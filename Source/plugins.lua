@@ -1,0 +1,295 @@
+--[[
+
+Two arrays are made:
+
+plugins = {
+	[<PLUGIN NAME>] = {
+		info = {
+			shortname = 'string',
+			longname = 'string',
+			author = 'string',
+			version = 'string',
+			minimumved = 'string',
+			description = 'string',
+		},
+		usedhooks = {
+			<LIST OF HOOKS HERE>
+		}
+	}
+
+hooks = {
+	[<HOOK NAME>] = {
+		[1] = <LOADED CODE>,
+		[2] = <LOADED CODE>
+	}
+}
+
+
+And for edits:
+
+pluginfileedits = {
+	[<FILENAME W/O .lua>] = {
+		[1] = { -- edit 1 in that file
+			find = 'string',
+			replace = 'string',
+			ignore_error = boolean, -- false by default
+			luapattern = boolean, -- false by default
+			plugin = 'string',
+		}
+		[2] = { -- edit 2 in that file
+			...
+		}
+	}
+	[<ANOTHER FILENAME>] = {
+		...
+	}
+}
+
+(sourceedits file in a plugin contains an array similar to that, called sourceedits)
+]]
+
+function loadplugins()
+	print("--Loading plugins...")
+	
+	plugins = {}
+	hooks = {}
+	pluginfileedits = {}
+	
+	if not love.filesystem.exists("plugins") then
+		love.filesystem.createDirectory("plugins")
+	else
+		-- The folder exists, go ahead and load any plugins in it!
+		folders = love.filesystem.getDirectoryItems("plugins")
+		
+		for k,v in pairs(folders) do
+			if love.filesystem.isDirectory("plugins/" .. v) or v:sub(-4, -1) == ".zip" then
+				-- This is a plugin folder/zip, neat! But if it's a zip, then we first need to mount it.
+				local pluginpath, pluginname
+				
+				if v:sub(1,1) == "#" then
+					-- Plugins starting with a # are disabled!
+				else
+				
+					if v:sub(-4, -1) == ".zip" then
+						assert(love.filesystem.mount("plugins/" .. v, "plugins-zip/" .. v:sub(1, -5)), "Failed to mount plugin " .. v)
+						pluginpath = "plugins-zip/" .. v:sub(1, -5)
+						pluginname = v:sub(1, -5)
+					else
+						pluginpath = "plugins/" .. v
+						pluginname = v
+					end
+					
+					print("  Loading plugin " .. pluginname)
+					
+					plugins[pluginname] = {}
+					-- Some defaults
+					plugins[pluginname].info = {
+						shortname = pluginname:sub(1,21),
+						longname = pluginname,
+						author = "Unknown",
+						version = "N.A.",
+						minimumved = "a58",
+						description = "No description specified",
+						descriptionimgs = {},
+						overrideinfo = false,
+						
+						-- Not specified by the plugin developer.
+						supported = true,
+						failededits = 0,
+						internal_pluginpath = pluginpath,
+					}
+					plugins[pluginname].usedhooks = {}
+					
+					-- So does this plugin have an info file?
+					if love.filesystem.exists(pluginpath .. "/info.lua") then
+						local infofile = love.filesystem.load(pluginpath .. "/info.lua")
+						infofile(plugins[pluginname].info)
+					end
+					
+					-- Is this plugin supported?
+					--alphabetaver = tonumber(plugins[pluginname].info.minimumved:sub(2,-1))
+					pver1, pver2 = plugins[pluginname].info.minimumved:match("^1%.([0-9]+)%.([0-9]+)$")
+					if (plugins[pluginname].info.minimumved:sub(1,1) == "a" or plugins[pluginname].info.minimumved:sub(1,1) == "b")
+					or (pver1 ~= nil and pver2 ~= nil and not (tonumber(pver1) > vergroups[1] or (tonumber(pver1) == vergroups[1] and tonumber(pver2) > vergroups[2]))) then
+						-- It is!
+						
+						if love.filesystem.exists(pluginpath .. "/hooks") then
+							-- There are hooks, yay
+							thesehooks = love.filesystem.getDirectoryItems(pluginpath .. "/hooks")
+							
+							for k2,v2 in pairs(thesehooks) do
+								hookname = v2:sub(1, -5)
+								
+								table.insert(plugins[pluginname].usedhooks, hookname)
+								
+								if hooks[hookname] == nil then
+									hooks[hookname] = {}
+								end
+								
+								table.insert(hooks[hookname], love.filesystem.load(pluginpath .. "/hooks/" .. v2))
+								
+								print("    -> Hook: " .. v2 .. " (" .. pluginpath .. "/hooks/" .. v2)
+							end
+						end
+						
+						-- Are we making file edits?
+						if love.filesystem.exists(pluginpath .. "/sourceedits.lua") then
+							print("Plugin " .. pluginname .. " has a sourceedits file!")
+						
+							local editsfile = love.filesystem.load(pluginpath .. "/sourceedits.lua")
+							--local fileedits
+							
+							editsfile()
+							
+							for k2,v2 in pairs(sourceedits) do -- For each edited file
+								if pluginfileedits[k2] == nil then
+									pluginfileedits[k2] = {}
+								end
+								
+								for k3,v3 in pairs(v2) do -- For each edit in said file
+									if v3.ignore_error == nil then v3.ignore_error = false end
+									if v3.luapattern == nil then v3.luapattern = false end
+									if v3.allowmultiple == nil then v3.allowmultiple = false end
+								
+									table.insert(pluginfileedits[k2], {
+										["find"] = v3.find,
+										["replace"] = v3.replace,
+										ignore_error = v3.ignore_error,
+										luapattern = v3.luapattern,
+										allowmultiple = v3.allowmultiple,
+										plugin = pluginname
+									})
+								end
+							end
+						end
+					else
+						-- Unrecognized, this Ved must've been released before anyone heard of the minimum version for this plugin!
+						plugins[pluginname].info.supported = false
+						unsupportedplugins = unsupportedplugins + 1
+					end
+				end
+			end
+		end
+	end
+	
+	print("--Finished loading plugins.")
+end
+
+function hook(hookname)
+	if hooks[hookname] ~= nil then
+		for k,v in pairs(hooks[hookname]) do
+			v()
+		end
+	end
+end
+
+function textlistplugins()
+	-- Output info of all plugins as text
+	local output = ""
+	
+	for k,v in pairs(plugins) do
+		output = output .. v.info.longname .. "  version " .. v.info.version .. "  by " .. v.info.author .. "  (" .. k .. ")\n" .. v.info.description .. "\n\n"
+	end
+	
+	return output
+end
+
+function loadpluginpages()
+	helppages = {}
+	
+	table.insert(helppages, {
+		subj = "Return",
+		imgs = {},
+		cont = [[
+\)
+]]
+	})
+
+	local i = false
+	
+	for k,v in pairs(plugins) do
+		table.insert(helppages, {
+			subj = v.info.shortname,
+			imgs = {},
+			cont = (v.info.supported and "" or [[
+[This plugin is not supported because it requires Ved ]] .. v.info.minimumved .. [[ or higher!]\r
+
+]]) .. (v.info.overrideinfo and v.info.description or [[
+]] .. v.info.longname .. [[\wh#
+
+by ]] .. v.info.author .. [[, version ]] .. v.info.version .. [[
+
+\-
+
+]] .. v.info.description .. [[
+]])
+		})
+		
+		helppages[#helppages].imgs = table.copy(v.info.descriptionimgs)
+		
+		for k2,v2 in pairs(helppages[#helppages].imgs) do
+			helppages[#helppages].imgs[k2] = v.info.internal_pluginpath .. "/" .. v2
+		end
+		
+		i = true
+	end
+	
+	--if not i then
+		table.insert(helppages, 2, {
+			subj = "PLUGINS INFO",
+			imgs = {},
+			cont = (i and [[
+Plugins\wh#
+
+Please go to http://tolp2.nl/ved/plugins.php
+for more information about plugins and hooks.
+]] or [[
+No plugins\wh#
+
+You do not have any plugins yet. Please go to http://tolp2.nl/ved/plugins.php
+for more information about plugins and hooks.
+]])
+		})
+	--end
+end
+
+function ved_require(reqfile)
+	if pluginfileedits[reqfile] == nil then
+		-- No plugins want to edit this file!
+		require(reqfile)
+	else
+		local readlua = love.filesystem.read(reqfile .. ".lua")
+		
+		for editk,editv in pairs(pluginfileedits[reqfile]) do
+			-- Is this a plain string or a pattern?
+			if not editv.luapattern then
+				editv.findoriginal = editv.find
+				editv.find = escapegsub_plugin(editv.find)
+			end
+			
+			if readlua:find(editv.find) == nil then
+				-- Something went wrong here! But should we complain loudly about it?
+				if not editv.ignore_error then
+					if plugins[editv.plugin] ~= nil then
+						plugins[editv.plugin].info.failededits = plugins[editv.plugin].info.failededits + 1
+					end
+					pluginerror(reqfile, editv.plugin, "TO BE ADDED", (editv.luapattern and editv.find or editv.findoriginal), editv.luapattern)
+				end
+			else
+				-- Alright, this change can be done!
+				readlua = "--[[## " .. reqfile .. " ##]] " .. readlua:gsub(editv.find, editv.replace)
+			end
+		end
+		
+		--[[
+		local succ, errormsg
+		succ, errormsg = loadstring(readlua)
+		assert(succ, errormsg)
+		]]
+		assert(loadstring(readlua))()
+	end
+end
+
+function escapegsub_plugin(invoer) -- Almost the same as the one in func.lua, but different. (no :lower() and no ])
+	return invoer:gsub("%%", "%%%%"):gsub("%(", "%%%("):gsub("%)", "%%%)"):gsub("%.", "%%%."):gsub("%+", "%%%+"):gsub("%-", "%%%-"):gsub("%*", "%%%*"):gsub("%?", "%%%?"):gsub("%[", "%%%["):gsub("%]", "%%%]"):gsub("%^", "%%%^"):gsub("%$", "%%%$")
+end
