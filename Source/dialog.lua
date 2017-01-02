@@ -657,7 +657,7 @@ function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 	end
 
 	RCMactive = true
-	RCMx = menuposx
+	RCMx = math.min(menuposx, love.graphics.getWidth()-188)
 	RCMy = math.min(menuposy, love.graphics.getHeight()-(#items*16))
 	RCMactualy = menuposy -- In case we want to have this back
 	RCMitems = items
