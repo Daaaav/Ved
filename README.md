@@ -14,7 +14,7 @@ You must extract all files to the same folder, moving out just the `.exe` will n
 You can download the latest version from the [Mac](Mac) folder. You do not need to install LÖVE.
 
 ## Linux
-On Linux, you need to use the source version, see the instructions above.
+On Linux, you need to use the source version, see the instructions above. If you really want to have a binary, you can `cat` the `.love` file to your `love` binary.
 
 # Feedback
 You can report bugs, make feature requests or ask questions on the [Idea Informer](http://ved.idea.informer.com/?show_all=0&show_idea=1&show_error=1&show_question=1&show_thank=1&show_expect=1&show_inproc=1&show_shedule=1&show_deliver=1&show_complete=1&show_when=0&orderby=2&orderasc=0). Or, if you prefer, you may use the Issues system on this repository. You can also contact me on the forums, Discord, FlockMod and whatnot, but there's a chance I'll lose track of it.

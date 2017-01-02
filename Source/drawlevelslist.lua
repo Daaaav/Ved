@@ -15,14 +15,18 @@ function drawlevelslist()
 		local k2 = 1
 		for k,v in pairs(files) do
 			if input .. input_r == "" or v:lower():find("^" .. escapegsub(input .. input_r)) then
-				local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, 758, 8) and love.mouse.getY() < love.graphics.getHeight()-26
+				local hoverarea = 758
+				if s.smallerscreen then
+					hoverarea = hoverarea - 96
+				end
+				local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
 			
 				if mouseishovering then
 					hoveringlevel = v:sub(1, -8)
 				end
 				if mouseishovering or tabselected == k2 then
 					love.graphics.setColor(255,255,255,64)
-					love.graphics.rectangle("fill", 8, 14+8*k2, 758, 8)
+					love.graphics.rectangle("fill", 8, 14+8*k2, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
 				
