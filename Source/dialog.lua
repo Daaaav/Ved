@@ -326,6 +326,9 @@ function dialog.update()
 							
 							--##SCRIPT##  ACCEPTABLE
 							scriptlines = {""}
+
+							-- Also make sure internal scripting mode doesn't stick
+							internalscript = false
 						else
 							-- Splitting/duplicating the current script
 							if DIAquestionid == 21 then
