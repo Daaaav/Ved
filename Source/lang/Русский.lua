@@ -324,13 +324,13 @@ RESETCOLORS = "Сбросить цвета",
 STRINGNOTFOUND = "\"$1\" не найдено",
 
 -- b17
-MAL = "The level file is malformed: ", -- one of the following strings are concatenated to this
-METADATACORRUPT = "Metadata is missing or corrupt.",
-METADATAITEMCORRUPT = "Metadata for $1 is missing or corrupt.",
-TILESCORRUPT = "Tiles missing or corrupt.",
-ENTITIESCORRUPT = "Entities missing or corrupt.",
-LEVELMETADATACORRUPT = "Room metadata missing or corrupt.",
-SCRIPTCORRUPT = "Scripts missing or corrupt.",
+MAL = "Файл уровня повреждён: ", -- one of the following strings are concatenated to this
+METADATACORRUPT = "Данные отсутствуют или повреждены.",
+METADATAITEMCORRUPT = "Данные для $1 отсутствуют или повреждены.",
+TILESCORRUPT = "Тайлы отсутствуют или повреждены.",
+ENTITIESCORRUPT = "Объекты отсутствуют или повреждены.",
+LEVELMETADATACORRUPT = "Данные комнаты отсутствуют или повреждены.",
+SCRIPTCORRUPT = "Скрипты отсутствуют или повреждены.",
 
 }
 
@@ -499,18 +499,18 @@ diffmessages = {
 		edited = "Изменён скрипт \"$1\"\\Y",
 	},
 	flagnames = {
-		added = "Set name for flag $1 to \"$2\"\\G",
-		removed = "Removed name \"$1\" for flag $2\\R",
-		edited = "Changed name for flag $1 from \"$2\" to \"$3\"\\Y",
+		added = "Задать имя для флага $1 чтобы \"$2\"\\G",
+		removed = "Удалено имя \"$1\" для флага $2\\R",
+		edited = "Изменено имя для флага $1 на \"$2\" to \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Added level note \"$1\"\\G",
-		removed = "Removed level note \"$1\"\\R",
-		edited = "Edited level note \"$1\"\\Y",
+		added = "Добавлена записка \"$1\"\\G",
+		removed = "Удалена записка \"$1\"\\R",
+		edited = "Изменена записка \"$1\"\\Y",
 	},
 	mde = {
-		added = "Metadata entity was added.\\G",
-		removed = "Metadata entity was removed.\\R",
+		added = "Данные объекта добавлены.\\G",
+		removed = "Данные объекта удалены.\\R",
 	},
 }
 
