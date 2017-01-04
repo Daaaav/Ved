@@ -312,9 +312,12 @@ function dialog.update()
 				-- Add a script with this name. In case we're making a new script while editing one already that uses an unused flag name and all flags are occupied, make this all a function.
 				
 				leavescript_to_state = function()
-					if DIAquestionid == 11 or DIAquestionid == 21 then
+					if DIAquestionid == 11 then -- making new script from editor, not in script list
 						-- We're currently already editing a script so save that before jumping to a new one!
 						scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
+						scripts[scriptname] = table.copy(scriptlines)
+					elseif DIAquestionid == 21 then
+						-- Splitting a script, but we already saved the input earlier
 						scripts[scriptname] = table.copy(scriptlines)
 					end
 					
@@ -331,18 +334,18 @@ function dialog.update()
 							internalscript = false
 						else
 							-- Splitting/duplicating the current script
+							local keepinternal
 							if DIAquestionid == 21 then
 								-- Splitting, meaning in editor
-								scripts[multiinput[1]] = table.copy(scriptlines) -- We now have a duplicate
+								scripts[multiinput[1]] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
 								
-								-- We're splitting, so we have to cut off parts now
-								for i = editingline, (#scripts[multiinput[1]]) do
-									table.remove(scripts[scriptname])
-								end
-								
-								for i = 1, editingline-1 do
+								-- Now cut off the top part of the new script
+								for i = 1, spl_originaleditingline-1 do
 									table.remove(scripts[multiinput[1]], 1)
 								end
+								
+								-- Oh, was the script an internal script by the way?
+								keepinternal = internalscript
 							else
 								-- Duplicating, meaning in menu
 								input = tonumber(input)
@@ -350,17 +353,41 @@ function dialog.update()
 							end
 							
 							scriptlines = table.copy(scripts[multiinput[1]])
+							
+							processflaglabels()
+							if DIAquestionid == 21 then
+								-- Splitting
+								internalscript = keepinternal
+							end
 						end
 						scriptname = multiinput[1]
 						tostate(3)
 					else
 						dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}), "", 1, 1, 0)
 						if DIAquestionid ~= 21 then
+							-- Not splitting
 							replacedialog = true
 							
 							--##SCRIPT##  DONE
 							scriptineditor(multiinput[1])
+						else
+							-- Splitting
 						end
+					end
+				end
+				
+				if DIAquestionid == 21 and scripts[multiinput[1]] == nil then
+					-- Splitting
+					scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
+					spl_originaleditingline = editingline
+					editingline = 1
+					input, input_r = scriptlines[1], ""
+					originalscript = table.copy(scriptlines) -- We need to have the unconverted version
+					local totalnumberlines = #scriptlines
+					
+					-- Before we save the current (possibly internal) script, split the contents of the old script.
+					for i = spl_originaleditingline, totalnumberlines do
+						table.remove(scriptlines)
 					end
 				end
 				
