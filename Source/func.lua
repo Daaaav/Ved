@@ -325,6 +325,7 @@ function loadstate(new, extradata)
 			roomx = 0
 			roomy = 0
 		end
+		updatewindowicon()
 		
 		if levelmetadata ~= nil and levelmetadata[(roomy)*20 + (roomx+1)] ~= nil then
 			gotoroom_finish()
@@ -1026,7 +1027,7 @@ function changeenemybounds()
 	if selectedtool == 13 and selectedsubtool[13] ~= 1 then return end
 	
 	selectedtool = 9
-	love.window.setIcon(toolimgicon[9])
+	updatewindowicon()
 	
 	-- Make sure we see the bounds
 	showepbounds = true
@@ -1045,7 +1046,7 @@ function changeplatformbounds()
 	if selectedtool == 13 and selectedsubtool[13] ~= 1 then return end
 
 	selectedtool = 8
-	love.window.setIcon(toolimgicon[8])
+	updatewindowicon()
 	
 	-- Make sure we see the bounds
 	showepbounds = true
@@ -1973,6 +1974,10 @@ function uniquenotename(newname, oldname)
 		return newname
 	end
 	return newname .. i
+end
+
+function updatewindowicon()
+	love.window.setIcon(toolimgicon[selectedtool])
 end
 
 hook("func")

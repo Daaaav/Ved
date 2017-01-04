@@ -1309,7 +1309,7 @@ function drawmaineditor()
 			
 			if nodialog and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 				selectedtool = t
-				love.window.setIcon(toolimgicon[t])
+				updatewindowicon()
 			end
 			
 			if nodialog and love.mouse.isDown("r") and t == 17 and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then

@@ -1436,13 +1436,12 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				love.window.setIcon(toolimgicon[selectedtool])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				love.window.setIcon(toolimgicon[17])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
+			updatewindowicon()
 			toolscroll()
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "." then
@@ -1457,13 +1456,12 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				love.window.setIcon(toolimgicon[selectedtool])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				love.window.setIcon(toolimgicon[1])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
+			updatewindowicon()
 			toolscroll()
 		end
 		
@@ -1903,7 +1901,7 @@ function love.keypressed(key)
 					selectedsubtool[k] = 1
 				elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 					selectedtool = k
-					love.window.setIcon(toolimgicon[k])
+					updatewindowicon()
 				end
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 				toolscroll()
@@ -2029,24 +2027,22 @@ function love.mousepressed(x, y, button)
 		elseif nodialog and (love.keyboard.isDown("lctrl") or love.keyboard.isDown("lshift") or love.keyboard.isDown("rctrl") or love.keyboard.isDown("rshift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				love.window.setIcon(toolimgicon[selectedtool])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				love.window.setIcon(toolimgicon[17])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
+			updatewindowicon()
 			toolscroll()
 		elseif nodialog and (love.keyboard.isDown("lctrl") or love.keyboard.isDown("lshift") or love.keyboard.isDown("rctrl") or love.keyboard.isDown("rshift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				love.window.setIcon(toolimgicon[selectedtool])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				love.window.setIcon(toolimgicon[1])
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
+			updatewindowicon()
 			toolscroll()
 		elseif nodialog and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(64, 0, love.graphics.getWidth(), love.graphics.getHeight()) and selectedtool ~= 14 then
 			if selectedsubtool[selectedtool] > 1 then
