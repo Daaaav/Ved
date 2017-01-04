@@ -211,6 +211,10 @@ function processflaglabelsreverse()
 	
 	-- Internal script handling!
 	if internalscript then
+		-- Backup first!
+		local scriptlinesbackup = table.copy(scriptlines)
+		local splithasfailed = false
+
 		-- Add the magic lines.
 		local saylines = #scriptlines+1
 				
@@ -266,55 +270,62 @@ function processflaglabelsreverse()
 			end
 
 			if not splitsuccessfully then
-				dialog.new(L.SPLITFAILED, "", 1, 1, 0)
+				splithasfailed = true
 				break
 			end
 			
 			lineshad = lineshad + finalblockline
 		end
 		
-		-- Alright, what do we have left?
-		table.insert(blocks, #scriptlines - lineshad)
-		
-		cons("Blocks:" .. #blocks)
-		
-		for k,v in pairs(blocks) do
-			cons("Block: " .. v)
-		end
-		
-		if #blocks == 1 then
-			-- We actually need to check for this unfortunately
-			cons("There is only one block, so no splitting required")
-			
-			table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
+		if splithasfailed then
+			-- Just restore the script from the backup we made and disengage internal scripting mode
+			scriptlines = table.copy(scriptlinesbackup)
+			internalscript = false -- even though it's already gone by not converting it, but it can't hurt
+			dialog.new(L.SPLITFAILED, "", 1, 1, 0)
 		else
-			-- ACTUALLY SPLIT EVERYTHING YAY
-			for k = #blocks, 1, -1 do
-				-- We're in the kth block.
-				local blockstartsat = 0
+			-- Alright, what do we have left?
+			table.insert(blocks, #scriptlines - lineshad)
+			
+			cons("Blocks:" .. #blocks)
+			
+			for k,v in pairs(blocks) do
+				cons("Block: " .. v)
+			end
+			
+			if #blocks == 1 then
+				-- We actually need to check for this unfortunately
+				cons("There is only one block, so no splitting required")
 				
-				for blu = k-1, 1, -1 do
-					cons("Adding block " .. blu)
-					blockstartsat = blockstartsat + blocks[blu]
-				end
-				
-				cons("Final start of block " .. k .. " with length " .. (blocks[k]) .. ": " .. (blockstartsat+1))
-				
-				if k == #blocks then
-					-- This is the last one so this also behaves slightly differently because it's observed to do so.
-					table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+2) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
-					table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
-				elseif k ~= 1 then
-					table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop).
-					table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
-				else
-					table.insert(scriptlines, 1, "say(" .. (blocks[k]) .. ") #v") -- Niet de +1 want: dit is de eerste regel dus dit is anders.
+				table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
+			else
+				-- ACTUALLY SPLIT EVERYTHING YAY
+				for k = #blocks, 1, -1 do
+					-- We're in the kth block.
+					local blockstartsat = 0
+					
+					for blu = k-1, 1, -1 do
+						cons("Adding block " .. blu)
+						blockstartsat = blockstartsat + blocks[blu]
+					end
+					
+					cons("Final start of block " .. k .. " with length " .. (blocks[k]) .. ": " .. (blockstartsat+1))
+					
+					if k == #blocks then
+						-- This is the last one so this also behaves slightly differently because it's observed to do so.
+						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+2) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
+						table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
+					elseif k ~= 1 then
+						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop).
+						table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
+					else
+						table.insert(scriptlines, 1, "say(" .. (blocks[k]) .. ") #v") -- Niet de +1 want: dit is de eerste regel dus dit is anders.
+					end
 				end
 			end
+			
+			table.insert(scriptlines, "loadscript(stop) #v")
+			table.insert(scriptlines, "text(1,0,0,4) #v")
 		end
-		
-		table.insert(scriptlines, "loadscript(stop) #v")
-		table.insert(scriptlines, "text(1,0,0,4) #v")
 	end
 	
 	local noflagsleftwarning = false
