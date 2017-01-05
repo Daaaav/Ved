@@ -1163,31 +1163,23 @@ Colors for createentity() crewmates\h#
 
 Enemy movement types\h#
 
-0 - Bouncing up and down
-1 - Same as above
-2 - Bouncing left and right
-3 - Same as above
-4 - Going right FOREVER (unless it hits something) (it can go left if you use a
-    negative speed)
-5 - Same as above
-6 - Bouncing up and down, only it goes a little bit off screen
-7 - Same as 4...?
-8 - Staying still...
-9 - Same as above
-10 - Clones right until it crashes VVVVVV because of lag. Also after running it
-     you cannot save because it will crash too. Also if you save it corrupts the
-     level and you cannot open it.
-11 - Same as 4 and 7...?
-12 - Same as 10, only clones in the same spot.
-13 - Like 4, only it is down and not right.
-14 - Same as 8 and 9
-15 - Same as 8, 9 and 14.
-16 - Appears but then dissapears quickly. I think it is moving really fast though.
-17 - It goes left, but it waits a second, teleports left a little bit, waits and
-     teleports and repeats until it is off screen (unless it keeps going and we
-     cannot see it...)
-18 - same as above, only it goes right and it is a little bit faster.
-19 and onwards - just stays still.
+0 - Bouncing up and down, starts down.
+1 - Bouncing up and down, starts up.
+2 - Bouncing left and right, starts left.
+3 - Bouncing left and right, starts right.
+4, 7, 11 - Moves right until collision.
+5 - Same as above, only acts weird when it collides.
+    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
+6 - Bouncing up and down, but only reaches a certain x position before going back
+    down. Used in "Trench warfare".
+8, 9, 14, 15 - Still (?)
+10, 12 - Clones right/in the same spot, crashes VVVVVV if it gets too intense, and
+         will corrupt your level if you save.
+13 - Like 4, but moves down until collision.
+16 - Flashes in and out of existence. (Appears and disappears)
+17 - Jittery movement left
+18 - Jittery movement right, little bit faster
+19+ - Still (?)
 
 Gamestates\h#
 
