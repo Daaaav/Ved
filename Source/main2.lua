@@ -779,6 +779,14 @@ function love.draw()
 		love.graphics.printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-10, 128, "center")
 	end
 	
+	-- Taking input warning
+	if allowdebug and takinginput then
+		love.graphics.setColor(255,160,0,192)
+		love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.printf("TAKING INPUT", 128, love.graphics.getHeight()-10, 128, "center")
+	end
+	
 	hook("love_draw_end")
 	
 	-- Are we displaying a replacement cursor?
