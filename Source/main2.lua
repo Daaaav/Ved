@@ -1781,9 +1781,13 @@ function love.keypressed(key)
 			scriptgotoline(editingline+57)
 		end
 	elseif state == 3 and key == "return" then
+		-- We can split lines because the current line is in input and input_r.
+		-- So input_r is simply transferred to the newly inserted line along with the cursor.
 		table.insert(scriptlines, editingline+1, "")
 		editingline = editingline + 1
 		input = anythingbutnil(scriptlines[editingline])
+		-- We also want to scroll the screen if necessary
+		scriptlineonscreen()
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
 	elseif state == 3 and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
