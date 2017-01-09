@@ -266,7 +266,7 @@ end
 function stopinput()
 	cons("Input stopped.")
 	-- Do not clear input here, because then we can't use it anymore after using stopinput(). Output will now be locked.
-	input = input .. input_r
+	input = anythingbutnil(input) .. anythingbutnil(input_r)
 	input_r = ""
 	__ = "_"
 	takinginput = false

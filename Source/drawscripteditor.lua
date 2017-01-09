@@ -191,7 +191,8 @@ function drawscripteditor()
 		elseif not mousepressed and not PleaseDo3DSHandlingThanks and onrbutton(0, nil, true) then
 			-- Return
 			leavescript_to_state = function()
-				scriptlines[editingline] = anythingbutnil(input) ..  anythingbutnil(input_r)
+				stopinput()
+				scriptlines[editingline] = input
 				scripts[scriptname] = table.copy(scriptlines)
 				tostate(10, true)
 			end

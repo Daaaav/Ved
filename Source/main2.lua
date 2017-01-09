@@ -1835,7 +1835,8 @@ function love.keypressed(key)
 		nodialog = false
 	elseif nodialog and state == 3 and key == "escape" then
 		leavescript_to_state = function()
-			scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
+			stopinput()
+			scriptlines[editingline] = input
 			scripts[scriptname] = table.copy(scriptlines)
 			tostate(10, true)
 			nodialog = false

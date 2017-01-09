@@ -528,7 +528,7 @@ function dialog.update()
 				-- Rename this script... As long as the names aren't the same, because then we'd end up *removing* the script (just read the code)
 				-- And of course, as long as a script with that name doesn't already exist.
 				-- input is the 'number' of the script
-				if scripts[multiinput[1]] ~= nil then
+				if scripts[multiinput[1]] ~= nil and multiinput[1] ~= scriptnames[input] then
 					dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}), "", 1, 1, 0)
 					replacedialog = true
 				elseif multiinput[1] ~= scriptnames[input] then
