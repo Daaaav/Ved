@@ -2,7 +2,7 @@
 
 States:
 -3	Just blackness
--2  tostate 6
+-2	tostate 6
 -1	Display error (expected: errormsg)
 0	Temp main menu (enter state)
 1	The editor (will expect things to have been loaded!)
@@ -1617,7 +1617,7 @@ function love.keypressed(key)
 		selectedtool = 1
 		
 		mousepressed = false
-	elseif allowdebug and state == 1 and key == "'" then
+	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("lctrl") then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
 			cons("==== " .. k .. " ====")
@@ -1823,6 +1823,7 @@ function love.keypressed(key)
 			tabselected = 0
 		else
 			if state6old1 then
+				stopinput()
 				tostate(1, true)
 			end
 		end

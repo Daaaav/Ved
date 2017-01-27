@@ -87,6 +87,7 @@ function drawlevelslist()
 				mousepressed = true
 			else
 				-- Return to editor.
+				stopinput()
 				tostate(1, true)
 				mousepressed = true
 			end
