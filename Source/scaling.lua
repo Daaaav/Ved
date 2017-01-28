@@ -15,6 +15,8 @@ love.graphics.getWidthOR = love.graphics.getWidth
 
 love.graphics.getWidth = function()
 	--return love.graphics.getWidthOR()
+	if s.smallerscreen then
+		return 800
 	return 64+640+192
 end
 
