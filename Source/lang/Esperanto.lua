@@ -325,13 +325,13 @@ RESETCOLORS = "Defaŭltigi kolorojn",
 STRINGNOTFOUND = "\"$1\" ne estis trovita",
 
 -- b17
-MAL = "The level file is malformed: ", -- one of the following strings are concatenated to this
-METADATACORRUPT = "Metadata is missing or corrupt.",
-METADATAITEMCORRUPT = "Metadata for $1 is missing or corrupt.",
-TILESCORRUPT = "Tiles missing or corrupt.",
-ENTITIESCORRUPT = "Entities missing or corrupt.",
-LEVELMETADATACORRUPT = "Room metadata missing or corrupt.",
-SCRIPTCORRUPT = "Scripts missing or corrupt.",
+MAL = "La nivelo-dosiero estas misformigita: ", -- one of the following strings are concatenated to this
+METADATACORRUPT = "Meta-datumoj estas mankantaj aŭ koruptitaj.",
+METADATAITEMCORRUPT = "Meta-datumoj por $1 estas mankantaj aŭ koruptitaj.",
+TILESCORRUPT = "Blokoj mankantaj aŭ koruptitaj.",
+ENTITIESCORRUPT = "Entoj mankantaj aŭ koruptitaj.",
+LEVELMETADATACORRUPT = "Ĉambraj meta-datumoj mankantaj aŭ koruptitaj.",
+SCRIPTCORRUPT = "Skriptoj mankantaj aŭ koruptitaj.",
 
 }
 
@@ -500,18 +500,18 @@ diffmessages = {
 		edited = "Redaktis skripton \"$1\"\\Y",
 	},
 	flagnames = {
-		added = "Set name for flag $1 to \"$2\"\\G",
-		removed = "Removed name \"$1\" for flag $2\\R",
-		edited = "Changed name for flag $1 from \"$2\" to \"$3\"\\Y",
+		added = "Agordiĝis nomo por flago $1 al \"$2\"\\G",
+		removed = "Foriĝis nomo \"$1\" por flago $2\\R",
+		edited = "Ŝanĝiĝis nomo por flago $1 de \"$2\" al \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Added level note \"$1\"\\G",
-		removed = "Removed level note \"$1\"\\R",
-		edited = "Edited level note \"$1\"\\Y",
+		added = "Aldoniĝis nivelo-noto \"$1\"\\G",
+		removed = "Foriĝis nivelo-noto \"$1\"\\R",
+		edited = "Redaktiĝis nivelo-noto \"$1\"\\Y",
 	},
 	mde = {
-		added = "Metadata entity was added.\\G",
-		removed = "Metadata entity was removed.\\R",
+		added = "Aldoniĝis meta-datuma ento.\\G",
+		removed = "Foriĝis meta-datuma ento.\\R",
 	},
 }
 
