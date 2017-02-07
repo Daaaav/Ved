@@ -42,12 +42,16 @@ o - orange text
 v - green text
 c - Cyan
 y - Yellow
+z - black text
+Z - dark gray text
 C - cyan text (Viridian)
 P - pink text (Violet)
 Y - yellow text (Vitellary)
 R - red text (Vermilion)
 G - green text (Verdigris)
 B - blue text (Victoria)
+& - Interpret next color code as background color instead of text color
+l - Link color (not yet supported)
 - - Horizontal line
 ) - Return to previous state
 

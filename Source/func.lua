@@ -865,6 +865,20 @@ function setColorArr(yourarray)
 	love.graphics.setColor(yourarray[1], yourarray[2], yourarray[3])
 end
 
+function insertrowcolor(rowcolors, yourarray)
+	if not backgroundshift then
+		table.insert(rowcolors, yourarray)
+	else
+		if #rowcolors == 0 then
+			table.insert(rowcolors, {192,192,192})
+		end
+		table.insert(rowcolors[#rowcolors], yourarray[1])
+		table.insert(rowcolors[#rowcolors], yourarray[2])
+		table.insert(rowcolors[#rowcolors], yourarray[3])
+		backgroundshift = false
+	end
+end
+
 function langkeys(strin, thesekeys)
 	-- Fills in $1 $2 etc in the strings.
 	for lk,lv in pairs(thesekeys) do

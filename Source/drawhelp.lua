@@ -24,6 +24,9 @@ function drawhelp()
 				local imagex = 0
 				
 				local rowcolors = {}
+				backgroundshift = false
+				
+				local doublesize = false -- Only used for background colors, the font is just set
 				
 				local singlecharmode = false
 				
@@ -32,6 +35,7 @@ function drawhelp()
 				for fl = 1, part2:len() do
 					if part2:sub(fl,fl) == "h" then
 						love.graphics.setFont(font16)
+						doublesize = true
 					elseif part2:sub(fl,fl) == "#" then
 						
 					elseif tonumber(part2:sub(fl,fl)) ~= nil then
@@ -64,38 +68,46 @@ function drawhelp()
 					elseif part2:sub(fl,fl) == "<" then
 						imagex = imagex - 8
 					elseif part2:sub(fl,fl) == "r" then
-						table.insert(rowcolors, {255,0,0})
+						insertrowcolor(rowcolors, {255,0,0})
 					elseif part2:sub(fl,fl) == "g" then
-						table.insert(rowcolors, {128,128,128})
+						insertrowcolor(rowcolors, {128,128,128})
 					elseif part2:sub(fl,fl) == "w" then
-						table.insert(rowcolors, {255,255,255})
+						insertrowcolor(rowcolors, {255,255,255})
 					elseif part2:sub(fl,fl) == "b" then
-						table.insert(rowcolors, {64,64,255})
+						insertrowcolor(rowcolors, {64,64,255})
 					elseif part2:sub(fl,fl) == "o" then
-						table.insert(rowcolors, {255,128,0})
+						insertrowcolor(rowcolors, {255,128,0})
 					elseif part2:sub(fl,fl) == "v" then
-						table.insert(rowcolors, {0,255,0})
+						insertrowcolor(rowcolors, {0,255,0})
 					
 					elseif part2:sub(fl,fl) == "C" then
-						table.insert(rowcolors, {132, 181, 255})
+						insertrowcolor(rowcolors, {132, 181, 255})
 					elseif part2:sub(fl,fl) == "P" then
-						table.insert(rowcolors, {255, 135, 255})
+						insertrowcolor(rowcolors, {255, 135, 255})
 					elseif part2:sub(fl,fl) == "Y" then
-						table.insert(rowcolors, {255, 255, 135})
+						insertrowcolor(rowcolors, {255, 255, 135})
 					elseif part2:sub(fl,fl) == "R" then
-						table.insert(rowcolors, {255, 61, 61})
+						insertrowcolor(rowcolors, {255, 61, 61})
 					elseif part2:sub(fl,fl) == "G" then
-						table.insert(rowcolors, {144, 255, 144})
+						insertrowcolor(rowcolors, {144, 255, 144})
 					elseif part2:sub(fl,fl) == "B" then
-						table.insert(rowcolors, {75, 75, 230})
+						insertrowcolor(rowcolors, {75, 75, 230})
 					
 					
 					elseif part2:sub(fl,fl) == "y" then
-						table.insert(rowcolors, {255,255,0})
+						insertrowcolor(rowcolors, {255,255,0})
 					elseif part2:sub(fl,fl) == "c" then
-						table.insert(rowcolors, {0,255,255})
+						insertrowcolor(rowcolors, {0,255,255})
+					elseif part2:sub(fl,fl) == "z" then
+						insertrowcolor(rowcolors, {0,0,0})
+					elseif part2:sub(fl,fl) == "Z" then
+						insertrowcolor(rowcolors, {64,64,64})
 					elseif part2:sub(fl,fl) == "n" then
-						table.insert(rowcolors, {192,192,192})
+						insertrowcolor(rowcolors, {192,192,192})
+					elseif part2:sub(fl,fl) == "l" then
+						insertrowcolor(rowcolors, {192,192,192})
+					elseif part2:sub(fl,fl) == "&" then
+						backgroundshift = true
 					elseif part2:sub(fl,fl) == "-" then
 						part1 = ("_"):rep(82)
 					elseif part2:sub(fl,fl) == "(" then
@@ -121,23 +133,38 @@ function drawhelp()
 					local textxoffset = 0
 					
 					for kn,vn in pairs(part1parts) do
-						if rowcolors[kn] == nil then
-							love.graphics.setColor(192,192,192,255)
-						else
-							setColorArr(rowcolors[kn])
-						end
-						
 						if singlecharmode and vn:sub(-2,-1) == "§" then
 							vn = vn:sub(1, -3)
 						end
 						
-						love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+textxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
-						
+						local currenttextxoffset = textxoffset
 						textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))
+						
+						if rowcolors[kn] == nil then
+							love.graphics.setColor(192,192,192,255)
+						elseif #rowcolors[kn] >= 6 then
+							love.graphics.setColor(rowcolors[kn][4], rowcolors[kn][5], rowcolors[kn][6])
+							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
+							love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
+							
+							setColorArr(rowcolors[kn])
+						else
+							setColorArr(rowcolors[kn])
+						end
+						
+						love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 					end
 				else
 					if rowcolors[1] ~= nil then
-						setColorArr(rowcolors[1])
+						if #rowcolors[1] >= 6 then
+							love.graphics.setColor(rowcolors[1][4], rowcolors[1][5], rowcolors[1][6])
+							local bgx, bgy = 8+200+8+screenxoffset-1, helparticlescroll+8+(10*linee)+3
+							love.graphics.rectangle("fill", bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
+
+							setColorArr(rowcolors[1])
+						else
+							setColorArr(rowcolors[1])
+						end
 					end
 					
 					love.graphics.print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
