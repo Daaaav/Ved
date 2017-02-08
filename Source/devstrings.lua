@@ -1316,6 +1316,92 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
 },
 
 {
+subj = "Formatting",
+imgs = {},
+cont = [[
+Formatting\wh#
+
+In notes you can use formatting codes to make your text larger, color it, and some
+other things. To add formatting to a line, add a backslash (\) at the end of it.\
+After the \, you can add any amount of the following characters, in any order:\
+
+h - Double font size\h
+
+# - Anchor (not yet implemented). There will be a way to switch/link to anchors\#
+    quickly.
+- - Horizontal line:
+\-
+
+Colors:\h#
+
+n - Normal\n
+r - Red\r
+g - Gray\g
+w - White\w
+b - Blue\b
+o - Orange\o
+v - Green\v
+c - Cyan\c
+y - Yellow\y
+C - Cyan (Viridian)\C
+P - Pink (Violet)\P
+Y - Yellow (Vitellary)\Y
+R - Red (Vermilion)\R
+G - Green (Verdigris)\G
+B - Blue (Victoria)\B
+
+
+Example:\h#
+
+\-
+Large orange text ("oh" has same result)\ho\
+
+Large orange text ("oh" has same result)\ho
+
+\-
+
+Using multiple colors on a line:\h#
+
+It is possible to use multiple colors on a line by separating colored parts with
+the ¤¤ character (which you can type using the ¤insert¤ key), and putting the color\nw
+codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
+is not necessary to list that at the end. If you want to use the ¤ character on a
+line which uses¤ \¤, write ¤¤¤¤ instead. For technical reasons, it is not possible to\nC
+color a single character by enclosing it in two ¤s, unless you also include a
+space or another character.
+
+\-
+You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
+
+You can ¤color¤ specific ¤words¤ with this!\nrnv
+\-
+Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
+
+Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
+\-
+
+
+Images (only available in plugin\h#
+
+descriptions):\h
+
+0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
+       and remember to keep lines blank to accommodate for the image height)
+^ - Put this before the image number, shift image number by 10. So ^4 makes image
+    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
+_ - Put this before the image number to decrease the image number by 10.
+> - Put this before the image number to shift further images to the right by 8
+    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
+    image 1 at x=32.
+< - Same, but shift to the left.
+]]
+----------------------------------------------------------------------------------[]-
+--[[
+) - Return to previous state
+]]
+},
+
+{
 subj = "Credits",
 imgs = {"credits.png"},
 cont = [[
@@ -1365,7 +1451,7 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 
 License\h#
 
-Copyright 2015-2016  Dav999              (I do not claim ownership of or copyright
+Copyright 2015-2017  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -1458,91 +1544,5 @@ Image test:
 \2
 ] ]
 },]]
-
-{
-subj = "Formatting",
-imgs = {},
-cont = [[
-Formatting\wh#
-
-In notes you can use formatting codes to make your text larger, color it, and some
-other things. To add formatting to a line, add a backslash (\) at the end of it.\
-After the \, you can add any amount of the following characters, in any order:\
-
-h - Double font size\h
-
-# - Anchor (not yet implemented). There will be a way to switch/link to anchors\#
-    quickly.
-- - Horizontal line:
-\-
-
-Colors:\h#
-
-n - Normal\n
-r - Red\r
-g - Gray\g
-w - White\w
-b - Blue\b
-o - Orange\o
-v - Green\v
-c - Cyan\c
-y - Yellow\y
-C - Cyan (Viridian)\C
-P - Pink (Violet)\P
-Y - Yellow (Vitellary)\Y
-R - Red (Vermilion)\R
-G - Green (Verdigris)\G
-B - Blue (Victoria)\B
-
-
-Example:\h#
-
-\-
-Large orange text ("oh" has same result)\ho\
-
-Large orange text ("oh" has same result)\ho
-
-\-
-
-Using multiple colors on a line:\h#
-
-It is possible to use multiple colors on a line by separating colored parts with
-the ¤¤ character (which you can type using the ¤insert¤ key), and putting the color\nw
-codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
-is not necessary to list that at the end. If you want to use the ¤ character on a
-line which uses¤ \¤, write ¤¤¤¤ instead. For technical reasons, it is not possible to\nC
-color a single character by enclosing it in two ¤s, unless you also include a
-space or another character.
-
-\-
-You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
-
-You can ¤color¤ specific ¤words¤ with this!\nrnv
-\-
-Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
-
-Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
-\-
-
-
-Images (only available in plugin\h#
-
-descriptions):\h
-
-0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
-       and remember to keep lines blank to accommodate for the image height)
-^ - Put this before the image number, shift image number by 10. So ^4 makes image
-    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
-_ - Put this before the image number to decrease the image number by 10.
-> - Put this before the image number to shift further images to the right by 8
-    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
-    image 1 at x=32.
-< - Same, but shift to the left.
-]]
-----------------------------------------------------------------------------------[]-
---[[
-) - Return to previous state
-]]
-}
 
 }
