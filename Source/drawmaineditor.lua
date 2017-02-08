@@ -1151,27 +1151,42 @@ function drawmaineditor()
 				--temporaryroomname = "To fix: spikes tool in multi mode"
 			end
 			
+			-- Is the text we're displaying going to fit?
+			local extralines = roomtext_extralines(temporaryroomname)
+			
 			love.graphics.setColor(160,160,0,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16, 40*16, 16)
+			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16, 40*16, 16 + extralines*16)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.printf(temporaryroomname, screenoffset, 29*16 +3, 40*16, "center")
+			love.graphics.printf(temporaryroomname, screenoffset, 29*16 +3 - extralines*16, 40*16, "center")
 			love.graphics.setFont(font8)
 		elseif editingroomname then
-			-- We're editing this room name!
+			-- We're editing this room name! If it doesn't fit, then just make it higher, we're editing it anyway
+			local text = input .. (__:sub(1,1) == "_" and __ or " " .. __:sub(2,-1))
+			local extralines = roomtext_extralines(text)
+			
 			love.graphics.setColor(128,128,128,128)
 			love.graphics.rectangle("fill", screenoffset, 29*16, 40*16, 16)
+			if extralines > 0 then
+				love.graphics.setColor(255,0,0,128)
+				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16, 40*16, extralines*16)
+			end
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.printf(input .. (__:sub(1,1) == "_" and __ or " " .. __:sub(2,-1)), screenoffset, 29*16 +3, 40*16, "center")
+			love.graphics.printf(text, screenoffset, 29*16 +3 - extralines*16, 40*16, "center")
 			love.graphics.setFont(font8)
 		elseif levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= "" then
 			-- Display it
+			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
+			local textx = (screenoffset+320)-(font16:getWidth(text)/2)
+			
 			love.graphics.setColor(0,0,0,128)
 			love.graphics.rectangle("fill", screenoffset, 29*16, 40*16, 16)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.printf(levelmetadata[(roomy)*20 + (roomx+1)].roomname, screenoffset, 29*16 +3, 40*16, "center")
+			love.graphics.setScissor(screenoffset, 29*16, 40*16, 16)
+			love.graphics.print(text, textx, 29*16 +3)
+			love.graphics.setScissor()
 			love.graphics.setFont(font8)
 		end
 	end

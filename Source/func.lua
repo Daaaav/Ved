@@ -1994,4 +1994,15 @@ function updatewindowicon()
 	love.window.setIcon(toolimgicon[selectedtool])
 end
 
+function roomtext_extralines(text)
+	_, thelines = font16:getWrap(text, 40*16)
+	
+	-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+	if type(thelines) == "table" then
+		return #thelines - 1
+	else
+		return thelines - 1
+	end
+end
+
 hook("func")
