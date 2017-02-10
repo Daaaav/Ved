@@ -1117,6 +1117,64 @@ function endeditingroomtext(donotmakethisnil)
 	elseif input ~= "" or editingroomtext == donotmakethisnil then
 		entitydata[editingroomtext].data = input
 		if makescriptroomtext and scripts[input] == nil then
+			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
+				local warnloadscriptexists = false
+				local loadscriptname = langkeys(s.loadscriptname, {input})
+				if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then -- flag
+					if scripts[loadscriptname] ~= nil then
+						warnloadscriptexists = true
+					else
+						-- What flag is available?
+						usedflags = {}
+						outofrangeflags = {}
+						
+						-- See which flags have been used in this level.
+						returnusedflags(usedflags, outofrangeflags)
+						
+						local useflag = -1
+						for vlag = 0, 99 do
+							if not usedflags[vlag] then
+								useflag = vlag
+								usedflags[vlag] = true
+								--vedmetadata.flaglabel[vlag] = partss[2]
+								break
+							end
+						end
+						
+						if useflag == -1 then
+							-- No flags left?
+							dialog.new(L.NOFLAGSLEFT, "", 1, 3, 16)
+							useflag = "FLAG"
+						end
+						
+						scripts[loadscriptname] = {
+							"ifflag(" .. useflag .. ",stop)",
+							"flag(" .. useflag .. ",on)",
+							"iftrinkets(0," .. input .. ")"
+						}
+						table.insert(scriptnames, loadscriptname)
+						entitydata[editingroomtext].data = loadscriptname
+						
+						temporaryroomname = L.LOADSCRIPTMADE
+						temporaryroomnametimer = 90
+					end
+				elseif love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl) then -- trinkets
+					if scripts[loadscriptname] ~= nil then
+						warnloadscriptexists = true
+					else
+						scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
+						table.insert(scriptnames, loadscriptname)
+						entitydata[editingroomtext].data = loadscriptname
+						
+						temporaryroomname = L.LOADSCRIPTMADE
+						temporaryroomnametimer = 90
+					end
+				end
+				if warnloadscriptexists then
+					dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}), "", 1, 1, 0)
+				end
+			end
+			
 			scripts[input] = {""}
 			table.insert(scriptnames, input)
 		end

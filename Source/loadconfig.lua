@@ -67,6 +67,11 @@ configs =
 		["type"] = "bool",
 		comment = "Enable to not let the editor add a space if a colon is the last character on a line in a script"
 		},
+	loadscriptname =
+		{
+		default = "$1_load",
+		["type"] = "string",
+		},
 	showfps =
 		{
 		default = false,
