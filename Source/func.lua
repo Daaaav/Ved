@@ -2063,4 +2063,10 @@ function roomtext_extralines(text)
 	end
 end
 
+function gotohelparticle(n)
+	helparticle = n
+	helparticlecontent = explode("\n", helppages[helparticle].cont)
+	helparticlescroll = 0
+end
+
 hook("func")

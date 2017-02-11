@@ -326,6 +326,8 @@ More shortcuts\h#
 
 Ved also introduces a few shortcuts.
 
+Main editor\gh#
+
 Ctrl+P¤  Jump to the room containing the startpoint\C
 Ctrl+S¤  Quicksave\C
 Ctrl+X¤  Cut room to the clipboard\C
@@ -336,8 +338,6 @@ Ctrl+Z¤  Undo\C
 Ctrl+Y¤  Redo\C
 Ctrl+F¤  Search\C
 Ctrl+/¤  Level notepad\C
-Ctrl+F (in script editor)¤  Find\C
-Ctrl+G (in script editor)¤  Go to line\C
 (NOTE: On Mac, replace ctrl by cmd)
 N¤  display all tile numbers\C
 M¤  Show map\C
@@ -345,6 +345,16 @@ Q¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+
+Script editor\gh#
+
+Ctrl+F¤  Find\C
+Ctrl+G¤  Go to line\C
+
+Script list\gh#
+
+N¤  Create new script\C
+F¤  Go to flags list\C
 ]]
 },
 

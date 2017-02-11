@@ -1833,6 +1833,11 @@ function love.keypressed(key)
 		editingmap = input
 	elseif state == 10 and (key == "up" or key == "down") then
 		handleScrolling(false, key == "up" and "wu" or "wd") -- 16px
+	elseif state == 10 and key == "n" then
+		startmultiinput({""})
+		dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
+	elseif state == 10 and key == "f" then
+		tostate(19,false)
 	elseif state == 11 and key == "return" then
 		searchscripts, searchrooms, searchnotes = searchtext(input)
 		searchedfor = input
@@ -1872,8 +1877,18 @@ function love.keypressed(key)
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 		elseif key == "insert" then
-			input = input .. "¤"
+			if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+				input = input .. "§"
+			else
+				input = input .. "¤"
+			end
 			helparticlecontent[helpeditingline] = input
+		end
+	elseif nodialog and state == 15 then
+		if key == "up" then
+			gotohelparticle(revcycle(helparticle, #helppages, 2))
+		elseif key == "down" then
+			gotohelparticle(cycle(helparticle, #helppages, 2))
 		end
 	elseif allowdebug and (key == "f10") then
 		

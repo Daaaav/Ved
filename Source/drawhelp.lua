@@ -268,9 +268,7 @@ function drawhelp()
 					startmultiinput({""})
 					dialog.new(L.NEWNOTENAME, L.CREATENEWNOTE, 1, 4, 12)
 				else
-					helparticle = rvnum
-					helparticlecontent = explode("\n", helppages[helparticle].cont)
-					helparticlescroll = 0
+					gotohelparticle(rvnum)
 				end
 			end
 		end
