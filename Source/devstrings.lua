@@ -3,6 +3,7 @@
 
 --L. = ""
 L.LOADSCRIPTMADE = "Load script created"
+L.COPY = "Copy"
 
 
 LH = {
@@ -1344,7 +1345,7 @@ h - Double font size\h
 - - Horizontal line:
 \-
 
-Colors:\h#
+Text colors:\h#
 
 n - Normal\n
 r - Red\r
@@ -1355,6 +1356,8 @@ o - Orange\o
 v - Green\v
 c - Cyan\c
 y - Yellow\y
+z - Black\z&Z
+Z - Dark gray\Z
 C - Cyan (Viridian)\C
 P - Pink (Violet)\P
 Y - Yellow (Vitellary)\Y
@@ -1372,14 +1375,14 @@ Large orange text ("oh" has same result)\ho
 
 \-
 
-Using multiple colors on a line:\h#
+Using multiple colors on a line\h#
 
 It is possible to use multiple colors on a line by separating colored parts with
-the ¤¤ character (which you can type using the ¤insert¤ key), and putting the color\nw
+the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
 codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
-is not necessary to list that at the end. If you want to use the ¤ character on a
-line which uses¤ \¤, write ¤¤¤¤ instead. For technical reasons, it is not possible to\nC
-color a single character by enclosing it in two ¤s, unless you also include a
+is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
+line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
+color a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\nY(
 space or another character.
 
 \-
@@ -1392,6 +1395,90 @@ Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
 Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 \-
 
+Coloring a single character\h#
+
+OK, I lied, it is possible to color a single character without including a space.
+To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
+the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
+
+\-
+You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
+
+You can c¤o§¤lor a ¤single¤ character like this!\nrny(
+\-
+
+This is not necessary if the single character is the first or last on a line.
+
+Background colors\h#
+
+Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
+colors. To do this, you can put¤ & ¤after the regular text color code, and then a
+color code for the background color. This can be done in combination with the ¤
+system described above, note that regular text colors start a the next "block",
+but background colors do not. The following examples use spaces to make everything
+more readable, but this is completely optional.
+
+\-
+Black on white text!\z&w\
+
+Black on white text!\z&w
+\-
+Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w\
+
+Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
+\-
+This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
+
+This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
+\-
+
+If you like, you can also make graphics using background colors:
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
 
 Images (only available in plugin\h#
 

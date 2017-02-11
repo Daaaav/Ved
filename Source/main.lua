@@ -9,10 +9,10 @@ allowdebug = false
 
 fpscap = 0
 
-ver = "1.0.3" -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
+ver = "1.1.0" -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-vergroups = {0,3} -- This'll be pattern-matched later
+vergroups = {1,0} -- This'll be pattern-matched later
 
 thismdeversion = 2
 

@@ -217,11 +217,16 @@ function drawhelp()
 				end
 			else
 				-- We are currently editing it.
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16)
+				love.graphics.printf(L.COPY, love.graphics.getWidth()-(128-8)-16-4-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16)
 				love.graphics.printf(L.SAVE, love.graphics.getWidth()-(128-8)-16-4, (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
 				
 				if nodialog and love.mouse.isDown("l") then
-					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16) then
+					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
+						-- Copy
+						love.system.setClipboardText(table.concat(helparticlecontent, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Save
 						helparticlecontent[helpeditingline] = input .. input_r
 						helpeditingline = 0
