@@ -251,12 +251,16 @@ function drawhelp()
 	j = -1
 	for rvnum = 1, #helppages+(helpeditable and 1 or 0) do
 		j = j + 1
+		local buttoncolor = {128,128,128}
+		if helparticle == rvnum then
+			buttoncolor = {192,192,192}
+		end
 		if helpeditingline ~= 0 then
-			love.graphics.setColor(128,128,128,64)
+			love.graphics.setColor(buttoncolor[1],buttoncolor[2],buttoncolor[3],64) -- Unfortunately we cannot simply unpack() this because there are more arguments
 			love.graphics.rectangle("fill", 8, helplistscroll+8+(24*j), 25*8-28, 16)
 			love.graphics.setColor(255,255,255,128)
 		else
-			hoverrectangle(128,128,128,128, 8, helplistscroll+8+(24*j), 25*8-28, 16)
+			hoverrectangle(buttoncolor[1],buttoncolor[2],buttoncolor[3],128, 8, helplistscroll+8+(24*j), 25*8-28, 16)
 		end
 		love.graphics.printf((helppages[rvnum] == nil and L.ADDNEWBTN or helppages[rvnum].subj), 8, helplistscroll+8+(24*j)+4+2, 25*8-28, "center")
 		
