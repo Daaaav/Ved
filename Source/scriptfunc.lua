@@ -144,7 +144,7 @@ end
 function processflaglabels()
 	-- Run when OPENING the script for display and editing
 
-	if not love.keyboard.isDown("lshift") and not love.keyboard.isDown("rshift") then
+	if not keyboard_eitherIsDown("shift") then
 		-- scriptlines assumed non-empty table of lines
 		for k,v in pairs(scriptlines) do
 			-- I could split it into parts and then check everything with that, but this is far easier and better performing.

@@ -17,7 +17,7 @@ function drawmaineditor()
 			end
 		end
 		
-		if s.smallerscreen and ((love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
+		if s.smallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
 			-- Discard anything we're doing with the mouse in the room, we're now on the toolbar
 		elseif tilespicker then
 			if false and tilescreator then
@@ -980,11 +980,13 @@ function drawmaineditor()
 			cons(k .. "->" .. v)
 		end
 		]]
-		if love.keyboard.isDown("n") and editingroomtext == 0 then
+		local displaytilenumbers
+		if nodialog and love.keyboard.isDown("n") and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			love.graphics.setFont(tinynumbers)
+			displaytilenumbers = true
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)])
+		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers)
 		
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then
@@ -1308,7 +1310,7 @@ function drawmaineditor()
 		cursory = "--"
 	end
 	
-	if (not s.smallerscreen) or ((love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and not love.keyboard.isDown("lshift")) then
+	if (not s.smallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
 		-- We also want the tools on the left. But it's a scrollable area.
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 128, love.graphics.getHeight())

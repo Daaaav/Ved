@@ -992,7 +992,7 @@ function table.copy(t)
 end
 
 function switchtileset()
-	if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+	if keyboard_eitherIsDown("shift") then
 		selectedtileset = revcycle(selectedtileset, 4, 0)
 	else
 		selectedtileset = cycle(selectedtileset, 4, 0)
@@ -1008,7 +1008,7 @@ function switchtileset()
 end
 
 function switchtilecol()
-	if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+	if keyboard_eitherIsDown("shift") then
 		selectedcolor = revcycle(selectedcolor, #tilesetblocks[selectedtileset].colors, 0)
 	else
 		selectedcolor = cycle(selectedcolor, #tilesetblocks[selectedtileset].colors, 0)
@@ -1024,7 +1024,7 @@ function switchtilecol()
 end
 
 function switchenemies()
-	if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+	if keyboard_eitherIsDown("shift") then
 		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
 	else
 		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = cycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
@@ -1120,7 +1120,7 @@ function endeditingroomtext(donotmakethisnil)
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
 				local warnloadscriptexists = false
 				local loadscriptname = langkeys(s.loadscriptname, {input})
-				if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then -- flag
+				if keyboard_eitherIsDown("shift") then -- flag
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
@@ -1158,7 +1158,7 @@ function endeditingroomtext(donotmakethisnil)
 						temporaryroomname = L.LOADSCRIPTMADE
 						temporaryroomnametimer = 90
 					end
-				elseif love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl) then -- trinkets
+				elseif keyboard_eitherIsDown(ctrl) then -- trinkets
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
@@ -2067,6 +2067,10 @@ function gotohelparticle(n)
 	helparticle = n
 	helparticlecontent = explode("\n", helppages[helparticle].cont)
 	helparticlescroll = 0
+end
+
+function keyboard_eitherIsDown(button)
+	return love.keyboard.isDown("l" .. button) or love.keyboard.isDown("r" .. button)
 end
 
 hook("func")

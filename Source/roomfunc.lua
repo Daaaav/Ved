@@ -57,7 +57,7 @@ function loadrohiom(x, y)
 	return myroomdata, myentitydata, mymetadata
 end
 
-function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2)
+function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers)
 	if zoomscale2 == nil then zoomscale2 = 1 end
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
 	for aty = 0, 29 do
@@ -68,7 +68,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2)
 				love.graphics.draw(tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["img"], tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["tiles"][tonumber(theroomdata[(aty*40)+(atx+1)])], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2), 0, 2*zoomscale2)
 			end
 			
-			if nodialog and love.keyboard.isDown("n") and editingroomtext == 0 and not editingroomname then
+			if displaytilenumbers then
 				love.graphics.print(theroomdata[(aty*40)+(atx+1)], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2))
 			end
 		end
@@ -110,7 +110,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 	for k,v in pairs(entitydata) do
 		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
 			-- First of all, we can remove an entity by shift-right clicking
-			if love.keyboard.isDown("lshift") and love.mouse.isDown("r") and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
+			if keyboard_eitherIsDown("shift") and love.mouse.isDown("r") and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
 				removeentity(k, entitydata[k].t)
 			else
 				-- What kind of entity is this?

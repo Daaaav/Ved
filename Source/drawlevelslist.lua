@@ -50,7 +50,7 @@ function drawlevelslist()
 			lastk = k
 		end
 		
-		if tabselected == 0 and (love.keyboard.isDown("up") or ((love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")) and love.keyboard.isDown("tab"))) then
+		if tabselected == 0 and (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
 			-- Start from the bottom.
 			tabselected = k2-1
 		elseif tabselected >= k2 then

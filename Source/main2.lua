@@ -1159,7 +1159,7 @@ end
 
 function love.textinput(char)
 	-- Are we holding down windows/super? Won't matter on Windows, but could for Linux...
-	if love.system.getOS() ~= "OS X" and (love.keyboard.isDown("lgui") or love.keyboard.isDown("rgui")) then
+	if love.system.getOS() ~= "OS X" and keyboard_eitherIsDown("gui") then
 		return
 	end
 
@@ -1238,7 +1238,7 @@ function love.keypressed(key)
 			elseif state == 6 then
 				tabselected = 0
 			end
-		elseif love.keyboard.isDown("l" .. ctrl) and love.keyboard.isDown("v") then
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 			input = input .. love.system.getClipboardText()
 			
 			if state == 3 then
@@ -1277,7 +1277,7 @@ function love.keypressed(key)
 			elseif state == 6 then
 				tabselected = 0
 			end
-		elseif key == "left" and not love.keyboard.isDown("l" .. ctrl) and not love.keyboard.isDown("r" .. ctrl) then
+		elseif key == "left" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = leftspace(input, input_r)
 			
 			cursorflashtime = 0
@@ -1287,7 +1287,7 @@ function love.keypressed(key)
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			end
-		elseif key == "right" and not love.keyboard.isDown("l" .. ctrl) and not love.keyboard.isDown("r" .. ctrl) then
+		elseif key == "right" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = rightspace(input, input_r)
 			
 			cursorflashtime = 0
@@ -1326,9 +1326,9 @@ function love.keypressed(key)
 	elseif #multiinput > 0 then
 		if key == "backspace" then
 			multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
-		elseif love.keyboard.isDown("l" .. ctrl) and love.keyboard.isDown("v") then
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText()
-		elseif love.keyboard.isDown("tab") and love.keyboard.isDown("lshift") then
+		elseif love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
 			RCMactive = false
 		
 			if currentmultiinput <= 1 then
@@ -1380,7 +1380,7 @@ function love.keypressed(key)
 		dialog.push()
 		DIAreturn = 2
 		
-	elseif state == 0 and key == "return" and love.keyboard.isDown("lshift") then
+	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
 	elseif state == 0 and key == "return" then
@@ -1414,7 +1414,7 @@ function love.keypressed(key)
 				s_hoofdd = 3
 			end
 		end
-	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and love.keyboard.isDown("lshift") and love.keyboard.isDown("l" .. ctrl) then
+	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
 		tilespicker_shortcut = true
 		
@@ -1433,7 +1433,7 @@ function love.keypressed(key)
 		end
 		
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
-		if love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl) then
+		if keyboard_eitherIsDown(ctrl) then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] > 1 then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] - 1
@@ -1453,7 +1453,7 @@ function love.keypressed(key)
 			toolscroll()
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "." then
-		if love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl) then
+		if keyboard_eitherIsDown(ctrl) then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] < #subtoolimgs[selectedtool] then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] + 1
@@ -1480,18 +1480,18 @@ function love.keypressed(key)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "m" then
 		tostate(12)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
-		if love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl) then
+		if keyboard_eitherIsDown(ctrl) then
 			tonotepad()
 		else
 			tostate(10)
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f1" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f1" and keyboard_eitherIsDown(ctrl) then
 		tostate(15)
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and keyboard_eitherIsDown(ctrl) then
 		tostate(11)
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and keyboard_eitherIsDown(ctrl) then
 		gotostartpointroom()
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "d" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "d" and keyboard_eitherIsDown(ctrl) then
 		tostate(6, nil, "secondlevel")
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "]" and mouselockx == -1 then
 		mouselockx = love.mouse.getX()
@@ -1676,7 +1676,7 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "s") then
 		-- Save
 		--tostate(8)
-		if (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and editingmap ~= "untitled\n" then
+		if keyboard_eitherIsDown(ctrl) and editingmap ~= "untitled\n" then
 			-- Quicksave- we have a name already
 			
 			-- Maybe we have a massive map... Or a slow computer
@@ -1703,7 +1703,7 @@ function love.keypressed(key)
 		-- Load
 		--dialog.new(L.SURELOADLEVEL .. "\n\n(dialog will be save/don't save/cancel later)", "", 1, 3, 3)
 		tostate(6)
-	elseif nodialog and (state == 1 or state == 6) and key == "n" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if state == 6 and not state6old1 then
 			stopinput()
@@ -1714,21 +1714,21 @@ function love.keypressed(key)
 			-- Else block also runs if state == 6 and state6old1, and thus makes a dialog appear; hey a free feature!
 			dialog.new(L.SURENEWLEVEL, "", 1, 3, 7)
 		end
-	elseif nodialog and (editingroomtext == 0) and (editingroomname == false) and (state == 1) and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and love.keyboard.isDown("y") then
+	elseif nodialog and (editingroomtext == 0) and (editingroomname == false) and (state == 1) and keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("y") then
 		-- No wait redo
 		redo()
 	elseif (not holdingzvx) and nodialog and (editingroomtext == 0) and (editingroomname == false) and (state == 1) and ((key == "c") or (key == "v") or (key == "z") or (key == "x") or (key == "h") or (key == "b")) then -- Tried cleaning this bit up, later I realized why it was like this
-		if (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and love.keyboard.isDown("z") then
+		if keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("z") then
 			-- We goofed, undo.
 			undo()
 		-- Redo code had to be moved
-		elseif (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and love.keyboard.isDown("x") then
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("x") then
 			-- Cut the room!
 			cutroom()
-		elseif (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and love.keyboard.isDown("c") then
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("c") then
 			-- Copy the room!
 			copyroom()
-		elseif (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) and love.keyboard.isDown("v") then
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 			-- Try pasting
 			pasteroom()
 		elseif key == "z" then
@@ -1802,7 +1802,7 @@ function love.keypressed(key)
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
-	elseif state == 3 and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+	elseif state == 3 and keyboard_eitherIsDown(ctrl) then
 		if key == "left" and #scripthistorystack > 0 then
 			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
 		elseif key == "right" and context == "flagscript" and carg2 ~= nil and carg2 ~= "" then
@@ -1816,7 +1816,7 @@ function love.keypressed(key)
 		end
 	elseif (state == 6) and key == "return" and tabselected == 0 then
 		state6load(input)
-	elseif (state == 6) and (((love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")) and key == "tab") or key == "up") then
+	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
 		if tabselected > 0 then
 			tabselected = tabselected - 1
 		end
@@ -1881,7 +1881,7 @@ function love.keypressed(key)
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 		elseif key == "insert" then
-			if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+			if keyboard_eitherIsDown("shift") then
 				input = input .. "§"
 			else
 				input = input .. "¤"
@@ -1898,7 +1898,7 @@ function love.keypressed(key)
 		
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown("l" .. ctrl) then
-			cons("You pressed " .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
+			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
@@ -2037,7 +2037,7 @@ function love.mousepressed(x, y, button)
 	]]
 	
 	if state == 1 then
-		if x < 64 and not (love.keyboard.isDown("lctrl") or love.keyboard.isDown("lshift") or love.keyboard.isDown("rctrl") or love.keyboard.isDown("rshift")) then
+		if x < 64 and not (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) then
 			if button == "wu" then
 				lefttoolscroll = lefttoolscroll + 16
 				lefttoolscrollbounds()
@@ -2057,7 +2057,7 @@ function love.mousepressed(x, y, button)
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
 			
-		elseif nodialog and (love.keyboard.isDown("lctrl") or love.keyboard.isDown("lshift") or love.keyboard.isDown("rctrl") or love.keyboard.isDown("rshift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
+		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
@@ -2067,7 +2067,7 @@ function love.mousepressed(x, y, button)
 			end
 			updatewindowicon()
 			toolscroll()
-		elseif nodialog and (love.keyboard.isDown("lctrl") or love.keyboard.isDown("lshift") or love.keyboard.isDown("rctrl") or love.keyboard.isDown("rshift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
+		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
