@@ -1485,6 +1485,8 @@ function love.keypressed(key)
 		else
 			tostate(10)
 		end
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f1" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
+		tostate(15)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 		tostate(11)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
@@ -1796,6 +1798,8 @@ function love.keypressed(key)
 		input = anythingbutnil(scriptlines[editingline])
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
+	elseif (state == 3 or state == 6) and key == "f1" then
+		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
 	elseif state == 3 and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then

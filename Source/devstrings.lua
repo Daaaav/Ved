@@ -338,6 +338,7 @@ Ctrl+Z¤  Undo\C
 Ctrl+Y¤  Redo\C
 Ctrl+F¤  Search\C
 Ctrl+/¤  Level notepad\C
+Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace ctrl by cmd)
 N¤  display all tile numbers\C
 M¤  Show map\C
