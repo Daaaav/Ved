@@ -80,6 +80,7 @@ function drawscripteditor()
 	end
 	
 	-- Now put some buttons on the right!
+	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	love.graphics.printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4+2, 128-16, "center")
 	if not PleaseDo3DSHandlingThanks then
 		rbutton(L.NEW, 1)
@@ -131,7 +132,10 @@ function drawscripteditor()
 	
 	-- First make these buttons do things
 	if nodialog and love.mouse.isDown("l") then
-		if not PleaseDo3DSHandlingThanks and onrbutton(1) then
+		if mouseon(love.graphics.getWidth()-24, 8, 16, 16) then
+			-- Help
+			tostate(15)
+		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
 			-- New
 			startmultiinput({""})
 			dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 11)
