@@ -580,7 +580,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Return",
+subj = "Terug",
 imgs = {},
 cont = [[
 \)
@@ -588,35 +588,36 @@ cont = [[
 },
 
 {
-subj = "Getting started",
+subj = "Aan de slag",
 imgs = {},
 cont = [[
-Getting started\wh#
+Aan de slag\wh#
 
-This article will help you get started with using Ved. To get started with using
-the editor, you need to load a level, or create a new one.
+Dit artikel zal je helpen om te beginnen met werken met Ved. Om naar de editor te
+gaan, moet je een level laden, of een nieuwe maken.
 
 
-The editor\h#
+De editor\h#
 
-On the left side, you will find the tools selection. Most tools have subtools that
-will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the "Tools"
-help page.
-Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
-On the right side of the screen, you will find many buttons and options. The upper
-buttons are related to the entire level, the lower buttons (under Room options)
-are specific to the current room. For more information about those buttons, refer
-to the respective help pages, where available.
+Aan de linkerkant staan de verschillende gereedschappen, de tools. De meeste tools
+hebben subtools die rechts ervan worden weergegeven. Om tussen tools te schakelen
+kun je de bĳbehorende snelkoppelingen gebruiken of scrollen met shift of ctrl
+ingedrukt. Om tussen subtools te schakelen kun je overal scrollen. Kĳk voor meer
+informatie over de tools op de "Tools"-helppagina.
+Je kunt op entiteiten klikken met de rechtermuisknop voor een menu met acties voor
+die entiteit. Om entiteiten te verwĳderen zonder dat menu te gebruiken kun je er
+rechts op klikken met shift ingedrukt.
+Aan de rechterkant van het scherm staan veel knoppen en opties. De bovenste
+knoppen zĳn voor het hele level, de onderste knoppen (onder Kamer-opties) zĳn
+specifiek voor de huidige kamer. Kĳk voor meer informatie over deze knoppen op de
+helppagina's ervoor, waar beschikbaar.
 
-Levels folder\h#
+Levels-map\h#
 
-Ved will normally use the same folder for storing levels as VVVVVV does, so it is
-easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
-detect your VVVVVV folder correctly, you can enter a custom path in the Ved
-options.
+Ved zal normaal gesproken dezelfde map gebruiken voor het opslaan van levels als
+VVVVVV, dus het is makkelĳk om te wisselen tussen de level-editor in VVVVVV en
+Ved. Als Ved je levels-map niet juist herkent, kun je zelf een pad invullen in de
+Ved-opties.
 ]]
 },
 
@@ -2085,7 +2086,7 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
-]]
+]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 
 --[[{
