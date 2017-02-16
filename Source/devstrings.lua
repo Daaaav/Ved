@@ -4,3 +4,4 @@
 --L. = ""
 L.LOADSCRIPTMADE = "Load script created"
 L.COPY = "Copy"
+L.CUSTOMSIZE = "Custom brush size: $1x$2"

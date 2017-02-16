@@ -242,14 +242,21 @@ function drawmaineditor()
 						maxsmear = atx
 					end
 				elseif not mousepressed and selectedsubtool[selectedtool] == 8 then
-					-- room fill
-					for sty = 0, 29 do
-						for stx = 0, 39 do
-							roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+					-- custom size
+					if customsizemode == 0 then
+						for sty = (aty-math.floor(customsizey)), (aty+math.ceil(customsizey)) do
+							for stx = (atx-math.floor(customsizex)), (atx+math.ceil(customsizex)) do
+								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+								end
+							end
 						end
+					else -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
+						customsizex = (atx)/2
+						customsizey = (29-aty)/2
+						customsizemode = 0
+						mousepressed = true
 					end
-					
-					mousepressed = true
 				elseif selectedsubtool[selectedtool] == 9 then
 					-- to out
 					-- rot
@@ -1141,14 +1148,22 @@ function drawmaineditor()
 		love.graphics.setScissor()
 		
 		--local multispikesmsg = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and selectedtool == 3
+		local editingcustomsize = selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 1
 		
 		-- Does this room have a name, perhaps?
-		if temporaryroomnametimer > 0 or editingbounds ~= 0 then --or multispikesmsg
+		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then --or multispikesmsg
 			-- Oh wait, we're displaying a message as room name!
 			if editingbounds < 0 then
 				temporaryroomname = L.BOUNDSTOPLEFT
 			elseif editingbounds > 0 then
 				temporaryroomname = L.BOUNDSBOTTOMRIGHT
+			elseif editingcustomsize then
+				local dispx, dispy = "--", "--"
+				if mouseon(screenoffset, 0, 639, 480) then
+					dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
+					dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+				end
+				temporaryroomname = langkeys(L.CUSTOMSIZE, {dispx, dispy})
 			--elseif multispikesmsg then
 				--temporaryroomname = "To fix: spikes tool in multi mode"
 			end
@@ -1241,12 +1256,9 @@ function drawmaineditor()
 				love.graphics.draw(cursorimg[3], screenoffset+(cursorx*16), (29*16))
 				love.graphics.draw(cursorimg[4], screenoffset+(cursorx*16), (29*16))
 			elseif selectedsubtool[selectedtool] == 8 then
-				-- Room fill
-				displayalphatile_all()
-				love.graphics.draw(cursorimg[1], screenoffset, 0)
-				love.graphics.draw(cursorimg[2], screenoffset+(39*16), 0)
-				love.graphics.draw(cursorimg[3], screenoffset, (29*16))
-				love.graphics.draw(cursorimg[4], screenoffset+(39*16), (29*16))
+				-- Custom size
+				displayalphatile(math.floor(customsizex), math.floor(customsizey), customsizex*2, customsizey*2)
+				displayshapedcursor(math.floor(customsizex), math.floor(customsizey), math.ceil(customsizex), math.ceil(customsizey))
 			elseif selectedsubtool[selectedtool] == 9 then
 				displayalphatile(-1, 0, 0, 0)
 				displayalphatile(1, 0, 0, 0)

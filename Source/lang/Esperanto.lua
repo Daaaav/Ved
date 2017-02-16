@@ -1870,7 +1870,7 @@ o - Orange\o
 v - Green\v
 c - Cyan\c
 y - Yellow\y
-z - Black\z&Z
+z - Black¤ (background color is not included)\z&Z
 Z - Dark gray\Z
 C - Cyan (Viridian)\C
 P - Pink (Violet)\P
@@ -1937,7 +1937,7 @@ Black on white text!\z&w\
 
 Black on white text!\z&w
 \-
-Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w\
+Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
 
 Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
 \-

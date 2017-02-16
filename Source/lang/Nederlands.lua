@@ -622,30 +622,32 @@ Ved-opties.
 },
 
 {
-subj = "Tile placement modes",
+subj = "Plaatsingsmodi",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
-Tile placement modes\wh#
+Plaatsingsmodi\wh#
 
-Ved supports three different modes to draw tiles.
+Ved ondersteunt drie verschillende modi om muren te tekenen.
 
-     Automatic mode\h#0
+     Automatische modus\h#0
 
-          This is the mode that is easiest to use. In this mode, you can draw
-          walls and backgrounds and the edges will automatically get placed
-          correctly. However, while editing in this mode, all walls and
-          backgrounds in the room must use the same tileset and color.
+          Dit is de modus die het makkelijkst te gebruiken is. In deze stand kun
+          je muren en achtergronden tekenen, en de hoekpunten en zijkanten zullen
+          automatisch goed afgewerkt worden. Het is in deze stand echter niet
+          mogelijk om meerdere verschillende tilesets of kleuren te gebruiken.
 
-     Multi-tileset mode\h#1
+     Multi-tileset-modus\h#1
 
-          This is similar to automatic mode, except that you can have multiple
-          different tilesets in the same room. That is, changing the tileset will
-          not affect already-placed walls and backgrounds, and you can draw in
-          multiple different types of tiles in the same room.
+          Dit lijkt op de automatische modus, behalve dat je meerdere
+          verschillende tilesets in dezelfde kamer kunt gebruiken. Dat wil zeggen,
+          als je van tileset verandert zullen bestaande muren en achtergronden
+          niet veranderd worden, en je kunt in meerdere verschillende kleuren
+          tekenen in dezelfde kamer.
 
-     Manual mode\h#2
+     Handmatige modus\h#2
 
-          Also called Direct Mode, in this mode you can place down any tile
+          Ook wel Direct Mode genoemd, in deze modus kun je alle 
+          Also called Direct Mode, in this mode you can place down any tile       []
           manually, so you are not bound to the pre-defined tileset combinations
           and edges will not automatically get added to walls, giving you complete
           control over how the room will look. However, this editing mode is often
@@ -1870,7 +1872,7 @@ o - Orange\o
 v - Green\v
 c - Cyan\c
 y - Yellow\y
-z - Black\z&Z
+z - Black¤ (background color is not included)\z&Z
 Z - Dark gray\Z
 C - Cyan (Viridian)\C
 P - Pink (Violet)\P
@@ -1937,7 +1939,7 @@ Black on white text!\z&w\
 
 Black on white text!\z&w
 \-
-Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w\
+Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
 
 Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
 \-

@@ -358,6 +358,10 @@ function loadstate(new, extradata)
 		mouselocky = -1
 		
 		warpbganimation = 0
+		
+		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker)
+		customsizex = 0 -- tiles to the left AND right of the cursor (can be a half)
+		customsizey = 0 -- tiles to the top AND bottom of the cursor
 	elseif new == 3 then
 		-- scriptname == ""
 		-- scriptlines = {}
