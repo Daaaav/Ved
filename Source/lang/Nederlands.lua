@@ -631,27 +631,26 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
 
      Automatische modus\h#0
 
-          Dit is de modus die het makkelijkst te gebruiken is. In deze stand kun
-          je muren en achtergronden tekenen, en de hoekpunten en zijkanten zullen
+          Dit is de modus die het makkelĳkst te gebruiken is. In deze stand kun je
+          muren en achtergronden tekenen, en de hoekpunten en zĳkanten zullen
           automatisch goed afgewerkt worden. Het is in deze stand echter niet
-          mogelijk om meerdere verschillende tilesets of kleuren te gebruiken.
+          mogelĳk om meerdere verschillende tilesets of kleuren te gebruiken.
 
      Multi-tileset-modus\h#1
 
-          Dit lijkt op de automatische modus, behalve dat je meerdere
-          verschillende tilesets in dezelfde kamer kunt gebruiken. Dat wil zeggen,
-          als je van tileset verandert zullen bestaande muren en achtergronden
-          niet veranderd worden, en je kunt in meerdere verschillende kleuren
-          tekenen in dezelfde kamer.
+          Dit lĳkt op de automatische modus, behalve dat je meerdere verschillende
+          tilesets in dezelfde kamer kunt gebruiken. Dat wil zeggen, als je van
+          tileset verandert zullen bestaande muren en achtergronden niet veranderd
+          worden, en je kunt in meerdere verschillende kleuren tekenen in dezelfde
+          kamer.
 
      Handmatige modus\h#2
 
-          Ook wel Direct Mode genoemd, in deze modus kun je alle 
-          Also called Direct Mode, in this mode you can place down any tile       []
-          manually, so you are not bound to the pre-defined tileset combinations
-          and edges will not automatically get added to walls, giving you complete
-          control over how the room will look. However, this editing mode is often
-          slower to use.
+          Ook wel bekend als Direct Mode, in deze modus kun je alles handmatig
+          plaatsen, dus je zit niet vast aan de ingebouwde tileset-combinaties en
+          hoekpunten en zĳkanten zullen niet automatisch afgewerkt worden,
+          waardoor je de volledige controle hebt over hoe de kamer eruit zal zien.
+          Het kost meestal echter meer tĳd om in deze modus te werken.
 ]]
 },
 
@@ -661,218 +660,221 @@ imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.pn
 cont = [[
 Tools\wh#
 
-You can use the following tools to fill rooms in your level:
+Je kunt de volgende tools gebruiken om kamers te vullen in je level:
 
 \0
-   Wall\h#
+   Muur\h#
 
 
-The wall tool can be used to place walls.
+Hiermee kun je muren plaatsen.
 
 \1
-   Background\h#
+   Achtergrond\h#
 
 
-The background tool can be used to place backgrounds.
+Hiermee kun je achtergronden plaatsen.
 
 \2
-   Spike\h#
+   Spĳker\h#
 
 
-The spike tool can be used to place spikes. You can use the expand subtool to
-place spikes on a surface with one click (or slide).
+Hiermee kun je spĳkers plaatsen. Je kunt de "automatisch uitbreiden"-subtools
+gebruiken om spĳkers te plaatsen op een oppervlak met één klik (of schuif).
 
 \3
    Trinket\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+Hiermee kun je trinkets plaatsen. Bedenk dat er maximaal twintig trinkets in een
+level geplaatst kunnen worden.
 
 \4
    Checkpoint\h#
 
 
-The checkpoint tool can be used to place checkpoints.
+Hiermee kun je checkpoints plaatsen.
 
 \5
-   Disappearing platform\h#
+   Brekend platform\h#
 
 
-The disappearing platform tool can be used to place disappearing platforms.
+Hiermee kun je brekende platforms plaatsen.
 
 \6
-   Conveyor\h#
+   Lopende band\h#
 
 
-The conveyor tool can be used to place conveyors.
+Hiermee kun je lopende banden plaatsen.
 
 \7
-   Moving platform\h#
+   Verplaatsend platform\h#
 
 
-The moving platform tool can be used to place moving platforms.
+Hiermee kun je verplaatsende platforms plaatsen.
 
 \8
-   Enemy\h#
+   Vĳand\h#
 
 
-The enemy tool can be used to place enemies. The shape and color of the enemy are
-determined by the enemy type setting and the tileset (color) respectively.
+Hiermee kun je vĳanden plaatsen. De vorm en kleur van de vĳand wordt bepaald door
+respectievelĳk de instellingen voor vĳand-type en tileset(-kleur).
 
 \9
-   Gravity line\h#
+   Zwaartekrachtlĳn\h#
 
 
-The gravity line tool can be used to place gravity lines.
+Hiermee kun je zwaartekrachtlĳnen plaatsen.
 
 \^0
-   Roomtext\h#
+   Tekst\h#
 
 
-The roomtext tool can be used to place text.
+Hiermee kun je tekst plaatsen.
 
 \^1
    Terminal\h#
 
 
-The terminal tool can be used to place terminals. First place the terminal, then
-type a name for the script. For more information about scripting, please refer to
-the scripting references.
+Hiermee kun je terminals plaatsen. Plaats eerst de terminal, typ vervolgens een
+naam voor het script. Kĳk voor meer informatie over scripts naar de lĳsten met
+scriptcommando's.
 
 \^2
-   Script box\h#
+   Scriptvak\h#
 
 
-The script box tool can be used to place script boxes. First click on the top left
-corner, then on the bottom right corner, then type a name for the script. For more
-information about scripting, please refer to the scripting references.
+Hiermee kun je scriptvakken plaatsen. Klik eerst op de linkerbovenhoek, dan op de
+rechteronderhoek, en typ vervolgens een naam voor het script. Kĳk voor meer
+informatie over scripts naar de lĳsten met scriptcommando's.
 
 \^3
-   Warp token\h#
+   Warptoken\h#
 
 
-The warp token tool can be used to place warp tokens. First click where the
-entrance should be, then where the exit should be.
+Hiermee kun je warptokens plaatsen. Klik eerst op de plek waar de ingang moet
+komen te staan, dan waar de uitgang moet komen te staan.
 
 \^4
-   Warp line\h#
+   Warplĳn\h#
 
 
-The warp line tool can be used to place warp lines. Please note that warp lines
-can only be placed on the edges of a room.
+Hiermee kun je warplĳnen plaatsen. Bedenk dat warplĳnen alleen aan de zĳkanten van
+een kamer geplaatst kunnen worden.
 
 \^5
-   Crewmate\h#
+   Bemanningslid\h#
 
 
-The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+Hiermee kun je bemanningsleden plaatsen die gered kunnen worden. Wanneer alle
+bemanningsleden worden gered, eindigt het level. Bedenk dat er maximaal twintig
+bemanningsleden in een level geplaatst kunnen worden.
 
 \^6
-   Start point\h#
+   Startpunt\h#
 
 
-The start point tool can be used to place the start point.
+Hiermee kun je het startpunt plaatsen.
 ]]
 },
 ----------------------------------------------------------------------------------[]-
 {
-subj = "Script editor",
+subj = "Scriptbewerker",
 imgs = {},
 cont = [[
-Script editor\wh#
+Scriptbewerker\wh#
 
-With the script editor, you can manage and edit scripts in your level.
+Met de scriptbewerker kun je scripts in je level beheren en bewerken.
 
 
-Flag names\h#
+Vlagnamen\h#
 
-For convenience and script readability, it is possible to use flag names instead
-of numbers. When you use a name instead of a number, a number will automatically
-be associated with that name, in the background. It is also possible to choose
-which number to use for which flag name.
+Voor het gemak en de leesbaarheid van scripts is het mogelĳk om namen te gebruiken
+voor vlaggen in plaats van nummers. Als je een naam gebruikt in plaats van een
+nummer, zal automatisch op de achtergrond een nummer worden toegewezen aan die
+naam. Het is ook mogelĳk om te kiezen welk vlagnummer gebruikt moet worden voor
+welke naam.
 
-Internal scripting mode\h#
+Interne scripting-modus\h#
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag(). For more
-information about internal scripting, check the internal scripting reference.
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Je moet er echter zelf voor zorgen dat het script geladen wordt via
+iftrinkets() of ifflag(). Kĳk voor meer informatie over interne scripting naar de
+lĳst met interne scriptcommando's.
 
-Splitting scripts\h#
+Scripts splitsen\h#
 
-It is possible to split a script in two scripts with the script editor. After
-putting the text cursor on the first line you want to be in the new script, click
-the Split button and enter the name of the new script. The lines before the cursor
-will remain in the original script, the lines from the cursor onward will be moved
-to the new script.
+Het is mogelĳk om een script in tweeën te splitsen met de scriptbewerker. Nadat
+je de tekstcursor op de eerste regel hebt gezet die je naar het nieuwe script wilt
+verplaatsen, klik op de "Splits"-knop en typ de naam van het nieuwe script. De
+regels voor de cursor blĳven in het oorspronkelĳke script, de regel waar de cursor
+staat en alle regels daarna zullen verplaatst worden naar het nieuwe script.
 ]]
 },
 
 {
-subj = "Shortcuts",
+subj = "Snelkoppelingen",
 imgs = {},
 cont = [[
-Editor shortcuts\wh#
+Snelkoppelingen\wh#
 
-Most shortcuts that can be used in VVVVVV can also be used in Ved.
+De meeste snelkoppelingen die in VVVVVV gebruikt kunnen worden kunnen ook worden
+gebruikt in Ved.
 
-F1¤  Change tileset\C
-F2¤  Change color\C
-F3¤  Change enemies\C
-F4¤  Enemy bounds\C
-F5¤  Platform bounds\C
+F1¤  Tileset veranderen\C
+F2¤  Kleur veranderen\C
+F3¤  Vĳanden veranderen\C
+F4¤  Vĳand-grenzen\C
+F5¤  Platform-grenzen\C
 
-F10¤  Manual/automatic mode (direct mode/undirect mode)\C
+F10¤  Handmatige/automatische modus (direct mode/niet-direct mode)\C
 
-W¤  Change warp direction\C
-E¤  Change roomname\C
+W¤  Warprichting veranderen\C
+E¤  Kamernaam veranderen\C
 
-L¤  Load map\C
-S¤  Save map\C
+L¤  Level laden\C
+S¤  Level opslaan\C
 
-Z¤  3x3 brush (walls and backgrounds)\C
-X¤  5x5 brush (")\C
+Z¤  3x3-kwast (muren en achtergronden)\C
+X¤  5x5-kwast (")\C
 
-< ¤and¤ >¤  change tool\CnC
-Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  change subtool\CnC
+< ¤en¤ >¤  tussen tools schakelen\CnC
+Ctrl/Cmd+< ¤en¤ Ctrl/Cmd+>¤  tussen subtools schakelen\CnC
 
-More shortcuts\h#
+Meer snelkoppelingen\h#
 
-Ved also introduces a few shortcuts.
+Ved introduceert ook een paar snelkoppelingen.
 
-Main editor\gh#
+Hoofd-editor\gh#
 
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
+Ctrl+P¤  Ga naar de kamer met het startpunt\C
+Ctrl+S¤  Snel opslaan\C
+Ctrl+X¤  Kamer naar het klembord knippen\C
+Ctrl+C¤  Kamer naar het klembord kopiëren\C
+Ctrl+V¤  Kamer van het klembord plakken (indien geldig)\C
+Ctrl+D¤  Dit level met een ander level vergelĳken\C
+Ctrl+Z¤  Ongedaan maken\C
+Ctrl+Y¤  Herhalen\C
+Ctrl+F¤  Zoeken\C
+Ctrl+/¤  Level-kladblok\C
 Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
-N¤  display all tile numbers\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
+(LET OP: Gebruik op Mac cmd in plaats van ctrl)
+N¤  Nummers van alle blokken tonen\C
+M¤  Kaart tonen\C
+Q¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 /¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+[¤  Y van muis vastzetten (om makkelĳker horizontale lĳnen te tekenen)\C
+]¤  X van muis vastzetten (om makkelĳker verticale lĳnen te tekenen)\C
 
-Script editor\gh#
+Scriptbewerker\gh#
 
-Ctrl+F¤  Find\C
-Ctrl+G¤  Go to line\C
+Ctrl+F¤  Zoeken\C
+Ctrl+G¤  Ga naar regel\C
 
-Script list\gh#
+Scriptlĳst\gh#
 
-N¤  Create new script\C
-F¤  Go to flags list\C
+N¤  Nieuw script maken\C
+F¤  Ga naar vlaggenlĳst\C
 ]]
 },
 
@@ -886,17 +888,18 @@ command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤opti
 ]]
 
 {
-subj = "Simp.script reference",
+subj = "Eenvoudige scripting",
 imgs = {},
-cont = [[
-Simplified scripting reference\wh#
+cont = [[Te vertalen\w&r
+Vereenvoudigde scripting\wh#
 
-VVVVVV's simplified scripting language is a basic language that can be used to
-script VVVVVV levels.
-Note: whenever something is between quotes, it needs to be typed without them.
+De vereenvoudigde scriptingtaal van VVVVVV is een soort taal die kan worden
+gebruikt om VVVVVV-levels mee te scripten.
+Let op: wanneer iets tussen aanhalingstekens staat, moet het zonder die
+aanhalingstekens getypt worden.
 
 
-say¤([lines[,color]] .. "]]" .. [[)\h#w
+say¤([regels[,kleur]] .. "]]" .. [[)\h#w
 
 Display a text box. Without any arguments, this will make a text box with one
 line, and by default this will result in a centered terminal text box. The color
@@ -980,7 +983,7 @@ or off.
 {
 subj = "Int. script reference",
 imgs = {},
-cont = [[
+cont = [[Te vertalen\w&r
 Internal scripting reference\wh#
 
 The internal scripting provides more power to scripters, but is also a bit more
@@ -1505,7 +1508,7 @@ Shake the screen for n ticks. This will not create a delay.
 {
 subj = "Lists reference",
 imgs = {},
-cont = [[
+cont = [[Te vertalen\w&r
 Lists reference\wh#
 
 These are lists of numbers that are used in VVVVVV, mostly copied from forum
@@ -1845,110 +1848,114 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
 },
 
 {
-subj = "Formatting",
+subj = "Opmaak",
 imgs = {},
 cont = [[
-Formatting\wh#
+Opmaak\wh#
 
-In notes you can use formatting codes to make your text larger, color it, and some
-other things. To add formatting to a line, add a backslash (\) at the end of it.\
-After the \, you can add any amount of the following characters, in any order:\
+In notities kun je opmaakcodes gebruiken om je tekst groter te maken, het een
+kleur te geven, en nog wat dingen. Om opmaak toe te voegen aan een regel, typ een
+backslash (\) aan het eind van de regel. Na de \ kun je elke hoeveelheid van de\
+volgende codes gebruiken, in welke volgorde dan ook:
 
-h - Double font size\h
+h - Dubbele lettergrootte\h
 
-# - Anchor (not yet implemented). There will be a way to switch/link to anchors\#
-    quickly.
-- - Horizontal line:
+# - Anker (nog niet ingebouwd). Er zal een manier komen om snel naar ankers te\#
+    springen/verwĳzen.
+- - Horizontale lĳn:
 \-
 
-Text colors:\h#
+Tekstkleuren:\h#
 
-n - Normal\n
-r - Red\r
-g - Gray\g
-w - White\w
-b - Blue\b
-o - Orange\o
-v - Green\v
-c - Cyan\c
-y - Yellow\y
-z - Black¤ (background color is not included)\z&Z
-Z - Dark gray\Z
-C - Cyan (Viridian)\C
-P - Pink (Violet)\P
-Y - Yellow (Vitellary)\Y
-R - Red (Vermilion)\R
-G - Green (Verdigris)\G
-B - Blue (Victoria)\B
+n - Normaal\n
+r - Rood\r
+g - Grĳs\g
+w - Wit\w
+b - Blauw\b
+o - Oranje\o
+v - Groen\v
+c - Cyaan\c
+y - Geel\y
+z - Zwart¤ (exclusief achtergrondkleur)\z&Z
+Z - Donkergrĳs\Z
+C - Cyaan (Viridian)\C
+P - Roze (Violet)\P
+Y - Geel (Vitellary)\Y
+R - Rood (Vermilion)\R
+G - Groen (Verdigris)\G
+B - Blauw (Victoria)\B
 
 
-Example:\h#
-
-\-
-Large orange text ("oh" has same result)\ho\
-
-Large orange text ("oh" has same result)\ho
+Voorbeeld:\h#
 
 \-
+Grote oranje tekst ("oh" is hetzelfde)\ho\
 
-Using multiple colors on a line\h#
-
-It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
-codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
-is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
-line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
-color a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\nY(
-space or another character.
+Grote oranje tekst ("oh" is hetzelfde)\ho
 
 \-
-You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
 
-You can ¤color¤ specific ¤words¤ with this!\nrnv
-\-
-Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
+Meerdere kleuren op een regel gebruiken\h#
 
-Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
-\-
-
-Coloring a single character\h#
-
-OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
-the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
+Het is mogelĳk om meerdere kleuren op een regel te gebruiken door gekleurde delen
+te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤insert¤ te drukken) en de\nYnw
+kleuren in de juiste volgorde na¤ \ ¤te zetten. Als de laatste kleur op de regel de\nC
+standaardkleur is (n), is het niet nodig om deze code op het eind neer te zetten.
+Als je het¤ ¤¤§¤-teken wilt gebruiken op een regel met¤ \¤, kun je in plaats daarvan¤ ¤¤¤¤\nYnCnY(
+typen. Het is om technische redenen ni¤e§¤t mogelĳk om een enkel teken een kleur te\nR(
+geven door het tussen twee¤ ¤¤§¤'s te zetten, tenzĳ je ook een spatie of een ander\nY(
+teken meeneemt.
 
 \-
-You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
+Je kunt specifieke ¤¤woorden¤¤ een ¤¤kleur¤¤ geven!\nvnr\
 
-You can c¤o§¤lor a ¤single¤ character like this!\nrny(
+Je kunt specifieke ¤woorden¤ een ¤kleur¤ geven!\nvnr
+\-
+Een ¤¤paar ¤¤tek¤¤st¤¤kleu¤¤ren\RYGCBP\
+
+Een ¤paar ¤tek¤st¤kleu¤ren\RYGCBP
 \-
 
-This is not necessary if the single character is the first or last on a line.
+Een enkel teken een kleur geven\h#
 
-Background colors\h#
-
-Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
-colors. To do this, you can put¤ & ¤after the regular text color code, and then a
-color code for the background color. This can be done in combination with the ¤
-system described above, note that regular text colors start a the next "block",
-but background colors do not. The following examples use spaces to make everything
-more readable, but this is completely optional.
+Oké, ik loog, het is wel mogelĳk om een enkel teken een kleur te geven zonder een
+spatie mee te nemen. Om dit te doen kun je het teken¤ § ¤(dat je kunt typen met\nY
+shift+insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
+opmaakcode¤ ( ¤na¤ \¤:\nCnC
 
 \-
-Black on white text!\z&w\
+Je kunt zo een ¤¤enkel¤¤ teken een kl¤¤e§¤¤ur geven!\nynr(\
 
-Black on white text!\z&w
-\-
-Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
-
-Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
-\-
-This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
-
-This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
+Je kunt zo een ¤enkel¤ teken een kl¤e§¤ur geven!\nynr(
 \-
 
-If you like, you can also make graphics using background colors:
+Dit is niet nodig als het enkele teken het eerste of laatste is op een regel.
+
+Achtergrondkleuren\h#
+
+Niet alleen kan tekst een kleur hebben, het kan ook ¤gemarkeerd¤ worden in welke\nZ&y
+tekstkleur dan ook. Om dit te doen kun je¤ & ¤zetten na de kleurcode voor de tekst,\nY
+en dan een kleurcode voor de achtergrondkleur. Dit kan gedaan worden in combinatie
+met het systeem met ¤ zoals hierboven beschreven, maar bedenk dat gewone
+tekstkleuren wel het nieuwe "blok" starten, maar achtergrondkleuren niet. De
+volgende voorbeelden gebruiken spaties om alles leesbaarder te maken, maar dit
+hoeft niet.
+
+\-
+Zwarte tekst op witte achtergrond!\z&w\
+
+Zwarte tekst op witte achtergrond!\z&w
+\-
+Rood op geel¤¤, ¤¤Zwart op wit¤¤ (spaties verbeteren de leesbaarheid)\r&y n z&w\
+
+Rood op geel¤, ¤Zwart op wit¤ (spaties verbeteren de leesbaarheid)\r&y n z&w
+\-
+Dit ¤¤werkt¤¤ nog steeds om enk¤¤e§¤¤le tekens kleuren te geven\n P n n&r (\
+
+Dit ¤werkt¤ nog steeds om enk¤e§¤le tekens kleuren te geven\n P n n&r (
+\-
+
+Als je wilt kun je ook grafische kunst maken met achtergrondkleuren:
 
 \-
  ¤¤        \n n&C\
@@ -1996,19 +2003,20 @@ If you like, you can also make graphics using background colors:
           \&o
 \-
 
-Images (only available in plugin\h#
+Afbeeldingen (alleen beschikbaar in\h#
 
-descriptions):\h
+beschrĳvingen van plugins):\h
 
-0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
-       and remember to keep lines blank to accommodate for the image height)
-^ - Put this before the image number, shift image number by 10. So ^4 makes image
-    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
-_ - Put this before the image number to decrease the image number by 10.
-> - Put this before the image number to shift further images to the right by 8
-    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
-    image 1 at x=32.
-< - Same, but shift to the left.
+0..9 - Toon afbeelding 0..9 op deze regel (index van het imgs-array begint bĳ 0,
+       en onthoud om regels leeg te laten onder de afbeelding)
+^ - Typ dit voor het afbeeldingsnummer, verhoog afbeeldingsnummer met 10. Dus ^4
+    geeft afbeelding 14, ^^4 geeft afbeelding 24. En 3^1^56 geeft afbeeldingen 3,
+    11, 25 en 26.
+_ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
+> - Typ dit voor het afbeeldingsnummer om verdere afbeeldingen 8 pixels naar
+    rechts te schuiven. Dit kan worden herhaald, dus 0>>>>1 zet afbeelding 0 op
+    x=0 en afbeelding 1 op x=32.
+< - Zelfde, maar schuif naar links.
 ]]
 ----------------------------------------------------------------------------------[]-
 --[[
@@ -2039,23 +2047,23 @@ cont = [[
 Credits\wh#
 
 
-Ved is made by Dav999
+Ved is gemaakt door Dav999
 
-Some of the graphics and the font were made by Format
+Sommige afbeeldingen en het lettertype zĳn gemaakt door Format
 
-Russian translation: CreepiX
-Esperanto translation: Format
-
-
-Special thanks to:\h#
+Russische vertaling: CreepiX
+Esperanto vertaling: Format
 
 
-Terry Cavanagh for making VVVVVV
+Met dank aan:\h#
 
-TurtleP (for the code that made graphics not blurry when scaled)
 
-Everyone who reported bugs, came up with ideas and motivated me to make this!
+Terry Cavanagh voor het maken van VVVVVV
 
+TurtleP (voor de code die afbeelding niet wazig maakt waneer ze geschaald worden)
+
+Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
+gemotiveerd om dit te maken!
 
 
 

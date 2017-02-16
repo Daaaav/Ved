@@ -1925,16 +1925,16 @@ This is not necessary if the single character is the first or last on a line.
 Background colors\h#
 
 Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
-colors. To do this, you can put¤ & ¤after the regular text color code, and then a
+colors. To do this, you can put¤ & ¤after the regular text color code, and then a\nY
 color code for the background color. This can be done in combination with the ¤
-system described above, note that regular text colors start a the next "block",
+system described above, note that regular text colors start the next "block",
 but background colors do not. The following examples use spaces to make everything
 more readable, but this is completely optional.
 
 \-
-Black on white text!\z&w\
+Black text on white background!\z&w\
 
-Black on white text!\z&w
+Black text on white background!\z&w
 \-
 Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
 
