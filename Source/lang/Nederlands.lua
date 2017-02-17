@@ -2060,7 +2060,7 @@ Met dank aan:\h#
 
 Terry Cavanagh voor het maken van VVVVVV
 
-TurtleP (voor de code die afbeelding niet wazig maakt waneer ze geschaald worden)
+TurtleP (voor de code die afbeeldingen niet wazig maakt waneer je ze schaalt)
 
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!

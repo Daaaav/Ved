@@ -1454,7 +1454,7 @@ function drawmaineditor()
 	end
 	
 	-- Now stuff on the right.
-	hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
+	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
 	hoverdraw(savebtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
@@ -1462,11 +1462,11 @@ function drawmaineditor()
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
 	
-	hoverdraw(undobtn, love.graphics.getWidth()-(128-8), 40, 16, 16, 1)
-	hoverdraw(redobtn, love.graphics.getWidth()-(128-8)+16, 40, 16, 16, 1)
-	hoverdraw(cutbtn, love.graphics.getWidth()-(128-8)+64, 40, 16, 16, 1)
-	hoverdraw(copybtn, love.graphics.getWidth()-(128-8)+80, 40, 16, 16, 1)
-	hoverdraw(pastebtn, love.graphics.getWidth()-(128-8)+96, 40, 16, 16, 1)
+	hoverdraw(undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
+	hoverdraw(redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
+	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
+	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
+	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 	
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
@@ -1495,11 +1495,11 @@ function drawmaineditor()
 	rbutton(langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	rbutton(L.ROOMNAME, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 	
-	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(6*16)-16-24-12-8-(24*6))+4+2+4, 128-16, "center")
+	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+10, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 	
 	-- Well make them actually do something!
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
-		if mouseon(love.graphics.getWidth()-128+8, 8, 16, 16) then
+		if mouseon(love.graphics.getWidth()-120, 8, 16, 16) then
 			-- Help
 			--dialog.new("A help thing will appear where you can click a tutorial button and some topic-specific buttons\n\nMaybe add something for being able to click on an area/button on the screen to get help about that", "", 1, 1, 0)
 			tostate(15)
@@ -1516,21 +1516,21 @@ function drawmaineditor()
 			--tostate(8)
 			startmultiinput({(editingmap ~= "untitled\n" and editingmap or ""), metadata.Title})
 			dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, "", 1, 4, 10)
-		elseif mouseon(love.graphics.getWidth()-(128-8), 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
 			undo()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-(128-8)+16, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+16, 40, 16, 16) then
 			redo()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-(128-8)+64, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+64, 40, 16, 16) then
 			-- Cut
 			cutroom()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-(128-8)+80, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+80, 40, 16, 16) then
 			-- Copy
 			copyroom()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-(128-8)+98, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+98, 40, 16, 16) then
 			-- Paste
 			pasteroom()
 			mousepressed = true
@@ -1618,7 +1618,7 @@ function drawmaineditor()
 		rbutton((selectedtool == 8 and L.PLATFORMBOUNDS or L.ENEMYBOUNDS), -3, 164+4, true, nil, editingbounds ~= 0)
 		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata[(roomy)*20 + (roomx+1)].platv}) or langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype})), -2, 164+4, true)
 		
-		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(6*16)-16-24-12-8-(24*0))+4+2, 128-16, "center") -- hier is 4 afgegaan.
+		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 	
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -1649,7 +1649,7 @@ function drawmaineditor()
 			end
 		end
 		
-		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(6*16)-16-24-12-8-(24*-1)-4, 128-16, 16) then
+		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
 			levelmetadata[(roomy)*20 + (roomx+1)].platv = 4
 		end
 	end
@@ -1683,12 +1683,12 @@ function drawmaineditor()
 	
 	-- Also display a smaller tiles picker for semi-undirect mode
 	if selectedtool <= 3 then
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-(6*16)-16-24-12-1-8, (6*16)+2, (5*16)+2)
+		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-157, (6*16)+2, (5*16)+2) -- -(6*16)-16-24-12-1-8 => -157
 		love.graphics.setColor(0,0,0,255)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-(6*16)-16-24-12-8, (6*16), (5*16))
+		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, (6*16), (5*16)) -- -(6*16)-16-24-12-8 => -156
 		love.graphics.setColor(255,255,255,255)
 		--if selectedtool <= 3 then
-		displaysmalltilespicker(love.graphics.getWidth()-(7*16), love.graphics.getHeight()-(6*16)-16-24-12-8, selectedtileset, selectedcolor)
+		displaysmalltilespicker(love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, selectedtileset, selectedcolor) -- -(6*16)-16-24-12-8 => -156
 	end
 	
 	-- And text below it.
@@ -1697,7 +1697,7 @@ function drawmaineditor()
 	love.graphics.print("<tiles2.png>", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32)
 	]]
 	
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-2-12-8, (6*16), 8+4)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
 	love.graphics.print(" " .. (tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12+2-8)
 	love.graphics.print(" ", love.graphics.getWidth()-(1.5*16), love.graphics.getHeight()-16-32-12+2-8) -- v
 	
@@ -1705,18 +1705,18 @@ function drawmaineditor()
 	love.graphics.print(" " .. (tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor})), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8+2-8)
 	love.graphics.print(" ", love.graphics.getWidth()-(1.5*16), love.graphics.getHeight()-16-24-8+2-8) -- v
 	
-	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-2-12-8, (6*16), 8+4) then
+	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) then -- -16-32-2-12-8 => -70
 		-- Switch tileset
 		switchtileset()
 		mousepressed = true
-	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4) then
+	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-58, (6*16), 8+4) then -- -16-24-2-8-8 => 58
 		-- Switch tilecol
 		switchtilecol()
 		mousepressed = true
 	end
 	
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4)
-	love.graphics.print(tilespicker and L.HIDEALL or L.SHOWALL, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-16-4+2-8)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-46, (6*16), 8+4) -- -16-16-2-4-8 => -46
+	love.graphics.print(tilespicker and L.HIDEALL or L.SHOWALL, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-42) -- -16-16-4+2-8 => -42
 	
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
