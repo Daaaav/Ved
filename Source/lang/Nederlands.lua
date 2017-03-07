@@ -890,7 +890,7 @@ command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤opti
 {
 subj = "Eenvoudige scripting",
 imgs = {},
-cont = [[Te vertalen\w&r
+cont = [[
 Vereenvoudigde scripting\wh#
 
 De vereenvoudigde scriptingtaal van VVVVVV is een soort taal die kan worden
@@ -901,9 +901,11 @@ aanhalingstekens getypt worden.
 
 say¤([regels[,kleur]] .. "]]" .. [[)\h#w
 
-Display a text box. Without any arguments, this will make a text box with one
-line, and by default this will result in a centered terminal text box. The color
-argument can be a color, or the name of a crewmate.
+Toon een tekstvak. Zonder argumenten zal dit een tekstvak maken met één regel, en
+standaard resulteert dit in een terminal-tekstvak in het midden. Het kleur-
+argument kan een kleur zijn, of de naam van een bemanningslid.
+Als je een kleur gebruikt en er is een bemanningslid dat gered kan worden in de
+kamer, 
 If you use a color and a rescuable crewmate with that color is in the room, then
 the text box will be displayed above that crewmate.
 

@@ -424,15 +424,9 @@ function loadstate(new, extradata)
 		stopinput()
 		input = ""
 		input_r = ""
-	
-		userprofile = os.getenv('USERPROFILE')
-		lerror, levelsfolder = getlevelsfolder()
-		if lerror == 0 then
-			files = listfiles(levelsfolder)
-		end
-		loadtileset("tiles.png")
-		loadtileset("tiles2.png")
-		loadsprites("sprites.png", 32)
+		
+		loadlevelsfolder()
+		loadtilesets()
 		
 		tabselected = 0
 	elseif new == 9 then
@@ -578,6 +572,20 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+function loadlevelsfolder()
+	userprofile = os.getenv('USERPROFILE')
+	lerror, levelsfolder = getlevelsfolder()
+	if lerror == 0 then
+		files = listfiles(levelsfolder)
+	end
+end
+
+function loadtilesets()
+	loadtileset("tiles.png")
+	loadtileset("tiles2.png")
+	loadsprites("sprites.png", 32)
+end
 
 function loadtileset(file)
 	tilesets[file] = {}

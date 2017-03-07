@@ -63,8 +63,33 @@ if love.window == nil then
 else
 	require("plugins")
 	loadplugins()
+	
+	defaulterrhand = false
+	
+	-- Let's do some command line argument parsing!
+	if #arg > 0 then
+		local clargs = ved_require("clargs")
+		
+		local nextpartto = nil
 
-	if not love.keyboard.isDown("lctrl") then
+		for k,v in pairs(arg) do
+			if v:sub(1,2) == "--" then
+				local a = v:sub(3,-1)
+				if clargs[a] ~= nil and clargs[a].func ~= nil then
+					clargs[a].func()
+				end
+			elseif v:sub(1,1) == "-" then
+				for c = 2, v:len() do
+					local a = clargs[v:sub(c,c)]
+					if a ~= nil and clargs[a] ~= nil and clargs[a].func ~= nil then
+						clargs[a].func()
+					end
+				end
+			end
+		end
+	end
+
+	if not love.keyboard.isDown("lctrl") and not defaulterrhand then
 		require("errorhandler")
 	end
 	--love.errhand("Error handler triggered manually...")

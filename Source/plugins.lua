@@ -256,7 +256,7 @@ end
 function ved_require(reqfile)
 	if pluginfileedits[reqfile] == nil then
 		-- No plugins want to edit this file!
-		require(reqfile)
+		return require(reqfile)
 	else
 		local readlua = love.filesystem.read(reqfile .. ".lua")
 		
@@ -286,7 +286,7 @@ function ved_require(reqfile)
 		succ, errormsg = loadstring(readlua)
 		assert(succ, errormsg)
 		]]
-		assert(loadstring(readlua))()
+		return assert(loadstring(readlua))()
 	end
 end
 
