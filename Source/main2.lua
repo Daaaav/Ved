@@ -296,7 +296,7 @@ function love.load()
 		love.filesystem.createDirectory("maps")
 	end
 	
-	if s.pcheckforupdates then
+	if s.pcheckforupdates and not opt_disableversioncheck then
 		updatecheckthread = love.thread.newThread("updatecheck.lua")
 		
 		verchannel = love.thread.getChannel("version")
@@ -317,7 +317,16 @@ function love.draw()
 	if state == -3 then
 		-- Do-nothing state
 	elseif state == -2 then
-		tostate(6)
+		if opt_loadlevel == nil then
+			tostate(6)
+		else
+			secondlevel = false
+			loadlevelsfolder()
+			loadtilesets()
+			
+			state6load(opt_loadlevel:sub(1,-8))
+			opt_loadlevel = nil -- If the level was invalid, we will still be in this state, and be redirected to state 6
+		end
 	elseif state == -1 then
 		love.graphics.printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
 	elseif state == 0 then

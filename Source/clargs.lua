@@ -17,11 +17,25 @@ local clargs = {
 		end
 	},
 
+	["u"] = "no-update-check",
+	["no-update-check"] = {
+		help = "Disable the check for updates, bypassing config",
+		func = function()
+			opt_disableversioncheck = true
+		end
+	},
+
 	["?"] = "help", ["h"] = "help",
 	["help"] = {
 		help = "Print help for command line args",
 		func = function()
-			print("\n\n")
+			print(
+				"\n\n\nUsage: ved [OPTION]... [FILE]\n\n" ..
+				"If given a file name, it is assumed to be a file within the levels directory.\n\n" ..
+				"Example use:\n" ..
+				"$ love ~/ved my\\ level.vvvvvv --debug\n" ..
+				">ved \"my level.vvvvvv\" --debug\n"
+			)
 			clhelp()
 			print("\n\n")
 		end
@@ -60,12 +74,12 @@ function clhelp()
 
 	-- Finally display everything
 	for kh, vh in pairs(helps) do
-		print("  -" .. table.concat(vh.abbr, " -") .. ", --" .. kh .. (" "):rep(optslen_highscore-cloptslen(vh)) .. "  " .. vh.help)
+		print("  -" .. table.concat(vh.abbr, ", -") .. ", --" .. kh .. (" "):rep(optslen_highscore-cloptslen(vh)) .. "  " .. vh.help)
 	end
 end
 
 function cloptslen(helpselement)
-	return 2 + 3*(#helpselement.abbr) + 4 + helpselement.full:len()
+	return 2 + 4*(#helpselement.abbr) + 2 + helpselement.full:len()
 end
 
 return clargs

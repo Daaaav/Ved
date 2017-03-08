@@ -6,6 +6,8 @@ print("BITMAP")
 ]]
 
 allowdebug = false
+opt_disableversioncheck = false
+opt_loadlevel = nil
 
 fpscap = 0
 
@@ -85,6 +87,8 @@ else
 						clargs[a].func()
 					end
 				end
+			elseif v:sub(-7,-1) == ".vvvvvv" then
+				opt_loadlevel = v
 			end
 		end
 	end

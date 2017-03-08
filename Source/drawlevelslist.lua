@@ -103,7 +103,7 @@ function drawlevelslist()
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
 		
-		if s.pcheckforupdates then
+		if s.pcheckforupdates and not opt_disableversioncheck then
 			versionchecked = verchannel:peek()
 		end
 		
@@ -113,7 +113,7 @@ function drawlevelslist()
 			unsupportedpluginstext = "\n\n" .. langkeys(L.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
 		end
 		
-		if not s.pcheckforupdates then
+		if not s.pcheckforupdates or opt_disableversioncheck then
 			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
 		elseif versionchecked ~= nil then		
 			if versionchecked == "connecterror" or versionchecked == "error" then
