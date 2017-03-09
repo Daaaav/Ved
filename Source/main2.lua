@@ -300,7 +300,7 @@ function love.load()
 		updatecheckthread = love.thread.newThread("updatecheck.lua")
 		
 		verchannel = love.thread.getChannel("version")
-		updatecheckthread:start(checkver)
+		updatecheckthread:start(checkver, true)
 		
 		updatenotesavailable = false
 	end
