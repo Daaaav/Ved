@@ -45,6 +45,12 @@ pluginfileedits = {
 	}
 }
 
+Now we also have an array with included files:
+
+pluginincludes = {
+	[<FILENAME W/O .lua>] = "full/path/to/file/in/plugin/folder"
+}
+
 (sourceedits file in a plugin contains an array similar to that, called sourceedits)
 ]]
 
@@ -54,6 +60,7 @@ function loadplugins()
 	plugins = {}
 	hooks = {}
 	pluginfileedits = {}
+	pluginincludes = {}
 	
 	if not love.filesystem.exists("plugins") then
 		love.filesystem.createDirectory("plugins")
@@ -162,6 +169,19 @@ function loadplugins()
 								end
 							end
 						end
+						
+						-- Including any files?
+						if love.filesystem.exists(pluginpath .. "/include") then
+							thesefiles = love.filesystem.getDirectoryItems(pluginpath .. "/include")
+							
+							for k2,v2 in pairs(thesefiles) do
+								filename = v2:sub(1, -5)
+								
+								pluginincludes[filename] = pluginpath .. "/include/" .. filename
+								
+								print("Included " .. v2)
+							end
+						end
 					else
 						-- Unrecognized, this Ved must've been released before anyone heard of the minimum version for this plugin!
 						plugins[pluginname].info.supported = false
@@ -254,7 +274,10 @@ for more information about plugins and hooks.
 end
 
 function ved_require(reqfile)
-	if pluginfileedits[reqfile] == nil then
+	if pluginincludes[reqfile] ~= nil then
+		-- A plugin specifically included this version of this file!
+		return require(pluginincludes[reqfile])
+	elseif pluginfileedits[reqfile] == nil then
 		-- No plugins want to edit this file!
 		return require(reqfile)
 	else
