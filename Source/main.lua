@@ -75,7 +75,10 @@ else
 		local nextpartto = nil
 
 		for k,v in pairs(arg) do
-			if v:sub(1,2) == "--" then
+			print("Argument " .. k .. " is: " .. v)
+			if v:sub(-7,-1) == ".vvvvvv" then
+				opt_loadlevel = v
+			elseif v:sub(1,2) == "--" then
 				local a = v:sub(3,-1)
 				if clargs[a] ~= nil and clargs[a].func ~= nil then
 					clargs[a].func()
@@ -87,8 +90,6 @@ else
 						clargs[a].func()
 					end
 				end
-			elseif v:sub(-7,-1) == ".vvvvvv" then
-				opt_loadlevel = v
 			end
 		end
 	end
