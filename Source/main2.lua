@@ -1784,7 +1784,7 @@ function love.keypressed(key)
 				holdingzvx = true
 			end
 		end
-	elseif state == 1 and nodialog and key == "f11" and temporaryroomnametimer == 0 then
+	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
 		-- Reload tilesets
 		loadtilesets()
 		temporaryroomname = L.TILESETSRELOADED
