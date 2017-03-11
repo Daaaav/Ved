@@ -76,7 +76,9 @@ else
 		local nextpartto = nil
 
 		for k,v in pairs(arg) do
-			if v:sub(-7,-1) == ".vvvvvv" then
+			if k < 0 then
+				-- Won't be looking at this one
+			elseif v:sub(-7,-1) == ".vvvvvv" then
 				opt_loadlevel = v
 			elseif v:sub(1,2) == "--" then
 				local a = v:sub(3,-1)
