@@ -907,82 +907,81 @@ say¤([regels[,kleur]] .. "]]" .. [[)\h#w
 
 Toon een tekstvak. Zonder argumenten zal dit een tekstvak maken met één regel, en
 standaard resulteert dit in een terminal-tekstvak in het midden. Het kleur-
-argument kan een kleur zijn, of de naam van een bemanningslid.
+argument kan een kleur zĳn, of de naam van een bemanningslid.
 Als je een kleur gebruikt en er is een bemanningslid dat gered kan worden in de
-kamer, 
-If you use a color and a rescuable crewmate with that color is in the room, then
-the text box will be displayed above that crewmate.
+kamer, zal het tekstvak boven dat bemanningslid worden weergegeven.
 
-reply¤([lines])\h#w
+reply¤([regels])\h#w
 
-Display a text box for Viridian. Without the lines argument, this will make a text
-box with one line.
+Toon een tekstvak voor Viridian. Zonder het regels-argument zal dit een tekstvak
+met één regel maken.
 
 delay¤(n)\h#w
 
-Delays further action by n ticks. 30 ticks is almost one second.
+Pauzeer het script voor n ticks. 30 ticks is bĳna een seconde.
 
-happy¤([crewmate])\h#w
+happy¤([bemanningslid])\h#w
 
-Makes a crewmate happy. Without an argument, this will make Viridian happy. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-happy.
+Maakt een bemanningslid blĳ. Zonder een argument zal dit Viridian blĳ maken. Je
+kunt ook "all", "everyone" of "everybody" gebruiken als een argument om iedereen
+blĳ te maken.
 
-sad¤([crewmate])\h#w
+sad¤([bemanningslid])\h#w
 
-Makes a crewmate sad. Without an argument, this will make Viridian sad. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-sad.
+Maakt een bemanningslid verdrietig. Zonder een argument zal dit Viridian
+verdrietig maken. Je kunt ook "all", "everyone" of "everybody" gebruiken als een
+argument om iedereen verdrietig te maken.
 
-flag¤(flag,on/off)\h#w
+flag¤(vlag,on/off)\h#w
 
-Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
-There are 100 flags, numbered from 0 to 99.
-By default, all flags are off when you start playing a level.
-Note: In Ved, you can also use flag names instead of the numbers.
+Zet een bepaalde vlag aan of uit. flag(4,on) zal bĳvoorbeeld vlag 4 aanzetten.
+Er zĳn 100 vlaggen, genummerd van 0 tot 99.
+Standaard staan alle vlaggen wanneer als je een level begint te spelen.
+Opmerking: In Ved kun je ook vlagnamen gebruiken in plaats van de nummers.
 
-ifflag¤(flag,scriptname)\h#w
+ifflag¤(vlag,scriptnaam)\h#w
 
-If a given flag is ON, then go to script with name scriptname.
-If a given flag is OFF, continue in the current script.
-Example:
-ifflag(20,cutscene) - If flag 20 is ON, go to script "cutscene", else continue in
-                      the current script.
-Note: In Ved, you can also use flag names instead of the numbers.
+Als een bepaalde vlag AAN staat, ga naar script met naam scriptnaam.
+Als een bepaalde vlag UIT staat, ga dan verder in het huidige script.
+Voorbeeld:
+ifflag(20,cutscene) - Als vlag 20 AAN staat, ga naar script "cutscene", zo niet,
+                      ga dan verder in het huidige script.
+Opmerking: In Ved kun je ook vlagnamen gebruiken in plaats van de nummers.
 
-iftrinkets¤(number,scriptname)\h#w
+iftrinkets¤(aantal,scriptnaam)\h#w
 
-If your amount of trinkets >= number, go to script with name scriptname.
-If your amount of trinkets < number, continue in the current script.
-Example:
-iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
-                               "enoughtrinkets" will be run, else the current
-                               script will continue.
-It is common practise to use 0 as a minimum amount of trinkets, as a way to load
-a script in any case.
+Als je aantal trinkets >= aantal, ga naar script met naam scriptnaam.
+Als je aantal trinkets < aantal, ga dan verder in het huidige script.
+Voorbeeld:
+iftrinkets(3,enoughtrinkets) - Als je 3 of meer trinkets hebt zal het script
+                               "enoughtrinkets" worden uitgevoerd, anders za het
+                               huidige script verdergaan.
+Het is gebruikelĳk om 0 als minimum aantal trinkets te gebruiken, om een script
+altĳd te laden.
 
-destroy¤(something)\h#w
+destroy¤(iets)\h#w
 
-Valid arguments can be:
-warptokens - Remove all warp tokens from the room until you re-enter the room.
-gravitylines - Remove all gravity lines from the room until you re-enter the room.
-The option "platforms" also exists, but it doesn't work properly.
+Geldige argumenten kunnen zĳn:
+warptokens - Verwĳder alle warptokens totdat je opnieuw de kamer binnenkomt.
+gravitylines - Verwĳder alle zwaartekrachtlĳnen totdat je opnieuw de kamer
+               binnenkomt.
+De optie "platforms" bestaat ook, maar werkt niet goed.
 
-music¤(number)\h#w
+music¤(nummer)\h#w
 
-Change the song to a certain song number.
-For the list of song numbers, refer to the "Lists reference" article.
+Verander de muziek naar een bepaald nummer.
+Kĳk voor de lĳst van muzieknummers naar het artikel "Lĳsten".
 
 map¤(on/off)\h#w
 
-Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
-you turn it on again. <If I'm not mistaken> rooms will still be uncovered while
-the map is off to be visible when the map is turned on.
+Zet de kaart aan of uit. Als je de kaart uitzet wordt er "NO SIGNAL" getoond tot
+je hem weer aanzet. Kamers zullen nog steeds onthuld worden terwĳl de kaart
+uitstaat en zichtbaar worden wanneer je de kaart weer aanzet.
 
-squeak¤(crewmate/on/off)\h#w
+squeak¤(bemanningslid/on/off)\h#w
 
-Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
-or off.
+Zorgt dat een bemanningslid een geluid maakt, of zet het tekstvak-geluid aan of
+uit.
 ]]
 },
 
@@ -1512,10 +1511,10 @@ Shake the screen for n ticks. This will not create a delay.
 },
 
 {
-subj = "Lists reference",
+subj = "Lĳsten",
 imgs = {},
 cont = [[Te vertalen\w&r
-Lists reference\wh#
+Lĳsten\wh#
 
 These are lists of numbers that are used in VVVVVV, mostly copied from forum
 posts. Thanks to everyone who assembled these lists!

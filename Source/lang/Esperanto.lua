@@ -969,8 +969,8 @@ For the list of song numbers, refer to the "Lists reference" article.
 map¤(on/off)\h#w
 
 Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
-you turn it on again. <If I'm not mistaken> rooms will still be uncovered while
-the map is off to be visible when the map is turned on.
+you turn it on again. Rooms will still be uncovered while the map is off to be
+visible when the map is turned on.
 
 squeak¤(crewmate/on/off)\h#w
 
