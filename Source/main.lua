@@ -76,7 +76,6 @@ else
 		local nextpartto = nil
 
 		for k,v in pairs(arg) do
-			print("Argument " .. k .. " is: " .. v)
 			if v:sub(-7,-1) == ".vvvvvv" then
 				opt_loadlevel = v
 			elseif v:sub(1,2) == "--" then
