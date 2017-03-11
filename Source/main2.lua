@@ -233,16 +233,7 @@ function love.load()
 	end
 	
 	savedwindowtitle = ""
-	
-	-- Load the default tilesets - Will be done later when we have the custom level folder
-	--loadtileset("tiles.png")
-	--loadtileset("tiles2.png")
-	-- loadtileset("tiles3.png") oops oversight
-	
-	-- Load the spriteset - This later too
-	-- loadsprites("sprites.png", 64)
-	--loadsprites("sprites.png", 32)
-	
+
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)
 	thingk()
@@ -279,7 +270,13 @@ function love.load()
 		ved_require("filefunc_luv")
 		dialog.new(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 	end
-			
+	
+	secondlevel = false
+	
+	-- Load the levels folder and tilesets
+	loadlevelsfolder()
+	loadtilesets()
+	
 	--if love.getVersion ~= nil then
 	local _, v, m = love.getVersion()
 	if not (v == 9 and m == 0) then
@@ -317,15 +314,13 @@ function love.draw()
 	if state == -3 then
 		-- Do-nothing state
 	elseif state == -2 then
-		if opt_loadlevel == nil then
-			tostate(6)
-		else
-			secondlevel = false
-			loadlevelsfolder()
-			loadtilesets()
-			
+		if opt_loadlevel ~= nil then
 			state6load(opt_loadlevel:sub(1,-8))
 			opt_loadlevel = nil -- If the level was invalid, we will still be in this state, and be redirected to state 6
+		elseif opt_newlevel then
+			triggernewlevel()
+		else
+			tostate(6)
 		end
 	elseif state == -1 then
 		love.graphics.printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
@@ -1723,10 +1718,10 @@ function love.keypressed(key)
 			-- Else block also runs if state == 6 and state6old1, and thus makes a dialog appear; hey a free feature!
 			dialog.new(L.SURENEWLEVEL, "", 1, 3, 7)
 		end
-	elseif nodialog and (editingroomtext == 0) and (editingroomname == false) and (state == 1) and keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("y") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("y") then
 		-- No wait redo
 		redo()
-	elseif (not holdingzvx) and nodialog and (editingroomtext == 0) and (editingroomname == false) and (state == 1) and ((key == "c") or (key == "v") or (key == "z") or (key == "x") or (key == "h") or (key == "b")) then -- Tried cleaning this bit up, later I realized why it was like this
+	elseif (not holdingzvx) and nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and ((key == "c") or (key == "v") or (key == "z") or (key == "x") or (key == "h") or (key == "b")) then -- Tried cleaning this bit up, later I realized why it was like this
 		if keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("z") then
 			-- We goofed, undo.
 			undo()
@@ -1789,6 +1784,11 @@ function love.keypressed(key)
 				holdingzvx = true
 			end
 		end
+	elseif state == 1 and nodialog and key == "f11" and temporaryroomnametimer == 0 then
+		-- Reload tilesets
+		loadtilesets()
+		temporaryroomname = L.TILESETSRELOADED
+		temporaryroomnametimer = 90
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
 		if key == "up" then
 			scriptgotoline(editingline-1)
@@ -1840,6 +1840,8 @@ function love.keypressed(key)
 				tostate(1, true)
 			end
 		end
+	elseif state == 6 and key == "f5" then
+		loadlevelsfolder()
 	elseif (state == 8) and (key == "return") then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)

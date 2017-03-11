@@ -1,5 +1,5 @@
 -- Dutch language file for Ved
--- b17
+-- 1.1.0
 
 L = {
 
@@ -331,6 +331,9 @@ TILESCORRUPT = "Data voor blokken ontbreekt of is corrupt.",
 ENTITIESCORRUPT = "Data voor entiteiten ontbreekt of is corrupt.",
 LEVELMETADATACORRUPT = "Kamer-metadata ontbreekt of is corrupt.",
 SCRIPTCORRUPT = "Scripts ontbreken of zĳn corrupt.",
+
+-- 1.1.0
+TILESETSRELOADED = "Tilesets en sprites opnieuw geladen",
 
 }
 
@@ -865,6 +868,7 @@ Q¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 /¤  Scripts\C
 [¤  Y van muis vastzetten (om makkelĳker horizontale lĳnen te tekenen)\C
 ]¤  X van muis vastzetten (om makkelĳker verticale lĳnen te tekenen)\C
+F11¤  tilesets en sprites opnieuw laden\C
 
 Scriptbewerker\gh#
 

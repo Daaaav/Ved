@@ -8,6 +8,7 @@ print("BITMAP")
 allowdebug = false
 opt_disableversioncheck = false
 opt_loadlevel = nil
+opt_newlevel = false
 
 fpscap = 0
 

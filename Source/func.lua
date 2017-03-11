@@ -425,8 +425,7 @@ function loadstate(new, extradata)
 		input = ""
 		input_r = ""
 		
-		loadlevelsfolder()
-		loadtilesets()
+		--loadlevelsfolder()
 		
 		tabselected = 0
 	elseif new == 9 then
@@ -574,11 +573,13 @@ end
 
 
 function loadlevelsfolder()
+	cons("Loading levels folder...")
 	userprofile = os.getenv('USERPROFILE')
 	lerror, levelsfolder = getlevelsfolder()
 	if lerror == 0 then
 		files = listfiles(levelsfolder)
 	end
+	cons("Loaded.")
 end
 
 function loadtilesets()
@@ -1700,8 +1701,11 @@ function listoverlappingentities(tabel)
 	end
 end
 
-function triggernewlevel()
-	success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = createblanklevel(5, 5)
+function triggernewlevel(width, height)
+	if width == nil or height == nil then
+		width, height = 5, 5
+	end
+	success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = createblanklevel(width, height)
 	editingmap = "untitled\n"
 	tostate(1)
 end

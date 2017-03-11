@@ -17,6 +17,14 @@ local clargs = {
 		end
 	},
 
+	["n"] = "new",
+	["new"] = {
+		help = "Start with a blank level (unless file name is given)",
+		func = function()
+			opt_newlevel = true
+		end
+	},
+
 	["u"] = "no-update-check",
 	["no-update-check"] = {
 		help = "Disable the check for updates, bypassing config",

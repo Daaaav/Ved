@@ -1,6 +1,6 @@
 -- Esperanta lingvodosiero por Ved
 -- de Hejmstel/Format
--- b17
+-- 1.1.0
 
 L = {
 
@@ -332,6 +332,9 @@ TILESCORRUPT = "Blokoj mankantaj aŭ koruptitaj.",
 ENTITIESCORRUPT = "Entoj mankantaj aŭ koruptitaj.",
 LEVELMETADATACORRUPT = "Ĉambraj meta-datumoj mankantaj aŭ koruptitaj.",
 SCRIPTCORRUPT = "Skriptoj mankantaj aŭ koruptitaj.",
+
+-- 1.1.0
+TILESETSRELOADED = "Tilesets and sprites reloaded",
 
 }
 
@@ -861,6 +864,7 @@ Q¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+F11¤  reload tilesets and sprites\C
 
 Script editor\gh#
 
