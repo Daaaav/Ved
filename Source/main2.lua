@@ -319,6 +319,7 @@ function love.draw()
 			opt_loadlevel = nil -- If the level was invalid, we will still be in this state, and be redirected to state 6
 		elseif opt_newlevel then
 			triggernewlevel()
+			opt_newlevel = false
 		else
 			tostate(6)
 		end
@@ -1523,16 +1524,6 @@ function love.keypressed(key)
 			end
 			
 			gotoroom_finish()
-		--[[
-		elseif editingbounds == -1 and  levelmetadata[(roomy)*20 + (roomx+1)].enemyx1+8 < levelmetadata[(roomy)*20 + (roomx+1)].enemyx2  then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 = levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 + 8
-		elseif editingbounds == 1 and levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 < 320 then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 = levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 + 8
-		elseif editingbounds == -2 and  levelmetadata[(roomy)*20 + (roomx+1)].platx1+8 < levelmetadata[(roomy)*20 + (roomx+1)].platx2  then
-			levelmetadata[(roomy)*20 + (roomx+1)].platx1 = levelmetadata[(roomy)*20 + (roomx+1)].platx1 + 8
-		elseif editingbounds == 2 and levelmetadata[(roomy)*20 + (roomx+1)].platx2 < 320 then
-			levelmetadata[(roomy)*20 + (roomx+1)].platx2 = levelmetadata[(roomy)*20 + (roomx+1)].platx2 + 8
-		]]
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "left") then
 		--<
@@ -1544,16 +1535,6 @@ function love.keypressed(key)
 			end
 			
 			gotoroom_finish()
-		--[[
-		elseif editingbounds == -1 and  levelmetadata[(roomy)*20 + (roomx+1)].enemyx2-8 > levelmetadata[(roomy)*20 + (roomx+1)].enemyx1  then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 = levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 - 8
-		elseif editingbounds == 1 and levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 > 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 = levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 - 8
-		elseif editingbounds == -2 and  levelmetadata[(roomy)*20 + (roomx+1)].platx2-8 > levelmetadata[(roomy)*20 + (roomx+1)].platx1  then
-			levelmetadata[(roomy)*20 + (roomx+1)].platx2 = levelmetadata[(roomy)*20 + (roomx+1)].platx2 - 8
-		elseif editingbounds == 2 and levelmetadata[(roomy)*20 + (roomx+1)].platx1 > 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].platx1 = levelmetadata[(roomy)*20 + (roomx+1)].platx1 - 8
-		]]
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "down") then
 		--v
@@ -1565,16 +1546,6 @@ function love.keypressed(key)
 			end
 			
 			gotoroom_finish()
-		--[[
-		elseif editingbounds == -1 and  levelmetadata[(roomy)*20 + (roomx+1)].enemyy1+8 < levelmetadata[(roomy)*20 + (roomx+1)].enemyy2  then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 + 8
-		elseif editingbounds == 1 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 < 240 then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 + 8
-		elseif editingbounds == -2 and  levelmetadata[(roomy)*20 + (roomx+1)].platy1+8 < levelmetadata[(roomy)*20 + (roomx+1)].platy2  then
-			levelmetadata[(roomy)*20 + (roomx+1)].platy1 = levelmetadata[(roomy)*20 + (roomx+1)].platy1 + 8
-		elseif editingbounds == 2 and levelmetadata[(roomy)*20 + (roomx+1)].platy2 < 240 then
-			levelmetadata[(roomy)*20 + (roomx+1)].platy2 = levelmetadata[(roomy)*20 + (roomx+1)].platy2 + 8
-		]]
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "up") then
 		--^
@@ -1586,16 +1557,6 @@ function love.keypressed(key)
 			end
 			
 			gotoroom_finish()
-		--[[
-		elseif editingbounds == -1 and  levelmetadata[(roomy)*20 + (roomx+1)].enemyy2-8 > levelmetadata[(roomy)*20 + (roomx+1)].enemyy1  then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 - 8
-		elseif editingbounds == 1 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 > 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 - 8
-		elseif editingbounds == -2 and  levelmetadata[(roomy)*20 + (roomx+1)].platy2-8 > levelmetadata[(roomy)*20 + (roomx+1)].platy1  then
-			levelmetadata[(roomy)*20 + (roomx+1)].platy2 = levelmetadata[(roomy)*20 + (roomx+1)].platy2 - 8
-		elseif editingbounds == 2 and levelmetadata[(roomy)*20 + (roomx+1)].platy1 > 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].platy1 = levelmetadata[(roomy)*20 + (roomx+1)].platy1 - 8
-		]]
 		end
 	elseif state == 1 and editingroomname and key == "return" then
 		editingroomname = false
@@ -1789,6 +1750,12 @@ function love.keypressed(key)
 		loadtilesets()
 		temporaryroomname = L.TILESETSRELOADED
 		temporaryroomnametimer = 90
+	elseif state == 1 and selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 and (key == "lshift" or key == "rshift") then
+		if customsizemode <= 2 then
+			customsizemode = 3
+		else
+			customsizemode = 1
+		end
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
 		if key == "up" then
 			scriptgotoline(editingline-1)

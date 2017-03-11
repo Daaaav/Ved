@@ -333,6 +333,11 @@ LEVELMETADATACORRUPT = "Kamer-metadata ontbreekt of is corrupt.",
 SCRIPTCORRUPT = "Scripts ontbreken of zĳn corrupt.",
 
 -- 1.1.0
+LOADSCRIPTMADE = "Laad-script gemaakt",
+COPY = "Kopiëren",
+CUSTOMSIZE = "Aangepaste kwastgrootte: $1x$2",
+SELECTINGA = "Selecteren - klik op linkerbovenhoek",
+SELECTINGB = "Selecteren: $1x$2",
 TILESETSRELOADED = "Tilesets en sprites opnieuw geladen",
 
 }
@@ -361,8 +366,8 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Vul gehele kamer", "Aardappel voor het doen van dingen die magisch zĳn"},
-[2] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Vul gehele kamer", "Aardappel voor het doen van dingen die magisch zĳn"},
+[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Aardappel voor het doen van dingen die magisch zĳn"},
+[2] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Aardappel voor het doen van dingen die magisch zĳn"},
 --[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
 [3] = {"Auto 1", "Automatisch uitbreiden L+R", "Automatisch uitbreiden L", "Automatisch uitbreiden R"},
 [4] = {},

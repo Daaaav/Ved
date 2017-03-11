@@ -333,6 +333,11 @@ LEVELMETADATACORRUPT = "Room metadata missing or corrupt.",
 SCRIPTCORRUPT = "Scripts missing or corrupt.",
 
 -- 1.1.0
+LOADSCRIPTMADE = "Load script created",
+COPY = "Copy",
+CUSTOMSIZE = "Custom brush size: $1x$2",
+SELECTINGA = "Selecting - click top left",
+SELECTINGB = "Selecting: $1x$2",
 TILESETSRELOADED = "Tilesets and sprites reloaded",
 
 }
@@ -361,8 +366,8 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Fill entire room", "Potato for Doing Things that are Magical"},
-[2] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Fill entire room", "Potato for Doing Things that are Magical"},
+[1] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Potato for Doing Things that are Magical"},
+[2] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Potato for Doing Things that are Magical"},
 --[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
 [3] = {"Auto 1", "Auto expand L+R", "Auto expand L", "Auto expand R"},
 [4] = {},

@@ -251,10 +251,22 @@ function drawmaineditor()
 								end
 							end
 						end
-					else -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
+					elseif customsizemode <= 2 then -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
 						customsizex = (atx)/2
 						customsizey = (29-aty)/2
 						customsizemode = 0
+						customsizetile = nil
+						mousepressed = true
+					elseif customsizemode == 3 then
+						customsizecoorx = atx
+						customsizecoory = aty
+						customsizemode = 4
+						mousepressed = true
+					elseif customsizemode == 4 then
+						customsizex = (atx-customsizecoorx)/2
+						customsizey = (aty-customsizecoory)/2
+						customsizemode = 0
+						customsizetile = nil
 						mousepressed = true
 					end
 				elseif selectedsubtool[selectedtool] == 9 then
@@ -1132,13 +1144,23 @@ function drawmaineditor()
 		if showepbounds or editingbounds ~= 0 then
 			if not (levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 == 320 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 == 240) then
 				love.graphics.setColor(255,0,0,255)
-				love.graphics.rectangle("line", screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].enemyx1*2), levelmetadata[(roomy)*20 + (roomx+1)].enemyy1*2, ((levelmetadata[(roomy)*20 + (roomx+1)].enemyx2-levelmetadata[(roomy)*20 + (roomx+1)].enemyx1)*2), (levelmetadata[(roomy)*20 + (roomx+1)].enemyy2-levelmetadata[(roomy)*20 + (roomx+1)].enemyy1)*2) 
+				love.graphics.rectangle("line",
+					screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].enemyx1*2),
+					levelmetadata[(roomy)*20 + (roomx+1)].enemyy1*2,
+					((levelmetadata[(roomy)*20 + (roomx+1)].enemyx2-levelmetadata[(roomy)*20 + (roomx+1)].enemyx1)*2),
+					(levelmetadata[(roomy)*20 + (roomx+1)].enemyy2-levelmetadata[(roomy)*20 + (roomx+1)].enemyy1)*2
+				)
 			end
 			
 			-- Then platforms.
 			if not (levelmetadata[(roomy)*20 + (roomx+1)].platx1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].platy1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].platx2 == 320 and levelmetadata[(roomy)*20 + (roomx+1)].platy2 == 240) then
 				love.graphics.setColor(0,0,255,255)
-				love.graphics.rectangle("line", screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].platx1*2), levelmetadata[(roomy)*20 + (roomx+1)].platy1*2, ((levelmetadata[(roomy)*20 + (roomx+1)].platx2-levelmetadata[(roomy)*20 + (roomx+1)].platx1)*2), (levelmetadata[(roomy)*20 + (roomx+1)].platy2-levelmetadata[(roomy)*20 + (roomx+1)].platy1)*2) 
+				love.graphics.rectangle("line",
+					screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].platx1*2),
+					levelmetadata[(roomy)*20 + (roomx+1)].platy1*2,
+					((levelmetadata[(roomy)*20 + (roomx+1)].platx2-levelmetadata[(roomy)*20 + (roomx+1)].platx1)*2),
+					(levelmetadata[(roomy)*20 + (roomx+1)].platy2-levelmetadata[(roomy)*20 + (roomx+1)].platy1)*2
+				)
 			end
 		end
 			
@@ -1148,7 +1170,7 @@ function drawmaineditor()
 		love.graphics.setScissor()
 		
 		--local multispikesmsg = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and selectedtool == 3
-		local editingcustomsize = selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 1
+		local editingcustomsize = selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0
 		
 		-- Does this room have a name, perhaps?
 		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then --or multispikesmsg
@@ -1158,12 +1180,23 @@ function drawmaineditor()
 			elseif editingbounds > 0 then
 				temporaryroomname = L.BOUNDSBOTTOMRIGHT
 			elseif editingcustomsize then
-				local dispx, dispy = "--", "--"
-				if mouseon(screenoffset, 0, 639, 480) then
-					dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
-					dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+				if customsizemode <= 2 then
+					local dispx, dispy = "--", "--"
+					if mouseon(screenoffset, 0, 639, 480) then
+						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
+						dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+					end
+					temporaryroomname = langkeys(L.CUSTOMSIZE, {dispx, dispy})
+				elseif customsizemode == 3 then
+					temporaryroomname = L.SELECTINGA
+				elseif customsizemode == 4 then
+					local dispx, dispy = "!!", "!!"
+					if mouseon(screenoffset, 0, 639, 480) then
+						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
+						dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+					end
+					temporaryroomname = langkeys(L.SELECTINGB, {dispx, dispy})
 				end
-				temporaryroomname = langkeys(L.CUSTOMSIZE, {dispx, dispy})
 			--elseif multispikesmsg then
 				--temporaryroomname = "To fix: spikes tool in multi mode"
 			end
@@ -1257,6 +1290,25 @@ function drawmaineditor()
 				love.graphics.draw(cursorimg[4], screenoffset+(cursorx*16), (29*16))
 			elseif selectedsubtool[selectedtool] == 8 then
 				-- Custom size
+				if customsizemode == 1 then
+					love.graphics.setColor(255,255,0,255)
+					love.graphics.rectangle("line",
+						screenoffset+0,
+						cursory*16,
+						(cursorx+1)*16,
+						love.graphics.getHeight()-cursory*16
+					)
+					love.graphics.setColor(255,255,255,255)
+				elseif customsizemode == 4 then
+					love.graphics.setColor(255,255,0,255)
+					love.graphics.rectangle("line",
+						screenoffset+customsizecoorx*16,
+						customsizecoory*16,
+						(cursorx-customsizecoorx+1)*16,
+						(cursory-customsizecoory+1)*16
+					)
+					love.graphics.setColor(255,255,255,255)
+				end
 				displayalphatile(math.floor(customsizex), math.floor(customsizey), customsizex*2, customsizey*2)
 				displayshapedcursor(math.floor(customsizex), math.floor(customsizey), math.ceil(customsizex), math.ceil(customsizey))
 			elseif selectedsubtool[selectedtool] == 9 then
@@ -1387,7 +1439,13 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			end
 			
-			if nodialog and love.mouse.isDown("l") and mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
+			if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
+				if selectedtool <= 2 and k == 8 and love.mouse.isDown("r") then
+					customsizemode = 1
+					customsizex = 0
+					customsizey = 0
+					customsizetile = nil
+				end
 				selectedsubtool[selectedtool] = k
 			end
 			

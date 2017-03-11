@@ -359,9 +359,12 @@ function loadstate(new, extradata)
 		
 		warpbganimation = 0
 		
-		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker)
+		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker), 3: needing to click top left in a room because I misunderstood the request all along, 4: needing to click bottom right of that.
 		customsizex = 0 -- tiles to the left AND right of the cursor (can be a half)
 		customsizey = 0 -- tiles to the top AND bottom of the cursor
+		customsizetile = nil -- what group of tiles to draw with this special cursor
+		customsizecoorx = nil -- coordinates of tile selected in mode 3
+		customsizecoory = nil
 	elseif new == 3 then
 		-- scriptname == ""
 		-- scriptlines = {}

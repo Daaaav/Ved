@@ -334,6 +334,11 @@ LEVELMETADATACORRUPT = "Ĉambraj meta-datumoj mankantaj aŭ koruptitaj.",
 SCRIPTCORRUPT = "Skriptoj mankantaj aŭ koruptitaj.",
 
 -- 1.1.0
+LOADSCRIPTMADE = "Load script created",
+COPY = "Copy",
+CUSTOMSIZE = "Custom brush size: $1x$2",
+SELECTINGA = "Selecting - click top left",
+SELECTINGB = "Selecting: $1x$2",
 TILESETSRELOADED = "Tilesets and sprites reloaded",
 
 }
@@ -362,8 +367,8 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Plenigi tutan ĉambron", "Mirinda mojosa magia terpomo"},
-[2] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Plenigi tutan ĉambron", "Mirinda mojosa magia terpomo"},
+[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Custom brush size", "Mirinda mojosa magia terpomo"},
+[2] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Custom brush size", "Mirinda mojosa magia terpomo"},
 --[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
 [3] = {"Aŭtomata", "Aŭtomata ambaŭen", "Aŭtomata maldekstren", "Aŭtomata dekstren"},
 [4] = {},
