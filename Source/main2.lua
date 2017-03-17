@@ -328,7 +328,7 @@ function love.draw()
 	elseif state == 0 then
 		love.graphics.print("Placeholder main menu. Enter state: " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\nShift+ENTER: Go without loadstate() (tostate(x, true))", 10, 10)
 		startinputonce()
-	elseif state == 1 then		
+	elseif state == 1 then
 		drawmaineditor()
 	elseif state == 2 then
 		love.graphics.print("Syntax highlighting" .. input .. __, 10, 10)

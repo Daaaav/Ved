@@ -1190,10 +1190,10 @@ function drawmaineditor()
 				elseif customsizemode == 3 then
 					temporaryroomname = L.SELECTINGA
 				elseif customsizemode == 4 then
-					local dispx, dispy = "!!", "!!"
+					local dispx, dispy = "--", "--"
 					if mouseon(screenoffset, 0, 639, 480) then
-						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
-						dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) - customsizecoorx + 1
+						dispy = math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16) - customsizecoory + 1
 					end
 					temporaryroomname = langkeys(L.SELECTINGB, {dispx, dispy})
 				end
@@ -1713,9 +1713,17 @@ function drawmaineditor()
 	end
 	
 	-- And coordinates.
+	love.graphics.setFont(tinynumbers)
+	love.graphics.setColor(128,128,128)
 	if s.coords0 then
+		love.graphics.print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
+		love.graphics.setFont(font8)
+		love.graphics.setColor(255,255,255)
 		love.graphics.print("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8)
 	else
+		love.graphics.print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
+		love.graphics.setFont(font8)
+		love.graphics.setColor(255,255,255)
 		love.graphics.print("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8)
 	end
 	
