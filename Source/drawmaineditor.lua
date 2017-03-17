@@ -1719,31 +1719,34 @@ function drawmaineditor()
 		love.graphics.print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
-		love.graphics.print("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8)
+		love.graphics.printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
 	else
 		love.graphics.print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
-		love.graphics.print("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8)
+		love.graphics.printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
 	end
 	
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
 	if tilespicker then
 		if (cursorx ~= "--") and (cursory ~= "--") then
-			local label = langkeys(L.TILE, {(cursory*40)+(cursorx+1)-1})
-			love.graphics.print(label, love.graphics.getWidth()-(font8:getWidth(label)), love.graphics.getHeight()-8-8)
-			label = (issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]) and L.SOLID or L.NOTSOLID)
-			love.graphics.print(label, love.graphics.getWidth()-(font8:getWidth(label)), love.graphics.getHeight()-8)
+			love.graphics.printf(
+				langkeys(L.TILE, {(cursory*40)+(cursorx+1)-1}),
+				love.graphics.getWidth()-128, love.graphics.getHeight()-8-8, 128, "right"
+			)
+			love.graphics.printf(
+				(issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]) and L.SOLID or L.NOTSOLID),
+				love.graphics.getWidth()-128, love.graphics.getHeight()-8, 128, "right"
+			)
 		else
-			local label = langkeys(L.TILE, {"----"})
-			love.graphics.print(label, love.graphics.getWidth()-(font8:getWidth(label)), love.graphics.getHeight()-8-8)
+			love.graphics.printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-8, 128, "right")
 		end
 	else
-		love.graphics.print("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-8)
+		love.graphics.printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-8, 56, "right")
 		if (cursorx ~= "--") and (cursory ~= "--") then
-			love.graphics.print("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-56-16, love.graphics.getHeight()-8)
+			love.graphics.printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-8, 72, "right") -- 56+16=72
 		else
-			love.graphics.print("<---,--->", love.graphics.getWidth()-56-16, love.graphics.getHeight()-8)
+			love.graphics.printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-8, 72, "right")
 		end
 	end
 	
