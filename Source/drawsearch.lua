@@ -30,7 +30,7 @@ function drawsearch()
 				--tostate(3)
 				
 				if v.foundline ~= 0 then
-					editingline = v.foundline
+					scriptgotoline(v.foundline)
 				end
 				
 				mousepressed = true
