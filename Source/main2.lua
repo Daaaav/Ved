@@ -314,15 +314,7 @@ function love.draw()
 	if state == -3 then
 		-- Do-nothing state
 	elseif state == -2 then
-		if opt_loadlevel ~= nil then
-			state6load(opt_loadlevel:sub(1,-8))
-			opt_loadlevel = nil -- If the level was invalid, we will still be in this state, and be redirected to state 6
-		elseif opt_newlevel then
-			triggernewlevel()
-			opt_newlevel = false
-		else
-			tostate(6)
-		end
+		-- Init state - see love.update()
 	elseif state == -1 then
 		love.graphics.printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
 	elseif state == 0 then
@@ -867,7 +859,17 @@ function love.update(dt)
 		end
 	end
 	
-	if state == 1 then
+	if state == -2 then
+		if opt_loadlevel ~= nil then
+			state6load(opt_loadlevel:sub(1,-8))
+			opt_loadlevel = nil -- If the level was invalid, we will still be in this state, and be redirected to state 6
+		elseif opt_newlevel then
+			triggernewlevel()
+			opt_newlevel = false
+		else
+			tostate(6)
+		end
+	elseif state == 1 then
 		if (editingbounds == -1 or editingbounds == 1) and selectedtool ~= 9 then
 			editingbounds = 0
 		elseif (editingbounds == -2 or editingbounds == 2) and selectedtool ~= 8 then
@@ -1815,10 +1817,10 @@ function love.keypressed(key)
 		editingmap = input
 	elseif state == 10 and (key == "up" or key == "down") then
 		handleScrolling(false, key == "up" and "wu" or "wd") -- 16px
-	elseif state == 10 and key == "n" then
+	elseif state == 10 and key == "n" and nodialog then
 		startmultiinput({""})
 		dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
-	elseif state == 10 and key == "f" then
+	elseif state == 10 and key == "f" and nodialog then
 		tostate(19,false)
 	elseif state == 11 and key == "return" then
 		searchscripts, searchrooms, searchnotes = searchtext(input)
