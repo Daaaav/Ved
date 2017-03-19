@@ -846,12 +846,17 @@ function love.update(dt)
 	end
 
 	if state ~= -1 then
+		local title_editingmap = ""
+		if editingmap ~= nil then
+			title_editingmap = editingmap:gsub("\n", "") .. " - "
+		end
+		
 		if allowdebug then
-			love.window.setTitle(anythingbutnil(editingmap) .. (editingmap ~= nil and " - " or "") .. "Ved v" .. ver .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v0." .. (love.graphics.ellipse == nil and 9 or 10) .. " ]")
+			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v0." .. (love.graphics.ellipse == nil and 9 or 10) .. " ]")
 		elseif s.showfps then
-			love.window.setTitle(anythingbutnil(editingmap) .. (editingmap ~= nil and " - " or "") .. "Ved v" .. ver .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
+			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
 		else
-			local newtitle = anythingbutnil(editingmap) .. (editingmap ~= nil and " - " or "") .. "Ved v" .. ver
+			local newtitle = title_editingmap .. "Ved v" .. ver
 			if newtitle ~= savedwindowtitle then
 				love.window.setTitle(newtitle)
 				savedwindowtitle = newtitle
