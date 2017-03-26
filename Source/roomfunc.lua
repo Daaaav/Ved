@@ -377,13 +377,19 @@ end
 
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
 	if editingroomtext == k then
+		local dispx = math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
+		local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 		love.graphics.setFont(font16)
-		love.graphics.print(input .. __, math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16), math.max(3, offsety+(v.y-myroomy*30)*16 + 3 - 16))
+		textshadow(input, dispx, dispy, true)
+		love.graphics.print(input .. __, dispx, dispy+3)
 		love.graphics.setFont(font8)
 	elseif (((not isscriptbox) or editingsboxid ~= k) and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16))
 	or (editingsboxid == k and (selectedsubtool[13] == 3 or sboxdontaskname)) then
+		local dispx = math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16)
+		local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 		love.graphics.setFont(font16)
-		love.graphics.print(v.data, math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16), math.max(3, offsety+(v.y-myroomy*30)*16 + 3 - 16))
+		textshadow(v.data, dispx, dispy, true)
+		love.graphics.print(v.data, dispx, dispy+3)
 		love.graphics.setFont(font8)
 	end
 end

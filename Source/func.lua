@@ -2104,4 +2104,10 @@ function tinyprint(text, x, y)
 	love.graphics.setFont(font8)
 end
 
+function textshadow(text, x, y, largefont)
+	love.graphics.setColor(128,128,128,192)
+	love.graphics.rectangle("fill", x, y, love.graphics.getFont():getWidth(text), largefont and 16 or 8)
+	love.graphics.setColor(255,255,255,255)
+end
+
 hook("func")
