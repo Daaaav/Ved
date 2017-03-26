@@ -402,11 +402,26 @@ function displaytilespicker(offsetx, offsety, tilesetname)
 	love.graphics.draw(tilesets[tilesetname]["img"], offsetx, offsety, 0, 2)
 	
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		-- Also draw a box around the currently selected tile!
-		local selectedx = selectedtile % 40
-		local selectedy = (selectedtile-selectedx) / 40
-		
-		love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
+		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then
+			-- We're currently creating a stamp from the tileset
+			local cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
+			local cursory = math.floor(love.mouse.getY() / 16)
+
+			love.graphics.setColor(255,255,0,255)
+			love.graphics.rectangle("line",
+				screenoffset+customsizecoorx*16,
+				customsizecoory*16,
+				(math.max(cursorx, customsizecoorx)-customsizecoorx+1)*16,
+				(math.max(cursory, customsizecoory)-customsizecoory+1)*16
+			)
+			love.graphics.setColor(255,255,255,255)
+		else
+			-- Also draw a box around the currently selected tile!
+			local selectedx = selectedtile % 40
+			local selectedy = (selectedtile-selectedx) / 40
+			
+			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
+		end
 	end
 end
 
@@ -775,20 +790,27 @@ function displayshapedcursor(leftblx, upblx, rightblx, downblx)
 	love.graphics.draw(cursorimg[4], (cursorx*16)+screenoffset+(rightblx*16), (cursory*16)+(downblx*16))
 end
 
-function displayalphatile(leftblx, upblx, forx, fory)
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		--love.graphics.setFont(tinynumbers)
+function displayalphatile(leftblx, upblx, forx, fory, customsize)
+	if (levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and not (customsize and customsizemode ~= 0))
+	or (customsize and customsizemode == 0 and customsizetile ~= nil) then
 		love.graphics.setColor(255,255,255,128)
-		for forfory = 0, fory do
-			for forforx = 0, forx do
-				--cons(roomx .. " " .. roomy .. " " .. (roomy)*20 + (roomx+1) .. " " .. levelmetadata[(roomy)*20 + (roomx+1)].tileset)
-				love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*(cursorx-leftblx+forforx)), (16*(cursory-upblx+forfory)), 0, 2)
-				
-				--love.graphics.print(selectedtile, 128+(16*(cursorx-leftblx+forforx)), (16*(cursory-upblx+forfory)))
+			for forfory = 0, fory do
+				for forforx = 0, forx do
+					local displayedtile = selectedtile
+					if customsize and customsizetile ~= nil then
+						displayedtile = customsizetile[forfory+1][forforx+1]
+					end
+					love.graphics.draw(
+						tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"],
+						tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][displayedtile],
+						screenoffset+(16*(cursorx-leftblx+forforx)),
+						(16*(cursory-upblx+forfory)),
+						0,
+						2
+					)
+				end
 			end
-		end
 		love.graphics.setColor(255,255,255,255)
-		--love.graphics.setFont(font8)
 	end
 	
 	-- But are we holding one of the directions?
@@ -812,47 +834,33 @@ end
 
 function displayalphatile_hor()
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		--love.graphics.setFont(tinynumbers)
 		love.graphics.setColor(255,255,255,128)
 		for forforx = 0, 39 do
-			--cons(roomx .. " " .. roomy .. " " .. (roomy)*20 + (roomx+1) .. " " .. levelmetadata[(roomy)*20 + (roomx+1)].tileset)
 			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*cursory), 0, 2)
-			
-			--love.graphics.print(selectedtile, 128+(16*forforx), (16*cursory))
 		end
 		love.graphics.setColor(255,255,255,255)
-		--love.graphics.setFont(font8)
 	end
 end
 
 function displayalphatile_ver()
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		--love.graphics.setFont(tinynumbers)
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
-			--cons(roomx .. " " .. roomy .. " " .. (roomy)*20 + (roomx+1) .. " " .. levelmetadata[(roomy)*20 + (roomx+1)].tileset)
 			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*cursorx), (16*forfory), 0, 2)
-			
-			--love.graphics.print(selectedtile, 128+(16*cursorx), (16*forfory))
 		end
 		love.graphics.setColor(255,255,255,255)
-		--love.graphics.setFont(font8)
 	end
 end
 
 function displayalphatile_all()
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		--love.graphics.setFont(tinynumbers)
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
 			for forforx = 0, 39 do
 				love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*forfory), 0, 2)
-				
-				--love.graphics.print(selectedtile, 128+(16*forforx), (16*forfory))
 			end
 		end
 		love.graphics.setColor(255,255,255,255)
-		--love.graphics.setFont(font8)
 	end
 end
 

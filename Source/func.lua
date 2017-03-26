@@ -362,7 +362,7 @@ function loadstate(new, extradata)
 		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker), 3: needing to click top left in a room because I misunderstood the request all along, 4: needing to click bottom right of that.
 		customsizex = 0 -- tiles to the left AND right of the cursor (can be a half)
 		customsizey = 0 -- tiles to the top AND bottom of the cursor
-		customsizetile = nil -- what group of tiles to draw with this special cursor
+		customsizetile = nil -- what group of tiles to draw with this special cursor (2D table)
 		customsizecoorx = nil -- coordinates of tile selected in mode 3
 		customsizecoory = nil
 	elseif new == 3 then
@@ -1997,13 +1997,8 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 
 	if sp_t > 0 then
 		if sp_go and sp_got > 0 then
-			--love.graphics.setFont(tinynumbers)
-			--love.graphics.print(s_ge2ten, ox+2, oy+2)
-			--love.graphics.setFont(font8)
 			if s_ge2ten > 99 then
-				love.graphics.setFont(tinynumbers)
-				love.graphics.print(s_ge2ten, ox+4, oy+4)
-				love.graphics.setFont(font8)
+				tinyprint(s_ge2ten, ox+4, oy+4)
 			else
 				love.graphics.print(s_ge2ten, ox+3, oy+5)
 			end
@@ -2090,6 +2085,23 @@ end
 
 function keyboard_eitherIsDown(button)
 	return love.keyboard.isDown("l" .. button) or love.keyboard.isDown("r" .. button)
+end
+
+-- Simply print a string in the tiny font, but always use 1 pixel of spacing between characters.
+function tinyprint(text, x, y)
+	love.graphics.setFont(tinynumbers)
+	if tostring(text):len() > 1 then
+		local _, v = love.getVersion()
+		if v >= 10 then
+			local origtext = text
+			text = ""
+			for c = 1, origtext:len() do
+				text = text .. origtext:sub(c,c) .. "~"
+			end
+		end
+	end
+	love.graphics.print(text, x, y)
+	love.graphics.setFont(font8)
 end
 
 hook("func")

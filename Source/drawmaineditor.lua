@@ -131,9 +131,34 @@ function drawmaineditor()
 				end
 
 			elseif levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-				cons("Tile selected: " .. (aty*40)+(atx+1)-1)
-			
-				selectedtile = (aty*40)+(atx+1)-1
+				if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and not mousepressed and customsizemode ~= 0 then
+					-- You can also make a stamp from the tileset
+					if customsizemode ~= 0 and customsizemode ~= 2 then
+						customsizecoorx = atx
+						customsizecoory = aty
+						customsizemode = 2
+						mousepressed = true
+					elseif customsizemode == 2 then
+						atx = math.max(atx, customsizecoorx)
+						aty = math.max(aty, customsizecoory)
+						customsizex = (atx-customsizecoorx)/2
+						customsizey = (aty-customsizecoory)/2
+						cons("sizex sizey " .. customsizex .. "," .. customsizey)
+						customsizemode = 0
+						customsizetile = {}
+						for sty = customsizecoory, aty do
+							table.insert(customsizetile, {})
+							for stx = customsizecoorx, atx do
+								table.insert(customsizetile[#customsizetile], (sty*40)+stx)
+							end
+						end
+						mousepressed = true
+						tilespicker = false
+					end
+				else
+					cons("Tile selected: " .. (aty*40)+(atx+1)-1)
+					selectedtile = (aty*40)+(atx+1)-1
+				end
 			end
 		elseif selectedtool <= 3 then
 			if undosaved == 0 then
@@ -244,12 +269,21 @@ function drawmaineditor()
 				elseif not mousepressed and selectedsubtool[selectedtool] == 8 then
 					-- custom size
 					if customsizemode == 0 then
+						local iy = 1
 						for sty = (aty-math.floor(customsizey)), (aty+math.ceil(customsizey)) do
+							local ix = 1
 							for stx = (atx-math.floor(customsizex)), (atx+math.ceil(customsizex)) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
+										-- Stamp
+										roomdata[roomy][roomx][(sty*40)+(stx+1)] = customsizetile[iy][ix]
+									elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
+										roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									end
 								end
+								ix = ix + 1
 							end
+							iy = iy + 1
 						end
 					elseif customsizemode <= 2 then -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
 						customsizex = (atx)/2
@@ -263,11 +297,30 @@ function drawmaineditor()
 						customsizemode = 4
 						mousepressed = true
 					elseif customsizemode == 4 then
+						atx = math.max(atx, customsizecoorx)
+						aty = math.max(aty, customsizecoory)
 						customsizex = (atx-customsizecoorx)/2
 						customsizey = (aty-customsizecoory)/2
 						customsizemode = 0
-						customsizetile = nil
+						customsizetile = {}
+						local foundnonzero = false
+						for sty = customsizecoory, aty do
+							table.insert(customsizetile, {})
+							for stx = customsizecoorx, atx do
+								local tnum = roomdata[roomy][roomx][(sty*40)+stx+1]
+								table.insert(customsizetile[#customsizetile], tnum)
+								if tnum ~= 0 then
+									foundnonzero = true
+								end
+							end
+						end
+						if not foundnonzero then
+							-- Ok, we don't need a useless brush.
+							customsizetile = nil
+						end
+
 						mousepressed = true
+						cons("That is " .. (atx-customsizecoorx) .. " by " .. (aty-customsizecoory) .. " starting at " .. customsizecoorx .. "," .. customsizecoory)
 					end
 				elseif selectedsubtool[selectedtool] == 9 then
 					-- to out
@@ -296,7 +349,7 @@ function drawmaineditor()
 				else
 					if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
 						-- Auto mode
-						useselectedtile = 8
+						useselectedtile = tilesetblocks[selectedtileset].colors[selectedcolor].spikes[9]
 					else
 						useselectedtile = selectedtile
 					end
@@ -1252,7 +1305,7 @@ function drawmaineditor()
 				-- Just one tile, but only in manual/direct mode.
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 			end
-		elseif selectedtool == 1 or selectedtool == 2 then
+		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
 			if selectedsubtool[selectedtool] == 1 then
 				-- Just a regular cursor
@@ -1304,12 +1357,12 @@ function drawmaineditor()
 					love.graphics.rectangle("line",
 						screenoffset+customsizecoorx*16,
 						customsizecoory*16,
-						(cursorx-customsizecoorx+1)*16,
-						(cursory-customsizecoory+1)*16
+						(math.max(cursorx, customsizecoorx)-customsizecoorx+1)*16,
+						(math.max(cursory, customsizecoory)-customsizecoory+1)*16
 					)
 					love.graphics.setColor(255,255,255,255)
 				end
-				displayalphatile(math.floor(customsizex), math.floor(customsizey), customsizex*2, customsizey*2)
+				displayalphatile(math.floor(customsizex), math.floor(customsizey), customsizex*2, customsizey*2, true)
 				displayshapedcursor(math.floor(customsizex), math.floor(customsizey), math.ceil(customsizex), math.ceil(customsizey))
 			elseif selectedsubtool[selectedtool] == 9 then
 				displayalphatile(-1, 0, 0, 0)
@@ -1324,9 +1377,7 @@ function drawmaineditor()
 			
 			-- If direct mode is on, we want to know what tile number we're about to place!
 			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-				love.graphics.setFont(tinynumbers)
-				love.graphics.print(selectedtile, screenoffset+(16*cursorx), (16*cursory))
-				love.graphics.setFont(font8)
+				tinyprint(selectedtile, screenoffset+(16*cursorx), (16*cursory))
 			end
 		elseif selectedtool == 3 then
 			-- Spike
@@ -1411,9 +1462,7 @@ function drawmaineditor()
 			love.graphics.setColor(255,255,255,255)
 			
 			-- Put the shortcut next to it.
-			love.graphics.setFont(tinynumbers)
-			love.graphics.print(toolshortcuts[t], coorx-2+32+1, coory)
-			love.graphics.setFont(font8)
+			tinyprint(toolshortcuts[t], coorx-2+32+1, coory)
 			
 			if nodialog and ((not mouseon(16, 0, 32, 16)) and not (mouseon(16, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) then
 				-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
@@ -1464,9 +1513,7 @@ function drawmaineditor()
 			
 			-- Shortcut text, but only for ZXCV
 			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 7 then
-				love.graphics.setFont(tinynumbers)
-				love.graphics.print((" ZXCVHB"):sub(k,k), coorx-2+32+1, coory)
-				love.graphics.setFont(font8)
+				tinyprint((" ZXCVHB"):sub(k,k), coorx-2+32+1, coory)
 			end
 			
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32))) then
@@ -1495,10 +1542,18 @@ function drawmaineditor()
 			lefttoolscroll = lefttoolscroll - 4
 			lefttoolscrollbounds()
 		end
+		
+		-- For certain features, it would be nice to indicate that there are shortcuts you can use
+		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 then
+			-- Custom cursor size
+			tinyprint("SHIFT", 128-20, love.graphics.getHeight()-7)
+		elseif editingroomtext > 0 and entitydata[editingroomtext] ~= nil and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
+			-- Name for script box
+			tinyprint("{SHIFT", 128-27, love.graphics.getHeight()-14)
+			tinyprint("}CTRL", 128-27, love.graphics.getHeight()-7)
+		end
 	else
-		love.graphics.setFont(tinynumbers)
-		love.graphics.print("CTRL", 0, 0)
-		love.graphics.setFont(font8)
+		tinyprint("CTRL", 0, 0)
 		
 		-- Also display the current (sub)tool!
 		love.graphics.draw(selectedtoolborder, 0, love.graphics.getHeight()-32)
@@ -1713,16 +1768,13 @@ function drawmaineditor()
 	end
 	
 	-- And coordinates.
-	love.graphics.setFont(tinynumbers)
 	love.graphics.setColor(128,128,128)
 	if s.coords0 then
-		love.graphics.print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
-		love.graphics.setFont(font8)
+		tinyprint("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
 		love.graphics.printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
 	else
-		love.graphics.print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
-		love.graphics.setFont(font8)
+		tinyprint("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
 		love.graphics.printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
 	end
