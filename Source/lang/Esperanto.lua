@@ -540,7 +540,9 @@ The lines in the help do not automatically wrap, so their lengths should not exc
 
 Use the following as a ruler:
 ----------------------------------------------------------------------------------[]-
-(the scrollbar [] is the limit, however formatting/control characters may cause the line to be smaller/wider)
+
+The scrollbar [] is the limit, however formatting/control characters may cause the line to be smaller/wider.
+You can also remember the number 83, when you're in that column, you've reached the limit (subtracting the amount of invisible formatting characters)
 
 
 If you'd rather not translate the help articles, it's no big deal!
