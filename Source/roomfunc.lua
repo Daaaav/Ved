@@ -1303,6 +1303,14 @@ function entityplaced(id)
 end
 
 function removeentity(id, thetype, undoing)
+	if id == nil then
+		cons("###\nremoveentity: trying to remove nil entity ID: " .. id .. "!\n###")
+		return
+	elseif entitydata[id] then
+		cons("###\nremoveentity: trying to remove nil entity: entitydata[" .. id .. "]!\n###")
+		return
+	end
+
 	if thetype == nil then
 		thetype = entitydata[id].t
 	end
