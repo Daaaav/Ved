@@ -817,6 +817,14 @@ je de tekstcursor op de eerste regel hebt gezet die je naar het nieuwe script wi
 verplaatsen, klik op de "Splits"-knop en typ de naam van het nieuwe script. De
 regels voor de cursor blĳven in het oorspronkelĳke script, de regel waar de cursor
 staat en alle regels daarna zullen verplaatst worden naar het nieuwe script.
+
+Naar scripts springen\h#
+
+Op regels met een van de commando's iftrinkets, ifflag, customiftrinkets of
+customifflag, is het mogelĳk om naar het gegeven script te springen door te
+klikken op de knop "Ga naar" wanneer de cursor op die regel staat. Je kunt
+hiervoor ook op ¤ctrl+rechts¤ drukken, en je kunt met ¤ctrl+links¤ één stap terug\nwnw
+nemen door de keten naar waar je vandaan kwam.
 ]]
 },
 
@@ -879,6 +887,8 @@ Scriptbewerker\gh#
 
 Ctrl+F¤  Zoeken\C
 Ctrl+G¤  Ga naar regel\C
+Ctrl+rechts¤  Spring naar script in voorwaardelĳk commando\C
+Ctrl+links¤  Spring één stap terug\C
 
 Scriptlĳst\gh#
 

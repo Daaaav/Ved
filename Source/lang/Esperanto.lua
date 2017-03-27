@@ -814,6 +814,13 @@ putting the text cursor on the first line you want to be in the new script, clic
 the Split button and enter the name of the new script. The lines before the cursor
 will remain in the original script, the lines from the cursor onward will be moved
 to the new script.
+
+Jumping to scripts\h#
+
+On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
+is possible to jump to the given script by clicking the "Go to" button when the
+cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
+use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
 ]]
 },
 
@@ -875,6 +882,8 @@ Script editor\gh#
 
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
+Ctrl+right¤  Jump to script in conditional command\C
+Ctrl+left¤  Jump one step back\C
 
 Script list\gh#
 
