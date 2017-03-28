@@ -1306,7 +1306,7 @@ function removeentity(id, thetype, undoing)
 	if id == nil then
 		cons("###\nremoveentity: trying to remove nil entity ID: " .. id .. "!\n###")
 		return
-	elseif entitydata[id] then
+	elseif entitydata[id] == nil then
 		cons("###\nremoveentity: trying to remove nil entity: entitydata[" .. id .. "]!\n###")
 		return
 	end
