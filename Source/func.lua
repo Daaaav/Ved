@@ -1766,7 +1766,7 @@ function handleScrolling(viakeyboard, mkinput)
 				end
 			end
 		elseif state == 15 then
-			if x <= 25*8 then
+			if love.mouse.getX() <= 25*8 then
 				if direction == "u" then
 					helplistscroll = helplistscroll + distance
 					if helplistscroll > 0 then
@@ -1779,7 +1779,7 @@ function handleScrolling(viakeyboard, mkinput)
 						helplistscroll = math.min(-upperbound, 0)
 					end
 				end
-			elseif x >= 25*8+8 then
+			elseif love.mouse.getX() >= 25*8+8 then
 				if direction == "u" then
 					helparticlescroll = helparticlescroll + distance
 					if helparticlescroll > 0 then
@@ -1787,7 +1787,9 @@ function handleScrolling(viakeyboard, mkinput)
 					end
 				elseif direction == "d" then
 					helparticlescroll = helparticlescroll - distance
-					local upperbound = ((#helparticlecontent*10)-(love.graphics.getHeight()-32)) -- scrollableHeight - visiblePart
+					-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
+					-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
+					local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 					if -helparticlescroll > upperbound then
 						helparticlescroll = math.min(-upperbound, 0)
 					end
