@@ -217,7 +217,7 @@ function love.errhand(msg)
 				return
 			elseif e == "keypressed" and (a == "escape") then
 				return
-			elseif e == "keypressed" and a == "c" and keyboard_eitherIsDown(ctrl) then
+			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
 			elseif e == "keypressed" and a == "s" and metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 				if editingmap == "untitled\n" or editingmap == nil then
@@ -456,7 +456,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				end
 				
 				return
-			elseif e == "keypressed" and a == "c" and keyboard_eitherIsDown(ctrl) then
+			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
 			--[[
 			elseif e == "keypressed" and a == "s" then
