@@ -1,6 +1,6 @@
 checkver, nohttps = ...
 
-local requesturl = "tolp2.nl/ved/version.php?sys=2&ver=" .. checkver
+local requesturl = "tolp.nl/ved/version.php?sys=2&ver=" .. checkver
 
 verchannel = love.thread.getChannel("version")
 

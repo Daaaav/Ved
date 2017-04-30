@@ -20,10 +20,10 @@ On Linux, you need to use the source version, see the instructions above. If you
 You can report bugs, make feature requests or ask questions on the [Idea Informer](http://ved.idea.informer.com/?show_all=0&show_idea=1&show_error=1&show_question=1&show_thank=1&show_expect=1&show_inproc=1&show_shedule=1&show_deliver=1&show_complete=1&show_when=0&orderby=2&orderasc=0). Or, if you prefer, you may use the Issues system on this repository. You can also contact me on the forums, Discord, FlockMod and whatnot, but there's a chance I'll lose track of it.
 
 # Changelog
-The official changelog can be found [here](https://tolp2.nl/ved/?p=download).
+The official changelog can be found [here](https://tolp.nl/ved/?p=download).
 
 # Developing plugins
-For more information about developing plugins, please check [https://tolp2.nl/ved/plugins.php](https://tolp2.nl/ved/plugins.php).
+For more information about developing plugins, please check [https://tolp.nl/ved/plugins.php](https://tolp.nl/ved/plugins.php).
 
 # Translating
-If you'd like to translate Ved into your own language, please send me a PM on the tOLP forum, the Distractionware forum, or post a message in one of the relevant topics/board on there, or you can contact me via the tOLP Discord server or FlockMod. If you don't know where to find any of these: tOLP is [here](https://tolp2.nl/forum/index.php), Distractionware is [here](http://distractionware.com/forum/index.php), the Discord server can be found [here](https://discord.gg/0r76El7PzkPMhSBF) and the drawing room is [here](http://vvvvvv-room.tk/room/).
+If you'd like to translate Ved into your own language, please send me a PM on the tOLP forum, the Distractionware forum, or post a message in one of the relevant topics/board on there, or you can contact me via the tOLP Discord server or FlockMod. If you don't know where to find any of these: tOLP is [here](https://tolp.nl/forum/index.php), Distractionware is [here](http://distractionware.com/forum/index.php), the Discord server can be found [here](https://discord.gg/0r76El7PzkPMhSBF) and the drawing room is [here](http://vvvvvv-room.tk/room/).
