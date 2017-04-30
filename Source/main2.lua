@@ -103,6 +103,8 @@ function love.load()
 	mousepressed = false -- for some things
 	
 	temporaryroomnametimer = 0
+	generictimer = 0
+	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script button
 	
 	scriptsearchterm = ""
 	
@@ -829,6 +831,11 @@ function love.update(dt)
 	-- The timing for this doesn't really matter
 	if temporaryroomnametimer > 0 then
 		temporaryroomnametimer = temporaryroomnametimer - 1
+	end
+	
+	-- The generic timer will be precise, though!
+	if generictimer > 0 then
+		generictimer = generictimer - dt
 	end
 	
 	if state == 1 and sp_t ~= 0 and not sp_go then

@@ -2116,4 +2116,9 @@ function textshadow(text, x, y, largefont)
 	love.graphics.setColor(255,255,255,255)
 end
 
+function setgenerictimer(mode, sec)
+	generictimer = sec
+	generictimer_mode = mode
+end
+
 hook("func")

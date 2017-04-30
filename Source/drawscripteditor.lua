@@ -89,7 +89,7 @@ function drawscripteditor()
 		rbutton(L.OPEN, 2)
 	end
 	love.graphics.printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*3)+4+2, 128-16, "center")
-	rbutton(L.COPYSCRIPT, 4)
+	rbutton(L.COPYSCRIPT, 4, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
 	if not PleaseDo3DSHandlingThanks then
 		rbutton(L.SCRIPTSPLIT, 5)
 	end
@@ -161,6 +161,7 @@ function drawscripteditor()
 		elseif onrbutton(4) then
 			-- Copy script
 			love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+			setgenerictimer(1, .25)
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(5) then
 			-- Split scripts
 			startmultiinput({""})
