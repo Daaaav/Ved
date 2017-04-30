@@ -41,7 +41,7 @@ function loadlevel(path)
 	end
 	
 	local x = {}
-	local mycount = {trinkets = 0, crewmates = 0, entities = 0, startpoint = nil, FC = 0} -- FC = Failed Checks
+	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
 	FClist = {}
 
 	-- First do the metadata.
@@ -258,6 +258,8 @@ function loadlevel(path)
 				cons_fc(langkeys(L.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}))
 			end
 		end
+		-- See this as MySQL's AUTO_INCREMENT
+		mycount.entity_ai = entityid + 1
 	else
 		--.
 	end
@@ -662,7 +664,7 @@ function createblanklevel(lvwidth, lvheight)
 	-- - All: X X
 	
 	-- Dit blijft zo
-	mycount = {trinkets = 0, crewmates = 0, entities = 0, startpoint = nil}
+	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil}
 	
 	-- First do the metadata.
 	cons("Loading metadata...")

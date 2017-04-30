@@ -774,15 +774,15 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 						count.crewmates = count.crewmates + 1
 					end
 					
-					-- How could I forget this?
-					count.entities = count.entities + 1
-					
 					-- I could have been busy debugging this for a long time.
 					local localcopy = table.copy(v)
 					localcopy.x = localcopy.x + (40*roomxdiff)
 					localcopy.y = localcopy.y + (30*roomydiff)
-					table.insert(entitydata, localcopy)
+					table.insert(entitydata, count.entity_ai, localcopy)
 					localcopy = nil
+					
+					count.entities = count.entities + 1
+					count.entity_ai = count.entity_ai + 1
 				end
 			end
 		end
@@ -1294,7 +1294,7 @@ end
 
 function entityplaced(id)
 	if id == nil then
-		id = #entitydata
+		id = count.entity_ai
 	end
 	
 	table.insert(undobuffer, {undotype = "addentity", rx = roomx, ry = roomy, entid = id, addedentitydata = table.copy(entitydata[id])})

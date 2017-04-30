@@ -430,7 +430,7 @@ function drawmaineditor()
 				-- Same code in dialog.lua for accepting adding a 21st trinket
 				cons("Trinket: " .. atx .. " " .. aty)
 				
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -442,6 +442,7 @@ function drawmaineditor()
 				entityplaced()
 				count.trinkets = count.trinkets + 1
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 					
 				if not love.keyboard.isDown("v") then
 					mousepressed = true
@@ -453,7 +454,7 @@ function drawmaineditor()
 			
 			if selectedsubtool[5] == 1 then
 				-- Upright
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -463,7 +464,7 @@ function drawmaineditor()
 					})
 			elseif selectedsubtool[5] == 2 then
 				-- Upside down
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -475,13 +476,14 @@ function drawmaineditor()
 			
 			entityplaced()
 			count.entities = count.entities + 1
+			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 6 then
 			-- Disappearing platform
 			cons("Disappear: " .. atx .. " " .. aty)
 			
-			table.insert(entitydata,
+			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
 				y = 30*roomy + aty,
@@ -492,13 +494,14 @@ function drawmaineditor()
 				
 			entityplaced()
 			count.entities = count.entities + 1
+			count.entity_ai = count.entity_ai + 1
 				
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 7 then
 			-- Conveyor
 			cons("Conveyor: " .. atx .. " " .. aty)
 			
-			table.insert(entitydata,
+			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
 				y = 30*roomy + aty,
@@ -509,6 +512,7 @@ function drawmaineditor()
 			
 			entityplaced()
 			count.entities = count.entities + 1
+			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 8 then
@@ -523,7 +527,7 @@ function drawmaineditor()
 			else
 				cons("Moving: " .. atx .. " " .. aty)
 				
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -534,6 +538,7 @@ function drawmaineditor()
 				
 				entityplaced()
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 			end
 			
 			mousepressed = true
@@ -549,7 +554,7 @@ function drawmaineditor()
 			else
 				cons("Enemy: " .. atx .. " " .. aty)
 				
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -560,6 +565,7 @@ function drawmaineditor()
 				
 				entityplaced()
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 			end
 			
 			mousepressed = true
@@ -593,7 +599,7 @@ function drawmaineditor()
 						linelength = 8 * (42-startat) - 8
 					end
 					
-					table.insert(entitydata,
+					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
@@ -628,7 +634,7 @@ function drawmaineditor()
 						linelength = 8 * (32-startat) - 8
 					end
 					
-					table.insert(entitydata,
+					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
@@ -640,6 +646,7 @@ function drawmaineditor()
 				
 				entityplaced()
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 				
 				startat = nil
 				linelength = nil
@@ -655,7 +662,7 @@ function drawmaineditor()
 			
 			cons("Roomtext: " .. atx .. " " .. aty)
 			
-			table.insert(entitydata,
+			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
 				y = 30*roomy + aty,
@@ -664,11 +671,12 @@ function drawmaineditor()
 				data = L.BUG
 				})
 				
-			editingroomtext = #entitydata
+			editingroomtext = count.entity_ai
 			makescriptroomtext = false
 			startinput()
 			
 			count.entities = count.entities + 1
+			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 12 then
@@ -680,7 +688,7 @@ function drawmaineditor()
 			
 			cons("Terminal: " .. atx .. " " .. aty)
 			
-			table.insert(entitydata,
+			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
 				y = 30*roomy + aty,
@@ -689,11 +697,12 @@ function drawmaineditor()
 				data = "stop"
 				})
 				
-			editingroomtext = #entitydata
+			editingroomtext = count.entity_ai
 			makescriptroomtext = true
 			startinput()
 			
 			count.entities = count.entities + 1
+			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 13 then
@@ -703,7 +712,7 @@ function drawmaineditor()
 			-- Subtool is changed in the background
 			if selectedsubtool[13] == 1 then
 				-- Placing top left corner.
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -711,26 +720,29 @@ function drawmaineditor()
 					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
 					data = "stop"
 					})
-				editingsboxid = #entitydata
+				editingsboxid = count.entity_ai
 				selectedsubtool[13] = 2
 				
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 				
 				mousepressed = true
 			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 				-- Placing bottom right corner
 				entitydata[editingsboxid].p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
 				entitydata[editingsboxid].p2 = math.max((30*roomy + aty) - entitydata[editingsboxid].y + 1, 1)
-				editingsboxid = nil
-				selectedsubtool[13] = 1
 				
 				if not sboxdontaskname then
-					editingroomtext = #entitydata
+					editingroomtext = editingsboxid
 					makescriptroomtext = true
 					startinput()
 				else
 					-- Register entity change for undo/redo
 				end
+				
+				editingsboxid = nil
+				selectedsubtool[13] = 1
+				
 				sboxdontaskname = nil
 				
 				mousepressed = true
@@ -763,7 +775,7 @@ function drawmaineditor()
 			
 			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and entitydata[warpid] == nil) then
 				-- Placing entrance.
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -771,7 +783,11 @@ function drawmaineditor()
 					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
 					data = ""
 					})
-				warpid = #entitydata
+				warpid = count.entity_ai
+				
+				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
+				
 				selectedsubtool[14] = 2
 			elseif selectedsubtool[14] == 2 or selectedsubtool[14] == 4 then
 				-- Placing exit, or moving exit
@@ -801,8 +817,6 @@ function drawmaineditor()
 			else
 				dialog.new(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)", "", 1, 1, 0)
 			end
-			
-			count.entities = count.entities + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 15 then
@@ -839,7 +853,7 @@ function drawmaineditor()
 						linelength = 8 * (32-startat) - 8
 					end
 					
-					table.insert(entitydata,
+					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
@@ -849,6 +863,7 @@ function drawmaineditor()
 						})
 					entityplaced()
 					count.entities = count.entities + 1
+					count.entity_ai = count.entity_ai + 1
 					
 					mousepressed = true
 				elseif aty == 0 or aty == 29 then
@@ -876,7 +891,7 @@ function drawmaineditor()
 						linelength = 8 * (42-startat) - 8
 					end
 					
-					table.insert(entitydata,
+					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
@@ -886,6 +901,7 @@ function drawmaineditor()
 						})
 					entityplaced()
 					count.entities = count.entities + 1
+					count.entity_ai = count.entity_ai + 1
 					
 					mousepressed = true
 				end
@@ -905,7 +921,7 @@ function drawmaineditor()
 			else
 				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
 			
-				table.insert(entitydata,
+				table.insert(entitydata, count.entity_ai,
 					{
 					x = 40*roomx + atx,
 					y = 30*roomy + aty,
@@ -917,6 +933,7 @@ function drawmaineditor()
 					
 				count.crewmates = count.crewmates + 1
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 			end
 			
 			mousepressed = true
@@ -953,7 +970,7 @@ function drawmaineditor()
 				count.entities = count.entities + 1
 			end
 			
-			table.insert(entitydata,
+			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
 				y = 30*roomy + aty,
@@ -962,7 +979,8 @@ function drawmaineditor()
 				data = ""
 				})
 					
-				count.startpoint = #entitydata
+			count.startpoint = #entitydata
+			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
