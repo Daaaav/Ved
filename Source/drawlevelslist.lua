@@ -9,7 +9,9 @@ function drawlevelslist()
 	love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
 	
 	if lerror ~= 0 then
+		love.graphics.setColor(255,128,0)
 		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-16, "left")
+		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil
 		local k2 = 1
