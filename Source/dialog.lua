@@ -267,6 +267,13 @@ function dialog.update()
 					
 				--v elseif
 				if (tonumber(multiinput[7]) ~= nil and tonumber(multiinput[8]) ~= nil) then
+					if (tonumber(multiinput[7]) < 1) then
+						multiinput[7] = 1
+					end
+					if (tonumber(multiinput[8]) < 1) then
+						multiinput[8] = 1
+					end
+
 					if (tonumber(multiinput[7]) > 20) or (tonumber(multiinput[8]) > 20) then
 						-- Ok hold on a second. Do you really want that?
 						if s.allowlimitbypass then
