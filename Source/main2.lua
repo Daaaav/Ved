@@ -369,6 +369,14 @@ function love.draw()
 		end
 	elseif state == 9 then
 		love.graphics.print(youdidanswer .. "\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
+
+		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
+		vvvvvv_textbox("red", 0, 50, {"Red"})
+		vvvvvv_textbox("yellow", 0, 75, {"Yellow"})
+		vvvvvv_textbox("green", 0, 100, {"Green"})
+		vvvvvv_textbox("blue", 0, 125, {"Blue"})
+		vvvvvv_textbox("purple", 0, 150, {"Purple"})
+		vvvvvv_textbox("gray", 0, 175, {"Gray"})
 	elseif state == 10 then
 		--[[
 		j = -1

@@ -2128,15 +2128,4 @@ function setgenerictimer(mode, sec)
 	generictimer_mode = mode
 end
 
--- Display a script box like in a VVVVVV cutscene.
--- text is a table with the lines.
-function display_textbox(color, x, y, text)
-	maxwidth = 0
-	for k,v in pairs(text) do
-		if v:len() > maxwidth then
-			maxwidth = v:len()
-		end
-	end
-end
-
 hook("func")
