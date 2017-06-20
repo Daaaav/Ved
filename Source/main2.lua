@@ -1804,6 +1804,24 @@ function love.keypressed(key)
 		elseif key == "g" then
 			startscriptgotoline()
 		end
+	elseif state == 3 and key == "tab" then
+		matching = {}
+
+		for k,v in pairs(knowncommands) do
+			if k:sub(1, input:len()) == input then
+				table.insert(matching, k)
+			end
+		end
+		for k,v in pairs(knowninternalcommands) do
+			if k:sub(1, input:len()) == input then
+				table.insert(matching, k)
+			end
+		end
+
+		if #matching == 1 then
+			input = matching[1]
+			scriptlines[editingline] = input
+		end
 	elseif (state == 6) and key == "return" and tabselected == 0 then
 		state6load(input)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then

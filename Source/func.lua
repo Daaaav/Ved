@@ -613,6 +613,13 @@ function loadtileset(file)
 	tilesets[file]["tilesheight"] = tilesets[file]["height"]/8  -- 16
 	
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
+
+	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
+	asimgdata = tilesets[file]["img"]:getData()
+	asimgdata:mapPixel(function(x, y, r, g, b, a)
+		return 255, 255, 255, a
+	end)
+	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata)
 	
 	tilesets[file]["tiles"] = {}
 	
@@ -2119,6 +2126,17 @@ end
 function setgenerictimer(mode, sec)
 	generictimer = sec
 	generictimer_mode = mode
+end
+
+-- Display a script box like in a VVVVVV cutscene.
+-- text is a table with the lines.
+function display_textbox(color, x, y, text)
+	maxwidth = 0
+	for k,v in pairs(text) do
+		if v:len() > maxwidth then
+			maxwidth = v:len()
+		end
+	end
 end
 
 hook("func")
