@@ -886,8 +886,8 @@ function vvvvvv_textbox(color, x, y, text)
 	end
 
 	-- Coordinate corrections, consistent with VVVVVV
-	x = math.max(x, 10)
-	y = math.max(y, 10)
+	x = math.min(math.max(x, 10), 294-(maxwidth*8)) -- VVVVVV always has a padding of 10 pixels. 320-10-16 since the left and right edges are always there
+	y = math.min(math.max(y, 10), 214-(#text*8)) -- 240-10-16
 
 	x = (screenoffset/2) + x
 
