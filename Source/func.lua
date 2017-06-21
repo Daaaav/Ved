@@ -567,6 +567,29 @@ function loadstate(new, extradata)
 	end
 end
 
+-- Go to state allocated by a plugin
+function to_astate(name, new, dontinitialize)
+	if new == nil then
+		new = 0
+	end
+	assert(state_allocations[name] ~= nil, "No states have been allocated for '" .. name .. "'")
+	assert(new <= state_allocations[name][2], "State " .. new .. " is beyond upper bound for '" .. name .. "', only " .. state_allocations[name][2] .. " allocated (starting at 0)")
+
+	if dontinitialize == nil then
+		dontinitialize = false
+	end
+
+	oldstate = state
+	state = anythingbutnil0(state_allocations[name][1] + new)
+	if not dontinitialize then
+		cons("State changed: " .. oldstate .. " => " .. name .. "." .. new .. "(" .. state .. ") (inited)")
+		-- Now load the state!
+		hook("func_loadstate")
+	else
+		cons("State changed: " .. oldstate .. " => " .. name .. "." .. new .. "(" .. state .. ") (not initialized)")
+	end
+end
+
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------

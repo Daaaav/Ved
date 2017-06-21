@@ -313,6 +313,36 @@ function ved_require(reqfile)
 	end
 end
 
+-- Plugins can allocate a number of states for their use, without clashing with other plugins
+state_allocations = {} -- contains: {start, max}
+state_alloc_pointer = 100
+
+function allocate_states(name, amount)
+	if amount == nil then
+		amount = 1
+	end
+	--assert(name == nil or amount == nil, "Attempt to allocate nil states, or attempt to allocate states for name nil") -- That crash will happen anyway
+	assert(state_allocations[name] == nil, "Attempt to allocate states for '" .. name .. "' multiple times")
+	assert(type(amount) == "number", "Attempt to allocate an amount of states for '" .. name .. "' that is " .. type(amount))
+	assert(math.floor(amount) == amount, "Attempt to allocate a non-integer amount of states (" .. amount .. ") for '" .. name .. "'")
+	assert(amount >= 0, "Attempt to allocate a negative amount of states (" .. amount .. ") for '" .. name .. "'")
+
+	print("Registering " .. amount .. " state(s) for '" .. name .. "' (" .. state_alloc_pointer .. "-" .. (state_alloc_pointer+amount-1) .. ")")
+
+	state_allocations[name] = {state_alloc_pointer, amount-1}
+	state_alloc_pointer = state_alloc_pointer + amount
+end
+
+function in_astate(name, s)
+	if s == nil then
+		s = 0
+	end
+	assert(state_allocations[name] ~= nil, "No states have been allocated for '" .. name .. "'")
+	assert(s <= state_allocations[name][2], "State " .. s .. " is beyond upper bound for '" .. name .. "', only " .. state_allocations[name][2] .. " allocated (starting at 0)")
+
+	return state == state_allocations[name][1] + s
+end
+
 function escapegsub_plugin(invoer) -- Almost the same as the one in func.lua, but different. (no :lower() and no ])
 	return invoer:gsub("%%", "%%%%"):gsub("%(", "%%%("):gsub("%)", "%%%)"):gsub("%.", "%%%."):gsub("%+", "%%%+"):gsub("%-", "%%%-"):gsub("%*", "%%%*"):gsub("%?", "%%%?"):gsub("%[", "%%%["):gsub("%]", "%%%]"):gsub("%^", "%%%^"):gsub("%$", "%%%$")
 end
