@@ -116,6 +116,8 @@ function love.load()
 	-- Dialogs. To not have an active window, set DIAwindowani to 16. To show one, just call dialog.new(message, title, showbar, canclose, questionid). -15 ~ -1 opening, 0 is normal, 1 ~ 15 closing
 	dialog.init()
 	nodialog = true
+
+	vvvvvv_textboxes = {}
 	
 	tilesets = {}
 	
@@ -377,6 +379,10 @@ function love.draw()
 		vvvvvv_textbox("blue", 0, 125, {"Blue"})
 		vvvvvv_textbox("purple", 0, 150, {"Purple"})
 		vvvvvv_textbox("gray", 0, 175, {"Gray"})
+
+		for k,v in pairs(vvvvvv_textboxes) do
+			vvvvvv_textbox(unpack(v))
+		end
 	elseif state == 10 then
 		--[[
 		j = -1
@@ -2115,6 +2121,9 @@ function love.mousepressed(x, y, button)
 		state6load(hoveringlevel)
 	elseif state == 9 and button == "r" then -- TEST STATE
 		rightclickmenu.create({"Delete", "Edit script", "Rename"}, "1")
+	elseif state == 9 and button == "l" and nodialog then
+		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
+		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
 	else
 		handleScrolling(false, button)
 	end
