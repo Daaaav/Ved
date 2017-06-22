@@ -446,7 +446,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			if e == "quit" then
 				love.event.quit()
 				return
-			elseif e == "keypressed" and (a == "escape") then
+			elseif e == "keypressed" and (a == "escape" or a == "return") then
 				love.graphics.setBackgroundColor(0,0,0)
 				love.graphics.clear()
 				
@@ -469,16 +469,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				DIAreturn = 1
 				DIAquitting = 1
 			]]
-			elseif e == "keypressed" and a == "return" then
-				love.graphics.setBackgroundColor(0,0,0)
-				love.graphics.clear()
-				
-				-- And again
-				if love.graphics.setDefaultFilter ~= nil then
-					love.graphics.setDefaultFilter("nearest", "nearest")
-				end
-				
-				return
 			end
 		end
  
