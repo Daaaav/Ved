@@ -172,16 +172,26 @@ function loadplugins()
 						
 						-- Including any files?
 						if love.filesystem.exists(pluginpath .. "/include") then
-							thesefiles = love.filesystem.getDirectoryItems(pluginpath .. "/include")
-							
-							for k2,v2 in pairs(thesefiles) do
-								filename = v2:sub(1, -5)
+							plugin_includefrom = function(dir)
+								thesefiles = love.filesystem.getDirectoryItems(pluginpath .. "/include" .. dir)
 								
-								pluginincludes[filename] = pluginpath .. "/include/" .. filename
-								
-								print("Included " .. v2)
+								for k2,v2 in pairs(thesefiles) do
+									if love.filesystem.isDirectory(pluginpath .. "/include" .. dir .. "/" .. v2) then
+										-- Do this directory as well!
+										plugin_includefrom(dir .. "/" .. v2)
+									else
+										filename = dir:sub(2, -1) .. "/" .. v2:sub(1, -5)
+
+										pluginincludes[filename] = pluginpath .. "/include/" .. filename
+
+										print("Included " .. filename)
+									end
+								end
 							end
+
+							plugin_includefrom("")
 						end
+						plugin_includefrom = nil
 					else
 						-- Unrecognized, this Ved must've been released before anyone heard of the minimum version for this plugin!
 						plugins[pluginname].info.supported = false
