@@ -812,7 +812,7 @@ function love.draw()
 end
 
 function love.update(dt)
-	hook("love_update_start")
+	hook("love_update_start", {dt})
 	--print(anythingbutnil0(context) .. " " .. anythingbutnil0(carg1) .. " " .. anythingbutnil0(carg2))
 
 	if takinginput or sp_t > 0 then
@@ -1184,7 +1184,7 @@ function love.update(dt)
 		RCMreturn = ""
 	end
 	
-	hook("love_update_end")
+	hook("love_update_end", {dt})
 	
 	dialog.update()
 	boxupdate()
@@ -1225,10 +1225,7 @@ function love.textinput(char)
 end
 
 function love.keypressed(key)
-	-- Global argument for hooks
-	_G.key = key
-
-	hook("love_keypressed_start")
+	hook("love_keypressed_start", {key})
 
 	-- Your privacy is respected.
 	keyva.keypressed(key)
@@ -1982,10 +1979,7 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
-	-- Global argument for hooks
-	_G.key = key
-
-	hook("love_keyreleased_start")
+	hook("love_keyreleased_start", {key})
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b") then
 		if selectedtool == 1 or selectedtool == 2 or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4) or ((selectedtool == 5 or selectedtool == 10) and oldzxsubtool <= 2) then
@@ -2018,12 +2012,7 @@ function love.mousepressed(x, y, button)
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
 	
-	-- Global argument for hooks
-	_G.x = x
-	_G.y = y
-	_G.button = button
-	
-	hook("love_mousepressed_start")
+	hook("love_mousepressed_start", {x, y, button})
 	
 
 	if (DIAwindowani ~= 16) and (DIAbar == 1) and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
@@ -2146,13 +2135,8 @@ function love.mousereleased(x, y, button)
 	if s.pscale ~= 1 then
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
-	
-	-- Global argument for hooks
-	_G.x = x
-	_G.y = y
-	_G.button = button
-	
-	hook("love_mousereleased_start")
+
+	hook("love_mousereleased_start", {x, y, button})
 	
 	
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then

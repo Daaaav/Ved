@@ -552,13 +552,9 @@ function loadstate(new, extradata)
 	elseif new == 25 then
 		editingcolor = nil
 	end
-	
-	-- Make this global so hooks can use it
-	_G.new = new
-	_G.extradata = extradata
-	
+
 	hook("func_loadstate")
-	
+
 	if mapscreenshot ~= nil then
 		mapscreenshot = nil
 

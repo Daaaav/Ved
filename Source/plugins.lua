@@ -205,10 +205,13 @@ function loadplugins()
 	print("--Finished loading plugins.")
 end
 
-function hook(hookname)
+function hook(hookname, vars)
 	if hooks[hookname] ~= nil then
+		if vars == nil then
+			vars = {}
+		end
 		for k,v in pairs(hooks[hookname]) do
-			v()
+			v(unpack(vars))
 		end
 	end
 end
