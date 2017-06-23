@@ -873,11 +873,11 @@ function love.update(dt)
 		end
 		
 		if allowdebug then
-			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "i" or "") .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v0." .. (love.graphics.ellipse == nil and 9 or 10) .. " ]")
+			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v0." .. (love.graphics.ellipse == nil and 9 or 10) .. " ]")
 		elseif s.showfps then
-			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "i" or "") .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
+			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
 		else
-			local newtitle = title_editingmap .. "Ved v" .. ver .. (intermediate_version and "i" or "")
+			local newtitle = title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "")
 			if newtitle ~= savedwindowtitle then
 				love.window.setTitle(newtitle)
 				savedwindowtitle = newtitle
