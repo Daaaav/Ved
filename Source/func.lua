@@ -283,11 +283,6 @@ function startmultiinput(usethese)
 end
 
 function tostate(new, dontinitialize, extradata)
-	if new == "c" then
-		-- Crash on purpose
-		_ = "" .. PurposefullyCrashed
-	end
-
 	if dontinitialize == nil then
 		dontinitialize = false
 	end
