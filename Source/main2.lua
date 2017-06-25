@@ -1198,7 +1198,8 @@ function love.textinput(char)
 
 	-- Ved should really only accept printable ASCII only when typing...
 	if s.acceptutf8 or (state == 13 or state == 15 or char:byte(2, 2) == nil) then
-		if takinginput then
+		-- Textual input isn't needed with a dialog on the screen, we have multiinput
+		if takinginput and DIAwindowani == 16 then
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
 			else
