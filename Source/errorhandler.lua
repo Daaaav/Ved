@@ -28,8 +28,44 @@ ERR_SAVEERROR = "Save error! %s"
 function error_printer(msg, layer)
 	--print((debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end
- 
+
 function love.errhand(msg)
+	local status, err = pcall(ved_showerror, msg)
+
+	if not status then
+		-- What, the crash screen has also crashed! Maybe a very basic crash screen doesn't?
+		if type(msg) ~= "string" then
+			msg = "[msg not string]"
+		end
+		if type(err) ~= "string" then
+			err = "[err not string]"
+		end
+
+		print("* * * B O N U S   E R R O R * * *\n" .. msg .. " / " .. err)
+
+		love.graphics.reset()
+		love.graphics.origin()
+		love.graphics.clear(0,0,0)
+		love.graphics.setColor(255,0,0)
+		love.graphics.printf("Ved's crash screen has crashed.\n\n" .. msg .. "\n\n" .. err, 10, 10, love.graphics.getWidth()-20, "left")
+		love.graphics.present()
+		while true do
+			love.event.pump()
+
+			for e, a, b, c in love.event.poll() do
+				if e == "quit" then
+					return
+				end
+			end
+
+			if love.timer then
+				love.timer.sleep(1/60)
+			end
+		end
+	end
+end
+
+function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
 	
 	if anythingbutnil == nil then
@@ -51,13 +87,13 @@ function love.errhand(msg)
 	if ctrl == nil then
 		ctrl = "ctrl"
 	end
- 
+
 	error_printer(msg, 2)
- 
+
 	if not love.window or not love.graphics or not love.event then
 		return
 	end
- 
+
 	-- Reset state.
 	if love.mouse then
 		love.mouse.setVisible(true)
@@ -82,17 +118,17 @@ function love.errhand(msg)
 	
 	font8 = love.graphics.newFont("Space Station.ttf", 8)
 	font16 = love.graphics.newFont("Space Station.ttf", 16)
- 
+
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
 	love.graphics.setColor(255, 255, 255, 255)
- 
+
 	--local trace = debug.traceback()
 	local trace = ""
-  
+
 	love.graphics.clear(love.graphics.getBackgroundColor())
 	love.graphics.origin()
- 
+
 	local err = {}
 	
 	if ctrl == nil then
@@ -120,7 +156,7 @@ function love.errhand(msg)
 			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
 		end
 	end
- 
+
 	table.insert(err, ERR_PLEASETELLDAV)
 	--[[
 	table.insert(err, "    " .. msg:gsub("\n", ".") .. "\n") --.."\n\n")
@@ -129,16 +165,16 @@ function love.errhand(msg)
 	table.insert(err, "    State: " .. (state == nil and "nil" or state) .. "\n")
 	]]
 	table.insert(err, "    " .. mainmessage)
- 
+
 	for l in string.gmatch(trace, "(.-)\n") do
 		if not string.match(l, "boot.lua") then
 			l = string.gsub(l, "stack traceback:", "Traceback\n")
 			table.insert(err, l)
 		end
 	end
- 
+
 	local p = table.concat(err, "\n")
- 
+
 	p = string.gsub(p, "\t", "")
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
 	
@@ -212,7 +248,7 @@ function love.errhand(msg)
 
 	while true do
 		love.event.pump()
- 
+
 		for e, a, b, c in love.event.poll() do
 			if e == "quit" then
 				return
@@ -262,7 +298,7 @@ function love.errhand(msg)
 
 		--update()
 		draw()
- 
+
 		if love.timer then
 			love.timer.sleep(1/60)
 		end
@@ -294,17 +330,17 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	
 	font8 = love.graphics.newFont("Space Station.ttf", 8)
 	font16 = love.graphics.newFont("Space Station.ttf", 16)
- 
+
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 128, 0)
 	love.graphics.setColor(255, 255, 255, 255)
- 
+
 	--local trace = debug.traceback()
 	local trace = ""
-  
+
 	love.graphics.clear(love.graphics.getBackgroundColor())
 	love.graphics.origin()
- 
+
 	local err = {}
 	
 	if ctrl == nil then
@@ -332,7 +368,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
 		end
 	end
- 
+
 	table.insert(err, ERR_PLEASETELLAUTHOR)
 	--[[
 	table.insert(err, "    " .. msg:gsub("\n", ".") .. "\n") --.."\n\n")
@@ -373,16 +409,16 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	table.insert(err, limitedlines .. "\n")
 	
 	table.insert(err, "\n\n\n" .. ERR_CONTINUE)
- 
+
 	for l in string.gmatch(trace, "(.-)\n") do
 		if not string.match(l, "boot.lua") then
 			l = string.gsub(l, "stack traceback:", "Traceback\n")
 			table.insert(err, l)
 		end
 	end
- 
+
 	local p = table.concat(err, "\n")
- 
+
 	p = string.gsub(p, "\t", "")
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
 	
@@ -442,7 +478,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	while true do
 		love.event.pump()
- 
+
 		for e, a, b, c in love.event.poll() do
 			if e == "quit" then
 				love.event.quit()
@@ -472,10 +508,10 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			]]
 			end
 		end
- 
+
 		--update()
 		draw()
- 
+
 		if love.timer then
 			love.timer.sleep(1/60)
 		end
