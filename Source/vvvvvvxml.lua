@@ -629,11 +629,11 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 end
 
 function xmlspecialchars(text)
-	return text:gsub("&", "&amp;"):gsub("\"", "&quot;"):gsub("'", "&apos;"):gsub("<", "&lt;"):gsub(">", "&gt;")
+	return text:gsub("&", "&amp;"):gsub("\"", "&quot;"):gsub("'", "&apos;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("^ ", "&#32;"):gsub(" $", "&#32;"):gsub("  ", " &#32;")
 end
 
 function unxmlspecialchars(text)
-	return text:gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&apos;", "'"):gsub("&quot;", "\""):gsub("&amp;", "&")
+	return text:gsub("&#32;", " "):gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&apos;", "'"):gsub("&quot;", "\""):gsub("&amp;", "&")
 end
 
 function despecialchars(text)
