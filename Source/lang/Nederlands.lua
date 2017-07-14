@@ -897,6 +897,7 @@ Scriptlĳst\gh#
 
 N¤  Nieuw script maken\C
 F¤  Ga naar vlaggenlĳst\C
+/¤  Ga naar bovenste/laatste script\C
 ]]
 },
 

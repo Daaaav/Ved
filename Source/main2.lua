@@ -1202,6 +1202,7 @@ function love.textinput(char)
 		if takinginput and DIAwindowani == 16 then
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
+			elseif (state == 3) and not nodialog and char == "/" then
 			else
 				input = input .. char
 			end
@@ -1864,6 +1865,11 @@ function love.keypressed(key)
 		dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
 	elseif state == 10 and key == "f" and nodialog then
 		tostate(19,false)
+	elseif state == 10 and key == "/" and nodialog then
+		if #scriptnames >= 1 then
+			scriptineditor(scriptnames[#scriptnames], #scriptnames)
+			nodialog = false -- Terrible
+		end
 	elseif state == 11 and key == "return" then
 		searchscripts, searchrooms, searchnotes = searchtext(input)
 		searchedfor = input

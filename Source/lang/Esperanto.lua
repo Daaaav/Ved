@@ -892,6 +892,7 @@ Script list\gh#
 
 N¤  Create new script\C
 F¤  Go to flags list\C
+/¤  Go to topmost/latest script\C
 ]]
 },
 
