@@ -979,7 +979,7 @@ function drawmaineditor()
 				data = ""
 				})
 					
-			count.startpoint = #entitydata
+			count.startpoint = count.entity_ai
 			count.entity_ai = count.entity_ai + 1
 			
 			mousepressed = true
