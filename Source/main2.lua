@@ -902,10 +902,10 @@ function love.update(dt)
 			editingbounds = 0
 		end
 		
-		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 and levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 3 then
-			warpbganimation = (warpbganimation + 3) % 32
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
+		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
 			warpbganimation = (warpbganimation + 2) % 64
+		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 then
+			warpbganimation = (warpbganimation + 3) % 32
 		end
 		
 		if vedmetadata == nil then
