@@ -87,6 +87,11 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
+	recentfiles =
+		{
+		default = {},
+		["type"] = "stringsarray",
+		},
 	syntaxcolor_command =
 		{
 		default = {124, 112, 218},
@@ -136,9 +141,31 @@ configs =
 
 function saveconfig()
 	--love.filesystem.write("settings.lua", 's.customvvvvvvdir = "' .. s.customvvvvvvdir .. '" -- do not include the directory called "levels" here, nor a trailing (back)slash\r\ns.language = "' .. s.language .. '"\r\ns.dialoganimations = ' .. boolstring(s.dialoganimations) .. '\ns.allowlimitbypass = ' .. boolstring(s.allowlimitbypass) .. '\ns.flipsubtoolscroll = ' .. boolstring(s.flipsubtoolscroll) .. '')
-	writagearr = {}
+	local writagearr = {}
 	for k,v in pairs(configs) do
-		table.insert(writagearr, "s." .. k .. " = " .. (v.type == "string" and "\"" .. ((s[k]):gsub("\\", "\\\\"):gsub("\"", "\\\"")) .. "\"" or (v.type == "bool" and boolstring(s[k]) or (v.type == "numbersarray" and "{" .. table.concat(s[k], ", ") .. "}" or s[k]))) .. (v.comment ~= nil and " -- " .. v.comment or ""))
+		local value
+		if v.type == "string" then
+			value = encodestring(s[k])
+		elseif v.type == "bool" then
+			value = boolstring(s[k])
+		elseif v.type == "numbersarray" then
+			value = "{" .. table.concat(s[k], ", ") .. "}"
+		elseif v.type == "stringsarray" then
+			value = "{"
+			local first = true
+			for k2,v2 in pairs(s[k]) do
+				if not first then
+					value = value .. ", "
+				else
+					first = false
+				end
+				value = value .. encodestring(v2)
+			end
+			value = value .. "}"
+		else
+			value = s[k]
+		end
+		table.insert(writagearr, "s." .. k .. " = " .. value .. (v.comment ~= nil and " -- " .. v.comment or ""))
 	end
 	love.filesystem.write("settings.lua", table.concat(writagearr, "\r\n"))
 end
@@ -146,10 +173,18 @@ end
 function boolstring(thebool)
 	if thebool == nil then
 		return "nil"
-	elseif thebool == true then
+	elseif thebool then
 		return "true"
 	else
 		return "false"
+	end
+end
+
+function encodestring(thestring)
+	if thestring == nil then
+		return "nil"
+	else
+		return "\"" .. ((thestring):gsub("\\", "\\\\"):gsub("\"", "\\\"")) .. "\""
 	end
 end
 
