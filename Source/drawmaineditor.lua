@@ -1,8 +1,8 @@
 function drawmaineditor()
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480) then
-		local atx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16)
-		local aty = math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
+		local aty = math.floor(getlockablemouseY() / 16)
 		
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
 		if love.mouse.isDown("l") and not mousepressed and selectedtool >= 4 and editingbounds == 0 then
@@ -1254,8 +1254,8 @@ function drawmaineditor()
 				if customsizemode <= 2 then
 					local dispx, dispy = "--", "--"
 					if mouseon(screenoffset, 0, 639, 480) then
-						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) + 1
-						dispy = 30-math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+						dispx = math.floor((getlockablemouseX()-screenoffset) / 16) + 1
+						dispy = 30-math.floor(getlockablemouseY() / 16)
 					end
 					temporaryroomname = langkeys(L.CUSTOMSIZE, {dispx, dispy})
 				elseif customsizemode == 3 then
@@ -1263,8 +1263,8 @@ function drawmaineditor()
 				elseif customsizemode == 4 then
 					local dispx, dispy = "--", "--"
 					if mouseon(screenoffset, 0, 639, 480) then
-						dispx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16) - customsizecoorx + 1
-						dispy = math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16) - customsizecoory + 1
+						dispx = math.floor((getlockablemouseX()-screenoffset) / 16) - customsizecoorx + 1
+						dispy = math.floor(getlockablemouseY() / 16) - customsizecoory + 1
 					end
 					temporaryroomname = langkeys(L.SELECTINGB, {dispx, dispy})
 				end
@@ -1314,8 +1314,8 @@ function drawmaineditor()
 	
 	-- Now display the cursor. If it's on the level
 	if nodialog and mouseon(screenoffset, 0, 639, 480) then
-		cursorx = math.floor(((love.keyboard.isDown("]") and mouselockx or love.mouse.getX())-screenoffset) / 16)
-		cursory = math.floor((love.keyboard.isDown("[") and mouselocky or love.mouse.getY()) / 16)
+		cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
+		cursory = math.floor(getlockablemouseY() / 16)
 		
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then

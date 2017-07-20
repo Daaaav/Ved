@@ -701,6 +701,15 @@ function mouseon(x, y, w, h)
 	end
 end
 
+function lockablemouseon(x, y, w, h)
+	-- Determines whether mouse is on a box with top left corner x1,y1 and width w and height h - but locked x and y (with [ or ]) is observed
+	if (getlockablemouseX() >= x) and (getlockablemouseX() < x+w) and (getlockablemouseY() >= y) and (getlockablemouseY() < y+h) then
+		return true
+	else
+		return false
+	end
+end
+
 function lefttoolscrollbounds()
 	if (lefttoolscroll < -368) then
 		lefttoolscroll = -368
@@ -2155,6 +2164,20 @@ function recentlyopened(levelname)
 		table.remove(s.recentfiles, 1)
 	end
 	saveconfig()
+end
+
+function getlockablemouseX()
+	if mouselockx == nil or mouselockx == -1 then
+		return love.mouse.getX()
+	end
+	return mouselockx
+end
+
+function getlockablemouseY()
+	if mouselocky == nil or mouselocky == -1 then
+		return love.mouse.getY()
+	end
+	return mouselocky
 end
 
 hook("func")

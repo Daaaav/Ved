@@ -399,7 +399,7 @@ function displaymapentities()
 end
 
 function entityrightclick(x, y, menuitems, newmenuid)
-	if love.mouse.isDown("r") and mouseon(x, y, 16, 16) then
+	if love.mouse.isDown("r") and lockablemouseon(x, y, 16, 16) then
 		rightclickmenu.create(menuitems, newmenuid)
 	end
 end
