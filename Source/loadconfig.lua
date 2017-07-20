@@ -175,11 +175,11 @@ end
 
 --- Handling of scaling options
 
-function windowfits(w, h, monitorres)
-	return w <= monitorres[1] and h <= monitorres[2]
-end
-
 do
+	local function windowfits(w, h, monitorres)
+		return w <= monitorres[1] and h <= monitorres[2]
+	end
+
 	local swidth = 896
 	
 	-- Maybe it's set for a smaller screen
