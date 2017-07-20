@@ -267,12 +267,15 @@ function dialog.update()
 					
 				--v elseif
 				if (tonumber(multiinput[7]) ~= nil and tonumber(multiinput[8]) ~= nil) then
+					-- Make sure we have a dimension, and that it isn't too interesting
 					if (tonumber(multiinput[7]) < 1) then
 						multiinput[7] = 1
 					end
 					if (tonumber(multiinput[8]) < 1) then
 						multiinput[8] = 1
 					end
+					-- Make sure our dimension has a precise width and height
+					multiinput[7], multiinput[8] = math.floor(multiinput[7]), math.floor(multiinput[8])
 
 					if (tonumber(multiinput[7]) > 20) or (tonumber(multiinput[8]) > 20) then
 						-- Ok hold on a second. Do you really want that?
