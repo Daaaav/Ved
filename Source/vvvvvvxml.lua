@@ -625,6 +625,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		dialog.new(L.MDENOTPASSED, "", 1, 1, 0)
 	end
 	
+	if success then
+		recentlyopened(path:sub(1, -8))
+	end
+
 	return success, iferrmsg
 end
 

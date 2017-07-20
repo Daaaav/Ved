@@ -1259,6 +1259,7 @@ function state6load(levelname)
 				oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
 			end
 		else
+			recentlyopened(editingmap)
 			tostate(1)
 		end
 	else
@@ -2140,6 +2141,20 @@ end
 function setgenerictimer(mode, sec)
 	generictimer = sec
 	generictimer_mode = mode
+end
+
+function recentlyopened(levelname)
+	for k,v in pairs(s.recentfiles) do
+		if v == levelname then
+			table.remove(s.recentfiles, k)
+			break
+		end
+	end
+	table.insert(s.recentfiles, levelname)
+	while #s.recentfiles > 5 do
+		table.remove(s.recentfiles, 1)
+	end
+	saveconfig()
 end
 
 hook("func")
