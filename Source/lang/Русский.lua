@@ -430,6 +430,7 @@ ERR_PLUGINSNOTLOADED = "(не загружено)"
 ERR_PLUGINSNONE = "(нет)"
 ERR_PLEASETELLDAV = "Пожалуйста, расскажите Dav999 об этой проблеме.\n\n\nДетали: (нажмите Ctrl+C/CMD+C чтобы скопировать в буфер обмена)\n\n"
 ERR_INTERMEDIATE = " (intermediate version)"
+ERR_TOONEW = " (too new)"
 
 ERR_PLUGINERROR = "Ошибка плагина!"
 ERR_FILE = "Файл для редактирования:"

@@ -431,6 +431,7 @@ ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
 ERR_PLEASETELLDAV = "Bonvolu raportu al Dav999 pri la problemo.\n\n\nDetaloj: (premu ctrl+C/cmd+C por kopii al la tondejo)\n\n"
 ERR_INTERMEDIATE = " (intermediate version)"
+ERR_TOONEW = " (too new)"
 
 ERR_PLUGINERROR = "Eraro de aldonaĵo!"
 ERR_FILE = "Dosiero redaktata:"

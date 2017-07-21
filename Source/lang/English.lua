@@ -430,6 +430,7 @@ ERR_PLUGINSNOTLOADED = "(not loaded)"
 ERR_PLUGINSNONE = "(none)"
 ERR_PLEASETELLDAV = "Please tell Dav999 about this problem.\n\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
 ERR_INTERMEDIATE = " (intermediate version)"
+ERR_TOONEW = " (too new)"
 
 ERR_PLUGINERROR = "Plugin error!"
 ERR_FILE = "File to be edited:"

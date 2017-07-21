@@ -430,6 +430,7 @@ ERR_PLUGINSNOTLOADED = "(niet geladen)"
 ERR_PLUGINSNONE = "(geen)"
 ERR_PLEASETELLDAV = "Vertel Dav999 alsjeblieft over dit probleem.\n\n\nDetails: (druk ctrl/cmd+C om naar het klembord te kopiëren)\n\n"
 ERR_INTERMEDIATE = " (tussenversie)"
+ERR_TOONEW = " (te nieuw)"
 
 ERR_PLUGINERROR = "Pluginfout!"
 ERR_FILE = "Bestand om te bewerken:"
