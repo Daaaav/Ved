@@ -136,7 +136,7 @@ function ved_showerror(msg)
 	end
 	
 	
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " v0." .. (love.graphics.ellipse == nil and 9 or 10) .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 	
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
