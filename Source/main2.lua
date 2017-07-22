@@ -873,7 +873,7 @@ function love.update(dt)
 		end
 		
 		if allowdebug then
-			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v0." .. (love.graphics.ellipse == nil and 9 or 10) .. " ]")
+			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v" .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. " ]")
 		elseif s.showfps then
 			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
 		else
