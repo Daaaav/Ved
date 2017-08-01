@@ -56,7 +56,7 @@ function drawlevelslist()
 			-- Start from the bottom.
 			tabselected = k2-1
 		elseif tabselected >= k2 then
-			tabselected = 0
+			tabselected = 1
 		end
 	end
 	
