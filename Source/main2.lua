@@ -104,7 +104,7 @@ function love.load()
 	
 	temporaryroomnametimer = 0
 	generictimer = 0
-	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script button
+	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button
 	
 	scriptsearchterm = ""
 	
