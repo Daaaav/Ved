@@ -1592,9 +1592,21 @@ function drawmaineditor()
 	
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
-	
-	hoverdraw(undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
-	hoverdraw(redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
+
+	if #undobuffer >= 1 then
+		hoverdraw(undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
+	else
+		love.graphics.setColor(64,64,64)
+		love.graphics.draw(undobtn, love.graphics.getWidth()-120, 40)
+		love.graphics.setColor(255,255,255)
+	end
+	if #redobuffer >= 1 then
+		hoverdraw(redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
+	else
+		love.graphics.setColor(64,64,64)
+		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, 40)
+		love.graphics.setColor(255,255,255)
+	end
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
