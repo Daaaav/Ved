@@ -538,7 +538,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 	mousepressed = true
 end
 
-function scriptgotoline(linenum)
+function scriptgotoline(linenum, colnum)
 	linenum = math.floor(linenum)
 
 	if anythingbutnil0(linenum) < 1 then
@@ -548,10 +548,14 @@ function scriptgotoline(linenum)
 	end
 	
 	scriptlines[editingline] = input .. input_r
-	input_r = ""
 	__ = "_"
 	editingline = linenum
-	input = anythingbutnil(scriptlines[editingline])
+	if colnum == nil then
+		input, input_r = anythingbutnil(scriptlines[editingline]), ""
+	else
+		input, input_r = anythingbutnil(scriptlines[editingline]):sub(1,colnum-1), anythingbutnil(scriptlines[editingline]):sub(colnum,-1)
+		scriptlines[editingline] = input
+	end
 	
 	-- Now make sure the line is actually on screen!
 	scriptlineonscreen()

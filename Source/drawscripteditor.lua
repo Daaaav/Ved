@@ -14,7 +14,7 @@ function drawscripteditor()
 	else
 		love.graphics.line(42*8, 24, 42*8, love.graphics.getHeight())
 	end
-	
+
 	-- The comment below is a bad way of doing it.
 	love.graphics.setScissor(0, 24, love.graphics.getWidth(), love.graphics.getHeight()-24)
 	
@@ -72,8 +72,8 @@ function drawscripteditor()
 	
 	love.graphics.setColor(255,255,255,255)
 	
-	-- Now let's put a scrollbar in sight!
-	local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 24, love.graphics.getHeight()-24-8, (#scriptlines*8+8)*(textsize and 2 or 1), ((-scriptscroll))/(((#scriptlines*8)*(textsize and 2 or 1))-(love.graphics.getHeight()-32)))
+	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
+	local newperonetage = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*(textsize and 2 or 1), ((-scriptscroll))/(((#scriptlines*8)*(textsize and 2 or 1))-(love.graphics.getHeight()-32)))
 		
 	if newperonetage ~= nil then
 		scriptscroll = -(newperonetage*(((#scriptlines*8)*(textsize and 2 or 1))-(love.graphics.getHeight()-32)))
