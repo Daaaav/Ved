@@ -570,6 +570,13 @@ function dialog.update()
 				s.lang = multiinput[1]
 				saveconfig()
 			end
+		elseif DIAquestionid == 25 then
+			currentmultiinput = 0 -- Not stopping input on purpose
+			if DIAreturn == 2 then
+				helpsearchterm = multiinput[1]
+				inhelpsearch(multiinput[1])
+			end
+			takinginput = true
 		end
 		
 		-- The answer to the question has been handled now. Or has it?

@@ -176,3 +176,7 @@ function inscriptsearch(this)
 		cons("afterfound is " .. afterfound)
 	end
 end
+
+function inhelpsearch(this)
+
+end

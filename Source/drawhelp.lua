@@ -13,7 +13,8 @@ function drawhelp()
 		--sis = explode("\n", helppages[helparticle].cont)
 		
 		--for s in string.gmatch(LH[helparticle].cont, ".*\n") do
-		love.graphics.setScissor(8+200+8+screenxoffset-2, 8, love.graphics.getWidth()-(8+200+8-4)-screenxoffset, love.graphics.getHeight()-16)
+		-- 8+200+8+...-2: 214, 8+200+8-4: 212
+		love.graphics.setScissor(214+screenxoffset, 8, love.graphics.getWidth()-212-screenxoffset, love.graphics.getHeight()-16)
 		love.graphics.setColor(192,192,192,255)
 
 		for k,s in pairs(helparticlecontent) do

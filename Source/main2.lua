@@ -55,6 +55,7 @@ function love.load()
 	ved_require("roomfunc")
 	ved_require("scriptfunc")
 	ved_require("searchfunc")
+	ved_require("helpfunc")
 	ved_require("vvvvvvxml")
 	ved_require("dialog")
 	ved_require("resizablebox")
@@ -105,9 +106,10 @@ function love.load()
 	temporaryroomnametimer = 0
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button
-	
+
 	scriptsearchterm = ""
-	
+	helpsearchterm = ""
+
 	sp_t = 0
 	sp_tim = 0
 	sp_go = true
@@ -2153,6 +2155,9 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
+	elseif state == 15 and button == "l" and nodialog and mouseon(214+(s.smallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.smallerscreen and -96 or 0), love.graphics.getHeight()-16) then
+		local chr, line
+		helplineonscreen(61)
 	else
 		handleScrolling(false, button)
 	end
