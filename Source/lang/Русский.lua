@@ -1070,7 +1070,7 @@ changeplayercolour¤(color)\w#h
 
 Changes the player's color
 
-color - cyan/player/blue/red/yellow/green/purple
+color - cyan/player/blue/red/yellow/green/purple/teleporter
 
 restoreplayercolour¤()\w#h
 
@@ -1304,9 +1304,9 @@ Just like changeai(colour,faceleft/faceright), this changes face direction.
 colour - cyan/player/blue/red/yellow/green/purple
 direction - 0 is left, 1 is right
 
-walk¤(direction,x)\w#h
+walk¤(direction,ticks)\w#h
 
-Makes the player walk the specified number of blocks
+Makes the player walk for the specified number of ticks
 
 direction - left/right
 
@@ -1725,7 +1725,9 @@ Enemy movement types\h#
     GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
 6 - Bouncing up and down, but only reaches a certain x position before going back
     down. Used in "Trench warfare".
-8, 9, 14, 15 - Still (?)
+8, 9 - For moving platforms they're conveyors, and they're still for anything else
+14 - Able to be blocked by disappearing platforms
+15 - Still (?)
 10, 12 - Clones right/in the same spot, crashes VVVVVV if it gets too intense, and
          will corrupt your level if you save.
 13 - Like 4, but moves down until collision.
