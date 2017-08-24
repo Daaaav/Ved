@@ -6,7 +6,7 @@ function helpgotoline(linenum, colnum, correctcol)
 	elseif linenum > #helparticlecontent then
 		linenum = #helparticlecontent
 	end
-	
+
 	helparticlecontent[helpeditingline] = input .. input_r
 	__ = "_"
 	helpeditingline = linenum
@@ -20,7 +20,7 @@ function helpgotoline(linenum, colnum, correctcol)
 		input, input_r = anythingbutnil(helparticlecontent[helpeditingline]):sub(1,colnum-1), anythingbutnil(helparticlecontent[helpeditingline]):sub(colnum,-1)
 		helparticlecontent[helpeditingline] = input
 	end
-	
+
 	-- Now make sure the line is actually on screen!
 	helplineonscreen()
 end

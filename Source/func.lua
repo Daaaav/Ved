@@ -1,3 +1,10 @@
+love.graphics.clearOR = love.graphics.clear
+love.graphics.clear = function()
+	if love.window.hasFocus() then
+		love.graphics.clearOR()
+	end
+end
+
 function cons(text)
 	if text == nil then
 		text = "nil"

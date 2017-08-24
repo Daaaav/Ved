@@ -312,6 +312,10 @@ function love.load()
 end
 
 function love.draw()
+	if not love.window.hasFocus() then
+		return
+	end
+
 	if s.pscale ~= 1 then
 		love.graphics.push()
 		love.graphics.scale(s.pscale,s.pscale)
