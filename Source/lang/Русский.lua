@@ -258,6 +258,7 @@ ALLOWDEBUG = "Включить режим разработчика",
 SHOWFPS = "Показывать счётчик FPS",
 IIXSCALE = "2x размер",
 CHECKFORUPDATES = "Проверять обновления",
+PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
 
 SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
 SCRIPTUSAGESSCRIPTS = "$1 использований в скриптах: $2",

@@ -259,6 +259,7 @@ ALLOWDEBUG = "Ebligi sencimigan reĝimon",
 SHOWFPS = "Montri kadrojn sekunde",
 IIXSCALE = "Duobla skalo",
 CHECKFORUPDATES = "Kontroli ĝisdatigojn",
+PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
 
 SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
 SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",

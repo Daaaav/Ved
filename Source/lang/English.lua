@@ -258,6 +258,7 @@ ALLOWDEBUG = "Enable debug mode",
 SHOWFPS = "Show FPS counter",
 IIXSCALE = "2x scale",
 CHECKFORUPDATES = "Check for updates",
+PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
 
 SCRIPTUSAGESROOMS = "$1 usages in rooms: $2",
 SCRIPTUSAGESSCRIPTS = "$1 usages in scripts: $2",

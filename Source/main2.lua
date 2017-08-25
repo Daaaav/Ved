@@ -312,7 +312,7 @@ function love.load()
 end
 
 function love.draw()
-	if not love.window.hasFocus() then
+	if s.pausedrawunfocused and not love.window.hasFocus() then
 		return
 	end
 
@@ -484,8 +484,11 @@ function love.draw()
 		
 		hoverdraw((s.checkforupdates and checkon or checkoff), 8, 8+(24*8), 16, 16, 2)
 		love.graphics.print(L.CHECKFORUPDATES, 8+16+8, 8+(24*8)+4+2)
-		
-		
+
+		hoverdraw((s.pausedrawunfocused and checkon or checkoff), 8, 8+(24*9), 16, 16, 2)
+		love.graphics.print(L.PAUSEDRAWUNFOCUSED, 8+16+8, 8+(24*9)+4+2)
+
+
 		rbutton(L.BTN_OK, 0)
 		
 		rbutton(L.CUSTOMVVVVVVDIRECTORY, 2)
@@ -529,7 +532,10 @@ function love.draw()
 			elseif mouseon(8, 8+(24*8), 16, 16) then
 				-- Check for updates
 				s.checkforupdates = not s.checkforupdates
-				
+			elseif mouseon(8, 8+(24*9), 16, 16) then
+				-- Pause drawing when window is unfocused
+				s.pausedrawunfocused = not s.pausedrawunfocused
+
 			elseif onrbutton(0) then
 				-- Save
 				saveconfig()

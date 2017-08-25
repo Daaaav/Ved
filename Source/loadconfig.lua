@@ -82,6 +82,11 @@ configs =
 		default = -1,
 		["type"] = "number",
 		},
+	pausedrawunfocused =
+		{
+		default = true,
+		["type"] = "bool",
+		},
 	checkforupdates =
 		{
 		default = true,
