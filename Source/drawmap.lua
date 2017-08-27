@@ -9,37 +9,37 @@ function drawmap()
 				displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
 			end
 		end
-		
+
 		mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
 	else
 		love.graphics.draw(mapscreenshot, 0, 0, 0, s.pscale^-1)
-		
+
 		-- We should be able to hover over rooms
 		hoverx = nil
 		hovery = nil
 		hovername = nil
-		
+
 		for mry = 0, metadata.mapheight-1 do
 			for mrx = 0, metadata.mapwidth-1 do
 				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) then
 					love.graphics.setColor(255,255,255,64)
 					love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 					love.graphics.setColor(255,255,255,255)
-					
+
 					hoverx = mrx
 					hovery = mry
 					hovername = levelmetadata[(mry)*20 + (mrx+1)].roomname
-					
+
 					-- But maybe we're clicking this room!
 					if love.mouse.isDown("l") then
 						-- Is this an action?
 						if not mousepressed and selectingrooms == 0 then
 							-- Nope
 							gotoroom(hoverx, hovery)
-							
+
 							-- We don't want to click the first tile we press
 							nodialog = false
-							
+
 							tostate(1, true)
 						elseif not mousepressed and selected1x == -1 then
 							-- Select 1
@@ -50,7 +50,7 @@ function drawmap()
 							-- Select 2 and proceed
 							selected2x = hoverx
 							selected2y = hovery
-							
+
 							if selected1x == selected2x and selected1y == selected2y then
 								-- This may have resulted in an infinite loop memory flood!
 								dialog.new(L.SOURCEDESTROOMSSAME, "", 1, 1, 0)
@@ -80,11 +80,11 @@ function drawmap()
 									copymoveentities(22, 22, selected2x, selected2y, true)
 									cons("Done...")
 								end
-								
+
 								-- Refresh the map.
 								mapscreenshot = nil
 								collectgarbage("collect")
-								
+
 								-- Hey wait don't create a COMPLETELY new map
 								for dispnewrooms = 1, selectingrooms do
 									if dispnewrooms == 2 then
@@ -99,10 +99,10 @@ function drawmap()
 									love.graphics.setColor(255,255,255,255)
 									displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
 								end
-								
+
 								mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
 							end
-							
+
 							selectingrooms = 0
 							mousepressed = true
 						end
@@ -110,7 +110,7 @@ function drawmap()
 				end
 			end
 		end
-		
+
 		if (hoverx ~= nil) and (hovery ~= nil) then
 			if s.coords0 then
 				love.graphics.print("(" .. hoverx .. "," .. hovery .. ")", screenoffset+640, 3)
@@ -143,7 +143,7 @@ function drawmap()
 		rbutton(L.SAVEMAP, 1, nil, true)
 		rbutton(L.COPYROOMS, 3, nil, true)
 		rbutton(L.SWAPROOMS, 4, nil, true)
-		
+
 		-- The buttons are clickable
 		if nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, nil, true) then

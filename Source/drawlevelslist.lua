@@ -7,7 +7,7 @@ function drawlevelslist()
 	end
 
 	love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
-	
+
 	if not lsuccess then
 		love.graphics.setColor(255,128,0)
 		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-16, "left")
@@ -31,12 +31,12 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, 14+8*k2, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				
+
 				love.graphics.print(v.name, 8, 16+8*k2) -- y = 16+8*k
-				
+
 				
 				love.graphics.setColor(255,255,255)
-				
+
 				--[[
 				if k2 == 1 and love.keyboard.isDown("tab") then
 					input = v.name:sub(1, -8)
@@ -45,13 +45,13 @@ function drawlevelslist()
 				if tabselected == k2 and love.keyboard.isDown("return") and nodialog then
 					state6load(v.name:sub(1, -8))
 				end
-				
+
 				k2 = k2 + 1
 			end
 
 			lastk = k
 		end
-		
+
 		if tabselected == 0 and (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
 			-- Start from the bottom.
 			tabselected = k2-1
@@ -59,14 +59,14 @@ function drawlevelslist()
 			tabselected = 1
 		end
 	end
-	
+
 	love.graphics.setColor(0,0,0)
 	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-26, love.graphics.getWidth(), 26)
 	love.graphics.setColor(255,255,255)
-	
+
 	love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
 	startinputonce()
-	
+
 	if not secondlevel then
 		hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
 	end
@@ -75,7 +75,7 @@ function drawlevelslist()
 	else
 		hoverdraw(retbtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
 	end
-	
+
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if not secondlevel and mouseon(love.graphics.getWidth()-128+8, 8, 16, 16) then
 			tostate(15)
@@ -98,23 +98,23 @@ function drawlevelslist()
 
 	--love.graphics.print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
 	--love.graphics.print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
-	
+
 	if not secondlevel then
 		rbutton(L.VEDOPTIONS, 0, 40)
 		rbutton(L.PLUGINS, 1, 40)
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
-		
+
 		if s.pcheckforupdates and not opt_disableversioncheck then
 			versionchecked = verchannel:peek()
 		end
-		
+
 		local unsupportedpluginstext = ""
-		
+
 		if unsupportedplugins > 0 then
 			unsupportedpluginstext = "\n\n" .. langkeys(L.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
 		end
-		
+
 		if not s.pcheckforupdates or opt_disableversioncheck then
 			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
 		elseif versionchecked ~= nil then		
@@ -129,12 +129,12 @@ function drawlevelslist()
 		else
 			love.graphics.printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
 		end
-		
+
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, 40) then
 				-- Ved options
 				tostate(13)
-				
+
 				mousepressed = true
 			elseif onrbutton(1, 40) then
 				-- Plugins
@@ -148,7 +148,7 @@ function drawlevelslist()
 				-- Test BUT "SEND FEEDBACK" FOR NOW
 				--dialog.new("Auto-creation of a save file for VVVVVV coming soon!", "", 1, 1, 0)
 				openurl("http://ved.idea.informer.com/")
-				
+
 				mousepressed = true
 			end
 		elseif oldstate == 13 and mousepressed and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), 40+120, 128-16, 16) then

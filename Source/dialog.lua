@@ -11,17 +11,17 @@ function dialog.draw()
 		-- Text
 		setColorDIA(0,0,0,255)
 		love.graphics.printf(DIAtext, DIAx+10, DIAy+DIAwindowani+10, DIAwidth-20, "left")
-		
+
 		-- Text boxes
 		dialog.textboxes()
-		
+
 		-- Button, if enabled
 		if DIAcanclose ~= 0 then
 			local btnwidth = 72
-			
+
 			if mouseon(DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25) and (DIAbtn1glow < 15) then
 				DIAbtn1glow = DIAbtn1glow + 1
-				
+
 				if DIAwindowani == 0 and love.mouse.isDown("l") then
 					if DIAcanclose == 2 then
 						dialog.push()
@@ -37,11 +37,11 @@ function dialog.draw()
 			elseif DIAbtn1glow > 0 then
 				DIAbtn1glow = DIAbtn1glow - 1
 			end
-			
+
 			if DIAcanclose == 3 or DIAcanclose == 4 or DIAcanclose == 5 then
 				if mouseon(DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25) and (DIAbtn2glow < 15) then
 					DIAbtn2glow = DIAbtn2glow + 1
-					
+
 					if DIAwindowani == 0 and love.mouse.isDown("l") then
 						dialog.push()
 						DIAreturn = 2
@@ -50,11 +50,11 @@ function dialog.draw()
 					DIAbtn2glow = DIAbtn2glow - 1
 				end
 			end
-			
+
 			if DIAcanclose == 5 then
 				if mouseon(DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25) and (DIAbtn3glow < 15) then
 					DIAbtn3glow = DIAbtn3glow + 1
-					
+
 					if DIAwindowani == 0 and love.mouse.isDown("l") then
 						dialog.push()
 						DIAreturn = 3
@@ -78,7 +78,7 @@ function dialog.draw()
 			elseif DIAcanclose == 5 then
 				love.graphics.printf(L.BTN_APPLY, DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			end
-			
+
 			if DIAcanclose == 3 then
 				setColorDIA(64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),128)
 				love.graphics.rectangle("fill", DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
@@ -95,7 +95,7 @@ function dialog.draw()
 				setColorDIA(0,0,0,255)
 				love.graphics.printf(L.BTN_CANCEL, DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			end
-			
+
 			if DIAcanclose == 5 then
 				setColorDIA(64+(4*DIAbtn3glow),64+(4*DIAbtn3glow),64+(4*DIAbtn3glow),128)
 				love.graphics.rectangle("fill", DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
@@ -110,7 +110,7 @@ function dialog.draw()
 		if DIAbar == 1 then
 			setColorDIA(64,64,64,128)
 			love.graphics.rectangle("fill", DIAx-1, DIAy+DIAwindowani-17, DIAwidth+2, 16)
-			
+
 			-- Also display the title text (if not empty). Shadow first
 			setColorDIA(0,0,0,255)
 			love.graphics.print(DIAbartext, DIAx-1+4+1, DIAy+DIAwindowani-17+6+1)
@@ -118,7 +118,7 @@ function dialog.draw()
 			love.graphics.print(DIAbartext, DIAx-1+4, DIAy+DIAwindowani-17+6)
 		end
 	end
-	
+
 	if DIAwindowani < 0 then
 		-- Window is opening
 		DIAwindowani = math.min(DIAwindowani + (60/math.max(love.timer.getFPS(), 1)), 0)
@@ -158,7 +158,7 @@ function dialog.textboxes()
 	elseif DIAquestionid == 10 then
 		-- Save level
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
-		
+
 		--if namenotgiven then
 			hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 40*8, 8, multiinput[2], 2, currentmultiinput == 2)
 		--end
@@ -171,7 +171,7 @@ function dialog.textboxes()
 	elseif DIAquestionid == 24 then
 		-- Language
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 188, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
-		
+
 		-- Unique, not an input field, but specific to this text box
 		setColorDIA(0,0,0,255)
 		love.graphics.printf(L.TRANSLATIONCREDIT, DIAx+10, DIAy+DIAwindowani+10+(15*8), DIAwidth-(2*72)-6-10, "left") -- 72 is that btnwidth up there
@@ -202,7 +202,7 @@ function dialog.update()
 			if DIAreturn == 2 or DIAreturn == 3 then -- cancel/ok
 				stopinput()
 			end
-			
+
 			if DIAreturn == 1 or DIAreturn == 3 then -- apply or ok
 				-- entdetails[3] is still the ID of this entity
 				local correctlines = false
@@ -212,16 +212,16 @@ function dialog.update()
 				and entitydata[tonumber(entdetails[3])].p3 == anythingbutnil0(tonumber(multiinput[6])) then
 					correctlines = true
 				end
-				
+
 				local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
 				for i = 1, 9 do
 					entitydata[tonumber(entdetails[3])][entitypropkeys[i]] = anythingbutnil0(tonumber(multiinput[i]))
 				end
 				entitydata[tonumber(entdetails[3])].data = multiinput[10]
-				
+
 				if correctlines then
 					autocorrectlines()
-					
+
 					-- Do keep the fields in sync, if we're only applying
 					if DIAreturn == 1 then
 						multiinput[4] = entitydata[tonumber(entdetails[3])].p1
@@ -239,7 +239,7 @@ function dialog.update()
 		elseif (DIAquestionid == 4) and (DIAreturn == 2) then
 			-- Add a 21st trinket
 			cons("Trinket: " .. atx .. " " .. aty)
-			
+
 			table.insert(entitydata, count.entity_ai,
 				{
 				x = 40*roomx + atx,
@@ -248,7 +248,7 @@ function dialog.update()
 				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
 				data = ""
 				})
-				
+
 			count.trinkets = count.trinkets + 1
 			count.entities = count.entities + 1
 			count.entity_ai = count.entity_ai + 1
@@ -264,7 +264,7 @@ function dialog.update()
 				metadata.Desc3 = multiinput[6]
 				--if ( (tonumber(multiinput[7]) > 20) or (tonumber(multiinput[8]) > 20) ) and ( (tonumber(multiinput[7]) < metadata.mapwidth) or (tonumber(multiinput[8]) < metadata.mapheight) ) then
 					-- On one side you're making the map size too large and on the other you're making it smaller than it is...
-					
+
 				--v elseif
 				if (tonumber(multiinput[7]) ~= nil and tonumber(multiinput[8]) ~= nil) then
 					-- Make sure we have a dimension, and that it isn't too interesting
@@ -321,7 +321,7 @@ function dialog.update()
 			stopinput()
 			if DIAreturn == 2 then
 				-- Add a script with this name. In case we're making a new script while editing one already that uses an unused flag name and all flags are occupied, make this all a function.
-				
+
 				leavescript_to_state = function()
 					if DIAquestionid == 11 then -- making new script from editor, not in script list
 						-- We're currently already editing a script so save that before jumping to a new one!
@@ -331,13 +331,13 @@ function dialog.update()
 						-- Splitting a script, but we already saved the input earlier
 						scripts[scriptname] = table.copy(scriptlines)
 					end
-					
+
 					if scripts[multiinput[1]] == nil then
 						table.insert(scriptnames, multiinput[1])
 						if DIAquestionid ~= 21 and DIAquestionid ~= 22 then
 							-- Creating an empty script
 							scripts[multiinput[1]] = {""}
-							
+
 							--##SCRIPT##  ACCEPTABLE
 							scriptlines = {""}
 
@@ -349,12 +349,12 @@ function dialog.update()
 							if DIAquestionid == 21 then
 								-- Splitting, meaning in editor
 								scripts[multiinput[1]] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
-								
+
 								-- Now cut off the top part of the new script
 								for i = 1, spl_originaleditingline-1 do
 									table.remove(scripts[multiinput[1]], 1)
 								end
-								
+
 								-- Oh, was the script an internal script by the way?
 								keepinternal = internalscript
 							else
@@ -362,9 +362,9 @@ function dialog.update()
 								input = tonumber(input)
 								scripts[multiinput[1]] = table.copy(scripts[scriptnames[input]])
 							end
-							
+
 							scriptlines = table.copy(scripts[multiinput[1]])
-							
+
 							processflaglabels()
 							if DIAquestionid == 21 then
 								-- Splitting
@@ -378,7 +378,7 @@ function dialog.update()
 						if DIAquestionid ~= 21 then
 							-- Not splitting
 							replacedialog = true
-							
+
 							--##SCRIPT##  DONE
 							scriptineditor(multiinput[1])
 						else
@@ -386,7 +386,7 @@ function dialog.update()
 						end
 					end
 				end
-				
+
 				if DIAquestionid == 21 and scripts[multiinput[1]] == nil then
 					-- Splitting
 					scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
@@ -395,13 +395,13 @@ function dialog.update()
 					input, input_r = scriptlines[1], ""
 					originalscript = table.copy(scriptlines) -- We need to have the unconverted version
 					local totalnumberlines = #scriptlines
-					
+
 					-- Before we save the current (possibly internal) script, split the contents of the old script.
 					for i = spl_originaleditingline, totalnumberlines do
 						table.remove(scriptlines)
 					end
 				end
-				
+
 				if (DIAquestionid ~= 11 and DIAquestionid ~= 21) or (not processflaglabelsreverse()) then
 					leavescript_to_state()
 				else
@@ -416,10 +416,10 @@ function dialog.update()
 			if DIAreturn == 2 then
 				-- Save the level with this name. But first apply the title!
 				metadata.Title = multiinput[2]
-				
+
 				savedsuccess, savederror = savelevel(multiinput[1] .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
 				editingmap = multiinput[1]
-				
+
 				if not savedsuccess then
 					-- Why not :c
 					dialog.new(L.SAVENOSUCCESS .. anythingbutnil(savederror), "", 1, 1, 0)
@@ -432,12 +432,12 @@ function dialog.update()
 			if DIAreturn == 2 then
 				-- Add a note with this name.
 				stopinput()
-				
+
 				-- We're currently already editing a script so save that before jumping to a new one!
 				--scripts[scriptname] = scriptlines .
-				
+
 				local newname = uniquenotename(multiinput[1])
-				
+
 								-- v by reference anyways
 				table.insert(helppages, {subj = newname, imgs = {}, cont = [[
 ]] .. multiinput[1] .. [[\wh#
@@ -454,11 +454,11 @@ function dialog.update()
 			stopinput()
 			if DIAreturn == 2 then
 				-- Rename this note
-				
+
 				local newname = uniquenotename(multiinput[1], helppages[helparticle].subj)
-				
+
 				helppages[helparticle].subj = newname
-				
+
 				--[[
 				if helpeditingline ~= 0 then
 					takinginput = true
@@ -471,7 +471,7 @@ function dialog.update()
 			if helppages[helparticle] == nil then
 				helparticle = helparticle - 1
 			end
-			
+
 			-- Go to the new article (removing this line will cause the deleted article to be left on the screen, along with its buttons, but not the button in the left menu for it)
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
 		elseif (DIAquestionid == 15) then
@@ -495,15 +495,15 @@ function dialog.update()
 							replacedialog = true
 						end
 					end
-				
+
 					if not replacedialog then
 						-- Give a name to this flag, but first check if we actually have vedmetadata
 						if vedmetadata == false then
 							vedmetadata = createmde()
 						end
-						
+
 						vedmetadata.flaglabel[flgnum] = multiinput[1]
-						
+
 						-- Refresh the state so it shows the correct label now
 						loadstate(state)
 					end
@@ -515,10 +515,10 @@ function dialog.update()
 		elseif DIAquestionid == 17 and DIAreturn == 2 then
 			-- Delete this script!
 			-- input is the 'number' of the script
-			
+
 			scripts[scriptnames[input]] = nil
 			table.remove(scriptnames, input)
-			
+
 			-- The script number is input
 			--table.remove(scripts, scriptnames[input])
 			--table.remove(scriptnames, input)
@@ -545,7 +545,7 @@ function dialog.update()
 				elseif multiinput[1] ~= scriptnames[input] then
 					scripts[multiinput[1]] = scripts[scriptnames[input]] -- Copy script from old to new name
 					scripts[scriptnames[input]] = nil -- Remove old name
-					
+
 					scriptnames[input] = multiinput[1] -- Administrative rename
 				end
 			end
@@ -578,7 +578,7 @@ function dialog.update()
 			end
 			takinginput = true
 		end
-		
+
 		-- The answer to the question has been handled now. Or has it?
 		if replacedialog == nil then
 			if not (DIAcanclose == 5 and DIAreturn == 1) then
@@ -590,7 +590,7 @@ function dialog.update()
 		replacedialog = nil
 		DIAreturn = 0
 	end
-	
+
 	if DIAmovingwindow == 1 then
 		DIAx = DIAmovedfromwx + (love.mouse.getX()-DIAmovedfrommx)
 		DIAy = DIAmovedfromwy + (love.mouse.getY()-DIAmovedfrommy)
@@ -606,7 +606,7 @@ function dialog.mousepressed()
 		DIAmovedfrommx = mousex
 		DIAmovedfrommy = mousey
 	end
-	
+
 	if DIAwindowani ~= 16 then
 		if (DIAcanclose == 1) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
 			dialog.push()
@@ -622,7 +622,7 @@ function dialog.mousepressed()
 			dialog.push()
 			DIAreturn = 2
 		end
-		
+
 		return
 	end
 end
@@ -639,13 +639,13 @@ function dialog.new(message, title, showbar, canclose, questionid)
 	else
 		DIAwindowani = 0
 	end
-	
+
 	if (questionid ~= nil) then
 		DIAquestionid = questionid
 	else
 		DIAquestionid = 0
 	end
-	
+
 	DIAreturn = 0
 end
 
@@ -685,12 +685,12 @@ function dialog.init()
 	DIAbtn2glow = 0
 	DIAbtn3glow = 0
 	DIAquestionid = 0
-	
+
 	DIAbar = 1
 	DIAcanclose = 1 -- Can be closed. This is actually the button type, 0 is none - dialog can't be closed, 1 is OK, 2 is Quit, 3 is yes or no.
-	
+
 	DIAreturn = 0 -- Button pressed, which could be used afterwards.
-	
+
 	DIAbartext = "UNDEFINED"
 	DIAtext = "UNDEFINED"
 end
@@ -735,13 +735,13 @@ function rightclickmenu.draw()
 			else
 				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 188, 16, true)
 				love.graphics.print(v, RCMx+1, (k-1)*16+RCMy+6)
-				
+
 				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 150, 16) then
 					RCMreturn = v
 				end
 			end
 		end
-		
+
 		if not mousepressed and love.mouse.isDown("l") then
 			RCMactive = false
 		end
@@ -755,7 +755,7 @@ function rightclickmenu.tofield()
 	table.insert(newitems, "#_")
 	RCMitems = newitems
 	RCMy = math.min(RCMactualy, love.graphics.getHeight()-16)
-	
+
 	if RCMid == "music" then
 		multiinput[9] = ""
 	end
@@ -766,21 +766,21 @@ function scrollbar(x, y, height, scrollableheight, peronetage)
 	-- Returns nil if untouched, returns scroll value if moved
 	-- New peronetage maybe?
 	local newperonetage
-	
+
 	love.graphics.setColor(96,96,96,96)
 	love.graphics.rectangle("fill", x, y, 16, height)
-	
+
 	if scrollableheight > height then
 		-- Display an actual scrollable thing
 		-- BUTTONheight: (height/scrollableheight)*height
 		-- BUTTONy: (height-BUTTONheight)*peronetage
 		local buttonheight = (height/scrollableheight)*height
-		
+
 		local scrollclickoffset = 0
 		if scrollclickstart ~= nil then
 			scrollclickoffset = love.mouse.getY()-scrollclickstart
 		end
-		
+
 		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) then
 			love.graphics.setColor(224,224,224,255)
 		else
@@ -800,34 +800,34 @@ function scrollbar(x, y, height, scrollableheight, peronetage)
 			end
 			]]
 		end
-		
+
 		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and not mousepressed and nodialog and love.mouse.isDown("l") then
 			if scrollclickstart == nil then
 				scrollclickstart = love.mouse.getY()
 				savedperonetage = peronetage
 			end
-			
+
 			mousepressed = true
 		elseif not love.mouse.isDown("l") and scrollclickstart ~= nil then
 			scrollclickstart = nil
 			savedperonetage = nil
 		end
-		
+
 		if scrollclickstart ~= nil then
 			newperonetage = savedperonetage + (scrollclickoffset/(height-buttonheight))
 		end
-		
+
 		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedperonetage == nil and peronetage or savedperonetage)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
 	end
-	
+
 	love.graphics.setColor(255,255,255,255)
-	
+
 	--[[
 	if newperonetage ~= nil then
 		cons("Returning " .. newperonetage)
 	end
 	]]
-	
+
 	if newperonetage ~= nil then
 		return math.min(math.max(newperonetage,0),1)
 	end
@@ -857,13 +857,13 @@ function coordsdialog.type(what)
 	if tostring(what) == tostring(tonumber(what)) then
 		coordsdialog.input = coordsdialog.input .. what
 	end
-	
+
 	if coordsdialog.input:len() == 4 then
 		gotoroom(
 			math.min(math.max(tonumber(coordsdialog.input:sub(1,2))-(not s.coords0 and 1 or 0), 0), metadata.mapwidth-1),
 			math.min(math.max(tonumber(coordsdialog.input:sub(3,4))-(not s.coords0 and 1 or 0), 0), metadata.mapheight-1)
 		)
-		
+
 		coordsdialog.active = false
 	end
 end

@@ -1,7 +1,7 @@
 function load()
 	-- Reeeeeally old version of love, I see
 	love.load()
-	
+
 	draw = love.draw
 end
 
@@ -11,11 +11,11 @@ function love.load()
 	-- Get the strings from every language!
 	local languagesarray = love.filesystem.enumerate("lang")
 	message = ""
-	
+
 	for k,v in pairs(languagesarray) do
 		if v:sub(-4,-1) == ".lua" then
 			require("lang/" .. v:sub(1,-5))
-			
+
 			message = message .. L.FATALERROR .. L.OUTDATEDLOVE .. "\n\n"
 		end
 	end

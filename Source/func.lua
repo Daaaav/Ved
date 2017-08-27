@@ -54,7 +54,7 @@ function backspace(text)
 		text = string.sub(text, 1, byteoffset - 1)
 	end
 	]]
-	
+
 	if text == nil then return end
 
 	local worktext = text
@@ -101,7 +101,7 @@ function rightspace(text, righttext)
 
 	-- Different UTF-8 stuff going on here.
 	local binarychar = toBinary(lastchar)
-	
+
 	if string.sub(binarychar, 1, 3) == "110" then
 		-- Two bytes to move at once!
 		text = text .. string.sub(righttext, 1, 2)
@@ -129,7 +129,7 @@ function firstUTF8(text)
 
 	-- Mostly the same as rightspace()
 	local binarychar = toBinary(lastchar)
-	
+
 	if string.sub(binarychar, 1, 3) == "110" then
 		-- Two bytes to move at once!
 		return string.sub(text, 1, 2)
@@ -153,27 +153,27 @@ function love.graphics.UTF8debugprint(text, x, y)
 	local displaythis = ""
 	local stringleft = text
 	local assertfalsetext = "\n  ======================================"
-	
+
 	local represent = {}
-	
+
 	for c = 1, string.len(text) do
 		table.insert(represent, string.byte(text, c, c))
 	end
 
 	while string.len(stringleft) > 0 do
 		local binarychar = toBinary(string.sub(stringleft, 1, 1))
-	
+
 		if string.sub(binarychar, 1, 3) == "110" then
 			-- Two bytes at once!
 			assert(stringleft:len() >= 2 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 1" .. assertfalsetext)
-			
+
 			displaythis = displaythis .. stringleft:sub(1,2)
 			stringleft = stringleft:sub(3,-1)
 		elseif string.sub(binarychar, 1, 4) == "1110" then
 			-- Three bytes at once!
 			assert(stringleft:len() >= 3 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 2" .. assertfalsetext)
 			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 3" .. assertfalsetext)
-			
+
 			displaythis = displaythis .. stringleft:sub(1,3)
 			stringleft = stringleft:sub(4,-1)
 		elseif string.sub(binarychar, 1, 5) == "11110" then
@@ -181,7 +181,7 @@ function love.graphics.UTF8debugprint(text, x, y)
 			assert(stringleft:len() >= 4 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 4" .. assertfalsetext)
 			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 5" .. assertfalsetext)
 			assert(toBinary(stringleft:sub(4, 4)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 6" .. assertfalsetext)
-			
+
 			displaythis = displaythis .. stringleft:sub(1,4)
 			stringleft = stringleft:sub(5,-1)
 		elseif string.sub(binarychar, 1, 1) == "1" then
@@ -193,7 +193,7 @@ function love.graphics.UTF8debugprint(text, x, y)
 			stringleft = stringleft:sub(2,-1)
 		end
 	end
-	
+
 	love.graphics.print(displaythis, x, y)
 end
 --
@@ -293,7 +293,7 @@ function tostate(new, dontinitialize, extradata)
 	if dontinitialize == nil then
 		dontinitialize = false
 	end
-	
+
 	oldstate = state
 	state = anythingbutnil0(tonumber(new)) -- please
 	if not dontinitialize then
@@ -306,10 +306,10 @@ end
 
 function loadstate(new, extradata)
 	if new == 1 then
-	
+
 		-- DON'T FORGET editingmap
 		-- ^ has been forgotten, has been realized, has been fixed.
-	
+
 		--roomdata = {}; roomdata[0] = {} -- temporary
 		--roomdata[0][0], entitydata, metadata = loademptyroom()
 		--success, metadata, roomdata, entitydata, levelmetadata, scripts = loadlevel("tilesets2.vvvvvv")
@@ -328,39 +328,39 @@ function loadstate(new, extradata)
 			roomy = 0
 		end
 		updatewindowicon()
-		
+
 		if levelmetadata ~= nil and levelmetadata[(roomy)*20 + (roomx+1)] ~= nil then
 			gotoroom_finish()
 		end
-		
+
 		editingroomtext = 0
 		editingroomname = false
 		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil
-		
+
 		minsmear = -1; maxsmear = -1
-		
+
 		-- old if not success
-		
+
 		-- Terminal -> open would crash otherwise
 		scriptlistscroll = 0
-		
+
 		holdingzvx = false
 		oldzxsubtool = 1
-		
+
 		undobuffer = {}
 		redobuffer = {}
 		undosaved = 0
-		
+
 		editingbounds = 0
 		showepbounds = true
-		
+
 		mouselockx = -1
 		mouselocky = -1
-		
+
 		warpbganimation = 0
-		
+
 		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker), 3: needing to click top left in a room because I misunderstood the request all along, 4: needing to click bottom right of that.
 		customsizex = 0 -- tiles to the left AND right of the cursor (can be a half)
 		customsizey = 0 -- tiles to the top AND bottom of the cursor
@@ -370,12 +370,12 @@ function loadstate(new, extradata)
 	elseif new == 3 then
 		-- scriptname == ""
 		-- scriptlines = {}
-		
+
 		-- Scripts can be fully contentless- without even one line.
 		if #scriptlines == 0 then
 			table.insert(scriptlines, "")
 		end
-		
+
 		editingline = 1 --#scriptlines
 		textlinestogo = 0
 		startinput()
@@ -383,22 +383,22 @@ function loadstate(new, extradata)
 		input = scriptlines[editingline]
 		syntaxhlon = true
 		textsize = false
-		
+
 		-- Little bit of caching
 		rememberflagnumber = -1
-		
+
 		-- Are we loading a $-separated 3DS script?
 		if oldstate == 22 then
 			PleaseDo3DSHandlingThanks = true
 		else
 			PleaseDo3DSHandlingThanks = false
 		end
-		
+
 		-- Make sure we don't keep checking for a load script when we can do it once.
 		intscrwarncache_script = nil
 		intscrwarncache_warn_noloadscript = nil
 		intscrwarncache_warn_boxed = nil
-		
+
 		if oldstate ~= 3 then
 			scripthistorystack = {}
 		end
@@ -406,7 +406,7 @@ function loadstate(new, extradata)
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
-		userprofile = os.getenv('USERPROFILE')
+		userprofile = os.getenv("USERPROFILE")
 		lsuccess, levelsfolder = getlevelsfolder()
 		if lsuccess then
 			lerror = 0
@@ -422,21 +422,21 @@ function loadstate(new, extradata)
 		else
 			--state6old1 = false
 		end
-		
+
 		if extradata == "secondlevel" then
 			-- This is the second level we're loading!
 			secondlevel = true
 		else
 			secondlevel = false
 		end
-		
+
 		-- Input should've been stopped, but it isn't always stopped apparently.
 		stopinput()
 		input = ""
 		input_r = ""
-		
+
 		--loadlevelsfolder()
-		
+
 		tabselected = 0
 	elseif new == 9 then
 		youdidanswer = ""
@@ -454,7 +454,7 @@ function loadstate(new, extradata)
 		--mapyoffset = (480-(((1/mapscale)-metadata.mapheight)*mapscale*480))/2
 		mapxoffset = (((1/mapscale)-metadata.mapwidth)*mapscale*640)/2
 		mapyoffset = (((1/mapscale)-metadata.mapheight)*mapscale*480)/2
-		
+
 		selectingrooms = 0
 		selected1x = -1; selected1y = -1
 		selected2x = -1; selected2y = -1
@@ -467,7 +467,7 @@ function loadstate(new, extradata)
 		helparticlescroll = 0
 		helpeditingline = 0
 		onlefthelpbuttons = false
-		
+
 		-- Are we gonna use this for Ved help or for level notes?
 		if extradata == nil then
 			-- Just the Ved help
@@ -492,49 +492,49 @@ function loadstate(new, extradata)
 	elseif new == 18 then
 		undostacktext = ""
 		redostacktext = ""
-		
+
 		for k,v in pairs(undobuffer) do
 			undostacktext = undostacktext .. v.undotype
-			
+
 			if v.undotype == "tiles" then
 				undostacktext = undostacktext .. " (" .. L.ROOM .. " " .. v.rx .. "," .. v.ry .. ")"
 			end
-			
+
 			undostacktext = undostacktext .. "\n"
 		end
-		
+
 		for k,v in pairs(redobuffer) do
 			redostacktext = redostacktext .. v.undotype
-			
+
 			if v.undotype == "tiles" then
 				redostacktext = redostacktext .. " (" .. L.ROOM .. " " .. v.rx .. "," .. v.ry .. ")"
 			end
-			
+
 			redostacktext = redostacktext .. "\n"
 		end
 	elseif new == 19 then
 		local flagstextleftar = {}
 		local flagstextrightar = {}
-		
+
 		usedflags = {}
 		outofrangeflags = {}
-		
+
 		-- Seee which flags have been used in this level.
 		returnusedflags(usedflags, outofrangeflags)
-		
+
 		for fl = 0, 49 do
 			table.insert(flagstextleftar, (fl < 10 and " " or "") .. fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
 		end
-		
+
 		for fl = 50, 99 do
 			table.insert(flagstextrightar, fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
 		end
-		
+
 		flagstextleft = table.concat(flagstextleftar)
 		flagstextright = table.concat(flagstextrightar)
-		
+
 		outofrangeflagstext = ""
-		
+
 		for k,v in pairs(outofrangeflags) do
 			if outofrangeflagstext == "" then
 				outofrangeflagstext = L.USEDOUTOFRANGEFLAGS .. " " .. k
@@ -618,10 +618,10 @@ end
 
 function loadtileset(file)
 	tilesets[file] = {}
-	
+
 	-- Try loading custom assets first
 	readsuccess, contents = readimage(levelsfolder, file)
-	
+
 	if readsuccess == true then
 		-- Custom image!
 		cons("Custom image: " .. file)
@@ -636,7 +636,7 @@ function loadtileset(file)
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
 	tilesets[file]["tileswidth"] = tilesets[file]["width"]/8  -- 16
 	tilesets[file]["tilesheight"] = tilesets[file]["height"]/8  -- 16
-	
+
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
 	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
@@ -645,9 +645,9 @@ function loadtileset(file)
 		return 255, 255, 255, a
 	end)
 	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata)
-	
+
 	tilesets[file]["tiles"] = {}
-	
+
 	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"]) -- 16 16 16 16
@@ -657,10 +657,10 @@ end
 
 function loadsprites(file, res)
 	tilesets[file] = {}
-	
+
 	-- Try loading custom assets first
 	readsuccess, contents = readimage(levelsfolder, file)
-	
+
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
@@ -675,18 +675,18 @@ function loadsprites(file, res)
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
 	tilesets[file]["tileswidth"] = tilesets[file]["width"]/res -- 32
 	tilesets[file]["tilesheight"] = tilesets[file]["height"]/res -- 32
-	
+
 	cons("Loading spriteset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
-	
+
 	-- Now make everything white so we can color-correct it!
 	asimgdata = tilesets[file]["img"]:getData()
 	asimgdata:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
-	
+
 	tilesets[file]["tiles"] = {}
-	
+
 	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*res, tsy*res, res, res, tilesets[file]["width"], tilesets[file]["height"])
@@ -747,20 +747,20 @@ function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 		love.graphics.setColor(r, g, b, a)
 		love.graphics.rectangle("fill", x, y, w, h)
 	end
-	
+
 	love.graphics.setColor(255,255,255,255)
 end
 
 function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 	if yoffset == nil then yoffset = 8 end
 	if buttonspacing == nil then buttonspacing = 24 end
-	
+
 	-- Text too long to fit?
 	local textyoffset = 6 -- 4+2
 	if (font8:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
 		textyoffset = 2
 	end
-	
+
 	if bottom then
 		hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(buttonspacing*(pos+1))-(yoffset-8), 128-16, 16)
 		love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, (love.graphics.getHeight()-(buttonspacing*(pos+1))-(yoffset-8))+textyoffset, 128-16, "center")
@@ -789,17 +789,17 @@ function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menui
 	if mode == nil then
 		mode = 0
 	end
-	
+
 	if active or mouseon(x, y-3, w, h) then
 		setColorDIA(255,255,255,255)
 		love.graphics.rectangle("fill", x, y-3, w, h)
-		
+
 		if (active and love.keyboard.isDown("tab")) or (mouseon(x, y-3, w, h) and love.mouse.isDown("l")) then
 			currentmultiinput = minumber
-			
+
 			if mode == 1 and (not RCMactive) then
 				rightclickmenu.create(menuitems, menuid, x, (y-3)+h, true) -- y+h
-				
+
 				mousepressed = true
 			end
 		end
@@ -808,7 +808,7 @@ function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menui
 		love.graphics.rectangle("fill", x, y-3, w, h)
 	end
 	setColorDIA(0,0,0,255)
-	
+
 	if mode == 0 then
 		love.graphics.print(anythingbutnil(text) .. (active and __ or ""), x, y-1)
 	elseif mode == 1 then
@@ -819,7 +819,7 @@ function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menui
 		end
 		love.graphics.draw(menupijltje, x+w-8, (y-3)+2) -- Die 8 is 7+1
 	end
-	
+
 	setColorDIA(255,255,255,255)
 end
 
@@ -863,7 +863,7 @@ function return_value()
 		end
 		subtoolnames[12] = table.copy(subtoolnames[5])
 	end
-	
+
 	return #subtoolnames
 end
 
@@ -941,7 +941,7 @@ function langkeys(strin, thesekeys)
 	for lk,lv in pairs(thesekeys) do
 		strin = strin:gsub("$" .. lk, (tostring(lv):gsub("%%", "%%%%")))
 	end
-	
+
 	return strin
 end
 
@@ -964,21 +964,21 @@ function updatecountdelete(thet, id, undoing)
 	elseif thet == 16 then
 		count.startpoint = nil
 	end
-	
+
 	-- Is this a roomtext/terminal/script box entity and were we editing it?
 	if editingroomtext == id then
 		stopinput()
 		editingroomtext = 0
 		makescriptroomtext = false
 	end
-	
+
 	-- Make sure we can undo this! If we're not already removing an entity by undoing
 	if not undoing then
 		table.insert(undobuffer, {undotype = "removeentity", rx = roomx, ry = roomy, entid = id, removedentitydata = table.copy(entitydata[id])})
 		redobuffer = {}
 		cons("[UNRE] REMOVED ENTITY")
 	end
-	
+
 	count.entities = count.entities - 1
 end
 
@@ -989,7 +989,7 @@ function updatecountadd(thet)
 		count.crewmates = count.crewmates + 1
 	-- Startpoint (16) should not be handled with this function
 	end
-	
+
 	count.entities = count.entities + 1
 end
 
@@ -1031,7 +1031,7 @@ function thingk()
 			helpeditable = true
 		end
 	end)
-	
+
 	return return_value()
 end
 
@@ -1057,10 +1057,10 @@ function switchtileset()
 	if selectedcolor > #tilesetblocks[selectedtileset].colors or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0) then
 		selectedcolor = 0
 	end
-	
+
 	levelmetadata[(roomy)*20 + (roomx+1)].tileset = selectedtileset
 	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
-	
+
 	autocorrectroom() -- this already checks if automatic mode is on
 end
 
@@ -1076,7 +1076,7 @@ function switchtilecol()
 	end
 
 	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
-	
+
 	autocorrectroom() -- this already checks if automatic mode is on
 end
 
@@ -1096,13 +1096,13 @@ end
 
 function changeenemybounds()
 	if selectedtool == 13 and selectedsubtool[13] ~= 1 then return end
-	
+
 	selectedtool = 9
 	updatewindowicon()
-	
+
 	-- Make sure we see the bounds
 	showepbounds = true
-	
+
 	if editingbounds == -1 then
 		--editingbounds = 1
 		editingbounds = 0
@@ -1118,10 +1118,10 @@ function changeplatformbounds()
 
 	selectedtool = 8
 	updatewindowicon()
-	
+
 	-- Make sure we see the bounds
 	showepbounds = true
-	
+
 	if editingbounds == -2 then
 		--editingbounds = 2
 		editingbounds = 0
@@ -1134,7 +1134,7 @@ end
 
 function changedmode()
 	--levelmetadata[(roomy)*20 + (roomx+1)].directmode = cycle(levelmetadata[(roomy)*20 + (roomx+1)].directmode, 1, 0)
-	
+
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
 		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
 	elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
@@ -1143,7 +1143,7 @@ function changedmode()
 	else
 		levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
 	end
-	
+
 	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
@@ -1184,10 +1184,10 @@ function endeditingroomtext(donotmakethisnil)
 						-- What flag is available?
 						usedflags = {}
 						outofrangeflags = {}
-						
+
 						-- See which flags have been used in this level.
 						returnusedflags(usedflags, outofrangeflags)
-						
+
 						local useflag = -1
 						for vlag = 0, 99 do
 							if not usedflags[vlag] then
@@ -1197,13 +1197,13 @@ function endeditingroomtext(donotmakethisnil)
 								break
 							end
 						end
-						
+
 						if useflag == -1 then
 							-- No flags left?
 							dialog.new(L.NOFLAGSLEFT, "", 1, 3, 16)
 							useflag = "FLAG"
 						end
-						
+
 						scripts[loadscriptname] = {
 							"ifflag(" .. useflag .. ",stop)",
 							"flag(" .. useflag .. ",on)",
@@ -1211,7 +1211,7 @@ function endeditingroomtext(donotmakethisnil)
 						}
 						table.insert(scriptnames, loadscriptname)
 						entitydata[editingroomtext].data = loadscriptname
-						
+
 						temporaryroomname = L.LOADSCRIPTMADE
 						temporaryroomnametimer = 90
 					end
@@ -1222,7 +1222,7 @@ function endeditingroomtext(donotmakethisnil)
 						scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
 						table.insert(scriptnames, loadscriptname)
 						entitydata[editingroomtext].data = loadscriptname
-						
+
 						temporaryroomname = L.LOADSCRIPTMADE
 						temporaryroomnametimer = 90
 					end
@@ -1231,7 +1231,7 @@ function endeditingroomtext(donotmakethisnil)
 					dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}), "", 1, 1, 0)
 				end
 			end
-			
+
 			scripts[input] = {""}
 			table.insert(scriptnames, input)
 		end
@@ -1257,21 +1257,21 @@ end
 
 function state6load(levelname)
 	stopinput()
-	
+
 	if not secondlevel then
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
 			oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
 			=  editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata
 		end
-		
+
 		editingmap = levelname
 		success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = loadlevel(editingmap .. ".vvvvvv")
-		
+
 		if not success then
 			--tostate(6)
 			dialog.new(langkeys(L.LEVELOPENFAIL, {anythingbutnil(editingmap)}) .. "\n\n" .. metadata, "", 1, 1, 0)
-			
+
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
@@ -1284,7 +1284,7 @@ function state6load(levelname)
 		end
 	else
 		success, metadata2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2 = loadlevel(levelname .. ".vvvvvv")
-		
+
 		if not success then
 			dialog.new(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2, "", 1, 1, 0)
 		else
@@ -1297,10 +1297,10 @@ end
 function compareleveldifferences(secondlevelname)
 	-- Assuming we have both metadata till vedmetadata and metadata till vedmetadata
 	-- Where xx2 is the older version, xx is the newer version. Also, secondlevelname is the older version
-	
+
 	differencesn = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 	local pagetext
-	
+
 	-- L E V E L   P R O P E R T I E S
 	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {secondlevelname}) or langkeys(L.COMPARINGTHESE, {editingmap, secondlevelname})) .. "\n\n"
 	for _,v in pairs(metadataitems) do
@@ -1308,28 +1308,28 @@ function compareleveldifferences(secondlevelname)
 			pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff[v], {metadata2[v], metadata[v]}) .. "\n"
 		end
 	end
-	
+
 	if metadata2.mapwidth ~= metadata.mapwidth or metadata2.mapheight ~= metadata.mapheight then
 		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsize, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}) .. "\n"
 	end
 	if metadata2.levmusic ~= metadata.levmusic then
 		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.levmusic, {metadata2.levmusic, metadata.levmusic}) .. "\n"
 	end
-	
+
 	table.insert(differencesn, {subj = diffmessages.pages.levelproperties, imgs = {}, cont = pagetext})
-	
+
 	-- R O O M S
 	pagetext = diffmessages.pages.changedrooms .. "\\wh#\n\n"
 	local co = not s.coords0 and 1 or 0 -- coordoffset
-	
+
 	if metadata2.mapwidth ~= metadata.mapwidth or metadata2.mapheight ~= metadata.mapheight then
 		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsizenote, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight, math.min(metadata2.mapwidth, metadata.mapwidth), math.min(metadata2.mapheight, metadata.mapheight)}) .. "\n\n"
 	end
-	
+
 	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
-			
+
 			for k,v in pairs(roomdata2[ry][rx]) do
 				if leftblank and v ~= 0 then
 					leftblank = false
@@ -1341,7 +1341,7 @@ function compareleveldifferences(secondlevelname)
 					changed = true
 				end
 			end
-			
+
 			if changed and levelmetadata2[(ry)*20 + (rx+1)].roomname == levelmetadata[(ry)*20 + (rx+1)].roomname then
 				if leftblank then
 					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
@@ -1361,30 +1361,30 @@ function compareleveldifferences(secondlevelname)
 			end
 		end
 	end
-	
+
 	table.insert(differencesn, {subj = diffmessages.pages.changedrooms, imgs = {}, cont = pagetext})
-	
+
 	-- R O O M   M E T A D A T A
 	pagetext = diffmessages.pages.changedroommetadata .. "\\wh#\n\n"
-	
+
 	for k,v in pairs(levelmetadata2) do
 		local changed = false
-		
+
 		-- Is anything different?
 		for k2,v2 in pairs(v) do
 			if v2 ~= levelmetadata[k][k2] then
 				changed = true
 			end
 		end
-		
+
 		local lrmx = (k-1) % 20
 		local lrmy = math.floor(((k-1) - lrmx) / 20)
-		
+
 		if not s.coords0 then
 			lrmx = lrmx + 1
 			lrmy = lrmy + 1
 		end
-		
+
 		if changed and levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
 			-- We're already going to show that the room name has changed
 			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
@@ -1392,7 +1392,7 @@ function compareleveldifferences(secondlevelname)
 			-- We're not, so label this
 			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, levelmetadata2[k].roomname}) .. "\n"
 		end
-		
+
 		if changed then
 			-- So what has changed?
 			if levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
@@ -1429,12 +1429,12 @@ function compareleveldifferences(secondlevelname)
 			end
 		end
 	end
-	
+
 	table.insert(differencesn, {subj = diffmessages.pages.changedroommetadata, imgs = {}, cont = pagetext})
-	
+
 	-- E N T I T I E S
 	pagetext = diffmessages.pages.entities .. "\\wh#\n\n"
-	
+
 	-- Locations are identifying here.
 	locentities2 = {}
 	locentities = {}
@@ -1452,14 +1452,14 @@ function compareleveldifferences(secondlevelname)
 			table.insert(locentities[(v.x*1000)+v.y], entitydata[k])
 		end
 	end
-		
+
 	-- First handle double entities at one location
 	for k,v in pairs(locentities) do
 		if #v > 1 then
 			-- This is what we're looking for.
 			local bkx, bky = v[1].x % 40, v[1].y % 30
 			local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
-		
+
 			if locentities2[k] == nil then
 				-- Easy, everything was added.
 				pagetext = pagetext .. langkeys(diffmessages.entities.addedmultiple, {bkx, bky, eroomx, eroomy}) .. "\n"
@@ -1469,7 +1469,7 @@ function compareleveldifferences(secondlevelname)
 			else
 				-- Say the situation changed, IF not all entities are the same.
 				local thesame = false
-				
+
 				if #v == #locentities2[k] then  -- The number of entities at this spot remained the same
 					thesame = true  -- all these entities have a matching entity in the other level unless we find one that's different  (:1)
 					for khere,vhere in pairs(v) do  -- For all entities at this location in the newer level
@@ -1493,7 +1493,7 @@ function compareleveldifferences(secondlevelname)
 						end
 					end
 				end
-				
+
 				if not thesame then
 					-- Different situation
 					pagetext = pagetext .. langkeys(diffmessages.entities.multiple1, {bkx, bky, eroomx, eroomy}) .. "\n"
@@ -1508,31 +1508,31 @@ function compareleveldifferences(secondlevelname)
 					end
 				end
 			end
-			
+
 			-- We can get rid of this now
-			
+
 			locentities[k] = nil
 			locentities2[k] = nil
 		end
 	end
-	
+
 	-- Did we miss anything last time around? Multiple entities removed from one spot?
 	for k,v in pairs(locentities2) do
 		if #v > 1 then
 			-- These were all removed, else we'd have seen these above
 			local bkx, bky = v[1].x % 40, v[1].y % 30
 			local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
-			
+
 			pagetext = pagetext .. langkeys(diffmessages.entities.removedmultiple, {bkx, bky, eroomx, eroomy}) .. "\n"
 			for k2,v2 in pairs(v) do
 				pagetext = pagetext .. "  " .. langkeys(diffmessages.entities.entity, {getentityname(v2.t, v2.p1)}) .. "\n"
 			end
-			
+
 			-- Get rid of this too
 			locentities2[k] = nil
 		end
 	end
-	
+
 	-- Now we only have single entities left! Check for added and changed entities now
 	for k,v in pairs(locentities) do
 		local bkx, bky = v[1].x % 40, v[1].y % 30
@@ -1549,7 +1549,7 @@ function compareleveldifferences(secondlevelname)
 					break
 				end
 			end
-			
+
 			if not thisisanexactmatch then
 				if v[1].t ~= locentities2[k][1].t then
 					-- The type was changed as well...
@@ -1559,32 +1559,32 @@ function compareleveldifferences(secondlevelname)
 				end
 			end
 		end
-		
+
 		-- Handled.
 		locentities[k] = nil
 		locentities2[k] = nil
 	end
-	
+
 	-- Lastly, were any entities removed?
 	for k,v in pairs(locentities2) do
 		local bkx, bky = v[1].x % 40, v[1].y % 30
 		local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
-	
+
 		pagetext = pagetext .. langkeys(diffmessages.entities.removed, {getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}) .. "\n"
-		
+
 		-- Just so we can check if everything was handled.
 		locentities2[k] = nil
 	end
-	
+
 	if #locentities ~= 0 or #locentities2 ~= 0 then
 		pagetext = pagetext .. "\n" .. diffmessages.entities.incomplete .. " " .. #locentities .. "," .. #locentities2 .. "\n"
 	end
-	
+
 	table.insert(differencesn, {subj = diffmessages.pages.entities, imgs = {}, cont = pagetext})
-	
+
 	-- S C R I P T S
 	pagetext = diffmessages.pages.scripts .. "\\wh#\n\n"
-	
+
 	-- Were any scripts added or changed?
 	for k,v in pairs(scripts) do
 		if scripts2[k] == nil then
@@ -1597,24 +1597,24 @@ function compareleveldifferences(secondlevelname)
 			end
 		end
 	end
-	
+
 	-- Any scripts that were removed?
 	for k,v in pairs(scripts2) do
 		if scripts[k] == nil then
 			pagetext = pagetext .. langkeys(diffmessages.scripts.removed, {k}) .. "\n"
 		end
 	end
-	
+
 	table.insert(differencesn, {subj = diffmessages.pages.scripts, imgs = {}, cont = pagetext})
-	
+
 	if vedmetadata ~= false or vedmetadata2 ~= false then
 		-- F L A G   N A M E S
 		pagetext = diffmessages.pages.flagnames .. "\\wh#\n\n"
-		
+
 		if vedmetadata2 == false then
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
-			
+
 			for i = 0, 99 do
 				if vedmetadata.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
@@ -1623,7 +1623,7 @@ function compareleveldifferences(secondlevelname)
 		elseif vedmetadata == false then
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
-			
+
 			for i = 0, 99 do
 				if vedmetadata2.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {vedmetadata2.flaglabel[i], i}) .. "\n"
@@ -1644,23 +1644,23 @@ function compareleveldifferences(secondlevelname)
 				end
 			end
 		end
-		
+
 		table.insert(differencesn, {subj = diffmessages.pages.flagnames, imgs = {}, cont = pagetext})
-		
+
 		-- L E V E L   N O T E S
 		pagetext = diffmessages.pages.levelnotes .. "\\wh#\n\n"
-		
+
 		if vedmetadata2 == false then
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
-			
+
 			for k,v in pairs(vedmetadata.notes) do
 				pagetext = pagetext .. langkeys(diffmessages.levelnotes.added, {v.subj}) .. "\n"
 			end
 		elseif vedmetadata == false then
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
-			
+
 			for k,v in pairs(vedmetadata2.notes) do
 				pagetext = pagetext .. langkeys(diffmessages.levelnotes.removed, {v.subj}) .. "\n"
 			end
@@ -1668,7 +1668,7 @@ function compareleveldifferences(secondlevelname)
 			-- Were any notes added or changed?
 			for k,v in pairs(vedmetadata.notes) do
 				local found = false
-				
+
 				for k2, v2 in pairs(vedmetadata2.notes) do
 					if v.subj == v2.subj then
 						-- Maybe it has been edited?
@@ -1685,11 +1685,11 @@ function compareleveldifferences(secondlevelname)
 					pagetext = pagetext .. langkeys(diffmessages.levelnotes.added, {v.subj}) .. "\n"
 				end
 			end
-			
+
 			-- Any level notes that were removed?
 			for k,v in pairs(vedmetadata2.notes) do
 				local found = false
-				
+
 				for k2, v2 in pairs(vedmetadata.notes) do
 					if v.subj == v2.subj then
 						found = true
@@ -1701,11 +1701,11 @@ function compareleveldifferences(secondlevelname)
 				end
 			end
 		end
-		
+
 		table.insert(differencesn, {subj = diffmessages.pages.levelnotes, imgs = {}, cont = pagetext})
 	end
 
-	
+
 	tostate(15, nil, {differencesn, false})
 end
 
@@ -1717,7 +1717,7 @@ function getentityname(id, p1)
 				return toolnames[t]
 			end
 		end
-		
+
 		-- And now?
 		return id
 	else
@@ -1778,7 +1778,7 @@ function handleScrolling(viakeyboard, mkinput)
 			direction = "d"
 		end
 	end
-	
+
 	
 	if direction ~= nil then
 		if state == 3 and not viakeyboard then
@@ -1836,7 +1836,7 @@ function handleScrolling(viakeyboard, mkinput)
 						helparticlescroll = math.min(-upperbound, 0)
 					end
 				end
-				
+
 				if helpeditingline ~= 0 and viakeyboard then
 					helparticlecontent[helpeditingline] = input .. input_r
 					input_r = ""
@@ -1867,13 +1867,13 @@ end
 function getalllanguages()
 	local languagesarray = love.filesystem.getDirectoryItems("lang")
 	local returnarray = {}
-	
+
 	for k,v in pairs(languagesarray) do
 		if v:sub(-4,-1) == ".lua" then
 			table.insert(returnarray, v:sub(1,-5))
 		end
 	end
-	
+
 	return returnarray
 end
 
@@ -1889,16 +1889,16 @@ function colorsetting(label, pos, mycolor)
 		love.graphics.setColor(128,128,128)
 	end
 	love.graphics.print(label, 8+32+8, 8+(24*pos)+4+2)
-	
+
 	if mouseon(8, 8+(24*pos), 32, 16) then
 		love.graphics.setColor(255,255,255,64)
 		love.graphics.rectangle("fill", 9, 9+(24*pos), 30, 14)
-		
+
 		if love.mouse.isDown("l") and editingcolor ~= mycolor then
 			editingcolor = mycolor
 		end
 	end
-	
+
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -1919,7 +1919,7 @@ function s_nieuw(t)
 			s_veld[y][x] = 0
 		end
 	end
-	
+
 	s_veld[3][1] = 1
 	s_puntje = 1
 	s_volgendenek = 2
@@ -1931,7 +1931,7 @@ function s_nieuw(t)
 	sp_go = false
 	sp_got = 1.5
 	sp_tim = 0
-	
+
 	s_noep()
 end
 
@@ -1949,13 +1949,13 @@ function s_noep()
 			end
 		end
 	end
-	
+
 	if legeplekken == 0 then
 		return
 	end
-	
+
 	gekozenplek = math.random(0, legeplekken-1)
-	
+
 	for ky,vy in pairs(s_veld) do
 		for kx,vx in pairs(vy) do
 			if vx == 0 and not (s_hoofdx == kx and s_hoofdy == ky) and not (
@@ -1972,7 +1972,7 @@ function s_noep()
 			end
 		end
 	end		
-	
+
 	dialog.new("s_noep() failed!", "", 1, 1, 0)
 end
 
@@ -2016,7 +2016,7 @@ function sp_tap()
 			s_nek()
 			s_hoofdx = s_hoofdx - 1
 		end
-		
+
 		if s_veld[s_hoofdy][s_hoofdx] == -1 then
 			s_veld[s_hoofdy][s_hoofdx] = 0
 			s_ge2ten = s_ge2ten + 1
@@ -2027,7 +2027,7 @@ function sp_tap()
 			s_verwpuntje()
 		end
 	else
-	
+
 	end
 end
 
@@ -2071,15 +2071,15 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 		love.graphics.rectangle("fill", ox+3, oy+5, 1, 1)
 		love.graphics.rectangle("fill", ox+5, oy+3, 1, 1)
 	end
-	
+
 	if math.random(0,100) < 10 then
 		if math.random(0,10) < 4 then
 			love.graphics.setColor(0,0,0)
 		end
-		
+
 		love.graphics.rectangle("fill", ox+math.random(0,19), oy+math.random(0,13), 1, 1)
 	end
-	
+
 	love.graphics.setColor(255,255,255)
 end
 
@@ -2088,7 +2088,7 @@ function uniquenotename(newname, oldname)
 		return newname
 	end
 	local i, found = 0, false
-	
+
 	while not found do
 		i = i+1
 		found = true
@@ -2099,7 +2099,7 @@ function uniquenotename(newname, oldname)
 			end
 		end
 	end
-	
+
 	if i == 1 then
 		return newname
 	end
@@ -2112,7 +2112,7 @@ end
 
 function roomtext_extralines(text)
 	_, thelines = font16:getWrap(text, 40*16)
-	
+
 	-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
 	if type(thelines) == "table" then
 		return #thelines - 1

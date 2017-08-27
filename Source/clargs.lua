@@ -52,7 +52,7 @@ local clargs = {
 
 function clhelp()
 	local helps = {}
-	
+
 	-- First get all the full options.
 	for kh, vh in pairs(clargs) do
 		if type(vh) ~= "string" then
@@ -66,14 +66,14 @@ function clhelp()
 			end
 		end
 	end
-	
+
 	-- Now get all the abbreviations.
 	for kh, vh in pairs(clargs) do
 		if type(vh) == "string" then
 			table.insert(helps[vh].abbr, kh)
 		end
 	end
-	
+
 	-- What's the longest combination of options? Helps us with alignment.
 	local optslen_highscore = 0
 	for kh, vh in pairs(helps) do

@@ -2,13 +2,13 @@ function returnusedflags(usedflagsA, outofrangeflagsA)
 	for rvnum = #scriptnames, 1, -1 do			
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			local explodedscript = explode("\n", v)
-			
+
 			for k1, v1 in pairs(explodedscript) do
 				local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v1, "%(", ","), "%)", ","), " ", ""))
-				
+
 				if (explcommaline[1] == "flag" or explcommaline[1] == "ifflag" or explcommaline[1] == "customifflag") and explcommaline[2] ~= nil and tonumber(explcommaline[2]) ~= nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
-					
+
 					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) > 99 then
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
@@ -23,20 +23,20 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor)
 		_= docolor and setColorArr(s.syntaxcolor_textbox)
 		love.graphics.print(text, x, y)
 		offsetchars = string.len(text) + 1
-		
+
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 		end
-		
+
 		return nil
 	else
 		offsetchars = 0
-		
+
 		--if text ~= "" then
 		-- Replace characters by one with which we will split.
 		text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
-		
+
 		partss = explode(",", text2)
 
 		for k,v in pairs(partss) do
@@ -57,7 +57,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor)
 						_= docolor and setColorArr(s.syntaxcolor_flagname)
 						break
 					end
-					
+
 					_= docolor and setColorArr(s.syntaxcolor_newflagname)
 				end
 			else
@@ -67,15 +67,15 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor)
 
 			_= docolor and setColorArr(s.syntaxcolor_separator)
 			love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
-			
+
 			offsetchars = offsetchars + (string.len(v)+1)
 		end
-		
+
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 		end
-		
+
 		if partss[1] == "say" or partss[1] == "reply" then
 			if partss[2] == nil then
 				return 1
@@ -97,9 +97,9 @@ function justtext(text, thisistext)
 	if not thisistext then
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
 			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
-			
+
 			partss = explode(",", text2)
-			
+
 			if partss[1] == "say" or partss[1] == "reply" then
 				if partss[2] == nil then
 					return 1
@@ -114,18 +114,18 @@ function justtext(text, thisistext)
 				end
 			end
 		end
-		
+
 		return nil -- also redundant
 	end
-	
+
 	return nil -- redundant
 end
 
 function scriptcontext(text)
 	local text2 = string.gsub(string.gsub(string.gsub(anythingbutnil(text), "%(", ","), "%)", ","), " ", "")
-	
+
 	parts = explode(",", text2)
-	
+
 	if parts[1] == "flag" and parts[2] ~= nil then
 		return "flag", tonumber(parts[2]), nil
 	elseif (parts[1] == "iftrinkets" or parts[1] == "customiftrinkets") and parts[3] ~= nil and parts[3] ~= "" then
@@ -152,26 +152,26 @@ function processflaglabels()
 			if v:sub(1,4) == "flag" or v:sub(1,6) == "ifflag" or v:sub(1,12) == "customifflag" then
 				-- Ok, how about now?
 				text2 = string.gsub(string.gsub(v, "%(", ","), "%)", ",")
-				
+
 				-- We need to explode it anyways.
 				partss = explode(",", text2)
-				
+
 				if vedmetadata ~= false and vedmetadata.flaglabel[tonumber(partss[2])] ~= nil and vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
 					-- This flag has a name
 					scriptlines[k] = scriptlines[k]:gsub(partss[2], vedmetadata.flaglabel[tonumber(partss[2])], 1)
 				end
 			end
 		end
-		
+
 		-- Is this an internal script?
 		if scriptlines[1] ~= nil and scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v" and scriptlines[#scriptlines-1] == "loadscript(stop) #v" and scriptlines[#scriptlines] == "text(1,0,0,4) #v" then
 			-- Quite so!
 			table.remove(scriptlines, #scriptlines)
 			table.remove(scriptlines, #scriptlines)
 			table.remove(scriptlines, 1)
-			
+
 			local removetheselines = {}
-			
+
 			for k,v in pairs(scriptlines) do
 				-- Remove any hashes we may have placed last time when replacing completely blank lines
 				if v == "#" then
@@ -180,12 +180,12 @@ function processflaglabels()
 					table.insert(removetheselines, k)
 				end
 			end
-			
+
 			-- Remove the lines we have to remove in reverse order, so the keys will remain the same for the items we're removing.
 			for l = #removetheselines, 1, -1 do
 				table.remove(scriptlines, removetheselines[l])
 			end
-			
+
 			--dialog.new("This is an internal script!", "", 1, 1, 0)
 			internalscript = true
 		else
@@ -202,13 +202,13 @@ function processflaglabelsreverse()
 	-- Run when LEAVING the script
 	-- Converts flag labels to numbers, and if an internal script, convert to a format that works in VVVVVV
 	-- scriptlines assumed non-empty table of lines
-	
+
 	usedflags = {}
 	outofrangeflags = {}
-	
+
 	-- See which flags have been used in this level.
 	returnusedflags(usedflags, outofrangeflags)
-	
+
 	-- Internal script handling!
 	if internalscript then
 		-- Backup first!
@@ -217,23 +217,23 @@ function processflaglabelsreverse()
 
 		-- Add the magic lines.
 		local saylines = #scriptlines+1
-				
+
 		-- Alright, figured out what the sorcery was... DIT IS NU HELAAS NIET MEER ZO SIMPEL!
 		--editingline = editingline + 1
-		
+
 		-- First actually set the line, then we'll talk.
 		scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
 		editingline = 2
 		input, input_r = scriptlines[1], ""
-		
+
 		--table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
-		
+
 		-- I see something coming here...
 		if scriptlines[editingline] == "" then
 			-- Make sure it's not changed back to an empty line by a leavescript_to_state.
 			input = "#"
 		end
-		
+
 		-- INSERT loadscript(stop) #v HIER ----- NIET DUS
 		--table.insert(scriptlines, "loadscript(stop) #v")
 
@@ -241,7 +241,7 @@ function processflaglabelsreverse()
 		local marksafe = true
 		for k = #scriptlines, 1, -1 do
 			local v = scriptlines[k]
-			
+
 			if v:sub(1,5) == "speak" then
 				marksafe = false
 			elseif v:sub(1,4) == "text" then
@@ -255,7 +255,7 @@ function processflaglabelsreverse()
 		local lineshad = 0
 		while (#scriptlines - lineshad) > 48 do
 			local splitsuccessfully = false
-			
+
 			local finalblockline = 0
 
 			for currentblockline = (lineshad+1)+48, lineshad+1, -1 do
@@ -273,10 +273,10 @@ function processflaglabelsreverse()
 				splithasfailed = true
 				break
 			end
-			
+
 			lineshad = lineshad + finalblockline
 		end
-		
+
 		if splithasfailed then
 			-- Just restore the script from the backup we made and disengage internal scripting mode
 			scriptlines = table.copy(scriptlinesbackup)
@@ -285,31 +285,31 @@ function processflaglabelsreverse()
 		else
 			-- Alright, what do we have left?
 			table.insert(blocks, #scriptlines - lineshad)
-			
+
 			cons("Blocks:" .. #blocks)
-			
+
 			for k,v in pairs(blocks) do
 				cons("Block: " .. v)
 			end
-			
+
 			if #blocks == 1 then
 				-- We actually need to check for this unfortunately
 				cons("There is only one block, so no splitting required")
-				
+
 				table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
 			else
 				-- ACTUALLY SPLIT EVERYTHING YAY
 				for k = #blocks, 1, -1 do
 					-- We're in the kth block.
 					local blockstartsat = 0
-					
+
 					for blu = k-1, 1, -1 do
 						cons("Adding block " .. blu)
 						blockstartsat = blockstartsat + blocks[blu]
 					end
-					
+
 					cons("Final start of block " .. k .. " with length " .. (blocks[k]) .. ": " .. (blockstartsat+1))
-					
+
 					if k == #blocks then
 						-- This is the last one so this also behaves slightly differently because it's observed to do so.
 						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+2) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
@@ -322,14 +322,14 @@ function processflaglabelsreverse()
 					end
 				end
 			end
-			
+
 			table.insert(scriptlines, "loadscript(stop) #v")
 			table.insert(scriptlines, "text(1,0,0,4) #v")
 		end
 	end
-	
+
 	local noflagsleftwarning = false
-	
+
 	-- b1 fix for flag names being assigned flag numbers that are also used in that script for the first time. See below
 	for k,v in pairs(scriptlines) do
 		if k == editingline then
@@ -337,11 +337,11 @@ function processflaglabelsreverse()
 		else
 			usev = v
 		end
-	
+
 		if usev:sub(1,4) == "flag" or usev:sub(1,6) == "ifflag" or usev:sub(1,12) == "customifflag" then
 			local text2 = string.gsub(string.gsub(usev, "%(", ","), "%)", ","):gsub(" ", "")
 			local partss = explode(",", text2)
-			
+
 			if tostring(tonumber(partss[2])) == tostring(partss[2]) and tonumber(partss[2]) ~= nil then
 				-- This is a flag number, so make sure we don't assign a flag name to it!
 				usedflags[tonumber(partss[2])] = true
@@ -349,44 +349,44 @@ function processflaglabelsreverse()
 			end
 		end
 	end
-	
+
 	for k,v in pairs(scriptlines) do
 		if k == editingline then
 			usev = anythingbutnil(input) .. anythingbutnil(input_r)
 		else
 			usev = v
 		end
-		
+
 		-- Are we using internal scripting mode? If this line is blank it's not going to be taken well by VVVVVV itself unless we put something here..
 		if internalscript and v == "" then
 			scriptlines[k] = "#"
 			usev = "#"
 		end
-		
+
 		-- Would be a good idea to stop accidental script splits from happening... People could much better use an actual split button if I add it
 		if (not s.dontpreventscriptsplits) and v:sub(-1,-1) == ":" then
 			scriptlines[k] = v .. " "
 		end
-	
+
 		-- I could split it into parts and then check everything with that, but this is far easier and better performing.
 		if usev:sub(1,4) == "flag" or usev:sub(1,6) == "ifflag" or usev:sub(1,12) == "customifflag" then
 			cons("(first 4 letters) " .. usev:sub(1,4) .. " found at line " .. k)
 			-- Ok, how about now?
 			local text2 = string.gsub(string.gsub(usev, "%(", ","), "%)", ","):gsub(" ", "")
-			
+
 			-- We need to explode it anyways.
 			local partss = explode(",", text2)
-			
+
 			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
-				
+
 				-- But first check if vedmetadata is enabled
 				if vedmetadata == false then
 					vedmetadata = createmde()
 				end
-				
+
 				local useflag = -1
-								
+
 				for vlag = 0, 99 do
 					if vedmetadata.flaglabel[vlag] == partss[2] then
 						useflag = vlag
@@ -394,7 +394,7 @@ function processflaglabelsreverse()
 						break
 					end
 				end
-				
+
 				if useflag == -1 then
 					-- This flag name is new! Find a flag number to assign it to.
 					cons("Flag name " .. partss[2] .. " is new!")
@@ -409,7 +409,7 @@ function processflaglabelsreverse()
 						end
 					end
 				end
-				
+
 				if useflag == -1 then
 					-- No flags left?
 					if not noflagsleftwarning then
@@ -420,7 +420,7 @@ function processflaglabelsreverse()
 					-- When replacing, make sure a flag named "flag" or similar won't replace the command itself. Also don't change the style of brackets/commas by imploding as x(y,z)
 					scriptlines[k] = partss[1] .. usev:sub(partss[1]:len()+1, -1):gsub(escapegsub(partss[2], true), useflag, 1)
 					cons("Substituted " .. partss[2] .. " (escaped gsub " .. escapegsub(partss[2]) .. ") by " .. useflag)
-					
+
 					if k == editingline then
 						-- This is a line we were editing, so update it first... Sigh
 						input = scriptlines[k]
@@ -431,7 +431,7 @@ function processflaglabelsreverse()
 			end
 		end
 	end
-		
+
 	return noflagsleftwarning
 end
 
@@ -440,7 +440,7 @@ function bumpscript(scriptid)
 	--local temp = scripts[script]
 	--table.remove(scripts, script)
 	--scripts[script] = temp
-	
+
 	-- id is the index of the script in scriptnames!
 	local temp = scriptnames[scriptid]
 	table.remove(scriptnames, scriptid)
@@ -467,7 +467,7 @@ end
 
 function checkintscrloadscript(scriptname)
 	entityuses, scriptuses = findscriptreferences(scriptname)
-	
+
 	-- Warn in case no script is referring to this one.
 	intscrwarncache_warn_noloadscript = #scriptuses == 0
 	intscrwarncache_warn_boxed = #entityuses > 0
@@ -477,19 +477,19 @@ end
 function findscriptreferences(argscriptname)
 	local entityuses = {} -- Contains entity IDs
 	local scriptuses = {} -- Contains: {argscriptname, line}
-	
+
 	for k,v in pairs(entitydata) do
 		if (v.t == 18 or v.t == 19) and v.data == argscriptname then
 			table.insert(entityuses, k)
 		end
 	end
-	
+
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
-		
+
 			partss = explode(",", v2)
-			
+
 			if (partss[1] == "iftrinkets" or partss[1] == "customiftrinkets" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname then
 				-- argscriptname is referred to in this script
 				table.insert(scriptuses, {scriptnames[rvnum], k})
@@ -497,7 +497,7 @@ function findscriptreferences(argscriptname)
 			end
 		end
 	end
-	
+
 	return entityuses, scriptuses
 end
 
@@ -511,7 +511,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 		leavescript_to_state = function()
 			scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
 			scripts[scriptname] = table.copy(scriptlines)
-			
+
 			if goingback then
 				table.remove(scripthistorystack)
 			else
@@ -520,21 +520,21 @@ function editorjumpscript(argscriptname, goingback, toline)
 
 			scriptineditor(argscriptname)
 			cons("Jumping to script " .. argscriptname .. " in editor, # history stack is now " .. (#scripthistorystack))
-			
+
 			if toline ~= nil then
 				-- Also go back to the correct line!
 				scriptgotoline(toline)
 			end
 		end
-		
+
 		-- So that processflaglabelsreverse() doesn't modify this for internal scripts
 		visibleeditingline = editingline
-		
+
 		if not processflaglabelsreverse() then
 			leavescript_to_state()
 		end
 	end
-	
+
 	mousepressed = true
 end
 
@@ -546,7 +546,7 @@ function scriptgotoline(linenum, colnum)
 	elseif linenum > #scriptlines then
 		linenum = #scriptlines
 	end
-	
+
 	scriptlines[editingline] = input .. input_r
 	__ = "_"
 	editingline = linenum
@@ -556,7 +556,7 @@ function scriptgotoline(linenum, colnum)
 		input, input_r = anythingbutnil(scriptlines[editingline]):sub(1,colnum-1), anythingbutnil(scriptlines[editingline]):sub(colnum,-1)
 		scriptlines[editingline] = input
 	end
-	
+
 	-- Now make sure the line is actually on screen!
 	scriptlineonscreen()
 end

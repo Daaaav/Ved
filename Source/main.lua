@@ -68,13 +68,13 @@ if love.window == nil then
 else
 	require("plugins")
 	loadplugins()
-	
+
 	defaulterrhand = false
-	
+
 	-- Let's do some command line argument parsing!
 	if #arg > 0 then
 		local clargs = ved_require("clargs")
-		
+
 		local nextpartto = nil
 
 		for k,v in pairs(arg) do

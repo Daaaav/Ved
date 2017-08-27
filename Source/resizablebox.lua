@@ -1,17 +1,17 @@
 --[[
 	box_exists: nil or false if it doesn't (yet) exist, true if it does (was resizableboxexists)
-	
+
 	boxperi_x, boxperi_y, boxperi_w, boxperi_h	This is the area in which you can resize the box, it will obviously never go outside of those limits.
-	
+
 	box_x, box_y, box_w, box_h	The current position and size of the box.
-	
+
 	box_type	This will be a number which defines which variable to set
 		-1	set nothing at all
 		0	box test in state 20, snap to 16x16 grid
 		1	resizable script box
-	
+
 	box_moving_h	This holds 0 for not holding any horizontal side, 1 for the top one, 2 for the bottom one
-	
+
 	box_moving_v	0 none, 1 left, 2 right
 ]]
 
@@ -78,14 +78,14 @@ function boxupdate()
 				box_h = 16
 			--end
 		end
-		
+
 		if box_type == 1 then
 			entitydata[box_meta].x = math.floor(((box_x+8) - 128) / 16) + roomx*40
 			entitydata[box_meta].y = math.floor((box_y+8) / 16) + roomy*30
 			entitydata[box_meta].p1 = math.floor((box_w+8) / 16)
 			entitydata[box_meta].p2 = math.floor((box_h+8) / 16)
 		end
-		
+
 		--[[
 		if box_type == 0 then
 			if box_moving_v == 1 or box_moving_h == 1 then
@@ -105,7 +105,7 @@ function boxmousepress()
 	if box_exists then
 		--if love.mouse.getX() - 8 >= box_x or love.mouse.getX() - 8 >= box_x
 		local raak = false
-		
+
 		if mouseon(box_x-8, box_y-8, 16, box_h+16) then
 			-- Left
 			box_moving_v = 1
@@ -124,7 +124,7 @@ function boxmousepress()
 			box_moving_h = 2
 			raak = true
 		end
-		
+
 		if not raak and box_outsideiscancel then
 			box_exists = false
 		end
@@ -137,10 +137,10 @@ function boxmouserelease()
 	if box_exists then
 		box_moving_h = 0
 		box_moving_v = 0
-		
+
 		box_x, box_y = math.max(boxperi_x, box_x), math.max(boxperi_y, box_y)
 		box_w, box_h = math.min((boxperi_x+boxperi_w)-box_x, box_w), math.min((boxperi_y+boxperi_h)-box_y, box_h)
-		
+
 		if box_type == 0 then
 			box_x, box_y, box_w, box_h = box_x+8, box_y+8, box_w+8, box_h+8
 			box_x, box_y, box_w, box_h = box_x-(box_x%16), box_y-(box_y%16), box_w-(box_w%16), box_h-(box_h%16)

@@ -221,7 +221,7 @@ do
 	end
 
 	local swidth = 896
-	
+
 	-- Maybe it's set for a smaller screen
 	if s.smallerscreen then
 		swidth = 800
@@ -231,10 +231,10 @@ do
 	--if s.scale > 1 then
 	local fits = false
 	local fits896 = false
-	
+
 	for mon = 1, love.window.getDisplayCount() do
 		local monw, monh = love.window.getDesktopDimensions(mon)
-	
+
 		if windowfits(swidth*s.scale, 480*s.scale, {monw, monh}) then
 			fits = true
 		end
@@ -242,23 +242,23 @@ do
 			fits896 = true
 		end
 	end
-	
+
 	if s.scale > 1 and not fits then
 		print("Scale setting kicked back from " .. s.scale .. "!")
 		s.scale = 1
 	end
-	
+
 	if not fits896 then
 		print("No monitor with width >= 896 found, setting smaller screen!")
 		s.smallerscreen = true
 	end
 	--end
-	
+
 	if s.smallerscreen then
 		_, _, graphicsflags = love.window.getMode()
 		love.window.setMode(800, 480, graphicsflags)
 	end
-	
+
 	s.pscale = s.scale
 	s.pcheckforupdates = s.checkforupdates
 end

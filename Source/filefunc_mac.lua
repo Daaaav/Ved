@@ -2,7 +2,7 @@
 
 
 -- We know we're on OS X for a start...
-userprofile = os.getenv('HOME')
+userprofile = os.getenv("HOME")
 
 simplevvvvvvfolder = true
 standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
@@ -12,9 +12,9 @@ standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 function listfiles(directory)
 	local i, t = 0, {}
 	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
-	
+
 	-- Only do files.
-	for filename in io.popen('ls '..directory:gsub(" ", "\\ ")..''):lines() do -- kijk eens bij t voor sorteren
+	for filename in io.popen("ls " .. directory:gsub(" ", "\\ ")):lines() do -- kijk eens bij t voor sorteren
 		i = i + 1
 		t[i] = {
 			name = filename,
@@ -50,13 +50,11 @@ end
 
 function listdirs(directory)
 	local i, t = 0, {}
-	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
-	
 	-- Only do folders.
-	for filename in io.popen('ls '..directory:gsub(" ", "\\ ")..''):lines() do
+	for filename in io.popen("ls " .. directory:gsub(" ", "\\ ")):lines() do
 		i = i + 1
 		t[i] = filename
-		
+
 		--cons(filename)
 	end
 	return t
@@ -64,11 +62,11 @@ end
 
 function directory_exists(where, what)
 	local i, t = 0, {}
-	
-	for filename in io.popen('ls '..where:gsub(" ", "\\ ")..''):lines() do
+
+	for filename in io.popen("ls " .. where:gsub(" ", "\\ ")):lines() do
 		if filename == what then return true end
 	end
-	
+
 	-- If we're here, then the dir doesn't exist.
 	return false
 end
@@ -77,15 +75,15 @@ function readlevelfile(path)
 	-- returns success, contents
 
 	fh, everr = io.open(path, "r")
-	
+
 	if fh == nil then
 		return false, everr
 	end
-	
+
 	local ficontents = fh:read("*a")
-	
+
 	fh:close()
-	
+
 	return true, ficontents
 end
 
@@ -93,15 +91,15 @@ function writelevelfile(path, contents)
 	-- returns success, (if not) error message
 
 	fh, everr = io.open(path, "w")
-	
+
 	if fh == nil then
 		return false, everr
 	end
-	
+
 	local ficontents = fh:write(contents)
-	
+
 	fh:close()
-	
+
 	return true, nil
 end
 
@@ -109,15 +107,15 @@ function readimage(levelsfolder, filename)
 	-- returns success, contents
 
 	fh, everr = io.open(levelsfolder:sub(1, -8) .. "/graphics/" .. filename, "rb")
-	
+
 	if fh == nil then
 		return false, everr
 	end
-	
+
 	local ficontents = fh:read("*a")
-	
+
 	fh:close()
-	
+
 	return true, ficontents
 end
 

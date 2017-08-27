@@ -21,7 +21,7 @@ function loadlevel(path)
 	-- scriptnames is used to keep the names in order of opening scripts
 	-- vedmetadata has flag names (.flaglabel)
 	-- If loading isn't successful, metadata will be an error string.
-	
+
 	-- Ok we have the file at path...
 	--[[
 	if not love.filesystem.isFile(path) then
@@ -29,17 +29,17 @@ function loadlevel(path)
 		cons("File " .. path .. " doesn't exist!")
 		return false
 	end
-	
+
 	-- Now load the level contents!
 	contents = love.filesystem.read(path)
 	]]
-	
+
 	success, contents = readlevelfile(levelsfolder .. dirsep .. path)
-	
+
 	if not success then
 		return false, contents
 	end
-	
+
 	local x = {}
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
 	FClist = {}
@@ -59,7 +59,7 @@ function loadlevel(path)
 		end
 		thismetadata[v] = unxmlspecialchars(m)
 	end
-	
+
 	-- But we'll have room size and music also move in with the metadata. Maybe change the regex so it'll match numbers only (not for music though because starting with an internal song number is possible), for now that's not necessary.
 	cons("Loading room size and music...")
 	for _,v in pairs({"mapwidth", "mapheight", "levmusic"}) do
@@ -69,14 +69,14 @@ function loadlevel(path)
 		end
 		thismetadata[v] = tonumber(m)
 	end
-	
+
 	-- TEMPORARY
 	-- thismetadata.tileset = 1
-	
+
 	-- Now, the contents!
 	cons("Loading all the contents...")
 	--x.alltiles = explode(",", contents:match("<contents>(.*)</contents>"))
-	
+
 	-- Ok, explode() is far too inefficient, what else have we got?
 	x.alltiles = {}
 	local m = contents:match("<contents>(.*)</contents>")
@@ -87,9 +87,9 @@ function loadlevel(path)
 		--print(num)
 		table.insert(x.alltiles, num)
 	end
-	
+
 	cons("Contents split (setting all rooms now)")
-	
+
 	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
 	local theserooms = {}
 	for yk = 0, thismetadata.mapheight-1 do
@@ -105,11 +105,11 @@ function loadlevel(path)
 			end
 		end
 	end
-	
+
 	-- Entities.
 	local allentities = {}
 	local myvedmetadata = false
-	
+
 	cons("Loading entities...")
 	if contents:find("<edEntities />") == nil and contents:find("<edEntities/>") == nil then
 		-- We have entities!
@@ -117,28 +117,28 @@ function loadlevel(path)
 		if x.entities == nil then
 			return false, L.MAL .. L.ENTITIESCORRUPT
 		end
-		
+
 		-- Get all entities
 		--.
 		entityid = 0
 		for entity in x.entities:gmatch("<edentity (.-)\r?\n            </edentity>") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
-			
+
 			-- We now got x="x" ... p6="x">Data... Attributes to the left of the >, data to the right of it.
 			metaparts = explode(">", entity)
-			
+
 			-- Explode more
 			attributes = explode(" ", metaparts[1])
-			
+
 			for k,v in pairs(attributes) do
 				-- Explode yet even more
 				keyvalue = explode("=", v)
-				
+
 				-- Leave out the quotes and convert it to number
 				local settothis = tonumber(keyvalue[2]:sub(2, -2))
 				allentities[entityid][keyvalue[1]] = settothis
-				
+
 				-- Is this a valid number?
 				--[[
 				if settothis == nil or type(settothis) ~= "number" then
@@ -147,10 +147,10 @@ function loadlevel(path)
 				end
 				]]
 			end
-			
+
 			-- Now we only need the data...
 			allentities[entityid].data = unxmlspecialchars(metaparts[2])
-			
+
 			-- Now before we go to the next one, if it's a trinket or crewmate, add it up, because we can only have 20 in a level. Officially. Also, parse the special data entity here if we found it.
 			if allentities[entityid].t == 9 then
 				mycount.trinkets = mycount.trinkets + 1
@@ -161,15 +161,15 @@ function loadlevel(path)
 			elseif allentities[entityid].x == 800 and allentities[entityid].y == 600 and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
 				local explodedmetadata = explode("|", allentities[entityid].data)
-				
+
 				myvedmetadata = createmde()
-				
+
 				myvedmetadata.mdeversion = anythingbutnil0(tonumber(explodedmetadata[1]))
-				
+
 				if myvedmetadata.mdeversion > thismdeversion then
 					dialog.new(L.MDEVERSIONWARNING, "", 1, 1, 0)
 				end
-				
+
 				if myvedmetadata.mdeversion >= 2 and explodedmetadata[2] ~= nil then
 					local explodedflags = explode("%$", explodedmetadata[2])
 					for k,v in pairs(explodedflags) do
@@ -181,16 +181,16 @@ function loadlevel(path)
 						myvedmetadata.flaglabel[f] = ""
 					end
 				end
-				
+
 				--[[
 				local explodedscripts = explode("%$", explodedmetadata[3])
 				for k,v in pairs(explodedscripts) do
 					table.insert(myvedmetadata.internalscripts, undespecialchars(v))
 				end
-				
+
 				myvedmetadata.leveloptions = explodedmetadata[4]
 				]]
-				
+
 				if explodedmetadata[5] ~= "" and explodedmetadata[5] ~= nil then
 					local explodednotes = explode("%$", explodedmetadata[5])
 					for k,v in pairs(explodednotes) do
@@ -199,14 +199,14 @@ function loadlevel(path)
 						table.insert(myvedmetadata.notes, {subj = undespecialchars(explodednote[1]), imgs = {}, cont = undespecialchars(explodednote[2])})
 					end
 				end
-				
+
 				-- Nil this entity now so we don't store multiple ones when saving
 				allentities[entityid] = nil
 			end
-			
+
 			-- It's an entity, that's for sure!
 			mycount.entities = mycount.entities + 1
-			
+
 			-- Do some integrity checks on this entity.
 			--[[
 			mycount.FC = mycount.FC + (allentities[entityid].x == nil and 1 or 0)
@@ -219,9 +219,9 @@ function loadlevel(path)
 			mycount.FC = mycount.FC + (allentities[entityid].p5 == nil and 1 or 0)
 			mycount.FC = mycount.FC + (allentities[entityid].p6 == nil and 1 or 0)
 			]]
-			
+
 			local oldFCcount = mycount.FC
-			
+
 			-- We might have just nil'd this entity because it was the data entity.
 			if allentities[entityid] ~= nil then
 				if allentities[entityid].x == nil or type(allentities[entityid].x) ~= "number" then
@@ -253,7 +253,7 @@ function loadlevel(path)
 					allentities[entityid].p6 = 0
 				end
 			end
-			
+
 			if oldFCcount < mycount.FC then
 				cons_fc(langkeys(L.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}))
 			end
@@ -263,45 +263,45 @@ function loadlevel(path)
 	else
 		--.
 	end
-	
+
 	-- Level meta data
 	cons("Loading room metadata...")
 	x.levelmetadata = contents:match("<levelMetaData>(.*)</levelMetaData>")
 	if x.levelmetadata == nil then
 		return false, L.MAL .. L.LEVELMETADATACORRUPT
 	end
-	
+
 	-- Get every room now.
 	local theselevelmetadata = {}
 	croom = 0
 	for room in x.levelmetadata:gmatch("<edLevelClass (.-)</edLevelClass>") do
 		croom = croom + 1
 		theselevelmetadata[croom] = {}
-		
+
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
 		metaparts = explode(">", room)
-		
+
 		-- Explode more
 		attributes = explode(" ", metaparts[1])
-		
+
 		for k,v in pairs(attributes) do
 			-- Explode yet even more
 			keyvalue = explode("=", v)
-			
+
 			-- Leave out the quotes and convert it to number
 			theselevelmetadata[croom][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
-			
+
 			--cons("Room: " .. croom .. " Key: " .. keyvalue[1] .. " Value: " .. tonumber(keyvalue[2]:sub(2, -2)))
 		end
-		
+
 		-- Now we only need the room name...
 		theselevelmetadata[croom].roomname = unxmlspecialchars(metaparts[2])
-		
+
 		-- And make sure directmode isn't nil for 2.0 levels
 		if theselevelmetadata[croom].directmode == nil then
 			theselevelmetadata[croom].directmode = 0
 		end
-		
+
 		-- Do some integrity checks on this room metadata.
 		--[[
 		mycount.FC = mycount.FC + (theselevelmetadata[croom].tileset == nil and 1 or 0)
@@ -318,9 +318,9 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemytype == nil and 1 or 0)
 		mycount.FC = mycount.FC + (theselevelmetadata[croom].warpdir == nil and 1 or 0)
 		]]
-		
+
 		local oldFCcount = mycount.FC
-		
+
 		if theselevelmetadata[croom].tileset == nil or type(theselevelmetadata[croom].tileset) ~= "number" or (theselevelmetadata[croom].tileset > 4) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[croom].tileset = 0
@@ -366,19 +366,19 @@ function loadlevel(path)
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[croom].warpdir = 0
 		end
-		
+
 		theselevelmetadata[croom].auto2mode = 0
-		
+
 		if oldFCcount < mycount.FC then
 			cons_fc(langkeys(L.ROOMINVALIDPROPERTIES , {croom, (mycount.FC-oldFCcount)}))
 		end
-		
+
 		-- If you select a higher tilecol in space station and then go to another tileset, VVVVVV will still save the out-of-range tilecol.
 		if tilesetblocks[theselevelmetadata[croom].tileset].colors[theselevelmetadata[croom].tilecol] == nil then
 			theselevelmetadata[croom].tilecol = 0
 		end
 	end
-	
+
 	-- Scripts
 	cons("Loading scripts...")
 	--x.allscripts = explode("|", unxmlspecialchars(contents:match("<script>(.*)</script>")))
@@ -392,14 +392,14 @@ function loadlevel(path)
 		table.insert(x.allscripts, ln)
 	end
 	cons("There are " .. (#x.allscripts) .. " lines of scripting! Loading all of that...")
-	
+
 	local allscripts = {}
 	local myscriptnames = {}
-	
+
 	if #x.allscripts > 1 then
 		-- We don't want a crash now do we?
 		currentscript = ""; sline = 1
-		
+
 		for k,v in pairs(x.allscripts) do
 			if v:sub(-1, -1) == ":" then
 				-- This is a script name!
@@ -419,16 +419,16 @@ function loadlevel(path)
 			end
 		end
 	end
-	
+
 	--[[
 	local myvedmetadata =
 		{
 		flaglabel = {} --{[2] = "testvlag"}
 		}
 	]]
-	
+
 	cons("Done loading!")
-	
+
 	
 	-- As many of the integrity checks as possible here
 	--[[
@@ -452,7 +452,7 @@ function loadlevel(path)
 	end if (#theselevelmetadata ~= 400) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.NOT400ROOMS)
-		
+
 		if #theselevelmetadata < 400 then
 			for croom = #theselevelmetadata+1, 400 do
 				theselevelmetadata[croom] =
@@ -477,22 +477,22 @@ function loadlevel(path)
 			end
 		end
 	end
-	
+
 	if mycount.FC ~= 0 then
 		local FClisttext = ""
-		
+
 		for k,v in pairs(FClist) do
 			if k > 5 then
 				FClisttext = FClisttext .. "... " .. langkeys(L.MOREERRORS, {(#FClist-5)})
 				break
 			end
-			
+
 			FClisttext = FClisttext .. v .. "\n"
 		end
-		
+
 		dialog.new(langkeys(L.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext, "", 1, 1, 0)
 	end
-	
+
 	-- No longer x.alltiles
 	return true, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata
 end
@@ -507,13 +507,13 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	if (path == nil) or (path == "") then
 		return false, L.FORGOTPATH
 	end
-	
+
 	savethis = vvvvvvxmltemplate
-	
+
 	cons("Placing metadata...")
 	for k,v in pairs(metadataitems) do
 		--cons("Placing metadata: " .. v .. " which should match " .. "%$" .. string.upper(v) .. "%$ and have a value of " .. xmlspecialchars(thismetadata[v]))
-		
+
 		-- OK WHY DID YOU GIVE ME SUCH A DEBUGGING HEADACHE?
 		--[[ Why is it that
 				savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", xmlspecialchars(thismetadata[v]))
@@ -525,10 +525,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		newthis = xmlspecialchars(anythingbutnil(thismetadata[v]))
 		savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", newthis)
 	end
-	
+
 	-- Hold on for a second, we need the map size and music too!
 	savethis = savethis:gsub("%$MAPWIDTH%$", thismetadata["mapwidth"]):gsub("%$MAPHEIGHT%$", thismetadata["mapheight"]):gsub("%$LEVMUSIC%$", thismetadata["levmusic"])
-	
+
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")
 	thenewcontents = {}
@@ -553,10 +553,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		end
 	end
 	savethis = savethis:gsub("%$CONTENTS%$", table.concat(thenewcontents, ",") .. ",")
-	
+
 	-- Slightly cleaning up
 	thenewcontents = nil
-	
+
 	-- Now do all entities, if we have any!
 	cons("Saving entities...")
 	if (#allentities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
@@ -565,47 +565,47 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		for k,v in pairs(allentities) do
 			thenewentities = thenewentities .. "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(v.data) .. "\n            </edentity>\n"
 		end
-		
+
 		if vedmetadata ~= false and vedmetadata ~= nil then
 			-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
 			local mdedata = thismdeversion .. "|" .. despecialchars(vedmetadata.flaglabel[0])
-			
+
 			for k = 1, 99 do -- 0 added above
 				mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k]) -- table.concat(vedmetadata.flaglabel, "$")
 			end
-			
+
 			mdedata = mdedata .. "|||"
-			
+
 			-- Now add the notes to it!
 			local notesdata = {}
-			
+
 			for k,v in pairs(vedmetadata.notes) do
 				-- Don't save the "Return" article
 				if k ~= 1 then
 					table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
 				end
 			end
-			
+
 			mdedata = mdedata .. table.concat(notesdata, "$")
-			
+
 			thenewentities = thenewentities .. "            <edentity x=\"800\" y=\"600\" t=\"17\" p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">" .. xmlspecialchars(mdedata) .. "\n            </edentity>\n"
 		end
-		
+
 		savethis = savethis:gsub("%$EDENTITIES%$", thenewentities:gsub("%%", "%%%%") .. "        </edEntities>")
 	else
 		-- We don't!
 		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities />")
 	end
-	
+
 	cons("Saving room metadata...")
 	-- Now all room metadata, aka levelclass
 	alllevelmetadata = ""
 	for k,v in pairs(theselevelmetadata) do
 		alllevelmetadata = alllevelmetadata .. "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. v.platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
 	end
-	
+
 	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (alllevelmetadata:gsub("%%", "%%%%")))
-	
+
 	-- Now all the scripts!
 	cons("Assembling scripts...")
 	allallscripts = ""
@@ -614,17 +614,17 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		local k, v = scriptnames[rvnum], allscripts[scriptnames[rvnum]]
 		allallscripts = allallscripts .. xmlspecialchars(k) .. ":|" .. xmlspecialchars(implode("|", v)) .. "|"
 	end
-	
+
 	savethis = savethis:gsub("%$SCRIPT%$", ((allallscripts:sub(1, -2)):gsub("%%", "%%%%")))
 
 	-- Alright, let's save!
 	cons("Saving file...")
 	success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. path, savethis)
-	
+
 	if vedmetadata == nil then
 		dialog.new(L.MDENOTPASSED, "", 1, 1, 0)
 	end
-	
+
 	if success then
 		recentlyopened(path:sub(1, -8))
 	end
@@ -660,16 +660,16 @@ function createblanklevel(lvwidth, lvheight)
 	-- scriptnames is used to keep the names in order of opening scripts
 	-- vedmetadata has flag names (.flaglabel)
 	-- If loading isn't successful, metadata will be an error string.
-	
+
 	-- There should be a list of tileset options and such
 	-- - Same as in VVVVVV
 	-- - Completely random
 	-- - Random from tileset: X
 	-- - All: X X
-	
+
 	-- Dit blijft zo
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil}
-	
+
 	-- First do the metadata.
 	cons("Loading metadata...")
 
@@ -686,10 +686,10 @@ function createblanklevel(lvwidth, lvheight)
 		mapheight = lvheight,
 		levmusic = 0
 		}
-	
+
 	-- Now, the contents!
 	cons("Loading all the contents...")
-	
+
 	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
 	theserooms = {}
 	for yk = 0, thismetadata.mapheight-1 do
@@ -704,11 +704,11 @@ function createblanklevel(lvwidth, lvheight)
 			end
 		end
 	end
-	
+
 	-- Entities.
 	cons("Loading entities...")
 	allentities = {}
-	
+
 	-- Level meta data, get every room now.
 	cons("Loading room metadata...")
 	theselevelmetadata = {}
@@ -733,13 +733,13 @@ function createblanklevel(lvwidth, lvheight)
 			auto2mode = 0,
 			}
 	end
-		
+
 	-- Scripts
 	cons("Loading scripts...")
-	
+
 	allscripts = {}
 	myscriptnames = {}
-	
+
 	--[[
 	myvedmetadata =
 		{
@@ -747,9 +747,9 @@ function createblanklevel(lvwidth, lvheight)
 		}
 	]]
 	local myvedmetadata = false
-	
+
 	cons("Done loading!")
-	
+
 	-- No longer x.alltiles
 	return true, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata
 end

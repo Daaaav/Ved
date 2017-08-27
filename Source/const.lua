@@ -5,7 +5,7 @@ tilesetnames =
 	"tiles.png",
 	"tiles2.png"
 	}
-	
+
 usedtilesets =
 	{
 	[0] = 1, -- space station
@@ -15,7 +15,7 @@ usedtilesets =
 	[3] = 2, -- warp zone
 	[4] = 2, -- ship
 	}
-	
+
 enemysprites =
 	{
 	[0] = 78,
@@ -29,7 +29,7 @@ enemysprites =
 	[8] = 112,
 	[9] = 114,
 	}
-	
+
 enemyframes =
 	{
 	[0] = 4,
@@ -43,7 +43,7 @@ enemyframes =
 	[8] = 2,
 	[9] = 2,
 	}
-	
+
 -- Some array with arrays of names+ids
 listmusicnamesids =
 {
@@ -94,7 +94,7 @@ knowncommands =
 	--iftrinketsless = true,
 	destroy = true,
 	music = true,
-	
+
 	map = true,
 	squeak = true,
 	}
@@ -211,7 +211,7 @@ knowninternalcommands =
 	bluecontrol = true,
 	yellowcontrol = true,
 	purplecontrol = true,
-	
+
 	customifflag = true,
 	customiftrinkets = true,
 	--customiftrinketsless = true,
@@ -219,7 +219,7 @@ knowninternalcommands =
 	changecustommood = true,
 	custommap = true,
 	}
-	
+
 warpbgcolors =
 	{
 		{ {16, 34, 33}, {10, 16, 14} },

@@ -34,26 +34,26 @@ tilesets =
 function loademptyroom() -- unused
 	-- Generate an entirely empty room with no entities nor metadata.
 	cons("Generating empty room")
-	
+
 	myroomdata = {}
-	
+
 	for k = 1, 1200 do
 		myroomdata[k] = 0 -- Just to test.
 	end
-	
+
 	myentitydata = {}
-	
+
 	mymetadata = {}
-	
+
 	mymetadata.roomname = "Untitled room"
 	mymetadata.tileset = 1
-	
+
 	return myroomdata, myentitydata, mymetadata
 end
 
 function loadrohiom(x, y)
 	-- Loads blocks of a room from level data and prepares it for display. Also loads entities and metadata.
-	
+
 	return myroomdata, myentitydata, mymetadata
 end
 
@@ -67,7 +67,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			if theroomdata[(aty*40)+(atx+1)] ~= 0 then
 				love.graphics.draw(tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["img"], tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["tiles"][tonumber(theroomdata[(aty*40)+(atx+1)])], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2), 0, 2*zoomscale2)
 			end
-			
+
 			if displaytilenumbers then
 				love.graphics.print(imagefontspacing(theroomdata[(aty*40)+(atx+1)]), offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2))
 			end
@@ -80,12 +80,12 @@ function addrooms(neww, newh)
 	-- I'm gonna do this in a very simple way, just loop through all rooms and add a room wherever it's nil.
 	-- This is because we can have decreased one side and increased another, then increase the other side and still have room data there we don't want to lose in case resizing was an accident
 	cons("Maybe adding rooms: new map size is " .. neww .. " " .. newh)
-	
+
 	for y = 0, (newh-1) do
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
-		
+
 		for x = 0, (neww-1) do
 			if roomdata[y][x] == nil then
 				roomdata[y][x] = {}
@@ -104,9 +104,9 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 	else
 		showtooltip = false
 	end
-	
+
 	showtooltipof = nil
-	
+
 	for k,v in pairs(entitydata) do
 		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
 			-- First of all, we can remove an entity by shift-right clicking
@@ -120,13 +120,13 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					-- Enemy
 					love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
 					drawentity(enemysprites[levelmetadata[(myroomy)*20 + (myroomx+1)].enemytype], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16) -- 78
-					
+
 					-- Where is it going?
 					love.graphics.setColor(255,255,255,255)
 					love.graphics.setFont(font16)
 					love.graphics.print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), offsetx+(v.x-myroomx*40)*16  + 8, offsety+(v.y-myroomy*30)*16 + 3  + 8)
 					love.graphics.setFont(font8)
-					
+
 					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.PROPERTIES}, "ent_1_" .. k)
 				elseif v.t == 2 then
 					-- Platform, it's either a moving one or a conveyor!
@@ -145,7 +145,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.draw(platformimg, platformpart[2], offsetx+(v.x-myroomx*40)*16 + 96, offsety+(v.y-myroomy*30)*16, 0, 2)
 						love.graphics.draw(platformimg, platformpart[3], offsetx+(v.x-myroomx*40)*16 + 112, offsety+(v.y-myroomy*30)*16, 0, 2)
 					end
-					
+
 					-- Now indicate what this actually is.
 					love.graphics.setColor(255,255,255,255)
 					love.graphics.setFont(font16)
@@ -178,7 +178,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.print("...?", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
 					end
 					love.graphics.setFont(font8)
-					
+
 					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.PROPERTIES}, "ent_2_" .. k)
 				elseif v.t == 3 then
 					-- Disappearing platform
@@ -210,7 +210,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						-- Vertical
 						love.graphics.line(offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + 1, offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + v.p3*2 - 1)
 					end
-					
+
 					-- Where is it, though?
 					love.graphics.draw(cursorimg[0], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
 					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), L.PROPERTIES}, "ent_11_" .. k)
@@ -292,14 +292,14 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.draw(scriptboximg[3], math.max(math.floor(love.mouse.getX()/16)*16, offsetx+(v.x-myroomx*40)*16), (v.y-myroomy*30)*16)
 						love.graphics.draw(scriptboximg[7], offsetx+(v.x-myroomx*40)*16, math.max(math.floor(love.mouse.getY()/16)*16, (v.y-myroomy*30)*16))
 						love.graphics.draw(scriptboximg[9], math.max(math.floor(love.mouse.getX()/16)*16, offsetx+(v.x-myroomx*40)*16), math.max(math.floor(love.mouse.getY()/16)*16, (v.y-myroomy*30)*16))
-						
+
 						-- Horizontal
-						
+
 						for prt = offsetx+(v.x-myroomx*40)*16 + 16, math.max(math.floor(love.mouse.getX()/16)*16), 16 do
 							love.graphics.draw(scriptboximg[2], prt, offsety+(v.y-myroomy*30)*16)
 							love.graphics.draw(scriptboximg[8], prt, math.max(math.floor((love.mouse.getY()/16))*16, offsety+(v.y-myroomy*30)*16))
 						end
-						
+
 						-- Vertical
 						for prt = offsety+(v.y-myroomy*30)*16 + 16, math.max(math.floor(love.mouse.getY()/16)*16, offsety+(v.y-myroomy*30)*16) - 16, 16 do
 							love.graphics.draw(scriptboximg[4], offsetx+(v.x-myroomx*40)*16, prt)
@@ -315,13 +315,13 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.draw(scriptboximg[3], offsetx+(v.x-myroomx*40)*16 + (v.p1-1)*16, offsety+(v.y-myroomy*30)*16)
 						love.graphics.draw(scriptboximg[7], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + (v.p2-1)*16)
 						love.graphics.draw(scriptboximg[9], offsetx+(v.x-myroomx*40)*16 + (v.p1-1)*16, offsety+(v.y-myroomy*30)*16 + (v.p2-1)*16)
-						
+
 						-- Horizontal
 						for prt = offsetx+(v.x-myroomx*40)*16 + 16, offsetx+(v.x-myroomx*40)*16 + (v.p1-1)*16 - 16, 16 do
 							love.graphics.draw(scriptboximg[2], prt, offsety+(v.y-myroomy*30)*16)
 							love.graphics.draw(scriptboximg[8], prt, offsety+(v.y-myroomy*30)*16 + (v.p2-1)*16)
 						end
-						
+
 						-- Vertical
 						for prt = offsety+(v.y-myroomy*30)*16 + 16, offsety+(v.y-myroomy*30)*16 + (v.p2-1)*16 - 16, 16 do
 							love.graphics.draw(scriptboximg[4], offsetx+(v.x-myroomx*40)*16, prt)
@@ -342,7 +342,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.line(offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + 1, offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + v.p3*2 - 1)
 					end
 					love.graphics.setColor(255,255,255,255)
-					
+
 					-- Where is it, though?
 					love.graphics.draw(cursorimg[0], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
 					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[15], L.DELETE, L.PROPERTIES}, "ent_50_" .. k)
@@ -360,7 +360,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 			end
 		end
 	end
-	
+
 	-- Here so that other entities won't cover the tooltip
 	if showtooltipof ~= nil then
 		love.graphics.print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
@@ -395,7 +395,7 @@ function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy
 end
 
 function displaymapentities()
-	
+
 end
 
 function entityrightclick(x, y, menuitems, newmenuid)
@@ -406,7 +406,7 @@ end
 
 function displaytilespicker(offsetx, offsety, tilesetname)
 	love.graphics.draw(tilesets[tilesetname]["img"], offsetx, offsety, 0, 2)
-	
+
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then
 			-- We're currently creating a stamp from the tileset
@@ -425,7 +425,7 @@ function displaytilespicker(offsetx, offsety, tilesetname)
 			-- Also draw a box around the currently selected tile!
 			local selectedx = selectedtile % 40
 			local selectedy = (selectedtile-selectedx) / 40
-			
+
 			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
 		end
 	end
@@ -434,9 +434,9 @@ end
 function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 	local selectedx = -1
 	local selectedy = -1
-	
+
 	local toolarray
-	
+
 	if selectedtool == 1 then -- wall
 		toolarray = tilesetblocks[chosentileset].colors[chosencolor].blocks
 	elseif selectedtool == 2 then -- background
@@ -444,12 +444,12 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 	elseif selectedtool == 3 then -- spikes
 		toolarray = tilesetblocks[chosentileset].colors[chosencolor].spikes
 	end
-	
+
 	for ly = 0, 4 do
 		for lx = 0, 5 do
 			-- The number is (6ly)+lx+1. The below line was a monster. Display this.
 			love.graphics.draw(tilesets[tilesetnames[tilesetblocks[chosentileset].tileimg]]["img"], tilesets[tilesetnames[tilesetblocks[chosentileset].tileimg]]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(16*lx), offsety+(16*ly), 0, 2)
-			
+
 			-- Is this tile the selected one?
 			if toolarray[(6*ly)+lx+1] == selectedtile then
 				selectedx, selectedy = lx, ly
@@ -458,7 +458,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 			-- Are we hovering on this tile? And are we in manual mode?
 			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and nodialog and mouseon(offsetx+(16*lx), offsety+(16*ly), 16, 16) then
 				love.graphics.draw(cursorimg[0], offsetx+(16*lx), offsety+(16*ly))
-				
+
 				-- Heck, maybe we're even clicking this.
 				if love.mouse.isDown("l") or love.mouse.isDown("m") then
 					if selectedtool == 1 then -- wall
@@ -468,15 +468,15 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 					elseif selectedtool == 3 then -- spikes
 						youhavechosen = tilesetblocks[chosentileset].colors[chosencolor].spikes[(6*ly)+lx+1]
 					end
-					
+
 					cons("Tile selected: " .. anythingbutnil0(youhavechosen))
-				
+
 					selectedtile = anythingbutnil0(youhavechosen)
 				end
 			end
 		end
 	end
-	
+
 	-- Were we highlighting a tile?
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
 		love.graphics.draw(cursorimg[20], offsetx+(16*selectedx)-2, offsety+(16*selectedy)-2)
@@ -519,11 +519,11 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode)
 	if spikessolid == nil then
 		spikessolid = false
 	end
-	
+
 	if not ignoremultimode and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and not tileincurrenttileset(tilenum) then
 		return false
 	end
-	
+
 	if tilenum == nil then
 		return false
 	elseif tilenum == 1 then
@@ -548,7 +548,7 @@ end
 
 function issolidmultispikes(tilenum, tileset, spikessolid)
 	-- Always ignore whether tiles are in the current tileset because we're now checking tiles next to a spike, don't let multi mode ruin that.
-	
+
 	return issolid(tilenum, tileset, spikessolid, true)
 end
 
@@ -565,7 +565,7 @@ end
 function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	-- tilesetblocks[tileset].colors[tilecol].blocks[x]
 	ts = tilesetblocks[tileset].tileimg
-	
+
 	--[[
 	if dowhat == nil then
 		-- Blocks
@@ -577,11 +577,11 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 		mytype = "background"
 	end
 	]]
-	
+
 	
 	doorroomx = inroomx
 	doorroomy = inroomy
-	
+
 	
 	-- This is all a complete mess. Basically: wall=8 background=1 spikes=2 nothing=4  outsidebackground = 6
 	--local dowhat = issolid(adjtile(t, 0, 0), ts) and 8 or (issolid(adjtile(t, 0, 0), ts) ~= issolid(adjtile(t, 0, 0), ts, true) and 2 or (isnot0(adjtile(t, 0, 0), ts) and (tileset == 1 and 6 or 1) or 4))
@@ -599,7 +599,7 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	else
 		dowhat = 4  -- NOTHING
 	end
-	
+
 	--local myissolid = ((dowhat == 8 or dowhat == 2) and issolid or ((dowhat == 1 or dowhat == 6) and isnot0 or isnot0))
 	local myissolid
 	if dowhat == 8 then
@@ -615,10 +615,10 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	else
 		myissolid = isnot0
 	end
-	
+
 	local mytype = ((dowhat == 8) and "blocks" or ((dowhat == 1 or dowhat == 6) and "background" or "spikes"))
 
-	
+
 	--if myissolid(adjtile(t, 0, 0), ts) then
 	if dowhat ~= 4 and dowhat ~= 2 and dowhat ~= 6 then
 		-- W A L L S   A N D   B A C K G R O U N D S   ( N O N - O U T S I D E   B G )
@@ -704,7 +704,7 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 			return tilesetblocks[tileset].colors[tilecol].spikes[9] -- UP
 		end
 	end
-	
+
 	-- Just return what it already is.
 	return roomdata[inroomy][inroomx][t]
 end
@@ -717,14 +717,14 @@ function adjtile(tilenum, xoff, yoff, spike)
 	-- First look if we're not gonna go offscreen
 	tily = math.floor((tilenum-1)/40)
 	tilx = (tilenum-40*tily)-1
-	
+
 	--[[ debugging crap
 	if lastchecked ~= tilenum then
 		cons("EVERYTHING. Tilenum=" .. tilenum .. " (we're checking " .. (tilenum + ((yoff)*40) + (xoff)) .. ") tilx=" .. tilx .. " tily=" .. tily .. "")
 		lastchecked = tilenum
 	end
 	]]
-	
+
 	if doorroomy == nil or doorroomx == nil then
 		-- Not quite local...
 		cons("THE FIRST THING WE DO IS PLACE SPIKES APPARENTLY")
@@ -751,7 +751,7 @@ function tileincurrenttileset(tile)
 		if tile == tilesetblocks[selectedtileset].colors[selectedcolor].background[k] then return true end
 		if tile == tilesetblocks[selectedtileset].colors[selectedcolor].spikes[k] then return true end -- b9 CORRECTION of b8: this line is just part of the fix for spikes in multi mode
 	end
-	
+
 	return false
 end
 
@@ -773,14 +773,14 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 					elseif v.t == 15 then
 						count.crewmates = count.crewmates + 1
 					end
-					
+
 					-- I could have been busy debugging this for a long time.
 					local localcopy = table.copy(v)
 					localcopy.x = localcopy.x + (40*roomxdiff)
 					localcopy.y = localcopy.y + (30*roomydiff)
 					table.insert(entitydata, count.entity_ai, localcopy)
 					localcopy = nil
-					
+
 					count.entities = count.entities + 1
 					count.entity_ai = count.entity_ai + 1
 				end
@@ -818,11 +818,11 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 			end
 		love.graphics.setColor(255,255,255,255)
 	end
-	
+
 	-- But are we holding one of the directions?
 	if love.keyboard.isDown("[") or love.keyboard.isDown("]") then
 		love.graphics.setColor(0,0,0,92)
-		
+
 		if love.keyboard.isDown("[") then
 			-- Horizontal
 			love.graphics.rectangle("fill", screenoffset, 0, 640, (16*(cursory-upblx)))
@@ -833,7 +833,7 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 			love.graphics.rectangle("fill", screenoffset, 0, (16*(cursorx-leftblx)), 480)
 			love.graphics.rectangle("fill", screenoffset+(16*(cursorx-leftblx+(forx+1))), 0, 640-(16*(cursorx-leftblx+(forx+1))), 480)
 		end
-		
+
 		love.graphics.setColor(255,255,255,255)
 	end
 end
@@ -961,13 +961,13 @@ function getroomcopydata(rx, ry)
 	cons("Copying room " .. rx .. " " .. ry)
 
 	local roomnumber = ry*20 + (rx+1)
-	
+
 	--local datatable = roomdata[ry][rx] of course this is by reference
 	local datatable = {}
 	for k,v in pairs(roomdata[ry][rx]) do
 		datatable[k] = v
 	end
-	
+
 	table.insert(datatable, 1, levelmetadata[roomnumber].tileset)
 	table.insert(datatable, 2, levelmetadata[roomnumber].tilecol)
 	table.insert(datatable, 3, levelmetadata[roomnumber].platx1)
@@ -985,7 +985,7 @@ function getroomcopydata(rx, ry)
 	-- Inserting it directly is causing trouble, even with [1]
 	local aiguroomtext = levelmetadata[roomnumber].roomname:gsub(",", "´")
 	table.insert(datatable, 15, aiguroomtext)
-	
+
 	return table.concat(datatable, ",")
 end
 
@@ -993,19 +993,19 @@ function setroomfromcopy(data, rx, ry)
 	cons("Setting room " .. rx .. " " .. ry)
 
 	local _, count = string.gsub(data, ",", "")
-	
+
 	if count ~= 1214 then -- 14+1+1199
 		cons("Paste failed- count of , is " .. count .. " so this is probably not the data we're looking for.")
 		return
 	end
-	
+
 	local explodeddata = explode(",", data)
-	
+
 	for k,v in pairs(explodeddata) do
 		if k ~= 15 then
 			local numw = tonumber(v)
 			explodeddata[k] = numw
-			
+
 			if numw == nil then
 				cons("Paste failed- [" .. k .. "] (tile " .. (k-15) .. ") is not a number!")
 				return
@@ -1033,10 +1033,10 @@ function setroomfromcopy(data, rx, ry)
 			end
 		end
 	end
-	
+
 	-- Everything appears to be well and safe to paste!
 	local roomnumber = ry*20 + (rx+1)
-	
+
 	levelmetadata[roomnumber].tileset, selectedtileset = explodeddata[1], explodeddata[1]
 	levelmetadata[roomnumber].tilecol, selectedcolor = explodeddata[2], explodeddata[2]
 	levelmetadata[roomnumber].platx1 = explodeddata[3]
@@ -1052,29 +1052,29 @@ function setroomfromcopy(data, rx, ry)
 	levelmetadata[roomnumber].directmode = explodeddata[13]
 	levelmetadata[roomnumber].warpdir = explodeddata[14]
 	levelmetadata[roomnumber].roomname = explodeddata[15]:gsub("´", ",")
-	
+
 	for i=1,15 do
 		table.remove(explodeddata, 1)
 	end
-	
+
 	roomdata[ry][rx] = table.copy(explodeddata)
-	
+
 	temporaryroomname = L.ROOMPASTED
 	temporaryroomnametimer = 90
 end
 
 function rotateroom180(rx, ry)
 	local oldroom = table.copy(roomdata[ry][rx])
-	
+
 	for n = 1, 1200 do
 		roomdata[ry][rx][1201-n] = oldroom[n]
 	end
-	
+
 	-- Now for the entities!
 	for k,v in pairs(entitydata) do
 		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
 			--cons(rx .. " " .. ry .. "  en " .. ((rx*40)+39 - v.x - 1)+(rx*40))
-			
+
 			if v.t == 9 or v.t == 13 then
 				-- Trinket or warp token entrance, 2x2 block
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
@@ -1083,7 +1083,7 @@ function rotateroom180(rx, ry)
 				-- Enemy- change the direction as well!
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
-				
+
 				-- v^<>
 				if v.p1 == 0 or v.p1 == 2 then
 					entitydata[k].p1 = v.p1+1
@@ -1094,13 +1094,13 @@ function rotateroom180(rx, ry)
 				-- Checkpoint, 2x2 block that can be flipped.
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
-				
+
 				if v.p1 == 1 then entitydata[k].p1 = 0 else entitydata[k].p1 = 1 end
 			elseif v.t == 15 or v.t == 16 or v.t == 18 then
 				-- Rescuable crewmate, start point and terminal, all 2x3 blocks. I won't let myself be stopped from making room rotation/flip functions because you can't rotate these!
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
-				
+
 				-- Well at least we can flip the start point horizontally, that's something, right?
 				if v.t == 16 then
 					if v.p1 == 1 then entitydata[k].p1 = 0 else entitydata[k].p1 = 1 end
@@ -1109,7 +1109,7 @@ function rotateroom180(rx, ry)
 				-- Disappearing platform, moving platform, or a 4-block conveyor
 				entitydata[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-				
+
 				-- Change the direction as well!
 				if v.p1 == 0 or v.p1 == 2 or v.p1 == 5 then
 					entitydata[k].p1 = v.p1+1
@@ -1120,7 +1120,7 @@ function rotateroom180(rx, ry)
 				-- An 8 block conveyor then!
 				entitydata[k].x = ((rx*40)+39 - v.x - 7)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-				
+
 				-- Flip it
 				if v.p1 == 7 then
 					entitydata[k].p1 = 8
@@ -1139,7 +1139,7 @@ function rotateroom180(rx, ry)
 				-- Gravity line or warp line
 				entitydata[k].x = ((rx*40)+39 - v.x)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-				
+
 				if v.t == 50 then
 					-- Same code as for enemy/moving platform directions, but it works here as well (<>^v now I think)
 					if v.p1 == 0 or v.p1 == 2 then
@@ -1158,7 +1158,7 @@ function rotateroom180(rx, ry)
 			entitydata[k].p2 = ((ry*30)+29 - v.p2 - 1)+(ry*30)
 		end
 	end
-	
+
 	-- If we have any gravity lines or warp lines, let the autocorrect do the job of fixing them!
 	autocorrectlines()
 end
@@ -1170,7 +1170,7 @@ function autocorrectlines()
 			if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 				-- Horizontal
 				local startat, linelength
-				
+
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
 					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(bt)]) then
@@ -1181,7 +1181,7 @@ function autocorrectlines()
 				if startat == nil then
 					startat = -1
 				end
-				
+
 				-- Now to see how long it should be!
 				for ft = startat+1, 40 do
 					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(ft)]) then
@@ -1192,7 +1192,7 @@ function autocorrectlines()
 				if linelength == nil then
 					linelength = 8 * (42-startat) - 8
 				end
-				
+
 				if entitydata[k].p2 ~= startat then
 					entitydata[k].p2 = startat
 				end if entitydata[k].p3 ~= linelength then
@@ -1201,7 +1201,7 @@ function autocorrectlines()
 			else
 				-- Vertical
 				local startat, linelength
-				
+
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
 					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
@@ -1213,7 +1213,7 @@ function autocorrectlines()
 				if startat == nil then
 					startat = -1
 				end
-				
+
 				-- Now to see how long it should be!
 				for ft = startat+1, 29 do
 					--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
@@ -1225,7 +1225,7 @@ function autocorrectlines()
 				if linelength == nil then
 					linelength = 8 * (32-startat) - 8
 				end
-				
+
 				if entitydata[k].p2 ~= startat then
 					entitydata[k].p2 = startat
 				end if entitydata[k].p3 ~= linelength then
@@ -1239,7 +1239,7 @@ end
 function undo()
 	if #undobuffer >= 1 then
 		gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-	
+
 		if undobuffer[#undobuffer].undotype == "tiles" then
 			if (undobuffer[#undobuffer].toundotiles[1] == nil) then
 				temporaryroomname = L.UNDOFAULTY
@@ -1258,7 +1258,7 @@ function undo()
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
 			temporaryroomnametimer = 90
 		end
-		
+
 		table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
 		table.remove(undobuffer, #undobuffer)
 	end
@@ -1267,7 +1267,7 @@ end
 function redo()
 	if #redobuffer >= 1 then
 		gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
-	
+
 		if redobuffer[#redobuffer].undotype == "tiles" then
 			if (redobuffer[#redobuffer].toredotiles[1] == nil) then
 				temporaryroomname = L.UNDOFAULTY
@@ -1286,7 +1286,7 @@ function redo()
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
 			temporaryroomnametimer = 90
 		end
-		
+
 		table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
 		table.remove(redobuffer, #redobuffer)
 	end
@@ -1296,7 +1296,7 @@ function entityplaced(id)
 	if id == nil then
 		id = count.entity_ai
 	end
-	
+
 	table.insert(undobuffer, {undotype = "addentity", rx = roomx, ry = roomy, entid = id, addedentitydata = table.copy(entitydata[id])})
 	redobuffer = {}
 	cons("[UNRE] ADDED ENTITY")
@@ -1321,24 +1321,24 @@ end
 
 function cutroom()
 	love.system.setClipboardText(getroomcopydata(roomx, roomy))
-	
+
 	-- That's only a copy, now reset the room except for the tileset/col
 	setroomfromcopy(levelmetadata[roomy*20 + (roomx+1)].tileset .. "," .. levelmetadata[roomy*20 + (roomx+1)].tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
-	
+
 	temporaryroomname = L.ROOMCUT
 	temporaryroomnametimer = 90
 end
 
 function copyroom()
 	love.system.setClipboardText(getroomcopydata(roomx, roomy))
-	
+
 	temporaryroomname = L.ROOMCOPIED
 	temporaryroomnametimer = 90
 end
 
 function pasteroom()
 	setroomfromcopy(love.system.getClipboardText(), roomx, roomy)
-	
+
 	if takinginput then
 		-- If we're taking input now, then it's gonna be particularly annoying if we paste an entire room in it!!
 		cons("TAKING INPUT WHILE PASTING A ROOM")

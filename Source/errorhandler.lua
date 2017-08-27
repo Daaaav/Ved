@@ -68,10 +68,10 @@ end
 
 function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
-	
+
 	if anythingbutnil == nil then
 		-- The irony.
-		
+
 		function anythingbutnil(this)
 			if this == nil then
 				return ""
@@ -82,9 +82,9 @@ function ved_showerror(msg)
 	end
 
 	msg = tostring(msg)
-	
+
 	local levelsavemsg = ERR_SAVELEVEL
-	
+
 	if ctrl == nil then
 		ctrl = "ctrl"
 	end
@@ -110,7 +110,7 @@ function ved_showerror(msg)
 		end
 	end
 	if love.audio then love.audio.stop() end
-	
+
 	-- I first want to make a screenshot of the current screen.
 	local crashscreenshot
 	if love.graphics.newImage and love.graphics.newScreenshot then
@@ -119,7 +119,7 @@ function ved_showerror(msg)
 
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
-	
+
 	font8 = love.graphics.newFont("Space Station.ttf", 8)
 	font16 = love.graphics.newFont("Space Station.ttf", 16)
 
@@ -134,19 +134,19 @@ function ved_showerror(msg)
 	love.graphics.origin()
 
 	local err = {}
-	
+
 	if ctrl == nil then
 		ctrl = "ctrl"
 	end
-	
+
 	
 	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
-	
+
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
 	else
 		local i = false
-		
+
 		for k,v in pairs(plugins) do
 			if not i then
 				mainmessage = mainmessage .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
@@ -155,7 +155,7 @@ function ved_showerror(msg)
 			end
 			i = true
 		end
-		
+
 		if not i then
 			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
 		end
@@ -181,16 +181,16 @@ function ved_showerror(msg)
 
 	p = string.gsub(p, "\t", "")
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
-	
+
 	-- Was this file edited by a plugin?
 	--if p:sub(1, 6) == "--[[##" then maybe have a keyboard shortcut to copy the edited source for debugging purposes.
-	
+
 	--[[
 	if dialog == nil then
 		--require("dialog")
-		
+
 		dialog = {}
-		
+
 		function dialog.draw() end
 		function dialog.update() end
 		function startmultiinput(_) end
@@ -199,7 +199,7 @@ function ved_showerror(msg)
 		DIAwindowani = 16
 	end
 	]]
-	
+
 	-- We want to make a dialog containing the crash. We don't, only for saving
 	--dialog.new(p, "Fatal error", 1, 2, 0)
 
@@ -217,7 +217,7 @@ function ved_showerror(msg)
 		love.graphics.print(ERR_VEDHASCRASHED, pos+4, pos+4)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.print(ERR_VEDHASCRASHED, pos, pos)
-		
+
 		-- Draw a box for the important details
 		if love._version_minor >= 11 then
 			love.graphics.setColor(1,92/255,92/255,208/255) -- temporary love2d 0.11 compatibility in advance for the crash screen
@@ -225,14 +225,14 @@ function ved_showerror(msg)
 			love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
 		end
 		love.graphics.rectangle("fill", pos-2, pos+40+40-1, love.graphics.getWidth()-(2*pos)+4, 56+8+8)
-		
+
 		-- Main text
 		love.graphics.setFont(font8)
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos)
-		
+
 		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
@@ -241,15 +241,15 @@ function ved_showerror(msg)
 		--else
 			--love.graphics.print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
 		end
-		
+
 		
 		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
 		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		
 		--love.graphics.print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
-		
+
 		--dialog.draw()
 		--love.graphics.setColor(255,255,255,255)
-		
+
 		love.graphics.present()
 	end
 	local function update()
@@ -270,11 +270,11 @@ function ved_showerror(msg)
 				if editingmap == "untitled\n" or editingmap == nil then
 					editingmap = "untitled"
 				end
-				
+
 				editingmap = editingmap .. "_" .. os.time()
-				
+
 				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
-				
+
 				if not savedsuccess then
 					levelsavemsg = string.format(ERR_SAVEERROR, anythingbutnil(savederror))
 				else
@@ -317,10 +317,10 @@ end
 
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
-	
+
 	if anythingbutnil == nil then
 		-- The irony.
-		
+
 		function anythingbutnil(this)
 			if this == nil then
 				return ""
@@ -331,13 +331,13 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	end
 
 	--msg = tostring(msg)
-	
+
 	-- I first want to make a screenshot of the current screen.
 	local crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
 
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
-	
+
 	font8 = love.graphics.newFont("Space Station.ttf", 8)
 	font16 = love.graphics.newFont("Space Station.ttf", 16)
 
@@ -352,19 +352,19 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	love.graphics.origin()
 
 	local err = {}
-	
+
 	if ctrl == nil then
 		ctrl = "ctrl"
 	end
-	
+
 	
 	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
-	
+
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
 	else
 		local i = false
-		
+
 		for k,v in pairs(plugins) do
 			if not i then
 				mainmessage = mainmessage .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
@@ -373,7 +373,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			end
 			i = true
 		end
-		
+
 		if not i then
 			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
 		end
@@ -388,15 +388,15 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	]]
 	table.insert(err, "    " .. mainmessage)
 	table.insert(err, "\n\n" .. string.format(aspattern and ERR_REPLACECODEPATTERN or ERR_REPLACECODE, anythingbutnil(fileerror)) .. "\n\n")
-	
+
 	-- We also want to include at least part of the code that wasn't found.
 	local _, numberlines = string.gsub(anythingbutnil(findthis) .. "\n", "\n", "")
-	
+
 	linesdone = 0
 	limitedlines = ""
 	for line in string.gmatch(anythingbutnil(findthis) .. "\n", "[^\n]*\n") do --"[^\n]+\n"
 		line = line:gsub("\t", "  ")
-	
+
 		if line:len() > 86 then
 			limitedlines = limitedlines .. line:sub(1, 81) .. "[...]\n"
 		else
@@ -410,14 +410,14 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			break
 		end
 	end
-	
+
 	-- Were there less lines?
 	for linesleft = 1, 5-numberlines do
 		limitedlines = limitedlines .. "\n"
 	end
-	
+
 	table.insert(err, limitedlines .. "\n")
-	
+
 	table.insert(err, "\n\n\n" .. ERR_CONTINUE)
 
 	for l in string.gmatch(trace, "(.-)\n") do
@@ -431,14 +431,14 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	p = string.gsub(p, "\t", "")
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
-	
+
 	
 	--[[
 	if dialog == nil then
 		--require("dialog")
-		
+
 		dialog = {}
-		
+
 		function dialog.draw() end
 		function dialog.update() end
 		function startmultiinput(_) end
@@ -447,7 +447,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		DIAwindowani = 16
 	end
 	]]
-	
+
 	-- We want to make a dialog containing the crash. We don't, only for saving
 	--dialog.new(p, "Fatal error", 1, 2, 0)
 
@@ -456,30 +456,30 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		love.graphics.clear(love.graphics.getBackgroundColor())
 		love.graphics.setColor(255,255,255,64)
 		love.graphics.draw(crashscreenshot, 0, 0) --, 0, s.pscale^-1)
-		
+
 		-- Title
 		love.graphics.setFont(font16)
 		love.graphics.setColor(0,0,0,255)
 		--love.graphics.print(ERR_PLUGINERROR, pos+4, pos+4)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.print(ERR_PLUGINERROR, pos, pos)
-		
+
 		-- Draw boxes for the important details
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
 		love.graphics.rectangle("fill", pos-2, pos+40+48-1, love.graphics.getWidth()-(2*pos)+4, 56)
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
 		love.graphics.rectangle("fill", pos-2, pos+40+47+80, love.graphics.getWidth()-(2*pos)+4, 56+8)
-		
+
 		-- Main text
 		love.graphics.setFont(font8)
 		love.graphics.setColor(0,0,0,255)
 		--love.graphics.printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos)
-		
+
 		--dialog.draw()
 		love.graphics.setColor(255,255,255,255)
-		
+
 		love.graphics.present()
 	end
 	local function update()
@@ -496,12 +496,12 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			elseif e == "keypressed" and (a == "escape" or a == "return") then
 				love.graphics.setBackgroundColor(0,0,0)
 				love.graphics.clear()
-				
+
 				-- We may need that line again
 				if love.graphics.setDefaultFilter ~= nil then
 					love.graphics.setDefaultFilter("nearest", "nearest")
 				end
-				
+
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))

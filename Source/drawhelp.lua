@@ -1,17 +1,17 @@
 function drawhelp()
 	-- Leaving room for a 16 px wide scrollbar. 4+16+8
-	
+
 	local screenxoffset = 0
 	if s.smallerscreen then
 		screenxoffset = -96
 	end
-	
+
 	local linee = 0
-	
+
 	if helppages[helparticle] ~= nil then
 		-- ...
 		--sis = explode("\n", helppages[helparticle].cont)
-		
+
 		--for s in string.gmatch(LH[helparticle].cont, ".*\n") do
 		-- 8+200+8+...-2: 214, 8+200+8-4: 212
 		love.graphics.setScissor(214+screenxoffset, 8, love.graphics.getWidth()-212-screenxoffset, love.graphics.getHeight()-16)
@@ -23,25 +23,25 @@ function drawhelp()
 			elseif s:find("\\") then
 				local imageshift = 0
 				local imagex = 0
-				
+
 				local rowcolors = {}
 				backgroundshift = false
-				
+
 				local doublesize = false -- Only used for background colors, the font is just set
-				
+
 				local singlecharmode = false
-				
+
 				local part1, part2 = s:match("(.*)\\(.*)")
-				
+
 				for fl = 1, part2:len() do
 					if part2:sub(fl,fl) == "h" then
 						love.graphics.setFont(font16)
 						doublesize = true
 					elseif part2:sub(fl,fl) == "#" then
-						
+
 					elseif tonumber(part2:sub(fl,fl)) ~= nil then
 						local dodisplay = true
-					
+
 						if helpimages[helparticle .. "_" .. (imageshift+tonumber(part2:sub(fl,fl)))] == nil and helppages[helparticle].imgs[imageshift+tonumber(part2:sub(fl,fl))+1] ~= nil then
 							if love.filesystem.exists(helppages[helparticle].imgs[imageshift+tonumber(part2:sub(fl,fl))+1]) then
 								cons("Loading help image " .. helparticle .. "_" .. (imageshift+tonumber(part2:sub(fl,fl))))
@@ -56,7 +56,7 @@ function drawhelp()
 							love.graphics.setColor(255,0,0,255)
 							part1 = L.IMAGEERROR
 						end
-						
+
 						if dodisplay then
 							love.graphics.draw(helpimages[helparticle .. "_" .. (imageshift+tonumber(part2:sub(fl,fl)))], 8+200+8+imagex+screenxoffset, helparticlescroll+8+(10*linee)+4)
 						end
@@ -80,7 +80,7 @@ function drawhelp()
 						insertrowcolor(rowcolors, {255,128,0})
 					elseif part2:sub(fl,fl) == "v" then
 						insertrowcolor(rowcolors, {0,255,0})
-					
+
 					elseif part2:sub(fl,fl) == "C" then
 						insertrowcolor(rowcolors, {132, 181, 255})
 					elseif part2:sub(fl,fl) == "P" then
@@ -93,7 +93,7 @@ function drawhelp()
 						insertrowcolor(rowcolors, {144, 255, 144})
 					elseif part2:sub(fl,fl) == "B" then
 						insertrowcolor(rowcolors, {75, 75, 230})
-					
+
 					
 					elseif part2:sub(fl,fl) == "y" then
 						insertrowcolor(rowcolors, {255,255,0})
@@ -120,39 +120,39 @@ function drawhelp()
 						nodialog = false
 					end
 				end
-				
+
 				-- The first part now needs some handling as well!
 				local _, numseparators = part1:gsub("¤","")
 				local _, numnotseparators = part1:gsub("¤¤","")
 				numseparators = numseparators - numnotseparators*2
-				
+
 				--cons("BECAUSE " .. (#{part1:match("¤")}) .. " and " .. (#{part1:match("¤¤")}))
-				
+
 				if numseparators > 0 then
 					--cons(numseparators)
 					local part1parts = {part1:match("(.*" .. ("[^¤])¤([^¤].*"):rep(numseparators) .. ")")} -- maybe the regex could be a little bit better?
 					local textxoffset = 0
-					
+
 					for kn,vn in pairs(part1parts) do
 						if singlecharmode and vn:sub(-2,-1) == "§" then
 							vn = vn:sub(1, -3)
 						end
-						
+
 						local currenttextxoffset = textxoffset
 						textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))
-						
+
 						if rowcolors[kn] == nil then
 							love.graphics.setColor(192,192,192,255)
 						elseif #rowcolors[kn] >= 6 then
 							love.graphics.setColor(rowcolors[kn][4], rowcolors[kn][5], rowcolors[kn][6])
 							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
 							love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
-							
+
 							setColorArr(rowcolors[kn])
 						else
 							setColorArr(rowcolors[kn])
 						end
-						
+
 						love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 					end
 				else
@@ -167,7 +167,7 @@ function drawhelp()
 							setColorArr(rowcolors[1])
 						end
 					end
-					
+
 					love.graphics.print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 				end
 				love.graphics.setFont(font8)
@@ -175,19 +175,19 @@ function drawhelp()
 			else
 				love.graphics.print(s, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 			end
-			
+
 			linee = linee + 1
 		end
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setScissor()
-		
+
 		-- Scroll bar for the article itself
 		local newperonetage = scrollbar(love.graphics.getWidth()-24, 8, love.graphics.getHeight()-16, (#helparticlecontent*10), ((-helparticlescroll))/((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
-		
+
 		if newperonetage ~= nil then
 			helparticlescroll = -(newperonetage*((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
 		end
-		
+
 		-- Is this note editable?
 		if helpeditable then
 			-- It is!
@@ -199,7 +199,7 @@ function drawhelp()
 				love.graphics.printf(L.EDIT, love.graphics.getWidth()-(128-8)-16-4-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16)
 				love.graphics.printf(L.DELETE, love.graphics.getWidth()-(128-8)-16-4, (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
-				
+
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12)-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Rename
@@ -226,7 +226,7 @@ function drawhelp()
 				love.graphics.printf(L.COPY, love.graphics.getWidth()-(128-8)-16-4-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16)
 				love.graphics.printf(L.SAVE, love.graphics.getWidth()-(128-8)-16-4, (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
-				
+
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Copy
@@ -245,11 +245,11 @@ function drawhelp()
 			end
 		end
 	end
-	
+
 	if s.smallerscreen then
 		-- Those buttons will overlap with the article content
 		local leftpartw = 8+200+8+screenxoffset-2
-		
+
 		if onlefthelpbuttons then
 			love.graphics.setColor(0,0,0)
 			love.graphics.rectangle("fill", leftpartw, 0, 25*8+16-28-leftpartw, love.graphics.getHeight())
@@ -258,7 +258,7 @@ function drawhelp()
 			love.graphics.setScissor(0, 0, leftpartw, love.graphics.getHeight())
 		end
 	end
-	
+
 	j = -1
 	for rvnum = 1, #helppages+(helpeditable and 1 or 0) do
 		j = j + 1
@@ -274,7 +274,7 @@ function drawhelp()
 			hoverrectangle(buttoncolor[1],buttoncolor[2],buttoncolor[3],128, 8, helplistscroll+8+(24*j), 25*8-28, 16)
 		end
 		love.graphics.printf((helppages[rvnum] == nil and L.ADDNEWBTN or helppages[rvnum].subj), 8, helplistscroll+8+(24*j)+4+2, 25*8-28, "center")
-		
+
 		-- Are we clicking on this?
 		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) then
 			if love.mouse.isDown("l") then
@@ -288,7 +288,7 @@ function drawhelp()
 			end
 		end
 	end
-	
+
 	if s.smallerscreen and not onlefthelpbuttons then
 		local leftpartw = 8+200+8+screenxoffset-2 -- Ugh I keep setting this
 		love.graphics.setColor(0,0,0,192)
@@ -298,9 +298,9 @@ function drawhelp()
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setScissor()
 	end
-	
+
 	-- Scroll bar for list of articles
 	--if scrollbar(8+(25*8-28)+4, 8, love.graphics.getHeight()-16, (love.graphics.getHeight()-16)*2, 0) then
-	
+
 	--end
 end

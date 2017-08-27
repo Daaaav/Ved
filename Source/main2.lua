@@ -66,18 +66,18 @@ function love.load()
 	ved_require("drawmap")
 	ved_require("drawhelp")
 	ved_require("slider")
-	
+
 	if s.pscale ~= 1 then
 		za,zb,zc = love.window.getMode()
 		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		
+
 		ved_require("scaling")
 	end
 
 	-- Are we using 0.10.x?
 	if love.getVersion ~= nil then
 		local major, minor, revision, codename = love.getVersion()
-		
+
 		if minor >= 10 then
 			ved_require("love10compat")
 		end
@@ -87,11 +87,11 @@ function love.load()
 			return 0, 9, 0, ""
 		end
 	end
-	
+
 	cons("love.load() reached")
-	
+
 	math.randomseed(os.time())
-	
+
 	state = -2; oldstate = "none"
 	--debug = 0 (kom ik achter zodra ik debug.debug probeer te gebruiken, syntax highlighting hielp blijkbaar niet)
 	input = ""; takinginput = false
@@ -100,9 +100,9 @@ function love.load()
 	cursorflashtime = 0
 	multiinput = {}; currentmultiinput = 0
 	bypassdialog = false
-	
+
 	mousepressed = false -- for some things
-	
+
 	temporaryroomnametimer = 0
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button
@@ -114,15 +114,15 @@ function love.load()
 	sp_tim = 0
 	sp_go = true
 	sp_got = 0
-	
+
 	-- Dialogs. To not have an active window, set DIAwindowani to 16. To show one, just call dialog.new(message, title, showbar, canclose, questionid). -15 ~ -1 opening, 0 is normal, 1 ~ 15 closing
 	dialog.init()
 	nodialog = true
 
 	vvvvvv_textboxes = {}
-	
+
 	tilesets = {}
-	
+
 	-- Load a couple of images
 	cursorimg = {}
 	cursorimg[0] = love.graphics.newImage("cursor/cursor.png")
@@ -132,13 +132,13 @@ function love.load()
 	cursorimg[4] = love.graphics.newImage("cursor/cursor4.png")
 	cursorimg[5] = love.graphics.newImage("cursor/entity.png")
 	cursorimg[6] = love.graphics.newImage("cursor/specialentity.png")
-	
+
 	local curcol = (love.system.getOS() == "OS X" and "b" or "w")
 	cursorimg[11] = love.graphics.newImage("cursor/resizev_" .. curcol .. ".png")
 	cursorimg[12] = love.graphics.newImage("cursor/resizeh_" .. curcol .. ".png")
-	
+
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
-	
+
 	cursorobjs = {}
 	--cursorobjs[11] = love.mouse.newCursor(cursorimg[11]:getData(), 8, 10)
 	--cursorobjs[12] = love.mouse.newCursor(cursorimg[12]:getData(), 10, 8)
@@ -147,7 +147,7 @@ function love.load()
 	cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
 	cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
 	cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
-	
+
 	scriptboximg = {}
 	scriptboximg[1] = love.graphics.newImage("cursor/script1.png")
 	scriptboximg[2] = love.graphics.newImage("cursor/script2.png")
@@ -157,38 +157,38 @@ function love.load()
 	scriptboximg[7] = love.graphics.newImage("cursor/script7.png")
 	scriptboximg[8] = love.graphics.newImage("cursor/script8.png")
 	scriptboximg[9] = love.graphics.newImage("cursor/script9.png")
-	
+
 	
 	selectedtoolborder = love.graphics.newImage("selectedtool.png")
 	unselectedtoolborder = love.graphics.newImage("unselectedtool.png")
-	
+
 	savebtn = love.graphics.newImage("save.png")
 	loadbtn = love.graphics.newImage("load.png")
 	newbtn = love.graphics.newImage("new.png")
 	helpbtn = love.graphics.newImage("help.png")
 	retbtn = love.graphics.newImage("ret.png")
-	
+
 	undobtn = love.graphics.newImage("undo.png")
 	redobtn = love.graphics.newImage("redo.png")
 	cutbtn = love.graphics.newImage("cut.png")
 	copybtn = love.graphics.newImage("copy.png")
 	pastebtn = love.graphics.newImage("paste.png")
-	
+
 	checkon = love.graphics.newImage("checkon.png")
 	checkoff = love.graphics.newImage("checkoff.png")
-	
+
 	menupijltje = love.graphics.newImage("menupijltje.png")
 	colorsel = love.graphics.newImage("colorsel.png")
-	
+
 	bggrid = love.graphics.newImage("bggrid.png")
-	
+
 	toolimg = {}
 	toolimgicon = {}
 	for t = 1, 17 do
 		toolimg[t] = love.graphics.newImage("tools/" .. t .. ".png")
 		toolimgicon[t] = love.image.newImageData("tools2/on/" .. t .. ".png")
 	end
-	
+
 	-- But we also have subtools!
 	subtoolimgs = {}
 	subtoolimgs[1] = {st("1_1"), st("1_2"), st("1_3"), st("1_4"), st("1_5"), st("1_6"), st("1_7"), st("1_8")}
@@ -208,19 +208,19 @@ function love.load()
 	subtoolimgs[15] = {}
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
-	
+
 	
 	scrollup = love.graphics.newImage("scrollup.png")
 	scrolldn = love.graphics.newImage("scrolldn.png")
-	
+
 	sideimg = love.graphics.newImage("sides.png");             smallsideimg = love.graphics.newImage("smallsides.png")
-	
+
 	sideline = {};                                             smallsideline = {}
 	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
 	sideline[2] = love.graphics.newQuad(8, 0, 8, 8, 32, 8);    smallsideline[2] = love.graphics.newQuad(16, 0, 16, 16, 64, 16)
 	sideline[3] = love.graphics.newQuad(16, 0, 8, 8, 32, 8);   smallsideline[3] = love.graphics.newQuad(32, 0, 16, 16, 64, 16)
 	sideline[4] = love.graphics.newQuad(24, 0, 8, 8, 32, 8);   smallsideline[4] = love.graphics.newQuad(48, 0, 16, 16, 64, 16)
-	
+
 	platformimg = love.graphics.newImage("platform.png")
 	platformpart =
 		{
@@ -228,7 +228,7 @@ function love.load()
 		love.graphics.newQuad(8, 0, 8, 8, 24, 8),
 		love.graphics.newQuad(16, 0, 8, 8, 24, 8)
 		}
-		
+
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
 
@@ -237,13 +237,13 @@ function love.load()
 	else
 		screenoffset = 128
 	end
-	
+
 	savedwindowtitle = ""
 
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)
 	thingk()
-	
+
 	if love.system.getOS() == "OS X" then
 		-- Cmd
 		ctrl = "gui"
@@ -274,13 +274,13 @@ function love.load()
 		ved_require("filefunc_luv")
 		dialog.new(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 	end
-	
+
 	secondlevel = false
-	
+
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
 	loadtilesets()
-	
+
 	--if love.getVersion ~= nil then
 	local _, v, m = love.getVersion()
 	if not (v == 9 and m == 0) then
@@ -289,23 +289,23 @@ function love.load()
 			love.system.openURL(url)
 		end
 	end
-	
+
 	--if not love.filesystem.exists("temp") then
 		--love.filesystem.createDirectory("temp")
 	--end
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
 	end
-	
+
 	if s.pcheckforupdates and not opt_disableversioncheck then
 		updatecheckthread = love.thread.newThread("updatecheck.lua")
-		
+
 		verchannel = love.thread.getChannel("version")
 		updatecheckthread:start(checkver, true)
-		
+
 		updatenotesavailable = false
 	end
-	
+
 	hook("love_load_end")
 end
 
@@ -332,7 +332,7 @@ function love.draw()
 		drawmaineditor()
 	elseif state == 2 then
 		love.graphics.print("Syntax highlighting" .. input .. __, 10, 10)
-		
+
 		syntaxhl(input, 10, 30, false, true)
 		startinputonce()
 	elseif state == 3 then
@@ -344,10 +344,10 @@ function love.draw()
 		love.graphics.print("Userprofile: " .. userprofile, 8, 8)
 		for k,v in pairs(files) do
 			love.graphics.print(v, 8, 16+8*k)
-			
+
 			lastk = k
 		end
-				
+
 		love.graphics.print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
 		love.graphics.print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
 		love.graphics.print("Identity: " .. love.filesystem.getIdentity() .. "\nSaveDirectory: " .. love.filesystem.getSaveDirectory(), 8, 16+8*lastk+24+16)
@@ -357,7 +357,7 @@ function love.draw()
 		for y = 0, 7 do
 			for x = 0, 23 do
 				love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][(y*24)+x], x*32, y*32)
-				
+
 				if mouseon(x*32, y*32, 32, 32) then
 					love.graphics.print((y*24)+x, love.graphics.getWidth()-24, love.graphics.getHeight()-8)
 				end
@@ -401,7 +401,7 @@ function love.draw()
 			j = j + 1
 			hoverrectangle(128,128,128,128, 8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16)
 			love.graphics.printf(scriptnames[rvnum], 8, scriptlistscroll+8+(24*j)+4+2, screenoffset+640-8-24, "center")
-			
+
 			-- Are we clicking on this?
 			if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
 				if love.mouse.isDown("l") then
@@ -417,23 +417,23 @@ function love.draw()
 				end
 			end
 		end
-		
+
 		-- Scrollbar
 		local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 8, love.graphics.getHeight()-16, (#scriptnames*24-8), ((-scriptlistscroll))/((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
-			
+
 		if newperonetage ~= nil then
 			--dialog.new("TODO SCROLL", "", 1, 1, 0)
 			scriptlistscroll = -(newperonetage*((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
 		end
-		
+
 		rbutton(L.NEW, 0)
 		rbutton(L.FLAGS, 1)
-		
+
 		-- Script count
 		love.graphics.printf(L.COUNT .. #scriptnames .. "/500", love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
-		
+
 		rbutton(L.RETURN, 0, nil, true)
-		
+
 		-- Buttons again
 		if nodialog and love.mouse.isDown("l") then
 			if onrbutton(0) then
@@ -458,28 +458,28 @@ function love.draw()
 		--love.graphics.draw(checkon, love.graphics.getWidth()-98, 50, 0, 2)
 		--love.graphics.draw(checkoff, love.graphics.getWidth()-98, 70, 0, 2)
 		love.graphics.print(L.VEDOPTIONS, 8, 8+4+2)
-		
+
 		hoverdraw((s.scale == 2 and checkon or checkoff), 8, 8+(24*1), 16, 16, 2)
 		love.graphics.print(L.IIXSCALE, 8+16+8, 8+(24*1)+4+2)
-		
+
 		hoverdraw((s.dialoganimations and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
 		love.graphics.print(L.DIALOGANIMATIONS, 8+16+8, 8+(24*2)+4+2)
-		
+
 		hoverdraw((s.flipsubtoolscroll and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
 		love.graphics.print(L.FLIPSUBTOOLSCROLL, 8+16+8, 8+(24*3)+4+2)
-		
+
 		hoverdraw((s.adjacentroomlines and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
 		love.graphics.print(L.ADJACENTROOMLINES, 8+16+8, 8+(24*4)+4+2)
-		
+
 		hoverdraw((s.askbeforequit and checkon or checkoff), 8, 8+(24*5), 16, 16, 2)
 		love.graphics.print(L.ASKBEFOREQUIT, 8+16+8, 8+(24*5)+4+2)
-		
+
 		hoverdraw((s.coords0 and checkon or checkoff), 8, 8+(24*6), 16, 16, 2)
 		love.graphics.print(L.COORDS0, 8+16+8, 8+(24*6)+4+2)
-		
+
 		hoverdraw((s.showfps and checkon or checkoff), 8, 8+(24*7), 16, 16, 2)
 		love.graphics.print(L.SHOWFPS, 8+16+8, 8+(24*7)+4+2)
-		
+
 		hoverdraw((s.checkforupdates and checkon or checkoff), 8, 8+(24*8), 16, 16, 2)
 		love.graphics.print(L.CHECKFORUPDATES, 8+16+8, 8+(24*8)+4+2)
 
@@ -488,16 +488,16 @@ function love.draw()
 
 
 		rbutton(L.BTN_OK, 0)
-		
+
 		rbutton(L.CUSTOMVVVVVVDIRECTORY, 2)
 		rbutton(L.LANGUAGE, 3)
 		rbutton(L.SYNTAXCOLORS, 4)
-		
+
 		rbutton(L.SENDFEEDBACK, 6)
-		
+
 		--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) -- love.graphics.getHeight()-(24*(X+1)) instead of 8+(24*X)
 		--love.graphics.printf("Cancel", love.graphics.getWidth()-(128-8), (8+(24*1))+4+2, 128-16, "center")
-		
+
 		
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(8, 8+(24*1), 16, 16) then
@@ -559,13 +559,13 @@ function love.draw()
 				tostate(25)
 			elseif not mousepressed and onrbutton(6) then
 				openurl("http://ved.idea.informer.com/")
-				
+
 				mousepressed = true
 			--elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) then
 				-- Cancel
 				--tostate(oldstate)
 			end
-			
+
 			mousepressed = true
 		end
 	elseif state == 14 then
@@ -574,7 +574,7 @@ function love.draw()
 				drawentity(enemysprites[5*rrrrr+asdfg], 16+48*asdfg, 16+48*rrrrr)
 			end
 		end
-		
+
 		for rrrrr = 0, 1 do
 			for asdfg = 0, 4 do
 				drawentity(enemysprites[5*rrrrr+asdfg], 600+16*asdfg, 16+16*rrrrr, true)
@@ -583,7 +583,7 @@ function love.draw()
 	elseif state == 15 then
 		drawhelp()
 	elseif state == 16 then
-		
+
 	elseif state == 17 then
 		love.graphics.print(love.filesystem.read("folderopendialog_return.txt"), 8, 8)
 	elseif state == 18 then
@@ -594,35 +594,35 @@ function love.draw()
 		for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- dit was misschien niet handig om te doen
 			for flk = 0, 49 do
 				local ax, ay, w, h = flcol-2, 24+flk*8, love.graphics.getWidth()/2 - 16, 8
-				
+
 				if nodialog and mouseon(ax, ay, w, h) then
 					love.graphics.setColor(128,128,128,255)
-					
+
 					if not mousepressed and nodialog and love.mouse.isDown("l") then
 						flgnum = flk + (flcol == 8 and 0 or 50) -- niet local, wordt gebruikt in dialog
-						
+
 						if vedmetadata == false then
 							startmultiinput({""})
 						else
 							startmultiinput({vedmetadata.flaglabel[flgnum]})
 						end
 						dialog.new(langkeys(L.NAMEFORFLAG, {flgnum}), "", 1, 4, 15)
-					
+
 						mousepressed = true
 					end
 				else
 					love.graphics.setColor(128,128,128,128)
 				end
-				
+
 				love.graphics.rectangle("fill", ax, ay, w, h)
 			end
 		end
-		
+
 		love.graphics.setColor(255,255,255,255)
-	
+
 		love.graphics.print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8+2)
 		love.graphics.print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8+2)
-		
+
 		rbutton(L.RETURN, 0, nil, true)
 
 		if nodialog and love.mouse.isDown("l") then
@@ -643,11 +643,11 @@ function love.draw()
 			love.graphics.line(0, li, love.graphics.getWidth(), li)
 		end
 		love.graphics.setColor(255,255,255,255)
-	
+
 		love.graphics.rectangle("line", box_x, box_y, box_w, box_h)
-		
+
 		love.graphics.print((box_exists and "Box exists" or "Box exists not") .. "\nPeri xywh " .. boxperi_x .. " " .. boxperi_y .. " " .. boxperi_w .. " " .. boxperi_h .. "\nBox xywh " .. box_x .. " " .. box_y .. " " .. box_w .. " " .. box_h .. "\nMoving HV: " .. box_moving_h .. box_moving_v .. "\n\nType " .. box_type .. "\nM for switching type -1/0\nV for shrinking the allowed perimeter\nR Reset\nE Re-enable", 10, 10)
-		
+
 		if love.keyboard.isDown("m") then
 			if box_type == 0 then
 				box_type = -1
@@ -685,10 +685,10 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_CURSOR,      7, s.syntaxcolor_cursor     )
 		colorsetting(L.SYNTAXCOLOR_FLAGNAME,    8, s.syntaxcolor_flagname   )
 		colorsetting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
-		
+
 		rbutton(L.BTN_OK, 0)
 		rbutton(L.RESETCOLORS, 2)
-		
+
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if onrbutton(0) then
 				-- Save
@@ -705,10 +705,10 @@ function love.draw()
 				end
 				editingcolor = nil
 			end
-			
+
 			mousepressed = true
 		end
-		
+
 		if editingcolor ~= nil then
 			for colb = 0, 255 do
 				love.graphics.setColor(colb,0,0)
@@ -718,24 +718,24 @@ function love.draw()
 				love.graphics.setColor(0,0,colb)
 				love.graphics.rectangle("fill", love.graphics.getWidth()-50, love.graphics.getHeight()-(colb+1), 50, 1)
 			end
-			
+
 			-- A colored block at the top
 			love.graphics.setColor(255,255,255)
 			love.graphics.rectangle("fill", love.graphics.getWidth()-160, love.graphics.getHeight()-263-20, 160, 16)
 			love.graphics.setColor(editingcolor[1],editingcolor[2],editingcolor[3])
 			love.graphics.rectangle("fill", love.graphics.getWidth()-159, love.graphics.getHeight()-263-19, 158, 14)
-			
+
 			-- The numbers
 			love.graphics.setColor(255,255,255)
 			love.graphics.printf(editingcolor[1], love.graphics.getWidth()-160, love.graphics.getHeight()-263, 50, "center")
 			love.graphics.printf(editingcolor[2], love.graphics.getWidth()-105, love.graphics.getHeight()-263, 50, "center")
 			love.graphics.printf(editingcolor[3], love.graphics.getWidth()-50, love.graphics.getHeight()-263, 50, "center")
-			
+
 			-- The arrows
 			love.graphics.draw(colorsel, love.graphics.getWidth()-164, love.graphics.getHeight()-editingcolor[1]-4)
 			love.graphics.draw(colorsel, love.graphics.getWidth()-109, love.graphics.getHeight()-editingcolor[2]-4)
 			love.graphics.draw(colorsel, love.graphics.getWidth()-54, love.graphics.getHeight()-editingcolor[3]-4)
-			
+
 			-- Are we clicking?
 			if love.mouse.isDown("l") then
 				if mouseon(love.graphics.getWidth()-160, love.graphics.getHeight()-256, 50, 256) then
@@ -749,31 +749,31 @@ function love.draw()
 		end
 	else
 		statecaught = false
-		
+
 		hook("love_draw_state")
-		
+
 		if not statecaught then
 			fatalerror(langkeys(L.UNKNOWNSTATE, {state, oldstate}))
 		end
 	end
-	
+
 	if not RCMabovedialog then
 		rightclickmenu.draw()
 	end
-	
+
 	dialog.draw()
-	
+
 	if RCMabovedialog then
 		rightclickmenu.draw()
 	end
-	
+
 	love.graphics.setColor(255,255,255,255)
-	
+
 	-- Show debug code if wanted
 	if allowdebug then
-		
+
 	end
-	
+
 	if fpscap == 1 then
 		love.graphics.setColor(255,0,0)
 		love.graphics.setFont(font16)
@@ -793,7 +793,7 @@ function love.draw()
 		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
 	end
-	
+
 	-- Low FPS warning
 	if s.lowfpswarning >= 0 and (love.timer.getTime()-begint >= 3) and love.timer.getFPS() <= s.lowfpswarning then
 		love.graphics.setColor(255,160,0,192)
@@ -801,7 +801,7 @@ function love.draw()
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-10, 128, "center")
 	end
-	
+
 	-- Taking input warning
 	if allowdebug and takinginput then
 		love.graphics.setColor(255,160,0,192)
@@ -809,13 +809,13 @@ function love.draw()
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.printf("TAKING INPUT", 128, love.graphics.getHeight()-10, 128, "center")
 	end
-	
+
 	hook("love_draw_end")
-	
+
 	-- Are we displaying a replacement cursor?
 	--if replacecursor ~= -1 then
 		--cursorimg
-	
+
 	if s.pscale ~= 1 then
 		love.graphics.pop()
 	end
@@ -837,7 +837,7 @@ function love.update(dt)
 	elseif __ ~= "_" then
 		__ = "_"
 	end
-	
+
 	if fpscap == 1 then
 		if dt < 1/60 then
 			love.timer.sleep(1/60 - dt)
@@ -851,17 +851,17 @@ function love.update(dt)
 			love.timer.sleep(1/15 - dt)
 		end
 	end
-	
+
 	-- The timing for this doesn't really matter
 	if temporaryroomnametimer > 0 then
 		temporaryroomnametimer = temporaryroomnametimer - 1
 	end
-	
+
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
 	end
-	
+
 	if state == 1 and sp_t ~= 0 and not sp_go then
 		sp_tim = sp_tim + dt
 		if sp_tim > .33 then
@@ -881,7 +881,7 @@ function love.update(dt)
 		if editingmap ~= nil then
 			title_editingmap = editingmap:gsub("\n", "") .. " - "
 		end
-		
+
 		if allowdebug then
 			love.window.setTitle(title_editingmap .. "Ved v" .. ver .. (intermediate_version and "-pre" or "") .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v" .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. " ]")
 		elseif s.showfps then
@@ -894,7 +894,7 @@ function love.update(dt)
 			end
 		end
 	end
-	
+
 	if state == -2 then
 		if opt_loadlevel ~= nil then
 			state6load(opt_loadlevel:sub(1,-8))
@@ -911,13 +911,13 @@ function love.update(dt)
 		elseif (editingbounds == -2 or editingbounds == 2) and selectedtool ~= 8 then
 			editingbounds = 0
 		end
-		
+
 		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
 			warpbganimation = (warpbganimation + 2) % 64
 		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 then
 			warpbganimation = (warpbganimation + 3) % 32
 		end
-		
+
 		if vedmetadata == nil then
 			cons("vedmetadata == nil! Setting to false.")
 			vedmetadata = false
@@ -930,13 +930,13 @@ function love.update(dt)
 			onlefthelpbuttons = false
 		end
 	end
-	
+
 	if coordsdialog.active or RCMactive or (DIAwindowani ~= 16) then
 		nodialog = false
 	elseif not love.mouse.isDown("l") then
 		nodialog = true
 	end
-	
+
 	-- Right click menu
 	if RCMreturn ~= nil and RCMreturn ~= "" then
 		if RCMid:sub(1, 4) == "ent_" then
@@ -951,7 +951,7 @@ function love.update(dt)
 						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the properties of
 						endeditingroomtext(tonumber(entdetails[3]))
 					end
-					
+
 					thisentity = entitydata[tonumber(entdetails[3])]
 					startmultiinput({thisentity.x, thisentity.y, thisentity.t, thisentity.p1, thisentity.p2, thisentity.p3, thisentity.p4, thisentity.p5, thisentity.p6, thisentity.data})
 					dialog.new(L.RAWENTITYPROPERTIES .. "\n\nx\ny\nt\np1\np2\np3\np4\np5\np6\n" .. L.SMALLENTITYDATA, (allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""), 1, 5, 2) -- ID stuff is debug mode
@@ -1036,7 +1036,7 @@ function love.update(dt)
 							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the text of
 							endeditingroomtext(tonumber(entdetails[3]))
 						end
-					
+
 						startinput()
 						input = entitydata[tonumber(entdetails[3])].data
 						editingroomtext = tonumber(entdetails[3])
@@ -1054,7 +1054,7 @@ function love.update(dt)
 							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
 							endeditingroomtext(tonumber(entdetails[3]))
 						end
-					
+
 						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 							dialog.new(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}), "", 1, 1, 0)
 						else
@@ -1071,7 +1071,7 @@ function love.update(dt)
 							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the name of
 							endeditingroomtext(tonumber(entdetails[3]))
 						end
-					
+
 						startinput()
 						input = entitydata[tonumber(entdetails[3])].data
 						editingroomtext = tonumber(entdetails[3])
@@ -1130,11 +1130,11 @@ function love.update(dt)
 					end
 					love.graphics.setCanvas()
 					mapcanvas = nil
-					
+
 					-- Love2d bug regarding canvases and scissors?
 					za,zb,zc = love.window.getMode()
 					love.window.setMode(za,zb,zc)
-					
+
 					collectgarbage("collect")
 					dialog.new(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 				end
@@ -1143,7 +1143,7 @@ function love.update(dt)
 			end
 		elseif RCMid:sub(1, 4) == "spt_" then
 			local rvnum = tonumber(RCMid:sub(5, -1))
-			
+
 			if RCMreturn == L.EDIT then
 				--##SCRIPT##  DONE
 				scriptineditor(scriptnames[rvnum], rvnum)
@@ -1190,12 +1190,12 @@ function love.update(dt)
 		else
 			dialog.new("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)
 		end
-		
+
 		RCMreturn = ""
 	end
-	
+
 	hook("love_update_end", {dt})
-	
+
 	dialog.update()
 	boxupdate()
 end
@@ -1216,9 +1216,9 @@ function love.textinput(char)
 			else
 				input = input .. char
 			end
-			
+
 			cursorflashtime = 0
-			
+
 			if state == 3 then
 				scriptlines[editingline] = input
 			elseif state == 15 and helpeditingline ~= 0 then
@@ -1230,7 +1230,7 @@ function love.textinput(char)
 			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. char
 		end
 	end
-	
+
 	if coordsdialog.active then
 		coordsdialog.type(char)
 	end
@@ -1241,14 +1241,14 @@ function love.keypressed(key)
 
 	-- Your privacy is respected.
 	keyva.keypressed(key)
-	
+
 	-- DEBUG FOR FPS CAP
 	if allowdebug and key == "pagedown" and love.keyboard.isDown("r" .. ctrl) then
 		fpscap = (fpscap + 1) % 4
 	elseif allowdebug and key == "pageup" and love.keyboard.isDown("r" .. ctrl) then
 		debug.debug()
 	end
-	
+
 	if RCMactive and RCMabovedialog and not RCMturnedintofield then
 		rightclickmenu.tofield()
 	end
@@ -1258,7 +1258,7 @@ function love.keypressed(key)
 	elseif takinginput then
 		if key == "backspace" then
 			input = backspace(input)
-			
+
 			if state == 3 then
 				-- We're checking for the not-yet-changed line, hence why this doesn't cause the exact same backspace problem VVVVVV has
 				if scriptlines[editingline] == "" and editingline ~= 1 then
@@ -1282,18 +1282,18 @@ function love.keypressed(key)
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 			input = input .. love.system.getClipboardText()
-			
+
 			if state == 3 then
 				if input:find("\n") then
 					-- CRLF -> LF
 					local inputparts = explode("\n", input:gsub("\r\n", "\n"))
-					
+
 					scriptlines[editingline] = inputparts[1]
-					
+
 					for k = 2, #inputparts do
 						table.insert(scriptlines, editingline+(k-1), inputparts[k])
 					end
-					
+
 					editingline = editingline + #inputparts - 1
 					input = anythingbutnil(scriptlines[editingline])
 				else
@@ -1304,13 +1304,13 @@ function love.keypressed(key)
 				if input:find("\n") then
 					-- CRLF -> LF
 					local inputparts = explode("\n", input:gsub("\r\n", "\n"))
-					
+
 					helparticlecontent[helpeditingline] = inputparts[1]
-					
+
 					for k = 2, #inputparts do
 						table.insert(helparticlecontent, helpeditingline+(k-1), inputparts[k])
 					end
-					
+
 					helpeditingline = helpeditingline + #inputparts - 1
 					input = anythingbutnil(helparticlecontent[helpeditingline])
 				else
@@ -1321,7 +1321,7 @@ function love.keypressed(key)
 			end
 		elseif key == "left" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = leftspace(input, input_r)
-			
+
 			cursorflashtime = 0
 
 			if state == 3 then
@@ -1331,9 +1331,9 @@ function love.keypressed(key)
 			end
 		elseif key == "right" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = rightspace(input, input_r)
-			
+
 			cursorflashtime = 0
-			
+
 			if state == 3 then
 				scriptlines[editingline] = input
 			elseif state == 15 and helpeditingline ~= 0 then
@@ -1342,9 +1342,9 @@ function love.keypressed(key)
 		elseif key == "home" then
 			input_r = anythingbutnil(input) .. anythingbutnil(input_r)
 			input = ""
-			
+
 			cursorflashtime = 0
-			
+
 			if state == 3 then
 				scriptlines[editingline] = input
 			elseif state == 15 and helpeditingline ~= 0 then
@@ -1353,9 +1353,9 @@ function love.keypressed(key)
 		elseif key == "end" then
 			input = anythingbutnil(input) .. anythingbutnil(input_r)
 			input_r = ""
-			
+
 			cursorflashtime = 0
-			
+
 			if state == 3 then
 				scriptlines[editingline] = input
 			elseif state == 15 and helpeditingline ~= 0 then
@@ -1372,7 +1372,7 @@ function love.keypressed(key)
 			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText()
 		elseif love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
 			RCMactive = false
-		
+
 			if currentmultiinput <= 1 then
 				currentmultiinput = #multiinput
 			else
@@ -1380,21 +1380,21 @@ function love.keypressed(key)
 			end
 		elseif love.keyboard.isDown("tab") then
 			RCMactive = false
-		
+
 			if currentmultiinput >= #multiinput then
 				currentmultiinput = 1
 			else
 				currentmultiinput = currentmultiinput + 1
 			end
 		end
-		
+
 		if RCMactive and RCMabovedialog and key == "return" then
 			RCMactive = false
 		end
 	end
-	
+
 	handleScrolling(true, key)
-	
+
 	if DIAwindowani ~= 16 and DIAcanclose == 1 and key == "return" then
 		dialog.push()
 		DIAreturn = 1
@@ -1408,7 +1408,7 @@ function love.keypressed(key)
 	elseif DIAwindowani ~= 16 and DIAcanclose == 5 and key == "return" then
 		dialog.push()
 		DIAreturn = 3
-		
+
 	elseif DIAwindowani ~= 16 and DIAcanclose == 3 and key == "y" then
 		dialog.push()
 		DIAreturn = 2
@@ -1421,7 +1421,7 @@ function love.keypressed(key)
 	elseif DIAwindowani ~= 16 and DIAcanclose == 5 and key == "escape" then
 		dialog.push()
 		DIAreturn = 2
-		
+
 	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
@@ -1459,7 +1459,7 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
 		tilespicker_shortcut = true
-		
+
 		if key == "left" then
 			selectedtile = selectedtile - 1
 		elseif key == "right" then
@@ -1469,11 +1469,11 @@ function love.keypressed(key)
 		elseif key == "down" then
 			selectedtile = (selectedtile + 40) % 1200
 		end
-		
+
 		if selectedtile < 0 then
 			selectedtile = selectedtile + 1200
 		end
-		
+
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
 		if keyboard_eitherIsDown(ctrl) then
 			if selectedtool ~= 14 then
@@ -1514,7 +1514,7 @@ function love.keypressed(key)
 			updatewindowicon()
 			toolscroll()
 		end
-		
+
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "q" then
 		coordsdialog.activate()
 	elseif coordsdialog.active and key == "escape" then
@@ -1549,7 +1549,7 @@ function love.keypressed(key)
 			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
 			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
 		end
-		
+
 		editingbounds = 0
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "right") then
 		-->
@@ -1559,7 +1559,7 @@ function love.keypressed(key)
 			else
 				roomx = roomx + 1
 			end
-			
+
 			gotoroom_finish()
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "left") then
@@ -1570,7 +1570,7 @@ function love.keypressed(key)
 			else
 				roomx = roomx - 1
 			end
-			
+
 			gotoroom_finish()
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "down") then
@@ -1581,7 +1581,7 @@ function love.keypressed(key)
 			else
 				roomy = roomy + 1
 			end
-			
+
 			gotoroom_finish()
 		end
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "up") then
@@ -1592,7 +1592,7 @@ function love.keypressed(key)
 			else
 				roomy = roomy - 1
 			end
-			
+
 			gotoroom_finish()
 		end
 	elseif state == 1 and editingroomname and key == "return" then
@@ -1604,22 +1604,22 @@ function love.keypressed(key)
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
-		
+
 		tilescreator = true
 		cb = {}
 		ca = {}
 		cs = {}
 		creatorstep = 1
 		creatorsubstep = 1
-		
+
 		selectedtileset = "creator"
 		selectedcolor = "creator"
-		
+
 		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]
-		
+
 		tilespicker = true
 		selectedtool = 1
-		
+
 		mousepressed = false
 	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("lctrl") then
 		-- Just display all tilesets and colors in the console.
@@ -1664,10 +1664,10 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") then
 		-- Edit room name
 		toggleeditroomname()
-		
+
 		-- Stop that extra e from getting into the roomname...
 		nodialog = false
-		
+
 		--[[
 		if input == "e" then
 			input = ""
@@ -1680,16 +1680,16 @@ function love.keypressed(key)
 		--tostate(8)
 		if keyboard_eitherIsDown(ctrl) and editingmap ~= "untitled\n" then
 			-- Quicksave- we have a name already
-			
+
 			-- Maybe we have a massive map... Or a slow computer
 			temporaryroomname = L.BUSYSAVING
 			temporaryroomnametimer = 9000 -- Surely saving a map won't take more than ~5 minutes, would it? I mean...
-			
+
 			love.graphics.clear(); love.draw(); love.graphics.present()
-			
+
 			-- Save now
 			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
-			
+
 			if not savedsuccess then
 				-- Why not :c
 				dialog.new(L.SAVENOSUCCESS .. anythingbutnil(savederror), "", 1, 1, 0)
@@ -1738,7 +1738,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 5 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 or selectedtool == 10 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
-				
+
 				holdingzvx = true
 			end
 		elseif key == "x" then
@@ -1746,7 +1746,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 3
-				
+
 				holdingzvx = true
 			end
 		elseif key == "c" then
@@ -1754,7 +1754,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 4
-				
+
 				holdingzvx = true
 			end
 		elseif key == "v" then
@@ -1762,7 +1762,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 5
-				
+
 				holdingzvx = true
 			end
 		elseif key == "h" then
@@ -1770,7 +1770,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 6
-				
+
 				holdingzvx = true
 			end
 		elseif key == "b" then
@@ -1778,7 +1778,7 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 7
-				
+
 				holdingzvx = true
 			end
 		end
@@ -1897,7 +1897,7 @@ function love.keypressed(key)
 			tostate(10, true)
 			nodialog = false
 		end
-		
+
 		if not processflaglabelsreverse() then
 			leavescript_to_state()
 		end
@@ -1933,7 +1933,7 @@ function love.keypressed(key)
 			gotohelparticle(cycle(helparticle, #helppages, 2))
 		end
 	elseif allowdebug and (key == "f10") then
-		
+
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown("l" .. ctrl) then
 			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
@@ -2024,13 +2024,13 @@ function love.mousepressed(x, y, button)
 			button = "m"
 		end
 	end
-	
+
 	if s.pscale ~= 1 then
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
-	
+
 	hook("love_mousepressed_start", {x, y, button})
-	
+
 
 	if (DIAwindowani ~= 16) and (DIAbar == 1) and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
 		DIAmovingwindow = 1
@@ -2039,7 +2039,7 @@ function love.mousepressed(x, y, button)
 		DIAmovedfrommx = x
 		DIAmovedfrommy = y
 	end
-	
+
 	--[[
 	if DIAwindowani ~= 16 then
 		if (DIAcanclose == 1) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
@@ -2061,11 +2061,11 @@ function love.mousepressed(x, y, button)
 			dialog.push()
 			DIAreturn = 3
 		end
-		
+
 		return
 	end
 	]]
-	
+
 	if state == 1 then
 		if x < 64 and not (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) then
 			if button == "wu" then
@@ -2086,7 +2086,7 @@ function love.mousepressed(x, y, button)
 		]]
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
-			
+
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
@@ -2156,7 +2156,7 @@ function love.mousepressed(x, y, button)
 	elseif state == 6 and hoveringlevel ~= nil and button == "l" then
 		-- Just like when going to a room by clicking on the map, we don't want to click the first tile we press.
 		nodialog = false
-		
+
 		state6load(hoveringlevel)
 	elseif state == 9 and button == "r" then -- TEST STATE
 		rightclickmenu.create({"Delete", "Edit script", "Rename"}, "1")
@@ -2169,7 +2169,7 @@ function love.mousepressed(x, y, button)
 	else
 		handleScrolling(false, button)
 	end
-	
+
 	boxmousepress()
 end
 
@@ -2190,7 +2190,7 @@ function love.mousereleased(x, y, button)
 	end
 
 	hook("love_mousereleased_start", {x, y, button})
-	
+
 	
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
 		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
@@ -2201,13 +2201,13 @@ function love.mousereleased(x, y, button)
 	mousepressed = false
 	minsmear = -1; maxsmear = -1
 	toout = 0
-	
+
 	if DIAmovingwindow == 1 then
 		DIAx = DIAmovedfromwx + (x-DIAmovedfrommx)
 		DIAy = DIAmovedfromwy + (y-DIAmovedfrommy)
 		DIAmovingwindow = 0
 	end
-	
+
 	boxmouserelease()
 end
 
