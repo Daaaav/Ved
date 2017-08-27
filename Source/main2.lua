@@ -265,8 +265,6 @@ function love.load()
 		macscrolling = false
 		hook("love_load_lin")
 		ved_require("filefunc_lin")
-		--require("filefunc_luv")
-		--dialog.new("Full support for Linux will be added really soon!", "", 1, 1, 0)
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"

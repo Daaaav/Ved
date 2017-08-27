@@ -2,6 +2,20 @@
 
 -- These functions assume you're not on a school computer or anywhere where cmd is completely restricted.
 
+
+-- We know we're on Windows for a start...
+userprofile = os.getenv('USERPROFILE')
+
+simplevvvvvvfolder = false
+standardvvvvvvfolders = {
+	display = "\\(My) Documents\\VVVVVV",
+	folders = {
+		"\\Documents\\VVVVVV",
+		"\\My Documents\\VVVVVV"
+	}
+}
+
+
 function cp850toutf8(text)
 	-- We're working with the command line...
 	
@@ -73,55 +87,52 @@ end
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
 function listfiles(directory)
-	local i, t, popen = 0, {}, io.popen
-	--for filename in popen('ls -a "'..directory..'"'):lines() do
+	local i, t = 0, {}
+	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
 	
 	-- Only do files.
-	for filename in popen('dir "'..directory..'" /b /a-d'):lines() do
+	for filename in io.popen('dir "'..directory..'" /b /a-d'):lines() do
 		i = i + 1
-		--t[i] = filename
-		t[i] = cp850toutf8(filename)
-		
-		--cons(filename)
+		t[i] = {
+			name = cp850toutf8(filename),
+			isdir = false,
+			lastmodified = 0,
+		}
 	end
 	return t
 end
 
 function getlevelsfolder(ignorecustom)
-	-- Returns error, path
-	-- 1: no documents, 2: no vvvvvv, 3: no levels folder
+	-- Returns success, path
 
 	if s.customvvvvvvdir == "" or ignorecustom then
-		-- We know we're on Windows for a start...
-		userprofile = os.getenv('USERPROFILE')
-		
 		-- Spawn less cmd windows
-		if directory_exists(userprofile .. "\\Documents\\VVVVVV", "levels") then
-			return 0, userprofile .. "\\Documents\\VVVVVV\\levels"
-		elseif directory_exists(userprofile .. "\\My Documents\\VVVVVV", "levels") then
-			return 0, userprofile .. "\\My Documents\\VVVVVV\\levels"
+		if directory_exists(userprofile .. standardvvvvvvfolders.folders[1], "levels") then
+			return true, userprofile .. standardvvvvvvfolders.folders[1] .. "\\levels"
+		elseif directory_exists(userprofile .. standardvvvvvvfolders.folders[2], "levels") then
+			return true, userprofile .. standardvvvvvvfolders.folders[2] .. "\\levels"
 		else
 			-- Also return what it should have been
-			return 4, userprofile .. "\\(My) Documents\\VVVVVV\\levels"
+			return false, userprofile .. standardvvvvvvfolder.display .. "\\levels"
 		end
 	else
 		-- The user has supplied a custom directory.
 		if directory_exists(s.customvvvvvvdir, "levels") then
 			-- Fair enough
-			return 0, s.customvvvvvvdir .. "\\levels"
+			return true, s.customvvvvvvdir .. "\\levels"
 		else
 			-- What are you doing?
-			return 4, s.customvvvvvvdir .. "\\levels"
+			return false, s.customvvvvvvdir .. "\\levels"
 		end
 	end
 end
 
 function listdirs(directory)
-	local i, t, popen = 0, {}, io.popen
-	--for filename in popen('ls -a "'..directory..'"'):lines() do
+	local i, t = 0, {}
+	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
 	
 	-- Only do folders.
-	for filename in popen('dir "'..directory..'" /b /ad'):lines() do
+	for filename in io.popen('dir "'..directory..'" /b /ad'):lines() do
 		i = i + 1
 		t[i] = filename
 		
@@ -131,9 +142,9 @@ function listdirs(directory)
 end
 
 function directory_exists(where, what)
-	local i, t, popen = 0, {}, io.popen
+	local i, t = 0, {}
 	
-	for filename in popen('dir "'..where..'" /b /ad'):lines() do
+	for filename in io.popen('dir "'..where..'" /b /ad'):lines() do
 		if filename == what then return true end
 	end
 	
@@ -192,33 +203,6 @@ end
 function openurl(url)
 	os.execute("start " .. url)
 end
-
---[[
-function getdocuments(directory)
-	local i, t, popen = 0, {}, io.popen
-	local docs, mydocs
-
-	-- Only do folders.
-	for filename in popen('dir "'..directory..'" /b /ad'):lines() do
-		if filename == "Documents" then docs = true end
-		if filename == "My Documents" then mydocs = true end
-	end
-	
-	if docs then
-		return "Documents"
-	elseif mydocs then
-		return "My Documents"
-	else
-		return nil
-	end
-end
-
-function directory_exists(directory)
-	local i, t, popen = 0, {}, io.popen
-
-	return popen('cd "' .. directory .. '"')
-end
-]]
 
 function util_folderopendialog()
 	-- love.filesystem.getSaveDirectory() = C:/Users/David/AppData/Roaming/LOVE/ved

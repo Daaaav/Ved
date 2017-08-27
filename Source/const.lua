@@ -217,6 +217,7 @@ knowninternalcommands =
 	--customiftrinketsless = true,
 	customposition = true,
 	changecustommood = true,
+	custommap = true,
 	}
 	
 warpbgcolors =

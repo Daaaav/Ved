@@ -407,7 +407,12 @@ function loadstate(new, extradata)
 		test = test .. test
 	elseif new == 5 then
 		userprofile = os.getenv('USERPROFILE')
-		lerror, levelsfolder = getlevelsfolder()
+		lsuccess, levelsfolder = getlevelsfolder()
+		if lsuccess then
+			lerror = 0
+		else
+			lerror = 4
+		end
 		files = listdirs(userprofile)
 	elseif new == 6 then
 		if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
@@ -598,9 +603,8 @@ end
 
 function loadlevelsfolder()
 	cons("Loading levels folder...")
-	userprofile = os.getenv('USERPROFILE')
-	lerror, levelsfolder = getlevelsfolder()
-	if lerror == 0 then
+	lsuccess, levelsfolder = getlevelsfolder()
+	if lsuccess then
 		files = listfiles(levelsfolder)
 	end
 	cons("Loaded.")

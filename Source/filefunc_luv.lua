@@ -2,13 +2,25 @@
 
 function listfiles(directory)
 	-- Preferably, only do files.
-	return love.filesystem.getDirectoryItems(directory)
+	files = {}
+	for f in love.filesystem.getDirectoryItems(directory) do
+		table.insert(files, {
+				name = f,
+				isdir = false,
+				lastmodified = 0,
+			}
+		)
+	end
+	return files
 end
 
-function getlevelsfolder()
-	-- Returns error, path
-	-- 1: no documents, 2: no vvvvvv, 3: no levels folder
-	
+function getlevelsfolder(ignorecustom)
+	-- Returns success, path
+
+	if ignorecustom then
+		return nil, "???"
+	end
+
 	-- We can't really set a custom directory if we don't know what commands to use :/
 	
 	if not love.filesystem.exists("levels") then
@@ -18,7 +30,7 @@ function getlevelsfolder()
 		love.filesystem.createDirectory("saves")
 	end
 	
-	return 0, "levels"
+	return true, "levels"
 end
 
 function listdirs(directory)

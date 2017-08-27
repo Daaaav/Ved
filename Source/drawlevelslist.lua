@@ -8,23 +8,23 @@ function drawlevelslist()
 
 	love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
 	
-	if lerror ~= 0 then
+	if not lsuccess then
 		love.graphics.setColor(255,128,0)
 		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-16, "left")
 		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil
+		local hoverarea = 758
+		if s.smallerscreen then
+			hoverarea = hoverarea - 96
+		end
 		local k2 = 1
 		for k,v in pairs(files) do
-			if input .. input_r == "" or v:lower():find("^" .. escapegsub(input .. input_r)) then
-				local hoverarea = 758
-				if s.smallerscreen then
-					hoverarea = hoverarea - 96
-				end
+			if input .. input_r == "" or v.name:lower():find("^" .. escapegsub(input .. input_r)) then
 				local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
-			
+
 				if mouseishovering then
-					hoveringlevel = v:sub(1, -8)
+					hoveringlevel = v.name:sub(1, -8)
 				end
 				if mouseishovering or tabselected == k2 then
 					love.graphics.setColor(255,255,255,64)
@@ -32,23 +32,23 @@ function drawlevelslist()
 					love.graphics.setColor(255,255,0)
 				end
 				
-				love.graphics.print(v, 8, 16+8*k2) -- y = 16+8*k
+				love.graphics.print(v.name, 8, 16+8*k2) -- y = 16+8*k
 				
 				
 				love.graphics.setColor(255,255,255)
 				
 				--[[
 				if k2 == 1 and love.keyboard.isDown("tab") then
-					input = v:sub(1, -8)
+					input = v.name:sub(1, -8)
 				end
 				]]
 				if tabselected == k2 and love.keyboard.isDown("return") and nodialog then
-					state6load(v:sub(1, -8))
+					state6load(v.name:sub(1, -8))
 				end
 				
 				k2 = k2 + 1
 			end
-				
+
 			lastk = k
 		end
 		
