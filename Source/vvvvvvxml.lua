@@ -429,7 +429,7 @@ function loadlevel(path)
 
 	cons("Done loading!")
 
-	
+
 	-- As many of the integrity checks as possible here
 	--[[
 	mycount.FC = mycount.FC + (type(thismetadata.mapwidth) ~= "number" and 1 or 0)

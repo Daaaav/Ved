@@ -1063,7 +1063,7 @@ function drawmaineditor()
 
 		love.graphics.setColor(255,255,255,255)
 
-		
+
 		--[[
 		cons("Using room " .. (roomy)*20 + (roomx+1))
 		for k,v in pairs(levelmetadata[(roomy)*20 + (roomx+1)]) do
@@ -1235,7 +1235,7 @@ function drawmaineditor()
 			end
 		end
 
-		
+
 		love.graphics.setColor(255,255,255,255)
 
 		love.graphics.setScissor()
@@ -1873,7 +1873,7 @@ function drawmaineditor()
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
 	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset, love.graphics.getHeight()-16-8, 128, "left")
 
-	
+
 	-- Dropdown for tileset?
 	--[[
 	if dropdown == 1 then

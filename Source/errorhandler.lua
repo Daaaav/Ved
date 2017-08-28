@@ -139,7 +139,7 @@ function ved_showerror(msg)
 		ctrl = "ctrl"
 	end
 
-	
+
 	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	if type(plugins) ~= "table" then
@@ -242,7 +242,7 @@ function ved_showerror(msg)
 			--love.graphics.print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
 		end
 
-		
+
 		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
 		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		
 		--love.graphics.print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
@@ -357,7 +357,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		ctrl = "ctrl"
 	end
 
-	
+
 	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	if type(plugins) ~= "table" then
@@ -432,7 +432,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	p = string.gsub(p, "\t", "")
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
 
-	
+
 	--[[
 	if dialog == nil then
 		--require("dialog")

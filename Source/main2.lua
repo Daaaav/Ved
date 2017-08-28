@@ -93,7 +93,6 @@ function love.load()
 	math.randomseed(os.time())
 
 	state = -2; oldstate = "none"
-	--debug = 0 (kom ik achter zodra ik debug.debug probeer te gebruiken, syntax highlighting hielp blijkbaar niet)
 	input = ""; takinginput = false
 	__ = "_"
 	input_r = ""
@@ -158,7 +157,7 @@ function love.load()
 	scriptboximg[8] = love.graphics.newImage("cursor/script8.png")
 	scriptboximg[9] = love.graphics.newImage("cursor/script9.png")
 
-	
+
 	selectedtoolborder = love.graphics.newImage("selectedtool.png")
 	unselectedtoolborder = love.graphics.newImage("unselectedtool.png")
 
@@ -193,7 +192,7 @@ function love.load()
 	subtoolimgs = {}
 	subtoolimgs[1] = {st("1_1"), st("1_2"), st("1_3"), st("1_4"), st("1_5"), st("1_6"), st("1_7"), st("1_8")}
 	subtoolimgs[2] = {st("2_1"), st("2_2"), st("2_3"), st("2_4"), st("2_5"), st("2_6"), st("2_7"), st("2_8")}
-	subtoolimgs[3] = {st("3_1"), st("3_2"), st("3_3"), st("3_4"), }-- st("3_5"), st("3_6"), st("3_7"), st("3_8")}
+	subtoolimgs[3] = {st("3_1"), st("3_2"), st("3_3"), st("3_4")}
 	subtoolimgs[4] = {}
 	subtoolimgs[5] = {st("5_1"), st("5_2")}
 	subtoolimgs[6] = {}
@@ -209,7 +208,7 @@ function love.load()
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
 
-	
+
 	scrollup = love.graphics.newImage("scrollup.png")
 	scrolldn = love.graphics.newImage("scrolldn.png")
 
@@ -290,9 +289,6 @@ function love.load()
 		end
 	end
 
-	--if not love.filesystem.exists("temp") then
-		--love.filesystem.createDirectory("temp")
-	--end
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
 	end
@@ -498,7 +494,7 @@ function love.draw()
 		--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) -- love.graphics.getHeight()-(24*(X+1)) instead of 8+(24*X)
 		--love.graphics.printf("Cancel", love.graphics.getWidth()-(128-8), (8+(24*1))+4+2, 128-16, "center")
 
-		
+
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(8, 8+(24*1), 16, 16) then
 				-- 2x scale
@@ -769,11 +765,6 @@ function love.draw()
 
 	love.graphics.setColor(255,255,255,255)
 
-	-- Show debug code if wanted
-	if allowdebug then
-
-	end
-
 	if fpscap == 1 then
 		love.graphics.setColor(255,0,0)
 		love.graphics.setFont(font16)
@@ -823,7 +814,6 @@ end
 
 function love.update(dt)
 	hook("love_update_start", {dt})
-	--print(anythingbutnil0(context) .. " " .. anythingbutnil0(carg1) .. " " .. anythingbutnil0(carg2))
 
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
@@ -1058,12 +1048,7 @@ function love.update(dt)
 						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 							dialog.new(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}), "", 1, 1, 0)
 						else
-							--##SCRIPT##  DONE
 							scriptineditor(entitydata[tonumber(entdetails[3])].data)
-							--scriptname = entitydata[tonumber(entdetails[3])].data
-							--scriptlines = table.copy(scripts[entitydata[tonumber(entdetails[3])].data])
-							--processflaglabels()
-							--tostate(3)
 						end
 					elseif RCMreturn == L.OTHERSCRIPT then
 						-- Were we already editing roomtext or a name?
@@ -1145,21 +1130,9 @@ function love.update(dt)
 			local rvnum = tonumber(RCMid:sub(5, -1))
 
 			if RCMreturn == L.EDIT then
-				--##SCRIPT##  DONE
 				scriptineditor(scriptnames[rvnum], rvnum)
-				--scriptname = scriptnames[rvnum]
-				--scriptlines = table.copy(scripts[scriptnames[rvnum]])
-				--processflaglabels()
-				--bumpscript(rvnum)
-				--tostate(3)
 			elseif RCMreturn == L.EDITWOBUMPING then
-				--##SCRIPT##  DONE
 				scriptineditor(scriptnames[rvnum], -1)
-				--scriptname = scriptnames[rvnum]
-				--scriptlines = table.copy(scripts[scriptnames[rvnum]])
-				--processflaglabels()
-				----bumpscript(rvnum)
-				--tostate(3)
 			elseif RCMreturn == L.COPYNAME then
 				love.system.setClipboardText(scriptnames[rvnum])
 			elseif RCMreturn == L.COPYCONTENTS then
@@ -1364,7 +1337,6 @@ function love.keypressed(key)
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
 		end
-	--elseif currentmultiinput ~= 0 then
 	elseif #multiinput > 0 then
 		if key == "backspace" then
 			multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
@@ -1428,17 +1400,6 @@ function love.keypressed(key)
 	elseif state == 0 and key == "return" then
 		stopinput()
 		tostate(input)
-	--elseif (state == 1) and (key == "z") then -- temporary key, might change
-		--zoomscale = 2
-	--[[
-	elseif nodialog and editingroomtext == 0 and (state == 1) and (key == "s") then -- again, but cycle tileset
-		--metadata.tileset = cycle(metadata.tileset, 2)
-		if usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].tileset = 1
-		else
-			levelmetadata[(roomy)*20 + (roomx+1)].tileset = 0
-		end
-	]]
 	elseif sp_t ~= 0 and key == "escape" then
 		sp_t = 0
 		sp_go = true
@@ -2040,32 +2001,6 @@ function love.mousepressed(x, y, button)
 		DIAmovedfrommy = y
 	end
 
-	--[[
-	if DIAwindowani ~= 16 then
-		if (DIAcanclose == 1) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-		elseif (DIAcanclose == 2) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-			DIAquitting = 1
-		elseif (DIAcanclose == 3 or DIAcanclose == 4) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-		elseif (DIAcanclose == 5) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			DIAreturn = 1
-		elseif (DIAcanclose == 3 or DIAcanclose == 4 or DIAcanclose == 5) and mousein(DIAx+DIAwidth-106, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-56, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 2
-		elseif (DIAcanclose == 5) and mousein(DIAx+DIAwidth-161, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-106, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 3
-		end
-
-		return
-	end
-	]]
-
 	if state == 1 then
 		if x < 64 and not (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) then
 			if button == "wu" then
@@ -2075,15 +2010,6 @@ function love.mousepressed(x, y, button)
 				lefttoolscroll = lefttoolscroll - 16
 				lefttoolscrollbounds()
 			end
-		--[[
-		elseif mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-2-12-8, (6*16), 8+4) then -- tileset picker
-			if dropdown == 1 then
-				dropdown = 0
-			else
-				--dropdown = 1
-				rightclickmenu.create({"#1", "Space St.", "#2", "Outside", "Lab", "Warp Zone", "Ship"}, "tileset")
-			end
-		]]
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
 
@@ -2191,7 +2117,7 @@ function love.mousereleased(x, y, button)
 
 	hook("love_mousereleased_start", {x, y, button})
 
-	
+
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
 		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
 		undosaved = 0

@@ -1779,7 +1779,7 @@ function handleScrolling(viakeyboard, mkinput)
 		end
 	end
 
-	
+
 	if direction ~= nil then
 		if state == 3 and not viakeyboard then
 			if direction == "u" then

@@ -34,7 +34,7 @@ function drawlevelslist()
 
 				love.graphics.print(v.name, 8, 16+8*k2) -- y = 16+8*k
 
-				
+
 				love.graphics.setColor(255,255,255)
 
 				--[[

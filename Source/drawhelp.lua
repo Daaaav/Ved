@@ -94,7 +94,7 @@ function drawhelp()
 					elseif part2:sub(fl,fl) == "B" then
 						insertrowcolor(rowcolors, {75, 75, 230})
 
-					
+
 					elseif part2:sub(fl,fl) == "y" then
 						insertrowcolor(rowcolors, {255,255,0})
 					elseif part2:sub(fl,fl) == "c" then

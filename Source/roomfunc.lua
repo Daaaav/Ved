@@ -578,11 +578,11 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	end
 	]]
 
-	
+
 	doorroomx = inroomx
 	doorroomy = inroomy
 
-	
+
 	-- This is all a complete mess. Basically: wall=8 background=1 spikes=2 nothing=4  outsidebackground = 6
 	--local dowhat = issolid(adjtile(t, 0, 0), ts) and 8 or (issolid(adjtile(t, 0, 0), ts) ~= issolid(adjtile(t, 0, 0), ts, true) and 2 or (isnot0(adjtile(t, 0, 0), ts) and (tileset == 1 and 6 or 1) or 4))
 	local dowhat
