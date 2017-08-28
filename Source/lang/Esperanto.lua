@@ -6,7 +6,7 @@ L = {
 
 TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)",
 
-OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.0 aŭ pli altan. Vi povas elŝuti la plej freŝan version de L{ve ĉe http://love2d.org/.",
+OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.0 aŭ pli altan. Vi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 UNKNOWNSTATE = "Saltis al nekonata stato ($1) de stato $2",
 FATALERROR = "NERIPAREBLA ERARO: ",
 FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu ripari ĝin.",
@@ -1725,7 +1725,7 @@ Enemy movement types\h#
 4, 7, 11 - Moves right until collision.
 5 - Same as above, only acts weird when it collides.
     GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
-6 - Bouncing up and down, but only reaches a certain x position before going back
+6 - Bouncing up and down, but only reaches a certain y position before going back
     down. Used in "Trench warfare".
 8, 9 - For moving platforms they're conveyors, and they're still for anything else
 14 - Able to be blocked by disappearing platforms

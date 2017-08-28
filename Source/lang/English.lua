@@ -5,7 +5,7 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
 
-OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from http://love2d.org/.",
+OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from https://love2d.org/.",
 UNKNOWNSTATE = "Unknown state ($1), jumped to from state $2",
 FATALERROR = "FATAL ERROR: ",
 FATALEND = "Please close the game and try again. And if you're Dav, please fix it.",
@@ -1724,7 +1724,7 @@ Enemy movement types\h#
 4, 7, 11 - Moves right until collision.
 5 - Same as above, only acts weird when it collides.
     GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
-6 - Bouncing up and down, but only reaches a certain x position before going back
+6 - Bouncing up and down, but only reaches a certain y position before going back
     down. Used in "Trench warfare".
 8, 9 - For moving platforms they're conveyors, and they're still for anything else
 14 - Able to be blocked by disappearing platforms
