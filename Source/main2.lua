@@ -179,6 +179,8 @@ function love.load()
 	menupijltje = love.graphics.newImage("menupijltje.png")
 	colorsel = love.graphics.newImage("colorsel.png")
 
+	smallfolder = love.graphics.newImage("smallfolder.png")
+
 	bggrid = love.graphics.newImage("bggrid.png")
 
 	toolimg = {}
@@ -1106,7 +1108,7 @@ function love.update(dt)
 							displayroom(mrx*0.5*640, mry*0.5*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], 0.5) --mapscale
 						end
 					end
-					saveas = (editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"
+					saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"):gsub("/", "__")
 					local _, v = love.getVersion()
 					if v == 9 then
 						mapcanvas:getImageData():encode("maps/" .. saveas)
@@ -1807,7 +1809,7 @@ function love.keypressed(key)
 			scriptlines[editingline] = input
 		end
 	elseif (state == 6) and key == "return" and tabselected == 0 then
-		state6load(input)
+		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
 		if tabselected > 0 then
 			tabselected = tabselected - 1

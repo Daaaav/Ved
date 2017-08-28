@@ -87,12 +87,12 @@ end
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
 function listfiles(directory)
-	local i, t = 0, {}
+	local i, t = 0, {[""] = {}}
 
 	-- Only do files.
 	for filename in io.popen('dir "' .. directory .. '" /b /a-d'):lines() do
 		i = i + 1
-		t[i] = {
+		t[""][i] = {
 			name = cp850toutf8(filename),
 			isdir = false,
 			lastmodified = 0,

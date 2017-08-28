@@ -10,16 +10,50 @@ standardvvvvvvfolder = "/.local/share/VVVVVV"
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
 function listfiles(directory)
-	local i, t = 0, {}
+	local t = {}
+	local namekeys = {}
+	local termoutput = {}
 
 	-- Only do files.
-	for filename in io.popen("ls " .. directory:gsub(" ", "\\ ")):lines() do -- kijk eens bij t voor sorteren
-		i = i + 1
-		t[i] = {
-			name = filename,
-			isdir = false,
-			lastmodified = 0,
-		}
+	--[[ Quick note: If you want to do modification timestamps here, consider -lQR --time-style +%s
+		-Q for quoted filenames so it's a little bit easier to get the name, and --time-style +%s uses unix timestamps for the modification times
+	]]
+	local expectingdir = true
+	-- First check what all the different directories and subdirectories are, so we can fill them
+	for filename in io.popen("cd " .. directory:gsub(" ", "\\ ") .. " && ls -R --group-directories-first"):lines() do -- kijk eens bij t voor sorteren
+		table.insert(termoutput, filename)
+		if expectingdir then
+			-- The shown directory will be listed as `./subfolder:`, the root will be listed as `.:`
+			t[filename:sub(3, -2)] = {}
+			expectingdir = false
+		elseif filename == "" then
+			expectingdir = true
+		end
+	end
+	local currentdir
+	expectingdir = true
+	-- Now we can fill them all with files
+	for _,filename in pairs(termoutput) do
+		if expectingdir then
+			currentdir = filename:sub(3, -2)
+			expectingdir = false
+		elseif filename == "" then
+			expectingdir = true
+		else
+			local prefix
+			if currentdir == "" then
+				prefix = ""
+			else
+				prefix = currentdir .. "/"
+			end
+			table.insert(t[currentdir],
+				{
+					name = filename,
+					isdir = t[prefix .. filename] ~= nil,
+					lastmodified = 0,
+				}
+			)
+		end
 	end
 	return t
 end

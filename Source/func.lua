@@ -1256,6 +1256,13 @@ function createmde()
 end
 
 function state6load(levelname)
+	if files[levelname] ~= nil then
+		input = levelname .. "/"
+		input_r = ""
+		tabselected = 0
+		return
+	end
+
 	stopinput()
 
 	if not secondlevel then
@@ -1854,7 +1861,7 @@ function handleScrolling(viakeyboard, mkinput)
 end
 
 function savemapimage()
-	saveas = (editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"
+	saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub("/", "__")
 	local _, v = love.getVersion()
 	if v == 9 then
 		mapscreenshot:getData():encode("maps/" .. saveas)

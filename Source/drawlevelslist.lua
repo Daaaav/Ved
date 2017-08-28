@@ -18,38 +18,59 @@ function drawlevelslist()
 		if s.smallerscreen then
 			hoverarea = hoverarea - 96
 		end
+		-- Are we in the root, or is there a subfolder we're supposed to look in?
+		local currentdir = ""
+		if string.find(input .. input_r, "/") ~= nil then
+			local lastindex = string.find(input .. input_r, "/[^/]-$")
+			currentdir = (input .. input_r):sub(1, lastindex-1)
+		end
 		local k2 = 1
-		for k,v in pairs(files) do
-			if input .. input_r == "" or v.name:lower():find("^" .. escapegsub(input .. input_r)) then
-				local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
-
-				if mouseishovering then
-					hoveringlevel = v.name:sub(1, -8)
+		if files[currentdir] ~= nil then
+			for k,v in pairs(files[currentdir]) do
+				local prefix
+				if currentdir == "" then
+					prefix = ""
+				else
+					prefix = currentdir .. "/"
 				end
-				if mouseishovering or tabselected == k2 then
-					love.graphics.setColor(255,255,255,64)
-					love.graphics.rectangle("fill", 8, 14+8*k2, hoverarea, 8)
-					love.graphics.setColor(255,255,0)
+				local barename = v.name:sub(1, -8)
+				if v.isdir then
+					barename = v.name
+				end
+				if input .. input_r == "" or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
+					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
+
+					if mouseishovering then
+						hoveringlevel = prefix .. barename
+					end
+					if mouseishovering or tabselected == k2 then
+						love.graphics.setColor(255,255,255,64)
+						love.graphics.rectangle("fill", 8, 14+8*k2, hoverarea, 8)
+						love.graphics.setColor(255,255,0)
+					end
+
+					if v.isdir then
+						love.graphics.draw(smallfolder, 8, 14+8*k2)
+					end
+					love.graphics.print(v.name, 18, 16+8*k2) -- y = 16+8*k
+
+
+					love.graphics.setColor(255,255,255)
+
+					--[[
+					if k2 == 1 and love.keyboard.isDown("tab") then
+						input = v.name:sub(1, -8)
+					end
+					]]
+					if tabselected == k2 and love.keyboard.isDown("return") and nodialog then
+						state6load(prefix .. barename)
+					end
+
+					k2 = k2 + 1
 				end
 
-				love.graphics.print(v.name, 8, 16+8*k2) -- y = 16+8*k
-
-
-				love.graphics.setColor(255,255,255)
-
-				--[[
-				if k2 == 1 and love.keyboard.isDown("tab") then
-					input = v.name:sub(1, -8)
-				end
-				]]
-				if tabselected == k2 and love.keyboard.isDown("return") and nodialog then
-					state6load(v.name:sub(1, -8))
-				end
-
-				k2 = k2 + 1
+				lastk = k
 			end
-
-			lastk = k
 		end
 
 		if tabselected == 0 and (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
