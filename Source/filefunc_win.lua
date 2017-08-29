@@ -91,29 +91,37 @@ function listfiles(directory)
 
 	-- First list all the directories, then the files
 	local listingfiles = false
-	-- I admit, this is way more complicated than it can be.
-	local pfile = io.popen('cd "' .. directory .. '" && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath" && echo //FILES// && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath @file @isdir" && forfiles /s /c "cmd /c if @isdir==FALSE echo @relpath @file @isdir"')
+	local pfile = io.popen('cd "' .. directory .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
 	for filename in pfile:lines() do
-		if filename ~= "" then
-			if filename == "//FILES// " then
-				listingfiles = true
+		if filename == "//FILES// " then
+			listingfiles = true
+		else
+			-- Files and directories are listed as `C:\Users\...\Documents\VVVVVV\levels\subfolder\deeper` (or wherever `directory` is)
+			-- so let's get a relative path instead.
+			local relpath = filename:match(escapegsub(directory, true) .. "\\(.*)")
+			if not listingfiles then
+				t[relpath] = {}
 			else
-				if not listingfiles then
-					-- Directories are listed as `".\subfolder\deeper"`
-					t[filename:sub(4, -2)] = {}
-				else
-					-- Files are listed as `".\subfolder\level.vvvvvv" "level.vvvvvv"`
-					local relpath, file, is_dir = filename:match('"(.-)" "(.-)" ([AEFLRSTU]+)')
-					-- What's the directory?
-					local folder = relpath:sub(3, -2-file:len())
-					table.insert(t[folder],
-						{
-							name = cp850toutf8(file),
-							isdir = is_dir == "TRUE",
-							lastmodified = 0,
-						}
-					)
+				local currentdir = ""
+				local file = relpath
+				if string.find(relpath, "\\") ~= nil then
+					local lastindex = string.find(relpath, "\\[^\\]-$")
+					currentdir = (relpath):sub(1, lastindex-1)
+					file = (relpath):sub(lastindex+1, -1)
 				end
+				local prefix
+				if currentdir == "" then
+					prefix = ""
+				else
+					prefix = currentdir .. "\\"
+				end
+				table.insert(t[currentdir],
+					{
+						name = cp850toutf8(file),
+						isdir = t[prefix .. file] ~= nil,
+						lastmodified = 0,
+					}
+				)
 			end
 		end
 	end
