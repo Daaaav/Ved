@@ -1257,7 +1257,7 @@ end
 
 function state6load(levelname)
 	if files[levelname] ~= nil then
-		input = levelname .. "/"
+		input = levelname .. dirsep
 		input_r = ""
 		tabselected = 0
 		return
@@ -1861,7 +1861,7 @@ function handleScrolling(viakeyboard, mkinput)
 end
 
 function savemapimage()
-	saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub("/", "__")
+	saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub(dirsep, "__")
 	local _, v = love.getVersion()
 	if v == 9 then
 		mapscreenshot:getData():encode("maps/" .. saveas)

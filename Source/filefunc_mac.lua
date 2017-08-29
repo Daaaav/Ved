@@ -14,13 +14,12 @@ function listfiles(directory)
 	local namekeys = {}
 	local termoutput = {}
 
-	-- Only do files.
 	local expectingdir = true
 	-- First check what all the different directories and subdirectories are, so we can fill them
 	for filename in io.popen("cd " .. directory:gsub(" ", "\\ ") .. " && ls -R --group-directories-first"):lines() do -- kijk eens bij t voor sorteren
 		table.insert(termoutput, filename)
 		if expectingdir then
-			-- The shown directory will be listed as `./subfolder:`, the root will be listed as `.:`
+			-- The shown directory will be listed as `./subfolder/deeper:`, the root will be listed as `.:`
 			t[filename:sub(3, -2)] = {}
 			expectingdir = false
 		elseif filename == "" then

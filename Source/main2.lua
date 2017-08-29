@@ -1108,7 +1108,7 @@ function love.update(dt)
 							displayroom(mrx*0.5*640, mry*0.5*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], 0.5) --mapscale
 						end
 					end
-					saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"):gsub("/", "__")
+					saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"):gsub(dirsep, "__")
 					local _, v = love.getVersion()
 					if v == 9 then
 						mapcanvas:getImageData():encode("maps/" .. saveas)

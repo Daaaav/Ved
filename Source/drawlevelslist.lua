@@ -20,8 +20,8 @@ function drawlevelslist()
 		end
 		-- Are we in the root, or is there a subfolder we're supposed to look in?
 		local currentdir = ""
-		if string.find(input .. input_r, "/") ~= nil then
-			local lastindex = string.find(input .. input_r, "/[^/]-$")
+		if string.find(input .. input_r, dirsep) ~= nil then
+			local lastindex = string.find(input .. input_r, dirsep .. "[^" .. dirsep .. "]-$")
 			currentdir = (input .. input_r):sub(1, lastindex-1)
 		end
 		local k2 = 1
@@ -31,7 +31,7 @@ function drawlevelslist()
 				if currentdir == "" then
 					prefix = ""
 				else
-					prefix = currentdir .. "/"
+					prefix = currentdir .. dirsep
 				end
 				local barename = v.name:sub(1, -8)
 				if v.isdir then

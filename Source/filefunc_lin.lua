@@ -14,7 +14,6 @@ function listfiles(directory)
 	local namekeys = {}
 	local termoutput = {}
 
-	-- Only do files.
 	--[[ Quick note: If you want to do modification timestamps here, consider -lQR --time-style +%s
 		-Q for quoted filenames so it's a little bit easier to get the name, and --time-style +%s uses unix timestamps for the modification times
 	]]
@@ -23,7 +22,7 @@ function listfiles(directory)
 	for filename in io.popen("cd " .. directory:gsub(" ", "\\ ") .. " && ls -R --group-directories-first"):lines() do -- kijk eens bij t voor sorteren
 		table.insert(termoutput, filename)
 		if expectingdir then
-			-- The shown directory will be listed as `./subfolder:`, the root will be listed as `.:`
+			-- The shown directory will be listed as `./subfolder/deeper:`, the root will be listed as `.:`
 			t[filename:sub(3, -2)] = {}
 			expectingdir = false
 		elseif filename == "" then

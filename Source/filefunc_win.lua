@@ -87,16 +87,34 @@ end
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
 function listfiles(directory)
-	local i, t = 0, {[""] = {}}
+	local t = {[""] = {}}
 
-	-- Only do files.
-	for filename in io.popen('dir "' .. directory .. '" /b /a-d'):lines() do
-		i = i + 1
-		t[""][i] = {
-			name = cp850toutf8(filename),
-			isdir = false,
-			lastmodified = 0,
-		}
+	-- First list all the directories, then the files
+	local listingfiles = false
+	-- I admit, this is way more complicated than it can be.
+	for filename in io.popen('cd "' .. directory .. '" && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath" && echo //FILES// && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath @file @isdir" && forfiles /s /c "cmd /c if @isdir==FALSE echo @relpath @file @isdir"'):lines() do
+		if filename ~= "" then
+			if filename == "//FILES// " then
+				listingfiles = true
+			else
+				if not listingfiles then
+					-- Directories are listed as `".\subfolder\deeper"`
+					t[filename:sub(4, -2)] = {}
+				else
+					-- Files are listed as `".\subfolder\level.vvvvvv" "level.vvvvvv"`
+					local relpath, file, is_dir = filename:match('"(.-)" "(.-)" ([AEFLRSTU]+)')
+					-- What's the directory?
+					local folder = relpath:sub(3, -2-file:len())
+					table.insert(t[folder],
+						{
+							name = cp850toutf8(file),
+							isdir = is_dir == "TRUE",
+							lastmodified = 0,
+						}
+					)
+				end
+			end
+		end
 	end
 	return t
 end
