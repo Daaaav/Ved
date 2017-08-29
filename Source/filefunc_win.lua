@@ -92,7 +92,8 @@ function listfiles(directory)
 	-- First list all the directories, then the files
 	local listingfiles = false
 	-- I admit, this is way more complicated than it can be.
-	for filename in io.popen('cd "' .. directory .. '" && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath" && echo //FILES// && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath @file @isdir" && forfiles /s /c "cmd /c if @isdir==FALSE echo @relpath @file @isdir"'):lines() do
+	local pfile = io.popen('cd "' .. directory .. '" && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath" && echo //FILES// && forfiles /s /c "cmd /c if @isdir==TRUE echo @relpath @file @isdir" && forfiles /s /c "cmd /c if @isdir==FALSE echo @relpath @file @isdir"')
+	for filename in pfile:lines() do
 		if filename ~= "" then
 			if filename == "//FILES// " then
 				listingfiles = true
@@ -116,6 +117,7 @@ function listfiles(directory)
 			end
 		end
 	end
+	pfile:close()
 	return t
 end
 
@@ -145,27 +147,31 @@ function getlevelsfolder(ignorecustom)
 end
 
 function listdirs(directory)
-	local i, t = 0, {}
+	local t = {}
 	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
 
 	-- Only do folders.
-	for filename in io.popen('dir "' .. directory .. '" /b /ad'):lines() do
-		i = i + 1
-		t[i] = filename
-
-		--cons(filename)
+	local pfile = io.popen('dir "' .. directory .. '" /b /ad')
+	for filename in pfile:lines() do
+		table.append(t, filename)
 	end
+	pfile:close()
 	return t
 end
 
 function directory_exists(where, what)
-	local i, t = 0, {}
+	local t = {}
 
-	for filename in io.popen('dir "' .. where .. '" /b /ad'):lines() do
-		if filename == what then return true end
+	local pfile = io.popen('dir "' .. where .. '" /b /ad')
+	for filename in pfile:lines() do
+		if filename == what then
+			pfile:close()
+			return true
+		end
 	end
 
 	-- If we're here, then the dir doesn't exist.
+	pfile:close()
 	return false
 end
 

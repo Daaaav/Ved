@@ -16,7 +16,8 @@ function listfiles(directory)
 
 	local expectingdir = true
 	-- First check what all the different directories and subdirectories are, so we can fill them
-	for filename in io.popen("cd " .. directory:gsub(" ", "\\ ") .. " && ls -R --group-directories-first"):lines() do -- kijk eens bij t voor sorteren
+	local pfile = io.popen("cd " .. directory:gsub(" ", "\\ ") .. " && ls -R --group-directories-first")
+	for filename in pfile:lines() do -- kijk eens bij t voor sorteren
 		table.insert(termoutput, filename)
 		if expectingdir then
 			-- The shown directory will be listed as `./subfolder/deeper:`, the root will be listed as `.:`
@@ -51,6 +52,7 @@ function listfiles(directory)
 			)
 		end
 	end
+	pfile:close()
 	return t
 end
 
@@ -78,25 +80,29 @@ function getlevelsfolder(ignorecustom)
 end
 
 function listdirs(directory)
-	local i, t = 0, {}
+	local t = {}
 	-- Only do folders.
-	for filename in io.popen("ls " .. directory:gsub(" ", "\\ ")):lines() do
-		i = i + 1
+	local pfile = io.popen("ls " .. directory:gsub(" ", "\\ "))
+	for filename in pfile:lines() do
 		t[i] = filename
-
-		--cons(filename)
 	end
+	pfile:close()
 	return t
 end
 
 function directory_exists(where, what)
-	local i, t = 0, {}
+	local t = {}
 
-	for filename in io.popen("ls " .. where:gsub(" ", "\\ ")):lines() do
-		if filename == what then return true end
+	local pfile = io.popen("ls " .. where:gsub(" ", "\\ "))
+	for filename in pfile:lines() do
+		if filename == what then
+			pfile:close()
+			return true
+		end
 	end
 
 	-- If we're here, then the dir doesn't exist.
+	pfile:close()
 	return false
 end
 
