@@ -1265,6 +1265,10 @@ function state6load(levelname)
 
 	stopinput()
 
+	if dirsep == "\\" then
+		levelname = levelname:gsub("/", "\\")
+	end
+
 	if not secondlevel then
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
