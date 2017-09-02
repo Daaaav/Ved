@@ -344,6 +344,14 @@ SELECTINGA = "Selecteren - klik op linkerbovenhoek",
 SELECTINGB = "Selecteren: $1x$2",
 TILESETSRELOADED = "Tilesets en sprites opnieuw geladen",
 
+-- 1.2.0
+BACKUPS = "Reservekopieën",
+LASTMODIFIEDTIME = "Oorspronkelĳk laatst gewĳzigd", -- List header
+OVERWRITTENTIME = "Overschreven", -- List header
+SAVEBACKUP = "Opslaan in VVVVVV-map",
+DATEFORMAT = "Datumformaat",
+CUSTOMDATEFORMAT = "Aangepast datumformaat",
+
 }
 
 toolnames = {

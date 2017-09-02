@@ -171,6 +171,12 @@ function dialog.textboxes()
 	elseif DIAquestionid == 24 then
 		-- Language
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 188, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
+		love.graphics.setColor(0,0,0)
+		love.graphics.print(L.DATEFORMAT, DIAx+10, DIAy+DIAwindowani+10+(7*8))
+		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(9*8), 188, 8, multiinput[2], 2, currentmultiinput == 2, 1, standarddateformat_labels, standarddateformat_labels, "dateformat")
+		if multiinput[2] == 4 then
+			hoverdiatext(DIAx+10+196, DIAy+DIAwindowani+10+(9*8), 188, 8, multiinput[3], 3, currentmultiinput == 3)
+		end
 
 		-- Unique, not an input field, but specific to this text box
 		setColorDIA(0,0,0,255)
@@ -568,6 +574,7 @@ function dialog.update()
 			if DIAreturn == 2 then
 				-- Set the language
 				s.lang = multiinput[1]
+				s.dateformat = multiinput[3]
 				saveconfig()
 			end
 		elseif DIAquestionid == 25 then
@@ -736,14 +743,17 @@ function rightclickmenu.draw()
 				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 188, 16, true)
 				love.graphics.print(v, RCMx+1, (k-1)*16+RCMy+6)
 
-				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 150, 16) then
+				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 188, 16) then
+					RCMactive = false
 					RCMreturn = v
+					mousepressed = true
 				end
 			end
 		end
 
 		if not mousepressed and love.mouse.isDown("l") then
 			RCMactive = false
+			mousepressed = true
 		end
 	end
 end

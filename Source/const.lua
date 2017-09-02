@@ -80,6 +80,22 @@ end
 --entityidtotool = {9, }
 entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
 
+do
+	local year = os.date("%Y")
+	standarddateformat_labels = {
+		year .. "-12-31 23:59:59",
+		"31-12-" .. year .. " 23:59:59",
+		"12/31/" .. year .. " 11:59:59 PM",
+		L.CUSTOMDATEFORMAT
+	}
+end
+
+standarddateformat_formats = {
+	"%Y-%m-%d %H:%M:%S",
+	"%d-%m-%Y %H:%M:%S",
+	"%m/%d/%Y %I:%M:%S %p"
+}
+
 
 knowncommands =
 	{

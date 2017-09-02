@@ -794,7 +794,7 @@ function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menui
 		setColorDIA(255,255,255,255)
 		love.graphics.rectangle("fill", x, y-3, w, h)
 
-		if (active and love.keyboard.isDown("tab")) or (mouseon(x, y-3, w, h) and love.mouse.isDown("l")) then
+		if (active and love.keyboard.isDown("tab")) or (mouseon(x, y-3, w, h) and love.mouse.isDown("l") and not mousepressed) then
 			currentmultiinput = minumber
 
 			if mode == 1 and (not RCMactive) then
@@ -2265,6 +2265,26 @@ end
 
 function windowfits(w, h, monitorres)
 	return w <= monitorres[1] and h <= monitorres[2]
+end
+
+function languagedialog()
+	languageslist = getalllanguages()
+	local standarddateformat_key, customdateformat = nil, s.dateformat
+	for k,v in pairs(standarddateformat_formats) do
+		if s.dateformat == v then
+			standarddateformat_key = k
+			break
+		end
+	end
+	if standarddateformat_key == nil then
+		standarddateformat_key = 4
+	end
+	startmultiinput({s.lang, standarddateformat_key, customdateformat})
+	dialog.new(L.RESTARTVEDLANG, L.LANGUAGE, 1, 4, 24)
+end
+
+function format_date(timestamp)
+	return os.date(s.dateformat, timestamp)
 end
 
 hook("func")

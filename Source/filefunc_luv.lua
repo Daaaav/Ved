@@ -4,12 +4,14 @@ function listfiles(directory)
 	-- Preferably, only do files.
 	files = {}
 	for f in love.filesystem.getDirectoryItems(directory) do
-		table.insert(files, {
-				name = f,
-				isdir = false,
-				lastmodified = 0,
-			}
-		)
+		if not love.filesystem.isDirectory(f) then
+			table.insert(files, {
+					name = f,
+					isdir = false,
+					lastmodified = 0,
+				}
+			)
+		end
 	end
 	return files
 end

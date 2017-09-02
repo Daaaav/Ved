@@ -344,6 +344,14 @@ SELECTINGA = "Выбор - кликните на верхний левый уг�
 SELECTINGB = "Выбор: $1x$2",
 TILESETSRELOADED = "Спрайты перезагружены",
 
+-- 1.2.0
+BACKUPS = "Backups",
+LASTMODIFIEDTIME = "Originally last modified", -- List header
+OVERWRITTENTIME = "Overwritten", -- List header
+SAVEBACKUP = "Save to VVVVVV folder",
+DATEFORMAT = "Date format",
+CUSTOMDATEFORMAT = "Custom date format",
+
 }
 
 toolnames = {

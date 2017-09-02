@@ -13,6 +13,11 @@ configs =
 		default = "English",
 		["type"] = "string",
 		},
+	dateformat =
+		{
+		default = "%Y-%m-%d %H:%M:%S",
+		["type"] = "string",
+		},
 	dialoganimations =
 		{
 		default = true,

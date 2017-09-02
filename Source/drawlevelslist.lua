@@ -86,7 +86,9 @@ function drawlevelslist()
 	love.graphics.setColor(255,255,255)
 
 	love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
-	startinputonce()
+	if nodialog then
+		startinputonce()
+	end
 
 	if not secondlevel then
 		hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
@@ -162,9 +164,7 @@ function drawlevelslist()
 				tostate(15, nil, "plugins")
 			elseif onrbutton(2, 40) then
 				-- Language
-				languageslist = getalllanguages()
-				startmultiinput({s.lang})
-				dialog.new(L.RESTARTVEDLANG, L.LANGUAGE, 1, 4, 24)
+				languagedialog()
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
 				--dialog.new("Auto-creation of a save file for VVVVVV coming soon!", "", 1, 1, 0)

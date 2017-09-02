@@ -344,6 +344,14 @@ SELECTINGA = "Selecting - click top left",
 SELECTINGB = "Selecting: $1x$2",
 TILESETSRELOADED = "Tilesets and sprites reloaded",
 
+-- 1.2.0
+BACKUPS = "Backups",
+LASTMODIFIEDTIME = "Originally last modified", -- List header
+OVERWRITTENTIME = "Overwritten", -- List header
+SAVEBACKUP = "Save to VVVVVV folder",
+DATEFORMAT = "Date format",
+CUSTOMDATEFORMAT = "Custom date format",
+
 }
 
 toolnames = {

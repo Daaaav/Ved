@@ -596,9 +596,7 @@ function love.draw()
 				dialog.new(langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {shouldbefolder}), "", 1, 4, 23)
 			elseif onrbutton(3) then
 				-- Language
-				languageslist = getalllanguages()
-				startmultiinput({s.lang})
-				dialog.new(L.RESTARTVEDLANG, L.LANGUAGE, 1, 4, 24)
+				languagedialog()
 			elseif onrbutton(4) then
 				-- Syntax colors
 				olderstate = oldstate
@@ -1210,6 +1208,16 @@ function love.update(dt)
 			end
 		elseif RCMid == "language" then
 			multiinput[1] = RCMreturn
+		elseif RCMid == "dateformat" then
+			for k,v in pairs(standarddateformat_labels) do
+				if RCMreturn == v then
+					multiinput[2] = k
+					if v ~= L.CUSTOMDATEFORMAT then
+						multiinput[3] = standarddateformat_formats[k]
+					end
+					break
+				end
+			end
 		else
 			dialog.new("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)
 		end
