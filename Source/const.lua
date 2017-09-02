@@ -94,6 +94,7 @@ knowncommands =
 	--iftrinketsless = true,
 	destroy = true,
 	music = true,
+	flash = true,
 
 	map = true,
 	squeak = true,
