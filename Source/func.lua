@@ -2259,4 +2259,8 @@ function write_overwrite_backup_file(levelname, savename, contents)
 	return love.filesystem.write("overwrite_backups/" .. levelname .. "/" .. savename, contents)
 end
 
+function windowfits(w, h, monitorres)
+	return w <= monitorres[1] and h <= monitorres[2]
+end
+
 hook("func")

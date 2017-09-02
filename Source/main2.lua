@@ -466,8 +466,28 @@ function love.draw()
 		--love.graphics.draw(checkoff, love.graphics.getWidth()-98, 70, 0, 2)
 		love.graphics.print(L.VEDOPTIONS, 8, 8+4+2)
 
-		hoverdraw((s.scale == 2 and checkon or checkoff), 8, 8+(24*1), 16, 16, 2)
-		love.graphics.print(L.IIXSCALE, 8+16+8, 8+(24*1)+4+2)
+		--hoverdraw((s.scale == 2 and checkon or checkoff), 8, 8+(24*1), 16, 16, 2)
+		--love.graphics.print(L.IIXSCALE, 8+16+8, 8+(24*1)+4+2)
+
+		love.graphics.print(L.SCALE, 8, 8+(24*1)+4+2)
+		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
+			function(value)
+				local swidth = 896
+				if s.smallerscreen then
+					swidth = 800
+				end
+				local fits = false
+
+				for mon = 1, love.window.getDisplayCount() do
+					local monw, monh = love.window.getDesktopDimensions(mon)
+
+					if windowfits(swidth*value, 480*value, {monw, monh}) then
+						fits = true
+					end
+				end
+				return not fits
+			end
+		)
 
 		hoverdraw((s.dialoganimations and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
 		love.graphics.print(L.DIALOGANIMATIONS, 8+16+8, 8+(24*2)+4+2)
@@ -496,6 +516,15 @@ function love.draw()
 		hoverdraw((s.enableoverwritebackups and checkon or checkoff), 8, 8+(24*10), 16, 16, 2)
 		love.graphics.print(L.ENABLEOVERWRITEBACKUPS, 8+16+8, 8+(24*10)+4+2)
 
+		love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
+		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
+
+		if s.pscale ~= s.scale then
+			love.graphics.setColor(255,128,0)
+			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
+			love.graphics.setColor(255,255,255)
+		end
+
 
 		rbutton(L.BTN_OK, 0)
 
@@ -510,6 +539,7 @@ function love.draw()
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
+			--[[
 			if mouseon(8, 8+(24*1), 16, 16) then
 				-- 2x scale
 				if s.scale == 2 then
@@ -518,7 +548,8 @@ function love.draw()
 					s.scale = 2
 				end
 				dialog.new(L.SCALEREBOOT, "", 1, 1, 0)
-			elseif mouseon(8, 8+(24*2), 16, 16) then
+			]]
+			if mouseon(8, 8+(24*2), 16, 16) then
 				-- Dialog animations
 				s.dialoganimations = not s.dialoganimations
 			elseif mouseon(8, 8+(24*3), 16, 16) then
