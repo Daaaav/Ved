@@ -988,6 +988,14 @@ music¤(number)\h#w
 Change the song to a certain song number.
 For the list of song numbers, refer to the "Lists reference" article.
 
+playremix\h#w
+
+Plays the remix of Predestined Fate as music.
+
+flash\h#w
+
+Flashes the screen white, makes a bang sound and shakes the screen for a bit.
+
 map¤(on/off)\h#w
 
 Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
@@ -998,6 +1006,11 @@ squeak¤(crewmate/on/off)\h#w
 
 Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
 or off.
+
+speaker¤(color)\h#w
+
+Changes the color and position of the next text boxes created with the "say"
+command. This can be used instead of giving a second argument to "say".
 ]]
 },
 

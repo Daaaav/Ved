@@ -97,6 +97,8 @@ knowncommands =
 
 	map = true,
 	squeak = true,
+	speaker = true,
+	playremix = true,
 	}
 
 knowninternalcommands =
@@ -157,6 +159,7 @@ knowninternalcommands =
 	ifcrewlost = true,
 	iftrinkets = true,
 	--iftrinketsless = true,
+	ifwarp = true,
 	hidecoordinates = true,
 	showcoordinates = true,
 	hideship = true,
@@ -211,6 +214,7 @@ knowninternalcommands =
 	bluecontrol = true,
 	yellowcontrol = true,
 	purplecontrol = true,
+	trinketscriptmusic = true,
 
 	customifflag = true,
 	customiftrinkets = true,

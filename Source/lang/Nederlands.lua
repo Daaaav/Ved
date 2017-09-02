@@ -995,6 +995,14 @@ music¤(nummer)\h#w
 Verander de muziek naar een bepaald nummer.
 Kĳk voor de lĳst van muzieknummers naar het artikel "Lĳsten".
 
+playremix\h#w
+
+Speelt de remix van Predestined Fate als muziek.
+
+flash\h#w
+
+Laat het scherm flitsen, maakt een geluid van een knal en schudt het scherm even.
+
 map¤(on/off)\h#w
 
 Zet de kaart aan of uit. Als je de kaart uitzet wordt er "NO SIGNAL" getoond tot
@@ -1005,6 +1013,11 @@ squeak¤(bemanningslid/on/off)\h#w
 
 Zorgt dat een bemanningslid een geluid maakt, of zet het tekstvak-geluid aan of
 uit.
+
+speaker¤(color)\h#w
+
+Verandert de kleur en positie van de volgende tekstvakken gemaakt met het "say"-
+commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 ]]
 },
 
