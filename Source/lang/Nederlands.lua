@@ -259,6 +259,8 @@ SHOWFPS = "Toon FPS-teller",
 IIXSCALE = "2x schaal",
 CHECKFORUPDATES = "Controleer op updates",
 PAUSEDRAWUNFOCUSED = "Niet tekenen als het venster inactief is",
+ENABLEOVERWRITEBACKUPS = "Reservekopie maken van levelbestanden die worden overschreven (5 backups worden bewaard per level)",
+AMOUNTOVERWRITEBACKUPS = "Aantal reservekopieën om te bewaren per level",
 
 SCRIPTUSAGESROOMS = "$1 keer gebruikt in kamers: $2",
 SCRIPTUSAGESSCRIPTS = "$1 keer gebruikt in scripts: $2",

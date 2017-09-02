@@ -260,6 +260,8 @@ SHOWFPS = "Montri kadrojn sekunde",
 IIXSCALE = "Duobla skalo",
 CHECKFORUPDATES = "Kontroli ĝisdatigojn",
 PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
+ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten (5 backups are kept per level)",
+AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
 
 SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
 SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",

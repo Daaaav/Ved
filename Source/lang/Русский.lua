@@ -259,6 +259,8 @@ SHOWFPS = "Показывать счётчик FPS",
 IIXSCALE = "2x размер",
 CHECKFORUPDATES = "Проверять обновления",
 PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
+ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten (5 backups are kept per level)",
+AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
 
 SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
 SCRIPTUSAGESSCRIPTS = "$1 использований в скриптах: $2",

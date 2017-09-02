@@ -2198,4 +2198,65 @@ function getlockablemouseY()
 	return mouselocky
 end
 
+function backup_level(levelsfolder, levelname)
+	-- levelname is `editingmap` - without ".vvvvvv"
+	-- What's the full path?
+	local fullpath = levelsfolder .. dirsep .. levelname .. ".vvvvvv"
+
+	-- Get the current contents of the level file, so we can save it somewhere else
+	local success, contents = readlevelfile(fullpath)
+	if not success then
+		-- Oh, it doesn't exist or something.
+		return false
+	end
+
+	-- If we're on Windows, we're dealing with backslashes at the moment. But we don't need that in love.filesystem.
+	if dirsep == "\\" then
+		levelname = levelname:gsub("\\", "/")
+	end
+
+	-- What to save it as?
+	local nowtime = os.time()
+	local modtime = anythingbutnil0(tonumber(getmodtime(fullpath)))
+	local savename = nowtime .. "_" .. modtime .. "_" .. levelname:gsub("/", "__") .. ".vvvvvv"
+
+	-- Actually save
+	if not write_overwrite_backup_file(levelname, savename, contents) then
+		return false
+	end
+
+	-- Level files can be several megabytes big, and you may save often.
+	prune_old_overwrite_backups(levelname)
+
+	return true
+end
+
+function prune_old_overwrite_backups(levelname)
+	-- What are all the backups we already got?
+	local oldest = {os.time()+3600, nil} -- time and key to full filename
+
+	local files = love.filesystem.getDirectoryItems("overwrite_backups/" .. levelname .. "/")
+	while #files > s.amountoverwritebackups and #files > 0 do
+		for k,v in pairs(files) do
+			local parts = explode("_", v)
+
+			if tonumber(parts[1]) < oldest[1] then
+				oldest[1] = tonumber(parts[1])
+				oldest[2] = k
+			end
+		end
+		cons("Pruning away backup " .. files[oldest[2]] .. " because it's the oldest")
+		love.filesystem.remove("overwrite_backups/" .. levelname .. "/" .. files[oldest[2]])
+		table.remove(files, oldest[2])
+	end
+end
+
+function write_overwrite_backup_file(levelname, savename, contents)
+	if not love.filesystem.exists("overwrite_backups/" .. levelname) then
+		love.filesystem.createDirectory("overwrite_backups/" .. levelname)
+	end
+
+	return love.filesystem.write("overwrite_backups/" .. levelname .. "/" .. savename, contents)
+end
+
 hook("func")

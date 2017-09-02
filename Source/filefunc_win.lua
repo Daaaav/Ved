@@ -156,8 +156,6 @@ end
 
 function listdirs(directory)
 	local t = {}
-	--for filename in io.popen('ls -a "'..directory..'"'):lines() do
-
 	-- Only do folders.
 	local pfile = io.popen('dir "' .. directory .. '" /b /ad')
 	for filename in pfile:lines() do
@@ -186,7 +184,7 @@ end
 function readlevelfile(path)
 	-- returns success, contents
 
-	fh, everr = io.open(path, "r")
+	local fh, everr = io.open(path, "r")
 
 	if fh == nil then
 		return false, everr
@@ -202,7 +200,7 @@ end
 function writelevelfile(path, contents)
 	-- returns success, (if not) error message
 
-	fh, everr = io.open(path, "w")
+	local fh, everr = io.open(path, "w")
 
 	if fh == nil then
 		return false, everr
@@ -215,10 +213,17 @@ function writelevelfile(path, contents)
 	return true, nil
 end
 
+function getmodtime(fullpath)
+	local pfile = io.popen(love.filesystem.getSaveDirectory():gsub("/", "\\") .. '\\available_utils\\fileunix.exe "' .. fullpath .. '"')
+	local modtime = pfile:read("*a")
+	pfile:close()
+	return modtime
+end
+
 function readimage(levelsfolder, filename)
 	-- returns success, contents
 
-	fh, everr = io.open(levelsfolder:sub(1, -8) .. "\\graphics\\" .. filename, "rb")
+	local fh, everr = io.open(levelsfolder:sub(1, -8) .. "\\graphics\\" .. filename, "rb")
 
 	if fh == nil then
 		return false, everr

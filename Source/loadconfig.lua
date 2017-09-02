@@ -92,6 +92,16 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
+	enableoverwritebackups =
+		{
+		default = true,
+		["type"] = "bool",
+		},
+	amountoverwritebackups =
+		{
+		default = 5,
+		["type"] = "number",
+		},
 	recentfiles =
 		{
 		default = {},

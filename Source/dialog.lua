@@ -417,7 +417,7 @@ function dialog.update()
 				-- Save the level with this name. But first apply the title!
 				metadata.Title = multiinput[2]
 
-				savedsuccess, savederror = savelevel(multiinput[1] .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
+				savedsuccess, savederror = savelevel(multiinput[1] .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 				editingmap = multiinput[1]
 
 				if not savedsuccess then

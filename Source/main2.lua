@@ -259,6 +259,12 @@ function love.load()
 		macscrolling = false
 		hook("love_load_win")
 		ved_require("filefunc_win")
+		-- Make sure our util works
+		if not love.filesystem.exists("available_utils") then
+			love.filesystem.createDirectory("available_utils")
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
+		end
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -293,6 +299,9 @@ function love.load()
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
+	end
+	if not love.filesystem.exists("overwrite_backups") then
+		love.filesystem.createDirectory("overwrite_backups")
 	end
 
 	if s.pcheckforupdates and not opt_disableversioncheck then
@@ -484,6 +493,9 @@ function love.draw()
 		hoverdraw((s.pausedrawunfocused and checkon or checkoff), 8, 8+(24*9), 16, 16, 2)
 		love.graphics.print(L.PAUSEDRAWUNFOCUSED, 8+16+8, 8+(24*9)+4+2)
 
+		hoverdraw((s.enableoverwritebackups and checkon or checkoff), 8, 8+(24*10), 16, 16, 2)
+		love.graphics.print(L.ENABLEOVERWRITEBACKUPS, 8+16+8, 8+(24*10)+4+2)
+
 
 		rbutton(L.BTN_OK, 0)
 
@@ -531,6 +543,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*9), 16, 16) then
 				-- Pause drawing when window is unfocused
 				s.pausedrawunfocused = not s.pausedrawunfocused
+			elseif mouseon(8, 8+(24*10), 16, 16) then
+				-- Make backups of level files that are overwritten
+				s.enableoverwritebackups = not s.enableoverwritebackups
 
 			elseif onrbutton(0) then
 				-- Save
@@ -1651,7 +1666,7 @@ function love.keypressed(key)
 			love.graphics.clear(); love.draw(); love.graphics.present()
 
 			-- Save now
-			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
+			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 
 			if not savedsuccess then
 				-- Why not :c
@@ -1666,7 +1681,6 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "l") then
 		-- Load
-		--dialog.new(L.SURELOADLEVEL .. "\n\n(dialog will be save/don't save/cancel later)", "", 1, 3, 3)
 		tostate(6)
 	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
@@ -1829,7 +1843,7 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif (state == 8) and (key == "return") then
 		stopinput()
-		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata)
+		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 		editingmap = input
 	elseif state == 10 and (key == "up" or key == "down") then
 		handleScrolling(false, key == "up" and "wu" or "wd") -- 16px
