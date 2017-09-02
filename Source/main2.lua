@@ -516,8 +516,10 @@ function love.draw()
 		hoverdraw((s.enableoverwritebackups and checkon or checkoff), 8, 8+(24*10), 16, 16, 2)
 		love.graphics.print(L.ENABLEOVERWRITEBACKUPS, 8+16+8, 8+(24*10)+4+2)
 
-		love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
-		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
+		if s.enableoverwritebackups then
+			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
+			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
+		end
 
 		if s.pscale ~= s.scale then
 			love.graphics.setColor(255,128,0)
