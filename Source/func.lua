@@ -438,6 +438,8 @@ function loadstate(new, extradata)
 		--loadlevelsfolder()
 
 		tabselected = 0
+		backupscreen = false
+		currentbackupdir = ""
 	elseif new == 9 then
 		youdidanswer = ""
 		dialog.new("Not much to see here. Other than that I got this working.\n\nAhem.\n\n\"Are you absolutely sure you want to delete everything?\"", "", 1, 3, 1)
@@ -608,6 +610,42 @@ function loadlevelsfolder()
 		files = listfiles(levelsfolder)
 	end
 	cons("Loaded.")
+	-- Now get all the backups
+	files[".ved-sys" .. dirsep .. "backups"] = {}
+	local rootbackupfolders = love.filesystem.getDirectoryItems("overwrite_backups")
+	for k1, f1 in pairs(rootbackupfolders) do
+		table.insert(files[".ved-sys" .. dirsep .. "backups"],
+			{
+				name = f1,
+				isdir = love.filesystem.isDirectory("overwrite_backups/" .. f1),
+				lastmodified = 0,
+				overwritten = 0,
+			}
+		)
+		if love.filesystem.isDirectory("overwrite_backups/" .. f1) then
+			-- Go down ONE more level, we don't expect subdirectories in this.
+			files[".ved-sys" .. dirsep .. "backups" .. dirsep .. f1] = {}
+			local backupfiles = love.filesystem.getDirectoryItems("overwrite_backups/" .. f1)
+			for k2, f2 in pairs(backupfiles) do
+				if not love.filesystem.isDirectory("overwrite_backups/" .. f1 .. "/" .. f2) then
+					-- What are the dates for this?
+					local ov, lm = 0, 0
+					local parts = explode("_", f2)
+					if #parts >= 2 then
+						ov, lm = anythingbutnil0(tonumber(parts[1])), anythingbutnil0(tonumber(parts[2]))
+					end
+					table.insert(files[".ved-sys" .. dirsep .. "backups" .. dirsep .. f1],
+						{
+							name = f2,
+							isdir = false,
+							lastmodified = lm,
+							overwritten = ov,
+						}
+					)
+				end
+			end
+		end
+	end
 end
 
 function loadtilesets()
@@ -1256,6 +1294,14 @@ function createmde()
 end
 
 function state6load(levelname)
+	if backupscreen then
+		if files[levelname] ~= nil then
+			currentbackupdir = levelname
+			tabselected = 0
+		end
+		return
+	end
+
 	if files[levelname] ~= nil then
 		input = levelname .. dirsep
 		input_r = ""

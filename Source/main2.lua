@@ -1882,6 +1882,8 @@ function love.keypressed(key)
 		end
 	elseif state == 6 and key == "f5" then
 		loadlevelsfolder()
+	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" then
+		currentbackupdir = ""
 	elseif (state == 8) and (key == "return") then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)

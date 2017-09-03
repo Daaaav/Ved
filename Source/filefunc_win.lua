@@ -120,6 +120,7 @@ function listfiles(directory)
 						name = cp850toutf8(file),
 						isdir = t[prefix .. file] ~= nil,
 						lastmodified = 0,
+						overwritten = 0,
 					}
 				)
 			end

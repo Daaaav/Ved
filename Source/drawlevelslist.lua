@@ -6,7 +6,9 @@ function drawlevelslist()
 		love.graphics.setColor(255,255,255,255)
 	end
 
-	love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
+	if not backupscreen then
+		love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
+	end
 
 	if not lsuccess then
 		love.graphics.setColor(255,128,0)
@@ -20,9 +22,22 @@ function drawlevelslist()
 		end
 		-- Are we in the root, or is there a subfolder we're supposed to look in?
 		local currentdir = ""
-		if string.find(input .. input_r, dirsep) ~= nil then
-			local lastindex = string.find(input .. input_r, dirsep .. "[^" .. dirsep .. "]-$")
-			currentdir = (input .. input_r):sub(1, lastindex-1)
+
+		if backupscreen then
+			if currentbackupdir == "" then
+				love.graphics.print(L.BACKUPS, 8, 8)
+				currentdir = ".ved-sys" .. dirsep .. "backups"
+			else
+				love.graphics.print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 8)
+				love.graphics.print(L.LASTMODIFIEDTIME, 18, 16)
+				love.graphics.print(L.OVERWRITTENTIME, 388, 16)
+				currentdir = currentbackupdir
+			end
+		else
+			if string.find(input .. input_r, dirsep) ~= nil then
+				local lastindex = string.find(input .. input_r, dirsep .. "[^" .. dirsep .. "]-$")
+				currentdir = (input .. input_r):sub(1, lastindex-1)
+			end
 		end
 		local k2 = 1
 		if files[currentdir] ~= nil then
@@ -52,7 +67,13 @@ function drawlevelslist()
 					if v.isdir then
 						love.graphics.draw(smallfolder, 8, 14+8*k2)
 					end
-					love.graphics.print(v.name, 18, 16+8*k2) -- y = 16+8*k
+					if backupscreen and not v.isdir then
+						-- Display the dates, we already know what the level is we're looking at.
+						love.graphics.print(format_date(v.lastmodified), 18, 16+8*k2)
+						love.graphics.print(format_date(v.overwritten), 388, 16+8*k2)
+					else
+						love.graphics.print(v.name, 18, 16+8*k2) -- y = 16+8*k
+					end
 
 
 					love.graphics.setColor(255,255,255)
@@ -85,9 +106,11 @@ function drawlevelslist()
 	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-26, love.graphics.getWidth(), 26)
 	love.graphics.setColor(255,255,255)
 
-	love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
-	if nodialog then
-		startinputonce()
+	if not backupscreen then
+		love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
+		if nodialog then
+			startinputonce()
+		end
 	end
 
 	if not secondlevel then
@@ -127,6 +150,11 @@ function drawlevelslist()
 		rbutton(L.PLUGINS, 1, 40)
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
+		if backupscreen then
+			rbutton(L.RETURN, 0, nil, true)
+		else
+			rbutton(L.BACKUPS, 0, nil, true)
+		end
 
 		if s.pcheckforupdates and not opt_disableversioncheck then
 			versionchecked = verchannel:peek()
@@ -170,6 +198,19 @@ function drawlevelslist()
 				--dialog.new("Auto-creation of a save file for VVVVVV coming soon!", "", 1, 1, 0)
 				openurl("http://ved.idea.informer.com/")
 
+				mousepressed = true
+			elseif not mousepressed and onrbutton(0, nil, true) then
+				-- Backups/return
+				if backupscreen and currentbackupdir ~= "" then
+					currentbackupdir = ""
+				else
+					backupscreen = not backupscreen
+					if backupscreen then
+						input, input_r = "", ""
+						currentbackupdir = ""
+						stopinput()
+					end
+				end
 				mousepressed = true
 			end
 		elseif oldstate == 13 and mousepressed and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), 40+120, 128-16, 16) then

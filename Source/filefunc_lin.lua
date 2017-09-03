@@ -51,6 +51,7 @@ function listfiles(directory)
 					name = filename,
 					isdir = t[prefix .. filename] ~= nil,
 					lastmodified = 0,
+					overwritten = 0,
 				}
 			)
 		end

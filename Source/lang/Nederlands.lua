@@ -346,6 +346,7 @@ TILESETSRELOADED = "Tilesets en sprites opnieuw geladen",
 
 -- 1.2.0
 BACKUPS = "Reservekopieën",
+BACKUPSOFLEVEL = "Reservekopieën van level $1",
 LASTMODIFIEDTIME = "Oorspronkelĳk laatst gewĳzigd", -- List header
 OVERWRITTENTIME = "Overschreven", -- List header
 SAVEBACKUP = "Opslaan in VVVVVV-map",

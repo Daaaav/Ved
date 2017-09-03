@@ -9,6 +9,7 @@ function listfiles(directory)
 					name = f,
 					isdir = false,
 					lastmodified = 0,
+					overwritten = 0,
 				}
 			)
 		end

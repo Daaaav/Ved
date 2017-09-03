@@ -346,6 +346,7 @@ TILESETSRELOADED = "Tilesets and sprites reloaded",
 
 -- 1.2.0
 BACKUPS = "Backups",
+BACKUPSOFLEVEL = "Backups of level $1",
 LASTMODIFIEDTIME = "Originally last modified", -- List header
 OVERWRITTENTIME = "Overwritten", -- List header
 SAVEBACKUP = "Save to VVVVVV folder",
