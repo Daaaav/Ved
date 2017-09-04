@@ -16,6 +16,7 @@ function drawlevelslist()
 		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil
+		hoveringlevel_k = nil
 		local hoverarea = 758
 		if s.smallerscreen then
 			hoverarea = hoverarea - 96
@@ -25,12 +26,12 @@ function drawlevelslist()
 
 		if backupscreen then
 			if currentbackupdir == "" then
-				love.graphics.print(L.BACKUPS, 8, 8)
+				love.graphics.print(L.BACKUPS, 8, 4)
 				currentdir = ".ved-sys" .. dirsep .. "backups"
 			else
-				love.graphics.print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 8)
-				love.graphics.print(L.LASTMODIFIEDTIME, 18, 16)
-				love.graphics.print(L.OVERWRITTENTIME, 388, 16)
+				love.graphics.print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 4)
+				love.graphics.print(L.LASTMODIFIEDTIME, 66, 15)
+				love.graphics.print(L.OVERWRITTENTIME, 408, 15)
 				currentdir = currentbackupdir
 			end
 		else
@@ -52,11 +53,14 @@ function drawlevelslist()
 				if v.isdir then
 					barename = v.name
 				end
-				if input .. input_r == "" or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
+				if backupscreen or input .. input_r == "" or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
 					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
 
 					if mouseishovering then
 						hoveringlevel = prefix .. barename
+						if backupscreen and not v.isdir then
+							hoveringlevel_k = k
+						end
 					end
 					if mouseishovering or tabselected == k2 then
 						love.graphics.setColor(255,255,255,64)
@@ -69,8 +73,9 @@ function drawlevelslist()
 					end
 					if backupscreen and not v.isdir then
 						-- Display the dates, we already know what the level is we're looking at.
-						love.graphics.print(format_date(v.lastmodified), 18, 16+8*k2)
-						love.graphics.print(format_date(v.overwritten), 388, 16+8*k2)
+						love.graphics.print("[" .. k .. "]", 18, 16+8*k2)
+						love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2)
+						love.graphics.print(format_date(v.overwritten), 408, 16+8*k2)
 					else
 						love.graphics.print(v.name, 18, 16+8*k2) -- y = 16+8*k
 					end

@@ -1218,6 +1218,14 @@ function love.update(dt)
 					break
 				end
 			end
+		elseif RCMid:sub(1, 4) == "bul_" then
+			if RCMreturn == L.SAVEBACKUP then
+				startmultiinput({""})
+				dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, L.SAVEBACKUP, 1, 4, 26)
+				input = RCMid:sub(5, -1)
+			else
+				dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+			end
 		else
 			dialog.new("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)
 		end
@@ -1882,7 +1890,7 @@ function love.keypressed(key)
 		end
 	elseif state == 6 and key == "f5" then
 		loadlevelsfolder()
-	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" then
+	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
 	elseif (state == 8) and (key == "return") then
 		stopinput()
@@ -2143,6 +2151,10 @@ function love.mousepressed(x, y, button)
 		nodialog = false
 
 		state6load(hoveringlevel)
+	elseif state == 6 and hoveringlevel ~= nil and button == "r" then
+		if backupscreen and currentbackupdir ~= "" then
+			rightclickmenu.create({"#[" .. hoveringlevel_k .. "]", L.SAVEBACKUP}, "bul_" .. hoveringlevel:sub((".ved-sys/backups"):len()+2, -1))
+		end
 	elseif state == 9 and button == "r" then -- TEST STATE
 		rightclickmenu.create({"Delete", "Edit script", "Rename"}, "1")
 	elseif state == 9 and button == "l" and nodialog then

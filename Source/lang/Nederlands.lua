@@ -352,6 +352,7 @@ OVERWRITTENTIME = "Overschreven", -- List header
 SAVEBACKUP = "Opslaan in VVVVVV-map",
 DATEFORMAT = "Datumformaat",
 CUSTOMDATEFORMAT = "Aangepast datumformaat",
+SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳven, hiervoor wordt namelĳk GEEN backup gemaakt!",
 
 }
 

@@ -152,7 +152,7 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 188, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 or DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
@@ -574,7 +574,8 @@ function dialog.update()
 			if DIAreturn == 2 then
 				-- Set the language
 				s.lang = multiinput[1]
-				s.dateformat = multiinput[3]
+				-- The date format has to be valid. This is almost leaning toothpick syndrome, except Lua uses the very standard percent sign escape character.
+				s.dateformat = ("^" .. multiinput[3]):gsub("([^%%])%%([^aAbBcdHIMmpSwxXYy%%])", "%1%%%%%2"):sub(2,-1)
 				saveconfig()
 			end
 		elseif DIAquestionid == 25 then
@@ -584,6 +585,23 @@ function dialog.update()
 				inhelpsearch(multiinput[1])
 			end
 			takinginput = true
+		elseif DIAquestionid == 26 then
+			-- Save copy of backup in levels folder
+			if DIAreturn == 2 then
+				if dirsep ~= "/" then
+					input = input:gsub(dirsep, "/")
+				end
+				local ficontents = love.filesystem.read("overwrite_backups/" .. input .. ".vvvvvv")
+				if ficontents == nil then
+					dialog.new(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}), "", 1, 1, 0)
+					replacedialog = true
+				end
+				local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. multiinput[1] .. ".vvvvvv", ficontents)
+				if not success then
+					dialog.new(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg), "", 1, 1, 0)
+					replacedialog = true
+				end
+			end
 		end
 
 		-- The answer to the question has been handled now. Or has it?
