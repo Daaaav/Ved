@@ -91,7 +91,13 @@ function listfiles(directory)
 
 	-- First list all the directories, then the files
 	local listingfiles = false
-	local pfile = io.popen('cd "' .. escapename(directory) .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
+	-- If the levels folder is on a different drive, a plain cd will have no effect whatsoever!
+	local maybe_driveletter = directory:match("[A-Za-z]:")
+	local driveswitch = ""
+	if maybe_driveletter ~= nil then
+		driveswitch = maybe_driveletter .. " && "
+	end
+	local pfile = io.popen(driveswitch .. 'cd "' .. escapename(directory) .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
 	for filename in pfile:lines() do
 		if filename == "//FILES// " then
 			listingfiles = true
