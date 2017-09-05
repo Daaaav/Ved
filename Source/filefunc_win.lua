@@ -248,5 +248,5 @@ end
 
 function escapename(name)
 	-- Windows doesn't allow all sorts of characters in filenames, which is nice for programmers using the command line and can be annoying for users.
-	return name:gsub('[\\/:%*%?"<>|]', "")
+	return name:gsub('"', "")
 end
