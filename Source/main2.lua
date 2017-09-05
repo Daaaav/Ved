@@ -2167,7 +2167,7 @@ function love.mousepressed(x, y, button)
 			screenxoffset = -96
 		end
 		chr = math.floor((x-216-screenxoffset)/8) + 1
-		line = math.floor(((y-8)-helparticlescroll-6)/10) + 1
+		line = math.floor(((y-8)-helparticlescroll-3)/10) + 1
 		helpgotoline(line, chr)
 	else
 		handleScrolling(false, button)
