@@ -444,7 +444,7 @@ ERR_PLUGINS = "Aldonaĵoj:"
 ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
 ERR_PLEASETELLDAV = "Bonvolu raportu al Dav999 pri la problemo.\n\n\nDetaloj: (premu ctrl+C/cmd+C por kopii al la tondejo)\n\n"
-ERR_INTERMEDIATE = " (intermeza versio)"
+ERR_INTERMEDIATE = " (intermeza versio)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (tro nova)"
 
 ERR_PLUGINERROR = "Eraro de aldonaĵo!"

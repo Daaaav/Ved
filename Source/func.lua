@@ -611,6 +611,9 @@ function loadlevelsfolder()
 	end
 	cons("Loaded.")
 	-- Now get all the backups
+	if files == nil then
+		files = {}
+	end
 	files[".ved-sys" .. dirsep .. "backups"] = {}
 	local rootbackupfolders = love.filesystem.getDirectoryItems("overwrite_backups")
 	for k1, f1 in pairs(rootbackupfolders) do

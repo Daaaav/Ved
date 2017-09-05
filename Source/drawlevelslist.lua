@@ -10,9 +10,9 @@ function drawlevelslist()
 		love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
 	end
 
-	if not lsuccess then
+	if not lsuccess and not backupscreen then
 		love.graphics.setColor(255,128,0)
-		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-16, "left")
+		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-136, "left")
 		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil

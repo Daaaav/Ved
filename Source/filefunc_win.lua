@@ -91,7 +91,7 @@ function listfiles(directory)
 
 	-- First list all the directories, then the files
 	local listingfiles = false
-	local pfile = io.popen('cd "' .. directory .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
+	local pfile = io.popen('cd "' .. escapename(directory) .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
 	for filename in pfile:lines() do
 		if filename == "//FILES// " then
 			listingfiles = true
@@ -158,7 +158,7 @@ end
 function listdirs(directory)
 	local t = {}
 	-- Only do folders.
-	local pfile = io.popen('dir "' .. directory .. '" /b /ad')
+	local pfile = io.popen('dir "' .. escapename(directory) .. '" /b /ad')
 	for filename in pfile:lines() do
 		table.append(t, filename)
 	end
@@ -169,7 +169,7 @@ end
 function directory_exists(where, what)
 	local t = {}
 
-	local pfile = io.popen('dir "' .. where .. '" /b /ad')
+	local pfile = io.popen('dir "' .. escapename(where) .. '" /b /ad')
 	for filename in pfile:lines() do
 		if filename == what then
 			pfile:close()
@@ -215,7 +215,7 @@ function writelevelfile(path, contents)
 end
 
 function getmodtime(fullpath)
-	local pfile = io.popen(love.filesystem.getSaveDirectory():gsub("/", "\\") .. '\\available_utils\\fileunix.exe "' .. fullpath .. '"')
+	local pfile = io.popen('"' .. escapename(love.filesystem.getSaveDirectory():gsub("/", "\\")) .. '\\available_utils\\fileunix.exe" "' .. escapename(fullpath) .. '"')
 	local modtime = pfile:read("*a")
 	pfile:close()
 	return modtime
@@ -238,10 +238,15 @@ function readimage(levelsfolder, filename)
 end
 
 function openurl(url)
-	os.execute("start " .. url)
+	os.execute('start "' .. url:gsub('"', "") .. '"')
 end
 
 function util_folderopendialog()
 	-- love.filesystem.getSaveDirectory() = C:/Users/David/AppData/Roaming/LOVE/ved
 	os.execute(love.filesystem.getSaveDirectory():gsub("/", "\\") .. "\\utils\\folderopendialog.exe")
+end
+
+function escapename(name)
+	-- Windows doesn't allow all sorts of characters in filenames, which is nice for programmers using the command line and can be annoying for users.
+	return name:gsub('[\\/:%*%?"<>|]', "")
 end

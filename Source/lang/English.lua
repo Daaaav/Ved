@@ -443,7 +443,7 @@ ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(not loaded)"
 ERR_PLUGINSNONE = "(none)"
 ERR_PLEASETELLDAV = "Please tell Dav999 about this problem.\n\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
-ERR_INTERMEDIATE = " (intermediate version)"
+ERR_INTERMEDIATE = " (intermediate version)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (too new)"
 
 ERR_PLUGINERROR = "Plugin error!"
