@@ -595,11 +595,12 @@ function dialog.update()
 				if ficontents == nil then
 					dialog.new(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}), "", 1, 1, 0)
 					replacedialog = true
-				end
-				local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. multiinput[1] .. ".vvvvvv", ficontents)
-				if not success then
-					dialog.new(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg), "", 1, 1, 0)
-					replacedialog = true
+				else
+					local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. multiinput[1] .. ".vvvvvv", ficontents)
+					if not success then
+						dialog.new(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg), "", 1, 1, 0)
+						replacedialog = true
+					end
 				end
 			end
 		end
