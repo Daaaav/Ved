@@ -2160,9 +2160,15 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
-	elseif state == 15 and button == "l" and nodialog and mouseon(214+(s.smallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.smallerscreen and -96 or 0), love.graphics.getHeight()-16) then
+	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.smallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.smallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
-		helplineonscreen(61)
+		local screenxoffset = 0
+		if s.smallerscreen then
+			screenxoffset = -96
+		end
+		chr = math.floor((x-216-screenxoffset)/8) + 1
+		line = math.floor(((y-8)-helparticlescroll-6)/10) + 1
+		helpgotoline(line, chr)
 	else
 		handleScrolling(false, button)
 	end

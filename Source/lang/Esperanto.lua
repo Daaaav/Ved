@@ -259,9 +259,9 @@ ALLOWDEBUG = "Ebligi sencimigan reĝimon",
 SHOWFPS = "Montri kadrojn sekunde",
 IIXSCALE = "Duobla skalo",
 CHECKFORUPDATES = "Kontroli ĝisdatigojn",
-PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
-ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten",
-AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
+PAUSEDRAWUNFOCUSED = "Ne bildigi kiam la fenestro estas elfokusa",
+ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas",
+AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
 SCALE = "Skalo",
 
 SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
@@ -346,14 +346,14 @@ SELECTINGB = "Elektado: $1x$2",
 TILESETSRELOADED = "Tegolaroj kaj ento-grafikoj reŝargitaj",
 
 -- 1.2.0
-BACKUPS = "Backups",
-BACKUPSOFLEVEL = "Backups of level $1",
-LASTMODIFIEDTIME = "Originally last modified", -- List header
-OVERWRITTENTIME = "Overwritten", -- List header
-SAVEBACKUP = "Save to VVVVVV folder",
-DATEFORMAT = "Date format",
-CUSTOMDATEFORMAT = "Custom date format",
-SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!",
+BACKUPS = "Savkopioj",
+BACKUPSOFLEVEL = "Savkopioj de nivelo $1",
+LASTMODIFIEDTIME = "Originale laste modifita", -- List header
+OVERWRITTENTIME = "Superskribita je", -- List header
+SAVEBACKUP = "Konservi al dosierujo de VVVVVV",
+DATEFORMAT = "Dato-formo",
+CUSTOMDATEFORMAT = "Tajlorita dato-formo",
+SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
 
 }
 

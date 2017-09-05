@@ -141,7 +141,7 @@ function getlevelsfolder(ignorecustom)
 			return true, userprofile .. standardvvvvvvfolders.folders[2] .. "\\levels"
 		else
 			-- Also return what it should have been
-			return false, userprofile .. standardvvvvvvfolder.display .. "\\levels"
+			return false, userprofile .. standardvvvvvvfolders.display .. "\\levels"
 		end
 	else
 		-- The user has supplied a custom directory.
