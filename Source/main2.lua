@@ -1936,16 +1936,19 @@ function love.keypressed(key)
 			__ = "_"
 			helpeditingline = helpeditingline - 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
+			helplineonscreen()
 		elseif key == "down" and helparticlecontent[helpeditingline+1] ~= nil then
 			helparticlecontent[helpeditingline] = input .. input_r
 			input_r = ""
 			__ = "_"
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
+			helplineonscreen()
 		elseif key == "return" then
 			table.insert(helparticlecontent, helpeditingline+1, "")
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
+			helplineonscreen()
 		elseif key == "insert" then
 			if keyboard_eitherIsDown("shift") then
 				input = input .. "§"
