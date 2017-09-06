@@ -89,14 +89,18 @@ end
 function listfiles(directory)
 	local t = {[""] = {}}
 
-	-- First list all the directories, then the files
-	local listingfiles = false
+	-- We really can't have slashes here instead of backslashes, this is Windows.
+	directory = directory:gsub("/", "\\")
+	-- We can't have a trailing backslash either, or our matching system will blow up. This comes in the form of a double backslash.
+	directory = directory:gsub("\\\\", "\\")
 	-- If the levels folder is on a different drive, a plain cd will have no effect whatsoever!
 	local maybe_driveletter = directory:match("[A-Za-z]:")
 	local driveswitch = ""
 	if maybe_driveletter ~= nil then
 		driveswitch = maybe_driveletter .. " && "
 	end
+	-- First list all the directories, then the files
+	local listingfiles = false
 	local pfile = io.popen(driveswitch .. 'cd "' .. escapename(directory) .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
 	for filename in pfile:lines() do
 		if filename == "//FILES// " then
@@ -105,7 +109,9 @@ function listfiles(directory)
 			-- Files and directories are listed as `C:\Users\...\Documents\VVVVVV\levels\subfolder\deeper` (or wherever `directory` is)
 			-- so let's get a relative path instead.
 			local relpath = filename:match(escapegsub(directory, true) .. "\\(.*)")
-			if not listingfiles then
+			if relpath == nil then
+				cons("FILE LIST WARNING: couldn't match levels folder in \"" .. filename .. "\", our directory is \"" .. directory .. "\"")
+			elseif not listingfiles then
 				t[relpath] = {}
 			else
 				local currentdir = ""
