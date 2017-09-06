@@ -1820,7 +1820,7 @@ function cons_fc(text)
 	cons("[CHECK] " .. text)
 end
 
-function handleScrolling(viakeyboard, mkinput)
+function handleScrolling(viakeyboard, mkinput, customdistance)
 	local direction, distance
 
 	if viakeyboard then
@@ -1837,6 +1837,9 @@ function handleScrolling(viakeyboard, mkinput)
 		elseif mkinput == "wd" then
 			direction = "d"
 		end
+	end
+	if customdistance ~= nil then
+		distance = customdistance
 	end
 
 
@@ -1911,6 +1914,13 @@ function handleScrolling(viakeyboard, mkinput)
 			end
 		end
 	end
+end
+
+function is_scrollable(x, y)
+	if state == 3 or state == 10 or state == 15 then
+		return true
+	end
+	return false
 end
 
 function savemapimage()

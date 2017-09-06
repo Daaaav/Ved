@@ -180,6 +180,7 @@ function loadplugins()
 										-- Do this directory as well!
 										plugin_includefrom(dir .. "/" .. v2)
 									else
+										local filename
 										filename = dir:sub(2, -1) .. "/" .. v2:sub(1, -5)
 
 										pluginincludes[filename] = pluginpath .. "/include/" .. filename

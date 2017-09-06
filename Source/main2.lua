@@ -101,6 +101,7 @@ function love.load()
 	bypassdialog = false
 
 	mousepressed = false -- for some things
+	middlescroll_x, middlescroll_y = -1, -1
 
 	temporaryroomnametimer = 0
 	generictimer = 0
@@ -811,6 +812,12 @@ function love.draw()
 		rightclickmenu.draw()
 	end
 
+	-- Middle click cursor
+	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
+		love.graphics.setColor(150+love.math.random(0,30), 130+love.math.random(0,30), 190+love.math.random(0,30))
+		drawentity(22, middlescroll_x-16, middlescroll_y-16, false)
+	end
+
 	love.graphics.setColor(255,255,255,255)
 
 	if fpscap == 1 then
@@ -1231,6 +1238,10 @@ function love.update(dt)
 		end
 
 		RCMreturn = ""
+	end
+
+	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) then
+		handleScrolling(false, love.mouse.getY() < middlescroll_y and "wu" or "wd", 10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16))
 	end
 
 	hook("love_update_end", {dt})
@@ -2176,6 +2187,16 @@ function love.mousepressed(x, y, button)
 		handleScrolling(false, button)
 	end
 
+	if button == "m" then
+		if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
+			middlescroll_x, middlescroll_y = -1, -1
+		elseif is_scrollable(x, y) then
+			middlescroll_x, middlescroll_y = x, y
+		end
+	elseif button == "l" and middlescroll_x ~= -1 and middlescroll_y ~= -1 then
+		middlescroll_x, middlescroll_y = -1, -1
+	end
+
 	boxmousepress()
 end
 
@@ -2212,6 +2233,10 @@ function love.mousereleased(x, y, button)
 		DIAx = DIAmovedfromwx + (x-DIAmovedfrommx)
 		DIAy = DIAmovedfromwy + (y-DIAmovedfrommy)
 		DIAmovingwindow = 0
+	end
+
+	if button == "m" and middlescroll_x ~= -1 and middlescroll_y ~= -1 and not mouseon(middlescroll_x-16, middlescroll_y-16, 32, 32) then
+		middlescroll_x, middlescroll_y = -1, -1
 	end
 
 	boxmouserelease()
