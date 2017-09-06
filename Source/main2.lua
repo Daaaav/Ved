@@ -814,7 +814,7 @@ function love.draw()
 
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-		love.graphics.setColor(150+love.math.random(0,30), 130+love.math.random(0,30), 190+love.math.random(0,30))
+		love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
 		drawentity(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
