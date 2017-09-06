@@ -111,6 +111,7 @@ function listfiles(directory)
 			local relpath = filename:match(escapegsub(directory, true) .. "\\(.*)")
 			if relpath == nil then
 				cons("FILE LIST WARNING: couldn't match levels folder in \"" .. filename .. "\", our directory is \"" .. directory .. "\"")
+				lsuccess = false
 			elseif not listingfiles then
 				t[relpath] = {}
 			else
