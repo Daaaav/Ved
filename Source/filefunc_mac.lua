@@ -16,7 +16,7 @@ function listfiles(directory)
 
 	local expectingdir = true
 	-- First check what all the different directories and subdirectories are, so we can fill them
-	local pfile = io.popen('cd "' .. escapename(directory) .. '" && ls -R --group-directories-first')
+	local pfile = io.popen("cd '" .. escapename(directory) .. "' && ls -R --group-directories-first")
 	for filename in pfile:lines() do -- kijk eens bij t voor sorteren
 		table.insert(termoutput, filename)
 		if expectingdir then
@@ -83,7 +83,7 @@ end
 function listdirs(directory)
 	local t = {}
 	-- Only do folders.
-	local pfile = io.popen('ls "' .. escapename(directory) .. '"')
+	local pfile = io.popen("ls '" .. escapename(directory) .. "'")
 	for filename in pfile:lines() do
 		t[i] = filename
 	end
@@ -94,7 +94,7 @@ end
 function directory_exists(where, what)
 	local t = {}
 
-	local pfile = io.popen('ls "' .. escapename(where) .. '"')
+	local pfile = io.popen("ls '" .. escapename(where) .. "'")
 	for filename in pfile:lines() do
 		if filename == what then
 			pfile:close()
@@ -140,7 +140,7 @@ function writelevelfile(path, contents)
 end
 
 function getmodtime(fullpath)
-	local pfile = io.popen('stat -c %Y "' .. escapename(fullpath) .. '"')
+	local pfile = io.popen("stat -c %Y '" .. escapename(fullpath) .. "'")
 	local modtime = pfile:read("*a")
 	pfile:close()
 	return modtime
@@ -163,10 +163,10 @@ function readimage(levelsfolder, filename)
 end
 
 function openurl(url)
-	os.execute('open "' .. escapename(url) .. '"')
+	os.execute("open '" .. escapename(url) .. "'")
 end
 
 function escapename(name)
-	-- Just escape a couple of characters
-	return name:gsub('(["\\`%$])', "\\%1")
+	-- We just need to somewhat escape '
+	return name:gsub("'", "'\\''")
 end
