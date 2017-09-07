@@ -169,6 +169,6 @@ function openurl(url)
 end
 
 function escapename(name)
-	-- Just escape " and \
-	return name:gsub('(["\\])', "\\%1")
+	-- Just escape a couple of characters
+	return name:gsub('(["\\`%$])', "\\%1")
 end
