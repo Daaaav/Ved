@@ -120,12 +120,16 @@ function ved_showerror(msg)
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
 
-	font8 = love.graphics.newFont("Space Station.ttf", 8)
-	font16 = love.graphics.newFont("Space Station.ttf", 16)
+	local font8 = love.graphics.newFont("Space Station.ttf", 8)
+	local font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
 	love.graphics.setColor(255, 255, 255, 255)
+
+	if love.graphics.clearOR ~= nil then
+		love.graphics.clear = love.graphics.clearOR
+	end
 
 	--local trace = debug.traceback()
 	local trace = ""
