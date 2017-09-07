@@ -338,8 +338,13 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
 
-	font8 = love.graphics.newFont("Space Station.ttf", 8)
-	font16 = love.graphics.newFont("Space Station.ttf", 16)
+	-- We may need that line again
+	if love.graphics.setDefaultFilter ~= nil then
+		love.graphics.setDefaultFilter("nearest", "nearest")
+	end
+
+	local font8 = love.graphics.newFont("Space Station.ttf", 8)
+	local font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 128, 0)
@@ -496,11 +501,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			elseif e == "keypressed" and (a == "escape" or a == "return") then
 				love.graphics.setBackgroundColor(0,0,0)
 				love.graphics.clear()
-
-				-- We may need that line again
-				if love.graphics.setDefaultFilter ~= nil then
-					love.graphics.setDefaultFilter("nearest", "nearest")
-				end
 
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
