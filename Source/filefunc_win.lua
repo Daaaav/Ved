@@ -251,7 +251,7 @@ function readimage(levelsfolder, filename)
 end
 
 function openurl(url)
-	os.execute('start "' .. url:gsub('"', "") .. '"')
+	os.execute('start "" "' .. url:gsub('"', "") .. '"')
 end
 
 function util_folderopendialog()
