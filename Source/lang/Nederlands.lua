@@ -1045,11 +1045,18 @@ To use internal scripting in Ved, you can enable internal scripting mode in the
 editor, to handle all commands in that script as internal scripting. However, you
 need to make sure that script is loaded with iftrinkets() or ifflag().
 
-Commands in ¤blue¤ are not optimal for use in custom levels, because they only work\nb
-in the main game.
-Commands in ¤orange¤ may corrupt your save data if you use them in specific ways.\no
-Commands in ¤red¤ shouldn't be used at all because they WILL corrupt your save data.\nr
-Note: whenever something is between quotes, it needs to be typed without them.
+Color coding:\w
+Normal - Should be safe, worst case scenario is VVVVVV crashing because you made a
+         mistake.
+Blue¤   - Some of these don't work in custom levels, others don't make a lot of\b
+         sense in custom levels, or are only half useful because they were really
+         designed for the main game.
+Orange¤ - These work and nothing will go wrong normally, unless you give some\o
+         specific arguments to them that will cause your save data to go away.
+Red¤    - Red commands shouldn't be used in custom levels because they will either\r
+         unlock certain parts of the main game (which you shouldn't want a custom
+         level to do, even if you say everyone has already completed the game), or
+         corrupt the save data altogether.
 
 
 squeak¤(color)\w#h
@@ -1186,7 +1193,7 @@ n - The entity number
 
 vvvvvvman¤()\w#h
 
-You know what it does
+Makes the player huge
 
 undovvvvvvman¤()\w#h
 
@@ -1241,7 +1248,7 @@ Change the current room to x,y, where x and y start at 0.
 x - Room x coordinate, starting at 0
 y - Room y coordinate, starting at 0
 
-gotoposition¤(x,y,z)\w#h
+gotoposition¤(x,y,f)\w#h
 
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
@@ -1287,8 +1294,10 @@ Opposite of stopmusic() (doesn't seem to work)
 
 playef¤(x,n)\w#h
 
-Play a sound effect. It is still unknown what the n does, but the main game always
-uses 10 for that argument.
+Play a sound effect.
+
+n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
+offset in milliseconds at which the sound effect started.
 
 changemood¤(colour,mood)\w#h
 
@@ -1393,7 +1402,8 @@ Makes someone missing
 
 finalmode¤(x,y)\b#h
 
-Final level (46,54)
+Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
+Final Level
 
 setcheckpoint¤()\w#h
 
@@ -1573,6 +1583,60 @@ y - Only used if x is a color name. Can be above/below
 custommap¤(on/off)\w#h
 
 The internal variant of the map command
+
+trinketscriptmusic\w#h
+
+Plays passion for exploring, without taking arguments(?)
+
+startintermission2\w#h
+
+Alternate finalmode(46,54), takes you to the final level without accepting
+arguments. Crashes in timeslip.
+
+resetgame\w#h
+
+Resets all trinkets, collected crewmates and flags, and teleports the player to
+the last checkpoint.
+
+redcontrol\b#h
+
+Start a conversation with Vermilion just like when you meet him in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+greencontrol\b#h
+
+Start a conversation with Verdigris just like when you meet him in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+bluecontrol\b#h
+
+Start a conversation with Victoria just like when you meet her in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+yellowcontrol\b#h
+
+Start a conversation with Vitellary just like when you meet him in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+purplecontrol\b#h
+
+Start a conversation with Violet just like when you meet her in the main game and
+press ENTER. Also creates an activity zone afterwards.
+
+foundlab\b#h
+
+Plays sound effect 3, shows text box with "Congratulations! You have found the
+secret lab!" Does not endtext, also has no further unwanted effects.
+
+foundlab2\b#h
+
+Displays the second text box you see after discovering the secret lab. Also does
+not endtext, and also does not have any further unwanted effects.
+
+entersecretlab\r#h
+
+Actually unlocks the secret lab for the main game, which is probably an unwanted
+effect for a custom level to have. Turns on secret lab mode.
 ]]
 },
 
