@@ -1214,7 +1214,7 @@ blackout¤()\w#h
 
 Make the screen black/freezes the screen
 
-blackin¤()\w#h
+blackon¤()\w#h
 
 Back to normal from blackout()
 
@@ -1554,6 +1554,25 @@ Turn off "secret lab mode"
 shake¤(n)\w#h
 
 Shake the screen for n ticks. This will not create a delay.
+
+activateteleporter¤()\w#h
+
+If there's a teleporter in the room, it will glow white and touching it will not
+annihilate your save data. May not work if there are multiple teleporters.
+
+customposition¤(x,y)\w#h
+
+Overrides the x,y of the text command and thus sets the position of the text box,
+but for crewmates, rescuable crewmates are used to position against, instead of
+createentity crewmates.
+
+x - center/centerx/centery, or a color name
+cyan/player/blue/red/yellow/green/purple (rescuable)
+y - Only used if x is a color name. Can be above/below
+
+custommap¤(on/off)\w#h
+
+The internal variant of the map command
 ]]
 },
 
