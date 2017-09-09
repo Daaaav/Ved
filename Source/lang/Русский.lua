@@ -258,9 +258,9 @@ ALLOWDEBUG = "Включить режим разработчика",
 SHOWFPS = "Показывать счётчик FPS",
 IIXSCALE = "2x размер",
 CHECKFORUPDATES = "Проверять обновления",
-PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
-ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten",
-AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
+PAUSEDRAWUNFOCUSED = "Не рендерить если окно не активно",
+ENABLEOVERWRITEBACKUPS = "Делать бекапы уровня при перезаписи файла",
+AMOUNTOVERWRITEBACKUPS = "Кол-во бекапов для каждого уровня",
 SCALE = "Размер",
 
 SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
@@ -345,14 +345,14 @@ SELECTINGB = "Выбор: $1x$2",
 TILESETSRELOADED = "Спрайты перезагружены",
 
 -- 1.2.0
-BACKUPS = "Backups",
-BACKUPSOFLEVEL = "Backups of level $1",
-LASTMODIFIEDTIME = "Originally last modified", -- List header
-OVERWRITTENTIME = "Overwritten", -- List header
-SAVEBACKUP = "Save to VVVVVV folder",
-DATEFORMAT = "Date format",
-CUSTOMDATEFORMAT = "Custom date format",
-SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!",
+BACKUPS = "Резервные копии",
+BACKUPSOFLEVEL = "Бекапы уровня $1",
+LASTMODIFIEDTIME = "Последние изменения", -- List header
+OVERWRITTENTIME = "Перезаписано", -- List header
+SAVEBACKUP = "Сохранить в папку VVVVVV",
+DATEFORMAT = "Формат даты",
+CUSTOMDATEFORMAT = "Свой формат даты",
+SAVEBACKUPNOBACKUP = "Выберите уникальное имя для файла, иначе бекап не будет создан!",
 
 }
 
@@ -443,8 +443,8 @@ ERR_PLUGINS = "Плагины:"
 ERR_PLUGINSNOTLOADED = "(не загружено)"
 ERR_PLUGINSNONE = "(нет)"
 ERR_PLEASETELLDAV = "Пожалуйста, расскажите Dav999 об этой проблеме.\n\n\nДетали: (нажмите Ctrl+C/CMD+C чтобы скопировать в буфер обмена)\n\n"
-ERR_INTERMEDIATE = " (intermediate version)" -- pre-release version, so a version in between officially released versions
-ERR_TOONEW = " (too new)"
+ERR_INTERMEDIATE = " (Версия между официально выпущенными версиями)" -- pre-release version, so a version in between officially released versions
+ERR_TOONEW = " (слишком новое)"
 
 ERR_PLUGINERROR = "Ошибка плагина!"
 ERR_FILE = "Файл для редактирования:"
