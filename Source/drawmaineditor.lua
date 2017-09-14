@@ -1571,6 +1571,10 @@ function drawmaineditor()
 			tinyprint("}CTRL", 128-27, love.graphics.getHeight()-7)
 		end
 	else
+		-- Still have a background, in case we have a brush that's so big it overlaps with this part of the screen
+		love.graphics.setColor(0, 0, 0, 192)
+		love.graphics.rectangle("fill", 0, 0, 32, love.graphics.getHeight())
+		love.graphics.setColor(255,255,255,255)
 		tinyprint("CTRL", 0, 0)
 
 		-- Also display the current (sub)tool!
@@ -1585,6 +1589,9 @@ function drawmaineditor()
 	end
 
 	-- Now stuff on the right.
+	love.graphics.setColor(0, 0, 0, 192)
+	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
+	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
