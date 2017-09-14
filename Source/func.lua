@@ -440,6 +440,8 @@ function loadstate(new, extradata)
 		tabselected = 0
 		backupscreen = false
 		currentbackupdir = ""
+		levellistscroll = 0
+		max_levellistscroll = 0
 	elseif new == 9 then
 		youdidanswer = ""
 		dialog.new("Not much to see here. Other than that I got this working.\n\nAhem.\n\n\"Are you absolutely sure you want to delete everything?\"", "", 1, 3, 1)
@@ -1857,6 +1859,19 @@ function handleScrolling(viakeyboard, mkinput, customdistance)
 					scriptscroll = math.min(-upperbound, 0)
 				end
 			end
+		elseif state == 6 then
+			if direction == "u" then
+				levellistscroll = levellistscroll + distance
+				if levellistscroll > 0 then
+					levellistscroll = 0
+				end
+			elseif direction == "d" then
+				levellistscroll = levellistscroll - distance
+				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-48))
+				if -levellistscroll > upperbound then
+					levellistscroll = math.min(-upperbound, 0)
+				end
+			end
 		elseif state == 10 then
 			if direction == "u" then
 				scriptlistscroll = scriptlistscroll + distance
@@ -1918,6 +1933,9 @@ end
 
 function is_scrollable(x, y)
 	if state == 3 or state == 10 or state == 15 then
+		return true
+	end
+	if state == 6 and x < love.graphics.getWidth()-128 then
 		return true
 	end
 	return false

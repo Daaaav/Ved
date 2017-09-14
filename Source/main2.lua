@@ -427,10 +427,9 @@ function love.draw()
 		end
 
 		-- Scrollbar
-		local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 8, love.graphics.getHeight()-16, (#scriptnames*24-8), ((-scriptlistscroll))/((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
+		local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 8, love.graphics.getHeight()-16, (#scriptnames*24-8), (-scriptlistscroll)/((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
 
 		if newperonetage ~= nil then
-			--dialog.new("TODO SCROLL", "", 1, 1, 0)
 			scriptlistscroll = -(newperonetage*((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
 		end
 

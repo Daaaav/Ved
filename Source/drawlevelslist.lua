@@ -17,7 +17,7 @@ function drawlevelslist()
 	else
 		hoveringlevel = nil
 		hoveringlevel_k = nil
-		local hoverarea = 758
+		local hoverarea = 734
 		if s.smallerscreen then
 			hoverarea = hoverarea - 96
 		end
@@ -42,6 +42,7 @@ function drawlevelslist()
 		end
 		local k2 = 1
 		if files[currentdir] ~= nil then
+			love.graphics.setScissor(0, 22, love.graphics.getWidth()-128, love.graphics.getHeight()-48)
 			for k,v in pairs(files[currentdir]) do
 				local prefix
 				if currentdir == "" then
@@ -54,7 +55,7 @@ function drawlevelslist()
 					barename = v.name
 				end
 				if backupscreen or input .. input_r == "" or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
-					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2, hoverarea, 8) and love.mouse.getY() < love.graphics.getHeight()-26
+					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-26)
 
 					if mouseishovering then
 						hoveringlevel = prefix .. barename
@@ -64,20 +65,20 @@ function drawlevelslist()
 					end
 					if mouseishovering or tabselected == k2 then
 						love.graphics.setColor(255,255,255,64)
-						love.graphics.rectangle("fill", 8, 14+8*k2, hoverarea, 8)
+						love.graphics.rectangle("fill", 8, 14+8*k2+levellistscroll, hoverarea, 8)
 						love.graphics.setColor(255,255,0)
 					end
 
 					if v.isdir then
-						love.graphics.draw(smallfolder, 8, 14+8*k2)
+						love.graphics.draw(smallfolder, 8, 14+8*k2+levellistscroll)
 					end
 					if backupscreen and not v.isdir then
 						-- Display the dates, we already know what the level is we're looking at.
-						love.graphics.print("[" .. k .. "]", 18, 16+8*k2)
-						love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2)
-						love.graphics.print(format_date(v.overwritten), 408, 16+8*k2)
+						love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
+						love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2+levellistscroll)
+						love.graphics.print(format_date(v.overwritten), 408, 16+8*k2+levellistscroll)
 					else
-						love.graphics.print(v.name, 18, 16+8*k2) -- y = 16+8*k
+						love.graphics.print(v.name, 18, 16+8*k2+levellistscroll) -- y = 16+8*k
 					end
 
 
@@ -97,6 +98,18 @@ function drawlevelslist()
 
 				lastk = k
 			end
+			love.graphics.setScissor()
+		end
+
+		-- Scrollbar
+		if max_levellistscroll ~= (k2-1)*8 then
+			levellistscroll = 0
+			max_levellistscroll = (k2-1)*8
+		end
+		local newperonetage = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-48, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-48)))
+
+		if newperonetage ~= nil then
+			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-48)))
 		end
 
 		if tabselected == 0 and (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
@@ -106,10 +119,6 @@ function drawlevelslist()
 			tabselected = 1
 		end
 	end
-
-	love.graphics.setColor(0,0,0)
-	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-26, love.graphics.getWidth(), 26)
-	love.graphics.setColor(255,255,255)
 
 	if not backupscreen then
 		love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
