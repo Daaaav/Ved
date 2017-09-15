@@ -1165,7 +1165,7 @@ end
 
 function autocorrectlines()
 	for k,v in pairs(entitydata) do
-		if (v.t == 11 or v.t == 50) and (v.x >= roomx*40) and (v.x <= (roomx*40)+39) and (v.y >= roomy*30) and (v.y <= (roomy*30)+29) then
+		if (v.p4 ~= 1) and (v.t == 11 or v.t == 50) and (v.x >= roomx*40) and (v.x <= (roomx*40)+39) and (v.y >= roomy*30) and (v.y <= (roomy*30)+29) then
 			-- This is a gravity line in this room.
 			if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 				-- Horizontal
