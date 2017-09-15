@@ -2322,11 +2322,21 @@ function prune_old_overwrite_backups(levelname)
 	for k,v in pairs(files) do
 		if not v:find("^[0-9]+_[0-9]+_.*%.vvvvvv$") then
 			cons(v .. " does not seem like one of my backup files, so I'm ignoring it.")
-			table.insert(ignorefiles, k)
+			table.insert(ignorefiles, v)
 		end
 	end
+	-- Temporarily screw avoiding O(n^2), we don't have more than thousands of backups, and we're only doing this once when saving, right?
 	for k,v in pairs(ignorefiles) do
-		table.remove(files, v)
+		for k2,v2 in pairs(files) do
+			if v == v2 then
+				table.remove(files, k2)
+				break
+			end
+		end
+	end
+	-- debug!!!
+	for k,v in pairs(files) do
+		print("GODVER " .. v)
 	end
 	while #files > s.amountoverwritebackups and #files > 0 do
 		for k,v in pairs(files) do

@@ -73,10 +73,16 @@ function drawlevelslist()
 						love.graphics.draw(smallfolder, 8, 14+8*k2+levellistscroll)
 					end
 					if backupscreen and not v.isdir then
-						-- Display the dates, we already know what the level is we're looking at.
-						love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
-						love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2+levellistscroll)
-						love.graphics.print(format_date(v.overwritten), 408, 16+8*k2+levellistscroll)
+						if v.overwritten == 0 then
+							-- This is kind of a weird place for that file.
+							love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
+							love.graphics.print(v.name, 18, 16+8*k2+levellistscroll)
+						else
+							-- Display the dates, we already know what the level is we're looking at.
+							love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
+							love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2+levellistscroll)
+							love.graphics.print(format_date(v.overwritten), 408, 16+8*k2+levellistscroll)
+						end
 					else
 						love.graphics.print(v.name, 18, 16+8*k2+levellistscroll) -- y = 16+8*k
 					end

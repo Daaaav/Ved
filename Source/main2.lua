@@ -181,6 +181,8 @@ function love.load()
 	colorsel = love.graphics.newImage("colorsel.png")
 
 	smallfolder = love.graphics.newImage("smallfolder.png")
+	smalllevel = love.graphics.newImage("smalllevel.png")
+	smallunknown = love.graphics.newImage("smallunknown.png")
 
 	bggrid = love.graphics.newImage("bggrid.png")
 
