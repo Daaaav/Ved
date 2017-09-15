@@ -2317,14 +2317,29 @@ function prune_old_overwrite_backups(levelname)
 	local oldest = {os.time()+3600, nil} -- time and key to full filename
 
 	local files = love.filesystem.getDirectoryItems("overwrite_backups/" .. levelname .. "/")
+	-- We only want this list of files to contain actual backups, so other things don't mess us up!
+	local ignorefiles = {}
+	for k,v in pairs(files) do
+		if not v:find("^[0-9]+_[0-9]+_.*%.vvvvvv$") then
+			cons(v .. " does not seem like one of my backup files, so I'm ignoring it.")
+			table.insert(ignorefiles, k)
+		end
+	end
+	for k,v in pairs(ignorefiles) do
+		table.remove(files, v)
+	end
 	while #files > s.amountoverwritebackups and #files > 0 do
 		for k,v in pairs(files) do
 			local parts = explode("_", v)
 
-			if tonumber(parts[1]) < oldest[1] then
+			if tonumber(parts[1]) ~= nil and tonumber(parts[1]) < oldest[1] then
 				oldest[1] = tonumber(parts[1])
 				oldest[2] = k
 			end
+		end
+		-- Now we did find at least something, right?
+		if oldest[2] == nil then
+			break
 		end
 		cons("Pruning away backup " .. files[oldest[2]] .. " because it's the oldest")
 		love.filesystem.remove("overwrite_backups/" .. levelname .. "/" .. files[oldest[2]])

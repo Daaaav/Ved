@@ -228,7 +228,7 @@ function writelevelfile(path, contents)
 end
 
 function getmodtime(fullpath)
-	local pfile = io.popen('"' .. escapename(love.filesystem.getSaveDirectory():gsub("/", "\\")) .. '\\available_utils\\fileunix.exe" "' .. escapename(fullpath) .. '"')
+	local pfile = io.popen(escapename(love.filesystem.getSaveDirectory():gsub("/", "\\")) .. '\\available_utils\\fileunix.exe "' .. escapename(fullpath) .. '"')
 	local modtime = pfile:read("*a")
 	pfile:close()
 	return modtime
