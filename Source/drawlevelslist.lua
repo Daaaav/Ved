@@ -186,6 +186,9 @@ function drawlevelslist()
 			unsupportedpluginstext = "\n\n" .. langkeys(L.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
 		end
 
+		if intermediate_version then
+			love.graphics.setColor(255,128,0)
+		end
 		if not s.pcheckforupdates or opt_disableversioncheck then
 			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
 		elseif versionchecked ~= nil then		
@@ -199,6 +202,9 @@ function drawlevelslist()
 			end
 		else
 			love.graphics.printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
+		end
+		if intermediate_version then
+			love.graphics.setColor(255,255,255)
 		end
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
