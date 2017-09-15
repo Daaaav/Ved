@@ -2334,10 +2334,6 @@ function prune_old_overwrite_backups(levelname)
 			end
 		end
 	end
-	-- debug!!!
-	for k,v in pairs(files) do
-		print("GODVER " .. v)
-	end
 	while #files > s.amountoverwritebackups and #files > 0 do
 		for k,v in pairs(files) do
 			local parts = explode("_", v)
