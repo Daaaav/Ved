@@ -18,7 +18,9 @@ function drawhelp()
 		love.graphics.setColor(192,192,192,255)
 
 		for k,s in pairs(helparticlecontent) do
-			if helpeditingline == k then
+			if helparticlescroll+14+(10*linee) < -1024 or helparticlescroll+14+(10*linee) > 480 then
+				-- Don't render
+			elseif helpeditingline == k then
 				love.graphics.print(s .. __, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 			elseif s:find("\\") then
 				local imageshift = 0
