@@ -2355,6 +2355,8 @@ function prune_old_overwrite_backups(levelname)
 end
 
 function write_overwrite_backup_file(levelname, savename, contents)
+	-- Make sure levels in subfolders also get backed up properly.
+	levelname = levelname:gsub("/", "__")
 	if not love.filesystem.exists("overwrite_backups/" .. levelname) then
 		love.filesystem.createDirectory("overwrite_backups/" .. levelname)
 	end
