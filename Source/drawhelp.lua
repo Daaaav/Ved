@@ -132,10 +132,12 @@ function drawhelp()
 
 				if numseparators > 0 then
 					--cons(numseparators)
-					local part1parts = {part1:match("(.*" .. ("[^¤])¤([^¤].*"):rep(numseparators) .. ")")} -- maybe the regex could be a little bit better?
+					if part1parts_cache[linee] == nil or part1 ~= part1parts_cache[linee][1] then
+						part1parts_cache[linee] = {part1, {part1:match("(.*" .. ("[^¤])¤([^¤].*"):rep(numseparators) .. ")")}} -- maybe the regex could be a little bit better?
+					end
 					local textxoffset = 0
 
-					for kn,vn in pairs(part1parts) do
+					for kn,vn in pairs(part1parts_cache[linee][2]) do
 						if singlecharmode and vn:sub(-2,-1) == "§" then
 							vn = vn:sub(1, -3)
 						end

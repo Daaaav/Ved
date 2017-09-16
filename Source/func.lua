@@ -471,6 +471,7 @@ function loadstate(new, extradata)
 		helparticlescroll = 0
 		helpeditingline = 0
 		onlefthelpbuttons = false
+		part1parts_cache = {}
 
 		-- Are we gonna use this for Ved help or for level notes?
 		if extradata == nil then
