@@ -17,6 +17,8 @@ function drawhelp()
 		love.graphics.setScissor(214+screenxoffset, 8, love.graphics.getWidth()-212-screenxoffset, love.graphics.getHeight()-16)
 		love.graphics.setColor(192,192,192,255)
 
+		local lastheaderwidth = 82
+
 		for k,s in pairs(helparticlecontent) do
 			if helparticlescroll+14+(10*linee) < -1024 or helparticlescroll+14+(10*linee) > 480 then
 				-- Don't render
@@ -32,6 +34,7 @@ function drawhelp()
 				local doublesize = false -- Only used for background colors, the font is just set
 
 				local singlecharmode = false
+				local bgexpandmode = false
 
 				local part1, part2 = s:match("(.*)\\(.*)")
 
@@ -112,7 +115,11 @@ function drawhelp()
 					elseif part2:sub(fl,fl) == "&" then
 						backgroundshift = true
 					elseif part2:sub(fl,fl) == "-" then
-						part1 = ("_"):rep(82)
+						part1 = ("_"):rep(doublesize and 41 or 82)
+					elseif part2:sub(fl,fl) == "=" then
+						part1 = ("_"):rep(lastheaderwidth)
+					elseif part2:sub(fl,fl) == "+" then
+						bgexpandmode = true
 					elseif part2:sub(fl,fl) == "(" then
 						-- Leaving this thing undocumented except in the code.
 						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
@@ -150,7 +157,11 @@ function drawhelp()
 						elseif #rowcolors[kn] >= 6 then
 							love.graphics.setColor(rowcolors[kn][4], rowcolors[kn][5], rowcolors[kn][6])
 							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
-							love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
+							if bgexpandmode and kn == #part1parts_cache[linee][2] then
+								love.graphics.rectangle("fill", bgx, bgy, 656-currenttextxoffset, doublesize and 20 or 10)
+							else
+								love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
+							end
 
 							setColorArr(rowcolors[kn])
 						else
@@ -159,12 +170,16 @@ function drawhelp()
 
 						love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
 					end
+
+					if doublesize then
+						lastheaderwidth = textxoffset/8
+					end
 				else
 					if rowcolors[1] ~= nil then
 						if #rowcolors[1] >= 6 then
 							love.graphics.setColor(rowcolors[1][4], rowcolors[1][5], rowcolors[1][6])
 							local bgx, bgy = 8+200+8+screenxoffset-1, helparticlescroll+8+(10*linee)+3
-							love.graphics.rectangle("fill", bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
+							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
 
 							setColorArr(rowcolors[1])
 						else
@@ -173,6 +188,10 @@ function drawhelp()
 					end
 
 					love.graphics.print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+
+					if doublesize then
+						lastheaderwidth = love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))/8
+					end
 				end
 				love.graphics.setFont(font8)
 				love.graphics.setColor(192,192,192,255)

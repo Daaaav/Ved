@@ -595,6 +595,8 @@ B - blue text (Victoria)
 & - Interpret next color code as background color instead of text color
 l - Link color (not yet supported)
 - - Horizontal line
++ - expand background color to end of line
+= - underline header (on next line)
 ) - Return to previous state
 
 Flags can be combined, like \rh or \hr for a red header
@@ -619,6 +621,7 @@ subj = "Getting started",
 imgs = {},
 cont = [[
 Getting started\wh#
+\C=
 
 This article will help you get started with using Ved. To get started with using
 the editor, you need to load a level, or create a new one.
@@ -652,6 +655,7 @@ subj = "Tile placement modes",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
 Tile placement modes\wh#
+\C=
 
 Ved supports three different modes to draw tiles.
 
@@ -684,6 +688,7 @@ subj = "Tools",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
 Tools\wh#
+\C=
 
 You can use the following tools to fill rooms in your level:
 
@@ -807,6 +812,7 @@ subj = "Script editor",
 imgs = {},
 cont = [[
 Script editor\wh#
+\C=
 
 With the script editor, you can manage and edit scripts in your level.
 
@@ -847,6 +853,7 @@ subj = "Shortcuts",
 imgs = {},
 cont = [[
 Editor shortcuts\wh#
+\C=
 
 Most shortcuts that can be used in VVVVVV can also be used in Ved.
 
@@ -925,6 +932,7 @@ subj = "Simp.script reference",
 imgs = {},
 cont = [[
 Simplified scripting reference\wh#
+\C=
 
 VVVVVV's simplified scripting language is a basic language that can be used to
 script VVVVVV levels.
@@ -1030,6 +1038,7 @@ subj = "Int. script reference",
 imgs = {},
 cont = [[
 Internal scripting reference\wh#
+\C=
 
 The internal scripting provides more power to scripters, but is also a bit more
 complex than simplified scripting.
@@ -1638,6 +1647,7 @@ subj = "Lists reference",
 imgs = {},
 cont = [[
 Lists reference\wh#
+\C=
 
 These are lists of numbers that are used in VVVVVV, mostly copied from forum
 posts. Thanks to everyone who assembled these lists!
@@ -1982,6 +1992,7 @@ subj = "Formatting",
 imgs = {},
 cont = [[
 Formatting\wh#
+\C=
 
 In notes you can use formatting codes to make your text larger, color it, and some
 other things. To add formatting to a line, add a backslash (\) at the end of it.\
@@ -2170,7 +2181,7 @@ cont = [[
 
 
 Credits\wh#
-
+\C=
 
 Ved is made by Dav999
 

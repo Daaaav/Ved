@@ -594,6 +594,8 @@ B - blue text (Victoria)
 & - Interpret next color code as background color instead of text color
 l - Link color (not yet supported)
 - - Horizontal line
++ - expand background color to end of line
+= - underline header (on next line)
 ) - Return to previous state
 
 Flags can be combined, like \rh or \hr for a red header
@@ -618,6 +620,7 @@ subj = "Aan de slag",
 imgs = {},
 cont = [[
 Aan de slag\wh#
+\C=
 
 Dit artikel zal je helpen om te beginnen met werken met Ved. Om naar de editor te
 gaan, moet je een level laden, of een nieuwe maken.
@@ -652,6 +655,7 @@ subj = "Plaatsingsmodi",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
 Plaatsingsmodi\wh#
+\C=
 
 Ved ondersteunt drie verschillende modi om muren te tekenen.
 
@@ -685,6 +689,7 @@ subj = "Tools",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
 Tools\wh#
+\C=
 
 Je kunt de volgende tools gebruiken om kamers te vullen in je level:
 
@@ -808,6 +813,7 @@ subj = "Scriptbewerker",
 imgs = {},
 cont = [[
 Scriptbewerker\wh#
+\C=
 
 Met de scriptbewerker kun je scripts in je level beheren en bewerken.
 
@@ -851,6 +857,7 @@ subj = "Snelkoppelingen",
 imgs = {},
 cont = [[
 Snelkoppelingen\wh#
+\C=
 
 De meeste snelkoppelingen die in VVVVVV gebruikt kunnen worden kunnen ook worden
 gebruikt in Ved.
@@ -930,6 +937,7 @@ subj = "Eenvoudige scripting",
 imgs = {},
 cont = [[
 Vereenvoudigde scripting\wh#
+\C=
 
 De vereenvoudigde scriptingtaal van VVVVVV is een soort taal die kan worden
 gebruikt om VVVVVV-levels mee te scripten.
@@ -1037,6 +1045,7 @@ subj = "Int. script reference",
 imgs = {},
 cont = [[Te vertalen\w&r
 Internal scripting reference\wh#
+\C=
 
 The internal scripting provides more power to scripters, but is also a bit more
 complex than simplified scripting.
@@ -1645,6 +1654,7 @@ subj = "Lĳsten",
 imgs = {},
 cont = [[Te vertalen\w&r
 Lĳsten\wh#
+\C=
 
 These are lists of numbers that are used in VVVVVV, mostly copied from forum
 posts. Thanks to everyone who assembled these lists!
@@ -1989,6 +1999,7 @@ subj = "Opmaak",
 imgs = {},
 cont = [[
 Opmaak\wh#
+\C=
 
 In notities kun je opmaakcodes gebruiken om je tekst groter te maken, het een
 kleur te geven, en nog wat dingen. Om opmaak toe te voegen aan een regel, typ een
@@ -2182,7 +2193,7 @@ cont = [[
 
 
 Credits\wh#
-
+\C=
 
 Ved is gemaakt door Dav999
 
