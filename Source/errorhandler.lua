@@ -97,6 +97,7 @@ function ved_showerror(msg)
 	-- Decide what's going to be in the message
 	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
+	local hasplugins = false
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
 	else
@@ -109,6 +110,7 @@ function ved_showerror(msg)
 				mainmessage = mainmessage .. ", " .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
 			end
 			i = true
+			hasplugins = true
 		end
 
 		if not i then
@@ -122,6 +124,36 @@ function ved_showerror(msg)
 		-- Make a file with a name of, for example, 1500000000_1.2.3_drawmaineditor_436.txt
 		local errorfile, errorline = msg:match("([^ ]+)%.lua:([0-9]+): .*")
 		local logfilename = "crash_logs/" .. os.time() .. "_" .. anythingbutnil(checkver) .. (intermediate_version and "-pre" or "") .. "_" .. anythingbutnil(errorfile):gsub("/", "__") .. "_" .. anythingbutnil(errorline) .. ".txt"
+		local pluginreport = ""
+		if hasplugins then
+			pluginreport = pluginreport .. "\n\nPlugin info:"
+			for k,v in pairs(plugins) do
+				pluginreport = pluginreport .. ("\n\t[" .. k .. "]\n"
+					.. "\t| Full name: " .. anythingbutnil(v.info.longname) .. "\n"
+					.. "\t| Author: " .. anythingbutnil(v.info.author) .. "\n"
+					.. "\t| Version: " .. anythingbutnil(v.info.version) .. "\n"
+					.. "\t| Supported: " .. (v.info.supported and "true" or "false") .. "\n"
+					.. "\t| Failed edits: " .. anythingbutnil(v.info.failededits) .. "\n"
+					.. "\t| Used hooks:"
+				)
+				local i = false
+				for k2,v2 in pairs(v.usedhooks) do
+					pluginreport = pluginreport .. "\n\t" .. (k2 == #v.usedhooks and "\\ \\ " or "| | ") .. v2
+					i = true
+				end
+				if not i then
+					pluginreport = pluginreport .. "\n\t\\ \\ (none)"
+				end
+			end
+
+			pluginreport = pluginreport .. "\n\nFiles edited by plugins:"
+			for k,v in pairs(pluginfileedits) do
+				pluginreport = pluginreport .. "\n\t[" .. k .. "]"
+				for k2,v2 in pairs(v) do
+					pluginreport = pluginreport .. "\n\t" .. (k2 == #v and "\\ " or "| ") .. v2.plugin
+				end
+			end
+		end
 		local contents = (mainmessage:gsub("\n    ", "\n") .. "\n"
 			.. "\n"
 			.. "Time: " .. os.date("%Y-%m-%d %H:%M:%S") .. " (" .. os.time() .. ")\n"
@@ -129,6 +161,7 @@ function ved_showerror(msg)
 			.. "Crash log reason: " .. (s == nil and "settings are nil" or "enabled normally") .. "\n"
 			.. "\n"
 			.. trace
+			.. pluginreport
 			.. "\n\nEOF"
 		)
 		if love.system.getOS() == "Windows" then
