@@ -440,6 +440,7 @@ ERR_VEDVERSION = "Versio de Ved:"
 ERR_LOVEVERSION = "Versio de LÖVE:"
 ERR_STATE = "Stato:"
 ERR_OS = "Operaciumo:"
+ERR_TIMESINCESTART = "Time since start:"
 ERR_PLUGINS = "Aldonaĵoj:"
 ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
@@ -460,6 +461,7 @@ ERR_LINESTOTAL = "%i linioj entute"
 ERR_SAVELEVEL = "Por konservi kopion de via nivelo, premu S"
 ERR_SAVESUCC = "Nivelo sukcese konservita kiel %s!"
 ERR_SAVEERROR = "Konserva eraro! %s"
+ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
 
 
 diffmessages = {

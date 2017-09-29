@@ -2,3 +2,6 @@
 -- This file gets loaded after the language files do, so keys can overwrite existing ones, and will show up in all languages.
 
 --L. = ""
+
+L.AUTOSAVECRASHLOGS = "Automatically save crash logs"
+L.MOREINFO = "More info"

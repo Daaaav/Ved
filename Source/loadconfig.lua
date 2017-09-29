@@ -92,6 +92,11 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
+	autosavecrashlogs =
+		{
+		default = true,
+		["type"] = "bool",
+		},
 	checkforupdates =
 		{
 		default = true,

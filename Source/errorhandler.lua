@@ -4,6 +4,7 @@ ERR_VEDVERSION = "Ved version:"
 ERR_LOVEVERSION = "LÖVE version:"
 ERR_STATE = "State:"
 ERR_OS = "OS:"
+ERR_TIMESINCESTART = "Time since start:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(not loaded)"
 ERR_PLUGINSNONE = "(none)"
@@ -24,10 +25,12 @@ ERR_LINESTOTAL = "%i lines in total"
 ERR_SAVELEVEL = "To save a copy of your level, press S"
 ERR_SAVESUCC = "Level saved successfully as %s!"
 ERR_SAVEERROR = "Save error! %s"
+ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
 
 
 function error_printer(msg, layer)
-	--print((debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
+	--return debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")
+	return debug.traceback()
 end
 
 function love.errhand(msg)
@@ -89,7 +92,57 @@ function ved_showerror(msg)
 		ctrl = "ctrl"
 	end
 
-	error_printer(msg, 2)
+	local trace = error_printer(msg, 2)
+
+	-- Decide what's going to be in the message
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+
+	if type(plugins) ~= "table" then
+		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
+	else
+		local i = false
+
+		for k,v in pairs(plugins) do
+			if not i then
+				mainmessage = mainmessage .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
+			else
+				mainmessage = mainmessage .. ", " .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
+			end
+			i = true
+		end
+
+		if not i then
+			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
+		end
+	end
+
+	-- Save the error to a crash log, if enabled. Do we even know if it's enabled?
+	local logwassaved = nil
+	if (s == nil or s.autosavecrashlogs) and love.filesystem.exists("crash_logs") then
+		-- Make a file with a name of, for example, 1500000000_1.2.3_drawmaineditor_436.txt
+		local errorfile, errorline = msg:match("([^ ]+)%.lua:([0-9]+): .*")
+		local logfilename = "crash_logs/" .. os.time() .. "_" .. anythingbutnil(checkver) .. (intermediate_version and "-pre" or "") .. "_" .. anythingbutnil(errorfile):gsub("/", "__") .. "_" .. anythingbutnil(errorline) .. ".txt"
+		local contents = (mainmessage:gsub("\n    ", "\n") .. "\n"
+			.. "\n"
+			.. "Time: " .. os.date("%Y-%m-%d %H:%M:%S") .. " (" .. os.time() .. ")\n"
+			.. "Debug mode: " .. (allowdebug and "enabled" or "disabled") .. "\n"
+			.. "Crash log reason: " .. (s == nil and "settings are nil" or "enabled normally") .. "\n"
+			.. "\n"
+			.. trace
+			.. "\n\nEOF"
+		)
+		if love.system.getOS() == "Windows" then
+			contents = contents:gsub("\n", "\r\n")
+		end
+		
+		if love.filesystem.exists(logfilename) then
+			love.filesystem.append(logfilename, contents)
+		else
+			love.filesystem.write(logfilename, contents)
+		end
+		print("Written crash log: " .. logfilename)
+		logwassaved = logfilename
+	end
 
 	if not love.window or not love.graphics or not love.event then
 		return
@@ -143,27 +196,6 @@ function ved_showerror(msg)
 		ctrl = "ctrl"
 	end
 
-
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
-
-	if type(plugins) ~= "table" then
-		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
-	else
-		local i = false
-
-		for k,v in pairs(plugins) do
-			if not i then
-				mainmessage = mainmessage .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
-			else
-				mainmessage = mainmessage .. ", " .. anythingbutnil(k) .. " (" .. anythingbutnil(v.info.version) .. ")"
-			end
-			i = true
-		end
-
-		if not i then
-			mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNONE)
-		end
-	end
 
 	table.insert(err, ERR_PLEASETELLDAV)
 	--[[
@@ -228,7 +260,7 @@ function ved_showerror(msg)
 		else
 			love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
 		end
-		love.graphics.rectangle("fill", pos-2, pos+40+40-1, love.graphics.getWidth()-(2*pos)+4, 56+8+8)
+		love.graphics.rectangle("fill", pos-2, pos+40+40-1, love.graphics.getWidth()-(2*pos)+4, 80)
 
 		-- Main text
 		love.graphics.setFont(font8)
@@ -240,12 +272,22 @@ function ved_showerror(msg)
 		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
-			love.graphics.printf(anythingbutnil(levelsavemsg), pos, pos+40+(16*8), love.graphics.getWidth() - pos)
+			love.graphics.printf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
 			love.graphics.setColor(255,255,255,255)
 		--else
 			--love.graphics.print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
 		end
 
+		if logwassaved ~= nil then
+			local text = string.format(ERR_LOGSAVED, love.filesystem.getSaveDirectory() .. "/" .. logwassaved)
+			if love.system.getOS() == "Windows" then
+				text = text:gsub("/", "\\")
+			end
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.print(text, pos+2, (love.graphics.getHeight()-24)+2)
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.print(text, pos, love.graphics.getHeight()-24)
+		end
 
 		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
 		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		

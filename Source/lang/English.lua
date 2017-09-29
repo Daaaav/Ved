@@ -439,6 +439,7 @@ ERR_VEDVERSION = "Ved version:"
 ERR_LOVEVERSION = "LÖVE version:"
 ERR_STATE = "State:"
 ERR_OS = "OS:"
+ERR_TIMESINCESTART = "Time since start:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(not loaded)"
 ERR_PLUGINSNONE = "(none)"
@@ -459,6 +460,7 @@ ERR_LINESTOTAL = "%i lines in total"
 ERR_SAVELEVEL = "To save a copy of your level, press S"
 ERR_SAVESUCC = "Level saved successfully as %s!"
 ERR_SAVEERROR = "Save error! %s"
+ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
 
 
 diffmessages = {

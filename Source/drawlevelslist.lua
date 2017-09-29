@@ -170,6 +170,9 @@ function drawlevelslist()
 		rbutton(L.PLUGINS, 1, 40)
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
+		if updatenotesavailable then
+			rbutton(L.MOREINFO, 11, 40, false, 20)
+		end
 		if backupscreen then
 			rbutton(L.RETURN, 0, nil, true)
 		else
@@ -190,18 +193,52 @@ function drawlevelslist()
 			love.graphics.setColor(255,128,0)
 		end
 		if not s.pcheckforupdates or opt_disableversioncheck then
-			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
+			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left") -- 40+120+16+3+8+30 = 217
 		elseif versionchecked ~= nil then		
 			if versionchecked == "connecterror" or versionchecked == "error" then
-				love.graphics.printf(L.VERSIONERROR .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
-			elseif versionchecked == "latest" then
-				love.graphics.printf(L.VERSIONUPTODATE .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
+				love.graphics.printf(L.VERSIONERROR .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
 			else
-				love.graphics.printf(langkeys(L.VERSIONOLD, {versionchecked}) .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
-				updatebutton = true
+				if updateversion == nil then
+					updateversion = ""
+					local currentarticle = 1
+					local currentarticlename = nil
+					local currentarticlecontents
+					local articlelines = explode("\n", versionchecked)
+					for k, v in pairs(articlelines) do
+						if v:sub(1,3) == "!>>" then
+							currentarticlename = v:sub(4,-1)
+							if (currentarticlename:sub(1,1) ~= "_" or allowdebug) then
+								if currentarticle == 1 then
+									updatenotesavailable = true
+								else
+									updatenotes[currentarticle].cont = table.concat(currentarticlecontents, "\n")
+								end
+								currentarticlecontents = {}
+								currentarticle = currentarticle + 1
+								updatenotes[currentarticle] = {subj = currentarticlename, imgs = {}, cont = nil}
+							end
+						else
+							if currentarticlename == "_VERSION" then
+								updateversion = updateversion .. v
+							end
+							if currentarticle ~= nil and (currentarticlename:sub(1,1) ~= "_" or allowdebug) then
+								table.insert(currentarticlecontents, v)
+							end
+						end
+					end
+					if currentarticle ~= 1 then
+						updatenotes[currentarticle].cont = table.concat(currentarticlecontents, "\n")
+					end
+				end
+				if updateversion == "latest" then
+					love.graphics.printf(L.VERSIONUPTODATE .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+				else
+					love.graphics.printf(langkeys(L.VERSIONOLD, {updateversion}) .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+					updatebutton = true
+				end
 			end
 		else
-			love.graphics.printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 40+120+16+3+8, 128-16, "left")
+			love.graphics.printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
 		end
 		if intermediate_version then
 			love.graphics.setColor(255,255,255)
@@ -225,6 +262,9 @@ function drawlevelslist()
 				openurl("http://ved.idea.informer.com/")
 
 				mousepressed = true
+			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then
+				-- Update notes and such
+				tostate(15, nil, {updatenotes, false})
 			elseif not mousepressed and onrbutton(0, nil, true) then
 				-- Backups/return
 				if backupscreen and currentbackupdir ~= "" then

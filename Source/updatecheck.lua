@@ -1,6 +1,6 @@
 checkver, nohttps = ...
 
-local requesturl = "tolp.nl/ved/version.php?sys=2&ver=" .. checkver
+local requesturl = "tolp.nl/ved/version.php?sys=3&ver=" .. checkver
 
 verchannel = love.thread.getChannel("version")
 
@@ -18,10 +18,10 @@ print("Finished version request.")
 
 if versioncheckedt == nil then
 	verchannel:push("connecterror")
-elseif versioncheckedt:sub(1,1) ~= ">" then
+elseif versioncheckedt:sub(1,3) ~= "!>>" then
 	verchannel:push("error")
 else
-	verchannel:push(versioncheckedt:sub(2,-1))
+	verchannel:push(versioncheckedt)
 end
 
 -- Other arguments returned by http(s).request: code, headers, status

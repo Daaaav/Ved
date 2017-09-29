@@ -439,6 +439,7 @@ ERR_VEDVERSION = "Версия Ved:"
 ERR_LOVEVERSION = "Версия LOVE:"
 ERR_STATE = "Статус:"
 ERR_OS = "ОС:"
+ERR_TIMESINCESTART = "Time since start:"
 ERR_PLUGINS = "Плагины:"
 ERR_PLUGINSNOTLOADED = "(не загружено)"
 ERR_PLUGINSNONE = "(нет)"
@@ -459,6 +460,7 @@ ERR_LINESTOTAL = "%i линий"
 ERR_SAVELEVEL = "Чтобы сохранить уровень, нажмите S."
 ERR_SAVESUCC = "Уровень сохранён как %s!"
 ERR_SAVEERROR = "Ошибка сохранения! %s"
+ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
 
 
 diffmessages = {

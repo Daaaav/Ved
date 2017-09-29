@@ -306,6 +306,9 @@ function love.load()
 	if not love.filesystem.exists("overwrite_backups") then
 		love.filesystem.createDirectory("overwrite_backups")
 	end
+	if not love.filesystem.exists("crash_logs") then
+		love.filesystem.createDirectory("crash_logs")
+	end
 
 	if s.pcheckforupdates and not opt_disableversioncheck then
 		updatecheckthread = love.thread.newThread("updatecheck.lua")
@@ -313,6 +316,8 @@ function love.load()
 		verchannel = love.thread.getChannel("version")
 		updatecheckthread:start(checkver, true)
 
+		updateversion = nil
+		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 		updatenotesavailable = false
 	end
 
@@ -523,6 +528,9 @@ function love.draw()
 			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
+		hoverdraw((s.autosavecrashlogs and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
+		love.graphics.print(L.AUTOSAVECRASHLOGS, 8+16+8, 8+(24*12)+4+2)
+
 		if s.pscale ~= s.scale then
 			love.graphics.setColor(255,128,0)
 			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
@@ -581,6 +589,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*10), 16, 16) then
 				-- Make backups of level files that are overwritten
 				s.enableoverwritebackups = not s.enableoverwritebackups
+			elseif mouseon(8, 8+(24*12), 16, 16) then
+				-- Auto save crash logs
+				s.autosavecrashlogs = not s.autosavecrashlogs
 
 			elseif onrbutton(0) then
 				-- Save

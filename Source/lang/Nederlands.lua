@@ -439,6 +439,7 @@ ERR_VEDVERSION = "Ved-versie:"
 ERR_LOVEVERSION = "LÖVE-versie:"
 ERR_STATE = "Staat:"
 ERR_OS = "Besturingssysteem:"
+ERR_TIMESINCESTART = "Tĳd sinds opstarten:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(niet geladen)"
 ERR_PLUGINSNONE = "(geen)"
@@ -459,6 +460,7 @@ ERR_LINESTOTAL = "%i regels in totaal"
 ERR_SAVELEVEL = "Om een kopie van je level op te slaan, druk op S"
 ERR_SAVESUCC = "Level succesvol opgeslagen als %s!"
 ERR_SAVEERROR = "Fout bĳ het opslaan! %s"
+ERR_LOGSAVED = "Meer informatie is te vinden in het crashlogboek:\n%s"
 
 
 diffmessages = {
