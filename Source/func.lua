@@ -302,6 +302,17 @@ function tostate(new, dontinitialize, extradata)
 	else
 		cons("State changed: " .. oldstate .. " => " .. state .. " (not initialized)")
 	end
+
+	if mapscreenshot ~= nil then
+		mapscreenshot = nil
+
+		-- Good time to garbage collect the old map away?
+		collectgarbage("collect")
+	end
+	if special_cursor then
+		love.mouse.setCursor()
+		special_cursor = false
+	end
 end
 
 function loadstate(new, extradata)
@@ -472,6 +483,12 @@ function loadstate(new, extradata)
 		helpeditingline = 0
 		onlefthelpbuttons = false
 		part1parts_cache = {}
+		cachedlink = nil
+		matching_url = nil
+		matching_article = nil
+		matching_anchor = nil
+		matching_article_num = nil
+		matching_anchor_line = nil
 
 		-- Are we gonna use this for Ved help or for level notes?
 		if extradata == nil then
@@ -566,13 +583,6 @@ function loadstate(new, extradata)
 	end
 
 	hook("func_loadstate")
-
-	if mapscreenshot ~= nil then
-		mapscreenshot = nil
-
-		-- Good time to garbage collect the old map away?
-		collectgarbage("collect")
-	end
 end
 
 -- Go to state allocated by a plugin
@@ -2386,6 +2396,18 @@ end
 
 function format_date(timestamp)
 	return os.date(s.dateformat, timestamp)
+end
+
+function drawlink(link)
+	love.graphics.setColor(255,255,255,192)
+	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-10, font8:getWidth(link)+8, 10)
+	love.graphics.setColor(0,0,0)
+	love.graphics.print(link, 4, love.graphics.getHeight()-7)
+	love.graphics.setColor(255,255,255)
+end
+
+function unrecognized_rcmreturn()
+	dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
 end
 
 hook("func")

@@ -634,7 +634,7 @@ Aan de linkerkant staan de verschillende gereedschappen, de tools. De meeste too
 hebben subtools die rechts ervan worden weergegeven. Om tussen tools te schakelen
 kun je de bĳbehorende snelkoppelingen gebruiken of scrollen met shift of ctrl
 ingedrukt. Om tussen subtools te schakelen kun je overal scrollen. Kĳk voor meer
-informatie over de tools op de "Tools"-helppagina.
+informatie over de tools op de ¤Tools¤-helppagina.\nwl
 Je kunt op entiteiten klikken met de rechtermuisknop voor een menu met acties voor
 die entiteit. Om entiteiten te verwĳderen zonder dat menu te gebruiken kun je er
 rechts op klikken met shift ingedrukt.
@@ -1662,6 +1662,17 @@ These are lists of numbers that are used in VVVVVV, mostly copied from forum
 posts. Thanks to everyone who assembled these lists!
 
 
+Index\w&Z+
+\&Z+
+#Music numbers (simplified scripting)\C&Z+l
+#Music numbers (internal)\C&Z+l
+#Sound effect numbers\C&Z+l
+#Entities\C&Z+l
+#Colors for createentity() crewmates\C&Z+l
+#Enemy movement types\C&Z+l
+#Gamestates\C&Z+l
+
+
 Music numbers (simplified scripting)\h#
 
 0 - Silence (no music)
@@ -1852,7 +1863,7 @@ Enemy movement types\h#
 3 - Bouncing left and right, starts right.
 4, 7, 11 - Moves right until collision.
 5 - Same as above, only acts weird when it collides.
-    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
+    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nCl
 6 - Bouncing up and down, but only reaches a certain y position before going back
     down. Used in "Trench warfare".
 8, 9 - For moving platforms they're conveyors, and they're still for anything else

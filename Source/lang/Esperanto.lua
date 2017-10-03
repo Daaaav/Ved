@@ -634,7 +634,7 @@ The editor\h#
 On the left side, you will find the tools selection. Most tools have subtools that
 will be listed to the right of it. To switch between tools, use their respective
 shortcut or scroll with shift or ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the "Tools"
+can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
 help page.
 Entities can be right clicked for a menu of actions for that entity. To delete
 entities without having to use the context menu, shift-right click on them.
@@ -1655,6 +1655,17 @@ These are lists of numbers that are used in VVVVVV, mostly copied from forum
 posts. Thanks to everyone who assembled these lists!
 
 
+Index\w&Z+
+\&Z+
+#Music numbers (simplified scripting)\C&Z+l
+#Music numbers (internal)\C&Z+l
+#Sound effect numbers\C&Z+l
+#Entities\C&Z+l
+#Colors for createentity() crewmates\C&Z+l
+#Enemy movement types\C&Z+l
+#Gamestates\C&Z+l
+
+
 Music numbers (simplified scripting)\h#
 
 0 - Silence (no music)
@@ -1845,7 +1856,7 @@ Enemy movement types\h#
 3 - Bouncing left and right, starts right.
 4, 7, 11 - Moves right until collision.
 5 - Same as above, only acts weird when it collides.
-    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nC
+    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nCl
 6 - Bouncing up and down, but only reaches a certain y position before going back
     down. Used in "Trench warfare".
 8, 9 - For moving platforms they're conveyors, and they're still for anything else

@@ -148,6 +148,10 @@ function love.load()
 	cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
 	cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
 
+	hand_cursor = love.mouse.getSystemCursor("hand")
+	forbidden_cursor = love.mouse.getSystemCursor("no")
+	special_cursor = false
+
 	scriptboximg = {}
 	scriptboximg[1] = love.graphics.newImage("cursor/script1.png")
 	scriptboximg[2] = love.graphics.newImage("cursor/script2.png")
@@ -1191,7 +1195,7 @@ function love.update(dt)
 					dialog.new(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 				end
 			else
-				dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+				unrecognized_rcmreturn()
 			end
 		elseif RCMid:sub(1, 4) == "spt_" then
 			local rvnum = tonumber(RCMid:sub(5, -1))
@@ -1216,7 +1220,7 @@ function love.update(dt)
 				dialog.new(L.NEWNAME, L.RENAMESCRIPT, 1, 4, 19)
 				input = rvnum
 			else
-				dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+				unrecognized_rcmreturn()
 			end
 		elseif RCMid == "music" then
 			for k,v in pairs(listmusicnamesids) do
@@ -1243,7 +1247,24 @@ function love.update(dt)
 				dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, L.SAVEBACKUP, 1, 4, 26)
 				input = RCMid:sub(5, -1)
 			else
-				dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+				unrecognized_rcmreturn()
+			end
+		elseif RCMid:sub(1, 4) == "lnk_" then
+			if RCMreturn == L.COPYLINK then
+				love.system.setClipboardText(RCMid:sub(5, -1))
+			--[[
+			elseif RCMreturn == L.OPENLINK then
+				openurl(RCMid:sub(5, -1))
+			elseif RCMreturn == L.OPENARTICLE then
+				for rvnum = 1, #helppages do
+					if RCMid:sub(5, -1) == helppages[rvnum].subj then
+						gotohelparticle(rvnum)
+						break
+					end
+				end
+			]]
+			else
+				unrecognized_rcmreturn()
 			end
 		else
 			dialog.new("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)

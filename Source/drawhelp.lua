@@ -18,6 +18,7 @@ function drawhelp()
 		love.graphics.setColor(192,192,192,255)
 
 		local lastheaderwidth = 82
+		local hoveringlink = nil
 
 		for k,s in pairs(helparticlecontent) do
 			if helparticlescroll+14+(10*linee) < -1024 or helparticlescroll+14+(10*linee) > 480 then
@@ -30,6 +31,7 @@ function drawhelp()
 
 				local rowcolors = {}
 				backgroundshift = false
+				local rowlinkmodes = {}
 
 				local doublesize = false -- Only used for background colors, the font is just set
 
@@ -111,7 +113,10 @@ function drawhelp()
 					elseif part2:sub(fl,fl) == "n" then
 						insertrowcolor(rowcolors, {192,192,192})
 					elseif part2:sub(fl,fl) == "l" then
+						rowlinkmodes[math.max(#rowcolors, 1)] = 2
+					elseif part2:sub(fl,fl) == "L" then
 						insertrowcolor(rowcolors, {192,192,192})
+						rowlinkmodes[#rowcolors] = 1
 					elseif part2:sub(fl,fl) == "&" then
 						backgroundshift = true
 					elseif part2:sub(fl,fl) == "-" then
@@ -143,42 +148,72 @@ function drawhelp()
 						part1parts_cache[linee] = {part1, {part1:match("(.*" .. ("[^¤])¤([^¤].*"):rep(numseparators) .. ")")}} -- maybe the regex could be a little bit better?
 					end
 					local textxoffset = 0
+					local link = nil
 
 					for kn,vn in pairs(part1parts_cache[linee][2]) do
 						if singlecharmode and vn:sub(-2,-1) == "§" then
 							vn = vn:sub(1, -3)
 						end
-
-						local currenttextxoffset = textxoffset
-						textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))
-
-						if rowcolors[kn] == nil then
-							love.graphics.setColor(192,192,192,255)
-						elseif #rowcolors[kn] >= 6 then
-							love.graphics.setColor(rowcolors[kn][4], rowcolors[kn][5], rowcolors[kn][6])
-							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
-							if bgexpandmode and kn == #part1parts_cache[linee][2] then
-								love.graphics.rectangle("fill", bgx, bgy, 656-currenttextxoffset, doublesize and 20 or 10)
-							else
-								love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
-							end
-
-							setColorArr(rowcolors[kn])
-						else
-							setColorArr(rowcolors[kn])
+						-- We never actually want that ugly # to show up if we're linking to anchors in the same article
+						local startinghash = false
+						if rowlinkmodes[kn] == 2 and vn:sub(1,1) == "#" then
+							vn = vn:sub(2,-1)
+							startinghash = true
 						end
 
-						love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+						if rowlinkmodes[kn] ~= 1 then
+							-- It's not the link belonging to a link text
+							local currenttextxoffset = textxoffset
+							textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))
+							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
+
+							if rowcolors[kn] == nil then
+								love.graphics.setColor(192,192,192,255)
+							elseif #rowcolors[kn] >= 6 then
+								love.graphics.setColor(rowcolors[kn][4], rowcolors[kn][5], rowcolors[kn][6])
+								if bgexpandmode and kn == #part1parts_cache[linee][2] then
+									love.graphics.rectangle("fill", bgx, bgy, 656-currenttextxoffset, doublesize and 20 or 10)
+								else
+									love.graphics.rectangle("fill", bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10)
+								end
+
+								setColorArr(rowcolors[kn])
+							else
+								setColorArr(rowcolors[kn])
+							end
+
+							love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+
+							if rowlinkmodes[kn] == 2 and mouseon(bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10) then
+								if link == nil then
+									link = vn
+								end
+								hoveringlink = link
+							end
+						else
+							-- Link which is not shown here
+							link = vn
+						end
+
+						if startinghash then
+							link = "#" .. link
+						end
 					end
 
 					if doublesize then
 						lastheaderwidth = textxoffset/8
 					end
 				else
+					-- We never actually want that ugly # to show up if we're linking to anchors in the same article
+					local startinghash = false
+					if rowlinkmodes[1] == 2 and part1:sub(1,1) == "#" then
+						part1 = part1:sub(2,-1)
+						startinghash = true
+					end
+					local bgx, bgy = 8+200+8+screenxoffset-1, helparticlescroll+8+(10*linee)+3
 					if rowcolors[1] ~= nil then
 						if #rowcolors[1] >= 6 then
 							love.graphics.setColor(rowcolors[1][4], rowcolors[1][5], rowcolors[1][6])
-							local bgx, bgy = 8+200+8+screenxoffset-1, helparticlescroll+8+(10*linee)+3
 							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
 
 							setColorArr(rowcolors[1])
@@ -188,6 +223,14 @@ function drawhelp()
 					end
 
 					love.graphics.print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+
+					--love.graphics.rectangle("line", bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
+					if rowlinkmodes[1] == 2 and mouseon(bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10) then
+						hoveringlink = part1
+						if startinghash then
+							hoveringlink = "#" .. hoveringlink
+						end
+					end
 
 					if doublesize then
 						lastheaderwidth = love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))/8
@@ -266,6 +309,82 @@ function drawhelp()
 					end
 				end
 			end
+		end
+
+		-- Were we hovering over a link?
+		if hoveringlink ~= nil and nodialog then
+			drawlink(hoveringlink)
+			if not special_cursor or hoveringlink ~= cachedlink then
+				matching_url = hoveringlink:match("https?://[A-Za-z0-9%-%._~:/%?#%[%]@!%$&'%(%)%*%+,;=%%]+$") ~= nil
+				matching_article = false
+				matching_anchor = false
+				if not matching_url then
+					if hoveringlink:find("#") then
+						local part1, part2 = hoveringlink:match("(.*)#(.*)")
+						if part1 == "" then
+							matching_article_num = helparticle -- current article
+						else
+							for rvnum = 1, #helppages do
+								if part1 == helppages[rvnum].subj then
+									matching_article_num = rvnum
+									break
+								end
+							end
+						end
+						if part2 == "" then
+							matching_anchor = true
+							matching_anchor_line = 1
+						elseif matching_article_num ~= nil then
+							for k,s in pairs(explode("\n", helppages[matching_article_num].cont)) do
+								if s:find("\\") and s:match(".*\\[^\\]*#[^\\]*") and part2 == s:match("(.*)\\.*"):gsub("¤", "") then
+									matching_anchor = true
+									matching_anchor_line = k
+									break
+								end
+							end
+						end
+					else
+						for rvnum = 1, #helppages do
+							if hoveringlink == helppages[rvnum].subj then
+								matching_article = true
+								matching_article_num = rvnum
+								break
+							end
+						end
+					end
+				end
+				if matching_url or matching_article or matching_anchor then
+					love.mouse.setCursor(hand_cursor)
+				else
+					love.mouse.setCursor(forbidden_cursor)
+				end
+				special_cursor = true
+				cachedlink = hoveringlink
+			end
+			if not mousepressed and love.mouse.isDown("l") then
+				if matching_url then
+					openurl(hoveringlink)
+				elseif matching_article then
+					gotohelparticle(matching_article_num)
+				elseif matching_anchor then
+					gotohelparticle(matching_article_num)
+					helparticlescroll = (matching_anchor_line-1)*-10
+					handleScrolling(false, "wd", 0)
+				end
+			elseif love.mouse.isDown("r") then
+				if matching_url then
+					rightclickmenu.create({L.COPYLINK}, "lnk_" .. hoveringlink)
+				elseif not matching_article and not matching_anchor then
+					rightclickmenu.create({L.COPYLINK}, "lnk_" .. hoveringlink)
+				end
+			end
+		elseif special_cursor then
+			love.mouse.setCursor()
+			special_cursor = false
+		end
+
+		if love.mouse.isDown("l") and nodialog then
+			mousepressed = true
 		end
 	end
 
