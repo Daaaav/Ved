@@ -3,8 +3,8 @@ function returnusedflags(usedflagsA, outofrangeflagsA)
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			local explodedscript = explode("\n", v)
 
-			for k1, v1 in pairs(explodedscript) do
-				local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v1, "%(", ","), "%)", ","), " ", ""))
+			for k2, v2 in pairs(explodedscript) do
+				local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v2, "%(", ","), "%)", ","), " ", ""))
 
 				if (explcommaline[1] == "flag" or explcommaline[1] == "ifflag" or explcommaline[1] == "customifflag") and explcommaline[2] ~= nil and tonumber(explcommaline[2]) ~= nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
@@ -499,6 +499,36 @@ function findscriptreferences(argscriptname)
 	end
 
 	return entityuses, scriptuses
+end
+
+function findusedscripts()
+	local usedscripts = {} -- the keys are the script names here, for an easier and more efficient (O(1)) lookup
+	local count = 0
+
+	for k,v in pairs(entitydata) do
+		if (v.t == 18 or v.t == 19) and scripts[v.data] ~= nil then
+			usedscripts[v.data] = true
+		end
+	end
+
+	for rvnum = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+
+			partss = explode(",", v2)
+
+			if (partss[1] == "iftrinkets" or partss[1] == "customiftrinkets" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
+				usedscripts[partss[3]] = true
+			end
+		end
+	end
+
+	-- Now count the amount of items, because unfortunately # doesn't work well for tables with non-sequential keys
+	for _ in pairs(usedscripts) do
+		count = count + 1
+	end
+
+	return usedscripts, count
 end
 
 function editorjumpscript(argscriptname, goingback, toline)

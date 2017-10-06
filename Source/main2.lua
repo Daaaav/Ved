@@ -415,37 +415,48 @@ function love.draw()
 			love.graphics.printf(k, 8, 8+(24*j)+4+2, 640, "center")
 		end
 		]]
-		j = -1
+		local j = -1
 		for rvnum = #scriptnames, 1, -1 do
-			j = j + 1
-			hoverrectangle(128,128,128,128, 8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16)
-			love.graphics.printf(scriptnames[rvnum], 8, scriptlistscroll+8+(24*j)+4+2, screenoffset+640-8-24, "center")
+			if scriptdisplay_used and scriptdisplay_unused
+			or scriptdisplay_used and usedscripts[scriptnames[rvnum]]
+			or scriptdisplay_unused and not usedscripts[scriptnames[rvnum]]
+			then
+				j = j + 1
+				hoverrectangle(128,128,128,128, 8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16)
+				love.graphics.printf(scriptnames[rvnum], 8, scriptlistscroll+8+(24*j)+4+2, screenoffset+640-8-24, "center")
 
-			-- Are we clicking on this?
-			if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
-				if love.mouse.isDown("l") then
-					--##SCRIPT##  DONE
-					scriptineditor(scriptnames[rvnum], rvnum)
-					--scriptname = scriptnames[rvnum]
-					--scriptlines = table.copy(scripts[scriptnames[rvnum]])
-					--processflaglabels()
-					--bumpscript(rvnum)
-					--tostate(3)
-				elseif love.mouse.isDown("r") then
-					rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
+				-- Are we clicking on this?
+				if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
+					if love.mouse.isDown("l") then
+						--##SCRIPT##  DONE
+						scriptineditor(scriptnames[rvnum], rvnum)
+						--scriptname = scriptnames[rvnum]
+						--scriptlines = table.copy(scripts[scriptnames[rvnum]])
+						--processflaglabels()
+						--bumpscript(rvnum)
+						--tostate(3)
+					elseif love.mouse.isDown("r") then
+						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
+					end
 				end
 			end
 		end
 
 		-- Scrollbar
-		local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 8, love.graphics.getHeight()-16, (#scriptnames*24-8), (-scriptlistscroll)/((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
+		local newperonetage = scrollbar(love.graphics.getWidth()-(128-8)-24, 8, love.graphics.getHeight()-16, ((j+1)*24-8), (-scriptlistscroll)/(((j+1)*24-8)-(love.graphics.getHeight()-16)))
 
 		if newperonetage ~= nil then
-			scriptlistscroll = -(newperonetage*((#scriptnames*24-8)-(love.graphics.getHeight()-16)))
+			scriptlistscroll = -(newperonetage*(((j+1)*24-8)-(love.graphics.getHeight()-16)))
 		end
 
 		rbutton(L.NEW, 0)
 		rbutton(L.FLAGS, 1)
+
+		love.graphics.printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 86, 112, "center")
+		hoverdraw((scriptdisplay_used and checkon or checkoff), love.graphics.getWidth()-120, 104, 16, 16, 2)
+		love.graphics.print(L.SCRIPTDISPLAY_USED, (love.graphics.getWidth()-120)+24, 110)
+		hoverdraw((scriptdisplay_unused and checkon or checkoff), love.graphics.getWidth()-120, 128, 16, 16, 2)
+		love.graphics.print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 134)
 
 		-- Script count
 		love.graphics.printf(L.COUNT .. #scriptnames .. "/500", love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
@@ -453,7 +464,8 @@ function love.draw()
 		rbutton(L.RETURN, 0, nil, true)
 
 		-- Buttons again
-		if nodialog and love.mouse.isDown("l") then
+		if nodialog and not mousepressed and love.mouse.isDown("l") then
+			local changed_scriptdisplay = false
 			if onrbutton(0) then
 				-- New
 				startmultiinput({""})
@@ -462,10 +474,32 @@ function love.draw()
 				-- Flags
 				mousepressed = true
 				tostate(19, false)
-			elseif not mousepressed and onrbutton(0, nil, true) then
+			elseif onrbutton(0, nil, true) then
 				-- Return
 				tostate(1, true)
+			elseif mouseon(love.graphics.getWidth()-120, 104, 16, 16) then
+				-- Show used
+				scriptdisplay_used = not scriptdisplay_used
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_unused = true
+				end
+				changed_scriptdisplay = true
+			elseif mouseon(love.graphics.getWidth()-120, 128, 16, 16) then
+				-- Show unused
+				scriptdisplay_unused = not scriptdisplay_unused
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_used = true
+				end
+				changed_scriptdisplay = true
 			end
+			if changed_scriptdisplay then
+				scriptlistscroll = 0
+				if usedscripts == nil then
+					usedscripts, n_usedscripts = findusedscripts()
+				end
+			end
+
+			mousepressed = true
 		end
 	elseif state == 11 then
 		drawsearch()

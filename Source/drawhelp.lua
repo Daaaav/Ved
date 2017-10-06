@@ -14,7 +14,7 @@ function drawhelp()
 
 		--for s in string.gmatch(LH[helparticle].cont, ".*\n") do
 		-- 8+200+8+...-2: 214, 8+200+8-4: 212
-		love.graphics.setScissor(214+screenxoffset, 8, love.graphics.getWidth()-212-screenxoffset, love.graphics.getHeight()-16)
+		love.graphics.setScissor(214+screenxoffset, 8, love.graphics.getWidth()-214-screenxoffset, love.graphics.getHeight()-16)
 		love.graphics.setColor(192,192,192,255)
 
 		local lastheaderwidth = 82

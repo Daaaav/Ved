@@ -6,8 +6,6 @@
 L.AUTOSAVECRASHLOGS = "Automatically save crash logs"
 L.MOREINFO = "More info"
 L.COPYLINK = "Copy link"
---[[
-L.OPENLINK = "Open link"
-L.OPENARTICLE = "Open article"
-L.JUMPTOANCHOR = "Jump to anchor"
-]]
+L.SCRIPTDISPLAY = "Show"
+L.SCRIPTDISPLAY_USED = "Used"
+L.SCRIPTDISPLAY_UNUSED = "Unused"

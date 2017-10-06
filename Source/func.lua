@@ -458,6 +458,10 @@ function loadstate(new, extradata)
 		dialog.new("Not much to see here. Other than that I got this working.\n\nAhem.\n\n\"Are you absolutely sure you want to delete everything?\"", "", 1, 3, 1)
 	elseif new == 10 then
 		scriptlistscroll = 0
+		usedscripts = nil
+		n_usedscripts = nil
+		scriptdisplay_used = true
+		scriptdisplay_unused = true
 	elseif new == 11 then
 		startinput()
 		searchscripts = {}; searchrooms = {}; searchnotes = {}
@@ -750,29 +754,17 @@ end
 
 function mousein(x1, y1, x2, y2)
 	-- Determines whether mouse is in a box with corners x1,y1 and x2,y2
-	if (love.mouse.getX() >= x1) and (love.mouse.getX() <= x2) and (love.mouse.getY() >= y1) and (love.mouse.getY() <= y2) then
-		return true
-	else
-		return false
-	end
+	return (love.mouse.getX() >= x1) and (love.mouse.getX() <= x2) and (love.mouse.getY() >= y1) and (love.mouse.getY() <= y2)
 end
 
 function mouseon(x, y, w, h)
 	-- Determines whether mouse is on a box with top left corner x1,y1 and width w and height h
-	if (love.mouse.getX() >= x) and (love.mouse.getX() < x+w) and (love.mouse.getY() >= y) and (love.mouse.getY() < y+h) then
-		return true
-	else
-		return false
-	end
+	return (love.mouse.getX() >= x) and (love.mouse.getX() < x+w) and (love.mouse.getY() >= y) and (love.mouse.getY() < y+h)
 end
 
 function lockablemouseon(x, y, w, h)
 	-- Determines whether mouse is on a box with top left corner x1,y1 and width w and height h - but locked x and y (with [ or ]) is observed
-	if (getlockablemouseX() >= x) and (getlockablemouseX() < x+w) and (getlockablemouseY() >= y) and (getlockablemouseY() < y+h) then
-		return true
-	else
-		return false
-	end
+	return (getlockablemouseX() >= x) and (getlockablemouseX() < x+w) and (getlockablemouseY() >= y) and (getlockablemouseY() < y+h)
 end
 
 function lefttoolscrollbounds()
@@ -1890,8 +1882,16 @@ function handleScrolling(viakeyboard, mkinput, customdistance)
 					scriptlistscroll = 0
 				end
 			elseif direction == "d" then
+				local ndisplayedscripts = 0
+				if scriptdisplay_used and scriptdisplay_unused then
+					ndisplayedscripts = #scriptnames
+				elseif scriptdisplay_used then
+					ndisplayedscripts = n_usedscripts
+				elseif scriptdisplay_unused then
+					ndisplayedscripts = #scriptnames - n_usedscripts
+				end
 				scriptlistscroll = scriptlistscroll - distance
-				local upperbound = ((#scriptnames*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+				local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 				if -scriptlistscroll > upperbound then
 					scriptlistscroll = math.min(-upperbound, 0)
 				end
