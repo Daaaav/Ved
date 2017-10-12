@@ -275,12 +275,12 @@ by ]] .. v.info.author .. [[, version ]] .. v.info.version .. [[
 			cont = (i and [[
 Plugins\wh#
 
-Please go to https://tolp.nl/ved/plugins.php
+Please go to ¤https://tolp.nl/ved/plugins.php\nCl
 for more information about plugins and hooks.
 ]] or [[
 No plugins\wh#
 
-You do not have any plugins yet. Please go to https://tolp.nl/ved/plugins.php
+You do not have any plugins yet. Please go to ¤https://tolp.nl/ved/plugins.php\nCl
 for more information about plugins and hooks.
 ]])
 		})
