@@ -2021,10 +2021,10 @@ volgende codes gebruiken, in welke volgorde dan ook:
 
 h - Dubbele lettergrootte\h
 
-# - Anker (nog niet ingebouwd). Er zal een manier komen om snel naar ankers te\#
-    springen/verwĳzen.
+# - Anker. Je kunt snel naar ankers springen met ¤#Links¤links¤.\nLCl
 - - Horizontale lĳn:
 \-
+= - Horizontale lĳn onder grote tekst
 
 Tekstkleuren:\h#
 
@@ -2054,6 +2054,12 @@ Grote oranje tekst ("oh" is hetzelfde)\ho\
 
 Grote oranje tekst ("oh" is hetzelfde)\ho
 
+\-
+Onderstreepte grote tekst\wh\
+\r=\
+
+Onderstreepte grote tekst\wh
+\r=
 \-
 
 Meerdere kleuren op een regel gebruiken\h#
@@ -2100,12 +2106,17 @@ en dan een kleurcode voor de achtergrondkleur. Dit kan gedaan worden in combinat
 met het systeem met ¤ zoals hierboven beschreven, maar bedenk dat gewone
 tekstkleuren wel het nieuwe "blok" starten, maar achtergrondkleuren niet. De
 volgende voorbeelden gebruiken spaties om alles leesbaarder te maken, maar dit
-hoeft niet.
+hoeft niet. Je kunt de code¤ + ¤gebruiken om de (laatste) achtergrondkleur door te\nY
+trekken naar het einde van de regel.
 
 \-
 Zwarte tekst op witte achtergrond!\z&w\
 
 Zwarte tekst op witte achtergrond!\z&w
+\-
+Zwarte tekst op doorgetrokken witte achtergrond!\z&w+\
+
+Zwarte tekst op doorgetrokken witte achtergrond!\z&w+
 \-
 Rood op geel¤¤, ¤¤Zwart op wit¤¤ (spaties verbeteren de leesbaarheid)\r&y n z&w\
 
@@ -2162,6 +2173,74 @@ Als je wilt kun je ook grafische kunst maken met achtergrondkleuren:
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
           \&o
+\-
+
+Links\h#
+
+Links kunnen voor twee dingen worden gebruikt: het linken naar ergens anders in de
+artikelen/notities, of het linken naar websites. Links gebruiken de semi-kleurcode
+l¤. Deze code schakelt niet naar het volgende "gekleurde blok", het is alleen van\Y
+toepassing op het huidige blok, in tegenstelling tot de normale kleuren (wanneer
+ze niet als achtergrondkleur gebruikt worden). Het verandert de kleur ook niet,
+dus je kunt zelf de stĳl van de link bepalen.
+
+Je kunt naar artikelen linken door simpelweg de naam van het artikel te gebruiken:
+
+\-
+Tools\bl\
+
+Tools\bl
+\-
+
+Als je hierboven op "Tools" klikt ga je naar het artikel genaamd "Tools". Ik heb
+hier de kleurcode¤ b ¤gebruikt om de link blauw te maken, en zoals je kunt zien is\nb
+de¤ l ¤van toepassing op datzelfde gekleurde gedeelte.\nY
+
+Je kunt een koppeling maken naar een ankers door een¤ # ¤te gebruiken gevolgd door
+alle tekst op die regel. (Gevallen van¤ ¤¤ ¤worden daar volledig genegeerd.) Je\nY
+kunt naar de bovenkant van een artikel linken met alleen een hekje (¤#§¤).\nY(
+
+\-
+#Meerdere kleuren op een regel gebruiken\bl\
+
+#Meerdere kleuren op een regel gebruiken\bl
+\-
+
+Je kunt op een soortgelĳke manier naar een anker in een ander artikel linken:
+
+\-
+Lĳsten#Gamestates\bl\
+
+Lĳsten#Gamestates\bl
+\-
+
+Linken naar websites is ook eenvoudig:
+
+\-
+https://example.com/\bl\
+
+https://example.com/\bl
+\-
+
+Je kunt een kleurblok met kleurcode¤ L ¤gebruiken dat de bestemming van de link\nY
+bevat vóór de tekst van de link, en zo de link een andere tekst laten zien:
+
+\-
+Tools¤¤Ga naar een ander artikel\Lbl\
+
+Tools¤Ga naar een ander artikel\Lbl
+\-
+Klik ¤¤Tools¤¤hier¤¤ om naar een ander artikel te gaan\nLbl\
+
+Klik ¤Tools¤hier¤ om naar een ander artikel te gaan\nLbl
+\-
+[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+
+[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+\-
+#Links¤¤ Knop A ¤¤ §¤¤#Links¤¤ Knop B \L w&Zl n L w&Z l(\
+
+#Links¤ Knop A ¤ §¤#Links¤ Knop B \L w&Zl n L w&Z l(
 \-
 
 Afbeeldingen (alleen beschikbaar in\h#

@@ -2012,10 +2012,10 @@ After the \, you can add any amount of the following characters, in any order:\
 
 h - Double font size\h
 
-# - Anchor (not yet implemented). There will be a way to switch/link to anchors\#
-    quickly.
+# - Anchor. You can jump to anchors quickly with ¤#Links¤links¤.\nLCl
 - - Horizontal line:
 \-
+= - Horizontal line underneath large text
 
 Text colors:\h#
 
@@ -2045,6 +2045,12 @@ Large orange text ("oh" has same result)\ho\
 
 Large orange text ("oh" has same result)\ho
 
+\-
+Underlined large text\wh\
+\r=\
+
+Underlined large text\wh
+\r=
 \-
 
 Using multiple colors on a line\h#
@@ -2088,12 +2094,17 @@ colors. To do this, you can put¤ & ¤after the regular text color code, and the
 color code for the background color. This can be done in combination with the ¤
 system described above, note that regular text colors start the next "block",
 but background colors do not. The following examples use spaces to make everything
-more readable, but this is completely optional.
+more readable, but this is completely optional. You can use the code¤ + ¤to expand\nY
+the (last) background color to the end of the line.
 
 \-
 Black text on white background!\z&w\
 
 Black text on white background!\z&w
+\-
+Black text on expanded white background!\z&w+\
+
+Black text on expanded white background!\z&w+
 \-
 Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
 
@@ -2150,6 +2161,73 @@ If you like, you can also make graphics using background colors:
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
           \&o
+\-
+
+Links\h#
+
+Links can be used for two things: linking to somewhere else in the articles/notes,
+or linking to websites. Links use the semi-color code¤ l¤. This code does not switch\nY
+to the next "colored block", it only applies to the current one, as opposed to
+regular (non-background) color codes. It also does not change color, so you can
+change the style of the link to anything you want.
+
+You can link to articles by simply using the name of the article:
+
+\-
+Tools\bl\
+
+Tools\bl
+\-
+
+Clicking the "Tools" above will bring you to the Tools help article. I used the
+color code¤ b ¤here to make the link blue, and as you can see, the¤ l ¤applies to\nbnY
+that same colored part.
+
+You can link to anchors in the same article by linking to a¤ # ¤followed by all text\nY
+on that line. (Instances of¤ ¤¤ ¤are completely ignored there.) You can link to the\nY
+top of the article with just a hash character (¤#§¤).\nY(
+
+\-
+#Using multiple colors on a line\bl\
+
+#Using multiple colors on a line\bl
+\-
+
+You can link to an anchor in a different article in a similar way:
+
+\-
+Lists reference#Gamestates\bl\
+
+Lists reference#Gamestates\bl
+\-
+
+Linking to websites is straightforward too:
+
+\-
+https://example.com/\bl\
+
+https://example.com/\bl
+\-
+
+You can use a color block with color code¤ L ¤that contains the actual destination\nY
+before the link text, and make the link show a different text that way:
+
+\-
+Tools¤¤Go to another article\Lbl\
+
+Tools¤Go to another article\Lbl
+\-
+Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
+
+Click ¤Tools¤here¤ to go to another article\nLbl
+\-
+[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+
+[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+\-
+#Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
+
+#Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
 \-
 
 Images (only available in plugin\h#
