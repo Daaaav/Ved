@@ -354,6 +354,15 @@ DATEFORMAT = "Datumformaat",
 CUSTOMDATEFORMAT = "Aangepast datumformaat",
 SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳven, hiervoor wordt namelĳk GEEN backup gemaakt!",
 
+-- 1.2.4
+AUTOSAVECRASHLOGS = "Crashlogboeken automatisch opslaan",
+MOREINFO = "Meer info",
+COPYLINK = "Kopieer link",
+SCRIPTDISPLAY = "Toon",
+SCRIPTDISPLAY_USED = "Gebruikt",
+SCRIPTDISPLAY_UNUSED = "Ongebruikt",
+SCRIPTDISPLAY_SHOWING = "Toont $1",
+
 }
 
 toolnames = {

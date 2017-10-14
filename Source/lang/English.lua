@@ -354,6 +354,15 @@ DATEFORMAT = "Date format",
 CUSTOMDATEFORMAT = "Custom date format",
 SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!",
 
+-- 1.2.4
+AUTOSAVECRASHLOGS = "Automatically save crash logs",
+MOREINFO = "More info",
+COPYLINK = "Copy link",
+SCRIPTDISPLAY = "Show",
+SCRIPTDISPLAY_USED = "Used",
+SCRIPTDISPLAY_UNUSED = "Unused",
+SCRIPTDISPLAY_SHOWING = "Showing $1",
+
 }
 
 toolnames = {

@@ -269,7 +269,7 @@ SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",
 
 SCRIPTSPLIT = "Dividi",
 SPLITSCRIPT = "Dividi skriptojn",
-COUNT = "Kvanto: ",
+COUNT = "Kvanto:",
 SMALLENTITYDATA = "datumoj",
 
 -- Stats screen
@@ -354,6 +354,15 @@ SAVEBACKUP = "Konservi al dosierujo de VVVVVV",
 DATEFORMAT = "Dato-formo",
 CUSTOMDATEFORMAT = "Tajlorita dato-formo",
 SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
+
+-- 1.2.4
+AUTOSAVECRASHLOGS = "Automatically save crash logs",
+MOREINFO = "More info",
+COPYLINK = "Copy link",
+SCRIPTDISPLAY = "Show",
+SCRIPTDISPLAY_USED = "Used",
+SCRIPTDISPLAY_UNUSED = "Unused",
+SCRIPTDISPLAY_SHOWING = "Showing $1",
 
 }
 

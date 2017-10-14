@@ -458,6 +458,10 @@ function love.draw()
 		hoverdraw((scriptdisplay_unused and checkon or checkoff), love.graphics.getWidth()-120, 128, 16, 16, 2)
 		love.graphics.print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 134)
 
+		if not (scriptdisplay_used and scriptdisplay_unused) then
+			love.graphics.printf(langkeys(L.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 182, 112, "center")
+		end
+
 		-- Script count
 		love.graphics.printf(L.COUNT .. #scriptnames .. "/500", love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
 
