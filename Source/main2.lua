@@ -257,6 +257,7 @@ function love.load()
 		ctrl = "gui"
 		dirsep = "/"
 		macscrolling = true
+		wgetavailable = false
 		hook("love_load_mac")
 		ved_require("filefunc_mac")
 	elseif love.system.getOS() == "Windows" then
@@ -264,6 +265,7 @@ function love.load()
 		ctrl = "ctrl"
 		dirsep = "\\"
 		macscrolling = false
+		wgetavailable = false
 		hook("love_load_win")
 		ved_require("filefunc_win")
 		-- Make sure our util works
@@ -277,6 +279,7 @@ function love.load()
 		ctrl = "ctrl"
 		dirsep = "/"
 		macscrolling = false
+		wgetavailable = true
 		hook("love_load_lin")
 		ved_require("filefunc_lin")
 	else
@@ -284,6 +287,7 @@ function love.load()
 		ctrl = "ctrl"
 		dirsep = "/"
 		macscrolling = false
+		wgetavailable = false
 		hook("love_load_luv")
 		ved_require("filefunc_luv")
 		dialog.new(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
@@ -318,7 +322,7 @@ function love.load()
 		updatecheckthread = love.thread.newThread("updatecheck.lua")
 
 		verchannel = love.thread.getChannel("version")
-		updatecheckthread:start(checkver, true)
+		updatecheckthread:start(checkver, true, wgetavailable)
 
 		updateversion = nil
 		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}

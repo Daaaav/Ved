@@ -1,17 +1,24 @@
-checkver, nohttps = ...
+checkver, nohttps, wgetavailable = ...
 
-local requesturl = "tolp.nl/ved/version.php?sys=3&ver=" .. checkver
+local request_base = "tolp.nl/ved/"
+local request_query = "?sys=3&ver=" .. checkver
 
 verchannel = love.thread.getChannel("version")
 
-if nohttps then
+if wgetavailable then
+	local pfile = io.popen("wget -qO- 'https://" .. request_base .. "version-ssl.php" .. request_query .. "' --https-only")
+
+	versioncheckedt = pfile:read("*a")
+
+	pfile:close()
+elseif nohttps then
 	local http = require("socket.http")
 
-	versioncheckedt = http.request("http://" .. requesturl)
+	versioncheckedt = http.request("http://" .. request_base .. "version.php" .. request_query)
 else
 	local https = require("ssl.https")
 
-	versioncheckedt = https.request("https://" .. requesturl)
+	versioncheckedt = https.request("https://" .. request_base .. "version-ssl.php" .. request_query)
 end
 
 print("Finished version request.")
