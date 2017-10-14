@@ -594,6 +594,8 @@ o - orange text
 v - green text
 c - Cyan
 y - Yellow
+p - Purple
+V - Dark green
 z - black text
 Z - dark gray text
 C - cyan text (Viridian)
@@ -2037,6 +2039,8 @@ o - Orange\o
 v - Green\v
 c - Cyan\c
 y - Yellow\y
+p - Purple\p
+V - Dark green\V
 z - Black¤ (background color is not included)\z&Z
 Z - Dark gray\Z
 C - Cyan (Viridian)\C

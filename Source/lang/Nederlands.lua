@@ -594,6 +594,8 @@ o - orange text
 v - green text
 c - Cyan
 y - Yellow
+p - Purple
+V - Dark green
 z - black text
 Z - dark gray text
 C - cyan text (Viridian)
@@ -2046,6 +2048,8 @@ o - Oranje\o
 v - Groen\v
 c - Cyaan\c
 y - Geel\y
+p - Paars\p
+V - Donkergroen\V
 z - Zwart¤ (exclusief achtergrondkleur)\z&Z
 Z - Donkergrĳs\Z
 C - Cyaan (Viridian)\C

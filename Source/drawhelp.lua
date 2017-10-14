@@ -106,6 +106,10 @@ function drawhelp()
 						insertrowcolor(rowcolors, {255,255,0})
 					elseif part2:sub(fl,fl) == "c" then
 						insertrowcolor(rowcolors, {0,255,255})
+					elseif part2:sub(fl,fl) == "p" then
+						insertrowcolor(rowcolors, {178,0,255})
+					elseif part2:sub(fl,fl) == "V" then
+						insertrowcolor(rowcolors, {0,128,0})
 					elseif part2:sub(fl,fl) == "z" then
 						insertrowcolor(rowcolors, {0,0,0})
 					elseif part2:sub(fl,fl) == "Z" then
