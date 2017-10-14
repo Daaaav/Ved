@@ -1,5 +1,5 @@
 -- Dutch language file for Ved
--- 1.2.2
+-- 1.2.4
 
 L = {
 

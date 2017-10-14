@@ -1,6 +1,6 @@
 -- Esperanta lingvodosiero por Ved
 -- de Hejmstel/Format
--- 1.2.2
+-- 1.2.4
 
 L = {
 
