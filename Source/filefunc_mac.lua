@@ -10,49 +10,24 @@ standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
 function listfiles(directory)
-	local t = {}
-	local namekeys = {}
-	local termoutput = {}
+	local t = {[""] = {}}
 
-	local expectingdir = true
-	-- First check what all the different directories and subdirectories are, so we can fill them
-	local pfile = io.popen("cd '" .. escapename(directory) .. "' && ls -R --group-directories-first")
+	-- Only do files.
+	local pfile = io.popen("cd '" .. escapename(directory) .. "' && ls -p")
 	for filename in pfile:lines() do -- kijk eens bij t voor sorteren
-		table.insert(termoutput, filename)
-		if expectingdir then
-			-- The shown directory will be listed as `./subfolder/deeper:`, the root will be listed as `.:`
-			t[filename:sub(3, -2)] = {}
-			expectingdir = false
-		elseif filename == "" then
-			expectingdir = true
-		end
-	end
-	local currentdir
-	expectingdir = true
-	-- Now we can fill them all with files
-	for _,filename in pairs(termoutput) do
-		if expectingdir then
-			currentdir = filename:sub(3, -2)
-			expectingdir = false
-		elseif filename == "" then
-			expectingdir = true
-		else
-			local prefix
-			if currentdir == "" then
-				prefix = ""
-			else
-				prefix = currentdir .. "/"
-			end
-			table.insert(t[currentdir],
+		-- Unfortunately, Mac's ls doesn't have --group-directories-first, so let's show only the files
+		if filename:sub(-1,-1) ~= "/" then
+			table.insert(t[""],
 				{
 					name = filename,
-					isdir = t[prefix .. filename] ~= nil,
+					isdir = false,
 					lastmodified = 0,
 					overwritten = 0,
 				}
 			)
 		end
 	end
+
 	pfile:close()
 	return t
 end
