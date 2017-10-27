@@ -129,6 +129,8 @@ function drawhelp()
 						part1 = ("_"):rep(lastheaderwidth)
 					elseif part2:sub(fl,fl) == "+" then
 						bgexpandmode = true
+					elseif part2:sub(fl,fl) == "X" then
+						part1 = unxmlspecialchars(part1)
 					elseif part2:sub(fl,fl) == "(" then
 						-- Leaving this thing undocumented except in the code.
 						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
