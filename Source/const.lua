@@ -96,6 +96,12 @@ standarddateformat_formats = {
 	"%m/%d/%Y %I:%M:%S %p"
 }
 
+state_hotkeys = {
+	--[1] = {
+		--{"q", "}
+	--},
+}
+
 
 knowncommands =
 	{

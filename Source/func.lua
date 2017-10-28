@@ -584,6 +584,8 @@ function loadstate(new, extradata)
 		pluginstext = textlistplugins()
 	elseif new == 25 then
 		editingcolor = nil
+	elseif new == 26 then
+		startinput()
 	end
 
 	hook("func_loadstate")
@@ -801,18 +803,35 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 	if yoffset == nil then yoffset = 8 end
 	if buttonspacing == nil then buttonspacing = 24 end
 
+	local hotkey
+	if type(label) == "table" then
+		hotkey = label[2]
+		label = label[1]
+	end
+
 	-- Text too long to fit?
 	local textyoffset = 6 -- 4+2
 	if (font8:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
 		textyoffset = 2
 	end
 
+	local y
 	if bottom then
-		hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(buttonspacing*(pos+1))-(yoffset-8), 128-16, 16)
-		love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, (love.graphics.getHeight()-(buttonspacing*(pos+1))-(yoffset-8))+textyoffset, 128-16, "center")
+		y = love.graphics.getHeight()-(buttonspacing*(pos+1))-(yoffset-8)
 	else
-		hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), yoffset+(buttonspacing*pos), 128-16, 16)
-		love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, yoffset+(buttonspacing*pos)+textyoffset, 128-16, "center")
+		y = yoffset+(buttonspacing*pos)
+	end
+	hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), y, 128-16, 16)
+	love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
+	if love.keyboard.isDown("f9") and hotkey ~= nil then
+		love.graphics.setFont(tinynumbers)
+		local hotkey_w = tinynumbers:getWidth(hotkey)
+		love.graphics.setColor(255,255,255,192)
+		love.graphics.rectangle("fill", love.graphics.getWidth()-9-hotkey_w, y-2, hotkey_w+3, 10)
+		love.graphics.setColor(0,0,0)
+		love.graphics.print(hotkey, love.graphics.getWidth()-7-hotkey_w, y)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(font8)
 	end
 end
 

@@ -30,6 +30,7 @@ States:
 23	Load a script file NOT in the 3DS format (lines separated by \r\n or \n)
 24	Simple plugins list (already not used)
 25	Syntax highlighting color settings
+26	Font test
 
 Debug keys:
 F12: change state
@@ -379,11 +380,14 @@ function love.draw()
 	elseif state == 7 then
 		for y = 0, 7 do
 			for x = 0, 23 do
-				love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][(y*24)+x], x*32, y*32)
-
 				if mouseon(x*32, y*32, 32, 32) then
 					love.graphics.print((y*24)+x, love.graphics.getWidth()-24, love.graphics.getHeight()-8)
+					love.graphics.setColor(255,255,255,64)
+					love.graphics.rectangle("fill", x*32, y*32, 32, 32)
+					love.graphics.setColor(255,255,255)
 				end
+
+				love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][(y*24)+x], x*32, y*32)
 			end
 		end
 	elseif state == 8 then
@@ -453,8 +457,8 @@ function love.draw()
 			scriptlistscroll = -(newperonetage*(((j+1)*24-8)-(love.graphics.getHeight()-16)))
 		end
 
-		rbutton(L.NEW, 0)
-		rbutton(L.FLAGS, 1)
+		rbutton({L.NEW, "N"}, 0)
+		rbutton({L.FLAGS, "F"}, 1)
 
 		love.graphics.printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 86, 112, "center")
 		hoverdraw((scriptdisplay_used and checkon or checkoff), love.graphics.getWidth()-120, 104, 16, 16, 2)
@@ -469,7 +473,7 @@ function love.draw()
 		-- Script count
 		love.graphics.printf(L.COUNT .. #scriptnames .. "/500", love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
 
-		rbutton(L.RETURN, 0, nil, true)
+		rbutton({L.RETURN, "b"}, 0, nil, true)
 
 		-- Buttons again
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
@@ -726,7 +730,7 @@ function love.draw()
 		love.graphics.print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8+2)
 		love.graphics.print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8+2)
 
-		rbutton(L.RETURN, 0, nil, true)
+		rbutton({L.RETURN, "b"}, 0, nil, true)
 
 		if nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, nil, true) then
@@ -850,6 +854,23 @@ function love.draw()
 				end
 			end
 		end
+	elseif state == 26 then
+		love.graphics.setColor(128,128,255,64)
+		love.graphics.rectangle("line", 32.5, 32.5, font8:getWidth(input), 8)
+		love.graphics.rectangle("line", 32.5, 64.5, font16:getWidth(input), 16)
+		love.graphics.rectangle("line", 32.5, 96.5, tinynumbers:getWidth(input), 7)
+		love.graphics.setColor(255,128,128,64)
+		love.graphics.rectangle("line", 32.5, 32.5-2, font8:getWidth(input), 8)
+		love.graphics.rectangle("line", 32.5, 64.5-4, font16:getWidth(input), 16)
+		love.graphics.setColor(255,255,255)
+		love.graphics.print(input, 32, 32)
+		love.graphics.setFont(font16)
+		love.graphics.print(input, 32, 64)
+		love.graphics.setFont(tinynumbers)
+		love.graphics.print(input, 32, 96)
+		love.graphics.setFont(font8)
+
+		love.graphics.print("Font test", 10, 10)
 	else
 		statecaught = false
 
@@ -868,6 +889,10 @@ function love.draw()
 
 	if RCMabovedialog then
 		rightclickmenu.draw()
+	end
+
+	if love.keyboard.isDown("f9") and state_hotkeys[state] ~= nil then
+		--love.graphics.print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
 	end
 
 	-- Middle click cursor

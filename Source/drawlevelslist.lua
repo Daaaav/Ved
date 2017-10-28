@@ -144,6 +144,7 @@ function drawlevelslist()
 
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if not secondlevel and mouseon(love.graphics.getWidth()-128+8, 8, 16, 16) then
+			stopinput()
 			tostate(15)
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then -- -96
 			if not state6old1 then
@@ -247,11 +248,13 @@ function drawlevelslist()
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, 40) then
 				-- Ved options
+				stopinput()
 				tostate(13)
 
 				mousepressed = true
 			elseif onrbutton(1, 40) then
 				-- Plugins
+				stopinput()
 				tostate(15, nil, "plugins")
 			elseif onrbutton(2, 40) then
 				-- Language
@@ -264,6 +267,7 @@ function drawlevelslist()
 				mousepressed = true
 			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
+				stopinput()
 				tostate(15, nil, {updatenotes, false})
 			elseif not mousepressed and onrbutton(0, nil, true) then
 				-- Backups/return

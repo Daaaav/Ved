@@ -139,7 +139,7 @@ function drawmap()
 			love.graphics.printf(L.SELECTSWAP2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 		end
 
-		rbutton(L.RETURN, 0, nil, true)
+		rbutton({L.RETURN, "b"}, 0, nil, true)
 		rbutton(L.SAVEMAP, 1, nil, true)
 		rbutton(L.COPYROOMS, 3, nil, true)
 		rbutton(L.SWAPROOMS, 4, nil, true)

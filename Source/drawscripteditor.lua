@@ -93,7 +93,7 @@ function drawscripteditor()
 	if not PleaseDo3DSHandlingThanks then
 		rbutton(L.SCRIPTSPLIT, 5)
 	end
-	rbutton(L.SEARCHSCRIPT, 6)
+	rbutton({L.SEARCHSCRIPT, "cF"}, 6)
 	rbutton(L.GOTOLINE, 7)
 	rbutton(internalscript and L.INTERNALOFF or L.INTERNALON, 8, nil, nil, nil, internalscript)
 	--hoverrectangle(internalscript and 160 or 128, internalscript and 160 or 128, internalscript and 0 or 128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
@@ -125,7 +125,7 @@ function drawscripteditor()
 	love.graphics.printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
 
 	if not PleaseDo3DSHandlingThanks then
-		rbutton(L.RETURN, 0, nil, true)
+		rbutton({L.RETURN, "b"}, 0, nil, true)
 	else
 		rbutton("Copy with $s", 0, nil, true) -- not translating I suppose
 	end

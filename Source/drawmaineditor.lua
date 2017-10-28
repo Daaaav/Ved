@@ -1620,11 +1620,11 @@ function drawmaineditor()
 
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
-	rbutton((upperoptpage2 and L.COMPARE or L.MAP), 2, 40, false, 20)
+	rbutton((upperoptpage2 and {L.COMPARE, "cD"} or {L.MAP, "M"}), 2, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton((upperoptpage2 and L.STATS or L.SCRIPTS), 3, 40, false, 20)
-		rbutton(L.SEARCH, 4, 40, false, 20)
-		rbutton(L.LEVELNOTEPAD, 5, 40, false, 20)
+		rbutton((upperoptpage2 and L.STATS or {L.SCRIPTS, "/"}), 3, 40, false, 20)
+		rbutton({L.SEARCH, "cF"}, 4, 40, false, 20)
+		rbutton({L.LEVELNOTEPAD, "c/"}, 5, 40, false, 20)
 	end
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
@@ -1639,11 +1639,11 @@ function drawmaineditor()
 	end
 
 	rbutton(L.ROTATE180, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) -- (roomoptpage2 and L.BACKB or L.MOREB)
-	rbutton((levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.MANUALMODE or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	rbutton({(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.MANUALMODE or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton(langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton(L.ROOMNAME, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
+	rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	rbutton({L.ROOMNAME, "E"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+10, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
@@ -1764,9 +1764,9 @@ function drawmaineditor()
 	end
 
 	-- We also have buttons for enemy and platform settings!
-	if selectedtool == 8 or selectedtool == 9 then			
-		rbutton((selectedtool == 8 and L.PLATFORMBOUNDS or L.ENEMYBOUNDS), -3, 164+4, true, nil, editingbounds ~= 0)
-		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata[(roomy)*20 + (roomx+1)].platv}) or langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype})), -2, 164+4, true)
+	if selectedtool == 8 or selectedtool == 9 then
+		rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
+		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata[(roomy)*20 + (roomx+1)].platv}) or {langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}), -2, 164+4, true)
 
 		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 

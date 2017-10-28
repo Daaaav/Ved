@@ -1,7 +1,7 @@
 function drawsearch()
 	love.graphics.print(L.SEARCHFOR .. input .. __, 12, 12) -- Temporary location and temporary untextbox
 
-	rbutton(L.RETURN, 0)
+	rbutton({L.RETURN, "b"}, 0)
 
 	if nodialog and not mousepressed and love.mouse.isDown("l") and onrbutton(0) then
 		tostate(1, true)
