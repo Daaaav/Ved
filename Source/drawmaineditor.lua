@@ -963,24 +963,53 @@ function drawmaineditor()
 				end
 			end
 
+			local x, y, p1 = 40*roomx + atx, 30*roomy + aty, selectedsubtool[17]-1
+
 			if count.startpoint ~= nil then
-				cons("Old start point at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " removed")
-				entitydata[count.startpoint] = nil
+				cons("Old start point at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " will be changed")
+
+				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = count.startpoint, changeddata = {
+							{
+								key = "x",
+								oldvalue = entitydata[count.startpoint].x,
+								newvalue = x,
+							},
+							{
+								key = "y",
+								oldvalue = entitydata[count.startpoint].y,
+								newvalue = y,
+							},
+							{
+								key = "p1",
+								oldvalue = entitydata[count.startpoint].p1,
+								newvalue = p1,
+							}
+						}
+					}
+				)
+				redobuffer = {}
+				cons("[UNRE] CHANGED ENTITY (START POINT)")
+
+				entitydata[count.startpoint].x = x
+				entitydata[count.startpoint].y = y
+				entitydata[count.startpoint].p1 = p1
 			else
+				cons("Inserting new partial start point to change")
+				table.insert(entitydata, count.entity_ai,
+					{
+					x = x,
+					y = y,
+					t = 16,
+					p1 = p1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
+					data = ""
+					})
+				entityplaced()
+
+				count.startpoint = count.entity_ai
 				count.entities = count.entities + 1
+				count.entity_ai = count.entity_ai + 1
 			end
 
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 16,
-				p1 = selectedsubtool[17]-1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			count.startpoint = count.entity_ai
-			count.entity_ai = count.entity_ai + 1
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then

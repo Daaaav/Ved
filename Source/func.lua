@@ -363,6 +363,7 @@ function loadstate(new, extradata)
 		undobuffer = {}
 		redobuffer = {}
 		undosaved = 0
+		unsavedchanges = false
 
 		editingbounds = 0
 		showepbounds = true

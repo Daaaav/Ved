@@ -1254,6 +1254,10 @@ function undo()
 			-- Hmm... Re-add it in this case!
 			entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
 			updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
+		elseif undobuffer[#undobuffer].undotype == "changeentity" then
+			for k,v in pairs(undobuffer[#undobuffer].changeddata) do
+				entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
+			end
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
 			temporaryroomnametimer = 90
@@ -1282,6 +1286,10 @@ function redo()
 		elseif redobuffer[#redobuffer].undotype == "removeentity" then
 			-- Redo the removing!
 			removeentity(redobuffer[#redobuffer].entid, nil, true)
+		elseif redobuffer[#redobuffer].undotype == "changeentity" then
+			for k,v in pairs(redobuffer[#redobuffer].changeddata) do
+				entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
+			end
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
 			temporaryroomnametimer = 90
