@@ -1246,6 +1246,7 @@ function undo()
 				temporaryroomnametimer = 90
 			else
 				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+				autocorrectlines()
 			end
 		elseif undobuffer[#undobuffer].undotype == "addentity" then
 			-- So we need to remove this entity again!
@@ -1255,7 +1256,7 @@ function undo()
 			entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
 			updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
 		elseif undobuffer[#undobuffer].undotype == "changeentity" then
-			for k,v in pairs(undobuffer[#undobuffer].changeddata) do
+			for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
 				entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
 			end
 		else
@@ -1278,6 +1279,7 @@ function redo()
 				temporaryroomnametimer = 90
 			else
 				roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
+				autocorrectlines()
 			end
 		elseif redobuffer[#redobuffer].undotype == "addentity" then
 			-- Re-add it again
@@ -1287,7 +1289,7 @@ function redo()
 			-- Redo the removing!
 			removeentity(redobuffer[#redobuffer].entid, nil, true)
 		elseif redobuffer[#redobuffer].undotype == "changeentity" then
-			for k,v in pairs(redobuffer[#redobuffer].changeddata) do
+			for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
 				entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
 			end
 		else
@@ -1325,6 +1327,23 @@ function removeentity(id, thetype, undoing)
 
 	updatecountdelete(thetype, id, undoing)
 	entitydata[id] = nil
+end
+
+function rcm_changingentity(entdetails, changes)
+	-- changes is a table containing keys and new values
+	local changeddata = {}
+	for k,v in pairs(changes) do
+		table.insert(changeddata, {
+				key = k,
+				oldvalue = entitydata[tonumber(entdetails[3])][k],
+				newvalue = v
+			}
+		)
+	end
+
+	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
+	redobuffer = {}
+	cons("[UNRE] CHANGED ENTITY")
 end
 
 function cutroom()

@@ -1086,41 +1086,73 @@ function love.update(dt)
 				elseif tonumber(entdetails[2]) == 1 then
 					-- Enemy
 					if RCMreturn == L.CHANGEDIRECTION then
-						entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
+						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
+						rcm_changingentity(entdetails, {p1 = new_p1})
+						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
 						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
 				elseif tonumber(entdetails[2]) == 2 then
 					-- Platform, moving/conveyor
 					if RCMreturn == L.CYCLETYPE then
+						local new_p1
 						if entitydata[tonumber(entdetails[3])].p1 < 4 then
 							-- Moving platform
-							entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
+							new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
 						else
 							-- Conveyor
-							entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 8, 5)
+							new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 8, 5)
 						end
+						rcm_changingentity(entdetails, {p1 = new_p1})
+						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
 						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
 				elseif tonumber(entdetails[2]) == 10 then
 					-- Checkpoint
 					if RCMreturn == L.FLIP then
-						entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+						rcm_changingentity(entdetails, {p1 = new_p1})
+						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
 						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
 				elseif tonumber(entdetails[2]) == 11 then
 					-- Gravity line
+					local old_p1 = entitydata[tonumber(entdetails[3])].p1
+					local old_p2 = entitydata[tonumber(entdetails[3])].p2
+					local old_p3 = entitydata[tonumber(entdetails[3])].p3
+					local new_p1
 					if RCMreturn == L.CHANGETOHOR then
-						entitydata[tonumber(entdetails[3])].p1 = 0
-						autocorrectlines()
+						new_p1 = 0
 					elseif RCMreturn == L.CHANGETOVER then
-						entitydata[tonumber(entdetails[3])].p1 = 1
-						autocorrectlines()
-					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						new_p1 = 1
+					--else
+						--dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
+					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					autocorrectlines()
+					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
+								{
+									key = "p1",
+									oldvalue = old_p1,
+									newvalue = new_p1
+								},
+								{
+									key = "p2",
+									oldvalue = old_p2,
+									newvalue = entitydata[tonumber(entdetails[3])].p2
+								},
+								{
+									key = "p3",
+									oldvalue = old_p3,
+									newvalue = entitydata[tonumber(entdetails[3])].p3
+								}
+							}
+						}
+					)
+					redobuffer = {}
+					cons("[UNRE] CHANGED ENTITY (GRAVLINE)")
 				elseif tonumber(entdetails[2]) == 13 then
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
@@ -1145,14 +1177,18 @@ function love.update(dt)
 				elseif tonumber(entdetails[2]) == 15 then
 					-- Rescuable crewmate
 					if RCMreturn == L.CHANGECOLOR then
-						entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 5, 0)
+						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 5, 0)
+						rcm_changingentity(entdetails, {p1 = new_p1})
+						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
 						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
 				elseif tonumber(entdetails[2]) == 16 then
 					-- Start point
 					if RCMreturn == L.CHANGEDIRECTION then
-						entitydata[tonumber(entdetails[3])].p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+						rcm_changingentity(entdetails, {p1 = new_p1})
+						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
 						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end

@@ -220,13 +220,26 @@ function dialog.update()
 				end
 
 				local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
+				local changeddata = {}
 				for i = 1, 9 do
+					table.insert(changeddata, {
+							key = entitypropkeys[i],
+							oldvalue = entitydata[tonumber(entdetails[3])][entitypropkeys[i]],
+							newvalue = anythingbutnil0(tonumber(multiinput[i]))
+						}
+					)
 					entitydata[tonumber(entdetails[3])][entitypropkeys[i]] = anythingbutnil0(tonumber(multiinput[i]))
 				end
 				entitydata[tonumber(entdetails[3])].data = multiinput[10]
 
 				if correctlines then
 					autocorrectlines()
+
+					for k,v in pairs(changeddata) do
+						if v.key == "p1" or v.key == "p2" or v.key == "p3" then
+							changeddata[k].newvalue = entitydata[tonumber(entdetails[3])][v.key]
+						end
+					end
 
 					-- Do keep the fields in sync, if we're only applying
 					if DIAreturn == 1 then
@@ -236,6 +249,10 @@ function dialog.update()
 						mousepressed = true
 					end
 				end
+
+				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
+				redobuffer = {}
+				cons("[UNRE] CHANGED ENTITY (PROPERTIES)")
 			end
 		elseif (DIAquestionid == 3) then
 			-- load a level or not

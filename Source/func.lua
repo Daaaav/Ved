@@ -345,10 +345,12 @@ function loadstate(new, extradata)
 		end
 
 		editingroomtext = 0
+		newroomtext = false
 		editingroomname = false
 		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil
+		oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
 
 		minsmear = -1; maxsmear = -1
 
@@ -1238,6 +1240,7 @@ function endeditingroomtext(donotmakethisnil)
 	if entitydata[editingroomtext] == nil then
 		dialog.new(L.EDITINGROOMTEXTNIL .. "\n\n(Location x)", "", 1, 1, 0)
 	elseif input ~= "" or editingroomtext == donotmakethisnil then
+		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
 		if makescriptroomtext and scripts[input] == nil then
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
@@ -1301,10 +1304,14 @@ function endeditingroomtext(donotmakethisnil)
 			scripts[input] = {""}
 			table.insert(scriptnames, input)
 		end
-		entityplaced(editingroomtext)
+		if newroomtext then
+			entityplaced(editingroomtext)
+			newroomtext = false
+		else
+			table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingroomtext, changedentitydata = {{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}}})
+		end
 	else
-		entitydata[editingroomtext] = nil
-		count.entities = count.entities - 1
+		removeentity(editingroomtext)
 	end
 	editingroomtext = 0
 end

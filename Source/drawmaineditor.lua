@@ -672,6 +672,7 @@ function drawmaineditor()
 				})
 
 			editingroomtext = count.entity_ai
+			newroomtext = true
 			makescriptroomtext = false
 			startinput()
 
@@ -698,6 +699,7 @@ function drawmaineditor()
 				})
 
 			editingroomtext = count.entity_ai
+			newroomtext = true
 			makescriptroomtext = true
 			startinput()
 
@@ -729,15 +731,44 @@ function drawmaineditor()
 				mousepressed = true
 			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 				-- Placing bottom right corner
-				entitydata[editingsboxid].p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
-				entitydata[editingsboxid].p2 = math.max((30*roomy + aty) - entitydata[editingsboxid].y + 1, 1)
+				local new_p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
+				local new_p2 = math.max((30*roomy + aty) - entitydata[editingsboxid].y + 1, 1)
+				entitydata[editingsboxid].p1 = new_p1
+				entitydata[editingsboxid].p2 = new_p2
 
 				if not sboxdontaskname then
 					editingroomtext = editingsboxid
+					newroomtext = true
 					makescriptroomtext = true
 					startinput()
 				else
 					-- Register entity change for undo/redo
+					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingsboxid, changedentitydata = {
+								{
+									key = "x",
+									oldvalue = oldscriptx,
+									newvalue = entitydata[editingsboxid].x
+								},
+								{
+									key = "y",
+									oldvalue = oldscripty,
+									newvalue = entitydata[editingsboxid].y
+								},
+								{
+									key = "p1",
+									oldvalue = oldscriptp1,
+									newvalue = new_p1
+								},
+								{
+									key = "p2",
+									oldvalue = oldscriptp2,
+									newvalue = new_p2
+								}
+							}
+						}
+					)
+					redobuffer = {}
+					cons("[UNRE] MOVED SCRIPT BOX")
 				end
 
 				editingsboxid = nil
@@ -748,6 +779,8 @@ function drawmaineditor()
 				mousepressed = true
 			elseif selectedsubtool[13] == 3 and (entitydata[editingsboxid] ~= nil) then
 				-- We were editing this box
+				oldscriptx, oldscripty = entitydata[editingsboxid].x, entitydata[editingsboxid].y
+				oldscriptp1, oldscriptp2 = entitydata[editingsboxid].p1, entitydata[editingsboxid].p2
 				entitydata[editingsboxid].x = 40*roomx + atx
 				entitydata[editingsboxid].y = 30*roomy + aty
 				entitydata[editingsboxid].p1 = 0
@@ -792,8 +825,29 @@ function drawmaineditor()
 			elseif selectedsubtool[14] == 2 or selectedsubtool[14] == 4 then
 				-- Placing exit, or moving exit
 				if entitydata[warpid] ~= nil then
-					entitydata[warpid].p1 = 40*roomx + atx
-					entitydata[warpid].p2 = 30*roomy + aty
+					local new_p1 = 40*roomx + atx
+					local new_p2 = 30*roomy + aty
+					-- We're moving the exit, which is an entity change
+					if selectedsubtool[14] == 4 then
+						table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = warpid, changedentitydata = {
+									{
+										key = "p1",
+										oldvalue = entitydata[warpid].p1,
+										newvalue = new_p1
+									},
+									{
+										key = "p2",
+										oldvalue = entitydata[warpid].p2,
+										newvalue = new_p2
+									}
+								}
+							}
+						)
+						redobuffer = {}
+						cons("[UNRE] MOVED WARP EXIT")
+					end
+					entitydata[warpid].p1 = new_p1
+					entitydata[warpid].p2 = new_p2
 
 					-- We're not adding a new entity if we're moving it!
 					if selectedsubtool[14] == 2 then
@@ -807,8 +861,28 @@ function drawmaineditor()
 			elseif selectedsubtool[14] == 3 and entitydata[warpid] ~= nil then
 				-- Moving entrance
 				if entitydata[warpid] ~= nil then
-					entitydata[warpid].x = 40*roomx + atx
-					entitydata[warpid].y = 30*roomy + aty
+					local new_x = 40*roomx + atx
+					local new_y = 30*roomy + aty
+
+					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = warpid, changedentitydata = {
+								{
+									key = "x",
+									oldvalue = entitydata[warpid].x,
+									newvalue = new_x
+								},
+								{
+									key = "y",
+									oldvalue = entitydata[warpid].y,
+									newvalue = new_y
+								}
+							}
+						}
+					)
+					redobuffer = {}
+					cons("[UNRE] MOVED WARP ENTRANCE")
+
+					entitydata[warpid].x = new_x
+					entitydata[warpid].y = new_y
 				else
 					dialog.new(L.WARPTOKENENT404, "", 1, 1, 0)
 				end
@@ -968,7 +1042,7 @@ function drawmaineditor()
 			if count.startpoint ~= nil then
 				cons("Old start point at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " will be changed")
 
-				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = count.startpoint, changeddata = {
+				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = count.startpoint, changedentitydata = {
 							{
 								key = "x",
 								oldvalue = entitydata[count.startpoint].x,
@@ -994,7 +1068,7 @@ function drawmaineditor()
 				entitydata[count.startpoint].y = y
 				entitydata[count.startpoint].p1 = p1
 			else
-				cons("Inserting new partial start point to change")
+				cons("Inserting new start point")
 				table.insert(entitydata, count.entity_ai,
 					{
 					x = x,
