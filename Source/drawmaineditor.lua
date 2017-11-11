@@ -164,8 +164,7 @@ function drawmaineditor()
 			if undosaved == 0 then
 				table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata[roomy][roomx]), toredotiles = {}})
 				undosaved = #undobuffer
-				redobuffer = {}
-				cons("[UNRE] SAVED BEGIN RESULT FOR UNDO")
+				finish_undo("SAVED BEGIN RESULT FOR UNDO")
 			end
 
 			if selectedtool <= 2 then
@@ -518,12 +517,29 @@ function drawmaineditor()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 8 then
 			-- Moving platform
 			if editingbounds == -2 then
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+				end
+
 				levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = atx*8, aty*8
 				levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
 				editingbounds = 2
 			elseif editingbounds == 2 then
 				levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = atx*8+8, aty*8+8
 				editingbounds = 0
+
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "plat" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("PLATFORM BOUNDS")
 			else
 				cons("Moving: " .. atx .. " " .. aty)
 
@@ -545,12 +561,29 @@ function drawmaineditor()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 9 then
 			-- Enemy
 			if editingbounds == -1 then
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+				end
+
 				levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = atx*8, aty*8
 				levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
 				editingbounds = 1
 			elseif editingbounds == 1 then
 				levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = atx*8+8, aty*8+8
 				editingbounds = 0
+
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "enemy" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("ENEMY BOUNDS")
 			else
 				cons("Enemy: " .. atx .. " " .. aty)
 
@@ -767,8 +800,7 @@ function drawmaineditor()
 							}
 						}
 					)
-					redobuffer = {}
-					cons("[UNRE] MOVED SCRIPT BOX")
+					finish_undo("MOVED SCRIPT BOX")
 				end
 
 				editingsboxid = nil
@@ -843,8 +875,7 @@ function drawmaineditor()
 								}
 							}
 						)
-						redobuffer = {}
-						cons("[UNRE] MOVED WARP EXIT")
+						finish_undo("MOVED WARP EXIT")
 					end
 					entitydata[warpid].p1 = new_p1
 					entitydata[warpid].p2 = new_p2
@@ -878,8 +909,7 @@ function drawmaineditor()
 							}
 						}
 					)
-					redobuffer = {}
-					cons("[UNRE] MOVED WARP ENTRANCE")
+					finish_undo("MOVED WARP ENTRANCE")
 
 					entitydata[warpid].x = new_x
 					entitydata[warpid].y = new_y
@@ -1061,8 +1091,7 @@ function drawmaineditor()
 						}
 					}
 				)
-				redobuffer = {}
-				cons("[UNRE] CHANGED ENTITY (START POINT)")
+				finish_undo("CHANGED ENTITY (START POINT)")
 
 				entitydata[count.startpoint].x = x
 				entitydata[count.startpoint].y = y
@@ -1873,6 +1902,8 @@ function drawmaineditor()
 
 		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 
+		local changedplatv, oldplatv = false, levelmetadata[(roomy)*20 + (roomx+1)].platv
+
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
 			if onrbutton(-3, 164+4, true) then
@@ -1895,6 +1926,7 @@ function drawmaineditor()
 				else
 					-- Platform speed
 					--dialog.new("Platform speed", "", 1, 1, 0)
+					changedplatv = true
 					levelmetadata[(roomy)*20 + (roomx+1)].platv = cycle(levelmetadata[(roomy)*20 + (roomx+1)].platv, 8, 0)
 				end
 
@@ -1902,8 +1934,24 @@ function drawmaineditor()
 			end
 		end
 
-		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
+		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
+			changedplatv = true
 			levelmetadata[(roomy)*20 + (roomx+1)].platv = 4
+			mousepressed = true
+		end
+
+		if changedplatv then
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+						{
+							key = "platv",
+							oldvalue = oldplatv,
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+						}
+					},
+					switchtool = 8
+				}
+			)
+			finish_undo("PLATV")
 		end
 	end
 

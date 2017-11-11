@@ -2,3 +2,5 @@
 -- This file gets loaded after the language files do, so keys can overwrite existing ones, and will show up in all languages.
 
 --L. = ""
+L.METADATAUNDONE = "Level options undone"
+L.METADATAREDONE = "Level options redone"

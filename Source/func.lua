@@ -351,6 +351,7 @@ function loadstate(new, extradata)
 		upperoptpage2 = false
 		warpid = nil
 		oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
+		oldbounds = {0, 0, 0, 0}
 
 		minsmear = -1; maxsmear = -1
 
@@ -1043,8 +1044,7 @@ function updatecountdelete(thet, id, undoing)
 	-- Make sure we can undo this! If we're not already removing an entity by undoing
 	if not undoing then
 		table.insert(undobuffer, {undotype = "removeentity", rx = roomx, ry = roomy, entid = id, removedentitydata = table.copy(entitydata[id])})
-		redobuffer = {}
-		cons("[UNRE] REMOVED ENTITY")
+		finish_undo("REMOVED ENTITY")
 	end
 
 	count.entities = count.entities - 1
@@ -1126,8 +1126,29 @@ function switchtileset()
 		selectedcolor = 0
 	end
 
+	local oldtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+
 	levelmetadata[(roomy)*20 + (roomx+1)].tileset = selectedtileset
 	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "tileset",
+					oldvalue = oldtileset,
+					newvalue = selectedtileset
+				},
+				{
+					key = "tilecol",
+					oldvalue = oldtilecol,
+					newvalue = selectedcolor
+				}
+			},
+			changetiles = true,
+			toundotiles = table.copy(roomdata[roomy][roomx])
+		}
+	)
+	finish_undo("TILESET")
 
 	autocorrectroom() -- this already checks if automatic mode is on
 end
@@ -1143,17 +1164,45 @@ function switchtilecol()
 		selectedcolor = 0
 	end
 
+	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+
 	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "tilecol",
+					oldvalue = oldtilecol,
+					newvalue = selectedcolor
+				}
+			},
+			changetiles = true,
+			toundotiles = table.copy(roomdata[roomy][roomx])
+		}
+	)
+	finish_undo("TILECOL")
 
 	autocorrectroom() -- this already checks if automatic mode is on
 end
 
 function switchenemies()
+	local oldtype = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
 	if keyboard_eitherIsDown("shift") then
 		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
 	else
 		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = cycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
 	end
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "enemytype",
+					oldvalue = oldtype,
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
+				}
+			},
+			switchtool = 9
+		}
+	)
+	finish_undo("ENEMY TYPE")
 end
 
 --[[ editingbounds:
@@ -1203,6 +1252,10 @@ end
 function changedmode()
 	--levelmetadata[(roomy)*20 + (roomx+1)].directmode = cycle(levelmetadata[(roomy)*20 + (roomx+1)].directmode, 1, 0)
 
+	local olddirect = levelmetadata[(roomy)*20 + (roomx+1)].directmode
+	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
+	--local oldtilecol = selectedcolor
+
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
 		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
 	elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
@@ -1216,22 +1269,66 @@ function changedmode()
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
 	end
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "directmode",
+					oldvalue = olddirect,
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].directmode
+				},
+				{
+					key = "auto2mode",
+					oldvalue = oldauto2,
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
+				}
+			}
+		}
+	)
+	finish_undo("MODE")
 end
 
 function changewarpdir()
+	local oldwarpdir = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
 	levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "warpdir",
+					oldvalue = oldwarpdir,
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
+				}
+			}
+		}
+	)
+	finish_undo("WARPDIR")
 end
 
 function toggleeditroomname()
 	if editingroomname then
-		editingroomname = false
-		stopinput()
-		levelmetadata[(roomy)*20 + (roomx+1)].roomname = input
+		saveroomname()
 	else
 		editingroomname = true
 		startinputonce()
 		input = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
 	end
+end
+
+function saveroomname()
+	editingroomname = false
+	stopinput()
+	local oldroomname = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
+	levelmetadata[(roomy)*20 + (roomx+1)].roomname = input
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "roomname",
+					oldvalue = oldroomname,
+					newvalue = input
+				}
+			}
+		}
+	)
+	finish_undo("ROOMNAME")
 end
 
 function endeditingroomtext(donotmakethisnil)

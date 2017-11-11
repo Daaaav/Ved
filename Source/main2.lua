@@ -1151,8 +1151,7 @@ function love.update(dt)
 							}
 						}
 					)
-					redobuffer = {}
-					cons("[UNRE] CHANGED ENTITY (GRAVLINE)")
+					finish_undo("CHANGED ENTITY (GRAVLINE)")
 				elseif tonumber(entdetails[2]) == 13 then
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
@@ -1770,9 +1769,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 		end
 	elseif state == 1 and editingroomname and key == "return" then
-		editingroomname = false
-		stopinput()
-		levelmetadata[(roomy)*20 + (roomx+1)].roomname = input
+		saveroomname()
 	elseif state == 1 and editingroomtext > 0 and key == "return" then
 		endeditingroomtext()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then

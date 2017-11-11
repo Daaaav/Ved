@@ -251,8 +251,7 @@ function dialog.update()
 				end
 
 				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
-				redobuffer = {}
-				cons("[UNRE] CHANGED ENTITY (PROPERTIES)")
+				finish_undo("CHANGED ENTITY (PROPERTIES)")
 			end
 		elseif (DIAquestionid == 3) then
 			-- load a level or not
@@ -278,6 +277,16 @@ function dialog.update()
 		elseif (DIAquestionid == 5) then
 			stopinput()
 			if DIAreturn == 2 then
+				-- What are the old properties?
+				local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
+				local undo_properties = {}
+				for k,v in pairs(undo_propertynames) do
+					undo_properties[k] = {
+						key = v,
+						oldvalue = metadata[v]
+					}
+				end
+
 				-- Level properties
 				metadata.Title = multiinput[1]
 				metadata.Creator = multiinput[2]
@@ -285,6 +294,7 @@ function dialog.update()
 				metadata.Desc1 = multiinput[4]
 				metadata.Desc2 = multiinput[5]
 				metadata.Desc3 = multiinput[6]
+				metadata.levmusic = multiinput[9]
 				--if ( (tonumber(multiinput[7]) > 20) or (tonumber(multiinput[8]) > 20) ) and ( (tonumber(multiinput[7]) < metadata.mapwidth) or (tonumber(multiinput[8]) < metadata.mapheight) ) then
 					-- On one side you're making the map size too large and on the other you're making it smaller than it is...
 
@@ -323,7 +333,15 @@ function dialog.update()
 						gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 					end
 				end
-				metadata.levmusic = multiinput[9]
+
+				--What are the new properties again?
+				for k,v in pairs(undo_propertynames) do
+					undo_properties[k].newvalue = metadata[v]
+				end
+
+				-- Make sure we can undo and redo it
+				table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
+				finish_undo("CHANGED METADATA")
 			end
 		elseif (DIAquestionid == 6) and (DIAreturn == 2) then
 			-- Yes, I do want to change the level size to this. If I set it to lower than the existing size I might lose rooms - or if I bypass the 20x20 limit this level will become nuclear.
@@ -438,7 +456,21 @@ function dialog.update()
 			stopinput()
 			if DIAreturn == 2 then
 				-- Save the level with this name. But first apply the title!
+				local oldtitle = metadata.Title
 				metadata.Title = multiinput[2]
+
+				if metadata.Title ~= oldtitle then
+					table.insert(undobuffer, {undotype = "metadata", changedmetadata = {
+								{
+									key = "Title",
+									oldvalue = oldtitle,
+									newvalue = metadata.Title
+								}
+							}
+						}
+					)
+					finish_undo("TITLE WHEN SAVING")
+				end
 
 				savedsuccess, savederror = savelevel(multiinput[1] .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 				editingmap = multiinput[1]

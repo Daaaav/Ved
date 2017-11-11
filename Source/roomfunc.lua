@@ -1063,7 +1063,12 @@ function setroomfromcopy(data, rx, ry)
 	temporaryroomnametimer = 90
 end
 
-function rotateroom180(rx, ry)
+function rotateroom180(rx, ry, undoing)
+	if not undoing then
+		table.insert(undobuffer, {undotype = "rotateroom180", rx = rx, ry = ry})
+		finish_undo("ROTATE ROOM 180")
+	end
+
 	local oldroom = table.copy(roomdata[ry][rx])
 
 	for n = 1, 1200 do
@@ -1238,7 +1243,13 @@ end
 
 function undo()
 	if #undobuffer >= 1 then
-		gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+		if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
+			gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+		end
+		if undobuffer[#undobuffer].switchtool ~= nil then
+			selectedtool = undobuffer[#undobuffer].switchtool
+			updatewindowicon()
+		end
 
 		if undobuffer[#undobuffer].undotype == "tiles" then
 			if (undobuffer[#undobuffer].toundotiles[1] == nil) then
@@ -1259,6 +1270,24 @@ function undo()
 			for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
 				entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
 			end
+		elseif undobuffer[#undobuffer].undotype == "metadata" then
+			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+				metadata[v.key] = v.oldvalue
+			end
+			temporaryroomname = L.METADATAUNDONE
+			temporaryroomnametimer = 90
+		elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
+			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
+			end
+			if undobuffer[#undobuffer].changetiles then
+				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+				autocorrectlines()
+				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			end
+		elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
+			rotateroom180(roomx, roomy, true)
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
 			temporaryroomnametimer = 90
@@ -1271,7 +1300,13 @@ end
 -- TODO: Merge these two?
 function redo()
 	if #redobuffer >= 1 then
-		gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
+		if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
+			gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
+		end
+		if redobuffer[#redobuffer].switchtool ~= nil then
+			selectedtool = redobuffer[#redobuffer].switchtool
+			updatewindowicon()
+		end
 
 		if redobuffer[#redobuffer].undotype == "tiles" then
 			if (redobuffer[#redobuffer].toredotiles[1] == nil) then
@@ -1292,6 +1327,23 @@ function redo()
 			for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
 				entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
 			end
+		elseif redobuffer[#redobuffer].undotype == "metadata" then
+			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+				metadata[v.key] = v.newvalue
+			end
+			temporaryroomname = L.METADATAREDONE
+			temporaryroomnametimer = 90
+		elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
+			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
+			end
+			if redobuffer[#redobuffer].changetiles then
+				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+				autocorrectroom()
+			end
+		elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
+			rotateroom180(roomx, roomy, true)
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
 			temporaryroomnametimer = 90
@@ -1308,8 +1360,7 @@ function entityplaced(id)
 	end
 
 	table.insert(undobuffer, {undotype = "addentity", rx = roomx, ry = roomy, entid = id, addedentitydata = table.copy(entitydata[id])})
-	redobuffer = {}
-	cons("[UNRE] ADDED ENTITY")
+	finish_undo("ADDED ENTITY")
 end
 
 function removeentity(id, thetype, undoing)
@@ -1342,8 +1393,12 @@ function rcm_changingentity(entdetails, changes)
 	end
 
 	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
+	finish_undo("CHANGED ENTITY")
+end
+
+function finish_undo(description)
 	redobuffer = {}
-	cons("[UNRE] CHANGED ENTITY")
+	cons("[UNRE] " .. description)
 end
 
 function cutroom()
