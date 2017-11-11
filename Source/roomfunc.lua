@@ -759,6 +759,24 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 	roomxdiff = newroomx - myroomx
 	roomydiff = newroomy - myroomy
 
+	local removedentities = nil
+	if not moving then
+		-- If we're copying, first remove all the entities from the target room.
+		removedentities = {}
+		local removedentityids = {}
+
+		for k,v in pairs(entitydata) do
+			if ((v.x >= newroomx*40) and (v.x <= (newroomx*40)+39) and (v.y >= newroomy*30) and (v.y <= (newroomy*30)+29)) then
+				table.insert(removedentities, {k, table.copy(v)})
+				table.insert(removedentityids, k)
+			end
+		end
+
+		for _,v in pairs(removedentityids) do
+			removeentity(v, nil, true)
+		end
+	end
+
 	for k,v in pairs(entitydata) do
 		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) then -----------or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
 			if moving then
@@ -787,6 +805,8 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 			end
 		end
 	end
+
+	return removedentities
 end
 
 function displayshapedcursor(leftblx, upblx, rightblx, downblx)	
@@ -989,8 +1009,17 @@ function getroomcopydata(rx, ry)
 	return table.concat(datatable, ",")
 end
 
-function setroomfromcopy(data, rx, ry)
+function setroomfromcopy(data, rx, ry, skip_undo)
 	cons("Setting room " .. rx .. " " .. ry)
+
+	if not skip_undo then
+		table.insert(undobuffer, {undotype = "paste", rx = rx, ry = ry,
+				olddata = getroomcopydata(rx, ry),
+				newdata = data
+			}
+		)
+		finish_undo("PASTING")
+	end
 
 	local _, count = string.gsub(data, ",", "")
 
@@ -1061,6 +1090,50 @@ function setroomfromcopy(data, rx, ry)
 
 	temporaryroomname = L.ROOMPASTED
 	temporaryroomnametimer = 90
+end
+
+function mapcopy(x1, y1, x2, y2, skip_undo)
+	local oldroomdata
+	if not skip_undo then
+		oldroomdata = getroomcopydata(x2, y2)
+	end
+
+	cons("Copying room data...")
+	--roomdata[selected2y][selected2x] = roomdata[selected1y][selected1x]
+	local copieddata = getroomcopydata(x1, y1)
+	setroomfromcopy(copieddata, x2, y2, true)
+	temporaryroomnametimer = 0
+	cons("Copying entities...")
+	local removedentities = copymoveentities(x1, y1, x2, y2, false)
+	cons("Done...")
+
+	if not skip_undo then
+		table.insert(undobuffer, {undotype = "mapcopy", rx = x2, ry = y2, rx_src = x1, ry_src = y1,
+				olddata = oldroomdata,
+				oldentities = removedentities
+			}
+		)
+		finish_undo("MAPCOPY")
+	end
+end
+
+function mapswap(x1, y1, x2, y2, skip_undo)
+	if not skip_undo then
+		table.insert(undobuffer, {undotype = "mapswap", rx = x2, ry = y2, rx_src = x1, ry_src = y1})
+		finish_undo("MAPSWAP")
+	end
+
+	cons("Swapping room data...")
+	local room1data = getroomcopydata(x1, y1)
+	local room2data = getroomcopydata(x2, y2)
+	setroomfromcopy(room1data, x2, y2, true)
+	setroomfromcopy(room2data, x1, y1, true)
+	temporaryroomnametimer = 0
+	cons("Swapping entities...")
+	copymoveentities(x1, y1, 22, 22, true)
+	copymoveentities(x2, y2, x1, y1, true)
+	copymoveentities(22, 22, x2, y2, true)
+	cons("Done...")
 end
 
 function rotateroom180(rx, ry, undoing)
@@ -1288,6 +1361,38 @@ function undo()
 			end
 		elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
 			rotateroom180(roomx, roomy, true)
+		elseif undobuffer[#undobuffer].undotype == "paste" then
+			setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
+			temporaryroomnametimer = 0
+		elseif undobuffer[#undobuffer].undotype == "mapswap" then
+			mapswap(
+				undobuffer[#undobuffer].rx,
+				undobuffer[#undobuffer].ry,
+				undobuffer[#undobuffer].rx_src,
+				undobuffer[#undobuffer].ry_src,
+				true
+			)
+		elseif undobuffer[#undobuffer].undotype == "mapcopy" then
+			-- Remove the copied entities again
+			local removedentityids = {}
+			local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
+
+			for k,v in pairs(entitydata) do
+				if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
+					table.insert(removedentityids, k)
+				end
+			end
+
+			for _,v in pairs(removedentityids) do
+				removeentity(v, nil, true)
+			end
+
+			setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
+			temporaryroomnametimer = 0
+			for k,v in pairs(undobuffer[#undobuffer].oldentities) do
+				entitydata[v[1]] = table.copy(v[2])
+				updatecountadd(v[2].t)
+			end
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
 			temporaryroomnametimer = 90
@@ -1344,6 +1449,25 @@ function redo()
 			end
 		elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
 			rotateroom180(roomx, roomy, true)
+		elseif redobuffer[#redobuffer].undotype == "paste" then
+			setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
+			temporaryroomnametimer = 0
+		elseif redobuffer[#redobuffer].undotype == "mapswap" then
+			mapswap(
+				redobuffer[#redobuffer].rx,
+				redobuffer[#redobuffer].ry,
+				redobuffer[#redobuffer].rx_src,
+				redobuffer[#redobuffer].ry_src,
+				true
+			)
+		elseif redobuffer[#redobuffer].undotype == "mapcopy" then
+			mapcopy(
+				redobuffer[#redobuffer].rx_src,
+				redobuffer[#redobuffer].ry_src,
+				redobuffer[#redobuffer].rx,
+				redobuffer[#redobuffer].ry,
+				true
+			)
 		else
 			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
 			temporaryroomnametimer = 90

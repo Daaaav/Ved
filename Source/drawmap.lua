@@ -58,27 +58,10 @@ function drawmap()
 								-- What were we selecting the rooms for, btw?
 								if selectingrooms == 1 then
 									-- Copying!
-									cons("Copying room data...")
-									--roomdata[selected2y][selected2x] = roomdata[selected1y][selected1x]
-									local copieddata = getroomcopydata(selected1x, selected1y)
-									setroomfromcopy(copieddata, selected2x, selected2y)
-									temporaryroomnametimer = 0
-									cons("Copying entities...")
-									copymoveentities(selected1x, selected1y, selected2x, selected2y, false)
-									cons("Done...")
+									mapcopy(selected1x, selected1y, selected2x, selected2y)
 								elseif selectingrooms == 2 then
 									-- Swapping!
-									cons("Swapping room data...")
-									local room1data = getroomcopydata(selected1x, selected1y)
-									local room2data = getroomcopydata(selected2x, selected2y)
-									setroomfromcopy(room1data, selected2x, selected2y)
-									setroomfromcopy(room2data, selected1x, selected1y)
-									temporaryroomnametimer = 0
-									cons("Swapping entities...")
-									copymoveentities(selected1x, selected1y, 22, 22, true)
-									copymoveentities(selected2x, selected2y, selected1x, selected1y, true)
-									copymoveentities(22, 22, selected2x, selected2y, true)
-									cons("Done...")
+									mapswap(selected1x, selected1y, selected2x, selected2y)
 								end
 
 								-- Refresh the map.
