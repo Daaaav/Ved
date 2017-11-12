@@ -311,6 +311,7 @@ function drawhelp()
 						stopinput()
 						takinginput = false
 						helppages[helparticle].cont = table.concat(helparticlecontent, "\n")
+						dirty()
 						nodialog = false
 					end
 				end

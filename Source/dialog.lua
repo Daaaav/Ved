@@ -38,7 +38,7 @@ function dialog.draw()
 				DIAbtn1glow = DIAbtn1glow - 1
 			end
 
-			if DIAcanclose == 3 or DIAcanclose == 4 or DIAcanclose == 5 then
+			if DIAcanclose == 3 or DIAcanclose == 4 or DIAcanclose == 5 or DIAcanclose == 6 then
 				if mouseon(DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25) and (DIAbtn2glow < 15) then
 					DIAbtn2glow = DIAbtn2glow + 1
 
@@ -51,7 +51,7 @@ function dialog.draw()
 				end
 			end
 
-			if DIAcanclose == 5 then
+			if DIAcanclose == 5 or DIAcanclose == 6 then
 				if mouseon(DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25) and (DIAbtn3glow < 15) then
 					DIAbtn3glow = DIAbtn3glow + 1
 
@@ -73,34 +73,36 @@ function dialog.draw()
 				love.graphics.printf(L.BTN_QUIT, DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			elseif DIAcanclose == 3 then
 				love.graphics.printf(L.BTN_NO, DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
-			elseif DIAcanclose == 4 then
+			elseif DIAcanclose == 4 or DIAcanclose == 6 then
 				love.graphics.printf(L.BTN_CANCEL, DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			elseif DIAcanclose == 5 then
 				love.graphics.printf(L.BTN_APPLY, DIAx+DIAwidth-btnwidth-1, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			end
 
-			if DIAcanclose == 3 then
+			if DIAcanclose == 3 or DIAcanclose == 4 or DIAcanclose == 5 or DIAcanclose == 6 then
 				setColorDIA(64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),128)
 				love.graphics.rectangle("fill", DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
 				setColorDIA(0,0,0,255)
+			end
+			if DIAcanclose == 3 then
 				love.graphics.printf(L.BTN_YES, DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			elseif DIAcanclose == 4 then
-				setColorDIA(64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),128)
-				love.graphics.rectangle("fill", DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
-				setColorDIA(0,0,0,255)
 				love.graphics.printf(L.BTN_OK, DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			elseif DIAcanclose == 5 then
-				setColorDIA(64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),64+(4*DIAbtn2glow),128)
-				love.graphics.rectangle("fill", DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
-				setColorDIA(0,0,0,255)
 				love.graphics.printf(L.BTN_CANCEL, DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
+			elseif DIAcanclose == 6 then
+				love.graphics.printf(L.BTN_DISCARD, DIAx+DIAwidth-(2*btnwidth)-6, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			end
 
-			if DIAcanclose == 5 then
+			if DIAcanclose == 5 or DIAcanclose == 6 then
 				setColorDIA(64+(4*DIAbtn3glow),64+(4*DIAbtn3glow),64+(4*DIAbtn3glow),128)
 				love.graphics.rectangle("fill", DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-26, btnwidth, 25)
 				setColorDIA(0,0,0,255)
+			end
+			if DIAcanclose == 5 then
 				love.graphics.printf(L.BTN_OK, DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
+			elseif DIAcanclose == 6 then
+				love.graphics.printf(L.BTN_SAVE, DIAx+DIAwidth-(3*btnwidth)-11, DIAy+DIAwindowani+DIAheight-16, btnwidth, "center")
 			end
 		end
 		-- Window border
@@ -353,10 +355,19 @@ function dialog.update()
 			-- Yes, create a new blank map, I'll lose any unsaved content
 			-- Make a dialog for options right away later
 			triggernewlevel()
-		elseif (DIAquestionid == 8) and (DIAreturn == 2) then
-			-- Yes, quit. I'll lose any unsaved content.
-			bypassdialog = true
-			love.event.quit()
+		elseif (DIAquestionid == 8) then
+			if DIAreturn == 3 then
+				-- I want to save first!
+				startmultiinput({(editingmap ~= "untitled\n" and editingmap or ""), metadata.Title})
+				dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, "", 1, 4, 10)
+				replacedialog = true
+				quitsave = true
+				DIAquitting = 1
+			elseif DIAreturn == 2 then
+				-- Yes, quit. I'll lose any unsaved content.
+				bypassdialog = true
+				love.event.quit()
+			end
 		elseif (DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 21 or DIAquestionid == 22) then
 			--     new script (list)    new script (editor)          split (editor)        duplicate (list)
 			stopinput()
@@ -448,6 +459,8 @@ function dialog.update()
 				else
 					replacedialog = true
 				end
+
+				dirty()
 			elseif DIAquestionid == 11 or DIAquestionid == 21 then
 				-- We were already editing a script so re-enable input for that!
 				takinginput = true
@@ -479,8 +492,11 @@ function dialog.update()
 					-- Why not :c
 					dialog.new(L.SAVENOSUCCESS .. anythingbutnil(savederror), "", 1, 1, 0)
 					replacedialog = true
+				elseif quitsave then
+					bypassdialog = true
 				end
 			end
+			quitsave = false
 		-- DIAQUESTIONID 11 IS HANDLED ABOVE (ALMOST EQUAL TO 9)
 		elseif (DIAquestionid == 12) then
 			stopinput()
@@ -514,6 +530,8 @@ function dialog.update()
 
 				helppages[helparticle].subj = newname
 
+				dirty()
+
 				--[[
 				if helpeditingline ~= 0 then
 					takinginput = true
@@ -523,6 +541,7 @@ function dialog.update()
 		elseif (DIAquestionid == 14) and (DIAreturn == 2) then
 			-- Yes, delete this note
 			table.remove(helppages, helparticle)
+			dirty()
 			if helppages[helparticle] == nil then
 				helparticle = helparticle - 1
 			end
@@ -573,6 +592,7 @@ function dialog.update()
 
 			scripts[scriptnames[input]] = nil
 			table.remove(scriptnames, input)
+			dirty()
 
 			-- The script number is input
 			--table.remove(scripts, scriptnames[input])

@@ -100,6 +100,7 @@ function love.load()
 	cursorflashtime = 0
 	multiinput = {}; currentmultiinput = 0
 	bypassdialog = false
+	quitsave = false
 
 	mousepressed = false -- for some things
 	middlescroll_x, middlescroll_y = -1, -1
@@ -555,8 +556,8 @@ function love.draw()
 		hoverdraw((s.adjacentroomlines and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
 		love.graphics.print(L.ADJACENTROOMLINES, 8+16+8, 8+(24*4)+4+2)
 
-		hoverdraw((s.askbeforequit and checkon or checkoff), 8, 8+(24*5), 16, 16, 2)
-		love.graphics.print(L.ASKBEFOREQUIT, 8+16+8, 8+(24*5)+4+2)
+		hoverdraw((s.neveraskbeforequit and checkon or checkoff), 8, 8+(24*5), 16, 16, 2)
+		love.graphics.print(L.NEVERASKBEFOREQUIT, 8+16+8, 8+(24*5)+4+2)
 
 		hoverdraw((s.coords0 and checkon or checkoff), 8, 8+(24*6), 16, 16, 2)
 		love.graphics.print(L.COORDS0, 8+16+8, 8+(24*6)+4+2)
@@ -622,7 +623,7 @@ function love.draw()
 				s.adjacentroomlines = not s.adjacentroomlines
 			elseif mouseon(8, 8+(24*5), 16, 16) then
 				-- Ask before quitting
-				s.askbeforequit = not s.askbeforequit
+				s.neveraskbeforequit = not s.neveraskbeforequit
 			elseif mouseon(8, 8+(24*6), 16, 16) then
 				-- Coords0
 				s.coords0 = not s.coords0
@@ -1007,7 +1008,7 @@ function love.update(dt)
 	if state ~= -1 then
 		local title_editingmap = ""
 		if editingmap ~= nil then
-			title_editingmap = editingmap:gsub("\n", "") .. " - "
+			title_editingmap = (has_unsaved_changes() and "*" or "") .. editingmap:gsub("\n", "") .. " - "
 		end
 
 		if allowdebug then
@@ -1406,6 +1407,7 @@ function love.textinput(char)
 
 			if state == 3 then
 				scriptlines[editingline] = input
+				dirty()
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			elseif state == 6 then
@@ -1453,6 +1455,7 @@ function love.keypressed(key)
 				else
 					scriptlines[editingline] = input
 				end
+				dirty()
 			elseif state == 15 then
 				-- Exact same story here.
 				if helparticlecontent[helpeditingline] == "" and helpeditingline ~= 1 then
@@ -1484,6 +1487,7 @@ function love.keypressed(key)
 				else
 					scriptlines[editingline] = input
 				end
+				dirty()
 			elseif state == 15 then
 				-- Same
 				if input:find("\n") then
@@ -1979,6 +1983,7 @@ function love.keypressed(key)
 		table.insert(scriptlines, editingline+1, "")
 		editingline = editingline + 1
 		input = anythingbutnil(scriptlines[editingline])
+		dirty()
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
 	elseif (state == 3 or state == 6) and key == "f1" then
@@ -2014,6 +2019,7 @@ function love.keypressed(key)
 		if #matching == 1 then
 			input = matching[1]
 			scriptlines[editingline] = input
+			dirty()
 		end
 	elseif (state == 6) and key == "return" and tabselected == 0 then
 		state6load(input .. input_r)
@@ -2376,9 +2382,22 @@ function love.mousereleased(x, y, button)
 end
 
 function love.quit()
+	--[[
 	if s.askbeforequit then
 		if nodialog and not bypassdialog then
 			dialog.new(L.SUREQUIT, "", 1, 3, 8)
+			return true
+		elseif not nodialog then
+			return true
+		end
+	end
+	]]
+	if not s.neveraskbeforequit then
+		if love.window.requestAttention ~= nil and love.window.hasFocus() then
+			love.window.requestAttention(true)
+		end
+		if nodialog and not bypassdialog and has_unsaved_changes() then --and unsaved changes
+			dialog.new(L.SUREQUITNEW, "", 1, 6, 8)
 			return true
 		elseif not nodialog then
 			return true

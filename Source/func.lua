@@ -367,6 +367,7 @@ function loadstate(new, extradata)
 		redobuffer = {}
 		undosaved = 0
 		unsavedchanges = false
+		saved_at_undo = 0
 
 		editingbounds = 0
 		showepbounds = true
@@ -2532,6 +2533,30 @@ end
 
 function unrecognized_rcmreturn()
 	dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+end
+
+-- Returns true if there are unsaved changes.
+function has_unsaved_changes()
+	if metadata == nil then
+		return false
+	end
+	if unsavedchanges then
+		return true
+	end
+	if undobuffer == nil then
+		return false
+	end
+	if #undobuffer == saved_at_undo then
+		return false
+	end
+	return true
+end
+
+-- Just stores that a change was made to the currently opened level that cannot be undone
+function dirty()
+	if not unsavedchanges then
+		unsavedchanges = true
+	end
 end
 
 hook("func")

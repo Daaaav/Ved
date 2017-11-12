@@ -42,6 +42,12 @@ configs =
 		{
 		default = true,
 		["type"] = "bool",
+		comment = "Obsolete, remains in order to not automatically make old versions of Ved annoying after running 1.3+"
+		},
+	neveraskbeforequit =
+		{
+		default = false,
+		["type"] = "bool",
 		},
 	scale =
 		{

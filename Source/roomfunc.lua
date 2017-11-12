@@ -1523,6 +1523,11 @@ end
 function finish_undo(description)
 	redobuffer = {}
 	cons("[UNRE] " .. description)
+
+	if saved_at_undo >= #undobuffer then
+		-- We just lost the state at which we saved, so we can't undo/redo back to that!
+		unsavedchanges = true
+	end
 end
 
 function cutroom()
