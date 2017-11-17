@@ -483,6 +483,8 @@ function loadstate(new, extradata)
 		selected1x = -1; selected1y = -1
 		selected2x = -1; selected2y = -1
 
+		mapmovedroom = false
+
 		setgenerictimer(2, 2.75)
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir

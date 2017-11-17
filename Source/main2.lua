@@ -107,7 +107,7 @@ function love.load()
 
 	temporaryroomnametimer = 0
 	generictimer = 0
-	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button
+	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
 
 	scriptsearchterm = ""
 	helpsearchterm = ""
@@ -1736,7 +1736,7 @@ function love.keypressed(key)
 		end
 
 		editingbounds = 0
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "right") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right") then
 		-->
 		if editingbounds == 0 then
 			if roomx+1 >= metadata.mapwidth then
@@ -1746,8 +1746,9 @@ function love.keypressed(key)
 			end
 
 			gotoroom_finish()
+			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "left") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left") then
 		--<
 		if editingbounds == 0 then
 			if roomx+1 <= 1 then
@@ -1757,8 +1758,9 @@ function love.keypressed(key)
 			end
 
 			gotoroom_finish()
+			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "down") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down") then
 		--v
 		if editingbounds == 0 then
 			if roomy+1 >= metadata.mapheight then
@@ -1768,8 +1770,9 @@ function love.keypressed(key)
 			end
 
 			gotoroom_finish()
+			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1) and (key == "up") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up") then
 		--^
 		if editingbounds == 0 then
 			if roomy+1 <= 1 then
@@ -1779,6 +1782,7 @@ function love.keypressed(key)
 			end
 
 			gotoroom_finish()
+			mapmovedroom = true
 		end
 	elseif state == 1 and editingroomname and key == "return" then
 		saveroomname()
@@ -2078,6 +2082,9 @@ function love.keypressed(key)
 		searchscripts, searchrooms, searchnotes = searchtext(input)
 		searchedfor = input
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
+		tostate(1, true)
+		nodialog = false
+	elseif nodialog and state == 12 and key == "return" then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and (state == 15 or state == 19) and key == "escape" then
