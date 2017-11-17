@@ -94,6 +94,17 @@ function drawmap()
 			end
 		end
 
+		if generictimer_mode == 2
+		and ((generictimer > 0 and generictimer <= 0.5)
+		or (generictimer > 1 and generictimer <= 1.5)
+		or (generictimer > 2 and generictimer < 2.5)) then
+			love.graphics.setColor(255,255,0)
+			love.graphics.setLineWidth(3)
+			love.graphics.rectangle("line", mapxoffset+screenoffset+(roomx*mapscale*640), mapyoffset+roomy*mapscale*480, mapscale*640, mapscale*480)
+			love.graphics.setLineWidth(1)
+			love.graphics.setColor(255,255,255)
+		end
+
 		if (hoverx ~= nil) and (hovery ~= nil) then
 			if s.coords0 then
 				love.graphics.print("(" .. hoverx .. "," .. hovery .. ")", screenoffset+640, 3)

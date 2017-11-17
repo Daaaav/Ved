@@ -482,6 +482,8 @@ function loadstate(new, extradata)
 		selectingrooms = 0
 		selected1x = -1; selected1y = -1
 		selected2x = -1; selected2y = -1
+
+		setgenerictimer(2, 2.75)
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
