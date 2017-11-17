@@ -1668,11 +1668,15 @@ function drawmaineditor()
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32))) then
 				-- Ugh this code but we're hovering over it. So display a tooltip, but don't get snipped away by the scissors.
+				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
+				if selectedtool <= 2 and k == 8 then
+					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
+				end
 				love.graphics.setScissor()
 				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(anythingbutnil(subtoolnames[selectedtool][k])), 8) -- string.len(anythingbutnil(subtoolnames[selectedtool][k]))*8
+				love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(tooltip_text), 8+(tooltip_text:find("\n") ~= nil and 8 or 0))
 				love.graphics.setColor(255,255,255,255)
-				love.graphics.print(anythingbutnil(subtoolnames[selectedtool][k]), love.mouse.getX()+16, love.mouse.getY()-8)
+				love.graphics.print(tooltip_text, love.mouse.getX()+16, love.mouse.getY()-8)
 				love.graphics.setScissor(16+64, 16, 32+4, love.graphics.getHeight()-32)
 			end
 		end

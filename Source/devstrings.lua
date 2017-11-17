@@ -14,3 +14,5 @@ L.BTN_SAVE = "Save"
 
 L.RECENTLYOPENED = "Recently opened levels"
 L.REMOVERECENT = "Do you want to remove it from the list of recently opened levels?"
+
+L.RESETCUSTOMBRUSH = "(Right click to set new size)"

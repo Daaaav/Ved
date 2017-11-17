@@ -43,7 +43,7 @@ function drawlevelslist()
 		local lessheight = 48
 		if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
 			lessheight = lessheight + 16 + #s.recentfiles*8
-			love.graphics.setColor(128,128,128)
+			love.graphics.setColor(64,64,64)
 			--love.graphics.rectangle("line", 7.5, love.graphics.getHeight()-lessheight+34.5, hoverarea+1, lessheight-59)
 			--love.graphics.setColor(255,0,0)
 			love.graphics.line(
