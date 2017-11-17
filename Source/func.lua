@@ -2392,6 +2392,9 @@ function setgenerictimer(mode, sec)
 end
 
 function recentlyopened(levelname)
+	if #s.recentfiles > 0 and s.recentfiles[#s.recentfiles] == levelname then
+		return
+	end
 	for k,v in pairs(s.recentfiles) do
 		if v == levelname then
 			table.remove(s.recentfiles, k)
