@@ -40,9 +40,57 @@ function drawlevelslist()
 				currentdir = (input .. input_r):sub(1, lastindex-1)
 			end
 		end
+		local lessheight = 48
+		if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+			lessheight = lessheight + 16 + #s.recentfiles*8
+			love.graphics.setColor(128,128,128)
+			--love.graphics.rectangle("line", 7.5, love.graphics.getHeight()-lessheight+34.5, hoverarea+1, lessheight-59)
+			--love.graphics.setColor(255,0,0)
+			love.graphics.line(
+				13.5, love.graphics.getHeight()-lessheight+34.5,
+				7.5, love.graphics.getHeight()-lessheight+34.5,
+				7.5, love.graphics.getHeight()-24.5,
+				8.5+hoverarea, love.graphics.getHeight()-24.5,
+				8.5+hoverarea, love.graphics.getHeight()-lessheight+34.5,
+				20.5+font8:getWidth(L.RECENTLYOPENED), love.graphics.getHeight()-lessheight+34.5
+			)
+			love.graphics.setColor(255,255,255)
+			love.graphics.print(L.RECENTLYOPENED, 18, love.graphics.getHeight()-(lessheight-25)+8)
+			love.graphics.setScissor(8, love.graphics.getHeight()-(lessheight-23)+12, hoverarea, lessheight-48-12)
+
+			local removerecent
+			for k,v in pairs(s.recentfiles) do
+				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
+				if mouseishovering then
+					hoveringlevel = v
+				end
+				if mouseishovering or tabselected == (-#s.recentfiles)+(k-1) then
+					love.graphics.setColor(255,255,255,64)
+					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
+					love.graphics.setColor(255,255,0)
+				end
+				love.graphics.print(v .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+				love.graphics.setColor(255,255,255)
+
+				if tabselected == (-#s.recentfiles)+(k-1) and nodialog then
+					if love.keyboard.isDown("return") then
+						state6load(v)
+					elseif love.keyboard.isDown("delete") then
+						removerecent = k
+					end
+				end
+			end
+			if removerecent ~= nil then
+				table.remove(s.recentfiles, removerecent)
+				tabselected = 0
+				saveconfig()
+			end
+
+			love.graphics.setScissor()
+		end
 		local k2 = 1
 		if files[currentdir] ~= nil then
-			love.graphics.setScissor(0, 22, love.graphics.getWidth()-128, love.graphics.getHeight()-48)
+			love.graphics.setScissor(0, 22, love.graphics.getWidth()-128, love.graphics.getHeight()-lessheight)
 			for k,v in pairs(files[currentdir]) do
 				local prefix
 				if currentdir == "" then
@@ -54,7 +102,7 @@ function drawlevelslist()
 				if v.isdir then
 					barename = v.name
 				end
-				if backupscreen or input .. input_r == "" or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
+				if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
 					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-26)
 
 					if mouseishovering then
@@ -112,17 +160,25 @@ function drawlevelslist()
 			levellistscroll = 0
 			max_levellistscroll = (k2-1)*8
 		end
-		local newperonetage = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-48, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-48)))
+		local newperonetage = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-lessheight, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 
 		if newperonetage ~= nil then
-			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-48)))
+			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 		end
 
-		if tabselected == 0 and (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
-			-- Start from the bottom.
-			tabselected = k2-1
+		if (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
+			if tabselected == 0 and #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+				tabselected = -1
+			elseif tabselected == 0 or tabselected < -#s.recentfiles then
+				-- Start from the bottom.
+				tabselected = k2-1
+			end
 		elseif tabselected >= k2 then
-			tabselected = 1
+			if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+				tabselected = -#s.recentfiles
+			else
+				tabselected = 1
+			end
 		end
 	end
 

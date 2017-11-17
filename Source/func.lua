@@ -1995,7 +1995,11 @@ function handleScrolling(viakeyboard, mkinput, customdistance)
 				end
 			elseif direction == "d" then
 				levellistscroll = levellistscroll - distance
-				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-48))
+				local lessheight = 48
+				if #s.recentfiles > 0 then
+					lessheight = lessheight + 16 + #s.recentfiles*8
+				end
+				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
 				if -levellistscroll > upperbound then
 					levellistscroll = math.min(-upperbound, 0)
 				end

@@ -11,3 +11,6 @@ L.SUREQUITNEW = "You have unsaved changes. Do you want to save these changes bef
 
 L.BTN_DISCARD = "Discard"
 L.BTN_SAVE = "Save"
+
+L.RECENTLYOPENED = "Recently opened levels"
+L.REMOVERECENT = "Do you want to remove it from the list of recently opened levels?"

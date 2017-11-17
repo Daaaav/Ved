@@ -1583,32 +1583,40 @@ function love.keypressed(key)
 
 	handleScrolling(true, key)
 
-	if DIAwindowani ~= 16 and DIAcanclose == 1 and key == "return" then
-		dialog.push()
-		DIAreturn = 1
-	elseif DIAwindowani ~= 16 and DIAcanclose == 2 and key == "return" then
-		dialog.push()
-		DIAreturn = 1
-		DIAquitting = 1
-	elseif DIAwindowani ~= 16 and DIAcanclose == 4 and key == "return" then
-		dialog.push()
-		DIAreturn = 2
-	elseif DIAwindowani ~= 16 and DIAcanclose == 5 and key == "return" then
-		dialog.push()
-		DIAreturn = 3
+	if DIAwindowani ~= 16 then
+		if DIAcanclose == 1 and key == "return" then
+			dialog.push()
+			DIAreturn = 1
+		elseif DIAcanclose == 2 and key == "return" then
+			dialog.push()
+			DIAreturn = 1
+			DIAquitting = 1
+		elseif DIAcanclose == 4 and key == "return" then
+			dialog.push()
+			DIAreturn = 2
+		elseif DIAcanclose == 5 and key == "return" then
+			dialog.push()
+			DIAreturn = 3
 
-	elseif DIAwindowani ~= 16 and DIAcanclose == 3 and key == "y" then
-		dialog.push()
-		DIAreturn = 2
-	elseif DIAwindowani ~= 16 and DIAcanclose == 3 and key == "n" then
-		dialog.push()
-		DIAreturn = 1
-	elseif DIAwindowani ~= 16 and DIAcanclose == 4 and key == "escape" then
-		dialog.push()
-		DIAreturn = 1
-	elseif DIAwindowani ~= 16 and DIAcanclose == 5 and key == "escape" then
-		dialog.push()
-		DIAreturn = 2
+		elseif DIAcanclose == 3 and key == "y" then
+			dialog.push()
+			DIAreturn = 2
+		elseif DIAcanclose == 3 and key == "n" then
+			dialog.push()
+			DIAreturn = 1
+		elseif (DIAcanclose == 4 or DIAcanclose == 6) and key == "escape" then
+			dialog.push()
+			DIAreturn = 1
+		elseif DIAcanclose == 5 and key == "escape" then
+			dialog.push()
+			DIAreturn = 2
+		elseif DIAcanclose == 6 and (key == "return" or key == "s") then
+			dialog.push()
+			DIAreturn = 3
+		elseif DIAcanclose == 6 and key == "d" then
+			dialog.push()
+			DIAreturn = 2
+		end
 
 	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
 		stopinput()
@@ -2024,11 +2032,15 @@ function love.keypressed(key)
 	elseif (state == 6) and key == "return" and tabselected == 0 then
 		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
-		if tabselected > 0 then
+		if tabselected ~= 0 then
 			tabselected = tabselected - 1
 		end
 	elseif (state == 6) and (key == "tab" or key == "down") then --and tabselected < #files then
-		tabselected = tabselected + 1
+		if tabselected == -1 then
+			tabselected = 1
+		else
+			tabselected = tabselected + 1
+		end
 	elseif (state == 6) and key == "escape" then
 		if tabselected ~= 0 then
 			tabselected = 0
@@ -2042,6 +2054,10 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
+	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
+		table.insert(files[""], {name="--[debug]--", isdir=false, lastmodified=0, overwritten=0})
+	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
+		table.remove(files[""])
 	elseif (state == 8) and (key == "return") then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
