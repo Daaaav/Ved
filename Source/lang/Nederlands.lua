@@ -1,5 +1,5 @@
 -- Dutch language file for Ved
--- 1.2.4
+-- 1.3.0
 
 L = {
 
@@ -37,6 +37,7 @@ FLAGNAMECHARS = "Namen van vlaggen kunnen geen (, ), , of spaties bevatten.",
 FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
 SUREQUIT = "Weet je zeker dat je wilt afsluiten? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
+SUREQUITNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het afsluiten?",
 SCALEREBOOT = "De nieuwe schaal-instellingen zullen van toepassing worden na het herstarten van Ved.",
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
@@ -76,6 +77,9 @@ SAVEDLEVELAS = "Level opgeslagen als $1.vvvvvv",
 ROOMCUT = "Kamer geknipt naar klembord",
 ROOMCOPIED = "Kamer gekopieerd naar klembord",
 ROOMPASTED = "Kamer geplakt",
+
+METADATAUNDONE = "Level-opties ongedaan gemaakt",
+METADATAREDONE = "Level-opties opnieuw gewĳzigd",
 
 BOUNDSTOPLEFT = "Klik op de linkerbovenhoek",
 BOUNDSBOTTOMRIGHT = "Klik op de rechteronderhoek",
@@ -117,6 +121,8 @@ BTN_YES = "Ja",
 BTN_NO = "Nee",
 BTN_APPLY = "Toepassen",
 BTN_QUIT = "Sluit",
+BTN_DISCARD = "Verwerpen",
+BTN_SAVE = "Opslaan",
 
 COMPARINGTHESE = "Vergelĳkt $1.vvvvvv met $2.vvvvvv",
 COMPARINGTHESENEW = "Vergelĳkt (niet-opgeslagen level) met $1.vvvvvv",
@@ -253,6 +259,7 @@ ALLOWLIMITBYPASS = "Sta limietbreuk toe",
 FLIPSUBTOOLSCROLL = "Keer scrollrichting voor subtools om",
 ADJACENTROOMLINES = "Indicaties van blokken in naastgelegen kamers",
 ASKBEFOREQUIT = "Vraag voor afsluiten",
+NEVERASKBEFOREQUIT = "Nooit vragen voor afsluiten, zelfs als er niet-opgeslagen wĳzigingen zĳn",
 COORDS0 = "Laat coördinaten beginnen bĳ 0 (zoals in interne scripting)",
 ALLOWDEBUG = "Schakel debugmodus in",
 SHOWFPS = "Toon FPS-teller",
@@ -362,6 +369,11 @@ SCRIPTDISPLAY = "Toon",
 SCRIPTDISPLAY_USED = "Gebruikt",
 SCRIPTDISPLAY_UNUSED = "Ongebruikt",
 SCRIPTDISPLAY_SHOWING = "Toont $1",
+
+-- 1.3.0 (more changes)
+RECENTLYOPENED = "Recent geopende levels",
+REMOVERECENT = "Wil je het uit de lĳst met recent geopende levels verwĳderen?",
+RESETCUSTOMBRUSH = "(Klik rechts om nieuwe grootte in te stellen)",
 
 }
 

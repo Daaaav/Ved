@@ -1,6 +1,6 @@
 -- Esperanta lingvodosiero por Ved
 -- de Hejmstel/Format
--- 1.2.4
+-- 1.3.0
 
 L = {
 
@@ -38,6 +38,7 @@ FLAGNAMECHARS = "Flagnomoj ne povas enhavi parentezojn, komojn aŭ spacetojn.",
 FLAGNAMEINUSE = "La flagnomo $1 jam estas uzata de flago $2",
 DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos konsiderata kiel pli malnova versio.",
 SUREQUIT = "Ĉu vi certas, ke vi volas eliri? Vi perdos ĉion nekonservitan.",
+SUREQUITNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol eliri?",
 SCALEREBOOT = "La novaj skalagordoj efikos post relanĉi Ved-on.",
 NAMEFORFLAG = "Nomo de flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
@@ -77,6 +78,9 @@ SAVEDLEVELAS = "Konservita kiel $1.vvvvvv",
 ROOMCUT = "Ĉambro tondita al tondejo",
 ROOMCOPIED = "Ĉambro kopiita al tondejo",
 ROOMPASTED = "Ĉambro algluita",
+
+METADATAUNDONE = "Nivelagordoj malfaritaj",
+METADATAREDONE = "Nivelagordoj refaritaj",
 
 BOUNDSTOPLEFT = "Alklaku la supra-maldekstran angulon de la limo",
 BOUNDSBOTTOMRIGHT = "Alklaku la malsupra-dekstran angulon",
@@ -118,6 +122,8 @@ BTN_YES = "Jes",
 BTN_NO = "Ne",
 BTN_APPLY = "Apliki",
 BTN_QUIT = "Eliri",
+BTN_DISCARD = "Ignori",
+BTN_SAVE = "Konservi",
 
 COMPARINGTHESE = "Komparado de $1.vvvvvv al $2.vvvvvv",
 COMPARINGTHESENEW = "Komparado de nekonservita nivelo al $1.vvvvvv",
@@ -254,6 +260,7 @@ ALLOWLIMITBYPASS = "Permesi preterpasadon de limoj",
 FLIPSUBTOOLSCROLL = "Renversi ruluman direkton de ilido",
 ADJACENTROOMLINES = "Indikiloj de blokoj en najbaraj ĉambroj",
 ASKBEFOREQUIT = "Demandi antaŭ ol eliri",
+NEVERASKBEFOREQUIT = "Neniam demandi antaŭ ol eliri, eĉ se estas nekonservitaj ŝanĝoj",
 COORDS0 = "Montri koordinatojn komence je nulo (kiel en interna skriptado)",
 ALLOWDEBUG = "Ebligi sencimigan reĝimon",
 SHOWFPS = "Montri kadrojn sekunde",
@@ -363,6 +370,11 @@ SCRIPTDISPLAY = "Show",
 SCRIPTDISPLAY_USED = "Used",
 SCRIPTDISPLAY_UNUSED = "Unused",
 SCRIPTDISPLAY_SHOWING = "Showing $1",
+
+-- 1.3.0 (more changes)
+RECENTLYOPENED = "Recently opened levels",
+REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
+RESETCUSTOMBRUSH = "(Dekstre alklaku por agordi novan grandon)",
 
 }
 

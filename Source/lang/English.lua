@@ -1,5 +1,5 @@
 -- Language file for Ved
--- 1.2.4
+-- 1.3.0
 
 L = {
 
@@ -37,6 +37,7 @@ FLAGNAMECHARS = "Flag names cannot contain (, ), , or spaces.",
 FLAGNAMEINUSE = "The flag name $1 is already in use by flag $2",
 DIFFSELECT = "Select the level to compare to. The level you select now will be treated as being an older version.",
 SUREQUIT = "Are you sure you want to quit? You will lose any unsaved content.",
+SUREQUITNEW = "You have unsaved changes. Do you want to save these changes before quitting?",
 SCALEREBOOT = "The new scale settings will take effect after rebooting Ved.",
 NAMEFORFLAG = "Name for flag $1:",
 SCRIPT404 = "Script \"$1\" does not exist!",
@@ -76,6 +77,9 @@ SAVEDLEVELAS = "Saved level as $1.vvvvvv",
 ROOMCUT = "Room cut to clipboard",
 ROOMCOPIED = "Copied room to clipboard",
 ROOMPASTED = "Pasted room",
+
+METADATAUNDONE = "Level options undone",
+METADATAREDONE = "Level options redone",
 
 BOUNDSTOPLEFT = "Click the top left corner of the bounds",
 BOUNDSBOTTOMRIGHT = "Click the bottom right corner",
@@ -117,6 +121,8 @@ BTN_YES = "Yes",
 BTN_NO = "No",
 BTN_APPLY = "Apply",
 BTN_QUIT = "Quit",
+BTN_DISCARD = "Discard",
+BTN_SAVE = "Save",
 
 COMPARINGTHESE = "Comparing $1.vvvvvv to $2.vvvvvv",
 COMPARINGTHESENEW = "Comparing (unsaved level) to $1.vvvvvv",
@@ -253,6 +259,7 @@ ALLOWLIMITBYPASS = "Allow bypassing of limits",
 FLIPSUBTOOLSCROLL = "Flip subtool scrolling direction",
 ADJACENTROOMLINES = "Indicators of tiles in adjacent rooms",
 ASKBEFOREQUIT = "Ask before quitting",
+NEVERASKBEFOREQUIT = "Never ask before quitting, even if there are unsaved changes",
 COORDS0 = "Display coordinates as starting at 0 (as in internal scripting)",
 ALLOWDEBUG = "Enable debug mode",
 SHOWFPS = "Show FPS counter",
@@ -362,6 +369,11 @@ SCRIPTDISPLAY = "Show",
 SCRIPTDISPLAY_USED = "Used",
 SCRIPTDISPLAY_UNUSED = "Unused",
 SCRIPTDISPLAY_SHOWING = "Showing $1",
+
+-- 1.3.0 (more changes)
+RECENTLYOPENED = "Recently opened levels",
+REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
+RESETCUSTOMBRUSH = "(Right click to set new size)",
 
 }
 

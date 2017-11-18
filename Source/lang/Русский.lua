@@ -1,5 +1,5 @@
 -- Language file for Ved
--- 1.2.4
+-- 1.3.0
 
 L = {
 
@@ -37,6 +37,7 @@ FLAGNAMECHARS = "Имя флага не может содержать (, ), , и
 FLAGNAMEINUSE = "Имя флага $1 уже используется флагом $2",
 DIFFSELECT = "Выберите второй уровень для сравнения. Уровень который вы выберете будет считаться за старую версию.",
 SUREQUIT = "Вы действительно хотите выйти? Вы потеряете весь несохранённый контент.",
+SUREQUITNEW = "You have unsaved changes. Do you want to save these changes before quitting?",
 SCALEREBOOT = "Новые настройки размера придут в силу после перезапуска Ved.",
 NAMEFORFLAG = "Имя флага $1:",
 SCRIPT404 = "Скрипт \"$1\" не существует!",
@@ -76,6 +77,9 @@ SAVEDLEVELAS = "Уровень сохранён как $1.vvvvvv",
 ROOMCUT = "Комната вырезана в буфер обмена",
 ROOMCOPIED = "Комната скопирована в буфер обмена",
 ROOMPASTED = "Комната вставлена из буфера обмена",
+
+METADATAUNDONE = "Level options undone",
+METADATAREDONE = "Level options redone",
 
 BOUNDSTOPLEFT = "Кликите на левый верхний угол рамки.",
 BOUNDSBOTTOMRIGHT = "Кликите на правый нижний угол рамки.",
@@ -117,6 +121,8 @@ BTN_YES = "Да",
 BTN_NO = "Нет",
 BTN_APPLY = "Применить",
 BTN_QUIT = "Выход",
+BTN_DISCARD = "Discard",
+BTN_SAVE = "Save",
 
 COMPARINGTHESE = "Сравниваю $1.vvvvvv с $2.vvvvvv",
 COMPARINGTHESENEW = "Сравниваю (несохранённый уровень) и $1.vvvvvv",
@@ -253,6 +259,7 @@ ALLOWLIMITBYPASS = "Отключить лимиты",
 FLIPSUBTOOLSCROLL = "Флипнуть направление прокручивания",
 ADJACENTROOMLINES = "Индикаторы стен",
 ASKBEFOREQUIT = "Подтверждение выхода",
+NEVERASKBEFOREQUIT = "Never ask before quitting, even if there are unsaved changes",
 COORDS0 = "Отображать координаты с 0 (для внутренних скриптов)",
 ALLOWDEBUG = "Включить режим разработчика",
 SHOWFPS = "Показывать счётчик FPS",
@@ -362,6 +369,11 @@ SCRIPTDISPLAY = "Show",
 SCRIPTDISPLAY_USED = "Used",
 SCRIPTDISPLAY_UNUSED = "Unused",
 SCRIPTDISPLAY_SHOWING = "Showing $1",
+
+-- 1.3.0 (more changes)
+RECENTLYOPENED = "Recently opened levels",
+REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
+RESETCUSTOMBRUSH = "(Right click to set new size)",
 
 }
 
