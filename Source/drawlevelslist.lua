@@ -318,7 +318,7 @@ function drawlevelslist()
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
 				--dialog.new("Auto-creation of a save file for VVVVVV coming soon!", "", 1, 1, 0)
-				openurl("http://ved.idea.informer.com/")
+				openurl("https://tolp.nl/ved/?p=feedback")
 
 				mousepressed = true
 			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then
