@@ -73,8 +73,8 @@ function loadplugins()
 				-- This is a plugin folder/zip, neat! But if it's a zip, then we first need to mount it.
 				local pluginpath, pluginname
 
-				if v:sub(1,1) == "#" then
-					-- Plugins starting with a # are disabled!
+				if v:sub(1,1) == "#" or v:sub(1,1) == "." then
+					-- Plugins starting with a # or . are disabled!
 				else
 
 					if v:sub(-4, -1) == ".zip" then
