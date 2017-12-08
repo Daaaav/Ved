@@ -125,17 +125,21 @@ function loadplugins()
 							thesehooks = love.filesystem.getDirectoryItems(pluginpath .. "/hooks")
 
 							for k2,v2 in pairs(thesehooks) do
-								hookname = v2:sub(1, -5)
+								if v2:sub(1, 1) ~= "." then
+									hookname = v2:sub(1, -5)
 
-								table.insert(plugins[pluginname].usedhooks, hookname)
+									table.insert(plugins[pluginname].usedhooks, hookname)
 
-								if hooks[hookname] == nil then
-									hooks[hookname] = {}
+									if hooks[hookname] == nil then
+										hooks[hookname] = {}
+									end
+
+									table.insert(hooks[hookname], love.filesystem.load(pluginpath .. "/hooks/" .. v2))
+
+									print("    -> Hook: " .. v2 .. " (" .. pluginpath .. "/hooks/" .. v2 .. ")")
+								else
+									print("    -> Ignoring hook " .. v2 .. " (" .. pluginpath .. "/hooks/" .. v2 .. ")")
 								end
-
-								table.insert(hooks[hookname], love.filesystem.load(pluginpath .. "/hooks/" .. v2))
-
-								print("    -> Hook: " .. v2 .. " (" .. pluginpath .. "/hooks/" .. v2)
 							end
 						end
 
