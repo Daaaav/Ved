@@ -254,6 +254,7 @@ function love.load()
 	love.keyboard.setKeyRepeat(true)
 	thingk()
 
+	local loaded_filefunc
 	if love.system.getOS() == "OS X" then
 		-- Cmd
 		ctrl = "gui"
@@ -261,7 +262,7 @@ function love.load()
 		macscrolling = true
 		wgetavailable = false
 		hook("love_load_mac")
-		ved_require("filefunc_mac")
+		loaded_filefunc = "mac"
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -269,7 +270,7 @@ function love.load()
 		macscrolling = false
 		wgetavailable = false
 		hook("love_load_win")
-		ved_require("filefunc_win")
+		loaded_filefunc = "win"
 		-- Make sure our util works
 		if not love.filesystem.exists("available_utils") then
 			love.filesystem.createDirectory("available_utils")
@@ -283,7 +284,7 @@ function love.load()
 		macscrolling = false
 		wgetavailable = true
 		hook("love_load_lin")
-		ved_require("filefunc_lin")
+		loaded_filefunc = "lin"
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
@@ -291,9 +292,10 @@ function love.load()
 		macscrolling = false
 		wgetavailable = false
 		hook("love_load_luv")
-		ved_require("filefunc_luv")
+		loaded_filefunc = "luv"
 		dialog.new(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 	end
+	ved_require("filefunc_" .. loaded_filefunc)
 
 	secondlevel = false
 
@@ -330,6 +332,12 @@ function love.load()
 		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 		updatenotesavailable = false
 	end
+
+	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
+	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, L)
+
+	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
+	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
 
 	hook("love_load_end")
 end
@@ -582,6 +590,9 @@ function love.draw()
 		hoverdraw((s.autosavecrashlogs and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
 		love.graphics.print(L.AUTOSAVECRASHLOGS, 8+16+8, 8+(24*12)+4+2)
 
+		hoverdraw((s.loadallmetadata and checkon or checkoff), 8, 8+(24*13), 16, 16, 2)
+		love.graphics.print(L.LOADALLMETADATA, 8+16+8, 8+(24*13)+4+2)
+
 		if s.pscale ~= s.scale then
 			love.graphics.setColor(255,128,0)
 			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
@@ -643,6 +654,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*12), 16, 16) then
 				-- Auto save crash logs
 				s.autosavecrashlogs = not s.autosavecrashlogs
+			elseif mouseon(8, 8+(24*13), 16, 16) then
+				-- Load all metadata
+				s.loadallmetadata = not s.loadallmetadata
 
 			elseif onrbutton(0) then
 				-- Save
@@ -1050,6 +1064,19 @@ function love.update(dt)
 		if vedmetadata == nil then
 			cons("vedmetadata == nil! Setting to false.")
 			vedmetadata = false
+		end
+	elseif state == 6 then
+		local chanmessage = allmetadata_outchannel:pop()
+
+		if chanmessage ~= nil then
+			files[chanmessage.dir][chanmessage.id].metadata = chanmessage
+
+			-- Is this also the metadata for any recent file? TODO: Support subdirectories
+			for k,v in pairs(s.recentfiles) do
+				if chanmessage.path == v .. ".vvvvvv" then
+					recentmetadata_files[v] = chanmessage.id
+				end
+			end
 		end
 	elseif state == 15 and s.smallerscreen then
 		local leftpartw = 8+200+8-96-2
@@ -2430,4 +2457,5 @@ end
 
 function love.threaderror(thread, errorstr)
 	dialog.new(L.THREADERROR .. "\n\n" .. errorstr, "", 1, 1, 0)
+	cons("Thread error")
 end

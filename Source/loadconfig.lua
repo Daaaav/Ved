@@ -108,6 +108,11 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
+	loadallmetadata =
+		{
+		default = true,
+		["type"] = "bool",
+		},
 	enableoverwritebackups =
 		{
 		default = true,

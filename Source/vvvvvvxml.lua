@@ -10,49 +10,26 @@ metadataitems =
 	"website"
 	}
 
-function loadlevel(path)
-	-- Returns (bool)success, (array)metadata, (array)contents, (array)entities, (array)levelmetadata, (array)scripts, (array)count, (array)scriptnames, (array)vedmetadata
+function loadlevelmetadata(path)
+	-- Returns (bool)success, (array)metadata, contents
 	-- Map size and music is gonna move in with the metadata here.
-	-- Contents is basically the raw array exploded
-	-- Entities bestaat uit arrays (entity contents are array item data)
-	-- Of course levelmetadata is all 400 rooms and also consists of arrays (roomname is array item roomname)
-	-- Scripts are pre-exploded and scripts[scriptname] = (array)contents
-	-- count will return the count of trinkets, crewmates and entities to keep everything within limits. It also contains the ID of the start point so it can be removed in case we place a new one.
-	-- scriptnames is used to keep the names in order of opening scripts
-	-- vedmetadata has flag names (.flaglabel)
 	-- If loading isn't successful, metadata will be an error string.
 
-	-- Ok we have the file at path...
-	--[[
-	if not love.filesystem.isFile(path) then
-		-- Doesn't exist.
-		cons("File " .. path .. " doesn't exist!")
-		return false
-	end
+	local success, contents = readlevelfile(levelsfolder .. dirsep .. path)
 
-	-- Now load the level contents!
-	contents = love.filesystem.read(path)
-	]]
-
-	success, contents = readlevelfile(levelsfolder .. dirsep .. path)
-
-	if not success then
+	if not success or contents == nil then
 		return false, contents
 	end
 
-	local x = {}
-	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
-	FClist = {}
-
 	-- First do the metadata.
 	cons("Loading metadata...")
-	x.metadata = contents:match("<MetaData>(.*)</MetaData>")
-	if x.metadata == nil then
+	local xmetadata = contents:match("<MetaData>(.*)</MetaData>")
+	if xmetadata == nil then
 		return false, L.MAL .. L.METADATACORRUPT
 	end
 	local thismetadata = {}
 	for _,v in pairs(metadataitems) do
-		local m = x.metadata:match("<" .. v .. ">(.*)</" .. v .. ">")
+		local m = xmetadata:match("<" .. v .. ">(.*)</" .. v .. ">")
 		if m == nil then
 			cons("mdcorr for "..v)
 			return false, L.MAL .. langkeys(L.METADATAITEMCORRUPT, {v})
@@ -70,8 +47,30 @@ function loadlevel(path)
 		thismetadata[v] = tonumber(m)
 	end
 
-	-- TEMPORARY
-	-- thismetadata.tileset = 1
+	return true, thismetadata, contents
+end
+
+function loadlevel(path)
+	-- Returns (bool)success, (array)metadata, (array)contents, (array)entities, (array)levelmetadata, (array)scripts, (array)count, (array)scriptnames, (array)vedmetadata
+	-- Map size and music is gonna move in with the metadata here.
+	-- Contents is basically the raw array exploded
+	-- Entities bestaat uit arrays (entity contents are array item data)
+	-- Of course levelmetadata is all 400 rooms and also consists of arrays (roomname is array item roomname)
+	-- Scripts are pre-exploded and scripts[scriptname] = (array)contents
+	-- count will return the count of trinkets, crewmates and entities to keep everything within limits. It also contains the ID of the start point so it can be removed in case we place a new one.
+	-- scriptnames is used to keep the names in order of opening scripts
+	-- vedmetadata has flag names (.flaglabel)
+	-- If loading isn't successful, metadata will be an error string.
+
+	local success, thismetadata, contents = loadlevelmetadata(path)
+
+	if not success then
+		return false, thismetadata
+	end
+
+	local x = {}
+	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
+	FClist = {}
 
 	-- Now, the contents!
 	cons("Loading all the contents...")

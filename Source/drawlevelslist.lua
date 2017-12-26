@@ -18,8 +18,10 @@ function drawlevelslist()
 		hoveringlevel = nil
 		hoveringlevel_k = nil
 		local hoverarea = 734
+		local metadatax = 422
 		if s.smallerscreen then
 			hoverarea = hoverarea - 96
+			metadatax = metadatax - 96
 		end
 		-- Are we in the root, or is there a subfolder we're supposed to look in?
 		local currentdir = ""
@@ -63,6 +65,7 @@ function drawlevelslist()
 				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 				if mouseishovering then
 					hoveringlevel = v
+					hoveringlevel_k = (-#s.recentfiles)+(k-1)
 				end
 				if mouseishovering or tabselected == (-#s.recentfiles)+(k-1) then
 					love.graphics.setColor(255,255,255,64)
@@ -70,6 +73,20 @@ function drawlevelslist()
 					love.graphics.setColor(255,255,0)
 				end
 				love.graphics.print(v .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+
+				local actualfile = recentmetadata_files[v]
+				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
+					local md = files[currentdir][actualfile].metadata
+					if not md.success then
+						love.graphics.draw(smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+					else
+						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
+							love.graphics.setColor(128,128,128)
+						end
+						love.graphics.print(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+					end
+				end
+
 				love.graphics.setColor(255,255,255)
 
 				if tabselected == (-#s.recentfiles)+(k-1) and nodialog then
@@ -102,14 +119,22 @@ function drawlevelslist()
 				if v.isdir then
 					barename = v.name
 				end
+				if s.loadallmetadata and not metadataloaded_folders[currentdir] and not v.isdir and not backupscreen then
+					-- Request all the metadata for this level (It's not disabled if we're here)
+					allmetadata_inchannel:push(
+						{
+							path = prefix .. v.name,
+							dir = currentdir,
+							id = k
+						}
+					)
+				end
 				if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
 					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-26)
 
 					if mouseishovering then
 						hoveringlevel = prefix .. barename
-						if backupscreen and not v.isdir then
-							hoveringlevel_k = k
-						end
+						hoveringlevel_k = k
 					end
 					if mouseishovering or tabselected == k2 then
 						love.graphics.setColor(255,255,255,64)
@@ -133,6 +158,17 @@ function drawlevelslist()
 						end
 					else
 						love.graphics.print(v.name, 18, 16+8*k2+levellistscroll) -- y = 16+8*k
+
+						if v.metadata ~= nil then
+							if not v.metadata.success then
+								love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
+							else
+								if not (mouseishovering or tabselected == k2) then
+									love.graphics.setColor(128,128,128)
+								end
+								love.graphics.print(v.metadata.Title, metadatax, 16+8*k2+levellistscroll)
+							end
+						end
 					end
 
 
@@ -153,6 +189,52 @@ function drawlevelslist()
 				lastk = k
 			end
 			love.graphics.setScissor()
+			if s.loadallmetadata and not metadataloaded_folders[currentdir] then
+				metadataloaded_folders[currentdir] = true
+			end
+
+			-- Draw level metadata
+			local preferred_k, md, topy
+			if hoveringlevel_k ~= nil then
+				preferred_k = hoveringlevel_k
+			elseif tabselected ~= nil then
+				preferred_k = tabselected
+			end
+			if preferred_k ~= nil then
+				if preferred_k < 0 then
+					local recentname = s.recentfiles[#s.recentfiles+preferred_k+1]
+					-- No "falsy" nonsense here, I only want the real "false"
+					if recentmetadata_files[recentname] ~= false then
+						if recentmetadata_files[recentname] == nil then
+							-- Wasn't found, apparently
+						elseif files[currentdir][recentmetadata_files[recentname]] ~= nil and files[currentdir][recentmetadata_files[recentname]].metadata ~= nil then
+							md = files[currentdir][recentmetadata_files[recentname]].metadata
+							topy = love.graphics.getHeight()-(lessheight-25)+16+8*(#s.recentfiles+preferred_k+1)
+						end
+					end
+				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
+					md = files[currentdir][preferred_k].metadata
+					topy = 24+8*preferred_k+levellistscroll
+				end
+				if md ~= nil then
+					if topy+48 > love.graphics.getHeight() then
+						topy = topy-56
+					end
+					love.graphics.setColor(73,73,73,224)
+					love.graphics.rectangle("fill", metadatax, topy-2, 40*8, 6*8)
+					love.graphics.setColor(255,255,255,255)
+					if md.success then
+						love.graphics.print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
+						love.graphics.printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
+						love.graphics.print(anythingbutnil(md.website), metadatax, topy+8)
+						love.graphics.print(anythingbutnil(md.Desc1), metadatax, topy+24)
+						love.graphics.print(anythingbutnil(md.Desc2), metadatax, topy+32)
+						love.graphics.print(anythingbutnil(md.Desc3), metadatax, topy+40)
+					else
+						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
+					end
+				end
+			end
 		end
 
 		-- Scrollbar

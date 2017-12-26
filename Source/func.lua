@@ -637,6 +637,8 @@ function loadlevelsfolder()
 	if lsuccess then
 		files = listfiles(levelsfolder)
 	end
+	metadataloaded_folders = {}
+	recentmetadata_files = {}
 	cons("Loaded.")
 	-- Now get all the backups
 	if files == nil then
