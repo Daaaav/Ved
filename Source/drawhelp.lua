@@ -376,7 +376,7 @@ function drawhelp()
 				elseif matching_anchor then
 					gotohelparticle(matching_article_num)
 					helparticlescroll = (matching_anchor_line-1)*-10
-					handleScrolling(false, "wd", 0)
+					handle_scrolling(false, "wd", 0)
 				end
 			elseif love.mouse.isDown("r") then
 				if matching_url then

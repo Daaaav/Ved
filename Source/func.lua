@@ -1956,7 +1956,7 @@ function cons_fc(text)
 	cons("[CHECK] " .. text)
 end
 
-function handleScrolling(viakeyboard, mkinput, customdistance)
+function handle_scrolling(viakeyboard, mkinput, customdistance)
 	local direction, distance
 
 	if viakeyboard then
@@ -2002,7 +2002,7 @@ function handleScrolling(viakeyboard, mkinput, customdistance)
 			elseif direction == "d" then
 				levellistscroll = levellistscroll - distance
 				local lessheight = 48
-				if #s.recentfiles > 0 then
+				if #s.recentfiles > 0 and input == "" and input_r == "" then
 					lessheight = lessheight + 16 + #s.recentfiles*8
 				end
 				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))

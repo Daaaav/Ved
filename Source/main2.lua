@@ -1404,7 +1404,7 @@ function love.update(dt)
 	end
 
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) then
-		handleScrolling(false, love.mouse.getY() < middlescroll_y and "wu" or "wd", 10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16))
+		handle_scrolling(false, love.mouse.getY() < middlescroll_y and "wu" or "wd", 10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16))
 	end
 
 	hook("love_update_end", {dt})
@@ -1608,7 +1608,7 @@ function love.keypressed(key)
 		end
 	end
 
-	handleScrolling(true, key)
+	handle_scrolling(true, key)
 
 	if DIAwindowani ~= 16 then
 		if DIAcanclose == 1 and key == "return" then
@@ -2094,7 +2094,7 @@ function love.keypressed(key)
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 		editingmap = input
 	elseif state == 10 and (key == "up" or key == "down") then
-		handleScrolling(false, key == "up" and "wu" or "wd") -- 16px
+		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
 	elseif state == 10 and key == "n" and nodialog then
 		startmultiinput({""})
 		dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
@@ -2373,7 +2373,7 @@ function love.mousepressed(x, y, button)
 		line = math.floor(((y-8)-helparticlescroll-3)/10) + 1
 		helpgotoline(line, chr)
 	else
-		handleScrolling(false, button)
+		handle_scrolling(false, button)
 	end
 
 	if button == "m" then
