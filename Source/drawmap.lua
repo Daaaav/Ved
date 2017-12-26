@@ -31,7 +31,7 @@ function drawmap()
 					hovername = levelmetadata[(mry)*20 + (mrx+1)].roomname
 
 					-- But maybe we're clicking this room!
-					if love.mouse.isDown("l") then
+					if love.mouse.isDown("l") and nodialog then
 						-- Is this an action?
 						if not mousepressed and selectingrooms == 0 then
 							-- Nope
