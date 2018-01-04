@@ -1731,7 +1731,7 @@ function love.keypressed(key)
 		coordsdialog.activate()
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "m" then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
@@ -1763,7 +1763,7 @@ function love.keypressed(key)
 		end
 
 		editingbounds = 0
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") then
 		-->
 		if editingbounds == 0 then
 			if roomx+1 >= metadata.mapwidth then
@@ -1775,7 +1775,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") then
 		--<
 		if editingbounds == 0 then
 			if roomx+1 <= 1 then
@@ -1787,7 +1787,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") then
 		--v
 		if editingbounds == 0 then
 			if roomy+1 >= metadata.mapheight then
@@ -1799,7 +1799,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") then
 		--^
 		if editingbounds == 0 then
 			if roomy+1 <= 1 then
@@ -2111,7 +2111,7 @@ function love.keypressed(key)
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and key == "return" then
+	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and (state == 15 or state == 19) and key == "escape" then
