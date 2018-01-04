@@ -357,9 +357,6 @@ function loadstate(new, extradata)
 
 		-- old if not success
 
-		-- Terminal -> open would crash otherwise
-		scriptlistscroll = 0
-
 		holdingzvx = false
 		oldzxsubtool = 1
 
@@ -462,11 +459,13 @@ function loadstate(new, extradata)
 		youdidanswer = ""
 		dialog.new("Not much to see here. Other than that I got this working.\n\nAhem.\n\n\"Are you absolutely sure you want to delete everything?\"", "", 1, 3, 1)
 	elseif new == 10 then
-		scriptlistscroll = 0
+		if oldstate ~= 3 or scriptlistscroll == nil then
+			scriptlistscroll = 0
+			scriptdisplay_used = true
+			scriptdisplay_unused = true
+		end
 		usedscripts = nil
 		n_usedscripts = nil
-		scriptdisplay_used = true
-		scriptdisplay_unused = true
 	elseif new == 11 then
 		startinput()
 		searchscripts = {}; searchrooms = {}; searchnotes = {}

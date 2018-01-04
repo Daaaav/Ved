@@ -2122,7 +2122,7 @@ function love.keypressed(key)
 			stopinput()
 			scriptlines[editingline] = input
 			scripts[scriptname] = table.copy(scriptlines)
-			tostate(10, true)
+			tostate(10)
 			nodialog = false
 		end
 

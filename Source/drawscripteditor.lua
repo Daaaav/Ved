@@ -199,7 +199,7 @@ function drawscripteditor()
 				stopinput()
 				scriptlines[editingline] = input
 				scripts[scriptname] = table.copy(scriptlines)
-				tostate(10, true)
+				tostate(10)
 			end
 
 			if not processflaglabelsreverse() then
