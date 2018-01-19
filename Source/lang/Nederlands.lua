@@ -1,5 +1,5 @@
 -- Dutch language file for Ved
--- 1.3.0
+-- 1.3.1
 
 L = {
 
@@ -193,6 +193,8 @@ OPTMUSIC = "Muziek",
 CAPNONE = "GEEN",
 ENTERLONGOPTNAME = "Levelnaam:",
 
+X = "x", -- Used for level size: 20x20
+
 SOLID = "Vast",
 NOTSOLID = "Niet vast",
 
@@ -269,6 +271,7 @@ PAUSEDRAWUNFOCUSED = "Niet tekenen als het venster inactief is",
 ENABLEOVERWRITEBACKUPS = "Reservekopie maken van levelbestanden die worden overschreven",
 AMOUNTOVERWRITEBACKUPS = "Aantal reservekopieën om te bewaren per level",
 SCALE = "Schaal",
+LOADALLMETADATA = "Laad metadata (zoals titel, auteur en beschrĳving) voor alle bestanden in de lĳst met levels",
 
 SCRIPTUSAGESROOMS = "$1 keer gebruikt in kamers: $2",
 SCRIPTUSAGESSCRIPTS = "$1 keer gebruikt in scripts: $2",

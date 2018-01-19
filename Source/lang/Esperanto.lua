@@ -1,6 +1,6 @@
 -- Esperanta lingvodosiero por Ved
 -- de Hejmstel/Format
--- 1.3.0
+-- 1.3.1
 
 L = {
 
@@ -194,6 +194,8 @@ OPTMUSIC = "Muziko",
 CAPNONE = "NENIU",
 ENTERLONGOPTNAME = "Nivelo-nomo:",
 
+X = "x", -- Used for level size: 20x20
+
 SOLID = "Masiva",
 NOTSOLID = "Ne masiva",
 
@@ -270,6 +272,7 @@ PAUSEDRAWUNFOCUSED = "Ne bildigi kiam la fenestro estas elfokusa",
 ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas",
 AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
 SCALE = "Skalo",
+LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
 
 SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
 SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",

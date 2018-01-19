@@ -1,5 +1,5 @@
 -- Language file for Ved
--- 1.3.0
+-- 1.3.1
 
 L = {
 
@@ -193,6 +193,8 @@ OPTMUSIC = "Саундтрек",
 CAPNONE = "НЕТ",
 ENTERLONGOPTNAME = "Название уровня:",
 
+X = "x", -- Used for level size: 20x20
+
 SOLID = "Твёрдый",
 NOTSOLID = "Не твёрдый",
 
@@ -269,6 +271,7 @@ PAUSEDRAWUNFOCUSED = "Не рендерить если окно не актив�
 ENABLEOVERWRITEBACKUPS = "Делать бекапы уровня при перезаписи файла",
 AMOUNTOVERWRITEBACKUPS = "Кол-во бекапов для каждого уровня",
 SCALE = "Размер",
+LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
 
 SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
 SCRIPTUSAGESSCRIPTS = "$1 использований в скриптах: $2",

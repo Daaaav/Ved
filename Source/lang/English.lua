@@ -1,5 +1,5 @@
 -- Language file for Ved
--- 1.3.0
+-- 1.3.1
 
 L = {
 
@@ -193,6 +193,8 @@ OPTMUSIC = "Music",
 CAPNONE = "NONE",
 ENTERLONGOPTNAME = "Level name:",
 
+X = "x", -- Used for level size: 20x20
+
 SOLID = "Solid",
 NOTSOLID = "Not solid",
 
@@ -269,6 +271,7 @@ PAUSEDRAWUNFOCUSED = "Do not render when the window is unfocused",
 ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten",
 AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
 SCALE = "Scale",
+LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
 
 SCRIPTUSAGESROOMS = "$1 usages in rooms: $2",
 SCRIPTUSAGESSCRIPTS = "$1 usages in scripts: $2",
