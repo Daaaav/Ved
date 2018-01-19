@@ -2342,7 +2342,7 @@ gemotiveerd om dit te maken!
 
 License\h#
 
-Copyright 2015-2017  Dav999              (I do not claim ownership of or copyright
+Copyright 2015-2018  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
 
 Redistribution and use in source and binary forms, with or without modification,
