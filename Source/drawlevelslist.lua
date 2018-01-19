@@ -130,7 +130,7 @@ function drawlevelslist()
 					)
 				end
 				if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
-					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-26)
+					local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21)
 
 					if mouseishovering then
 						hoveringlevel = prefix .. barename
