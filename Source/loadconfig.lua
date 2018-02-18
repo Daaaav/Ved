@@ -252,6 +252,11 @@ end
 --- Handling of scaling options
 
 do
+	s.scale = tonumber(s.scale)
+	if s.scale == nil or s.scale <= 0 then
+		s.scale = 1
+	end
+
 	local function windowfits(w, h, monitorres)
 		return w <= monitorres[1] and h <= monitorres[2]
 	end

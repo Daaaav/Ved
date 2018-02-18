@@ -568,7 +568,7 @@ function love.draw()
 
 		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
 			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
+			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
 		end
 
@@ -859,42 +859,55 @@ function love.draw()
 		love.graphics.print(L.DISPLAYSETTINGSTITLE, 8, 8+4+2)
 
 		love.graphics.print(L.SCALE, 8, 8+(24*1)+4+2)
-		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
-			function(value)
-				local swidth = 896
-				if s.psmallerscreen then
-					swidth = 800
-				end
-				local fits = false
-
-				for mon = 1, love.window.getDisplayCount() do
-					local monw, monh = love.window.getDesktopDimensions(mon)
-
-					if windowfits(swidth*value, 480*value, {monw, monh}) then
-						fits = true
+		if nonintscale then
+			-- Something
+			love.graphics.print(input .. __, 16+font8:getWidth(L.SCALE), 8+(24*1)+4+2)
+		else
+			int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
+				function(value)
+					local swidth = 896
+					if s.psmallerscreen then
+						swidth = 800
 					end
+					local fits = false
+
+					for mon = 1, love.window.getDisplayCount() do
+						local monw, monh = love.window.getDesktopDimensions(mon)
+
+						if windowfits(swidth*value, 480*value, {monw, monh}) then
+							fits = true
+						end
+					end
+					return not fits
 				end
-				return not fits
-			end
-		)
+			)
+		end
 
-		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
-		love.graphics.print(L.SMALLERSCREEN, 8+16+8, 8+(24*2)+4+2)
+		hoverdraw((nonintscale and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
+		love.graphics.print(L.NONINTSCALE, 8+16+8, 8+(24*2)+4+2)
 
-		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
-		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*3)+4+2)
+		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
+		love.graphics.print(L.SMALLERSCREEN, 8+16+8, 8+(24*3)+4+2)
+
+		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
+		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*4)+4+2)
 
 
-		-- TODO: Print resolution somewhere
-		local ved_w, ved_h = 896*s.scale, 480*s.scale
+		local num_scale
+		if nonintscale then
+			num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
+		else
+			num_scale = anythingbutnil0(tonumber(s.scale))
+		end
+		local ved_w, ved_h = 896*num_scale, 480*num_scale
 		if s.smallerscreen then
-			ved_w = 800*s.scale
+			ved_w = 800*num_scale
 		end
 
 
 		-- Display monitors
 		love.graphics.setColor(12, 12, 12)
-		love.graphics.rectangle("fill", 16, 112, love.graphics.getWidth()-32, 332)
+		love.graphics.rectangle("fill", 16, 125, love.graphics.getWidth()-32, 332)
 		local total_monw, high_monh = -16, 0
 		local monitors = {}
 		local fits = false
@@ -916,7 +929,7 @@ function love.draw()
 		for k,v in pairs(monitors) do
 			local monw, monh = unpack(v)
 			local dispx = (love.graphics.getWidth()/2 - (total_monw*pixelscale)/2) + currentmon_x
-			local dispy = 112 + (166 - (monh*pixelscale)/2)
+			local dispy = 125 + (166 - (monh*pixelscale)/2)
 
 			love.graphics.setColor(6, 6, 6)
 			love.graphics.rectangle("fill", dispx-4, dispy-4, monw*pixelscale+8, monh*pixelscale+8)
@@ -926,25 +939,29 @@ function love.draw()
 			love.graphics.setScissor(dispx, dispy, monw*pixelscale+1, monh*pixelscale+1)
 			love.graphics.draw(
 				scaleimgs[s.smallerscreen],                         -- compensate for window borders in this image
-				dispx + ((monw*pixelscale)/2 - (ved_w*pixelscale)/2) - 9*pixelscale*s.scale,
-				dispy + ((monh*pixelscale)/2 - (ved_h*pixelscale)/2) - 30*pixelscale*s.scale,
-				0, pixelscale*s.scale
+				dispx + ((monw*pixelscale)/2 - (ved_w*pixelscale)/2) - 9*pixelscale*num_scale,
+				dispy + ((monh*pixelscale)/2 - (ved_h*pixelscale)/2) - 30*pixelscale*num_scale,
+				0, pixelscale*num_scale
 			)
 			love.graphics.setScissor()
-			love.graphics.printf((love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "") .. langkeys(L.MONITORSIZE, {monw, monh}), dispx, 122 + (166 + (monh*pixelscale)/2), monw*pixelscale, "center")
+			love.graphics.printf((love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "") .. langkeys(L.MONITORSIZE, {monw, monh}), dispx, 135 + (166 + (monh*pixelscale)/2), monw*pixelscale, "center")
 			currentmon_x = currentmon_x + monw*pixelscale + 16
 		end
 
-		love.graphics.printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 118, love.graphics.getWidth(), "center")
+		love.graphics.printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 131, love.graphics.getWidth(), "center")
 
 
-		if not fits then
+		if num_scale ~= tonumber(num_scale) or num_scale == nil or num_scale <= 0 then
 			love.graphics.setColor(255,0,0)
-			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-18)
+			love.graphics.print(L.SCALENONUM, 8, love.graphics.getHeight()-15)
+			love.graphics.setColor(255,255,255)
+		elseif not fits then
+			love.graphics.setColor(255,0,0)
+			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
 		elseif s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
 			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
+			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
 		end
 
@@ -954,13 +971,30 @@ function love.draw()
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(8, 8+(24*2), 16, 16) then
+				-- Non-int scaling
+				nonintscale = not nonintscale
+				if nonintscale then
+					startinput()
+					input = tostring(s.scale)
+				else
+					stopinput()
+					s.scale = math.floor(num_scale)
+					if s.scale <= 0 then
+						s.scale = 1
+					end
+				end
+			elseif mouseon(8, 8+(24*3), 16, 16) then
 				-- Smaller screen
 				s.smallerscreen = not s.smallerscreen
-			elseif mouseon(8, 8+(24*3), 16, 16) then
+			elseif mouseon(8, 8+(24*4), 16, 16) then
 				-- Force scale settings
 				s.forcescale = not s.forcescale
 			elseif onrbutton(0) then
 				-- Save
+				if nonintscale then
+					stopinput()
+					s.scale = num_scale
+				end
 				saveconfig()
 				tostate(oldstate, true)
 				-- Just to make sure we don't get stuck in the settings

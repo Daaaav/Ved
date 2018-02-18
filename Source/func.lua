@@ -594,6 +594,12 @@ function loadstate(new, extradata)
 		editingcolor = nil
 	elseif new == 26 then
 		startinput()
+	elseif new == 27 then
+		nonintscale = s.scale ~= math.floor(anythingbutnil0(tonumber(s.scale)))
+		if nonintscale then
+			startinput()
+			input = tostring(s.scale)
+		end
 	end
 
 	hook("func_loadstate")
