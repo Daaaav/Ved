@@ -166,32 +166,32 @@ function love.load()
 	scriptboximg[9] = love.graphics.newImage("cursor/script9.png")
 
 
-	selectedtoolborder = love.graphics.newImage("selectedtool.png")
-	unselectedtoolborder = love.graphics.newImage("unselectedtool.png")
+	selectedtoolborder = love.graphics.newImage("images/selectedtool.png")
+	unselectedtoolborder = love.graphics.newImage("images/unselectedtool.png")
 
-	savebtn = love.graphics.newImage("save.png")
-	loadbtn = love.graphics.newImage("load.png")
-	newbtn = love.graphics.newImage("new.png")
-	helpbtn = love.graphics.newImage("help.png")
-	retbtn = love.graphics.newImage("ret.png")
+	savebtn = love.graphics.newImage("images/save.png")
+	loadbtn = love.graphics.newImage("images/load.png")
+	newbtn = love.graphics.newImage("images/new.png")
+	helpbtn = love.graphics.newImage("images/help.png")
+	retbtn = love.graphics.newImage("images/ret.png")
 
-	undobtn = love.graphics.newImage("undo.png")
-	redobtn = love.graphics.newImage("redo.png")
-	cutbtn = love.graphics.newImage("cut.png")
-	copybtn = love.graphics.newImage("copy.png")
-	pastebtn = love.graphics.newImage("paste.png")
+	undobtn = love.graphics.newImage("images/undo.png")
+	redobtn = love.graphics.newImage("images/redo.png")
+	cutbtn = love.graphics.newImage("images/cut.png")
+	copybtn = love.graphics.newImage("images/copy.png")
+	pastebtn = love.graphics.newImage("images/paste.png")
 
-	checkon = love.graphics.newImage("checkon.png")
-	checkoff = love.graphics.newImage("checkoff.png")
+	checkon = love.graphics.newImage("images/checkon.png")
+	checkoff = love.graphics.newImage("images/checkoff.png")
 
-	menupijltje = love.graphics.newImage("menupijltje.png")
-	colorsel = love.graphics.newImage("colorsel.png")
+	menupijltje = love.graphics.newImage("images/menupijltje.png")
+	colorsel = love.graphics.newImage("images/colorsel.png")
 
-	smallfolder = love.graphics.newImage("smallfolder.png")
-	smalllevel = love.graphics.newImage("smalllevel.png")
-	smallunknown = love.graphics.newImage("smallunknown.png")
+	smallfolder = love.graphics.newImage("images/smallfolder.png")
+	smalllevel = love.graphics.newImage("images/smalllevel.png")
+	smallunknown = love.graphics.newImage("images/smallunknown.png")
 
-	bggrid = love.graphics.newImage("bggrid.png")
+	bggrid = love.graphics.newImage("images/bggrid.png")
 
 	scaleimgs = {
 		[false] = love.graphics.newImage("images/scale_normal.png"),
@@ -228,10 +228,10 @@ function love.load()
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
 
 
-	scrollup = love.graphics.newImage("scrollup.png")
-	scrolldn = love.graphics.newImage("scrolldn.png")
+	scrollup = love.graphics.newImage("images/scrollup.png")
+	scrolldn = love.graphics.newImage("images/scrolldn.png")
 
-	sideimg = love.graphics.newImage("sides.png");             smallsideimg = love.graphics.newImage("smallsides.png")
+	sideimg = love.graphics.newImage("images/sides.png");             smallsideimg = love.graphics.newImage("images/smallsides.png")
 
 	sideline = {};                                             smallsideline = {}
 	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
@@ -239,7 +239,7 @@ function love.load()
 	sideline[3] = love.graphics.newQuad(16, 0, 8, 8, 32, 8);   smallsideline[3] = love.graphics.newQuad(32, 0, 16, 16, 64, 16)
 	sideline[4] = love.graphics.newQuad(24, 0, 8, 8, 32, 8);   smallsideline[4] = love.graphics.newQuad(48, 0, 16, 16, 64, 16)
 
-	platformimg = love.graphics.newImage("platform.png")
+	platformimg = love.graphics.newImage("images/platform.png")
 	platformpart =
 		{
 		love.graphics.newQuad(0, 0, 8, 8, 24, 8),
