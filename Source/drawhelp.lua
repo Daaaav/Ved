@@ -2,7 +2,7 @@ function drawhelp()
 	-- Leaving room for a 16 px wide scrollbar. 4+16+8
 
 	local screenxoffset = 0
-	if s.smallerscreen then
+	if s.psmallerscreen then
 		screenxoffset = -96
 	end
 
@@ -395,7 +395,7 @@ function drawhelp()
 		end
 	end
 
-	if s.smallerscreen then
+	if s.psmallerscreen then
 		-- Those buttons will overlap with the article content
 		local leftpartw = 8+200+8+screenxoffset-2
 
@@ -438,7 +438,7 @@ function drawhelp()
 		end
 	end
 
-	if s.smallerscreen and not onlefthelpbuttons then
+	if s.psmallerscreen and not onlefthelpbuttons then
 		local leftpartw = 8+200+8+screenxoffset-2 -- Ugh I keep setting this
 		love.graphics.setColor(0,0,0,192)
 		love.graphics.rectangle("fill", leftpartw-8, 0, 4, love.graphics.getHeight())

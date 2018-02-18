@@ -123,6 +123,11 @@ configs =
 		default = 5,
 		["type"] = "number",
 		},
+	forcescale =
+		{
+		default = false,
+		["type"] = "bool",
+		},
 	recentfiles =
 		{
 		default = {},
@@ -258,32 +263,32 @@ do
 		swidth = 800
 	end
 
-	-- We need to make sure that the Ved window will fit on the screen
-	--if s.scale > 1 then
-	local fits = false
-	local fits896 = false
+	if not s.forcescale then
+		-- We need to make sure that the Ved window will fit on the screen
+		local fits = false
+		local fits896 = false
 
-	for mon = 1, love.window.getDisplayCount() do
-		local monw, monh = love.window.getDesktopDimensions(mon)
+		for mon = 1, love.window.getDisplayCount() do
+			local monw, monh = love.window.getDesktopDimensions(mon)
 
-		if windowfits(swidth*s.scale, 480*s.scale, {monw, monh}) then
-			fits = true
+			if windowfits(swidth*s.scale, 480*s.scale, {monw, monh}) then
+				fits = true
+			end
+			if monw >= 896 then
+				fits896 = true
+			end
 		end
-		if monw >= 896 then
-			fits896 = true
+
+		if s.scale > 1 and not fits then
+			print("Scale setting kicked back from " .. s.scale .. "!")
+			s.scale = 1
+		end
+
+		if not fits896 then
+			print("No monitor with width >= 896 found, setting smaller screen!")
+			s.smallerscreen = true
 		end
 	end
-
-	if s.scale > 1 and not fits then
-		print("Scale setting kicked back from " .. s.scale .. "!")
-		s.scale = 1
-	end
-
-	if not fits896 then
-		print("No monitor with width >= 896 found, setting smaller screen!")
-		s.smallerscreen = true
-	end
-	--end
 
 	if s.smallerscreen then
 		_, _, graphicsflags = love.window.getMode()
@@ -291,5 +296,6 @@ do
 	end
 
 	s.pscale = s.scale
+	s.psmallerscreen = s.smallerscreen
 	s.pcheckforupdates = s.checkforupdates
 end

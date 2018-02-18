@@ -17,7 +17,7 @@ function drawmaineditor()
 			end
 		end
 
-		if s.smallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
+		if s.psmallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
 			-- Discard anything we're doing with the mouse in the room, we're now on the toolbar
 		elseif tilespicker then
 			if false and tilescreator then
@@ -1575,7 +1575,7 @@ function drawmaineditor()
 		cursory = "--"
 	end
 
-	if (not s.smallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
+	if (not s.psmallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
 		-- We also want the tools on the left. But it's a scrollable area.
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 128, love.graphics.getHeight())

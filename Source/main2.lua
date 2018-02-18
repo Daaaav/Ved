@@ -31,6 +31,7 @@ States:
 24	Simple plugins list (already not used)
 25	Syntax highlighting color settings
 26	Font test
+27	Display/Scale settings
 
 Debug keys:
 F12: change state
@@ -192,6 +193,13 @@ function love.load()
 
 	bggrid = love.graphics.newImage("bggrid.png")
 
+	scaleimgs = {
+		[false] = love.graphics.newImage("images/scale_normal.png"),
+		[true] = love.graphics.newImage("images/scale_small.png")
+	}
+	scaleimgs[false]:setFilter("linear", "nearest")
+	scaleimgs[true]:setFilter("linear", "nearest")
+
 	toolimg = {}
 	toolimgicon = {}
 	for t = 1, 17 do
@@ -242,7 +250,7 @@ function love.load()
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
 
-	if s.smallerscreen then
+	if s.psmallerscreen then
 		screenoffset = 32
 	else
 		screenoffset = 128
@@ -532,68 +540,33 @@ function love.draw()
 		--love.graphics.draw(checkoff, love.graphics.getWidth()-98, 70, 0, 2)
 		love.graphics.print(L.VEDOPTIONS, 8, 8+4+2)
 
-		--hoverdraw((s.scale == 2 and checkon or checkoff), 8, 8+(24*1), 16, 16, 2)
-		--love.graphics.print(L.IIXSCALE, 8+16+8, 8+(24*1)+4+2)
-
-		love.graphics.print(L.SCALE, 8, 8+(24*1)+4+2)
-		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
-			function(value)
-				local swidth = 896
-				if s.smallerscreen then
-					swidth = 800
-				end
-				local fits = false
-
-				for mon = 1, love.window.getDisplayCount() do
-					local monw, monh = love.window.getDesktopDimensions(mon)
-
-					if windowfits(swidth*value, 480*value, {monw, monh}) then
-						fits = true
-					end
-				end
-				return not fits
+		for k,v in pairs({
+				"dialoganimations",
+				"flipsubtoolscroll",
+				"adjacentroomlines",
+				"neveraskbeforequit",
+				"coords0",
+				"showfps",
+				"checkforupdates",
+				"pausedrawunfocused",
+				"enableoverwritebackups",
+				false,
+				"autosavecrashlogs",
+				"loadallmetadata"
+			}
+		) do
+			if v then
+				hoverdraw((s[v] and checkon or checkoff), 8, 8+(24*k), 16, 16, 2)
+				love.graphics.print(L[v:upper()], 8+16+8, 8+(24*k)+4+2)
 			end
-		)
-
-		hoverdraw((s.dialoganimations and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
-		love.graphics.print(L.DIALOGANIMATIONS, 8+16+8, 8+(24*2)+4+2)
-
-		hoverdraw((s.flipsubtoolscroll and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
-		love.graphics.print(L.FLIPSUBTOOLSCROLL, 8+16+8, 8+(24*3)+4+2)
-
-		hoverdraw((s.adjacentroomlines and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
-		love.graphics.print(L.ADJACENTROOMLINES, 8+16+8, 8+(24*4)+4+2)
-
-		hoverdraw((s.neveraskbeforequit and checkon or checkoff), 8, 8+(24*5), 16, 16, 2)
-		love.graphics.print(L.NEVERASKBEFOREQUIT, 8+16+8, 8+(24*5)+4+2)
-
-		hoverdraw((s.coords0 and checkon or checkoff), 8, 8+(24*6), 16, 16, 2)
-		love.graphics.print(L.COORDS0, 8+16+8, 8+(24*6)+4+2)
-
-		hoverdraw((s.showfps and checkon or checkoff), 8, 8+(24*7), 16, 16, 2)
-		love.graphics.print(L.SHOWFPS, 8+16+8, 8+(24*7)+4+2)
-
-		hoverdraw((s.checkforupdates and checkon or checkoff), 8, 8+(24*8), 16, 16, 2)
-		love.graphics.print(L.CHECKFORUPDATES, 8+16+8, 8+(24*8)+4+2)
-
-		hoverdraw((s.pausedrawunfocused and checkon or checkoff), 8, 8+(24*9), 16, 16, 2)
-		love.graphics.print(L.PAUSEDRAWUNFOCUSED, 8+16+8, 8+(24*9)+4+2)
-
-		hoverdraw((s.enableoverwritebackups and checkon or checkoff), 8, 8+(24*10), 16, 16, 2)
-		love.graphics.print(L.ENABLEOVERWRITEBACKUPS, 8+16+8, 8+(24*10)+4+2)
-
-		if s.enableoverwritebackups then
-			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
-			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
-		hoverdraw((s.autosavecrashlogs and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
-		love.graphics.print(L.AUTOSAVECRASHLOGS, 8+16+8, 8+(24*12)+4+2)
+		if s.enableoverwritebackups then
+			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*10)+4+2)
+			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*10), "amountoverwritebackups", 0, 999)
+		end
 
-		hoverdraw((s.loadallmetadata and checkon or checkoff), 8, 8+(24*13), 16, 16, 2)
-		love.graphics.print(L.LOADALLMETADATA, 8+16+8, 8+(24*13)+4+2)
-
-		if s.pscale ~= s.scale then
+		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
 			love.graphics.setColor(255,128,0)
 			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
 			love.graphics.setColor(255,255,255)
@@ -605,56 +578,47 @@ function love.draw()
 		rbutton(L.CUSTOMVVVVVVDIRECTORY, 2)
 		rbutton(L.LANGUAGE, 3)
 		rbutton(L.SYNTAXCOLORS, 4)
+		rbutton(L.DISPLAYSETTINGS, 5)
 
-		rbutton(L.SENDFEEDBACK, 6)
+		rbutton(L.SENDFEEDBACK, 7)
 
 		--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) -- love.graphics.getHeight()-(24*(X+1)) instead of 8+(24*X)
 		--love.graphics.printf("Cancel", love.graphics.getWidth()-(128-8), (8+(24*1))+4+2, 128-16, "center")
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
-			--[[
 			if mouseon(8, 8+(24*1), 16, 16) then
-				-- 2x scale
-				if s.scale == 2 then
-					s.scale = 1
-				else
-					s.scale = 2
-				end
-				dialog.new(L.SCALEREBOOT, "", 1, 1, 0)
-			]]
-			if mouseon(8, 8+(24*2), 16, 16) then
 				-- Dialog animations
 				s.dialoganimations = not s.dialoganimations
-			elseif mouseon(8, 8+(24*3), 16, 16) then
+			elseif mouseon(8, 8+(24*2), 16, 16) then
 				-- Flip subtool scrolling direction
 				s.flipsubtoolscroll = not s.flipsubtoolscroll
-			elseif mouseon(8, 8+(24*4), 16, 16) then
+			elseif mouseon(8, 8+(24*3), 16, 16) then
 				-- Indicators of tiles in adjacent rooms
 				s.adjacentroomlines = not s.adjacentroomlines
-			elseif mouseon(8, 8+(24*5), 16, 16) then
+			elseif mouseon(8, 8+(24*4), 16, 16) then
 				-- Ask before quitting
 				s.neveraskbeforequit = not s.neveraskbeforequit
-			elseif mouseon(8, 8+(24*6), 16, 16) then
+			elseif mouseon(8, 8+(24*5), 16, 16) then
 				-- Coords0
 				s.coords0 = not s.coords0
-			elseif mouseon(8, 8+(24*7), 16, 16) then
+			elseif mouseon(8, 8+(24*6), 16, 16) then
 				-- Show FPS
 				s.showfps = not s.showfps
 				savedwindowtitle = ""
-			elseif mouseon(8, 8+(24*8), 16, 16) then
+			elseif mouseon(8, 8+(24*7), 16, 16) then
 				-- Check for updates
 				s.checkforupdates = not s.checkforupdates
-			elseif mouseon(8, 8+(24*9), 16, 16) then
+			elseif mouseon(8, 8+(24*8), 16, 16) then
 				-- Pause drawing when window is unfocused
 				s.pausedrawunfocused = not s.pausedrawunfocused
-			elseif mouseon(8, 8+(24*10), 16, 16) then
+			elseif mouseon(8, 8+(24*9), 16, 16) then
 				-- Make backups of level files that are overwritten
 				s.enableoverwritebackups = not s.enableoverwritebackups
-			elseif mouseon(8, 8+(24*12), 16, 16) then
+			elseif mouseon(8, 8+(24*11), 16, 16) then
 				-- Auto save crash logs
 				s.autosavecrashlogs = not s.autosavecrashlogs
-			elseif mouseon(8, 8+(24*13), 16, 16) then
+			elseif mouseon(8, 8+(24*12), 16, 16) then
 				-- Load all metadata
 				s.loadallmetadata = not s.loadallmetadata
 
@@ -679,7 +643,11 @@ function love.draw()
 				-- Syntax colors
 				olderstate = oldstate
 				tostate(25)
-			elseif not mousepressed and onrbutton(6) then
+			elseif onrbutton(5) then
+				-- Display/Scale
+				olderstate = oldstate
+				tostate(27)
+			elseif not mousepressed and onrbutton(7) then
 				openurl("https://tolp.nl/ved/?p=feedback")
 
 				mousepressed = true
@@ -886,6 +854,121 @@ function love.draw()
 		love.graphics.setFont(font8)
 
 		love.graphics.print("Font test", 10, 10)
+	elseif state == 27 then
+		-- Display/Scale settings
+		love.graphics.print(L.DISPLAYSETTINGSTITLE, 8, 8+4+2)
+
+		love.graphics.print(L.SCALE, 8, 8+(24*1)+4+2)
+		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
+			function(value)
+				local swidth = 896
+				if s.psmallerscreen then
+					swidth = 800
+				end
+				local fits = false
+
+				for mon = 1, love.window.getDisplayCount() do
+					local monw, monh = love.window.getDesktopDimensions(mon)
+
+					if windowfits(swidth*value, 480*value, {monw, monh}) then
+						fits = true
+					end
+				end
+				return not fits
+			end
+		)
+
+		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
+		love.graphics.print(L.SMALLERSCREEN, 8+16+8, 8+(24*2)+4+2)
+
+		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
+		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*3)+4+2)
+
+
+		-- TODO: Print resolution somewhere
+		local ved_w, ved_h = 896*s.scale, 480*s.scale
+		if s.smallerscreen then
+			ved_w = 800*s.scale
+		end
+
+
+		-- Display monitors
+		love.graphics.setColor(12, 12, 12)
+		love.graphics.rectangle("fill", 16, 112, love.graphics.getWidth()-32, 332)
+		local total_monw, high_monh = -16, 0
+		local monitors = {}
+		local fits = false
+		for mon = 1, love.window.getDisplayCount() do
+			local monw, monh = love.window.getDesktopDimensions(mon)
+			table.insert(monitors, {monw, monh})
+
+			if monh > high_monh then
+				high_monh = monh
+			end
+			total_monw = total_monw + monw + 16
+
+			if windowfits(ved_w, ved_h, {monw, monh}) then
+				fits = true
+			end
+		end
+		local pixelscale = 1/math.max(total_monw/(love.graphics.getWidth()-96), high_monh/268)
+		local currentmon_x = 0
+		for k,v in pairs(monitors) do
+			local monw, monh = unpack(v)
+			local dispx = (love.graphics.getWidth()/2 - (total_monw*pixelscale)/2) + currentmon_x
+			local dispy = 112 + (166 - (monh*pixelscale)/2)
+
+			love.graphics.setColor(6, 6, 6)
+			love.graphics.rectangle("fill", dispx-4, dispy-4, monw*pixelscale+8, monh*pixelscale+8)
+			love.graphics.setColor(0, 0, 128)
+			love.graphics.rectangle("fill", dispx, dispy, monw*pixelscale, monh*pixelscale)
+			love.graphics.setColor(255, 255, 255)
+			love.graphics.setScissor(dispx, dispy, monw*pixelscale+1, monh*pixelscale+1)
+			love.graphics.draw(
+				scaleimgs[s.smallerscreen],                         -- compensate for window borders in this image
+				dispx + ((monw*pixelscale)/2 - (ved_w*pixelscale)/2) - 9*pixelscale*s.scale,
+				dispy + ((monh*pixelscale)/2 - (ved_h*pixelscale)/2) - 30*pixelscale*s.scale,
+				0, pixelscale*s.scale
+			)
+			love.graphics.setScissor()
+			love.graphics.printf((love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "") .. langkeys(L.MONITORSIZE, {monw, monh}), dispx, 122 + (166 + (monh*pixelscale)/2), monw*pixelscale, "center")
+			currentmon_x = currentmon_x + monw*pixelscale + 16
+		end
+
+		love.graphics.printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 118, love.graphics.getWidth(), "center")
+
+
+		if not fits then
+			love.graphics.setColor(255,0,0)
+			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-18)
+			love.graphics.setColor(255,255,255)
+		elseif s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
+			love.graphics.setColor(255,128,0)
+			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-18)
+			love.graphics.setColor(255,255,255)
+		end
+
+
+		rbutton(L.BTN_OK, 0)
+
+
+		if nodialog and not mousepressed and love.mouse.isDown("l") then
+			if mouseon(8, 8+(24*2), 16, 16) then
+				-- Smaller screen
+				s.smallerscreen = not s.smallerscreen
+			elseif mouseon(8, 8+(24*3), 16, 16) then
+				-- Force scale settings
+				s.forcescale = not s.forcescale
+			elseif onrbutton(0) then
+				-- Save
+				saveconfig()
+				tostate(oldstate, true)
+				-- Just to make sure we don't get stuck in the settings
+				oldstate = olderstate
+			end
+
+			mousepressed = true
+		end
 	else
 		statecaught = false
 
@@ -1078,7 +1161,7 @@ function love.update(dt)
 				end
 			end
 		end
-	elseif state == 15 and s.smallerscreen then
+	elseif state == 15 and s.psmallerscreen then
 		local leftpartw = 8+200+8-96-2
 		if love.mouse.getX() <= leftpartw then
 			onlefthelpbuttons = true
@@ -2363,10 +2446,10 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
-	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.smallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.smallerscreen and -96 or 0), love.graphics.getHeight()-16) then
+	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.psmallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.psmallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
 		local screenxoffset = 0
-		if s.smallerscreen then
+		if s.psmallerscreen then
 			screenxoffset = -96
 		end
 		chr = math.floor((x-216-screenxoffset)/8) + 1

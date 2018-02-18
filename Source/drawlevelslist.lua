@@ -19,7 +19,7 @@ function drawlevelslist()
 		hoveringlevel_k = nil
 		local hoverarea = 734
 		local metadatax = 422
-		if s.smallerscreen then
+		if s.psmallerscreen then
 			hoverarea = hoverarea - 96
 			metadatax = metadatax - 96
 		end
