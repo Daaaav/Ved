@@ -213,7 +213,7 @@ VERSIONERROR = "Kon versie niet controleren.",
 VERSIONUPTODATE = "Je versie van Ved is up-to-date.",
 VERSIONOLD = "Update beschikbaar! Laatste versie: $1",
 VERSIONCHECKING = "Controleren op updates...",
-VERSIONDISABLED = "Update-controle uitgeschakeld",
+VERSIONDISABLED = "Update-\ncontrole uitgeschakeld",
 
 SAVESUCCESS = "Succesvol opgeslagen!",
 SAVENOSUCCESS = "Opslaan niet succesvol! Fout: ",
