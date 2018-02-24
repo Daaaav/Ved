@@ -3,7 +3,7 @@
 
 L = {
 
-TRANSLATIONCREDIT = "Сделано CreepiX'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
+TRANSLATIONCREDIT = "Сделано CreepiX'ом и Captain Normalguy'ем", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
 
 OUTDATEDLOVE = "Ваша версия LOVE устарела. Пожалуйста, используйте версию 0.9.0 или выше. Загрузите LOVE на https://love2d.org/.",
 UNKNOWNSTATE = "Неизвестный режим ($1), пригнул из $2",
@@ -37,7 +37,7 @@ FLAGNAMECHARS = "Имя флага не может содержать (, ), , и
 FLAGNAMEINUSE = "Имя флага $1 уже используется флагом $2",
 DIFFSELECT = "Выберите второй уровень для сравнения. Уровень который вы выберете будет считаться за старую версию.",
 SUREQUIT = "Вы действительно хотите выйти? Вы потеряете весь несохранённый контент.",
-SUREQUITNEW = "You have unsaved changes. Do you want to save these changes before quitting?",
+SUREQUITNEW = "Есть несохраненные изменения. Сохранить их перед выходом?",
 SCALEREBOOT = "Новые настройки размера придут в силу после перезапуска Ved.",
 NAMEFORFLAG = "Имя флага $1:",
 SCRIPT404 = "Скрипт \"$1\" не существует!",
@@ -78,8 +78,8 @@ ROOMCUT = "Комната вырезана в буфер обмена",
 ROOMCOPIED = "Комната скопирована в буфер обмена",
 ROOMPASTED = "Комната вставлена из буфера обмена",
 
-METADATAUNDONE = "Level options undone",
-METADATAREDONE = "Level options redone",
+METADATAUNDONE = "Настройки уровня отменены",
+METADATAREDONE = "Настройки уровня восстановлены",
 
 BOUNDSTOPLEFT = "Кликите на левый верхний угол рамки.",
 BOUNDSBOTTOMRIGHT = "Кликите на правый нижний угол рамки.",
@@ -121,8 +121,8 @@ BTN_YES = "Да",
 BTN_NO = "Нет",
 BTN_APPLY = "Применить",
 BTN_QUIT = "Выход",
-BTN_DISCARD = "Discard",
-BTN_SAVE = "Save",
+BTN_DISCARD = "Не сохр.", -- use "Не сохранять" if space allows (if text is vertically centered)
+BTN_SAVE = "Сохранить",
 
 COMPARINGTHESE = "Сравниваю $1.vvvvvv с $2.vvvvvv",
 COMPARINGTHESENEW = "Сравниваю (несохранённый уровень) и $1.vvvvvv",
@@ -193,7 +193,7 @@ OPTMUSIC = "Саундтрек",
 CAPNONE = "НЕТ",
 ENTERLONGOPTNAME = "Название уровня:",
 
-X = "x", -- Used for level size: 20x20
+X = " на ", -- Used for level size: 20x20
 
 SOLID = "Твёрдый",
 NOTSOLID = "Не твёрдый",
@@ -261,7 +261,7 @@ ALLOWLIMITBYPASS = "Отключить лимиты",
 FLIPSUBTOOLSCROLL = "Флипнуть направление прокручивания",
 ADJACENTROOMLINES = "Индикаторы стен",
 ASKBEFOREQUIT = "Подтверждение выхода",
-NEVERASKBEFOREQUIT = "Never ask before quitting, even if there are unsaved changes",
+NEVERASKBEFOREQUIT = "Никогда не спрашивать про несохранённые изменения при выходе",
 COORDS0 = "Отображать координаты с 0 (для внутренних скриптов)",
 ALLOWDEBUG = "Включить режим разработчика",
 SHOWFPS = "Показывать счётчик FPS",
@@ -271,7 +271,7 @@ PAUSEDRAWUNFOCUSED = "Не рендерить если окно не актив�
 ENABLEOVERWRITEBACKUPS = "Делать бекапы уровня при перезаписи файла",
 AMOUNTOVERWRITEBACKUPS = "Кол-во бекапов для каждого уровня",
 SCALE = "Размер",
-LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
+LOADALLMETADATA = "Показать настройки (название, автор, описание и т.д.) у всех файлов в списке уровней",
 
 SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
 SCRIPTUSAGESSCRIPTS = "$1 использований в скриптах: $2",
@@ -365,18 +365,18 @@ CUSTOMDATEFORMAT = "Свой формат даты",
 SAVEBACKUPNOBACKUP = "Выберите уникальное имя для файла, иначе бекап не будет создан!",
 
 -- 1.2.4
-AUTOSAVECRASHLOGS = "Automatically save crash logs",
-MOREINFO = "More info",
-COPYLINK = "Copy link",
-SCRIPTDISPLAY = "Show",
-SCRIPTDISPLAY_USED = "Used",
-SCRIPTDISPLAY_UNUSED = "Unused",
-SCRIPTDISPLAY_SHOWING = "Showing $1",
+AUTOSAVECRASHLOGS = "Сохранять отчёты об ошибке автоматически",
+MOREINFO = "Узнать больше",
+COPYLINK = "Скопировать ссылку",
+SCRIPTDISPLAY = "Показать",
+SCRIPTDISPLAY_USED = "Использовано",
+SCRIPTDISPLAY_UNUSED = "Не исп-но",
+SCRIPTDISPLAY_SHOWING = "Всего показано: $1",
 
 -- 1.3.0 (more changes)
-RECENTLYOPENED = "Recently opened levels",
-REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
-RESETCUSTOMBRUSH = "(Right click to set new size)",
+RECENTLYOPENED = "Недавно открытые уровни",
+REMOVERECENT = "Вы действительно хотите удалить этот уровень из списка недавно открытых?",
+RESETCUSTOMBRUSH = "(ПКМ - изменение размера)",
 
 }
 
@@ -463,7 +463,7 @@ ERR_VEDVERSION = "Версия Ved:"
 ERR_LOVEVERSION = "Версия LOVE:"
 ERR_STATE = "Статус:"
 ERR_OS = "ОС:"
-ERR_TIMESINCESTART = "Time since start:"
+ERR_TIMESINCESTART = "Прошло времени с начала запуска:"
 ERR_PLUGINS = "Плагины:"
 ERR_PLUGINSNOTLOADED = "(не загружено)"
 ERR_PLUGINSNONE = "(нет)"
@@ -484,7 +484,7 @@ ERR_LINESTOTAL = "%i линий"
 ERR_SAVELEVEL = "Чтобы сохранить уровень, нажмите S."
 ERR_SAVESUCC = "Уровень сохранён как %s!"
 ERR_SAVEERROR = "Ошибка сохранения! %s"
-ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
+ERR_LOGSAVED = "Больше сведений в отчёте об ошибке:\n%s"
 
 
 diffmessages = {
@@ -2306,7 +2306,7 @@ Ved is made by Dav999
 
 Some of the graphics and the font were made by Format
 
-Russian translation: CreepiX
+Russian translation: CreepiX, Captain Normalguy
 Esperanto translation: Format
 
 

@@ -2305,7 +2305,7 @@ Ved is made by Dav999
 
 Some of the graphics and the font were made by Format
 
-Russian translation: CreepiX
+Russian translation: CreepiX, Captain Normalguy
 Esperanto translation: Format
 
 

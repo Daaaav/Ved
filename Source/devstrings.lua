@@ -4,7 +4,7 @@
 --L. = ""
 L.DISPLAYSETTINGS = "Display/Scale"
 L.DISPLAYSETTINGSTITLE = "Display/Scale settings"
-L.SMALLERSCREEN = "Smaller screen width (800px wide instead of 896px)"
+L.SMALLERSCREEN = "Smaller window width (800px wide instead of 896px)"
 L.FORCESCALE = "Force scale settings"
 L.SCALENOFIT = "The current scale settings make the window too large to fit."
 L.SCALENONUM = "The current scale settings are invalid."

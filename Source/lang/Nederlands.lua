@@ -2319,7 +2319,7 @@ Ved is gemaakt door Dav999
 
 Sommige afbeeldingen en het lettertype zĳn gemaakt door Format
 
-Russische vertaling: CreepiX
+Russische vertaling: CreepiX, Captain Normalguy
 Esperanto vertaling: Format
 
 
