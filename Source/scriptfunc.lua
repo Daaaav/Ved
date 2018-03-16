@@ -387,6 +387,12 @@ function processflaglabelsreverse()
 
 				local useflag = -1
 
+				-- The flag name must not be empty.
+				if partss[2] == "" then
+					cons("Flag name is empty, skipping")
+					break
+				end
+
 				for vlag = 0, 99 do
 					if vedmetadata.flaglabel[vlag] == partss[2] then
 						useflag = vlag
