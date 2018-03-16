@@ -4,6 +4,12 @@ local inchannel = love.thread.getChannel("allmetadata_in")
 local outchannel = love.thread.getChannel("allmetadata_out")
 
 require("love.filesystem")
+
+-- Workaround for including func
+love.graphics = {}
+function hook() end
+
+require("func")
 require("vvvvvvxml")
 require("filefunc_" .. loaded_filefunc)
 
