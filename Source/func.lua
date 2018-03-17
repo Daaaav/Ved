@@ -464,8 +464,7 @@ function loadstate(new, extradata)
 			scriptdisplay_used = true
 			scriptdisplay_unused = true
 		end
-		usedscripts = nil
-		n_usedscripts = nil
+		usedscripts, n_usedscripts = findusedscripts()
 	elseif new == 11 then
 		startinput()
 		searchscripts = {}; searchrooms = {}; searchnotes = {}
