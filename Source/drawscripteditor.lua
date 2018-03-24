@@ -220,6 +220,7 @@ function drawscripteditor()
 		if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 			--dialog.new((scripts[carg1] == nil and "Create" or "Go to") .. " script " .. carg1, "", 1, 1, 0)
 			editorjumpscript(carg1)
+			mousepressed = true
 		end
 	elseif context == "flagscript" then
 		--[[
@@ -251,6 +252,7 @@ function drawscripteditor()
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg2)
+				mousepressed = true
 			end
 		end
 	end

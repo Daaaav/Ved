@@ -570,8 +570,6 @@ function editorjumpscript(argscriptname, goingback, toline)
 			leavescript_to_state()
 		end
 	end
-
-	mousepressed = true
 end
 
 function scriptgotoline(linenum, colnum)
