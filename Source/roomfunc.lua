@@ -149,30 +149,8 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					-- Now indicate what this actually is.
 					love.graphics.setColor(255,255,255,255)
 					love.graphics.setFont(font16)
-					if v.p1 == 0 then
-						-- Moving down
-						love.graphics.print(" VV", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 1 then
-						-- Moving up
-						love.graphics.print(" ^^", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 2 then
-						-- Moving left
-						love.graphics.print(" <", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 3 then
-						-- Moving right
-						love.graphics.print("  >", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 5 then
-						-- Conveyor right
-						love.graphics.print(">>>>", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 6 then
-						-- Conveyor left
-						love.graphics.print("<<<<", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 7 then
-						-- Long conveyor right
-						love.graphics.print(">>>>>>>>", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					elseif v.p1 == 8 then
-						-- Long conveyor left
-						love.graphics.print("<<<<<<<<", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
+					if platform_labels[v.p1] ~= nil then
+						love.graphics.print(platform_labels[v.p1], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
 					else
 						-- What
 						love.graphics.print("...?", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
