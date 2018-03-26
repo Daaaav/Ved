@@ -642,11 +642,38 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 end
 
 function xmlspecialchars(text)
-	return text:gsub("&", "&amp;"):gsub("\"", "&quot;"):gsub("'", "&apos;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("^ ", "&#32;"):gsub(" $", "&#32;"):gsub("  ", " &#32;")
+	-- Replace real special entities like < > & by XML entities like &lt; &gt; &amp;
+	return xmlnumericentities(text:gsub("&", "&amp;"):gsub("\"", "&quot;"):gsub("'", "&apos;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("^ ", "&#32;"):gsub(" $", "&#32;"):gsub("  ", " &#32;"))
 end
 
 function unxmlspecialchars(text)
-	return text:gsub("&#32;", " "):gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&apos;", "'"):gsub("&quot;", "\""):gsub("&amp;", "&")
+	-- Decode XML entities like &lt; &gt; &amp; to < > &
+	return unxmlnumericentities(text):gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&apos;", "'"):gsub("&quot;", "\""):gsub("&amp;", "&")
+end
+
+function xmlnumericentities(text)
+	-- Replace real control characters (<0x20) by numeric XML entities like &#31;
+	return text:gsub(
+		"%c",
+		function(c)
+			return "&#" .. string.byte(c) .. ";"
+		end
+	)
+end
+
+function unxmlnumericentities(text)
+	-- Replace numeric XML entities (like &#32;) to real characters
+	return text:gsub(
+		"&#(%d+);",
+		function(n)
+			return string.char(n)
+		end
+	):gsub(
+		"&#x(%x+);",
+		function(n)
+			return string.char(tonumber(n,16))
+		end
+	)
 end
 
 function despecialchars(text)
