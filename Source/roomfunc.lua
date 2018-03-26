@@ -818,7 +818,7 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 	end
 
 	-- But are we holding one of the directions?
-	if love.keyboard.isDown("[") or love.keyboard.isDown("]") then
+	if not editingroomname and (love.keyboard.isDown("[") or love.keyboard.isDown("]")) then
 		love.graphics.setColor(0,0,0,92)
 
 		if love.keyboard.isDown("[") then
