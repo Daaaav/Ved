@@ -1,5 +1,5 @@
 -- Language file for Ved
--- 1.3.1
+-- 1.3.2
 
 L = {
 
@@ -377,6 +377,17 @@ SCRIPTDISPLAY_SHOWING = "Showing $1",
 RECENTLYOPENED = "Recently opened levels",
 REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
 RESETCUSTOMBRUSH = "(Right click to set new size)",
+
+-- 1.3.2
+DISPLAYSETTINGS = "Display/Scale",
+DISPLAYSETTINGSTITLE = "Display/Scale settings",
+SMALLERSCREEN = "Smaller window width (800px wide instead of 896px)",
+FORCESCALE = "Force scale settings",
+SCALENOFIT = "The current scale settings make the window too large to fit.",
+SCALENONUM = "The current scale settings are invalid.",
+MONITORSIZE = "$1x$2 monitor",
+VEDRES = "Ved resolution: $1x$2",
+NONINTSCALE = "Non-integer scaling",
 
 }
 

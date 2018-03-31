@@ -1,5 +1,5 @@
 -- Dutch language file for Ved
--- 1.3.1
+-- 1.3.2
 
 L = {
 
@@ -377,6 +377,17 @@ SCRIPTDISPLAY_SHOWING = "Toont $1",
 RECENTLYOPENED = "Recent geopende levels",
 REMOVERECENT = "Wil je het uit de lĳst met recent geopende levels verwĳderen?",
 RESETCUSTOMBRUSH = "(Klik rechts om nieuwe grootte in te stellen)",
+
+-- 1.3.2
+DISPLAYSETTINGS = "Beeld/Schaal",
+DISPLAYSETTINGSTITLE = "Beeld-/Schaalinstellingen",
+SMALLERSCREEN = "Kleinere vensterbreedte (800px breed in plaats van 896px)",
+FORCESCALE = "Forceer schaalinstellingen",
+SCALENOFIT = "Deze schaalinstellingen maken het venster te groot om te passen.",
+SCALENONUM = "Deze schaalinstellingen zijn ongeldig.",
+MONITORSIZE = "$1x$2-beeldscherm",
+VEDRES = "Resolutie van Ved: $1x$2",
+NONINTSCALE = "Schalen met niet-gehele getallen",
 
 }
 
