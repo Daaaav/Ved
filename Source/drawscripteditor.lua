@@ -137,6 +137,9 @@ function drawscripteditor()
 			tostate(15)
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
 			-- New
+			input = input .. input_r
+			input_r = ""
+			scriptlines[editingline] = input
 			startmultiinput({""})
 			dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 11)
 		elseif PleaseDo3DSHandlingThanks and onrbutton(2) then
@@ -164,6 +167,9 @@ function drawscripteditor()
 			setgenerictimer(1, .25)
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(5) then
 			-- Split scripts
+			input = input .. input_r
+			input_r = ""
+			scriptlines[editingline] = input
 			startmultiinput({""})
 			dialog.new(L.NEWSCRIPTNAME, L.SPLITSCRIPT, 1, 4, 21)
 		elseif onrbutton(6) then

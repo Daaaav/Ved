@@ -596,12 +596,18 @@ function scriptgotoline(linenum, colnum)
 end
 
 function startinscriptsearch()
+	input = input .. input_r
+	input_r = ""
+	scriptlines[editingline] = input
 	startmultiinput({scriptsearchterm})
 	dialog.new(L.SEARCHFOR, "", 1, 4, 20)
 	currentmultiinput = 1
 end
 
 function startscriptgotoline()
+	input = input .. input_r
+	input_r = ""
+	scriptlines[editingline] = input
 	startmultiinput({""})
 	dialog.new(L.GOTOLINE2, "", 1, 4, 18)
 	currentmultiinput = 1
