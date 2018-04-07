@@ -76,20 +76,6 @@ function love.load()
 		ved_require("scaling")
 	end
 
-	-- Are we using 0.10.x?
-	if love.getVersion ~= nil then
-		local major, minor, revision, codename = love.getVersion()
-
-		if minor >= 10 then
-			ved_require("love10compat")
-		end
-	else
-		-- 0.9.0 which does not support love.getVersion() but is still supported along with 0.10?
-		love.getVersion = function()
-			return 0, 9, 0, ""
-		end
-	end
-
 	cons("love.load() reached")
 
 	math.randomseed(os.time())
@@ -311,9 +297,7 @@ function love.load()
 	loadlevelsfolder()
 	loadtilesets()
 
-	--if love.getVersion ~= nil then
-	local _, v, m = love.getVersion()
-	if not (v == 9 and m == 0) then
+	if love_version_meets(9,1) then
 		-- We're not using 0.9.0, so we can use love2d's openURL function instead of the command line
 		function openurl(url)
 			love.system.openURL(url)
@@ -1425,11 +1409,10 @@ function love.update(dt)
 						end
 					end
 					saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"):gsub(dirsep, "__")
-					local _, v = love.getVersion()
-					if v == 9 then
-						mapcanvas:getImageData():encode("maps/" .. saveas)
-					else
+					if love_version_meets(10) then
 						mapcanvas:newImageData():encode("png", "maps/" .. saveas)
+					else
+						mapcanvas:getImageData():encode("maps/" .. saveas)
 					end
 					love.graphics.setCanvas()
 					mapcanvas = nil

@@ -10,7 +10,7 @@ function drawmap()
 			end
 		end
 
-		mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+		createmapscreenshot()
 	else
 		love.graphics.draw(mapscreenshot, 0, 0, 0, s.pscale^-1)
 
@@ -83,7 +83,7 @@ function drawmap()
 									displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
 								end
 
-								mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+								createmapscreenshot()
 							end
 
 							selectingrooms = 0

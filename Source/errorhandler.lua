@@ -72,18 +72,6 @@ end
 function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
 
-	if anythingbutnil == nil then
-		-- The irony.
-
-		function anythingbutnil(this)
-			if this == nil then
-				return ""
-			else
-				return this
-			end
-		end
-	end
-
 	msg = tostring(msg)
 
 	local levelsavemsg = ERR_SAVELEVEL
@@ -95,7 +83,7 @@ function ved_showerror(msg)
 	local trace = error_printer(msg, 2)
 
 	-- Decide what's going to be in the message
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_minor >= 11 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_major >= 12 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	local hasplugins = false
 	if type(plugins) ~= "table" then
@@ -199,8 +187,18 @@ function ved_showerror(msg)
 
 	-- I first want to make a screenshot of the current screen.
 	local crashscreenshot
-	if love.graphics.newImage and love.graphics.newScreenshot then
-		crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+	if love.graphics.newImage then
+		if love.graphics.newScreenshot then
+			crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+		--[[ I don't think this works, since love.draw never gets run again...
+		elseif love.graphics.captureScreenshot then
+			love.graphics.captureScreenshot(
+				function(imgdata)
+					crashscreenshot = love.graphics.newImage(imgdata)
+				end
+			)
+		]]
+		end
 	end
 
 	love.graphics.reset()
@@ -288,11 +286,7 @@ function ved_showerror(msg)
 		love.graphics.print(ERR_VEDHASCRASHED, pos, pos)
 
 		-- Draw a box for the important details
-		if love._version_minor >= 11 then
-			love.graphics.setColor(1,92/255,92/255,208/255) -- temporary love2d 0.11 compatibility in advance for the crash screen
-		else
-			love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
-		end
+		love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
 		love.graphics.rectangle("fill", pos-2, pos+40+40-1, love.graphics.getWidth()-(2*pos)+4, 80)
 
 		-- Main text
@@ -397,22 +391,13 @@ end
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
 
-	if anythingbutnil == nil then
-		-- The irony.
-
-		function anythingbutnil(this)
-			if this == nil then
-				return ""
-			else
-				return this
-			end
-		end
-	end
-
 	--msg = tostring(msg)
 
 	-- I first want to make a screenshot of the current screen.
-	local crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+	local crashscreenshot
+	if love.graphics.newImage and love.graphics.newScreenshot then
+		crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+	end
 
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
@@ -539,7 +524,9 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		local pos = 40
 		love.graphics.clear(love.graphics.getBackgroundColor())
 		love.graphics.setColor(255,255,255,64)
-		love.graphics.draw(crashscreenshot, 0, 0) --, 0, s.pscale^-1)
+		if crashscreenshot ~= nil then
+			love.graphics.draw(crashscreenshot, 0, 0) --, 0, s.pscale^-1)
+		end
 
 		-- Title
 		love.graphics.setFont(font16)

@@ -55,7 +55,7 @@ pluginincludes = {
 ]]
 
 function loadplugins()
-	print("--Loading plugins...")
+	cons("--Loading plugins...")
 
 	plugins = {}
 	hooks = {}
@@ -86,7 +86,7 @@ function loadplugins()
 						pluginname = v
 					end
 
-					print("  Loading plugin " .. pluginname)
+					cons("  Loading plugin " .. pluginname)
 
 					plugins[pluginname] = {}
 					-- Some defaults
@@ -145,7 +145,7 @@ function loadplugins()
 
 						-- Are we making file edits?
 						if love.filesystem.exists(pluginpath .. "/sourceedits.lua") then
-							print("Plugin " .. pluginname .. " has a sourceedits file!")
+							cons("Plugin " .. pluginname .. " has a sourceedits file!")
 
 							local editsfile = love.filesystem.load(pluginpath .. "/sourceedits.lua")
 							--local fileedits
@@ -189,7 +189,7 @@ function loadplugins()
 
 										pluginincludes[filename] = pluginpath .. "/include/" .. filename
 
-										print("Included " .. filename)
+										cons("Included " .. filename)
 									end
 								end
 							end
@@ -207,7 +207,7 @@ function loadplugins()
 		end
 	end
 
-	print("--Finished loading plugins.")
+	cons("--Finished loading plugins.")
 end
 
 function hook(hookname, vars)
@@ -345,7 +345,7 @@ function allocate_states(name, amount)
 	assert(math.floor(amount) == amount, "Attempt to allocate a non-integer amount of states (" .. amount .. ") for '" .. name .. "'")
 	assert(amount >= 0, "Attempt to allocate a negative amount of states (" .. amount .. ") for '" .. name .. "'")
 
-	print("Registering " .. amount .. " state(s) for '" .. name .. "' (" .. state_alloc_pointer .. "-" .. (state_alloc_pointer+amount-1) .. ")")
+	cons("Registering " .. amount .. " state(s) for '" .. name .. "' (" .. state_alloc_pointer .. "-" .. (state_alloc_pointer+amount-1) .. ")")
 
 	state_allocations[name] = {state_alloc_pointer, amount-1}
 	state_alloc_pointer = state_alloc_pointer + amount

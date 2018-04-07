@@ -66,6 +66,17 @@ love.graphics.present()
 if love.window == nil then
 	require("incompatmain")
 else
+	require("corefunc")
+
+	-- How recent is our love2d version?
+	if love_version_meets(10) then
+		require("love10compat")
+
+		if love_version_meets(11) then
+			require("love11compat")
+		end
+	end
+
 	require("plugins")
 	loadplugins()
 

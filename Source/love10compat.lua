@@ -1,4 +1,4 @@
--- Compatibility with love2d 0.10.x
+-- Compatibility with love2d 0.10.x and above
 
 love.mouse.isDown10 = love.mouse.isDown
 

@@ -5,38 +5,6 @@ love.graphics.clear = function()
 	end
 end
 
-function cons(text)
-	if text == nil then
-		text = "nil"
-	elseif type(text) == "boolean" then
-		text = (text and "TRUE" or "FALSE")
-	end
-	print("[" .. round(love.timer.getTime()-begint, 2) .. "\\" .. round(love.timer.getTime()-begint-sincet, 2) .. "] " .. text)
-	sincet = round(love.timer.getTime()-begint, 2)
-end
-
-function round(num, idp)
-  local mult = 10^(idp or 0)
-  return math.floor(num * mult + 0.5) / mult
-end
-
-function anythingbutnil(this)
-	if this == nil then
-		return ""
-	else
-		return this
-	end
-end
-
-function anythingbutnil0(this)
-	-- Same, but instead of an empty string return 0
-	if this == nil then
-		return 0
-	else
-		return this
-	end
-end
-
 function fatalerror(msg)
 	errormsg = msg
 	cons("FATAL ERROR: " .. msg)
@@ -430,7 +398,15 @@ function loadstate(new, extradata)
 	elseif new == 6 then
 		if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
 			-- We'll be able to go back. Show this by making a screenshot
-			editorscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+			if love_version_meets(11) then
+				love.graphics.captureScreenshot(
+					function(imgdata)
+						editorscreenshot = love.graphics.newImage(imgdata)
+					end
+				)
+			else
+				editorscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+			end
 			state6old1 = true
 		else
 			--state6old1 = false
@@ -697,16 +673,18 @@ function loadtileset(file)
 	-- Try loading custom assets first
 	readsuccess, contents = readimage(levelsfolder, file)
 
+	local asimgdata
 	if readsuccess == true then
 		-- Custom image!
 		cons("Custom image: " .. file)
 		--love.filesystem.write("temp/" .. file, contents)
 		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
-		tilesets[file]["img"] = love.graphics.newImage(love.image.newImageData(love.filesystem.newFileData(contents, file, "file")))
+		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
-		tilesets[file]["img"] = love.graphics.newImage(file)
+		asimgdata = love.image.newImageData(file)
 	end
+	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
 	tilesets[file]["tileswidth"] = tilesets[file]["width"]/8  -- 16
@@ -715,7 +693,6 @@ function loadtileset(file)
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
 	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
-	asimgdata = tilesets[file]["img"]:getData()
 	asimgdata:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
@@ -736,16 +713,18 @@ function loadsprites(file, res)
 	-- Try loading custom assets first
 	readsuccess, contents = readimage(levelsfolder, file)
 
+	local asimgdata
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
 		--love.filesystem.write("temp/" .. file, contents)
 		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
-		tilesets[file]["img"] = love.graphics.newImage(love.image.newImageData(love.filesystem.newFileData(contents, file, "file")))
+		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
-		tilesets[file]["img"] = love.graphics.newImage(file)
+		asimgdata = love.image.newImageData(file)
 	end
+	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
 	tilesets[file]["tileswidth"] = tilesets[file]["width"]/res -- 32
@@ -754,7 +733,6 @@ function loadsprites(file, res)
 	cons("Loading spriteset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
 	-- Now make everything white so we can color-correct it!
-	asimgdata = tilesets[file]["img"]:getData()
 	asimgdata:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
@@ -2093,11 +2071,10 @@ end
 
 function savemapimage()
 	saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub(dirsep, "__")
-	local _, v = love.getVersion()
-	if v == 9 then
-		mapscreenshot:getData():encode("maps/" .. saveas)
-	else
+	if love_version_meets(10) then
 		mapscreenshot:getData():encode("png", "maps/" .. saveas)
+	else
+		mapscreenshot:getData():encode("maps/" .. saveas)
 	end
 	dialog.new(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
 end
@@ -2378,8 +2355,7 @@ end
 
 function imagefontspacing(text)
 	if tostring(text):len() > 1 then
-		local _, v = love.getVersion()
-		if v >= 10 then
+		if love_version_meets(10) then
 			local origtext = tostring(text)
 			text = ""
 			for c = 1, origtext:len() do
@@ -2573,6 +2549,18 @@ end
 function dirty()
 	if not unsavedchanges then
 		unsavedchanges = true
+	end
+end
+
+function createmapscreenshot()
+	if love_version_meets(11) then
+		love.graphics.captureScreenshot(
+			function(imgdata)
+				mapscreenshot = love.graphics.newImage(imgdata)
+			end
+		)
+	else
+		mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
 	end
 end
 
