@@ -133,6 +133,16 @@ configs =
 		default = {},
 		["type"] = "stringsarray",
 		},
+	visload_seen =
+		{
+		default = false,
+		["type"] = "bool",
+		},
+	vis_firstseen =
+		{
+		default = false,
+		["type"] = "bool",
+		},
 	syntaxcolor_command =
 		{
 		default = {124, 112, 218},
