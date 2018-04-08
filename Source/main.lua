@@ -26,6 +26,10 @@ unsupportedplugins = 0
 --checkver = "10241"
 --versys = "1"
 
+if love.setDeprecationOutput ~= nil then
+	love.setDeprecationOutput(allowdebug or intermediate_version)
+end
+
 -- So that zooming in won't make tiles blurry, thanks TurtleP
 if love.graphics.setDefaultFilter ~= nil then
 	love.graphics.setDefaultFilter("nearest", "nearest")
