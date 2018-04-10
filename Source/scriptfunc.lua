@@ -350,6 +350,8 @@ function processflaglabelsreverse()
 		end
 	end
 
+	local textlinestogo = 0
+
 	for k,v in pairs(scriptlines) do
 		if k == editingline then
 			usev = anythingbutnil(input) .. anythingbutnil(input_r)
@@ -357,25 +359,36 @@ function processflaglabelsreverse()
 			usev = v
 		end
 
+		-- Okay, we'll have to split this. What's on this line?
+		local partss
+		if textlinestogo <= 0 then
+			local text2 = string.gsub(string.gsub(usev, "%(", ","), "%)", ","):gsub(" ", "")
+			partss = explode(",", text2)
+		else
+			partss = {""}
+		end
+
 		-- Are we using internal scripting mode? If this line is blank it's not going to be taken well by VVVVVV itself unless we put something here..
-		if internalscript and v == "" then
+		if internalscript and v == "" and textlinestogo <= 0 then
 			scriptlines[k] = "#"
 			usev = "#"
 		end
 
-		-- Would be a good idea to stop accidental script splits from happening... People could much better use an actual split button if I add it
+		if textlinestogo > 0 then
+			textlinestogo = textlinestogo - 1
+		end
+
+		if partss[1] == "text" and partss[5] ~= nil then
+			textlinestogo = tonumber(partss[5])
+		end
+
+		-- Would be a good idea to stop accidental script splits from happening... People could much better use the actual split button
 		if (not s.dontpreventscriptsplits) and v:sub(-1,-1) == ":" then
 			scriptlines[k] = v .. " "
 		end
 
-		-- I could split it into parts and then check everything with that, but this is far easier and better performing.
-		if usev:sub(1,4) == "flag" or usev:sub(1,6) == "ifflag" or usev:sub(1,12) == "customifflag" then
-			cons("(first 4 letters) " .. usev:sub(1,4) .. " found at line " .. k)
-			-- Ok, how about now?
-			local text2 = string.gsub(string.gsub(usev, "%(", ","), "%)", ","):gsub(" ", "")
-
-			-- We need to explode it anyways.
-			local partss = explode(",", text2)
+		if partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag" then
+			cons("" .. partss[1] .. " found at line " .. k)
 
 			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
