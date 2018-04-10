@@ -348,6 +348,8 @@ function loadstate(new, extradata)
 		customsizetile = nil -- what group of tiles to draw with this special cursor (2D table)
 		customsizecoorx = nil -- coordinates of tile selected in mode 3
 		customsizecoory = nil
+
+		eraserlocked = false
 	elseif new == 3 then
 		-- scriptname == ""
 		-- scriptlines = {}

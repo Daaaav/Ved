@@ -167,6 +167,9 @@ function love.load()
 	copybtn = love.graphics.newImage("images/copy.png")
 	pastebtn = love.graphics.newImage("images/paste.png")
 
+	eraseron = love.graphics.newImage("images/eraseron.png")
+	eraseroff = love.graphics.newImage("images/eraseroff.png")
+
 	checkon = love.graphics.newImage("images/checkon.png")
 	checkoff = love.graphics.newImage("images/checkoff.png")
 
@@ -217,7 +220,7 @@ function love.load()
 	scrollup = love.graphics.newImage("images/scrollup.png")
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
 
-	sideimg = love.graphics.newImage("images/sides.png");             smallsideimg = love.graphics.newImage("images/smallsides.png")
+	sideimg = love.graphics.newImage("images/sides.png");      smallsideimg = love.graphics.newImage("images/smallsides.png")
 
 	sideline = {};                                             smallsideline = {}
 	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
@@ -1851,6 +1854,8 @@ function love.keypressed(key)
 		mouselockx = love.mouse.getX()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "[" and mouselocky == -1 then
 		mouselocky = love.mouse.getY()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "tab" then
+		eraserlocked = not eraserlocked
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "escape" then
 		editingbounds = 0
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
