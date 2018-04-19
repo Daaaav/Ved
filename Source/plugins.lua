@@ -340,7 +340,7 @@ function allocate_states(name, amount)
 		amount = 1
 	end
 	--assert(name == nil or amount == nil, "Attempt to allocate nil states, or attempt to allocate states for name nil") -- That crash will happen anyway
-	assert(state_allocations[name] == nil, "Attempt to allocate states for '" .. name .. "' multiple times")
+	assert(state_allocations[name] == nil, "Attempt to allocate states for '" .. name .. "' multiple times; plugin included twice?")
 	assert(type(amount) == "number", "Attempt to allocate an amount of states for '" .. name .. "' that is " .. type(amount))
 	assert(math.floor(amount) == amount, "Attempt to allocate a non-integer amount of states (" .. amount .. ") for '" .. name .. "'")
 	assert(amount >= 0, "Attempt to allocate a negative amount of states (" .. amount .. ") for '" .. name .. "'")
