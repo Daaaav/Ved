@@ -1593,12 +1593,12 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			end
 
-			if nodialog and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
+			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 				selectedtool = t
 				updatewindowicon()
 			end
 
-			if nodialog and love.mouse.isDown("r") and t == 17 and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then
+			if nodialog and not mousepressed and love.mouse.isDown("r") and t == 17 and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then
 				-- Find the start point
 				gotostartpointroom()
 			end
@@ -1642,7 +1642,7 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			end
 
-			if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
+			if nodialog and not mousepressed and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
 				if selectedtool <= 2 and k == 8 and love.mouse.isDown("r") then
 					customsizemode = 1
 					customsizex = 0
@@ -1693,10 +1693,10 @@ function drawmaineditor()
 		hoverdraw(scrolldn, 16, love.graphics.getHeight()-16, 32, 16)
 
 		-- Are we clicking them?
-		if nodialog and love.mouse.isDown("l") and mouseon(16, 0, 32, 16) then
+		if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, 0, 32, 16) then
 			lefttoolscroll = lefttoolscroll + 4
 			lefttoolscrollbounds()
-		elseif nodialog and love.mouse.isDown("l") and mouseon(16, love.graphics.getHeight()-16, 32, 16) then
+		elseif nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, love.graphics.getHeight()-16, 32, 16) then
 			lefttoolscroll = lefttoolscroll - 4
 			lefttoolscrollbounds()
 		end
