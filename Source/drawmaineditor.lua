@@ -421,6 +421,8 @@ function drawmaineditor()
 					autocorrectroom()
 				end
 			end
+
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 4 then
 			-- Trinket
 			if (count.trinkets == 20) and s.allowlimitbypass then
@@ -1851,6 +1853,7 @@ function drawmaineditor()
 			if not upperoptpage2 then
 				-- Scripts
 				tostate(10)
+				mousepressed = true
 			else
 
 			end
