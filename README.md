@@ -4,7 +4,7 @@ This is the repository for Ved, an external editor for VVVVVV levels.
 # Downloading
 You can choose to download the source version, which is a `.love` file, or, if you are using Windows or Mac OS X, you can also choose to download a `.exe` or `.app` version.
 ## Source
-You can download the latest version from the [SourcePackages](SourcePackages) folder. You'll need to download [LÖVE](https://love2d.org/) 0.9.x or 0.10.x once. After that, you should be able to double-click the `.love`, or drag it on top of the love binary (`love.exe`, `love.app` or `love`).
+You can download the latest version from the [SourcePackages](SourcePackages) folder. You'll need to download [LÖVE](https://love2d.org/) 0.9.x, 0.10.x or 11.x once. After that, you should be able to double-click the `.love`, or drag it on top of the love binary (`love.exe`, `love.app` or `love`).
 As long as your version of LÖVE is 0.9.0 or above and wasn't released _too_ recently, you don't really have to worry about getting a specific old version of LÖVE, even if "0.9.0 or higher" might give that impression. I try to add compatibility for new LÖVE versions soon after they're released, and if possible even earlier, without dropping compatibility for old versions.
 
 ## Windows version
