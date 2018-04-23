@@ -2348,24 +2348,11 @@ function keyboard_eitherIsDown(button)
 	return love.keyboard.isDown("l" .. button) or love.keyboard.isDown("r" .. button)
 end
 
--- Simply print a string in the tiny font, but always use 1 pixel of spacing between characters.
+-- Simply print a string in the tiny font
 function tinyprint(text, x, y)
 	love.graphics.setFont(tinynumbers)
-	love.graphics.print(imagefontspacing(text), x, y)
+	love.graphics.print(text, x, y)
 	love.graphics.setFont(font8)
-end
-
-function imagefontspacing(text)
-	if tostring(text):len() > 1 then
-		if love_version_meets(10) then
-			local origtext = tostring(text)
-			text = ""
-			for c = 1, origtext:len() do
-				text = text .. origtext:sub(c,c) .. "~"
-			end
-		end
-	end
-	return text
 end
 
 function textshadow(text, x, y, largefont)

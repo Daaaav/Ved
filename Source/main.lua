@@ -5,6 +5,8 @@ love.graphics.setFont(font_scale1)
 print("BITMAP")
 ]]
 
+require("corefunc")
+
 allowdebug = false
 opt_disableversioncheck = false
 opt_loadlevel = nil
@@ -40,7 +42,7 @@ font8 = love.graphics.newFont("Space Station.ttf", 8)
 font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
-tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsamqwertyuiopkl<>/[]zxnb")
+tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsamqwertyuiopkl<>/[]zxnb", love_version_meets(10) and 1 or nil)
 
 love.graphics.setFont(font8)
 
@@ -70,8 +72,6 @@ love.graphics.present()
 if love.window == nil then
 	require("incompatmain")
 else
-	require("corefunc")
-
 	-- How recent is our love2d version?
 	if love_version_meets(10) then
 		require("love10compat")

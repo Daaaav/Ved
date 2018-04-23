@@ -28,18 +28,25 @@ end
 
 
 -- So this was a bug in love, not in the font?
+function love11_tempfixfontpos(func, ...)
+	local args = {...}
+	local currentfont = love.graphics.getFont()
+	if currentfont == font8 then
+		args[3] = args[3] - 2 -- y
+	elseif currentfont == font16 then
+		args[3] = args[3] - 3
+	end
+	func(unpack(args))
+end
+
 love.graphics.print11 = love.graphics.print
 
 love.graphics.print = function(...)
-	local args = {...}
-	args[3] = args[3] - 2 -- y
-	love.graphics.print11(unpack(args))
+	love11_tempfixfontpos(love.graphics.print11, ...)
 end
 
 love.graphics.printf11 = love.graphics.printf
 
 love.graphics.printf = function(...)
-	local args = {...}
-	args[3] = args[3] - 2 -- y
-	love.graphics.printf11(unpack(args))
+	love11_tempfixfontpos(love.graphics.printf11, ...)
 end

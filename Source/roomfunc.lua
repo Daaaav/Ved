@@ -69,7 +69,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 
 			if displaytilenumbers then
-				love.graphics.print(imagefontspacing(theroomdata[(aty*40)+(atx+1)]), offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2))
+				love.graphics.print(theroomdata[(aty*40)+(atx+1)], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2))
 			end
 		end
 	end
