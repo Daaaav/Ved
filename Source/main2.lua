@@ -51,6 +51,7 @@ function love.load()
 	if s.lang ~= "English" and love.filesystem.exists("lang/" .. s.lang .. ".lua") then
 		ved_require("lang/" .. s.lang)
 	end
+
 	ved_require("devstrings")
 	ved_require("const")
 	ved_require("func")
@@ -68,6 +69,7 @@ function love.load()
 	ved_require("drawmap")
 	ved_require("drawhelp")
 	ved_require("slider")
+	ved_require("imagefont")
 
 	if s.pscale ~= 1 then
 		za,zb,zc = love.window.getMode()
@@ -307,6 +309,56 @@ function love.load()
 		end
 	end
 
+	-- Are we using font.png?
+	if love_version_meets(10) and s.usefontpng then
+		loadfontpng()
+	end
+
+	if love_version_meets(10) and s.usefontpng then
+		--[[ Pretty experimental.
+			If we're using font.png, and the language file defines a function to replace
+			certain non-ASCII characters with ASCII, then apply that to the entire file.
+			Should work fine as anything not translated will be ASCII and shouldn't be replaced.
+			And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
+			For example, a language may use a small amount of accented characters,
+			but if only ASCII is allowed, would prefer to leave the accent off rather
+			than have that character not be displayed at all.
+			And yes, this means a language file will have to be loaded 3 times (English first)
+		]]
+
+		if fontpng_ascii == nil then
+			fontpng_ascii = function(c) end
+		end
+
+		local any_unsupported = false
+		local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
+		if readlua ~= nil then
+			cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
+			local newlua, replacements = readlua:gsub(
+				"([\194-\244][\128-\191]*)",
+				function(c)
+					if c == "¤" or c == "§" then
+						return
+					end
+
+					local newc = fontpng_ascii(c)
+
+					if newc == nil then
+						any_unsupported = true
+						print(c)
+					end
+					return newc
+				end
+			)
+			if not any_unsupported then
+				print("(All characters apparently supported!)")
+			end
+			cons("Replacements: " .. replacements)
+
+			assert(loadstring(newlua))()
+		end
+	end
+
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
 	end
@@ -539,7 +591,8 @@ function love.draw()
 				"enableoverwritebackups",
 				false,
 				"autosavecrashlogs",
-				"loadallmetadata"
+				"loadallmetadata",
+				false
 			}
 		) do
 			if v then
@@ -552,6 +605,12 @@ function love.draw()
 			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*10)+4+2)
 			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*10), "amountoverwritebackups", 0, 999)
 		end
+
+		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*13), 16, 16, 2)
+		love.graphics.print(
+			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or L.MAKESLANGUAGEUNREADABLE),
+			8+16+8, 8+(24*13)+4+2
+		)
 
 		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
 			love.graphics.setColor(255,128,0)
@@ -608,6 +667,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*12), 16, 16) then
 				-- Load all metadata
 				s.loadallmetadata = not s.loadallmetadata
+			elseif mouseon(8, 8+(24*13), 16, 16) then
+				-- Use font.png
+				s.usefontpng = not s.usefontpng
 
 			elseif onrbutton(0) then
 				-- Save

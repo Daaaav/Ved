@@ -749,6 +749,17 @@ function loadsprites(file, res)
 	end
 end
 
+function loadfontpng()
+	local readsuccess, contents = readimage(levelsfolder, "font.png")
+
+	if not readsuccess then
+		return
+	end
+
+	-- The following function can be found in imagefont.lua
+	convertfontpng(love.image.newImageData(love.filesystem.newFileData(contents, "font.png", "file")))
+end
+
 function mousein(x1, y1, x2, y2)
 	-- Determines whether mouse is in a box with corners x1,y1 and x2,y2
 	return (love.mouse.getX() >= x1) and (love.mouse.getX() <= x2) and (love.mouse.getY() >= y1) and (love.mouse.getY() <= y2)

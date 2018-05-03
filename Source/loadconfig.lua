@@ -133,6 +133,11 @@ configs =
 		default = {},
 		["type"] = "stringsarray",
 		},
+	usefontpng =
+		{
+		default = false,
+		["type"] = "bool",
+		},
 	visload_seen =
 		{
 		default = false,

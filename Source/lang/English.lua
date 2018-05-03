@@ -1,5 +1,12 @@
 -- Language file for Ved
--- 1.3.2
+-- 1.3.4
+
+--[[
+If your language uses accented characters (or similar) but doesn't rely on a completely different
+alphabet/writing system, you can define a function called `fontpng_ascii(c)` that can replace
+special characters by ASCII variants if a custom font.png from VVVVVV is used.
+Please see Nederlands.lua or Esperanto.lua for examples!
+]]
 
 L = {
 
@@ -389,6 +396,11 @@ MONITORSIZE = "$1x$2 monitor",
 VEDRES = "Ved resolution: $1x$2",
 NONINTSCALE = "Non-integer scaling",
 
+-- 1.3.4
+USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
+
 }
 
 toolnames = {
@@ -471,7 +483,7 @@ long4 = "Ship",
 
 ERR_VEDHASCRASHED = "Ved has crashed!"
 ERR_VEDVERSION = "Ved version:"
-ERR_LOVEVERSION = "LÖVE version:"
+ERR_LOVEVERSION = "L{VE version:"
 ERR_STATE = "State:"
 ERR_OS = "OS:"
 ERR_TIMESINCESTART = "Time since start:"

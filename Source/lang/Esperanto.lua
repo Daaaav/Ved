@@ -2,6 +2,41 @@
 -- de Hejmstel/Format
 -- 1.3.2
 
+function fontpng_ascii(c)
+	-- Only used if font.png from the VVVVVV folder is selected as the font to use.
+	-- This is a function to replace non-ASCII characters by ASCII, when those characters
+	-- would be better as ASCII than not being displayed at all.
+	-- This function will be passed any (multibyte) character in this language file that
+	-- is not an ASCII character, and can return an ASCII replacement.
+	-- If it doesn't return anything, the character in question is left unmodified.
+
+	if c == "Ĉ" then
+		return "Cx"
+	elseif c == "Ĝ" then
+		return "Gx"
+	elseif c == "Ĥ" then
+		return "Hx"
+	elseif c == "Ĵ" then
+		return "Jx"
+	elseif c == "Ŝ" then
+		return "Sx"
+	elseif c == "Ŭ" then
+		return "Ux"
+	elseif c == "ĉ" then
+		return "cx"
+	elseif c == "ĝ" then
+		return "gx"
+	elseif c == "ĥ" then
+		return "hx"
+	elseif c == "ĵ" then
+		return "jx"
+	elseif c == "ŝ" then
+		return "sx"
+	elseif c == "ŭ" then
+		return "ux"
+	end
+end
+
 L = {
 
 TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)",
@@ -366,29 +401,34 @@ CUSTOMDATEFORMAT = "Tajlorita dato-formo",
 SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
 
 -- 1.2.4
-AUTOSAVECRASHLOGS = "Automatically save crash logs",
-MOREINFO = "More info",
-COPYLINK = "Copy link",
-SCRIPTDISPLAY = "Show",
-SCRIPTDISPLAY_USED = "Used",
-SCRIPTDISPLAY_UNUSED = "Unused",
-SCRIPTDISPLAY_SHOWING = "Showing $1",
+AUTOSAVECRASHLOGS = "Aŭtomate konservi kraŝo-protokolojn",
+MOREINFO = "Pli da informo",
+COPYLINK = "Kopii ligilon",
+SCRIPTDISPLAY = "Montri",
+SCRIPTDISPLAY_USED = "Uzita",
+SCRIPTDISPLAY_UNUSED = "Neuzita",
+SCRIPTDISPLAY_SHOWING = "Montranta $1",
 
 -- 1.3.0 (more changes)
-RECENTLYOPENED = "Recently opened levels",
-REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
+RECENTLYOPENED = "Lastatempe malfermitaj niveloj",
+REMOVERECENT = "Ĉu vi volas forigi ĝin de la listo de lastatempe malfermitaj niveloj?",
 RESETCUSTOMBRUSH = "(Dekstre alklaku por agordi novan grandon)",
 
 -- 1.3.2
-DISPLAYSETTINGS = "Display/Scale",
-DISPLAYSETTINGSTITLE = "Display/Scale settings",
-SMALLERSCREEN = "Smaller window width (800px wide instead of 896px)",
-FORCESCALE = "Force scale settings",
-SCALENOFIT = "The current scale settings make the window too large to fit.",
-SCALENONUM = "The current scale settings are invalid.",
-MONITORSIZE = "$1x$2 monitor",
-VEDRES = "Ved resolution: $1x$2",
-NONINTSCALE = "Non-integer scaling",
+DISPLAYSETTINGS = "Ekrano/grando",
+DISPLAYSETTINGSTITLE = "Agordoj de ekrano/grando",
+SMALLERSCREEN = "Pli malgranda fenestro-larĝo (larĝa je 800px anstataŭ 896px)",
+FORCESCALE = "Devigi agordojn de grando",
+SCALENOFIT = "La nunaj agordoj de grando tro grandigas la fenestron por laŭmezuriĝi.",
+SCALENONUM = "La nunaj agordoj de grando estas nevalidaj.",
+MONITORSIZE = "$1x$2 ekrano",
+VEDRES = "Distingivo de Ved: $1x$2",
+NONINTSCALE = "Neentjera skalado",
+
+-- 1.3.4
+USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 
 }
 
@@ -472,10 +512,10 @@ long4 = "Ŝipo",
 
 ERR_VEDHASCRASHED = "Ved estas kraŝinta!"
 ERR_VEDVERSION = "Versio de Ved:"
-ERR_LOVEVERSION = "Versio de LÖVE:"
+ERR_LOVEVERSION = "Versio de L{VE:"
 ERR_STATE = "Stato:"
 ERR_OS = "Operaciumo:"
-ERR_TIMESINCESTART = "Time since start:"
+ERR_TIMESINCESTART = "Tempo ekde starto:"
 ERR_PLUGINS = "Aldonaĵoj:"
 ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
@@ -496,7 +536,7 @@ ERR_LINESTOTAL = "%i linioj entute"
 ERR_SAVELEVEL = "Por konservi kopion de via nivelo, premu S"
 ERR_SAVESUCC = "Nivelo sukcese konservita kiel %s!"
 ERR_SAVEERROR = "Konserva eraro! %s"
-ERR_LOGSAVED = "More information can be found in the crash log:\n%s"
+ERR_LOGSAVED = "Pli da informo troviĝas en la kraŝo-protokolo:\n%s"
 
 
 diffmessages = {

@@ -1,5 +1,24 @@
 -- Dutch language file for Ved
--- 1.3.2
+-- 1.3.4
+
+function fontpng_ascii(c)
+	-- Only used if font.png from the VVVVVV folder is selected as the font to use.
+	-- This is a function to replace non-ASCII characters by ASCII, when those characters
+	-- would be better as ASCII than not being displayed at all.
+	-- This function will be passed any (multibyte) character in this language file that
+	-- is not an ASCII character, and can return an ASCII replacement.
+	-- If it doesn't return anything, the character in question is left unmodified.
+
+	if c == "ĳ" then -- by the way, 0.0000000% of people use this single character, just looks a bit better in the font
+		return "ij" -- 100% of people just use this
+	elseif c == "é" or c == "ë" then
+		return "e"
+	elseif c == "ö" then
+		return "{"
+	elseif c == "ó" then
+		return "o"
+	end
+end
 
 L = {
 
@@ -389,6 +408,11 @@ MONITORSIZE = "$1x$2-beeldscherm",
 VEDRES = "Resolutie van Ved: $1x$2",
 NONINTSCALE = "Schalen met niet-gehele getallen",
 
+-- 1.3.4
+USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
+
 }
 
 toolnames = {
@@ -471,7 +495,7 @@ long4 = "Schip",
 
 ERR_VEDHASCRASHED = "Ved is gecrasht!"
 ERR_VEDVERSION = "Ved-versie:"
-ERR_LOVEVERSION = "LÖVE-versie:"
+ERR_LOVEVERSION = "L{VE-versie:"
 ERR_STATE = "Staat:"
 ERR_OS = "Besturingssysteem:"
 ERR_TIMESINCESTART = "Tĳd sinds opstarten:"
