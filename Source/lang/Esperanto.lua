@@ -426,9 +426,9 @@ VEDRES = "Distingivo de Ved: $1x$2",
 NONINTSCALE = "Neentjera skalado",
 
 -- 1.3.4
-USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
+USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
-REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
+REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
 
 }
 
