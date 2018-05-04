@@ -18,12 +18,12 @@ function convertfontpng(imagedata)
 			if typ == 1 then
 				return 0, 0, 0, 0
 			elseif typ == 2 then
-				return 1*colfactor, 1*colfactor, 0, 1*colfactor
+				return colfactor, colfactor, 0, colfactor
 			else
-				return imagedata:getPixel(
+				return colfactor, colfactor, colfactor, ({imagedata:getPixel(
 					(charnum*8+xcoord) % 128,
 					math.floor(charnum/16)*8 + y
-				)
+				)})[4]
 			end
 		end
 	)

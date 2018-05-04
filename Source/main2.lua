@@ -887,6 +887,10 @@ function love.draw()
 			end
 		end
 	elseif state == 26 then
+		local printfunc = love.graphics.print
+		if love.graphics.print11 ~= nil then
+			printfunc = love.graphics.print11
+		end
 		love.graphics.setColor(128,128,255,64)
 		love.graphics.rectangle("line", 32.5, 32.5, font8:getWidth(input), 8)
 		love.graphics.rectangle("line", 32.5, 64.5, font16:getWidth(input), 16)
@@ -895,11 +899,11 @@ function love.draw()
 		love.graphics.rectangle("line", 32.5, 32.5-2, font8:getWidth(input), 8)
 		love.graphics.rectangle("line", 32.5, 64.5-4, font16:getWidth(input), 16)
 		love.graphics.setColor(255,255,255)
-		love.graphics.print(input, 32, 32)
+		printfunc(input, 32, 32)
 		love.graphics.setFont(font16)
-		love.graphics.print(input, 32, 64)
+		printfunc(input, 32, 64)
 		love.graphics.setFont(tinynumbers)
-		love.graphics.print(input, 32, 96)
+		printfunc(input, 32, 96)
 		love.graphics.setFont(font8)
 
 		love.graphics.print("Font test", 10, 10)
