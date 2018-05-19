@@ -1,14 +1,15 @@
--- Dutch language file for Ved
--- 1.3.4
+-- Language file for Ved
+--- Language: Nederlands (nl)
+--- Last converted: 2018-05-10 00:00:00 (ZZZ)
+
+--[[
+	If you would like to help translate Ved, please get in touch with Dav999
+	to get access to the online translation system!
+	If you want to continue translating in this file, it's possible to import
+	it into the system later, so don't worry.
+]]
 
 function fontpng_ascii(c)
-	-- Only used if font.png from the VVVVVV folder is selected as the font to use.
-	-- This is a function to replace non-ASCII characters by ASCII, when those characters
-	-- would be better as ASCII than not being displayed at all.
-	-- This function will be passed any (multibyte) character in this language file that
-	-- is not an ASCII character, and can return an ASCII replacement.
-	-- If it doesn't return anything, the character in question is left unmodified.
-
 	if c == "ĳ" then -- by the way, 0.0000000% of people use this single character, just looks a bit better in the font
 		return "ij" -- 100% of people just use this
 	elseif c == "é" or c == "ë" then
@@ -22,7 +23,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
+TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.0. Je kan de laatste versie van L{ve downloaden op https://love2d.org/.",
 UNKNOWNSTATE = "Onbekende staat ($1), naar veranderd vanaf $2",
@@ -85,7 +86,8 @@ TILESETCHANGEDTO = "Tileset veranderd naar $1",
 TILESETCOLORCHANGEDTO = "Tileset-kleur veranderd naar $1",
 ENEMYTYPECHANGED = "Vĳand-type veranderd",
 
-CHANGEDTOMODE = "Veranderd naar $1plaatsing", -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+-- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+CHANGEDTOMODE = "Veranderd naar $1plaatsing",
 CHANGEDTOMODEAUTO = "automatische ",
 CHANGEDTOMODEMANUAL = "handmatige ",
 CHANGEDTOMODEMULTI = "multi-tileset-",
@@ -206,7 +208,7 @@ ROOMENEMIES = "Kamer-vĳanden",
 OPTNAME = "Naam",
 OPTBY = "Door",
 OPTWEBSITE = "Website",
-OPTDESC = "Beschr.", -- If necessary, you can span multiple lines by using \n
+OPTDESC = "Beschr.", -- If necessary, you can span multiple lines
 OPTSIZE = "Grootte",
 OPTMUSIC = "Muziek",
 CAPNONE = "GEEN",
@@ -267,7 +269,7 @@ FLAGS = "Vlaggen",
 ROOM = "kamer",
 CONTENTFILLER = "Inhoud",
 
-   FLAGUSED = "Gebruikt     ",
+FLAGUSED = "Gebruikt     ", -- preferably same length as L.FLAGNOTUSED
 FLAGNOTUSED = "Niet gebruikt",
 FLAGNONAME = "Geen naam",
 USEDOUTOFRANGEFLAGS = "Gebruikte vlaggen buiten bereik:",
@@ -356,8 +358,8 @@ SYNTAXCOLOR_NEWFLAGNAME = "Nieuwe vlagnaam",
 RESETCOLORS = "Kleuren resetten",
 STRINGNOTFOUND = "\"$1\" kan niet worden gevonden",
 
--- b17
-MAL = "Het levelbestand is niet in orde: ", -- one of the following strings are concatenated to this
+-- b17 - L.MAL is concatenated with L.[...]CORRUPT
+MAL = "Het levelbestand is niet in orde: ",
 METADATACORRUPT = "Metadata ontbreekt of is corrupt.",
 METADATAITEMCORRUPT = "Metadata voor $1 ontbreekt of is corrupt.",
 TILESCORRUPT = "Data voor blokken ontbreekt of is corrupt.",
@@ -410,7 +412,7 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 
 -- 1.3.4
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
 
 }
@@ -440,15 +442,14 @@ toolnames = {
 subtoolnames = {
 
 [1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Aardappel voor het doen van dingen die magisch zĳn"},
-[2] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Aardappel voor het doen van dingen die magisch zĳn"},
---[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
+[2] = {},
 [3] = {"Auto 1", "Automatisch uitbreiden L+R", "Automatisch uitbreiden L", "Automatisch uitbreiden R"},
 [4] = {},
 [5] = {"Rechtop", "Ondersteboven"},
 [6] = {},
 [7] = {"Klein R", "Klein L", "Groot R", "Groot L"},
 [8] = {"Omlaag", "Omhoog", "Links", "Rechts"},
-[9] = {"Omlaag", "Omhoog", "Links", "Rechts"},
+[9] = {},
 [10] = {"Horizontaal", "Verticaal"},
 [11] = {},
 [12] = {},
@@ -675,7 +676,7 @@ subj = "Terug",
 imgs = {},
 cont = [[
 \)
-]]
+]] -- This should be left the same!
 },
 
 {
@@ -870,7 +871,6 @@ bemanningsleden in een level geplaatst kunnen worden.
 Hiermee kun je het startpunt plaatsen.
 ]]
 },
-----------------------------------------------------------------------------------[]-
 {
 subj = "Scriptbewerker",
 imgs = {},
@@ -985,15 +985,6 @@ F¤  Ga naar vlaggenlĳst\C
 /¤  Ga naar bovenste/laatste script\C
 ]]
 },
-
---[[
-\-
-Test thing
-
-command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤optional number¤)\wnvnynGnY(
-
-\-
-]]
 
 {
 subj = "Eenvoudige scripting",
@@ -2321,10 +2312,6 @@ _ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
     x=0 en afbeelding 1 op x=32.
 < - Zelfde, maar schuif naar links.
 ]]
-----------------------------------------------------------------------------------[]-
---[[
-) - Return to previous state
-]]
 },
 
 {
@@ -2401,74 +2388,5 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
-
---[[{
-subj = "Testing",
-imgs = {"tools2/1.png", "i/warn.png", "i/warn2.png"},
-cont = [ [
-Getting started\wh#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of -XX-
-times, and that is something that should be carefully considered.
-
-More info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of
-times.
-
-Even more info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot.
-
-Get started with this article.
-
-This should be double font size\h
-WRONG
-
-And we should leave an extra line blank for that.
-
-Another section\h#
-
-Section could start here.
-
-Ay more
-
-Ok time to start experimenting with colors.
-
-This line should be red.\r
-This line should be gray.\g
-Now it gets interesting\rh
-
-Should have same result\hr
-
-\-
-
-Red\r
-Gray\g
-White\w
-Blue\b
-Orange\o
-Green\v
-Viridian\C
-Violet\P
-Vitellary\Y
-Vermilion\R
-Verdigris\G
-Victoria\B
-
-W
-\-r
-W
-
-Image test:
-\0
-   Wall\h#
-
-
-\1
-
-\2
-] ]
-},]]
 
 }

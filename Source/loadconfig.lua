@@ -318,4 +318,5 @@ do
 	s.pscale = s.scale
 	s.psmallerscreen = s.smallerscreen
 	s.pcheckforupdates = s.checkforupdates
+	s.plang = s.lang
 end

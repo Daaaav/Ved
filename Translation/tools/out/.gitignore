@@ -1,0 +1,4 @@
+po/*
+!po/templates/
+*.lua
+!Template.lua

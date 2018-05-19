@@ -181,8 +181,13 @@ function dialog.textboxes()
 		end
 
 		-- Unique, not an input field, but specific to this text box
+		local bottomleft_text = L.TRANSLATIONCREDIT
+		if s.plang == "English" then
+			-- Yeah, hardcoded text!
+			bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
+		end
 		setColorDIA(0,0,0,255)
-		love.graphics.printf(L.TRANSLATIONCREDIT, DIAx+10, DIAy+DIAwindowani+10+(15*8), DIAwidth-(2*72)-6-10, "left") -- 72 is that btnwidth up there
+		love.graphics.printf(bottomleft_text, DIAx+10, DIAy+DIAwindowani+10+(15*8), DIAwidth-(2*72)-6-10, "left") -- 72 is that btnwidth up there
 	end
 end
 

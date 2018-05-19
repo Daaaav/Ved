@@ -1,9 +1,19 @@
 -- Language file for Ved
--- 1.3.2
+--- Language: Русский (ru)
+--- Last converted: 2018-05-10 00:00:00 (ZZZ)
+
+--[[
+	If you would like to help translate Ved, please get in touch with Dav999
+	to get access to the online translation system!
+	If you want to continue translating in this file, it's possible to import
+	it into the system later, so don't worry.
+]]
+
+--- fontpng_ascii: N.A.
 
 L = {
 
-TRANSLATIONCREDIT = "Сделано CreepiX'ом и Captain Normalguy'ем", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
+TRANSLATIONCREDIT = "Сделано CreepiX'ом и Captain Normalguy'ем", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Ваша версия LOVE устарела. Пожалуйста, используйте версию 0.9.0 или выше. Загрузите LOVE на https://love2d.org/.",
 UNKNOWNSTATE = "Неизвестный режим ($1), пригнул из $2",
@@ -66,7 +76,8 @@ TILESETCHANGEDTO = "Стиль стен изменён на $1",
 TILESETCOLORCHANGEDTO = "Цвет стен изменён на $1",
 ENEMYTYPECHANGED = "Тип врагов изменён",
 
-CHANGEDTOMODE = "Выбран $1 режим.", -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+-- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+CHANGEDTOMODE = "Выбран $1 режим.",
 CHANGEDTOMODEAUTO = "автоматический",
 CHANGEDTOMODEMANUAL = "ручной",
 CHANGEDTOMODEMULTI = "мульти",
@@ -187,7 +198,7 @@ ROOMENEMIES = "Враги",
 OPTNAME = "Название",
 OPTBY = "Автор",
 OPTWEBSITE = "Сайт",
-OPTDESC = "Описание", -- If necessary, you can span multiple lines by using \n
+OPTDESC = "Описание", -- If necessary, you can span multiple lines
 OPTSIZE = "Размер",
 OPTMUSIC = "Саундтрек",
 CAPNONE = "НЕТ",
@@ -248,7 +259,7 @@ FLAGS = "Флаги",
 ROOM = "Комната",
 CONTENTFILLER = "Контент",
 
-   FLAGUSED = "Использован   ",
+FLAGUSED = "Использован   ", -- preferably same length as L.FLAGNOTUSED
 FLAGNOTUSED = "Не использован",
 FLAGNONAME = "Нет имени",
 USEDOUTOFRANGEFLAGS = "Использовано флагов:",
@@ -337,8 +348,8 @@ SYNTAXCOLOR_NEWFLAGNAME = "Новое имя флага",
 RESETCOLORS = "Сбросить цвета",
 STRINGNOTFOUND = "\"$1\" не найдено",
 
--- b17
-MAL = "Файл уровня повреждён: ", -- one of the following strings are concatenated to this
+-- b17 - L.MAL is concatenated with L.[...]CORRUPT
+MAL = "Файл уровня повреждён: ",
 METADATACORRUPT = "Данные отсутствуют или повреждены.",
 METADATAITEMCORRUPT = "Данные для $1 отсутствуют или повреждены.",
 TILESCORRUPT = "Тайлы отсутствуют или повреждены.",
@@ -391,7 +402,7 @@ NONINTSCALE = "Масштаб с дробным значением",
 
 -- 1.3.4
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
-MAKESLANGUAGEUNREADABLE = " (makes Russian unreadable)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+MAKESLANGUAGEUNREADABLE = " (makes Russian unreadable)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 
 }
@@ -421,15 +432,14 @@ toolnames = {
 subtoolnames = {
 
 [1] = {"1x1", "3x3", "5x5", "7x7", "9x9", "Горизонтальная линия", "Вертикальная линия", "Модифицируемый размер стен", "Картошка для магических вещей"},
-[2] = {"1x1", "3x3", "5x5", "7x7", "9x9", "Горизонтальная линия", "Вертикальная линия", "Модифицируемый размер стен", "Картошка для магических вещей"},
---[3] = {"1 снизу", "3 снизу", "5 снизу", "7 снизу", "9 снизу", "Расширить Л+П", "Расширить Л", "Расширить П"},
+[2] = {},
 [3] = {"Авто 1", "Авто расширить Л+П", "Авто расширить Л", "Авто расширить П"},
 [4] = {},
 [5] = {"Нормальный", "Флипнутый"},
 [6] = {},
 [7] = {"Маленький П", "Маленький Л", "Большой П", "Большой Л"},
 [8] = {"Вниз", "Вверх", "Влево", "Вправо"},
-[9] = {"Вниз", "Вверх", "Влево", "Вправо"},
+[9] = {},
 [10] = {"Горизонтальный", "Вертикальный"},
 [11] = {},
 [12] = {},
@@ -656,7 +666,7 @@ subj = "Return",
 imgs = {},
 cont = [[
 \)
-]]
+]] -- This should be left the same!
 },
 
 {
@@ -849,7 +859,6 @@ a limit of twenty missing crewmates in a level.
 The start point tool can be used to place the start point.
 ]]
 },
-----------------------------------------------------------------------------------[]-
 {
 subj = "Script editor",
 imgs = {},
@@ -960,15 +969,6 @@ F¤  Go to flags list\C
 /¤  Go to topmost/latest script\C
 ]]
 },
-
---[[
-\-
-Test thing
-
-command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤optional number¤)\wnvnynGnY(
-
-\-
-]]
 
 {
 subj = "Simp.script reference",
@@ -2288,10 +2288,6 @@ _ - Put this before the image number to decrease the image number by 10.
     image 1 at x=32.
 < - Same, but shift to the left.
 ]]
-----------------------------------------------------------------------------------[]-
---[[
-) - Return to previous state
-]]
 },
 
 {
@@ -2369,74 +2365,5 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
-
---[[{
-subj = "Testing",
-imgs = {"tools2/1.png", "i/warn.png", "i/warn2.png"},
-cont = [ [
-Getting started\wh#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of -XX-
-times, and that is something that should be carefully considered.
-
-More info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of
-times.
-
-Even more info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot.
-
-Get started with this article.
-
-This should be double font size\h
-WRONG
-
-And we should leave an extra line blank for that.
-
-Another section\h#
-
-Section could start here.
-
-Ay more
-
-Ok time to start experimenting with colors.
-
-This line should be red.\r
-This line should be gray.\g
-Now it gets interesting\rh
-
-Should have same result\hr
-
-\-
-
-Red\r
-Gray\g
-White\w
-Blue\b
-Orange\o
-Green\v
-Viridian\C
-Violet\P
-Vitellary\Y
-Vermilion\R
-Verdigris\G
-Victoria\B
-
-W
-\-r
-W
-
-Image test:
-\0
-   Wall\h#
-
-
-\1
-
-\2
-] ]
-},]]
 
 }

@@ -1,16 +1,19 @@
 -- Language file for Ved
--- 1.3.4
+--- Language: English (templates)
+--- Last converted: 2018-05-10 00:00:00 (ZZZ)
 
 --[[
-If your language uses accented characters (or similar) but doesn't rely on a completely different
-alphabet/writing system, you can define a function called `fontpng_ascii(c)` that can replace
-special characters by ASCII variants if a custom font.png from VVVVVV is used.
-Please see Nederlands.lua or Esperanto.lua for examples!
+	If you would like to help translate Ved, please get in touch with Dav999
+	to get access to the online translation system!
+	If you want to continue translating in this file, it's possible to import
+	it into the system later, so don't worry.
 ]]
+
+--- fontpng_ascii: N.A.
 
 L = {
 
-TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)"
+TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from https://love2d.org/.",
 UNKNOWNSTATE = "Unknown state ($1), jumped to from state $2",
@@ -73,7 +76,8 @@ TILESETCHANGEDTO = "Tileset changed to $1",
 TILESETCOLORCHANGEDTO = "Tileset color changed to $1",
 ENEMYTYPECHANGED = "Enemy type changed",
 
-CHANGEDTOMODE = "Changed to $1 tile placement", -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+-- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+CHANGEDTOMODE = "Changed to $1 tile placement",
 CHANGEDTOMODEAUTO = "automatic",
 CHANGEDTOMODEMANUAL = "manual",
 CHANGEDTOMODEMULTI = "multi-tileset",
@@ -194,7 +198,7 @@ ROOMENEMIES = "Room enemies",
 OPTNAME = "Name",
 OPTBY = "By",
 OPTWEBSITE = "Website",
-OPTDESC = "Desc", -- If necessary, you can span multiple lines by using \n
+OPTDESC = "Desc", -- If necessary, you can span multiple lines
 OPTSIZE = "Size",
 OPTMUSIC = "Music",
 CAPNONE = "NONE",
@@ -255,7 +259,7 @@ FLAGS = "Flags",
 ROOM = "room",
 CONTENTFILLER = "Content",
 
-   FLAGUSED = "Used    ",
+FLAGUSED = "Used    ", -- preferably same length as L.FLAGNOTUSED
 FLAGNOTUSED = "Not used",
 FLAGNONAME = "No name",
 USEDOUTOFRANGEFLAGS = "Used out of range flags:",
@@ -344,8 +348,8 @@ SYNTAXCOLOR_NEWFLAGNAME = "New flag name",
 RESETCOLORS = "Reset colors",
 STRINGNOTFOUND = "\"$1\" was not found",
 
--- b17
-MAL = "The level file is malformed: ", -- one of the following strings are concatenated to this
+-- b17 - L.MAL is concatenated with L.[...]CORRUPT
+MAL = "The level file is malformed: ",
 METADATACORRUPT = "Metadata is missing or corrupt.",
 METADATAITEMCORRUPT = "Metadata for $1 is missing or corrupt.",
 TILESCORRUPT = "Tiles missing or corrupt.",
@@ -398,7 +402,7 @@ NONINTSCALE = "Non-integer scaling",
 
 -- 1.3.4
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 
 }
@@ -428,15 +432,14 @@ toolnames = {
 subtoolnames = {
 
 [1] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Potato for Doing Things that are Magical"},
-[2] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Potato for Doing Things that are Magical"},
---[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
+[2] = {},
 [3] = {"Auto 1", "Auto expand L+R", "Auto expand L", "Auto expand R"},
 [4] = {},
 [5] = {"Upright", "Flipped"},
 [6] = {},
 [7] = {"Small R", "Small L", "Large R", "Large L"},
 [8] = {"Down", "Up", "Left", "Right"},
-[9] = {"Down", "Up", "Left", "Right"},
+[9] = {},
 [10] = {"Horizontal", "Vertical"},
 [11] = {},
 [12] = {},
@@ -663,7 +666,7 @@ subj = "Return",
 imgs = {},
 cont = [[
 \)
-]]
+]] -- This should be left the same!
 },
 
 {
@@ -856,7 +859,6 @@ a limit of twenty missing crewmates in a level.
 The start point tool can be used to place the start point.
 ]]
 },
-----------------------------------------------------------------------------------[]-
 {
 subj = "Script editor",
 imgs = {},
@@ -967,15 +969,6 @@ F¤  Go to flags list\C
 /¤  Go to topmost/latest script\C
 ]]
 },
-
---[[
-\-
-Test thing
-
-command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤optional number¤)\wnvnynGnY(
-
-\-
-]]
 
 {
 subj = "Simp.script reference",
@@ -2295,10 +2288,6 @@ _ - Put this before the image number to decrease the image number by 10.
     image 1 at x=32.
 < - Same, but shift to the left.
 ]]
-----------------------------------------------------------------------------------[]-
---[[
-) - Return to previous state
-]]
 },
 
 {
@@ -2375,74 +2364,5 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
-
---[[{
-subj = "Testing",
-imgs = {"tools2/1.png", "i/warn.png", "i/warn2.png"},
-cont = [ [
-Getting started\wh#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of -XX-
-times, and that is something that should be carefully considered.
-
-More info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of
-times.
-
-Even more info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot.
-
-Get started with this article.
-
-This should be double font size\h
-WRONG
-
-And we should leave an extra line blank for that.
-
-Another section\h#
-
-Section could start here.
-
-Ay more
-
-Ok time to start experimenting with colors.
-
-This line should be red.\r
-This line should be gray.\g
-Now it gets interesting\rh
-
-Should have same result\hr
-
-\-
-
-Red\r
-Gray\g
-White\w
-Blue\b
-Orange\o
-Green\v
-Viridian\C
-Violet\P
-Vitellary\Y
-Vermilion\R
-Verdigris\G
-Victoria\B
-
-W
-\-r
-W
-
-Image test:
-\0
-   Wall\h#
-
-
-\1
-
-\2
-] ]
-},]]
 
 }

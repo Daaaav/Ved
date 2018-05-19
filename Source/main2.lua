@@ -359,6 +359,10 @@ function love.load()
 		end
 	end
 
+	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
+	subtoolnames[2] = subtoolnames[1]
+	subtoolnames[9] = subtoolnames[8]
+
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
 	end

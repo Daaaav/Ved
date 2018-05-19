@@ -1,15 +1,15 @@
--- Esperanta lingvodosiero por Ved
--- de Hejmstel/Format
--- 1.3.2
+-- Language file for Ved
+--- Language: Esperanto (eo)
+--- Last converted: 2018-05-10 00:00:00 (ZZZ)
+
+--[[
+	If you would like to help translate Ved, please get in touch with Dav999
+	to get access to the online translation system!
+	If you want to continue translating in this file, it's possible to import
+	it into the system later, so don't worry.
+]]
 
 function fontpng_ascii(c)
-	-- Only used if font.png from the VVVVVV folder is selected as the font to use.
-	-- This is a function to replace non-ASCII characters by ASCII, when those characters
-	-- would be better as ASCII than not being displayed at all.
-	-- This function will be passed any (multibyte) character in this language file that
-	-- is not an ASCII character, and can return an ASCII replacement.
-	-- If it doesn't return anything, the character in question is left unmodified.
-
 	if c == "Ĉ" then
 		return "Cx"
 	elseif c == "Ĝ" then
@@ -102,7 +102,8 @@ TILESETCHANGEDTO = "Blokaro ŝanĝita al $1",
 TILESETCOLORCHANGEDTO = "Koloro de blokaro ŝanĝita al $1",
 ENEMYTYPECHANGED = "Malamiko-tipo ŝanĝita al $1",
 
-CHANGEDTOMODE = "$1 bloko-metado", -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+-- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+CHANGEDTOMODE = "$1 bloko-metado",
 CHANGEDTOMODEAUTO = "Aŭtomata",
 CHANGEDTOMODEMANUAL = "Permana",
 CHANGEDTOMODEMULTI = "Multblokara",
@@ -223,7 +224,7 @@ ROOMENEMIES = "Malamikoj en ĉambro",
 OPTNAME = "Nomo",
 OPTBY = "Kreinto",
 OPTWEBSITE = "Retejo ",
-OPTDESC = "Pri-\nskribo", -- If necessary, you can span multiple lines by using \n
+OPTDESC = "Pri-\nskribo", -- If necessary, you can span multiple lines
 OPTSIZE = "Grando",
 OPTMUSIC = "Muziko",
 CAPNONE = "NENIU",
@@ -284,7 +285,7 @@ FLAGS = "Flagoj",
 ROOM = "ĉambro",
 CONTENTFILLER = "Enhavo",
 
-   FLAGUSED = "Uzata   ",
+FLAGUSED = "Uzata   ", -- preferably same length as L.FLAGNOTUSED
 FLAGNOTUSED = "Ne uzata",
 FLAGNONAME = "Sennoma",
 USEDOUTOFRANGEFLAGS = "Uzataj ekstervariejaj flagoj:",
@@ -373,8 +374,8 @@ SYNTAXCOLOR_NEWFLAGNAME = "Nova flagnomo",
 RESETCOLORS = "Defaŭltigi kolorojn",
 STRINGNOTFOUND = "\"$1\" ne estis trovita",
 
--- b17
-MAL = "La nivelo-dosiero estas misformigita: ", -- one of the following strings are concatenated to this
+-- b17 - L.MAL is concatenated with L.[...]CORRUPT
+MAL = "La nivelo-dosiero estas misformigita: ",
 METADATACORRUPT = "Meta-datumoj estas mankantaj aŭ koruptitaj.",
 METADATAITEMCORRUPT = "Meta-datumoj por $1 estas mankantaj aŭ koruptitaj.",
 TILESCORRUPT = "Blokoj mankantaj aŭ koruptitaj.",
@@ -427,7 +428,7 @@ NONINTSCALE = "Neentjera skalado",
 
 -- 1.3.4
 USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreaadable!)" where Language is the name of your language.
+MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
 
 }
@@ -457,15 +458,14 @@ toolnames = {
 subtoolnames = {
 
 [1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Mirinda mojosa magia terpomo"},
-[2] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Mirinda mojosa magia terpomo"},
---[3] = {"1 bottom", "3 bottom", "5 bottom", "7 bottom", "9 bottom", "Expand L+R", "Expand L", "Expand R"},
+[2] = {},
 [3] = {"Aŭtomata", "Aŭtomata ambaŭen", "Aŭtomata maldekstren", "Aŭtomata dekstren"},
 [4] = {},
 [5] = {"Grunda", "Plafona"},
 [6] = {},
 [7] = {"Malgranda, dekstren", "Malgranda, maldekstren", "Granda, dekstren", "Granda, maldekstren"},
 [8] = {"Malsupren", "Supren", "Maldekstren", "Dekstren"},
-[9] = {"Malsupren", "Supren", "Maldekstren", "Dekstren"},
+[9] = {},
 [10] = {"Horizontala", "Vertikala"},
 [11] = {},
 [12] = {},
@@ -692,7 +692,7 @@ subj = "Return",
 imgs = {},
 cont = [[
 \)
-]]
+]] -- This should be left the same!
 },
 
 {
@@ -885,7 +885,6 @@ a limit of twenty missing crewmates in a level.
 The start point tool can be used to place the start point.
 ]]
 },
-----------------------------------------------------------------------------------[]-
 {
 subj = "Script editor",
 imgs = {},
@@ -996,15 +995,6 @@ F¤  Go to flags list\C
 /¤  Go to topmost/latest script\C
 ]]
 },
-
---[[
-\-
-Test thing
-
-command¤(§¤required text¤,§¤required number¤,§¤optional text¤,§¤optional number¤)\wnvnynGnY(
-
-\-
-]]
 
 {
 subj = "Simp.script reference",
@@ -2324,10 +2314,6 @@ _ - Put this before the image number to decrease the image number by 10.
     image 1 at x=32.
 < - Same, but shift to the left.
 ]]
-----------------------------------------------------------------------------------[]-
---[[
-) - Return to previous state
-]]
 },
 
 {
@@ -2404,74 +2390,5 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
-
---[[{
-subj = "Testing",
-imgs = {"tools2/1.png", "i/warn.png", "i/warn2.png"},
-cont = [ [
-Getting started\wh#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of -XX-
-times, and that is something that should be carefully considered.
-
-More info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot of
-times.
-
-Even more info\h#
-
-Lorum ipsum dolor sit amet. The quick brown fox jumps over the lazy dog a lot.
-
-Get started with this article.
-
-This should be double font size\h
-WRONG
-
-And we should leave an extra line blank for that.
-
-Another section\h#
-
-Section could start here.
-
-Ay more
-
-Ok time to start experimenting with colors.
-
-This line should be red.\r
-This line should be gray.\g
-Now it gets interesting\rh
-
-Should have same result\hr
-
-\-
-
-Red\r
-Gray\g
-White\w
-Blue\b
-Orange\o
-Green\v
-Viridian\C
-Violet\P
-Vitellary\Y
-Vermilion\R
-Verdigris\G
-Victoria\B
-
-W
-\-r
-W
-
-Image test:
-\0
-   Wall\h#
-
-
-\1
-
-\2
-] ]
-},]]
 
 }
