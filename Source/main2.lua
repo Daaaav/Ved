@@ -309,54 +309,60 @@ function love.load()
 		end
 	end
 
+	local hijack_print = false
+
 	-- Are we using font.png?
 	if love_version_meets(10) and s.usefontpng then
-		loadfontpng()
+		if loadfontpng() then
+			--[[
+				If we're using font.png, and the language file defines a function to replace
+				certain non-ASCII characters with ASCII, then apply that to the entire file.
+				Should work fine as anything not translated will be ASCII and shouldn't be replaced.
+				And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
+				For example, a language may use a small amount of accented characters,
+				but if only ASCII is allowed, would prefer to leave the accent off rather
+				than have that character not be displayed at all.
+				And yes, this means a language file will have to be loaded 3 times (English first)
+			]]
+
+			if fontpng_ascii == nil then
+				fontpng_ascii = function(c) end
+			end
+
+			local any_unsupported = false
+			local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
+			if readlua ~= nil then
+				cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
+				local newlua, replacements = readlua:gsub(
+					"([\194-\244][\128-\191]*)",
+					function(c)
+						if c == "¤" or c == "§" then
+							return
+						end
+
+						local newc = fontpng_ascii(c)
+
+						if newc == nil then
+							any_unsupported = true
+							print(c)
+						end
+						return newc
+					end
+				)
+				if not any_unsupported then
+					print("(All characters apparently supported!)")
+				end
+				cons("Replacements: " .. replacements)
+
+				assert(loadstring(newlua))()
+			end
+
+			hijack_print = true
+		end
 	end
 
-	if love_version_meets(10) and s.usefontpng then
-		--[[ Pretty experimental.
-			If we're using font.png, and the language file defines a function to replace
-			certain non-ASCII characters with ASCII, then apply that to the entire file.
-			Should work fine as anything not translated will be ASCII and shouldn't be replaced.
-			And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
-			For example, a language may use a small amount of accented characters,
-			but if only ASCII is allowed, would prefer to leave the accent off rather
-			than have that character not be displayed at all.
-			And yes, this means a language file will have to be loaded 3 times (English first)
-		]]
-
-		if fontpng_ascii == nil then
-			fontpng_ascii = function(c) end
-		end
-
-		local any_unsupported = false
-		local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
-		if readlua ~= nil then
-			cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
-			local newlua, replacements = readlua:gsub(
-				"([\194-\244][\128-\191]*)",
-				function(c)
-					if c == "¤" or c == "§" then
-						return
-					end
-
-					local newc = fontpng_ascii(c)
-
-					if newc == nil then
-						any_unsupported = true
-						print(c)
-					end
-					return newc
-				end
-			)
-			if not any_unsupported then
-				print("(All characters apparently supported!)")
-			end
-			cons("Replacements: " .. replacements)
-
-			assert(loadstring(newlua))()
-		end
+	if hijack_print or love_version_meets(11) then
+		temp_print_override()
 	end
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies

@@ -753,11 +753,13 @@ function loadfontpng()
 	local readsuccess, contents = readimage(levelsfolder, "font.png")
 
 	if not readsuccess then
-		return
+		return false
 	end
 
 	-- The following function can be found in imagefont.lua
 	convertfontpng(love.image.newImageData(love.filesystem.newFileData(contents, "font.png", "file")))
+
+	return true
 end
 
 function mousein(x1, y1, x2, y2)
@@ -2561,6 +2563,36 @@ function createmapscreenshot()
 		)
 	else
 		mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+	end
+end
+
+function temp_print_override()
+	-- This will stop being used later.
+	-- Basically, in LÖVE 0.9 and 0.10, the TTF font is displaced, and the correction for this has
+	-- always been hardcoded. This doesn't happen in 11+, and also doesn't happen for bitmap fonts.
+	-- Plan is to remove the hardcoded offset EVERYWHERE and hijack lg.print[f] for 0.9/0.10 with TTF instead.
+
+	function love11_tempfixfontpos(func, ...)
+		local args = {...}
+		local currentfont = love.graphics.getFont()
+		if currentfont == font8 then
+			args[3] = args[3] - 2 -- y
+		elseif currentfont == font16 then
+			args[3] = args[3] - 3
+		end
+		func(unpack(args))
+	end
+
+	love.graphics.print11 = love.graphics.print
+
+	love.graphics.print = function(...)
+		love11_tempfixfontpos(love.graphics.print11, ...)
+	end
+
+	love.graphics.printf11 = love.graphics.printf
+
+	love.graphics.printf = function(...)
+		love11_tempfixfontpos(love.graphics.printf11, ...)
 	end
 end
 
