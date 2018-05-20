@@ -98,7 +98,9 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		count_total = count_total + 1
 	end
 
+	local line_number = 0
 	for line in io.lines("in/po/" .. arg[1] .. "/" .. pofile .. ".po") do
+		line_number = line_number + 1
 		local handled = false
 
 		if line == "" then
@@ -107,6 +109,9 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 			handled = true
 		elseif line:match("^#%. .*$") ~= nil then
 			-- #. developer's comment
+			handled = true
+		elseif line:match("^# .*$") ~= nil then
+			-- # translator comment
 			handled = true
 		elseif line == "#, fuzzy" then
 			-- Actually maybe don't consider it translated
