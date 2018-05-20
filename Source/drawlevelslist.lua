@@ -426,4 +426,10 @@ function drawlevelslist()
 			allowdebug = true
 		end
 	end
+
+	love.graphics.setColor(0,255,0)
+	love.graphics.setFont(font16)
+	love.graphics.print("GAME PAUSED", 300, 300)
+	love.graphics.setFont(font8)
+	love.graphics.setColor(255,255,255)
 end
