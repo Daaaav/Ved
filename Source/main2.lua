@@ -1604,7 +1604,7 @@ function love.textinput(char)
 		if takinginput and DIAwindowani == 16 then
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
-			elseif (state == 3) and not nodialog and char == "/" then
+			elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
 			else
 				input = input .. char
 			end
