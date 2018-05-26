@@ -2221,6 +2221,8 @@ function love.keypressed(key)
 			startinscriptsearch()
 		elseif key == "g" then
 			startscriptgotoline()
+		elseif key == "i" then
+			internalscript = not internalscript
 		end
 	elseif state == 3 and key == "tab" then
 		matching = {}
