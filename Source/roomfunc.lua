@@ -127,7 +127,11 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					love.graphics.print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), offsetx+(v.x-myroomx*40)*16  + 8, offsety+(v.y-myroomy*30)*16 + 3  + 8)
 					love.graphics.setFont(font8)
 
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.PROPERTIES}, "ent_1_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.PROPERTIES}, "ent_1_" .. k,
+						2, 2
+					)
 				elseif v.t == 2 then
 					-- Platform, it's either a moving one or a conveyor!
 					love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
@@ -157,7 +161,11 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					end
 					love.graphics.setFont(font8)
 
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.PROPERTIES}, "ent_2_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.PROPERTIES}, "ent_2_" .. k,
+						v.p1 < 7 and 4 or 8, 1
+					)
 				elseif v.t == 3 then
 					-- Disappearing platform
 					love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
@@ -170,34 +178,76 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					love.graphics.setFont(font16)
 					love.graphics.print("////", offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
 					love.graphics.setFont(font8)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[6], L.DELETE, L.PROPERTIES}, "ent_3_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[6], L.DELETE, L.PROPERTIES}, "ent_3_" .. k,
+						4, 1
+					)
 				elseif v.t == 9 then
 					-- Trinket
 					drawentity(22, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[4], L.DELETE, L.PROPERTIES}, "ent_9_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[4], L.DELETE, L.PROPERTIES}, "ent_9_" .. k,
+						2, 2
+					)
 				elseif v.t == 10 then
 					-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
 					drawentity(20+v.p1, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[5], L.DELETE, L.FLIP, L.PROPERTIES}, "ent_10_" .. k)
-				elseif v.t == 11 then
-					-- Gravity line. This is kind of a special story.
-					if v.p1 == 0 then
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[5], L.DELETE, L.FLIP, L.PROPERTIES}, "ent_10_" .. k,
+						2, 2
+					)
+				elseif v.t == 11 or v.t == 50 then
+					-- Gravity line or warp line. This is kind of a special story.
+					if v.t == 50 then
+						love.graphics.setColor(0,255,0,255)
+					end
+					local sel_x, sel_y, sel_w, sel_h
+					-- Gravity lines and warp lines have a different p1!
+					if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 						-- Horizontal
-						love.graphics.line(offsetx+(v.p2)*16 + 1, offsety+(v.y-myroomy*30)*16 + 8, offsetx+(v.p2)*16 + v.p3*2 - 1, offsety+(v.y-myroomy*30)*16 + 8)
+						sel_x = offsetx+(v.p2)*16
+						sel_y = offsety+(v.y-myroomy*30)*16
+						sel_w = v.p3/8
+						sel_h = 1
+						love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
 					else
 						-- Vertical
-						love.graphics.line(offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + 1, offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + v.p3*2 - 1)
+						sel_x = offsetx+(v.x-myroomx*40)*16
+						sel_y = offsety+(v.p2)*16
+						sel_w = 1
+						sel_h = v.p3/8
+						love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
 					end
+					love.graphics.setColor(255,255,255,255)
 
 					-- Where is it, though?
 					love.graphics.draw(cursorimg[0], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), L.PROPERTIES}, "ent_11_" .. k)
+					if v.t == 11 then
+						entityrightclick(
+							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+							{"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), L.PROPERTIES}, "ent_11_" .. k,
+							sel_w, sel_h, sel_x, sel_y
+						)
+					else
+						entityrightclick(
+							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+							{"#" .. toolnames[15], L.DELETE, L.PROPERTIES}, "ent_50_" .. k,
+							sel_w, sel_h, sel_x, sel_y
+						)
+					end
 				elseif v.t == 13 then
 					-- Warp token. But are we currently displaying the entrance or the destination? Or both?
 					if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
 						-- Entrance
 						drawentity(18, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
-						entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[14], L.DELETE, L.GOTODESTINATION, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k)
+						entityrightclick(
+							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+							{"#" .. toolnames[14], L.DELETE, L.GOTODESTINATION, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k,
+							2, 2
+						)
 					end
 					-- warpid = what warp token destination we're placing.
 					if (warpid ~= k or selectedsubtool[14] >= 3) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
@@ -205,7 +255,11 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						love.graphics.setColor(255,255,255,64)
 						drawentity(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16)
 						love.graphics.setColor(255,255,255,255)
-						entityrightclick(offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16, {"#" .. toolnames[14], L.DELETE, L.GOTOENTRANCE, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k)
+						entityrightclick(
+							offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16,
+							{"#" .. toolnames[14], L.DELETE, L.GOTOENTRANCE, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k,
+							2, 2
+						)
 					end
 				elseif v.t == 15 then
 					-- Rescuable crewmate
@@ -234,24 +288,36 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					end
 					drawentity(144, offsetx+(v.x-myroomx*40)*16 - 8, offsety+(v.y-myroomy*30)*16 + 2)
 					love.graphics.setColor(255, 255, 255)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.PROPERTIES}, "ent_15_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.PROPERTIES}, "ent_15_" .. k,
+						2, 3
+					)
 				elseif v.t == 16 then
 					-- Start point
 					love.graphics.setColor(132, 181, 255)
 					drawentity(3*v.p1, offsetx+(v.x-myroomx*40)*16 - 8, offsety+(v.y-myroomy*30)*16 + 2)
 					love.graphics.setColor(255, 255, 255)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[17], L.DELETE, L.CHANGEDIRECTION, L.PROPERTIES}, "ent_16_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[17], L.DELETE, L.CHANGEDIRECTION, L.PROPERTIES}, "ent_16_" .. k,
+						2, 3
+					)
 				elseif v.t == 17 then
 					-- Roomtext
 					love.graphics.setFont(font16)
+					local data = v.data
 					if editingroomtext == k then
 						-- We're editing this text at the moment.
-						love.graphics.print(input .. __, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
-					else
-						love.graphics.print(v.data, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
+						data = input .. __
 					end
+					love.graphics.print(data, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 3)
 					love.graphics.setFont(font8)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.PROPERTIES}, "ent_17_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.PROPERTIES}, "ent_17_" .. k,
+						data:len(), 1
+					)
 				elseif v.t == 18 then
 					-- Terminal
 					if math.abs(sp_t) == k then
@@ -260,7 +326,11 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					drawentity(17, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 16)
 					-- Maybe we should also display the script name!
 					displayscriptname(false, k, v, offsetx, offsety, myroomx, myroomy)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.PROPERTIES}, "ent_18_" .. k)
+					entityrightclick(
+						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+						{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.PROPERTIES}, "ent_18_" .. k,
+						2, 3
+					)
 				elseif v.t == 19 then
 					-- Script box, draw it as an actual box.
 					--love.graphics.draw(cursorimg[1], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
@@ -305,31 +375,26 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 							love.graphics.draw(scriptboximg[4], offsetx+(v.x-myroomx*40)*16, prt)
 							love.graphics.draw(scriptboximg[6], offsetx+(v.x-myroomx*40)*16 + (v.p1-1)*16, prt)
 						end
+
+						entityrightclick(
+							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+							{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.PROPERTIES}, "ent_19_" .. k,
+							v.p1, v.p2
+						)
 					end
 					-- Maybe we should also display the script name!
 					displayscriptname(true, k, v, offsetx, offsety, myroomx, myroomy)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.PROPERTIES}, "ent_19_" .. k)
-				elseif v.t == 50 then
-					-- Warp line
-					love.graphics.setColor(0,255,0,255)
-					if v.p1 == 2 or v.p1 == 3 then
-						-- Horizontal
-						love.graphics.line(offsetx+(v.p2)*16 + 1, offsety+(v.y-myroomy*30)*16 + 8, offsetx+(v.p2)*16 + v.p3*2 - 1, offsety+(v.y-myroomy*30)*16 + 8)
-					else
-						-- Vertical
-						love.graphics.line(offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + 1, offsetx+(v.x-myroomx*40)*16 + 8, offsety+(v.p2)*16 + v.p3*2 - 1)
-					end
-					love.graphics.setColor(255,255,255,255)
-
-					-- Where is it, though?
-					love.graphics.draw(cursorimg[0], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
-					entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. toolnames[15], L.DELETE, L.PROPERTIES}, "ent_50_" .. k)
+				-- 50 (warp line) handled above with gravity line (11)
 				else
 					-- We don't know what this is, actually!
 					love.graphics.draw(cursorimg[5], offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16)
 					showtooltip = true
 					if v.t ~= nil then
-						entityrightclick(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, {"#" .. "Type " .. v.t, L.DELETE, L.PROPERTIES}, "ent_" .. v.t .. "_" .. k)
+						entityrightclick(
+							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
+							{"#" .. "Type " .. v.t, L.DELETE, L.PROPERTIES}, "ent_" .. v.t .. "_" .. k,
+							1, 1
+						)
 					end
 				end
 				if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
@@ -376,9 +441,25 @@ function displaymapentities()
 
 end
 
-function entityrightclick(x, y, menuitems, newmenuid)
-	if love.mouse.isDown("r") and lockablemouseon(x, y, 16, 16) then
-		rightclickmenu.create(menuitems, newmenuid)
+function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y)
+	-- entityrightclick(x, y, menuitems, newmenuid[, sel_w, sel_h[, sel_x, sel_y]])
+	-- sel_* are used for the cyan selection rectangle - w and h are number of tiles,
+	-- x and y are used to specify alternative values for x and y (first two args)
+	-- which are thus in pixels!
+	if lockablemouseon(x, y, 16, 16) then
+		if sel_w ~= nil and sel_h ~= nil then
+			if sel_x == nil or sel_y == nil then
+				sel_x = x; sel_y = y
+			end
+			love.graphics.setColor(0,255,255)
+			love.graphics.setLineWidth(2)
+			love.graphics.rectangle("line", sel_x+1, sel_y+1, sel_w*16-2, sel_h*16-2)
+			love.graphics.setLineWidth(1)
+			love.graphics.setColor(255,255,255)
+		end
+		if love.mouse.isDown("r") then
+			rightclickmenu.create(menuitems, newmenuid)
+		end
 	end
 end
 
