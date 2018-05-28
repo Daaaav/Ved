@@ -105,7 +105,10 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 		showtooltip = false
 	end
 
-	showtooltipof = nil
+	local showtooltipof = nil
+	local scriptname_shown = false
+	local scriptname_args = {}
+	local scriptname_editingshown = false -- is the script name that's being edited in this room? We have its key
 
 	for k,v in pairs(entitydata) do
 		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
@@ -325,7 +328,12 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					end
 					drawentity(17, offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16 + 16)
 					-- Maybe we should also display the script name!
-					displayscriptname(false, k, v, offsetx, offsety, myroomx, myroomy)
+					if editingroomtext == k then
+						scriptname_editingshown = true
+					elseif hovering_over_name(false, k, v, offsetx, offsety, myroomx, myroomy) then
+						scriptname_shown = true
+						scriptname_args = {false, k, v}
+					end
 					entityrightclick(
 						offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
 						{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.PROPERTIES}, "ent_18_" .. k,
@@ -383,7 +391,12 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 						)
 					end
 					-- Maybe we should also display the script name!
-					displayscriptname(true, k, v, offsetx, offsety, myroomx, myroomy)
+					if editingroomtext == k then
+						scriptname_editingshown = true
+					elseif hovering_over_name(true, k, v, offsetx, offsety, myroomx, myroomy) then
+						scriptname_shown = true
+						scriptname_args = {true, k, v}
+					end
 				-- 50 (warp line) handled above with gravity line (11)
 				else
 					-- We don't know what this is, actually!
@@ -408,6 +421,13 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 	if showtooltipof ~= nil then
 		love.graphics.print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
 	end
+
+	if scriptname_editingshown then
+		displayscriptname(entitydata[editingroomtext].t == 19, editingroomtext, entitydata[editingroomtext], offsetx, offsety, myroomx, myroomy)
+	end
+	if scriptname_shown then
+		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy)
+	end
 end
 
 function drawentity(tile, atx, aty, small)
@@ -418,23 +438,24 @@ function drawentity(tile, atx, aty, small)
 	end
 end
 
+function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
+	return (((not isscriptbox) or editingsboxid ~= k) and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16))
+	or (editingsboxid == k and (selectedsubtool[13] == 3 or sboxdontaskname))
+end
+
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
+	love.graphics.setFont(font16)
+	local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
 		local dispx = math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
-		local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
-		love.graphics.setFont(font16)
 		textshadow(input, dispx, dispy, true)
 		love.graphics.print(input .. __, dispx, dispy+3)
-		love.graphics.setFont(font8)
-	elseif (((not isscriptbox) or editingsboxid ~= k) and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16))
-	or (editingsboxid == k and (selectedsubtool[13] == 3 or sboxdontaskname)) then
+	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
 		local dispx = math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16)
-		local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
-		love.graphics.setFont(font16)
 		textshadow(v.data, dispx, dispy, true)
 		love.graphics.print(v.data, dispx, dispy+3)
-		love.graphics.setFont(font8)
 	end
+	love.graphics.setFont(font8)
 end
 
 function displaymapentities()
