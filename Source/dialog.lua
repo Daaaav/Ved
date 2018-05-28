@@ -205,6 +205,11 @@ end
 ]]
 
 function dialog.update()
+	if DIAwindowani > 16 then
+		-- Oops, too far.
+		DIAwindowani = 16
+	end
+
 	if (DIAcanclose == 5 and DIAreturn == 1) --[[ apply ]] or (DIAwindowani == 16 and DIAquestionid ~= 0) then
 		if (DIAquestionid == 1) then -- State 9 test
 			-- Do something
