@@ -75,6 +75,7 @@ function ved_showerror(msg)
 	msg = tostring(msg)
 
 	local levelsavemsg = ERR_SAVELEVEL
+	local alreadysaved = false
 
 	if ctrl == nil then
 		ctrl = "ctrl"
@@ -339,7 +340,8 @@ function ved_showerror(msg)
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
-			elseif e == "keypressed" and a == "s" and metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
+			elseif e == "keypressed" and a == "s" and not alreadysaved
+			and metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 				if editingmap == "untitled\n" or editingmap == nil then
 					editingmap = "untitled"
 				end
@@ -352,7 +354,10 @@ function ved_showerror(msg)
 					levelsavemsg = string.format(ERR_SAVEERROR, anythingbutnil(savederror))
 				else
 					levelsavemsg = string.format(ERR_SAVESUCC, editingmap .. ".vvvvvv")
+					alreadysaved = true
 				end
+			elseif e == "keypressed" and a == "r" and alreadysaved then
+				alreadysaved = false
 			--[[
 			elseif e == "keypressed" and a == "s" then
 				startmultiinput({(editingmap ~= "untitled\n" and editingmap or "")})
