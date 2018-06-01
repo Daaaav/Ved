@@ -181,6 +181,7 @@ function drawscripteditor()
 		elseif not mousepressed and onrbutton(8) then
 			-- Internal scripting
 			internalscript = not internalscript
+			dirty()
 
 			mousepressed = true
 		elseif not mousepressed and onrbutton(10) then

@@ -2223,6 +2223,11 @@ function love.keypressed(key)
 			startscriptgotoline()
 		elseif key == "i" then
 			internalscript = not internalscript
+			dirty()
+		elseif key == "d" then
+			table.remove(scriptlines, editingline)
+			input = anythingbutnil(scriptlines[editingline])
+			dirty()
 		end
 	elseif state == 3 and key == "tab" then
 		matching = {}
@@ -2339,6 +2344,9 @@ function love.keypressed(key)
 				input = input .. "¤"
 			end
 			helparticlecontent[helpeditingline] = input
+		elseif key == "d" and keyboard_eitherIsDown("ctrl") then
+			table.remove(helparticlecontent, helpeditingline)
+			input = anythingbutnil(helparticlecontent[helpeditingline])
 		end
 	elseif nodialog and state == 15 then
 		if key == "up" then
