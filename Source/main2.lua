@@ -2227,6 +2227,7 @@ function love.keypressed(key)
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
 			input = anythingbutnil(scriptlines[editingline])
+			input_r = ""
 			dirty()
 		end
 	elseif state == 3 and key == "tab" then
@@ -2347,6 +2348,7 @@ function love.keypressed(key)
 		elseif key == "d" and keyboard_eitherIsDown("ctrl") then
 			table.remove(helparticlecontent, helpeditingline)
 			input = anythingbutnil(helparticlecontent[helpeditingline])
+			input_r = ""
 		end
 	elseif nodialog and state == 15 then
 		if key == "up" then
