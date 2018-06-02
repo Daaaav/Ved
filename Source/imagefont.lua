@@ -57,7 +57,7 @@ function convertfontpng(imagedata)
 	love.graphics.setCanvas()
 	font16 = love.graphics.newImageFont(font16canvas:newImageData(), glyphstring, -4)
 
-	--font8:setFallbacks(love.graphics.newFont("Space Station.ttf", 8))
+	font8:setFallbacks(love.graphics.newImageFont("imagefont_fallback.png", "¤§"))
 
 	love.graphics.setFont(font8)
 
