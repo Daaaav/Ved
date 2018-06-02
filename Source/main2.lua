@@ -92,6 +92,7 @@ function love.load()
 	quitsave = false
 
 	mousepressed = false -- for some things
+	mousepressed_custombrush = false
 	middlescroll_x, middlescroll_y = -1, -1
 
 	temporaryroomnametimer = 0
@@ -2608,6 +2609,7 @@ function love.mousereleased(x, y, button)
 	end
 
 	mousepressed = false
+	mousepressed_custombrush = false
 	minsmear = -1; maxsmear = -1
 	toout = 0
 

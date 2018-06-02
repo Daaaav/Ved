@@ -266,7 +266,7 @@ function drawmaineditor()
 						elseif atx > maxsmear then
 							maxsmear = atx
 						end
-					elseif not mousepressed and selectedsubtool[selectedtool] == 8 then
+					elseif not mousepressed_custombrush and selectedsubtool[selectedtool] == 8 then
 						-- custom size
 						if customsizemode == 0 then
 							local iy = 1
@@ -290,12 +290,12 @@ function drawmaineditor()
 							customsizey = (29-aty)/2
 							customsizemode = 0
 							customsizetile = nil
-							mousepressed = true
+							mousepressed_custombrush = true
 						elseif customsizemode == 3 then
 							customsizecoorx = atx
 							customsizecoory = aty
 							customsizemode = 4
-							mousepressed = true
+							mousepressed_custombrush = true
 						elseif customsizemode == 4 then
 							atx = math.max(atx, customsizecoorx)
 							aty = math.max(aty, customsizecoory)
@@ -319,7 +319,7 @@ function drawmaineditor()
 								customsizetile = nil
 							end
 
-							mousepressed = true
+							mousepressed_custombrush = true
 							cons("That is " .. (atx-customsizecoorx) .. " by " .. (aty-customsizecoory) .. " starting at " .. customsizecoorx .. "," .. customsizecoory)
 						end
 					elseif selectedsubtool[selectedtool] == 9 then
