@@ -19,8 +19,9 @@ function returnusedflags(usedflagsA, outofrangeflagsA)
 end
 
 function syntaxhl(text, x, y, thisistext, addcursor, docolor)
-	if thisistext then
-		_= docolor and setColorArr(s.syntaxcolor_textbox)
+	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
+	if thisistext or thisiscomment then
+		_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		love.graphics.print(text, x, y)
 		offsetchars = string.len(text) + 1
 
