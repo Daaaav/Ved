@@ -191,6 +191,15 @@ function dialog.textboxes()
 	end
 end
 
+function dialog.current_input_not_dropdown()
+	if DIAquestionid == 5 and currentmultiinput == 9 then
+		return false
+	elseif DIAquestionid == 24 and (currentmultiinput == 1 or currentmultiinput == 2) then
+		return false
+	end
+	return true
+end
+
 --[[
 function dialog.keypressed()
 	if (DIAwindowani ~= 16) and (DIAcanclose == 1) and (key == "return") then

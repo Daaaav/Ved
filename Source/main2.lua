@@ -1620,7 +1620,7 @@ function love.textinput(char)
 			elseif state == 6 then
 				tabselected = 0
 			end
-		elseif currentmultiinput ~= 0 then
+		elseif currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
 			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. char
 		end
 	end
@@ -1643,9 +1643,11 @@ function love.keypressed(key)
 		debug.debug()
 	end
 
+	--[[
 	if RCMactive and RCMabovedialog and not RCMturnedintofield then
 		rightclickmenu.tofield()
 	end
+	]]
 
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)
@@ -1761,11 +1763,14 @@ function love.keypressed(key)
 			_, input_r = rightspace(input, input_r)
 		end
 	elseif #multiinput > 0 then
-		if key == "backspace" then
-			multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
-		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
-			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText()
-		elseif love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
+		if currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
+			if key == "backspace" then
+				multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
+			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
+				multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText():gsub("[\r\n]", "")
+			end
+		end
+		if love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
 			RCMactive = false
 
 			if currentmultiinput <= 1 then
