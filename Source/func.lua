@@ -1107,19 +1107,6 @@ function thingk()
 	return return_value()
 end
 
--- http://stackoverflow.com/a/18975924/3495280
-function table.copy(t)
-	local t2 = {}
-	for kap,vep in pairs(t) do
-		if type(vep) == "table" then
-			t2[kap] = table.copy(vep)
-		else
-			t2[kap] = vep
-		end
-	end
-	return t2
-end
-
 function switchtileset()
 	if keyboard_eitherIsDown("shift") then
 		selectedtileset = revcycle(selectedtileset, 4, 0)

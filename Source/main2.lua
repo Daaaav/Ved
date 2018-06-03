@@ -835,6 +835,7 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_CURSOR,      7, s.syntaxcolor_cursor     )
 		colorsetting(L.SYNTAXCOLOR_FLAGNAME,    8, s.syntaxcolor_flagname   )
 		colorsetting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
+		colorsetting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
 		rbutton(L.BTN_OK, 0)
 		rbutton(L.RESETCOLORS, 2)

@@ -193,6 +193,11 @@ configs =
 		default = {255, 192, 64},
 		["type"] = "numbersarray",
 		},
+	syntaxcolor_comment =
+		{
+		default = {0, 128, 0},
+		["type"] = "numbersarray",
+		}
 	}
 
 function saveconfig()
@@ -247,7 +252,11 @@ end
 function loaddefaultsettings()
 	s = {}
 	for k,v in pairs(configs) do
-		s[k] = v.default
+		if type(v.default) == "table" then
+			s[k] = table.copy(v.default)
+		else
+			s[k] = v.default
+		end
 	end
 end
 
