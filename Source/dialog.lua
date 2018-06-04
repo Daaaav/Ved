@@ -4,7 +4,7 @@ dialog = {}
 
 function dialog.draw()
 	-- Now come the dialogs!
-	if DIAwindowani ~= 16 then
+	if DIAwindowani ~= 16 then -- don't change in the old system!
 		-- Window contents
 		setColorDIA(192,192,192,239)
 		love.graphics.rectangle("fill", DIAx, DIAy+DIAwindowani, DIAwidth, DIAheight)
@@ -109,16 +109,14 @@ function dialog.draw()
 		setColorDIA(255,255,255,239)
 		love.graphics.rectangle("line", DIAx, DIAy+DIAwindowani, DIAwidth, DIAheight)
 		-- Bar, if enabled
-		if DIAbar == 1 then
-			setColorDIA(64,64,64,128)
-			love.graphics.rectangle("fill", DIAx-1, DIAy+DIAwindowani-17, DIAwidth+2, 16)
+		setColorDIA(64,64,64,128)
+		love.graphics.rectangle("fill", DIAx-1, DIAy+DIAwindowani-17, DIAwidth+2, 16)
 
-			-- Also display the title text (if not empty). Shadow first
-			setColorDIA(0,0,0,255)
-			love.graphics.print(DIAbartext, DIAx-1+4+1, DIAy+DIAwindowani-17+6+1)
-			setColorDIA(255,255,255,255)
-			love.graphics.print(DIAbartext, DIAx-1+4, DIAy+DIAwindowani-17+6)
-		end
+		-- Also display the title text (if not empty). Shadow first
+		setColorDIA(0,0,0,255)
+		love.graphics.print(DIAbartext, DIAx-1+4+1, DIAy+DIAwindowani-17+6+1)
+		setColorDIA(255,255,255,255)
+		love.graphics.print(DIAbartext, DIAx-1+4, DIAy+DIAwindowani-17+6)
 	end
 
 	if DIAwindowani < 0 then
@@ -200,18 +198,9 @@ function dialog.current_input_not_dropdown()
 	return true
 end
 
---[[
-function dialog.keypressed()
-	if (DIAwindowani ~= 16) and (DIAcanclose == 1) and (key == "return") then
-		dialog.push()
-		DIAreturn = 1
-	elseif (DIAwindowani ~= 16) and (DIAcanclose == 2) and (key == "return") then
-		dialog.push()
-		DIAreturn = 1
-		DIAquitting = 1
-	end
+function dialog.is_open()
+	return DIAwindowani ~= 16
 end
-]]
 
 function dialog.update()
 	if DIAwindowani > 16 then
@@ -711,42 +700,10 @@ function dialog.update()
 	end
 end
 
---[[
-function dialog.mousepressed()
-	if (DIAwindowani ~= 16) and (DIAbar == 1) and (mouseb == "l") and (mousex >= DIAx) and (mousex <= DIAx+DIAwidth) and (mousey >= DIAy-17) and (mousey <= DIAy) then
-		DIAmovingwindow = 1
-		DIAmovedfromwx = DIAx
-		DIAmovedfromwy = DIAy
-		DIAmovedfrommx = mousex
-		DIAmovedfrommy = mousey
-	end
-
-	if DIAwindowani ~= 16 then
-		if (DIAcanclose == 1) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-		elseif (DIAcanclose == 2) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-			DIAquitting = 1
-		elseif (DIAcanclose == 3) and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 1
-		elseif (DIAcanclose == 3) and mousein(DIAx+DIAwidth-106, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-56, DIAy+DIAwindowani+DIAheight-1) then
-			dialog.push()
-			DIAreturn = 2
-		end
-
-		return
-	end
-end
-]]
-
 function dialog.new(message, title, showbar, canclose, questionid)
 	dialog.init()
 	DIAbartext = title
 	DIAtext = message
-	DIAbar = showbar
 	DIAcanclose = canclose
 	if s.dialoganimations then
 		DIAwindowani = -15
@@ -800,258 +757,10 @@ function dialog.init()
 	DIAbtn3glow = 0
 	DIAquestionid = 0
 
-	DIAbar = 1
 	DIAcanclose = 1 -- Can be closed. This is actually the button type, 0 is none - dialog can't be closed, 1 is OK, 2 is Quit, 3 is yes or no.
 
 	DIAreturn = 0 -- Button pressed, which could be used afterwards.
 
 	DIAbartext = "UNDEFINED"
 	DIAtext = "UNDEFINED"
-end
-
--- And here some stuff for the right click menu
-rightclickmenu = {}
-function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
-	if menuposx == nil then
-		menuposx = love.mouse.getX()
-	end if menuposy == nil then
-		menuposy = love.mouse.getY()
-	end
-
-	RCMactive = true
-	RCMx = math.min(menuposx, love.graphics.getWidth()-188)
-	RCMy = math.min(menuposy, love.graphics.getHeight()-(#items*16))
-	RCMactualy = menuposy -- In case we want to have this back
-	RCMitems = items
-	RCMid = menuid -- can be anything, really
-	RCMreturn = ""
-	RCMabovedialog = abovedialog == true
-	RCMturnedintofield = false -- If you start typing while one of these is up for a multiinput, it'll turn into a thing that looks like an autocorrect field. Or some kind of other input method.
-end
-
-function rightclickmenu.draw()
-	if RCMactive == true then
-		for k,v in pairs(RCMitems) do
-			if v:sub(1, 1) == "#" or RCMturnedintofield then
-				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, 188, 16) -- 150 -> 188
-				love.graphics.setColor(192,192,192,255)
-				if not RCMturnedintofield then
-					love.graphics.print(v:sub(2, -1), RCMx+1, (k-1)*16+RCMy+6)
-				elseif RCMid == "music" then
-					love.graphics.print(anythingbutnil(multiinput[9]) .. __, RCMx+1, (k-1)*16+RCMy+6)
-					-- Right
-					if multiinput[9] == nil then
-						RCMactive = false
-					end
-				end
-				love.graphics.setColor(255,255,255,255)
-			else
-				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 188, 16, true)
-				love.graphics.print(v, RCMx+1, (k-1)*16+RCMy+6)
-
-				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 188, 16) then
-					RCMactive = false
-					RCMreturn = v
-					mousepressed = true
-				end
-			end
-		end
-
-		if not mousepressed and love.mouse.isDown("l") then
-			RCMactive = false
-			mousepressed = true
-		end
-	end
-end
-
-function rightclickmenu.tofield()
-	-- Turn into a box thing!
-	RCMturnedintofield = true
-	newitems = {}
-	table.insert(newitems, "#_")
-	RCMitems = newitems
-	RCMy = math.min(RCMactualy, love.graphics.getHeight()-16)
-
-	if RCMid == "music" then
-		multiinput[9] = ""
-	end
-end
-
--- Scroll bars!
-function scrollbar(x, y, height, scrollableheight, peronetage)
-	-- Returns nil if untouched, returns scroll value if moved
-	-- New peronetage maybe?
-	local newperonetage
-
-	love.graphics.setColor(96,96,96,96)
-	love.graphics.rectangle("fill", x, y, 16, height)
-
-	if scrollableheight > height then
-		-- Display an actual scrollable thing
-		-- BUTTONheight: (height/scrollableheight)*height
-		-- BUTTONy: (height-BUTTONheight)*peronetage
-		local buttonheight = (height/scrollableheight)*height
-
-		local scrollclickoffset = 0
-		if scrollclickstart ~= nil then
-			scrollclickoffset = love.mouse.getY()-scrollclickstart
-		end
-
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) then
-			love.graphics.setColor(224,224,224,255)
-		else
-			love.graphics.setColor(192,192,192,255)
-			--[[
-			if not mousepressed and love.mouse.isDown("l") then
-				if scrollclickstart == nil then
-					scrollclickstart = love.mouse.getY()
-				end
-			elseif scrollclickstart ~= nil then
-				scrollclickstart = nil
-			end
-			]]
-			--[[
-			if not (not mousepressed and love.mouse.isDown("l")) then
-				scrollclickstart = love.mouse.getY()
-			end
-			]]
-		end
-
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and not mousepressed and nodialog and love.mouse.isDown("l") then
-			if scrollclickstart == nil then
-				scrollclickstart = love.mouse.getY()
-				savedperonetage = peronetage
-			end
-
-			mousepressed = true
-		elseif not love.mouse.isDown("l") and scrollclickstart ~= nil then
-			scrollclickstart = nil
-			savedperonetage = nil
-		end
-
-		if scrollclickstart ~= nil then
-			newperonetage = savedperonetage + (scrollclickoffset/(height-buttonheight))
-		end
-
-		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedperonetage == nil and peronetage or savedperonetage)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
-	end
-
-	love.graphics.setColor(255,255,255,255)
-
-	--[[
-	if newperonetage ~= nil then
-		cons("Returning " .. newperonetage)
-	end
-	]]
-
-	if newperonetage ~= nil then
-		return math.min(math.max(newperonetage,0),1)
-	end
-end
-
-
-coordsdialog =
-{
-	active = false,
-	input = ""
-}
-function coordsdialog.draw()
-	love.graphics.setColor(64,64,64,128)
-	love.graphics.rectangle("fill", (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2, 7*16, 3*16)
-	love.graphics.setColor(255,255,255,255)
-	love.graphics.setFont(font16)
-	love.graphics.print(" " .. coordsdialog.print(), (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2+16+3)
-	love.graphics.setFont(font8)
-end
-
-function coordsdialog.activate()
-	coordsdialog.active = true
-	coordsdialog.input = ""
-end
-
-function coordsdialog.type(what)
-	if tostring(what) == tostring(tonumber(what)) then
-		coordsdialog.input = coordsdialog.input .. what
-	end
-
-	if coordsdialog.input:len() == 4 then
-		gotoroom(
-			math.min(math.max(tonumber(coordsdialog.input:sub(1,2))-(not s.coords0 and 1 or 0), 0), metadata.mapwidth-1),
-			math.min(math.max(tonumber(coordsdialog.input:sub(3,4))-(not s.coords0 and 1 or 0), 0), metadata.mapheight-1)
-		)
-
-		coordsdialog.active = false
-	end
-end
-
-function coordsdialog.print()
-	-- Ugly, but easy
-	if coordsdialog.input:len() == 0 then
-		return "__,__"
-	elseif coordsdialog.input:len() == 1 then
-		return coordsdialog.input .. "_,__"
-	elseif coordsdialog.input:len() == 2 then
-		return coordsdialog.input .. ",__"
-	elseif coordsdialog.input:len() == 3 then
-		return coordsdialog.input:sub(1,2) .. "," .. (coordsdialog.input:sub(3,3)) .. "_"
-	elseif coordsdialog.input:len() == 4 then
-		return coordsdialog.input:sub(1,2) .. "," .. (coordsdialog.input:sub(3,4))
-	else
-		return coordsdialog.input
-	end
-end
-
--- Display a text box like in a VVVVVV cutscene.
--- text is a table with the lines.
-function vvvvvv_textbox(color, x, y, text)
-	maxwidth = 0
-	for k,v in pairs(text) do
-		if v:len() > maxwidth then
-			maxwidth = v:len()
-		end
-	end
-
-	-- Coordinate corrections, consistent with VVVVVV
-	x = math.min(math.max(x, 10), 294-(maxwidth*8)) -- VVVVVV always has a padding of 10 pixels. 320-10-16 since the left and right edges are always there
-	y = math.min(math.max(y, 10), 214-(#text*8)) -- 240-10-16
-
-	x = (screenoffset/2) + x
-
-	-- What color?
-	if textboxcolors[color] == nil then
-		color = "gray"
-	end
-
-	-- Text box backgrounds apparently divide all color values by 6
-	love.graphics.setColor(
-		math.floor(textboxcolors[color][1]/6),
-		math.floor(textboxcolors[color][2]/6),
-		math.floor(textboxcolors[color][3]/6)
-	)
-	love.graphics.rectangle("fill", x*2, y*2, 32+maxwidth*16, 32+(#text*16))
-
-	-- All the edge parts
-	love.graphics.setColor(textboxcolors[color])
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][40], x*2, y*2, 0, 2) -- top left
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][42], x*2+16+maxwidth*16, y*2, 0, 2) -- top right
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][45], x*2, y*2+16+(#text*16), 0, 2) -- bottom left
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][47], x*2+16+maxwidth*16, y*2+16+(#text*16), 0, 2) -- bottom right
-	for i = 1, maxwidth do
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][41], x*2+i*16, y*2, 0, 2) -- top
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][46], x*2+i*16, y*2+16+(#text*16), 0, 2) -- bottom
-	end
-	for i = 1, #text do
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][43], x*2, y*2+i*16, 0, 2) -- left
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][44], x*2+16+maxwidth*16, y*2+i*16, 0, 2) -- right
-	end
-
-	-- Now put the text in
-	love.graphics.setFont(font16)
-	for k,v in pairs(text) do
-		love.graphics.print(v, x*2+16, y*2+k*16 +3)
-	end
-	love.graphics.setFont(font8)
-
-	love.graphics.setColor(255,255,255)
 end

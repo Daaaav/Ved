@@ -404,6 +404,7 @@ NONINTSCALE = "<L.NONINTSCALE>",
 USEFONTPNG = "<L.USEFONTPNG>",
 MAKESLANGUAGEUNREADABLE = "<L.MAKESLANGUAGEUNREADABLE>", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = "<L.REQUIRESHIGHERLOVE>",
+SYNTAXCOLOR_COMMENT = "<L.SYNTAXCOLOR_COMMENT>",
 
 }
 

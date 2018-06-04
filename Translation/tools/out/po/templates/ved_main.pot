@@ -1406,6 +1406,11 @@ msgctxt "L.REQUIRESHIGHERLOVE"
 msgid " (requires L{VE $1 or higher)"
 msgstr ""
 
+#. 1.3.4
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr ""
+
 msgctxt "toolnames.1"
 msgid "Wall"
 msgstr ""

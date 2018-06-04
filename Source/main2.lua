@@ -61,6 +61,10 @@ function love.load()
 	ved_require("helpfunc")
 	ved_require("vvvvvvxml")
 	ved_require("dialog")
+	ved_require("rightclickmenu")
+	ved_require("scrollbar")
+	ved_require("coordsdialog")
+	ved_require("vvvvvv_textbox")
 	ved_require("resizablebox")
 	ved_require("drawmaineditor")
 	ved_require("drawscripteditor")
@@ -1269,7 +1273,7 @@ function love.update(dt)
 		end
 	end
 
-	if coordsdialog.active or RCMactive or (DIAwindowani ~= 16) then
+	if coordsdialog.active or RCMactive or dialog.is_open() then
 		nodialog = false
 	elseif not love.mouse.isDown("l") then
 		nodialog = true
@@ -1603,7 +1607,7 @@ function love.textinput(char)
 	-- Ved should really only accept printable ASCII only when typing...
 	if s.acceptutf8 or (state == 13 or state == 15 or char:byte(2, 2) == nil) then
 		-- Textual input isn't needed with a dialog on the screen, we have multiinput
-		if takinginput and DIAwindowani == 16 then
+		if takinginput and not dialog.is_open() then
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
 			elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
@@ -1796,7 +1800,7 @@ function love.keypressed(key)
 
 	handle_scrolling(true, key)
 
-	if DIAwindowani ~= 16 then
+	if dialog.is_open() then
 		if DIAcanclose == 1 and key == "return" then
 			dialog.push()
 			DIAreturn = 1
@@ -2463,7 +2467,7 @@ function love.mousepressed(x, y, button)
 	hook("love_mousepressed_start", {x, y, button})
 
 
-	if (DIAwindowani ~= 16) and (DIAbar == 1) and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
+	if dialog.is_open() and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
 		DIAmovingwindow = 1
 		DIAmovedfromwx = DIAx
 		DIAmovedfromwy = DIAy

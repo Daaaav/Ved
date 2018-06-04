@@ -404,6 +404,7 @@ NONINTSCALE = "Масштаб с дробным значением",
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
 MAKESLANGUAGEUNREADABLE = " (makes Russian unreadable)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
+SYNTAXCOLOR_COMMENT = "Comment",
 
 }
 
