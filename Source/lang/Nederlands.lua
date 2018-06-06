@@ -144,6 +144,7 @@ BTN_APPLY = "Toepassen",
 BTN_QUIT = "Sluit",
 BTN_DISCARD = "Verwerpen",
 BTN_SAVE = "Opslaan",
+BTN_CLOSE = "Close",
 
 COMPARINGTHESE = "Vergelĳkt $1.vvvvvv met $2.vvvvvv",
 COMPARINGTHESENEW = "Vergelĳkt (niet-opgeslagen level) met $1.vvvvvv",

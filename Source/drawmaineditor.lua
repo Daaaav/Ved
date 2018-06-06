@@ -1811,8 +1811,10 @@ function drawmaineditor()
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
-			startmultiinput({(editingmap ~= "untitled\n" and editingmap or ""), metadata.Title})
-			dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, "", 1, 4, 10)
+			dialog.create(
+				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+				dialog.callback.save, nil, dialog.form.save_make()
+			)
 		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
 			undo()
 			mousepressed = true

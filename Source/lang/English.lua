@@ -134,6 +134,7 @@ BTN_APPLY = "Apply",
 BTN_QUIT = "Quit",
 BTN_DISCARD = "Discard",
 BTN_SAVE = "Save",
+BTN_CLOSE = "Close",
 
 COMPARINGTHESE = "Comparing $1.vvvvvv to $2.vvvvvv",
 COMPARINGTHESENEW = "Comparing (unsaved level) to $1.vvvvvv",

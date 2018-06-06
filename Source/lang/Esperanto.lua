@@ -160,6 +160,7 @@ BTN_APPLY = "Apliki",
 BTN_QUIT = "Eliri",
 BTN_DISCARD = "Ignori",
 BTN_SAVE = "Konservi",
+BTN_CLOSE = "Close",
 
 COMPARINGTHESE = "Komparado de $1.vvvvvv al $2.vvvvvv",
 COMPARINGTHESENEW = "Komparado de nekonservita nivelo al $1.vvvvvv",

@@ -92,7 +92,7 @@ function love.load()
 	input_r = ""
 	cursorflashtime = 0
 	multiinput = {}; currentmultiinput = 0
-	bypassdialog = false
+	no_more_quit_dialog = false
 	quitsave = false
 
 	mousepressed = false -- for some things
@@ -1594,7 +1594,7 @@ function love.update(dt)
 
 	hook("love_update_end", {dt})
 
-	dialog.update()
+	dialog.update(dt)
 	boxupdate()
 end
 
@@ -1625,6 +1625,12 @@ function love.textinput(char)
 			elseif state == 6 then
 				tabselected = 0
 			end
+		-- dialog.new("Actually just do a search for #dialogs as well after removing the old system")
+		elseif #dialogs > 0 then
+			local cf = dialogs[#dialogs].currentfield
+			if cf ~= 0 then
+				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
+			end
 		elseif currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
 			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. char
 		end
@@ -1637,6 +1643,23 @@ end
 
 function love.keypressed(key)
 	hook("love_keypressed_start", {key})
+if key == "f12" then
+	dialog.create("This works!", DBS.OKCANCELAPPLY,
+		function(button)
+			if button == DB.APPLY then
+				dialog.create("Here's another one!")
+			elseif button == DB.OK then
+				dialog.create("Hey, you clicked OK!")
+			end
+			print("GOT THIS RESP: " .. button)
+		end, "Title", nil,
+		function(button)
+			if button == DB.APPLY then
+				return true
+			end
+		end
+	)
+end
 
 	-- Your privacy is respected.
 	keyva.keypressed(key)
@@ -1767,6 +1790,32 @@ function love.keypressed(key)
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
 		end
+	elseif #dialogs > 0 then
+		local cf = dialogs[#dialogs].currentfield
+		if cf ~= 0 and dialog.current_input_not_dropdown() then
+			if key == "backspace" then
+				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
+			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
+				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
+			end
+		end
+		if key == "tab" then
+			RCMactive = false
+
+			if keyboard_eitherIsDown("shift") then
+				if cf <= 1 then
+					dialogs[#dialogs].currentfield = #dialogs[#dialogs].fields
+				else
+					dialogs[#dialogs].currentfield = cf - 1
+				end
+			else
+				if cf >= #dialogs[#dialogs].fields then
+					dialogs[#dialogs].currentfield = 1
+				else
+					dialogs[#dialogs].currentfield = cf + 1
+				end
+			end
+		end
 	elseif #multiinput > 0 then
 		if currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
 			if key == "backspace" then
@@ -1800,7 +1849,10 @@ function love.keypressed(key)
 
 	handle_scrolling(true, key)
 
-	if dialog.is_open() then
+	-- dialog.new("TODO change to dialog.is_open()")
+	if #dialogs > 0 then
+		dialogs[#dialogs]:keypressed(key)
+	elseif DIAwindowani ~= 16 then
 		if DIAcanclose == 1 and key == "return" then
 			dialog.push()
 			DIAreturn = 1
@@ -2104,8 +2156,10 @@ function love.keypressed(key)
 				temporaryroomnametimer = 90
 			end
 		else
-			startmultiinput({(editingmap ~= "untitled\n" and editingmap or ""), metadata.Title})
-			dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, "", 1, 4, 10)
+			dialog.create(
+				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+				dialog.callback.save, nil, dialog.form.save_make()
+			)
 		end
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "l") then
 		-- Load
@@ -2467,7 +2521,10 @@ function love.mousepressed(x, y, button)
 	hook("love_mousepressed_start", {x, y, button})
 
 
-	if dialog.is_open() and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
+	-- dialog.new("TODO, don't forget!")
+	if #dialogs > 0 and button == "l" then -- TODO: replace by dialog.is_open()
+		dialogs[#dialogs]:mousepressed(x, y)
+	elseif DIAwindowani ~= 16 and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
 		DIAmovingwindow = 1
 		DIAmovedfromwx = DIAx
 		DIAmovedfromwy = DIAy
@@ -2623,6 +2680,9 @@ function love.mousereleased(x, y, button)
 	minsmear = -1; maxsmear = -1
 	toout = 0
 
+	for k,v in pairs(dialogs) do
+		v:mousereleased(x, y)
+	end
 	if DIAmovingwindow == 1 then
 		DIAx = DIAmovedfromwx + (x-DIAmovedfrommx)
 		DIAy = DIAmovedfromwy + (y-DIAmovedfrommy)
@@ -2637,26 +2697,23 @@ function love.mousereleased(x, y, button)
 end
 
 function love.quit()
-	--[[
-	if s.askbeforequit then
-		if nodialog and not bypassdialog then
-			dialog.new(L.SUREQUIT, "", 1, 3, 8)
-			return true
-		elseif not nodialog then
-			return true
-		end
-	end
-	]]
-	if not s.neveraskbeforequit then
-		if love.window.requestAttention ~= nil and love.window.hasFocus() then
+	if not s.neveraskbeforequit and has_unsaved_changes() then
+		if love.window.requestAttention ~= nil and not love.window.hasFocus() then
 			love.window.requestAttention(true)
 		end
-		if nodialog and not bypassdialog and has_unsaved_changes() then --and unsaved changes
-			dialog.new(L.SUREQUITNEW, "", 1, 6, 8)
-			return true
-		elseif not nodialog then
+
+		if #dialogs > 0 and dialogs[#dialogs].identifier == "quit" then
+			-- There's already a quit dialog right in front (only top layer though, for convenience)
 			return true
 		end
+
+		dialog.create(
+			L.SUREQUITNEW, DBS.SAVEDISCARDCANCEL,
+			dialog.callback.surequit, nil, nil,
+			dialog.callback.surequit_noclose, "quit"
+		)
+
+		return true
 	end
 end
 

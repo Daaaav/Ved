@@ -134,6 +134,7 @@ BTN_APPLY = "Применить",
 BTN_QUIT = "Выход",
 BTN_DISCARD = "Не сохр.", -- use "Не сохранять" if space allows (if text is vertically centered)
 BTN_SAVE = "Сохранить",
+BTN_CLOSE = "Close",
 
 COMPARINGTHESE = "Сравниваю $1.vvvvvv с $2.vvvvvv",
 COMPARINGTHESENEW = "Сравниваю (несохранённый уровень) и $1.vvvvvv",

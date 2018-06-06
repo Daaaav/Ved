@@ -441,6 +441,10 @@ msgctxt "L.BTN_SAVE"
 msgid "Save"
 msgstr ""
 
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr ""
+
 msgctxt "L.COMPARINGTHESE"
 msgid "Comparing $1.vvvvvv to $2.vvvvvv"
 msgstr ""

@@ -2519,7 +2519,7 @@ end
 
 -- Returns true if there are unsaved changes.
 function has_unsaved_changes()
-	if metadata == nil then
+	if metadata == nil or no_more_quit_dialog then
 		return false
 	end
 	if unsavedchanges then
