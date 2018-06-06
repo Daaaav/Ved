@@ -399,7 +399,6 @@ function drawlevelslist()
 				languagedialog()
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
-				--dialog.new("Auto-creation of a save file for VVVVVV coming soon!", "", 1, 1, 0)
 				openurl("https://tolp.nl/ved/?p=feedback")
 
 				mousepressed = true

@@ -425,12 +425,9 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 4 then
 			-- Trinket
-			if (count.trinkets == 20) and s.allowlimitbypass then
-				dialog.new(L.MAXTRINKETS_BYPASS, "", 1, 3, 4)
-			elseif count.trinkets >= 20  and not s.allowlimitbypass then
-				dialog.new(L.MAXTRINKETS, "", 1, 1, 0)
+			if count.trinkets >= 20 then
+				dialog.create(L.MAXTRINKETS)
 			else
-				-- Same code in dialog.lua for accepting adding a 21st trinket
 				cons("Trinket: " .. atx .. " " .. aty)
 
 				table.insert(entitydata, count.entity_ai,
@@ -827,8 +824,6 @@ function drawmaineditor()
 
 				mousepressed = true
 			else
-				--dialog.new("What did you do?!\n\n(script box out of range subtool)", "", 1, 1, 0)
-
 				cons("You tried placing the bottom right of a non-existant script box!")
 
 				editingsboxid = nil
@@ -839,8 +834,6 @@ function drawmaineditor()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 14 then
 			-- Warp token
 			cons("Warp token: " .. atx .. " " .. aty)
-
-			--dialog.new("Dav needs to work on this!", "", 1, 1, 0)
 
 			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and entitydata[warpid] == nil) then
 				-- Placing entrance.
@@ -889,7 +882,7 @@ function drawmaineditor()
 						entityplaced(warpid)
 					end
 				else
-					dialog.new(L.WARPTOKENENT404, "", 1, 1, 0)
+					dialog.create(L.WARPTOKENENT404)
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
@@ -918,12 +911,12 @@ function drawmaineditor()
 					entitydata[warpid].x = new_x
 					entitydata[warpid].y = new_y
 				else
-					dialog.new(L.WARPTOKENENT404, "", 1, 1, 0)
+					dialog.create(L.WARPTOKENENT404)
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
 			else
-				dialog.new(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)", "", 1, 1, 0)
+				dialog.create(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)")
 			end
 
 			mousepressed = true
@@ -1020,12 +1013,8 @@ function drawmaineditor()
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate				
-			--dialog.new("Crewmates don't feel like being lost yet.", "", 1, 1, 0)
-
-			if (count.crewmates == 20) and s.allowlimitbypass then
-				dialog.new(L.MAXCREWMATES_BYPASS, "NO QUESTION ID YET!", 1, 3, 0)
-			elseif count.crewmates >= 20  and not s.allowlimitbypass then
-				dialog.new(L.MAXCREWMATES, "", 1, 1, 0)
+			if count.crewmates >= 20 then
+				dialog.create(L.MAXCREWMATES)
 			else
 				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
 
@@ -1051,7 +1040,6 @@ function drawmaineditor()
 
 			-- First remove the old one, but check first
 			if (count.startpoint ~= nil) and ( (entitydata[count.startpoint] == nil) or (entitydata[count.startpoint].t ~= 16) ) then
-				--dialog.new(L.STARTPOINTNOLONGERFOUND .. "\n\nEntity #" .. count.startpoint .. " is '" .. anythingbutnil(anythingbutnil(entitydata[count.startpoint]).t) .. "'.", "", 1, 1, 0)
 				cons("Whoops, old start point not found! At least find out if even exists anywhere anymore (probably not)")
 
 				local found = false
@@ -1120,7 +1108,7 @@ function drawmaineditor()
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
-			dialog.new(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool), "", 1, 1, 0)
+			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 		end
 	--[[
 	elseif nodialog and love.mouse.isDown("r") and mouseon(64+64, 0, 639, 480) then
@@ -1798,7 +1786,6 @@ function drawmaineditor()
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if mouseon(love.graphics.getWidth()-120, 8, 16, 16) then
 			-- Help
-			--dialog.new("A help thing will appear where you can click a tutorial button and some topic-specific buttons\n\nMaybe add something for being able to click on an area/button on the screen to get help about that", "", 1, 1, 0)
 			tostate(15)
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
@@ -1945,11 +1932,9 @@ function drawmaineditor()
 				-- Enemy type // Platform speed
 				if selectedtool == 9 then
 					-- Enemy type
-					--dialog.new("Enemy type", "", 1, 1, 0)
 					switchenemies()
 				else
 					-- Platform speed
-					--dialog.new("Platform speed", "", 1, 1, 0)
 					changedplatv = true
 					levelmetadata[(roomy)*20 + (roomx+1)].platv = cycle(levelmetadata[(roomy)*20 + (roomx+1)].platv, 8, 0)
 				end

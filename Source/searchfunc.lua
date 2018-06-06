@@ -161,7 +161,7 @@ function inscriptsearch(this)
 
 		if foundline == 0 then
 			-- Still not found?
-			dialog.new(langkeys(L.STRINGNOTFOUND, {scriptsearchterm}), "", 1, 1, 0)
+			dialog.create(langkeys(L.STRINGNOTFOUND, {scriptsearchterm}))
 			return
 		end
 

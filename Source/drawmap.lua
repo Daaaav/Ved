@@ -19,75 +19,77 @@ function drawmap()
 		hovery = nil
 		hovername = nil
 
-		for mry = 0, metadata.mapheight-1 do
-			for mrx = 0, metadata.mapwidth-1 do
-				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) then
-					love.graphics.setColor(255,255,255,64)
-					love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
-					love.graphics.setColor(255,255,255,255)
+		if nodialog then
+			for mry = 0, metadata.mapheight-1 do
+				for mrx = 0, metadata.mapwidth-1 do
+					if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) then
+						love.graphics.setColor(255,255,255,64)
+						love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+						love.graphics.setColor(255,255,255,255)
 
-					hoverx = mrx
-					hovery = mry
-					hovername = levelmetadata[(mry)*20 + (mrx+1)].roomname
+						hoverx = mrx
+						hovery = mry
+						hovername = levelmetadata[(mry)*20 + (mrx+1)].roomname
 
-					-- But maybe we're clicking this room!
-					if love.mouse.isDown("l") and nodialog then
-						-- Is this an action?
-						if not mousepressed and selectingrooms == 0 then
-							-- Nope
-							gotoroom(hoverx, hovery)
+						-- But maybe we're clicking this room!
+						if love.mouse.isDown("l") then
+							-- Is this an action?
+							if not mousepressed and selectingrooms == 0 then
+								-- Nope
+								gotoroom(hoverx, hovery)
 
-							-- We don't want to click the first tile we press
-							nodialog = false
+								-- We don't want to click the first tile we press
+								nodialog = false
 
-							tostate(1, true)
-						elseif not mousepressed and selected1x == -1 then
-							-- Select 1
-							selected1x = hoverx
-							selected1y = hovery
-							mousepressed = true
-						elseif not mousepressed and selected2x == -1 then
-							-- Select 2 and proceed
-							selected2x = hoverx
-							selected2y = hovery
+								tostate(1, true)
+							elseif not mousepressed and selected1x == -1 then
+								-- Select 1
+								selected1x = hoverx
+								selected1y = hovery
+								mousepressed = true
+							elseif not mousepressed and selected2x == -1 then
+								-- Select 2 and proceed
+								selected2x = hoverx
+								selected2y = hovery
 
-							if selected1x == selected2x and selected1y == selected2y then
-								-- This may have resulted in an infinite loop memory flood!
-								dialog.new(L.SOURCEDESTROOMSSAME, "", 1, 1, 0)
-							else
-								-- What were we selecting the rooms for, btw?
-								if selectingrooms == 1 then
-									-- Copying!
-									mapcopy(selected1x, selected1y, selected2x, selected2y)
-								elseif selectingrooms == 2 then
-									-- Swapping!
-									mapswap(selected1x, selected1y, selected2x, selected2y)
-								end
-
-								-- Refresh the map.
-								mapscreenshot = nil
-								collectgarbage("collect")
-
-								-- Hey wait don't create a COMPLETELY new map
-								for dispnewrooms = 1, selectingrooms do
-									if dispnewrooms == 2 then
-										mrx = selected1x
-										mry = selected1y
-									else
-										mrx = selected2x
-										mry = selected2y
+								if selected1x == selected2x and selected1y == selected2y then
+									-- This may have resulted in an infinite loop memory flood!
+									dialog.create(L.SOURCEDESTROOMSSAME)
+								else
+									-- What were we selecting the rooms for, btw?
+									if selectingrooms == 1 then
+										-- Copying!
+										mapcopy(selected1x, selected1y, selected2x, selected2y)
+									elseif selectingrooms == 2 then
+										-- Swapping!
+										mapswap(selected1x, selected1y, selected2x, selected2y)
 									end
-									love.graphics.setColor(0,0,0,255)
-									love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
-									love.graphics.setColor(255,255,255,255)
-									displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
+
+									-- Refresh the map.
+									mapscreenshot = nil
+									collectgarbage("collect")
+
+									-- Hey wait don't create a COMPLETELY new map
+									for dispnewrooms = 1, selectingrooms do
+										if dispnewrooms == 2 then
+											mrx = selected1x
+											mry = selected1y
+										else
+											mrx = selected2x
+											mry = selected2y
+										end
+										love.graphics.setColor(0,0,0,255)
+										love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+										love.graphics.setColor(255,255,255,255)
+										displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
+									end
+
+									createmapscreenshot()
 								end
 
-								createmapscreenshot()
+								selectingrooms = 0
+								mousepressed = true
 							end
-
-							selectingrooms = 0
-							mousepressed = true
 						end
 					end
 				end

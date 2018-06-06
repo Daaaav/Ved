@@ -187,7 +187,6 @@ function processflaglabels()
 				table.remove(scriptlines, removetheselines[l])
 			end
 
-			--dialog.new("This is an internal script!", "", 1, 1, 0)
 			internalscript = true
 		else
 			internalscript = false
@@ -282,7 +281,7 @@ function processflaglabelsreverse()
 			-- Just restore the script from the backup we made and disengage internal scripting mode
 			scriptlines = table.copy(scriptlinesbackup)
 			internalscript = false -- even though it's already gone by not converting it, but it can't hurt
-			dialog.new(L.SPLITFAILED, "", 1, 1, 0)
+			dialog.create(L.SPLITFAILED)
 		else
 			-- Alright, what do we have left?
 			table.insert(blocks, #scriptlines - lineshad)

@@ -69,5 +69,5 @@ end
 
 function openurl(url)
 	--os.execute("start " .. url)
-	dialog.new("URL: " .. url, "", 1, 1, 0)
+	dialog.create("URL: " .. url)
 end

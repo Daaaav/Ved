@@ -297,7 +297,7 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
-		dialog.new(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
+		dialog.create(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}))
 	end
 	ved_require("filefunc_" .. loaded_filefunc)
 
@@ -1304,7 +1304,7 @@ function love.update(dt)
 						rcm_changingentity(entdetails, {p1 = new_p1})
 						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 2 then
 					-- Platform, moving/conveyor
@@ -1320,7 +1320,7 @@ function love.update(dt)
 						rcm_changingentity(entdetails, {p1 = new_p1})
 						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 10 then
 					-- Checkpoint
@@ -1329,7 +1329,7 @@ function love.update(dt)
 						rcm_changingentity(entdetails, {p1 = new_p1})
 						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 11 then
 					-- Gravity line
@@ -1341,8 +1341,6 @@ function love.update(dt)
 						new_p1 = 0
 					elseif RCMreturn == L.CHANGETOVER then
 						new_p1 = 1
-					--else
-						--dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
 					end
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
 					autocorrectlines()
@@ -1385,7 +1383,7 @@ function love.update(dt)
 						selectedsubtool[14] = 4
 						warpid = tonumber(entdetails[3])
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 15 then
 					-- Rescuable crewmate
@@ -1394,7 +1392,7 @@ function love.update(dt)
 						rcm_changingentity(entdetails, {p1 = new_p1})
 						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 16 then
 					-- Start point
@@ -1403,7 +1401,7 @@ function love.update(dt)
 						rcm_changingentity(entdetails, {p1 = new_p1})
 						entitydata[tonumber(entdetails[3])].p1 = new_p1
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 17 then
 					-- Roomtext
@@ -1421,7 +1419,7 @@ function love.update(dt)
 					elseif RCMreturn == L.COPYTEXT then
 						love.system.setClipboardText(entitydata[tonumber(entdetails[3])].data)
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 					-- Terminal or script box
@@ -1433,7 +1431,7 @@ function love.update(dt)
 						end
 
 						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
-							dialog.new(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}), "", 1, 1, 0)
+							dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 						else
 							scriptineditor(entitydata[tonumber(entdetails[3])].data)
 						end
@@ -1469,13 +1467,13 @@ function love.update(dt)
 							p_nieuw(tonumber(entdetails[3]))
 						end
 					else
-						dialog.new(RCMid .. " " .. RCMreturn .. " not supported yet.", "", 1, 1, 0)
+						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
 				else
-					dialog.new(langkeys(L.UNKNOWNENTITYTYPE, {anythingbutnil(entdetails[2])}) .. ",\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)
+					dialog.create(langkeys(L.UNKNOWNENTITYTYPE, {anythingbutnil(entdetails[2])}) .. ",\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 				end
 			else
-				dialog.new(langkeys(L.ENTITY404, {tonumber(entdetails[3])}), "", 1, 1, 0)
+				dialog.create(langkeys(L.ENTITY404, {tonumber(entdetails[3])}))
 			end
 		elseif RCMid == "savemap" then
 			if RCMreturn == L.SAVEMAP then
@@ -1484,7 +1482,7 @@ function love.update(dt)
 			elseif RCMreturn == L.SAVEFULLSIZEMAP then
 				-- Save a big map!
 				if not love.graphics.isSupported("canvas") then
-					dialog.new(L.GRAPHICSCARDCANVAS, "", 1, 1, 0)
+					dialog.create(L.GRAPHICSCARDCANVAS)
 				else
 					mapcanvas = love.graphics.newCanvas(320*metadata.mapwidth, 240*metadata.mapheight)
 					love.graphics.setCanvas(mapcanvas)
@@ -1507,7 +1505,7 @@ function love.update(dt)
 					love.window.setMode(za,zb,zc)
 
 					collectgarbage("collect")
-					dialog.new(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
+					dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
 				end
 			else
 				unrecognized_rcmreturn()
@@ -1582,7 +1580,7 @@ function love.update(dt)
 				unrecognized_rcmreturn()
 			end
 		else
-			dialog.new("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn, "", 1, 1, 0)
+			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 		end
 
 		RCMreturn = ""
@@ -2133,7 +2131,7 @@ function love.keypressed(key)
 
 			if not savedsuccess then
 				-- Why not :c
-				dialog.new(L.SAVENOSUCCESS .. anythingbutnil(savederror), "", 1, 1, 0)
+				dialog.create(L.SAVENOSUCCESS .. anythingbutnil(savederror))
 			else
 				temporaryroomname = langkeys(L.SAVEDLEVELAS, {editingmap})
 				temporaryroomnametimer = 90
@@ -2467,7 +2465,7 @@ function love.keypressed(key)
 			--bumpscript(rvnum)
 			tostate(3)
 		else
-			dialog.new("Cannot open " .. input .. "\n\n" .. sccontents, "", 1, 1, 0)
+			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
 			startinput()
 		end
 	end
@@ -2707,6 +2705,6 @@ function love.quit()
 end
 
 function love.threaderror(thread, errorstr)
-	dialog.new(L.THREADERROR .. "\n\n" .. errorstr, "", 1, 1, 0)
+	dialog.create(L.THREADERROR .. "\n\n" .. errorstr)
 	cons("Thread error")
 end

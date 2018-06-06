@@ -1326,7 +1326,7 @@ function endeditingroomtext(donotmakethisnil)
 	-- We were typing a text!
 	stopinput()
 	if entitydata[editingroomtext] == nil then
-		dialog.new(L.EDITINGROOMTEXTNIL .. "\n\n(Location x)", "", 1, 1, 0)
+		dialog.create(L.EDITINGROOMTEXTNIL .. "\n\n(Location x)")
 	elseif input ~= "" or editingroomtext == donotmakethisnil then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
@@ -1385,7 +1385,7 @@ function endeditingroomtext(donotmakethisnil)
 					end
 				end
 				if warnloadscriptexists then
-					dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}), "", 1, 1, 0)
+					dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}))
 				end
 			end
 
@@ -1450,7 +1450,7 @@ function state6load(levelname)
 
 		if not success then
 			--tostate(6)
-			dialog.new(langkeys(L.LEVELOPENFAIL, {anythingbutnil(editingmap)}) .. "\n\n" .. metadata, "", 1, 1, 0)
+			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(editingmap)}) .. "\n\n" .. metadata)
 
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
@@ -1466,7 +1466,7 @@ function state6load(levelname)
 		success, metadata2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
-			dialog.new(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2, "", 1, 1, 0)
+			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
 		else
 			-- Compare differences now!
 			compareleveldifferences(levelname)
@@ -2078,7 +2078,7 @@ function savemapimage()
 	else
 		mapscreenshot:getData():encode("maps/" .. saveas)
 	end
-	dialog.new(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}), "", 1, 1, 0)
+	dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
 end
 
 function getalllanguages()
@@ -2190,7 +2190,7 @@ function s_noep()
 		end
 	end		
 
-	dialog.new("s_noep() failed!", "", 1, 1, 0)
+	dialog.create("s_noep() failed!")
 end
 
 function s_verwpuntje()
@@ -2514,7 +2514,7 @@ function drawlink(link)
 end
 
 function unrecognized_rcmreturn()
-	dialog.new(RCMid .. " " .. RCMreturn .. " unrecognized.", "", 1, 1, 0)
+	dialog.create(RCMid .. " " .. RCMreturn .. " unrecognized.")
 end
 
 -- Returns true if there are unsaved changes.

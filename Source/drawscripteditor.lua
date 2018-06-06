@@ -160,7 +160,7 @@ function drawscripteditor()
 				scriptsstr = scriptsstr .. (scriptsstr == "" and "" or ", ") .. v[1] .. ":" .. v[2]
 			end
 
-			dialog.new(langkeys(L.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}), "", 1, 1, 0)
+			dialog.create(langkeys(L.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
 		elseif onrbutton(4) then
 			-- Copy script
 			love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
@@ -225,34 +225,10 @@ function drawscripteditor()
 		rbutton((scripts[carg1] == nil and L.CREATE or L.GOTO), 13)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
-			--dialog.new((scripts[carg1] == nil and "Create" or "Go to") .. " script " .. carg1, "", 1, 1, 0)
 			editorjumpscript(carg1)
 			mousepressed = true
 		end
 	elseif context == "flagscript" then
-		--[[
-		love.graphics.printf("Flag " .. carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-		hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*13), 128-16, 16)
-		love.graphics.printf("Name", love.graphics.getWidth()-(128-8), 8+(24*13)+4+2, 128-16, "center")
-
-		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(love.graphics.getWidth()-(128-8), 8+(24*13), 128-16, 16) then
-			--dialog.new("Need to make that", "", 1, 1, 0)
-			dialog.new("Not working, but you can just enter any flag name and it will get linked to an unused flag number automatically.", "", 1, 1, 0)
-
-			--[ [
-			flgnum = carg1 -- niet local, wordt gebruikt in dialog
-
-			if vedmetadata == false then
-				startmultiinput({""})
-			else
-				startmultiinput({vedmetadata.flaglabel[tonumber(flgnum)]})
-			end
-			dialog.new("Name for flag " .. flgnum .. ":", "", 1, 4, 15)
-			] ]
-
-			mousepressed = true
-		end
-		]]
 		if carg2 ~= nil and carg2 ~= "" then
 			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
 			rbutton((scripts[carg2] == nil and L.CREATE or L.GOTO), 13)

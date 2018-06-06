@@ -589,20 +589,7 @@ function dialog.update(dt)
 			end
 		elseif (DIAquestionid == 4) and (DIAreturn == 2) then
 			-- Add a 21st trinket
-			cons("Trinket: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 9,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			count.trinkets = count.trinkets + 1
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
+			assert(false)
 		elseif (DIAquestionid == 5) then
 			stopinput()
 			if DIAreturn == 2 then

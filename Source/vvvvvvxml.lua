@@ -166,7 +166,7 @@ function loadlevel(path)
 				myvedmetadata.mdeversion = anythingbutnil0(tonumber(explodedmetadata[1]))
 
 				if myvedmetadata.mdeversion > thismdeversion then
-					dialog.new(L.MDEVERSIONWARNING, "", 1, 1, 0)
+					dialog.create(L.MDEVERSIONWARNING)
 				end
 
 				if myvedmetadata.mdeversion >= 2 and explodedmetadata[2] ~= nil then
@@ -489,7 +489,7 @@ function loadlevel(path)
 			FClisttext = FClisttext .. v .. "\n"
 		end
 
-		dialog.new(langkeys(L.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext, "", 1, 1, 0)
+		dialog.create(langkeys(L.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
 	end
 
 	-- No longer x.alltiles
@@ -626,7 +626,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. path, savethis)
 
 	if vedmetadata == nil then
-		dialog.new(L.MDENOTPASSED, "", 1, 1, 0)
+		dialog.create(L.MDENOTPASSED)
 	end
 
 	if success then
