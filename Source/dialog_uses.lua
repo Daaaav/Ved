@@ -9,6 +9,13 @@ function dialog.form.save_make()
 end
 
 dialog.callback = {}
+dialog.callback.noclose_on = {}
+
+function dialog.callback.noclose_on.save(button)
+	if button == DB.SAVE then
+		return true
+	end
+end
 
 function dialog.callback.surequit(button)
 	if button == DB.SAVE then
@@ -22,9 +29,14 @@ function dialog.callback.surequit(button)
 	end
 end
 
-function dialog.callback.surequit_noclose(button)
+function dialog.callback.surenewlevel(button)
 	if button == DB.SAVE then
-		return true
+		dialog.create(
+			L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+			dialog.callback.savenewlevel, nil, dialog.form.save_make(), nil
+		)
+	elseif button == DB.DISCARD then
+		triggernewlevel()
 	end
 end
 
@@ -62,5 +74,14 @@ function dialog.callback.savequit(button, fields)
 
 	if not has_unsaved_changes() then
 		love.event.quit()
+	end
+end
+
+function dialog.callback.savenewlevel(button, fields)
+	dialog.callback.save(button, fields)
+
+	if button == DB.OK and not has_unsaved_changes() then
+		dialogs[#dialogs]:press_button(0)
+		triggernewlevel()
 	end
 end

@@ -1643,23 +1643,6 @@ end
 
 function love.keypressed(key)
 	hook("love_keypressed_start", {key})
-if key == "f12" then
-	dialog.create("This works!", DBS.OKCANCELAPPLY,
-		function(button)
-			if button == DB.APPLY then
-				dialog.create("Here's another one!")
-			elseif button == DB.OK then
-				dialog.create("Hey, you clicked OK!")
-			end
-			print("GOT THIS RESP: " .. button)
-		end, "Title", nil,
-		function(button)
-			if button == DB.APPLY then
-				return true
-			end
-		end
-	)
-end
 
 	-- Your privacy is respected.
 	keyva.keypressed(key)
@@ -2171,9 +2154,15 @@ end
 			triggernewlevel()
 			-- Don't immediately trigger the dialog in state 1!
 			nodialog = false
-		else
+		elseif has_unsaved_changes() then
 			-- Else block also runs if state == 6 and state6old1, and thus makes a dialog appear; hey a free feature!
-			dialog.new(L.SURENEWLEVEL, "", 1, 3, 7)
+			dialog.create(
+				L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
+				dialog.callback.surenewlevel, nil, nil,
+				dialog.callback.noclose_on.save
+			)
+		else
+			triggernewlevel()
 		end
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("y") then
 		-- No wait redo
@@ -2710,7 +2699,7 @@ function love.quit()
 		dialog.create(
 			L.SUREQUITNEW, DBS.SAVEDISCARDCANCEL,
 			dialog.callback.surequit, nil, nil,
-			dialog.callback.surequit_noclose, "quit"
+			dialog.callback.noclose_on.save, "quit"
 		)
 
 		return true

@@ -680,8 +680,7 @@ function dialog.update(dt)
 			gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 		elseif (DIAquestionid == 7) and (DIAreturn == 2) then
 			-- Yes, create a new blank map, I'll lose any unsaved content
-			-- Make a dialog for options right away later
-			triggernewlevel()
+			assert(false)
 		elseif (DIAquestionid == 8) then
 			-- Quitting, save/discard/cancel?
 			assert(false)

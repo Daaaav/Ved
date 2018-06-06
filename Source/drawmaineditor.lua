@@ -1802,11 +1802,17 @@ function drawmaineditor()
 			tostate(15)
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
-			--dialog.new("Making a new level isn't supported yet!", "", 1, 1, 0)
-			dialog.new(L.SURENEWLEVEL, "", 1, 3, 7)
+			if has_unsaved_changes() then
+				dialog.create(
+					L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
+					dialog.callback.surenewlevel, nil, nil,
+					dialog.callback.noclose_on.save
+				)
+			else
+				triggernewlevel()
+			end
 		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
-			--dialog.new(L.SURELOADLEVEL .. "\n\n(dialog will be save/don't save/cancel later)", "", 1, 3, 3)
 			tostate(6)
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save

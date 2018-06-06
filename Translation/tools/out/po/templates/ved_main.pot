@@ -133,6 +133,10 @@ msgctxt "L.SUREQUITNEW"
 msgid "You have unsaved changes. Do you want to save these changes before quitting?"
 msgstr ""
 
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr ""
+
 msgctxt "L.SCALEREBOOT"
 msgid "The new scale settings will take effect after rebooting Ved."
 msgstr ""

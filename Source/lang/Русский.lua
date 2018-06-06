@@ -48,6 +48,7 @@ FLAGNAMEINUSE = "Имя флага $1 уже используется флаго
 DIFFSELECT = "Выберите второй уровень для сравнения. Уровень который вы выберете будет считаться за старую версию.",
 SUREQUIT = "Вы действительно хотите выйти? Вы потеряете весь несохранённый контент.",
 SUREQUITNEW = "Есть несохраненные изменения. Сохранить их перед выходом?",
+SURENEWLEVELNEW = "You have unsaved changes. Do you want to save these changes before creating a new level?",
 SCALEREBOOT = "Новые настройки размера придут в силу после перезапуска Ved.",
 NAMEFORFLAG = "Имя флага $1:",
 SCRIPT404 = "Скрипт \"$1\" не существует!",
