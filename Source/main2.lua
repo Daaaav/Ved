@@ -604,6 +604,7 @@ function love.draw()
 				"neveraskbeforequit",
 				"coords0",
 				"showfps",
+				false,
 				"checkforupdates",
 				"pausedrawunfocused",
 				"enableoverwritebackups",
@@ -619,15 +620,26 @@ function love.draw()
 			end
 		end
 
+		love.graphics.print(L.FPSLIMIT, 8, 8+(24*7)+4+2)
+		int_control(16+font8:getWidth(L.FPSLIMIT), 8+(24*7), "fpslimit_ix", 1, 4, nil, nil,
+			function(value)
+				local ret = ({"15", "30", "60", "--"})[value]
+				if ret == nil then
+					return "??"
+				end
+				return ret
+			end, 16
+		)
+
 		if s.enableoverwritebackups then
-			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*10)+4+2)
-			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*10), "amountoverwritebackups", 0, 999)
+			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
+			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
-		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*13), 16, 16, 2)
+		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*14), 16, 16, 2)
 		love.graphics.print(
 			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or L.MAKESLANGUAGEUNREADABLE),
-			8+16+8, 8+(24*13)+4+2
+			8+16+8, 8+(24*14)+4+2
 		)
 
 		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
@@ -670,22 +682,22 @@ function love.draw()
 				-- Show FPS
 				s.showfps = not s.showfps
 				savedwindowtitle = ""
-			elseif mouseon(8, 8+(24*7), 16, 16) then
+			elseif mouseon(8, 8+(24*8), 16, 16) then
 				-- Check for updates
 				s.checkforupdates = not s.checkforupdates
-			elseif mouseon(8, 8+(24*8), 16, 16) then
+			elseif mouseon(8, 8+(24*9), 16, 16) then
 				-- Pause drawing when window is unfocused
 				s.pausedrawunfocused = not s.pausedrawunfocused
-			elseif mouseon(8, 8+(24*9), 16, 16) then
+			elseif mouseon(8, 8+(24*10), 16, 16) then
 				-- Make backups of level files that are overwritten
 				s.enableoverwritebackups = not s.enableoverwritebackups
-			elseif mouseon(8, 8+(24*11), 16, 16) then
+			elseif mouseon(8, 8+(24*12), 16, 16) then
 				-- Auto save crash logs
 				s.autosavecrashlogs = not s.autosavecrashlogs
-			elseif mouseon(8, 8+(24*12), 16, 16) then
+			elseif mouseon(8, 8+(24*13), 16, 16) then
 				-- Load all metadata
 				s.loadallmetadata = not s.loadallmetadata
-			elseif mouseon(8, 8+(24*13), 16, 16) then
+			elseif mouseon(8, 8+(24*14), 16, 16) then
 				-- Use font.png
 				s.usefontpng = not s.usefontpng
 
@@ -1107,22 +1119,16 @@ function love.draw()
 
 	love.graphics.setColor(255,255,255,255)
 
-	if fpscap == 1 then
+	if allowdebug and s.fpslimit_ix ~= 4 then
 		love.graphics.setColor(255,0,0)
 		love.graphics.setFont(font16)
-		love.graphics.print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
-		love.graphics.setFont(font8)
-		love.graphics.setColor(255,255,255)
-	elseif fpscap == 2 then
-		love.graphics.setColor(255,0,0)
-		love.graphics.setFont(font16)
-		love.graphics.print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
-		love.graphics.setFont(font8)
-		love.graphics.setColor(255,255,255)
-	elseif fpscap == 3 then
-		love.graphics.setColor(255,0,0)
-		love.graphics.setFont(font16)
-		love.graphics.print("15", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+		if s.fpslimit_ix == 3 then
+			love.graphics.print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+		elseif s.fpslimit_ix == 2 then
+			love.graphics.print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+		elseif s.fpslimit_ix == 1 then
+			love.graphics.print("15", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+		end
 		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
 	end
@@ -1170,15 +1176,15 @@ function love.update(dt)
 		__ = "_"
 	end
 
-	if fpscap == 1 then
+	if s.fpslimit_ix == 3 then
 		if dt < 1/60 then
 			love.timer.sleep(1/60 - dt)
 		end
-	elseif fpscap == 2 then
+	elseif s.fpslimit_ix == 2 then
 		if dt < 1/30 then
 			love.timer.sleep(1/30 - dt)
 		end
-	elseif fpscap == 3 then
+	elseif s.fpslimit_ix == 1 then
 		if dt < 1/15 then
 			love.timer.sleep(1/15 - dt)
 		end
@@ -1653,7 +1659,7 @@ function love.keypressed(key)
 
 	-- DEBUG FOR FPS CAP
 	if allowdebug and key == "pagedown" and love.keyboard.isDown("r" .. ctrl) then
-		fpscap = (fpscap + 1) % 4
+		s.fpslimit_ix = (s.fpslimit_ix % 4) + 1
 	elseif allowdebug and key == "pageup" and love.keyboard.isDown("r" .. ctrl) then
 		debug.debug()
 	end

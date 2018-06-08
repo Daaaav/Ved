@@ -93,6 +93,11 @@ configs =
 		default = -1,
 		["type"] = "number",
 		},
+	fpslimit_ix =
+		{
+		default = 4,
+		["type"] = "number",
+		},
 	pausedrawunfocused =
 		{
 		default = true,

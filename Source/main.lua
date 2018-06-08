@@ -12,8 +12,6 @@ opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
 
-fpscap = 0
-
 ver = "1.4.0" -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 

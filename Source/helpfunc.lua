@@ -54,14 +54,6 @@ function startinhelpsearch()
 	currentmultiinput = 1
 end
 
---[[
-function startscriptgotoline()
-	startmultiinput({""})
-	dialog.new(L.GOTOLINE2, "", 1, 4, 18)
-	currentmultiinput = 1
-end
-]]
-
 function helplineonscreen(ln)
 	if ln == nil then
 		ln = helpeditingline

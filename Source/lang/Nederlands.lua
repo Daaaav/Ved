@@ -417,6 +417,7 @@ USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
 SYNTAXCOLOR_COMMENT = "Comment",
+FPSLIMIT = "FPS limit",
 
 }
 
