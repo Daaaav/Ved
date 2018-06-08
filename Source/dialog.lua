@@ -257,9 +257,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode) -- items and
 end
 
 function cDialog:press_button(button)
-	if self.noclosechecker ~= nil and self.noclosechecker(button) then
+	if self.noclosechecker ~= nil and self.noclosechecker(button, self:return_fields(), self.identifier) then
 		if self.handler ~= nil then
-			self.handler(button, self:return_fields())
+			self.handler(button, self:return_fields(), self.identifier)
 		end
 	else
 		self:close(button)
@@ -282,7 +282,7 @@ function cDialog:closed()
 	table.remove(dialogs)
 	-- Call the close handler!
 	if self.handler ~= nil then
-		self.handler(self.return_btn, self:return_fields())
+		self.handler(self.return_btn, self:return_fields(), self.identifier)
 	end
 end
 
@@ -471,16 +471,15 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 188, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 or DIAquestionid == 26 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 21 or DIAquestionid == 22 then
+		assert(false)
+	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
+	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
 		-- Save level
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
-
-		--if namenotgiven then
-			hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 40*8, 8, multiinput[2], 2, currentmultiinput == 2)
-		--end
+		assert(false)
 	elseif DIAquestionid == 18 then
 		-- Go to line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 5*8, 8, multiinput[1], 1, currentmultiinput == 1)
@@ -673,101 +672,7 @@ function dialog.update(dt)
 			assert(false)
 		elseif (DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 21 or DIAquestionid == 22) then
 			--     new script (list)    new script (editor)          split (editor)        duplicate (list)
-			stopinput()
-			if DIAreturn == 2 then
-				-- Add a script with this name. In case we're making a new script while editing one already that uses an unused flag name and all flags are occupied, make this all a function.
-
-				leavescript_to_state = function()
-					if DIAquestionid == 11 then -- making new script from editor, not in script list
-						-- We're currently already editing a script so save that before jumping to a new one!
-						scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
-						scripts[scriptname] = table.copy(scriptlines)
-					elseif DIAquestionid == 21 then
-						-- Splitting a script, but we already saved the input earlier
-						scripts[scriptname] = table.copy(scriptlines)
-					end
-
-					if scripts[multiinput[1]] == nil then
-						table.insert(scriptnames, multiinput[1])
-						if DIAquestionid ~= 21 and DIAquestionid ~= 22 then
-							-- Creating an empty script
-							scripts[multiinput[1]] = {""}
-
-							--##SCRIPT##  ACCEPTABLE
-							scriptlines = {""}
-
-							-- Also make sure internal scripting mode doesn't stick
-							internalscript = false
-						else
-							-- Splitting/duplicating the current script
-							local keepinternal
-							if DIAquestionid == 21 then
-								-- Splitting, meaning in editor
-								scripts[multiinput[1]] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
-
-								-- Now cut off the top part of the new script
-								for i = 1, spl_originaleditingline-1 do
-									table.remove(scripts[multiinput[1]], 1)
-								end
-
-								-- Oh, was the script an internal script by the way?
-								keepinternal = internalscript
-							else
-								-- Duplicating, meaning in menu
-								input = tonumber(input)
-								scripts[multiinput[1]] = table.copy(scripts[scriptnames[input]])
-							end
-
-							scriptlines = table.copy(scripts[multiinput[1]])
-
-							processflaglabels()
-							if DIAquestionid == 21 then
-								-- Splitting
-								internalscript = keepinternal
-							end
-						end
-						scriptname = multiinput[1]
-						tostate(3)
-					else
-						dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}), "", 1, 1, 0)
-						if DIAquestionid ~= 21 then
-							-- Not splitting
-							replacedialog = true
-
-							--##SCRIPT##  DONE
-							scriptineditor(multiinput[1])
-						else
-							-- Splitting
-						end
-					end
-				end
-
-				if DIAquestionid == 21 and scripts[multiinput[1]] == nil then
-					-- Splitting
-					scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
-					spl_originaleditingline = editingline
-					editingline = 1
-					input, input_r = scriptlines[1], ""
-					originalscript = table.copy(scriptlines) -- We need to have the unconverted version
-					local totalnumberlines = #scriptlines
-
-					-- Before we save the current (possibly internal) script, split the contents of the old script.
-					for i = spl_originaleditingline, totalnumberlines do
-						table.remove(scriptlines)
-					end
-				end
-
-				if (DIAquestionid ~= 11 and DIAquestionid ~= 21) or (not processflaglabelsreverse()) then
-					leavescript_to_state()
-				else
-					replacedialog = true
-				end
-
-				dirty()
-			elseif DIAquestionid == 11 or DIAquestionid == 21 then
-				-- We were already editing a script so re-enable input for that!
-				takinginput = true
-			end
+			assert(false)
 		elseif (DIAquestionid == 10) then
 			-- Save level
 			assert(false)
@@ -991,6 +896,10 @@ function dialog.new(message, title, showbar, canclose, questionid)
 end
 
 function dialog.create(message, buttons, handler, title, fields, noclosechecker, identifier)
+	if fields ~= nil then
+		fields = table.copy(fields)
+	end
+
 	table.insert(dialogs,
 		cDialog:new{
 			text = message,

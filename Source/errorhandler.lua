@@ -253,23 +253,6 @@ function ved_showerror(msg)
 	-- Was this file edited by a plugin?
 	--if p:sub(1, 6) == "--[[##" then maybe have a keyboard shortcut to copy the edited source for debugging purposes.
 
-	--[[
-	if dialog == nil then
-		--require("dialog")
-
-		dialog = {}
-
-		function dialog.draw() end
-		function dialog.update() end
-		function startmultiinput(_) end
-	else
-		-- We may have a dialog on the screen already. Remove that as to not have it running in the crash screen, because dialogs still work.
-		DIAwindowani = 16
-	end
-	]]
-
-	-- We want to make a dialog containing the crash. We don't, only for saving
-	--dialog.new(p, "Fatal error", 1, 2, 0)
 
 	local function draw()
 		local pos = 40
@@ -358,17 +341,6 @@ function ved_showerror(msg)
 				end
 			elseif e == "keypressed" and a == "r" and alreadysaved then
 				alreadysaved = false
-			--[[
-			elseif e == "keypressed" and a == "s" then
-				startmultiinput({(editingmap ~= "untitled\n" and editingmap or "")})
-				dialog.new(L.ENTERNAMESAVE .. "\n\n\n\nNote: considering Ved has crashed, it may be better to save with a separate name now, to not overwrite your level in case the crash was caused by corruption in the level of some sorts.", "Unfortunately this doesn't work yet", 1, 4, 10)
-			]]
-			--[[
-			elseif e == "mousepressed" and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-				dialog.push()
-				DIAreturn = 1
-				DIAquitting = 1
-			]]
 			elseif e == "keypressed" and a == "pageup" then
 				if love.keyboard.isDown("r" .. ctrl) then
 					debug.debug()
@@ -507,24 +479,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	p = string.gsub(p, "%[string \"(.-)\"%]", "%1")
 
 
-	--[[
-	if dialog == nil then
-		--require("dialog")
-
-		dialog = {}
-
-		function dialog.draw() end
-		function dialog.update() end
-		function startmultiinput(_) end
-	else
-		-- We may have a dialog on the screen already. Remove that as to not have it running in the crash screen, because dialogs still work.
-		DIAwindowani = 16
-	end
-	]]
-
-	-- We want to make a dialog containing the crash. We don't, only for saving
-	--dialog.new(p, "Fatal error", 1, 2, 0)
-
 	local function draw()
 		local pos = 40
 		love.graphics.clear(love.graphics.getBackgroundColor())
@@ -576,17 +530,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
-			--[[
-			elseif e == "keypressed" and a == "s" then
-				startmultiinput({(editingmap ~= "untitled\n" and editingmap or "")})
-				dialog.new(L.ENTERNAMESAVE .. "\n\n\n\nNote: considering Ved has crashed, it may be better to save with a separate name now, to not overwrite your level in case the crash was caused by corruption in the level of some sorts.", "Unfortunately this doesn't work yet", 1, 4, 10)
-			]]
-			--[[
-			elseif e == "mousepressed" and mousein(DIAx+DIAwidth-51, DIAy+DIAwindowani+DIAheight-26, DIAx+DIAwidth-1, DIAy+DIAwindowani+DIAheight-1) then
-				dialog.push()
-				DIAreturn = 1
-				DIAquitting = 1
-			]]
 			end
 		end
 

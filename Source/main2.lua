@@ -551,8 +551,11 @@ function love.draw()
 			local changed_scriptdisplay = false
 			if onrbutton(0) then
 				-- New
-				startmultiinput({""})
-				dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
+				dialog.create(
+					L.NEWSCRIPTNAME, DBS.OKCANCEL,
+					dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
+					dialog.callback.newscript_noclose, "newscript_list"
+				)
 			elseif onrbutton(1) then
 				-- Flags
 				mousepressed = true
@@ -1522,8 +1525,11 @@ function love.update(dt)
 			elseif RCMreturn == L.COPYCONTENTS then
 				love.system.setClipboardText(table.concat(scripts[scriptnames[rvnum]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 			elseif RCMreturn == L.DUPLICATE then
-				startmultiinput({""})
-				dialog.new(L.NEWSCRIPTNAME, L.DUPLICATE, 1, 4, 22)
+				dialog.create(
+					L.NEWSCRIPTNAME, DBS.OKCANCEL,
+					dialog.callback.newscript, L.DUPLICATE, dialog.form.simplename,
+					dialog.callback.newscript_noclose, "duplicate_list"
+				)
 				input = rvnum
 			elseif RCMreturn == L.DELETE then
 				dialog.new(langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), "", 1, 3, 17)
@@ -2337,8 +2343,11 @@ function love.keypressed(key)
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
 	elseif state == 10 and key == "n" and nodialog then
-		startmultiinput({""})
-		dialog.new(L.NEWSCRIPTNAME, L.CREATENEWSCRIPT, 1, 4, 9)
+		dialog.create(
+			L.NEWSCRIPTNAME, DBS.OKCANCEL,
+			dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
+			dialog.callback.newscript_noclose, "newscript_list"
+		)
 	elseif state == 10 and key == "f" and nodialog then
 		tostate(19,false)
 	elseif state == 10 and key == "/" and nodialog then

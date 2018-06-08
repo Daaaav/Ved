@@ -1787,6 +1787,7 @@ function drawmaineditor()
 		if mouseon(love.graphics.getWidth()-120, 8, 16, 16) then
 			-- Help
 			tostate(15)
+			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
 			if has_unsaved_changes() then
@@ -1798,9 +1799,11 @@ function drawmaineditor()
 			else
 				triggernewlevel()
 			end
+			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
 			tostate(6)
+			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
@@ -1808,6 +1811,7 @@ function drawmaineditor()
 				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make()
 			)
+			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
 			undo()
 			mousepressed = true
