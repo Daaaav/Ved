@@ -231,7 +231,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 					if v.t == 11 then
 						entityrightclick(
 							offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16,
-							{"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), L.PROPERTIES}, "ent_11_" .. k,
+							{"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}, "ent_11_" .. k,
 							sel_w, sel_h, sel_x, sel_y
 						)
 					else

@@ -177,6 +177,8 @@ CHANGETOVER = "Verander naar verticaal",
 RESIZE = "Opnieuw plaatsen",
 CHANGEENTRANCE = "Verplaats ingang",
 CHANGEEXIT = "Verplaats uitgang",
+LOCK = "Lock",
+UNLOCK = "Unlock",
 BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved-opties",

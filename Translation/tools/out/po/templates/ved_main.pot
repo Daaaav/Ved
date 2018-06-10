@@ -565,6 +565,14 @@ msgctxt "L.CHANGEEXIT"
 msgid "Move exit"
 msgstr ""
 
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr ""
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr ""
+
 msgctxt "L.BUG"
 msgid "[Bug!]"
 msgstr ""
@@ -1417,6 +1425,11 @@ msgstr ""
 #. 1.3.4
 msgctxt "L.SYNTAXCOLOR_COMMENT"
 msgid "Comment"
+msgstr ""
+
+#. 1.3.4
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
 msgstr ""
 
 msgctxt "toolnames.1"

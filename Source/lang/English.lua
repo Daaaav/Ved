@@ -167,6 +167,8 @@ CHANGETOVER = "Change to vertical",
 RESIZE = "Move/Resize",
 CHANGEENTRANCE = "Move entrance",
 CHANGEEXIT = "Move exit",
+LOCK = "Lock",
+UNLOCK = "Unlock",
 BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved options",

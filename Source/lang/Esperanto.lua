@@ -193,6 +193,8 @@ CHANGETOVER = "Ŝanĝi al vertikala",
 RESIZE = "Movigi/Regrandigi",
 CHANGEENTRANCE = "Movigi enirejon",
 CHANGEEXIT = "Movigi elirejon",
+LOCK = "Lock",
+UNLOCK = "Unlock",
 BUG = "[Erareto!]",
 
 VEDOPTIONS = "Ved-agordoj",

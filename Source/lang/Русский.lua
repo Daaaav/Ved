@@ -167,6 +167,8 @@ CHANGETOVER = "Изменить на вертикальный",
 RESIZE = "Подвинуть",
 CHANGEENTRANCE = "Подвинуть вход",
 CHANGEEXIT = "Подвинуть выход",
+LOCK = "Lock",
+UNLOCK = "Unlock",
 BUG = "[Глюк!]",
 
 VEDOPTIONS = "Настройки",

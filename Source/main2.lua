@@ -1345,13 +1345,23 @@ function love.update(dt)
 					local old_p1 = entitydata[tonumber(entdetails[3])].p1
 					local old_p2 = entitydata[tonumber(entdetails[3])].p2
 					local old_p3 = entitydata[tonumber(entdetails[3])].p3
-					local new_p1
+					local old_p4 = entitydata[tonumber(entdetails[3])].p4
+					local new_p1, new_p4
 					if RCMreturn == L.CHANGETOHOR then
 						new_p1 = 0
+						new_p4 = old_p4
 					elseif RCMreturn == L.CHANGETOVER then
 						new_p1 = 1
+						new_p4 = old_p4
+					elseif RCMreturn == L.UNLOCK then
+						new_p1 = old_p1
+						new_p4 = 0
+					elseif RCMreturn == L.LOCK then
+						new_p1 = old_p1
+						new_p4 = 1
 					end
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					entitydata[tonumber(entdetails[3])].p4 = new_p4
 					autocorrectlines()
 					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
 								{
@@ -1368,6 +1378,11 @@ function love.update(dt)
 									key = "p3",
 									oldvalue = old_p3,
 									newvalue = entitydata[tonumber(entdetails[3])].p3
+								},
+								{
+									key = "p4",
+									oldvalue = old_p4,
+									newvalue = entitydata[tonumber(entdetails[3])].p4
 								}
 							}
 						}
