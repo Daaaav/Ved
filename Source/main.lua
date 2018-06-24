@@ -23,6 +23,8 @@ thismdeversion = 2
 
 unsupportedplugins = 0
 
+fontpng_works = false
+
 --checkver = "10241"
 --versys = "1"
 

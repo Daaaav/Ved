@@ -193,6 +193,7 @@ ENEMYBOUNDS = "Рамка",
 ROOMNAME = "Название",
 ROOMOPTIONS = "Настройки комнаты",
 ROTATE180 = "Повернуть на 180 градусов",
+ROTATE180UNI = "Rotate 180°",
 HIDEBOUNDS = "Скрыть рамки",
 SHOWBOUNDS = "Показать рамки",
 

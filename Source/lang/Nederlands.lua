@@ -203,6 +203,7 @@ ENEMYBOUNDS = "Vĳand-grenzen",
 ROOMNAME = "Kamernaam",
 ROOMOPTIONS = "Kamer-opties",
 ROTATE180 = "Roteer 180grd",
+ROTATE180UNI = "Rotate 180°",
 HIDEBOUNDS = "Verb. grenzen",
 SHOWBOUNDS = "Toon grenzen",
 

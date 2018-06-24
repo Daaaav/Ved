@@ -661,6 +661,10 @@ msgctxt "L.ROTATE180"
 msgid "Rotate 180deg"
 msgstr ""
 
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr ""
+
 msgctxt "L.HIDEBOUNDS"
 msgid "Hide bounds"
 msgstr ""

@@ -207,6 +207,7 @@ ENEMYBOUNDS = "Gegnergrenzen",
 ROOMNAME = "Raumname",
 ROOMOPTIONS = "Raumoptionen",
 ROTATE180 = "Um 180 Grad drehen",
+ROTATE180UNI = "Rotate 180°",
 HIDEBOUNDS = "Grenzen nicht zeigen",
 SHOWBOUNDS = "Grenzen zeigen",
 

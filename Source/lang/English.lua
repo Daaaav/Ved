@@ -193,6 +193,7 @@ ENEMYBOUNDS = "Enemy bounds",
 ROOMNAME = "Roomname",
 ROOMOPTIONS = "Room options",
 ROTATE180 = "Rotate 180deg",
+ROTATE180UNI = "Rotate 180°",
 HIDEBOUNDS = "Hide bounds",
 SHOWBOUNDS = "Show bounds",
 

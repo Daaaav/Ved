@@ -341,7 +341,7 @@ function love.load()
 				local newlua, replacements = readlua:gsub(
 					"([\194-\244][\128-\191]*)",
 					function(c)
-						if c == "¤" or c == "§" then
+						if c == "¤" or c == "§" or c == "°" then
 							return
 						end
 
@@ -363,6 +363,7 @@ function love.load()
 			end
 
 			hijack_print = true
+			fontpng_works = true
 		end
 	end
 

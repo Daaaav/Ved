@@ -219,6 +219,7 @@ ENEMYBOUNDS = "Malamiko-limo",
 ROOMNAME = "Ĉambronomo",
 ROOMOPTIONS = "Ĉambro-agordoj",
 ROTATE180 = "Turni 180-grade",
+ROTATE180UNI = "Rotate 180°",
 HIDEBOUNDS = "Kaŝi limojn",
 SHOWBOUNDS = "Montri limojn",
 
