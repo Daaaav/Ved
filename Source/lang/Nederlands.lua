@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-05-10 00:00:00 (ZZZ)
+--- Last converted: 2018-07-05 22:53:41 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -8,6 +8,10 @@
 	If you want to continue translating in this file, it's possible to import
 	it into the system later, so don't worry.
 ]]
+
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return (n ~= 1) end
 
 function fontpng_ascii(c)
 	if c == "ĳ" then -- by the way, 0.0000000% of people use this single character, just looks a bit better in the font
@@ -18,6 +22,10 @@ function fontpng_ascii(c)
 		return "{"
 	elseif c == "ó" then
 		return "o"
+	elseif c == "ï" then
+		return "i"
+	elseif c == "ü" then
+		return "u"
 	end
 end
 
@@ -58,7 +66,7 @@ FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
 SUREQUIT = "Weet je zeker dat je wilt afsluiten? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 SUREQUITNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het afsluiten?",
-SURENEWLEVELNEW = "You have unsaved changes. Do you want to save these changes before creating a new level?",
+SURENEWLEVELNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het maken van een nieuw level?",
 SCALEREBOOT = "De nieuwe schaal-instellingen zullen van toepassing worden na het herstarten van Ved.",
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
@@ -134,7 +142,7 @@ TEXTSIZEL = "Grootte: groot",
 INSERT = "Invoegen",
 HELP = "Help",
 INTSCRWARNING_NOLOADSCRIPT = "Laad-script nodig!",
-INTSCRWARNING_BOXED = "Rechtstreekse scriptvak-/ terminal- verwĳzing!\n\n", -- deliberate linebreak spaces
+INTSCRWARNING_BOXED = "Rechtstreekse scriptvak-/ terminal- verwĳzing!\n\n",
 COLUMN = "Kolom: ",
 
 BTN_OK = "OK",
@@ -142,10 +150,10 @@ BTN_CANCEL = "Annuleer",
 BTN_YES = "Ja",
 BTN_NO = "Nee",
 BTN_APPLY = "Toepassen",
-BTN_QUIT = "Sluit",
+BTN_QUIT = "Afsluiten",
 BTN_DISCARD = "Verwerpen",
 BTN_SAVE = "Opslaan",
-BTN_CLOSE = "Close",
+BTN_CLOSE = "Sluiten",
 
 COMPARINGTHESE = "Vergelĳkt $1.vvvvvv met $2.vvvvvv",
 COMPARINGTHESENEW = "Vergelĳkt (niet-opgeslagen level) met $1.vvvvvv",
@@ -177,8 +185,8 @@ CHANGETOVER = "Verander naar verticaal",
 RESIZE = "Opnieuw plaatsen",
 CHANGEENTRANCE = "Verplaats ingang",
 CHANGEEXIT = "Verplaats uitgang",
-LOCK = "Lock",
-UNLOCK = "Unlock",
+LOCK = "Vergrendelen",
+UNLOCK = "Ontgrendelen",
 BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved-opties",
@@ -203,7 +211,7 @@ ENEMYBOUNDS = "Vĳand-grenzen",
 ROOMNAME = "Kamernaam",
 ROOMOPTIONS = "Kamer-opties",
 ROTATE180 = "Roteer 180grd",
-ROTATE180UNI = "Rotate 180°",
+ROTATE180UNI = "Roteer 180°",
 HIDEBOUNDS = "Verb. grenzen",
 SHOWBOUNDS = "Toon grenzen",
 
@@ -245,7 +253,7 @@ SAVESUCCESS = "Succesvol opgeslagen!",
 SAVENOSUCCESS = "Opslaan niet succesvol! Fout: ",
 
 EDIT = "Bewerk",
-EDITWOBUMPING = "Bewerk zonder te bumpen",
+EDITWOBUMPING = "Bewerk, niet naar boven",
 COPYNAME = "Kopieer naam",
 COPYCONTENTS = "Kopieer inhoud",
 DUPLICATE = "Dupliceer",
@@ -280,7 +288,7 @@ FLAGNONAME = "Geen naam",
 USEDOUTOFRANGEFLAGS = "Gebruikte vlaggen buiten bereik:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-map",
-CUSTOMVVVVVVDIRECTORYEXPL = "Voer hier het volledige pad naar je VVVVVV-map in, als het niet \"$1\" is (laat het anders leeg). Neem niet de map \"levels\" hierin op, en ook niet een schuine streep.", -- "een schuine streep naar links is ook een schuine streep" - Dav 2016
+CUSTOMVVVVVVDIRECTORYEXPL = "Voer hier het volledige pad naar je VVVVVV-map in, als het niet \"$1\" is (laat het anders leeg). Neem niet de map \"levels\" hierin op, en ook niet een schuine streep.",
 LANGUAGE = "Taal",
 DIALOGANIMATIONS = "Dialoogvenster-animaties",
 ALLOWLIMITBYPASS = "Sta limietbreuk toe",
@@ -410,7 +418,7 @@ DISPLAYSETTINGSTITLE = "Beeld-/Schaalinstellingen",
 SMALLERSCREEN = "Kleinere vensterbreedte (800px breed in plaats van 896px)",
 FORCESCALE = "Forceer schaalinstellingen",
 SCALENOFIT = "Deze schaalinstellingen maken het venster te groot om te passen.",
-SCALENONUM = "Deze schaalinstellingen zijn ongeldig.",
+SCALENONUM = "Deze schaalinstellingen zĳn ongeldig.",
 MONITORSIZE = "$1x$2-beeldscherm",
 VEDRES = "Resolutie van Ved: $1x$2",
 NONINTSCALE = "Schalen met niet-gehele getallen",
@@ -419,9 +427,41 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
-SYNTAXCOLOR_COMMENT = "Comment",
-FPSLIMIT = "FPS limit",
+SYNTAXCOLOR_COMMENT = "Commentaar",
+FPSLIMIT = "FPS-limiet",
 
+}
+
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "Je hebt $1 plugin die niet wordt ondersteund in deze versie.",
+		[1] = "Je hebt $1 plugins die niet worden ondersteund in deze versie.",
+	}
+	LEVELFAILEDCHECKS = {
+		[0] = "Bĳ $1 test is een probleem geconstateerd bĳ dit level. Het probleem kan al automatisch zĳn opgelost, maar het is nog steeds mogelĳk dat dit crashes of inconsistenties zal veroorzaken.",
+		[1] = "Bĳ $1 tests zĳn problemen geconstateerd bĳ dit level. De problemen kunnen al automatisch zĳn opgelost, maar het is nog steeds mogelĳk dat dit crashes of inconsistenties zal veroorzaken.",
+	}
+	SCRIPTUSAGESROOMS = {
+		[0] = "$1 keer gebruikt in kamers: $2",
+		[1] = "$1 keer gebruikt in kamers: $2",
+	}
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "$1 keer gebruikt in scripts: $2",
+		[1] = "$1 keer gebruikt in scripts: $2",
+	}
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschap!",
+		[1] = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschappen!",
+	}
+	ROOMINVALIDPROPERTIES = {
+		[0] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschap!",
+		[1] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschappen!",
+	}
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "Toont $1",
+		[1] = "Toont $1",
+	}
 }
 
 toolnames = {
@@ -442,7 +482,7 @@ toolnames = {
 "Warptoken",
 "Warplĳn",
 "Bemanningslid",
-"Startpunt"
+"Startpunt",
 
 }
 
@@ -473,7 +513,7 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "A"
+[3] = "A",
 
 }
 
@@ -1102,639 +1142,653 @@ commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 },
 
 {
-subj = "Int. script reference",
+subj = "Interne scripting",
 imgs = {},
-cont = [[Te vertalen\w&r
-Internal scripting reference\wh#
+cont = [[
+Interne scripting\wh#position of the text box,
 \C=
 
-The internal scripting provides more power to scripters, but is also a bit more
-complex than simplified scripting.
+De interne scripting geeft scripters meer controle, maar is ook een beetje
+complexer dan vereenvoudigde scripting.
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag().
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Je moet er echter zelf voor zorgen dat het script geladen wordt via
+iftrinkets() of ifflag().
 
-Color coding:\w
-Normal - Should be safe, worst case scenario is VVVVVV crashing because you made a
-         mistake.
-Blue¤   - Some of these don't work in custom levels, others don't make a lot of\b
-         sense in custom levels, or are only half useful because they were really
-         designed for the main game.
-Orange¤ - These work and nothing will go wrong normally, unless you give some\o
-         specific arguments to them that will cause your save data to go away.
-Red¤    - Red commands shouldn't be used in custom levels because they will either\r
-         unlock certain parts of the main game (which you shouldn't want a custom
-         level to do, even if you say everyone has already completed the game), or
-         corrupt the save data altogether.
+Kleurcodes:\w
+Normaal - Zou veilig moeten zĳn, in het ergste geval zou VVVVVV kunnen crashen
+          omdat je een fout hebt gemaakt.
+Blauw¤   - Niet al deze commando's werken in aangepaste levels, andere zĳn niet\b
+          echt logisch in aangepaste levels, of zĳn maar voor de helft nuttig
+          omdat ze echt zĳn ontworpen voor het echte spel.
+Oranje¤  - Deze werken en normaal gesproken zal er niks fout gaan, tenzĳ je er heel\o
+          specifieke argumenten aan geeft die je opgeslagen data laten verdwĳnen.
+Rood¤    - Rode commando's moeten niet gebruikt worden in levels omdat ze ofwel\r
+          bepaalde delen van het hoofdspel ontgrendelen (waarvan je niet moet
+          willen dat een level het doet, ook al zeg je dat iedereen het spel al
+          uitgespeeld heeft), of maken de opgeslagen data helemaal corrupt.
 
 
-squeak¤(color)\w#h
+squeak¤(kleur)\w#h
 
-Makes a squeak sound from a crewmate, or a terminal sound
+Zorgt dat een bemanningslid een geluid maakt, of een terminal-geluid
 
-color - cyan/player/blue/red/yellow/green/purple/terminal
+kleur - cyan/player/blue/red/yellow/green/purple/terminal
 
-text¤(color,x,y,lines)\w#h
+text¤(kleur,x,y,regels)\w#h
 
-Store a text box in memory with color, position and number of lines. Usually, the
-position command is used after the text command (and its lines of text), which
-will overwrite the coordinates given here, so these are usually left as 0.
+Slaat een tekstvak op in het geheugen met kleur, positie en aantal regels. Meestal
+wordt het position-commando gebruikt na het text-commando (en het aantal regels)
+wat de coördinaten zal overschrĳven die hier gegeven zĳn, dus deze worden meestal
+op 0 gelaten.
 
-color - cyan/player/blue/red/yellow/green/purple/gray
-x - The x position of the text box
-y - The y position of the text box
-lines - The number of lines
+kleur - cyan/player/blue/red/yellow/green/purple/gray
+x - De x-positie van het tekstvak
+y - De y-positie van het tekstvak
+regels - Het aantal regels
 
 position¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box.
+Overschrĳft de x,y van het text-commando en stelt daarmee de positie van het
+tekstvak in.
 
-x - center/centerx/centery, or a color name
+x - center/centerx/centery, of de naam van een kleur
 cyan/player/blue/red/yellow/green/purple
-y - Only used if x is a color name. Can be above/below
+y - Wordt alleen gebruikt als x de naam van een kleur is. Kan above/below zĳn
 
 endtext\w#h
 
-Makes a text box disappear (fade out)
+Laat een tekstvak verdwĳnen (fade-out)
 
 endtextfast\w#h
 
-Makes a text box disappear immediately (without fading out)
+Laat een tekstvak onmiddelĳk verdwĳnen (zonder fade-out)
 
 speak\w#h
 
-Shows a text box, without removing old text boxes. Also pauses the script until
-you press action (unless there's a backgroundtext command above it)
+Toont een tekstvak, zonder oude tekstvakken te verwĳderen. Pauzeert het script ook
+tot je op action drukt (tenzĳ er een backgroundtext-commando boven staat)
 
 speak_active\w#h
 
-Shows a text box, and removes any old text box. Also pauses the script until you
-press action (unless there's a backgroundtext command above it)
+Toont een tekstvak, en verwĳdert oude tekstvakken. Pauzeert het script ook tot je
+op action drukt (tenzĳ er een backgroundtext-commando boven staat)
 
 backgroundtext\w#h
 
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
+Als je dit commando op de regel boven speak of speak_active plaatst zal het spel
+niet wachten totdat je op action drukt nadat een tekstvak gemaakt is. Dit kan
+gebruikt worden om meerdere tekstvakken tegelĳk te maken.
 
-changeplayercolour¤(color)\w#h
+changeplayercolour¤(kleur)\w#h
 
-Changes the player's color
+Verandert de kleur van de speler
 
-color - cyan/player/blue/red/yellow/green/purple/teleporter
+kleur - cyan/player/blue/red/yellow/green/purple/teleporter
 
 restoreplayercolour¤()\w#h
 
-Changes the player's color back to cyan
+Verandert de kleur van de speler terug naar cyaan
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
+Verandert de kleur van een bemanningslid (let op: dit werkt alleen met
+bemanningsleden die gemaakt zĳn met het createcrewman-commando)
 
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
+a - Kleur van het bemanningslid om te veranderen
+cyan/player/blue/red/yellow/green/purple
+b - Kleur om naar te veranderen
 
 alarmon\w#h
 
-Turns the alarm on
+Zet het alarm aan
 
 alarmoff\w#h
 
-Turns the alarm off
+Zet het alarm uit
 
 cutscene¤()\w#h
 
-Makes cutscene bars appear
+Laat de cutscene-balken verschĳnen
 
 endcutscene¤()\w#h
 
-Makes cutscene bars disappear
+Laat de cutscene-balken verdwĳnen
 
 untilbars¤()\w#h
 
-Wait until cutscene()/endcutscene() is completed
+Wacht tot cutscene()/untilbars() is voltooid
 
 customifflag¤(n,script)\w#h
 
-Same as ifflag(n,script) in simplified scripting
+Hetzelfde als ifflag(n,script) in vereenvoudigde scripting
 
 ifflag¤(n,script)\b#h
 
-Same as customifflag, but loads an internal (main game) script
+Hetzelfde als customifflag, maar laadt een intern script (uit het hoofdspel)
 
 loadscript¤(script)\b#h
 
-Load an internal (main game) script. Commonly used in custom levels as
-loadscript(stop)
+Laadt een intern script (uit het hoofdspel). Regelmatig gebruikt in aangepaste
+levels als loadscript(stop)
 
 iftrinkets¤(n,script)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Hetzelfde als vereenvoudigde scripting, maar laadt een intern script (uit het
+hoofdspel)
 
 iftrinketsless¤(n,script)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Hetzelfde als vereenvoudigde scripting, maar laadt een intern script (uit het
+hoofdspel)
 
 customiftrinkets¤(n,script)\w#h
 
-Same as iftrinkets(n,script) in simplfied scripting
+Hetzelfde als iftrinkets(n,script) in vereenvoudigde scripting
 
 customiftrinketsless¤(n,script)\w#h
 
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
+Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting (maar onthoud
+dat het stuk is)
 
-createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
+createcrewman¤(x,y,kleur,stemming,ki1,ki2)\w#h
 
-Creates a crewmate (not rescuable)
+Maakt een bemanningslid (kan niet gered worden)
 
-mood - 0 for happy, 1 for sad
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+stemming - 0 voor blĳ, 1 voor verdrietig
+ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
       faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+ki2 - nodig als followposition gebruikt wordt voor ki1
 
 createentity¤(x,y,n,meta1,meta2)\o#h
 
-Creates an entity, check the lists reference for entity numbers
+Maakt een entiteit, zie de Lĳsten-pagina voor nummers van entiteiten
 
-n - The entity number
+n - Het nummer van de entiteit
 
 vvvvvvman¤()\w#h
 
-Makes the player huge
+Maakt de speler gigantisch
 
 undovvvvvvman¤()\w#h
 
-Back to normal
+Terug naar normaal
 
 hideplayer¤()\w#h
 
-Makes the player invisible
+Maakt de speler onzichtbaar
 
 showplayer¤()\w#h
 
-Makes the player visible
+Maakt de speler zichtbaar
 
 gamestate¤(x)\o#h
 
-Change the gamestate to the specified state number
+Verander de gamestate naar het opgegeven state-nummer
 
 gamemode¤(x)\b#h
 
-teleporter to show the map, game to hide it (shows teleporters of the main game)
+teleporter om de kaart te tonen, game om het te verbergen (toont teleporters van
+het hoofdspel)
 
 x - teleporter/game
 
 blackout¤()\w#h
 
-Make the screen black/freezes the screen
+Maakt het beeld zwart/bevriest het beeld
 
 blackon¤()\w#h
 
-Back to normal from blackout()
+Terug naar normaal van blackout()
 
 fadeout¤()\w#h
 
-Fades the screen to black
+Laat het beeld zwart worden
 
 fadein¤()\w#h
 
-Fades back
+Laat het beeld herstellen
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Laat het beeld onmiddelĳk herstellen van fadeout()
 
 untilfade¤()\w#h
 
-Wait until fadeout()/fadein() is completed
+Wacht totdat fadeout()/fadein() klaar is
 
 gotoroom¤(x,y)\w#h
 
-Change the current room to x,y, where x and y start at 0.
+Wĳzig de huidige kamer naar x,y, waar x en y beginnen bĳ 0.
 
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
+x - x-coördinaat van kamer, beginnend bĳ 0
+y - y-coördinaat van kamer, beginnend bĳ 0
 
 gotoposition¤(x,y,f)\w#h
 
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
+Verander Viridians positie naar x,y in deze kamer, en f is of je zwaartekracht
+omgedraaid is of niet. (1 voor omgedraaid, 0 voor niet omgedraaid)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
+z - 1 voor zwaartekracht omgedraaid, 0 voor niet omgedraaid (je kunt ook
+gotoposition(x,y) gebruiken, dan heb je standaard normale zwaartekracht)
 
 flash¤(x)\w#h
 
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
+Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lnag het scherm wit moet
+blĳven (alleen flash zal niet werken, je moet flash(5) gebruiken in combinatie met
+playef(9) en shake(20) als je een normale flits wil)
 
-x - The amount of ticks. 30 ticks is almost one second.
+x - Het aantal ticks. 30 ticks is bĳna een seconde.
 
 play¤(x)\w#h
 
-Start playing a song with internal song number.
+Begin met het spelen van muziek met intern nummer.
 
-x - Internal song number
+x - Intern liednummer
 
 jukebox¤(x)\w#h
 
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
+Maakt een jukeboxterminal wit en zet de kleur van alle andere terminals uit (in
+aangepaste levels lĳkt het gewoon de witte kleur van alle geactiveerde terminals
+uit te zetten).
 
 musicfadeout¤()\w#h
 
-Fades out the music.
+Laat de muziek outfaden.
 
 musicfadein¤()\w#h
 
-Opposite of musicfadeout() (doesn't seem to work)
+Omgekeerde van musicfadeout() (lĳkt niet te werken)
 
 stopmusic¤()\w#h
 
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
+Stopt de muziek onmiddelĳk. Equivalent aan music(0) in vereenvoudigde scripting.
 
 resumemusic¤()\w#h
 
-Opposite of stopmusic() (doesn't seem to work)
+Omgekeerde van stopmusic() (lĳkt niet te werken)
 
 playef¤(x,n)\w#h
 
-Play a sound effect.
+Speel een geluidseffect.
 
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
+n - Eigenlĳk ongebruikt, en kan weggelaten worden. In VVVVVV 1.x werd dit gebruikt
+voor het startpunt van het geluidseffect in milliseconden.
 
-changemood¤(colour,mood)\w#h
+changemood¤(kleur,stemming)\w#h
 
-Changes the mood of a crewmate (only works for crewmates created with
-createcrewman)
+Verandert de stemming van een bemanningslid (werkt alleen voor bemanningsleden
+die gemaakt zĳn met createcrewman)
 
-colour - cyan/player/blue/red/yellow/green/purple
-mood - 0 for happy, 1 for sad
+kleur - cyan/player/blue/red/yellow/green/purple
+stemming - 0 voor blĳ, 1 voor verdrietig
 
 everybodysad¤()\w#h
 
-Makes everybody sad (only for crewmates created with createcrewman and the player)
+Maakt iedereen verdrietig (alleen voor bemanningsleden die gemaakt zĳn met
+createcrewman en de speler)
 
-changetile¤(colour,tile)\w#h
+changetile¤(kleur,tile)\w#h
 
-Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
-and it only works for crewmates created with createcrewman)
+Verandert de sprite van een bemanningslid (je kunt het veranderen naar elke sprite
+in sprites.png, en het werkt alleen voor bemanningsleden die gemaakt zĳn met
+createcrewman)
 
-colour - cyan/player/blue/red/yellow/green/purple/gray
-tile - Tile number
+kleur - cyan/player/blue/red/yellow/green/purple/gray
+tile - Nummer van sprite
 
 face¤(a,b)\w#h
 
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
+Laat het gezicht van bemanningslid a kĳken naar bemanningslid b (werkt alleen met
+bemanningsleden die gemaakt zĳn met createcrewman)
 
 a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
+b - zelfde
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Laat het opgegeven bemanningslid de speler volgen (voor zover ik me kan herinneren
+hangt dit ook af van de locatie op de kaart)
 
-changeai¤(crewmate,ai1,ai2)\w#h
+changeai¤(bemanningslid,ki1,ki2)\w#h
 
-Can change the face direction of a crewmate or the walking behaviour
+Kan de gezichtsrichting van een bemanningslid veranderen of het loopgedrag
 
-crewmate - cyan/player/blue/red/yellow/green/purple
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+bemanningslid - cyan/player/blue/red/yellow/green/purple
+ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+      faceplayer/panic/faceleft/faceright/followposition,ki2
+ki2 - nodig als followposition gebruikt wordt voor ki1
 
-changedir¤(colour,direction)\w#h
+changedir¤(kleur,richting)\w#h
 
-Just like changeai(colour,faceleft/faceright), this changes face direction.
+Net zoals changeai(kleur,faceleft/faceright), verandert dit de gezichtsrichting.
 
-colour - cyan/player/blue/red/yellow/green/purple
-direction - 0 is left, 1 is right
+kleur - cyan/player/blue/red/yellow/green/purple
+richting - 0 is links, 1 is rechts
 
-walk¤(direction,x)\w#h
+walk¤(richting,x)\w#h
 
-Makes the player walk for the specified number of ticks
+Laat de speler lopen voor het opgegeven aantal ticks
 
-direction - left/right
+richting - left/right
 
-flipgravity¤(colour)\w#h
+flipgravity¤(kleur)\w#h
 
-Flips the gravity of a certain crewmate (it won't always work on yourself)
+Keert de zwaartekracht om van een bepaald bemanningslid (het werkt niet altĳd op
+jezelf)
 
-colour - cyan/player/blue/red/yellow/green/purple
+kleur - cyan/player/blue/red/yellow/green/purple
 
 flipme\w#h
 
-Correct vertical positioning of multiple text boxes in flip mode
+Corrigeer verticale positionering van meerdere tekstvakken in flip mode
 
 tofloor\w#h
 
-Makes the player flip to the floor if he isn't already on the floor.
+Laat de speler naar de grond gaan als hĳ daar niet al staat.
 
 flip\w#h
 
-Make the player flip
+Laat de zwaartekracht van de speler omdraaien
 
 foundtrinket¤(x)\w#h
 
-Makes a trinket found
+Laat een trinket gevonden zĳn
 
-x - Number of the trinket
+x - Nummer van het trinket
 
 runtrinketscript\b#h
 
-Play Passion For Exploring?
+Speel Passion For Exploring?
 
 altstates¤(x)\b#h
 
-Changes the layout of some rooms, like the trinket room in the ship before and
-after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
+Verander de layout van sommige kamers, zoals de trinket-kamer in het schip voor en
+na de explosie, en de ingang van het geheime lab (aangepaste levels ondersteunen
+altstates helemaal niet)
 
 createlastrescued¤(x,y)\b#h
 
-Creates the last rescued crewmate at position x,y (?)
+Maak het laatst geredde bemanningslid op positie x,y (?)
 
-rescued¤(colour)\b#h
+rescued¤(kleur)\b#h
 
-Makes someone rescued
+Maakt iemand gered
 
-missing¤(colour)\b#h
+missing¤(kleur)\b#h
 
-Makes someone missing
+Maakt iemand vermist
 
 finalmode¤(x,y)\b#h
 
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
+Teleporteert je naar Outside Dimension VVVVVV, (46,54) is de eerste kamer van het
 Final Level
 
 setcheckpoint¤()\w#h
 
-Sets the checkpoint to the current location
+Stelt het checkpoint in op de huidige locatie
 
 textboxactive\w#h
 
-Makes all text boxes on the screen disappear except for the last created one
+Laat alle tekstvakken op het scherm verdwĳnen behalve de laatst gemaakte
 
 ifexplored¤(x,y,script)\w#h
 
-If x+1,y+1 is explored, go to (internal) script
+Als x+1,y+1 bezocht is, ga naar (intern) script
 
-iflast¤(crewmate,script)\b#h
+iflast¤(bemanningslid,script)\b#h
 
-If crewmate x was rescued last, go to script
+Als bemanningslid x als laatste gered is, ga naar script
 
-crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
-Victoria (I don't know the number for Viridian and Violet)
+bemanningslid - Nummers worden hier gebruikt: 2: Vitellary, 3: Vermillion,
+4: Verdigris, 5: Victoria (Ik weet het nummer voor Viridian en Violet niet)
 
 ifskip¤(x)\b#h
 
-If you skip the cutscenes in No Death Mode, go to script x
+Als je cutscenes overslaat in No Death Mode, ga naar script x
 
-ifcrewlost¤(crewmate,script)\b#h
+ifcrewlost¤(bemanningslid,script)\b#h
 
-If crewmate is lost, go to script
+Als bemanningslid vermist is, ga naar script
 
 showcoordinates¤(x,y)\w#h
 
-Show coordinates x,y on the map (This works for the map for custom levels)
+Toon coördinaten x,y op de kaart (Dit werkt voor de kaart in aangepaste levels)
 
 hidecoordinates¤(x,y)\w#h
 
-Hide coordinates x,y on the map (This works for the map for custom levels)
+Verberg coördinaten x,y op de kaart (Dit werkt voor de kaart in aangepaste levels)
 
 showship\w#h
 
-Show the ship on the map
+Toon het schip op de kaart
 
 hideship\w#h
 
-Hide the ship on the map
+Verberg het schip op de kaart
 
 showsecretlab\w#h
 
-Show the secret lab on the map
+Toon het geheime lab op de kaart
 
 hidesecretlab\w#h
 
-Hide the secret lab on the map
+Verberg het geheime lab op de kaart
 
 showteleporters¤()\b#h
 
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
+Toon de teleporters op de kaart (Ik denk dat het alleen de teleporter in Space
+Station 1 toont)
 
 hideteleporters¤()\b#h
 
-Hide the teleporters on the map
+Verberg de teleporters op de kaart
 
 showtargets¤()\b#h
 
-Show the targets on the map (unknown teleporters which show up as ?s)
+Toon de doelen op de kaart (onbekende teleporters die getoond worden als ?'s)
 
 hidetargets¤()\b#h
 
-Hide the targets on the map
+Verberg de doelen op de kaart
 
 showtrinkets¤()\b#h
 
-Show the trinkets on the map
+Toon de trinkets op de kaart
 
 hidetrinkets¤()\b#h
 
-Hide the trinkets on the map
+Verberg de trinkets op de kaart
 
 hascontrol¤()\w#h
 
-Makes the player have control, however doesn't work in the middle of scripts
+Laat de speler besturing hebben, maar dit werkt niet tĳdens het uitvoeren van
+scripts
 
 nocontrol¤()\w#h
 
-The opposite of hascontrol()
+Het omgekeerde van hascontrol()
 
 specialline¤(x)\b#h
 
-Special dialogs that show up in the main game
+Speciale teksten die worden weergegeven in het hoofdspel
 
 destroy¤(x)\w#h
 
-Same behaviour as simplified command
+Hetzelfde gedrag als het vereenvoudigde commando
 
 x - gravitylines/warptokens/platforms
 
 delay¤(x)\w#h
 
-Same behaviour as simplified command
+Hetzelfde gedrag als het vereenvoudigde commando
 
 flag¤(x,on/off)\w#h
 
-Same behaviour as simplified command
+Hetzelfde gedrag als het vereenvoudigde commando
 
 telesave¤()\r#h
 
-Saves your game (in the regular teleporter save, so don't use it!)
+Slaat je spel op (in het normale teleporter-bestand, dus gebruik het niet!)
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Laat het beeld onmiddelĳk herstellen van fadeout()
 
-createactivityzone¤(colour)\b#h
+createactivityzone¤(kleur)\b#h
 
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
+Maakt een zone waar je staat die zegt "Press ACTION to talk to (Bemanningslid)"
 
 createrescuedcrew¤()\b#h
 
-Creates all rescued crewmates
+Maakt alle geredde bemanningsleden
 
 trinketyellowcontrol¤()\b#h
 
-Dialog of Vitellary when he gives you a trinket in the real game
+Tekst van Vitellary wanneer hĳ je een trinket geeft in het echte spel
 
 trinketbluecontrol¤()\b#h
 
-Dialog of Victoria when she gives you a trinket in the real game
+Tekst van Victoria wanneer ze je een trinket geeft in het echte spel
 
 rollcredits¤()\r#h
 
-Makes the credits roll. It destroys your save after the credits are completed!
+Laat de credits rollen. Het vernietigt je opgeslagen data nadat de credits
+afgelopen zĳn!
 
 teleportscript¤(script)\b#h
 
-Used to set a script which is run when you use a teleporter
+Gebruikt om een script in te stellen dat wordt uitgevoerd wanneer je een
+teleporter gebruikt
 
 clearteleportscript¤()\b#h
 
-Clears the teleporter script set with teleporterscript(x)
+Verwĳdert het teleporter-script ingesteld met teleporterscript(x)
 
 moveplayer¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make him move up or to the left
+Verplaatst de speler x pixels naar rechts en y pixels naar beneden. Natuurlĳk kun
+je ook negatieve getallen gebruiken om hem omhoog en naar links te verplaatsen
 
 do¤(n)\w#h
 
-Starts a loop block which will repeat n times
+Start een lus-blok dat n keer herhaald zal worden
 
 loop\w#h
 
-Put this at the end of the loop block
+Zet dit aan het eind van het lus-blok
 
 leavesecretlab¤()\b#h
 
-Turn off "secret lab mode"
+Zet "secret lab mode" uit
 
 shake¤(n)\w#h
 
-Shake the screen for n ticks. This will not create a delay.
+Schud het beeld voor n ticks. Dit zal geen wachttĳd veroorzaken.
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will glow white and touching it will not
-annihilate your save data. May not work if there are multiple teleporters.
+Als er een teleporter in de kamer is zal deze wit gloeien en hem aanraken zal je
+opgeslagen data niet vernietigen. Werkt misschien niet als er meerdere teleporters
+zĳn.
 
 customposition¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box,
-but for crewmates, rescuable crewmates are used to position against, instead of
-createentity crewmates.
+Overschrĳft de x,y van het text-commando en stelt daarmee de positie van het
+tekstvak in, maar voor bemanningsleden worden bemanningsleden die gered kunnen
+worden gebruikt om mee te positioneren, in plaats van
+createentity-bemanningsleden.
 
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple (rescuable)
-y - Only used if x is a color name. Can be above/below
+x - center/centerx/centery, of de naam van een kleur
+cyan/player/blue/red/yellow/green/purple (kan gered worden)
+y - Wordt alleen gebruikt als x de naam van een kleur is. Kan above/below zĳn
 
 custommap¤(on/off)\w#h
 
-The internal variant of the map command
+De interne variant van het map-commando
 
 trinketscriptmusic\w#h
 
-Plays passion for exploring, without taking arguments(?)
+Speelt Passion For Exploring, zonder argumenten te accepteren(?)
 
 startintermission2\w#h
 
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
+Alternatieve finalmode(46,54), brengt je naar het Final Level zonder argumenten te
+accepteren. Crasht bĳ Timeslip.
 
 resetgame\w#h
 
-Resets all trinkets, collected crewmates and flags, and teleports the player to
-the last checkpoint.
+Reset alle trinkets, verzamelde bemanningsleden en vlaggen, en teleporteert de
+speler naar het laatste checkpoint.
 
 redcontrol\b#h
 
-Start a conversation with Vermilion just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Start een gesprek met Vermilion net zoals wanneer je hem in het hoofdspel ontmoet
+en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 greencontrol\b#h
 
-Start a conversation with Verdigris just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Start een gesprek met Verdigris net zoals wanneer je hem in het hoofdspel ontmoet
+en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 bluecontrol\b#h
 
-Start a conversation with Victoria just like when you meet her in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Start een gesprek met Victoria net zoals wanneer je haar in het hoofdspel ontmoet
+en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 yellowcontrol\b#h
 
-Start a conversation with Vitellary just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Start een gesprek met Vitellary net zoals wanneer je hem in het hoofdspel ontmoet
+en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 purplecontrol\b#h
 
-Start a conversation with Violet just like when you meet her in the main game and
-press ENTER. Also creates an activity zone afterwards.
+Start een gesprek met Violet net zoals wanneer je haar in het hoofdspel ontmoet
+en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 foundlab\b#h
 
-Plays sound effect 3, shows text box with "Congratulations! You have found the
-secret lab!" Does not endtext, also has no further unwanted effects.
+Speelt geluidseffect 3 af, toont tekstvak met "Congratulations! You have found the
+secret lab!" Voert geen endtext uit, en heeft geen verdere ongewenste effecten.
 
 foundlab2\b#h
 
-Displays the second text box you see after discovering the secret lab. Also does
-not endtext, and also does not have any further unwanted effects.
+Toont het tweede tekstvak dat je ziet nadat je het geheime lab hebt ontdekt. Voert
+ook geen endtext uit, en heeft geen verdere ongewenste effecten.
 
 entersecretlab\r#h
 
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
+Ontgrendelt het geheime lab voor het hoofdspel, wat waarschĳnlĳk een ongewenst
+effect is voor een aangepast level om te hebben. Zet "secret lab mode" aan.
 ]]
 },
 
 {
 subj = "Lĳsten",
 imgs = {},
-cont = [[Te vertalen\w&r
+cont = [[
 Lĳsten\wh#
 \C=
 
-These are lists of numbers that are used in VVVVVV, mostly copied from forum
-posts. Thanks to everyone who assembled these lists!
+Dit zĳn lĳsten van nummers die gebruikt worden in VVVVVV, vooral gekopieerd uit
+forumberichten. Bedankt aan iedereen die deze lĳsten samengesteld heeft!
 
 
-Index\w&Z+
+Inhoud\w&Z+
 \&Z+
-#Music numbers (simplified scripting)\C&Z+l
-#Music numbers (internal)\C&Z+l
-#Sound effect numbers\C&Z+l
-#Entities\C&Z+l
-#Colors for createentity() crewmates\C&Z+l
-#Enemy movement types\C&Z+l
+#Muzieknummers (vereenvoudigde scripting)\C&Z+l
+#Muzieknummers (intern)\C&Z+l
+#Geluidseffecten\C&Z+l
+#Entiteiten\C&Z+l
+#Kleuren voor createentity()-¤Kleuren voor createentity()-bemanningsleden\LC&Z+l
+#Vĳand-bewegingstypes\C&Z+l
 #Gamestates\C&Z+l
 
 
-Music numbers (simplified scripting)\h#
+Muzieknummers (vereenvoudigde scripting)\h#
 
-0 - Silence (no music)
+0 - Silence (geen muziek)
 1 - Pushing onwards
 2 - Positive force
 3 - Potential for anything
@@ -1747,7 +1801,7 @@ Music numbers (simplified scripting)\h#
 10 - Paced energy
 11 - Piercing the sky
 
-Music numbers (internal)\h#
+Muzieknummers (intern)\h#
 
 0 - Path Complete
 1 - Pushing Onwards
@@ -1766,222 +1820,227 @@ Music numbers (internal)\h#
 14 - Piercing The Sky
 15 - Predestined Fate remixed
 
-Sound effect numbers\h#
+Geluidseffecten\h#
 
-0 - Flip to ceiling
-1 - Flip back to floor
-2 - Cry
-3 - Trinket collected
-4 - Coin collected
-5 - Checkpoint touched
-6 - Quicker quicksand block touched
-7 - Normal quicksand block touched
-8 - Gravity line touched
-9 - Flash
+0 - Keer zwaartekracht om naar plafond
+1 - Keer zwaartekracht om naar vloer
+2 - Huil
+3 - Trinket verzameld
+4 - Muntje verzameld
+5 - Checkpoint aangeraakt
+6 - Sneller drĳfzandblok aangeraakt
+7 - Normaal drĳfzandblok aangeraakt
+8 - Zwaartekrachtlĳn aangeraakt
+9 - Flits
 10 - Warp
-11 - Viridian squeak
-12 - Verdigris squeak
-13 - Victoria squeak
-14 - Vitellary squeak
-15 - Violet squeak
-16 - Vermilion squeak
-17 - Terminal touched
-18 - Teleporter touched
+11 - Geluid van Viridian
+12 - Geluid van Verdigris
+13 - Geluid van Victoria
+14 - Geluid van Vitellary
+15 - Geluid van Violet
+16 - Geluid van Vermilion
+17 - Terminal aangeraakt
+18 - Teleporter aangeraakt
 19 - Alarm
-20 - Terminal squeak
-21 - Time trial countdown "3", "2", "1"
-22 - Time trial countdown "Go!"
-23 - VVVVVV Man breaking walls
-24 - Crewmates (de)combining into VVVVVV Man
-25 - New record in Super Gravitron
-26 - New trophy in Super Gravitron
-27 - Rescued crewmate (in custom levels)
+20 - Terminal-geluid
+21 - Aftelling in time trial "3", "2", "1"
+22 - Aftelling in time trial "Go!"
+23 - VVVVVV Man die muren breekt
+24 - Bemanningsleden die (de)combineren in VVVVVV Man
+25 - Nieuw record in Super Gravitron
+26 - Nieuwe trofee in Super Gravitron
+27 - Gered bemanningslid (in aangepaste levels)
 
-Entities\h#
+Entiteiten\h#
 
-0 - The player
-1 - Enemy
-    Metadata: movement type, movement speed
-    Due to lacking needed data, you will only ever get a purple enemy box, unless
-    you're in the VVVVVV polar dimension while doing the command
-2 - Moving platform
-    Metadata: movement type, movement speed
-    Note that conveyors are implemented as moving platforms, see movement type 8
-    and 9.
-3 - A disappearing platform
-4 - A 1x1 quicker quicksand block
-5 - A flipped Viridian, you will flip gravity when touched
-6 - Weird red flashy thingy that disappears quickly
-7 - Same as above, but doesn't flash and is colored cyan
-8 - A coin from the prototype
-    Metadata: Coin ID
+0 - De speler
+1 - Vĳand
+    Metadata: bewegingstype, bewegingssnelheid
+    Omdat de benodigde data ontbreekt krĳg je alleen een paarse doos-vĳand, tenzĳ
+    je in de polar dimension van VVVVVV bent wanneer je het commando gebruikt
+2 - Bewegend platform
+    Metadata: bewegingstype, bewegingssnelheid
+    Opmerking: lopende banden zĳn geïmplementeerd als bewegende platforms, zie
+    bewegingstype 8 en 9.
+3 - Een brekend platform
+4 - Een sneller drĳfzandblok van 1x1
+5 - Een omgekeerde Viridian, je zwaartekracht zal omkeren wanneer je hem aanraakt
+6 - Raar rood flitsend dingetje dat snel verdwĳnt
+7 - Zelfde als hierboven, maar flitst niet en is cyaan-gekleurd
+8 - Een munt uit het prototype
+    Metadata: Munt-ID
 9 - Trinket
-    Metadata: Trinket ID
-    Note that trinket ID start at 0, and everything above 19 will not be saved in
-    the savefile once you restart the level
+    Metadata: Trinket-ID
+    Opmerking: trinket-ID's beginnen bij 0, en alles boven 19 wordt niet
+    opgeslagen in het bestand wanneer je het level herstart
 10 - Checkpoint
-     Metadata: Checkpoint state (0=flipped, 1=normal), Checkpoint ID (checks if
-     the checkpoint is active or not)
-11 - Horizontal gravity line
-     Metadata: Length in pixels
-12 - Vertical gravity line
-     Metadata: Length in pixels
-13 - Warp token
-     Metadata: Destination in tiles X axis, destination in tiles Y axis
-14 - The round teleporter
-     Metadata: Checkpoint ID(?)
+     Metadata: Checkpoint-status (0=ondersteboven, 1=normaal), Checkpoint-ID
+     (controleert of het checkpoint actief is of niet)
+11 - Horizontale zwaartekrachtlĳn
+     Metadata: Lengte in pixels
+12 - Verticale zwaartekrachtlĳn
+     Metadata: Lengte in pixels
+13 - Warptoken
+     Metadata: Bestemming in blokken op X-as, bestemming in blokken op Y-as
+14 - De ronde teleporter
+     Metadata: Checkpoint-ID(?)
 15 - Verdigris
-     Metadata: AI state
-16 - Vitellary (flipped)
-     Metadata: AI state
+     Metadata: KI-status
+16 - Vitellary (ondersteboven)
+     Metadata: KI-status
 17 - Victoria
-     Metadata: AI state
-18 - Crewmate
-     Metadata: Color (using raw color list, not the crewmate colors), mood
+     Metadata: KI-status
+18 - Bemanningslid
+     Metadata: Kleur (gebruikt kleurenlĳst, niet bemanningslidkleuren), stemming
 19 - Vermilion
-     Metadata: AI state
+     Metadata: KI-status
 20 - Terminal
-     Metadata: Sprite, Script ID(?)
-21 - Same as above but when touched the terminal doesn't light up
-     Metadata: Sprite, Script ID(?)
-22 - Collected trinket
-     Metadata: Trinket ID
-23 - Gravitron square
-     Metadata: Direction
-     If you input negative X coordinate (or too high), an arrow shows instead,
-     just like in the real Gravitron
-24 - Intermission 1 crewmate
-     Metadata: Raw color, mood
-     Doesn't seem to be affected by hazards, but should be.
-25 - Trophy
-     Metadata: Challenge identifier, sprite
-     If the challenge is completed, the base sprite ID (what you get if you use
-     sprite=0) will change. Only use 0 or 1 if you want predictable results
-     (0=normal, 1=flipped)
-26 - The warp token to the Secret Lab
-     Keep in mind that the warp is just implemented as a nice looking sprite.
-     You'll have to script the functionality for yourself
-55 - Rescueable crewmate
-     Metadata: Crewmate color. Color >6 will always show a *happy* Viridian
-56 - Custom level enemy
-     Metadata: Movement type, movement speed
-     Keep in mind that if there's no enemies in the room, the enemy sprite data
-     isn't updated correctly and it will just show what enemy you saw last time,
-     or a square enemy
-Undefined entities (27-50, 57+) give glitchy Viridians.
+     Metadata: Sprite, Script-ID(?)
+21 - Zelfde als hierboven maar wanneer aangeraakt zal de terminal geen licht geven
+     Metadata: Sprite, Script-ID(?)
+22 - Verzamelde trinket
+     Metadata: Trinket-ID
+23 - Gravitron-vierkant
+     Metadata: Richting
+     Als je een negatieve X-coördinaat opgeeft (of te hoog) zal een pĳltje getoond
+     worden, net zoals in de echte gravitron
+24 - Bemanningslid intermission 1
+     Metadata: "Rauwe" kleur, stemming
+     Lĳkt niet getroffen te worden door gevaren, maar zou wel moeten.
+25 - Trofee
+     Metadata: Uitdagings-id, sprite
+     Als de uitdaging voltooid is zal de basis-sprite-ID (wat je krĳgt als je
+     sprite=0 gebruikt) veranderen. Gebruik alleen 0 of 1 als je voorspelbare
+     resultaten wil (0=normaal, 1=ondersteboven)
+26 - Het warptoken naar het Secret Lab
+     Houd in gedachten dat deze warp alleen geïmplementeerd is als een
+     mooi-uitziende sprite. Je moet de functionaliteit zelf scripten
+55 - Bemanningslid dat gered kan worden
+     Metadata: Kleur van bemanningslid. Kleur >6 zal altĳd een *blĳe* Viridian
+     tonen
+56 - Vĳand voor aangepaste levels
+     Metadata: Bewegingstype, bewegingssnelheid
+     Houd in gedachten dat als er geen vĳanden in de kamer zĳn, de vĳand-sprite
+     niet correct geüpdate wordt en de vĳand die je de laatste keer zag zal worden
+     getoond, of een vierkante vĳand
+Ongedefinieerde entiteiten (27-50, 57+) geven rare Viridians.
 
-Colors for createentity() crewmates\h#
+Kleuren voor createentity()-\h#
 
-0: Cyan
-1: Flashy red (used for death)
-2: Dark orange
-3: Trinket color
-4: Gray
-5: Flashy white
-6: Red (tiny bit darker than Vermilion)
-7: Lime green
-8: Hot pink
-9: Brilliant yellow
-10: Flashy white
-11: Bright cyan
-12: Blue, same as Victoria
-13: Green, same as Verdigris
-14: Yellow, same as Vitellary
-15: Red, same as Vermilion
-16: Blue, same as Victoria
-17: Lighter orange
-18: Gray
-19: Darker gray
-20: Pink, same as Violet
-21: Lighter gray
-22: White
-23: Flashy white
-24-29: White
-30: Gray
-31: Dark, slightly purplish gray?
-32: Dark cyan/green
-33: Dark blue
-34: Dark green
-35: Dark red
-36: Dull orange
-37: Flashy gray
-38: Gray
-39: Darker cyan/green
-40: Flashier gray
-41-99: White
-100: Dark gray
-101: Flashy white
-102: Teleporter color
-103 and onwards: White
+bemanningsleden\h
 
-Enemy movement types\h#
+0: Cyaan
+1: Flitsend rood (gebruikt voor dood)
+2: Donker-oranje
+3: Trinket-kleur
+4: Grĳs
+5: Flitsend wit
+6: Rood (beetje donkerder dan Vermilion)
+7: Limoen-groen
+8: Felroze
+9: Briljant geel
+10: Flitsend wit
+11: Felcyaan
+12: Blauw, zelfde als Victoria
+13: Groen, zelfde als Verdigris
+14: Geel, zelfde als Vitellary
+15: Rood, zelfde als Vermilion
+16: Blauw, zelfde als Victoria
+17: Lichter oranje
+18: Grĳs
+19: Donkerder groen
+20: Roze, zelfde als Violet
+21: Lichter grĳs
+22: Wit
+23: Flitsend wit
+24-29: Wit
+30: Grĳs
+31: Donker, beetje paarsig grĳs?
+32: Donkercyaan/-groen
+33: Donkerblauw
+34: Donkergroen
+35: Donkerrood
+36: Saai oranje
+37: Flitsend grĳs
+38: Grĳs
+39: Donkerder cyaan/groen
+40: Flitsender grĳs
+41-99: Wit
+100: Donkergrĳs
+101: Flitsend wit
+102: Teleporter-kleur
+103 en verder: Wit
 
-0 - Bouncing up and down, starts down.
-1 - Bouncing up and down, starts up.
-2 - Bouncing left and right, starts left.
-3 - Bouncing left and right, starts right.
-4, 7, 11 - Moves right until collision.
-5 - Same as above, only acts weird when it collides.
-    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nCl
-6 - Bouncing up and down, but only reaches a certain y position before going back
-    down. Used in "Trench warfare".
-8, 9 - For moving platforms they're conveyors, and they're still for anything else
-14 - Able to be blocked by disappearing platforms
-15 - Still (?)
-10, 12 - Clones right/in the same spot, crashes VVVVVV if it gets too intense, and
-         will corrupt your level if you save.
-13 - Like 4, but moves down until collision.
-16 - Flashes in and out of existence. (Appears and disappears)
-17 - Jittery movement left
-18 - Jittery movement right, little bit faster
-19+ - Still (?)
+Vĳand-bewegingstypes\h#
+
+0 - Springt op en neer, begint beneden.
+1 - Springt op en neer, begint boven
+2 - Springt naar links en rechts, begint links.
+3 - Springt naar links en rechts, begint rechts.
+4, 7, 11 - Verplaatst naar rechts tot botsing.
+5 - Zelfde als hierboven, maar gedraagt zich vreemd wanneer het botst.
+    GIF hier: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Springt op en neer, maar bereikt een bepaalde y-positie voor terug te gaan
+    naar beneden. Gebruikt in "Trench warfare".
+8, 9 - Voor bewegende platforms zĳn het lopende banden, en stilstaand voor de rest
+14 - Kan geblokkeerd worden door brekende platforms
+15 - Stilstaand (?)
+10, 12 - Kloont naar rechts/op dezelfde plek, crasht VVVVVV als het te intens
+         wordt, en maakt je opgeslagen data corrupt als je opslaat.
+13 - Net zoals 4, maar beweegt naar beneden tot botsing.
+16 - Verschĳnt en verdwĳnt.
+17 - Gejaagde beweging naar links
+18 - Gejaagde beweging naar rechts, klein beetje sneller
+19+ - Stilstaand (?)
 
 Gamestates\h#
 
-0 - Break out from most gamestates
-1 - Set gamestate to 0 (i.e. same as above in practice)
+0 - Breekt uit de meeste gamestates
+1 - Zet de gamestate op 0 (oftewel in de praktĳk hetzelfde als hierboven)
 2 - "To do: write quick intro to story!"
 4 - "Press arrow keys or WASD to move"
-5 - Runs the script "returntohub" (i.e. fadeout, teleport to right before The
-    Tower, fadein, play Passion for Exploring)
-7 - Removes textboxes
+5 - Voert het script "returntohub" uit (oftewel fadeout, teleporteer naar rechts
+    voor The Tower, fadein, speel Passion for Exploring)
+7 - Verwĳdert tekstvakken
 8 - "Press enter to view map and quicksave"
 9 - Super Gravitron
 10 - Gravitron
-11 - "When you're NOT standing on stop and wait for you" (Tries to access flipmode
-     check to write "the ceiling" or "the floor", and check crewmate, but as this
-     fails, the above prints instead)
+11 - "When you're NOT standing on stop and wait for you" (Probeert flipmode-check
+     te gebruiken om "the ceiling" of "the floor" te laten zien, maar omdat dit
+     fout gaat, wordt in plaats daarvan weergegeven wat hierboven staat)
 12 - "You can't continue to the next room until he is safely accross."
-13 - Removes textboxes quickly
-14 - "When you're standing on the floor," (the same applies here as for 11)
-15 - Makes Viridian happy
-16 - Makes Viridian sad
+13 - Verwĳdert tekstvakken snel
+14 - "When you're standing on the floor," (hetzelfde is hier van toepassing als
+     bĳ 11)
+15 - Maakt Viridian blĳ
+16 - Maakt Viridian verdrietig
 17 - "If you prefer, you can press UP or DOWN instead of ACTION to flip."
-20 - If flag 1 is 0, set flag 1 to 1 and remove textboxes
-21 - If flag 2 is 0, set flag 2 to 1 and remove textboxes
+20 - Als vlag 1 op 0 staat, zet vlag 1 op 1 en verwĳder tekstvakken
+21 - Als vlag 2 op 0 staat, zet vlag 2 op 1 en verwĳder tekstvakken
 22 - "Press ACTION to flip"
 30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
      out ok..."
-31 - "Violet, is that you?" cutscene (as long as flag 6 is 0)
-32 - If flag 7 is 0: "A teleporter!" "I can get back to the ship with this!"
-33 - If flag 9 is 0: Victoria-cutscene
-34 - If flag 10 is 0: Vitellary-cutscene
-35 - If flag 11 is 0: Verdigris-cutscene
-36 - If flag 8 is 0: Vermilion-cutscene
-37 - Vitellary after gravitron
-38 - Vermilion after gravitron
-39 - Verdigris after gravitron
-40 - Victoria after gravitron
-41 - If flag 60 is 0: run the beginning of intermission 1 cutscene
-42 - If flag 62 is 0: run the 3rd intermission 1 cutscene
-43 - If flag 63 is 0: run the 4th intermission 1 cutscene
-44 - If flag 64 is 0: run the 5th intermission 1 cutscene
-45 - If flag 65 is 0: run the 6th intermission 1 cutscene
-46 - If flag 66 is 0: run the 7th intermission 1 cutscene
-47 - If flag 69 is 0: "Ohh! I wonder what that is?" trinket cutscene
-48 - If flag 70 is 0: "This seems like a good place to store anything I find out
-     there..." (Victoria not found yet)
-49 - If flag 71 is 0: Play Predestined Fate
+31 - "Violet, is that you?"-cutscene (zolang vlag 6 op 0 staat)
+32 - Als vlag 7 op 0 staat: "A teleporter!" "I can get back to the ship with
+     this!"
+33 - Als vlag 9 op 0 staat: Victoria-cutscene
+34 - Als vlag 10 op 0 staat: Vitellary-cutscene
+35 - Als vlag 11 op 0 staat: Verdigris-cutscene
+36 - Als vlag 8 op 0 staat: Vermilion-cutscene
+37 - Vitellary na gravitron
+38 - Vermilion na gravitron
+39 - Verdigris na gravitron
+40 - Victoria na gravitron
+41 - Als vlag 60 op 0 staat: draai het begin van de intermission 1-cutscene
+42 - Als vlag 62 op 0 staat: draai de 3e intermission 1-cutscene
+43 - Als vlag 63 op 0 staat: draai de 4e intermission 1-cutscene
+44 - Als vlag 64 op 0 staat: draai de 5e intermission 1-cutscene
+45 - Als vlag 65 op 0 staat: draai de 6e intermission 1-cutscene
+46 - Als vlag 66 op 0 staat: draai de 7e intermission 1-cutscene
+47 - Als vlag 69 op 0 staat: "Ohh! I wonder what that is?"-trinket-cutscene
+48 - Als vlag 70 op 0 staat: "This seems like a good place to store anything I
+     find out there..." (Victoria nog niet gevonden)
+49 - Als vlag 71 op 0 staat: Speel Predestined Fate
 50 - "Help! Can anyone hear this message?"
 51 - "Verdigris? Are you out there? Are you ok?"
 52 - "Please help us! We've crashed and need assistance!"
@@ -1989,80 +2048,84 @@ Gamestates\h#
 54 - "This is Doctor Violet from the D.S.S. Souleye! Please respond!"
 55 - "Please... Anyone..."
 56 - "Please be alright, everyone..."
-With gamestate 50-56, you can choose where to start, because everything will
-     appear after each other
-80 - If screen is black (and only if), continue to state 81 (My guess is that this
-     is called when ESC is pressed, before the pause menu opens)
-81 - Go back to the main menu
-82 - Results of time trial (bugged)
-83 - If screen is back, continue to state 84
-84 - Results of time trial (I think 82 works better than 84)
-85 - The Time Trial version of gamestate 200 (Flash, play Positive Force, turn on
-     finalstretch mode)
-States 90-95 are time trial related, but doesn't work properly in custom levels.
-     The only real effects that happens in custom levels is a warp, and music
-     change
+Met gamestate 50-56 kun je kiezen waar te beginnen, want alles komt na elkaar
+80 - Dan en slechts dan als het beeld zwart is, ga door naar state 81 (Mĳn gok is
+     dat dit wordt aangeroepen wanneer ESC wordt ingedrukt, voor het pauze-menu
+     wordt geopend)
+81 - Ga terug naar het hoofdmenu
+82 - Resultaten van time trial (bugged)
+83 - Als beeld zwart is, ga door naar state 84
+84 - Resultaten van time trial (Ik denk dat 82 beter werkt dan 84)
+85 - De Time Trial-versie van gamestate 200 (Flits, speel Positive Force, zet
+     finalstretch-mode aan)
+States 90-95 zijn gerelateerd aan time trials, maar werken niet goed in aangepaste
+     levels. De enige echte effecten die gebeuren in aangepaste levels zĳn een
+     warp, en verandering van de muziek
 90 - Space Station 1
 91 - The Laboratory
 92 - Warp Zone
 93 - The Tower
 94 - Space Station 2
 95 - Final Level
-96 - If the screen is black, continue to state 97
-97 - Exit from Super Gravitron (teleport and play Pipe Dream)
-100 - If flag 4 is 0: continue to state 101
-101 - If you are flipped, flip back to floor, continue to state 102
-The following states (102-112) try to go to the current state + 1, like in 50-56
-      (but doesn't loop around), but may glitch as half of the states (103, 105,
-      107, 109, 111) doesn't exist.
+96 - Als het beeld zwart is, ga door naar state 97
+97 - Verlaat Super Gravitron (teleporteer en speel Pipe Dream)
+100 - Als vlag 4 op 0 staat: ga door naar state 101
+101 - Als je zwaartekracht omgekeerd is, ga terug naar de vloer, ga naar state 102
+De volgende states (102-112) proberen naar de huidige state te gaan + 1, net zoals
+      in 50-56 (maar vormt geen lus), maar kan problemen veroorzaken omdat de
+      helft van de staten (103, 105, 107, 109, 111) niet bestaat.
 102 - Verdigris: "Captain! I've been so worried!"
 104 - "I'm glad you're ok!"
 106 - "I've been trying to find a way out, but I keep going around in circles..."
 108 - "Don't worry! I have a teleporter key!"
 110 - "Follow me!"
-112 - Removes textboxes
-115 - Essentially nothing, continue to state 116
-116 - Red dialog at the bottom of the screen saying "Sorry Eurogamers! Teleporting
-      around the map doesn't work in this version!", continue to state 117, which
-      doesn't exist, so things may fail
-118 - Removes textboxes
-State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
-      things
-120 - If flag 5 is 0: continue to state 121
-121 - If you're on the floor, flip.
+112 - Verwĳdert tekstvakken
+115 - In wezen niets, ga door naar state 116
+116 - Rood tekstvak onderin beeld met tekst "Sorry Eurogamers! Teleporting around
+      the map doesn't work in this version!", ga door naar state 117, wat niet
+      bestaat, dus dingen zouden fout kunnen gaan
+118 - Verwĳdert tekstvakken
+State 120-128 werken een beetje zoals 102-112, d.w.z in serie, maar met minder
+      problemen
+120 - Als vlag 5 op 0 staat: ga door naar state 121
+121 - Als je op de vloer staat, keer zwaartekracht om
 122 - Vitellary: "Captain! You're ok!"
 124 - Vitellary: "I've found a teleporter, but I can't get it to go anywhere..."
 126 - "I can help with that!"
 128 - "I have the teleporter codex for our ship!"
 130 - "Yey! Let's go home!"
-132 - Removes textboxes
+132 - Verwĳdert tekstvakken
 200 - Final mode
-1000 - Turns on cutscenebars, freezes the game, continue to state 1001
-1001 - You got a shiny trinket! dialog (but you didn't actually get any, this is
-       just called each time you get one), continue to state 1003
-1003 - Revert game to normal
-1010 - You found a crewmate! in the same manner as for trinkets
-2000 - Save the game
-2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
-            The Laboratory I guess, continue to state 2510
-2510 - Viridian: "Hello?", continue to state 2512
-2512 - Viridian: "Is anybody there?", continue to state 2514
-2514 - Removes textboxes, play Potential For Anything
-3000-3099 states:
-3000-3005 - Level Complete! You've rescued the crewmate applied to companion(),
-            defaults to Verdigris. 6=Verdigris, 7=Vitellary, 8=Victoria,
-            9=Vermilion, 10=Viridian (yes, really), 11=Violet (Gamestates:
-            3006-3011=Verdigris, 3020-3026=Vitellary, 3040-3046=Victoria,
-            3060-3066=Vermilion, 3080-3086=Viridian, 3050-3056=Violet)
-3070-3072 - Perform postrescue things, usually return to ship
+1000 - Zet cutscenebalken aan, bevriest het spel, gaat door naar state 1001
+1001 - "You got a shiny trinket!" (maar je hebt er niet echt een gekregen, dit
+       wordt gewoon iedere keer dat je er een verzamelt aangeroepen), ga door naar
+       state 1003
+1003 - Herstel spel naar normale situatie
+1010 - You found a crewmate! op dezelfde manier als voor trinkets
+2000 - Sla het spel op
+2500-2509 - Teleporteer naar een of andere vreemde niet-bestaande locatie,
+            vermoedelijk naar The Laboratory denk ik, ga door naar state 2510
+2510 - Viridian: "Hello?", ga door naar state 2512
+2512 - Viridian: "Is anybody there?", ga door naar state 2514
+2514 - Verwĳdert tekstvakken, speel Potential For Anything
+States 3000-3099:
+3000-3005 - "Level Complete! You've rescued..." het bemanningslid toegepast op
+            companion(), standaard Verdigris. 6=Verdigris, 7=Vitellary,
+            8=Victoria, 9=Vermilion, 10=Viridian (ja, echt), 11=Violet
+            (Gamestates: 3006-3011=Verdigris, 3020-3026=Vitellary,
+            3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
+            3050-3056=Violet)
+3070-3072 - Do dingen na redding, normaal gesproken terug naar schip
 3501 - Game Complete
-4010 - Flash + warp
-4070 - The Final Level, but the game will crash when you reach Timeslip (Because
-       of how the game gets entity information, which is broken in custom levels)
-4080 - Captain teleported back to the ship: "Hello!" [C[C[C[C[Captain!] cutscene +
-       credits.
-       The above will mess up your save data so don't do it unless you backed up!
-4090 - Cutscene after you complete space station 1
+4010 - Flits + warp
+4070 - Het Final Level, maar het spel zal crashen wanneer je Timeslip bereikt
+       (Door de manier waarop het spel entiteit-informatie krĳgt, wat stuk is in
+       aangepaste levels)
+4080 - Kapitein teruggeteleporteerd naar het schip:
+       "Hello!" [C[C[C[C[Captain!]-cutscene + credits.
+       Het bovenstaande zal je opgeslagen data vernietigen dus doe het niet tenzĳ
+       je een backup hebt gemaakt!
+4090 - Cutscene nadat je space station 1 hebt afgemaakt
 ]]
 },
 
@@ -2295,9 +2358,9 @@ Klik ¤¤Tools¤¤hier¤¤ om naar een ander artikel te gaan\nLbl\
 
 Klik ¤Tools¤hier¤ om naar een ander artikel te gaan\nLbl
 \-
-[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+[¤¤#Links¤¤Like¤¤] [¤¤#Voorbeeld:¤¤Dislike¤¤]\n L vl n L rl\
 
-[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+[¤#Links¤Like¤] [¤#Voorbeeld:¤Dislike¤]\n L vl n L rl
 \-
 #Links¤¤ Knop A ¤¤ §¤¤#Links¤¤ Knop B \L w&Zl n L w&Z l(\
 
@@ -2350,6 +2413,7 @@ Sommige afbeeldingen en het lettertype zĳn gemaakt door Format
 
 Russische vertaling: CreepiX, Captain Normalguy
 Esperanto vertaling: Format
+Duitse vertaling: r00ster
 
 
 Met dank aan:\h#
@@ -2361,7 +2425,6 @@ TurtleP (voor de code die afbeeldingen niet wazig maakt waneer je ze schaalt)
 
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
-
 
 
 

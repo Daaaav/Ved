@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-05-10 00:00:00 (ZZZ)
+--- Last converted: 2018-07-05 22:53:22 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -9,7 +9,13 @@
 	it into the system later, so don't worry.
 ]]
 
---- fontpng_ascii: N.A.
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return (n%10==1 and n%100~=11 and 0 or n%10>=2 and n%10<=4 and (n%100<10 or n%100>=20) and 1 or 2) end
+
+function fontpng_ascii(c)
+
+end
 
 L = {
 
@@ -133,7 +139,7 @@ BTN_YES = "Да",
 BTN_NO = "Нет",
 BTN_APPLY = "Применить",
 BTN_QUIT = "Выход",
-BTN_DISCARD = "Не сохр.", -- use "Не сохранять" if space allows (if text is vertically centered)
+BTN_DISCARD = "Не сохр.",
 BTN_SAVE = "Сохранить",
 BTN_CLOSE = "Close",
 
@@ -193,7 +199,7 @@ ENEMYBOUNDS = "Рамка",
 ROOMNAME = "Название",
 ROOMOPTIONS = "Настройки комнаты",
 ROTATE180 = "Повернуть на 180 градусов",
-ROTATE180UNI = "Rotate 180°",
+ROTATE180UNI = "Повернуть на 180°",
 HIDEBOUNDS = "Скрыть рамки",
 SHOWBOUNDS = "Показать рамки",
 
@@ -328,11 +334,11 @@ STATE = "Статус",
 MOUSE = "Мышь",
 
 BLUE = "Синий",
-GREEN = "Зелёный",
 RED = "Красный",
 CYAN = "Голубой",
 PURPLE = "Фиолетовый",
 YELLOW = "Жёлтый",
+GREEN = "Зелёный",
 GRAY = "Серый",
 PINK = "Розовый",
 BROWN = "Коричневый",
@@ -395,7 +401,7 @@ REMOVERECENT = "Вы действительно хотите удалить эт
 RESETCUSTOMBRUSH = "(ПКМ - изменение размера)",
 
 -- 1.3.2
-DISPLAYSETTINGS = "Отображение/Масштаб",
+DISPLAYSETTINGS = "Отображение\n/Масштаб",
 DISPLAYSETTINGSTITLE = "Настройки отображения/масштаба",
 SMALLERSCREEN = "Меньшая ширина окна (ширина меняется с 896 пикс. на 800 пикс.)",
 FORCESCALE = "Запрет изменений настроек масштаба",
@@ -407,11 +413,36 @@ NONINTSCALE = "Масштаб с дробным значением",
 
 -- 1.3.4
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
-MAKESLANGUAGEUNREADABLE = " (makes Russian unreadable)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
-REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
+MAKESLANGUAGEUNREADABLE = " (делает Русский нечитаемым!)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
+REQUIRESHIGHERLOVE = " (необходим L{VE версии $1 или выше)",
 SYNTAXCOLOR_COMMENT = "Comment",
 FPSLIMIT = "FPS limit",
 
+}
+
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "You have $1 plugins that are not supported in this version.",
+	}
+	LEVELFAILEDCHECKS = {
+		[0] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+	}
+	SCRIPTUSAGESROOMS = {
+		[0] = "$1 usages in rooms: $2",
+	}
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "$1 usages in scripts: $2",
+	}
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "Entity at [$1 $2] has $3 invalid properties!",
+	}
+	ROOMINVALIDPROPERTIES = {
+		[0] = "LevelMetadata for room #$1 has $2 invalid properties!",
+	}
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "Showing $1",
+	}
 }
 
 toolnames = {
@@ -432,7 +463,7 @@ toolnames = {
 "Телепорт",
 "Линия варпа",
 "Член экипажа",
-"Точка старта"
+"Точка старта",
 
 }
 
@@ -463,7 +494,7 @@ warpdirs = {
 [0] = "НЕТ",
 [1] = "ГОРИЗОНТАЛЬНЫЙ",
 [2] = "ВЕРТИКАЛЬНЫЙ",
-[3] = "ПОЛНЫЙ"
+[3] = "ПОЛНЫЙ",
 
 }
 
@@ -669,7 +700,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Return",
+subj = "Возврат",
 imgs = {},
 cont = [[
 \)
@@ -677,7 +708,7 @@ cont = [[
 },
 
 {
-subj = "Getting started",
+subj = "Перед началом",
 imgs = {},
 cont = [[
 Getting started\wh#
@@ -711,380 +742,381 @@ options.
 },
 
 {
-subj = "Tile placement modes",
+subj = "Режимы расп-ния стен",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
-Tile placement modes\wh#
+Режимы расположения стен\wh#
 \C=
 
-Ved supports three different modes to draw tiles.
+Ved поддерживает три разных режима создания стен.
 
-     Automatic mode\h#0
+     Автоматический режим\h#0
 
-          This is the mode that is easiest to use. In this mode, you can draw
-          walls and backgrounds and the edges will automatically get placed
-          correctly. However, while editing in this mode, all walls and
-          backgrounds in the room must use the same tileset and color.
+          Этот режим является наилёгким в применении. При создании стен и фона в
+          этом режиме, их края будут автоматически расположены правильно. Однако,
+          используя этот режим, все стены и фоны будут из одинакого набора и
+          одинакого цвета.
 
-     Multi-tileset mode\h#1
+     Режим мульти-набор\h#1
 
-          This is similar to automatic mode, except that you can have multiple
-          different tilesets in the same room. That is, changing the tileset will
-          not affect already-placed walls and backgrounds, and you can draw in
-          multiple different types of tiles in the same room.
+          Этот режим схож с автоматическим, но используя его можно работать с
+          несколькими разными наборами в одной комнате. Это значит, что изменение
+          набора не повлияет на уже установленные стены и фоны и Вы можете
+          использовать разные наборы в одной комнате.
 
-     Manual mode\h#2
+     Ручной режим\h#2
 
-          Also called Direct Mode, in this mode you can place down any tile
-          manually, so you are not bound to the pre-defined tileset combinations
-          and edges will not automatically get added to walls, giving you complete
-          control over how the room will look. However, this editing mode is often
-          slower to use.
+          Также называется Режим напрямую (Direct Mode). В этом режиме Вы можете
+          распологать стены вручную, т.е. нет ограничений в заранее подготовленных
+          наборах и края стен и фонов не будут создаваться автоматически, что даёт
+          вам полный контроль над внешним видом комнаты. Однако, этот режим чаще
+          всего затяжный в использовании.
 ]]
 },
 
 {
-subj = "Tools",
+subj = "Инструменты",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
-Tools\wh#
+Инструменты\wh#
 \C=
 
-You can use the following tools to fill rooms in your level:
+Вы можете использовать следующие инструменты для наполнения уровня:
 
 \0
-   Wall\h#
+   Стена\h#
 
 
-The wall tool can be used to place walls.
+Используется для установки стен.
 
 \1
-   Background\h#
+   Фон\h#
 
 
-The background tool can be used to place backgrounds.
+Используется для установки фона.
 
 \2
-   Spike\h#
+   Шипы\h#
 
 
-The spike tool can be used to place spikes. You can use the expand subtool to
-place spikes on a surface with one click (or slide).
+Используется для устаноки шипов. Вы можете использовать вариацию автоматического
+расширения для установки шипов на одной поверхности в один клик.
 
 \3
-   Trinket\h#
+   Тринкет\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+Используеся для установки тринкетов. Учтите, что в одном уровне может быть
+максимум двадцать тринкетов.
 
 \4
-   Checkpoint\h#
+   Чекпоинт\h#
 
 
-The checkpoint tool can be used to place checkpoints.
+Используется для установки чекпоинтов (точек сохранения).
 
 \5
-   Disappearing platform\h#
+   Исчезающая платформа\h#
 
 
-The disappearing platform tool can be used to place disappearing platforms.
+Используется для установки исчезающих платформ.
 
 \6
-   Conveyor\h#
+   Конвеер\h#
 
 
-The conveyor tool can be used to place conveyors.
+Используется для установки конвееров.
 
 \7
-   Moving platform\h#
+   Двигающаяся платворма\h#
 
 
-The moving platform tool can be used to place moving platforms.
+Используется для установки двигающихся платформ.
 
 \8
-   Enemy\h#
+   Враг\h#
 
 
-The enemy tool can be used to place enemies. The shape and color of the enemy are
-determined by the enemy type setting and the tileset (color) respectively.
+Используется для установки врагов. Тип и цвет врагов определяется настройкой
+типа врага и цветом набора соответственно.
 
 \9
-   Gravity line\h#
+   Грави-линия\h#
 
 
-The gravity line tool can be used to place gravity lines.
+Используется для установки грави-линий.
 
 \^0
-   Roomtext\h#
+   Текст\h#
 
 
-The roomtext tool can be used to place text.
+Используется для установки текста в комнате.
 
 \^1
-   Terminal\h#
+   Компьютер\h#
 
 
-The terminal tool can be used to place terminals. First place the terminal, then
-type a name for the script. For more information about scripting, please refer to
-the scripting references.
+Используется для установки компьютеров. Сначала установите компьютер, затем
+введите название скрипта. Для дополнительной информации смотрите
+справки о скриптах.
 
 \^2
-   Script box\h#
+   Скрипт\h#
 
 
-The script box tool can be used to place script boxes. First click on the top left
-corner, then on the bottom right corner, then type a name for the script. For more
-information about scripting, please refer to the scripting references.
+Используется для установки области скрипта. Сначала укажите правый верхний угол
+области, затем левый нижний, затем введите название скрипта. Для дополнительной
+информации смотрите справки о скриптах.
 
 \^3
-   Warp token\h#
+   Телепорт\h#
 
 
-The warp token tool can be used to place warp tokens. First click where the
-entrance should be, then where the exit should be.
+Используется для установки телепорта. Сначала кликните там, где должен быть вход,
+затем там, где выход.
 
 \^4
-   Warp line\h#
+   Линия варпа\h#
 
 
-The warp line tool can be used to place warp lines. Please note that warp lines
-can only be placed on the edges of a room.
+Используется для установки линий варпа. Учтите, что линии варпа могут быть
+расположены ролько на краях комнаты.
 
 \^5
-   Crewmate\h#
+   Член экипажа\h#
 
 
-The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+Используется для установки членов экипажа, которых нужно спасти. Когда все члены
+экипажа будут спасены, уровень будет пройден. Учтите, что в одном уровне может
+быть максимум двадцать членов экипажа.
 
 \^6
-   Start point\h#
+   Точка старта\h#
 
 
-The start point tool can be used to place the start point.
+Используется для установки точки старта.
 ]]
 },
 {
-subj = "Script editor",
+subj = "Редактор скриптов",
 imgs = {},
 cont = [[
-Script editor\wh#
+Редактор скриптов\wh#
 \C=
 
-With the script editor, you can manage and edit scripts in your level.
+Вы можете управлять и изменять скрипты с помощью редактора скриптов.
 
 
-Flag names\h#
+Названия флагов\h#
 
-For convenience and script readability, it is possible to use flag names instead
-of numbers. When you use a name instead of a number, a number will automatically
-be associated with that name, in the background. It is also possible to choose
-which number to use for which flag name.
+Для удобства чтения скриптов есть возможность использовать названия флагов
+вместо чисел. Если вы используете имя вместо числа, число будет автоматически
+звязано с этим названием. Также есть возможность выборара определённого числа для
+определённого флага.
 
-Internal scripting mode\h#
+Режим внутреннего скриптинга\h#
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag(). For more
-information about internal scripting, check the internal scripting reference.
+Чтобы использовать внутренний скриптинг в Ved, Вы можете включить режим
+внутреннего скриптинга в редакторе, чтобы расценивать все команды в данном скрипте
+как во внутреннем скрипте. Однако учтите, что данный скрипт применяется с помощью
+iftrinkets() или ifflag(). Для дополнительной информации о внутреннем скриптинге
+смотрите пункт внутреннего скриптинга.
 
-Splitting scripts\h#
+Разделение скриптов\h#
 
-It is possible to split a script in two scripts with the script editor. After
-putting the text cursor on the first line you want to be in the new script, click
-the Split button and enter the name of the new script. The lines before the cursor
-will remain in the original script, the lines from the cursor onward will be moved
-to the new script.
+В редакторе скриптов есть возможность разделения скрипта на две части. Для этого
+установите курсор на строке, которая должна быть первой в новом скрипте, затем
+нажмите кнопку "Разделить" и введите название нового скрипта. После этого строки
+перед курсором останутся в изначальном скрипте, а строки, начиная с положения
+курсора и далее, будут перенесены в новый скрипт.
 
-Jumping to scripts\h#
+Переход к скриптам\h#
 
-On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
-is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
-]]
-},
-
-{
-subj = "Shortcuts",
-imgs = {},
-cont = [[
-Editor shortcuts\wh#
-\C=
-
-Most shortcuts that can be used in VVVVVV can also be used in Ved.
-
-F1¤  Change tileset\C
-F2¤  Change color\C
-F3¤  Change enemies\C
-F4¤  Enemy bounds\C
-F5¤  Platform bounds\C
-
-F10¤  Manual/automatic mode (direct mode/undirect mode)\C
-
-W¤  Change warp direction\C
-E¤  Change roomname\C
-
-L¤  Load map\C
-S¤  Save map\C
-
-Z¤  3x3 brush (walls and backgrounds)\C
-X¤  5x5 brush (")\C
-
-< ¤and¤ >¤  change tool\CnC
-Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  change subtool\CnC
-
-More shortcuts\h#
-
-Ved also introduces a few shortcuts.
-
-Main editor\gh#
-
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
-Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
-N¤  display all tile numbers\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
-/¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
-F11¤  reload tilesets and sprites\C
-
-Script editor\gh#
-
-Ctrl+F¤  Find\C
-Ctrl+G¤  Go to line\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
-
-Script list\gh#
-
-N¤  Create new script\C
-F¤  Go to flags list\C
-/¤  Go to topmost/latest script\C
+В строках с командами iftrinkets, ifflag, customiftrinkets или customifflag есть
+возможность переходить к скриптам используя кнопку "Перейти" когда курсор
+находится на строке с этой командой. Также можно нажать ¤ctrl+ПКМ¤ чтобы это\nw
+сделать, или можно нажать ¤ctrl+ЛКМ¤ чтобы вернуться на исходный скрипт.\nw
 ]]
 },
 
 {
-subj = "Simp.script reference",
+subj = "Горячие клавиши",
 imgs = {},
 cont = [[
-Simplified scripting reference\wh#
+Горячие клавиши в редакторе\wh#
 \C=
 
-VVVVVV's simplified scripting language is a basic language that can be used to
-script VVVVVV levels.
-Note: whenever something is between quotes, it needs to be typed without them.
+Большинство горячих клавиш из VVVVVV могут быть так же применены и в Ved.
+
+F1¤  Изменить набор\C
+F2¤  Изменить цвет\C
+F3¤  Изменить тип врагов\C
+F4¤  Рамка врагов\C
+F5¤  Рамка платформ\C
+
+F10¤  Ручной/автоматический режим (direct mode/undirect mode)\C
+
+W¤  Изменить тип варпа\C
+E¤  Изменить название комнаты\C
+
+L¤  Загрузить уровень\C
+S¤  Сохранить уровень\C
+
+Z¤  Кисть 3x3\C
+X¤  Кисть 5x5\C
+
+< ¤и¤ >¤  менять инструмент\CnC
+Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  менять вариацию инструмента\CnC
+
+Больше горячих клавиш\h#
+
+Ved предоставляет несколько новых горячих клавиш
+
+Основной редактор\gh#
+
+Ctrl+P¤  Перейти к комнате с точкой старта\C
+Ctrl+S¤  Быстрое сохранение\C
+Ctrl+X¤  Вырезать комнату\C
+Ctrl+C¤  Скопировать комнату\C
+Ctrl+V¤  Вставить комнату (если есть)\C
+Ctrl+D¤  Сравнить данный уровень с другим\C
+Ctrl+Z¤  Отменить\C
+Ctrl+Y¤  Восстановить\C
+Ctrl+F¤  Поиск\C
+Ctrl+/¤  Записки уровня\C
+Ctrl+F1¤  Помощь\C
+(ВНИМАНИЕ: на версии Mac используйте cmd вместо ctrl)
+N¤  Покозать номера плиток в комнате\C
+M¤  Открыть карту\C
+Q¤  Перейти к комнате (Ввести координаты комнаты четырьмя цифрами)\C
+/¤  Скрипты\C
+[¤  Закрепить положение Y курсора(для просого построения горизональных линий)\C
+]¤  Закрепить положение X курсора(для просого построения вертикальных линий)\C
+F11¤  Перезагрузка спрайтов и плиток\C
+
+Редактор скриптов\gh#
+
+Ctrl+F¤  Поиск\C
+Ctrl+G¤  Перейти к строке\C
+Ctrl+right¤  Перейти к скрипту с ссылкой на данной строке\C
+Ctrl+left¤  Перейти к предыдущему скрипту по ссылке\C
+
+Список скриптов\gh#
+
+N¤  Создать новый скриптt\C
+F¤  Перейти к списку скриптов\C
+/¤  Перейти к первому/последнему скрипту\C
+]]
+},
+
+{
+subj = "Простые скрипты",
+imgs = {},
+cont = [[
+Простейшие скрипты\wh#
+\C=
+
+Простейший язык скриптинга VVVVVV - это основа создания скриптов для создания
+уровней в VVVVVV.
+Учтите: то, что в этом пункте заключено в ковычки, должно писаться без них.
 
 
-say¤([lines[,color]] .. "]]" .. [[)\h#w
+say¤([кол-во строк[,цвет]] .. "]]" .. [[)\h#w
 
-Display a text box. Without any arguments, this will make a text box with one
-line, and by default this will result in a centered terminal text box. The color
-argument can be a color, or the name of a crewmate.
-If you use a color and a rescuable crewmate with that color is in the room, then
-the text box will be displayed above that crewmate.
+Показывает текстовую рамку. При отсутствии аргументов создаёт серую текстовую
+рамку с одной строкой, расположенную по центру. Аргумент color может быть как
+цветом, так и именем члена экипажа.
+Если вы используете цвет и в комнате есть член экипажа с соответствующим цветом,
+то текстовая рамка будет расположена над ним.
 
-reply¤([lines])\h#w
+reply¤([кол-во строк])\h#w
 
-Display a text box for Viridian. Without the lines argument, this will make a text
-box with one line.
+Показывает текстовую рамку Виридиана. Без аргументов показывает текстовую рамку
+с одной строкой.
 
-delay¤(n)\h#w
+delay¤(N)\h#w
 
-Delays further action by n ticks. 30 ticks is almost one second.
+Задерживает сделующую команду на N тиков. 30 тиков примерно равны одной секунде.
 
-happy¤([crewmate])\h#w
+happy¤([член экипажа])\h#w
 
-Makes a crewmate happy. Without an argument, this will make Viridian happy. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-happy.
+Делает члена экипажа счасливым. Без аргумента сделает счастливым Виридиана. Также
+можно использовать аргументы "all", "everyone" или "everybody", чтобы сделать
+счастливыми всех.
 
-sad¤([crewmate])\h#w
+sad¤([член экипажа])\h#w
 
-Makes a crewmate sad. Without an argument, this will make Viridian sad. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-sad.
+Делает члена экипажа грустным. Без аргумента сделает грустным Виридиана. Также
+можно использовать аргументы "all", "everyone" или "everybody", чтобы сделать
+грустными всех.
 
-flag¤(flag,on/off)\h#w
+flag¤(номер флага,on/off)\h#w
 
-Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
-There are 100 flags, numbered from 0 to 99.
-By default, all flags are off when you start playing a level.
-Note: In Ved, you can also use flag names instead of the numbers.
+Включает (on) или выключает (off) флаг с данным номером. К примеру, flag(4,on)
+включит флаг под номером 4. Всего есть 100 флагов, пронумерованных от 0 до 99.
+По умолчанию все флаги выключены при запуске уровня.
+На заметку: в Ved также можно использовать имена флагов вместо чисел.
 
-ifflag¤(flag,scriptname)\h#w
+ifflag¤(номер флага,название скрипта)\h#w
 
-If a given flag is ON, then go to script with name scriptname.
-If a given flag is OFF, continue in the current script.
-Example:
-ifflag(20,cutscene) - If flag 20 is ON, go to script "cutscene", else continue in
-                      the current script.
-Note: In Ved, you can also use flag names instead of the numbers.
+Если данный флаг ВКЛЮЧЁН, прыгнуть к срипту с данным названием.
+Если данный флаг выключен, продожить выполнение скрипта.
+Пример:
+ifflag(20,cutscene) - Если флаг под номером 20 ВКЛЮЧЁН, прыгнуть к скрипту
+                      "cutscene", иначе продолжить выполнение скрипта.
+На заметку: в Ved также можно использовать имена флагов вместо чисел.
 
-iftrinkets¤(number,scriptname)\h#w
+iftrinkets¤(кол-во,название скрипта)\h#w
 
-If your amount of trinkets >= number, go to script with name scriptname.
-If your amount of trinkets < number, continue in the current script.
-Example:
-iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
-                               "enoughtrinkets" will be run, else the current
-                               script will continue.
-It is common practise to use 0 as a minimum amount of trinkets, as a way to load
-a script in any case.
+Если количество собранных тринкетов >= "кол-во", прыгнуть к скрипту.
+Если количество собранных тринкетов < "кол-во", продожить выполнение скрипта.
+Пример:
+iftrinkets(3,enoughtrinkets) - Если собрано 3 или более тринкетов, прыгнуть к
+                               скрипту "enoughtrinkets", иначе продожить
+                               выполнение скрипта.
+Использование нуля, как минимального количества тринкетов - обычная практика.
+Таким способом можно загрузить скрипт при любых обстоятельствах.
 
-destroy¤(something)\h#w
+destroy¤(нечто)\h#w
 
-Valid arguments can be:
-warptokens - Remove all warp tokens from the room until you re-enter the room.
-gravitylines - Remove all gravity lines from the room until you re-enter the room.
-The option "platforms" also exists, but it doesn't work properly.
+Рабочими аргументами являются:
+warptokens - Убрать все телепорты из комнаты до последующего захода в неё.
+gravitylines - Убрать все грави-линии из комнаты до последующего захода в неё.
+Также есть аргумент "platforms" (платформы), но он не работает должным образом.
 
-music¤(number)\h#w
+music¤(номер)\h#w
 
-Change the song to a certain song number.
-For the list of song numbers, refer to the "Lists reference" article.
+Поменять музыку на трек под данным номером.
+Для просмотра номеров треков, воспользуйтесь пунктом "Список номеров".
 
 playremix\h#w
 
-Plays the remix of Predestined Fate as music.
+Поменять музыку на ремикс Predestined Fate.
 
 flash\h#w
 
-Flashes the screen white, makes a bang sound and shakes the screen for a bit.
+Делает вспышку по всему экрану, играет звук взрыва и немного трясёт экран.
 
 map¤(on/off)\h#w
 
-Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
-you turn it on again. Rooms will still be uncovered while the map is off to be
-visible when the map is turned on.
+Включает (on) или выключает (off) карту. Если карта выключена, она будет
+показывать надпись "NO SIGNAL" до последующего её включения. Пройденные комнаты
+всё равно будут отображаться после выключения и включения карты.
 
-squeak¤(crewmate/on/off)\h#w
+squeak¤(член экипажа/on/off)\h#w
 
-Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
-or off.
+Заставляет взвизгнуть данного члена экипажа, вкючает (on) или выключает (off)
+звук взвизга при появлении текстовой рамки.
 
-speaker¤(color)\h#w
+speaker¤(цвет)\h#w
 
-Changes the color and position of the next text boxes created with the "say"
-command. This can be used instead of giving a second argument to "say".
+Меняет цвет и положение последующих текстовых рамок, созданных командой "say".
+Может использоваться как второй аргумент в команде "say".
 ]]
 },
 
 {
-subj = "Int. script reference",
+subj = "Внутренний скриптинг",
 imgs = {},
 cont = [[
 Internal scripting reference\wh#
@@ -1400,7 +1432,7 @@ Just like changeai(colour,faceleft/faceright), this changes face direction.
 colour - cyan/player/blue/red/yellow/green/purple
 direction - 0 is left, 1 is right
 
-walk¤(direction,ticks)\w#h
+walk¤(direction,x)\w#h
 
 Makes the player walk for the specified number of ticks
 
@@ -2320,13 +2352,13 @@ cont = [[
 Credits\wh#
 \C=
 
-
 Ved is made by Dav999
 
 Some of the graphics and the font were made by Format
 
 Russian translation: CreepiX, Captain Normalguy
 Esperanto translation: Format
+German translation: r00ster
 
 
 Special thanks to:\h#
@@ -2337,7 +2369,6 @@ Terry Cavanagh for making VVVVVV
 TurtleP (for the code that made graphics not blurry when scaled)
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
 
 
 

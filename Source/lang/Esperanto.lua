@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-05-10 00:00:00 (ZZZ)
+--- Last converted: 2018-07-05 22:53:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -8,6 +8,10 @@
 	If you want to continue translating in this file, it's possible to import
 	it into the system later, so don't worry.
 ]]
+
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return (n ~= 1) end
 
 function fontpng_ascii(c)
 	if c == "Ĉ" then
@@ -39,7 +43,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)",
+TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.0 aŭ pli altan. Vi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 UNKNOWNSTATE = "Saltis al nekonata stato ($1) de stato $2",
@@ -48,9 +52,9 @@ FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu rip
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.",
-MAXTRINKETS_BYPASS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendata fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
+MAXTRINKETS_BYPASS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendate fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
 MAXCREWMATES = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.",
-MAXCREWMATES_BYPASS = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendata fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
+MAXCREWMATES_BYPASS = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendate fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
 EDITINGROOMTEXTNIL = "Ekzistinta ĉambroteksto, kiun ni estis redaktinta, estas nula!",
 STARTPOINTNOLONGERFOUND = "La malnova komenciĝejo ne plu troveblas!",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
@@ -62,10 +66,10 @@ RAWENTITYPROPERTIES = "Vi povas ŝanĝi la krudajn atributvalorojn de ĉi tiu en
 UNKNOWNENTITYTYPE = "Nekonata entotipo $1",
 METADATAENTITYCREATENOW = "La metadatuma ento ne jam ekzistas. Ĉu krei ĝin nun?\n\nLa metadatuma ento estas kaŝita ento, kiu povas esti aldonita al VVVVVV-niveloj por teni ekstrajn datumojn, kiujn uzas Ved, ekzemple la nivelo-notblokon, flagnomojn, kaj aliajn aferojn.",
 WARPTOKENENT404 = "Teleportila ento ne plu ekzistas!",
-SPLITFAILED = "Divido mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?",
+SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.\n\nĈu eliri la redaktilon?",
 LEVELOPENFAIL = "Ne povis malfermi $1.vvvvvv.",
-SIZELIMITSURE = "La maksimuma grando de nivelo estas 20 oble 20.\n\nPreterpasi tiun limon kaŭzos erarojn kaj nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV. Estas forte rekomendita ne fari tion, krom se vi nur testas. Ĉu vi certas, ke vi volas preterpasi la limon?",
+SIZELIMITSURE = "La maksimuma grando de nivelo estas 20 oble 20.\n\nPreterpasi tiun limon kaŭzos erarojn kaj nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV. Estas forte rekomendate ne fari tion, krom se vi nur testas. Ĉu vi certas, ke vi volas preterpasi la limon?",
 SIZELIMIT = "La maksimuma grando de nivelo estas 20 oble 20.\n\nLa grando anstataŭe ŝanĝiĝos al $1 oble $2.",
 SCRIPTALREADYEXISTS = "Skripto \"$1\" jam ekzistas!",
 FLAGNAMENUMBERS = "Flagnomoj ne povas esti nur ciferoj.",
@@ -74,7 +78,7 @@ FLAGNAMEINUSE = "La flagnomo $1 jam estas uzata de flago $2",
 DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos konsiderata kiel pli malnova versio.",
 SUREQUIT = "Ĉu vi certas, ke vi volas eliri? Vi perdos ĉion nekonservitan.",
 SUREQUITNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol eliri?",
-SURENEWLEVELNEW = "You have unsaved changes. Do you want to save these changes before creating a new level?",
+SURENEWLEVELNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol krei novan nivelon?",
 SCALEREBOOT = "La novaj skalagordoj efikos post relanĉi Ved-on.",
 NAMEFORFLAG = "Nomo de flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
@@ -138,8 +142,8 @@ SCRIPTUSAGES = "Uzadoj",
 EDITTAB = "Redakti",
 COPYSCRIPT = "Kopii skripton",
 SEARCHSCRIPT = "Serĉi",
-GOTOLINE = "Iri al linio",
-GOTOLINE2 = "Iri al linio:",
+GOTOLINE = "Salti al linio",
+GOTOLINE2 = "Salti al linio:",
 INTERNALON = "Int.skr: NE",
 INTERNALOFF = "Int.skr: JES",
 VIEW = "Vidi",
@@ -150,7 +154,7 @@ TEXTSIZEL = "Tekstgrando: L",
 INSERT = "Enmeti",
 HELP = "Helpo",
 INTSCRWARNING_NOLOADSCRIPT = "Ŝargskripto bezonata!",
-INTSCRWARNING_BOXED = "Refrencita rekte de skrpitkvadrato/komputilo!\n\n",
+INTSCRWARNING_BOXED = "Refrencita rekte de skriptkvadrato/komputilo!\n\n",
 COLUMN = "Kolumno: ",
 
 BTN_OK = "Bone",
@@ -161,14 +165,14 @@ BTN_APPLY = "Apliki",
 BTN_QUIT = "Eliri",
 BTN_DISCARD = "Ignori",
 BTN_SAVE = "Konservi",
-BTN_CLOSE = "Close",
+BTN_CLOSE = "Fermi",
 
 COMPARINGTHESE = "Komparado de $1.vvvvvv al $2.vvvvvv",
 COMPARINGTHESENEW = "Komparado de nekonservita nivelo al $1.vvvvvv",
 
 RETURN = "Reen",
 CREATE = "Krei",
-GOTO = "Iri al",
+GOTO = "Alsalti",
 DELETE = "Forigi",
 RENAME = "Renomi",
 CHANGEDIRECTION = "Ŝanĝi direkton",
@@ -180,8 +184,8 @@ RIGHT = "dekstren",
 TESTFROMHERE = "Testi de ĉi tie",
 FLIP = "Renversi",
 CYCLETYPE = "Ŝanĝi tipon",
-GOTODESTINATION = "Iri al celloko",
-GOTOENTRANCE = "Iri al enirejo",
+GOTODESTINATION = "Salti al celo",
+GOTOENTRANCE = "Salti al enirejo",
 CHANGECOLOR = "Ŝanĝi koloron",
 EDITTEXT = "Redakti tekston",
 COPYTEXT = "Kopii tekston",
@@ -193,8 +197,8 @@ CHANGETOVER = "Ŝanĝi al vertikala",
 RESIZE = "Movigi/Regrandigi",
 CHANGEENTRANCE = "Movigi enirejon",
 CHANGEEXIT = "Movigi elirejon",
-LOCK = "Lock",
-UNLOCK = "Unlock",
+LOCK = "Ŝlosi",
+UNLOCK = "Malŝlosi",
 BUG = "[Erareto!]",
 
 VEDOPTIONS = "Ved-agordoj",
@@ -219,7 +223,7 @@ ENEMYBOUNDS = "Malamiko-limo",
 ROOMNAME = "Ĉambronomo",
 ROOMOPTIONS = "Ĉambro-agordoj",
 ROTATE180 = "Turni 180-grade",
-ROTATE180UNI = "Rotate 180°",
+ROTATE180UNI = "Turni 180-grade",
 HIDEBOUNDS = "Kaŝi limojn",
 SHOWBOUNDS = "Montri limojn",
 
@@ -313,13 +317,13 @@ PAUSEDRAWUNFOCUSED = "Ne bildigi kiam la fenestro estas elfokusa",
 ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas",
 AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
 SCALE = "Skalo",
-LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
+LOADALLMETADATA = "Ŝargi metadatumojn (kiel titolon, aŭtoron kaj priskribon) por ĉiuj dosieroj en nivelolisto",
 
 SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
 SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",
 
-SCRIPTSPLIT = "Dividi",
-SPLITSCRIPT = "Dividi skriptojn",
+SCRIPTSPLIT = "Fendi",
+SPLITSCRIPT = "Fendi skriptojn",
 COUNT = "Kvanto:",
 SMALLENTITYDATA = "datumoj",
 
@@ -435,21 +439,53 @@ NONINTSCALE = "Neentjera skalado",
 USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
-SYNTAXCOLOR_COMMENT = "Comment",
-FPSLIMIT = "FPS limit",
+SYNTAXCOLOR_COMMENT = "Komento",
+FPSLIMIT = "KS-limo",
 
+}
+
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "Vi havas $1 aldonaĵon, kiu ne estas subtenata en ĉi tiu versio.",
+		[1] = "Vi havas $1 aldonaĵojn, kiuj ne estas subtenataj en ĉi tiu versio.",
+	}
+	LEVELFAILEDCHECKS = {
+		[0] = "Ĉi tiu nivelo malsukcesis je $1 kontrolo. La problemo eble estas riparita aŭtomate, sed eblas ke tio ankoraŭ kaŭzos erarojn kaj nekonsekvencaĵojn.",
+		[1] = "Ĉi tiu nivelo malsukcesis je $1 kontroloj. La problemoj eble estas riparitaj aŭtomate, sed eblas ke tio ankoraŭ kaŭzos erarojn kaj nekonsekvencaĵojn.",
+	}
+	SCRIPTUSAGESROOMS = {
+		[0] = "$1 uzado en ĉambroj: $2",
+		[1] = "$1 uzadoj en ĉambroj: $2",
+	}
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "$1 uzado en skriptoj: $2",
+		[1] = "$1 uzadoj en skriptoj: $2",
+	}
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "Ento ĉe [$1 $2] havas $3 malvalidan atributon!",
+		[1] = "Ento ĉe [$1 $2] havas $3 malvalidajn atributojn!",
+	}
+	ROOMINVALIDPROPERTIES = {
+		[0] = "LevelMetadata por ĉambro #$1 havas $2 malvalidan atributon!",
+		[1] = "LevelMetadata por ĉambro #$1 havas $2 malvalidajn atributojn!",
+	}
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "Montranta $1",
+		[1] = "Montranta $1",
+	}
 }
 
 toolnames = {
 
 "Muro",
 "Fono",
-"Pintaĵo",
+"Pikaĵo",
 "Kolektaĵo",
 "Konservejo",
 "Malaperanta platformo",
-"Movigilo",
-"Movanta platformo",
+"Transportbendo",
+"Moviĝanta platformo",
 "Malamiko",
 "Renversilo",
 "Ĉambroteksto",
@@ -458,7 +494,7 @@ toolnames = {
 "Teleportilo",
 "Teleportlinio",
 "Ŝipano",
-"Komencejo"
+"Komencejo",
 
 }
 
@@ -489,7 +525,7 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "Ĉ"
+[3] = "Ĉ",
 
 }
 
@@ -576,8 +612,8 @@ diffmessages = {
 		cleared2 = "Ĉiuj blokoj viŝitaj en ($1,$2) ($3 -> $4)\\R",
 	},
 	roommetadata = {
-		changed0 = "Ĉambro $1:",
-		changed1 = "Ĉambro $1 ($2):",
+		changed0 = "Ĉambro $1,$2:",
+		changed1 = "Ĉambro $1,$2 ($3):",
 		roomname = "Ĉambronomo ŝanĝita de \"$1\" al \"$2\"\\Y",
 		roomnameremoved = "Ĉambronomo \"$1\" viŝita\\R",
 		roomnameadded = "Ĉambro nomita \"$1\"\\G",
@@ -695,7 +731,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Return",
+subj = "Reveni",
 imgs = {},
 cont = [[
 \)
@@ -703,1046 +739,1041 @@ cont = [[
 },
 
 {
-subj = "Getting started",
+subj = "Kiel komenci",
 imgs = {},
 cont = [[
-Getting started\wh#
+Kiel komenci\wh#
 \C=
 
-This article will help you get started with using Ved. To get started with using
-the editor, you need to load a level, or create a new one.
+Tiu ĉi artikolo helpos vin komenci uzi Ved. Por komenci uzi la redaktilon, vi
+devas ŝargi nivelon, aŭ krei novan nivelon.
 
 
-The editor\h#
+La redaktilo\h#
 
-On the left side, you will find the tools selection. Most tools have subtools that
-will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
-help page.
-Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
-On the right side of the screen, you will find many buttons and options. The upper
-buttons are related to the entire level, the lower buttons (under Room options)
-are specific to the current room. For more information about those buttons, refer
-to the respective help pages, where available.
+Ĉe la maldekstra flanko, vi trovos la ilaron. La plimulto da iloj havas ilidojn
+kiuj listiĝos ĉe ĝia dekstro. Por ŝanĝi la uzatan ilon, uzu la taŭgan klavaro-
+komandon aŭ rulumu kun shift aŭ ctrl premata. Por interŝanĝi ilidojn, vi povas
+rulumi ie ajn. Por pli da informoj pri la iloj, legu la helpopaĝon ¤Iloj.\nwl
+Entoj povas dekstre alklakiĝi por menuo de agoj por tiu ento. Por forigi entojn
+sen uzi la kuntekstan menuon, dekstre alklaku ilin dum premadi shift.
+Ĉe la dekstra flanko de la ekrano, vi trovos multajn butonojn kaj agordojn. La
+supraj butonoj rilatas al la tuta nivelo, dum la malsupraj (sub Ĉambro-agordoj)
+estas specifaj al la aktuala ĉambro. Por pli da informoj pri tiuj butonoj, legu
+la respektivajn helpopaĝojn, kie haveblas.
 
-Levels folder\h#
+Dosierujo de niveloj\h#
 
-Ved will normally use the same folder for storing levels as VVVVVV does, so it is
-easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
-detect your VVVVVV folder correctly, you can enter a custom path in the Ved
-options.
+Ved normale uzos la saman dosierujon por konservi nivelojn kiel VVVVVV, por ke
+iri de la niveloredaktilo de VVVVVV al Ved kaj male estas facile. Se Ved ne
+detektas vian VVVVVV-dosierujon korekte, vi povas enigi propran dosierindikon
+en la agordoj de Ved.
 ]]
 },
 
 {
-subj = "Tile placement modes",
+subj = "Reĝimoj de kahel-metado",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
-Tile placement modes\wh#
+Reĝimoj de kahel-metado\wh#
 \C=
 
-Ved supports three different modes to draw tiles.
+Ved subtenas tri diversajn reĝimojn por meti kahelojn.
 
-     Automatic mode\h#0
+     Aŭtomata reĝimo\h#0
 
-          This is the mode that is easiest to use. In this mode, you can draw
-          walls and backgrounds and the edges will automatically get placed
-          correctly. However, while editing in this mode, all walls and
-          backgrounds in the room must use the same tileset and color.
+          Tiu ĉi estas la plej facile uzebla reĝimo. En tiu ĉi reĝimo, vi povas
+          meti murojn kaj fonojn, kaj la bordoj aŭtomate metiĝos korekte. Tamen,
+          dum redakti en tiu ĉi reĝimo, ĉiuj muroj kaj fonoj en la ĉambro devas
+          uzi la saman kahelaron kaj koloron.
 
-     Multi-tileset mode\h#1
+     Multkahelara reĝimo\h#1
 
-          This is similar to automatic mode, except that you can have multiple
-          different tilesets in the same room. That is, changing the tileset will
-          not affect already-placed walls and backgrounds, and you can draw in
-          multiple different types of tiles in the same room.
+          Tiu ĉi similas al la aŭtomata reĝimo, krom ke vi povas havi multajn
+          malsamajn kahelarojn en la sama ĉambro. Tio estas, ke ŝanĝi la kahelaron
+          ne influos jame metitaj muroj kaj fonoj, kaj vi povas desegni per multaj
+          kahelaroj en la sama ĉambro.
 
-     Manual mode\h#2
+     Permana reĝimo\h#2
 
-          Also called Direct Mode, in this mode you can place down any tile
-          manually, so you are not bound to the pre-defined tileset combinations
-          and edges will not automatically get added to walls, giving you complete
-          control over how the room will look. However, this editing mode is often
-          slower to use.
+          Ankaŭ nomita rekta reĝimo, en tiu ĉi reĝimo vi povas meti ian ajn
+          kahelon permane, do vi ne estas limigita al la antaŭdifinitaj kombinoj
+          de kahelaroj, kaj bordoj ne aŭtomate aldoniĝos al muroj, por doni al vi
+          tutan regon super kiel aspektos la ĉambro. Tamen, tiu ĉi reĝimo de
+          redaktado ofte pli malrapide uzeblas.
 ]]
 },
 
 {
-subj = "Tools",
+subj = "Iloj",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
-Tools\wh#
+Iloj\wh#
 \C=
 
-You can use the following tools to fill rooms in your level:
+Vi povas uzi la sekvantajn ilojn por plenigi ĉambrojn en via nivelo:
 
 \0
-   Wall\h#
+   Muro\h#
 
 
-The wall tool can be used to place walls.
+Tiu ĉi ilo estas uzebla por meti murojn.
 
 \1
-   Background\h#
+   Fono\h#
 
 
-The background tool can be used to place backgrounds.
+Tiu ĉi ilo estas uzebla por meti fonojn.
 
 \2
-   Spike\h#
+   Pikaĵo\h#
 
 
-The spike tool can be used to place spikes. You can use the expand subtool to
-place spikes on a surface with one click (or slide).
+Tiu ĉi ilo estas uzebla por meti pikaĵojn. Vi povas uzi la etendan ilidon por
+meti pikaĵojn sur surfacon per unu klako (aŭ deŝovo).
 
 \3
-   Trinket\h#
+   Kolektaĵo\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+Tiu ĉi ilo estas uzebla por meti kolektaĵojn. Bonvole notu, ke estas limo
+de dudek kolektaĵoj en nivelo.
 
 \4
-   Checkpoint\h#
+   Konservejo\h#
 
 
-The checkpoint tool can be used to place checkpoints.
+Tiu ĉi ilo estas uzebla por meti konservejojn.
 
 \5
-   Disappearing platform\h#
+   Malaperanta platformo\h#
 
 
-The disappearing platform tool can be used to place disappearing platforms.
+Tiu ĉi ilo estas uzebla por meti malaperantajn platformojn.
 
 \6
-   Conveyor\h#
+   Transportbendo\h#
 
 
-The conveyor tool can be used to place conveyors.
+Tiu ĉi ilo estas uzebla por meti transportbendojn.
 
 \7
-   Moving platform\h#
+   Moviĝanta platformo\h#
 
 
-The moving platform tool can be used to place moving platforms.
+Tiu ĉi ilo estas uzebla por meti moviĝantajn platformojn.
 
 \8
-   Enemy\h#
+   Malamiko\h#
 
 
-The enemy tool can be used to place enemies. The shape and color of the enemy are
-determined by the enemy type setting and the tileset (color) respectively.
+Tiu ĉi ilo estas uzebla por meti malamikojn. La formo kaj koloro de la malamiko
+estas determinitaj de la agordo de la malamiko-tipo, kaj la (koloro de la)
+kahelaro, respektive.
 
 \9
-   Gravity line\h#
+   Renversilo\h#
 
 
-The gravity line tool can be used to place gravity lines.
+Tiu ĉi ilo estas uzebla por meti renversilojn.
 
 \^0
-   Roomtext\h#
+   Ĉambroteksto\h#
 
 
-The roomtext tool can be used to place text.
+Tiu ĉi ilo estas uzebla por meti ĉambrotekston.
 
 \^1
-   Terminal\h#
+   Komputilo\h#
 
 
-The terminal tool can be used to place terminals. First place the terminal, then
-type a name for the script. For more information about scripting, please refer to
-the scripting references.
+Tiu ĉi ilo estas uzebla por meti komputilojn. Unue metu ĝin, kaj tiam
+tajpu nomon por la skripto. Por pli da informoj pri skriptado, bonvolu legi
+la referencoj de skriptado.
 
 \^2
-   Script box\h#
+   Skriptkvadrato\h#
 
 
-The script box tool can be used to place script boxes. First click on the top left
-corner, then on the bottom right corner, then type a name for the script. For more
-information about scripting, please refer to the scripting references.
+Tiu ĉi ilo estas uzebla por meti skriptkvadratojn. Unue alklaku la supra-
+maldekstran angulon, kaj tiam la malsupra-dekstran, kaj tiam tajpu nomon por la
+skripto. Por pli da informoj pri skriptado, bonvolu legi la referencoj de
+skriptado.
 
 \^3
-   Warp token\h#
+   Teleportilo\h#
 
 
-The warp token tool can be used to place warp tokens. First click where the
-entrance should be, then where the exit should be.
+Tiu ĉi ilo estas uzebla por meti teleportilojn. Unue alklaku, kie devus esti la
+enirejo, kaj tiam alklaku, kie devus esti la elirejo.
 
 \^4
-   Warp line\h#
+   Teleportlinio\h#
 
 
-The warp line tool can be used to place warp lines. Please note that warp lines
-can only be placed on the edges of a room.
+Tiu ĉi ilo estas uzebla por meti teleportliniojn. Bonvole notu, ke ili nur
+povas metiĝi sur la bordoj de ĉambro.
 
 \^5
-   Crewmate\h#
+   Ŝipano\h#
 
 
-The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+Tiu ĉi ilo estas uzebla por meti mankantajn ŝipanojn, kiuj povas saviĝi. Se
+ĉiuj ŝipanoj saviĝas, la nivelo finiĝos. Bonvole notu, ke estas limo de dudek
+ŝipanoj en nivelo.
 
 \^6
-   Start point\h#
+   Komencejo\h#
 
 
-The start point tool can be used to place the start point.
+Tiu ĉi ilo estas uzebla por meti la komencejon.
 ]]
 },
 {
-subj = "Script editor",
+subj = "Skripto-redaktilo",
 imgs = {},
 cont = [[
-Script editor\wh#
+Skripto-redaktilo\wh#
 \C=
 
-With the script editor, you can manage and edit scripts in your level.
+Per la skripto-redaktilo, vi povas administri kaj redakti skriptojn en via
+nivelo.
 
 
-Flag names\h#
+Flagnomoj\h#
 
-For convenience and script readability, it is possible to use flag names instead
-of numbers. When you use a name instead of a number, a number will automatically
-be associated with that name, in the background. It is also possible to choose
-which number to use for which flag name.
+Por oportuneco kaj legebleco de skriptoj, estas eble uzi flagnomojn anstataŭ
+numeroj. Kiam vi uzas nomon anstataŭ numero, numero aŭtomate estos asociita kun
+tiu nomo, enfone. Ankaŭ eblas elekti kiun numeron uzi por ĉiu flagnomo.
 
-Internal scripting mode\h#
+Reĝimo de interna skriptado\h#
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag(). For more
-information about internal scripting, check the internal scripting reference.
+Por uzi internan skriptadon en Ved, vi povas ebligi ĝian reĝimon en la
+redaktilo, por teni ĉiujn komandojn en tiu skripto kiel internan skriptadon.
+Tamen, vi devas certigi, ke tiu skripto estas ŝargita per iftrinkets() aŭ
+ifflag(). Por pli da informoj pri interna skriptado, legu la referencojn de
+interna skriptado.
 
-Splitting scripts\h#
+Fendado de skriptoj\h#
 
-It is possible to split a script in two scripts with the script editor. After
-putting the text cursor on the first line you want to be in the new script, click
-the Split button and enter the name of the new script. The lines before the cursor
-will remain in the original script, the lines from the cursor onward will be moved
-to the new script.
+Eblas fendi skripton en du per la skripto-redaktilo. Post meti la tekst-
+kursoron sur la unuan linion, kiun vi volas esti en la nova skripto, alklaku la
+butonon Fendi kaj enigu la nomon de la nova skripto. La linioj antaŭ la kursoro
+restos en la originala skripto, kaj la linioj de la kursoro pluen moviĝos al la
+nova.
 
-Jumping to scripts\h#
+Saltado al skriptoj\h#
 
-On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
-is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
-]]
-},
-
-{
-subj = "Shortcuts",
-imgs = {},
-cont = [[
-Editor shortcuts\wh#
-\C=
-
-Most shortcuts that can be used in VVVVVV can also be used in Ved.
-
-F1¤  Change tileset\C
-F2¤  Change color\C
-F3¤  Change enemies\C
-F4¤  Enemy bounds\C
-F5¤  Platform bounds\C
-
-F10¤  Manual/automatic mode (direct mode/undirect mode)\C
-
-W¤  Change warp direction\C
-E¤  Change roomname\C
-
-L¤  Load map\C
-S¤  Save map\C
-
-Z¤  3x3 brush (walls and backgrounds)\C
-X¤  5x5 brush (")\C
-
-< ¤and¤ >¤  change tool\CnC
-Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  change subtool\CnC
-
-More shortcuts\h#
-
-Ved also introduces a few shortcuts.
-
-Main editor\gh#
-
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
-Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
-N¤  display all tile numbers\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
-/¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
-F11¤  reload tilesets and sprites\C
-
-Script editor\gh#
-
-Ctrl+F¤  Find\C
-Ctrl+G¤  Go to line\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
-
-Script list\gh#
-
-N¤  Create new script\C
-F¤  Go to flags list\C
-/¤  Go to topmost/latest script\C
+Sur linioj kun komando iftrinkets, ifflag, customiftrinkets aŭ customifflag,
+eblas salti al la donita skripto per alklaki la butonon "Alsalti" kiam la
+kursoro estas sur tiu linio. Vi ankaŭ povas premi ¤ctrl+dekstro¤ por fari do,
+kaj vi povas uzi ¤ctrl+maldekstro¤ por retrosalti unu paŝon tra la ĉeno.\nw
 ]]
 },
 
 {
-subj = "Simp.script reference",
+subj = "Klavkombinoj",
 imgs = {},
 cont = [[
-Simplified scripting reference\wh#
+Klavkombinoj de la redaktilo\wh#
 \C=
 
-VVVVVV's simplified scripting language is a basic language that can be used to
-script VVVVVV levels.
-Note: whenever something is between quotes, it needs to be typed without them.
+La plimulto da klavkombinoj uzeblaj en VVVVVV ankaŭ uzeblas en Ved.
+
+F1¤  Ŝanĝi kahelaron\C
+F2¤  Ŝanĝi koloron\C
+F3¤  Ŝanĝi malamikojn\C
+F4¤  Limoj de malamikoj\C
+F5¤  Limoj de platformoj\C
+
+F10¤  Permana/aŭtomata reĝimo (rekta/nerekta reĝimo)\C
+
+W¤  Ŝanĝi teleport-direkton\C
+E¤  Ŝanĝi ĉambronomon\C
+
+L¤  Ŝargi nivelon\C
+S¤  Konservi nivelon\C
+
+Z¤  Broso 3x3 (muroj kaj fonoj)\C
+X¤  Broso 5x5 (")\C
+
+< ¤kaj¤ >¤  ŝanĝi ilon\CnC
+Ctrl/Cmd+< ¤kaj¤ Ctrl/Cmd+>¤  ŝanĝi ilidon\CnC
+
+Pli da klavkombinoj\h#
+
+Ved ankaŭ enkondukas kelkajn klavkombinoj.
+
+Ĉefa redaktilo\gh#
+
+Ctrl+P¤  Salti al la ĉambro enhavanta la komencejon\C
+Ctrl+S¤  Rapidkonservo\C
+Ctrl+X¤  Tondi ĉambron al tondejo\C
+Ctrl+C¤  Kopii ĉambron al tondejo\C
+Ctrl+V¤  Alglui ĉambron de tondejo (se eble)\C
+Ctrl+D¤  Kompari tiun ĉi nivelon al alia\C
+Ctrl+Z¤  Malfari\C
+Ctrl+Y¤  Refari\C
+Ctrl+F¤  Serĉi\C
+Ctrl+/¤  Nivela notbloko\C
+Ctrl+F1¤  Helpo\C
+(RIMARKU: En Macintosh, anstataŭigi Ctrl per Cmd)\C
+N¤  montri ĉiujn kahelnumerojn\C
+M¤  Montri mapon\C
+Q¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
+/¤  Skriptoj\C
+[¤  ŝlosi Y de muso dum premadata (por fari horizontalajn strekojn pli facile)\C
+]¤  ŝlosi X de muso dum premadata (por fari vertikalajn strekojn pli facile)\C
+F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
+
+Skripto-redaktilo\gh#
+
+Ctrl+F¤  Trovi]C
+Ctrl+G¤  Salti al linio\C
+Ctrl+dekstro¤  Salti al skripto en kondiĉa komando\C
+Ctrl+maldesktro¤  Retrosalti unu paŝon\C
+
+Skriptlisto\gh#
+
+N¤  Krei novan skripton\C
+F¤  Iri al flaglisto\C
+/¤  Iri al plej supra/lastatempa skripto\C
+]]
+},
+
+{
+subj = "Simpla skriptado",
+imgs = {},
+cont = [[
+Referenco de simpla skriptado\wh#
+\C=
+
+La simpligita skriptlingvo de VVVVVV estas baza lingvo uzebla por skripti nivelojn
+de VVVVVV.
+Notu: kiam ajn io estas inter citiloj, tio devas tajpiĝi sen ili.
 
 
-say¤([lines[,color]] .. "]]" .. [[)\h#w
+say¤([linioj[,koloro]] .. "]]" .. [[)\h#w
 
-Display a text box. Without any arguments, this will make a text box with one
-line, and by default this will result in a centered terminal text box. The color
-argument can be a color, or the name of a crewmate.
-If you use a color and a rescuable crewmate with that color is in the room, then
-the text box will be displayed above that crewmate.
+Montri dialog-skatolon. Sen argumentoj, tio ĉi faros dialog-skatolon kun unu
+linio, kaj defaŭlte tio rezultos en centrigita komputila dialog-skatolo. La
+argumento de koloro povas esti koloro, aŭ nomo de ŝipano.
+Se vi uzas koloron kaj savebla ŝipano de tiu koloro estas en la ĉambro, la
+dialog-skatolo do estos montrota super tiu ŝipano.
 
-reply¤([lines])\h#w
+reply¤([linioj])\h#w
 
-Display a text box for Viridian. Without the lines argument, this will make a text
-box with one line.
+Montri dialog-skatolon de Viridian. Sen la linioj-argumento, tio ĉi faros
+dialog-skatolon kun unu linio.
 
 delay¤(n)\h#w
 
-Delays further action by n ticks. 30 ticks is almost one second.
+Prokrastas pluan agadon ĝis n kadroj. 30 kadroj estas proksimume unu sekundo.
 
-happy¤([crewmate])\h#w
+happy¤([ŝipano])\h#w
 
-Makes a crewmate happy. Without an argument, this will make Viridian happy. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-happy.
+Feliĉigas ŝipanon. Sen argumento, tio ĉi feliĉigos Viridianon. Vi ankaŭ povas
+uzi "all", "everyone" aŭ "everybody" kiel argumenton por feliĉigi ĉiujn.
 
-sad¤([crewmate])\h#w
+sad¤([ŝipano])\h#w
 
-Makes a crewmate sad. Without an argument, this will make Viridian sad. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-sad.
+Malfeliĉigas ŝipanon. Sen argumento, tio ĉi malfeliĉigos Viridianon. Vi ankaŭ
+povas uzi "all", "everyone" aŭ "everybody" kiel argumenton por malfeliĉigi ĉiujn.
 
-flag¤(flag,on/off)\h#w
+flag¤(flago,on/off)\h#w
 
-Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
-There are 100 flags, numbered from 0 to 99.
-By default, all flags are off when you start playing a level.
-Note: In Ved, you can also use flag names instead of the numbers.
+Ŝalti aŭ malŝalti la donitan flagon. Ekzemple, flag(4,on) ŝaltos la flagon de
+numero 4. Estas 100 flagoj, numeritaj de 0 ĝis 99. Defaŭlte, ĉiuj flagoj estas
+malŝaltitaj kiam vi komencas ludi nivelon.
+Notu: En Ved, vi ankaŭ povas uzi flagnomojn anstataŭ la numerojn.
 
-ifflag¤(flag,scriptname)\h#w
+ifflag¤(flago,skriptnomo)\h#w
 
-If a given flag is ON, then go to script with name scriptname.
-If a given flag is OFF, continue in the current script.
-Example:
-ifflag(20,cutscene) - If flag 20 is ON, go to script "cutscene", else continue in
-                      the current script.
-Note: In Ved, you can also use flag names instead of the numbers.
+Se la donita flago estas ŜALTA, saltu al la skripto kun la nomo skriptnomo.
+Se ĝi estas MALŜALTA, daŭru en la nuntempa skripto.
+Ekzemplo:
+ifflag(20,cutscene) - Se flago 20 estas ŜALTA, saltu al skripto "cutscene",
+                      alie daŭru en la nuntempa skripto.
+Notu: En Ved, vi ankaŭ povas uzi flagnomojn anstataŭ la numerojn.
 
-iftrinkets¤(number,scriptname)\h#w
+iftrinkets¤(nombro,skriptnomo)\h#w
 
-If your amount of trinkets >= number, go to script with name scriptname.
-If your amount of trinkets < number, continue in the current script.
-Example:
-iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
-                               "enoughtrinkets" will be run, else the current
-                               script will continue.
-It is common practise to use 0 as a minimum amount of trinkets, as a way to load
-a script in any case.
+Se via kvanto da kolektaĵoj >= nombro, saltu al la skripto kun la nomo
+skriptnomo. Se ĝi estas < nombro, daŭru en la nuntempa skripto.
+Ekzemplo:
+iftrinkets(3,enoughtrinkets) - Se vi havas 3 aŭ pli da kolektaĵoj, la skripto
+"enoughtrinkets" estos plenumita, alie la nuntempa skripto daŭros.
+En praktiko, estas kutime uzi 0 por nombro se vi volas ŝargi skripton en ĉiu
+okazo.
 
-destroy¤(something)\h#w
+destroy¤(forigotaĵo)\h#w
 
-Valid arguments can be:
-warptokens - Remove all warp tokens from the room until you re-enter the room.
-gravitylines - Remove all gravity lines from the room until you re-enter the room.
-The option "platforms" also exists, but it doesn't work properly.
+Validaj argumentoj estas:
+warptokens - Forigi ĉiujn teleportilojn de la ĉambro ĝis kiam vi reeniras la
+ĉambron.
+gravitylines - Forigi ĉiujn renversilojn de la ĉambro ĝis kiam vi reeniras la
+ĉambron.
+Ankaŭ ekzistas la opcio "platforms" por platformoj, sed tio ne funkcias korekte.
 
-music¤(number)\h#w
+music¤(numero)\h#w
 
-Change the song to a certain song number.
-For the list of song numbers, refer to the "Lists reference" article.
+Ŝanĝi la melodion al certa melodi-numero.
+Por la listo da melodi-numeroj, legu la artikolon "Lista referenco".
 
 playremix\h#w
 
-Plays the remix of Predestined Fate as music.
+Ludas la remiksaĵon de Predestined Fate kiel muzikon.
 
 flash\h#w
 
-Flashes the screen white, makes a bang sound and shakes the screen for a bit.
+Blankigas kaj skuas la ekranon dum momento, ludante ekbruan sonon.
 
 map¤(on/off)\h#w
 
-Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
-you turn it on again. Rooms will still be uncovered while the map is off to be
-visible when the map is turned on.
+Ŝalti aŭ malŝalti la mapon. Se vi malŝaltas ĝin, ĝi montros "NO SIGNAL" ĝis
+kiam vi reŝaltas ĝin. Ĉambroj ankoraŭ malkovriĝos dum la mapo estas malŝaltita
+por esti videblaj kiam ĝi estas reŝaltita.
 
-squeak¤(crewmate/on/off)\h#w
+squeak(ŝipano/on/off)\h#w
 
-Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
-or off.
+Pepigi ŝipanon, aŭ (mal)ŝalti la pep-sonon de kiam dialog-skatolo montriĝas.
 
-speaker¤(color)\h#w
+speaker¤(koloro)\h#w
 
-Changes the color and position of the next text boxes created with the "say"
-command. This can be used instead of giving a second argument to "say".
+Ŝanĝas la koloron kaj pozicion de la sekvantaj dialog-skatoloj kreitaj per la
+komando "say". Tio ĉi uzeblas anstataŭ doni duan argumenton al "say".
 ]]
 },
 
 {
-subj = "Int. script reference",
+subj = "Interna skriptado",
 imgs = {},
 cont = [[
-Internal scripting reference\wh#
+Referenco de interna skriptado\wh#
 \C=
 
-The internal scripting provides more power to scripters, but is also a bit more
-complex than simplified scripting.
+Interna skriptado provizas pli da potenco al skriptantoj, sed ankaŭ estas iom pli
+kompleksa ol simpligita skriptado.
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag().
+Por uzi internan skriptadon en Ved, vi povas ebligi la reĝimon de interna
+skriptado en la redaktilo, por trakti ĉiujn komandojn en tiu skripto kiel
+internan skriptadon. Tamen, vi devas certigi, ke tiu skripto estas ŝargita per
+iftrinkets() aŭ ifflag().
 
-Color coding:\w
-Normal - Should be safe, worst case scenario is VVVVVV crashing because you made a
-         mistake.
-Blue¤   - Some of these don't work in custom levels, others don't make a lot of\b
-         sense in custom levels, or are only half useful because they were really
-         designed for the main game.
-Orange¤ - These work and nothing will go wrong normally, unless you give some\o
-         specific arguments to them that will cause your save data to go away.
-Red¤    - Red commands shouldn't be used in custom levels because they will either\r
-         unlock certain parts of the main game (which you shouldn't want a custom
-         level to do, even if you say everyone has already completed the game), or
-         corrupt the save data altogether.
+Kolorkodoj:\w
+Blanka - Devus esti sekura, en plej malbona okazo VVVVVV kraŝos ĉar vi eraris.
+Blua¤   - Kelkaj el ĉi tiuj ne funkcias en propraj niveloj, aliaj ne tre senc-\b
+         havas en propraj niveloj, aŭ nur duone utilas ĉar ili vere estis
+         dezajnitaj por la ĉefa ludo.
+Oranĝa¤ - Ĉi tiuj funkcias kaj nenio malbona okazos, krom se vi donas al ili iujn\o
+         specifajn argumentojn, kiuj forigos vian konservitajn datumojn.
+Ruĝa¤   - Ruĝaj komandoj devus ne uziĝi en propraj niveloj ĉar ili ĉu malŝlosos\r
+         iujn partojn de la ĉefa ludo (funkcio ne dezirinda por propra nivelo),
+         aŭ difektos viajn konservitajn datumojn entute.
 
 
-squeak¤(color)\w#h
+squeak¤(koloro)\w#h
 
-Makes a squeak sound from a crewmate, or a terminal sound
+Faras pep-sonon de ŝipano, aŭ sonon de komputilo.
 
-color - cyan/player/blue/red/yellow/green/purple/terminal
+koloro - cyan/player/blue/red/yellow/green/purple/terminal
 
-text¤(color,x,y,lines)\w#h
+text¤(koloro,x,y,linioj)\w#h
 
-Store a text box in memory with color, position and number of lines. Usually, the
-position command is used after the text command (and its lines of text), which
-will overwrite the coordinates given here, so these are usually left as 0.
+Konservi dialog-skatolon en memoro kun koloro, pozicio kaj nombro da linioj.
+Kutime, la komando position estas uzita post la komando text (kaj ties tekst-
+linioj), kio superskribos la koordinatojn ĉi tie donitajn, do ĉi tiuj kutime
+estas lasitaj kiel 0.
 
-color - cyan/player/blue/red/yellow/green/purple/gray
-x - The x position of the text box
-y - The y position of the text box
-lines - The number of lines
+koloro - cyan/player/blue/red/yellow/green/purple/gray
+x - La x-pozicio de la dialog-skatolo
+y - La y-pozicio de la dialog-skatolo
+linioj - La kvanto da linioj
 
 position¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box.
+Superskribas la x,y de la komando text kaj do agordas la pozicion de la
+dialog-skatolo.
 
-x - center/centerx/centery, or a color name
+x - center/centerx/centery, aŭ kolornomo
 cyan/player/blue/red/yellow/green/purple
-y - Only used if x is a color name. Can be above/below
+y - Nur uzita se x estas kolornomo. Povas esti above/below
 
 endtext\w#h
 
-Makes a text box disappear (fade out)
+Forigas (fordissolvigas) dialog-skatolon.
 
 endtextfast\w#h
 
-Makes a text box disappear immediately (without fading out)
+Tuje forigas dialog-skatolon (sen fordissolvo).
 
 speak\w#h
 
-Shows a text box, without removing old text boxes. Also pauses the script until
-you press action (unless there's a backgroundtext command above it)
+Montras dialog-skatolon sen forigi malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas ACTION (krom se estas backgroundtext super ĝi).
 
 speak_active\w#h
 
-Shows a text box, and removes any old text box. Also pauses the script until you
-press action (unless there's a backgroundtext command above it)
+Montras dialog-skatolon kaj forigas malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas ACTION (krom se estas backgroundtext super ĝi).
 
 backgroundtext\w#h
 
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
+Se vi metas tiun ĉi komandon sur la linion super speak aŭ speak_active, la ludo
+ne atendos ĝis kiam vi premas ACTION post krei la dialog-skatolon. Tio ĉi uzeblas
+por krei multajn dialog-skatolojn samtempe.
 
-changeplayercolour¤(color)\w#h
+changeplayercolour¤(koloro)\w#h
 
-Changes the player's color
+Ŝanĝas la koloron de la ludanto.
 
-color - cyan/player/blue/red/yellow/green/purple/teleporter
+koloro - cyan/player/blue/red/yellow/green/purple/teleporter
 
 restoreplayercolour¤()\w#h
 
-Changes the player's color back to cyan
+Reŝanĝas la koloron de la ludanto al cejana
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
+Ŝanĝas la koloron de ŝipano (notu: tio ĉi nur funkcias kun ŝipanoj kreitaj per la
+komando createcrewman)
 
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
+a - Koloro de ŝanĝota ŝipano (cyan/player/blue/red/yellow/green/purple)
+b - Nova koloro
 
 alarmon\w#h
 
-Turns the alarm on
+Ŝaltas la sonorilon
 
 alarmoff\w#h
 
-Turns the alarm off
+Malŝaltas la sonorilon
 
 cutscene¤()\w#h
 
-Makes cutscene bars appear
+Aperigas striojn de rakontsekvenco.
 
 endcutscene¤()\w#h
 
-Makes cutscene bars disappear
+Malaperigas la striojn de rakontsekvenco.
 
 untilbars¤()\w#h
 
-Wait until cutscene()/endcutscene() is completed
+Atendas, ĝis cutscene/endcutscene estas finiĝinta
 
-customifflag¤(n,script)\w#h
+customifflag¤(n,skripto)\w#h
 
-Same as ifflag(n,script) in simplified scripting
+Same kiel ifflag(n,skripto) en simpligita skriptado
 
-ifflag¤(n,script)\b#h
+ifflag¤(n,skripto)\b#h
 
-Same as customifflag, but loads an internal (main game) script
+Same kiel customifflag, sed ŝargas internan skripton (de la ĉefa ludo)
 
-loadscript¤(script)\b#h
+loadscript¤(skripto)\b#h
 
-Load an internal (main game) script. Commonly used in custom levels as
+Ŝargi internan skripton (de la ĉefa ludo). Komune uzata en propraj niveloj kiel
 loadscript(stop)
 
-iftrinkets¤(n,script)\b#h
+iftrinkets¤(n,skripto)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
 
-iftrinketsless¤(n,script)\b#h
+iftrinketsless¤(n,skripto)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
 
-customiftrinkets¤(n,script)\w#h
+customiftrinkets¤(n,skripto)\w#h
 
-Same as iftrinkets(n,script) in simplfied scripting
+Same kiel iftrinkets(n,skripto) en simpligita skriptado
 
-customiftrinketsless¤(n,script)\w#h
+customiftrinketsless¤(n,skripto)\w#h
 
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
+Same kiel iftrinketsless(n,skripto) en simpligita skriptado (sed memoru, ke tio
+estas nefunkcia)
 
-createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
+createcrewman¤(x,y,koloro,animstato,ai1,ai2)\w#h
 
-Creates a crewmate (not rescuable)
+Kreas ŝipanon (ne saveblan)
 
-mood - 0 for happy, 1 for sad
+animstato - 0 por feliĉa, 1 por malfeliĉa
 ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
       faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+ai2 - deviga se followposition estas uzata por ai1
 
 createentity¤(x,y,n,meta1,meta2)\o#h
 
-Creates an entity, check the lists reference for entity numbers
+Kreas enton, kontrolu la listan referencon por ento-numeroj
 
-n - The entity number
+n - La ento-numero
 
 vvvvvvman¤()\w#h
 
-Makes the player huge
+Grandegigas la ludanton
 
 undovvvvvvman¤()\w#h
 
-Back to normal
+Malfaras vvvvvvman()
 
 hideplayer¤()\w#h
 
-Makes the player invisible
+Malvidebligas la ludanton
 
 showplayer¤()\w#h
 
-Makes the player visible
+Videbligas la ludanton
 
 gamestate¤(x)\o#h
 
-Change the gamestate to the specified state number
+Ŝanĝi la ludstaton al la specifita stato-numero
 
 gamemode¤(x)\b#h
 
-teleporter to show the map, game to hide it (shows teleporters of the main game)
+teleporter por montri la mapon, game por kaŝi ĝin (montras teleportilegojn de la
+ĉefa ludo)
 
 x - teleporter/game
 
 blackout¤()\w#h
 
-Make the screen black/freezes the screen
+Nigrigas/frostigas la ekranon
 
 blackon¤()\w#h
 
-Back to normal from blackout()
+Malfaras blackout()
 
 fadeout¤()\w#h
 
-Fades the screen to black
+Dissolvigas la ekranon al nigro
 
 fadein¤()\w#h
 
-Fades back
+Maldissolvigas la ekranon
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Tuje maldissolvigas la ekranon de fadeout()
 
 untilfade¤()\w#h
 
-Wait until fadeout()/fadein() is completed
+Atendi, ĝis fadeout/fadein estas finiĝinta
 
 gotoroom¤(x,y)\w#h
 
-Change the current room to x,y, where x and y start at 0.
+Ŝanĝi la nuntempan ĉambron al x,y, kie x kaj y ekas je 0
 
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
+x - Ĉambra x-koordinato, ekante je 0
+y - Ĉambra y-koordinato, ekante je 0
 
-gotoposition¤(x,y,f)\w#h
+gotoposition¤(x,y[,f])\w#h
 
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
-
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
+Ŝanĝi la pozicion de Viridian al x,y en tiu ĉi ĉambro, kaj f estas ĉu vi estas
+renversita aŭ ne. (1 por renverso, 0 por nerenverso)
 
 flash¤(x)\w#h
 
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
-
-x - The amount of ticks. 30 ticks is almost one second.
+Blankigas la ekranon dum x kadroj (30 kadroj = Unu sekundo). Por flash
+simila al tiu de simpligita skriptado, uzu:
+flash(5)
+playef(9)
+shake(20)
 
 play¤(x)\w#h
 
-Start playing a song with internal song number.
+Komenci ludi melodion kun interna melodi-numero.
 
-x - Internal song number
+x - Interna melodi-numero
 
 jukebox¤(x)\w#h
 
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
+Blankigas muzikan komputilon kaj malkolorigas ĉiujn aliajn komputilojn
+(En propraj niveloj, tiu komando ŝajnas simple malkolorigi ĉiun komputilon).
 
 musicfadeout¤()\w#h
 
-Fades out the music.
+Dissolvigas la muzikon.
 
 musicfadein¤()\w#h
 
-Opposite of musicfadeout() (doesn't seem to work)
+Malo de musicfadeout() (ne ŝajnas funkcii)
 
 stopmusic¤()\w#h
 
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
+Haltigas la muzikon tuje. Ekvivalenta al music(0) en simpligita skriptado.
 
 resumemusic¤()\w#h
 
-Opposite of stopmusic() (doesn't seem to work)
+Malo de stopmusic() (ne ŝajnas funkcii)
 
-playef¤(x,n)\w#h
+playef¤(x)\w#h
 
-Play a sound effect.
+Ludi sonon. Vidu la listan referencon por la listo de son-numeroj.
 
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
+changemood¤(koloro,animstato)\w#h
 
-changemood¤(colour,mood)\w#h
+Ŝanĝas la animstaton de ŝipano (nur funkcias por ŝipanoj de createcrewman)
 
-Changes the mood of a crewmate (only works for crewmates created with
-createcrewman)
-
-colour - cyan/player/blue/red/yellow/green/purple
-mood - 0 for happy, 1 for sad
+koloro - cyan/player/blue/red/yellow/green/purple
+animstato - 0 por feliĉa, 1 por malfeliĉa
 
 everybodysad¤()\w#h
 
-Makes everybody sad (only for crewmates created with createcrewman and the player)
+Malfeliĉigas ĉiujn (nur por ŝipanoj de createcrewman kaj la ludanto)
 
-changetile¤(colour,tile)\w#h
+changetile¤(koloro,kahelo)\w#h
 
-Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
-and it only works for crewmates created with createcrewman)
+Ŝanĝas la kahelon de ŝipano (nur por ŝipanoj de createcrewman; vi povas uzi iun
+ajn grafikon en sprites.png)
 
-colour - cyan/player/blue/red/yellow/green/purple/gray
-tile - Tile number
+koloro - cyan/player/blue/red/yellow/green/purple/gray
+kahelo - Kahelnumero
 
 face¤(a,b)\w#h
 
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
+Frontigas ŝipanon a kontraŭ ŝipano b (nur por ŝipanoj de createcrewman)
 
 a - cyan/player/blue/red/yellow/green/purple/gray
 b - same
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Faras la specifitan ŝipanon akompananto (eble dependas de la loko sur la mapo)
 
-changeai¤(crewmate,ai1,ai2)\w#h
+changeai¤(ŝipano,ai1,ai2)\w#h
 
-Can change the face direction of a crewmate or the walking behaviour
+Povas ŝanĝi la frontan direkton de ŝipano aŭ la marŝ-agmaniero
 
-crewmate - cyan/player/blue/red/yellow/green/purple
+ŝipano - cyan/player/blue/red/yellow/green/purple
 ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
       faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+ai2 - deviga se followposition estas uzata por ai1
 
-changedir¤(colour,direction)\w#h
+changedir¤(koloro,direkto)\w#h
 
-Just like changeai(colour,faceleft/faceright), this changes face direction.
+Ĝuste kiel changeai(koloro,faceleft/faceright), tio ĉi ŝanĝas frontan direkton.
 
-colour - cyan/player/blue/red/yellow/green/purple
-direction - 0 is left, 1 is right
+koloro - cyan/player/blue/red/yellow/green/purple
+direkto - 0 estas maldekstren, 1 estas dekstren
 
-walk¤(direction,x)\w#h
+walk¤(direkto,x)\w#h
 
-Makes the player walk for the specified number of ticks
+Marŝigas la ludanton dum la specifita nombro da kadroj
 
-direction - left/right
+direkto - left/right
 
-flipgravity¤(colour)\w#h
+flipgravity¤(koloro)\w#h
 
-Flips the gravity of a certain crewmate (it won't always work on yourself)
+Renversas la graviton de iu ŝipano (ne ĉiam funkcias kun vi mem)
 
-colour - cyan/player/blue/red/yellow/green/purple
+koloro - cyan/player/blue/red/yellow/green/purple
 
 flipme\w#h
 
-Correct vertical positioning of multiple text boxes in flip mode
+Korektigi vertikalan poziciigadon de multaj dialog-skatoloj en renversita
+reĝimo
 
 tofloor\w#h
 
-Makes the player flip to the floor if he isn't already on the floor.
+Se la ludanto ne jam estas sur la grundo, tio ĉi renversigas lin al ĝi.
 
 flip\w#h
 
-Make the player flip
+Renversigas la ludanton
 
 foundtrinket¤(x)\w#h
 
-Makes a trinket found
+Igas kolektaĵon trovita
 
-x - Number of the trinket
+x - Numero de la kolektaĵo
 
 runtrinketscript\b#h
 
-Play Passion For Exploring?
+Ludi Passion for Exploring?
 
 altstates¤(x)\b#h
 
-Changes the layout of some rooms, like the trinket room in the ship before and
-after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
+Ŝanĝas la aranĝon de iuj ĉambroj, kiel la kolektaĵa ĉambro en la ŝipo antaŭ kaj
+post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj tute
+ne subtenas ĉi tion)
 
 createlastrescued¤(x,y)\b#h
 
-Creates the last rescued crewmate at position x,y (?)
+Kreas la laste savitan ŝipanon ĉe pozicio x,y (?)
 
-rescued¤(colour)\b#h
+rescued¤(koloro)\b#h
 
-Makes someone rescued
+Igas iun savita
 
-missing¤(colour)\b#h
+missing¤(color)\b#h
 
-Makes someone missing
+Igas iun mankanta
 
 finalmode¤(x,y)\b#h
 
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
-Final Level
+Teleportigas vin al ekster Dimension VVVVVV, (46,54) estas la inicia ĉambro de la
+Fina Nivelo
 
 setcheckpoint¤()\w#h
 
-Sets the checkpoint to the current location
+Agordas la konservan punkton al la nuntempa loko
 
 textboxactive\w#h
 
-Makes all text boxes on the screen disappear except for the last created one
+Forigas ĉiujn dialog-skatolojn sur la ekrano krom la laste kreita
 
-ifexplored¤(x,y,script)\w#h
+ifexplored¤(x,y,skripto)\w#h
 
-If x+1,y+1 is explored, go to (internal) script
+Se x,y estas esplorita, saltu al (interna) skripto. x kaj y ekas je 0.
 
-iflast¤(crewmate,script)\b#h
+iflast¤(ŝipano,skripto)\b#h
 
-If crewmate x was rescued last, go to script
+Se ŝipano x estis savita laste, saltu al skripto
 
-crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
-Victoria (I don't know the number for Viridian and Violet)
+ŝipano - Numeroj uziĝas ĉi tie:
+         2: Vitellary
+         3: Vermilion
+         4: Verdigris
+         5: Victoria
 
 ifskip¤(x)\b#h
 
-If you skip the cutscenes in No Death Mode, go to script x
+Se vi preterpasas la rakontsekvencojn en Nulmorta Reĝimo, saltu al skripto x
 
-ifcrewlost¤(crewmate,script)\b#h
+ifcrewlost¤(ŝipano,skripto)\b#h
 
-If crewmate is lost, go to script
+Se ŝipano estas mankanta, saltu al skripto
 
 showcoordinates¤(x,y)\w#h
 
-Show coordinates x,y on the map (This works for the map for custom levels)
+Montri koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
 
 hidecoordinates¤(x,y)\w#h
 
-Hide coordinates x,y on the map (This works for the map for custom levels)
+Kaŝi koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
 
 showship\w#h
 
-Show the ship on the map
+Montri la ŝipon sur la mapo
 
 hideship\w#h
 
-Hide the ship on the map
+Kaŝi la ŝipon sur la mapo
 
 showsecretlab\w#h
 
-Show the secret lab on the map
+Montri la sekretan laboratorion sur la mapo
 
 hidesecretlab\w#h
 
-Hide the secret lab on the map
+Kaŝi la sekretan laboratorion sur la mapo
 
 showteleporters¤()\b#h
 
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
+Montri la teleportilegojn sur la mapo (nur ŝajnas montri tiun de Space Station 1)
 
 hideteleporters¤()\b#h
 
-Hide the teleporters on the map
+Kaŝi la teleportilegojn sur la mapo
 
 showtargets¤()\b#h
 
-Show the targets on the map (unknown teleporters which show up as ?s)
+Montri la celojn sur la mapo (nekonataj teleportilegoj, montrataj kiel ?-ojn)
 
 hidetargets¤()\b#h
 
-Hide the targets on the map
+Kaŝi la celojn sur la mapo
 
 showtrinkets¤()\b#h
 
-Show the trinkets on the map
+Montri la kolektaĵojn sur la mapo
 
 hidetrinkets¤()\b#h
 
-Hide the trinkets on the map
+Kaŝi la kolektaĵojn sur la mapo
 
 hascontrol¤()\w#h
 
-Makes the player have control, however doesn't work in the middle of scripts
+Donas regpovon al la ludanto, sed ne funkcias en la mezo de skriptoj
 
 nocontrol¤()\w#h
 
-The opposite of hascontrol()
+La malo de hascontrol()
 
 specialline¤(x)\b#h
 
-Special dialogs that show up in the main game
+Specialaj dialogoj, kiuj aperas en la ĉefa ludo
 
 destroy¤(x)\w#h
 
-Same behaviour as simplified command
+Same kiel simpligita komando
 
-x - gravitylines/warptokens/platforms
+x- gravitylines/warptokens/platforms
 
 delay¤(x)\w#h
 
-Same behaviour as simplified command
+Same kiel simpligita komando
 
 flag¤(x,on/off)\w#h
 
-Same behaviour as simplified command
+Same kiel simpligita komando
 
 telesave¤()\r#h
 
-Saves your game (in the regular teleporter save, so don't use it!)
+Konservas vian ludon (superskribas viajn konservitajn datumojn de la ĉefa ludo, do
+ne uzu ĝin!)
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Tuje maldissolvi de fadeout()
 
-createactivityzone¤(colour)\b#h
+createactivityzone¤(koloro)\b#h
 
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
+Kreas zonon kie vi staras, kiu diras "Press ACTION to talk to (Crewmate)"
 
 createrescuedcrew¤()\b#h
 
-Creates all rescued crewmates
+Kreas ĉiujn savitajn ŝipanojn
 
 trinketyellowcontrol¤()\b#h
 
-Dialog of Vitellary when he gives you a trinket in the real game
+Dialogo de Vitellary, kiam li donas al vi kolektaĵon en la ĉefa ludo
 
 trinketbluecontrol¤()\b#h
 
-Dialog of Victoria when she gives you a trinket in the real game
+Dialogo de Victoria, kiam ŝi donas al vi kolektaĵon en la ĉefa ludo
 
 rollcredits¤()\r#h
 
-Makes the credits roll. It destroys your save after the credits are completed!
+Montras la kreditojn. Tio ĉi detruas viajn konservitajn datumojn kiam ĝi estas
+finiĝinta!
 
-teleportscript¤(script)\b#h
+teleportscript¤(skripto)\b#h
 
-Used to set a script which is run when you use a teleporter
+Iam agordis skripton, kiu plenumiĝus kiam vi uzus teleportilegon
 
 clearteleportscript¤()\b#h
 
-Clears the teleporter script set with teleporterscript(x)
+Viŝas la teleportilan skripton agorditan per la supra komando.
 
-moveplayer¤(x,y)\w#h
+moveplater¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make him move up or to the left
+Movas la ludanton x bilderojn dekstren kaj y malsupren. Kompreneble vi ankaŭ povas
+uzi minusajn nombrojn por movi lin maldekstren/supren
 
 do¤(n)\w#h
 
-Starts a loop block which will repeat n times
+Komencas iteracio-blokon, kiu ripetiĝos n fojojn
 
 loop\w#h
 
-Put this at the end of the loop block
+Metu ĉi tion ĉe la fino de la iteracio-bloko
 
 leavesecretlab¤()\b#h
 
-Turn off "secret lab mode"
+Malŝalti "sekretlaboratorian reĝimon"
 
 shake¤(n)\w#h
 
-Shake the screen for n ticks. This will not create a delay.
+Skuos la ekranon dum n kadroj. Tio ĉi ne kreas prokraston.
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will glow white and touching it will not
-annihilate your save data. May not work if there are multiple teleporters.
+Se estas teleportilegon en la ĉambro, ĝi brilos blanke kaj tuŝi ĝin ne ekstermos
+viajn konservitajn datumojn. Eble ne funkcios se estas multaj teleportilegoj.
 
 customposition¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box,
-but for crewmates, rescuable crewmates are used to position against, instead of
-createentity crewmates.
+Superskribas la x,y de la komando text kaj do agordas la pozicion de la dialog-
+skatolo (por saveblaj ŝipanoj anstataŭ ŝipanoj de createcrewman).
 
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple (rescuable)
-y - Only used if x is a color name. Can be above/below
+x - center/centerx/centery, aŭ kolornomo
+cyan/player/blue/red/yellow/green/purple (savebla)
+y - Nur uzata se x estas kolornomo. Povas esti above/below
 
 custommap¤(on/off)\w#h
 
-The internal variant of the map command
+Same kiel map() en simpligita skriptado
 
 trinketscriptmusic\w#h
 
-Plays passion for exploring, without taking arguments(?)
+Ludas Passion for Exploring, sen preni argumentojn(?)
 
 startintermission2\w#h
 
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
+Alterna finalmode(46,54), metas vin en la fina nivelo sen akcepti argumentojn.
+Kraŝigas la ludon en Timeslip.
 
 resetgame\w#h
 
-Resets all trinkets, collected crewmates and flags, and teleports the player to
-the last checkpoint.
+Restarigas ĉiujn kolektaĵojn, kolektitajn ŝipanojn kaj flagojn, kaj teleportas
+la ludanton al la lasta konservejo.
 
 redcontrol\b#h
 
-Start a conversation with Vermilion just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Komenci konversacion kun Vermilion ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 greencontrol\b#h
 
-Start a conversation with Verdigris just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Komenci konversacion kun Verdigris ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 bluecontrol\b#h
 
-Start a conversation with Victoria just like when you meet her in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Komenci konversacion kun Victoria ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 yellowcontrol\b#h
 
-Start a conversation with Vitellary just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Komenci konversacion kun Vitellary ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 purplecontrol\b#h
 
-Start a conversation with Violet just like when you meet her in the main game and
-press ENTER. Also creates an activity zone afterwards.
+Komenci konversacion kun Violet ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 foundlab\b#h
 
-Plays sound effect 3, shows text box with "Congratulations! You have found the
-secret lab!" Does not endtext, also has no further unwanted effects.
+Ludas sonon 3, montras dialog-skatolon kun "Congratulations! You have found the
+secret lab!" Ne uzas endtext, ankaŭ ne havas pluajn nevolatajn efikojn.
 
 foundlab2\b#h
 
-Displays the second text box you see after discovering the secret lab. Also does
-not endtext, and also does not have any further unwanted effects.
+Montras la duan dialog-skatolon, kiun vi vidas post malkovri la sekretan
+laboratorion. Ankaŭ ne uzas endtext, kaj ankaŭ ne havas pluajn nevolatajn efikojn.
 
 entersecretlab\r#h
 
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
+Fakte malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne nevolata
+efiko por propra nivelo. Ŝaltas sekretlaboratorian reĝimon.
 ]]
 },
 
 {
-subj = "Lists reference",
+subj = "Lista referenco",
 imgs = {},
 cont = [[
-Lists reference\wh#
+Lista referenco\wh#
 \C=
 
-These are lists of numbers that are used in VVVVVV, mostly copied from forum
-posts. Thanks to everyone who assembled these lists!
+Jen listoj de numeroj uzataj en VVVVVV, plejparte kopiitaj de forumaj afiŝoj.
+Dank' al ĉiuj, kiuj faris ĉi tiujn listojn!
 
 
-Index\w&Z+
+Tabelo\w&Z+
 \&Z+
-#Music numbers (simplified scripting)\C&Z+l
-#Music numbers (internal)\C&Z+l
-#Sound effect numbers\C&Z+l
-#Entities\C&Z+l
-#Colors for createentity() crewmates\C&Z+l
-#Enemy movement types\C&Z+l
-#Gamestates\C&Z+l
+#Muziknumeroj (simpligita skriptado)\C&Z+l
+#Muziknumeroj (internaj)\C&Z+l
+#Son-numeroj\C&Z+l
+#Entoj\C&Z+l
+#Koloroj por ŝipanoj de createentity()\C&Z+l
+#Moviĝtipoj por malamikoj\C&Z+l
+#Ludstatoj\C&Z+l
 
 
-Music numbers (simplified scripting)\h#
+Muziknumeroj (simpligita skriptado)\h#
 
-0 - Silence (no music)
+0 - Silento (nul muziko)
 1 - Pushing onwards
 2 - Positive force
 3 - Potential for anything
@@ -1755,7 +1786,7 @@ Music numbers (simplified scripting)\h#
 10 - Paced energy
 11 - Piercing the sky
 
-Music numbers (internal)\h#
+Muziknumeroj (internaj)\h#
 
 0 - Path Complete
 1 - Pushing Onwards
@@ -1774,222 +1805,225 @@ Music numbers (internal)\h#
 14 - Piercing The Sky
 15 - Predestined Fate remixed
 
-Sound effect numbers\h#
+Son-numeroj
 
-0 - Flip to ceiling
-1 - Flip back to floor
-2 - Cry
-3 - Trinket collected
-4 - Coin collected
-5 - Checkpoint touched
-6 - Quicker quicksand block touched
-7 - Normal quicksand block touched
-8 - Gravity line touched
-9 - Flash
-10 - Warp
-11 - Viridian squeak
-12 - Verdigris squeak
-13 - Victoria squeak
-14 - Vitellary squeak
-15 - Violet squeak
-16 - Vermilion squeak
-17 - Terminal touched
-18 - Teleporter touched
-19 - Alarm
-20 - Terminal squeak
-21 - Time trial countdown "3", "2", "1"
-22 - Time trial countdown "Go!"
-23 - VVVVVV Man breaking walls
-24 - Crewmates (de)combining into VVVVVV Man
-25 - New record in Super Gravitron
-26 - New trophy in Super Gravitron
-27 - Rescued crewmate (in custom levels)
+0 - Renverso al plafono
+1 - Rerenverso al planko
+2 - Krio
+3 - Kolektaĵo kolektita
+4 - Monero kolektita
+5 - Konservejo tuŝita
+6 - Pli rapida movsablo tuŝita
+7 - Normala movsablo tuŝita
+8 - Renversilo tuŝita
+9 - Ekbrilo
+10 - Teleporto
+11 - Pepo de Viridian
+12 - Pepo de Verdigris
+13 - Pepo de Victoria
+14 - Pepo de Vitellary
+15 - Pepo de Violet
+16 - Pepo de Vermilion
+17 - Komputilo tuŝita
+18 - Teleportilego tuŝita
+19 - Sonorilo
+20 - Pepo de komputilo
+21 - Tempoprovaĵa ĝisnombrado "3, 2, 1"
+22 - Tempoprovaĵa ĝisnombrado "GO!"
+23 - VVVVVV Man rompanta murojn
+24 - (Mal)kombiniĝo al/el VVVVVV Man
+25 - Nova rekordo en Super Gravitron
+26 - Nova trofeo en Super Gravitron
+27 - Savita ŝipano (en propraj niveloj)
 
-Entities\h#
+Entoj\h#
 
-0 - The player
-1 - Enemy
-    Metadata: movement type, movement speed
-    Due to lacking needed data, you will only ever get a purple enemy box, unless
-    you're in the VVVVVV polar dimension while doing the command
-2 - Moving platform
-    Metadata: movement type, movement speed
-    Note that conveyors are implemented as moving platforms, see movement type 8
-    and 9.
-3 - A disappearing platform
-4 - A 1x1 quicker quicksand block
-5 - A flipped Viridian, you will flip gravity when touched
-6 - Weird red flashy thingy that disappears quickly
-7 - Same as above, but doesn't flash and is colored cyan
-8 - A coin from the prototype
-    Metadata: Coin ID
-9 - Trinket
-    Metadata: Trinket ID
-    Note that trinket ID start at 0, and everything above 19 will not be saved in
-    the savefile once you restart the level
-10 - Checkpoint
-     Metadata: Checkpoint state (0=flipped, 1=normal), Checkpoint ID (checks if
-     the checkpoint is active or not)
-11 - Horizontal gravity line
-     Metadata: Length in pixels
-12 - Vertical gravity line
-     Metadata: Length in pixels
-13 - Warp token
-     Metadata: Destination in tiles X axis, destination in tiles Y axis
-14 - The round teleporter
-     Metadata: Checkpoint ID(?)
+0 - La ludanto
+1 - Malamiko
+    Metadatumoj: moviĝ-tipo, moviĝ-rapido
+    Pro manko de bezonataj datumoj, vi nur iam ajn ricevos purpuran malamikan
+    skatolon, krom se vi estas en la polusa dimensio de VVVVVV dum fari tiun ĉi
+    komandon.
+2 - Moviĝanta platformo
+    Metadatumoj: moviĝ-tipo, moviĝ-rapido
+    Notu ke movigiloj estas realigitaj kiel moviĝantajn platformojn, vidu moviĝ-
+    tipojn 8 kaj 9
+3 - Malaperanta platformo
+4 - 1x1 pli rapida movsablo-bloko
+5 - Renversita Viridian, vi renversiĝos se vi tuŝas ĝin
+6 - Stranga ruĝa brilanta aferumo, kiu rapide malaperas
+7 - Same kiel supre, sed estas cejana kaj ne brilas
+8 - Monero de la prototipo
+    Metadatumo: Monera idento
+9 - Kolektaĵo
+    Metadatumo: Kolektaĵa idento
+    Notu ke kolektaĵa idento ekas je 0, kaj ĉio super 19 ne konserviĝos se vi
+    reŝargas la nivelon
+10 - Konservejo
+     Metadatumoj: Stato de konservejo (0=renversita, 1=normala)
+                  Idento de konservejo (kontrolas, ĉu la konservejo aktivas aŭ ne)
+11 - Horizontala renversilo
+     Metadatumo: Longo en bilderoj
+12 - Vertikala renversilo
+     Metadatumo: Longo en bilderoj
+13 - Teleportilo
+     Metadatumoj: Celo en kaheloj (X-akso), celo en kaheloj (Y-akso)
+14 - Teleportilego
+     Metadatumo: Konserveja idento(?)
 15 - Verdigris
-     Metadata: AI state
-16 - Vitellary (flipped)
-     Metadata: AI state
+     Metadatumo: AI-stato
+16 - Vitellary (renversita)
+     Metadatumo: AI-stato
 17 - Victoria
-     Metadata: AI state
-18 - Crewmate
-     Metadata: Color (using raw color list, not the crewmate colors), mood
+     Metadatumo: AI-stato
+18 - Ŝipano
+     Metadatumoj: Koloro (uzante krudan kolorliston, ne la ŝipanajn kolorojn),
+     animstato
 19 - Vermilion
-     Metadata: AI state
-20 - Terminal
-     Metadata: Sprite, Script ID(?)
-21 - Same as above but when touched the terminal doesn't light up
-     Metadata: Sprite, Script ID(?)
-22 - Collected trinket
-     Metadata: Trinket ID
-23 - Gravitron square
-     Metadata: Direction
-     If you input negative X coordinate (or too high), an arrow shows instead,
-     just like in the real Gravitron
-24 - Intermission 1 crewmate
-     Metadata: Raw color, mood
-     Doesn't seem to be affected by hazards, but should be.
-25 - Trophy
-     Metadata: Challenge identifier, sprite
-     If the challenge is completed, the base sprite ID (what you get if you use
-     sprite=0) will change. Only use 0 or 1 if you want predictable results
-     (0=normal, 1=flipped)
-26 - The warp token to the Secret Lab
-     Keep in mind that the warp is just implemented as a nice looking sprite.
-     You'll have to script the functionality for yourself
-55 - Rescueable crewmate
-     Metadata: Crewmate color. Color >6 will always show a *happy* Viridian
-56 - Custom level enemy
-     Metadata: Movement type, movement speed
-     Keep in mind that if there's no enemies in the room, the enemy sprite data
-     isn't updated correctly and it will just show what enemy you saw last time,
-     or a square enemy
-Undefined entities (27-50, 57+) give glitchy Viridians.
+     Metadatumo: AI-stato
+20 - Komputilo
+     Metadatumoj: Grafiko, skript-idento(?)
+21 - Same kiel supre, sed kiam tuŝita la komputilo ne briliĝas
+     Metadatumoj: Grafiko, skript-idento(?)
+22 - Kolektita kolektaĵo
+     Metadatumo: Idento de kolektaĵo
+23 - Kvadrata malamiko de Gravitron
+     Metadatumo: Direkto
+     Se vi enigas minusan aŭ tro altan X-koordinaton, sago montriĝas, ĝuste kiel
+     la vera Gravitron
+24 - Ŝipano de Interakto 1
+     Metadatumoj: Kruda koloro, animstato
+     Ŝajne ne afektita de hazardoj, kvankam ĝi devus
+25 - Trofeo
+     Metadatumoj: Identilo de defio, grafiko
+     Se la defio estas plenumita, la baza grafikidento (kiun vi ekhavas se vi uzas
+     grafikon=0) ŝanĝos. Nur uzu 0 aŭ 1 se vi volas predikteblajn rezultojn.
+26 - La teleportilo al la sekreta laboratorio
+     Notu bone ke tio ĉi nur estas bonaspektan grafikon, kaj ke vi mem devos
+     skripti ĝian funkcieblon.
+55 - Savebla ŝipano
+     Metadatumo: Koloro de la ŝipano. Koloroj super 6 ĉiam montros *feliĉan*
+     Viridian
+56 - Malamiko de propra niveloj
+     Metadatumoj: Moviĝ-tipo, moviĝ-rapido
+     Notu bone, ke se ne estas malamikoj en la ĉambro, la malamikaj grafik-
+     datumoj ne korekte aktualiĝos kaj simple montriĝos tia malamiko, kian vi
+     vidis lastatempe, aŭ kvadrata malamiko.
+Nedifinitaj entoj (27-50, 57+) donas cimecajn Viridianojn.
 
-Colors for createentity() crewmates\h#
+Koloroj por ŝipanoj de createentity()\h#
 
-0: Cyan
-1: Flashy red (used for death)
-2: Dark orange
-3: Trinket color
-4: Gray
-5: Flashy white
-6: Red (tiny bit darker than Vermilion)
-7: Lime green
-8: Hot pink
-9: Brilliant yellow
-10: Flashy white
-11: Bright cyan
-12: Blue, same as Victoria
-13: Green, same as Verdigris
-14: Yellow, same as Vitellary
-15: Red, same as Vermilion
-16: Blue, same as Victoria
-17: Lighter orange
-18: Gray
-19: Darker gray
-20: Pink, same as Violet
-21: Lighter gray
-22: White
-23: Flashy white
-24-29: White
-30: Gray
-31: Dark, slightly purplish gray?
-32: Dark cyan/green
-33: Dark blue
-34: Dark green
-35: Dark red
-36: Dull orange
-37: Flashy gray
-38: Gray
-39: Darker cyan/green
-40: Flashier gray
-41-99: White
-100: Dark gray
-101: Flashy white
-102: Teleporter color
-103 and onwards: White
+0: Cejana
+1: Brilante ruĝa (uzita por mortado)
+2: Malhele oranĝa
+3: Kolektaĵ-kolora
+4: Griza
+5: Brilante blanka
+6: Ruĝa (iomete pli malhela ol Vermilion)
+7: Kalkverda
+8: Brilroza
+9: Brilflava
+10: Brilante blanka
+11: Brilcejana
+12: Blua, same kiel Victoria
+13: Verda, same kiel Verdigris
+14: Flava, same kiel Vitellary
+15: Ruĝa, same kiel Vermilion
+16: Blua, same kiel Victoria
+17: Plihele oranĝa
+18: Griza
+19: Malplihele griza
+20: Roza, same kiel Violet
+21: Plihele griza
+22: Blanka
+23: Brilante blanka
+24-29: Blanka
+30: Griza
+31: Hele, iome purpurece griza?
+32: Malhele cejana/verda
+33: Malhele blua
+34: Malhele verda
+35: Malhele ruĝa
+36: Senverve oranĝa
+37: Brilante griza
+38: Griza
+39: Malplihele cejana/verda
+40: Pli-brilante griza
+41-99: Blanka
+100: Malhele griza
+101: Brilante blanka
+102: Teleportkolora
+103 kaj pluen: Blanka
 
-Enemy movement types\h#
+Moviĝtipoj de malamikoj\h#
 
-0 - Bouncing up and down, starts down.
-1 - Bouncing up and down, starts up.
-2 - Bouncing left and right, starts left.
-3 - Bouncing left and right, starts right.
-4, 7, 11 - Moves right until collision.
-5 - Same as above, only acts weird when it collides.
-    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nCl
-6 - Bouncing up and down, but only reaches a certain y position before going back
-    down. Used in "Trench warfare".
-8, 9 - For moving platforms they're conveyors, and they're still for anything else
-14 - Able to be blocked by disappearing platforms
-15 - Still (?)
-10, 12 - Clones right/in the same spot, crashes VVVVVV if it gets too intense, and
-         will corrupt your level if you save.
-13 - Like 4, but moves down until collision.
-16 - Flashes in and out of existence. (Appears and disappears)
-17 - Jittery movement left
-18 - Jittery movement right, little bit faster
-19+ - Still (?)
+0 - Resaltadas supren kaj malsupren, ekas malsupren.
+1 - Resaltadas supren kaj malsupren, ekas supren.
+2 - Resaltadas maldekstren kaj dekstren, ekas maldekstren.
+3 - Resaltadas maldekstren kaj dekstren, ekas dekstren.
+4, 7, 11 - Moviĝas dekstren ĝis kolizio.
+5 - Same kiel supre, sed ĝi agas strange kiam ĝi kolizias.
+    GIF ĉi tie: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Resaltadas supren kaj malsupren, sed nur atingas certan y-pozicion antaŭ ol
+    reiri malsupren. Uzita en "Trench Warfare".
+8, 9 - Movigiloj (por moviĝantaj platformoj)
+       Ne moviĝas (por ĉio alia)
+14 - Blokebla de malaperantaj platformoj
+15 - Ne moviĝas (?)
+10, 12 - Multobligas dekstren en la sama loko, kraŝigas VVVVVV se tro intensiĝas,
+         difektos vian nivelon se vi konservas ĝin
+13 - Kiel 4, sed moviĝas malsupren ĝis kolizio.
+16 - Aperas kaj malaperas
+17 - Treme iras maldekstren
+18 - Treme iras dekstren, iom pli rapide
+19+ - Ne moviĝas (?)
 
-Gamestates\h#
+Ludstatoj\h#
 
-0 - Break out from most gamestates
-1 - Set gamestate to 0 (i.e. same as above in practice)
+0 - Eliĝi de plej multe da ludstatoj
+1 - Agordi ludstaton al 0 (t.e. same kiel supre en praktiko)
 2 - "To do: write quick intro to story!"
 4 - "Press arrow keys or WASD to move"
-5 - Runs the script "returntohub" (i.e. fadeout, teleport to right before The
-    Tower, fadein, play Passion for Exploring)
-7 - Removes textboxes
+5 - Plenumas la skripton "returntohub" (t.e. fadeout, teleportiĝi al ĝuste
+    antaŭ La Turo, fadein, ludi Passion for Exploring)
+7 - Forigas dialog-skatolojn
 8 - "Press enter to view map and quicksave"
 9 - Super Gravitron
 10 - Gravitron
-11 - "When you're NOT standing on stop and wait for you" (Tries to access flipmode
-     check to write "the ceiling" or "the floor", and check crewmate, but as this
-     fails, the above prints instead)
+11 - "When you're NOT standing on stop and wait for you" (Provas aliri flipmode-
+     kontrolon por skribi "the ceiling" aŭ "the floor", kaj kontroli ŝipanon, sed
+     ĉar ĉi tio malsukcesas, la supra montriĝas anstataŭe)
 12 - "You can't continue to the next room until he is safely accross."
-13 - Removes textboxes quickly
-14 - "When you're standing on the floor," (the same applies here as for 11)
-15 - Makes Viridian happy
-16 - Makes Viridian sad
+13 - Forigas dialog-skatolojn rapide
+14 - "When you're standing on the floor," (same aplikiĝas ĉi tie kiel 11)
+15 - Feliĉigas Viridian
+16 - Malfeliĉigas Viridian
 17 - "If you prefer, you can press UP or DOWN instead of ACTION to flip."
-20 - If flag 1 is 0, set flag 1 to 1 and remove textboxes
-21 - If flag 2 is 0, set flag 2 to 1 and remove textboxes
+20 - Se flago 1 estas 0, agordu ĝin al 1 kaj forigi dialog-skatolojn
+21 - Se flago 2 estas 0, agordu ĝin al 1 kaj forigi dialog-skatolojn
 22 - "Press ACTION to flip"
 30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
      out ok..."
-31 - "Violet, is that you?" cutscene (as long as flag 6 is 0)
-32 - If flag 7 is 0: "A teleporter!" "I can get back to the ship with this!"
-33 - If flag 9 is 0: Victoria-cutscene
-34 - If flag 10 is 0: Vitellary-cutscene
-35 - If flag 11 is 0: Verdigris-cutscene
-36 - If flag 8 is 0: Vermilion-cutscene
-37 - Vitellary after gravitron
-38 - Vermilion after gravitron
-39 - Verdigris after gravitron
-40 - Victoria after gravitron
-41 - If flag 60 is 0: run the beginning of intermission 1 cutscene
-42 - If flag 62 is 0: run the 3rd intermission 1 cutscene
-43 - If flag 63 is 0: run the 4th intermission 1 cutscene
-44 - If flag 64 is 0: run the 5th intermission 1 cutscene
-45 - If flag 65 is 0: run the 6th intermission 1 cutscene
-46 - If flag 66 is 0: run the 7th intermission 1 cutscene
-47 - If flag 69 is 0: "Ohh! I wonder what that is?" trinket cutscene
-48 - If flag 70 is 0: "This seems like a good place to store anything I find out
-     there..." (Victoria not found yet)
-49 - If flag 71 is 0: Play Predestined Fate
+31 - Sekvenco: "Violet, is that you?" (se flago 6 estas 0)
+32 - Se flago 7 estas 0: "A teleporter!" "I can get back to the ship with this!"
+33 - Se flago 9 estas 0: Victoria-sekvenco
+34 - Se flago 10 estas 0: Vitellary-sekvenco
+35 - Se flago 11 estas 0: Verdigris-sekvenco
+36 - Se flago 8 estas 0: Vermilion-sekvenco
+37 - Vitellary post Gravitron
+38 - Vermilion post Gravitron
+39 - Verdigris post Gravitron
+40 - Victoria post Gravitron
+41 - Se flago 60 estas 0: plenumi komencon de sekvenco de Interakto 1
+42 - Se flago 62 estas 0: plenumi trian sekvencon de Interakto 1
+43 - Se flago 63 estas 0: plenumi kvaran sekvencon de Interakto 1
+44 - Se flago 64 estas 0: plenumi kvinan sekvencon de Interakto 1
+45 - Se flago 65 estas 0: plenumi sesan sekvencon de Interakto 1
+46 - Se flago 66 estas 0: plenumi sepan sekvencon de Interakto 1
+47 - Se flago 69 estas 0: Kolektaĵsekvenco: "Ohh! I wonder what that is?"
+48 - Se flago 70 estas 0: "This seems like a good place to store anything I find
+     out there..." (Victoria ne jam trovita)
+49 - Se flago 71 estas 0: Ludi Predestined Fate
 50 - "Help! Can anyone hear this message?"
 51 - "Verdigris? Are you out there? Are you ok?"
 52 - "Please help us! We've crashed and need assistance!"
@@ -1997,227 +2031,232 @@ Gamestates\h#
 54 - "This is Doctor Violet from the D.S.S. Souleye! Please respond!"
 55 - "Please... Anyone..."
 56 - "Please be alright, everyone..."
-With gamestate 50-56, you can choose where to start, because everything will
-     appear after each other
-80 - If screen is black (and only if), continue to state 81 (My guess is that this
-     is called when ESC is pressed, before the pause menu opens)
-81 - Go back to the main menu
-82 - Results of time trial (bugged)
-83 - If screen is back, continue to state 84
-84 - Results of time trial (I think 82 works better than 84)
-85 - The Time Trial version of gamestate 200 (Flash, play Positive Force, turn on
-     finalstretch mode)
-States 90-95 are time trial related, but doesn't work properly in custom levels.
-     The only real effects that happens in custom levels is a warp, and music
-     change
-90 - Space Station 1
-91 - The Laboratory
-92 - Warp Zone
-93 - The Tower
-94 - Space Station 2
-95 - Final Level
-96 - If the screen is black, continue to state 97
-97 - Exit from Super Gravitron (teleport and play Pipe Dream)
-100 - If flag 4 is 0: continue to state 101
-101 - If you are flipped, flip back to floor, continue to state 102
-The following states (102-112) try to go to the current state + 1, like in 50-56
-      (but doesn't loop around), but may glitch as half of the states (103, 105,
-      107, 109, 111) doesn't exist.
+Kun ludstatoj 50-56, vi povas elekti kie komenci, ĉar ĉio aperos post unu la alia
+80 - Se, kaj nur se la ekrano nigras, daŭri al stato 81 (mia supozo estas, ke tio
+     ĉi estas vokita kiam ESC premiĝas, antaŭ ol la paŭzmenuo malfermiĝas)
+81 - Reiri al la ĉefmenuo
+82 - Rezultoj de tempoprovo (cimeca)
+83 - Se ekrano nigras, daŭri al stato 84
+84 - Rezultoj de tempoprovo (pli cimeca ol 82)
+85 - La tempoprova versio de ludstato 200 (brubrili, ludi Positive Force, ŝalti
+     reĝimon finalstretch)
+Statoj 90-95 rilatas al tempoprovoj, sed ne funkcias korekte en propraj niveloj.
+     La nuraj veraj efikoj, kiuj okazas en propraj niveloj estas teleporto, kaj
+     ŝanĝo de muziko
+90 - Kosmostacio 1
+91 - La laboratorio
+92 - Teleportzono
+93 - La turo
+94 - Kosmostacio 2
+95 - Fina niveloj
+96 - Se ekrano nigras, daŭri al stato 97
+97 - Eliri de Super Gravitron (teleportiĝi kaj ludi Pipe Dream)
+100 - Se flago 4 estas 0: daŭri al stato 101
+101 - Se vi estas renversita, rerenversiĝi al planko, daŭri al stato 102
+      La sekvantaj statoj (102-112) provas iri al la aktuala stato + 1, kiel en
+      50-56 (sed ne reiteracias) sed eble missignalos pro ke duono da la statoj
+      (103, 105, 107, 109, 111) ne ekzistas.
 102 - Verdigris: "Captain! I've been so worried!"
 104 - "I'm glad you're ok!"
 106 - "I've been trying to find a way out, but I keep going around in circles..."
 108 - "Don't worry! I have a teleporter key!"
 110 - "Follow me!"
-112 - Removes textboxes
-115 - Essentially nothing, continue to state 116
-116 - Red dialog at the bottom of the screen saying "Sorry Eurogamers! Teleporting
-      around the map doesn't work in this version!", continue to state 117, which
-      doesn't exist, so things may fail
-118 - Removes textboxes
-State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
-      things
-120 - If flag 5 is 0: continue to state 121
-121 - If you're on the floor, flip.
+112 - Forigas dialog-skatolojn
+115 - Esence nenio, daŭri al stato 116
+116 - Ruĝa dialog-skatolo ĉe la malsupro de la ekrano diranta "Sorry Eurogamers!
+      Teleporting around the map doesn't work in this version!", daŭri al stato
+      117, kiu ne ekzistas, do aferoj eble malsukcesos
+118 - Forigas dialog-skatolojn
+Statoj 120-128 funkcias iome kiel 102-112, t.e. en serio, sed kun malpli da
+      rompitaj aferoj
+120 - Se flago 5 estas 0: daŭri al stato 121
+121 - Se vi estas sur la planko, renversiĝi.
 122 - Vitellary: "Captain! You're ok!"
 124 - Vitellary: "I've found a teleporter, but I can't get it to go anywhere..."
 126 - "I can help with that!"
 128 - "I have the teleporter codex for our ship!"
 130 - "Yey! Let's go home!"
-132 - Removes textboxes
-200 - Final mode
-1000 - Turns on cutscenebars, freezes the game, continue to state 1001
-1001 - You got a shiny trinket! dialog (but you didn't actually get any, this is
-       just called each time you get one), continue to state 1003
-1003 - Revert game to normal
-1010 - You found a crewmate! in the same manner as for trinkets
-2000 - Save the game
-2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
-            The Laboratory I guess, continue to state 2510
-2510 - Viridian: "Hello?", continue to state 2512
-2512 - Viridian: "Is anybody there?", continue to state 2514
-2514 - Removes textboxes, play Potential For Anything
-3000-3099 states:
-3000-3005 - Level Complete! You've rescued the crewmate applied to companion(),
-            defaults to Verdigris. 6=Verdigris, 7=Vitellary, 8=Victoria,
-            9=Vermilion, 10=Viridian (yes, really), 11=Violet (Gamestates:
-            3006-3011=Verdigris, 3020-3026=Vitellary, 3040-3046=Victoria,
-            3060-3066=Vermilion, 3080-3086=Viridian, 3050-3056=Violet)
-3070-3072 - Perform postrescue things, usually return to ship
-3501 - Game Complete
-4010 - Flash + warp
-4070 - The Final Level, but the game will crash when you reach Timeslip (Because
-       of how the game gets entity information, which is broken in custom levels)
-4080 - Captain teleported back to the ship: "Hello!" [C[C[C[C[Captain!] cutscene +
-       credits.
-       The above will mess up your save data so don't do it unless you backed up!
-4090 - Cutscene after you complete space station 1
+132 - Forigas dialog-skatolojn
+200 - Fina reĝimon
+1000 - Ŝaltas sekvencostriojn, haltigas la ludon, daŭri al stato 1001
+1001 - "You got a shiny trinket!" (sed vi ne fakte akiris kolektaĵon, tio ĉi nur
+       vokiĝas ĉiun fojon, kiam vi akiras unu), daŭri al stato 1003
+1003 - Malhaltigi ludon
+1010 - "You found a crewmate!" samamaniere kiel por kolektaĵoj
+2000 - Konservi la ludon
+2500-2509 - Teleportiĝi al iu stranga neekzistana loko, supozeble al la
+            laboratorio, mi supozas, daŭri al stato 2510
+2510 - Viridian: "Hello?", daŭri al stato 2512
+2512 - Viridian: "Is anybody there?", daŭri al stato 2514
+2514 - Forigi dialog-skatolojn, ludi Potential for Anything
+Statoj 3000-3099:
+3000-3005: "Level Complete! You've rescued..." kaj la ŝipano aplikita al
+           companion(), defaŭlte Verdigris. 6=Verdigris, 7=Vitellary,
+           8=Victoria, 9=Vermilion, 10=Viridian (jes, vere), 11=Violet
+           (Ludstatoj: 3006-3011=Verdigris, 3020-3026=Vitellary, 3040-
+           3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian, 3050-
+           3056=Violet)
+3070-3072 - Plenumi postsavajn aferojn, kutime reveni al ŝipo
+3501 - Game Complete (ludo venkita)
+4010 - Brubrilo + teleporto
+4070 - La fina nivelo, sed la ludo kraŝos kiam vi atingas Timeslip (pro kiel la
+       ludo atingas ento-informojn, kio estas rompita en propraj niveloj)
+4080 - Ŝipestro teleportita reen al la ŝipo: "Hello!" [C[C[C[C[Captain!],
+       sekvenco kaj kreditoj.
+       La supra difektos viajn konservitajn datumojn, do ne uzu krom se vi
+       havas restaŭrkopion!
+4090 - Sekvenco post venki la unuan kosmostacion
 ]]
 },
 
 {
-subj = "Formatting",
+subj = "Aranĝado",
 imgs = {},
 cont = [[
-Formatting\wh#
+Aranĝado\wh#
 \C=
 
-In notes you can use formatting codes to make your text larger, color it, and some
-other things. To add formatting to a line, add a backslash (\) at the end of it.\
-After the \, you can add any amount of the following characters, in any order:\
+En notoj vi povas uzi aranĝokodojn por pligrandigi aŭ kolorigi vian tekston, inter
+aliaj aferoj. Por aldoni aranĝadon al linio, aldoni deklivon (\) ĉe la fino de ĝi.\
+Post la \, vi povas aldoni ajnan kvanton da la sekvaj signoj, en ajna ordo:\
 
-h - Double font size\h
+h - Duobla tipargrando\h
 
-# - Anchor. You can jump to anchors quickly with ¤#Links¤links¤.\nLCl
-- - Horizontal line:
+# - Ankro. Vi povas salti al ankroj rapide per ¤#Ligiloj¤ligiloj¤.\nLCl
+- - Horizontala streko:
 \-
-= - Horizontal line underneath large text
+= - Horizontala streko sub granda tekston
 
-Text colors:\h#
+Tekstkoloroj:\h#
 
-n - Normal\n
-r - Red\r
-g - Gray\g
-w - White\w
-b - Blue\b
-o - Orange\o
-v - Green\v
-c - Cyan\c
-y - Yellow\y
-p - Purple\p
-V - Dark green\V
-z - Black¤ (background color is not included)\z&Z
-Z - Dark gray\Z
-C - Cyan (Viridian)\C
-P - Pink (Violet)\P
-Y - Yellow (Vitellary)\Y
-R - Red (Vermilion)\R
-G - Green (Verdigris)\G
-B - Blue (Victoria)\B
+n - Normala\n
+r - Ruĝa\r
+g - Griza\g
+w - Blanka\w
+b - Blua\b
+o - Oranĝa\o
+v - Verda\v
+c - Cejana\c
+y - Flava\y
+p - Purpura\p
+V - Malhelverda\V
+z - Nigra¤ (fonkoloro ne estas inkluzivita)\z&Z
+Z - Malhelgriza\Z
+C - Cejana (Viridian)\C
+P - Roza (Violet)\P
+Y - Flava (Vitellary)\Y
+R - Ruĝa (Vermilion)\R
+G - Verda (Verdigris)\G
+B - Blua (Victoria)\B
 
 
-Example:\h#
-
-\-
-Large orange text ("oh" has same result)\ho\
-
-Large orange text ("oh" has same result)\ho
+Ekzemplo:\h#
 
 \-
-Underlined large text\wh\
+Granda oranĝa teksto ("oh" havas\ho\
+
+saman rezulton)\ho\
+
+Granda oranĝa teksto ("oh" havas\ho
+
+saman rezulton)\ho
+
+\-
+Substrekita granda teksto\wh\
 \r=\
 
-Underlined large text\wh
+Substrekita granda teksto\wh
 \r=
 \-
 
-Using multiple colors on a line\h#
+Uzi multajn kolorojn sur linio\h#
 
-It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
-codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
-is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
-line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
-color a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\nY(
-space or another character.
-
-\-
-You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
-
-You can ¤color¤ specific ¤words¤ with this!\nrnv
-\-
-Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
-
-Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
-\-
-
-Coloring a single character\h#
-
-OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
-the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
+Eblas uzi multajn kolorojn sur linio per dividi koloritajn partojn per la
+signo¤ ¤¤ ¤(kiun vi povas tajpi uzante la klavon ¤insert/enigi¤), kaj meti la\nYnw
+kolorkodojn en ordon post¤ \¤. Se la lasta koloro sur la linio estas la defaŭlta\nC
+koloro (n), ne necesas listi tion ĉefine. Se vi volas uzi la signon¤ ¤¤ ¤sur\nY
+linio, kiu uzas¤ \¤, skribi¤ ¤¤¤¤ ¤anstataŭe. Pro teknikaj kaŭzoj, ne eb¤l§¤as\nCnYnR(
+kolorigi unu signon sole per meti ĝin inter du¤ ¤¤§¤oj, krom se vi ankaŭ inkluzivas\nY
+spaceton aŭ alian signon.
 
 \-
-You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
+Vi povas ¤¤kolorigi¤¤ certajn ¤¤vortojn¤¤ per ĉi tio!\nrnv\
 
-You can c¤o§¤lor a ¤single¤ character like this!\nrny(
+Vi povas ¤kolorigi¤ certajn ¤vortojn¤ per ĉi tio!\nrnv
+\-
+Kelkaj ¤¤te¤¤ks¤¤ta¤¤j ¤¤ko¤¤lo¤¤ro¤¤j\RYGCBPRYG\
+
+Kelkaj ¤te¤ks¤ta¤j ¤ko¤lo¤ro¤j\RYGCBPRYG
 \-
 
-This is not necessary if the single character is the first or last on a line.
+Kolorigi unu signon sole\h#
 
-Background colors\h#
-
-Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
-colors. To do this, you can put¤ & ¤after the regular text color code, and then a\nY
-color code for the background color. This can be done in combination with the ¤
-system described above, note that regular text colors start the next "block",
-but background colors do not. The following examples use spaces to make everything
-more readable, but this is completely optional. You can use the code¤ + ¤to expand\nY
-the (last) background color to the end of the line.
+Okej, mi mensogis, ja eblas kolorigi unu signon sole sen inkluzivi spaceton.
+Por fari do, meti la signon¤ § ¤(tajpebla per uzi ¤shift+insert¤), post\nYnw
+la signo, kiun vi volas kolorigi, kaj ebligi ĝin per la aranĝokodo¤ ( ¤post¤ \¤:\nCnC
 
 \-
-Black text on white background!\z&w\
+Vi povas k¤¤o§¤¤lorigi unu signon ¤¤sole¤¤ ĉi tiel!\nrny(\
 
-Black text on white background!\z&w
-\-
-Black text on expanded white background!\z&w+\
-
-Black text on expanded white background!\z&w+
-\-
-Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
-
-Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
-\-
-This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
-
-This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
+Vi povas k¤o§¤lorigi unu signon ¤sole¤ ĉi tiel!\nrny(
 \-
 
-If you like, you can also make graphics using background colors:
+Tio ĉi ne necesas se la sola signo estas la unua aŭ lasta sur linio.
+
+Fonkoloroj\h#
+
+Teksto ne nur povas esti kolorigita, ĝi ankaŭ povas esti ¤markita¤ en ajnaj de la\nZ&y
+tekstkoloroj. Por fari do, vi povas meti¤ & ¤post la regulara teksta kolorkodo, kaj\nY
+tiam kolorkodo por la fonkoloro. Tio ĉi fareblas en kombino kun la sistemo
+ĉi-supre priskribita; notu, ke kutimaj tekstkoloroj komencas la sekvan "blokon",
+sed fonkoloroj ne faras do. La jenaj ekzemploj uzas spacetojn por fari ĉion pli
+legeblan, sed tio estas tute malnepra. Vi povas uzi la kodon¤ + ¤por etendi la\nY
+(lastan) fonkoloron al la fino de la linio.
 
 \-
- ¤¤        \n n&C\
-          \&C\
-   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
-   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
-          \&C\
-          \&C\
-   ¤¤      ¤¤ \&C n n&C\
-    ¤¤    ¤¤  \&C n n&C\
- ¤¤        \n n&C\
-   ¤¤    \n n&C\
+Nigra teksto sur blanka fono!\z&w\
 
- ¤        \n n&C
-          \&C
-   ¤  ¤  ¤  ¤ \&C n n&C n n&C
-   ¤  ¤  ¤  ¤ \&C n n&C n n&C
-          \&C
-          \&C
-   ¤      ¤ \&C n n&C
-    ¤    ¤  \&C n n&C
- ¤        \n n&C
-   ¤    \n n&C
+Nigra teksto sur blanka fono!\z&w
 \-
-          \&o\
+Nigra teksto sur etendita blanka fono!\z&w+\
+
+Nigra teksto sur etendita blanka fono!\z&w+
+\-
+Ruĝa sur flavo¤¤, ¤¤Nigra sur blanko¤¤ (nenepre spacetoj pli legebligas)\r&y n z&w\
+
+Ruĝa sur flavo¤, ¤Nigra sur blanko¤ (nenepre spacetoj pli legebligas)\r&y n z&w
+\-
+Tio ĉi ankoraŭ ¤¤funkcias¤¤ por kolorigi unu si¤¤g§¤¤non sole\n P n n&r (\
+
+Tio ĉi ankoraŭ ¤funkcias¤ por kolorigi unu si¤g§¤non sole\n P n n&r (
+\-
+
+Se vi volas, vi ankaŭ povas krei grafikojn pere de fonkoloroj:
+
+\-
+ ¤¤        \n n&C\ 
+          \&C\ 
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\ 
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\ 
+          \&C\ 
+          \&C\ 
+   ¤¤      ¤¤ \&C n n&C\ 
+    ¤¤    ¤¤  \&C n n&C\ 
+ ¤¤        \n n&C\ 
+   ¤¤    \n n&C\ 
+ 
+ ¤        \n n&C 
+          \&C 
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C 
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C 
+          \&C 
+          \&C 
+   ¤      ¤ \&C n n&C 
+    ¤    ¤  \&C n n&C 
+ ¤        \n n&C 
+   ¤    \n n&C 
+\- 
+          \&o\ 
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
@@ -2226,59 +2265,59 @@ If you like, you can also make graphics using background colors:
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
-          \&o\
+          \&o\ 
+ 
+          \&o 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
+          \&o 
+\- 
 
-          \&o
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
-          \&o
-\-
+Ligiloj\h#
 
-Links\h#
+Ligiloj povas uziĝi por du aferoj: ligi al ie alia en la artikoloj/notoj,
+aŭ ligi al retejoj. Ligiloj uzas la duon-kolorkodon¤ l¤. Tiu ĉi kodo ne\nY
+ŝanĝas al la sekva "kolorbloko", ĝi nur aplikiĝas al la aktuala, kontraŭe
+al kutimaj (nefonaj) kolorkodoj. Ĝi ankaŭ ne ŝanĝas la koloron, do vi povas
+ŝanĝi la stilon de la ligilo kiel ajn vi deziras.
 
-Links can be used for two things: linking to somewhere else in the articles/notes,
-or linking to websites. Links use the semi-color code¤ l¤. This code does not switch\nY
-to the next "colored block", it only applies to the current one, as opposed to
-regular (non-background) color codes. It also does not change color, so you can
-change the style of the link to anything you want.
-
-You can link to articles by simply using the name of the article:
-
-\-
-Tools\bl\
-
-Tools\bl
-\-
-
-Clicking the "Tools" above will bring you to the Tools help article. I used the
-color code¤ b ¤here to make the link blue, and as you can see, the¤ l ¤applies to\nbnY
-that same colored part.
-
-You can link to anchors in the same article by linking to a¤ # ¤followed by all text\nY
-on that line. (Instances of¤ ¤¤ ¤are completely ignored there.) You can link to the\nY
-top of the article with just a hash character (¤#§¤).\nY(
+Vi povas ligi al artikoloj per simple uzi la nomon de la artikolo:
 
 \-
-#Using multiple colors on a line\bl\
+Iloj\bl\
 
-#Using multiple colors on a line\bl
+Iloj\bl
 \-
 
-You can link to an anchor in a different article in a similar way:
+Alklaki la ligilon "Iloj" ĉi-supre prenos vin al la helpoartikolo "Iloj". Mi
+uzis la kolorkodon¤ b ¤ĉi tie por bluigi la ligilon, kaj kiel vi povas vidi,\nb
+la¤ l ¤aplikiĝas al tiu sama kolorigita parto.\nY
+
+Vi povas ligi al ankroj en la sama artikolo per ligi al¤ # ¤sekvata de ĉiu teksto\nY
+sur tiu linio. (Aperoj de¤ ¤¤ ¤tute ignoriĝas tie.) Vi povas ligi al la supraĵo de la\nY
+artikolo per nur krado (¤#§¤).\nY(
 
 \-
-Lists reference#Gamestates\bl\
+#Uzi multajn kolorojn sur linio\bl\
 
-Lists reference#Gamestates\bl
+#Uzi multajn kolorojn sur linio\bl
 \-
 
-Linking to websites is straightforward too:
+Vi povas ligi al ankro en malsama artikolo en simila maniero:
+
+\-
+Lista referenco#Ludstatoj\bl\
+
+Lista referenco#Ludstatoj\bl
+\-
+
+Ligi al retejo ankaŭ estas rekte facila:
 
 \-
 https://example.com/\bl\
@@ -2286,45 +2325,46 @@ https://example.com/\bl\
 https://example.com/\bl
 \-
 
-You can use a color block with color code¤ L ¤that contains the actual destination\nY
-before the link text, and make the link show a different text that way:
+Vi povas uzi kolorblokon kun kolorkodo¤ L ¤kiu enhavas la veran celolokon\nY
+antaŭ la ligilo-teksto, kaj igi la ligilon montri malsaman tekston tiel:
 
 \-
-Tools¤¤Go to another article\Lbl\
+Iloj¤¤Iri al alia artikolo\Lbl\
 
-Tools¤Go to another article\Lbl
+Iloj¤Iri al alia artikolo\Lbl
 \-
-Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
+Alklaku ¤¤Iloj¤¤ĉi tien¤¤ por iri al alia artikolo\nLbl\
 
-Click ¤Tools¤here¤ to go to another article\nLbl
+Alklaku ¤Iloj¤ĉi tien¤ por iri al alia artikolo\nLbl
 \-
-[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+[¤¤#Ligiloj¤¤Ŝati¤¤] [¤¤#Ekzemplo:¤¤Malŝati¤¤]\n L vl n L rl\
 
-[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+[¤#Ligiloj¤Ŝati¤] [¤#Ekzemplo:¤Malŝati¤]\n L vl n L rl
 \-
-#Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
+#Ligiloj¤¤ Butono A ¤¤ §¤¤#Ligiloj¤¤ Butono B \L w&Zl n L w&Z l(\
 
-#Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
+#Ligiloj¤ Butono A ¤ §¤#Ligiloj¤ Butono B \L w&Zl n L w&Z l(
 \-
 
-Images (only available in plugin\h#
+Bildoj (nur haveblaj en aldonaĵaj\h#
 
-descriptions):\h
+priskriboj):\h
 
-0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
-       and remember to keep lines blank to accommodate for the image height)
-^ - Put this before the image number, shift image number by 10. So ^4 makes image
-    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
-_ - Put this before the image number to decrease the image number by 10.
-> - Put this before the image number to shift further images to the right by 8
-    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
-    image 1 at x=32.
-< - Same, but shift to the left.
+0..9 - montri bildon 0..9 sur ĉi tiu linio (tabelindekso en la imgs-tabelo
+       ekas je 0, kaj memoru blankigi liniojn por akomodi la bildan alton)
+^ - Metu ĉi tion antaŭ la bildnumero, ŝovi bildnumeron je 10. Do ^4 faras
+    bildon 14, ^^4 faras bildon 24. Kaj 3^1^56 faras bildojn 3, 11, 25 kaj
+    26.
+_ - Metu ĉi tion antaŭ la bildnumero por malpliigi la bildnumeron je 10.
+> - Metu ĉi tion antaŭ la bildnumero por ŝovi pluajn bildojn dekstren je
+    8 bilderoj. Tio ĉi ripeteblas, do 0>>>>1 metas bildon 0 ĉe x=0 kaj
+    bildon 1 ĉe x=32.
+< - Same, sed ŝovas maldekstren.
 ]]
 },
 
 {
-subj = "Credits",
+subj = "Kreditoj",
 imgs = {"credits.png"},
 cont = [[
 \0
@@ -2343,35 +2383,35 @@ cont = [[
 
 
 
-Credits\wh#
+Kreditoj\wh#
 \C=
 
-Ved is made by Dav999
+Ved estas farita de Dav999
 
-Some of the graphics and the font were made by Format
+Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel (Format)
 
-Russian translation: CreepiX, Captain Normalguy
-Esperanto translation: Format
-
-
-Special thanks to:\h#
+Ruslingva traduko: CreepiX, Captain Normalguy
+Esperanta traduko: Hejmstel
+German translation: r00ster
 
 
-Terry Cavanagh for making VVVVVV
-
-TurtleP (for the code that made graphics not blurry when scaled)
-
-Everyone who reported bugs, came up with ideas and motivated me to make this!
+Specialdanke al:\h#
 
 
+Terry Cavanagh pro fari VVVVVV
 
+TurtleP (pro kelka kodo)
+
+Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion! 
 
 
 
 
 
 
-License\h#
+
+
+Permesilo\h#
 
 Copyright 2015-2018  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)

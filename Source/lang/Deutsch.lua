@@ -1,13 +1,17 @@
 -- Language file for Ved
---- Language: English (templates)
---- Last converted: 2018-05-10 00:00:00 (ZZZ)
+--- Language: Deutsch (de)
+--- Last converted: 2018-07-05 22:53:35 (CEST)
 
 --[[
-  If you would like to help translate Ved, please get in touch with Dav999
-  to get access to the online translation system!
-  If you want to continue translating in this file, it's possible to import
-  it into the system later, so don't worry.
+	If you would like to help translate Ved, please get in touch with Dav999
+	to get access to the online translation system!
+	If you want to continue translating in this file, it's possible to import
+	it into the system later, so don't worry.
 ]]
+
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return (n ~= 1) end
 
 function fontpng_ascii(c)
 	if c == "ä" then
@@ -75,7 +79,7 @@ NUMUNSUPPORTEDPLUGINS = "Du hast $1 Plugins die nicht untersützt sind in dieser
 WHATDIDYOUDO = "Was hast du getan?!",
 UNDOFAULTY = "Was tust du?",
 SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
-UNKNOWNUNDOTYPE = "Unknown undo type \"$1\"!",
+UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
 MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
 LEVELFAILEDCHECKS = "Dieses Level hat $1 Check(s) nicht bestanden. Die Probleme wurden vielleicht automatisch behoben, aber es ist möglich dass es trotzdem crasht und in Inkonsistenzen resultiert.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
@@ -182,7 +186,7 @@ RESIZE = "Bewegen/Größe ändern",
 CHANGEENTRANCE = "Bewege Eingang",
 CHANGEEXIT = "Bewege Ausgang",
 LOCK = "Fixieren",
-UNLOCK = "Freischalten",
+UNLOCK = "Entsperren",
 BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved-Optionen",
@@ -197,7 +201,7 @@ PLUGINS = "Plugins",
 BACKB = "Zurück <<",
 MOREB = "Mehr >>",
 AUTOMODE = "Modus: automatisch",
-AUTO2MODE = "Mode: multi",
+AUTO2MODE = "Modus: multi",
 MANUALMODE = "Modus: manuell",
 PLATFORMSPEED = "Platf. gesch.: $1",
 ENEMYTYPE = "Objekttyp: $1",
@@ -207,7 +211,7 @@ ENEMYBOUNDS = "Gegnergrenzen",
 ROOMNAME = "Raumname",
 ROOMOPTIONS = "Raumoptionen",
 ROTATE180 = "Um 180 Grad drehen",
-ROTATE180UNI = "Rotate 180°",
+ROTATE180UNI = "Um 180 Grad drehen",
 HIDEBOUNDS = "Grenzen nicht zeigen",
 SHOWBOUNDS = "Grenzen zeigen",
 
@@ -391,7 +395,7 @@ LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
 OVERWRITTENTIME = "Überschrieben", -- List header
 SAVEBACKUP = "Im VVVVVV Ordner speichern",
 DATEFORMAT = "Datumsformat",
-CUSTOMDATEFORMAT = "Custom date format",
+CUSTOMDATEFORMAT = "Eigenes Datumsformat",
 SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird gemacht in diesem Fall!",
 
 -- 1.2.4
@@ -428,6 +432,31 @@ FPSLIMIT = "FPS-Limit",
 
 }
 
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "You have $1 plugins that are not supported in this version.",
+	}
+	LEVELFAILEDCHECKS = {
+		[0] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+	}
+	SCRIPTUSAGESROOMS = {
+		[0] = "$1 usages in rooms: $2",
+	}
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "$1 usages in scripts: $2",
+	}
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "Entity at [$1 $2] has $3 invalid properties!",
+	}
+	ROOMINVALIDPROPERTIES = {
+		[0] = "LevelMetadata for room #$1 has $2 invalid properties!",
+	}
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "Showing $1",
+	}
+}
+
 toolnames = {
 
 "Mauer",
@@ -446,7 +475,7 @@ toolnames = {
 "Teleportationssymbol",
 "Teleportationslinie",
 "Crewmitglied",
-"Startpunkt"
+"Startpunkt",
 
 }
 
@@ -477,7 +506,7 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "A"
+[3] = "A",
 
 }
 
@@ -535,80 +564,80 @@ ERR_LOGSAVED = "Mehr informationen kann in diesem Absturzprotokoll gefunden werd
 
 
 diffmessages = {
-  pages = {
-    levelproperties = "Leveleigenschaften",
-    changedrooms = "Räume geändert",
-    changedroommetadata = "Raummetadaten geändert",
-    entities = "Objekte",
-    scripts = "Skripte",
-    flagnames = "Flag names",
-    levelnotes = "Levelnotizen",
-  },
-  levelpropertiesdiff = {
-    Title = "Name wurde geändert von \"$1\" zu \"$2\"",
-    Creator = "Author wurde geändert von \"$1\" zu \"$2\"",
-    website = "Webseite wurde gändert von \"$1\" zu \"$2\"",
-    Desc1 = "Beschreibung1 wurde geändert von \"$1\" zu \"$2\"",
-    Desc2 = "Beschreibung2 wurde geändert von \"$1\" zu \"$2\"",
-    Desc3 = "Beschreibung3 wurde geändert von \"$1\" zu \"$2\"",
-    mapsize = "Kartengröße wurde gändert von $1x$2 zu $3x$4",
-    mapsizenote = "BEACHTE: Kartengröße wurde von $1x$2 zu $3x$4 geändert.\\o\nRäume außerhalb von $5x$6 sind nicht gelistet.\\o",
-    levmusic = "Levelmusik wurde gändert von $1 zu $2",
-  },
-  rooms = {
-    added1 = "($1,$2) ($3) hinzugefügt\\G",
-    added2 = "($1,$2) ($3 -> $4) hinzugefügt\\G",
-    changed1 = "($1,$2) ($3) geändert\\Y",
-    changed2 = "($1,$2) ($3 -> $4) geändert\\Y",
-    cleared1 = "Alle Tiles in ($1,$2) ($3) wurden gelöscht\\R",
-    cleared2 = "Alle Tiles in ($1,$2) ($3 -> $4) wurden gelöscht\\R",
-  },
-  roommetadata = {
-    changed0 = "Raum $1,$2:",
-    changed1 = "Raum $1,$2 ($3):",
-    roomname = "Raumname wurde geändert von \"$1\" zu \"$2\"\\Y",
-    roomnameremoved = "Raumname \"$1\" entfernt\\R",
-    roomnameadded = "Raum \"$1\" benannt\\G",
-    tileset = "Tileset $1 Tilesetfarbe $2 geändert zu Tileset $3 Tilesetfarbe $4\\Y",
-    platv = "Plattformgeschwindigkeit geändert von $1 zu $2\\Y",
-    enemytype = "Gegnertyp geändert von $1 zu $2\\Y",
-    platbounds = "Plattformgrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-    enemybounds = "Gegnergrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-    directmode01 = "Direkter-Modus aktiviert\\G",
-    directmode10 = "Direkter-Modus deaktiviert\\R",
-    warpdir = "Teleportationsrichtung geändert von $1 zu $2\\Y",
-  },
-  entities = {
-    added = "Objekttyp $1 hinzugefügt auf Position $2,$3 in Raum ($4,$5)\\G",
-    removed = "Objekttyp $1 entfernt von Position $2,$3 in Raum ($4,$5)\\R",
-    changed = "Objekttyp $1 geändert auf Position $2,$3 in Raum ($4,$5)\\Y",
-    changedtype = "Objekttyp $1 geändert zu Typ $2 auf Position $3,$4 in Raum ($5,$6)\\Y",
-    multiple1 = "Objekte geändert auf Position $1,$2 in Raum ($3,$4):\\Y",
-    multiple2 = "zu:",
-    addedmultiple = "Objekte hinzugefügt auf Position $1,$2 in Raum ($3,$4):\\G",
-    removedmultiple = "Objekte entfernet auf Position $1,$2 in Raum ($3,$4):\\R",
-    entity = "Typ $1",
-    incomplete = "Nicht alle Objekte wurden behandelt! Bitte melde das Dav.\\r",
-  },
-  scripts = {
-    added = "Skript \"$1\" hinzugefügt\\G",
-    removed = "Skript \"$1\" entfernt\\R",
-    edited = "Skript \"$1\" bearbeitet\\Y",
-  },
-  flagnames = {
-    added = "Setze Name für Flag $1 zu \"$2\"\\G",
-    removed = "Entferne Name \"$1\" für Flag $2\\R",
-    edited = "Name für Flag $1 geändert von \"$2\" zu \"$3\"\\Y",
-  },
-  levelnotes = {
-    added = "Levelnotiz \"$1\" hinzugefügt\\G",
-    removed = "Levelnotiz \"$1\" entfernt\\R",
-    edited = "Levelnotiz \"$1\" bearbeitet\\Y",
-  },
-  mde = {
-    added = "Metadatenobjekt wurde hinzugefügt.\\G",
-    removed = "Metadatenobjekt wurde entfernt.\\R",
-  },
+	pages = {
+		levelproperties = "Leveleigenschaften",
+		changedrooms = "Räume geändert",
+		changedroommetadata = "Raummetadaten geändert",
+		entities = "Objekte",
+		scripts = "Skripte",
+		flagnames = "Flag namen",
+		levelnotes = "Levelnotizen",
+	},
+	levelpropertiesdiff = {
+		Title = "Name wurde geändert von \"$1\" zu \"$2\"",
+		Creator = "Author wurde geändert von \"$1\" zu \"$2\"",
+		website = "Webseite wurde gändert von \"$1\" zu \"$2\"",
+		Desc1 = "Beschreibung1 wurde geändert von \"$1\" zu \"$2\"",
+		Desc2 = "Beschreibung2 wurde geändert von \"$1\" zu \"$2\"",
+		Desc3 = "Beschreibung3 wurde geändert von \"$1\" zu \"$2\"",
+		mapsize = "Kartengröße wurde gändert von $1x$2 zu $3x$4",
+		mapsizenote = "BEACHTE: Kartengröße wurde von $1x$2 zu $3x$4 geändert.\\o\nRäume außerhalb von $5x$6 sind nicht gelistet.\\o",
+		levmusic = "Levelmusik wurde gändert von $1 zu $2",
+	},
+	rooms = {
+		added1 = "($1,$2) ($3) hinzugefügt\\G",
+		added2 = "($1,$2) ($3 -> $4) hinzugefügt\\G",
+		changed1 = "($1,$2) ($3) geändert\\Y",
+		changed2 = "($1,$2) ($3 -> $4) geändert\\Y",
+		cleared1 = "Alle Tiles in ($1,$2) ($3) wurden gelöscht\\R",
+		cleared2 = "Alle Tiles in ($1,$2) ($3 -> $4) wurden gelöscht\\R",
+	},
+	roommetadata = {
+		changed0 = "Raum $1,$2:",
+		changed1 = "Raum $1,$2 ($3):",
+		roomname = "Raumname wurde geändert von \"$1\" zu \"$2\"\\Y",
+		roomnameremoved = "Raumname \"$1\" entfernt\\R",
+		roomnameadded = "Raum \"$1\" benannt\\G",
+		tileset = "Tileset $1 Tilesetfarbe $2 geändert zu Tileset $3 Tilesetfarbe $4\\Y",
+		platv = "Plattformgeschwindigkeit geändert von $1 zu $2\\Y",
+		enemytype = "Gegnertyp geändert von $1 zu $2\\Y",
+		platbounds = "Plattformgrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
+		enemybounds = "Gegnergrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
+		directmode01 = "Direkter-Modus aktiviert\\G",
+		directmode10 = "Direkter-Modus deaktiviert\\R",
+		warpdir = "Teleportationsrichtung geändert von $1 zu $2\\Y",
+	},
+	entities = {
+		added = "Objekttyp $1 hinzugefügt auf Position $2,$3 in Raum ($4,$5)\\G",
+		removed = "Objekttyp $1 entfernt von Position $2,$3 in Raum ($4,$5)\\R",
+		changed = "Objekttyp $1 geändert auf Position $2,$3 in Raum ($4,$5)\\Y",
+		changedtype = "Objekttyp $1 geändert zu Typ $2 auf Position $3,$4 in Raum ($5,$6)\\Y",
+		multiple1 = "Objekte geändert auf Position $1,$2 in Raum ($3,$4):\\Y",
+		multiple2 = "zu:",
+		addedmultiple = "Objekte hinzugefügt auf Position $1,$2 in Raum ($3,$4):\\G",
+		removedmultiple = "Objekte entfernet auf Position $1,$2 in Raum ($3,$4):\\R",
+		entity = "Typ $1",
+		incomplete = "Nicht alle Objekte wurden behandelt! Bitte melde das Dav.\\r",
+	},
+	scripts = {
+		added = "Skript \"$1\" hinzugefügt\\G",
+		removed = "Skript \"$1\" entfernt\\R",
+		edited = "Skript \"$1\" bearbeitet\\Y",
+	},
+	flagnames = {
+		added = "Setze Name für Flag $1 zu \"$2\"\\G",
+		removed = "Entferne Name \"$1\" für Flag $2\\R",
+		edited = "Name für Flag $1 geändert von \"$2\" zu \"$3\"\\Y",
+	},
+	levelnotes = {
+		added = "Levelnotiz \"$1\" hinzugefügt\\G",
+		removed = "Levelnotiz \"$1\" entfernt\\R",
+		edited = "Levelnotiz \"$1\" bearbeitet\\Y",
+	},
+	mde = {
+		added = "Metadatenobjekt wurde hinzugefügt.\\G",
+		removed = "Metadatenobjekt wurde entfernt.\\R",
+	},
 }
 
 
@@ -2340,6 +2369,7 @@ Some of the graphics and the font were made by Format
 
 Russian translation: CreepiX, Captain Normalguy
 Esperanto translation: Format
+German translation: r00ster
 
 
 Special thanks to:\h#
@@ -2350,7 +2380,6 @@ Terry Cavanagh for making VVVVVV
 TurtleP (for the code that made graphics not blurry when scaled)
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
 
 
 
