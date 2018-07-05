@@ -9,6 +9,10 @@
 	it into the system later, so don't worry.
 ]]
 
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return (n ~= 1) end
+
 --- fontpng_ascii: N.A.
 
 L = {
@@ -412,6 +416,38 @@ REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 SYNTAXCOLOR_COMMENT = "Comment",
 FPSLIMIT = "FPS limit",
 
+}
+
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "You have $1 plugin that is not supported in this version.",
+		[1] = "You have $1 plugins that are not supported in this version.",
+	},
+	LEVELFAILEDCHECKS = {
+		[0] = "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[1] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+	},
+	SCRIPTUSAGESROOMS = {
+		[0] = "$1 usage in rooms: $2",
+		[1] = "$1 usages in rooms: $2",
+	},
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "$1 usage in scripts: $2",
+		[1] = "$1 usages in scripts: $2",
+	},
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "Entity at [$1 $2] has $3 invalid property!",
+		[1] = "Entity at [$1 $2] has $3 invalid properties!",
+	},
+	ROOMINVALIDPROPERTIES = {
+		[0] = "LevelMetadata for room #$1 has $2 invalid property!",
+		[1] = "LevelMetadata for room #$1 has $2 invalid properties!",
+	},
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "Showing $1",
+		[1] = "Showing $1",
+	},
 }
 
 toolnames = {
@@ -2326,6 +2362,7 @@ Some of the graphics and the font were made by Format
 
 Russian translation: CreepiX, Captain Normalguy
 Esperanto translation: Format
+German translation: r00ster
 
 
 Special thanks to:\h#
@@ -2336,7 +2373,6 @@ Terry Cavanagh for making VVVVVV
 TurtleP (for the code that made graphics not blurry when scaled)
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
 
 
 

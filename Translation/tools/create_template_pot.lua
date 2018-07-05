@@ -43,6 +43,8 @@ luatemplate_list = {}
 	diffmessages: Since this is different than the others,
 		I'd like to parse it separately
 	diffmessages_sub: like auto is to root
+	plu: inside L_PLU, similar to diffmessages
+	plu_sub: similar to diffmessages_sub (like auto is to root)
 	help
 	help_com
 	help_article
@@ -66,6 +68,7 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 	local lua_key = nil -- original key, maybe as used in subarrays
 	local key = nil -- key as used in po, to be unique
 	local value = nil
+	local value_plural = nil
 	local comment = nil
 
 	if main_mode == "root" then
@@ -80,6 +83,8 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 				main_mode = "help"
 				po_list = po_list_help
 				vc_key = 1
+			elseif current_arr == "L_PLU" then
+				main_mode = "plu"
 			else
 				main_mode = "auto"
 			end
@@ -116,6 +121,9 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 				value = ""
 			end
 			]]
+			handled = true
+		elseif line == "function lang_plurals(n) return (n ~= 1) end" then
+			export_line = "function lang_plurals(n) return 0 end"
 			handled = true
 		end
 	elseif main_mode == "root_com" then
@@ -215,6 +223,35 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			export_line = "\t\t" .. lua_key .. " = \"<" .. key .. ">\","
 			handled = true
 		end
+	elseif main_mode == "plu" then
+		if line == "" then
+			handled = true
+		elseif line == "}" then
+			current_arr = nil
+			main_mode = "root"
+			handled = true
+		elseif line:match("^\t[A-Za-z0-9_]+ = {$") ~= nil then
+			-- subtable = {
+			current_arr_sub = line:match("^\t([A-Za-z0-9_]+) = {$")
+			main_mode = "plu_sub"
+			handled = true
+		end
+	elseif main_mode == "plu_sub" then
+		if line == "" then
+			handled = true
+		elseif line == "\t}," then
+			key = current_arr .. "." .. current_arr_sub
+			value = _G[current_arr][current_arr_sub][0]
+			value_plural = _G[current_arr][current_arr_sub][1]
+			export_line = "\t\t[0] = \"<" .. key .. ">\",\n\t}"
+			current_arr_sub = nil
+			main_mode = "plu"
+			handled = true
+		elseif line:match("^\t\t%[[0-5]%] = \".*\",?$") ~= nil then
+			-- [KEY] = "Value",
+			no_lua_export = true
+			handled = true
+		end
 	elseif main_mode == "help" then
 		if line == "" then
 			handled = true
@@ -305,9 +342,20 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			value = "<empty>"
 		end
 		value_escaped = escape_po_str(value)
-		table.insert(po_list, "msgctxt \"" .. key .. "\"\nmsgid \""
-			.. value_escaped .. "\"\nmsgstr \"\"\n"
-		)
+		if value_plural == nil then
+			table.insert(po_list, "msgctxt \"" .. key .. "\"\nmsgid \""
+				.. value_escaped .. "\"\nmsgstr \"\"\n"
+			)
+		else
+			if value_plural == "" then
+				value_plural = "<empty>"
+			end
+			value_plural_escaped = escape_po_str(value_plural)
+			table.insert(po_list, "msgctxt \"" .. key .. "\"\nmsgid \""
+				.. value_escaped .. "\"\nmsgid_plural \""
+				.. value_plural_escaped .. "\"\nmsgstr[0] \"\"\nmsgstr[1] \"\"\n"
+			)
+		end
 	end
 	if not no_lua_export then
 		table.insert(luatemplate_list, export_line)

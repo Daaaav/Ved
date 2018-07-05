@@ -9,6 +9,10 @@
 	it into the system later, so don't worry.
 ]]
 
+-- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
+-- (but then in Lua's syntax)
+function lang_plurals(n) return 0 end
+
 --- fontpng_ascii: N.A.
 
 L = {
@@ -412,6 +416,31 @@ REQUIRESHIGHERLOVE = "<L.REQUIRESHIGHERLOVE>",
 SYNTAXCOLOR_COMMENT = "<L.SYNTAXCOLOR_COMMENT>",
 FPSLIMIT = "<L.FPSLIMIT>",
 
+}
+
+-- Please check the reference for plural forms
+L_PLU = {
+	NUMUNSUPPORTEDPLUGINS = {
+		[0] = "<L_PLU.NUMUNSUPPORTEDPLUGINS>",
+	}
+	LEVELFAILEDCHECKS = {
+		[0] = "<L_PLU.LEVELFAILEDCHECKS>",
+	}
+	SCRIPTUSAGESROOMS = {
+		[0] = "<L_PLU.SCRIPTUSAGESROOMS>",
+	}
+	SCRIPTUSAGESSCRIPTS = {
+		[0] = "<L_PLU.SCRIPTUSAGESSCRIPTS>",
+	}
+	ENTITYINVALIDPROPERTIES = {
+		[0] = "<L_PLU.ENTITYINVALIDPROPERTIES>",
+	}
+	ROOMINVALIDPROPERTIES = {
+		[0] = "<L_PLU.ROOMINVALIDPROPERTIES>",
+	}
+	SCRIPTDISPLAY_SHOWING = {
+		[0] = "<L_PLU.SCRIPTDISPLAY_SHOWING>",
+	}
 }
 
 toolnames = {
