@@ -1756,8 +1756,8 @@ function drawmaineditor()
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
 	rbutton((upperoptpage2 and {L.COMPARE, "cD"} or {L.MAP, "M"}), 2, 40, false, 20)
+	rbutton((upperoptpage2 and L.STATS or {L.SCRIPTS, "/"}), 3, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton((upperoptpage2 and L.STATS or {L.SCRIPTS, "/"}), 3, 40, false, 20)
 		rbutton({L.SEARCH, "cF"}, 4, 40, false, 20)
 		rbutton({L.LEVELNOTEPAD, "c/"}, 5, 40, false, 20)
 	end
@@ -1854,7 +1854,9 @@ function drawmaineditor()
 				tostate(10)
 				mousepressed = true
 			else
-
+				-- Stats
+				tostate(28)
+				mousepressed = true
 			end
 		elseif onrbutton(4, 40, false, 20) then
 			if not upperoptpage2 then

@@ -32,6 +32,7 @@ States:
 25	Syntax highlighting color settings
 26	Font test
 27	Display/Scale settings
+28	Level stats
 
 Debug keys:
 F12: change state
@@ -102,6 +103,9 @@ function love.load()
 	temporaryroomnametimer = 0
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
+
+	limitglow = 0
+	limitglow_enabled = false
 
 	scriptsearchterm = ""
 	helpsearchterm = ""
@@ -1088,6 +1092,55 @@ function love.draw()
 
 			mousepressed = true
 		end
+	elseif state == 28 then
+		-- Stats screen
+		-- basic_stats has elements: {name, value, max}
+		local p100 = love.graphics.getWidth() - 40 - basic_stats_max_text_width
+		for k,v in pairs(basic_stats) do
+			love.graphics.print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k+2)
+
+			-- Background
+			love.graphics.setColor(32, 32, 32)
+			love.graphics.rectangle("fill",
+				24+basic_stats_max_text_width, 16*k,
+				p100, 8
+			)
+			-- Value
+			local perone = v[2] / v[3]
+			if perone >= 1 then
+				-- limitglow can be between 0 and 2
+				local glowadd = 0
+				if perone > 1 then
+					if limitglow > 1 then
+						glowadd = 125*(2-limitglow)
+					else
+						glowadd = 125*limitglow
+					end
+				end
+				love.graphics.setColor(130+glowadd,0,0)
+			elseif perone >= .95 then
+				love.graphics.setColor(255,0,0)
+			elseif perone >= .8 then
+				love.graphics.setColor(255,216,0)
+			else
+				love.graphics.setColor(38,127,0)
+			end
+			love.graphics.rectangle("fill",
+				24+basic_stats_max_text_width, 16*k,
+				math.min(perone, 1)*p100, 8
+			)
+			love.graphics.setColor(255,255,255)
+		end
+
+		rbutton({L.RETURN, "b"}, 0, nil, true)
+
+		if nodialog and love.mouse.isDown("l") then
+			if onrbutton(0, nil, true) then
+				-- Return
+				tostate(oldstate, true) -- keep the scrollbar "farness"
+				mousepressed = true
+			end
+		end
 	else
 		statecaught = false
 
@@ -1199,6 +1252,14 @@ function love.update(dt)
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
+	end
+
+	if state == 28 and limitglow_enabled then
+		limitglow = limitglow + dt
+
+		if limitglow > 2 then
+			limitglow = limitglow - 2
+		end
 	end
 
 	if state == 1 and sp_t ~= 0 and not sp_go then
@@ -2386,7 +2447,7 @@ function love.keypressed(key)
 	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and (state == 15 or state == 19) and key == "escape" then
+	elseif nodialog and (state == 15 or state == 19 or state == 28) and key == "escape" then
 		tostate(oldstate, true)
 		nodialog = false
 	elseif nodialog and state == 3 and key == "escape" then

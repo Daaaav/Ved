@@ -577,6 +577,40 @@ function loadstate(new, extradata)
 			startinput()
 			input = tostring(s.scale)
 		end
+	elseif new == 28 then
+		local usedflags = {}
+
+		-- See which flags have been used in this level.
+		returnusedflags(usedflags, {})
+
+		local n_usedflags = 0
+		for fl = 0, 99 do
+			if usedflags[fl] then
+				n_usedflags = n_usedflags + 1
+			end
+		end
+
+		basic_stats = {
+			{L.AMOUNTSCRIPTS, #scriptnames, 500},
+			{L.AMOUNTUSEDFLAGS, n_usedflags, 100},
+			{L.AMOUNTENTITIES, anythingbutnil0(count.entities), 3000},
+			{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), 20},
+			{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), 20},
+		}
+
+		basic_stats_max_text_width = 0
+		limitglow_enabled = false
+		for k,v in pairs(basic_stats) do
+			local width = font8:getWidth(v[1] .. " /" .. v[2] .. v[3])
+
+			if width > basic_stats_max_text_width then
+				basic_stats_max_text_width = width
+			end
+
+			if v[2] > v[3] then
+				limitglow_enabled = true
+			end
+		end
 	end
 
 	hook("func_loadstate")
