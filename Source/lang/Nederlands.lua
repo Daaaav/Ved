@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-07-05 22:53:41 (CEST)
+--- Last converted: 2018-07-06 22:05:41 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -437,31 +437,31 @@ L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
 		[0] = "Je hebt $1 plugin die niet wordt ondersteund in deze versie.",
 		[1] = "Je hebt $1 plugins die niet worden ondersteund in deze versie.",
-	}
+	},
 	LEVELFAILEDCHECKS = {
 		[0] = "Bĳ $1 test is een probleem geconstateerd bĳ dit level. Het probleem kan al automatisch zĳn opgelost, maar het is nog steeds mogelĳk dat dit crashes of inconsistenties zal veroorzaken.",
 		[1] = "Bĳ $1 tests zĳn problemen geconstateerd bĳ dit level. De problemen kunnen al automatisch zĳn opgelost, maar het is nog steeds mogelĳk dat dit crashes of inconsistenties zal veroorzaken.",
-	}
+	},
 	SCRIPTUSAGESROOMS = {
 		[0] = "$1 keer gebruikt in kamers: $2",
 		[1] = "$1 keer gebruikt in kamers: $2",
-	}
+	},
 	SCRIPTUSAGESSCRIPTS = {
 		[0] = "$1 keer gebruikt in scripts: $2",
 		[1] = "$1 keer gebruikt in scripts: $2",
-	}
+	},
 	ENTITYINVALIDPROPERTIES = {
 		[0] = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschap!",
 		[1] = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschappen!",
-	}
+	},
 	ROOMINVALIDPROPERTIES = {
 		[0] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschap!",
 		[1] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschappen!",
-	}
+	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Toont $1",
 		[1] = "Toont $1",
-	}
+	},
 }
 
 toolnames = {

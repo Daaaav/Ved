@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-07-05 22:53:39 (CEST)
+--- Last converted: 2018-07-06 22:05:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -449,31 +449,31 @@ L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
 		[0] = "Vi havas $1 aldonaĵon, kiu ne estas subtenata en ĉi tiu versio.",
 		[1] = "Vi havas $1 aldonaĵojn, kiuj ne estas subtenataj en ĉi tiu versio.",
-	}
+	},
 	LEVELFAILEDCHECKS = {
 		[0] = "Ĉi tiu nivelo malsukcesis je $1 kontrolo. La problemo eble estas riparita aŭtomate, sed eblas ke tio ankoraŭ kaŭzos erarojn kaj nekonsekvencaĵojn.",
 		[1] = "Ĉi tiu nivelo malsukcesis je $1 kontroloj. La problemoj eble estas riparitaj aŭtomate, sed eblas ke tio ankoraŭ kaŭzos erarojn kaj nekonsekvencaĵojn.",
-	}
+	},
 	SCRIPTUSAGESROOMS = {
 		[0] = "$1 uzado en ĉambroj: $2",
 		[1] = "$1 uzadoj en ĉambroj: $2",
-	}
+	},
 	SCRIPTUSAGESSCRIPTS = {
 		[0] = "$1 uzado en skriptoj: $2",
 		[1] = "$1 uzadoj en skriptoj: $2",
-	}
+	},
 	ENTITYINVALIDPROPERTIES = {
 		[0] = "Ento ĉe [$1 $2] havas $3 malvalidan atributon!",
 		[1] = "Ento ĉe [$1 $2] havas $3 malvalidajn atributojn!",
-	}
+	},
 	ROOMINVALIDPROPERTIES = {
 		[0] = "LevelMetadata por ĉambro #$1 havas $2 malvalidan atributon!",
 		[1] = "LevelMetadata por ĉambro #$1 havas $2 malvalidajn atributojn!",
-	}
+	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Montranta $1",
 		[1] = "Montranta $1",
-	}
+	},
 }
 
 toolnames = {

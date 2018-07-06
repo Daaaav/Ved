@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-07-05 22:53:22 (CEST)
+--- Last converted: 2018-07-06 22:05:34 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -424,25 +424,25 @@ FPSLIMIT = "FPS limit",
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
 		[0] = "You have $1 plugins that are not supported in this version.",
-	}
+	},
 	LEVELFAILEDCHECKS = {
 		[0] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
-	}
+	},
 	SCRIPTUSAGESROOMS = {
 		[0] = "$1 usages in rooms: $2",
-	}
+	},
 	SCRIPTUSAGESSCRIPTS = {
 		[0] = "$1 usages in scripts: $2",
-	}
+	},
 	ENTITYINVALIDPROPERTIES = {
 		[0] = "Entity at [$1 $2] has $3 invalid properties!",
-	}
+	},
 	ROOMINVALIDPROPERTIES = {
 		[0] = "LevelMetadata for room #$1 has $2 invalid properties!",
-	}
+	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Showing $1",
-	}
+	},
 }
 
 toolnames = {

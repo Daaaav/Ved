@@ -243,7 +243,7 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			key = current_arr .. "." .. current_arr_sub
 			value = _G[current_arr][current_arr_sub][0]
 			value_plural = _G[current_arr][current_arr_sub][1]
-			export_line = "\t\t[0] = \"<" .. key .. ">\",\n\t}"
+			export_line = "\t\t[0] = \"<" .. key .. ">\",\n\t},"
 			current_arr_sub = nil
 			main_mode = "plu"
 			handled = true
