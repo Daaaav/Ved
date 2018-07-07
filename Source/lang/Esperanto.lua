@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-07-06 22:05:39 (CEST)
+--- Last converted: 2018-07-07 23:09:04 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2392,7 +2392,7 @@ Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel (Format)
 
 Ruslingva traduko: CreepiX, Captain Normalguy
 Esperanta traduko: Hejmstel
-German translation: r00ster
+Germana traduko: r00ster
 
 
 Specialdanke al:\h#
