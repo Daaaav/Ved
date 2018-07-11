@@ -56,6 +56,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 	local current_english_plural = nil
 	local current_translated = nil
 	local current_translated_plurals = {}
+	local current_translated_plurals_count = 0
 	local multiline_mode = 0 -- 1 for msgid, 2 for msgstr, 11 for msgid_plural, >=20 for msgstr[n+20]
 	local fuzzy = false
 
@@ -71,23 +72,36 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 				for k,v in pairs(current_translated_plurals) do
 					v = unescape_po_str(v)
 					if v == "" or fuzzy then
-						-- Just use the English plural if it's untranslated
-						v = current_english_plural
+						-- Just ignore this one, we won't use it. English fallbacks exist.
 						any_untranslated = true
-					end
-					if v == "<empty>" then
-						-- It's actually supposed to be empty.
-						v = ""
-					end
-					local fillin
-					if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
-						-- This is a multiline string
-						fillin = escape_lua_blockstr(v)
 					else
-						fillin = escape_lua_str(v)
+						if v == "<empty>" then
+							-- It's actually supposed to be empty.
+							v = ""
+						end
+						local fillin
+						if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
+							-- This is a multiline string
+							fillin = escape_lua_blockstr(v)
+						else
+							fillin = escape_lua_str(v)
+						end
+						fillin = fillin:gsub("%%", "%%%%")
+						plurals_export[k+1] = "\t\t[" .. k .. "] = \"" .. fillin .. "\","
 					end
-					fillin = fillin:gsub("%%", "%%%%")
-					plurals_export[k+1] = "\t\t[" .. k .. "] = \"" .. fillin .. "\","
+				end
+				-- Are there any gaps in the list? Lua will act a bit screwy in that case
+				local lastfound = false
+				for k = number_plurals, 1, -1 do
+					if lastfound and plurals_export[k] == nil then
+						plurals_export[k] = ""
+					elseif not lastfound and plurals_export[k] ~= nil then
+						lastfound = true
+					end
+				end
+				if current_translated_plurals_count < number_plurals or any_untranslated then
+					table.insert(plurals_export, "\t\t[-1] = \"" .. current_english .. "\",")
+					table.insert(plurals_export, "\t\t[-2] = \"" .. current_english_plural .. "\",")
 				end
 				if any_untranslated then
 					count_translated = count_translated - 1 -- elegant
@@ -139,6 +153,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 			end
 			--print("Got plural rule: " .. plural_line)
 			number_plurals, plural_equation = plural_line:match("^nplurals=([1-6]); plural=(.*);$")
+			number_plurals = tonumber(number_plurals)
 			--print(number_plurals .. " plural(s), eqn: " .. plural_equation)
 
 			-- Now convert the plural equation to lua
@@ -160,6 +175,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		current_english_plural = nil
 		current_translated = nil
 		current_translated_plurals = {}
+		current_translated_plurals_count = 0
 		multiline_mode = 0
 		fuzzy = false
 
@@ -221,6 +237,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 			local form = line:match("msgstr%[([0-5])%] \"\"")
 			multiline_mode = 20 + form
 			current_translated_plurals[tonumber(form)] = ""
+			current_translated_plurals_count = current_translated_plurals_count + 1
 			handled = true
 		elseif line:match("^msgstr \".*\"$") ~= nil then
 			-- Translated! On a single line.
@@ -232,6 +249,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 			multiline_mode = 0
 			local form, translation = line:match("^msgstr%[([0-5])%] \"(.*)\"$")
 			current_translated_plurals[form] = translation
+			current_translated_plurals_count = current_translated_plurals_count + 1
 			handled = true
 		elseif line:match("^\".*\"$") ~= nil then
 			-- Hey, it's a continuation line!
