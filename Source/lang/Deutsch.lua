@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-07-07 23:09:02 (CEST)
+--- Last converted: 2018-07-12 22:43:21 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -75,13 +75,11 @@ GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte die
 SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
 SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
 THREADERROR = "Threadfehler!",
-NUMUNSUPPORTEDPLUGINS = "Du hast $1 Plugins die nicht untersützt sind in dieser Version.",
 WHATDIDYOUDO = "Was hast du getan?!",
 UNDOFAULTY = "Was tust du?",
 SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
 UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
 MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
-LEVELFAILEDCHECKS = "Dieses Level hat $1 Check(s) nicht bestanden. Die Probleme wurden vielleicht automatisch behoben, aber es ist möglich dass es trotzdem crasht und in Inkonsistenzen resultiert.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
 MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht übergeben zu savelevel()!",
 RESTARTVEDLANG = "Nach dem ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
@@ -211,7 +209,7 @@ ENEMYBOUNDS = "Gegnergrenzen",
 ROOMNAME = "Raumname",
 ROOMOPTIONS = "Raumoptionen",
 ROTATE180 = "Um 180 Grad drehen",
-ROTATE180UNI = "Um 180 Grad drehen",
+ROTATE180UNI = "Um 180° drehen",
 HIDEBOUNDS = "Grenzen nicht zeigen",
 SHOWBOUNDS = "Grenzen zeigen",
 
@@ -307,9 +305,6 @@ AMOUNTOVERWRITEBACKUPS = "Anzahl an Backups die gemacht werden sollen pro Level"
 SCALE = "Größe",
 LOADALLMETADATA = "Lade Metadaten (sowas wie Titel, Author und Beschreibung) für alle Dateien in der Levelliste",
 
-SCRIPTUSAGESROOMS = "$1 Benutzungen in Räume: $2",
-SCRIPTUSAGESSCRIPTS = "$1 Benutzungen in Skripts: $2",
-
 SCRIPTSPLIT = "Trennen",
 SPLITSCRIPT = "Skripts trennen",
 COUNT = "Anzahl: ",
@@ -331,8 +326,6 @@ AMOUNTFLAGNAMES = "Flag namen:",
 TILESUSAGE = "Tiles verwendung",
 
 
-ENTITYINVALIDPROPERTIES = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaften!",
-ROOMINVALIDPROPERTIES = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaften!",
 UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
 MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
 MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
@@ -405,7 +398,6 @@ COPYLINK = "Link kopieren",
 SCRIPTDISPLAY = "Zeigen",
 SCRIPTDISPLAY_USED = "Benutzt",
 SCRIPTDISPLAY_UNUSED = "Unbenutzt",
-SCRIPTDISPLAY_SHOWING = "$1 zeigen",
 
 -- 1.3.0 (more changes)
 RECENTLYOPENED = "Zuletzt geöffnete Level",
@@ -435,25 +427,32 @@ FPSLIMIT = "FPS-Limit",
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[0] = "You have $1 plugins that are not supported in this version.",
+		[-1] = "You have $1 plugin that is not supported in this version.",
+		[-2] = "You have $1 plugins that are not supported in this version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[-1] = "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[-2] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[0] = "$1 usages in rooms: $2",
+		[-1] = "$1 usage in rooms: $2",
+		[-2] = "$1 usages in rooms: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[0] = "$1 usages in scripts: $2",
+		[-1] = "$1 usage in scripts: $2",
+		[-2] = "$1 usages in scripts: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[0] = "Entity at [$1 $2] has $3 invalid properties!",
+		[-1] = "Entity at [$1 $2] has $3 invalid property!",
+		[-2] = "Entity at [$1 $2] has $3 invalid properties!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[-1] = "LevelMetadata for room #$1 has $2 invalid property!",
+		[-2] = "LevelMetadata for room #$1 has $2 invalid properties!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "Showing $1",
+		[-1] = "Showing $1",
+		[-2] = "Showing $1",
 	},
 }
 

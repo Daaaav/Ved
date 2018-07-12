@@ -169,10 +169,6 @@ msgctxt "L.THREADERROR"
 msgid "Thread error!"
 msgstr ""
 
-msgctxt "L.NUMUNSUPPORTEDPLUGINS"
-msgid "You have $1 plugins that are not supported in this version."
-msgstr ""
-
 msgctxt "L.WHATDIDYOUDO"
 msgid "What did you do?!"
 msgstr ""
@@ -191,10 +187,6 @@ msgstr ""
 
 msgctxt "L.MDEVERSIONWARNING"
 msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
-msgstr ""
-
-msgctxt "L.LEVELFAILEDCHECKS"
-msgid "This level failed $1 check(s). The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
 msgstr ""
 
 msgctxt "L.FORGOTPATH"
@@ -969,14 +961,6 @@ msgctxt "L.LOADALLMETADATA"
 msgid "Load metadata (such as title, author and description) for all files in levels list"
 msgstr ""
 
-msgctxt "L.SCRIPTUSAGESROOMS"
-msgid "$1 usages in rooms: $2"
-msgstr ""
-
-msgctxt "L.SCRIPTUSAGESSCRIPTS"
-msgid "$1 usages in scripts: $2"
-msgstr ""
-
 msgctxt "L.SCRIPTSPLIT"
 msgid "Split"
 msgstr ""
@@ -1056,14 +1040,6 @@ msgstr ""
 #. Stats screen
 msgctxt "L.TILESUSAGE"
 msgid "Tiles usage"
-msgstr ""
-
-msgctxt "L.ENTITYINVALIDPROPERTIES"
-msgid "Entity at [$1 $2] has $3 invalid properties!"
-msgstr ""
-
-msgctxt "L.ROOMINVALIDPROPERTIES"
-msgid "LevelMetadata for room #$1 has $2 invalid properties!"
 msgstr ""
 
 msgctxt "L.UNEXPECTEDSCRIPTLINE"
@@ -1344,11 +1320,6 @@ msgstr ""
 #. 1.2.4
 msgctxt "L.SCRIPTDISPLAY_UNUSED"
 msgid "Unused"
-msgstr ""
-
-#. 1.2.4
-msgctxt "L.SCRIPTDISPLAY_SHOWING"
-msgid "Showing $1"
 msgstr ""
 
 #. 1.3.0 (more changes)

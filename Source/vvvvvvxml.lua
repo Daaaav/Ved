@@ -254,7 +254,7 @@ function loadlevel(path)
 			end
 
 			if oldFCcount < mycount.FC then
-				cons_fc(langkeys(L.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}))
+				cons_fc(langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
 			end
 		end
 		-- See this as MySQL's AUTO_INCREMENT
@@ -369,7 +369,7 @@ function loadlevel(path)
 		theselevelmetadata[croom].auto2mode = 0
 
 		if oldFCcount < mycount.FC then
-			cons_fc(langkeys(L.ROOMINVALIDPROPERTIES , {croom, (mycount.FC-oldFCcount)}))
+			cons_fc(langkeys(L_PLU.ROOMINVALIDPROPERTIES , {croom, (mycount.FC-oldFCcount)}, 2))
 		end
 
 		-- If you select a higher tilecol in space station and then go to another tileset, VVVVVV will still save the out-of-range tilecol.
@@ -489,7 +489,7 @@ function loadlevel(path)
 			FClisttext = FClisttext .. v .. "\n"
 		end
 
-		dialog.create(langkeys(L.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
+		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
 	end
 
 	-- No longer x.alltiles

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-07-07 23:09:04 (CEST)
+--- Last converted: 2018-07-12 22:43:19 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -87,13 +87,11 @@ GRAPHICSCARDCANVAS = "Pardonon, ŝajnas ke via grafikkarto ne subtenas tiun traj
 SUREDELETESCRIPT = "Ĉu vi certas, ke vi volas forigi la skripton \"$1\"?",
 SUREDELETENOTE = "Ĉu vi certas, ke vi volas forigi ĉi tiun noton?",
 THREADERROR = "Fadena eraro!",
-NUMUNSUPPORTEDPLUGINS = "Vi havas $1 aldonaĵojn, kiuj ne estas subtenataj en ĉi tiu versio.",
 WHATDIDYOUDO = "Kion vi faris?!",
 UNDOFAULTY = "Kion vi faras?",
 SOURCEDESTROOMSSAME = "Originala kaj nova ĉambroj estas samaj!",
 UNKNOWNUNDOTYPE = "Nekonata malfaro-tipo \"$1\"!",
 MDEVERSIONWARNING = "Ĉi tiu nivelo ŝajnas esti farita en pli nova versio de Ved, kaj eble enhavas iujn datumojn, kiuj perdiĝos kiam vi konservas la nivelon.",
-LEVELFAILEDCHECKS = "Ĉi tiu nivelo malsukcesis je $1 kontrolo(j). La problemoj eble estas riparitaj aŭtomate, sed eblas ke tio ankoraŭ kaŭzos erarojn kaj nekonsekvencaĵojn.",
 FORGOTPATH = "Vi forgesis specifi dosierindikon!",
 MDENOTPASSED = "Averto: metadatuma ento ne transdonita al savelevel()!",
 RESTARTVEDLANG = "Post ŝanĝi la lingvon, vi devas relanĉi Ved-on antaŭ ol la ŝanĝo efikos.",
@@ -319,9 +317,6 @@ AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
 SCALE = "Skalo",
 LOADALLMETADATA = "Ŝargi metadatumojn (kiel titolon, aŭtoron kaj priskribon) por ĉiuj dosieroj en nivelolisto",
 
-SCRIPTUSAGESROOMS = "$1 uzadoj en ĉambroj: $2",
-SCRIPTUSAGESSCRIPTS = "$1 uzadoj en skriptoj: $2",
-
 SCRIPTSPLIT = "Fendi",
 SPLITSCRIPT = "Fendi skriptojn",
 COUNT = "Kvanto:",
@@ -343,8 +338,6 @@ AMOUNTFLAGNAMES = "Flagnomoj:",
 TILESUSAGE = "Uzado de blokoj",
 
 
-ENTITYINVALIDPROPERTIES = "Ento ĉe [$1 $2] havas $3 malvalidajn atributojn!",
-ROOMINVALIDPROPERTIES = "LevelMetadata por ĉambro #$1 havas $2 malvalidajn atributojn!",
 UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
 MAPWIDTHINVALID = "Maplarĝo estas malvalida: $1",
 MAPHEIGHTINVALID = "Mapalto estas malvalida: $1",
@@ -417,7 +410,6 @@ COPYLINK = "Kopii ligilon",
 SCRIPTDISPLAY = "Montri",
 SCRIPTDISPLAY_USED = "Uzita",
 SCRIPTDISPLAY_UNUSED = "Neuzita",
-SCRIPTDISPLAY_SHOWING = "Montranta $1",
 
 -- 1.3.0 (more changes)
 RECENTLYOPENED = "Lastatempe malfermitaj niveloj",

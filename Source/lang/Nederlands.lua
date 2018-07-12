@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-07-07 23:09:06 (CEST)
+--- Last converted: 2018-07-12 22:43:16 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -75,13 +75,11 @@ GRAPHICSCARDCANVAS = "Sorry, het lĳkt dat je grafische kaart deze functie niet 
 SUREDELETESCRIPT = "Weet je zeker dat je het script \"$1\" wilt verwĳderen?",
 SUREDELETENOTE = "Weet je zeker dat je deze notitie wilt verwĳderen?",
 THREADERROR = "Thread-fout!",
-NUMUNSUPPORTEDPLUGINS = "Je hebt $1 plugins die niet worden ondersteund in deze versie.",
 WHATDIDYOUDO = "Wat heb je gedaan?!",
 UNDOFAULTY = "Waar ben je mee bezig?",
 SOURCEDESTROOMSSAME = "Beide kamers zĳn hetzelfde!",
 UNKNOWNUNDOTYPE = "Onbekend ongedaan-maak-type \"$1\"!",
 MDEVERSIONWARNING = "Dit level lĳkt in een nieuwere versie van Ved te zĳn gemaakt, en kan data bevatten die verloren zal gaan als je dit level opslaat.",
-LEVELFAILEDCHECKS = "Bĳ $1 test(s) zĳn problemen geconstateerd bĳ dit level. De problemen kunnen al automatisch zĳn opgelost, maar het is nog steeds mogelĳk dat dit crashes of inconsistenties zal veroorzaken.",
 FORGOTPATH = "Je bent vergeten een pad op te geven!",
 MDENOTPASSED = "Let op: metadata-entiteit niet meegegeven aan savelevel()!",
 RESTARTVEDLANG = "Na het veranderen van de taal moet Ved opnieuw opgestart worden voordat de wĳziging van toepassing wordt.",
@@ -307,9 +305,6 @@ AMOUNTOVERWRITEBACKUPS = "Aantal reservekopieën om te bewaren per level",
 SCALE = "Schaal",
 LOADALLMETADATA = "Laad metadata (zoals titel, auteur en beschrĳving) voor alle bestanden in de lĳst met levels",
 
-SCRIPTUSAGESROOMS = "$1 keer gebruikt in kamers: $2",
-SCRIPTUSAGESSCRIPTS = "$1 keer gebruikt in scripts: $2",
-
 SCRIPTSPLIT = "Splits",
 SPLITSCRIPT = "Splits scripts",
 COUNT = "Aantal:",
@@ -331,8 +326,6 @@ AMOUNTFLAGNAMES = "Vlagnamen:",
 TILESUSAGE = "Gebruik van blokken",
 
 
-ENTITYINVALIDPROPERTIES = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschappen!",
-ROOMINVALIDPROPERTIES = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschappen!",
 UNEXPECTEDSCRIPTLINE = "Onverwachte scriptregel zonder script: $1",
 MAPWIDTHINVALID = "Levelbreedte is ongeldig: $1",
 MAPHEIGHTINVALID = "Levelhoogte is ongeldig: $1",
@@ -405,7 +398,6 @@ COPYLINK = "Kopieer link",
 SCRIPTDISPLAY = "Toon",
 SCRIPTDISPLAY_USED = "Gebruikt",
 SCRIPTDISPLAY_UNUSED = "Ongebruikt",
-SCRIPTDISPLAY_SHOWING = "Toont $1",
 
 -- 1.3.0 (more changes)
 RECENTLYOPENED = "Recent geopende levels",
@@ -459,8 +451,8 @@ L_PLU = {
 		[1] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschappen!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "Toont $1",
-		[1] = "Toont $1",
+		[0] = "$1 wordt getoond",
+		[1] = "$1 worden getoond",
 	},
 }
 

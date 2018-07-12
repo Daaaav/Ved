@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-07-07 23:08:59 (CEST)
+--- Last converted: 2018-07-12 22:43:11 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -63,13 +63,11 @@ GRAPHICSCARDCANVAS = "Ваша видеокарта не поддерживае�
 SUREDELETESCRIPT = "Вы уверены что хотите удалить скрипт \"$1\"?",
 SUREDELETENOTE = "Вы уверены что хотите удалить эту записку?",
 THREADERROR = "Ошибка темы!",
-NUMUNSUPPORTEDPLUGINS = "У вас установлен $1 плагин который не поддерживает данную версию.",
 WHATDIDYOUDO = "Что ты наделал?!",
 UNDOFAULTY = "Что ты делаешь?",
 SOURCEDESTROOMSSAME = "Изначальная комната и конечная комната одна и та же!",
 UNKNOWNUNDOTYPE = "Неизвестный тип отмены \"$1\"!",
 MDEVERSIONWARNING = "Этот уровень был сделан в более поздней версии Ved, и может содержать информацию которая будет потеряна при сохранении.",
-LEVELFAILEDCHECKS = "Этот уровень провалил $1 проверку. Ошибки могли быть исправлены автоматически, но это не точно.",
 FORGOTPATH = "Вы забыли указать путь!",
 MDENOTPASSED = "Внимание: объекту данных запрещён доступ к команде savelevel!",
 RESTARTVEDLANG = "После изменения языка, необходимо перезапустить Ved.",
@@ -295,9 +293,6 @@ AMOUNTOVERWRITEBACKUPS = "Кол-во бекапов для каждого ур�
 SCALE = "Размер",
 LOADALLMETADATA = "Показать настройки (название, автор, описание и т.д.) у всех файлов в списке уровней",
 
-SCRIPTUSAGESROOMS = "$1 использований в комнатах: $2",
-SCRIPTUSAGESSCRIPTS = "$1 использований в скриптах: $2",
-
 SCRIPTSPLIT = "Разделить",
 SPLITSCRIPT = "Разделить скрипты",
 COUNT = "Счёт: ",
@@ -319,8 +314,6 @@ AMOUNTFLAGNAMES = "Названия флагов:",
 TILESUSAGE = "Использование стен",
 
 
-ENTITYINVALIDPROPERTIES = "Объект в комнате [$1 $2] имеет $3 неправильных свойства!",
-ROOMINVALIDPROPERTIES = "Информация комнаты #$1 имеет $2 неправильных свойства!",
 UNEXPECTEDSCRIPTLINE = "Неизвестная линия скрипта: $1",
 MAPWIDTHINVALID = "Ширина карты неверная: $1",
 MAPHEIGHTINVALID = "Высота карты неверная: $1",
@@ -393,7 +386,6 @@ COPYLINK = "Скопировать ссылку",
 SCRIPTDISPLAY = "Показать",
 SCRIPTDISPLAY_USED = "Использовано",
 SCRIPTDISPLAY_UNUSED = "Не исп-но",
-SCRIPTDISPLAY_SHOWING = "Всего показано: $1",
 
 -- 1.3.0 (more changes)
 RECENTLYOPENED = "Недавно открытые уровни",
@@ -423,25 +415,32 @@ FPSLIMIT = "FPS limit",
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[0] = "You have $1 plugins that are not supported in this version.",
+		[-1] = "You have $1 plugin that is not supported in this version.",
+		[-2] = "You have $1 plugins that are not supported in this version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[-1] = "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[-2] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[0] = "$1 usages in rooms: $2",
+		[-1] = "$1 usage in rooms: $2",
+		[-2] = "$1 usages in rooms: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[0] = "$1 usages in scripts: $2",
+		[-1] = "$1 usage in scripts: $2",
+		[-2] = "$1 usages in scripts: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[0] = "Entity at [$1 $2] has $3 invalid properties!",
+		[-1] = "Entity at [$1 $2] has $3 invalid property!",
+		[-2] = "Entity at [$1 $2] has $3 invalid properties!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[-1] = "LevelMetadata for room #$1 has $2 invalid property!",
+		[-2] = "LevelMetadata for room #$1 has $2 invalid properties!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "Showing $1",
+		[-1] = "Showing $1",
+		[-2] = "Showing $1",
 	},
 }
 

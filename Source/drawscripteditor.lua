@@ -162,7 +162,7 @@ function drawscripteditor()
 				scriptsstr = scriptsstr .. (scriptsstr == "" and "" or ", ") .. v[1] .. ":" .. v[2]
 			end
 
-			dialog.create(langkeys(L.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
+			dialog.create(langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
 		elseif onrbutton(4) then
 			-- Copy script
 			love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))

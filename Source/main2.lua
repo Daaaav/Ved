@@ -33,6 +33,7 @@ States:
 26	Font test
 27	Display/Scale settings
 28	Level stats
+29	Plural forms test
 
 Debug keys:
 F12: change state
@@ -543,7 +544,7 @@ function love.draw()
 		love.graphics.print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 134)
 
 		if not (scriptdisplay_used and scriptdisplay_unused) then
-			love.graphics.printf(langkeys(L.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 182, 112, "center")
+			love.graphics.printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 182, 112, "center")
 		end
 
 		-- Script count
@@ -1140,6 +1141,16 @@ function love.draw()
 				tostate(oldstate, true) -- keep the scrollbar "farness"
 				mousepressed = true
 			end
+		end
+	elseif state == 29 then
+		-- Plural forms test
+		int_control(20, 20, "val", 0, 9999, nil, plural_test)
+		love.graphics.print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
+		love.graphics.print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, plural_test.val}, 2), 20, 100)
+
+		if nodialog and love.mouse.isDown("l") then
+			-- Shrug
+			mousepressed = true
 		end
 	else
 		statecaught = false

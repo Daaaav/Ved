@@ -198,6 +198,9 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		elseif line:match("^# .*$") ~= nil then
 			-- # translator comment
 			handled = true
+		elseif line:match("^#~ .*$") ~= nil then
+			-- #~ deleted string
+			handled = true
 		elseif line == "#, fuzzy" then
 			-- Actually maybe don't consider it translated
 			fuzzy = true
