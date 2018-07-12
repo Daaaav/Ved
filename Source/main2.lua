@@ -2623,7 +2623,7 @@ function love.mousepressed(x, y, button)
 	end
 
 	if state == 1 then
-		if x < 64 and not (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) then
+		if x < 64 and not s.psmallerscreen and not (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) then
 			if button == "wu" then
 				lefttoolscroll = lefttoolscroll + 16
 				lefttoolscrollbounds()
@@ -2634,7 +2634,7 @@ function love.mousepressed(x, y, button)
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
 
-		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
+		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
@@ -2644,7 +2644,7 @@ function love.mousepressed(x, y, button)
 			end
 			updatewindowicon()
 			toolscroll()
-		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and mousein(0, 0, love.graphics.getWidth(), love.graphics.getHeight()) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
+		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
 				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
@@ -2654,13 +2654,13 @@ function love.mousepressed(x, y, button)
 			end
 			updatewindowicon()
 			toolscroll()
-		elseif nodialog and button == flipscrollmore(macscrolling and "wd" or "wu") and mousein(64, 0, love.graphics.getWidth(), love.graphics.getHeight()) and selectedtool ~= 14 then
+		elseif nodialog and button == flipscrollmore(macscrolling and "wd" or "wu") and (x >= 64 or s.psmallerscreen) and selectedtool ~= 14 then
 			if selectedsubtool[selectedtool] > 1 then
 				selectedsubtool[selectedtool] = selectedsubtool[selectedtool] - 1
 			else
 				selectedsubtool[selectedtool] = #subtoolimgs[selectedtool]
 			end
-		elseif nodialog and button == flipscrollmore(macscrolling and "wu" or "wd") and mousein(64, 0, love.graphics.getWidth(), love.graphics.getHeight()) and selectedtool ~= 14 then
+		elseif nodialog and button == flipscrollmore(macscrolling and "wu" or "wd") and (x >= 64 or s.psmallerscreen) and selectedtool ~= 14 then
 			if selectedsubtool[selectedtool] < #subtoolimgs[selectedtool] then
 				selectedsubtool[selectedtool] = selectedsubtool[selectedtool] + 1
 			else
