@@ -17,6 +17,8 @@ function drawlevelslist()
 	else
 		hoveringlevel = nil
 		hoveringlevel_k = nil
+		hoveringlevel_k_location = nil
+		tabselected_k = tabselected
 		local hoverarea = 734
 		local metadatax = 422
 		if s.psmallerscreen then
@@ -135,6 +137,7 @@ function drawlevelslist()
 					if mouseishovering then
 						hoveringlevel = prefix .. barename
 						hoveringlevel_k = k
+						hoveringlevel_k_location = k2
 					end
 					if mouseishovering or tabselected == k2 then
 						love.graphics.setColor(255,255,255,64)
@@ -179,8 +182,12 @@ function drawlevelslist()
 						input = v.name:sub(1, -8)
 					end
 					]]
-					if tabselected == k2 and love.keyboard.isDown("return") and nodialog then
-						state6load(prefix .. barename)
+					if tabselected == k2 then
+						tabselected_k = k
+
+						if love.keyboard.isDown("return") and nodialog then
+							state6load(prefix .. barename)
+						end
 					end
 
 					k2 = k2 + 1
@@ -194,11 +201,13 @@ function drawlevelslist()
 			end
 
 			-- Draw level metadata
-			local preferred_k, md, topy
+			local preferred_k, preferred_k_location, md, topy
 			if hoveringlevel_k ~= nil then
 				preferred_k = hoveringlevel_k
+				preferred_k_location = hoveringlevel_k_location
 			elseif tabselected ~= nil then
-				preferred_k = tabselected
+				preferred_k = tabselected_k
+				preferred_k_location = tabselected
 			end
 			if preferred_k ~= nil then
 				if preferred_k < 0 then
@@ -214,7 +223,7 @@ function drawlevelslist()
 					end
 				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
 					md = files[currentdir][preferred_k].metadata
-					topy = 24+8*preferred_k+levellistscroll
+					topy = 24+8*preferred_k_location+levellistscroll
 				end
 				if md ~= nil then
 					if topy+48 > love.graphics.getHeight() then
