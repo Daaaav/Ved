@@ -229,7 +229,7 @@ function processflaglabelsreverse()
 		--table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
 
 		-- I see something coming here...
-		if scriptlines[editingline] == "" then
+		if input == "" then
 			-- Make sure it's not changed back to an empty line by a leavescript_to_state.
 			input = "#"
 		end
