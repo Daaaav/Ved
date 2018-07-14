@@ -560,7 +560,7 @@ function love.draw()
 				dialog.create(
 					L.NEWSCRIPTNAME, DBS.OKCANCEL,
 					dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
-					dialog.callback.newscript_noclose, "newscript_list"
+					dialog.callback.newscript_validate, "newscript_list"
 				)
 			elseif onrbutton(1) then
 				-- Flags
@@ -776,12 +776,24 @@ function love.draw()
 					if not mousepressed and nodialog and love.mouse.isDown("l") then
 						flgnum = flk + (flcol == 8 and 0 or 50) -- niet local, wordt gebruikt in dialog
 
-						if vedmetadata == false then
-							startmultiinput({""})
-						else
-							startmultiinput({vedmetadata.flaglabel[flgnum]})
+						local field_default = ""
+						if vedmetadata ~= false then
+							field_default = vedmetadata.flaglabel[flgnum]
 						end
-						dialog.new(langkeys(L.NAMEFORFLAG, {flgnum}), "", 1, 4, 15)
+
+						-- We also want to know where this was used.
+						local usages = {}
+						returnusedflags(nil, nil, flgnum, usages)
+
+						dialog.create(
+							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"
+							.. langkeys(L_PLU.FLAGUSAGES, {#usages, table.concat(usages, ", ")}),
+							DBS.OKCANCEL,
+							dialog.callback.changeflagname,
+							nil,
+							dialog.form.simplename_make(field_default),
+							dialog.callback.changeflagname_validate
+						)
 
 						mousepressed = true
 					end
@@ -1622,7 +1634,7 @@ function love.update(dt)
 				dialog.create(
 					L.NEWSCRIPTNAME, DBS.OKCANCEL,
 					dialog.callback.newscript, L.DUPLICATE, dialog.form.simplename,
-					dialog.callback.newscript_noclose, "duplicate_list"
+					dialog.callback.newscript_validate, "duplicate_list"
 				)
 				input = rvnum
 			elseif RCMreturn == L.DELETE then
@@ -1724,7 +1736,7 @@ function love.textinput(char)
 				tabselected = 0
 			end
 		-- dialog.new("Actually just do a search for #dialogs as well after removing the old system")
-		elseif #dialogs > 0 then
+		elseif #dialogs > 0 and not dialogs[#dialogs].closing then
 			local cf = dialogs[#dialogs].currentfield
 			if cf ~= 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
@@ -1871,7 +1883,7 @@ function love.keypressed(key)
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
 		end
-	elseif #dialogs > 0 then
+	elseif #dialogs > 0 and not dialogs[#dialogs].closing then
 		local cf = dialogs[#dialogs].currentfield
 		if cf ~= 0 and dialog.current_input_not_dropdown() then
 			if key == "backspace" then
@@ -2440,7 +2452,7 @@ function love.keypressed(key)
 		dialog.create(
 			L.NEWSCRIPTNAME, DBS.OKCANCEL,
 			dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
-			dialog.callback.newscript_noclose, "newscript_list"
+			dialog.callback.newscript_validate, "newscript_list"
 		)
 	elseif state == 10 and key == "f" and nodialog then
 		tostate(19,false)

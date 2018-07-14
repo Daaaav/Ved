@@ -8,6 +8,12 @@ function dialog.form.save_make()
 	}
 end
 
+function dialog.form.simplename_make(default)
+	return {
+		{"name", 0, 1, 40, default},
+	}
+end
+
 -- 
 dialog.form.simplename = {
 	{"name", 0, 1, 40, ""},
@@ -91,24 +97,31 @@ function dialog.callback.savenewlevel(button, fields)
 	end
 end
 
-function dialog.callback.newscript(button, fields, identifier)
+function dialog.callback.newscript_validate(button, fields, identifier)
+	if button == DB.OK and scripts[fields.name] ~= nil then
+		-- Script already exists
+		dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
+		return true
+	end
+end
+
+function dialog.callback.newscript(button, fields, identifier, notclosed)
 	-- Old question IDs:
 	--  9: new script (list)
 	-- 11: new script (editor)
 	-- 21: split      (editor)
 	-- 22: duplicate  (list)
+	if notclosed then
+		-- Already errored because script already exists
+		return
+	end
+
 	if button ~= DB.OK then
 		-- Not pressing OK
 		if identifier == "newscript_editor" or identifier == "split_editor" then
 			-- We were already editing a script so re-enable input for that!
 			takinginput = true
 		end
-		return
-	end
-
-	if scripts[fields.name] ~= nil then
-		-- Script already exists
-		dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
 		return
 	end
 
@@ -190,8 +203,34 @@ function dialog.callback.newscript(button, fields, identifier)
 	dirty()
 end
 
-function dialog.callback.newscript_noclose(button, fields, identifier)
-	if button == DB.OK and scripts[fields.name] ~= nil then
-		return true
+function dialog.callback.changeflagname_validate(button, fields)
+	if button == DB.OK then
+		local problem = flagname_check_problem(fields.name, flgnum)
+
+		if problem ~= nil then
+			dialog.create(problem)
+			return true
+		end
+	end
+end
+
+function dialog.callback.changeflagname(button, fields, _, notclosed)
+	if notclosed then
+		return
+	end
+
+	if button == DB.OK then
+		-- Give a name to this flag, but first check if we actually have vedmetadata
+		if vedmetadata == false then
+			vedmetadata = createmde()
+		end
+
+		vedmetadata.flaglabel[flgnum] = fields.name
+
+		-- This is a change!
+		dirty()
+
+		-- Refresh the state so it shows the correct label now
+		loadstate(state)
 	end
 end

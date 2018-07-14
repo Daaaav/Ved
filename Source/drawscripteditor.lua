@@ -142,7 +142,7 @@ function drawscripteditor()
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
 				dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
-				dialog.callback.newscript_noclose, "newscript_editor"
+				dialog.callback.newscript_validate, "newscript_editor"
 			)
 		elseif PleaseDo3DSHandlingThanks and onrbutton(2) then
 			-- Open ($script)
@@ -174,7 +174,7 @@ function drawscripteditor()
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
 				dialog.callback.newscript, L.SPLITSCRIPT, dialog.form.simplename,
-				dialog.callback.newscript_noclose, "split_editor"
+				dialog.callback.newscript_validate, "split_editor"
 			)
 		elseif onrbutton(6) then
 			-- Search

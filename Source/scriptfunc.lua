@@ -1,17 +1,23 @@
-function returnusedflags(usedflagsA, outofrangeflagsA)
-	for rvnum = #scriptnames, 1, -1 do			
+function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificflag_usages)
+	-- if specificflag is not given, then all used flags will be stored in usedflagsA and outofrangeflagsA.
+	-- else, a list of "script:line" is put in specificflag_usages, which is all usages of that flag.
+	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
-			local explodedscript = explode("\n", v)
+			local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ""))
 
-			for k2, v2 in pairs(explodedscript) do
-				local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v2, "%(", ","), "%)", ","), " ", ""))
-
-				if (explcommaline[1] == "flag" or explcommaline[1] == "ifflag" or explcommaline[1] == "customifflag") and explcommaline[2] ~= nil and tonumber(explcommaline[2]) ~= nil then
+			if (
+				explcommaline[1] == "flag"
+				or explcommaline[1] == "ifflag"
+				or explcommaline[1] == "customifflag"
+			) and explcommaline[2] ~= nil and tonumber(explcommaline[2]) ~= nil then
+				if specificflag == nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
 
 					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) > 99 then
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
+				elseif specificflag == tonumber(explcommaline[2]) then
+					table.insert(specificflag_usages, scriptnames[rvnum] .. ":" .. k)
 				end
 			end
 		end
@@ -637,5 +643,33 @@ function scriptlineonscreen(ln)
 	else
 		scriptscroll = math.max(scriptscroll, -(8*(ln-1)))
 		scriptscroll = math.min(scriptscroll, -(8*ln-8*56))
+	end
+end
+
+function flagname_illegal_chars(name)
+	return name:find("%(") or name:find("%)") or name:find(",") or name:find(" ")
+end
+
+function flagname_check_problem(name, number)
+	-- Returns a string describing the problem with a flag name for a flag number if there is a problem
+	-- Returns nil if there's no problem
+	if name == "" then
+		return
+	end
+
+	if tostring(tonumber(name)) == tostring(name) then
+		-- This is a number
+		return L.FLAGNAMENUMBERS
+	elseif flagname_illegal_chars(name) then
+		-- This contains illegal characters
+		return L.FLAGNAMECHARS
+	elseif vedmetadata ~= false then
+		-- Final check: check if this flag hasn't been used already.
+		for kd = 0, 99 do
+			if kd ~= number and vedmetadata.flaglabel[kd] == name then
+				-- This flag already exists!
+				return langkeys(L.FLAGNAMEINUSE, {name, kd})
+			end
+		end
 	end
 end

@@ -95,7 +95,9 @@ function cDialog:draw(topmost)
 	love.graphics.rectangle("fill", self.x, self.y+self.windowani, self.width, self.height)
 	-- Text
 	self:setColor(0,0,0,255)
+	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
 	love.graphics.printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, "left")
+	love.graphics.setScissor()
 
 	-- Text boxes
 	for k,v in pairs(self.fields) do
@@ -173,6 +175,9 @@ end
 
 function cDialog:mousepressed(x, y)
 	-- Left mouse button pressed on the dialog
+	if self.closing then
+		return
+	end
 	if x > self.x and x <= self.x+self.width and y >= self.y-17 and y <= self.y then
 		-- Title bar
 		self.moving = true
@@ -194,6 +199,9 @@ end
 
 function cDialog:keypressed(key)
 	-- Key pressed that might be of interest
+	if self.closing then
+		return
+	end
 	if key == "return" then
 		if self.buttons_present[DB.OK] then
 			self:press_button(DB.OK)
@@ -257,9 +265,16 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode) -- items and
 end
 
 function cDialog:press_button(button)
-	if self.noclosechecker ~= nil and self.noclosechecker(button, self:return_fields(), self.identifier) then
+	if self.closing then
+		return
+	end
+	local notclosed = false
+	if self.noclosechecker ~= nil then
+		notclosed = self.noclosechecker(button, self:return_fields(), self.identifier)
+	end
+	if notclosed then
 		if self.handler ~= nil then
-			self.handler(button, self:return_fields(), self.identifier)
+			self.handler(button, self:return_fields(), self.identifier, notclosed)
 		end
 	else
 		self:close(button)
@@ -282,7 +297,7 @@ function cDialog:closed()
 	table.remove(dialogs)
 	-- Call the close handler!
 	if self.handler ~= nil then
-		self.handler(self.return_btn, self:return_fields(), self.identifier)
+		self.handler(self.return_btn, self:return_fields(), self.identifier, false)
 	end
 end
 
@@ -471,10 +486,10 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 188, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 15 or DIAquestionid == 21 or DIAquestionid == 22 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
-	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 26 then
+	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
@@ -728,40 +743,7 @@ function dialog.update(dt)
 			-- Go to the new article (removing this line will cause the deleted article to be left on the screen, along with its buttons, but not the button in the left menu for it)
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
 		elseif (DIAquestionid == 15) then
-			stopinput()
-			if DIAreturn == 2 then
-				-- Is the name valid?
-				if tostring(tonumber(multiinput[1])) == tostring(multiinput[1]) then
-					-- This is a number
-					dialog.new(L.FLAGNAMENUMBERS, "", 1, 1, 0)
-					replacedialog = true
-				elseif multiinput[1]:find("%(") or multiinput[1]:find("%)") or multiinput[1]:find(",") or multiinput[1]:find(" ") then
-					-- This contains illegal characters
-					dialog.new(L.FLAGNAMECHARS, "", 1, 1, 0)
-					replacedialog = true
-				else
-					-- Final check: check if this flag hasn't been used already.
-					for kd = 0, 99 do
-						if kd ~= flnum and multiinput[1] ~= "" and vedmetadata ~= false and vedmetadata.flaglabel[kd] == multiinput[1] then
-							-- This flag already exists!
-							dialog.new(langkeys(L.FLAGNAMEINUSE, {multiinput[1], kd}), "", 1, 1, 0)
-							replacedialog = true
-						end
-					end
-
-					if not replacedialog then
-						-- Give a name to this flag, but first check if we actually have vedmetadata
-						if vedmetadata == false then
-							vedmetadata = createmde()
-						end
-
-						vedmetadata.flaglabel[flgnum] = multiinput[1]
-
-						-- Refresh the state so it shows the correct label now
-						loadstate(state)
-					end
-				end
-			end
+			assert(false)
 		elseif DIAquestionid == 16 and DIAreturn == 2 then
 			-- Leave the editor even though a flag label doesn't have a number now.
 			leavescript_to_state()
