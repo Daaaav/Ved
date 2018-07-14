@@ -783,11 +783,11 @@ function love.draw()
 
 						-- We also want to know where this was used.
 						local usages = {}
-						returnusedflags(nil, nil, flgnum, usages)
+						local n_usages = returnusedflags(nil, nil, flgnum, usages)
 
 						dialog.create(
 							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"
-							.. langkeys(L_PLU.FLAGUSAGES, {#usages, table.concat(usages, ", ")}),
+							.. langkeys(L_PLU.FLAGUSAGES, {n_usages, table.concat(usages, ", ")}),
 							DBS.OKCANCEL,
 							dialog.callback.changeflagname,
 							nil,

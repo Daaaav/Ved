@@ -1,7 +1,10 @@
 function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificflag_usages)
 	-- if specificflag is not given, then all used flags will be stored in usedflagsA and outofrangeflagsA.
-	-- else, a list of "script:line" is put in specificflag_usages, which is all usages of that flag.
+	-- else, a list of script names is put in specificflag_usages, which is all usages of that flag,
+	-- and the number of usages is returned (including multiple usages in the same script).
+	local specificflag_n_real_usages = 0
 	for rvnum = #scriptnames, 1, -1 do
+		local script_inserted = false
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ""))
 
@@ -17,11 +20,18 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
 				elseif specificflag == tonumber(explcommaline[2]) then
-					table.insert(specificflag_usages, scriptnames[rvnum] .. ":" .. k)
+					specificflag_n_real_usages = specificflag_n_real_usages + 1
+
+					if not script_inserted then
+						table.insert(specificflag_usages, scriptnames[rvnum])
+						script_inserted = true
+					end
 				end
 			end
 		end
 	end
+
+	return specificflag_n_real_usages
 end
 
 function syntaxhl(text, x, y, thisistext, addcursor, docolor)
