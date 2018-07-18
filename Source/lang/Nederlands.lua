@@ -454,6 +454,10 @@ L_PLU = {
 		[0] = "$1 wordt getoond",
 		[1] = "$1 worden getoond",
 	},
+	FLAGUSAGES = {
+		[0] = "Used $1 time in scripts: $2",
+		[1] = "Used $1 times in scripts: $2",
+	},
 }
 
 toolnames = {

@@ -3,7 +3,3 @@
 
 --L. = ""
 
-L_PLU.FLAGUSAGES = {
-		[0] = "Used $1 time in scripts: $2",
-		[1] = "Used $1 times in scripts: $2",
-	}

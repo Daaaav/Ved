@@ -1449,6 +1449,12 @@ msgid_plural "Showing $1"
 msgstr[0] ""
 msgstr[1] ""
 
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] ""
+msgstr[1] ""
+
 msgctxt "toolnames.1"
 msgid "Wall"
 msgstr ""

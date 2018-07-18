@@ -433,6 +433,9 @@ L_PLU = {
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "<L_PLU.SCRIPTDISPLAY_SHOWING>",
 	},
+	FLAGUSAGES = {
+		[0] = "<L_PLU.FLAGUSAGES>",
+	},
 }
 
 toolnames = {
