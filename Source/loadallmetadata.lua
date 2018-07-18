@@ -28,7 +28,8 @@ while true do
 				id = level.id,
 				path = level.path,
 				success = false,
-				errmsg = metadata
+				errmsg = metadata,
+				refresh = level.refresh
 			}
 		)
 	else
@@ -36,6 +37,7 @@ while true do
 		metadata.id = level.id
 		metadata.path = level.path
 		metadata.success = true
+		metadata.refresh = level.refresh
 		outchannel:push(metadata)
 	end
 end

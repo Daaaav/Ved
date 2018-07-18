@@ -127,7 +127,8 @@ function drawlevelslist()
 						{
 							path = prefix .. v.name,
 							dir = currentdir,
-							id = k
+							id = k,
+							refresh = levels_refresh
 						}
 					)
 				end

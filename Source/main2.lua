@@ -307,6 +307,7 @@ function love.load()
 	ved_require("filefunc_" .. loaded_filefunc)
 
 	secondlevel = false
+	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
 
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
@@ -1348,7 +1349,7 @@ function love.update(dt)
 	elseif state == 6 then
 		local chanmessage = allmetadata_outchannel:pop()
 
-		if chanmessage ~= nil then
+		if chanmessage ~= nil and chanmessage.refresh == levels_refresh then
 			files[chanmessage.dir][chanmessage.id].metadata = chanmessage
 
 			-- Is this also the metadata for any recent file? TODO: Support subdirectories

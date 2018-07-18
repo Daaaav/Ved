@@ -651,6 +651,10 @@ end
 
 function loadlevelsfolder()
 	cons("Loading levels folder...")
+	levels_refresh = levels_refresh + 1
+	if allmetadata_inchannel ~= nil then
+		allmetadata_inchannel:clear()
+	end
 	lsuccess, levelsfolder = getlevelsfolder()
 	if lsuccess then
 		files = listfiles(levelsfolder)
