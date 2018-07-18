@@ -1504,12 +1504,11 @@ function state6load(levelname)
 			=  editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata
 		end
 
-		editingmap = levelname
-		success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = loadlevel(editingmap .. ".vvvvvv")
+		success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			--tostate(6)
-			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(editingmap)}) .. "\n\n" .. metadata)
+			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
 
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
@@ -1518,6 +1517,7 @@ function state6load(levelname)
 				oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
 			end
 		else
+			editingmap = levelname
 			recentlyopened(editingmap)
 			tostate(1)
 		end

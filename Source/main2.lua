@@ -2446,7 +2446,9 @@ function love.keypressed(key)
 	elseif (state == 8) and (key == "return") then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
-		editingmap = input
+		if savedsuccess then
+			editingmap = input
+		end
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
 	elseif state == 10 and key == "n" and nodialog then

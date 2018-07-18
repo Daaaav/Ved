@@ -71,11 +71,12 @@ function dialog.callback.save(button, fields)
 		end
 
 		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
-		editingmap = fields.filename
 
 		if not savedsuccess then
 			-- Why not :c
 			dialog.create(L.SAVENOSUCCESS .. anythingbutnil(savederror))
+		else
+			editingmap = fields.filename
 		end
 	end
 end
