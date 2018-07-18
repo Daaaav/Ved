@@ -53,7 +53,7 @@ function drawscripteditor()
 		end
 
 		if editingline == k then --and textlinestogo == 0 then
-			context, carg1, carg2 = scriptcontext(v)
+			context, carg1, carg2 = scriptcontext(input .. input_r)
 		end
 
 		if textq ~= nil then
