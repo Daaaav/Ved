@@ -153,6 +153,7 @@ function drawmaineditor()
 							end
 						end
 						mousepressed = true
+						nodialog = false
 						tilespicker = false
 					end
 				else
