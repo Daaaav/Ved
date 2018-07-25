@@ -653,6 +653,12 @@ function love.draw()
 			love.graphics.setColor(255,128,0)
 			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
+		else
+			love.graphics.print(
+				ERR_VEDVERSION .. " " .. ver .. (intermediate_version and "-pre" or "") .. "\n"
+				.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+				8, love.graphics.getHeight()-21
+			)
 		end
 
 
