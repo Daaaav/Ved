@@ -194,8 +194,20 @@ function loadlevel(path)
 					local explodedvars = explode("%$", explodedmetadata[4])
 					for k,v in pairs(explodedvars) do
 						local explodedvar = explode("@", v)
-						if (#explodedvar) >= 3 then
-							myvedmetadata.vars[undespecialchars(explodedvar[1])] = {
+						local key = undespecialchars(explodedvar[1])
+						if explodedvar[2] == "t" then
+							table.remove(explodedvar, 1); table.remove(explodedvar, 1)
+							for k2, v2 in pairs(explodedvar) do
+								if k2 % 2 == 0 then
+									explodedvar[k2] = undespecialchars(v2)
+								end
+							end
+							myvedmetadata.vars[key] = {
+								["type"] = "t",
+								value = explodedvar
+							}
+						elseif (#explodedvar) >= 3 then
+							myvedmetadata.vars[key] = {
 								["type"] = explodedvar[2],
 								value = undespecialchars(explodedvar[3])
 							}
@@ -603,7 +615,18 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			local varsdata = {}
 
 			for k,v in pairs(vedmetadata.vars) do
-				table.insert(varsdata, despecialchars(k) .. "@" .. v["type"] .. "@" .. despecialchars(v.value))
+				if v["type"] == "t" then
+					local values = ""
+					for k2,v2 in pairs(v.value) do
+						if k2 % 2 == 0 then
+							v2 = despecialchars(v2)
+						end
+						values = values .. "@" .. v2
+					end
+					table.insert(varsdata, despecialchars(k) .. "@t" .. values)
+				else
+					table.insert(varsdata, despecialchars(k) .. "@" .. v["type"] .. "@" .. despecialchars(v.value))
+				end
 			end
 
 			mdedata = mdedata .. table.concat(varsdata, "$") .. "|"

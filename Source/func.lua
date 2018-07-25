@@ -2642,6 +2642,69 @@ function temp_print_override()
 end
 
 
+-- Some helper functions for level-specific vars in the metadata entity
+function cast_level_var_type(t, v)
+	if t == "b" then
+		return v == "1"
+	elseif t == "n" then
+		return tonumber(v)
+	elseif t == "t" then
+		if type(v) ~= "table" then
+			return nil
+		end
+		local tab = {}
+		local current_type -- Precedes both key and value
+		local current_key, current_value
+		for k,v in pairs(v) do
+			local ix = ((k-1)%4)+1
+			if ix == 1 or ix == 3 then
+				-- Key type or value type
+				current_type = v
+			elseif ix == 2 then
+				-- Key
+				current_key = cast_level_var_type(current_type, v)
+			elseif ix == 4 then
+				-- Value
+				if current_key ~= nil then
+					tab[current_key] = cast_level_var_type(current_type, v)
+				end
+				current_key, current_value = nil
+			end
+		end
+		return tab
+	end
+	return v
+end
+
+function serialize_level_var_type(value, disallow_table)
+	if type(value) == "boolean" then
+		return "b", value and "1" or "0"
+	elseif type(value) == "number" then
+		return "n", tostring(value)
+	elseif type(value) == "string" then
+		return "s", value
+	elseif type(value) == "table" and not disallow_table then
+		-- Only 1d tables!
+		tab = {}
+		for k,v in pairs(value) do
+			local key_type, key = serialize_level_var_type(k, true)
+			local val_type, val = serialize_level_var_type(v, true)
+
+			if key_type == nil or val_type == nil then
+				return nil, nil
+			end
+
+			table.insert(tab, key_type)
+			table.insert(tab, key)
+			table.insert(tab, val_type)
+			table.insert(tab, val)
+		end
+		return "t", tab
+	else
+		return nil, nil
+	end
+end
+
 -- Functions for level-specific vars in the metadata entity
 function get_level_var(key)
 	-- Might look excessive, but we don't want "falsy" stuff, and returning nil is clear
@@ -2653,14 +2716,7 @@ function get_level_var(key)
 		return nil
 	end
 
-	local t,v = vedmetadata.vars[key]["type"], vedmetadata.vars[key].value
-
-	if t == "b" then
-		return v == "1"
-	elseif t == "n" then
-		return tonumber(v)
-	end
-	return v
+	return cast_level_var_type(vedmetadata.vars[key]["type"], vedmetadata.vars[key].value)
 end
 
 function get_all_level_vars()
@@ -2673,15 +2729,7 @@ function get_all_level_vars()
 	local vars = {}
 
 	for k,v in pairs(vedmetadata.vars) do
-		local t,val = v["type"], v.value
-
-		if t == "b" then
-			val = val == "1"
-		elseif t == "n" then
-			val = tonumber(val)
-		end
-
-		vars[k] = val
+		vars[k] = cast_level_var_type(v["type"], v.value)
 	end
 
 	return vars
@@ -2694,17 +2742,9 @@ function set_level_var(key, value)
 		vedmetadata = createmde()
 	end
 
-	local t, v
-	if type(value) == "boolean" then
-		t = "b"
-		v = value and "1" or "0"
-	elseif type(value) == "number" then
-		t = "n"
-		v = tostring(value)
-	elseif type(value) == "string" then
-		t = "s"
-		v = value
-	else
+	local t, v = serialize_level_var_type(value)
+
+	if t == nil then
 		return false
 	end
 
