@@ -190,12 +190,31 @@ function loadlevel(path)
 				myvedmetadata.leveloptions = explodedmetadata[4]
 				]]
 
+				if myvedmetadata.mdeversion >= 3 and explodedmetadata[4] ~= "" and explodedmetadata[4] ~= nil then
+					local explodedvars = explode("%$", explodedmetadata[4])
+					for k,v in pairs(explodedvars) do
+						local explodedvar = explode("@", v)
+						if (#explodedvar) >= 3 then
+							myvedmetadata.vars[undespecialchars(explodedvar[1])] = {
+								["type"] = explodedvar[2],
+								value = undespecialchars(explodedvar[3])
+							}
+						end
+					end
+				end
+
 				if explodedmetadata[5] ~= "" and explodedmetadata[5] ~= nil then
 					local explodednotes = explode("%$", explodedmetadata[5])
 					for k,v in pairs(explodednotes) do
 						local explodednote = explode("@", v)
 						--myvedmetadata.notes[undespecialchars(explodednote[1])] = undespecialchars(explodednote[2])
-						table.insert(myvedmetadata.notes, {subj = undespecialchars(explodednote[1]), imgs = {}, cont = undespecialchars(explodednote[2])})
+						table.insert(myvedmetadata.notes,
+							{
+								subj = undespecialchars(explodednote[1]),
+								imgs = {},
+								cont = undespecialchars(explodednote[2])
+							}
+						)
 					end
 				end
 
@@ -578,7 +597,16 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k]) -- table.concat(vedmetadata.flaglabel, "$")
 			end
 
-			mdedata = mdedata .. "|||"
+			mdedata = mdedata .. "||"
+
+			-- Vars
+			local varsdata = {}
+
+			for k,v in pairs(vedmetadata.vars) do
+				table.insert(varsdata, despecialchars(k) .. "@" .. v["type"] .. "@" .. despecialchars(v.value))
+			end
+
+			mdedata = mdedata .. table.concat(varsdata, "$") .. "|"
 
 			-- Now add the notes to it!
 			local notesdata = {}

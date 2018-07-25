@@ -1469,8 +1469,7 @@ function createmde()
 		mdeversion = thismdeversion,
 		-- This is of course an ugly way to do it
 		flaglabel = {"","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","", [0] = ""},
-		internalscripts = {},
-		leveloptions = {},
+		vars = {},
 		notes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 	}
 end
@@ -2640,6 +2639,89 @@ function temp_print_override()
 	love.graphics.printf = function(...)
 		love11_tempfixfontpos(love.graphics.printf11, ...)
 	end
+end
+
+
+-- Functions for level-specific vars in the metadata entity
+function get_level_var(key)
+	-- Might look excessive, but we don't want "falsy" stuff, and returning nil is clear
+	if vedmetadata == false or vedmetadata == nil then
+		return nil
+	end
+
+	if vedmetadata.vars[key] == nil then
+		return nil
+	end
+
+	local t,v = vedmetadata.vars[key]["type"], vedmetadata.vars[key].value
+
+	if t == "b" then
+		return v == "1"
+	elseif t == "n" then
+		return tonumber(v)
+	end
+	return v
+end
+
+function get_all_level_vars()
+	-- Get all vars as an array.
+
+	if vedmetadata == false or vedmetadata == nil then
+		return {}
+	end
+
+	local vars = {}
+
+	for k,v in pairs(vedmetadata.vars) do
+		local t,val = v["type"], v.value
+
+		if t == "b" then
+			val = val == "1"
+		elseif t == "n" then
+			val = tonumber(val)
+		end
+
+		vars[k] = val
+	end
+
+	return vars
+end
+
+function set_level_var(key, value)
+	-- Returns false in case of invalid value type, true if valid.
+
+	if vedmetadata == false then
+		vedmetadata = createmde()
+	end
+
+	local t, v
+	if type(value) == "boolean" then
+		t = "b"
+		v = value and "1" or "0"
+	elseif type(value) == "number" then
+		t = "n"
+		v = tostring(value)
+	elseif type(value) == "string" then
+		t = "s"
+		v = value
+	else
+		return false
+	end
+
+	vedmetadata.vars[key] = {
+		["type"] = t,
+		value = v
+	}
+
+	return true
+end
+
+function remove_level_var(key)
+	if vedmetadata == false or vedmetadata == nil then
+		return
+	end
+
+	vedmetadata.vars[key] = nil
 end
 
 hook("func")

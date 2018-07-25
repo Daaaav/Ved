@@ -19,7 +19,7 @@ vergroups = {4,1} -- This'll be pattern-matched later
 
 intermediate_version = true -- If true, this is a WIP version (this just affects display)
 
-thismdeversion = 2
+thismdeversion = 3
 
 unsupportedplugins = 0
 
