@@ -654,23 +654,23 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	cons("Saving room metadata...")
 	-- Now all room metadata, aka levelclass
-	alllevelmetadata = ""
+	local alllevelmetadata = {}
 	for k,v in pairs(theselevelmetadata) do
-		alllevelmetadata = alllevelmetadata .. "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. v.platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
+		table.insert(alllevelmetadata, "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. v.platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n")
 	end
 
-	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (alllevelmetadata:gsub("%%", "%%%%")))
+	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (table.concat(alllevelmetadata, ""):gsub("%%", "%%%%")))
 
 	-- Now all the scripts!
 	cons("Assembling scripts...")
-	allallscripts = ""
+	local allallscripts = {}
 	--for k,v in pairs(allscripts) do
 	for rvnum = 1, #scriptnames do
 		local k, v = scriptnames[rvnum], allscripts[scriptnames[rvnum]]
-		allallscripts = allallscripts .. xmlspecialchars(k) .. ":|" .. xmlspecialchars(implode("|", v)) .. "|"
+		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(implode("|", v)) .. "|")
 	end
 
-	savethis = savethis:gsub("%$SCRIPT%$", ((allallscripts:sub(1, -2)):gsub("%%", "%%%%")))
+	savethis = savethis:gsub("%$SCRIPT%$", ((table.concat(allallscripts, ""):sub(1, -2)):gsub("%%", "%%%%")))
 
 	-- Alright, let's save!
 	cons("Saving file...")
