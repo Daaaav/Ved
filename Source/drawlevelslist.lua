@@ -94,6 +94,7 @@ function drawlevelslist()
 				if tabselected == (-#s.recentfiles)+(k-1) and nodialog then
 					if love.keyboard.isDown("return") then
 						state6load(v)
+						return
 					elseif love.keyboard.isDown("delete") then
 						removerecent = k
 					end
@@ -188,6 +189,7 @@ function drawlevelslist()
 
 						if love.keyboard.isDown("return") and nodialog then
 							state6load(prefix .. barename)
+							return
 						end
 					end
 
