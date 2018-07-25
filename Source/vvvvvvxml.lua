@@ -596,9 +596,16 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Saving entities...")
 	if (#allentities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
 		-- We do!
+		local entitydatasaved = 0
 		local thenewentities = {"        <edEntities>\n"}
 		for k,v in pairs(allentities) do
-			table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(v.data) .. "\n            </edentity>\n")
+			local data = v.data
+			if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and string.len(data) > 40 then
+				-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
+				entitydatasaved = entitydatasaved + string.len(data)
+				data = ""
+			end
+			table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(data) .. "\n            </edentity>\n")
 		end
 
 		if vedmetadata ~= false and vedmetadata ~= nil then
@@ -647,6 +654,12 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		end
 
 		savethis = savethis:gsub("%$EDENTITIES%$", table.concat(thenewentities, ""):gsub("%%", "%%%%") .. "        </edEntities>")
+
+		if entitydatasaved > 0 then
+			cons("Done with entities, " .. entitydatasaved .. " bytes were saved from unnecessary entity data.")
+		else
+			cons("Done with entities.")
+		end
 	else
 		-- We don't!
 		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities />")
