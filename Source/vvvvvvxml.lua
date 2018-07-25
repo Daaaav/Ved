@@ -596,9 +596,9 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Saving entities...")
 	if (#allentities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
 		-- We do!
-		thenewentities = "        <edEntities>\n"
+		local thenewentities = {"        <edEntities>\n"}
 		for k,v in pairs(allentities) do
-			thenewentities = thenewentities .. "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(v.data) .. "\n            </edentity>\n"
+			table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(v.data) .. "\n            </edentity>\n")
 		end
 
 		if vedmetadata ~= false and vedmetadata ~= nil then
@@ -643,10 +643,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 			mdedata = mdedata .. table.concat(notesdata, "$")
 
-			thenewentities = thenewentities .. "            <edentity x=\"800\" y=\"600\" t=\"17\" p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">" .. xmlspecialchars(mdedata) .. "\n            </edentity>\n"
+			table.insert(thenewentities, "            <edentity x=\"800\" y=\"600\" t=\"17\" p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">" .. xmlspecialchars(mdedata) .. "\n            </edentity>\n")
 		end
 
-		savethis = savethis:gsub("%$EDENTITIES%$", thenewentities:gsub("%%", "%%%%") .. "        </edEntities>")
+		savethis = savethis:gsub("%$EDENTITIES%$", table.concat(thenewentities, ""):gsub("%%", "%%%%") .. "        </edEntities>")
 	else
 		-- We don't!
 		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities />")
