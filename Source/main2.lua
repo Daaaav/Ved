@@ -1698,6 +1698,11 @@ function love.update(dt)
 			else
 				unrecognized_rcmreturn()
 			end
+		elseif RCMid:sub(1, 4) == "dia_" then
+			-- New-style dialog dropdown
+			if #dialogs > 0 then
+				dialogs[#dialogs]:dropdown_onchange(RCMid:sub(5, -1), RCMreturn)
+			end
 		else
 			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 		end
@@ -1770,12 +1775,6 @@ function love.keypressed(key)
 	elseif allowdebug and key == "pageup" and love.keyboard.isDown("r" .. ctrl) then
 		debug.debug()
 	end
-
-	--[[
-	if RCMactive and RCMabovedialog and not RCMturnedintofield then
-		rightclickmenu.tofield()
-	end
-	]]
 
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)

@@ -896,6 +896,7 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 	end
 end
 
+-- dialog.new("TODO: This can probably be removed later")
 function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menuitemslabel, menuid)
 	-- Mode can be 0 for text, 1 for dropdown
 	-- menuitems is used for the right click menu, menuitemslabel is used for the label on the field (but can be nil to just show text)

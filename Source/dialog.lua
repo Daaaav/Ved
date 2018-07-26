@@ -225,7 +225,29 @@ function cDialog:keypressed(key)
 	end
 end
 
-function cDialog:drawfield(topmost, n, key, x, y, w, content, mode) -- items and such
+function cDialog:dropdown_onchange(key, picked)
+	if self.closing then
+		return
+	end
+
+	for k,v in pairs(self.fields) do
+		if v[1] == key then
+			local new_value = nil
+			if v[9] ~= nil then
+				new_value = v[9](picked, v[7], v[8])
+			end
+			if new_value == nil then
+				new_value = picked
+			end
+
+			v[5] = new_value
+
+			break
+		end
+	end
+end
+
+function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel) -- next: dropdown onchange function
 	if mode == nil then
 		mode = 0
 	end
@@ -245,7 +267,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode) -- items and
 			self.currentfield = n
 
 			if mode == 1 and not RCMactive then
-				-- TODO create menu
+				rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
 
 				mousepressed = true
 			end
@@ -259,7 +281,12 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode) -- items and
 	if mode == 0 then
 		love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
 	elseif mode == 1 then
-		-- TODO
+		if menuitemslabel == false then
+			love.graphics.print(anythingbutnil(content), real_x, real_y-1)
+		else
+			love.graphics.print(anythingbutnil(menuitemslabel[anythingbutnil0(tonumber(content))]), real_x, real_y-1)
+		end
+		love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
 	end
 	self:setColor(255,255,255,255)
 end
@@ -268,6 +295,7 @@ function cDialog:press_button(button)
 	if self.closing then
 		return
 	end
+	RCMactive = false
 	local notclosed = false
 	if self.noclosechecker ~= nil then
 		notclosed = self.noclosechecker(button, self:return_fields(), self.identifier)
@@ -522,6 +550,7 @@ function dialog.textboxes()
 	end
 end
 
+-- TODO maybe actually look in the top dialog and see what the mode is - once I migrate these
 function dialog.current_input_not_dropdown()
 	if DIAquestionid == 5 and currentmultiinput == 9 then
 		return false
