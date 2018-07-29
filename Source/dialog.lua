@@ -911,6 +911,8 @@ function dialog.create(message, buttons, handler, title, fields, noclosechecker,
 		fields = table.copy(fields)
 	end
 
+	RCMactive = false
+
 	table.insert(dialogs,
 		cDialog:new{
 			text = message,
