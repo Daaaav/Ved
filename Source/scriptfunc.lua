@@ -395,7 +395,7 @@ function processflaglabelsreverse()
 		end
 
 		if partss[1] == "text" and partss[5] ~= nil then
-			textlinestogo = tonumber(partss[5])
+			textlinestogo = anythingbutnil0(tonumber(partss[5]))
 		end
 
 		-- Would be a good idea to stop accidental script splits from happening... People could much better use the actual split button
