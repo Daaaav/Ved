@@ -14,6 +14,8 @@ function dialog.form.simplename_make(default)
 	}
 end
 
+--function dialog.form.
+
 -- 
 dialog.form.simplename = {
 	{"name", 0, 1, 40, ""},

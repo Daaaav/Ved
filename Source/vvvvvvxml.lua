@@ -594,18 +594,22 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	-- Now do all entities, if we have any!
 	cons("Saving entities...")
-	if (#allentities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
+	if (count.entities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
 		-- We do!
 		local entitydatasaved = 0
 		local thenewentities = {"        <edEntities>\n"}
-		for k,v in pairs(allentities) do
-			local data = v.data
-			if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and string.len(data) > 40 then
-				-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
-				entitydatasaved = entitydatasaved + string.len(data)
-				data = ""
+		--for k,v in pairs(allentities) do
+		for k = 1, count.entity_ai-1 do
+			if allentities[k] ~= nil then
+				local v = allentities[k]
+				local data = v.data
+				if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and string.len(data) > 40 then
+					-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
+					entitydatasaved = entitydatasaved + string.len(data)
+					data = ""
+				end
+				table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(data) .. "\n            </edentity>\n")
 			end
-			table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(data) .. "\n            </edentity>\n")
 		end
 
 		if vedmetadata ~= false and vedmetadata ~= nil then
