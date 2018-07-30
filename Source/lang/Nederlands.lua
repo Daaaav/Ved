@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-07-12 22:43:16 (CEST)
+--- Last converted: 2018-07-30 19:00:10 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -455,8 +455,8 @@ L_PLU = {
 		[1] = "$1 worden getoond",
 	},
 	FLAGUSAGES = {
-		[0] = "Used $1 time in scripts: $2",
-		[1] = "Used $1 times in scripts: $2",
+		[0] = "$1 keer gebruikt in scripts: $2",
+		[1] = "$1 keer gebruikt in scripts: $2",
 	},
 }
 
@@ -1007,6 +1007,7 @@ Ctrl+/¤  Level-kladblok\C
 Ctrl+F1¤  Help\C
 (LET OP: Gebruik op Mac cmd in plaats van ctrl)
 N¤  Nummers van alle blokken tonen\C
+J¤  Soliditeit van blokken tonen\C
 M¤  Kaart tonen\C
 Q¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 /¤  Scripts\C
@@ -1018,6 +1019,7 @@ Scriptbewerker\gh#
 
 Ctrl+F¤  Zoeken\C
 Ctrl+G¤  Ga naar regel\C
+Ctrl+I¤  Schakel internescriptmodus in/uit\C
 Ctrl+rechts¤  Spring naar script in voorwaardelĳk commando\C
 Ctrl+links¤  Spring één stap terug\C
 

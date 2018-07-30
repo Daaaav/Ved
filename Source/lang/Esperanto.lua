@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-07-12 22:43:19 (CEST)
+--- Last converted: 2018-07-30 19:00:07 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -467,8 +467,8 @@ L_PLU = {
 		[1] = "Montranta $1",
 	},
 	FLAGUSAGES = {
-		[0] = "Used $1 time in scripts: $2",
-		[1] = "Used $1 times in scripts: $2",
+		[0] = "Uzita $1 fojon en skriptoj: $2",
+		[1] = "Uzita $1 fojojn en skriptoj: $2",
 	},
 }
 
@@ -1015,6 +1015,7 @@ Ctrl+/¤  Nivela notbloko\C
 Ctrl+F1¤  Helpo\C
 (RIMARKU: En Macintosh, anstataŭigi Ctrl per Cmd)\C
 N¤  montri ĉiujn kahelnumerojn\C
+J¤  montri solidecon de kaheloj\C
 M¤  Montri mapon\C
 Q¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
 /¤  Skriptoj\C
@@ -1026,6 +1027,7 @@ Skripto-redaktilo\gh#
 
 Ctrl+F¤  Trovi]C
 Ctrl+G¤  Salti al linio\C
+Ctrl+I¤  Baskuligi reĝimon de interna skriptado\C
 Ctrl+dekstro¤  Salti al skripto en kondiĉa komando\C
 Ctrl+maldesktro¤  Retrosalti unu paŝon\C
 

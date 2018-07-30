@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-07-12 22:43:21 (CEST)
+--- Last converted: 2018-07-30 19:00:05 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -265,7 +265,7 @@ CREATENEWNOTE = "Erstelle neue Notiz",
 ADDNEWBTN = "[Neues hinzufügen]",
 IMAGEERROR = "[BILDFEHLER]",
 
-NEWNAME = "Neuer name:",
+NEWNAME = "Neuer Name:",
 RENAMENOTE = "Notiz umbennen",
 RENAMESCRIPT = "Skript umbennen:",
 
@@ -322,8 +322,8 @@ TILESETSONLYUSED = "(nur Räume die Tiles haben werden gezählt)",
 AMOUNTROOMSWITHNAMES = "Räume die einen Namen haben:",
 PLACINGMODEUSAGE = "Tileplatzierungsmoduse:",
 AMOUNTLEVELNOTES = "Level notizen:",
-AMOUNTFLAGNAMES = "Flag namen:",
-TILESUSAGE = "Tiles verwendung",
+AMOUNTFLAGNAMES = "Flagnamen:",
+TILESUSAGE = "Tiles Verwendung",
 
 
 UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
@@ -347,7 +347,7 @@ GREEN = "Grün",
 GRAY = "Grau",
 PINK = "Pink",
 BROWN = "Braun",
-RAINBOWBG = "Regenbogen Hintergrund",
+RAINBOWBG = "Regenbogen-Hintergrund",
 
 -- b14
 SYNTAXCOLORS = "Syntaxfarben",
@@ -392,7 +392,7 @@ CUSTOMDATEFORMAT = "Eigenes Datumsformat",
 SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird gemacht in diesem Fall!",
 
 -- 1.2.4
-AUTOSAVECRASHLOGS = "Crashlogs automatisch speichern",
+AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
 MOREINFO = "Mehr Info",
 COPYLINK = "Link kopieren",
 SCRIPTDISPLAY = "Zeigen",
@@ -427,36 +427,36 @@ FPSLIMIT = "FPS-Limit",
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[-1] = "You have $1 plugin that is not supported in this version.",
-		[-2] = "You have $1 plugins that are not supported in this version.",
+		[0] = "Du hast $1 Plugin das nicht unterstützt ist in dieser Version.",
+		[1] = "Du hast $1 Plugins die nicht untersützt sind in dieser Version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[-1] = "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
-		[-2] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[0] = "Dieses Level schlug fehl bei $1 Überprüfung. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
+		[1] = "Dieses Level schlug fehl bei $1 Überprüfungen. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[-1] = "$1 usage in rooms: $2",
-		[-2] = "$1 usages in rooms: $2",
+		[0] = "$1 Benutzung in Räume: $2",
+		[1] = "$1 Benutzungen in Räume: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[-1] = "$1 usage in scripts: $2",
-		[-2] = "$1 usages in scripts: $2",
+		[0] = "$1 Benutzung in Skripts: $2",
+		[1] = "$1 Benutzungen in Skripts: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[-1] = "Entity at [$1 $2] has $3 invalid property!",
-		[-2] = "Entity at [$1 $2] has $3 invalid properties!",
+		[0] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaft!",
+		[1] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaften!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[-1] = "LevelMetadata for room #$1 has $2 invalid property!",
-		[-2] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[0] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaft!",
+		[1] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaften!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[-1] = "Showing $1",
-		[-2] = "Showing $1",
+		[0] = "$1 wird gezeigt",
+		[1] = "$1 werden gezeigt",
 	},
 	FLAGUSAGES = {
-		[0] = "Used $1 time in scripts: $2",
-		[1] = "Used $1 times in scripts: $2",
+		[0] = "Wurde $1 mal in diesen Skripts benutzt: $2",
+		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
 	},
 }
 
@@ -537,7 +537,7 @@ long4 = "Schiff",
 
 }
 
-ERR_VEDHASCRASHED = "Ved ist gecrasht!"
+ERR_VEDHASCRASHED = "Ved ist abgestürzt!"
 ERR_VEDVERSION = "Ved Version:"
 ERR_LOVEVERSION = "LÖVE Version:"
 ERR_STATE = "Status:"
@@ -573,7 +573,7 @@ diffmessages = {
 		changedroommetadata = "Raummetadaten geändert",
 		entities = "Objekte",
 		scripts = "Skripte",
-		flagnames = "Flag namen",
+		flagnames = "Flagnamen",
 		levelnotes = "Levelnotizen",
 	},
 	levelpropertiesdiff = {
@@ -1001,6 +1001,7 @@ Ctrl+/¤  Level notepad\C
 Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace ctrl by cmd)
 N¤  display all tile numbers\C
+J¤  display tile solidity\C
 M¤  Show map\C
 Q¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
@@ -1012,6 +1013,7 @@ Script editor\gh#
 
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
+Ctrl+I¤  Toggle internal scripting mode\C
 Ctrl+right¤  Jump to script in conditional command\C
 Ctrl+left¤  Jump one step back\C
 

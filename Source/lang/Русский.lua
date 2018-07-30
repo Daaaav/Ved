@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-07-12 22:43:11 (CEST)
+--- Last converted: 2018-07-30 19:00:12 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -54,7 +54,7 @@ FLAGNAMEINUSE = "Имя флага $1 уже используется флаго
 DIFFSELECT = "Выберите второй уровень для сравнения. Уровень который вы выберете будет считаться за старую версию.",
 SUREQUIT = "Вы действительно хотите выйти? Вы потеряете весь несохранённый контент.",
 SUREQUITNEW = "Есть несохраненные изменения. Сохранить их перед выходом?",
-SURENEWLEVELNEW = "You have unsaved changes. Do you want to save these changes before creating a new level?",
+SURENEWLEVELNEW = "Есть несохранённые изменения. Сохранить их перед созданием нового уровня?",
 SCALEREBOOT = "Новые настройки размера придут в силу после перезапуска Ved.",
 NAMEFORFLAG = "Имя флага $1:",
 SCRIPT404 = "Скрипт \"$1\" не существует!",
@@ -139,7 +139,7 @@ BTN_APPLY = "Применить",
 BTN_QUIT = "Выход",
 BTN_DISCARD = "Не сохр.",
 BTN_SAVE = "Сохранить",
-BTN_CLOSE = "Close",
+BTN_CLOSE = "Закрыть",
 
 COMPARINGTHESE = "Сравниваю $1.vvvvvv с $2.vvvvvv",
 COMPARINGTHESENEW = "Сравниваю (несохранённый уровень) и $1.vvvvvv",
@@ -171,8 +171,8 @@ CHANGETOVER = "Изменить на вертикальный",
 RESIZE = "Подвинуть",
 CHANGEENTRANCE = "Подвинуть вход",
 CHANGEEXIT = "Подвинуть выход",
-LOCK = "Lock",
-UNLOCK = "Unlock",
+LOCK = "Закрепить",
+UNLOCK = "Открепить",
 BUG = "[Глюк!]",
 
 VEDOPTIONS = "Настройки",
@@ -404,47 +404,55 @@ VEDRES = "Разрешение Ved: $1 на $2",
 NONINTSCALE = "Масштаб с дробным значением",
 
 -- 1.3.4
-USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
+USEFONTPNG = "Использовать файл font.png из папки графики VVVVVV как шрифт.",
 MAKESLANGUAGEUNREADABLE = " (делает Русский нечитаемым!)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (необходим L{VE версии $1 или выше)",
-SYNTAXCOLOR_COMMENT = "Comment",
-FPSLIMIT = "FPS limit",
+SYNTAXCOLOR_COMMENT = "Комментарий",
+FPSLIMIT = "Ограничение FPS",
 
 }
 
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[-1] = "You have $1 plugin that is not supported in this version.",
-		[-2] = "You have $1 plugins that are not supported in this version.",
+		[0] = "У вас установлен $1 плагин, не поддерживаемый данной версией программы.",
+		[1] = "У вас установлены $1 плагина, не поддерживаемые данной версией программы.",
+		[2] = "У вас установлены $1 плагинов, не поддерживаемые данной версией программы.",
 	},
 	LEVELFAILEDCHECKS = {
-		[-1] = "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
-		[-2] = "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies.",
+		[0] = "Этот уровень провалил $1 проверку. Ошибка могла быть исправлена автоматически, но это всё равно может привести к сбоям и несоответствиям.",
+		[1] = "Этот уровень провалил $1 проверки. Ошибки могли быть исправлены автоматически, но это всё равно может привести к сбоям и несоответствиям.",
+		[2] = "Этот уровень провалил $1 проверок. Ошибки могли быть исправлены автоматически, но это всё равно может привести к сбоям и несоответствиям.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[-1] = "$1 usage in rooms: $2",
-		[-2] = "$1 usages in rooms: $2",
+		[0] = "$1 использование в комнатах: $2",
+		[1] = "$1 использования в комнатах: $2",
+		[2] = "$1 использований в комнатах: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[-1] = "$1 usage in scripts: $2",
-		[-2] = "$1 usages in scripts: $2",
+		[0] = "$1 использование в скриптах: $2",
+		[1] = "$1 использования в скриптах: $2",
+		[2] = "$1 использований в скриптах: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[-1] = "Entity at [$1 $2] has $3 invalid property!",
-		[-2] = "Entity at [$1 $2] has $3 invalid properties!",
+		[0] = "Объект в комнате [$1 $2] имеет $3 неверное свойство!",
+		[1] = "Объект в комнате [$1 $2] имеет $3 неверных свойства!",
+		[2] = "Объект в комнате [$1 $2] имеет $3 неверных свойств!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[-1] = "LevelMetadata for room #$1 has $2 invalid property!",
-		[-2] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[0] = "Информация комнаты #$1 имеет $2 неверное свойство!",
+		[1] = "Информация комнаты #$1 имеет $2 неверных свойства!",
+		[2] = "Информация комнаты #$1 имеет $2 неверных свойств!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[-1] = "Showing $1",
-		[-2] = "Showing $1",
+		[0] = "Всего показано: $1",
+		[1] = "Всего показано: $1",
+		[2] = "Всего показано: $1",
 	},
 	FLAGUSAGES = {
-		[0] = "Used $1 time in scripts: $2",
-		[1] = "Used $1 times in scripts: $2",
+		[0] = "Использован $1 раз в скриптах: $2",
+		[1] = "Использован $1 раза в скриптах: $2",
+		[2] = "Использован $1 раз в скриптах: $2",
 	},
 }
 
@@ -714,33 +722,33 @@ cont = [[
 subj = "Перед началом",
 imgs = {},
 cont = [[
-Getting started\wh#
+Перед началом\wh#
 \C=
 
-This article will help you get started with using Ved. To get started with using
-the editor, you need to load a level, or create a new one.
+Данная статья поможет Вам разобраться, как пользоваться Ved. Перед тем, как начать
+пользоваться редактором, Вам необходимо открыть уровень или создать новый.
 
+Редактор\h#
 
-The editor\h#
+С левой стороны расположен набор инструментов. Большинство инструментов имеют
+вариации, которые будут показаны левее. Чтобы переключать инструменты,
+используйте горячие клавиши или прокручивайте колёсико мыши, зажав клавишу
+Shift или Ctrl. Менять вариации инструментов можно, прокручивая колёсико
+мыши где угодно. Для дополнительной информации смотрите пункт ¤Инструменты¤.\nwl
+Объекты можно кликать правой кнопкой мыши для выпадения меню действий с этим
+объектом. Чтобы удалять объекты без выпадания меню действий, зажмите клавишу
+Shift и кликнете по объекту правой кнопкой мыши.
+В правой стороне окна расположено множество кнопок и настроек. Верхние кнопки
+относятся ко всему уровню, а кнопки ниже (под кнопкой "Настройки уровня")
+относятся только к данной комнате. Для дополнительной информации о кнопках
+смотрите соответсвующие пункты.
 
-On the left side, you will find the tools selection. Most tools have subtools that
-will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
-help page.
-Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
-On the right side of the screen, you will find many buttons and options. The upper
-buttons are related to the entire level, the lower buttons (under Room options)
-are specific to the current room. For more information about those buttons, refer
-to the respective help pages, where available.
+Папка уровней\h#
 
-Levels folder\h#
-
-Ved will normally use the same folder for storing levels as VVVVVV does, so it is
-easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
-detect your VVVVVV folder correctly, you can enter a custom path in the Ved
-options.
+По умолчанию Ved использует ту же папку для содержания уровней, что и VVVVVV,
+так что можно легко переключаться между редактором уровней VVVVVV и Ved. Если
+Ved неверно обнаруживает папку VVVVVV, Вы можете указать к ней путь в
+настройках Ved.
 ]]
 },
 
@@ -990,6 +998,7 @@ Ctrl+/¤  Записки уровня\C
 Ctrl+F1¤  Помощь\C
 (ВНИМАНИЕ: на версии Mac используйте cmd вместо ctrl)
 N¤  Покозать номера плиток в комнате\C
+J¤  Показать твёрдость\C
 M¤  Открыть карту\C
 Q¤  Перейти к комнате (Ввести координаты комнаты четырьмя цифрами)\C
 /¤  Скрипты\C
@@ -1001,6 +1010,7 @@ F11¤  Перезагрузка спрайтов и плиток\C
 
 Ctrl+F¤  Поиск\C
 Ctrl+G¤  Перейти к строке\C
+Ctrl+I¤  Переключить внутренний скриптинг\C
 Ctrl+right¤  Перейти к скрипту с ссылкой на данной строке\C
 Ctrl+left¤  Перейти к предыдущему скрипту по ссылке\C
 
@@ -1728,7 +1738,7 @@ effect for a custom level to have. Turns on secret lab mode.
 },
 
 {
-subj = "Lists reference",
+subj = "Списки номеров",
 imgs = {},
 cont = [[
 Lists reference\wh#
@@ -2084,7 +2094,7 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
 },
 
 {
-subj = "Formatting",
+subj = "Оформление",
 imgs = {},
 cont = [[
 Formatting\wh#
@@ -2333,7 +2343,7 @@ _ - Put this before the image number to decrease the image number by 10.
 },
 
 {
-subj = "Credits",
+subj = "Авторы",
 imgs = {"credits.png"},
 cont = [[
 \0
