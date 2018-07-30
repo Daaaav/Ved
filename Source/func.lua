@@ -1541,18 +1541,18 @@ function compareleveldifferences(secondlevelname)
 	local pagetext
 
 	-- L E V E L   P R O P E R T I E S
-	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {secondlevelname}) or langkeys(L.COMPARINGTHESE, {editingmap, secondlevelname})) .. "\n\n"
+	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {secondlevelname}) or langkeys(L.COMPARINGTHESE, {editingmap, secondlevelname})) .. "\\\n\n"
 	for _,v in pairs(metadataitems) do
 		if metadata2[v] ~= metadata[v] then
-			pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff[v], {metadata2[v], metadata[v]}) .. "\n"
+			pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff[v], {metadata2[v], metadata[v]}) .. "\\\n"
 		end
 	end
 
 	if metadata2.mapwidth ~= metadata.mapwidth or metadata2.mapheight ~= metadata.mapheight then
-		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsize, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}) .. "\n"
+		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsize, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}) .. "\\\n"
 	end
 	if metadata2.levmusic ~= metadata.levmusic then
-		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.levmusic, {metadata2.levmusic, metadata.levmusic}) .. "\n"
+		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.levmusic, {metadata2.levmusic, metadata.levmusic}) .. "\\\n"
 	end
 
 	table.insert(differencesn, {subj = diffmessages.pages.levelproperties, imgs = {}, cont = pagetext})
@@ -1629,7 +1629,7 @@ function compareleveldifferences(secondlevelname)
 			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
 		elseif changed then
 			-- We're not, so label this
-			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, levelmetadata2[k].roomname}) .. "\n"
+			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, levelmetadata2[k].roomname}) .. "\\\n"
 		end
 
 		if changed then
