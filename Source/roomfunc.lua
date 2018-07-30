@@ -57,19 +57,33 @@ function loadrohiom(x, y)
 	return myroomdata, myentitydata, mymetadata
 end
 
-function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers)
+function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid)
 	if zoomscale2 == nil then zoomscale2 = 1 end
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
+	local ts = usedtilesets[themetadata.tileset]
+
 	for aty = 0, 29 do
 		for atx = 0, 39 do
-			-- Display roomdata[(aty*40)+(atx+1)]
-			--cons("Will display: (aty*40)+(atx+1) in other words " .. (aty*40)+(atx+1) .. " (at " .. atx .. " " .. aty .. ")")
-			if theroomdata[(aty*40)+(atx+1)] ~= 0 then
-				love.graphics.draw(tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["img"], tilesets[tilesetnames[usedtilesets[themetadata.tileset]]]["tiles"][tonumber(theroomdata[(aty*40)+(atx+1)])], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2), 0, 2*zoomscale2)
+			local t = theroomdata[(aty*40)+(atx+1)]
+			local x, y = offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2)
+			if t ~= 0 then
+				love.graphics.draw(tilesets[tilesetnames[ts]]["img"], tilesets[tilesetnames[ts]]["tiles"][tonumber(t)], x, y, 0, 2*zoomscale2)
+			end
+
+			if displaysolid then
+				if issolid(t, ts, false, true) then
+					-- Wall
+					love.graphics.draw(solidimg, x, y)
+				elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
+					-- Spikes
+					love.graphics.setColor(255,0,0)
+					love.graphics.draw(solidimg, x, y)
+					love.graphics.setColor(255,255,255)
+				end
 			end
 
 			if displaytilenumbers then
-				love.graphics.print(theroomdata[(aty*40)+(atx+1)], offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2))
+				love.graphics.print(t, x, y)
 			end
 		end
 	end
@@ -484,8 +498,38 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 	end
 end
 
-function displaytilespicker(offsetx, offsety, tilesetname)
+function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, displaysolid)
 	love.graphics.draw(tilesets[tilesetname]["img"], offsetx, offsety, 0, 2)
+
+	if displaytilenumbers or displaysolid then
+		local ts = 1
+		if tilesetname == "tiles2.png" then
+			ts = 2
+		end
+
+		for aty = 0, 29 do
+			for atx = 0, 39 do
+				local t = (aty*40)+atx
+				local x, y = offsetx+(16*atx), offsety+(16*aty)
+
+				if displaysolid then
+					if issolid(t, ts, false, true) then
+						-- Wall
+						love.graphics.draw(solidimg, x, y)
+					elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
+						-- Spikes
+						love.graphics.setColor(255,0,0)
+						love.graphics.draw(solidimg, x, y)
+						love.graphics.setColor(255,255,255)
+					end
+				end
+
+				if displaytilenumbers then
+					love.graphics.print(t, x, y)
+				end
+			end
+		end
+	end
 
 	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then

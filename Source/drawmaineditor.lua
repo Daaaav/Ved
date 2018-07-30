@@ -1135,7 +1135,20 @@ function drawmaineditor()
 	end
 
 	if tilespicker then
-		displaytilespicker(screenoffset, 0, tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]])
+		local displaytilenumbers, displaysolid
+		if nodialog and editingroomtext == 0 and not editingroomname then
+			if love.keyboard.isDown("n") then
+				love.graphics.setFont(tinynumbers)
+				displaytilenumbers = true
+			end
+			if love.keyboard.isDown("j") then
+				displaysolid = true
+			end
+		end
+
+		local ts_name = tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]
+
+		displaytilespicker(screenoffset, 0, ts_name, displaytilenumbers, displaysolid)
 	else
 		-- If we have gravity lines and such, make sure they don't go offscreen
 		love.graphics.setScissor(screenoffset, 0, 640, 480)
@@ -1195,13 +1208,18 @@ function drawmaineditor()
 			cons(k .. "->" .. v)
 		end
 		]]
-		local displaytilenumbers
-		if nodialog and love.keyboard.isDown("n") and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
-			love.graphics.setFont(tinynumbers)
-			displaytilenumbers = true
+		local displaytilenumbers, displaysolid
+		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
+			if love.keyboard.isDown("n") then
+				love.graphics.setFont(tinynumbers)
+				displaytilenumbers = true
+			end
+			if love.keyboard.isDown("j") then
+				displaysolid = true
+			end
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers)
+		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid)
 
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then

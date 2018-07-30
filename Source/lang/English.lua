@@ -987,6 +987,7 @@ Ctrl+/¤  Level notepad\C
 Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace ctrl by cmd)
 N¤  display all tile numbers\C
+J¤  display tile solidity\C
 M¤  Show map\C
 Q¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
@@ -998,6 +999,7 @@ Script editor\gh#
 
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
+Ctrl+I¤  Toggle internal scripting mode\C
 Ctrl+right¤  Jump to script in conditional command\C
 Ctrl+left¤  Jump one step back\C
 

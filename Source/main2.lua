@@ -194,6 +194,8 @@ function love.load()
 
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
+	solidimg = love.graphics.newImage("images/solid.png")
+
 	scaleimgs = {
 		[false] = love.graphics.newImage("images/scale_normal.png"),
 		[true] = love.graphics.newImage("images/scale_small.png")
