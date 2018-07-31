@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-07-30 19:00:12 (CEST)
+--- Last converted: 2018-07-31 04:39:25 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2362,26 +2362,26 @@ cont = [[
 
 
 
-Credits\wh#
+Авторы\wh#
 \C=
 
-Ved is made by Dav999
+Создатель Ved: Dav999
 
-Some of the graphics and the font were made by Format
+Некоторая графика и шрифт: Format
 
-Russian translation: CreepiX, Captain Normalguy
-Esperanto translation: Format
-German translation: r00ster
-
-
-Special thanks to:\h#
+Перевод на русский: CreepiX, Captain Normalguy
+Перевод на эсперанто: Format
+Перевод на немецкий: r00ster
 
 
-Terry Cavanagh for making VVVVVV
+Отдельная благодарность:\h#
 
-TurtleP (for the code that made graphics not blurry when scaled)
 
-Everyone who reported bugs, came up with ideas and motivated me to make this!
+Терри Кавана, создателю VVVVVV
+
+TurtleP (за код, убирающий сглаживание при изменении размера)
+
+Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
 
 
 
