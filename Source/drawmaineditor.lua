@@ -337,11 +337,6 @@ function drawmaineditor()
 
 						toout = toout + 1
 					end
-
-					autocorrectroom()
-
-					-- Make sure warp lines and gravity lines are not floating or inside of new walls.
-					autocorrectlines()
 				else
 					--cons("Tile clicked spike: " .. atx .. " " .. aty .. ", set to " .. selectedtile .. ", subtool " .. selectedsubtool[3])
 
@@ -418,9 +413,12 @@ function drawmaineditor()
 
 						end
 					end
-
-					autocorrectroom()
 				end
+
+				autocorrectroom()
+
+				-- Make sure warp lines and gravity lines are not floating or inside of new walls.
+				autocorrectlines()
 			end
 
 			mousepressed = true
