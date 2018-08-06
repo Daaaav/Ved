@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-07-30 19:00:05 (CEST)
+--- Last converted: 2018-08-07 01:38:26 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -185,7 +185,7 @@ CHANGEENTRANCE = "Bewege Eingang",
 CHANGEEXIT = "Bewege Ausgang",
 LOCK = "Fixieren",
 UNLOCK = "Entsperren",
-BUG = "[Bug!]",
+BUG = "[Fehler!]",
 
 VEDOPTIONS = "Ved-Optionen",
 LEVELOPTIONS = "Level-Optionen",
@@ -2368,23 +2368,23 @@ cont = [[
 Credits\wh#
 \C=
 
-Ved is made by Dav999
+Ved ist gemacht von Dav999
 
-Some of the graphics and the font were made by Format
+Manche der Grafiken und Schriftarten wurden von Format gemacht
 
-Russian translation: CreepiX, Captain Normalguy
-Esperanto translation: Format
-German translation: r00ster
-
-
-Special thanks to:\h#
+Russische Übersetzung: CreepiX, Captain Normalguy
+Esperanto Übersetzung: Format
+Deutsche Übersetzung: r00ster
 
 
-Terry Cavanagh for making VVVVVV
+Besonderen Dank an:\h#
 
-TurtleP (for the code that made graphics not blurry when scaled)
 
-Everyone who reported bugs, came up with ideas and motivated me to make this!
+Terry Cavanagh für das machen von VVVVVV
+
+TurtleP (für den Code der Grafiken nicht verschwommen aussehen ließ beim skalieren)
+
+Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu machen!
 
 
 

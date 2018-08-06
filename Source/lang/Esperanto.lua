@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-07-30 19:00:07 (CEST)
+--- Last converted: 2018-08-07 01:38:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
