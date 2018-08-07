@@ -2130,16 +2130,6 @@ function is_scrollable(x, y)
 	return false
 end
 
-function savemapimage()
-	saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub(dirsep, "__")
-	if love_version_meets(10) then
-		mapscreenshot:getData():encode("png", "maps/" .. saveas)
-	else
-		mapscreenshot:getData():encode("maps/" .. saveas)
-	end
-	dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
-end
-
 function getalllanguages()
 	local languagesarray = love.filesystem.getDirectoryItems("lang")
 	local returnarray = {}

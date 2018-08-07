@@ -147,7 +147,7 @@ function drawmap()
 				tostate(1, true)
 			elseif onrbutton(1, nil, true) then
 				-- Save map
-				savemapimage()
+				dialog.create("Not currently supported")
 			elseif onrbutton(3, nil, true) then
 				-- Copy rooms
 				selectingrooms = 1
@@ -158,11 +158,6 @@ function drawmap()
 				selectingrooms = 2
 				selected1x = -1; selected1y = -1
 				selected2x = -1; selected2y = -1
-			end
-		elseif nodialog and love.mouse.isDown("r") then
-			if onrbutton(1, nil, true) then
-				-- Save map
-				rightclickmenu.create({L.SAVEMAP, L.SAVEFULLSIZEMAP}, "savemap")
 			end
 		end
 	end

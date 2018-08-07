@@ -1593,41 +1593,6 @@ function love.update(dt)
 			else
 				dialog.create(langkeys(L.ENTITY404, {tonumber(entdetails[3])}))
 			end
-		elseif RCMid == "savemap" then
-			if RCMreturn == L.SAVEMAP then
-				-- You could have just left clicked the button but this is to prevent confusion.
-				savemapimage()
-			elseif RCMreturn == L.SAVEFULLSIZEMAP then
-				-- Save a big map!
-				if not love.graphics.isSupported("canvas") then
-					dialog.create(L.GRAPHICSCARDCANVAS)
-				else
-					mapcanvas = love.graphics.newCanvas(320*metadata.mapwidth, 240*metadata.mapheight)
-					love.graphics.setCanvas(mapcanvas)
-					for mry = 0, metadata.mapheight-1 do
-						for mrx = 0, metadata.mapwidth-1 do
-							displayroom(mrx*0.5*640, mry*0.5*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], 0.5) --mapscale
-						end
-					end
-					saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. "_fullsize.png"):gsub(dirsep, "__")
-					if love_version_meets(10) then
-						mapcanvas:newImageData():encode("png", "maps/" .. saveas)
-					else
-						mapcanvas:getImageData():encode("maps/" .. saveas)
-					end
-					love.graphics.setCanvas()
-					mapcanvas = nil
-
-					-- Love2d bug regarding canvases and scissors?
-					za,zb,zc = love.window.getMode()
-					love.window.setMode(za,zb,zc)
-
-					collectgarbage("collect")
-					dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
-				end
-			else
-				unrecognized_rcmreturn()
-			end
 		elseif RCMid:sub(1, 4) == "spt_" then
 			local rvnum = tonumber(RCMid:sub(5, -1))
 
