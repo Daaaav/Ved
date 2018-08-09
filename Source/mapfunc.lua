@@ -39,7 +39,7 @@ function map_work()
 			rooms_map_current_y = rooms_map_current_y + 1
 		end
 
-		if rooms_map_current_y >= metadata.mapwidth then
+		if rooms_map_current_y >= metadata.mapheight then
 			rooms_map_done = true
 			break
 		end
