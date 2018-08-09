@@ -76,6 +76,7 @@ function love.load()
 	ved_require("drawhelp")
 	ved_require("slider")
 	ved_require("imagefont")
+	ved_require("mapfunc")
 
 	if s.pscale ~= 1 then
 		za,zb,zc = love.window.getMode()
@@ -195,6 +196,7 @@ function love.load()
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
 	solidimg = love.graphics.newImage("images/solid.png")
+	fullcovered = love.graphics.newImage("images/fullcovered.png")
 
 	scaleimgs = {
 		[false] = love.graphics.newImage("images/scale_normal.png"),
@@ -1235,6 +1237,10 @@ function love.draw()
 		love.graphics.printf("TAKING INPUT", 128, love.graphics.getHeight()-10, 128, "center")
 	end
 
+--TODO REMOE
+if rooms_map_current_x ~= nil then
+love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x, 20, 5)
+end
 	hook("love_draw_end")
 
 	-- Are we displaying a replacement cursor?
@@ -1374,6 +1380,10 @@ function love.update(dt)
 		elseif love.mouse.getX() > 25*8+16-28 then
 			onlefthelpbuttons = false
 		end
+	end
+
+	if state == 1 or state == 12 then
+		map_work()
 	end
 
 	if coordsdialog.active or RCMactive or dialog.is_open() then

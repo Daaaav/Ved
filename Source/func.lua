@@ -271,12 +271,6 @@ function tostate(new, dontinitialize, extradata)
 		cons("State changed: " .. oldstate .. " => " .. state .. " (not initialized)")
 	end
 
-	if mapscreenshot ~= nil then
-		mapscreenshot = nil
-
-		-- Good time to garbage collect the old map away?
-		collectgarbage("collect")
-	end
 	if special_cursor then
 		love.mouse.setCursor()
 		special_cursor = false
@@ -1520,6 +1514,7 @@ function state6load(levelname)
 			editingmap = levelname
 			recentlyopened(editingmap)
 			tostate(1)
+			map_init()
 		end
 	else
 		success, metadata2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2 = loadlevel(levelname .. ".vvvvvv")
@@ -1990,6 +1985,7 @@ function triggernewlevel(width, height)
 		width, height = 5, 5
 	end
 	success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = createblanklevel(width, height)
+	map_init()
 	editingmap = "untitled\n"
 	tostate(1)
 end
@@ -2590,18 +2586,6 @@ function dirty()
 	end
 end
 
-function createmapscreenshot()
-	if love_version_meets(11) then
-		love.graphics.captureScreenshot(
-			function(imgdata)
-				mapscreenshot = love.graphics.newImage(imgdata)
-			end
-		)
-	else
-		mapscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
-	end
-end
-
 function temp_print_override()
 	-- This will stop being used later.
 	-- Basically, in LÖVE 0.9 and 0.10, the TTF font is displaced, and the correction for this has
@@ -2753,6 +2737,14 @@ function remove_level_var(key)
 	end
 
 	vedmetadata.vars[key] = nil
+end
+
+function clear_canvas(canvas)
+	if love_version_meets(10) then
+		love.graphics.clear()
+	else
+		canvas:clear()
+	end
 end
 
 hook("func")
