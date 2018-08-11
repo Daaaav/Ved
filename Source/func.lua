@@ -1487,6 +1487,9 @@ function state6load(levelname)
 
 	stopinput()
 
+	-- Loading levels tends to happen where it shouldn't.
+	love.graphics.setScissor()
+
 	if dirsep == "\\" then
 		levelname = levelname:gsub("/", "\\")
 	end

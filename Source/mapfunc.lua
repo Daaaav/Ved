@@ -69,7 +69,6 @@ function map_doroom(x, y)
 
 		love.graphics.setCanvas(canvas)
 		clear_canvas(canvas)
-		love.graphics.setScissor()
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
