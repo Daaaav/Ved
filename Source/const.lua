@@ -113,6 +113,15 @@ platform_labels = {
 	[8] = "<<<<<<<<",
 }
 
+-- States in which the map is loaded at low priority
+lowprio_maploading_states = {
+	[3] = true,
+	[10] = true,
+	[11] = true,
+	[19] = true,
+	[28] = true,
+}
+
 
 knowncommands =
 	{

@@ -20,7 +20,7 @@ function map_init()
 	end
 end
 
-function map_work()
+function map_work(timelimit)
 	-- Work on the map if it's not done yet, stop if we've passed 0.011s
 	-- Note that it will go over 0.01s, and theoretically take forever.
 	if rooms_map_done then
@@ -29,7 +29,7 @@ function map_work()
 
 	local st = love.timer.getTime()
 
-	while love.timer.getTime()-st < 0.011 do
+	while love.timer.getTime()-st < timelimit do
 		map_doroom(rooms_map_current_x, rooms_map_current_y)
 
 		rooms_map_current_x = rooms_map_current_x + 1

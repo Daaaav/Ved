@@ -1382,8 +1382,15 @@ function love.update(dt)
 		end
 	end
 
-	if state == 1 or state == 12 then
-		map_work()
+	if state == 1 then
+		-- In the main editor, just work on the map without taking too much time.
+		map_work(0.011)
+	elseif state == 12 then
+		-- If we're looking at the map, then it has a little higher priority.
+		map_work(0.015)
+	elseif lowprio_maploading_states[state] then
+		-- There are states (like the script editor) where we'll load the map at low priority.
+		map_work(0.005)
 	end
 
 	if coordsdialog.active or RCMactive or dialog.is_open() then
