@@ -1530,6 +1530,8 @@ function undo()
 
 		table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
 		table.remove(undobuffer, #undobuffer)
+
+		mapmovedroom = true
 	end
 end
 -- TODO: Merge these two?
@@ -1606,6 +1608,8 @@ function redo()
 
 		table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
 		table.remove(redobuffer, #redobuffer)
+
+		mapmovedroom = true
 	end
 end	
 
@@ -1672,6 +1676,8 @@ function cutroom()
 
 	temporaryroomname = L.ROOMCUT
 	temporaryroomnametimer = 90
+
+	mapmovedroom = true
 end
 
 function copyroom()
@@ -1679,10 +1685,14 @@ function copyroom()
 
 	temporaryroomname = L.ROOMCOPIED
 	temporaryroomnametimer = 90
+
+	mapmovedroom = true
 end
 
 function pasteroom()
 	setroomfromcopy(love.system.getClipboardText(), roomx, roomy)
+
+	mapmovedroom = true
 
 	if takinginput then
 		-- If we're taking input now, then it's gonna be particularly annoying if we paste an entire room in it!!

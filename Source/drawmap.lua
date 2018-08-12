@@ -70,6 +70,10 @@ function drawmap()
 							selectingrooms = 0
 							mousepressed = true
 						end
+					elseif love.mouse.isDown("r") then
+						-- We just want to go there
+						gotoroom(hoverx, hovery)
+						mapmovedroom = true
 					end
 				end
 			end
@@ -120,8 +124,28 @@ function drawmap()
 	rbutton(L.COPYROOMS, 3, nil, true)
 	rbutton(L.SWAPROOMS, 4, nil, true)
 
+	local strip_ypos = love.graphics.getHeight()-144
+
+	if #undobuffer >= 1 then
+		hoverdraw(undobtn, love.graphics.getWidth()-120, strip_ypos, 16, 16, 1)
+	else
+		love.graphics.setColor(64,64,64)
+		love.graphics.draw(undobtn, love.graphics.getWidth()-120, strip_ypos)
+		love.graphics.setColor(255,255,255)
+	end
+	if #redobuffer >= 1 then
+		hoverdraw(redobtn, love.graphics.getWidth()-120+16, strip_ypos, 16, 16, 1)
+	else
+		love.graphics.setColor(64,64,64)
+		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, strip_ypos)
+		love.graphics.setColor(255,255,255)
+	end
+	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, strip_ypos, 16, 16, 1)
+	hoverdraw(copybtn, love.graphics.getWidth()-120+80, strip_ypos, 16, 16, 1)
+	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, strip_ypos, 16, 16, 1)
+
 	-- The buttons are clickable
-	if nodialog and love.mouse.isDown("l") then
+	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then
 			-- Return
 			tostate(1, true)
@@ -138,6 +162,18 @@ function drawmap()
 			selectingrooms = 2
 			selected1x = -1; selected1y = -1
 			selected2x = -1; selected2y = -1
+		elseif mouseon(love.graphics.getWidth()-120, strip_ypos, 16, 16) then
+			undo()
+		elseif mouseon(love.graphics.getWidth()-120+16, strip_ypos, 16, 16) then
+			redo()
+		elseif mouseon(love.graphics.getWidth()-120+64, strip_ypos, 16, 16) then
+			cutroom()
+		elseif mouseon(love.graphics.getWidth()-120+80, strip_ypos, 16, 16) then
+			copyroom()
+		elseif mouseon(love.graphics.getWidth()-120+98, strip_ypos, 16, 16) then
+			pasteroom()
 		end
+
+		mousepressed = true
 	end
 end
