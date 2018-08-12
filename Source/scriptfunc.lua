@@ -181,10 +181,13 @@ function processflaglabels()
 		end
 
 		-- Is this an internal script?
-		if scriptlines[1] ~= nil and scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v" and scriptlines[#scriptlines-1] == "loadscript(stop) #v" and scriptlines[#scriptlines] == "text(1,0,0,4) #v" then
+		if scriptlines[1] ~= nil and ((scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v") or (scriptlines[1] == "squeak(off) #v" and scriptlines[2]:sub(1,4) == "say(" and scriptlines[2]:sub(-4,-1) == ") #v")) and scriptlines[#scriptlines-1] == "loadscript(stop) #v" and (scriptlines[#scriptlines] == "text(1,0,0,4) #v" or scriptlines[#scriptlines] == "text(1,0,0,3) #v") then
 			-- Quite so!
 			table.remove(scriptlines, #scriptlines)
 			table.remove(scriptlines, #scriptlines)
+			if scriptlines[1] == "squeak(off) #v" then
+				table.remove(scriptlines, 1)
+			end
 			table.remove(scriptlines, 1)
 
 			local removetheselines = {}
@@ -193,7 +196,7 @@ function processflaglabels()
 				-- Remove any hashes we may have placed last time when replacing completely blank lines
 				if v == "#" then
 					scriptlines[k] = ""
-				elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" then
+				elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
 					table.insert(removetheselines, k)
 				end
 			end
@@ -239,7 +242,7 @@ function processflaglabelsreverse()
 
 		-- First actually set the line, then we'll talk.
 		scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
-		editingline = 2
+		editingline = 3
 		input, input_r = scriptlines[1], ""
 
 		--table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
@@ -313,6 +316,7 @@ function processflaglabelsreverse()
 				cons("There is only one block, so no splitting required")
 
 				table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
+				table.insert(scriptlines, 1, "squeak(off) #v")
 			else
 				-- ACTUALLY SPLIT EVERYTHING YAY
 				for k = #blocks, 1, -1 do
@@ -329,18 +333,19 @@ function processflaglabelsreverse()
 					if k == #blocks then
 						-- This is the last one so this also behaves slightly differently because it's observed to do so.
 						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+2) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
-						table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
+						table.insert(scriptlines, blockstartsat, "text(1,0,0,3) #v")
 					elseif k ~= 1 then
 						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop).
-						table.insert(scriptlines, blockstartsat, "text(1,0,0,4) #v")
+						table.insert(scriptlines, blockstartsat, "text(1,0,0,3) #v")
 					else
 						table.insert(scriptlines, 1, "say(" .. (blocks[k]) .. ") #v") -- Niet de +1 want: dit is de eerste regel dus dit is anders.
+						table.insert(scriptlines, 1, "squeak(off) #v")
 					end
 				end
 			end
 
 			table.insert(scriptlines, "loadscript(stop) #v")
-			table.insert(scriptlines, "text(1,0,0,4) #v")
+			table.insert(scriptlines, "text(1,0,0,3) #v")
 		end
 	end
 
