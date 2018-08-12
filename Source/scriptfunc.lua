@@ -196,7 +196,7 @@ function processflaglabels()
 				-- Remove any hashes we may have placed last time when replacing completely blank lines
 				if v == "#" then
 					scriptlines[k] = ""
-				elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3)" then
+				elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
 					table.insert(removetheselines, k)
 				end
 			end
@@ -317,8 +317,6 @@ function processflaglabelsreverse()
 
 				table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
 				table.insert(scriptlines, 1, "squeak(off) #v")
-				cons("First line in script right after inserting: " .. scriptlines[1])
-				cons("Second line in script right after inserting: " .. scriptlines[2])
 			else
 				-- ACTUALLY SPLIT EVERYTHING YAY
 				for k = #blocks, 1, -1 do
