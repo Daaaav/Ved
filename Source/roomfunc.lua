@@ -1652,6 +1652,9 @@ function finish_undo(description)
 		-- We just lost the state at which we saved, so we can't undo/redo back to that!
 		unsavedchanges = true
 	end
+
+	-- Also remove the current room from the map, as it was probably changed. Unless it wasn't, but no biggie.
+	map_resetroom(roomx, roomy)
 end
 
 function cutroom()

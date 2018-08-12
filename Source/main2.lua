@@ -1239,7 +1239,7 @@ function love.draw()
 
 --TODO REMOE
 if rooms_map_current_x ~= nil then
-love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x, 20, 5)
+love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 5)
 end
 	hook("love_draw_end")
 
