@@ -11,8 +11,6 @@ function drawmap()
 			--love.graphics.rectangle("line", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 			if rooms_map[mry][mrx].map ~= nil then
 				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, mapscale*2)
-			else
-				love.graphics.print("nil", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480+4)
 			end
 		end
 	end
@@ -66,18 +64,6 @@ function drawmap()
 								elseif selectingrooms == 2 then
 									-- Swapping!
 									mapswap(selected1x, selected1y, selected2x, selected2y)
-								end
-
-								-- Refresh the map, but don't create a COMPLETELY new map
-								for dispnewrooms = 1, selectingrooms do
-									if dispnewrooms == 2 then
-										mrx = selected1x
-										mry = selected1y
-									else
-										mrx = selected2x
-										mry = selected2y
-									end
-									-- TODO CLEAR MAP FOR ROOM MRX,MRY, so it'll be generated again
 								end
 							end
 

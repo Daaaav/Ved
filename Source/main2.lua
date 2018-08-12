@@ -2462,6 +2462,16 @@ function love.keypressed(key)
 	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
+	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
+		undo()
+	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "y" then
+		redo()
+	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "x" then
+		cutroom()
+	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "c" then
+		copyroom()
+	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "v" then
+		pasteroom()
 	elseif nodialog and (state == 15 or state == 19 or state == 28) and key == "escape" then
 		tostate(oldstate, true)
 		nodialog = false

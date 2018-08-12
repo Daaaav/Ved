@@ -1239,6 +1239,8 @@ function mapcopy(x1, y1, x2, y2, skip_undo)
 		)
 		finish_undo("MAPCOPY")
 	end
+
+	map_resetroom(x2, y2)
 end
 
 function mapswap(x1, y1, x2, y2, skip_undo)
@@ -1258,6 +1260,9 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	copymoveentities(x2, y2, x1, y1, true)
 	copymoveentities(22, 22, x2, y2, true)
 	cons("Done...")
+
+	map_resetroom(x1, y1)
+	map_resetroom(x2, y2)
 end
 
 function rotateroom180(rx, ry, undoing)
@@ -1442,6 +1447,7 @@ function undo()
 	if #undobuffer >= 1 then
 		if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
 			gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+			map_resetroom(roomx, roomy)
 		end
 		if undobuffer[#undobuffer].switchtool ~= nil then
 			selectedtool = undobuffer[#undobuffer].switchtool
@@ -1531,6 +1537,7 @@ function redo()
 	if #redobuffer >= 1 then
 		if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
 			gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
+			map_resetroom(roomx, roomy)
 		end
 		if redobuffer[#redobuffer].switchtool ~= nil then
 			selectedtool = redobuffer[#redobuffer].switchtool
