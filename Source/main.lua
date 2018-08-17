@@ -34,7 +34,7 @@ end
 
 -- So that zooming in won't make tiles blurry, thanks TurtleP
 if love.graphics.setDefaultFilter ~= nil then
-	love.graphics.setDefaultFilter("nearest", "nearest")
+	love.graphics.setDefaultFilter("linear", "nearest")
 end
 
 -- TTF

@@ -101,8 +101,8 @@ function map_doroom(x, y)
 
 		love.graphics.setCanvas(canvas)
 		clear_canvas(canvas)
-		love.graphics.setColor(0,0,0,255)
-		love.graphics.rectangle("fill", 0, 0, 320, 240)
+		--love.graphics.setColor(0,0,0,255)
+		--love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
 		displayroom(0, 0, roomdata[y][x], levelmetadata[y*20 + x+1], 0.5)
 		love.graphics.setCanvas()
@@ -111,4 +111,135 @@ function map_doroom(x, y)
 	end
 
 	rooms_map[y][x].done = true
+end
+
+function map_export(x1, y1, w, h, resolution, transparentbg)
+	-- Save an exported map, starting at x1,y1 (0-indexed), w rooms wide and h rooms high.
+	-- Resolution can be -1 for "As shown (max 640x480)", or another number for the scale times 320x240.
+	-- So for resolution 2, every room is displayed at 640x480.
+	-- Assumes everything has been checked for validity before.
+
+	local room_w, room_h, used_resolution
+
+	if resolution == -1 then
+		room_w, room_h = 640*mapscale, 480*mapscale
+		used_resolution = mapscale*2
+	else
+		room_w, room_h = 320*resolution, 240*resolution
+		used_resolution = resolution
+	end
+	local w_size, h_size = room_w*w, room_h*h
+
+	-- Now create the canvas, which should be possible, but a crash may be luring...
+	local status, err = pcall(function()
+		local canvas
+		if love.graphics.isSupported("npot") then
+			-- Perfectly normal
+			canvas = love.graphics.newCanvas(w_size, h_size)
+		else
+			-- Don't mind that empty filler, be glad that non-npot-compatible thing even works!
+			canvas = love.graphics.newCanvas(
+				math.pow(2, math.ceil(math.log(w_size)/math.log(2))),
+				math.pow(2, math.ceil(math.log(h_size)/math.log(2)))
+			)
+		end
+
+		love.graphics.setCanvas(canvas)
+		clear_canvas(canvas)
+		if not transparentbg then
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.rectangle("fill", 0, 0, w_size, h_size)
+		end
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.setBlendMode("premultiplied")
+		for yo = 0, h-1 do
+			local mry = y1 + yo
+			for xo = 0, w-1 do
+				local mrx = x1 + xo
+				if rooms_map[mry][mrx].map ~= nil then
+					love.graphics.draw(rooms_map[mry][mrx].map, xo*room_w, yo*room_h, 0, used_resolution)
+				end
+			end
+		end
+		love.graphics.setBlendMode("alpha")
+		love.graphics.setCanvas()
+
+		local saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub(dirsep, "__")
+
+		if love_version_meets(10) then
+			canvas:newImageData():encode("png", "maps/" .. saveas)
+		else
+			canvas:getImageData():encode("maps/" .. saveas)
+		end
+
+		dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
+
+		collectgarbage("collect")
+	end)
+
+	if not status then
+		dialog.create(
+			L.MAPEXPORTERROR .. "\n\n"
+			.. err .. "\n\n\n"
+			.. renderer_info_string()
+		)
+	end
+end
+
+function fix_map_export_input(fields, output0)
+	-- Expects fields as given in the export dialog
+	-- Returns valid x1, y1, w, h, x2, y2 as far as possible.
+	-- Fixes anything that can go wrong in user input: text, negative numbers, decimal point, out-of-range, ...
+
+	-- co is the coordinates indexing, 1 or 0. Input and output will be using that, unless output0 is true,
+	-- then the input will be using it but the output will always use 0-indexing.
+	local co = not s.coords0 and 1 or 0 -- coordoffset
+
+	-- We get the values from the fields, as numbers.
+	local x1, y1, w, h, x2, y2 = tonumber(fields.x1), tonumber(fields.y1), tonumber(fields.w), tonumber(fields.h)
+
+	-- Anything not a valid number? Also make it 0-indexed.
+	if x1 == nil then x1 = 0 else x1 = x1-co end
+	if y1 == nil then y1 = 0 else y1 = y1-co end
+	if w == nil then w = 20 end
+	if h == nil then h = 20 end
+
+	-- Now that we have 0-indexed values, we can continue to do so if output0 is true.
+	if output0 then co = 0 end
+
+	-- Make sure we're not splitting rooms in parts, that'd suck.
+	x1, y1, w, h = math.floor(x1), math.floor(y1), math.ceil(w), math.ceil(h)
+
+	-- Make sure we're in bounds. First our x and y, those are simple, should be at least 0, and at most mapwidth-1/mapheight-1.
+	x1, y1 = math.min(metadata.mapwidth-1, math.max(0, x1)), math.min(metadata.mapheight-1, math.max(0, y1))
+
+	-- Width and height must also not be less than 1.
+	w, h = math.max(1, w), math.max(1, h)
+
+	-- Now make sure the map size isn't going off the map.
+	if x1+w > metadata.mapwidth then
+		w = metadata.mapwidth-x1
+	end
+	if y1+h > metadata.mapheight then
+		h = metadata.mapheight-y1
+	end
+
+	return x1+co, y1+co, w, h, x1+w+co-1, y1+h+co-1
+end
+
+function create_export_dialog()
+	if not love.graphics.isSupported("canvas") then
+		dialog.create(L.GRAPHICSCARDCANVAS .. "\n\n\n\n\n" .. renderer_info_string())
+		return
+	end
+
+	dialog.create(
+		"",
+		{DB.SAVE, DB.CANCEL},
+		dialog.callback.mapexport,
+		L.SAVEMAP,
+		dialog.form.exportmap_make(),
+		dialog.callback.mapexport_validate,
+		"mapexport"
+	)
 end

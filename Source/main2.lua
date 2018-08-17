@@ -1884,18 +1884,32 @@ function love.keypressed(key)
 		end
 		if key == "tab" then
 			RCMactive = false
+			local done = false
+			local original = math.max(cf, 1)
 
-			if keyboard_eitherIsDown("shift") then
-				if cf <= 1 then
-					dialogs[#dialogs].currentfield = #dialogs[#dialogs].fields
+			while not done do
+				if keyboard_eitherIsDown("shift") then
+					if cf <= 1 then
+						dialogs[#dialogs].currentfield = #dialogs[#dialogs].fields
+					else
+						dialogs[#dialogs].currentfield = cf - 1
+					end
 				else
-					dialogs[#dialogs].currentfield = cf - 1
+					if cf >= #dialogs[#dialogs].fields then
+						dialogs[#dialogs].currentfield = 1
+					else
+						dialogs[#dialogs].currentfield = cf + 1
+					end
 				end
-			else
-				if cf >= #dialogs[#dialogs].fields then
-					dialogs[#dialogs].currentfield = 1
-				else
-					dialogs[#dialogs].currentfield = cf + 1
+
+				cf = dialogs[#dialogs].currentfield
+				if cf == original then
+					-- Don't keep looping around forever
+					done = true
+				end
+				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] < 2 then
+					-- Only text labels are skipped
+					done = true
 				end
 			end
 		end
@@ -2472,6 +2486,8 @@ function love.keypressed(key)
 		copyroom()
 	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "v" then
 		pasteroom()
+	elseif nodialog and state == 12 and key == "s" then
+		create_export_dialog()
 	elseif nodialog and (state == 15 or state == 19 or state == 28) and key == "escape" then
 		tostate(oldstate, true)
 		nodialog = false

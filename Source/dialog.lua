@@ -248,47 +248,91 @@ function cDialog:dropdown_onchange(key, picked)
 end
 
 function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel) -- next: dropdown onchange function
+	-- Modes:
+	-- 0: textbox (default)
+	-- 1: dropdown
+	-- 2: text label (can also be function returning string)
+	-- 3: checkbox
 	if mode == nil then
 		mode = 0
 	end
 
 	local real_x = self.x+10+x*8
-	local real_y = self.y+self.windowani+10+y*8
+	local real_y = self.y+self.windowani+10+y*8 + 1
 	local real_w = w*8
+
+	if mode == 2 then
+		-- This is only a label, don't do anything special.
+		self:setColor(0,0,0,255)
+		local textcontent
+		if type(content) == "function" then
+			textcontent = content(key, self:return_fields())
+		else
+			textcontent = content
+		end
+		love.graphics.printf(anythingbutnil(textcontent), real_x, real_y-1, real_w, "left")
+		self:setColor(255,255,255,255)
+		return
+	end
 
 	local active = self.currentfield == n
 
-	if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) then
-		self:setColor(255,255,255,255)
-		love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
+	if mode <= 1 then
+		-- Text field or dropdown
+		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) then
+			self:setColor(255,255,255,255)
+			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
 
-		if (active and love.keyboard.isDown("tab"))
-		or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+			if (active and love.keyboard.isDown("tab"))
+			or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+				self.currentfield = n
+
+				if mode == 1 and not RCMactive then
+					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
+
+					mousepressed = true
+				end
+			end
+		else
+			self:setColor(255,255,255,192)
+			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
+		end
+
+		self:setColor(0,0,0,255)
+
+		if mode == 0 then
+			love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
+		elseif mode == 1 then
+			if menuitemslabel == false then
+				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
+			else
+				love.graphics.print(anythingbutnil(menuitemslabel[anythingbutnil0(tonumber(content))]), real_x, real_y-1)
+			end
+			love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
+		end
+	elseif mode == 3 then
+		-- Checkbox
+		self:hoverdraw(topmost, content and checkon or checkoff, real_x, real_y-3, real_w, 8)
+
+		if (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
 			self.currentfield = n
 
-			if mode == 1 and not RCMactive then
-				rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
-
-				mousepressed = true
-			end
+			self.fields[n][5] = not content
+			mousepressed = true
 		end
-	else
-		self:setColor(255,255,255,192)
-		love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
 	end
-	self:setColor(0,0,0,255)
 
-	if mode == 0 then
-		love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
-	elseif mode == 1 then
-		if menuitemslabel == false then
-			love.graphics.print(anythingbutnil(content), real_x, real_y-1)
-		else
-			love.graphics.print(anythingbutnil(menuitemslabel[anythingbutnil0(tonumber(content))]), real_x, real_y-1)
-		end
-		love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
-	end
 	self:setColor(255,255,255,255)
+end
+
+function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
+	if topmost and mouseon(x, y, w, h) then
+		love.graphics.draw(img, x, y, 0, s)
+	else
+		self:setColor(255,255,255,128)
+		love.graphics.draw(img, x, y, 0, s)
+		self:setColor(255,255,255,255)
+	end
 end
 
 function cDialog:press_button(button)
@@ -513,7 +557,7 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(6*8), 40*8, 8, multiinput[6], 6, currentmultiinput == 6)
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
-		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 188, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
+		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 240, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
 	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 15 or DIAquestionid == 21 or DIAquestionid == 22 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
@@ -531,12 +575,12 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(8*8), 47*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 24 then
 		-- Language
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 188, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
+		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 240, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
 		love.graphics.setColor(0,0,0)
 		love.graphics.print(L.DATEFORMAT, DIAx+10, DIAy+DIAwindowani+10+(7*8))
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(9*8), 188, 8, multiinput[2], 2, currentmultiinput == 2, 1, standarddateformat_labels, standarddateformat_labels, "dateformat")
+		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(9*8), 240, 8, multiinput[2], 2, currentmultiinput == 2, 1, standarddateformat_labels, standarddateformat_labels, "dateformat")
 		if multiinput[2] == 4 then
-			hoverdiatext(DIAx+10+196, DIAy+DIAwindowani+10+(9*8), 188, 8, multiinput[3], 3, currentmultiinput == 3)
+			hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(11*8), 240, 8, multiinput[3], 3, currentmultiinput == 3)
 		end
 
 		-- Unique, not an input field, but specific to this text box

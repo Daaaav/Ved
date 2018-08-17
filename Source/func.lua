@@ -1044,40 +1044,6 @@ function insertrowcolor(rowcolors, yourarray)
 	end
 end
 
-function langkeys(strin, thesekeys, pluralvar)
-	-- Fills in $1 $2 etc in the strings.
-	if type(strin) == "table" then
-		if pluralvar == nil then
-			pluralvar = 1
-		end
-
-		local pluralform = lang_plurals(thesekeys[pluralvar])
-
-		if type(pluralform) == "boolean" then
-			pluralform = pluralform and 1 or 0
-		end
-
-		if strin[pluralform] == nil then
-			-- Use English fallback
-			pluralform = (thesekeys[pluralvar] ~= 1) and -2 or -1
-		end
-
-		strin = strin[pluralform]
-	end
-
-	for lk,lv in pairs(thesekeys) do
-		strin = strin:gsub("$" .. lk, (tostring(lv):gsub("%%", "%%%%")))
-	end
-
-	return strin
-end
-
-function userdatathing(thing)
-	for thingy in thing:lines() do
-		return thingy
-	end
-end
-
 function st(name)
 	return love.graphics.newImage("tools/sub/" .. name .. ".png")
 end
@@ -2748,6 +2714,15 @@ function clear_canvas(canvas)
 	else
 		canvas:clear()
 	end
+end
+
+function renderer_info_string()
+	local rend_name, rend_version, rend_vendor, rend_device = love.graphics.getRendererInfo()
+
+	return L.RENDERERINFO .. "\n\n"
+		.. rend_name .. " - " .. rend_version .. "\n"
+		.. rend_device .. "\n"
+		.. rend_vendor
 end
 
 hook("func")

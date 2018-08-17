@@ -7,7 +7,7 @@ function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 	end
 
 	RCMactive = true
-	RCMx = math.min(menuposx, love.graphics.getWidth()-188)
+	RCMx = math.min(menuposx, love.graphics.getWidth()-240)
 	RCMy = math.min(menuposy, love.graphics.getHeight()-(#items*16))
 	RCMactualy = menuposy -- In case we want to have this back
 	RCMitems = items
@@ -21,15 +21,15 @@ function rightclickmenu.draw()
 		for k,v in pairs(RCMitems) do
 			if v:sub(1, 1) == "#" then
 				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, 188, 16) -- 150 -> 188
+				love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, 240, 16) -- 150 -> 188 -> 240
 				love.graphics.setColor(192,192,192,255)
 				love.graphics.print(v:sub(2, -1), RCMx+1, (k-1)*16+RCMy+6)
 				love.graphics.setColor(255,255,255,255)
 			else
-				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 188, 16, true)
+				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 240, 16, true)
 				love.graphics.print(v, RCMx+1, (k-1)*16+RCMy+6)
 
-				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 188, 16) then
+				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 240, 16) then
 					RCMactive = false
 					RCMreturn = v
 					mousepressed = true

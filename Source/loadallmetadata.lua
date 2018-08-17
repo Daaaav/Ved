@@ -9,6 +9,7 @@ require("love.filesystem")
 love.graphics = {}
 function hook() end
 
+require("corefunc")
 require("func")
 require("vvvvvvxml")
 require("filefunc_" .. loaded_filefunc)

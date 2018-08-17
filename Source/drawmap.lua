@@ -5,15 +5,20 @@ function drawmap()
 	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
 	love.graphics.draw(fullcovered, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
+	love.graphics.setBlendMode("premultiplied")
 	for mry = 0, metadata.mapheight-1 do
 		for mrx = 0, metadata.mapwidth-1 do
-			--displayroom(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, roomdata[mry][mrx], levelmetadata[(mry)*20 + (mrx+1)], mapscale)
-			--love.graphics.rectangle("line", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 			if rooms_map[mry][mrx].map ~= nil then
+				-- First draw a black background
+				love.graphics.setColor(0,0,0,255)
+				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+				love.graphics.setColor(255,255,255,255)
+
 				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, mapscale*2)
 			end
 		end
 	end
+	love.graphics.setBlendMode("alpha")
 
 	-- We should be able to hover over rooms
 	hoverx = nil
@@ -86,7 +91,26 @@ function drawmap()
 	or (generictimer > 2 and generictimer < 2.5))) then
 		love.graphics.setColor(255,255,0)
 		love.graphics.setLineWidth(3)
-		love.graphics.rectangle("line", mapxoffset+screenoffset+(roomx*mapscale*640), mapyoffset+roomy*mapscale*480, mapscale*640, mapscale*480)
+		love.graphics.rectangle("line",
+			mapxoffset+screenoffset+(roomx*mapscale*640),
+			mapyoffset+roomy*mapscale*480,
+			mapscale*640, mapscale*480
+		)
+		love.graphics.setLineWidth(1)
+		love.graphics.setColor(255,255,255)
+	end
+
+	-- Maybe we're exporting the map and showing which selection will be exported?
+	if #dialogs > 0 and dialogs[#dialogs].identifier == "mapexport" then
+		local x1, y1, w, h, x2, y2 = fix_map_export_input(dialogs[#dialogs]:return_fields(), true)
+
+		love.graphics.setColor(0,0,255)
+		love.graphics.setLineWidth(3)
+		love.graphics.rectangle("line",
+			mapxoffset+screenoffset+(x1*mapscale*640),
+			mapyoffset+y1*mapscale*480,
+			w*mapscale*640, h*mapscale*480
+		)
 		love.graphics.setLineWidth(1)
 		love.graphics.setColor(255,255,255)
 	end
@@ -97,10 +121,6 @@ function drawmap()
 		else
 			love.graphics.print("(" .. (hoverx+1) .. "," .. (hovery+1) .. ")", screenoffset+640, 3)
 		end
-	--[[
-	elseif selectingrooms ~= 0 then
-		love.graphics.printf(langkeys(L.SELECTCOPYSWAP, {(selected1x == -1 and L.SELECTFIRST or L.SELECTSECOND), (selectingrooms == 1 and L.SELECTCOPY or L.SELECTSWAP)}), screenoffset+640, 3, love.graphics.getWidth()-(screenoffset+640), "left")
-	]]
 	end
 	if (hovername ~= nil) then
 		love.graphics.printf(hovername, screenoffset+640, 11, love.graphics.getWidth()-screenoffset-640, "left")
@@ -120,7 +140,7 @@ function drawmap()
 	end
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
-	rbutton(L.SAVEMAP, 1, nil, true)
+	rbutton({L.SAVEMAP, "S"}, 1, nil, true)
 	rbutton(L.COPYROOMS, 3, nil, true)
 	rbutton(L.SWAPROOMS, 4, nil, true)
 
@@ -151,7 +171,7 @@ function drawmap()
 			tostate(1, true)
 		elseif onrbutton(1, nil, true) then
 			-- Save map
-			dialog.create("Not currently supported")
+			create_export_dialog()
 		elseif onrbutton(3, nil, true) then
 			-- Copy rooms
 			selectingrooms = 1

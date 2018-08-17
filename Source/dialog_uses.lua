@@ -14,6 +14,56 @@ function dialog.form.simplename_make(default)
 	}
 end
 
+function dialog.form.exportmap_make()
+	local co = not s.coords0 and 1 or 0 -- coordoffset
+
+	-- Top left / width & height / bottom right is three things on one line,
+	-- calculate how we should space it.
+	local spacing = (47 - font8:getWidth(L.TOPLEFT)/8 - font8:getWidth(L.WIDTHHEIGHT)/8 - font8:getWidth(L.BOTTOMRIGHT)/8) / 2
+	local wh_pos = font8:getWidth(L.TOPLEFT)/8 + round(spacing)
+	local br_pos = 46 - font8:getWidth(L.BOTTOMRIGHT)/8
+
+	return {
+		{"", 0, 0, 40, L.MAPRESOLUTION, 2},
+		{
+			"resolution", 0, 1, 30, -1, 1,
+			map_resolutions_labels, map_resolutions_numbertolabel,
+			function(picked)
+				return map_resolutions_labeltonumber[picked]
+			end
+		},
+		{
+			"res_label", 33, 1, 12,
+			function(_, fields)
+				local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+				if fields.resolution == -1 then
+					return 640*mapscale*w .. "x" .. 480*mapscale*h
+				end
+				return 320*fields.resolution*w .. "x" .. 240*fields.resolution*h
+			end, 2
+		},
+		{"", 0, 3, 40, L.TOPLEFT, 2},
+		{"", wh_pos, 3, 40, L.WIDTHHEIGHT, 2},
+		{"x1", 0, 4, 3, co},
+		{"", 3, 4, 1, ",", 2},
+		{"y1", 4, 4, 3, co},
+		{"w", wh_pos, 4, 3, metadata.mapwidth},
+		{"h", wh_pos+4, 4, 3, metadata.mapheight},
+		{"", br_pos, 3, 40, L.BOTTOMRIGHT, 2},
+		{
+			"bottomright_label", br_pos, 4, 40,
+			function(_, fields)
+				local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+				return x2 .. "," .. y2
+			end, 2
+		},
+		{"transparentbg", 0, 7, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, 3},
+		{"", 2, 7, 40, L.TRANSPARENTMAPBG, 2},
+		{"keepdialogopen", 0, 15, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, 3},
+		{"", 2, 15, 40, L.KEEPDIALOGOPEN, 2},
+	}
+end
+
 --function dialog.form.
 
 -- 
@@ -235,5 +285,62 @@ function dialog.callback.changeflagname(button, fields, _, notclosed)
 
 		-- Refresh the state so it shows the correct label now
 		loadstate(state)
+	end
+end
+
+function dialog.callback.mapexport_validate(button, fields, identifier)
+	if button == DB.SAVE then
+		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+
+		-- Check if we're gonna exceed the max texture size... Unless you're on 0.9.0, update.
+		if love_version_meets(9,1) then
+			local sizelimit = love.graphics.getSystemLimit("texturesize")
+			local w_size, h_size
+
+			if fields.resolution == -1 then
+				w_size, h_size = 640*mapscale*w, 480*mapscale*h
+			else
+				w_size, h_size = 320*fields.resolution*w, 240*fields.resolution*h
+			end
+
+			if w_size > sizelimit or h_size > sizelimit then
+				dialog.create(
+					langkeys(L.MAXTEXTURESIZE, {w_size, h_size, sizelimit})
+					.. "\n\n\n" .. renderer_info_string()
+				)
+				return true
+			end
+		end
+
+		-- So is everything done?
+		for mry = y1, y2 do
+			for mrx = x1, x2 do
+				if not rooms_map[mry][mrx].done then
+					dialog.create(L.MAPINCOMPLETE)
+					return true
+				end
+			end
+		end
+
+		-- Maybe we always want it left open?
+		if fields.keepdialogopen then
+			-- Let's also lie to the handler function, it was actually closed.
+			dialog.callback.mapexport(button, fields, identifier, false)
+			return true
+		end
+	end
+end
+
+function dialog.callback.mapexport(button, fields, _, notclosed)
+	if notclosed then
+		-- If an error occured, then this will be true.
+		-- If we checked "Keep dialog open", then the validator will make this false.
+		return
+	end
+
+	if button == DB.SAVE then
+		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+
+		map_export(x1, y1, w, h, tonumber(fields.resolution), fields.transparentbg)
 	end
 end
