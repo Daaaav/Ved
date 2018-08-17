@@ -106,6 +106,7 @@ function addrooms(neww, newh)
 				for t = 1, 1200 do
 					roomdata[y][x][t] = 0
 				end
+				map_resetroom(x, y)
 			end
 		end
 	end
