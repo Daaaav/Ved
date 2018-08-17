@@ -1237,10 +1237,12 @@ function love.draw()
 		love.graphics.printf("TAKING INPUT", 128, love.graphics.getHeight()-10, 128, "center")
 	end
 
---TODO REMOE
-if rooms_map_current_x ~= nil then
-love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 5)
-end
+	--[[ some debug stuff for the new map
+	if rooms_map_current_x ~= nil then
+	love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 5)
+	end
+	]]
+
 	hook("love_draw_end")
 
 	-- Are we displaying a replacement cursor?
