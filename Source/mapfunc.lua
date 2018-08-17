@@ -172,7 +172,21 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 			canvas:getImageData():encode("maps/" .. saveas)
 		end
 
-		dialog.create(langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}))
+		dialog.create(
+			langkeys(L.MAPSAVEDAS, {saveas, love.filesystem.getSaveDirectory()}),
+			{L.VIEWIMAGE, DB.OK},
+			function(button)
+				if button == L.VIEWIMAGE then
+					openurl("file://" .. love.filesystem.getSaveDirectory() .. "/maps/" .. saveas)
+				end
+			end,
+			nil, nil,
+			function(button)
+				if button == L.VIEWIMAGE then
+					return true
+				end
+			end
+		)
 
 		collectgarbage("collect")
 	end)

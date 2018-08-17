@@ -15,3 +15,4 @@ L.MAPINCOMPLETE = "The map is not ready yet (at the time you pressed Save), plea
 L.KEEPDIALOGOPEN = "Keep dialog open"
 L.TRANSPARENTMAPBG = "Transparent background"
 L.MAPEXPORTERROR = "Error while creating map."
+L.VIEWIMAGE = "View" -- Verb, view image

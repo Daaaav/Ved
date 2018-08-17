@@ -322,7 +322,7 @@ function drawhelp()
 		if hoveringlink ~= nil and nodialog then
 			drawlink(hoveringlink)
 			if not special_cursor or hoveringlink ~= cachedlink then
-				matching_url = hoveringlink:match("https?://[A-Za-z0-9%-%._~:/%?#%[%]@!%$&'%(%)%*%+,;=%%]+$") ~= nil
+				matching_url = hoveringlink:match("^https?://[A-Za-z0-9%-%._~:/%?#%[%]@!%$&'%(%)%*%+,;=%%]+$") ~= nil
 				matching_article = false
 				matching_anchor = false
 				if not matching_url then
