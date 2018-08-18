@@ -677,13 +677,20 @@ function issolidmultispikes(tilenum, tileset, spikessolid)
 	return issolid(tilenum, tileset, spikessolid, true)
 end
 
-function issolidforgravline(tilenum)
+function issolidforgravline(tilenum, linetype)
 	if tilenum == nil then
 		return false
 	end
+
+	if linetype == 50 then
+		-- Warp lines get blocked by solid tiles, but not the tileset-specific exceptions...
+		return issolid(tilenum, -1, false, true)
+	end
+
 	if tilenum >= 1 and tilenum <= 679 then
 		return true
 	end
+
 	return false
 end
 
@@ -1381,7 +1388,7 @@ function autocorrectlines()
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(bt)]) then
+					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(bt)], v.t) then
 						startat = bt
 						break
 					end
@@ -1392,7 +1399,7 @@ function autocorrectlines()
 
 				-- Now to see how long it should be!
 				for ft = startat+1, 40 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(ft)]) then
+					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(ft)], v.t) then
 						linelength = 8 * (ft-startat) - 8
 						break
 					end
@@ -1413,7 +1420,7 @@ function autocorrectlines()
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
 					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(bt*40)+((v.x%40)+1)]) then
+					if issolidforgravline(roomdata[roomy][roomx][(bt*40)+((v.x%40)+1)], v.t) then
 						startat = bt+1
 						break
 					end
@@ -1425,7 +1432,7 @@ function autocorrectlines()
 				-- Now to see how long it should be!
 				for ft = startat+1, 29 do
 					--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(ft*40)+((v.x%40)+1)]) then
+					if issolidforgravline(roomdata[roomy][roomx][(ft*40)+((v.x%40)+1)], v.t) then
 						linelength = 8 * (ft-startat)
 						break
 					end

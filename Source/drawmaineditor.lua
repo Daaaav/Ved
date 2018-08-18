@@ -607,82 +607,29 @@ function drawmaineditor()
 			if not issolid(roomdata[roomy][roomx][(aty*40)+(atx+1)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
 				cons("Gravity line: " .. atx .. " " .. aty)
 
+				local p1, p2
 				if selectedsubtool[10] == 1 then
 					-- Horizontal
-
-					-- Backtrack to see what tile is solid
-					for bt = atx, 0, -1 do
-						if issolidforgravline(roomdata[roomy][roomx][(aty*40)+(bt)]) then
-							startat = bt
-							break
-						end
-					end
-					if startat == nil then
-						startat = -1
-					end
-
-					-- Now to see how long it should be!
-					for ft = startat+1, 40 do
-						if issolidforgravline(roomdata[roomy][roomx][(aty*40)+(ft)]) then
-							linelength = 8 * (ft-startat) - 8
-							break
-						end
-					end
-					if linelength == nil then
-						linelength = 8 * (42-startat) - 8
-					end
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 11,
-						p1 = 0, p2 = startat, p3 = linelength, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
+					p1, p2 = 0, atx
 				else
 					-- Vertical
-
-					-- Backtrack to see what tile is solid
-					for bt = aty, 0, -1 do
-						--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-						if issolidforgravline(roomdata[roomy][roomx][(bt*40)+(atx+1)]) then
-							startat = bt+1
-							break
-						end
-					end
-					if startat == nil then
-						startat = -1
-					end
-
-					-- Now to see how long it should be!
-					for ft = startat+1, 29 do
-						--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-						if issolidforgravline(roomdata[roomy][roomx][(ft*40)+(atx+1)]) then
-							linelength = 8 * (ft-startat)
-							break
-						end
-					end
-					if linelength == nil then
-						linelength = 8 * (32-startat) - 8
-					end
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 11,
-						p1 = 1, p2 = startat, p3 = linelength, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
+					p1, p2 = 1, aty
 				end
+
+				table.insert(entitydata, count.entity_ai,
+					{
+					x = 40*roomx + atx,
+					y = 30*roomy + aty,
+					t = 11,
+					p1 = p1, p2 = p2, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
+					data = ""
+					})
 
 				entityplaced()
 				count.entities = count.entities + 1
 				count.entity_ai = count.entity_ai + 1
 
-				startat = nil
-				linelength = nil
+				autocorrectlines()
 			end
 
 			mousepressed = true
@@ -929,36 +876,12 @@ function drawmaineditor()
 				if atx == 0 or atx == 39 then
 					-- Vertical left or right, type 0 or 1
 
-					-- Backtrack to see what tile is solid
-					for bt = aty, 0, -1 do
-						--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-						if issolid(roomdata[roomy][roomx][(bt*40)+(atx+1)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-							startat = bt+1
-							break
-						end
-					end
-					if startat == nil then
-						startat = -1
-					end
-
-					-- Now to see how long it should be!
-					for ft = startat+1, 29 do
-						--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-						if issolid(roomdata[roomy][roomx][(ft*40)+(atx+1)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-							linelength = 8 * (ft-startat)
-							break
-						end
-					end
-					if linelength == nil then
-						linelength = 8 * (32-startat) - 8
-					end
-
 					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
 						t = 50,
-						p1 = (atx == 0 and 0 or 1), p2 = startat, p3 = linelength, p4 = 0, p5 = 320, p6 = 240,
+						p1 = (atx == 0 and 0 or 1), p2 = startat, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
 						data = ""
 						})
 					entityplaced()
@@ -966,37 +889,17 @@ function drawmaineditor()
 					count.entity_ai = count.entity_ai + 1
 
 					mousepressed = true
+
+					autocorrectlines()
 				elseif aty == 0 or aty == 29 then
 					-- Horizontal top or bottom, type 2 or 3
 
-					-- Backtrack to see what tile is solid
-					for bt = atx, 0, -1 do
-						if issolid(roomdata[roomy][roomx][(aty*40)+(bt)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-							startat = bt
-							break
-						end
-					end
-					if startat == nil then
-						startat = -1
-					end
-
-					-- Now to see how long it should be!
-					for ft = startat+1, 40 do
-						if issolid(roomdata[roomy][roomx][(aty*40)+(ft)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-							linelength = 8 * (ft-startat) - 8
-							break
-						end
-					end
-					if linelength == nil then
-						linelength = 8 * (42-startat) - 8
-					end
-
 					table.insert(entitydata, count.entity_ai,
 						{
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
 						t = 50,
-						p1 = (aty == 0 and 2 or 3), p2 = startat, p3 = linelength, p4 = 0, p5 = 320, p6 = 240,
+						p1 = (aty == 0 and 2 or 3), p2 = startat, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
 						data = ""
 						})
 					entityplaced()
@@ -1004,10 +907,9 @@ function drawmaineditor()
 					count.entity_ai = count.entity_ai + 1
 
 					mousepressed = true
-				end
 
-				startat = nil
-				linelength = nil
+					autocorrectlines()
+				end
 			end
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
