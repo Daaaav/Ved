@@ -344,3 +344,43 @@ function dialog.callback.mapexport(button, fields, _, notclosed)
 		map_export(x1, y1, w, h, tonumber(fields.resolution), fields.transparentbg)
 	end
 end
+
+function dialog.callback.scriptsearch(button, fields)
+	if button == DB.OK then
+		scriptsearchterm = fields.name
+		inscriptsearch(fields.name)
+	end
+
+	takinginput = true -- We were working on a script
+end
+
+function dialog.callback.scriptgotoline_validate(button, fields)
+	if button == DB.OK then
+		-- Check if this is a valid number.
+		if tonumber(fields.line) == nil
+		or tostring(tonumber(fields.line)) ~= fields.line
+		or math.floor(tonumber(fields.line)) ~= tonumber(fields.line) then
+			dialog.create(L.INVALIDLINENUMBER)
+			return true
+		end
+	end
+end
+
+function dialog.callback.scriptgotoline(button, fields, _, notclosed)
+	if notclosed then
+		return
+	end
+
+	if button == DB.OK then
+		scriptgotoline(tonumber(fields.line))
+	end
+
+	takinginput = true -- We were working on a script
+end
+
+function dialog.callback.noflagsleft(button)
+	if button == DB.YES then
+		-- Leave the editor even though a flag label doesn't have a number now.
+		leavescript_to_state()
+	end
+end

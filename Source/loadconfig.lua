@@ -23,11 +23,6 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
-	allowlimitbypass =
-		{
-		default = false,
-		["type"] = "bool",
-		},
 	flipsubtoolscroll =
 		{
 		default = false,
@@ -206,7 +201,6 @@ configs =
 	}
 
 function saveconfig()
-	--love.filesystem.write("settings.lua", 's.customvvvvvvdir = "' .. s.customvvvvvvdir .. '" -- do not include the directory called "levels" here, nor a trailing (back)slash\r\ns.language = "' .. s.language .. '"\r\ns.dialoganimations = ' .. boolstring(s.dialoganimations) .. '\ns.allowlimitbypass = ' .. boolstring(s.allowlimitbypass) .. '\ns.flipsubtoolscroll = ' .. boolstring(s.flipsubtoolscroll) .. '')
 	local writagearr = {}
 	for k,v in pairs(configs) do
 		local value

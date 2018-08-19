@@ -2708,26 +2708,6 @@ function love.mousepressed(x, y, button)
 			chr = math.floor((x-48)/8) + 1
 			line = math.floor(((y-24)-scriptscroll-6)/8) + 1
 		end
-		--[[ Development debug message, so this pyramid is okay (at least I decided not to do it all on one line)
-		dialog.new("You're clicking at " .. x .. "," .. y .. "\nscriptscroll is " .. scriptscroll .. "\nx and y from origin is thus " .. (x-48) .. "," .. ((y-24)-scriptscroll) .. "\nSince font y is pretty cursed, that is " .. (x-48) .. "," .. ((y-24)-scriptscroll-6) .. "\n\nTHAT MUST MEAN CHAR " .. (chr-1) .. " ON LINE " .. (line-1) .. "\n(counts start at 0, hi Info)\n\n"
-			.. "Line above top: " .. (
-				line < 1 and "yes" or (
-					"no\nLine below bottom: " .. (
-						line > #scriptlines and "yes" or (
-							"no\nChar too far left: " .. (
-								chr < 0 and "yes" or (
-									"no\nChar too far right: " .. (
-										chr >= scriptlines[line]:len() and "yes" or "no"
-									)
-								)
-							)
-						)
-					)
-				)
-			),
-			"Click to set cursor pos", 1, 1, 0
-		)
-		]]
 		if chr < 1 then
 			chr = 1
 		end

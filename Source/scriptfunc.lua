@@ -453,7 +453,11 @@ function processflaglabelsreverse()
 				if useflag == -1 then
 					-- No flags left?
 					if not noflagsleftwarning then
-						dialog.new(L.NOFLAGSLEFT, "", 1, 3, 16)
+						dialog.create(
+							L.NOFLAGSLEFT,
+							DBS.YESNO,
+							dialog.callback.noflagsleft
+						)
 						noflagsleftwarning = true
 					end
 				else					
@@ -630,21 +634,32 @@ function scriptgotoline(linenum, colnum)
 end
 
 function startinscriptsearch()
-	input = input .. input_r
-	input_r = ""
+	stopinput()
 	scriptlines[editingline] = input
-	startmultiinput({scriptsearchterm})
-	dialog.new(L.SEARCHFOR, "", 1, 4, 20)
-	currentmultiinput = 1
+
+	dialog.create(
+		L.SEARCHFOR,
+		DBS.OKCANCEL,
+		dialog.callback.scriptsearch,
+		nil,
+		dialog.form.simplename_make(scriptsearchterm)
+	)
 end
 
 function startscriptgotoline()
-	input = input .. input_r
-	input_r = ""
+	stopinput()
 	scriptlines[editingline] = input
-	startmultiinput({""})
-	dialog.new(L.GOTOLINE2, "", 1, 4, 18)
-	currentmultiinput = 1
+
+	dialog.create(
+		L.GOTOLINE2,
+		DBS.OKCANCEL,
+		dialog.callback.scriptgotoline,
+		nil,
+		{
+			{"line", 0, 1, 5, ""}
+		},
+		dialog.callback.scriptgotoline_validate
+	)
 end
 
 function scriptlineonscreen(ln)

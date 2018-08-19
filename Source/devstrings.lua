@@ -16,3 +16,4 @@ L.KEEPDIALOGOPEN = "Keep dialog open"
 L.TRANSPARENTMAPBG = "Transparent background"
 L.MAPEXPORTERROR = "Error while creating map."
 L.VIEWIMAGE = "View" -- Verb, view image
+L.INVALIDLINENUMBER = "Please enter a valid line number."

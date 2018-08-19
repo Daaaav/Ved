@@ -558,10 +558,10 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 240, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 15 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 15 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
-	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 26 then
+	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 19 or DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
@@ -569,7 +569,7 @@ function dialog.textboxes()
 		assert(false)
 	elseif DIAquestionid == 18 then
 		-- Go to line
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 5*8, 8, multiinput[1], 1, currentmultiinput == 1)
+		assert(false)
 	elseif DIAquestionid == 23 then
 		-- Custom VVVVVV dir, use the space we can get
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(8*8), 47*8, 8, multiinput[1], 1, currentmultiinput == 1)
@@ -714,20 +714,16 @@ function dialog.update(dt)
 					multiinput[7], multiinput[8] = math.floor(multiinput[7]), math.floor(multiinput[8])
 
 					if (tonumber(multiinput[7]) > 20) or (tonumber(multiinput[8]) > 20) then
-						-- Ok hold on a second. Do you really want that?
-						if s.allowlimitbypass then
-							dialog.new(L.SIZELIMITSURE, "", 1, 3, 6)
-							replacedialog = true
-						else
-							dialog.new(langkeys(L.SIZELIMIT, {math.min(20, tonumber(multiinput[7])), math.min(20, tonumber(multiinput[8]))}), "", 1, 1, 0)
-							metadata.mapwidth = math.min(20, tonumber(multiinput[7]))
-							metadata.mapheight = math.min(20, tonumber(multiinput[8]))
-							addrooms(metadata.mapwidth, metadata.mapheight)
-							gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
-						end
-					--elseif (tonumber(multiinput[7]) < metadata.mapwidth) or (tonumber(multiinput[8]) < metadata.mapheight) then
-						-- We're making the map smaller
-						--dialog.new("Are you sure you wish to make the map smaller?
+						dialog.create(
+							langkeys(L.SIZELIMIT, {
+								math.min(20, tonumber(multiinput[7])),
+								math.min(20, tonumber(multiinput[8]))
+							})
+						)
+						metadata.mapwidth = math.min(20, tonumber(multiinput[7]))
+						metadata.mapheight = math.min(20, tonumber(multiinput[8]))
+						addrooms(metadata.mapwidth, metadata.mapheight)
+						gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 					else
 						-- Just do it
 						metadata.mapwidth = math.min(20, tonumber(multiinput[7]))
@@ -748,10 +744,7 @@ function dialog.update(dt)
 			end
 		elseif (DIAquestionid == 6) and (DIAreturn == 2) then
 			-- Yes, I do want to change the level size to this. If I set it to lower than the existing size I might lose rooms - or if I bypass the 20x20 limit this level will become nuclear.
-			metadata.mapwidth = tonumber(multiinput[7])
-			metadata.mapheight = tonumber(multiinput[8])
-			addrooms(metadata.mapwidth, metadata.mapheight)
-			gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+			assert(false)
 		elseif (DIAquestionid == 7) and (DIAreturn == 2) then
 			-- Yes, create a new blank map, I'll lose any unsaved content
 			assert(false)
@@ -819,7 +812,7 @@ function dialog.update(dt)
 			assert(false)
 		elseif DIAquestionid == 16 and DIAreturn == 2 then
 			-- Leave the editor even though a flag label doesn't have a number now.
-			leavescript_to_state()
+			assert(false)
 		elseif DIAquestionid == 17 and DIAreturn == 2 then
 			-- Delete this script!
 			-- input is the 'number' of the script
@@ -832,14 +825,7 @@ function dialog.update(dt)
 			--table.remove(scripts, scriptnames[input])
 			--table.remove(scriptnames, input)
 		elseif DIAquestionid == 18 then
-			--stopinput()
-			currentmultiinput = 0
-			if DIAreturn == 2 then
-				-- Go to line in script
-				scriptgotoline(tonumber(multiinput[1]))
-			end
-			-- Take input again!
-			takinginput = true
+			assert(false)
 		elseif DIAquestionid == 19 then
 			stopinput()
 			-- Be a number, you input!
@@ -849,7 +835,7 @@ function dialog.update(dt)
 				-- And of course, as long as a script with that name doesn't already exist.
 				-- input is the 'number' of the script
 				if scripts[multiinput[1]] ~= nil and multiinput[1] ~= scriptnames[input] then
-					dialog.new(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}), "", 1, 1, 0)
+					dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}))
 					replacedialog = true
 				elseif multiinput[1] ~= scriptnames[input] then
 					scripts[multiinput[1]] = scripts[scriptnames[input]] -- Copy script from old to new name
@@ -859,12 +845,7 @@ function dialog.update(dt)
 				end
 			end
 		elseif DIAquestionid == 20 then
-			currentmultiinput = 0 -- Not stopping input on purpose
-			if DIAreturn == 2 then
-				scriptsearchterm = multiinput[1]
-				inscriptsearch(multiinput[1])
-			end
-			takinginput = true
+			assert(false)
 		-- 21 AND 22 HANDLED ABOVE AT 9 AND 11 (21 is script split, 22 is script duplicate)
 		elseif DIAquestionid == 23 then
 			stopinput()
@@ -896,12 +877,12 @@ function dialog.update(dt)
 				end
 				local ficontents = love.filesystem.read("overwrite_backups/" .. input .. ".vvvvvv")
 				if ficontents == nil then
-					dialog.new(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}), "", 1, 1, 0)
+					dialog.create(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}))
 					replacedialog = true
 				else
 					local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. multiinput[1] .. ".vvvvvv", ficontents)
 					if not success then
-						dialog.new(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg), "", 1, 1, 0)
+						dialog.create(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg))
 						replacedialog = true
 					end
 				end

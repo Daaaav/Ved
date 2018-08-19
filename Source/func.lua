@@ -244,6 +244,7 @@ function stopinput()
 	input = anythingbutnil(input) .. anythingbutnil(input_r)
 	input_r = ""
 	__ = "_"
+	cursorflashtime = 0
 	takinginput = false
 	currentmultiinput = 0
 end
