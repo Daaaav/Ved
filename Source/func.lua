@@ -1378,7 +1378,7 @@ function endeditingroomtext(donotmakethisnil)
 
 						if useflag == -1 then
 							-- No flags left?
-							dialog.create(L.NOFLAGSLEFT_LOADSCRIPT)
+							dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {input}))
 							scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
 						else
 							scripts[loadscriptname] = {
