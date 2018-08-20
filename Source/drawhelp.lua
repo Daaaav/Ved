@@ -275,8 +275,13 @@ function drawhelp()
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12)-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Rename
-						startmultiinput({helppages[helparticle].subj})
-						dialog.new(L.NEWNAME, L.RENAMENOTE, 1, 4, 13)
+						dialog.create(
+							L.NEWNAME,
+							DBS.OKCANCEL,
+							dialog.callback.renamenote,
+							L.RENAMENOTE,
+							dialog.form.simplename_make(helppages[helparticle].subj)
+						)
 					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Edit
 						helpeditingline = 1
@@ -285,7 +290,11 @@ function drawhelp()
 						nodialog = false
 					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16) then
 						-- Delete
-						dialog.new(L.SUREDELETENOTE, "", 1, 3, 14)
+						dialog.create(
+							L.SUREDELETENOTE,
+							DBS.YESNO,
+							dialog.callback.suredeletenote
+						)
 					end
 				end
 			else
@@ -429,8 +438,13 @@ function drawhelp()
 			if love.mouse.isDown("l") then
 				if helppages[rvnum] == nil then
 					-- This is just the "add new" button.
-					startmultiinput({""})
-					dialog.new(L.NEWNOTENAME, L.CREATENEWNOTE, 1, 4, 12)
+					dialog.create(
+						L.NEWNOTENAME,
+						DBS.OKCANCEL,
+						dialog.callback.newnote,
+						L.CREATENEWNOTE,
+						dialog.form.simplename
+					)
 				else
 					gotohelparticle(rvnum)
 				end

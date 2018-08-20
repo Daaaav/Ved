@@ -345,6 +345,15 @@ function dialog.callback.mapexport(button, fields, _, notclosed)
 	end
 end
 
+function dialog.callback.helpsearch(button, fields)
+	if button == DB.OK then
+		helpsearchterm = fields.name
+		inhelpsearch(fields.name)
+	end
+
+	takinginput = true
+end
+
 function dialog.callback.scriptsearch(button, fields)
 	if button == DB.OK then
 		scriptsearchterm = fields.name
@@ -382,5 +391,48 @@ function dialog.callback.noflagsleft(button)
 	if button == DB.YES then
 		-- Leave the editor even though a flag label doesn't have a number now.
 		leavescript_to_state()
+	end
+end
+
+function dialog.callback.renamenote(button, fields)
+	if button == DB.OK then
+		local newname = uniquenotename(fields.name, helppages[helparticle].subj)
+
+		helppages[helparticle].subj = newname
+
+		dirty()
+	end
+end
+
+function dialog.callback.suredeletenote(button)
+	if button == DB.YES then
+		-- Yes, delete this note
+		table.remove(helppages, helparticle)
+		dirty()
+		if helppages[helparticle] == nil then
+			helparticle = helparticle - 1
+		end
+
+		-- Go to the new article (removing this line will cause the deleted article to be left on the screen, along with its buttons, but not the button in the left menu for it)
+		helparticlecontent = explode("\n", helppages[helparticle].cont)
+	end
+end
+
+function dialog.callback.newnote(button, fields)
+	if button == DB.OK then
+		-- Add a note with this name.
+		local newname = uniquenotename(fields.name)
+
+						-- v by reference anyways
+		table.insert(helppages, {subj = newname, imgs = {}, cont = [[
+]] .. fields.name .. [[\wh#
+
+]] .. L.CONTENTFILLER})
+
+		helparticle = #helppages
+		helpeditingline = 3
+		takinginput = true
+		helparticlecontent = explode("\n", helppages[#helppages].cont)
+		input = anythingbutnil(helparticlecontent[3])
 	end
 end

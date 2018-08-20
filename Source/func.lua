@@ -1378,15 +1378,15 @@ function endeditingroomtext(donotmakethisnil)
 
 						if useflag == -1 then
 							-- No flags left?
-							dialog.new(L.NOFLAGSLEFT, "", 1, 3, 16)
-							useflag = "FLAG"
+							dialog.create(L.NOFLAGSLEFT_LOADSCRIPT)
+							scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
+						else
+							scripts[loadscriptname] = {
+								"ifflag(" .. useflag .. ",stop)",
+								"flag(" .. useflag .. ",on)",
+								"iftrinkets(0," .. input .. ")"
+							}
 						end
-
-						scripts[loadscriptname] = {
-							"ifflag(" .. useflag .. ",stop)",
-							"flag(" .. useflag .. ",on)",
-							"iftrinkets(0," .. input .. ")"
-						}
 						table.insert(scriptnames, loadscriptname)
 						entitydata[editingroomtext].data = loadscriptname
 

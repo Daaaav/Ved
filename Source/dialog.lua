@@ -558,10 +558,10 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 240, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 15 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
-	elseif DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 19 or DIAquestionid == 26 then
+	elseif DIAquestionid == 19 or DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
@@ -759,55 +759,12 @@ function dialog.update(dt)
 			assert(false)
 		-- DIAQUESTIONID 11 IS HANDLED ABOVE (ALMOST EQUAL TO 9)
 		elseif (DIAquestionid == 12) then
-			stopinput()
-			if DIAreturn == 2 then
-				-- Add a note with this name.
-				stopinput()
-
-				-- We're currently already editing a script so save that before jumping to a new one!
-				--scripts[scriptname] = scriptlines .
-
-				local newname = uniquenotename(multiinput[1])
-
-								-- v by reference anyways
-				table.insert(helppages, {subj = newname, imgs = {}, cont = [[
-]] .. multiinput[1] .. [[\wh#
-
-]] .. L.CONTENTFILLER})
-
-				helparticle = #helppages
-				helpeditingline = 3
-				takinginput = true
-				helparticlecontent = explode("\n", helppages[#helppages].cont)
-				input = anythingbutnil(helparticlecontent[3])
-			end
+			assert(false)
 		elseif (DIAquestionid == 13) then
-			stopinput()
-			if DIAreturn == 2 then
-				-- Rename this note
-
-				local newname = uniquenotename(multiinput[1], helppages[helparticle].subj)
-
-				helppages[helparticle].subj = newname
-
-				dirty()
-
-				--[[
-				if helpeditingline ~= 0 then
-					takinginput = true
-				end
-				]]
-			end
+			assert(false)
 		elseif (DIAquestionid == 14) and (DIAreturn == 2) then
 			-- Yes, delete this note
-			table.remove(helppages, helparticle)
-			dirty()
-			if helppages[helparticle] == nil then
-				helparticle = helparticle - 1
-			end
-
-			-- Go to the new article (removing this line will cause the deleted article to be left on the screen, along with its buttons, but not the button in the left menu for it)
-			helparticlecontent = explode("\n", helppages[helparticle].cont)
+			assert(false)
 		elseif (DIAquestionid == 15) then
 			assert(false)
 		elseif DIAquestionid == 16 and DIAreturn == 2 then
@@ -863,12 +820,7 @@ function dialog.update(dt)
 				saveconfig()
 			end
 		elseif DIAquestionid == 25 then
-			currentmultiinput = 0 -- Not stopping input on purpose
-			if DIAreturn == 2 then
-				helpsearchterm = multiinput[1]
-				inhelpsearch(multiinput[1])
-			end
-			takinginput = true
+			assert(false)
 		elseif DIAquestionid == 26 then
 			-- Save copy of backup in levels folder
 			if DIAreturn == 2 then

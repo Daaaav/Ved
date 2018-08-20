@@ -49,9 +49,14 @@ function helpgotoline(linenum, colnum, correctcol)
 end
 
 function startinhelpsearch()
-	startmultiinput({helpsearchterm})
-	dialog.new(L.SEARCHFOR, "", 1, 4, 25)
-	currentmultiinput = 1
+	stopinput()
+	dialog.create(
+		L.SEARCHFOR,
+		DBS.OKCANCEL,
+		dialog.callback.helpsearch,
+		nil,
+		dialog.form.simplename_make(helpsearchterm)
+	)
 end
 
 function helplineonscreen(ln)

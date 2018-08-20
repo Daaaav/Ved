@@ -17,3 +17,4 @@ L.TRANSPARENTMAPBG = "Transparent background"
 L.MAPEXPORTERROR = "Error while creating map."
 L.VIEWIMAGE = "View" -- Verb, view image
 L.INVALIDLINENUMBER = "Please enter a valid line number."
+L.NOFLAGSLEFT_LOADSCRIPT = "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script. Consider removing all references to flags you no longer need and try again."
