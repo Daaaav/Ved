@@ -290,7 +290,7 @@ end
 
 function dialog.callback.mapexport_validate(button, fields, identifier)
 	if button == DB.SAVE then
-		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields, true)
 
 		-- Check if we're gonna exceed the max texture size... Unless you're on 0.9.0, update.
 		if love_version_meets(9,1) then
