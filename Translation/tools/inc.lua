@@ -9,11 +9,17 @@ languages = {
 langdir_path = "../../Source/lang" -- must not include a trailing /
 
 
-function assert_lang_arg(argnum)
-	-- Require that a valid language argument is given
+function assert_lang_arg(argnum, allownone)
+	-- If allownone is false/nil: Require that a valid language argument is given
+	-- If allownone is true: Return true if a valid lang argument is given,
+	--  require that it is valid if it is given, return false if nothing is given.
 	if arg[argnum] == nil then
-		print("Please give a language code as an argument")
-		os.exit(0)
+		if allownone then
+			return false
+		else
+			print("Please give a language code as an argument")
+			os.exit(0)
+		end
 	end
 	if languages[arg[argnum]] == nil then
 		print("\"" .. arg[argnum] .. "\" is not a valid language code. Choices are:")
@@ -22,6 +28,7 @@ function assert_lang_arg(argnum)
 		end
 		os.exit(0)
 	end
+	return true
 end
 
 function load_lua_lang(lang)
