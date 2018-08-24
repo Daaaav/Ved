@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-08-07 01:38:26 (CEST)
+--- Last converted: 2018-08-24 13:04:02 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -40,24 +40,22 @@ FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bi
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystem-Funktionen; Level werden hier gespeichert:\n\n$2",
 MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde erreicht in diesem Level.",
-MAXTRINKETS_BYPASS = "Die maximale Anzahl an Trinkets (20) wurde erreicht in diesem Level.\n\nNoch mehr Trinkets hinzuzufügen wird Glitches und/oder Inkonsistenzen verursachen wenn das Level in VVVVVV geladen wird, und es wird empfohlen dies nicht zu tun. Bist du dir sicher dass du das Limit umgehen willst?",
 MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde erreicht in diesem Level.",
-MAXCREWMATES_BYPASS = "Die maximale Anzahl an Crewmitgliedern (20) wurde erreicht in diesem Level.\n\nNoch mehr Crewmitglieder hinzuzufügen wird Glitches und/oder Inkonsistenzen verursachen wenn das Level in VVVVVV geladen wird, und es wird empfohlen dies nicht zu tun. Bist du dir sicher dass du das Limit umgehen willst?",
 EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
 STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
 UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
 SURENEWLEVEL = "Bist du sicher du willst ein neues Level machen? Du wirst jeden ungespeicherten Inhalt verlieren.",
 SURELOADLEVEL = "Bist du sicher du willst ein neues Level machen? Du wirst jeden ungespeicherten Inhalt verlieren.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
-MAPSAVEDAS = "Kartenbild gespeichert als $1 im Ordner $2!",
+MAPSAVEDAS = "Kartenbild gespeichert als $1!",
 RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
 UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
 METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flag-Namen und andere Dinge.",
 WARPTOKENENT404 = "Teleportationssymbol Objekt existiert nicht mehr!",
 SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Text-Befehl und einem speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Versuche alle referenzen zu Flags zu entfernen die du nicht mehr brauchst und versuche es erneut.\n\nWillst du den Editor verlassen?",
+NOFLAGSLEFT_LOADSCRIPT = "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
-SIZELIMITSURE = "Die maximale größe eines levels ist 20 bis 20.\n\nDas überschreiten des Limits wird Glitches und/oder Inkonsistenzen verursachen wenn das Level in VVVVVV geladen wird. Es wird strengstens empfohlen dies nicht zu tun, außer du testest nur. Bist du dir sicher dass du das Limit umgehen willst?",
 SIZELIMIT = "Die maximale größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
 SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
 FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
@@ -71,7 +69,8 @@ SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugest
 NAMEFORFLAG = "Name für Flag $1:",
 SCRIPT404 = "Skript \"$1\" existiert nicht!",
 ENTITY404 = "Objekt #$1 existiert nicht mehr!",
-GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte dieses Feature nicht unterstützt!",
+GRAPHICSCARDCANVAS = "Sorry, it seems like your graphics card or driver does not support this feature!",
+MAXTEXTURESIZE = "Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n\nThe size limit on this system is $3x$3.",
 SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
 SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
 THREADERROR = "Threadfehler!",
@@ -289,7 +288,6 @@ CUSTOMVVVVVVDIRECTORY = "VVVVVV Ordner",
 CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV Ordner ein, falls es nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
-ALLOWLIMITBYPASS = "Erlaube das umgehen von Limitierungen",
 FLIPSUBTOOLSCROLL = "Drehe Scroll-Richtung des Unterwerkzeugs",
 ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
 ASKBEFOREQUIT = "Frage vor dem beenden",
@@ -324,6 +322,9 @@ PLACINGMODEUSAGE = "Tileplatzierungsmoduse:",
 AMOUNTLEVELNOTES = "Level notizen:",
 AMOUNTFLAGNAMES = "Flagnamen:",
 TILESUSAGE = "Tiles Verwendung",
+AMOUNTTILES = "Tiles:",
+AMOUNTSOLIDTILES = "Solid tiles:",
+AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
@@ -421,6 +422,21 @@ MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing 
 REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
 SYNTAXCOLOR_COMMENT = "Kommentar",
 FPSLIMIT = "FPS-Limit",
+
+MAPRESOLUTION = "Resolution", -- Map export size
+MAPRES_ASSHOWN = "As shown (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 per room)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 per room)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Top left",
+WIDTHHEIGHT = "Width & height",
+BOTTOMRIGHT = "Bottom right",
+RENDERERINFO = "Renderer information:",
+MAPINCOMPLETE = "The map is not ready yet (at the time you pressed Save), please try again when it is ready.",
+KEEPDIALOGOPEN = "Keep dialog open",
+TRANSPARENTMAPBG = "Transparent background",
+MAPEXPORTERROR = "Error while creating map.",
+VIEWIMAGE = "View", -- Verb, view image
+INVALIDLINENUMBER = "Please enter a valid line number.",
 
 }
 

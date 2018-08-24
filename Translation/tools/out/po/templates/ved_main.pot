@@ -28,16 +28,8 @@ msgctxt "L.MAXTRINKETS"
 msgid "The maximum amount of trinkets (20) has been reached in this level."
 msgstr ""
 
-msgctxt "L.MAXTRINKETS_BYPASS"
-msgid "The maximum amount of trinkets (20) has been reached in this level.\n\nAdding any more will cause glitches and/or inconsistencies when loading the level in VVVVVV, and it is recommended not to do so. Are you sure you want to bypass the limit?"
-msgstr ""
-
 msgctxt "L.MAXCREWMATES"
 msgid "The maximum amount of crewmates (20) has been reached in this level."
-msgstr ""
-
-msgctxt "L.MAXCREWMATES_BYPASS"
-msgid "The maximum amount of crewmates (20) has been reached in this level.\n\nAdding any more will cause glitches and/or inconsistencies when loading the level in VVVVVV, and it is recommended not to do so. Are you sure you want to bypass the limit?"
 msgstr ""
 
 msgctxt "L.EDITINGROOMTEXTNIL"
@@ -65,7 +57,7 @@ msgid "Could not get contents of levels folder. Please check if $1 exists and tr
 msgstr ""
 
 msgctxt "L.MAPSAVEDAS"
-msgid "Map image saved as $1 in the folder $2!"
+msgid "Map image saved as $1!"
 msgstr ""
 
 msgctxt "L.RAWENTITYPROPERTIES"
@@ -93,12 +85,12 @@ msgctxt "L.NOFLAGSLEFT"
 msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again.\n\nLeave the editor?"
 msgstr ""
 
-msgctxt "L.LEVELOPENFAIL"
-msgid "Unable to open $1.vvvvvv."
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
 msgstr ""
 
-msgctxt "L.SIZELIMITSURE"
-msgid "The maximum size of a level is 20 by 20.\n\nExceeding this limit will cause glitches and inconsistencies when loading the level in VVVVVV. It is strongly recommended not to do this, unless you are only testing. Are you sure you want to bypass the limit?"
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
 msgstr ""
 
 msgctxt "L.SIZELIMIT"
@@ -154,7 +146,11 @@ msgid "Entity #$1 no longer exists!"
 msgstr ""
 
 msgctxt "L.GRAPHICSCARDCANVAS"
-msgid "Sorry, it seems like your graphics card does not support this feature!"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr ""
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid "Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n\nThe size limit on this system is $3x$3."
 msgstr ""
 
 msgctxt "L.SUREDELETESCRIPT"
@@ -901,10 +897,6 @@ msgctxt "L.DIALOGANIMATIONS"
 msgid "Dialog animations"
 msgstr ""
 
-msgctxt "L.ALLOWLIMITBYPASS"
-msgid "Allow bypassing of limits"
-msgstr ""
-
 msgctxt "L.FLIPSUBTOOLSCROLL"
 msgid "Flip subtool scrolling direction"
 msgstr ""
@@ -1040,6 +1032,21 @@ msgstr ""
 #. Stats screen
 msgctxt "L.TILESUSAGE"
 msgid "Tiles usage"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
 msgstr ""
 
 msgctxt "L.UNEXPECTEDSCRIPTLINE"
@@ -1405,6 +1412,67 @@ msgstr ""
 #. 1.3.4
 msgctxt "L.FPSLIMIT"
 msgid "FPS limit"
+msgstr ""
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr ""
+
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr ""
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr ""
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr ""
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr ""
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr ""
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr ""
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr ""
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr ""
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr ""
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr ""
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr ""
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr ""
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"

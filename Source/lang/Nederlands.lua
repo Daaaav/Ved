@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-08-07 01:38:21 (CEST)
+--- Last converted: 2018-08-24 13:01:08 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -40,24 +40,22 @@ FATALEND = "Sluit het spel en probeer het opnieuw. En als je Dav bent, los het a
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
 MAXTRINKETS = "Het maximum aantal trinkets (20) is bereikt in dit level.",
-MAXTRINKETS_BYPASS = "Het maximum aantal trinkets (20) is bereikt in dit level.\n\nHet toevoegen van meer zal problemen veroorzaken bĳ het laden van het level in VVVVVV, en het wordt niet aangeraden om dit te doen. Weet je zeker dat je het limiet wilt overschĳden?",
 MAXCREWMATES = "Het maximum aantal bemanningsleden (20) is bereikt in dit level.",
-MAXCREWMATES_BYPASS = "Het maximum aantal bemanningsleden (20) is bereikt in dit level.\n\nHet toevoegen van meer zal problemen veroorzaken bĳ het laden van het level in VVVVVV, en het wordt niet aangeraden om dit te doen. Weet je zeker dat je het limiet wilt overschĳden?",
 EDITINGROOMTEXTNIL = "Bestaande tekst die bewerkt werd is nil!",
 STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
 SURENEWLEVEL = "Weet je zeker dat je een nieuw level wilt maken? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 SURELOADLEVEL = "Weet je zeker dat je een level wilt laden? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Kon niet de inhoud van de levels-map verkrĳgen. Controleer of $1 bestaat en probeer het opnieuw.",
-MAPSAVEDAS = "Kaart opgeslagen als $1 in de map $2!",
+MAPSAVEDAS = "Kaart opgeslagen als $1!",
 RAWENTITYPROPERTIES = "Je kunt de eigenschappen van deze entiteit hier wĳzigen.",
 UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
 METADATAENTITYCREATENOW = "De metadata-entiteit bestaat nog niet. Nu aanmaken?\n\nDe metadata-entiteit is een verborgen entiteit die kan worden toegevoegd aan VVVVVV-levels om extra data op te slaan die door Ved gebruikt wordt, zoals het level-kladblok, namen van vlaggen, en andere dingen.",
 WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.\n\nDe editor verlaten?",
+NOFLAGSLEFT_LOADSCRIPT = "Er zĳn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden. In plaats daarvan is er een laadscript gemaakt dat het doelscript altĳd laadt met iftrinkets(0,$1). Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 LEVELOPENFAIL = "Kon $1.vvvvvv niet openen.",
-SIZELIMITSURE = "De maximale grootte van een level is 20 bĳ 20.\n\nDit limiet overschrĳden zal problemen veroorzaken bĳ het laden van het level in VVVVVV, en het wordt niet aangeraden om dit te doen. Weet je zeker dat je het limiet wilt overschĳden?",
 SIZELIMIT = "De maximale grootte van een level is 20 bĳ 20.\n\nDe levelgrootte zal worden aangepast naar $1 bĳ $2.",
 SCRIPTALREADYEXISTS = "Script \"$1\" bestaat al!",
 FLAGNAMENUMBERS = "Namen van vlaggen kunnen niet alleen uit nummers bestaan.",
@@ -71,7 +69,8 @@ SCALEREBOOT = "De nieuwe schaal-instellingen zullen van toepassing worden na het
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
 ENTITY404 = "Entiteit #$1 bestaat niet meer!",
-GRAPHICSCARDCANVAS = "Sorry, het lĳkt dat je grafische kaart deze functie niet ondersteunt!",
+GRAPHICSCARDCANVAS = "Sorry, het lĳkt dat je grafische kaart of het stuurprogramma deze functie niet ondersteunt!",
+MAXTEXTURESIZE = "Sorry, het maken van een afbeelding van $1x$2 lĳkt niet te worden ondersteund door je grafische kaart of het stuurprogramma.\n\nDe maximale grootte op dit systeem is $3x$3.",
 SUREDELETESCRIPT = "Weet je zeker dat je het script \"$1\" wilt verwĳderen?",
 SUREDELETENOTE = "Weet je zeker dat je deze notitie wilt verwĳderen?",
 THREADERROR = "Thread-fout!",
@@ -201,11 +200,11 @@ MOREB = "Meer >>",
 AUTOMODE = "Modus: auto",
 AUTO2MODE = "Modus: multi",
 MANUALMODE = "Modus: handm.",
-PLATFORMSPEED = "Platf-snhd.: $1",
-ENEMYTYPE = "Vĳand-type: $1",
-PLATFORMBOUNDS = "Platf-grenzen",
+PLATFORMSPEED = "Snelheid: $1",
+ENEMYTYPE = "Type: $1",
+PLATFORMBOUNDS = "Begrenzing",
 WARPDIR = "Warprichting:$1",
-ENEMYBOUNDS = "Vĳand-grenzen",
+ENEMYBOUNDS = "Begrenzing",
 ROOMNAME = "Kamernaam",
 ROOMOPTIONS = "Kamer-opties",
 ROTATE180 = "180grd draaien",
@@ -289,7 +288,6 @@ CUSTOMVVVVVVDIRECTORY = "VVVVVV-map",
 CUSTOMVVVVVVDIRECTORYEXPL = "Voer hier het volledige pad naar je VVVVVV-map in, als het niet \"$1\" is (laat het anders leeg). Neem niet de map \"levels\" hierin op, en ook niet een schuine streep.",
 LANGUAGE = "Taal",
 DIALOGANIMATIONS = "Dialoogvenster-animaties",
-ALLOWLIMITBYPASS = "Limietbreuk toestaan",
 FLIPSUBTOOLSCROLL = "Scrollrichting voor subtools omkeren",
 ADJACENTROOMLINES = "Indicaties van blokken in naastgelegen kamers",
 ASKBEFOREQUIT = "Vragen voor afsluiten",
@@ -324,6 +322,9 @@ PLACINGMODEUSAGE = "Plaatsingsmodi:",
 AMOUNTLEVELNOTES = "Levelnotities:",
 AMOUNTFLAGNAMES = "Vlagnamen:",
 TILESUSAGE = "Gebruik van blokken",
+AMOUNTTILES = "Blokken:",
+AMOUNTSOLIDTILES = "Vaste blokken:",
+AMOUNTSPIKES = "Spĳkers:",
 
 
 UNEXPECTEDSCRIPTLINE = "Onverwachte scriptregel zonder script: $1",
@@ -421,6 +422,21 @@ MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing 
 REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
 SYNTAXCOLOR_COMMENT = "Commentaar",
 FPSLIMIT = "FPS-limiet",
+
+MAPRESOLUTION = "Resolutie", -- Map export size
+MAPRES_ASSHOWN = "Zoals weergegeven (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 per kamer)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 per kamer)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Linksboven",
+WIDTHHEIGHT = "Breedte & hoogte",
+BOTTOMRIGHT = "Rechtsonder",
+RENDERERINFO = "Renderer-informatie:",
+MAPINCOMPLETE = "De kaart is nog niet klaar (op het moment dat je op Opslaan klikte), probeer het opnieuw wanneer hĳ klaar is.",
+KEEPDIALOGOPEN = "Houd dialoogvenster geopend",
+TRANSPARENTMAPBG = "Transparante achtergrond",
+MAPEXPORTERROR = "Fout bĳ het maken van de kaart.",
+VIEWIMAGE = "Bekĳken", -- Verb, view image
+INVALIDLINENUMBER = "Voer een geldig regelnummer in.",
 
 }
 

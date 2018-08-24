@@ -40,6 +40,7 @@ METADATAENTITYCREATENOW = "The metadata entity does not exist yet. Create it now
 WARPTOKENENT404 = "Warp token entity no longer exists!",
 SPLITFAILED = "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again.\n\nLeave the editor?",
+NOFLAGSLEFT_LOADSCRIPT = "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again.",
 LEVELOPENFAIL = "Unable to open $1.vvvvvv.",
 SIZELIMIT = "The maximum size of a level is 20 by 20.\n\nThe level size will be changed to $1 by $2 instead.",
 SCRIPTALREADYEXISTS = "Script \"$1\" already exists!",
@@ -55,6 +56,7 @@ NAMEFORFLAG = "Name for flag $1:",
 SCRIPT404 = "Script \"$1\" does not exist!",
 ENTITY404 = "Entity #$1 no longer exists!",
 GRAPHICSCARDCANVAS = "Sorry, it seems like your graphics card or driver does not support this feature!",
+MAXTEXTURESIZE = "Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n\nThe size limit on this system is $3x$3.",
 SUREDELETESCRIPT = "Are you sure you want to delete the script \"$1\"?",
 SUREDELETENOTE = "Are you sure you want to delete this note?",
 THREADERROR = "Thread error!",
@@ -306,6 +308,9 @@ PLACINGMODEUSAGE = "Tile placing modes:",
 AMOUNTLEVELNOTES = "Level notes:",
 AMOUNTFLAGNAMES = "Flag names:",
 TILESUSAGE = "Tiles usage",
+AMOUNTTILES = "Tiles:",
+AMOUNTSOLIDTILES = "Solid tiles:",
+AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unexpected script line without script: $1",
@@ -403,6 +408,21 @@ MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing 
 REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 SYNTAXCOLOR_COMMENT = "Comment",
 FPSLIMIT = "FPS limit",
+
+MAPRESOLUTION = "Resolution", -- Map export size
+MAPRES_ASSHOWN = "As shown (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 per room)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 per room)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Top left",
+WIDTHHEIGHT = "Width & height",
+BOTTOMRIGHT = "Bottom right",
+RENDERERINFO = "Renderer information:",
+MAPINCOMPLETE = "The map is not ready yet (at the time you pressed Save), please try again when it is ready.",
+KEEPDIALOGOPEN = "Keep dialog open",
+TRANSPARENTMAPBG = "Transparent background",
+MAPEXPORTERROR = "Error while creating map.",
+VIEWIMAGE = "View", -- Verb, view image
+INVALIDLINENUMBER = "Please enter a valid line number.",
 
 }
 

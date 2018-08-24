@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-08-07 01:38:24 (CEST)
+--- Last converted: 2018-08-24 13:01:10 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -52,24 +52,22 @@ FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu rip
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.",
-MAXTRINKETS_BYPASS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendate fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
 MAXCREWMATES = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.",
-MAXCREWMATES_BYPASS = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.\n\nAldoni pluajn kaŭzos erarojn kaj/aŭ nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV, kaj ne estas rekomendate fari do. Ĉu vi certas, ke vi volas preterpasi la limon?",
 EDITINGROOMTEXTNIL = "Ekzistinta ĉambroteksto, kiun ni estis redaktinta, estas nula!",
 STARTPOINTNOLONGERFOUND = "La malnova komenciĝejo ne plu troveblas!",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
 SURENEWLEVEL = "Ĉu vi certas, ke vi volas fari novan nivelon? Vi perdos ĉion nekonservitan.",
 SURELOADLEVEL = "Ĉu vi certas, ke vi volas ŝargi nivelon? Vi perdos ĉion nekonservitan.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Ne povis akiri la enhavon de la nivelodosierujo. Bonvolu kontroli ĉu $1 ekzistas, kaj reprovu.",
-MAPSAVEDAS = "Mapbildo konservita kiel $1 en la dosierujo $2!",
+MAPSAVEDAS = "Map-bildo konservita kiel $1!",
 RAWENTITYPROPERTIES = "Vi povas ŝanĝi la krudajn atributvalorojn de ĉi tiu ento ĉi tie.",
 UNKNOWNENTITYTYPE = "Nekonata entotipo $1",
 METADATAENTITYCREATENOW = "La metadatuma ento ne jam ekzistas. Ĉu krei ĝin nun?\n\nLa metadatuma ento estas kaŝita ento, kiu povas esti aldonita al VVVVVV-niveloj por teni ekstrajn datumojn, kiujn uzas Ved, ekzemple la nivelo-notblokon, flagnomojn, kaj aliajn aferojn.",
 WARPTOKENENT404 = "Teleportila ento ne plu ekzistas!",
 SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.\n\nĈu eliri la redaktilon?",
+NOFLAGSLEFT_LOADSCRIPT = "Ne plu restas flagoj, do ŝarg-skripto uzanta novan flagon ne povis kreiĝi. Anstataŭe, ŝarg-skripto estis kreita, kiu ĉiam ŝargas la celatan skripton per iftrinkets(0,$1). Konsideru forigi ĉiujn aludojn al flagoj ne plu bezonataj kaj reprovu.",
 LEVELOPENFAIL = "Ne povis malfermi $1.vvvvvv.",
-SIZELIMITSURE = "La maksimuma grando de nivelo estas 20 oble 20.\n\nPreterpasi tiun limon kaŭzos erarojn kaj nekonsekvencaĵojn dum ŝargado de la nivelo en VVVVVV. Estas forte rekomendate ne fari tion, krom se vi nur testas. Ĉu vi certas, ke vi volas preterpasi la limon?",
 SIZELIMIT = "La maksimuma grando de nivelo estas 20 oble 20.\n\nLa grando anstataŭe ŝanĝiĝos al $1 oble $2.",
 SCRIPTALREADYEXISTS = "Skripto \"$1\" jam ekzistas!",
 FLAGNAMENUMBERS = "Flagnomoj ne povas esti nur ciferoj.",
@@ -83,7 +81,8 @@ SCALEREBOOT = "La novaj skalagordoj efikos post relanĉi Ved-on.",
 NAMEFORFLAG = "Nomo de flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
 ENTITY404 = "Ento #$1 ne plu ekzistas!",
-GRAPHICSCARDCANVAS = "Pardonon, ŝajnas ke via grafikkarto ne subtenas tiun trajton!",
+GRAPHICSCARDCANVAS = "Pardonon, sed ŝajnas ke via grafikkarto ne subtenas tiun trajton!",
+MAXTEXTURESIZE = "Pardonon, krei bildon de $1x$2 ne ŝajnas esti subtenata de via grafikkarto aŭ pelilo.\n\nLa limo de grando ĉe tiu ĉi sistemo estas $3x$3.",
 SUREDELETESCRIPT = "Ĉu vi certas, ke vi volas forigi la skripton \"$1\"?",
 SUREDELETENOTE = "Ĉu vi certas, ke vi volas forigi ĉi tiun noton?",
 THREADERROR = "Fadena eraro!",
@@ -301,7 +300,6 @@ CUSTOMVVVVVVDIRECTORY = "VVVVVV -dosierujo",
 CUSTOMVVVVVVDIRECTORYEXPL = "Enmetu la plenan dosierindikon al via VVVVVV-dosierujo ĉi tie, se ĝi ne estas \"$1\" (se do, lasu ĝin blanka). Ne inkluzivu la dosierujon nomitan \"levels\" ĉi tie, nek vostan (mal)suprenstrekon.",
 LANGUAGE = "Lingvo",
 DIALOGANIMATIONS = "Dialoganimacioj",
-ALLOWLIMITBYPASS = "Permesi preterpasadon de limoj",
 FLIPSUBTOOLSCROLL = "Renversi ruluman direkton de ilido",
 ADJACENTROOMLINES = "Indikiloj de blokoj en najbaraj ĉambroj",
 ASKBEFOREQUIT = "Demandi antaŭ ol eliri",
@@ -336,6 +334,9 @@ PLACINGMODEUSAGE = "Blokmetadaj reĝimoj:",
 AMOUNTLEVELNOTES = "Nivelnotoj:",
 AMOUNTFLAGNAMES = "Flagnomoj:",
 TILESUSAGE = "Uzado de blokoj",
+AMOUNTTILES = "Kaheloj:",
+AMOUNTSOLIDTILES = "Solidaj kaheloj:",
+AMOUNTSPIKES = "Pintaĵoj:",
 
 
 UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
@@ -433,6 +434,21 @@ MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing 
 REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
 SYNTAXCOLOR_COMMENT = "Komento",
 FPSLIMIT = "KS-limo",
+
+MAPRESOLUTION = "Distingivo", -- Map export size
+MAPRES_ASSHOWN = "Kiel montrate (maks. 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% (po $2x$3 por ĉambro)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 (po $3x$4 por ĉambro)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Supra maldekstro",
+WIDTHHEIGHT = "Larĝo kaj alto",
+BOTTOMRIGHT = "Malsupra dekstro",
+RENDERERINFO = "Informoj de bildigilo:",
+MAPINCOMPLETE = "La mapo ne jam pretas (je la tempo, kiam vi premis Konservi), bonvole reprovu kiam ĝi ja pretas.",
+KEEPDIALOGOPEN = "Restigi dialogon malferma",
+TRANSPARENTMAPBG = "Travidebla fono",
+MAPEXPORTERROR = "Eraro dum kreado de mapo.",
+VIEWIMAGE = "Vidi", -- Verb, view image
+INVALIDLINENUMBER = "Bonvolu enigi validan linio-numeron.",
 
 }
 
