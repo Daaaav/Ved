@@ -339,7 +339,7 @@ function dialog.callback.mapexport(button, fields, _, notclosed)
 	end
 
 	if button == DB.SAVE then
-		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
+		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields, true)
 
 		map_export(x1, y1, w, h, tonumber(fields.resolution), fields.transparentbg)
 	end
