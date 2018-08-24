@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2018-08-24 13:01:10 (CEST)
+--- Last converted: 2018-08-25 00:24:51 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -440,7 +440,7 @@ MAPRES_ASSHOWN = "Kiel montrate (maks. 640x480)", -- $1x$2 is resolution, max 64
 MAPRES_PERCENT = "$1% (po $2x$3 por ĉambro)", -- Example: 50% (160x120 per room)
 MAPRES_RATIO = "$1:$2 (po $3x$4 por ĉambro)", -- Example: 1:8 (40x30 per room)
 TOPLEFT = "Supra maldekstro",
-WIDTHHEIGHT = "Larĝo kaj alto",
+WIDTHHEIGHT = "Larĝo k alto",
 BOTTOMRIGHT = "Malsupra dekstro",
 RENDERERINFO = "Informoj de bildigilo:",
 MAPINCOMPLETE = "La mapo ne jam pretas (je la tempo, kiam vi premis Konservi), bonvole reprovu kiam ĝi ja pretas.",

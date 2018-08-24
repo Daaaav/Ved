@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-08-24 13:04:02 (CEST)
+--- Last converted: 2018-08-25 00:24:51 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -31,7 +31,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Übersetzt von r00ster91", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Deine LÖVE Version ist veraltet. Bitte benutze Version 0.9.0 oder höher. Du kannst die neuste LÖVE Version von https://love2d.org downloaden.",
 UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
@@ -53,8 +53,8 @@ UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
 METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flag-Namen und andere Dinge.",
 WARPTOKENENT404 = "Teleportationssymbol Objekt existiert nicht mehr!",
 SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Text-Befehl und einem speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Versuche alle referenzen zu Flags zu entfernen die du nicht mehr brauchst und versuche es erneut.\n\nWillst du den Editor verlassen?",
-NOFLAGSLEFT_LOADSCRIPT = "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again.",
+NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
+NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
 SIZELIMIT = "Die maximale größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
 SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
@@ -69,8 +69,8 @@ SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugest
 NAMEFORFLAG = "Name für Flag $1:",
 SCRIPT404 = "Skript \"$1\" existiert nicht!",
 ENTITY404 = "Objekt #$1 existiert nicht mehr!",
-GRAPHICSCARDCANVAS = "Sorry, it seems like your graphics card or driver does not support this feature!",
-MAXTEXTURESIZE = "Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n\nThe size limit on this system is $3x$3.",
+GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber dieses Feature nicht unterstützt!",
+MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
 SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
 SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
 THREADERROR = "Threadfehler!",
@@ -105,8 +105,8 @@ ROOMCUT = "Raum augeschnitten und zur Zwischenablage kopiert",
 ROOMCOPIED = "Raum wurde zur Zwischenablage kopiert",
 ROOMPASTED = "Raum eingefügt",
 
-METADATAUNDONE = "Level optionen wurden rückgängig gemacht",
-METADATAREDONE = "Level optionen wiederholt",
+METADATAUNDONE = "Leveloptionen wurden rückgängig gemacht",
+METADATAREDONE = "Leveloptionen wiederholt",
 
 BOUNDSTOPLEFT = "Klicke auf die obere linke Ecke der Begrenzung",
 BOUNDSBOTTOMRIGHT = "Klicke auf die untere rechte Ecke",
@@ -319,11 +319,11 @@ TILESETUSSAGE = "Tileset Benutzung",
 TILESETSONLYUSED = "(nur Räume die Tiles haben werden gezählt)",
 AMOUNTROOMSWITHNAMES = "Räume die einen Namen haben:",
 PLACINGMODEUSAGE = "Tileplatzierungsmoduse:",
-AMOUNTLEVELNOTES = "Level notizen:",
+AMOUNTLEVELNOTES = "Level-Notizen:",
 AMOUNTFLAGNAMES = "Flagnamen:",
 TILESUSAGE = "Tiles Verwendung",
 AMOUNTTILES = "Tiles:",
-AMOUNTSOLIDTILES = "Solid tiles:",
+AMOUNTSOLIDTILES = "Solide Tiles:",
 AMOUNTSPIKES = "Spikes:",
 
 
@@ -423,20 +423,20 @@ REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
 SYNTAXCOLOR_COMMENT = "Kommentar",
 FPSLIMIT = "FPS-Limit",
 
-MAPRESOLUTION = "Resolution", -- Map export size
-MAPRES_ASSHOWN = "As shown (max 640x480)", -- $1x$2 is resolution, max 640x480
-MAPRES_PERCENT = "$1% ($2x$3 per room)", -- Example: 50% (160x120 per room)
-MAPRES_RATIO = "$1:$2 ($3x$4 per room)", -- Example: 1:8 (40x30 per room)
-TOPLEFT = "Top left",
-WIDTHHEIGHT = "Width & height",
-BOTTOMRIGHT = "Bottom right",
-RENDERERINFO = "Renderer information:",
-MAPINCOMPLETE = "The map is not ready yet (at the time you pressed Save), please try again when it is ready.",
-KEEPDIALOGOPEN = "Keep dialog open",
-TRANSPARENTMAPBG = "Transparent background",
-MAPEXPORTERROR = "Error while creating map.",
-VIEWIMAGE = "View", -- Verb, view image
-INVALIDLINENUMBER = "Please enter a valid line number.",
+MAPRESOLUTION = "Auflösung", -- Map export size
+MAPRES_ASSHOWN = "Wie gezeigt (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 pro Raum)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 pro Raum)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Oben links",
+WIDTHHEIGHT = "Breite & Höhe",
+BOTTOMRIGHT = "Unten rechts",
+RENDERERINFO = "Renderer Information:",
+MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn es fertig ist.",
+KEEPDIALOGOPEN = "Halte Dialog offen",
+TRANSPARENTMAPBG = "Transparenter Hintergrund",
+MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
+VIEWIMAGE = "Ansehen", -- Verb, view image
+INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
 
 }
 
@@ -480,7 +480,7 @@ toolnames = {
 
 "Mauer",
 "Hintergrund",
-"Spitze",
+"Spike",
 "Trinket",
 "Checkpoint",
 "Verschwindende Plattform",

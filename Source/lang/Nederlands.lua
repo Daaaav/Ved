@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-08-24 13:01:08 (CEST)
+--- Last converted: 2018-08-25 00:24:51 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -424,7 +424,7 @@ SYNTAXCOLOR_COMMENT = "Commentaar",
 FPSLIMIT = "FPS-limiet",
 
 MAPRESOLUTION = "Resolutie", -- Map export size
-MAPRES_ASSHOWN = "Zoals weergegeven (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_ASSHOWN = "Als weergegeven (max 640x480)", -- $1x$2 is resolution, max 640x480
 MAPRES_PERCENT = "$1% ($2x$3 per kamer)", -- Example: 50% (160x120 per room)
 MAPRES_RATIO = "$1:$2 ($3x$4 per kamer)", -- Example: 1:8 (40x30 per room)
 TOPLEFT = "Linksboven",
