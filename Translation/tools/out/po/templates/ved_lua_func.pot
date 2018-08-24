@@ -1,5 +1,0 @@
-
-#. function fontpng_ascii(c) - see the special page for info
-msgctxt "fontpng_ascii"
-msgid "<empty>"
-msgstr ""

@@ -375,8 +375,9 @@ else
 end
 
 -- The same goes for the pot
-os.execute("mkdir out/po/templates/ -p")
-fh, everr = io.open("out/po/templates/ved_main.pot", "w")
+os.execute("mkdir out/po/ved/templates/ -p")
+os.execute("mkdir out/po/ved_help/templates/ -p")
+fh, everr = io.open("out/po/ved/templates/ved_main.pot", "w")
 if fh == nil then
 	print("ERROR: Cannot open new main pot file for writing")
 	print(everr)
@@ -385,7 +386,7 @@ else
 	fh:close()
 end
 
-fh, everr = io.open("out/po/templates/ved_help.pot", "w")
+fh, everr = io.open("out/po/ved_help/templates/ved_help.pot", "w")
 if fh == nil then
 	print("ERROR: Cannot open new help pot file for writing")
 	print(everr)
@@ -395,7 +396,7 @@ else
 end
 
 -- Also make a pot for fontpng, which shall not be defined in English
-fh, everr = io.open("out/po/templates/ved_lua_func.pot", "w")
+fh, everr = io.open("out/po/ved/templates/ved_lua_func.pot", "w")
 if fh == nil then
 	print("ERROR: Cannot open new help pot file for writing")
 	print(everr)

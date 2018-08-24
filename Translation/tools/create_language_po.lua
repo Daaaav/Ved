@@ -25,7 +25,8 @@ if arg[1] == "templates" then
 	os.exit(0)
 end
 
-os.execute("mkdir out/po/" .. arg[1] .. "/ -p") -- it must be a language code
+os.execute("mkdir out/po/ved/" .. arg[1] .. "/ -p") -- it must be a language code
+os.execute("mkdir out/po/ved_help/" .. arg[1] .. "/ -p")
 
 -- Load the language
 load_lua_lang(arg[1])
@@ -39,7 +40,12 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 	local current_value = nil
 	local current_english = nil
 
-	for line in io.lines("out/po/templates/" .. pofile .. ".pot") do
+	local project = "ved"
+	if pofile == "ved_help" then
+		project = "ved_help"
+	end
+
+	for line in io.lines("out/po/" .. project .. "/templates/" .. pofile .. ".pot") do
 		local export_line = line
 		local handled = false
 
@@ -110,7 +116,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		table.insert(po_list, export_line)
 	end
 
-	fh, everr = io.open("out/po/" .. arg[1] .. "/" .. pofile .. ".po", "w")
+	fh, everr = io.open("out/po/" .. project .. "/" .. arg[1] .. "/" .. pofile .. ".po", "w")
 	if fh == nil then
 		print("ERROR: Cannot open " .. pofile .. ".po for writing")
 		print(everr)
@@ -118,7 +124,7 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		fh:write([[
 msgid ""
 msgstr ""
-"X-Pootle-Path: /]] .. arg[1] .. [[/ved/]] .. pofile .. [[.po\n"
+"X-Pootle-Path: /]] .. arg[1] .. [[/]] .. project .. [[/]] .. pofile .. [[.po\n"
 "X-Pootle-Revision: x\n"
 ]] .. table.concat(po_list, "\n") .. "\n")
 		fh:close()

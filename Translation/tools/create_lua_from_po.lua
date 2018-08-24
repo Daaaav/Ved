@@ -3,7 +3,7 @@
 --[[
 	This fills in the template (out/Template.lua) to create a traditional
 	Ved language file.
-	Requires the files for the language to exist at in/po/(code)/, and also
+	Requires the files for the language to exist at in/po/ved/(code)/, and also
 	out/Template.lua is required to exist.
 	Outputs the language lua file as out/(Langname).lua, so that changes
 	aren't as likely to be overwritten, and so you can manually run a diff
@@ -183,8 +183,13 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		count_total = count_total + 1
 	end
 
+	local project = "ved"
+	if pofile == "ved_help" then
+		project = "ved_help"
+	end
+
 	local line_number = 0
-	for line in io.lines("in/po/" .. arg[1] .. "/" .. pofile .. ".po") do
+	for line in io.lines("in/po/" .. project .. "/" .. arg[1] .. "/" .. pofile .. ".po") do
 		line_number = line_number + 1
 		local handled = false
 

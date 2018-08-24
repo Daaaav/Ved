@@ -1,4 +1,5 @@
 po/*
-!po/templates/
+!po/ved/templates/
+!po/ved_help/templates/
 *.lua
 !Template.lua
