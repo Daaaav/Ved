@@ -2823,6 +2823,7 @@ function love.focus(f)
 	else
 		hook("love_focus_lost")
 	end
+	hook("love_focus", {f})
 end
 
 function love.quit()
