@@ -2807,6 +2807,16 @@ function love.mousereleased(x, y, button)
 	boxmouserelease()
 end
 
+function love.directorydropped(path)
+	-- LÖVE 0.10+
+	hook("love_directorydropped", {path})
+end
+
+function love.filedropped(path)
+	-- LÖVE 0.10+
+	hook("love_filedropped", {path})
+end
+
 function love.focus(f)
 	if f then
 		hook("love_focus_gained")
