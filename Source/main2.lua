@@ -2444,6 +2444,8 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
+		explore_lvl_dir()
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
 		table.insert(files[""], {name="--[debug]--", isdir=false, lastmodified=0, overwritten=0})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
@@ -2795,7 +2797,22 @@ function love.mousereleased(x, y, button)
 		middlescroll_x, middlescroll_y = -1, -1
 	end
 
+	if state == 6 and not secondlevel and nodialog and not backupscreen and button == "l" and onrbutton(1, nil, true) then
+		-- This has to be in mousereleased, since opening a window with a mouse press prevents a mouse
+		-- release event to occur, which either causes the next click to be missed, or causes a new
+		-- window to be opened on focus when you try to fix that!
+		explore_lvl_dir()
+	end
+
 	boxmouserelease()
+end
+
+function love.focus(f)
+	if f then
+		hook("love_focus_gained")
+	else
+		hook("love_focus_lost")
+	end
 end
 
 function love.quit()

@@ -328,6 +328,7 @@ function drawlevelslist()
 			rbutton(L.RETURN, 0, nil, true)
 		else
 			rbutton(L.BACKUPS, 0, nil, true)
+			rbutton({L.OPENLEVELSFOLDER, "cD"}, 1, nil, true)
 		end
 
 		if s.pcheckforupdates and not opt_disableversioncheck then
@@ -431,6 +432,10 @@ function drawlevelslist()
 					end
 				end
 				mousepressed = true
+			-- See love.mousereleased for this
+			--elseif not mousepressed and onrbutton(1, nil, true) and not backupscreen then
+				--explore_lvl_dir()
+				--mousepressed = true
 			end
 		elseif oldstate == 13 and mousepressed and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), 40+120, 128-16, 16) then
 			-- Not a bug, it's a feature

@@ -2726,4 +2726,8 @@ function renderer_info_string()
 		.. rend_vendor
 end
 
+function explore_lvl_dir()
+	love.system.openURL("file://" .. levelsfolder)
+end
+
 hook("func")
