@@ -399,7 +399,7 @@ function processflaglabelsreverse()
 			textlinestogo = textlinestogo - 1
 		end
 
-		if partss[1] == "text" and partss[5] ~= nil then
+		if partss[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
 			textlinestogo = anythingbutnil0(tonumber(partss[5]))
 		end
 
