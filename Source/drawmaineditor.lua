@@ -10,6 +10,8 @@ function drawmaineditor()
 				-- Exceptions related to whatever entity we're clicking on!
 				if selectedtool == 13 and selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 					-- We're trying to place a script box bottom right corner?
+				elseif selectedtool == 13 and selectedsubtool[13] == 3 and k == editingsboxid then
+					-- This is actually the script box we're editing at the moment, we might want to keep the top left...
 				elseif v.x == 40*roomx + atx and v.y == 30*roomy + aty and v.t == entitytooltoid[selectedtool] then
 					-- Yep, "You are already checked in"
 					mousepressed = true
