@@ -121,6 +121,11 @@ function love.load()
 	dialog.init()
 	nodialog = true
 
+	arrow_up = "↑"
+	arrow_down = "↓"
+	arrow_left = "←"
+	arrow_right = "→"
+
 	vvvvvv_textboxes = {}
 
 	tilesets = {}
@@ -370,10 +375,21 @@ function love.load()
 				cons("Replacements: " .. replacements)
 
 				assert(loadstring(newlua))()
+
+				-- But also load devstrings again, otherwise we might crash during development!
+				-- Don't care as much about the fontpng replacements here...
+				-- Override `require` not wanting to load this file another time >:o
+				package.loaded.devstrings = false
+				ved_require("devstrings")
 			end
 
 			hijack_print = true
 			fontpng_works = true
+
+			arrow_up = "^"
+			arrow_down = "V"
+			arrow_left = "<"
+			arrow_right = ">"
 		end
 	end
 

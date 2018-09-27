@@ -265,15 +265,40 @@ function drawhelp()
 			-- It is!
 			if helpeditingline == 0 then
 				-- We're not currently editing it.
-				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4-(128-12)-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16)
-				love.graphics.printf(L.RENAME, love.graphics.getWidth()-(128-8)-16-4-(128-12)-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
-				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16)
-				love.graphics.printf(L.EDIT, love.graphics.getWidth()-(128-8)-16-4-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
-				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16)
-				love.graphics.printf(L.DELETE, love.graphics.getWidth()-(128-8)-16-4, (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
+				love.graphics.setColor(0,0,0,192)
+				love.graphics.rectangle("fill", love.graphics.getWidth()-140-116-116-20-20-4, love.graphics.getHeight()-28, 116+116+116+20+24, 24)
+
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116-20-20, love.graphics.getHeight()-24, 16, 16)
+				love.graphics.printf(arrow_up, love.graphics.getWidth()-140-116-116-20-20, (love.graphics.getHeight()-24)+4+2, 16, "center")
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116-20, love.graphics.getHeight()-24, 16, 16)
+				love.graphics.printf(arrow_down, love.graphics.getWidth()-140-116-116-20, (love.graphics.getHeight()-24)+4+2, 16, "center")
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116, love.graphics.getHeight()-24, 128-16, 16)
+				love.graphics.printf(L.RENAME, love.graphics.getWidth()-140-116-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16)
+				love.graphics.printf(L.EDIT, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16)
+				love.graphics.printf(L.DELETE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
 
 				if nodialog and love.mouse.isDown("l") then
-					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12)-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
+					if not mousepressed and mouseon(love.graphics.getWidth()-140-116-116-20-20, love.graphics.getHeight()-24, 16, 16) then
+						-- Move up
+						if helparticle > 2 then
+							local this_art = table.copy(helppages[helparticle])
+							helppages[helparticle] = table.copy(helppages[helparticle-1])
+							helppages[helparticle-1] = table.copy(this_art)
+							helparticle = helparticle - 1
+						end
+						nodialog = false
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-140-116-116-20, love.graphics.getHeight()-24, 16, 16) then
+						-- Move down
+						if helparticle < #helppages then
+							local this_art = table.copy(helppages[helparticle])
+							helppages[helparticle] = table.copy(helppages[helparticle+1])
+							helppages[helparticle+1] = table.copy(this_art)
+							helparticle = helparticle + 1
+						end
+						nodialog = false
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-140-116-116, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Rename
 						dialog.create(
 							L.NEWNAME,
@@ -282,13 +307,13 @@ function drawhelp()
 							L.RENAMENOTE,
 							dialog.form.simplename_make(helppages[helparticle].subj)
 						)
-					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Edit
 						helpeditingline = 1
 						input = anythingbutnil(helparticlecontent[helpeditingline])
 						takinginput = true
 						nodialog = false
-					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16) then
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Delete
 						dialog.create(
 							L.SUREDELETENOTE,
@@ -299,21 +324,24 @@ function drawhelp()
 				end
 			else
 				-- We are currently editing it.
+				love.graphics.setColor(0,0,0,192)
+				love.graphics.rectangle("fill", love.graphics.getWidth()-140-116-4, love.graphics.getHeight()-28, 116+116+4, 24)
+
 				local yellow = false
 				if generictimer_mode == 1 and generictimer > 0 then
 					yellow = true
 				end
-				hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16)
-				love.graphics.printf(L.COPY, love.graphics.getWidth()-(128-8)-16-4-(128-12), (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
-				hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16)
-				love.graphics.printf(L.SAVE, love.graphics.getWidth()-(128-8)-16-4, (love.graphics.getHeight()-(24*1))+4+2, 128-16, "center")
+				hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16)
+				love.graphics.printf(L.COPY, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16)
+				love.graphics.printf(L.SAVE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
 
 				if nodialog and love.mouse.isDown("l") then
-					if not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4-(128-12), love.graphics.getHeight()-(24*1), 128-16, 16) then
+					if not mousepressed and mouseon(love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Copy
 						love.system.setClipboardText(table.concat(helparticlecontent, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 						setgenerictimer(1, .25)
-					elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8)-16-4, love.graphics.getHeight()-(24*1), 128-16, 16) then
+					elseif not mousepressed and mouseon(love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Save
 						helparticlecontent[helpeditingline] = input .. input_r
 						helpeditingline = 0
