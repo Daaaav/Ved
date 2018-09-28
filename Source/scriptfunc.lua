@@ -408,6 +408,11 @@ function processflaglabelsreverse()
 			scriptlines[k] = v .. " "
 		end
 
+		-- Same for "#" in internal scripts, people might want to put it in a text box... Issue #18
+		if internalscript and v == "#" then
+			scriptlines[k] = "# "
+		end
+
 		if partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag" then
 			cons("" .. partss[1] .. " found at line " .. k)
 
