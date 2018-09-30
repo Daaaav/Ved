@@ -1,20 +1,28 @@
 function drawmaineditor()
 	-- Are we clicking?
-	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480) then
+	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
+	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
 		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		local aty = math.floor(getlockablemouseY() / 16)
 
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
-		if love.mouse.isDown("l") and not mousepressed and selectedtool >= 4 and editingbounds == 0 then
+		if love.mouse.isDown("l") and not mousepressed and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
 			for k,v in pairs(entitydata) do
 				-- Exceptions related to whatever entity we're clicking on!
 				if selectedtool == 13 and selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 					-- We're trying to place a script box bottom right corner?
 				elseif selectedtool == 13 and selectedsubtool[13] == 3 and k == editingsboxid then
 					-- This is actually the script box we're editing at the moment, we might want to keep the top left...
-				elseif v.x == 40*roomx + atx and v.y == 30*roomy + aty and v.t == entitytooltoid[selectedtool] then
-					-- Yep, "You are already checked in"
-					mousepressed = true
+				elseif v.x == 40*roomx + atx and v.y == 30*roomy + aty then
+					if movingentity == k then
+						-- Okay, we're moving an entity where it already is
+					elseif movingentity > 0 and entitydata[movingentity] ~= nil and v.t == entitydata[movingentity].t then
+						-- Moving an entity on top of another one, eh?
+						mousepressed = true
+					elseif selectedtool >= 4 and v.t == entitytooltoid[selectedtool] then
+						-- Yep, "You are already checked in"
+						mousepressed = true
+					end
 				end
 			end
 		end
@@ -162,6 +170,34 @@ function drawmaineditor()
 					cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 					selectedtile = (aty*40)+(atx+1)-1
 				end
+			end
+		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
+			if love.mouse.isDown("l") and not mousepressed then
+				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
+				table.insert(
+					undobuffer,
+					{
+						undotype = "changeentity",
+						rx = roomx, ry = roomy, entid = movingentity,
+						changedentitydata = {
+							{
+								key = "x",
+								oldvalue = entitydata[movingentity].x,
+								newvalue = new_x
+							},
+							{
+								key = "y",
+								oldvalue = entitydata[movingentity].y,
+								newvalue = new_y
+							}
+						}
+					}
+				)
+				finish_undo("CHANGED ENTITY (X AND Y)")
+				entitydata[movingentity].x = new_x
+				entitydata[movingentity].y = new_y
+				movingentity = 0
+				nodialog = false
 			end
 		elseif selectedtool <= 3 then
 			if not (eraserlocked and love.mouse.isDown("r")) then
@@ -828,6 +864,9 @@ function drawmaineditor()
 					-- We're not adding a new entity if we're moving it!
 					if selectedsubtool[14] == 2 then
 						entityplaced(warpid)
+					else
+						-- Don't ask, it's to make alt+clicking work well for warp tokens
+						nodialog = false
 					end
 				else
 					dialog.create(L.WARPTOKENENT404)
@@ -858,6 +897,8 @@ function drawmaineditor()
 
 					entitydata[warpid].x = new_x
 					entitydata[warpid].y = new_y
+
+					nodialog = false
 				else
 					dialog.create(L.WARPTOKENENT404)
 				end
@@ -1368,6 +1409,12 @@ function drawmaineditor()
 				-- Just one tile, but only in manual/direct mode.
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 			end
+		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
+			displayentity(
+				screenoffset, 0, roomx, roomy, movingentity, entitydata[movingentity],
+				cursorx, cursory,
+				false, false, {}, false, false
+			)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
 			if selectedsubtool[selectedtool] == 1 then

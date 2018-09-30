@@ -276,6 +276,11 @@ function tostate(new, dontinitialize, extradata)
 		love.mouse.setCursor()
 		special_cursor = false
 	end
+
+	if oldstate == 1 then
+		editingroomname = false
+	end
+
 end
 
 function loadstate(new, extradata)
@@ -310,6 +315,7 @@ function loadstate(new, extradata)
 		editingroomtext = 0
 		newroomtext = false
 		editingroomname = false
+		movingentity = 0
 		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil

@@ -1425,6 +1425,8 @@ function love.update(dt)
 			if entitydata[tonumber(entdetails[3])] ~= nil then
 				if RCMreturn == L.DELETE then
 					removeentity(tonumber(entdetails[3]), tonumber(entdetails[2]))
+				elseif RCMreturn == L.MOVEENTITY then
+					movingentity = tonumber(entdetails[3])
 				elseif RCMreturn == L.PROPERTIES then
 					-- Edit properties of this entity, whatever it is. But if we were editing room text or a name of something, stop that first.
 					if editingroomtext > 0 then
@@ -2122,6 +2124,8 @@ function love.keypressed(key)
 		end
 
 		editingbounds = 0
+	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
+		movingentity = 0
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") then
 		-->
 		if editingbounds == 0 then
