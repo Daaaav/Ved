@@ -3,3 +3,7 @@
 
 --L. = ""
 L.OPENLEVELSFOLDER = "Open lvl dir"
+L_PLU.NOTALLTILESVALID = {
+	[-1] = "$1 tile is not a valid whole number in the range 0-1199",
+	[-2] = "$1 tiles are not a valid whole number in the range 0-1199"
+}

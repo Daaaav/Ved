@@ -82,8 +82,7 @@ function loadlevel(path)
 	if m == nil then
 		return false, L.MAL .. L.TILESCORRUPT
 	end
-	for num in m:gmatch("(%d+),") do
-		--print(num)
+	for num in m:gmatch("([^,]*),") do
 		table.insert(x.alltiles, num)
 	end
 
@@ -91,6 +90,8 @@ function loadlevel(path)
 
 	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
 	local theserooms = {}
+	local failedtiles = 0
+	local t
 	for yk = 0, thismetadata.mapheight-1 do
 		--print("Y: " .. yk)
 		theserooms[yk] = {}
@@ -98,11 +99,24 @@ function loadlevel(path)
 			theserooms[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
-					theserooms[yk][xk][(40*yt) + xt + 1] = tonumber(anythingbutnil0(x.alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1]))
-					--cons("Tile loaded: " .. (yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1 .. " (" .. xk .. " " .. yk .. " " .. xt .. " " .. yt .. "), " .. yk .. "*1200*" .. thismetadata.mapwidth .. " + " .. xk .. "*40 + " .. yt .. "*" .. thismetadata.mapwidth .. "*40 + " .. xt .. " + 1")
+					t = tonumber(x.alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
+					if t == nil or t < 0 or t >= 1200 then
+						t = 0
+						failedtiles = failedtiles + 1
+					elseif math.floor(t) ~= t then
+						t = math.floor(t)
+						failedtiles = failedtiles + 1
+					end
+
+					theserooms[yk][xk][(40*yt) + xt + 1] = t
 				end
 			end
 		end
+	end
+
+	if failedtiles > 0 then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 	end
 
 	-- Entities.
