@@ -9,7 +9,9 @@ function coordsdialog.draw()
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setFont(font16)
 	love.graphics.print(" " .. coordsdialog.print(), (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2+16+3)
+	love.graphics.printf(L.GOTOROOM, 0, (love.graphics.getHeight()-3*16)/2-32, love.graphics.getWidth(), "center")
 	love.graphics.setFont(font8)
+	love.graphics.printf(L.ESCTOCANCEL, 0, (love.graphics.getHeight()+3*16)/2+48, love.graphics.getWidth(), "center")
 end
 
 function coordsdialog.activate()
