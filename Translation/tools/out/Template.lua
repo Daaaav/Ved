@@ -423,6 +423,10 @@ TRANSPARENTMAPBG = "<L.TRANSPARENTMAPBG>",
 MAPEXPORTERROR = "<L.MAPEXPORTERROR>",
 VIEWIMAGE = "<L.VIEWIMAGE>", -- Verb, view image
 INVALIDLINENUMBER = "<L.INVALIDLINENUMBER>",
+OPENLEVELSFOLDER = "<L.OPENLEVELSFOLDER>", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "<L.MOVEENTITY>",
+GOTOROOM = "<L.GOTOROOM>",
+ESCTOCANCEL = "<L.ESCTOCANCEL>",
 
 }
 
@@ -451,6 +455,9 @@ L_PLU = {
 	},
 	FLAGUSAGES = {
 		[0] = "<L_PLU.FLAGUSAGES>",
+	},
+	NOTALLTILESVALID = {
+		[0] = "<L_PLU.NOTALLTILESVALID>",
 	},
 }
 

@@ -423,6 +423,10 @@ TRANSPARENTMAPBG = "Transparent background",
 MAPEXPORTERROR = "Error while creating map.",
 VIEWIMAGE = "View", -- Verb, view image
 INVALIDLINENUMBER = "Please enter a valid line number.",
+OPENLEVELSFOLDER = "Open lvl dir", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Move",
+GOTOROOM = "Go to room",
+ESCTOCANCEL = "[Press ESC to cancel]",
 
 }
 
@@ -459,6 +463,10 @@ L_PLU = {
 	FLAGUSAGES = {
 		[0] = "Used $1 time in scripts: $2",
 		[1] = "Used $1 times in scripts: $2",
+	},
+	NOTALLTILESVALID = {
+		[0] = "$1 tile is not a valid whole number in the range 0-1199",
+		[1] = "$1 tiles are not a valid whole number in the range 0-1199"
 	},
 }
 
