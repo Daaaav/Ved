@@ -1848,6 +1848,16 @@ function love.keypressed(key)
 			elseif state == 6 then
 				tabselected = 0
 			end
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
+			-- If you use Linux you may like this shortcut!
+			input = ""
+
+			if state == 3 then
+				scriptlines[editingline] = input
+				dirty()
+			elseif state == 15 then
+				helparticlecontent[helpeditingline] = input
+			end
 		elseif key == "left" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = leftspace(input, input_r)
 
@@ -1900,6 +1910,8 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
+			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
+				dialogs[#dialogs].fields[cf][5] = ""
 			end
 		end
 		if key == "tab" then
@@ -1939,6 +1951,8 @@ function love.keypressed(key)
 				multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
 			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 				multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText():gsub("[\r\n]", "")
+			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
+				multiinput[currentmultiinput] = ""
 			end
 		end
 		if love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
