@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2018-08-26 17:38:30 (CEST)
+--- Last converted: 2018-10-04 03:06:30 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -437,6 +437,10 @@ TRANSPARENTMAPBG = "Transparante achtergrond",
 MAPEXPORTERROR = "Fout bĳ het maken van de kaart.",
 VIEWIMAGE = "Bekĳken", -- Verb, view image
 INVALIDLINENUMBER = "Voer een geldig regelnummer in.",
+OPENLEVELSFOLDER = "Levelsmap openen", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Verplaatsen",
+GOTOROOM = "Ga naar kamer",
+ESCTOCANCEL = "[Druk op ESC om te annuleren]",
 
 }
 
@@ -473,6 +477,10 @@ L_PLU = {
 	FLAGUSAGES = {
 		[0] = "$1 keer gebruikt in scripts: $2",
 		[1] = "$1 keer gebruikt in scripts: $2",
+	},
+	NOTALLTILESVALID = {
+		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
+		[1] = "$1 blokken zijn geen geldig geheel getal in het bereik 0-1199",
 	},
 }
 

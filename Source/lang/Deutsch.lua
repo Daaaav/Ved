@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-08-26 17:38:30 (CEST)
+--- Last converted: 2018-10-04 03:06:29 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -437,6 +437,10 @@ TRANSPARENTMAPBG = "Transparenter Hintergrund",
 MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
 VIEWIMAGE = "Ansehen", -- Verb, view image
 INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
+OPENLEVELSFOLDER = "Open lvl dir", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Move",
+GOTOROOM = "Go to room",
+ESCTOCANCEL = "[Press ESC to cancel]",
 
 }
 
@@ -473,6 +477,10 @@ L_PLU = {
 	FLAGUSAGES = {
 		[0] = "Wurde $1 mal in diesen Skripts benutzt: $2",
 		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
+	},
+	NOTALLTILESVALID = {
+		[-1] = "$1 tile is not a valid whole number in the range 0-1199",
+		[-2] = "$1 tiles are not a valid whole number in the range 0-1199",
 	},
 }
 

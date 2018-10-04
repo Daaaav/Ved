@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-08-26 17:38:30 (CEST)
+--- Last converted: 2018-10-04 03:06:29 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -425,6 +425,10 @@ TRANSPARENTMAPBG = "Прозрачный фон",
 MAPEXPORTERROR = "Ошибка в создании карты.",
 VIEWIMAGE = "Просмотр", -- Verb, view image
 INVALIDLINENUMBER = "Пожалуйста, введите верное значение строки.",
+OPENLEVELSFOLDER = "Открыть в\nпроводнике", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Переместить",
+GOTOROOM = "Перейти к комнате",
+ESCTOCANCEL = "[ESC для отмены]",
 
 }
 
@@ -469,6 +473,11 @@ L_PLU = {
 		[0] = "Использован $1 раз в скриптах: $2",
 		[1] = "Использован $1 раза в скриптах: $2",
 		[2] = "Использован $1 раз в скриптах: $2",
+	},
+	NOTALLTILESVALID = {
+		[0] = "$1 стена имеет недопустимое значение в пределах 0-1199",
+		[1] = "$1 стены имеют недопустимые значения в пределах 0-1199",
+		[2] = "$1 стен имеют недопустимые значения в пределах 0-1199",
 	},
 }
 
