@@ -558,10 +558,10 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 240, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
-	elseif DIAquestionid == 19 or DIAquestionid == 26 then
+	elseif DIAquestionid == 26 then
 		-- Create new script or note or anything else with a single-line
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
@@ -572,7 +572,7 @@ function dialog.textboxes()
 		assert(false)
 	elseif DIAquestionid == 23 then
 		-- Custom VVVVVV dir, use the space we can get
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(8*8), 47*8, 8, multiinput[1], 1, currentmultiinput == 1)
+		assert(false)
 	elseif DIAquestionid == 24 then
 		-- Language
 		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 240, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
@@ -617,8 +617,7 @@ function dialog.update(dt)
 	if (DIAcanclose == 5 and DIAreturn == 1) --[[ apply ]] or (DIAwindowani == 16 and DIAquestionid ~= 0) then
 		if (DIAquestionid == 1) then -- State 9 test
 			-- Do something
-			-- if DIAreturn == 1 then
-			youdidanswer = "You answered: " .. DIAreturn
+			assert(false)
 		elseif (DIAquestionid == 2) then
 			-- Save entity properties
 			if DIAreturn == 2 or DIAreturn == 3 then -- cancel/ok
@@ -772,44 +771,16 @@ function dialog.update(dt)
 			assert(false)
 		elseif DIAquestionid == 17 and DIAreturn == 2 then
 			-- Delete this script!
-			-- input is the 'number' of the script
-
-			scripts[scriptnames[input]] = nil
-			table.remove(scriptnames, input)
-			dirty()
-
-			-- The script number is input
-			--table.remove(scripts, scriptnames[input])
-			--table.remove(scriptnames, input)
+			assert(false)
 		elseif DIAquestionid == 18 then
 			assert(false)
 		elseif DIAquestionid == 19 then
-			stopinput()
-			-- Be a number, you input!
-			input = tonumber(input)
-			if DIAreturn == 2 then
-				-- Rename this script... As long as the names aren't the same, because then we'd end up *removing* the script (just read the code)
-				-- And of course, as long as a script with that name doesn't already exist.
-				-- input is the 'number' of the script
-				if scripts[multiinput[1]] ~= nil and multiinput[1] ~= scriptnames[input] then
-					dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {multiinput[1]}))
-					replacedialog = true
-				elseif multiinput[1] ~= scriptnames[input] then
-					scripts[multiinput[1]] = scripts[scriptnames[input]] -- Copy script from old to new name
-					scripts[scriptnames[input]] = nil -- Remove old name
-
-					scriptnames[input] = multiinput[1] -- Administrative rename
-				end
-			end
+			assert(false)
 		elseif DIAquestionid == 20 then
 			assert(false)
 		-- 21 AND 22 HANDLED ABOVE AT 9 AND 11 (21 is script split, 22 is script duplicate)
 		elseif DIAquestionid == 23 then
-			stopinput()
-			if DIAreturn == 2 then
-				-- Set the custom VVVVVV directory to this
-				s.customvvvvvvdir = multiinput[1]
-			end
+			assert(false)
 		elseif DIAquestionid == 24 then
 			stopinput()
 			if DIAreturn == 2 then

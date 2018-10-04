@@ -14,6 +14,12 @@ function dialog.form.simplename_make(default)
 	}
 end
 
+function dialog.form.customvvvvvvdir_make()
+	return {
+		{"path", 0, 8, 47, s.customvvvvvvdir},
+	}
+end
+
 function dialog.form.exportmap_make()
 	local co = not s.coords0 and 1 or 0 -- coordoffset
 
@@ -434,5 +440,49 @@ function dialog.callback.newnote(button, fields)
 		takinginput = true
 		helparticlecontent = explode("\n", helppages[#helppages].cont)
 		input = anythingbutnil(helparticlecontent[3])
+	end
+end
+
+function dialog.callback.renamescript_validate(button, fields)
+	if button == DB.OK and scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+		-- Script already exists
+		dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
+		return true
+	end
+end
+
+function dialog.callback.renamescript(button, fields, _, notclosed)
+	if notclosed or button ~= DB.OK then
+		return
+	end
+
+	input = tonumber(input)
+	-- Rename this script... As long as the names aren't the same,
+	-- because then we'd end up *removing* the script (just read the code)
+	-- And of course, as long as a script with that name doesn't already exist.
+	-- input is the 'number' of the script
+	if fields.name ~= scriptnames[input] then
+		scripts[fields.name] = scripts[scriptnames[input]] -- Copy script from old to new name
+		scripts[scriptnames[input]] = nil -- Remove old name
+
+		scriptnames[input] = fields.name -- Administrative rename
+	end
+end
+
+function dialog.callback.suredeletescript(button)
+	if button == DB.YES then
+		-- Delete this script!
+		-- input is the 'number' of the script
+
+		scripts[scriptnames[input]] = nil
+		table.remove(scriptnames, input)
+		dirty()
+	end
+end
+
+function dialog.callback.customvvvvvvdir(button, fields)
+	if button == DB.OK then
+		-- Set the custom VVVVVV directory to this
+		s.customvvvvvvdir = fields.path
 	end
 end

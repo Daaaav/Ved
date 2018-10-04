@@ -434,9 +434,6 @@ function loadstate(new, extradata)
 		currentbackupdir = ""
 		levellistscroll = 0
 		max_levellistscroll = 0
-	elseif new == 9 then
-		youdidanswer = ""
-		dialog.new("Not much to see here. Other than that I got this working.\n\nAhem.\n\n\"Are you absolutely sure you want to delete everything?\"", "", 1, 3, 1)
 	elseif new == 10 then
 		if oldstate ~= 3 or scriptlistscroll == nil then
 			scriptlistscroll = 0

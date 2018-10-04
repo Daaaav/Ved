@@ -499,7 +499,7 @@ function love.draw()
 			end
 		end
 	elseif state == 9 then
-		love.graphics.print(youdidanswer .. "\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
+		love.graphics.print("\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
 
 		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
 		vvvvvv_textbox("red", 0, 50, {"Red"})
@@ -746,8 +746,10 @@ function love.draw()
 			elseif onrbutton(2) then
 				-- Custom VVVVVV folder
 				local _, shouldbefolder = getlevelsfolder(true)
-				startmultiinput({s.customvvvvvvdir})
-				dialog.new(langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {shouldbefolder}), "", 1, 4, 23)
+				dialog.create(
+					langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {shouldbefolder}), DBS.OKCANCEL,
+					dialog.callback.customvvvvvvdir, nil, dialog.form.customvvvvvvdir_make()
+				)
 			elseif onrbutton(3) then
 				-- Language
 				languagedialog()
@@ -1649,11 +1651,17 @@ function love.update(dt)
 				)
 				input = rvnum
 			elseif RCMreturn == L.DELETE then
-				dialog.new(langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), "", 1, 3, 17)
+				dialog.create(
+					langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
+					dialog.callback.suredeletescript
+				)
 				input = rvnum
 			elseif RCMreturn == L.RENAME then
-				startmultiinput({scriptnames[rvnum]})
-				dialog.new(L.NEWNAME, L.RENAMESCRIPT, 1, 4, 19)
+				dialog.create(
+					L.NEWNAME, DBS.OKCANCEL,
+					dialog.callback.renamescript, L.RENAMESCRIPT, dialog.form.simplename_make(scriptnames[rvnum]),
+					dialog.callback.renamescript_validate
+				)
 				input = rvnum
 			else
 				unrecognized_rcmreturn()
