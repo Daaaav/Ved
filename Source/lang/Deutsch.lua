@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-10-05 19:34:21 (CEST)
+--- Last converted: 2018-10-05 20:13:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -438,7 +438,7 @@ MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
 VIEWIMAGE = "Ansehen", -- Verb, view image
 INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
 OPENLEVELSFOLDER = "Öffne Level Ordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
-MOVEENTITY = "Bewege",
+MOVEENTITY = "Bewegen",
 GOTOROOM = "Gehe zum Raum",
 ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
 
