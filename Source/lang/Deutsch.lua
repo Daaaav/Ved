@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-10-04 03:06:29 (CEST)
+--- Last converted: 2018-10-05 19:34:21 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -38,7 +38,7 @@ UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
 FATALERROR = "FATALER FEHLER: ",
 FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
 
-OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystem-Funktionen; Level werden hier gespeichert:\n\n$2",
+OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
 MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde erreicht in diesem Level.",
 MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde erreicht in diesem Level.",
 EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
@@ -50,9 +50,9 @@ COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekomm
 MAPSAVEDAS = "Kartenbild gespeichert als $1!",
 RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
 UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
-METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flag-Namen und andere Dinge.",
-WARPTOKENENT404 = "Teleportationssymbol Objekt existiert nicht mehr!",
-SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Text-Befehl und einem speak/speak_active?", -- Command names are best left untranslated
+METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flagnamen und andere Dinge.",
+WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
+SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
 NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
@@ -80,7 +80,7 @@ SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
 UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
 MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
-MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht übergeben zu savelevel()!",
+MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht an savelevel() übergeben!",
 RESTARTVEDLANG = "Nach dem ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
 
 SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
@@ -127,8 +127,8 @@ SCRIPTUSAGES = "Benutzungen",
 EDITTAB = "Bearbeiten",
 COPYSCRIPT = "Skript kopieren",
 SEARCHSCRIPT = "Suchen",
-GOTOLINE = "Geh zu Zeile",
-GOTOLINE2 = "Geh zu Zeile:",
+GOTOLINE = "Gehe zu Zeile",
+GOTOLINE2 = "Gehe zu Zeile:",
 INTERNALON = "Int.sc ist aus",
 INTERNALOFF = "Int.sc ist an",
 VIEW = "Ansehen",
@@ -139,7 +139,7 @@ TEXTSIZEL = "Textgröße: L",
 INSERT = "Einfügen",
 HELP = "Hilfe",
 INTSCRWARNING_NOLOADSCRIPT = "Ladeskript benötigt!",
-INTSCRWARNING_BOXED = "Direkte Skript Box/Konsolen Referenz!\n\n",
+INTSCRWARNING_BOXED = "Direkte Skriptbox/Konsolen Referenz!\n\n",
 COLUMN = "Spalte: ",
 
 BTN_OK = "OK",
@@ -170,7 +170,7 @@ TESTFROMHERE = "Teste von hier",
 FLIP = "Umdrehen",
 CYCLETYPE = "Typ ändern",
 GOTODESTINATION = "Gehe zum Ziel",
-GOTOENTRANCE = "Gehe zum Anfang",
+GOTOENTRANCE = "Gehe zum Eingang",
 CHANGECOLOR = "Farbe ändern",
 EDITTEXT = "Text bearbeiten",
 COPYTEXT = "Text kopieren",
@@ -187,7 +187,7 @@ UNLOCK = "Entsperren",
 BUG = "[Fehler!]",
 
 VEDOPTIONS = "Ved-Optionen",
-LEVELOPTIONS = "Level-Optionen",
+LEVELOPTIONS = "Leveloptionen",
 MAP = "Karte",
 SCRIPTS = "Skripte",
 SEARCH = "Suchen",
@@ -288,12 +288,12 @@ CUSTOMVVVVVVDIRECTORY = "VVVVVV Ordner",
 CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV Ordner ein, falls es nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
-FLIPSUBTOOLSCROLL = "Drehe Scroll-Richtung des Unterwerkzeugs",
+FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
 ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
 ASKBEFOREQUIT = "Frage vor dem beenden",
 NEVERASKBEFOREQUIT = "Frage niemals vor dem beenden, auch wenn es ungespeicherte Änderungen gibt",
 COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
-ALLOWDEBUG = "Aktiviere Debug-Modus",
+ALLOWDEBUG = "Aktiviere Debugmodus",
 SHOWFPS = "Zeige FPS-Zähler",
 IIXSCALE = "2x Größe",
 CHECKFORUPDATES = "Nach Updates suchen",
@@ -431,16 +431,16 @@ TOPLEFT = "Oben links",
 WIDTHHEIGHT = "Breite & Höhe",
 BOTTOMRIGHT = "Unten rechts",
 RENDERERINFO = "Renderer Information:",
-MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn es fertig ist.",
+MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn sie fertig ist.",
 KEEPDIALOGOPEN = "Halte Dialog offen",
 TRANSPARENTMAPBG = "Transparenter Hintergrund",
 MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
 VIEWIMAGE = "Ansehen", -- Verb, view image
 INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
-OPENLEVELSFOLDER = "Open lvl dir", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
-MOVEENTITY = "Move",
-GOTOROOM = "Go to room",
-ESCTOCANCEL = "[Press ESC to cancel]",
+OPENLEVELSFOLDER = "Öffne Level Ordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Bewege",
+GOTOROOM = "Gehe zum Raum",
+ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
 
 }
 
@@ -479,8 +479,8 @@ L_PLU = {
 		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
 	},
 	NOTALLTILESVALID = {
-		[-1] = "$1 tile is not a valid whole number in the range 0-1199",
-		[-2] = "$1 tiles are not a valid whole number in the range 0-1199",
+		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
+		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
 	},
 }
 
@@ -499,7 +499,7 @@ toolnames = {
 "Raumtext",
 "Konsole",
 "Skriptbox",
-"Teleportationssymbol",
+"Teleporter",
 "Teleportationslinie",
 "Crewmitglied",
 "Startpunkt",
