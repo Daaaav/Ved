@@ -412,7 +412,7 @@ function drawlevelslist()
 				languagedialog()
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
-				openurl("https://tolp.nl/ved/?p=feedback")
+				openurl("https://tolp.nl/ved/feedback")
 
 				mousepressed = true
 			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then

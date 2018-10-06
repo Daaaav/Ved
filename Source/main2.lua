@@ -762,7 +762,7 @@ function love.draw()
 				olderstate = oldstate
 				tostate(27)
 			elseif not mousepressed and onrbutton(7) then
-				openurl("https://tolp.nl/ved/?p=feedback")
+				openurl("https://tolp.nl/ved/feedback")
 
 				mousepressed = true
 			--elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) then
