@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-10-05 19:34:20 (CEST)
+--- Last converted: 2018-10-08 01:42:04 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1157,608 +1157,648 @@ speaker¤(цвет)\h#w
 subj = "Внутренний скриптинг",
 imgs = {},
 cont = [[
-Internal scripting reference\wh#
+Внутренний скриптинг\wh#
 \C=
 
-The internal scripting provides more power to scripters, but is also a bit more
-complex than simplified scripting.
+Внутренний скриптинг является мощным, но при этом более сложным способом создания
+скриптов, чем простейший.
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. However, you
-need to make sure that script is loaded with iftrinkets() or ifflag().
+Чтобы использовать внутренний скриптинг в Ved, можно включить режим внутреннего
+скриптинга в редакторе, чтобы все команды в данном скрипте воспринимались
+внутренним скриптингом. Однако учтите, что этот скрипт должен загружаться с
+помощью iftrinkets() или ifflag().
 
-Color coding:\w
-Normal - Should be safe, worst case scenario is VVVVVV crashing because you made a
-         mistake.
-Blue¤   - Some of these don't work in custom levels, others don't make a lot of\b
-         sense in custom levels, or are only half useful because they were really
-         designed for the main game.
-Orange¤ - These work and nothing will go wrong normally, unless you give some\o
-         specific arguments to them that will cause your save data to go away.
-Red¤    - Red commands shouldn't be used in custom levels because they will either\r
-         unlock certain parts of the main game (which you shouldn't want a custom
-         level to do, even if you say everyone has already completed the game), or
-         corrupt the save data altogether.
+Подсветка:\w
+Обычная - Эти команды должны работать, в худшем случае VVVVVV вылетет при
+          допущенной ошибке.
+Синяя¤   - Некоторые из этих команд не работают или не были созданы для\b
+          пользовательских уровней, т. к. были сделаны для основной игры.
+Рыжая¤   - Эти команды работают без ошибок, если им не присвоен определённый\o
+          аргумент, при работе с которым команда удаляет сохранение игры.
+Красная¤ - Красные команды не следует использовать в пользовательских уровнях\r
+          т. к. они могут привести к разблокированию определённых частей
+          основной игры (что не желательно, даже если все уже её прошли), или
+          повредить файлы сохранения в целом.
 
+          
+squeak¤(цвет)\w#h
 
-squeak¤(color)\w#h
+Заставляет члена команды взвизгнуть, или терминал - издать звук.
+цвет - cyan   /player/blue /red    /yellow/green  /purple    /terminal
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый/терминал)
 
-Makes a squeak sound from a crewmate, or a terminal sound
+text¤(цвет,x,y,строки)\w#h
 
-color - cyan/player/blue/red/yellow/green/purple/terminal
+Сохраняет текстовую рамку с цветом, координатами и её количеством строк в
+памяти. Обычно используется после текстовой команды (с её строками), которая
+переписывает данные координаты, так что обычно их приравнивают к нулю.
 
-text¤(color,x,y,lines)\w#h
-
-Store a text box in memory with color, position and number of lines. Usually, the
-position command is used after the text command (and its lines of text), which
-will overwrite the coordinates given here, so these are usually left as 0.
-
-color - cyan/player/blue/red/yellow/green/purple/gray
-x - The x position of the text box
-y - The y position of the text box
-lines - The number of lines
+цвет - cyan   /player/blue /red    /yellow/green  /purple    /gray
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый/серый)
+x - координата x текстовой рамки
+y - координата y текстовой рамки
+строки - количество строк
 
 position¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box.
+Переопределяет x и y текстовой команды, тем самым устанавливая позицию
+текстовой рамки.
 
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple
-y - Only used if x is a color name. Can be above/below
+x - center/centerx/centery,
+   (центр /центр x/центр y)
+или можно использовать цвета:
+ cyan   /player/blue /red    /yellow/green  /purple
+(голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+y - используется, только если x - цвет. Принимает значения above /below
+                                                          (сверху/снизу)
 
 endtext\w#h
 
-Makes a text box disappear (fade out)
+Заставляет текстовую рамку плавно исчезнуть
 
 endtextfast\w#h
 
-Makes a text box disappear immediately (without fading out)
+Заставляет текстовую рамку исчезнуть немедленно
 
 speak\w#h
 
-Shows a text box, without removing old text boxes. Also pauses the script until
-you press action (unless there's a backgroundtext command above it)
+Показывает текстовую рамку, не убирая предыдущие. Также приостанавливает скрипт
+пока не будет нажата клавиша действия (если до этого не было
+команды backgroundtext).
 
 speak_active\w#h
 
-Shows a text box, and removes any old text box. Also pauses the script until you
-press action (unless there's a backgroundtext command above it)
+Создаёт текстовую рамку, убирая предыдущую. Также приостанавливает скрипт пока не
+будет нажата клавиша действия (если до этого не было команды backgroundtext).
 
 backgroundtext\w#h
 
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
+Если данная команда стоит перед speak или speak_active, игра не будет ждать
+нажатия клавиши действия после создания текстовой рамки. Может использоваться для
+одновременного создания нескольких текстовых рамок.
 
-changeplayercolour¤(color)\w#h
+changeplayercolour¤(цвет)\w#h
 
-Changes the player's color
+Меняет цвет игрока.
 
-color - cyan/player/blue/red/yellow/green/purple/teleporter
+цвет - cyan   /player/blue /red    /yellow/green  /purple    /teleporter
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый/цвет телепорта)
 
 restoreplayercolour¤()\w#h
 
-Changes the player's color back to cyan
+Меняет цвет игрока обратно на голубой
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
+Меняет цвет члена экипажа (на заметку: работает только с членами экипажа,
+созданными командой createcrewman)
 
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
+a - Цвет члена экипажа, который нужно поменять:
+ cyan   /player/blue /red    /yellow/green  /purple
+(голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+b - Цвет, на который нужно поменять предыдущий
 
 alarmon\w#h
 
-Turns the alarm on
+Включает тревогу
 
 alarmoff\w#h
 
-Turns the alarm off
+Выключает тревогу
 
 cutscene¤()\w#h
 
-Makes cutscene bars appear
+Создаёт границы катсцены
 
 endcutscene¤()\w#h
 
-Makes cutscene bars disappear
+Убирает границы катсцены
 
 untilbars¤()\w#h
 
-Wait until cutscene()/endcutscene() is completed
+Ждать, пока закончится выполнение cutscene()/endcutscene() 
 
-customifflag¤(n,script)\w#h
+customifflag¤(номер флага,название скипта)\w#h
 
-Same as ifflag(n,script) in simplified scripting
+То же, что и ifflag(номер флага,название скипта) в простейшем скриптинге
 
-ifflag¤(n,script)\b#h
+ifflag¤(номер флага,название скипта)\b#h
 
-Same as customifflag, but loads an internal (main game) script
+То же, что и customifflag, но включающий скрипт основной игры
 
-loadscript¤(script)\b#h
+loadscript¤(скрипт)\b#h
 
-Load an internal (main game) script. Commonly used in custom levels as
-loadscript(stop)
+Загружает скрипт основной игры. В пользовательских уровнях обычно используется
+как loadscript(stop)
 
-iftrinkets¤(n,script)\b#h
+iftrinkets¤(кол-во,скрипт)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+То же, что и в простейшем скриптинге, но включающий скрипт основной игры
 
-iftrinketsless¤(n,script)\b#h
+iftrinketsless¤(кол-во,скрипт)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+То же, что и в простейшем скриптинге, но включающий скрипт основной игры
 
-customiftrinkets¤(n,script)\w#h
+customiftrinkets¤(кол-во,скрипт)\w#h
 
-Same as iftrinkets(n,script) in simplfied scripting
+То же, что и iftrinkets(кол-во,скрипт) в простейшем скриптинге
 
-customiftrinketsless¤(n,script)\w#h
+customiftrinketsless¤(кол-во,скрипт)\w#h
 
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
+То же, что и iftrinketsless(кол-во,скрипт) в простейшем скриптинге (не работает
+должным образом)
 
-createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
+createcrewman¤(x,y,цвет,настроение,ai1,ai2)\w#h
 
-Creates a crewmate (not rescuable)
+Создаёт члена экипажа (нельзя спасти)
 
 mood - 0 for happy, 1 for sad
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+настроение - 0 - счастливый, 1 - грустный
+ai1 -         followplayer/followpurple/followyellow/followred/followgreen
+(следовать за:игрок       /фиолетовый  /жёлтый      /красный  /зелёный)
 
-createentity¤(x,y,n,meta1,meta2)\o#h
+              /followblue/faceplayer        /panic     /faceleft/faceright
+              (синий     /следить за игроком/паниковать/влево   /вправо)
+              
+              /followposition,ai2
+              (следовать позиции),ai2
+ai2 - необходим, если в ai1 использовано followposition
 
-Creates an entity, check the lists reference for entity numbers
+createentity¤(x,y,номер,meta1,meta2)\o#h
 
-n - The entity number
+Создаёт объект, пользуйтесь пунктом "Список номеров" для номеров объектов.
+
+номер - Номер объекта
 
 vvvvvvman¤()\w#h
 
-Makes the player huge
+Делает игрока огромным
 
 undovvvvvvman¤()\w#h
 
-Back to normal
+Вернуть игроку нормальный размер
 
 hideplayer¤()\w#h
 
-Makes the player invisible
+Делает игрока невидимым
 
 showplayer¤()\w#h
 
-Makes the player visible
+Показывает игрока
 
 gamestate¤(x)\o#h
 
-Change the gamestate to the specified state number
+Меняет номер состояния игры на число x, пользуйтесь пунктом "Список номеров"
+для номеров состояний игры
 
 gamemode¤(x)\b#h
 
-teleporter to show the map, game to hide it (shows teleporters of the main game)
+Аргумент teleporter для открытия каты и указания телепортов основной игры,
+аргумент game для скрытия карты
 
 x - teleporter/game
 
 blackout¤()\w#h
 
-Make the screen black/freezes the screen
+Резко затемняет/замораживает экран
 
 blackon¤()\w#h
 
-Back to normal from blackout()
+Отмена blackout()
 
 fadeout¤()\w#h
 
-Fades the screen to black
+Плавно затемняет экран
 
 fadein¤()\w#h
 
-Fades back
+Плавно отменяет fadein()
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Немедленно отменяет fadeout()
 
 untilfade¤()\w#h
 
-Wait until fadeout()/fadein() is completed
+Ждать конца выполнения fadeout()/fadein()
 
 gotoroom¤(x,y)\w#h
 
-Change the current room to x,y, where x and y start at 0.
+Поменять комнату на x,y (x и y принимают значения больше нуля)
 
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
+x - координата x комнаты, больше нуля
+x - координата y комнаты, больше нуля
 
 gotoposition¤(x,y,f)\w#h
 
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
+Сделать координатную позицию Виридиана x,y в данной комнате, f определяет
+состояние (1 - перевёрнутый, 0 - нормальный)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
+f - 1 - перевёрнутый, 0 - нормальный (также можно использовать gotoposition(x,y),
+тогда по умолчанию гравитация будет обычной)
 
 flash¤(x)\w#h
 
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
+Делает экран белым, можно настроить время x, которое будет длиться этот эффект
+(команда flash не сработает, придётся использовать flash(5), playef(9) и shake(20)
+для её воссоздания)
 
-x - The amount of ticks. 30 ticks is almost one second.
+x - количество тиков. 30 тиков примерно равны одной секунде.
 
 play¤(x)\w#h
 
-Start playing a song with internal song number.
+Играет трек под номером x
 
-x - Internal song number
+x - Номер трека
 
 jukebox¤(x)\w#h
 
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
+Меняет цвет терминала-проигрывателя на белый и выключает подсветку остальных
+(похоже, что в пользовательских уровнях эта команда просто выключает подсветку
+использованных терминалов)
 
 musicfadeout¤()\w#h
 
-Fades out the music.
+Применяет эффект плавного затухания к музыке
 
 musicfadein¤()\w#h
 
-Opposite of musicfadeout() (doesn't seem to work)
+Должен применять эффект плавного нарастания к музыке, не работает
 
 stopmusic¤()\w#h
 
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
+Немедленно останавливает музыку. То же, что и music(0) в простом скриптинге.
 
 resumemusic¤()\w#h
 
-Opposite of stopmusic() (doesn't seem to work)
+Должен продолжать воспроизведение музыки, не работает
 
 playef¤(x,n)\w#h
 
-Play a sound effect.
+Возпроизвести звуковой эффект x
 
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
+n - Не используется, может быть нетронутым. В ранних версиях VVVVVV использовался
+для обозначения задержки перед воспроизведением в милисекундах.
 
-changemood¤(colour,mood)\w#h
+changemood¤(цвет,настроение)\w#h
 
-Changes the mood of a crewmate (only works for crewmates created with
+Поменять настроение члена экипажа (только для членов экипажа, созданных используя
 createcrewman)
 
-colour - cyan/player/blue/red/yellow/green/purple
-mood - 0 for happy, 1 for sad
+цвет - cyan   /player/blue /red    /yellow/green  /purple
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+настроение - 0 - счастливый, 1 - грустный
 
 everybodysad¤()\w#h
 
-Makes everybody sad (only for crewmates created with createcrewman and the player)
+Сделать всех грустными  (только для членов экипажа, созданных используя
+createcrewman, и игрока)
 
-changetile¤(colour,tile)\w#h
+changetile¤(цвет,спрайт)\w#h
 
-Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
-and it only works for crewmates created with createcrewman)
+Поменять вид члена экипажа (на любой спрайт из sprites.png, работает только на
+членах экипажа, созданных используя createcrewman)
 
 colour - cyan/player/blue/red/yellow/green/purple/gray
-tile - Tile number
+цвет - cyan   /player/blue /red    /yellow/green  /purple    /gray
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый/серый)
+спрайт - Номер спрайта
 
 face¤(a,b)\w#h
 
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
+Поворачивает члена экипажа a смотреть на члена экипажа b (работает только на
+членах экипажа, созданных используя createcrewman)
 
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
+a,b - cyan   /player/blue /red    /yellow/green  /purple
+     (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Делает определённого члена экипажа x компаньоном (на сколько я помню, эта команда
+зависит от расположения на карте)
 
-changeai¤(crewmate,ai1,ai2)\w#h
+changeai¤(член экипажа,ai1,ai2)\w#h
 
-Can change the face direction of a crewmate or the walking behaviour
+Может менять направление члена экипажа или его поведение
 
-crewmate - cyan/player/blue/red/yellow/green/purple
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+член экипажа - cyan   /player/blue /red    /yellow/green  /purple
+              (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+ai1 -         followplayer/followpurple/followyellow/followred/followgreen
+(следовать за:игрок       /фиолетовый  /жёлтый      /красный  /зелёный)
 
-changedir¤(colour,direction)\w#h
+              /followblue/faceplayer        /panic     /faceleft/faceright
+              (синий     /следить за игроком/паниковать/влево   /вправо)
+              
+              /followposition,ai2
+              (следовать позиции),ai2
+ai2 - необходим, если в ai1 использовано followposition
 
-Just like changeai(colour,faceleft/faceright), this changes face direction.
+changedir¤(цвет,направление)\w#h
 
-colour - cyan/player/blue/red/yellow/green/purple
-direction - 0 is left, 1 is right
+Как и в changeai, меняет направление члена экипажа
 
-walk¤(direction,x)\w#h
+цвет - cyan   /player/blue /red    /yellow/green  /purple
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+направление - 0 - налево, 1 - направо
 
-Makes the player walk for the specified number of ticks
+walk¤(направление,тики)\w#h
 
-direction - left/right
+Заставляет игрока идти определённое количество тиков в данном направлении
 
-flipgravity¤(colour)\w#h
+направление - left /right
+             (влево/вправо)
 
-Flips the gravity of a certain crewmate (it won't always work on yourself)
+flipgravity¤(цвет)\w#h
 
-colour - cyan/player/blue/red/yellow/green/purple
+Меняет гравитацию данного чена экипажа (не всегда работает на игроке)
+
+цвет - cyan   /player/blue /red    /yellow/green  /purple
+      (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
 
 flipme\w#h
 
-Correct vertical positioning of multiple text boxes in flip mode
+Исправляет вертикальное расположение нескольких текстовых рамок во flip-режиме
 
 tofloor\w#h
 
-Makes the player flip to the floor if he isn't already on the floor.
+Переворачивает игрока вниз, если он ещё не в этом положении
 
 flip\w#h
 
-Make the player flip
+Переворачивает гравитацию игрока
 
 foundtrinket¤(x)\w#h
 
-Makes a trinket found
+Находит тринкеты
 
-x - Number of the trinket
+x - Количество тринкетов
 
 runtrinketscript\b#h
 
-Play Passion For Exploring?
+Воспроизводит Passion For Exploring?
 
 altstates¤(x)\b#h
 
-Changes the layout of some rooms, like the trinket room in the ship before and
-after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
+Меняет расстановку некоторых комнат, как в случае с комнатой с тринкетами на
+корабле до и после взрыва, или вход в секретную лабораторию (пользовательские
+уровни никак не поддерживают данную команду)
 
 createlastrescued¤(x,y)\b#h
 
-Creates the last rescued crewmate at position x,y (?)
+Создаёт последнего спасённого члена экипажа в точке x,y (?)
 
-rescued¤(colour)\b#h
+rescued¤(цвет)\b#h
 
-Makes someone rescued
+Спасает определённого члена экипажа
 
-missing¤(colour)\b#h
+missing¤(цвет)\b#h
 
-Makes someone missing
+Убирает у члена экипажа состояние спасённого
 
 finalmode¤(x,y)\b#h
 
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
-Final Level
+Телепортирует игрока во Внешнее Измерение VVVVVV, (45,54) - начальная комната
+Последнего Уровня
 
 setcheckpoint¤()\w#h
 
-Sets the checkpoint to the current location
+Устанавливает чекпоинт в данной позиции
 
 textboxactive\w#h
 
-Makes all text boxes on the screen disappear except for the last created one
+Убирает все текстовые рамки, кроме последней созданной
 
-ifexplored¤(x,y,script)\w#h
+ifexplored¤(x,y,скрипт)\w#h
 
-If x+1,y+1 is explored, go to (internal) script
+Если x+1,y+1 уже изучено, выполнить (внутренний) скрипт
 
-iflast¤(crewmate,script)\b#h
+iflast¤(член экипажа,скрипт)\b#h
 
-If crewmate x was rescued last, go to script
+Если определённый член экипажа был спасён последним, выполнить скрипт
 
-crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
-Victoria (I don't know the number for Viridian and Violet)
+член экипажа - Использованные номера: 2: Вителлари, 3: Вермильон, 4: Вердигрис,
+5: Виктория (я не знаю, какие номера принадлежат Виридиану и Виолетте)
 
 ifskip¤(x)\b#h
 
 If you skip the cutscenes in No Death Mode, go to script x
+Если игрок пропускает катсцену в Режиме Без Смертей, выполнить скрипт x
 
-ifcrewlost¤(crewmate,script)\b#h
+ifcrewlost¤(член экипажа,скрипт)\b#h
 
-If crewmate is lost, go to script
+Если член экипажа не был найден, выполнить скрипт
 
 showcoordinates¤(x,y)\w#h
 
-Show coordinates x,y on the map (This works for the map for custom levels)
+Показывает координаты x,y на карте (работает в пользовательских уровнях)
 
 hidecoordinates¤(x,y)\w#h
 
-Hide coordinates x,y on the map (This works for the map for custom levels)
+Скрывает координаты x,y на карте (работает в пользовательских уровнях)
 
 showship\w#h
 
-Show the ship on the map
+Показывает корабль на карте
 
 hideship\w#h
 
-Hide the ship on the map
+Скрывает корабль на карте
 
 showsecretlab\w#h
 
-Show the secret lab on the map
+Показывает секретную лабораторию на карте
 
 hidesecretlab\w#h
 
-Hide the secret lab on the map
+Скрывает секретную лабораторию на карте
 
 showteleporters¤()\b#h
 
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
+Показывает телепорты на карте (по-моему, показывает только телепорт на
+Космической Станции 1)
 
 hideteleporters¤()\b#h
 
-Hide the teleporters on the map
+Скрывает телепорты на карте
 
 showtargets¤()\b#h
 
-Show the targets on the map (unknown teleporters which show up as ?s)
+Показывает цели на карте (неизвестные телепорты, обозначаемые знаками вопроса)
 
 hidetargets¤()\b#h
 
-Hide the targets on the map
+Скрывает цели на карте
 
 showtrinkets¤()\b#h
 
-Show the trinkets on the map
+Показывает тринкеты на карте
 
 hidetrinkets¤()\b#h
 
-Hide the trinkets on the map
+Скрывает тринкеты на карте
 
 hascontrol¤()\w#h
 
-Makes the player have control, however doesn't work in the middle of scripts
+Даёт игроку управление, не работает в середине скриптов
 
 nocontrol¤()\w#h
 
-The opposite of hascontrol()
+Обратное hascontrol()
 
 specialline¤(x)\b#h
 
-Special dialogs that show up in the main game
+Особые диалоги, которые появляются в основной игре
 
 destroy¤(x)\w#h
 
-Same behaviour as simplified command
+То же, что и в соответствующей простейшей команде
 
 x - gravitylines/warptokens/platforms
+   (грави-линии /телепорты /платформы)
 
 delay¤(x)\w#h
 
-Same behaviour as simplified command
+То же, что и в соответствующей простейшей команде
 
 flag¤(x,on/off)\w#h
 
-Same behaviour as simplified command
+То же, что и в соответствующей простейшей команде
 
 telesave¤()\r#h
 
-Saves your game (in the regular teleporter save, so don't use it!)
+Сохраняет игру (только при обычном сохранении у телепорта; не использовать!)
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Немедленное затемнение после fadeout()
 
-createactivityzone¤(colour)\b#h
+createactivityzone¤(цвет)\b#h
 
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
+Создаёт зону в позиции игрока с надписью "Press ACTION to talk to (Член экипажа)"
 
 createrescuedcrew¤()\b#h
 
-Creates all rescued crewmates
+Создаёт всех спасённых членов команды
 
 trinketyellowcontrol¤()\b#h
 
-Dialog of Vitellary when he gives you a trinket in the real game
+Диалог с Вителлари когда он даёт тебе тринкет из основной игры
 
 trinketbluecontrol¤()\b#h
 
-Dialog of Victoria when she gives you a trinket in the real game
+Диалог с Викторией когда она даёт тебе тринкет из основной игры
 
 rollcredits¤()\r#h
 
-Makes the credits roll. It destroys your save after the credits are completed!
+Запускает титры. Это удаляет файл сохранения после окончания титров!
 
-teleportscript¤(script)\b#h
+teleportscript¤(скрипт)\b#h
 
-Used to set a script which is run when you use a teleporter
+Раньше использовался для создания скрипта при телепортировании
 
 clearteleportscript¤()\b#h
 
 Clears the teleporter script set with teleporterscript(x)
+Удаляет скрипт телепортирования, созданный teleporterscript(скрипт)
 
 moveplayer¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make him move up or to the left
+Передвигает игрока на x пикселей вправо и y пикселей вниз. Конечно, можно
+использовать отрицательные числа, чтобы двигать игрока вверх или влево.
 
 do¤(n)\w#h
 
-Starts a loop block which will repeat n times
+Начинает цикл, который повторится n раз
 
 loop\w#h
 
-Put this at the end of the loop block
+Обозначает конец цикла
 
 leavesecretlab¤()\b#h
 
-Turn off "secret lab mode"
+Выключает "режим секретной лаборатории"
 
 shake¤(n)\w#h
 
-Shake the screen for n ticks. This will not create a delay.
+Трясёт экран n тиков. Не создаёт задержку.
+
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will glow white and touching it will not
-annihilate your save data. May not work if there are multiple teleporters.
+Если в комнате есть телепорт, он засветится при его касании и это не уничтожит
+ваши сохранения. Может не сработать при нескольких телепортах.
 
 customposition¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box,
-but for crewmates, rescuable crewmates are used to position against, instead of
-createentity crewmates.
+Переопределяет x,y текстовой команды, тем самым устанавливая позицию текстовой
+рамки, а в случае с членами экипажа это работает только на спасаемых членах
+экипажа, не созданных с помощью createenity.
 
 x - center/centerx/centery, or a color name
 cyan/player/blue/red/yellow/green/purple (rescuable)
 y - Only used if x is a color name. Can be above/below
 
+x - center/centerx/centery, или цвет
+   (центр /центр x/центр y)
+ cyan   /player/blue /red    /yellow/green  /purple     (спасаемые)
+(голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
+y - Используется только если x - цвет. Принимает значения above /below
+                                                         (сверху/снизу)
+
 custommap¤(on/off)\w#h
 
-The internal variant of the map command
+Внутренний вариант команды управления картой
 
 trinketscriptmusic\w#h
 
-Plays passion for exploring, without taking arguments(?)
+Воспроизводит Passion For Exploring, не требует аргументов (?)
 
 startintermission2\w#h
 
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
+Альтернатива finalmode(46,54), переносит игрока на финальный уровень не требуя
+аргументов. Выленает в комнате Timeslip.
 
 resetgame\w#h
 
-Resets all trinkets, collected crewmates and flags, and teleports the player to
-the last checkpoint.
+Возвращает в начальное состояние все тринкеты, членов экипажа и флаги,
+телепортирует игрока к последнему чекпоинту
 
 redcontrol\b#h
 
-Start a conversation with Vermilion just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Начинает разговор с Вермилионом как в основной игре. Создаёт зону действия.
 
 greencontrol\b#h
 
-Start a conversation with Verdigris just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Начинает разговор с Вердигрисом как в основной игре. Создаёт зону действия.
 
 bluecontrol\b#h
 
-Start a conversation with Victoria just like when you meet her in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Начинает разговор с Викторией как в основной игре. Создаёт зону действия.
 
 yellowcontrol\b#h
 
-Start a conversation with Vitellary just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Начинает разговор с Вителлари как в основной игре. Создаёт зону действия.
 
 purplecontrol\b#h
 
-Start a conversation with Violet just like when you meet her in the main game and
-press ENTER. Also creates an activity zone afterwards.
+Начинает разговор с Виолеттой как в основной игре. Создаёт зону действия.
 
 foundlab\b#h
 
-Plays sound effect 3, shows text box with "Congratulations! You have found the
-secret lab!" Does not endtext, also has no further unwanted effects.
+Проигрывает звуковой эффект 3, показывает текстовую рамку с надписью
+"Congratulations! You have found the secret lab!". Не выплняет endtext и не имеет
+последующих нежелательных эффектов.
 
 foundlab2\b#h
 
-Displays the second text box you see after discovering the secret lab. Also does
-not endtext, and also does not have any further unwanted effects.
+Показывает вторую текстовую рамку после обнаружения секретной лаборатории. Так же
+не выплняет endtext и не имеет последующих нежелательных эффектов.
 
 entersecretlab\r#h
 
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
+Действидельно разблокирует секретную лабораторию в основной игре, что скорее
+является нежелательным эффектом для пользовательской игры. Включает режим
+секретной лаборатории.
 ]]
 },
 
