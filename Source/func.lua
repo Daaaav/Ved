@@ -5,6 +5,19 @@ love.graphics.clear = function()
 	end
 end
 
+function limit_draw_fps()
+	local cur_frame_time = love.timer.getTime()
+	if next_frame_time <= cur_frame_time then
+		next_frame_time = cur_frame_time
+	elseif next_frame_time - cur_frame_time <= 1 then
+		love.timer.sleep(next_frame_time - cur_frame_time)
+	else
+		-- Safety measure: we were going to sleep for WAY too long, make sure we do it right next time.
+		cons("Excessive FPS limit sleep for " .. (next_frame_time - cur_frame_time) .. "s prevented")
+		next_frame_time = cur_frame_time
+	end
+end
+
 function fatalerror(msg)
 	errormsg = msg
 	cons("FATAL ERROR: " .. msg)

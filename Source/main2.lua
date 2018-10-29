@@ -428,11 +428,14 @@ function love.load()
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
 
+	next_frame_time = love.timer.getTime()
+
 	hook("love_load_end")
 end
 
 function love.draw()
 	if s.pausedrawunfocused and not love.window.hasFocus() then
+		limit_draw_fps()
 		return
 	end
 
@@ -650,12 +653,12 @@ function love.draw()
 		love.graphics.print(L.FPSLIMIT, 8, 8+(24*7)+4+2)
 		int_control(16+font8:getWidth(L.FPSLIMIT), 8+(24*7), "fpslimit_ix", 1, 4, nil, nil,
 			function(value)
-				local ret = ({"15", "30", "60", "--"})[value]
+				local ret = ({"30", "60", "120", "---"})[value]
 				if ret == nil then
 					return "??"
 				end
 				return ret
-			end, 16
+			end, 24
 		)
 
 		if s.enableoverwritebackups then
@@ -1229,11 +1232,11 @@ function love.draw()
 		love.graphics.setColor(255,0,0)
 		love.graphics.setFont(font16)
 		if s.fpslimit_ix == 3 then
-			love.graphics.print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+			love.graphics.print("120", love.graphics.getWidth()-48, love.graphics.getHeight()-16)
 		elseif s.fpslimit_ix == 2 then
-			love.graphics.print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+			love.graphics.print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
 		elseif s.fpslimit_ix == 1 then
-			love.graphics.print("15", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+			love.graphics.print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
 		end
 		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
@@ -1267,6 +1270,10 @@ function love.draw()
 	--if replacecursor ~= -1 then
 		--cursorimg
 
+	if s.fpslimit_ix ~= 4 then
+		limit_draw_fps()
+	end
+
 	if s.pscale ~= 1 then
 		love.graphics.pop()
 	end
@@ -1289,17 +1296,11 @@ function love.update(dt)
 	end
 
 	if s.fpslimit_ix == 3 then
-		if dt < 1/60 then
-			love.timer.sleep(1/60 - dt)
-		end
+		next_frame_time = next_frame_time + 1/120
 	elseif s.fpslimit_ix == 2 then
-		if dt < 1/30 then
-			love.timer.sleep(1/30 - dt)
-		end
+		next_frame_time = next_frame_time + 1/60
 	elseif s.fpslimit_ix == 1 then
-		if dt < 1/15 then
-			love.timer.sleep(1/15 - dt)
-		end
+		next_frame_time = next_frame_time + 1/30
 	end
 
 	-- The timing for this doesn't really matter
