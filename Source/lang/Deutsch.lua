@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-10-08 01:42:04 (CEST)
+--- Last converted: 2018-10-29 13:59:25 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,13 +39,13 @@ FATALERROR = "FATALER FEHLER: ",
 FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
-MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde erreicht in diesem Level.",
-MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde erreicht in diesem Level.",
+MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde in diesem Level erreicht.",
+MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde in diesem Level erreicht.",
 EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
 STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
 UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
-SURENEWLEVEL = "Bist du sicher du willst ein neues Level machen? Du wirst jeden ungespeicherten Inhalt verlieren.",
-SURELOADLEVEL = "Bist du sicher du willst ein neues Level machen? Du wirst jeden ungespeicherten Inhalt verlieren.",
+SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
+SURELOADLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
 MAPSAVEDAS = "Kartenbild gespeichert als $1!",
 RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
@@ -56,12 +56,12 @@ SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen ein
 NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
 NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
-SIZELIMIT = "Die maximale größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
+SIZELIMIT = "Die maximale Größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
 SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
 FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
 FLAGNAMECHARS = "Flagnamen können nicht (, ), , oder Leerzeichen enthalten.",
 FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
-DIFFSELECT = "Wähle das Level aus mit dem verglichen werden soll. Das Level was du auswählst wird behandelt als ist es von einer älteren Version.",
+DIFFSELECT = "Wähle das Level aus mit dem verglichen werden soll.\nDas Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
 SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
 SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
@@ -70,7 +70,7 @@ NAMEFORFLAG = "Name für Flag $1:",
 SCRIPT404 = "Skript \"$1\" existiert nicht!",
 ENTITY404 = "Objekt #$1 existiert nicht mehr!",
 GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber dieses Feature nicht unterstützt!",
-MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
+MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder deinem Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
 SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
 SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
 THREADERROR = "Threadfehler!",
@@ -94,8 +94,8 @@ ENEMYTYPECHANGED = "Objekttyp verändert",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
 CHANGEDTOMODE = "Geändert zu $1 Tileplatzierung",
-CHANGEDTOMODEAUTO = "automatisch",
-CHANGEDTOMODEMANUAL = "manuell",
+CHANGEDTOMODEAUTO = "automatischer",
+CHANGEDTOMODEMANUAL = "manueller",
 CHANGEDTOMODEMULTI = "multi-Tileset",
 
 BUSYSAVING = "Speichern...",
@@ -209,8 +209,8 @@ ROOMNAME = "Raumname",
 ROOMOPTIONS = "Raumoptionen",
 ROTATE180 = "Um 180 Grad drehen",
 ROTATE180UNI = "Um 180° drehen",
-HIDEBOUNDS = "Grenzen nicht zeigen",
-SHOWBOUNDS = "Grenzen zeigen",
+HIDEBOUNDS = "Grenzen ausblenden",
+SHOWBOUNDS = "Grenzen einblenden",
 
 ROOMPLATFORMS = "Raumplattformen", -- basically, platforms/enemies in/for this room
 ROOMENEMIES = "Raumgegner",
@@ -221,13 +221,13 @@ OPTWEBSITE = "Webseite",
 OPTDESC = "Beschrei\n-bung", -- If necessary, you can span multiple lines
 OPTSIZE = "Größe",
 OPTMUSIC = "Musik",
-CAPNONE = "KEINER",
+CAPNONE = "KEINE",
 ENTERLONGOPTNAME = "Levelname:",
 
 X = "x", -- Used for level size: 20x20
 
-SOLID = "Solide",
-NOTSOLID = "Nicht solide",
+SOLID = "Solid",
+NOTSOLID = "Unsolid",
 
 TSCOLOR = "Farbe $1",
 
@@ -244,7 +244,7 @@ VERSIONERROR = "Kann nicht die Version prüfen.",
 VERSIONUPTODATE = "Deine Version von Ved ist auf dem neusten Stand.",
 VERSIONOLD = "Update verfügbar! Neuste Version: $1",
 VERSIONCHECKING = "Suche nach Updates...",
-VERSIONDISABLED = "Updateprüfung deaktiviert",
+VERSIONDISABLED = "Updateüberprüfung deaktiviert",
 
 SAVESUCCESS = "Erfolgreich gespeichert!",
 SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
@@ -261,7 +261,7 @@ CREATENEWSCRIPT = "Erstelle neues Skript",
 NEWNOTENAME = "Name:",
 CREATENEWNOTE = "Erstelle neue Notiz",
 
-ADDNEWBTN = "[Neues hinzufügen]",
+ADDNEWBTN = "[Neue hinzufügen]",
 IMAGEERROR = "[BILDFEHLER]",
 
 NEWNAME = "Neuer Name:",
@@ -284,14 +284,14 @@ FLAGNOTUSED = "Nicht benutzt",
 FLAGNONAME = "Kein Name",
 USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
 
-CUSTOMVVVVVVDIRECTORY = "VVVVVV Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV Ordner ein, falls es nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
+CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
+CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV-Ordner ein, falls es nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
 FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
 ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
-ASKBEFOREQUIT = "Frage vor dem beenden",
-NEVERASKBEFOREQUIT = "Frage niemals vor dem beenden, auch wenn es ungespeicherte Änderungen gibt",
+ASKBEFOREQUIT = "Frage vor dem Beenden",
+NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte Änderungen gibt",
 COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
 ALLOWDEBUG = "Aktiviere Debugmodus",
 SHOWFPS = "Zeige FPS-Zähler",
@@ -334,7 +334,7 @@ LEVMUSICEMPTY = "Levelmusik ist leer!",
 NOT400ROOMS = "#levelMetadata <> 400!!",
 MOREERRORS = "$1 mehr",
 
-DEBUGMODEON = "Debug-Modus an",
+DEBUGMODEON = "Debugmodus an",
 FPS = "FPS",
 STATE = "Status",
 MOUSE = "Maus",
@@ -348,7 +348,7 @@ GREEN = "Grün",
 GRAY = "Grau",
 PINK = "Pink",
 BROWN = "Braun",
-RAINBOWBG = "Regenbogen-Hintergrund",
+RAINBOWBG = "Regenbogenhintergrund",
 
 -- b14
 SYNTAXCOLORS = "Syntaxfarben",
@@ -387,27 +387,27 @@ BACKUPS = "Backups",
 BACKUPSOFLEVEL = "Backups von Level $1",
 LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
 OVERWRITTENTIME = "Überschrieben", -- List header
-SAVEBACKUP = "Im VVVVVV Ordner speichern",
+SAVEBACKUP = "Im VVVVVV-Ordner speichern",
 DATEFORMAT = "Datumsformat",
 CUSTOMDATEFORMAT = "Eigenes Datumsformat",
-SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird gemacht in diesem Fall!",
+SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird in diesem Fall gemacht!",
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
 MOREINFO = "Mehr Info",
 COPYLINK = "Link kopieren",
-SCRIPTDISPLAY = "Zeigen",
+SCRIPTDISPLAY = "Anzeigen",
 SCRIPTDISPLAY_USED = "Benutzt",
 SCRIPTDISPLAY_UNUSED = "Unbenutzt",
 
 -- 1.3.0 (more changes)
 RECENTLYOPENED = "Zuletzt geöffnete Level",
-REMOVERECENT = "Willst du es entfernen von der Liste der zuletzt geöffneten Level?",
+REMOVERECENT = "Willst du es von der Liste der zuletzt geöffneten Level entfernen?",
 RESETCUSTOMBRUSH = "(Rechtsklick um eine neue Größe einzustellen)",
 
 -- 1.3.2
 DISPLAYSETTINGS = "Anzeige/\nSkalierung",
-DISPLAYSETTINGSTITLE = "Anzeige/Skalierung Einstellungen",
+DISPLAYSETTINGSTITLE = "Anzeige/Skalierungseinstellungen",
 SMALLERSCREEN = "Kleinere Fensterbreite (800px breit anstatt 896px)",
 FORCESCALE = "Zwinge Skalierungseinstellungen",
 SCALENOFIT = "Die aktuelle Größeneinstellung macht das Fenster zu groß um zu passen.",
@@ -417,7 +417,7 @@ VEDRES = "Ved Auflösung: $1x$2",
 NONINTSCALE = "Nicht-ganzzahlige Skalierung",
 
 -- 1.3.4
-USEFONTPNG = "Benutze font.png von VVVVVV Grafikordner als Schrift",
+USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
 SYNTAXCOLOR_COMMENT = "Kommentar",
