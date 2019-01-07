@@ -213,6 +213,9 @@ end
 
 function writelevelfile(path, contents)
 	-- returns success, (if not) error message
+	if path:match(".*[:%*%?\"<>|].*") ~= nil then
+		return false, L.INVALIDFILENAME_WIN
+	end
 
 	local fh, everr = io.open(path, "w")
 
