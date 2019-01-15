@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2018-10-29 13:59:25 (CET)
+--- Last converted: 2019-01-15 23:03:05 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -19,7 +19,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Сделано CreepiX'ом и Captain Normalguy'ем", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Сделано CreepiX'ом и Чиприком", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.0 или выше. Загрузите L{VE на https://love2d.org/.",
 UNKNOWNSTATE = "Неизвестный режим ($1), перешедший из $2",
@@ -1806,27 +1806,26 @@ entersecretlab\r#h
 subj = "Списки номеров",
 imgs = {},
 cont = [[
-Lists reference\wh#
+Список номеров\wh#
 \C=
 
-These are lists of numbers that are used in VVVVVV, mostly copied from forum
-posts. Thanks to everyone who assembled these lists!
+Здесь представлены номера, используемые в VVVVVV, в основном скопированных с
+постов на форуме. Спасибо всем, кто помог собрать этот список!
 
-
-Index\w&Z+
+Пункты\w&Z+
 \&Z+
-#Music numbers (simplified scripting)\C&Z+l
-#Music numbers (internal)\C&Z+l
-#Sound effect numbers\C&Z+l
-#Entities\C&Z+l
-#Colors for createentity() crewmates\C&Z+l
-#Enemy movement types\C&Z+l
-#Gamestates\C&Z+l
+#Номера музыки (простой скриптинг)\C&Z+l
+#Номера музыки (внутренний скриптинг)\C&Z+l
+#Номера звуковых эффектов\C&Z+l
+#Объекты\C&Z+l
+#Список цветов для createentity() crewmates\C&Z+l
+#Типы движения врагов\C&Z+l
+#Состояния игры\C&Z+l
 
 
-Music numbers (simplified scripting)\h#
+Номера музыки (простой скриптинг)\h#
 
-0 - Silence (no music)
+0 - Тишина (нет музыки)
 1 - Pushing onwards
 2 - Positive force
 3 - Potential for anything
@@ -1839,7 +1838,7 @@ Music numbers (simplified scripting)\h#
 10 - Paced energy
 11 - Piercing the sky
 
-Music numbers (internal)\h#
+Номера музыки (внутренний скриптинг)\h#
 
 0 - Path Complete
 1 - Pushing Onwards
@@ -1858,222 +1857,224 @@ Music numbers (internal)\h#
 14 - Piercing The Sky
 15 - Predestined Fate remixed
 
-Sound effect numbers\h#
+Номера звуковых эффектов\h#
 
-0 - Flip to ceiling
-1 - Flip back to floor
-2 - Cry
-3 - Trinket collected
-4 - Coin collected
-5 - Checkpoint touched
-6 - Quicker quicksand block touched
-7 - Normal quicksand block touched
-8 - Gravity line touched
-9 - Flash
-10 - Warp
-11 - Viridian squeak
-12 - Verdigris squeak
-13 - Victoria squeak
-14 - Vitellary squeak
-15 - Violet squeak
-16 - Vermilion squeak
-17 - Terminal touched
-18 - Teleporter touched
-19 - Alarm
-20 - Terminal squeak
-21 - Time trial countdown "3", "2", "1"
-22 - Time trial countdown "Go!"
-23 - VVVVVV Man breaking walls
-24 - Crewmates (de)combining into VVVVVV Man
-25 - New record in Super Gravitron
-26 - New trophy in Super Gravitron
-27 - Rescued crewmate (in custom levels)
+0 - Переворот вверх
+1 - Переворот вниз
+2 - Плач
+3 - Тринкет
+4 - Монета
+5 - Чекпоинт
+6 - Быстрый зыбучий песок
+7 - Обычный зыбучий песок
+8 - Грави-линия
+9 - Вспышка
+10 - Варп
+11 - Голос Виридиана
+12 - Голос Вердигриса
+13 - Голос Виктории
+14 - Голос Вителлари
+15 - Голос Виолетты
+16 - Голос Вермилиона
+17 - Касание терминала
+18 - Телепорт
+19 - Сигнал тревоги
+20 - Звук терминала
+21 - Обратный отсчёт испытания временем
+22 - "Go!" испытания временем
+23 - Разрушение стены человеком VVVVVV
+24 - Члены экипажа сливаются в форму человека VVVVVV (восстанавливаются из неё)
+25 - Новый рекорд в Супер Гравитроне
+26 - Новый трофей в Супер Гравитроне
+27 - Спасение члена экипажа (в пользовательских уровнях)
 
-Entities\h#
+Объекты\h#
 
-0 - The player
-1 - Enemy
-    Metadata: movement type, movement speed
-    Due to lacking needed data, you will only ever get a purple enemy box, unless
-    you're in the VVVVVV polar dimension while doing the command
-2 - Moving platform
-    Metadata: movement type, movement speed
-    Note that conveyors are implemented as moving platforms, see movement type 8
-    and 9.
-3 - A disappearing platform
-4 - A 1x1 quicker quicksand block
-5 - A flipped Viridian, you will flip gravity when touched
-6 - Weird red flashy thingy that disappears quickly
-7 - Same as above, but doesn't flash and is colored cyan
-8 - A coin from the prototype
-    Metadata: Coin ID
-9 - Trinket
-    Metadata: Trinket ID
-    Note that trinket ID start at 0, and everything above 19 will not be saved in
-    the savefile once you restart the level
-10 - Checkpoint
-     Metadata: Checkpoint state (0=flipped, 1=normal), Checkpoint ID (checks if
-     the checkpoint is active or not)
-11 - Horizontal gravity line
-     Metadata: Length in pixels
-12 - Vertical gravity line
-     Metadata: Length in pixels
-13 - Warp token
-     Metadata: Destination in tiles X axis, destination in tiles Y axis
-14 - The round teleporter
-     Metadata: Checkpoint ID(?)
-15 - Verdigris
-     Metadata: AI state
-16 - Vitellary (flipped)
-     Metadata: AI state
-17 - Victoria
-     Metadata: AI state
-18 - Crewmate
-     Metadata: Color (using raw color list, not the crewmate colors), mood
-19 - Vermilion
-     Metadata: AI state
-20 - Terminal
-     Metadata: Sprite, Script ID(?)
-21 - Same as above but when touched the terminal doesn't light up
-     Metadata: Sprite, Script ID(?)
-22 - Collected trinket
-     Metadata: Trinket ID
-23 - Gravitron square
-     Metadata: Direction
-     If you input negative X coordinate (or too high), an arrow shows instead,
-     just like in the real Gravitron
-24 - Intermission 1 crewmate
-     Metadata: Raw color, mood
-     Doesn't seem to be affected by hazards, but should be.
-25 - Trophy
-     Metadata: Challenge identifier, sprite
-     If the challenge is completed, the base sprite ID (what you get if you use
-     sprite=0) will change. Only use 0 or 1 if you want predictable results
-     (0=normal, 1=flipped)
-26 - The warp token to the Secret Lab
-     Keep in mind that the warp is just implemented as a nice looking sprite.
-     You'll have to script the functionality for yourself
-55 - Rescueable crewmate
-     Metadata: Crewmate color. Color >6 will always show a *happy* Viridian
-56 - Custom level enemy
-     Metadata: Movement type, movement speed
-     Keep in mind that if there's no enemies in the room, the enemy sprite data
-     isn't updated correctly and it will just show what enemy you saw last time,
-     or a square enemy
-Undefined entities (27-50, 57+) give glitchy Viridians.
+0 - Игрок
+1 - Враг
+    Данные: тип движения, скорость движения
+    Из-за отсутствия необходимых данных, Вы получите лишь фиолетовую
+    коробку-врага, за исключением использования этой команды в полярном измерении
+    VVVVVV.
+2 - Движущаяся платформа
+    Учтите: в данном случае конвееры считаются движущимися платформами, смотрите
+    типы движения 8 и 9.
+3 - Исчезающая платформа
+4 - Единичный блок быстрого зыбучего песка
+5 - Перевёрнутый Виридиан, переворачивает гравитацию при касании
+6 - Непонятная мерцающая красная штука, которая быстро пропадает
+7 - То же, что и сверху, но не мерцает и голубого цвета
+8 - Монета из прототипа
+    Данные: ID монеты
+9 - Трикет
+    Данные: ID тринкета
+    Учтите: ID тринкетов начинаются с 0, любое число выше 19 не сохранится в
+    файле уровня при перезапуске.
+10 - Чекпоинт
+     Данные: Состояние чекпоинта (0 - перевёрнутый, 1 - нормальный), ID чекпоинта
+     (проверяет, активен ли чекпоинт)
+11 - Горизонтальная грави-линия
+     Данные: длина в пикселях
+12 - Вертикальная грави-линия
+     Данные: длина в пикселях
+13 - Жетон телепортации
+     Данные: Пункт назначения в тайлах по оси X, пункт назначения в тайлах по
+     оси Y
+14 - Круглый телепорт
+     Данные: ID чекпоинта(?)
+15 - Вердигрис
+     Данные: состояние AI
+16 - Вителлари (перевёрнутый)
+     Данные: состояние AI
+17 - Виктория
+     Данные: состояние AI
+18 - Член экипажа
+     Данные: Цвет (из списка цветов, не цвет члена экипажа), настроение
+19 - Вермилион
+     Данные: состояние AI
+20 - Терминал
+     Данные: Спрайт, ID скрипта(?)
+21 - То же, что и сверху, но не высвечивается при касании
+     Данные: Спрайт, ID скрипта(?)
+22 - Собранный тринкет
+     Данные: ID тринкета
+23 - Квадрат из Грвитрона
+     Данные: направление
+     При вводе отрицательной координаты X (или слишком большой) появляется
+     только стрелка, как в настоящем Гравитроне
+24 - Член экипажа сбоя 1
+     Данные: Цвет из списка цветов
+     По всей видимости, не страдает от припядствий, чего не следует происходить
+25 - Трофей
+     Данные: Идентификатор задания, спрайт
+     Если задание выполнено, начальное ID спрайта (при sprite=0) изменится.
+     Используйте 0 или 1 для предсказуемых результатов (0-нормальный,
+     1 - перевёрнутый)
+26 - Варп в Секретную Лабораторию
+     Учтите, что это только красивый спрайт. Вам придётся создавать отдельный
+     скрипт для его функционирования.
+55 - Спасаемый член экипжа
+     Данные: Цвет члена экипажа. Номера больше 6 дают в результате *счастливого*
+     Виридиана.
+56 - Враг пользовательского уровня
+     Данные: тип движения, скорость движения
+     Учтите, что если в комнате врагов нет, то данные врага будут обновленны
+     некорректно и в результате это покажет врага, которого вы видели в последний
+     раз, или квадратного врага.
+Неуказанные объекты (27-50, 57 и далее) дают в результате неисправных Виридианов.
 
-Colors for createentity() crewmates\h#
+Список цветов для createentity() crewmates\h#
 
-0: Cyan
-1: Flashy red (used for death)
-2: Dark orange
-3: Trinket color
-4: Gray
-5: Flashy white
-6: Red (tiny bit darker than Vermilion)
-7: Lime green
-8: Hot pink
-9: Brilliant yellow
-10: Flashy white
-11: Bright cyan
-12: Blue, same as Victoria
-13: Green, same as Verdigris
-14: Yellow, same as Vitellary
-15: Red, same as Vermilion
-16: Blue, same as Victoria
-17: Lighter orange
-18: Gray
-19: Darker gray
-20: Pink, same as Violet
-21: Lighter gray
-22: White
-23: Flashy white
-24-29: White
-30: Gray
-31: Dark, slightly purplish gray?
-32: Dark cyan/green
-33: Dark blue
-34: Dark green
-35: Dark red
-36: Dull orange
-37: Flashy gray
-38: Gray
-39: Darker cyan/green
-40: Flashier gray
-41-99: White
-100: Dark gray
-101: Flashy white
-102: Teleporter color
-103 and onwards: White
+0: Голубой
+1: Мерцающий красный (используется при смерти)
+2: Тёмно-оранжевый
+3: Цвет тринкета
+4: Серый
+5: Мерцающий белый
+6: Красный (немного темнее цвета Вермилиона)
+7: Лаймовый
+8: Ярко-розовый
+9: Блестящий жёлтый
+10: Мерцающий белый
+11: Ярко-серый
+12: Синий, как Виктория
+13: Зелёный, как Вердигрис
+14: Жёлтый, как Вителлари
+15: Красный, как Вермилион
+16: Синий, как Виктория
+17: Светло-оранжевый
+18: Серый
+19: Тёмно-серый
+20: Розовый, как Виолетта
+21: Светло-серый
+22: Белый
+23: Мерцающий белый
+24-29: Белый
+30: Серый
+31: Тёмно-серый, немного фиолетовый?
+32: Тёмный цвет морской волны
+33: Тёмно-синий
+34: Тёмно-зелёный
+35: Тёмно-красный
+36: Тускло-оранжевый
+37: Мерцающий серый
+38: Серый
+39: Тёмный цвет морской волны
+40: Более мерцающий серый
+41-99: Белый
+100: Тёмно-серый
+101: Мерцающий белый
+102: Цвет телепорта
+103 и далее: белый
 
-Enemy movement types\h#
+Типы движения врагов\h#
 
-0 - Bouncing up and down, starts down.
-1 - Bouncing up and down, starts up.
-2 - Bouncing left and right, starts left.
-3 - Bouncing left and right, starts right.
-4, 7, 11 - Moves right until collision.
-5 - Same as above, only acts weird when it collides.
-    GIF here: ¤https://files.catbox.moe/c23ovl.gif\nCl
-6 - Bouncing up and down, but only reaches a certain y position before going back
-    down. Used in "Trench warfare".
-8, 9 - For moving platforms they're conveyors, and they're still for anything else
-14 - Able to be blocked by disappearing platforms
-15 - Still (?)
-10, 12 - Clones right/in the same spot, crashes VVVVVV if it gets too intense, and
-         will corrupt your level if you save.
-13 - Like 4, but moves down until collision.
-16 - Flashes in and out of existence. (Appears and disappears)
-17 - Jittery movement left
-18 - Jittery movement right, little bit faster
-19+ - Still (?)
+0 - Прыжки вверх-вниз, сначала вниз.
+1 - Прыжки вверх-вниз, сначала вверх.
+2 - Движение влево-вправо, сначала влево.
+3 - Движение влево-вправо, сначала вправо.
+4, 7, 11 - Движение вправо до касания с поверхностью
+5 - То же, что и сверху, но ведёт себя странно при соприкосновении
+    GIF-пример: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Движение вверх-вниз, но движется вниз только при достижении определённой
+    позиции Y. Используется в комнате "Trench warfare".
+8, 9 - Конвееры для движущихся платформ и стационарность для всего остального
+14 - Может быть блокировно исчезающими платформами
+15 - Стационарно (?)
+10, 12 - Клонируется вправо/в этой же точке, заставляет VVVVVV вылететь при
+         большой интенсивности, искажает файл уровня при сохранении.
+13 - Как 4, но движение вниз.
+16 - Пропадает из бытия. (Появляется и исчезает)
+17 - Дёрганное движение вправо
+18 - Дёрганное движение вправо, немного быстрее
+19 и более - Стационарно (?)
 
-Gamestates\h#
+Состояния игры\h#
 
-0 - Break out from most gamestates
-1 - Set gamestate to 0 (i.e. same as above in practice)
+0 - Прерывает большинство состояний игры
+1 - Установить состояние игры 0 (по сути, то же, что и 0)
 2 - "To do: write quick intro to story!"
 4 - "Press arrow keys or WASD to move"
-5 - Runs the script "returntohub" (i.e. fadeout, teleport to right before The
-    Tower, fadein, play Passion for Exploring)
-7 - Removes textboxes
+5 - Запускает скрипт "returntohub" (т.е. затемнение, телепортация прямо перед
+    The Tower, высветление, воспроизведение Passion for Exploring)
+7 - Убирает текстовые рамки
 8 - "Press enter to view map and quicksave"
-9 - Super Gravitron
-10 - Gravitron
-11 - "When you're NOT standing on stop and wait for you" (Tries to access flipmode
-     check to write "the ceiling" or "the floor", and check crewmate, but as this
-     fails, the above prints instead)
+9 - Супер Гравитрон
+10 - Гравитрон
+11 - "When you're NOT standing on stop and wait for you" (Результат неудачной
+     попытки проверить состояние flipmode, чтобы написать "the ceiling" или
+     "the floor" в середине)
 12 - "You can't continue to the next room until he is safely accross."
-13 - Removes textboxes quickly
-14 - "When you're standing on the floor," (the same applies here as for 11)
-15 - Makes Viridian happy
-16 - Makes Viridian sad
+13 - Быстро убирает текстовые рамки
+14 - "When you're standing on the floor," (случай, схожий с 11)
+15 - Делает Виридиана счастливым
+16 - Делает Виридиана грустным
 17 - "If you prefer, you can press UP or DOWN instead of ACTION to flip."
-20 - If flag 1 is 0, set flag 1 to 1 and remove textboxes
-21 - If flag 2 is 0, set flag 2 to 1 and remove textboxes
+20 - Если флаг 1 равен 0, устанавливает флаг 1 в 1 и убирает текстовые рамки
+21 - Если флаг 2 равен 0, устанавливает флаг 2 в 1 и убирает текстовые рамки
 22 - "Press ACTION to flip"
 30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
      out ok..."
-31 - "Violet, is that you?" cutscene (as long as flag 6 is 0)
-32 - If flag 7 is 0: "A teleporter!" "I can get back to the ship with this!"
-33 - If flag 9 is 0: Victoria-cutscene
-34 - If flag 10 is 0: Vitellary-cutscene
-35 - If flag 11 is 0: Verdigris-cutscene
-36 - If flag 8 is 0: Vermilion-cutscene
-37 - Vitellary after gravitron
-38 - Vermilion after gravitron
-39 - Verdigris after gravitron
-40 - Victoria after gravitron
-41 - If flag 60 is 0: run the beginning of intermission 1 cutscene
-42 - If flag 62 is 0: run the 3rd intermission 1 cutscene
-43 - If flag 63 is 0: run the 4th intermission 1 cutscene
-44 - If flag 64 is 0: run the 5th intermission 1 cutscene
-45 - If flag 65 is 0: run the 6th intermission 1 cutscene
-46 - If flag 66 is 0: run the 7th intermission 1 cutscene
-47 - If flag 69 is 0: "Ohh! I wonder what that is?" trinket cutscene
-48 - If flag 70 is 0: "This seems like a good place to store anything I find out
-     there..." (Victoria not found yet)
-49 - If flag 71 is 0: Play Predestined Fate
+31 - Катсцена "Violet, is that you?" (если флаг 6 равен 0)
+32 - Если флаг 7 равен 0: "A teleporter!" "I can get back to the ship with this!"
+33 - Если флаг 9 равен 0: Катсцена с Викторией
+34 - Если флаг 10 равен 0: Катсцена с Вителлари
+35 - Если флаг 11 равен 0: Катсцена с Вердигрисом
+36 - Если флаг 8 равен 0: Катсцена с Вермилионом
+37 - Вителлари после гравитрона
+38 - Вермилион после гравитрона
+39 - Вердигрис после гравитрона
+40 - Виктория после гравитрона
+41 - Если флаг 60 равен 0: Воспроизводит начало катсцены сбоя 1
+42 - Если флаг 62 равен 0: Воспроизводит 3 катсцену сбоя 1
+43 - Если флаг 63 равен 0: Воспроизводит 4 катсцену сбоя 1
+44 - Если флаг 64 равен 0: Воспроизводит 5 катсцену сбоя 1
+45 - Если флаг 65 равен 0: Воспроизводит 6 катсцену сбоя 1
+46 - Если флаг 66 равен 0: Воспроизводит 7 катсцену сбоя 1
+47 - Если флаг 69 равен 0: Катсцена с тринкетом "Ohh! I wonder what that is?"
+48 - Если флаг 70 равен 0: "This seems like a good place to store anything I find
+     out there..." (Виктория ещё не спасена)
+49 - Если флаг 71 равен 0: Воспроизводит Predestined Fate
 50 - "Help! Can anyone hear this message?"
 51 - "Verdigris? Are you out there? Are you ok?"
 52 - "Please help us! We've crashed and need assistance!"
@@ -2081,80 +2082,86 @@ Gamestates\h#
 54 - "This is Doctor Violet from the D.S.S. Souleye! Please respond!"
 55 - "Please... Anyone..."
 56 - "Please be alright, everyone..."
-With gamestate 50-56, you can choose where to start, because everything will
-     appear after each other
-80 - If screen is black (and only if), continue to state 81 (My guess is that this
-     is called when ESC is pressed, before the pause menu opens)
-81 - Go back to the main menu
-82 - Results of time trial (bugged)
-83 - If screen is back, continue to state 84
-84 - Results of time trial (I think 82 works better than 84)
-85 - The Time Trial version of gamestate 200 (Flash, play Positive Force, turn on
-     finalstretch mode)
-States 90-95 are time trial related, but doesn't work properly in custom levels.
-     The only real effects that happens in custom levels is a warp, and music
-     change
-90 - Space Station 1
-91 - The Laboratory
-92 - Warp Zone
-93 - The Tower
-94 - Space Station 2
-95 - Final Level
-96 - If the screen is black, continue to state 97
-97 - Exit from Super Gravitron (teleport and play Pipe Dream)
-100 - If flag 4 is 0: continue to state 101
-101 - If you are flipped, flip back to floor, continue to state 102
-The following states (102-112) try to go to the current state + 1, like in 50-56
-      (but doesn't loop around), but may glitch as half of the states (103, 105,
-      107, 109, 111) doesn't exist.
-102 - Verdigris: "Captain! I've been so worried!"
+При выборе любого состояния игры из 50-56, остальные состояния будут включаться
+     по порядку
+80 - Только если экран затемнён, перейти к состоянию 81 (По-моему, это состояние
+     активируется при нажатии ESC, перед открытием меню паузы)
+81 - Вернуться к главному меню
+82 - Результаты испытания временем (неисправно)
+83 - Если экран затемнён, перейти к состоянию 84
+84 - Результаты испытания временем (по-моему, 82 работает лучше)
+85 - Состояние 200 в режиме испытания временем (Вспышка, играет Positive Force,
+     включается режим finastretch)
+Состояния 90-95 связаны с испытаниями временем, но они не работают должным
+     образом в пользовательских уровнях. Единственные изменения в
+     пользовательских уровнях от этих состояний - варпы и изменения музыки.
+90 - Космическая Станция 1
+91 - Лаборатория
+92 - Зона Варпа
+93 - Башня
+94 - Космическая Станция 2
+95 - Финальный Уровень
+96 - Если экран затемнён, перейти к состоянию 97
+97 - Выход из Супер Гравитрона (телепортация, играет Pipe Dream)
+100 - Если флаг 4 равен 0: перейти к состоянию 101
+101 - Если гравитация перевёрнута, перевернуться обратно, перейти к состоянию 102
+Далее состояния (102-112) пытаются переходить к состояниям, следующим по списку,
+     как 50-56 (но не зацикливаются), однако могут выдать ошибку, так как
+     половины состояний (103, 105, 107, 109, 111) не существует.
+102 - Вердигрис: "Captain! I've been so worried!"
 104 - "I'm glad you're ok!"
 106 - "I've been trying to find a way out, but I keep going around in circles..."
 108 - "Don't worry! I have a teleporter key!"
 110 - "Follow me!"
-112 - Removes textboxes
-115 - Essentially nothing, continue to state 116
-116 - Red dialog at the bottom of the screen saying "Sorry Eurogamers! Teleporting
-      around the map doesn't work in this version!", continue to state 117, which
-      doesn't exist, so things may fail
-118 - Removes textboxes
-State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
-      things
-120 - If flag 5 is 0: continue to state 121
-121 - If you're on the floor, flip.
-122 - Vitellary: "Captain! You're ok!"
-124 - Vitellary: "I've found a teleporter, but I can't get it to go anywhere..."
+112 - Убирает текстовые рамки
+115 - По сути, не делает ничего, переходит к состоянию 116
+116 - Красная текстовая рамка внизу экрана: "Sorry Eurogamers! Teleporting
+      around the map doesn't work in this version!", переход к состоянию 117,
+      которого не существует, так что может не сработать.
+118 - Убирает текстовые рамки
+Состояния 120-128 работают почти как 102-112, но более надёжно
+120 - Если флаг 5 равен 0: перейти к состоянию 121
+121 - Если гравитация направлена вниз, перевернуться.
+122 - Вителлари: "Captain! You're ok!"
+124 - Вителлари: "I've found a teleporter, but I can't get it to go anywhere..."
 126 - "I can help with that!"
 128 - "I have the teleporter codex for our ship!"
 130 - "Yey! Let's go home!"
-132 - Removes textboxes
-200 - Final mode
-1000 - Turns on cutscenebars, freezes the game, continue to state 1001
-1001 - You got a shiny trinket! dialog (but you didn't actually get any, this is
-       just called each time you get one), continue to state 1003
-1003 - Revert game to normal
-1010 - You found a crewmate! in the same manner as for trinkets
-2000 - Save the game
-2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
-            The Laboratory I guess, continue to state 2510
-2510 - Viridian: "Hello?", continue to state 2512
-2512 - Viridian: "Is anybody there?", continue to state 2514
-2514 - Removes textboxes, play Potential For Anything
-3000-3099 states:
-3000-3005 - Level Complete! You've rescued the crewmate applied to companion(),
-            defaults to Verdigris. 6=Verdigris, 7=Vitellary, 8=Victoria,
-            9=Vermilion, 10=Viridian (yes, really), 11=Violet (Gamestates:
-            3006-3011=Verdigris, 3020-3026=Vitellary, 3040-3046=Victoria,
-            3060-3066=Vermilion, 3080-3086=Viridian, 3050-3056=Violet)
-3070-3072 - Perform postrescue things, usually return to ship
-3501 - Game Complete
-4010 - Flash + warp
+132 - Убирает текстовые рамки
+200 - Режим финала
+1000 - Включает границы катсцен, приостанавливает игру, переход к состоянию 1001
+1001 - Диалог "You got a shiny trinket!" (на самом деле Вы не получаете тринкет,
+       диалог высвечивается каждый раз при собирании тринкетов), переход к
+       состоянию 1003
+1003 - Вернуть игру в нормальный режим
+1010 - "You found a crewmate!" в том же духе, как и с тринкетами
+2000 - Сохранить игру
+2500-2509 - Телепортироваться в какую-то странную несуществующую локацию, скорее
+            всего имелась ввиду Лаборатория, перейти к состоянию 2510
+2510 - Виридиан: "Hello?", перейти к состоянию 2512
+2512 - Виридиан: "Is anybody there?", перейти к состоянию 2514
+2514 - Убирает текстовые рамки, воспроизводит Potential For Anything
+Состояния 3000-3099:
+3000-3005 - "Level Complete! You've rescued the crewmate" применяемый к
+            companion(), по умолчанию - Виридиан. 6 - Вердигрис, 7 -Вителлари,
+            8 - Виктория, 9- Вермилион, 10 - Виридиан (зуб даю), 11 - Виолетта
+            (Состаяния игры: 3006-3011 - Вердигрис, 3020-3026 - Вителлари,
+            3040-3046 - Виктория, 3060-3066 - Вермилион, 3080-3086 - Виридиан,
+            3050-3056 - Виолетта)
+3070-3072 - Делает вещи, выполняемые после спасения, обычно возвращает на корабль
+3501 - Игра Завершена
+4010 - Вспышка + варп
 4070 - The Final Level, but the game will crash when you reach Timeslip (Because
        of how the game gets entity information, which is broken in custom levels)
+       The Final Level, но игра крашается при достижении Timeslip (из-за
+       получения игрой данных объекта, неисправных в пользовательских уровнях)
 4080 - Captain teleported back to the ship: "Hello!" [C[C[C[C[Captain!] cutscene +
        credits.
-       The above will mess up your save data so don't do it unless you backed up!
-4090 - Cutscene after you complete space station 1
+       Капитан телепортируется обратно на корабль, катсцена
+       "Hello!" [C[C[C[C[Captain!] + титры.
+       Это испортит Ваши данные сохранения, так что не рискуйте, если не
+       сделали бекап!
+4090 - Катсцена после Космической Станции 1
 ]]
 },
 
@@ -2432,10 +2439,10 @@ cont = [[
 
 Создатель Ved: Dav999
 
-Некоторая графика и шрифт: Format
+Некоторая графика и шрифт: Doormat
 
-Перевод на русский: CreepiX, Captain Normalguy
-Перевод на эсперанто: Format
+Перевод на русский: CreepiX, Чиприк
+Перевод на эсперанто: Doormat
 Перевод на немецкий: r00ster
 
 
@@ -2443,8 +2450,6 @@ cont = [[
 
 
 Терри Кавана, создателю VVVVVV
-
-TurtleP (за код, убирающий сглаживание при изменении размера)
 
 Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
 
@@ -2455,9 +2460,11 @@ TurtleP (за код, убирающий сглаживание при изме�
 
 
 
+
+
 License\h#
 
-Copyright 2015-2018  Dav999              (I do not claim ownership of or copyright
+Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
 
 Redistribution and use in source and binary forms, with or without modification,

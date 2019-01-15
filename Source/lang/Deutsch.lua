@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2018-10-29 13:59:25 (CET)
+--- Last converted: 2019-01-15 22:54:06 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -61,7 +61,7 @@ SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
 FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
 FLAGNAMECHARS = "Flagnamen können nicht (, ), , oder Leerzeichen enthalten.",
 FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
-DIFFSELECT = "Wähle das Level aus mit dem verglichen werden soll.\nDas Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
+DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
 SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
 SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
@@ -285,7 +285,7 @@ FLAGNONAME = "Kein Name",
 USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV-Ordner ein, falls es nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
+CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV-Ordner ein, falls er nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
 FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
@@ -2394,10 +2394,10 @@ Credits\wh#
 
 Ved ist gemacht von Dav999
 
-Manche der Grafiken und Schriftarten wurden von Format gemacht
+Manche der Grafiken und Schriftarten wurden von Doormat gemacht
 
-Russische Übersetzung: CreepiX, Captain Normalguy
-Esperanto Übersetzung: Format
+Russische Übersetzung: CreepiX, Cheeprick
+Esperanto Übersetzung: Doormat
 Deutsche Übersetzung: r00ster
 
 
@@ -2405,8 +2405,6 @@ Besonderen Dank an:\h#
 
 
 Terry Cavanagh für das machen von VVVVVV
-
-TurtleP (für den Code der Grafiken nicht verschwommen aussehen ließ beim skalieren)
 
 Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu machen!
 
@@ -2417,9 +2415,11 @@ Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu ma
 
 
 
+
+
 License\h#
 
-Copyright 2015-2018  Dav999              (I do not claim ownership of or copyright
+Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
 
 Redistribution and use in source and binary forms, with or without modification,

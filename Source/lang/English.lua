@@ -2380,10 +2380,10 @@ Credits\wh#
 
 Ved is made by Dav999
 
-Some of the graphics and the font were made by Format
+Some of the graphics and the font were made by Doormat
 
-Russian translation: CreepiX, Captain Normalguy
-Esperanto translation: Format
+Russian translation: CreepiX, Cheeprick
+Esperanto translation: Doormat
 German translation: r00ster
 
 
@@ -2391,8 +2391,6 @@ Special thanks to:\h#
 
 
 Terry Cavanagh for making VVVVVV
-
-TurtleP (for the code that made graphics not blurry when scaled)
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
 
@@ -2403,9 +2401,11 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 
 
 
+
+
 License\h#
 
-Copyright 2015-2018  Dav999              (I do not claim ownership of or copyright
+Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
 
 Redistribution and use in source and binary forms, with or without modification,
