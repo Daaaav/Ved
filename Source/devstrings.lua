@@ -4,3 +4,5 @@
 --L. = ""
 L.INVALIDFILENAME_WIN = "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)"
 L.INVALIDFILENAME_MAC = "MacOS doesn't allow the : character in filenames."
+
+L.COLORED_TEXTBOXES = "Use true textbox colors"

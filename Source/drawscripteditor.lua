@@ -6,7 +6,7 @@ function drawscripteditor()
 	--for k,v in pairs(scriptlines) do
 
 	-- This can roll over, prevent that!
-	textlinestogo = 0
+	local textlinestogo = 0
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
 	if textsize then
@@ -22,6 +22,8 @@ function drawscripteditor()
 	if textsize then
 		love.graphics.setFont(font16)
 	end
+
+	local textq, textc, lasttextcolor
 
 	-- -- Make sure to display all lines but if we put the cursor further, then do display line numbers
 	-- I could make it #scriptlines now
@@ -42,10 +44,10 @@ function drawscripteditor()
 
 			if textsize then
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8)
-				textq = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon)
+				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
 			else
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
-				textq = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon)
+				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
@@ -58,6 +60,20 @@ function drawscripteditor()
 
 		if textq ~= nil then
 			textlinestogo = textq
+			lasttextcolor = textc
+
+			-- Dialog bar
+			if k < table.maxn(scriptlines) and syntaxhlon then
+				if textboxcolors[textc] == nil then
+					textc = "gray"
+				end
+				love.graphics.setColor(textboxcolors[textc])
+				if textsize then
+					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+5, 6, textq*16)
+				else
+					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+6, 3, textq*8)
+				end
+			end
 		elseif textlinestogo > 0 then
 			textlinestogo = textlinestogo - 1
 		end

@@ -138,6 +138,11 @@ configs =
 		default = false,
 		["type"] = "bool",
 		},
+	colored_textboxes =
+		{
+		default = true,
+		["type"] = "bool",
+		},
 	visload_seen =
 		{
 		default = false,

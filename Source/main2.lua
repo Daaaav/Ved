@@ -906,6 +906,9 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
 		colorsetting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
+		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
+		love.graphics.print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4+2)
+
 		rbutton(L.BTN_OK, 0)
 		rbutton(L.RESETCOLORS, 2)
 
@@ -924,6 +927,9 @@ function love.draw()
 					end
 				end
 				editingcolor = nil
+			elseif mouseon(8, 8+(24*12), 16, 16) then
+				-- Use true textbox colors
+				s.colored_textboxes = not s.colored_textboxes
 			end
 
 			mousepressed = true

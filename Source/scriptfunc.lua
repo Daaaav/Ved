@@ -34,10 +34,17 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	return specificflag_n_real_usages
 end
 
-function syntaxhl(text, x, y, thisistext, addcursor, docolor)
+function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
-		_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
+		if thisistext and s.colored_textboxes then
+			if textboxcolors[lasttextcolor] == nil then
+				lasttextcolor = "gray"
+			end
+			_= docolor and setColorArr(textboxcolors[lasttextcolor])
+		else
+			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
+		end
 		love.graphics.print(text, x, y)
 		offsetchars = string.len(text) + 1
 
@@ -93,17 +100,23 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor)
 			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 		end
 
-		if partss[1] == "say" or partss[1] == "reply" then
+		if partss[1] == "say" then
 			if partss[2] == nil then
-				return 1
+				return 1, normalize_simplified_color(partss[3])
 			else
-				return tonumber(partss[2])
+				return tonumber(partss[2]), normalize_simplified_color(partss[3])
+			end
+		elseif partss[1] == "reply" then
+			if partss[2] == nil then
+				return 1, "player"
+			else
+				return tonumber(partss[2]), "player"
 			end
 		elseif partss[1] == "text" then
 			if partss[5] == nil then
-				return 1
+				return 0, partss[2]
 			else
-				return tonumber(partss[5])
+				return tonumber(partss[5]), partss[2]
 			end
 		end
 	end
@@ -707,4 +720,22 @@ function flagname_check_problem(name, number)
 			end
 		end
 	end
+end
+
+function normalize_simplified_color(c)
+	if c == "1" or c == "viridian" or c == "player" then
+		c = "cyan"
+	elseif c == "2" or c == "violet" or c == "pink" then
+		c = "purple"
+	elseif c == "3" or c == "vitellary" then
+		c = "yellow"
+	elseif c == "4" or c == "vermilion" then -- "vermillion" does not work in VVVVVV
+		c = "red"
+	elseif c == "5" or c == "verdigris" then
+		c = "green"
+	elseif c == "6" or c == "victoria" then
+		c = "blue"
+	end
+
+	return c
 end
