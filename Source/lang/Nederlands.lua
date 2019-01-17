@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-01-15 22:54:07 (CET)
+--- Last converted: 2019-01-17 14:00:36 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -508,7 +508,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Aardappel voor het doen van dingen die magisch zĳn"},
+[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Fill bucket", "Aardappel voor het doen van dingen die magisch zĳn"},
 [2] = {},
 [3] = {"Auto 1", "Automatisch uitbreiden L+R", "Automatisch uitbreiden L", "Automatisch uitbreiden R"},
 [4] = {},

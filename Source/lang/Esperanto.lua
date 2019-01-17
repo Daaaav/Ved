@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-01-15 22:54:06 (CET)
+--- Last converted: 2019-01-17 14:00:35 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -520,7 +520,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Mirinda mojosa magia terpomo"},
+[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Fill bucket", "Mirinda mojosa magia terpomo"},
 [2] = {},
 [3] = {"Aŭtomata", "Aŭtomata ambaŭen", "Aŭtomata maldekstren", "Aŭtomata dekstren"},
 [4] = {},

@@ -219,8 +219,8 @@ function love.load()
 
 	-- But we also have subtools!
 	subtoolimgs = {}
-	subtoolimgs[1] = {st("1_1"), st("1_2"), st("1_3"), st("1_4"), st("1_5"), st("1_6"), st("1_7"), st("1_8")}
-	subtoolimgs[2] = {st("2_1"), st("2_2"), st("2_3"), st("2_4"), st("2_5"), st("2_6"), st("2_7"), st("2_8")}
+	subtoolimgs[1] = {st("1_1"), st("1_2"), st("1_3"), st("1_4"), st("1_5"), st("1_6"), st("1_7"), st("1_8"), st("1_9")}
+	subtoolimgs[2] = {st("2_1"), st("2_2"), st("2_3"), st("2_4"), st("2_5"), st("2_6"), st("2_7"), st("2_8"), st("1_9")}
 	subtoolimgs[3] = {st("3_1"), st("3_2"), st("3_3"), st("3_4")}
 	subtoolimgs[4] = {}
 	subtoolimgs[5] = {st("5_1"), st("5_2")}
@@ -2332,7 +2332,7 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("y") then
 		-- No wait redo
 		redo()
-	elseif (not holdingzvx) and nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and ((key == "c") or (key == "v") or (key == "z") or (key == "x") or (key == "h") or (key == "b")) then -- Tried cleaning this bit up, later I realized why it was like this
+	elseif (not holdingzvx) and nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and ((key == "c") or (key == "v") or (key == "z") or (key == "x") or (key == "h") or (key == "b") or (key == "f")) then -- Tried cleaning this bit up, later I realized why it was like this
 		if keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("z") then
 			-- We goofed, undo.
 			undo()
@@ -2391,6 +2391,14 @@ function love.keypressed(key)
 			if selectedtool == 1 or selectedtool == 2 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 7
+
+				holdingzvx = true
+			end
+		elseif key == "f" then
+			-- Fill bucket
+			if selectedtool == 1 or selectedtool == 2 then
+				oldzxsubtool = selectedsubtool[selectedtool]
+				selectedsubtool[selectedtool] = 9
 
 				holdingzvx = true
 			end
@@ -2660,7 +2668,7 @@ end
 function love.keyreleased(key)
 	hook("love_keyreleased_start", {key})
 
-	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b") then
+	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
 		if selectedtool == 1 or selectedtool == 2 or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4) or ((selectedtool == 5 or selectedtool == 10) and oldzxsubtool <= 2) then
 			selectedsubtool[selectedtool] = oldzxsubtool
 		end

@@ -362,6 +362,32 @@ function drawmaineditor()
 							cons("That is " .. (atx-customsizecoorx) .. " by " .. (aty-customsizecoory) .. " starting at " .. customsizecoorx .. "," .. customsizecoory)
 						end
 					elseif selectedsubtool[selectedtool] == 9 then
+						-- Fill bucket
+						-- What "color" is the tile we're clicking on?
+						local oldtile = roomdata[roomy][roomx][aty*40+atx+1]
+						roomdata[roomy][roomx][aty*40+atx+1] = useselectedtile
+
+						-- It's only useful to fill if we're not filling an area with exactly the same tile.
+						if oldtile ~= useselectedtile then
+							-- Start a list of tiles
+							local tilesarea, i = {{atx, aty}}, 1
+
+							while tilesarea[i] ~= nil and i < 1200 do
+								local f_x, f_y = unpack(tilesarea[i])
+								for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
+									if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
+									and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
+									and roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] == oldtile then
+										roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] = useselectedtile
+
+										table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
+									end
+								end
+
+								i = i + 1
+							end
+						end
+					elseif selectedsubtool[selectedtool] == 10 then
 						-- to out
 						-- rot
 
@@ -1417,7 +1443,7 @@ function drawmaineditor()
 			)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
-			if selectedsubtool[selectedtool] == 1 then
+			if selectedsubtool[selectedtool] == 1 or selectedsubtool[selectedtool] == 9 then
 				-- Just a regular cursor
 				displayalphatile(0, 0, 0, 0)
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
@@ -1474,7 +1500,7 @@ function drawmaineditor()
 				end
 				displayalphatile(math.floor(customsizex), math.floor(customsizey), customsizex*2, customsizey*2, true)
 				displayshapedcursor(math.floor(customsizex), math.floor(customsizey), math.ceil(customsizex), math.ceil(customsizey))
-			elseif selectedsubtool[selectedtool] == 9 then
+			elseif selectedsubtool[selectedtool] == 10 then
 				displayalphatile(-1, 0, 0, 0)
 				displayalphatile(1, 0, 0, 0)
 				displayalphatile(0, -1, 0, 0)
@@ -1629,8 +1655,8 @@ function drawmaineditor()
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
-			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 7 then
-				tinyprint((" ZXCVHB"):sub(k,k), coorx-2+32+1, coory)
+			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 9 then
+				tinyprint((" ZXCVHB F"):sub(k,k), coorx-2+32+1, coory)
 			end
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then

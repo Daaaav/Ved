@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-01-15 22:54:06 (CET)
+--- Last converted: 2019-01-17 14:00:35 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -508,7 +508,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Kartoffel für das machen von dingen die magisch sind"},
+[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Fill bucket", "Kartoffel für das machen von dingen die magisch sind"},
 [2] = {},
 [3] = {"Automatisch 1", "Automatisch erweitern L+R", "Automatisch erweitern L", "Automatisch erweitern R"},
 [4] = {},

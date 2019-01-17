@@ -494,7 +494,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Potato for Doing Things that are Magical"},
+[1] = {"1x1 brush", "3x3 brush", "5x5 brush", "7x7 brush", "9x9 brush", "Fill horizontally", "Fill vertically", "Custom brush size", "Fill bucket", "Potato for Doing Things that are Magical"},
 [2] = {},
 [3] = {"Auto 1", "Auto expand L+R", "Auto expand L", "Auto expand R"},
 [4] = {},
