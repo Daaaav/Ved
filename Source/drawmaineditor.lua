@@ -1590,15 +1590,22 @@ function drawmaineditor()
 		-- We're done with that now, but now we have an area with subtools.
 		love.graphics.setScissor(16+64, 16, 32+4, love.graphics.getHeight()-32)
 
+		-- Allow for more than 9 subtools without scrolling, up to 13.
+		local subtoolheight = 48
+		if (#subtoolimgs[selectedtool] > 9) then
+			local n_subtools = #subtoolimgs[selectedtool]
+			subtoolheight = (416-n_subtools*32)/(n_subtools-1)+32
+		end
+
 		for k,v in pairs(subtoolimgs[selectedtool]) do
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or (selectedtool == 14 and selectedsubtool[selectedtool] ~= k) then
 				love.graphics.setColor(255,255,255,128)
-			elseif not nodialog or ((mouseon(16+64, 0, 32, 16)) or (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32))) and selectedsubtool[selectedtool] ~= k then
+			elseif not nodialog or ((mouseon(16+64, 0, 32, 16)) or (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and selectedsubtool[selectedtool] ~= k then
 				love.graphics.setColor(255,255,255,128)
 			end
 
-			if nodialog and not mousepressed and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
+			if nodialog and not mousepressed and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
 				if selectedtool <= 2 and k == 8 and love.mouse.isDown("r") then
 					customsizemode = 1
 					customsizex = 0
@@ -1609,13 +1616,13 @@ function drawmaineditor()
 			end
 
 			if selectedsubtool[selectedtool] == k then
-				love.graphics.draw(selectedtoolborder,  16+64, (16+(48*(k-1)))+leftsubtoolscroll)
+				love.graphics.draw(selectedtoolborder,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			else
-				love.graphics.draw(unselectedtoolborder,  16+64, (16+(48*(k-1)))+leftsubtoolscroll)
+				love.graphics.draw(unselectedtoolborder,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			end
 
 			coorx = 16+64+2
-			coory = (16+2+(48*(k-1)))+leftsubtoolscroll
+			coory = (16+2+(subtoolheight*(k-1)))+leftsubtoolscroll
 
 			-- v = subtoolimgs[selectedtool][k]
 			love.graphics.draw(v, coorx, coory)
@@ -1626,7 +1633,7 @@ function drawmaineditor()
 				tinyprint((" ZXCVHB"):sub(k,k), coorx-2+32+1, coory)
 			end
 
-			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(48*(k-1)))+leftsubtoolscroll, 32, 32))) then
+			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then
 				-- Ugh this code but we're hovering over it. So display a tooltip, but don't get snipped away by the scissors.
 				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
 				if selectedtool <= 2 and k == 8 then
