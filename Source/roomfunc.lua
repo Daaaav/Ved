@@ -706,9 +706,17 @@ function isnot0(tilenum)
 		return false
 	elseif tilenum == 0 then
 		return false
-	else
+	end
+	return true
+end
+
+function isoutsidebg(tilenum)
+	if tilenum == nil then
+		return false
+	elseif tilenum >= 680 and tilenum <= 703 then
 		return true
 	end
+	return false
 end
 
 function issolid(tilenum, tileset, spikessolid, ignoremultimode)
@@ -815,8 +823,10 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 		else
 			myissolid = issolid
 		end
-	elseif dowhat == 1 or dowhat == 6 then
+	elseif dowhat == 1 then
 		myissolid = isnot0
+	elseif dowhat == 6 then
+		myissolid = isoutsidebg
 	else
 		myissolid = isnot0
 	end
