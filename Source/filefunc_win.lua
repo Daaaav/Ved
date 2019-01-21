@@ -213,7 +213,7 @@ end
 
 function writelevelfile(path, contents)
 	-- returns success, (if not) error message
-	if path:match(".*[:%*%?\"<>|].*") ~= nil then
+	if path:sub(3):match(".*[:%*%?\"<>|].*") ~= nil then
 		return false, L.INVALIDFILENAME_WIN
 	end
 
