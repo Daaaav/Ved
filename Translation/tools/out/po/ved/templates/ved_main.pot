@@ -1,0 +1,2172 @@
+
+#. If you're making a translation, feel free to set this to something like "Translation made by (you)".
+msgctxt "L.TRANSLATIONCREDIT"
+msgid "<empty>"
+msgstr ""
+
+msgctxt "L.OUTDATEDLOVE"
+msgid "Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from https://love2d.org/."
+msgstr ""
+
+msgctxt "L.UNKNOWNSTATE"
+msgid "Unknown state ($1), jumped to from state $2"
+msgstr ""
+
+msgctxt "L.FATALERROR"
+msgid "FATAL ERROR: "
+msgstr ""
+
+msgctxt "L.FATALEND"
+msgid "Please close the game and try again. And if you're Dav, please fix it."
+msgstr ""
+
+msgctxt "L.OSNOTRECOGNIZED"
+msgid "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2"
+msgstr ""
+
+msgctxt "L.MAXTRINKETS"
+msgid "The maximum amount of trinkets (20) has been reached in this level."
+msgstr ""
+
+msgctxt "L.MAXCREWMATES"
+msgid "The maximum amount of crewmates (20) has been reached in this level."
+msgstr ""
+
+msgctxt "L.EDITINGROOMTEXTNIL"
+msgid "Existing room text we were editing is nil!"
+msgstr ""
+
+msgctxt "L.STARTPOINTNOLONGERFOUND"
+msgid "The old start point can no longer be found!"
+msgstr ""
+
+msgctxt "L.UNSUPPORTEDTOOL"
+msgid "Unsupported tool! Tool: "
+msgstr ""
+
+msgctxt "L.SURENEWLEVEL"
+msgid "Are you sure you want to make a new level? You will lose any unsaved content."
+msgstr ""
+
+msgctxt "L.SURELOADLEVEL"
+msgid "Are you sure you want to load a level? You will lose any unsaved content."
+msgstr ""
+
+msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
+msgid "Could not get contents of levels folder. Please check if $1 exists and try again."
+msgstr ""
+
+msgctxt "L.MAPSAVEDAS"
+msgid "Map image saved as $1!"
+msgstr ""
+
+msgctxt "L.RAWENTITYPROPERTIES"
+msgid "You can change the raw property values of this entity here."
+msgstr ""
+
+msgctxt "L.UNKNOWNENTITYTYPE"
+msgid "Unknown entity type $1"
+msgstr ""
+
+msgctxt "L.METADATAENTITYCREATENOW"
+msgid "The metadata entity does not exist yet. Create it now?\n\nThe metadata entity is a hidden entity that can be added to VVVVVV levels to hold extra data used by Ved, like the level notepad, flag names, and other things."
+msgstr ""
+
+msgctxt "L.WARPTOKENENT404"
+msgid "Warp token entity no longer exists!"
+msgstr ""
+
+#. Command names are best left untranslated
+msgctxt "L.SPLITFAILED"
+msgid "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?"
+msgstr ""
+
+msgctxt "L.NOFLAGSLEFT"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again.\n\nLeave the editor?"
+msgstr ""
+
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
+msgstr ""
+
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
+msgstr ""
+
+msgctxt "L.SIZELIMIT"
+msgid "The maximum size of a level is 20 by 20.\n\nThe level size will be changed to $1 by $2 instead."
+msgstr ""
+
+msgctxt "L.SCRIPTALREADYEXISTS"
+msgid "Script \"$1\" already exists!"
+msgstr ""
+
+msgctxt "L.FLAGNAMENUMBERS"
+msgid "Flag names cannot be only numbers."
+msgstr ""
+
+msgctxt "L.FLAGNAMECHARS"
+msgid "Flag names cannot contain (, ), , or spaces."
+msgstr ""
+
+msgctxt "L.FLAGNAMEINUSE"
+msgid "The flag name $1 is already in use by flag $2"
+msgstr ""
+
+msgctxt "L.DIFFSELECT"
+msgid "Select the level to compare to. The level you select now will be treated as being an older version."
+msgstr ""
+
+msgctxt "L.SUREQUIT"
+msgid "Are you sure you want to quit? You will lose any unsaved content."
+msgstr ""
+
+msgctxt "L.SUREQUITNEW"
+msgid "You have unsaved changes. Do you want to save these changes before quitting?"
+msgstr ""
+
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr ""
+
+msgctxt "L.SCALEREBOOT"
+msgid "The new scale settings will take effect after rebooting Ved."
+msgstr ""
+
+msgctxt "L.NAMEFORFLAG"
+msgid "Name for flag $1:"
+msgstr ""
+
+msgctxt "L.SCRIPT404"
+msgid "Script \"$1\" does not exist!"
+msgstr ""
+
+msgctxt "L.ENTITY404"
+msgid "Entity #$1 no longer exists!"
+msgstr ""
+
+msgctxt "L.GRAPHICSCARDCANVAS"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr ""
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid "Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n\nThe size limit on this system is $3x$3."
+msgstr ""
+
+msgctxt "L.SUREDELETESCRIPT"
+msgid "Are you sure you want to delete the script \"$1\"?"
+msgstr ""
+
+msgctxt "L.SUREDELETENOTE"
+msgid "Are you sure you want to delete this note?"
+msgstr ""
+
+msgctxt "L.THREADERROR"
+msgid "Thread error!"
+msgstr ""
+
+msgctxt "L.WHATDIDYOUDO"
+msgid "What did you do?!"
+msgstr ""
+
+msgctxt "L.UNDOFAULTY"
+msgid "What are you doing?"
+msgstr ""
+
+msgctxt "L.SOURCEDESTROOMSSAME"
+msgid "Source and destination rooms are the same!"
+msgstr ""
+
+msgctxt "L.UNKNOWNUNDOTYPE"
+msgid "Unknown undo type \"$1\"!"
+msgstr ""
+
+msgctxt "L.MDEVERSIONWARNING"
+msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
+msgstr ""
+
+msgctxt "L.FORGOTPATH"
+msgid "You forgot to specify a path!"
+msgstr ""
+
+msgctxt "L.MDENOTPASSED"
+msgid "Caution: metadata entity not passed to savelevel()!"
+msgstr ""
+
+msgctxt "L.RESTARTVEDLANG"
+msgid "After changing the language, you need to restart Ved before the change will take effect."
+msgstr ""
+
+msgctxt "L.SELECTCOPY1"
+msgid "Select the room to copy"
+msgstr ""
+
+msgctxt "L.SELECTCOPY2"
+msgid "Select the location to copy this room to"
+msgstr ""
+
+msgctxt "L.SELECTSWAP1"
+msgid "Select the first room to swap"
+msgstr ""
+
+msgctxt "L.SELECTSWAP2"
+msgid "Select the second room to swap"
+msgstr ""
+
+msgctxt "L.TILESETCHANGEDTO"
+msgid "Tileset changed to $1"
+msgstr ""
+
+msgctxt "L.TILESETCOLORCHANGEDTO"
+msgid "Tileset color changed to $1"
+msgstr ""
+
+msgctxt "L.ENEMYTYPECHANGED"
+msgid "Enemy type changed"
+msgstr ""
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODE"
+msgid "Changed to $1 tile placement"
+msgstr ""
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEAUTO"
+msgid "automatic"
+msgstr ""
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMANUAL"
+msgid "manual"
+msgstr ""
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMULTI"
+msgid "multi-tileset"
+msgstr ""
+
+msgctxt "L.BUSYSAVING"
+msgid "Saving..."
+msgstr ""
+
+msgctxt "L.SAVEDLEVELAS"
+msgid "Saved level as $1.vvvvvv"
+msgstr ""
+
+msgctxt "L.ROOMCUT"
+msgid "Room cut to clipboard"
+msgstr ""
+
+msgctxt "L.ROOMCOPIED"
+msgid "Copied room to clipboard"
+msgstr ""
+
+msgctxt "L.ROOMPASTED"
+msgid "Pasted room"
+msgstr ""
+
+msgctxt "L.METADATAUNDONE"
+msgid "Level options undone"
+msgstr ""
+
+msgctxt "L.METADATAREDONE"
+msgid "Level options redone"
+msgstr ""
+
+msgctxt "L.BOUNDSTOPLEFT"
+msgid "Click the top left corner of the bounds"
+msgstr ""
+
+msgctxt "L.BOUNDSBOTTOMRIGHT"
+msgid "Click the bottom right corner"
+msgstr ""
+
+msgctxt "L.TILE"
+msgid "Tile $1"
+msgstr ""
+
+msgctxt "L.HIDEALL"
+msgid "  Hide all  "
+msgstr ""
+
+msgctxt "L.SHOWALL"
+msgid "  Show all  "
+msgstr ""
+
+msgctxt "L.SCRIPTEDITOR"
+msgid "Script editor"
+msgstr ""
+
+msgctxt "L.FILE"
+msgid "File"
+msgstr ""
+
+msgctxt "L.NEW"
+msgid "New"
+msgstr ""
+
+msgctxt "L.OPEN"
+msgid "Open"
+msgstr ""
+
+msgctxt "L.SAVE"
+msgid "Save"
+msgstr ""
+
+msgctxt "L.UNDO"
+msgid "Undo"
+msgstr ""
+
+msgctxt "L.REDO"
+msgid "Redo"
+msgstr ""
+
+msgctxt "L.COMPARE"
+msgid "Compare"
+msgstr ""
+
+msgctxt "L.STATS"
+msgid "Stats"
+msgstr ""
+
+msgctxt "L.SCRIPTUSAGES"
+msgid "Usages"
+msgstr ""
+
+msgctxt "L.EDITTAB"
+msgid "Edit"
+msgstr ""
+
+msgctxt "L.COPYSCRIPT"
+msgid "Copy script"
+msgstr ""
+
+msgctxt "L.SEARCHSCRIPT"
+msgid "Search"
+msgstr ""
+
+msgctxt "L.GOTOLINE"
+msgid "Go to line"
+msgstr ""
+
+msgctxt "L.GOTOLINE2"
+msgid "Go to line:"
+msgstr ""
+
+msgctxt "L.INTERNALON"
+msgid "Int.sc is off"
+msgstr ""
+
+msgctxt "L.INTERNALOFF"
+msgid "Int.sc is on"
+msgstr ""
+
+msgctxt "L.VIEW"
+msgid "View"
+msgstr ""
+
+msgctxt "L.SYNTAXHLOFF"
+msgid "Syntax HL: on"
+msgstr ""
+
+msgctxt "L.SYNTAXHLON"
+msgid "Syntax HL: off"
+msgstr ""
+
+msgctxt "L.TEXTSIZEN"
+msgid "Text size: N"
+msgstr ""
+
+msgctxt "L.TEXTSIZEL"
+msgid "Text size: L"
+msgstr ""
+
+msgctxt "L.INSERT"
+msgid "Insert"
+msgstr ""
+
+msgctxt "L.HELP"
+msgid "Help"
+msgstr ""
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
+msgid "Load script required!"
+msgstr ""
+
+msgctxt "L.INTSCRWARNING_BOXED"
+msgid "Direct script box/terminal reference!\n\n"
+msgstr ""
+
+msgctxt "L.COLUMN"
+msgid "Column: "
+msgstr ""
+
+msgctxt "L.BTN_OK"
+msgid "OK"
+msgstr ""
+
+msgctxt "L.BTN_CANCEL"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "L.BTN_YES"
+msgid "Yes"
+msgstr ""
+
+msgctxt "L.BTN_NO"
+msgid "No"
+msgstr ""
+
+msgctxt "L.BTN_APPLY"
+msgid "Apply"
+msgstr ""
+
+msgctxt "L.BTN_QUIT"
+msgid "Quit"
+msgstr ""
+
+msgctxt "L.BTN_DISCARD"
+msgid "Discard"
+msgstr ""
+
+msgctxt "L.BTN_SAVE"
+msgid "Save"
+msgstr ""
+
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr ""
+
+msgctxt "L.COMPARINGTHESE"
+msgid "Comparing $1.vvvvvv to $2.vvvvvv"
+msgstr ""
+
+msgctxt "L.COMPARINGTHESENEW"
+msgid "Comparing (unsaved level) to $1.vvvvvv"
+msgstr ""
+
+msgctxt "L.RETURN"
+msgid "Return"
+msgstr ""
+
+msgctxt "L.CREATE"
+msgid "Create"
+msgstr ""
+
+msgctxt "L.GOTO"
+msgid "Go to"
+msgstr ""
+
+msgctxt "L.DELETE"
+msgid "Delete"
+msgstr ""
+
+msgctxt "L.RENAME"
+msgid "Rename"
+msgstr ""
+
+msgctxt "L.CHANGEDIRECTION"
+msgid "Change direction"
+msgstr ""
+
+msgctxt "L.DIRECTION"
+msgid "Direction->"
+msgstr ""
+
+msgctxt "L.UP"
+msgid "up"
+msgstr ""
+
+msgctxt "L.DOWN"
+msgid "down"
+msgstr ""
+
+msgctxt "L.LEFT"
+msgid "left"
+msgstr ""
+
+msgctxt "L.RIGHT"
+msgid "right"
+msgstr ""
+
+msgctxt "L.TESTFROMHERE"
+msgid "Test from here"
+msgstr ""
+
+msgctxt "L.FLIP"
+msgid "Flip"
+msgstr ""
+
+msgctxt "L.CYCLETYPE"
+msgid "Change type"
+msgstr ""
+
+msgctxt "L.GOTODESTINATION"
+msgid "Go to destination"
+msgstr ""
+
+msgctxt "L.GOTOENTRANCE"
+msgid "Go to entrance"
+msgstr ""
+
+msgctxt "L.CHANGECOLOR"
+msgid "Change color"
+msgstr ""
+
+msgctxt "L.EDITTEXT"
+msgid "Edit text"
+msgstr ""
+
+msgctxt "L.COPYTEXT"
+msgid "Copy text"
+msgstr ""
+
+msgctxt "L.EDITSCRIPT"
+msgid "Edit script"
+msgstr ""
+
+msgctxt "L.OTHERSCRIPT"
+msgid "Change script name"
+msgstr ""
+
+msgctxt "L.PROPERTIES"
+msgid "Properties"
+msgstr ""
+
+msgctxt "L.CHANGETOHOR"
+msgid "Change to horizontal"
+msgstr ""
+
+msgctxt "L.CHANGETOVER"
+msgid "Change to vertical"
+msgstr ""
+
+msgctxt "L.RESIZE"
+msgid "Move/Resize"
+msgstr ""
+
+msgctxt "L.CHANGEENTRANCE"
+msgid "Move entrance"
+msgstr ""
+
+msgctxt "L.CHANGEEXIT"
+msgid "Move exit"
+msgstr ""
+
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr ""
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr ""
+
+msgctxt "L.BUG"
+msgid "[Bug!]"
+msgstr ""
+
+msgctxt "L.VEDOPTIONS"
+msgid "Ved options"
+msgstr ""
+
+msgctxt "L.LEVELOPTIONS"
+msgid "Level options"
+msgstr ""
+
+msgctxt "L.MAP"
+msgid "Map"
+msgstr ""
+
+msgctxt "L.SCRIPTS"
+msgid "Scripts"
+msgstr ""
+
+msgctxt "L.SEARCH"
+msgid "Search"
+msgstr ""
+
+msgctxt "L.SENDFEEDBACK"
+msgid "Send Feedback"
+msgstr ""
+
+msgctxt "L.LEVELNOTEPAD"
+msgid "Level notepad"
+msgstr ""
+
+msgctxt "L.PLUGINS"
+msgid "Plugins"
+msgstr ""
+
+msgctxt "L.BACKB"
+msgid "Back <<"
+msgstr ""
+
+msgctxt "L.MOREB"
+msgid "More >>"
+msgstr ""
+
+msgctxt "L.AUTOMODE"
+msgid "Mode: auto"
+msgstr ""
+
+msgctxt "L.AUTO2MODE"
+msgid "Mode: multi"
+msgstr ""
+
+msgctxt "L.MANUALMODE"
+msgid "Mode: manual"
+msgstr ""
+
+msgctxt "L.PLATFORMSPEED"
+msgid "Platf. spd.: $1"
+msgstr ""
+
+msgctxt "L.ENEMYTYPE"
+msgid "Enemy type: $1"
+msgstr ""
+
+msgctxt "L.PLATFORMBOUNDS"
+msgid "Platf. bounds"
+msgstr ""
+
+msgctxt "L.WARPDIR"
+msgid "Warp dir: $1"
+msgstr ""
+
+msgctxt "L.ENEMYBOUNDS"
+msgid "Enemy bounds"
+msgstr ""
+
+msgctxt "L.ROOMNAME"
+msgid "Roomname"
+msgstr ""
+
+msgctxt "L.ROOMOPTIONS"
+msgid "Room options"
+msgstr ""
+
+msgctxt "L.ROTATE180"
+msgid "Rotate 180deg"
+msgstr ""
+
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr ""
+
+msgctxt "L.HIDEBOUNDS"
+msgid "Hide bounds"
+msgstr ""
+
+msgctxt "L.SHOWBOUNDS"
+msgid "Show bounds"
+msgstr ""
+
+#. basically, platforms/enemies in/for this room
+msgctxt "L.ROOMPLATFORMS"
+msgid "Room platforms"
+msgstr ""
+
+msgctxt "L.ROOMENEMIES"
+msgid "Room enemies"
+msgstr ""
+
+msgctxt "L.OPTNAME"
+msgid "Name"
+msgstr ""
+
+msgctxt "L.OPTBY"
+msgid "By"
+msgstr ""
+
+msgctxt "L.OPTWEBSITE"
+msgid "Website"
+msgstr ""
+
+#. If necessary, you can span multiple lines
+msgctxt "L.OPTDESC"
+msgid "Desc"
+msgstr ""
+
+msgctxt "L.OPTSIZE"
+msgid "Size"
+msgstr ""
+
+msgctxt "L.OPTMUSIC"
+msgid "Music"
+msgstr ""
+
+msgctxt "L.CAPNONE"
+msgid "NONE"
+msgstr ""
+
+msgctxt "L.ENTERLONGOPTNAME"
+msgid "Level name:"
+msgstr ""
+
+#. Used for level size: 20x20
+msgctxt "L.X"
+msgid "x"
+msgstr ""
+
+msgctxt "L.SOLID"
+msgid "Solid"
+msgstr ""
+
+msgctxt "L.NOTSOLID"
+msgid "Not solid"
+msgstr ""
+
+msgctxt "L.TSCOLOR"
+msgid "Color $1"
+msgstr ""
+
+msgctxt "L.ONETRINKETS"
+msgid "T:"
+msgstr ""
+
+msgctxt "L.ONECREWMATES"
+msgid "C:"
+msgstr ""
+
+msgctxt "L.ONEENTITIES"
+msgid "E:"
+msgstr ""
+
+msgctxt "L.LEVELSLIST"
+msgid "Levels"
+msgstr ""
+
+msgctxt "L.LOADTHISLEVEL"
+msgid "Load this level: "
+msgstr ""
+
+msgctxt "L.ENTERNAMESAVE"
+msgid "Enter name to save as: "
+msgstr ""
+
+msgctxt "L.SEARCHFOR"
+msgid "Search for: "
+msgstr ""
+
+msgctxt "L.VERSIONERROR"
+msgid "Unable to check version."
+msgstr ""
+
+msgctxt "L.VERSIONUPTODATE"
+msgid "Your version of Ved is up-to-date."
+msgstr ""
+
+msgctxt "L.VERSIONOLD"
+msgid "Update available! Latest version: $1"
+msgstr ""
+
+msgctxt "L.VERSIONCHECKING"
+msgid "Checking for updates..."
+msgstr ""
+
+msgctxt "L.VERSIONDISABLED"
+msgid "Update check disabled"
+msgstr ""
+
+msgctxt "L.SAVESUCCESS"
+msgid "Saved successfully!"
+msgstr ""
+
+msgctxt "L.SAVENOSUCCESS"
+msgid "Saving not successful! Error: "
+msgstr ""
+
+msgctxt "L.EDIT"
+msgid "Edit"
+msgstr ""
+
+msgctxt "L.EDITWOBUMPING"
+msgid "Edit without bumping"
+msgstr ""
+
+msgctxt "L.COPYNAME"
+msgid "Copy name"
+msgstr ""
+
+msgctxt "L.COPYCONTENTS"
+msgid "Copy contents"
+msgstr ""
+
+msgctxt "L.DUPLICATE"
+msgid "Duplicate"
+msgstr ""
+
+msgctxt "L.NEWSCRIPTNAME"
+msgid "Name:"
+msgstr ""
+
+msgctxt "L.CREATENEWSCRIPT"
+msgid "Create new script"
+msgstr ""
+
+msgctxt "L.NEWNOTENAME"
+msgid "Name:"
+msgstr ""
+
+msgctxt "L.CREATENEWNOTE"
+msgid "Create new note"
+msgstr ""
+
+msgctxt "L.ADDNEWBTN"
+msgid "[Add new]"
+msgstr ""
+
+msgctxt "L.IMAGEERROR"
+msgid "[IMAGE ERROR]"
+msgstr ""
+
+msgctxt "L.NEWNAME"
+msgid "New name:"
+msgstr ""
+
+msgctxt "L.RENAMENOTE"
+msgid "Rename note"
+msgstr ""
+
+msgctxt "L.RENAMESCRIPT"
+msgid "Rename script"
+msgstr ""
+
+msgctxt "L.LINE"
+msgid "line "
+msgstr ""
+
+msgctxt "L.SAVEMAP"
+msgid "Save map"
+msgstr ""
+
+msgctxt "L.SAVEFULLSIZEMAP"
+msgid "Save fullsize map"
+msgstr ""
+
+msgctxt "L.COPYROOMS"
+msgid "Copy room"
+msgstr ""
+
+msgctxt "L.SWAPROOMS"
+msgid "Swap rooms"
+msgstr ""
+
+msgctxt "L.FLAGS"
+msgid "Flags"
+msgstr ""
+
+msgctxt "L.ROOM"
+msgid "room"
+msgstr ""
+
+msgctxt "L.CONTENTFILLER"
+msgid "Content"
+msgstr ""
+
+#. preferably same length as L.FLAGNOTUSED
+msgctxt "L.FLAGUSED"
+msgid "Used    "
+msgstr ""
+
+msgctxt "L.FLAGNOTUSED"
+msgid "Not used"
+msgstr ""
+
+msgctxt "L.FLAGNONAME"
+msgid "No name"
+msgstr ""
+
+msgctxt "L.USEDOUTOFRANGEFLAGS"
+msgid "Used out of range flags:"
+msgstr ""
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY"
+msgid "VVVVVV folder"
+msgstr ""
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
+msgid "Enter the full path to your VVVVVV directory here, if it is not \"$1\" (else leave it blank). Do not include the directory called \"levels\" here, nor a trailing (back)slash."
+msgstr ""
+
+msgctxt "L.LANGUAGE"
+msgid "Language"
+msgstr ""
+
+msgctxt "L.DIALOGANIMATIONS"
+msgid "Dialog animations"
+msgstr ""
+
+msgctxt "L.FLIPSUBTOOLSCROLL"
+msgid "Flip subtool scrolling direction"
+msgstr ""
+
+msgctxt "L.ADJACENTROOMLINES"
+msgid "Indicators of tiles in adjacent rooms"
+msgstr ""
+
+msgctxt "L.ASKBEFOREQUIT"
+msgid "Ask before quitting"
+msgstr ""
+
+msgctxt "L.NEVERASKBEFOREQUIT"
+msgid "Never ask before quitting, even if there are unsaved changes"
+msgstr ""
+
+msgctxt "L.COORDS0"
+msgid "Display coordinates as starting at 0 (as in internal scripting)"
+msgstr ""
+
+msgctxt "L.ALLOWDEBUG"
+msgid "Enable debug mode"
+msgstr ""
+
+msgctxt "L.SHOWFPS"
+msgid "Show FPS counter"
+msgstr ""
+
+msgctxt "L.IIXSCALE"
+msgid "2x scale"
+msgstr ""
+
+msgctxt "L.CHECKFORUPDATES"
+msgid "Check for updates"
+msgstr ""
+
+msgctxt "L.PAUSEDRAWUNFOCUSED"
+msgid "Do not render when the window is unfocused"
+msgstr ""
+
+msgctxt "L.ENABLEOVERWRITEBACKUPS"
+msgid "Make backups of level files that are overwritten"
+msgstr ""
+
+msgctxt "L.AMOUNTOVERWRITEBACKUPS"
+msgid "Number of backups to keep per level"
+msgstr ""
+
+msgctxt "L.SCALE"
+msgid "Scale"
+msgstr ""
+
+msgctxt "L.LOADALLMETADATA"
+msgid "Load metadata (such as title, author and description) for all files in levels list"
+msgstr ""
+
+msgctxt "L.COLORED_TEXTBOXES"
+msgid "Use true textbox colors"
+msgstr ""
+
+msgctxt "L.SCRIPTSPLIT"
+msgid "Split"
+msgstr ""
+
+msgctxt "L.SPLITSCRIPT"
+msgid "Split scripts"
+msgstr ""
+
+msgctxt "L.COUNT"
+msgid "Count: "
+msgstr ""
+
+msgctxt "L.SMALLENTITYDATA"
+msgid "data"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTSCRIPTS"
+msgid "Scripts:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTUSEDFLAGS"
+msgid "Flags:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTENTITIES"
+msgid "Entities:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTTRINKETS"
+msgid "Trinkets:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTCREWMATES"
+msgid "Crewmates:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTINTERNALSCRIPTS"
+msgid "Internal scripts:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.TILESETUSSAGE"
+msgid "Tileset usage"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.TILESETSONLYUSED"
+msgid "(only rooms having tiles are counted)"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTROOMSWITHNAMES"
+msgid "Rooms having a name:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.PLACINGMODEUSAGE"
+msgid "Tile placing modes:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTLEVELNOTES"
+msgid "Level notes:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTFLAGNAMES"
+msgid "Flag names:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.TILESUSAGE"
+msgid "Tiles usage"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr ""
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
+msgstr ""
+
+msgctxt "L.UNEXPECTEDSCRIPTLINE"
+msgid "Unexpected script line without script: $1"
+msgstr ""
+
+msgctxt "L.MAPWIDTHINVALID"
+msgid "Map width is invalid: $1"
+msgstr ""
+
+msgctxt "L.MAPHEIGHTINVALID"
+msgid "Map height is invalid: $1"
+msgstr ""
+
+msgctxt "L.LEVMUSICEMPTY"
+msgid "Level music is empty!"
+msgstr ""
+
+msgctxt "L.NOT400ROOMS"
+msgid "#levelMetadata <> 400!!"
+msgstr ""
+
+msgctxt "L.MOREERRORS"
+msgid "$1 more"
+msgstr ""
+
+msgctxt "L.DEBUGMODEON"
+msgid "Debug mode on"
+msgstr ""
+
+msgctxt "L.FPS"
+msgid "FPS"
+msgstr ""
+
+msgctxt "L.STATE"
+msgid "State"
+msgstr ""
+
+msgctxt "L.MOUSE"
+msgid "Mouse"
+msgstr ""
+
+msgctxt "L.BLUE"
+msgid "Blue"
+msgstr ""
+
+msgctxt "L.RED"
+msgid "Red"
+msgstr ""
+
+msgctxt "L.CYAN"
+msgid "Cyan"
+msgstr ""
+
+msgctxt "L.PURPLE"
+msgid "Purple"
+msgstr ""
+
+msgctxt "L.YELLOW"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "L.GREEN"
+msgid "Green"
+msgstr ""
+
+msgctxt "L.GRAY"
+msgid "Gray"
+msgstr ""
+
+msgctxt "L.PINK"
+msgid "Pink"
+msgstr ""
+
+msgctxt "L.BROWN"
+msgid "Brown"
+msgstr ""
+
+msgctxt "L.RAINBOWBG"
+msgid "Rainbow BG"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLORS"
+msgid "Syntax colors"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
+msgid "Scripting syntax highlighting color settings"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_COMMAND"
+msgid "Command"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_GENERIC"
+msgid "Generic"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_SEPARATOR"
+msgid "Separator"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_NUMBER"
+msgid "Number"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_TEXTBOX"
+msgid "Textbox"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
+msgid "Unrecognized command"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_CURSOR"
+msgid "Cursor"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_FLAGNAME"
+msgid "Flag name"
+msgstr ""
+
+#. b14
+msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
+msgid "New flag name"
+msgstr ""
+
+#. b14
+msgctxt "L.RESETCOLORS"
+msgid "Reset colors"
+msgstr ""
+
+#. b14
+msgctxt "L.STRINGNOTFOUND"
+msgid "\"$1\" was not found"
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.MAL"
+msgid "The level file is malformed: "
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.METADATACORRUPT"
+msgid "Metadata is missing or corrupt."
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.METADATAITEMCORRUPT"
+msgid "Metadata for $1 is missing or corrupt."
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.TILESCORRUPT"
+msgid "Tiles missing or corrupt."
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.ENTITIESCORRUPT"
+msgid "Entities missing or corrupt."
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.LEVELMETADATACORRUPT"
+msgid "Room metadata missing or corrupt."
+msgstr ""
+
+#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+msgctxt "L.SCRIPTCORRUPT"
+msgid "Scripts missing or corrupt."
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.LOADSCRIPTMADE"
+msgid "Load script created"
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.COPY"
+msgid "Copy"
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.CUSTOMSIZE"
+msgid "Custom brush size: $1x$2"
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.SELECTINGA"
+msgid "Selecting - click top left"
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.SELECTINGB"
+msgid "Selecting: $1x$2"
+msgstr ""
+
+#. 1.1.0
+msgctxt "L.TILESETSRELOADED"
+msgid "Tilesets and sprites reloaded"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.BACKUPS"
+msgid "Backups"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.BACKUPSOFLEVEL"
+msgid "Backups of level $1"
+msgstr ""
+
+#. List header / 1.2.0
+msgctxt "L.LASTMODIFIEDTIME"
+msgid "Originally last modified"
+msgstr ""
+
+#. List header / 1.2.0
+msgctxt "L.OVERWRITTENTIME"
+msgid "Overwritten"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.SAVEBACKUP"
+msgid "Save to VVVVVV folder"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.DATEFORMAT"
+msgid "Date format"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.CUSTOMDATEFORMAT"
+msgid "Custom date format"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.SAVEBACKUPNOBACKUP"
+msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.AUTOSAVECRASHLOGS"
+msgid "Automatically save crash logs"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.MOREINFO"
+msgid "More info"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.COPYLINK"
+msgid "Copy link"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.SCRIPTDISPLAY"
+msgid "Show"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.SCRIPTDISPLAY_USED"
+msgid "Used"
+msgstr ""
+
+#. 1.2.4
+msgctxt "L.SCRIPTDISPLAY_UNUSED"
+msgid "Unused"
+msgstr ""
+
+#. 1.3.0 (more changes)
+msgctxt "L.RECENTLYOPENED"
+msgid "Recently opened levels"
+msgstr ""
+
+#. 1.3.0 (more changes)
+msgctxt "L.REMOVERECENT"
+msgid "Do you want to remove it from the list of recently opened levels?"
+msgstr ""
+
+#. 1.3.0 (more changes)
+msgctxt "L.RESETCUSTOMBRUSH"
+msgid "(Right click to set new size)"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.DISPLAYSETTINGS"
+msgid "Display/Scale"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.DISPLAYSETTINGSTITLE"
+msgid "Display/Scale settings"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.SMALLERSCREEN"
+msgid "Smaller window width (800px wide instead of 896px)"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.FORCESCALE"
+msgid "Force scale settings"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.SCALENOFIT"
+msgid "The current scale settings make the window too large to fit."
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.SCALENONUM"
+msgid "The current scale settings are invalid."
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.MONITORSIZE"
+msgid "$1x$2 monitor"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.VEDRES"
+msgid "Ved resolution: $1x$2"
+msgstr ""
+
+#. 1.3.2
+msgctxt "L.NONINTSCALE"
+msgid "Non-integer scaling"
+msgstr ""
+
+#. 1.3.4
+msgctxt "L.USEFONTPNG"
+msgid "Use font.png from VVVVVV graphics folder as font"
+msgstr ""
+
+#. If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language. / 1.3.4
+msgctxt "L.MAKESLANGUAGEUNREADABLE"
+msgid "<empty>"
+msgstr ""
+
+#. 1.3.4
+msgctxt "L.REQUIRESHIGHERLOVE"
+msgid " (requires L{VE $1 or higher)"
+msgstr ""
+
+#. 1.3.4
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr ""
+
+#. 1.3.4
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
+msgstr ""
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr ""
+
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr ""
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr ""
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr ""
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr ""
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr ""
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr ""
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr ""
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr ""
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr ""
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr ""
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr ""
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr ""
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
+msgstr ""
+
+#. Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+msgctxt "L.OPENLEVELSFOLDER"
+msgid "Open lvl dir"
+msgstr ""
+
+msgctxt "L.MOVEENTITY"
+msgid "Move"
+msgstr ""
+
+msgctxt "L.GOTOROOM"
+msgid "Go to room"
+msgstr ""
+
+msgctxt "L.ESCTOCANCEL"
+msgid "[Press ESC to cancel]"
+msgstr ""
+
+msgctxt "L.INVALIDFILENAME_WIN"
+msgid "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)"
+msgstr ""
+
+msgctxt "L.INVALIDFILENAME_MAC"
+msgid "macOS doesn't allow the : character in filenames."
+msgstr ""
+
+msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
+msgid "You have $1 plugin that is not supported in this version."
+msgid_plural "You have $1 plugins that are not supported in this version."
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.LEVELFAILEDCHECKS"
+msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.SCRIPTUSAGESROOMS"
+msgid "$1 usage in rooms: $2"
+msgid_plural "$1 usages in rooms: $2"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.SCRIPTUSAGESSCRIPTS"
+msgid "$1 usage in scripts: $2"
+msgid_plural "$1 usages in scripts: $2"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.ENTITYINVALIDPROPERTIES"
+msgid "Entity at [$1 $2] has $3 invalid property!"
+msgid_plural "Entity at [$1 $2] has $3 invalid properties!"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
+msgid "LevelMetadata for room #$1 has $2 invalid property!"
+msgid_plural "LevelMetadata for room #$1 has $2 invalid properties!"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.SCRIPTDISPLAY_SHOWING"
+msgid "Showing $1"
+msgid_plural "Showing $1"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.NOTALLTILESVALID"
+msgid "$1 tile is not a valid whole number in the range 0-1199"
+msgid_plural "$1 tiles are not a valid whole number in the range 0-1199"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "toolnames.1"
+msgid "Wall"
+msgstr ""
+
+msgctxt "toolnames.2"
+msgid "Background"
+msgstr ""
+
+msgctxt "toolnames.3"
+msgid "Spike"
+msgstr ""
+
+msgctxt "toolnames.4"
+msgid "Trinket"
+msgstr ""
+
+msgctxt "toolnames.5"
+msgid "Checkpoint"
+msgstr ""
+
+msgctxt "toolnames.6"
+msgid "Disappearing platform"
+msgstr ""
+
+msgctxt "toolnames.7"
+msgid "Conveyor"
+msgstr ""
+
+msgctxt "toolnames.8"
+msgid "Moving platform"
+msgstr ""
+
+msgctxt "toolnames.9"
+msgid "Enemy"
+msgstr ""
+
+msgctxt "toolnames.10"
+msgid "Gravity line"
+msgstr ""
+
+msgctxt "toolnames.11"
+msgid "Roomtext"
+msgstr ""
+
+msgctxt "toolnames.12"
+msgid "Terminal"
+msgstr ""
+
+msgctxt "toolnames.13"
+msgid "Script box"
+msgstr ""
+
+msgctxt "toolnames.14"
+msgid "Warp token"
+msgstr ""
+
+msgctxt "toolnames.15"
+msgid "Warp line"
+msgstr ""
+
+msgctxt "toolnames.16"
+msgid "Crewmate"
+msgstr ""
+
+msgctxt "toolnames.17"
+msgid "Start point"
+msgstr ""
+
+msgctxt "subtoolnames.1.1"
+msgid "1x1 brush"
+msgstr ""
+
+msgctxt "subtoolnames.1.2"
+msgid "3x3 brush"
+msgstr ""
+
+msgctxt "subtoolnames.1.3"
+msgid "5x5 brush"
+msgstr ""
+
+msgctxt "subtoolnames.1.4"
+msgid "7x7 brush"
+msgstr ""
+
+msgctxt "subtoolnames.1.5"
+msgid "9x9 brush"
+msgstr ""
+
+msgctxt "subtoolnames.1.6"
+msgid "Fill horizontally"
+msgstr ""
+
+msgctxt "subtoolnames.1.7"
+msgid "Fill vertically"
+msgstr ""
+
+msgctxt "subtoolnames.1.8"
+msgid "Custom brush size"
+msgstr ""
+
+msgctxt "subtoolnames.1.9"
+msgid "Fill bucket"
+msgstr ""
+
+msgctxt "subtoolnames.1.10"
+msgid "Potato for Doing Things that are Magical"
+msgstr ""
+
+msgctxt "subtoolnames.3.1"
+msgid "Auto 1"
+msgstr ""
+
+msgctxt "subtoolnames.3.2"
+msgid "Auto expand L+R"
+msgstr ""
+
+msgctxt "subtoolnames.3.3"
+msgid "Auto expand L"
+msgstr ""
+
+msgctxt "subtoolnames.3.4"
+msgid "Auto expand R"
+msgstr ""
+
+msgctxt "subtoolnames.5.1"
+msgid "Upright"
+msgstr ""
+
+msgctxt "subtoolnames.5.2"
+msgid "Flipped"
+msgstr ""
+
+msgctxt "subtoolnames.7.1"
+msgid "Small R"
+msgstr ""
+
+msgctxt "subtoolnames.7.2"
+msgid "Small L"
+msgstr ""
+
+msgctxt "subtoolnames.7.3"
+msgid "Large R"
+msgstr ""
+
+msgctxt "subtoolnames.7.4"
+msgid "Large L"
+msgstr ""
+
+msgctxt "subtoolnames.8.1"
+msgid "Down"
+msgstr ""
+
+msgctxt "subtoolnames.8.2"
+msgid "Up"
+msgstr ""
+
+msgctxt "subtoolnames.8.3"
+msgid "Left"
+msgstr ""
+
+msgctxt "subtoolnames.8.4"
+msgid "Right"
+msgstr ""
+
+msgctxt "subtoolnames.10.1"
+msgid "Horizontal"
+msgstr ""
+
+msgctxt "subtoolnames.10.2"
+msgid "Vertical"
+msgstr ""
+
+msgctxt "subtoolnames.14.1"
+msgid "Entrance"
+msgstr ""
+
+msgctxt "subtoolnames.14.2"
+msgid "Exit"
+msgstr ""
+
+msgctxt "subtoolnames.16.1"
+msgid "Pink"
+msgstr ""
+
+msgctxt "subtoolnames.16.2"
+msgid "Yellow"
+msgstr ""
+
+msgctxt "subtoolnames.16.3"
+msgid "Red"
+msgstr ""
+
+msgctxt "subtoolnames.16.4"
+msgid "Green"
+msgstr ""
+
+msgctxt "subtoolnames.16.5"
+msgid "Blue"
+msgstr ""
+
+msgctxt "subtoolnames.16.6"
+msgid "Cyan"
+msgstr ""
+
+msgctxt "subtoolnames.16.7"
+msgid "Random"
+msgstr ""
+
+msgctxt "subtoolnames.17.1"
+msgid "Face right"
+msgstr ""
+
+msgctxt "subtoolnames.17.2"
+msgid "Face left"
+msgstr ""
+
+msgctxt "warpdirs.0"
+msgid "x"
+msgstr ""
+
+msgctxt "warpdirs.1"
+msgid "H"
+msgstr ""
+
+msgctxt "warpdirs.2"
+msgid "V"
+msgstr ""
+
+msgctxt "warpdirs.3"
+msgid "A"
+msgstr ""
+
+msgctxt "warpdirchangedtext.0"
+msgid "Room warping disabled"
+msgstr ""
+
+msgctxt "warpdirchangedtext.1"
+msgid "Warp direction set to horizontal"
+msgstr ""
+
+msgctxt "warpdirchangedtext.2"
+msgid "Warp direction set to vertical"
+msgstr ""
+
+msgctxt "warpdirchangedtext.3"
+msgid "Warp direction set to all directions"
+msgstr ""
+
+msgctxt "langtilesetnames.short0"
+msgid "Space Stn."
+msgstr ""
+
+msgctxt "langtilesetnames.long0"
+msgid "Space Station"
+msgstr ""
+
+msgctxt "langtilesetnames.short1"
+msgid "Outside"
+msgstr ""
+
+msgctxt "langtilesetnames.long1"
+msgid "Outside"
+msgstr ""
+
+msgctxt "langtilesetnames.short2"
+msgid "Lab"
+msgstr ""
+
+msgctxt "langtilesetnames.long2"
+msgid "Lab"
+msgstr ""
+
+msgctxt "langtilesetnames.short3"
+msgid "Warp Zone"
+msgstr ""
+
+msgctxt "langtilesetnames.long3"
+msgid "Warp Zone"
+msgstr ""
+
+msgctxt "langtilesetnames.short4"
+msgid "Ship"
+msgstr ""
+
+msgctxt "langtilesetnames.long4"
+msgid "Ship"
+msgstr ""
+
+msgctxt "ERR_VEDHASCRASHED"
+msgid "Ved has crashed!"
+msgstr ""
+
+msgctxt "ERR_VEDVERSION"
+msgid "Ved version:"
+msgstr ""
+
+msgctxt "ERR_LOVEVERSION"
+msgid "L{VE version:"
+msgstr ""
+
+msgctxt "ERR_STATE"
+msgid "State:"
+msgstr ""
+
+msgctxt "ERR_OS"
+msgid "OS:"
+msgstr ""
+
+msgctxt "ERR_TIMESINCESTART"
+msgid "Time since start:"
+msgstr ""
+
+msgctxt "ERR_PLUGINS"
+msgid "Plugins:"
+msgstr ""
+
+msgctxt "ERR_PLUGINSNOTLOADED"
+msgid "(not loaded)"
+msgstr ""
+
+msgctxt "ERR_PLUGINSNONE"
+msgid "(none)"
+msgstr ""
+
+msgctxt "ERR_PLEASETELLDAV"
+msgid "Please tell Dav999 about this problem.\n\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+msgstr ""
+
+#. pre-release version, so a version in between officially released versions
+msgctxt "ERR_INTERMEDIATE"
+msgid " (intermediate version)"
+msgstr ""
+
+msgctxt "ERR_TOONEW"
+msgid " (too new)"
+msgstr ""
+
+msgctxt "ERR_PLUGINERROR"
+msgid "Plugin error!"
+msgstr ""
+
+msgctxt "ERR_FILE"
+msgid "File to be edited:"
+msgstr ""
+
+msgctxt "ERR_FILEEDITORS"
+msgid "Plugins that edit this file:"
+msgstr ""
+
+msgctxt "ERR_CURRENTPLUGIN"
+msgid "Plugin that triggered the error:"
+msgstr ""
+
+msgctxt "ERR_PLEASETELLAUTHOR"
+msgid "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke\nthis plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+msgstr ""
+
+msgctxt "ERR_CONTINUE"
+msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr ""
+
+msgctxt "ERR_REPLACECODE"
+msgid "Failed to find this in %s.lua:"
+msgstr ""
+
+msgctxt "ERR_REPLACECODEPATTERN"
+msgid "Failed to find this in %s.lua (as pattern):"
+msgstr ""
+
+msgctxt "ERR_LINESTOTAL"
+msgid "%i lines in total"
+msgstr ""
+
+msgctxt "ERR_SAVELEVEL"
+msgid "To save a copy of your level, press S"
+msgstr ""
+
+msgctxt "ERR_SAVESUCC"
+msgid "Level saved successfully as %s!"
+msgstr ""
+
+msgctxt "ERR_SAVEERROR"
+msgid "Save error! %s"
+msgstr ""
+
+msgctxt "ERR_LOGSAVED"
+msgid "More information can be found in the crash log:\n%s"
+msgstr ""
+
+msgctxt "diffmessages.pages.levelproperties"
+msgid "Level properties"
+msgstr ""
+
+msgctxt "diffmessages.pages.changedrooms"
+msgid "Changed rooms"
+msgstr ""
+
+msgctxt "diffmessages.pages.changedroommetadata"
+msgid "Changed room metadata"
+msgstr ""
+
+msgctxt "diffmessages.pages.entities"
+msgid "Entities"
+msgstr ""
+
+msgctxt "diffmessages.pages.scripts"
+msgid "Scripts"
+msgstr ""
+
+msgctxt "diffmessages.pages.flagnames"
+msgid "Flag names"
+msgstr ""
+
+msgctxt "diffmessages.pages.levelnotes"
+msgid "Level notes"
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.Title"
+msgid "Name was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.Creator"
+msgid "Author was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.website"
+msgid "Website was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc1"
+msgid "Desc1 was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc2"
+msgid "Desc2 was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc3"
+msgid "Desc3 was changed from \"$1\" to \"$2\""
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsize"
+msgid "Map size was changed from $1x$2 to $3x$4"
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsizenote"
+msgid "NOTE: Map size was changed from $1x$2 to $3x$4.\\o\nRooms outside of $5x$6 are not listed.\\o"
+msgstr ""
+
+msgctxt "diffmessages.levelpropertiesdiff.levmusic"
+msgid "Level music was changed from $1 to $2"
+msgstr ""
+
+msgctxt "diffmessages.rooms.added1"
+msgid "Added ($1,$2) ($3)\\G"
+msgstr ""
+
+msgctxt "diffmessages.rooms.added2"
+msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgstr ""
+
+msgctxt "diffmessages.rooms.changed1"
+msgid "Changed ($1,$2) ($3)\\Y"
+msgstr ""
+
+msgctxt "diffmessages.rooms.changed2"
+msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgstr ""
+
+msgctxt "diffmessages.rooms.cleared1"
+msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgstr ""
+
+msgctxt "diffmessages.rooms.cleared2"
+msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.changed0"
+msgid "Room $1,$2:"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.changed1"
+msgid "Room $1,$2 ($3):"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.roomname"
+msgid "Roomname changed from \"$1\" to \"$2\"\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.roomnameremoved"
+msgid "Roomname \"$1\" removed\\R"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.roomnameadded"
+msgid "Room named \"$1\"\\G"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.tileset"
+msgid "Tileset $1 tilecol $2 changed to tileset $3 tilecol $4\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.platv"
+msgid "Platform speed changed from $1 to $2\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.enemytype"
+msgid "Enemy type changed from $1 to $2\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.platbounds"
+msgid "Platform bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.enemybounds"
+msgid "Enemy bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.directmode01"
+msgid "Direct mode enabled\\G"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.directmode10"
+msgid "Direct mode disabled\\R"
+msgstr ""
+
+msgctxt "diffmessages.roommetadata.warpdir"
+msgid "Warp direction changed from $1 to $2\\Y"
+msgstr ""
+
+msgctxt "diffmessages.entities.added"
+msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgstr ""
+
+msgctxt "diffmessages.entities.removed"
+msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgstr ""
+
+msgctxt "diffmessages.entities.changed"
+msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgstr ""
+
+msgctxt "diffmessages.entities.changedtype"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgstr ""
+
+msgctxt "diffmessages.entities.multiple1"
+msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgstr ""
+
+msgctxt "diffmessages.entities.multiple2"
+msgid "to:"
+msgstr ""
+
+msgctxt "diffmessages.entities.addedmultiple"
+msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgstr ""
+
+msgctxt "diffmessages.entities.removedmultiple"
+msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgstr ""
+
+msgctxt "diffmessages.entities.entity"
+msgid "Type $1"
+msgstr ""
+
+msgctxt "diffmessages.entities.incomplete"
+msgid "Not all entities were handled! Please report this to Dav.\\r"
+msgstr ""
+
+msgctxt "diffmessages.scripts.added"
+msgid "Added script \"$1\"\\G"
+msgstr ""
+
+msgctxt "diffmessages.scripts.removed"
+msgid "Removed script \"$1\"\\R"
+msgstr ""
+
+msgctxt "diffmessages.scripts.edited"
+msgid "Edited script \"$1\"\\Y"
+msgstr ""
+
+msgctxt "diffmessages.flagnames.added"
+msgid "Set name for flag $1 to \"$2\"\\G"
+msgstr ""
+
+msgctxt "diffmessages.flagnames.removed"
+msgid "Removed name \"$1\" for flag $2\\R"
+msgstr ""
+
+msgctxt "diffmessages.flagnames.edited"
+msgid "Changed name for flag $1 from \"$2\" to \"$3\"\\Y"
+msgstr ""
+
+msgctxt "diffmessages.levelnotes.added"
+msgid "Added level note \"$1\"\\G"
+msgstr ""
+
+msgctxt "diffmessages.levelnotes.removed"
+msgid "Removed level note \"$1\"\\R"
+msgstr ""
+
+msgctxt "diffmessages.levelnotes.edited"
+msgid "Edited level note \"$1\"\\Y"
+msgstr ""
+
+msgctxt "diffmessages.mde.added"
+msgid "Metadata entity was added.\\G"
+msgstr ""
+
+msgctxt "diffmessages.mde.removed"
+msgid "Metadata entity was removed.\\R"
+msgstr ""
