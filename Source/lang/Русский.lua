@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-01-17 14:00:35 (CET)
+--- Last converted: 2019-01-22 12:34:23 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -290,6 +290,7 @@ ENABLEOVERWRITEBACKUPS = "Создавать бекапы уровня при п
 AMOUNTOVERWRITEBACKUPS = "Кол-во бекапов для каждого уровня",
 SCALE = "Масштаб",
 LOADALLMETADATA = "Показать метаданные (название, автор, описание и т.д.) у всех файлов в списке уровней",
+COLORED_TEXTBOXES = "Use true textbox colors",
 
 SCRIPTSPLIT = "Разделить",
 SPLITSCRIPT = "Разделить скрипты",
@@ -429,6 +430,9 @@ OPENLEVELSFOLDER = "Открыть в\nпроводнике", -- Open levels dir
 MOVEENTITY = "Переместить",
 GOTOROOM = "Перейти к комнате",
 ESCTOCANCEL = "[ESC для отмены]",
+
+INVALIDFILENAME_WIN = "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)",
+INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
 
 }
 

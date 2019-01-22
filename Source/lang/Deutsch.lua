@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-01-17 14:00:35 (CET)
+--- Last converted: 2019-01-22 12:34:23 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -302,6 +302,7 @@ ENABLEOVERWRITEBACKUPS = "Mache Backups von Level Dateien die überschrieben wer
 AMOUNTOVERWRITEBACKUPS = "Anzahl an Backups die gemacht werden sollen pro Level",
 SCALE = "Größe",
 LOADALLMETADATA = "Lade Metadaten (sowas wie Titel, Author und Beschreibung) für alle Dateien in der Levelliste",
+COLORED_TEXTBOXES = "Benutze Echtfarben für Textbox",
 
 SCRIPTSPLIT = "Trennen",
 SPLITSCRIPT = "Skripts trennen",
@@ -442,6 +443,9 @@ MOVEENTITY = "Bewegen",
 GOTOROOM = "Gehe zum Raum",
 ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
 
+INVALIDFILENAME_WIN = "Windows erlaubt keines der folgenden Zeichen in Dateinamen:\n\n: * ? \" < > |\n\n(| ist ein senkrechter Strich)",
+INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
+
 }
 
 -- Please check the reference for plural forms
@@ -508,7 +512,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Fill bucket", "Kartoffel für das machen von dingen die magisch sind"},
+[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Farbeimer", "Kartoffel für das machen von dingen die magisch sind"},
 [2] = {},
 [3] = {"Automatisch 1", "Automatisch erweitern L+R", "Automatisch erweitern L", "Automatisch erweitern R"},
 [4] = {},

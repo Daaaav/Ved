@@ -288,6 +288,7 @@ ENABLEOVERWRITEBACKUPS = "Make backups of level files that are overwritten",
 AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
 SCALE = "Scale",
 LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
+COLORED_TEXTBOXES = "Use true textbox colors",
 
 SCRIPTSPLIT = "Split",
 SPLITSCRIPT = "Split scripts",
@@ -427,6 +428,9 @@ OPENLEVELSFOLDER = "Open lvl dir", -- Open levels directory/folder in Explorer, 
 MOVEENTITY = "Move",
 GOTOROOM = "Go to room",
 ESCTOCANCEL = "[Press ESC to cancel]",
+
+INVALIDFILENAME_WIN = "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)",
+INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
 
 }
 

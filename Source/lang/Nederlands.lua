@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-01-17 14:00:36 (CET)
+--- Last converted: 2019-01-22 12:34:23 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -302,6 +302,7 @@ ENABLEOVERWRITEBACKUPS = "Reservekopie maken van levelbestanden die worden overs
 AMOUNTOVERWRITEBACKUPS = "Aantal reservekopieën om te bewaren per level",
 SCALE = "Schaal",
 LOADALLMETADATA = "Laad metadata (zoals titel, auteur en beschrĳving) voor alle bestanden in de lĳst met levels",
+COLORED_TEXTBOXES = "Gebruik echte kleuren voor tekstvakken",
 
 SCRIPTSPLIT = "Splitsen",
 SPLITSCRIPT = "Scripts splitsen",
@@ -442,6 +443,9 @@ MOVEENTITY = "Verplaatsen",
 GOTOROOM = "Ga naar kamer",
 ESCTOCANCEL = "[Druk op ESC om te annuleren]",
 
+INVALIDFILENAME_WIN = "Windows staat de volgende tekens niet toe in bestandsnamen:\n\n: * ? \" < > |\n\n(waar | een verticale lijn is)",
+INVALIDFILENAME_MAC = "macOS staat het teken : niet toe in bestandsnamen.",
+
 }
 
 -- Please check the reference for plural forms
@@ -508,7 +512,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Fill bucket", "Aardappel voor het doen van dingen die magisch zĳn"},
+[1] = {"1x1-kwast", "3x3-kwast", "5x5-kwast", "7x7-kwast", "9x9-kwast", "Vul horizontaal", "Vul verticaal", "Aangepaste kwastgrootte", "Opvullen", "Aardappel voor het doen van dingen die magisch zĳn"},
 [2] = {},
 [3] = {"Auto 1", "Automatisch uitbreiden L+R", "Automatisch uitbreiden L", "Automatisch uitbreiden R"},
 [4] = {},

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-01-17 14:00:35 (CET)
+--- Last converted: 2019-01-22 12:34:23 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -314,6 +314,7 @@ ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas
 AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
 SCALE = "Skalo",
 LOADALLMETADATA = "Ŝargi metadatumojn (kiel titolon, aŭtoron kaj priskribon) por ĉiuj dosieroj en nivelolisto",
+COLORED_TEXTBOXES = "Uzi verajn tekstskatol-kolorojn",
 
 SCRIPTSPLIT = "Fendi",
 SPLITSCRIPT = "Fendi skriptojn",
@@ -454,6 +455,9 @@ MOVEENTITY = "Movigi",
 GOTOROOM = "Iri al ĉambro",
 ESCTOCANCEL = "[Premu ESC por nuligi]",
 
+INVALIDFILENAME_WIN = "Windows ne permesas la jenajn signojn en dosiernomoj:\n\n: * ? \" < > |\n\n(| estante vertikala streko)",
+INVALIDFILENAME_MAC = "macOS ne permesas la signon : en dosiernomoj.",
+
 }
 
 -- Please check the reference for plural forms
@@ -520,7 +524,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Fill bucket", "Mirinda mojosa magia terpomo"},
+[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Plenigilo", "Mirinda mojosa magia terpomo"},
 [2] = {},
 [3] = {"Aŭtomata", "Aŭtomata ambaŭen", "Aŭtomata maldekstren", "Aŭtomata dekstren"},
 [4] = {},
