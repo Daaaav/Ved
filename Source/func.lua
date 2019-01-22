@@ -364,6 +364,7 @@ function loadstate(new, extradata)
 		customsizecoory = nil
 
 		eraserlocked = false
+		keyboardmode = false
 	elseif new == 3 then
 		-- scriptname == ""
 		-- scriptlines = {}

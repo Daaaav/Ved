@@ -1387,6 +1387,36 @@ function love.update(dt)
 			cons("vedmetadata == nil! Setting to false.")
 			vedmetadata = false
 		end
+
+		if keyboardmode and love.timer.getTime() % 0.02 < 0.007 then
+			--[[ Experimental and still very annoying.
+			You want to be able to:
+			* Move one tile by pressing once
+			* Smoothly move multiple times at a reasonable speed, not too fast not too slow
+			* Move diagonally and such
+			]]
+			local x, y = love.mouse.getPosition(x,y)
+			local changed = false
+			if love.keyboard.isDown("right") or love.keyboard.isDown("kp6") then
+				x = x + 16
+				changed = true
+			end
+			if love.keyboard.isDown("left") or love.keyboard.isDown("kp4") then
+				x = x - 16
+				changed = true
+			end
+			if love.keyboard.isDown("down") or love.keyboard.isDown("kp2") then
+				y = y + 16
+				changed = true
+			end
+			if love.keyboard.isDown("up") or love.keyboard.isDown("kp8") then
+				y = y - 16
+				changed = true
+			end
+			if changed then
+				love.mouse.setPosition(x,y)
+			end
+		end
 	elseif state == 6 then
 		local chanmessage = allmetadata_outchannel:pop()
 
@@ -2155,7 +2185,7 @@ function love.keypressed(key)
 		editingbounds = 0
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
 		movingentity = 0
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
 		-->
 		if editingbounds == 0 then
 			if roomx+1 >= metadata.mapwidth then
@@ -2167,7 +2197,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") and (not keyboardmode or state == 12) then
 		--<
 		if editingbounds == 0 then
 			if roomx+1 <= 1 then
@@ -2179,7 +2209,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") and (not keyboardmode or state == 12) then
 		--v
 		if editingbounds == 0 then
 			if roomy+1 >= metadata.mapheight then
@@ -2191,7 +2221,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") and (not keyboardmode or state == 12) then
 		--^
 		if editingbounds == 0 then
 			if roomy+1 <= 1 then
