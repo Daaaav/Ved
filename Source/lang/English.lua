@@ -381,7 +381,7 @@ SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not w
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Automatically save crash logs",
-MOREINFO = "More info",
+MOREINFO = "Latest info",
 COPYLINK = "Copy link",
 SCRIPTDISPLAY = "Show",
 SCRIPTDISPLAY_USED = "Used",
@@ -431,6 +431,10 @@ ESCTOCANCEL = "[Press ESC to cancel]",
 
 INVALIDFILENAME_WIN = "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)",
 INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
+
+-- Keyboard key. Please use CAPITAL LETTERS ONLY
+TINY_CTRL = "CTRL",
+TINY_SHIFT = "SHIFT",
 
 }
 

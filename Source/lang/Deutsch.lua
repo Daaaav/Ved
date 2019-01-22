@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-01-22 12:34:23 (CET)
+--- Last converted: 2019-01-22 17:46:56 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -395,7 +395,7 @@ SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du n
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
-MOREINFO = "Mehr Info",
+MOREINFO = "Neuste Infos",
 COPYLINK = "Link kopieren",
 SCRIPTDISPLAY = "Anzeigen",
 SCRIPTDISPLAY_USED = "Benutzt",
@@ -445,6 +445,10 @@ ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
 
 INVALIDFILENAME_WIN = "Windows erlaubt keines der folgenden Zeichen in Dateinamen:\n\n: * ? \" < > |\n\n(| ist ein senkrechter Strich)",
 INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
+
+-- Keyboard key. Please use CAPITAL LETTERS ONLY
+TINY_CTRL = "STRG",
+TINY_SHIFT = "SHIFT",
 
 }
 

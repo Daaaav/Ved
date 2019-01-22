@@ -1310,7 +1310,7 @@ msgstr ""
 
 #. 1.2.4
 msgctxt "L.MOREINFO"
-msgid "More info"
+msgid "Latest info"
 msgstr ""
 
 #. 1.2.4
@@ -1502,6 +1502,16 @@ msgstr ""
 
 msgctxt "L.INVALIDFILENAME_MAC"
 msgid "macOS doesn't allow the : character in filenames."
+msgstr ""
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_CTRL"
+msgid "CTRL"
+msgstr ""
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_SHIFT"
+msgid "SHIFT"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"

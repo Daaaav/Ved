@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-01-22 12:34:23 (CET)
+--- Last converted: 2019-01-22 17:46:55 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -383,7 +383,7 @@ SAVEBACKUPNOBACKUP = "Выберите уникальное имя для фай
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Сохранять отчёты об ошибке автоматически",
-MOREINFO = "Узнать больше",
+MOREINFO = "Latest info",
 COPYLINK = "Скопировать ссылку",
 SCRIPTDISPLAY = "Показать",
 SCRIPTDISPLAY_USED = "Использовано",
@@ -433,6 +433,10 @@ ESCTOCANCEL = "[ESC для отмены]",
 
 INVALIDFILENAME_WIN = "Windows doesn't allow the following characters in filenames:\n\n: * ? \" < > |\n\n(| being a vertical bar)",
 INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
+
+-- Keyboard key. Please use CAPITAL LETTERS ONLY
+TINY_CTRL = "CTRL",
+TINY_SHIFT = "SHIFT",
 
 }
 

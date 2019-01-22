@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-01-22 12:34:23 (CET)
+--- Last converted: 2019-01-22 17:46:56 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -407,7 +407,7 @@ SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne vo
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Aŭtomate konservi kraŝo-protokolojn",
-MOREINFO = "Pli da informo",
+MOREINFO = "Latest info",
 COPYLINK = "Kopii ligilon",
 SCRIPTDISPLAY = "Montri",
 SCRIPTDISPLAY_USED = "Uzita",
@@ -457,6 +457,10 @@ ESCTOCANCEL = "[Premu ESC por nuligi]",
 
 INVALIDFILENAME_WIN = "Windows ne permesas la jenajn signojn en dosiernomoj:\n\n: * ? \" < > |\n\n(| estante vertikala streko)",
 INVALIDFILENAME_MAC = "macOS ne permesas la signon : en dosiernomoj.",
+
+-- Keyboard key. Please use CAPITAL LETTERS ONLY
+TINY_CTRL = "CTRL",
+TINY_SHIFT = "SHIFT",
 
 }
 

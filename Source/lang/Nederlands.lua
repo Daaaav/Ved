@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-01-22 12:34:23 (CET)
+--- Last converted: 2019-01-22 17:46:56 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -395,7 +395,7 @@ SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳ
 
 -- 1.2.4
 AUTOSAVECRASHLOGS = "Crashlogboeken automatisch opslaan",
-MOREINFO = "Meer info",
+MOREINFO = "Laatste info",
 COPYLINK = "Link kopiëren",
 SCRIPTDISPLAY = "Tonen",
 SCRIPTDISPLAY_USED = "Gebruikt",
@@ -445,6 +445,10 @@ ESCTOCANCEL = "[Druk op ESC om te annuleren]",
 
 INVALIDFILENAME_WIN = "Windows staat de volgende tekens niet toe in bestandsnamen:\n\n: * ? \" < > |\n\n(waar | een verticale lijn is)",
 INVALIDFILENAME_MAC = "macOS staat het teken : niet toe in bestandsnamen.",
+
+-- Keyboard key. Please use CAPITAL LETTERS ONLY
+TINY_CTRL = "CTRL",
+TINY_SHIFT = "SHIFT",
 
 }
 
