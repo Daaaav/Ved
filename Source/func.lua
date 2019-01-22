@@ -718,6 +718,8 @@ function loadtilesets()
 	loadtileset("tiles.png")
 	loadtileset("tiles2.png")
 	loadsprites("sprites.png", 32)
+
+	loadwarpbgs()
 end
 
 function loadtileset(file)
@@ -796,6 +798,32 @@ function loadsprites(file, res)
 	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*res, tsy*res, res, res, tilesets[file]["width"], tilesets[file]["height"])
+		end
+	end
+end
+
+function loadwarpbgs()
+	-- warpbgs[C][D] means warp background color C, direction D.
+	-- So, you can fill in warpbg from the big tilesetblocks table from const,
+	-- and the warpdir room property.
+	warpbgs = {}
+
+	for c = 1, 7 do
+		table.insert(warpbgs, {})
+
+		for d = 1, 2 do
+			table.insert(warpbgs[c],
+				love.graphics.newSpriteBatch(tilesets["tiles2.png"]["img"], 16*21, "static")
+			)
+			local quad = love.graphics.newQuad(
+				-24+24*c, 128 + 16*d, 16, 16,
+				tilesets["tiles2.png"]["width"], tilesets["tiles2.png"]["height"]
+			)
+			for bgy = -1, 14 do
+				for bgx = -1, 19 do
+					warpbgs[c][d]:add(quad, 32*bgx, 32*bgy, 0, 2)
+				end
+			end
 		end
 	end
 end

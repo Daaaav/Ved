@@ -1125,20 +1125,19 @@ function drawmaineditor()
 		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 or levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 then
 			-- Horizontal/vertical warp direction.
 
-			--if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 then
-				-- Horizontal
-			--love.graphics.draw(tempverticalbg, 128, 0)
-
 			local tils = levelmetadata[(roomy)*20 + (roomx+1)].tileset
 			local tilc = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
 
-			for bgy = -1, 14 do
-				for bgx = -1, 19 do
-					love.graphics.draw(tilesets[tilesetnames[2]]["img"], tilesets[tilesetnames[2]]["tiles"][720+3*(tilesetblocks[tils].colors[tilc].warpbg - 1)+(80*(levelmetadata[(roomy)*20 + (roomx+1)].warpdir - 1))], screenoffset+(32*bgx) + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 and (32-warpbganimation) or 0), (32*bgy) + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 and (32-warpbganimation) or 0), 0, 2)
-					love.graphics.draw(tilesets[tilesetnames[2]]["img"], tilesets[tilesetnames[2]]["tiles"][721+3*(tilesetblocks[tils].colors[tilc].warpbg - 1)+(80*(levelmetadata[(roomy)*20 + (roomx+1)].warpdir - 1))], screenoffset+(32*bgx)+16 + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 and (32-warpbganimation) or 0), (32*bgy) + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 and (32-warpbganimation) or 0), 0, 2)
-					love.graphics.draw(tilesets[tilesetnames[2]]["img"], tilesets[tilesetnames[2]]["tiles"][760+3*(tilesetblocks[tils].colors[tilc].warpbg - 1)+(80*(levelmetadata[(roomy)*20 + (roomx+1)].warpdir - 1))], screenoffset+(32*bgx) + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 and (32-warpbganimation) or 0), (32*bgy)+16 + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 and (32-warpbganimation) or 0), 0, 2)
-					love.graphics.draw(tilesets[tilesetnames[2]]["img"], tilesets[tilesetnames[2]]["tiles"][761+3*(tilesetblocks[tils].colors[tilc].warpbg - 1)+(80*(levelmetadata[(roomy)*20 + (roomx+1)].warpdir - 1))], screenoffset+(32*bgx)+16 + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 and (32-warpbganimation) or 0), (32*bgy)+16 + (levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 and (32-warpbganimation) or 0), 0, 2)
-				end
+			if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 then
+				love.graphics.draw(
+					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][1],
+					screenoffset + (32-warpbganimation), 0
+				)
+			elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 then
+				love.graphics.draw(
+					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][2],
+					screenoffset, 32-warpbganimation
+				)
 			end
 
 			love.graphics.setColor(255,255,255,92)
