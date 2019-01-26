@@ -62,13 +62,48 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
 	local ts = usedtilesets[themetadata.tileset]
 
+	-- Is our SpriteBatch still up-to-date?
+	local needs_update = false
+	if tile_batch_tileset ~= ts then
+		needs_update = true
+		if love_version_meets(9,1) then
+			tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
+		else
+			tile_batch:setImage(tilesets[tilesetnames[ts]]["img"])
+		end
+		tile_batch_tileset = ts
+	else
+		for i = 1, 1200 do
+			if tile_batch_tiles[i] ~= theroomdata[i] then
+				needs_update = true
+				break
+			end
+		end
+	end
+	if needs_update then
+		tile_batch:clear()
+
+		for aty = 0, 29 do
+			for atx = 0, 39 do
+				local t = theroomdata[(aty*40)+(atx+1)]
+				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
+				if t ~= 0 then
+					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][tonumber(t)], x, y, 0, 2*zoomscale2)
+				end
+				tile_batch_tiles[(aty*40)+(atx+1)] = t
+			end
+		end
+	end
+	love.graphics.draw(tile_batch, offsetx, offsety)
+
+	if not displaysolid and not displaytilenumbers then
+		return
+	end
+
 	for aty = 0, 29 do
 		for atx = 0, 39 do
 			local t = theroomdata[(aty*40)+(atx+1)]
 			local x, y = offsetx+(16*atx*zoomscale2), offsety+(16*aty*zoomscale2)
-			if t ~= 0 then
-				love.graphics.draw(tilesets[tilesetnames[ts]]["img"], tilesets[tilesetnames[ts]]["tiles"][tonumber(t)], x, y, 0, 2*zoomscale2)
-			end
 
 			if displaysolid then
 				if issolid(t, ts, false, true) then

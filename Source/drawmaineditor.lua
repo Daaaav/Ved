@@ -1692,11 +1692,12 @@ function drawmaineditor()
 		-- For certain features, it would be nice to indicate that there are shortcuts you can use
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 then
 			-- Custom cursor size
-			tinyprint(L.TINY_SHIFT, 128-20, love.graphics.getHeight()-7)
+			tinyprint(L.TINY_SHIFT, 128-tinynumbers:getWidth(L.TINY_SHIFT), love.graphics.getHeight()-7)
 		elseif editingroomtext > 0 and entitydata[editingroomtext] ~= nil and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
 			-- Name for script box
-			tinyprint("{" .. L.TINY_SHIFT, 128-27, love.graphics.getHeight()-14)
-			tinyprint("}" .. L.TINY_CTRL, 128-27, love.graphics.getHeight()-7)
+			local tinywidth = math.max(tinynumbers:getWidth("{" .. L.TINY_SHIFT), tinynumbers:getWidth("}" .. L.TINY_CTRL))
+			tinyprint("{" .. L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-14)
+			tinyprint("}" .. L.TINY_CTRL, 128-tinywidth, love.graphics.getHeight()-7)
 		end
 
 		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)

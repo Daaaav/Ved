@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-01-22 17:46:56 (CET)
+--- Last converted: 2019-01-22 23:07:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999

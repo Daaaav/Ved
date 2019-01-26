@@ -430,6 +430,15 @@ function love.load()
 
 	next_frame_time = love.timer.getTime()
 
+	-- If I add layers, I should probably increase the max number of sprites and just add them after each other.
+	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.
+	tile_batch = love.graphics.newSpriteBatch(tilesets["tiles.png"]["img"], 1200, "dynamic")
+	tile_batch_tileset = 1
+	tile_batch_tiles = {}
+	for i = 1, 1200 do
+		tile_batch_tiles[i] = 0
+	end
+
 	hook("love_load_end")
 end
 
