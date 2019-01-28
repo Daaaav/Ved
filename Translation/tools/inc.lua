@@ -4,6 +4,7 @@ languages = {
 	eo = "Esperanto",
 	ru = "Русский",
 	de = "Deutsch",
+	fr = "Français",
 }
 
 langdir_path = "../../Source/lang" -- must not include a trailing /

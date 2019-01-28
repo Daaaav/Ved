@@ -1,5 +1,5 @@
 -- Language file for Ved
---- Language: Deutsch (de)
+--- Language: Français (fr)
 --- Last converted: 2019-01-28 01:44:42 (CET)
 
 --[[
@@ -11,528 +11,516 @@
 
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
-function lang_plurals(n) return (n ~= 1) end
+function lang_plurals(n) return (n > 1) end
 
 function fontpng_ascii(c)
-	if c == "ä" then
-		return "|"
-	elseif c == "ö" or c == "Ö" then
-		return "{"
-	elseif c == "ü" then
-		return "ue"
-	elseif c == "Ä" then
-		return "Ae"
-	elseif c == "Ü" then
-		return "Ue"
-	elseif c == "ß" then
-		return "ss"
-	end
+
 end
 
 L = {
 
-TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deine LÖVE Version ist veraltet. Bitte benutze Version 0.9.0 oder höher. Du kannst die neuste LÖVE Version von https://love2d.org downloaden.",
-UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
-FATALERROR = "FATALER FEHLER: ",
-FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
+OUTDATEDLOVE = "Votre version de L{ve est obsolète. Veuillez utiliser la version 0.9.0 ou ultérieure. Vous pouvez télécharger la dernière version de L{ve sur le site https://love2d.org/.",
+UNKNOWNSTATE = "État inconnu ($1), entré depuis l'état $2",
+FATALERROR = "ERREUR FATALE : ",
+FATALEND = "Veuillez fermer le jeu et réessayer. Et si vous êtes Dav, veuillez le réparer.",
 
-OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
-MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde in diesem Level erreicht.",
-MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde in diesem Level erreicht.",
-EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
-STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
-UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
-SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-SURELOADLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
-MAPSAVEDAS = "Kartenbild gespeichert als $1!",
-RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
-UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
-METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flagnamen und andere Dinge.",
-WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
-SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
-NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
-LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
-SIZELIMIT = "Die maximale Größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
-SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
-FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
-FLAGNAMECHARS = "Flag names cannot contain parentheses, commas or spaces.",
-FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
-DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
-SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
-SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
-SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugestartet wird.",
-NAMEFORFLAG = "Name für Flag $1:",
-SCRIPT404 = "Skript \"$1\" existiert nicht!",
-ENTITY404 = "Objekt #$1 existiert nicht mehr!",
-GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber dieses Feature nicht unterstützt!",
-MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder deinem Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
-SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
-SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
-THREADERROR = "Threadfehler!",
-WHATDIDYOUDO = "Was hast du getan?!",
-UNDOFAULTY = "Was tust du?",
-SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
-UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
-MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
-FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
-MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht an savelevel() übergeben!",
-RESTARTVEDLANG = "Nach dem ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
+OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
+MAXTRINKETS = "Le nombre maximum de médailles (20) a été atteint dans ce niveau.",
+MAXCREWMATES = "Le nombre maximum d'équipiers (20) a été atteint dans ce niveau.",
+EDITINGROOMTEXTNIL = "Le texte de la salle existante que vous éditiez est nil !",
+STARTPOINTNOLONGERFOUND = "L'ancien point de départ ne peut plus être trouvé !",
+UNSUPPORTEDTOOL = "Outil non supporté! Outil : ",
+SURENEWLEVEL = "Êtes-vous sûr de vouloir créer un nouveau niveau? Vous perdrez tout contenu non sauvegardé.",
+SURELOADLEVEL = "Êtes-vous sûr de vouloir charger un niveau? Vous perdrez tout contenu non sauvegardé.",
+COULDNOTGETCONTENTSLEVELFOLDER = "Le contenu du dossier de niveaux n'a pas pu être récupéré. Veuillez vérifier si $1 existe et réessayez.",
+MAPSAVEDAS = "L'image de la carte a été sauvegardée en tant que $1 !",
+RAWENTITYPROPERTIES = "Vous pouvez changer les valeurs brutes des propriétés de cette entité ici.",
+UNKNOWNENTITYTYPE = "Type d'entité $1 inconnu",
+METADATAENTITYCREATENOW = "L'entité de métadonnées n'existe pas. Voulez vous la créer maintenant?\n\nL'entité de métadonnées est une entité cachée qui peut être ajoutée à des niveaux de VVVVVV pour stocker des données supplémentaires utilisées par Ved, comme par exemple des notes sur le niveau, des noms de drapeaux et bien d'autres choses.",
+WARPTOKENENT404 = "Le jeton de téléportation n'existe plus !",
+SPLITFAILED = "La séparation a misérablement échoué ! Avez-vous trop de lignes entre une commande texte et une commande speak ou speak_active ?", -- Command names are best left untranslated
+NOFLAGSLEFT = "Il n'y a plus de drapeaux disponibles, donc au moins un nouveau nom de drapeau ne peut pas être associé à un numéro de drapeau. L'utilisation de ce script dans VVVVVV a des chances de le casser. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.\n\nQuitter l'éditeur ?",
+NOFLAGSLEFT_LOADSCRIPT = "Il n'y a plus de drapeaux disponibles, donc un script de chargement utilisant un nouveau drapeau n'a pas pu être créé. A la place, un script de chargement qui charge le script cible avec iftrinkets(0,$1) a été créé. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.",
+LEVELOPENFAIL = "Impossible d'ouvrir le fichier $1.vvvvvv.",
+SIZELIMIT = "La taille maximum d'un niveau est de 20 par 20.\n\nA la place, la taille du niveau va être changée en $1 par $2.",
+SCRIPTALREADYEXISTS = "Le script \"$1\" existe déjà !",
+FLAGNAMENUMBERS = "Les noms de drapeaux ne peuvent pas être composés que de nombres.",
+FLAGNAMECHARS = "Les noms de drapeaux ne peuvent pas contenir de virgules, de parenthèses ou d'espaces.",
+FLAGNAMEINUSE = "Le nom de drapeau $1 est déjà utilisé par le drapeau $2",
+DIFFSELECT = "Choisissez le niveau à comparer. Le niveau que vous sélectionnez sera considéré comme l'ancienne version.",
+SUREQUIT = "Êtes-vous sûr de vouloir quitter? Vous allez perdre tout contenu non sauvegardé.",
+SUREQUITNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de quitter ?",
+SURENEWLEVELNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de créer un nouveau niveau ?",
+SCALEREBOOT = "La nouvelle configuration d'échelle seront prises en compte après avoir redémarré Ved.",
+NAMEFORFLAG = "Nom pour le drapeau $1 :",
+SCRIPT404 = "Le script \"$1\" n'existe pas !",
+ENTITY404 = "L'entité #$1 n'existe plus !",
+GRAPHICSCARDCANVAS = "Nous sommes désolés, mais il semble que votre carte graphique ou son pilote ne supporte pas cette fonctionnalité !",
+MAXTEXTURESIZE = "Nous sommes désolés, créer une image de dimensions $1x$2 ne semble pas être supporté par votre carte graphique ou son pilote..\n\nLa taille limite sur ce système est $3x$3.",
+SUREDELETESCRIPT = "Êtes-vous sûr de vouloir supprimer le script \"$1\" ?",
+SUREDELETENOTE = "Êtes-vous sûr de vouloir supprimer cette note ?",
+THREADERROR = "Erreur de processus !",
+WHATDIDYOUDO = "Qu'avez-vous fait ?!",
+UNDOFAULTY = "Qu'est-ce que vous faites ?",
+SOURCEDESTROOMSSAME = "La salle de départ et de destination sont les mêmes !",
+UNKNOWNUNDOTYPE = "Type de retour en arrière \"$1\" inconnu !",
+MDEVERSIONWARNING = "Ce niveau semble avoir été créé dans une version ultérieure de Ved, et peut contenir des données pouvant être perdues lorsque vous sauverez ce niveau.",
+FORGOTPATH = "Vous avez oublié de spécifier un chemin !",
+MDENOTPASSED = "Attention: aucune entité de métadonnées n'a été passée à savelevel() !",
+RESTARTVEDLANG = "Après avoir changé la langue, vous devez relancer Ved pour que les changements prennent effet.",
 
-SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
-SELECTCOPY2 = "Wähle die Position wo der Raum hinkopiert werden soll",
-SELECTSWAP1 = "Wähle den ersten Raum aus zum tauschen",
-SELECTSWAP2 = "Wähle den zweiten Raum aus zum tauschen",
+SELECTCOPY1 = "Sélectionnez la salle à copier",
+SELECTCOPY2 = "Sélectionnez l'emplacement où copier cette salle",
+SELECTSWAP1 = "Sélectionnez la première salle à échanger",
+SELECTSWAP2 = "Sélectionnez la seconde salle à échanger",
 
-TILESETCHANGEDTO = "Tileset geändert zu $1",
-TILESETCOLORCHANGEDTO = "Tilesetfarbe geändert zu $1",
-ENEMYTYPECHANGED = "Objekttyp verändert",
+TILESETCHANGEDTO = "Jeu de tuiles changé à $1",
+TILESETCOLORCHANGEDTO = "La couleur du jeu de tuiles à été changé à $1",
+ENEMYTYPECHANGED = "Type d'ennemi changé",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
-CHANGEDTOMODE = "Geändert zu $1 Tileplatzierung",
-CHANGEDTOMODEAUTO = "automatischer",
-CHANGEDTOMODEMANUAL = "manueller",
-CHANGEDTOMODEMULTI = "multi-Tileset",
+CHANGEDTOMODE = "Type de placement de tuiles changé à $1",
+CHANGEDTOMODEAUTO = "automatique",
+CHANGEDTOMODEMANUAL = "manuel",
+CHANGEDTOMODEMULTI = "multi jeux de tuiles",
 
-BUSYSAVING = "Speichern...",
-SAVEDLEVELAS = "Level wurde gespeichert als $1.vvvvvv",
+BUSYSAVING = "Sauvegarde en cours...",
+SAVEDLEVELAS = "Niveau sauvegardé en tant que $1.vvvvvv",
 
-ROOMCUT = "Raum augeschnitten und zur Zwischenablage kopiert",
-ROOMCOPIED = "Raum wurde zur Zwischenablage kopiert",
-ROOMPASTED = "Raum eingefügt",
+ROOMCUT = "Salle coupée et sauvegardée dans le presse papiers",
+ROOMCOPIED = "Salle copiée dans le presse papiers",
+ROOMPASTED = "Salle collée",
 
-METADATAUNDONE = "Leveloptionen wurden rückgängig gemacht",
-METADATAREDONE = "Leveloptionen wiederholt",
+METADATAUNDONE = "Options de niveaux remises en arrière",
+METADATAREDONE = "Options de niveaux rétablies",
 
-BOUNDSTOPLEFT = "Klicke auf die obere linke Ecke der Begrenzung",
-BOUNDSBOTTOMRIGHT = "Klicke auf die untere rechte Ecke",
+BOUNDSTOPLEFT = "Sélectionnez le coin en haut à gauche de la zone de sélection",
+BOUNDSBOTTOMRIGHT = "Sélectionnez le coin en bas à droite",
 
-TILE = "Tile $1",
-HIDEALL = " Verstecken",
-SHOWALL = "Zeige alles",
-SCRIPTEDITOR = "Skripteditor",
-FILE = "Datei",
-NEW = "Neu",
-OPEN = "Öffnen",
-SAVE = "Speichern",
-UNDO = "Rückgängig",
-REDO = "Wiederholen",
-COMPARE = "Vergleichen",
-STATS = "Statistiken",
-SCRIPTUSAGES = "Benutzungen",
-EDITTAB = "Bearbeiten",
-COPYSCRIPT = "Skript kopieren",
-SEARCHSCRIPT = "Suchen",
-GOTOLINE = "Gehe zu Zeile",
-GOTOLINE2 = "Gehe zu Zeile:",
-INTERNALON = "Int.sc ist aus",
-INTERNALOFF = "Int.sc ist an",
-VIEW = "Ansehen",
-SYNTAXHLOFF = "Syntax HL: an",
-SYNTAXHLON = "Syntax HL: aus",
-TEXTSIZEN = "Textgröße: N",
-TEXTSIZEL = "Textgröße: L",
-INSERT = "Einfügen",
-HELP = "Hilfe",
-INTSCRWARNING_NOLOADSCRIPT = "Ladeskript benötigt!",
-INTSCRWARNING_BOXED = "Direkte Skriptbox/\nKonsolen Referenz!\n\n",
-COLUMN = "Spalte: ",
+TILE = "Tuile $1",
+HIDEALL = "Tout cacher",
+SHOWALL = "Tout montrer",
+SCRIPTEDITOR = "Éditeur de script",
+FILE = "Fichier",
+NEW = "Nouveau",
+OPEN = "Ouvrir",
+SAVE = "Sauver",
+UNDO = "Revenir en arrière",
+REDO = "Revenir en avant",
+COMPARE = "Comparer",
+STATS = "Statistiques",
+SCRIPTUSAGES = "Utilisations",
+EDITTAB = "Modifier",
+COPYSCRIPT = "Copier le script",
+SEARCHSCRIPT = "Chercher",
+GOTOLINE = "Aller à la ligne",
+GOTOLINE2 = "Aller à la ligne :",
+INTERNALON = "Int.sc est désactivé",
+INTERNALOFF = "Int.sc est activé",
+VIEW = "Vue",
+SYNTAXHLOFF = "Color. syn. : oui",
+SYNTAXHLON = "Color. syn. : non",
+TEXTSIZEN = "Taille du texte: Normal",
+TEXTSIZEL = "Taille du texte: Grand",
+INSERT = "Insérer",
+HELP = "Aide",
+INTSCRWARNING_NOLOADSCRIPT = "Script de chargement requis !",
+INTSCRWARNING_BOXED = "Réf. directe à l'invite de commande du script !\n\n",
+COLUMN = "Colonne : ",
 
 BTN_OK = "OK",
-BTN_CANCEL = "Abbrechen",
-BTN_YES = "Ja",
-BTN_NO = "Nein",
-BTN_APPLY = "Anwenden",
-BTN_QUIT = "Beenden",
-BTN_DISCARD = "Verwerfen",
-BTN_SAVE = "Speichern",
-BTN_CLOSE = "Schließen",
+BTN_CANCEL = "Annuler",
+BTN_YES = "Oui",
+BTN_NO = "Non",
+BTN_APPLY = "Appliquer",
+BTN_QUIT = "Quitter",
+BTN_DISCARD = "Jeter",
+BTN_SAVE = "Sauver",
+BTN_CLOSE = "Fermer",
 
-COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
-COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
+COMPARINGTHESE = "Comparaison entre $1.vvvvvv et $2.vvvvvv en cours",
+COMPARINGTHESENEW = "Comparaison entre (niveau non sauvegardé) et $1.vvvvvv en cours",
 
-RETURN = "Zurückkehren",
-CREATE = "Erstellen",
-GOTO = "Gehe zu",
-DELETE = "Löschen",
-RENAME = "Umbennen",
-CHANGEDIRECTION = "Richtung ändern",
-DIRECTION = "Richtung->",
-UP = "hoch",
-DOWN = "runter",
-LEFT = "links",
-RIGHT = "rechts",
-TESTFROMHERE = "Teste von hier",
-FLIP = "Umdrehen",
-CYCLETYPE = "Typ ändern",
-GOTODESTINATION = "Gehe zum Ziel",
-GOTOENTRANCE = "Gehe zum Eingang",
-CHANGECOLOR = "Farbe ändern",
-EDITTEXT = "Text bearbeiten",
-COPYTEXT = "Text kopieren",
-EDITSCRIPT = "Skript bearbeiten",
-OTHERSCRIPT = "Skript umbennen",
-PROPERTIES = "Eigenschaften",
-CHANGETOHOR = "Ändern zu horizontal",
-CHANGETOVER = "Ändern zu vertikal",
-RESIZE = "Bewegen/Größe ändern",
-CHANGEENTRANCE = "Bewege Eingang",
-CHANGEEXIT = "Bewege Ausgang",
-LOCK = "Fixieren",
-UNLOCK = "Entsperren",
-BUG = "[Fehler!]",
+RETURN = "Retour",
+CREATE = "Créer",
+GOTO = "Aller à",
+DELETE = "Supprimer",
+RENAME = "Renommer",
+CHANGEDIRECTION = "Changer la direction",
+DIRECTION = "Direction->",
+UP = "haut",
+DOWN = "bas",
+LEFT = "gauche",
+RIGHT = "droit",
+TESTFROMHERE = "Tester depuis ici",
+FLIP = "Renverser",
+CYCLETYPE = "Changer le type",
+GOTODESTINATION = "Aller à la destination",
+GOTOENTRANCE = "Aller à l'entrée",
+CHANGECOLOR = "Changer la couleur",
+EDITTEXT = "Éditer le texte",
+COPYTEXT = "Copier le texte",
+EDITSCRIPT = "Éditer le script",
+OTHERSCRIPT = "Changer le nom du script",
+PROPERTIES = "Propriétés",
+CHANGETOHOR = "Modifié à horizontal",
+CHANGETOVER = "Modifié à vertical",
+RESIZE = "Déplacer/Redimensionner",
+CHANGEENTRANCE = "Déplacer l'entrée",
+CHANGEEXIT = "Déplacer la sortie",
+LOCK = "Vérouiller",
+UNLOCK = "Dévérouiller",
+BUG = "[Bogue!]",
 
-VEDOPTIONS = "Ved-Optionen",
-LEVELOPTIONS = "Leveloptionen",
-MAP = "Karte",
-SCRIPTS = "Skripte",
-SEARCH = "Suchen",
-SENDFEEDBACK = "Feedback senden",
-LEVELNOTEPAD = "Level-\nNotizblock",
-PLUGINS = "Plugins",
+VEDOPTIONS = "Options de Ved",
+LEVELOPTIONS = "Options de niveau",
+MAP = "Carte",
+SCRIPTS = "Scripts",
+SEARCH = "Chercher",
+SENDFEEDBACK = "Envoyer un avis",
+LEVELNOTEPAD = "Commentaires de niveau",
+PLUGINS = "Modules",
 
-BACKB = "Zurück <<",
-MOREB = "Mehr >>",
-AUTOMODE = "Modus: automatisch",
-AUTO2MODE = "Modus: multi",
-MANUALMODE = "Modus: manuell",
-PLATFORMSPEED = "Platf. gesch.: $1",
-ENEMYTYPE = "Objekttyp: $1",
-PLATFORMBOUNDS = "Platf. Grenze",
-WARPDIR = "Teleportations\n-richtung: $1",
-ENEMYBOUNDS = "Gegnergrenzen",
-ROOMNAME = "Raumname",
-ROOMOPTIONS = "Raumoptionen",
-ROTATE180 = "Um 180 Grad drehen",
-ROTATE180UNI = "Um 180° drehen",
-HIDEBOUNDS = "Grenzen ausblenden",
-SHOWBOUNDS = "Grenzen einblenden",
+BACKB = "Retour <<",
+MOREB = "Plus >>",
+AUTOMODE = "Mode : auto",
+AUTO2MODE = "Mode : multi",
+MANUALMODE = "Mode : manuel",
+PLATFORMSPEED = "Vit. de plateforme : $1",
+ENEMYTYPE = "Type d'ennemi: $1",
+PLATFORMBOUNDS = "Limites de plateforme",
+WARPDIR = "Dir de TP: $1",
+ENEMYBOUNDS = "Zone des ennemis",
+ROOMNAME = "Nom de la salle",
+ROOMOPTIONS = "Options de la salle",
+ROTATE180 = "Tourner à 180 degrés",
+ROTATE180UNI = "Tourner à 180°",
+HIDEBOUNDS = "Cacher les limites",
+SHOWBOUNDS = "Afficher les limites",
 
-ROOMPLATFORMS = "Raumplattformen", -- basically, platforms/enemies in/for this room
-ROOMENEMIES = "Raumgegner",
+ROOMPLATFORMS = "Plateformes de la salle", -- basically, platforms/enemies in/for this room
+ROOMENEMIES = "Ennemis de la salle",
 
-OPTNAME = "Name",
-OPTBY = "Von",
-OPTWEBSITE = "Webseite",
-OPTDESC = "Beschrei\n-bung", -- If necessary, you can span multiple lines
-OPTSIZE = "Größe",
-OPTMUSIC = "Musik",
-CAPNONE = "KEINE",
-ENTERLONGOPTNAME = "Levelname:",
+OPTNAME = "Nom",
+OPTBY = "Par",
+OPTWEBSITE = "SiteWeb",
+OPTDESC = "Desc", -- If necessary, you can span multiple lines
+OPTSIZE = "Taille",
+OPTMUSIC = "Musique",
+CAPNONE = "AUCUN",
+ENTERLONGOPTNAME = "Nom du niveau :",
 
 X = "x", -- Used for level size: 20x20
 
-SOLID = "Solid",
-NOTSOLID = "Unsolid",
+SOLID = "Solide",
+NOTSOLID = "Non solide",
 
-TSCOLOR = "Farbe $1",
+TSCOLOR = "Couleur : $1",
 
-ONETRINKETS = "T:",
-ONECREWMATES = "C:",
-ONEENTITIES = "E:",
+ONETRINKETS = "M :",
+ONECREWMATES = "Eq :",
+ONEENTITIES = "En :",
 
-LEVELSLIST = "Level",
-LOADTHISLEVEL = "Lade dieses Level: ",
-ENTERNAMESAVE = "Speichern als: ",
-SEARCHFOR = "Suche nach: ",
+LEVELSLIST = "Niveaux",
+LOADTHISLEVEL = "Charger ce niveau : ",
+ENTERNAMESAVE = "Entrer le nom utilisé pour la sauvegarde : ",
+SEARCHFOR = "Chercher pour : ",
 
-VERSIONERROR = "Kann nicht die Version prüfen.",
-VERSIONUPTODATE = "Deine Version von Ved ist auf dem neusten Stand.",
-VERSIONOLD = "Update verfügbar! Neuste Version: $1",
-VERSIONCHECKING = "Suche nach Updates...",
-VERSIONDISABLED = "Updateüberprüfung deaktiviert",
+VERSIONERROR = "Impossible de vérifier la version.",
+VERSIONUPTODATE = "Votre version de Ved est à jour.",
+VERSIONOLD = "Mise à jour disponible! Dernière version : $1",
+VERSIONCHECKING = "Recherche de mise à jour...",
+VERSIONDISABLED = "Recherche de mise à jour désactivée",
 
-SAVESUCCESS = "Erfolgreich gespeichert!",
-SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
+SAVESUCCESS = "Sauvegarde effectuée !",
+SAVENOSUCCESS = "La sauvegarde a échouée! Erreur : ",
 
-EDIT = "Bearbeiten",
-EDITWOBUMPING = "Bearbeiten ohne stoßen",
-COPYNAME = "Name kopieren",
-COPYCONTENTS = "Inhalt kopieren",
-DUPLICATE = "Duplizieren",
+EDIT = "Modifier",
+EDITWOBUMPING = "Modifier sans réordonner la liste",
+COPYNAME = "Copier le nom",
+COPYCONTENTS = "Copier le contenu",
+DUPLICATE = "Dupliquer",
 
-NEWSCRIPTNAME = "Name:",
-CREATENEWSCRIPT = "Erstelle neues Skript",
+NEWSCRIPTNAME = "Nom :",
+CREATENEWSCRIPT = "Créer un nouveau script",
 
-NEWNOTENAME = "Name:",
-CREATENEWNOTE = "Erstelle neue Notiz",
+NEWNOTENAME = "Nom :",
+CREATENEWNOTE = "Créer une nouvelle note",
 
-ADDNEWBTN = "[Neue hinzufügen]",
-IMAGEERROR = "[BILDFEHLER]",
+ADDNEWBTN = "[Ajouter nouveau]",
+IMAGEERROR = "[ERREUR D'IMAGE]",
 
-NEWNAME = "Neuer Name:",
-RENAMENOTE = "Notiz umbennen",
-RENAMESCRIPT = "Skript umbennen:",
+NEWNAME = "Nouveau nom :",
+RENAMENOTE = "Renommer la note",
+RENAMESCRIPT = "Renommer le script",
 
-LINE = "Zeile ",
+LINE = "ligne ",
 
-SAVEMAP = "Karte speichern",
-SAVEFULLSIZEMAP = "Karte in voller größe speichern",
-COPYROOMS = "Kopiere Raum",
-SWAPROOMS = "Tausche Räume",
+SAVEMAP = "Sauver la carte",
+SAVEFULLSIZEMAP = "Sauver la carte globale",
+COPYROOMS = "Copier la salle",
+SWAPROOMS = "Échanger les salles",
 
-FLAGS = "Flags",
-ROOM = "Raum",
-CONTENTFILLER = "Inhalt",
+FLAGS = "Drapeaux",
+ROOM = "salle",
+CONTENTFILLER = "Contenu",
 
-FLAGUSED = "Benutzt      ", -- preferably same length as L.FLAGNOTUSED
-FLAGNOTUSED = "Nicht benutzt",
-FLAGNONAME = "Kein Name",
-USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
+FLAGUSED = "Utilisé    ", -- preferably same length as L.FLAGNOTUSED
+FLAGNOTUSED = "Non utilisé",
+FLAGNONAME = "Aucun nom",
+USEDOUTOFRANGEFLAGS = "Drapeaux hors limites utilisés :",
 
-CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV-Ordner ein, falls er nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
-LANGUAGE = "Sprache",
-DIALOGANIMATIONS = "Dialoganimationen",
-FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
-ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
-ASKBEFOREQUIT = "Frage vor dem Beenden",
-NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte Änderungen gibt",
-COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
-ALLOWDEBUG = "Aktiviere Debugmodus",
-SHOWFPS = "Zeige FPS-Zähler",
-IIXSCALE = "2x Größe",
-CHECKFORUPDATES = "Nach Updates suchen",
-PAUSEDRAWUNFOCUSED = "Nicht rendern wenn das Fenster unfokusiert ist",
-ENABLEOVERWRITEBACKUPS = "Mache Backups von Level Dateien die überschrieben werden",
-AMOUNTOVERWRITEBACKUPS = "Anzahl an Backups die gemacht werden sollen pro Level",
-SCALE = "Größe",
-LOADALLMETADATA = "Lade Metadaten (sowas wie Titel, Author und Beschreibung) für alle Dateien in der Levelliste",
-COLORED_TEXTBOXES = "Benutze Echtfarben für Textbox",
+CUSTOMVVVVVVDIRECTORY = "Dossier de VVVVVV",
+CUSTOMVVVVVVDIRECTORYEXPL = "Entrez le chemin complet du dossier de VVVVVV ici, si ce n'est pas \"$1\" (dans ce cas laissez cette partie vide). N'incluez pas le dossier nommé \"levels\" ici, ni un (anti)slash à la fin du chemin.",
+LANGUAGE = "Langue",
+DIALOGANIMATIONS = "Animations de dialogue",
+FLIPSUBTOOLSCROLL = "Inverser la direction de défilage des sous-outils",
+ADJACENTROOMLINES = "Indicateurs de tuiles dans les salles adjacentes",
+ASKBEFOREQUIT = "Demander avant de quitter",
+NEVERASKBEFOREQUIT = "Ne jamais demander avant de quitter, même s'il y a des modifications non sauvegardées",
+COORDS0 = "Afficher les coordonnées en commençant à 0 (comme dans les scripts internes)",
+ALLOWDEBUG = "Activer le mode de débogage",
+SHOWFPS = "Afficher le compteur de FPS",
+IIXSCALE = "Échelle 2x",
+CHECKFORUPDATES = "Chercher une mise à jour",
+PAUSEDRAWUNFOCUSED = "Ne pas effectuer de rendu lorsque la fenêtre n'est pas en premier plan",
+ENABLEOVERWRITEBACKUPS = "Faire des sauvegardes des fichiers de niveaux qui sont remplacés",
+AMOUNTOVERWRITEBACKUPS = "Nombre de sauvegardes à garder par niveau",
+SCALE = "Échelle",
+LOADALLMETADATA = "Charger des métadonnées (ex : titre, auteur, description) pour tous les fichiers dans la liste de niveaux",
+COLORED_TEXTBOXES = "Utiliser des couleurs pour l'éditeur de script",
 
-SCRIPTSPLIT = "Trennen",
-SPLITSCRIPT = "Skripts trennen",
-COUNT = "Anzahl: ",
-SMALLENTITYDATA = "Daten",
+SCRIPTSPLIT = "Séparer",
+SPLITSCRIPT = "Scripts de séparation",
+COUNT = "Compte : ",
+SMALLENTITYDATA = "texte",
 
 -- Stats screen
-AMOUNTSCRIPTS = "Skripts:",
-AMOUNTUSEDFLAGS = "Flags:",
-AMOUNTENTITIES = "Objekte:",
-AMOUNTTRINKETS = "Trinkets:",
-AMOUNTCREWMATES = "Crewmitglieder:",
-AMOUNTINTERNALSCRIPTS = "Interne Skripts:",
-TILESETUSSAGE = "Tileset Benutzung",
-TILESETSONLYUSED = "(nur Räume die Tiles haben werden gezählt)",
-AMOUNTROOMSWITHNAMES = "Räume die einen Namen haben:",
-PLACINGMODEUSAGE = "Tileplatzierungsmoduse:",
-AMOUNTLEVELNOTES = "Level-Notizen:",
-AMOUNTFLAGNAMES = "Flagnamen:",
-TILESUSAGE = "Tiles Verwendung",
-AMOUNTTILES = "Tiles:",
-AMOUNTSOLIDTILES = "Solide Tiles:",
-AMOUNTSPIKES = "Spikes:",
+AMOUNTSCRIPTS = "Scripts :",
+AMOUNTUSEDFLAGS = "Drapeaux :",
+AMOUNTENTITIES = "Entités :",
+AMOUNTTRINKETS = "Médailles :",
+AMOUNTCREWMATES = "Équipiers :",
+AMOUNTINTERNALSCRIPTS = "Scripts internes :",
+TILESETUSSAGE = "Utilisation du jeu de tuiles",
+TILESETSONLYUSED = "(seules les salles ayant des tuiles sont comptées)",
+AMOUNTROOMSWITHNAMES = "Salles ayant un nom :",
+PLACINGMODEUSAGE = "Modes de placement de tuiles :",
+AMOUNTLEVELNOTES = "Notes de niveau :",
+AMOUNTFLAGNAMES = "Nom des drapeaux :",
+TILESUSAGE = "Utilisation des tuiles",
+AMOUNTTILES = "Tuiles :",
+AMOUNTSOLIDTILES = "Tuiles solides :",
+AMOUNTSPIKES = "Pointes :",
 
 
-UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
-MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
-MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
-LEVMUSICEMPTY = "Levelmusik ist leer!",
-NOT400ROOMS = "The number of entries in levelMetaData is not 400!",
-MOREERRORS = "$1 mehr",
+UNEXPECTEDSCRIPTLINE = "Ligne de script sans script inattendue : $1",
+MAPWIDTHINVALID = "La largeur de la carte est invalide : $1",
+MAPHEIGHTINVALID = "La hauteur de la carte est invalide : $1",
+LEVMUSICEMPTY = "La musique du niveau est vide !",
+NOT400ROOMS = "Le nombre d'entrées de levelMetadata n'est pas 400 !",
+MOREERRORS = "et $1 autres",
 
-DEBUGMODEON = "Debugmodus an",
+DEBUGMODEON = "Mode de débogage activé",
 FPS = "FPS",
-STATE = "Status",
-MOUSE = "Maus",
+STATE = "Etat",
+MOUSE = "Souris",
 
-BLUE = "Blau",
-RED = "Rot",
+BLUE = "Bleu",
+RED = "Rouge",
 CYAN = "Cyan",
-PURPLE = "Lila",
-YELLOW = "Gelb",
-GREEN = "Grün",
-GRAY = "Grau",
-PINK = "Pink",
-BROWN = "Braun",
-RAINBOWBG = "Regenbogenhintergrund",
+PURPLE = "Violet",
+YELLOW = "Jaune",
+GREEN = "Vert",
+GRAY = "Gris",
+PINK = "Rose",
+BROWN = "Marron",
+RAINBOWBG = "Arrière-plan arc-en-ciel",
 
 -- b14
-SYNTAXCOLORS = "Syntaxfarben",
-SYNTAXCOLORSETTINGSTITLE = "Skriptingsyntaxhervorhebungsfarbeneinstellungen",
-SYNTAXCOLOR_COMMAND = "Befehl",
-SYNTAXCOLOR_GENERIC = "Generisch",
-SYNTAXCOLOR_SEPARATOR = "Separator",
-SYNTAXCOLOR_NUMBER = "Nummer",
-SYNTAXCOLOR_TEXTBOX = "Textbox",
-SYNTAXCOLOR_ERRORTEXT = "Unbekannter Befehl",
-SYNTAXCOLOR_CURSOR = "Mauszeiger",
-SYNTAXCOLOR_FLAGNAME = "Flagname",
-SYNTAXCOLOR_NEWFLAGNAME = "Neuer Flagname",
-RESETCOLORS = "Farben zurücksetzen",
-STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
+SYNTAXCOLORS = "Couleurs syntaxiques",
+SYNTAXCOLORSETTINGSTITLE = "Options de coloration syntaxique lors de la modification de scripts",
+SYNTAXCOLOR_COMMAND = "Commande",
+SYNTAXCOLOR_GENERIC = "Générique",
+SYNTAXCOLOR_SEPARATOR = "Séparateur",
+SYNTAXCOLOR_NUMBER = "Nombre",
+SYNTAXCOLOR_TEXTBOX = "Boite de texte",
+SYNTAXCOLOR_ERRORTEXT = "Commande non reconnue",
+SYNTAXCOLOR_CURSOR = "Curseur",
+SYNTAXCOLOR_FLAGNAME = "Nom de drapeau",
+SYNTAXCOLOR_NEWFLAGNAME = "Nouveau nom de drapeau",
+RESETCOLORS = "Remise à zéro des couleurs",
+STRINGNOTFOUND = "\"$1\" n'a pas été trouvé",
 
 -- b17 - L.MAL is concatenated with L.[...]CORRUPT
-MAL = "Das Level ist beschädigt: ",
-METADATACORRUPT = "Metadaten fehlen oder sind beschädigt.",
-METADATAITEMCORRUPT = "Metadaten für $1 fehlt oder ist beschädigt.",
-TILESCORRUPT = "Tiles fehlen oder sind beschädigt.",
-ENTITIESCORRUPT = "Objekte fehlen oder sind beschädigt.",
-LEVELMETADATACORRUPT = "Raummetadaten fehlen oder sind beschädigt.",
-SCRIPTCORRUPT = "Skripte fehlen oder sind beschädigt.",
+MAL = "Le fichier de niveau est mal formaté : ",
+METADATACORRUPT = "Les métadonnées sont manquantes ou corrompues.",
+METADATAITEMCORRUPT = "Les métadonnées pour $1 sont manquantes ou corrompues.",
+TILESCORRUPT = "Les tuiles sont manquantes ou corrompues.",
+ENTITIESCORRUPT = "Les entités sont manquantes ou corrompues.",
+LEVELMETADATACORRUPT = "Les métadonnées des salles sont manquantes ou corrompues.",
+SCRIPTCORRUPT = "Les scripts sont manquants ou corrompus.",
 
 -- 1.1.0
-LOADSCRIPTMADE = "Ladeskript erstellt",
-COPY = "Kopieren",
-CUSTOMSIZE = "Eigene Pinselgröße: $1x$2",
-SELECTINGA = "Auswählen - klicke oben links",
-SELECTINGB = "Ausgewählt: $1x$2",
-TILESETSRELOADED = "Tilesets und Sprites neugeladen",
+LOADSCRIPTMADE = "Script de chargement créé",
+COPY = "Copier",
+CUSTOMSIZE = "Taille de pinceau customisée : $1x$2",
+SELECTINGA = "Sélection - coin haut gauche",
+SELECTINGB = "Sélection : $1x$2",
+TILESETSRELOADED = "Jeux de tuiles et images rechargées",
 
 -- 1.2.0
-BACKUPS = "Backups",
-BACKUPSOFLEVEL = "Backups von Level $1",
-LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
-OVERWRITTENTIME = "Überschrieben", -- List header
-SAVEBACKUP = "Im VVVVVV-Ordner speichern",
-DATEFORMAT = "Datumsformat",
-CUSTOMDATEFORMAT = "Eigenes Datumsformat",
-SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird in diesem Fall gemacht!",
+BACKUPS = "Sauvegardes",
+BACKUPSOFLEVEL = "Sauvegardes du niveau $1",
+LASTMODIFIEDTIME = "Dernière modification", -- List header
+OVERWRITTENTIME = "Remplacé", -- List header
+SAVEBACKUP = "Sauver dans le dossier de VVVVVV",
+DATEFORMAT = "Format de date",
+CUSTOMDATEFORMAT = "Format de date personnalisé",
+SAVEBACKUPNOBACKUP = "Faites en sorte de choisir un nom unique pour ceci si vous ne voulez rien remplacer, car AUCUNE sauvegarde ne sera effectuée dans ce cas-ci !",
 
 -- 1.2.4
-AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
-MOREINFO = "Neuste Infos",
-COPYLINK = "Link kopieren",
-SCRIPTDISPLAY = "Anzeigen",
-SCRIPTDISPLAY_USED = "Benutzt",
-SCRIPTDISPLAY_UNUSED = "Unbenutzt",
+AUTOSAVECRASHLOGS = "Sauver les historiques de plantage automatiquement",
+MOREINFO = "Dernières nouvelles",
+COPYLINK = "Copier le lien",
+SCRIPTDISPLAY = "Montrer",
+SCRIPTDISPLAY_USED = "Utilisé",
+SCRIPTDISPLAY_UNUSED = "Non utilisé",
 
 -- 1.3.0 (more changes)
-RECENTLYOPENED = "Zuletzt geöffnete Level",
-REMOVERECENT = "Willst du es von der Liste der zuletzt geöffneten Level entfernen?",
-RESETCUSTOMBRUSH = "(Rechtsklick um eine neue Größe einzustellen)",
+RECENTLYOPENED = "Niveaux récemment ouverts",
+REMOVERECENT = "Voulez-vous l'enlever de la liste des niveaux ouverts récemment ?",
+RESETCUSTOMBRUSH = "(Clic droit pour donner une nouvelle taille)",
 
 -- 1.3.2
-DISPLAYSETTINGS = "Anzeige/\nSkalierung",
-DISPLAYSETTINGSTITLE = "Anzeige/Skalierungseinstellungen",
-SMALLERSCREEN = "Kleinere Fensterbreite (800px breit anstatt 896px)",
-FORCESCALE = "Zwinge Skalierungseinstellungen",
-SCALENOFIT = "Die aktuelle Größeneinstellung macht das Fenster zu groß um zu passen.",
-SCALENONUM = "Die aktuellen Größeeinstellungen sind ungültig.",
-MONITORSIZE = "$1x$2 Monitor",
-VEDRES = "Ved Auflösung: $1x$2",
-NONINTSCALE = "Nicht-ganzzahlige Skalierung",
+DISPLAYSETTINGS = "Affichage/\nÉchelle",
+DISPLAYSETTINGSTITLE = "Options d'Affichage/Échelle",
+SMALLERSCREEN = "Largeur de la fenêtre plus petite (800px au lieu de 896px)",
+FORCESCALE = "Forcer les options d'échelle",
+SCALENOFIT = "Les options d'échelle courantes rendent la fenêtre trop grande pour être affichée.",
+SCALENONUM = "Les options d'échelle courantes sont invalides.",
+MONITORSIZE = "Moniteur $1x$2",
+VEDRES = "Résolution de Ved : $1x$2",
+NONINTSCALE = "Échelonnage non entière",
 
 -- 1.3.4
-USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
+USEFONTPNG = "Utiliser font.png du dossier d'images de VVVVVV comme police",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
-REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
-SYNTAXCOLOR_COMMENT = "Kommentar",
-FPSLIMIT = "FPS-Limit",
+REQUIRESHIGHERLOVE = " (requiert L{VE $1 ou version ultérieure)",
+SYNTAXCOLOR_COMMENT = "Commentaire",
+FPSLIMIT = "Limite de FPS",
 
-MAPRESOLUTION = "Auflösung", -- Map export size
-MAPRES_ASSHOWN = "Wie gezeigt (max 640x480)", -- $1x$2 is resolution, max 640x480
-MAPRES_PERCENT = "$1% ($2x$3 pro Raum)", -- Example: 50% (160x120 per room)
-MAPRES_RATIO = "$1:$2 ($3x$4 pro Raum)", -- Example: 1:8 (40x30 per room)
-TOPLEFT = "Oben links",
-WIDTHHEIGHT = "Breite & Höhe",
-BOTTOMRIGHT = "Unten rechts",
-RENDERERINFO = "Renderer Information:",
-MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn sie fertig ist.",
-KEEPDIALOGOPEN = "Halte Dialog offen",
-TRANSPARENTMAPBG = "Transparenter Hintergrund",
-MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
-VIEWIMAGE = "Ansehen", -- Verb, view image
-INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
-OPENLEVELSFOLDER = "Öffne Level Ordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
-MOVEENTITY = "Bewegen",
-GOTOROOM = "Gehe zum Raum",
-ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
+MAPRESOLUTION = "Résolution", -- Map export size
+MAPRES_ASSHOWN = "Comme illustré (max 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 par salle)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 par salle)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Haut gauche",
+WIDTHHEIGHT = "Largeur & hauteur",
+BOTTOMRIGHT = "Bas droit",
+RENDERERINFO = "Information sur le moteur de rendu :",
+MAPINCOMPLETE = "La carte n'est pas encore prête (au moment où vous avez appuyé sur Sauver), veuillez réessayer quand elle sera prête.",
+KEEPDIALOGOPEN = "Garder le dialogue ouvert",
+TRANSPARENTMAPBG = "Arrière plan transparent",
+MAPEXPORTERROR = "Erreur lors de la création de la carte.",
+VIEWIMAGE = "Voir", -- Verb, view image
+INVALIDLINENUMBER = "Veuillez entrer un numéro de ligne valide.",
+OPENLEVELSFOLDER = "Ouvrir dossier niveaux", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Déplacer",
+GOTOROOM = "Aller dans la salle",
+ESCTOCANCEL = "[Appuyez sur Échap pour annuler]",
 
-INVALIDFILENAME_WIN = "Windows erlaubt keines der folgenden Zeichen in Dateinamen:\n\n: * ? \" < > |\n\n(| ist ein senkrechter Strich)",
-INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
+INVALIDFILENAME_WIN = "Windows n'autorise pas les caractères suivants dans un nom de fichier:\n\n: * ? \" < > |\n\n(| étant une barre verticale)",
+INVALIDFILENAME_MAC = "macOS n'autorise pas le caractère : dans un nom de fichier.",
 
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
-TINY_CTRL = "STRG",
-TINY_SHIFT = "SHIFT",
+TINY_CTRL = "CTRL",
+TINY_SHIFT = "MAJ",
 
 }
 
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[0] = "Du hast $1 Plugin das nicht unterstützt ist in dieser Version.",
-		[1] = "Du hast $1 Plugins die nicht untersützt sind in dieser Version.",
+		[0] = "Vous avez $1 module qui n'est pas supporté dans cette version.",
+		[1] = "Vous avez $1 modules qui ne sont pas supportés dans cette version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "Dieses Level schlug fehl bei $1 Überprüfung. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
-		[1] = "Dieses Level schlug fehl bei $1 Überprüfungen. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
+		[0] = "Ce niveau a échoué $1 test. Le problème a peut-être été réparé automatiquement, mais il est possible que certains problèmes et incohérences subsistent.",
+		[1] = "Ce niveau a échoué $1 tests. Les problèmes ont peut-être été réparés automatiquement, mais il est possible que certains problèmes et incohérences subsistent.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[0] = "$1 Benutzung in Räume: $2",
-		[1] = "$1 Benutzungen in Räume: $2",
+		[0] = "$1 utilisation dans les salles : $2",
+		[1] = "$1 utilisations dans les salles : $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[0] = "$1 Benutzung in Skripts: $2",
-		[1] = "$1 Benutzungen in Skripts: $2",
+		[0] = "$1 utilisation dans les scripts : $2",
+		[1] = "$1 utilisations dans les scripts : $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[0] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaft!",
-		[1] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaften!",
+		[0] = "L'entité à [$1 $2] a $3 propriété invalide !",
+		[1] = "L'entité à [$1 $2] a $3 propriétés invalides !",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaft!",
-		[1] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaften!",
+		[0] = "Les métadonnées du niveau pour la salle #$1 a $2 propriété invalide !",
+		[1] = "Les métadonnées du niveau pour la salle #$1 a $2 propriétés invalides !",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "$1 wird gezeigt",
-		[1] = "$1 werden gezeigt",
+		[0] = "Affichage de $1",
+		[1] = "Affichage de $1",
 	},
 	FLAGUSAGES = {
-		[0] = "Wurde $1 mal in diesen Skripts benutzt: $2",
-		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
+		[0] = "Utilisé $1 fois dans les scripts : $2",
+		[1] = "Utilisé $1 fois dans les scripts : $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
-		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
+		[0] = "La tuile $1 n'est pas un nombre entier valide dans l'intervalle 0-1199",
+		[1] = "Les tuiles $1 ne sont pas des nombres entiers valides dans l'intervalle 0-1199",
 	},
 }
 
 toolnames = {
 
-"Mauer",
-"Hintergrund",
-"Spike",
-"Trinket",
-"Checkpoint",
-"Verschwindende Plattform",
-"Conveyor",
-"Bewegliche Plattform",
-"Gegner",
-"Schwerkraftlinie",
-"Raumtext",
-"Konsole",
-"Skriptbox",
-"Teleporter",
-"Teleportationslinie",
-"Crewmitglied",
-"Startpunkt",
+"Mur",
+"Arrière-plan",
+"Pique",
+"Médailles",
+"Point de sauvegarde",
+"Plateforme disparaissante",
+"Tapis roulant",
+"Plateforme mobile",
+"Ennemi",
+"Ligne de gravité",
+"Texte de salle",
+"Moniteur",
+"Boite de script",
+"Jeton de téléportation",
+"Ligne de téléportation",
+"Équipiers",
+"Point de départ",
 
 }
 
 subtoolnames = {
 
-[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Farbeimer", "Kartoffel für das machen von dingen die magisch sind"},
+[1] = {"Pinceau 1x1", "Pinceau 3x3", "Pinceau 5x5", "Pinceau 7x7", "Pinceau 9x9", "Remplir horizontalement", "Remplir verticalement", "Taille de pinceau customisée", "Seau de remplissage", "Patate pour Faire des Trucs qui sont Magiques"},
 [2] = {},
-[3] = {"Automatisch 1", "Automatisch erweitern L+R", "Automatisch erweitern L", "Automatisch erweitern R"},
+[3] = {"Auto 1", "Expansion auto G+D", "Expansion auto G", "Expansion auto D"},
 [4] = {},
-[5] = {"Aufrecht", "Umgedreht"},
+[5] = {"Vertical", "Renversé"},
 [6] = {},
-[7] = {"Kleines R", "Kleines L", "Großes R", "Großes L"},
-[8] = {"Runter", "Hoch", "Links", "Rechts"},
+[7] = {"Petit D", "Petit G", "Grand D", "Grand G"},
+[8] = {"Bas", "Haut", "Gauche", "Droite"},
 [9] = {},
-[10] = {"Horizontal", "Vertikal"},
+[10] = {"Horizontal", "Vertical"},
 [11] = {},
 [12] = {},
 [13] = {},
-[14] = {"Eingang", "Ausgang"},
+[14] = {"Entrée", "Quitter"},
 [15] = {},
-[16] = {"Pink", "Gelb", "Rot", "Grün", "Blau", "Cyan", "Zufällig"},
-[17] = {"Gucke nach rechts", "Gucke nach links"},
+[16] = {"Rose", "Jaune", "Rouge", "Vert", "Bleu", "Cyan", "Aléatoire"},
+[17] = {"Tourner vers la droite", "Tourner vers la gauche"},
 
 }
 
@@ -547,131 +535,131 @@ warpdirs = {
 
 warpdirchangedtext = {
 
-[0] = "Raumteleportation ist deaktiviert",
-[1] = "Teleportationsrichtung zu horizontal gesetzt",
-[2] = "Teleportationsrichtung zu vertikal gesetzt",
-[3] = "Teleportationsrichtung zu allen Richtungen gesetzt",
+[0] = "Téléportation dans la même salle désactivée",
+[1] = "Direction de téléportation : horizontal",
+[2] = "Direction de téléportation : vertical",
+[3] = "Direction de téléportation : vertical et horizontal",
 
 }
 
 langtilesetnames = {
 
-short0 = "Raumstn.",
-long0 = "Raumstation",
-short1 = "Draußen",
-long1 = "Draußen",
-short2 = "Lab.",
-long2 = "Labor",
-short3 = "Teleprtzone.",
-long3 = "Teleportationszone",
-short4 = "Schf.",
-long4 = "Schiff",
+short0 = "Stn. Spat.",
+long0 = "Station Spatiale",
+short1 = "Extérieur",
+long1 = "Extérieur",
+short2 = "Labo",
+long2 = "Labo",
+short3 = "Zone de TP",
+long3 = "Zone de Téléportation",
+short4 = "Vaisseau",
+long4 = "Vaisseau",
 
 }
 
-ERR_VEDHASCRASHED = "Ved ist abgestürzt!"
-ERR_VEDVERSION = "Ved Version:"
-ERR_LOVEVERSION = "LÖVE Version:"
-ERR_STATE = "Status:"
-ERR_OS = "Betriebssystem:"
-ERR_TIMESINCESTART = "Zeit seit dem Start:"
-ERR_PLUGINS = "Plugins:"
-ERR_PLUGINSNOTLOADED = "(nicht geladen)"
-ERR_PLUGINSNONE = "(keine)"
-ERR_PLEASETELLDAV = "Bitte erzähl Dav999 über dieses Problem.\n\n\nDetails: (drücke strg/cmd+C um es zur Zwischenablage zu kopieren)\n\n"
-ERR_INTERMEDIATE = " (Zwischenversion)" -- pre-release version, so a version in between officially released versions
-ERR_TOONEW = " (zu neu)"
+ERR_VEDHASCRASHED = "Ved a planté !"
+ERR_VEDVERSION = "Version de Ved :"
+ERR_LOVEVERSION = "Version de L{VE :"
+ERR_STATE = "État :"
+ERR_OS = "SE :"
+ERR_TIMESINCESTART = "Temps depuis le début :"
+ERR_PLUGINS = "Modules :"
+ERR_PLUGINSNOTLOADED = "(non chargé)"
+ERR_PLUGINSNONE = "(aucun)"
+ERR_PLEASETELLDAV = "Veuillez contacter Dav999 à propos de ce problème.\n\n\nDétails : (appuyez sur Ctrl/Cmd+C pour copier dans le presse papiers)\n\n"
+ERR_INTERMEDIATE = " (version intermédiaire)" -- pre-release version, so a version in between officially released versions
+ERR_TOONEW = " (trop récent)"
 
-ERR_PLUGINERROR = "Plugin Fehler!"
-ERR_FILE = "Datei die bearbeitet wird:"
-ERR_FILEEDITORS = "Plugins die diese Datei bearbeiten:"
-ERR_CURRENTPLUGIN = "Plugin das diesen Fehler verursacht hat:"
-ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke strg/cmd+C um es zur Zwischenable zu kopieren)\n\n"
-ERR_CONTINUE = "Du kannst fortfahren indem du ESC oder Enter drückst, aber beachte dass diese gescheiterte Bearbeitung vielleicht Probleme verursacht."
-ERR_REPLACECODE = "Konnte dies nicht finden in %s.lua:"
-ERR_REPLACECODEPATTERN = "Konnte dies nicht finden in %s.lua (als Muster):"
-ERR_LINESTOTAL = "%i Zeilen insgesamt"
+ERR_PLUGINERROR = "Erreur de module !"
+ERR_FILE = "Fichier à éditer :"
+ERR_FILEEDITORS = "Modules qui modifient ce fichier :"
+ERR_CURRENTPLUGIN = "Module qui a provoqué cette erreur :"
+ERR_PLEASETELLAUTHOR = "Un module était supposé modifier le code de Ved, mais le code à remplacer n'a pas été trouvé.\nIl est possible que ceci soit causé par un conflit entre deux modules, ou qu'une mise à jour de Ved aie cassé ce module.\n\nDétails : (appuyez sur Ctrl/Cmd+C pour copier dans le presse papiers)\n\n"
+ERR_CONTINUE = "Vous pouvez continuer en appuyant sur Échap ou Entrée, mais cette modification erronée peut causer des problèmes."
+ERR_REPLACECODE = "Impossible de trouver ceci dans %s.lua :"
+ERR_REPLACECODEPATTERN = "Impossible de trouver ceci dans %s.lua (en tant que motif) :"
+ERR_LINESTOTAL = "%i lignes au total"
 
-ERR_SAVELEVEL = "Um eine Kopie deines Levels zu speichern, drücke S"
-ERR_SAVESUCC = "Level erfolgreich gespeichert als %s!"
-ERR_SAVEERROR = "Speicherfehler! %s"
-ERR_LOGSAVED = "Mehr informationen kann in diesem Absturzprotokoll gefunden werden:\n%s"
+ERR_SAVELEVEL = "Pour sauver une copie de votre niveau, appuyez sur S"
+ERR_SAVESUCC = "Niveau sauvegardé avec succès en tant que %s !"
+ERR_SAVEERROR = "Erreur de sauvegarde! %s"
+ERR_LOGSAVED = "Plus d'informations peuvent être trouvées dans le rapport de plantage :\n%s"
 
 
 diffmessages = {
 	pages = {
-		levelproperties = "Leveleigenschaften",
-		changedrooms = "Räume geändert",
-		changedroommetadata = "Raummetadaten geändert",
-		entities = "Objekte",
-		scripts = "Skripte",
-		flagnames = "Flagnamen",
-		levelnotes = "Levelnotizen",
+		levelproperties = "Propriétés de niveaux",
+		changedrooms = "Salles modifiées",
+		changedroommetadata = "Métadonnées de salle modifiée",
+		entities = "Entités",
+		scripts = "Scripts",
+		flagnames = "Nom des drapeaux",
+		levelnotes = "Notes de niveau",
 	},
 	levelpropertiesdiff = {
-		Title = "Name wurde geändert von \"$1\" zu \"$2\"",
-		Creator = "Author wurde geändert von \"$1\" zu \"$2\"",
-		website = "Webseite wurde gändert von \"$1\" zu \"$2\"",
-		Desc1 = "Beschreibung1 wurde geändert von \"$1\" zu \"$2\"",
-		Desc2 = "Beschreibung2 wurde geändert von \"$1\" zu \"$2\"",
-		Desc3 = "Beschreibung3 wurde geändert von \"$1\" zu \"$2\"",
-		mapsize = "Kartengröße wurde gändert von $1x$2 zu $3x$4",
-		mapsizenote = "BEACHTE: Kartengröße wurde von $1x$2 zu $3x$4 geändert.\\o\nRäume außerhalb von $5x$6 sind nicht gelistet.\\o",
-		levmusic = "Levelmusik wurde gändert von $1 zu $2",
+		Title = "Le nom a été changé de \"$1\" à \"$2\"",
+		Creator = "L'auteur a été changé de \"$1\" à \"$2\"",
+		website = "Le site internet a été changé de \"$1\" à \"$2\"",
+		Desc1 = "La description 1 a été changée de \"$1\" à \"$2\"",
+		Desc2 = "La description 2 a été changée de \"$1\" à \"$2\"",
+		Desc3 = "La description 3 a été changée de \"$1\" à \"$2\"",
+		mapsize = "La taille de la carte a été changée de $1x$2 à $3x$4",
+		mapsizenote = "NOTE: La taille de la carte a été changée de $1x$2 à $3x$4.\\o\nLes salles en dehors de $5x$6 ne sont pas listées.\\o",
+		levmusic = "La musique du niveau a été changée de $1 à $2",
 	},
 	rooms = {
-		added1 = "($1,$2) ($3) hinzugefügt\\G",
-		added2 = "($1,$2) ($3 -> $4) hinzugefügt\\G",
-		changed1 = "($1,$2) ($3) geändert\\Y",
-		changed2 = "($1,$2) ($3 -> $4) geändert\\Y",
-		cleared1 = "Alle Tiles in ($1,$2) ($3) wurden gelöscht\\R",
-		cleared2 = "Alle Tiles in ($1,$2) ($3 -> $4) wurden gelöscht\\R",
+		added1 = "Ajouté ($1,$2) ($3)\\G",
+		added2 = "Ajouté ($1,$2) ($3 -> $4)\\G",
+		changed1 = "Modifié ($1,$2) ($3)\\Y",
+		changed2 = "Modifié ($1,$2) ($3 -> $4)\\Y",
+		cleared1 = "Tuiles dans la zone ($1,$2) ($3) enlevées\\R",
+		cleared2 = "Tuiles dans la zone ($1,$2) ($3 -> $4) enlevées\\R",
 	},
 	roommetadata = {
-		changed0 = "Raum $1,$2:",
-		changed1 = "Raum $1,$2 ($3):",
-		roomname = "Raumname wurde geändert von \"$1\" zu \"$2\"\\Y",
-		roomnameremoved = "Raumname \"$1\" entfernt\\R",
-		roomnameadded = "Raum \"$1\" benannt\\G",
-		tileset = "Tileset $1 Tilesetfarbe $2 geändert zu Tileset $3 Tilesetfarbe $4\\Y",
-		platv = "Plattformgeschwindigkeit geändert von $1 zu $2\\Y",
-		enemytype = "Gegnertyp geändert von $1 zu $2\\Y",
-		platbounds = "Plattformgrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-		enemybounds = "Gegnergrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-		directmode01 = "Direkter-Modus aktiviert\\G",
-		directmode10 = "Direkter-Modus deaktiviert\\R",
-		warpdir = "Teleportationsrichtung geändert von $1 zu $2\\Y",
+		changed0 = "Salle $1,$2 :",
+		changed1 = "Salle $1,$2 ($3) :",
+		roomname = "Nom de la salle modifié de \"$1\" à \"$2\"\\Y",
+		roomnameremoved = "Nom de la salle \"$1\" enlevé\\R",
+		roomnameadded = "Salle nommée \"$1\"\\G",
+		tileset = "Jeu de tuiles $1 couleur $2 modifié à jeu de tuiles $3 couleur $4\\Y",
+		platv = "Vitesse de la plateforme modifiée de $1 à $2\\Y",
+		enemytype = "Type d'ennemi modifié de $1 à $2\\Y",
+		platbounds = "Bords de la plateforme modifiées de $1,$2,$3,$4 à $5,$6,$7,$8\\Y",
+		enemybounds = "Bords de l'ennemi modifié de $1,$2,$3,$4 à $5,$6,$7,$8\\Y",
+		directmode01 = "Mode direct activé\\G",
+		directmode10 = "Mode direct désactivé\\R",
+		warpdir = "Direction de téléportation modifiée de $1 à $2\\Y",
 	},
 	entities = {
-		added = "Objekttyp $1 hinzugefügt auf Position $2,$3 in Raum ($4,$5)\\G",
-		removed = "Objekttyp $1 entfernt von Position $2,$3 in Raum ($4,$5)\\R",
-		changed = "Objekttyp $1 geändert auf Position $2,$3 in Raum ($4,$5)\\Y",
-		changedtype = "Objekttyp $1 geändert zu Typ $2 auf Position $3,$4 in Raum ($5,$6)\\Y",
-		multiple1 = "Objekte geändert auf Position $1,$2 in Raum ($3,$4):\\Y",
-		multiple2 = "zu:",
-		addedmultiple = "Objekte hinzugefügt auf Position $1,$2 in Raum ($3,$4):\\G",
-		removedmultiple = "Objekte entfernet auf Position $1,$2 in Raum ($3,$4):\\R",
-		entity = "Typ $1",
-		incomplete = "Nicht alle Objekte wurden behandelt! Bitte melde das Dav.\\r",
+		added = "Type d'entité $1 ajouté à la position $2,$3 dans la salle ($4,$5)\\G",
+		removed = "Type d'entité $1 supprimé à la position $2,$3 dans la salle ($4,$5)\\R",
+		changed = "Type d'entité $1 modifié à la position $2,$3 dans la salle ($4,$5)\\Y",
+		changedtype = "Type d'entité $1 modifié en type $2 à la position $3,$4 dans la salle ($5,$6)\\Y",
+		multiple1 = "Entités modifiées à la position $1,$2 dans la salle ($3,$4) :\\Y",
+		multiple2 = "vers :",
+		addedmultiple = "Entités ajoutées à la position $1,$2 dans la salle ($3,$4) :\\G",
+		removedmultiple = "Entités supprimées à la position $1,$2 dans la salle ($3,$4) :\\R",
+		entity = "Type $1",
+		incomplete = "Toutes les entités n'ont pas pu être traitées! Veuillez reporter ceci à Dav.\\r",
 	},
 	scripts = {
-		added = "Skript \"$1\" hinzugefügt\\G",
-		removed = "Skript \"$1\" entfernt\\R",
-		edited = "Skript \"$1\" bearbeitet\\Y",
+		added = "Script \"$1\" ajouté\\G",
+		removed = "Script \"$1\" supprimé\\R",
+		edited = "Script \"$1\" modifié\\Y",
 	},
 	flagnames = {
-		added = "Setze Name für Flag $1 zu \"$2\"\\G",
-		removed = "Entferne Name \"$1\" für Flag $2\\R",
-		edited = "Name für Flag $1 geändert von \"$2\" zu \"$3\"\\Y",
+		added = "Ajouté un nom pour le drapeau $1 : \"$2\"\\G",
+		removed = "Nom \"$1\" supprimé pour le drapeau $2\\R",
+		edited = "Nom du drapeau $1 modifié de \"$2\" à \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Levelnotiz \"$1\" hinzugefügt\\G",
-		removed = "Levelnotiz \"$1\" entfernt\\R",
-		edited = "Levelnotiz \"$1\" bearbeitet\\Y",
+		added = "Note de niveau \"$1\" ajoutée\\G",
+		removed = "Note de niveau \"$1\" supprimée\\R",
+		edited = "Note de niveau \"$1\" modifiée\\Y",
 	},
 	mde = {
-		added = "Metadatenobjekt wurde hinzugefügt.\\G",
-		removed = "Metadatenobjekt wurde entfernt.\\R",
+		added = "Entité de métadonnées ajoutée\\G",
+		removed = "Entité de métadonnées supprimée\\G",
 	},
 }
 
@@ -747,7 +735,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Zurück",
+subj = "Return",
 imgs = {},
 cont = [[
 \)
@@ -2400,22 +2388,22 @@ cont = [[
 Credits\wh#
 \C=
 
-Ved ist gemacht von Dav999
+Ved is made by Dav999
 
-Manche der Grafiken und Schriftarten wurden von Doormat gemacht
+Some of the graphics and the font were made by Doormat
 
-Russische Übersetzung: CreepiX, Cheeprick
-Esperanto Übersetzung: Doormat
-Deutsche Übersetzung: r00ster
+Russian translation: CreepiX, Cheeprick
+Esperanto translation: Doormat
+German translation: r00ster
 French translation: RhenaudTheLukark
 
 
-Besonderen Dank an:\h#
+Special thanks to:\h#
 
 
-Terry Cavanagh für das machen von VVVVVV
+Terry Cavanagh for making VVVVVV
 
-Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu machen!
+Everyone who reported bugs, came up with ideas and motivated me to make this!
 
 
 

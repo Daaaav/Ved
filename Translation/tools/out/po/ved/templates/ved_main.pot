@@ -106,7 +106,7 @@ msgid "Flag names cannot be only numbers."
 msgstr ""
 
 msgctxt "L.FLAGNAMECHARS"
-msgid "Flag names cannot contain (, ), , or spaces."
+msgid "Flag names cannot contain parentheses, commas or spaces."
 msgstr ""
 
 msgctxt "L.FLAGNAMEINUSE"
@@ -1070,7 +1070,7 @@ msgid "Level music is empty!"
 msgstr ""
 
 msgctxt "L.NOT400ROOMS"
-msgid "#levelMetadata <> 400!!"
+msgid "The number of entries in levelMetaData is not 400!"
 msgstr ""
 
 msgctxt "L.MOREERRORS"
@@ -1922,7 +1922,7 @@ msgid "Plugin that triggered the error:"
 msgstr ""
 
 msgctxt "ERR_PLEASETELLAUTHOR"
-msgid "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke\nthis plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+msgid "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
 msgstr ""
 
 msgctxt "ERR_CONTINUE"

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-01-22 23:07:30 (CET)
+--- Last converted: 2019-01-28 01:44:43 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -59,7 +59,7 @@ LEVELOPENFAIL = "Kon $1.vvvvvv niet openen.",
 SIZELIMIT = "De maximale grootte van een level is 20 bĳ 20.\n\nDe levelgrootte zal worden aangepast naar $1 bĳ $2.",
 SCRIPTALREADYEXISTS = "Script \"$1\" bestaat al!",
 FLAGNAMENUMBERS = "Namen van vlaggen kunnen niet alleen uit nummers bestaan.",
-FLAGNAMECHARS = "Namen van vlaggen kunnen geen (, ), , of spaties bevatten.",
+FLAGNAMECHARS = "Namen van vlaggen kunnen geen haakjes, komma's of spaties bevatten.",
 FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
 SUREQUIT = "Weet je zeker dat je wilt afsluiten? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
@@ -332,7 +332,7 @@ UNEXPECTEDSCRIPTLINE = "Onverwachte scriptregel zonder script: $1",
 MAPWIDTHINVALID = "Levelbreedte is ongeldig: $1",
 MAPHEIGHTINVALID = "Levelhoogte is ongeldig: $1",
 LEVMUSICEMPTY = "Levelmuziek is leeg!",
-NOT400ROOMS = "#levelMetadata <> 400!!",
+NOT400ROOMS = "Het aantal elementen in levelMetaData is niet 400!",
 MOREERRORS = "$1 meer",
 
 DEBUGMODEON = "Debugmodus aan",
@@ -443,7 +443,7 @@ MOVEENTITY = "Verplaatsen",
 GOTOROOM = "Ga naar kamer",
 ESCTOCANCEL = "[Druk op ESC om te annuleren]",
 
-INVALIDFILENAME_WIN = "Windows staat de volgende tekens niet toe in bestandsnamen:\n\n: * ? \" < > |\n\n(waar | een verticale lijn is)",
+INVALIDFILENAME_WIN = "Windows staat de volgende tekens niet toe in bestandsnamen:\n\n: * ? \" < > |\n\n(waar | een verticale lĳn is)",
 INVALIDFILENAME_MAC = "macOS staat het teken : niet toe in bestandsnamen.",
 
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
@@ -488,7 +488,7 @@ L_PLU = {
 	},
 	NOTALLTILESVALID = {
 		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
-		[1] = "$1 blokken zijn geen geldig geheel getal in het bereik 0-1199",
+		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199",
 	},
 }
 
@@ -2444,6 +2444,7 @@ Sommige afbeeldingen en het lettertype zĳn gemaakt door Doormat
 Russische vertaling: CreepiX, Cheeprick
 Esperanto vertaling: Doormat
 Duitse vertaling: r00ster
+Franse vertaling: RhenaudTheLukark
 
 
 Met dank aan:\h#
@@ -2453,7 +2454,6 @@ Terry Cavanagh voor het maken van VVVVVV
 
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
-
 
 
 

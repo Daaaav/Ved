@@ -45,7 +45,7 @@ LEVELOPENFAIL = "Unable to open $1.vvvvvv.",
 SIZELIMIT = "The maximum size of a level is 20 by 20.\n\nThe level size will be changed to $1 by $2 instead.",
 SCRIPTALREADYEXISTS = "Script \"$1\" already exists!",
 FLAGNAMENUMBERS = "Flag names cannot be only numbers.",
-FLAGNAMECHARS = "Flag names cannot contain (, ), , or spaces.",
+FLAGNAMECHARS = "Flag names cannot contain parentheses, commas or spaces.",
 FLAGNAMEINUSE = "The flag name $1 is already in use by flag $2",
 DIFFSELECT = "Select the level to compare to. The level you select now will be treated as being an older version.",
 SUREQUIT = "Are you sure you want to quit? You will lose any unsaved content.",
@@ -318,7 +318,7 @@ UNEXPECTEDSCRIPTLINE = "Unexpected script line without script: $1",
 MAPWIDTHINVALID = "Map width is invalid: $1",
 MAPHEIGHTINVALID = "Map height is invalid: $1",
 LEVMUSICEMPTY = "Level music is empty!",
-NOT400ROOMS = "#levelMetadata <> 400!!",
+NOT400ROOMS = "The number of entries in levelMetaData is not 400!",
 MOREERRORS = "$1 more",
 
 DEBUGMODEON = "Debug mode on",
@@ -572,7 +572,7 @@ ERR_PLUGINERROR = "Plugin error!"
 ERR_FILE = "File to be edited:"
 ERR_FILEEDITORS = "Plugins that edit this file:"
 ERR_CURRENTPLUGIN = "Plugin that triggered the error:"
-ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke\nthis plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
 ERR_CONTINUE = "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
 ERR_REPLACECODE = "Failed to find this in %s.lua:"
 ERR_REPLACECODEPATTERN = "Failed to find this in %s.lua (as pattern):"
@@ -2393,6 +2393,7 @@ Some of the graphics and the font were made by Doormat
 Russian translation: CreepiX, Cheeprick
 Esperanto translation: Doormat
 German translation: r00ster
+French translation: RhenaudTheLukark
 
 
 Special thanks to:\h#
@@ -2401,7 +2402,6 @@ Special thanks to:\h#
 Terry Cavanagh for making VVVVVV
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
 
 
 
