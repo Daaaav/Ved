@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-01-28 01:44:42 (CET)
+--- Last converted: 2019-01-28 15:42:31 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -337,7 +337,7 @@ GREEN = "Vert",
 GRAY = "Gris",
 PINK = "Rose",
 BROWN = "Marron",
-RAINBOWBG = "Arrière-plan arc-en-ciel",
+RAINBOWBG = "Arc-en-ciel",
 
 -- b14
 SYNTAXCOLORS = "Couleurs syntaxiques",

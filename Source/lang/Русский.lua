@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-01-28 01:44:42 (CET)
+--- Last converted: 2019-01-28 15:42:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999

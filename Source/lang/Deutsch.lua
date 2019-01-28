@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-01-28 01:44:42 (CET)
+--- Last converted: 2019-01-28 15:42:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -59,7 +59,7 @@ LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
 SIZELIMIT = "Die maximale Größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
 SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
 FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
-FLAGNAMECHARS = "Flag names cannot contain parentheses, commas or spaces.",
+FLAGNAMECHARS = "Flagnamen können keine Klammern, Kommas oder Leerzeichen enthalten.",
 FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
 DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
 SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
@@ -112,7 +112,7 @@ BOUNDSTOPLEFT = "Klicke auf die obere linke Ecke der Begrenzung",
 BOUNDSBOTTOMRIGHT = "Klicke auf die untere rechte Ecke",
 
 TILE = "Tile $1",
-HIDEALL = " Verstecken",
+HIDEALL = "Verstecken",
 SHOWALL = "Zeige alles",
 SCRIPTEDITOR = "Skripteditor",
 FILE = "Datei",
@@ -332,7 +332,7 @@ UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
 MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
 MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
 LEVMUSICEMPTY = "Levelmusik ist leer!",
-NOT400ROOMS = "The number of entries in levelMetaData is not 400!",
+NOT400ROOMS = "Die Anzahl an Metadaten in levelMetaData ist nicht 400!",
 MOREERRORS = "$1 mehr",
 
 DEBUGMODEON = "Debugmodus an",
@@ -349,7 +349,7 @@ GREEN = "Grün",
 GRAY = "Grau",
 PINK = "Pink",
 BROWN = "Braun",
-RAINBOWBG = "Regenbogenhintergrund",
+RAINBOWBG = "Regenbogen",
 
 -- b14
 SYNTAXCOLORS = "Syntaxfarben",
@@ -2407,7 +2407,7 @@ Manche der Grafiken und Schriftarten wurden von Doormat gemacht
 Russische Übersetzung: CreepiX, Cheeprick
 Esperanto Übersetzung: Doormat
 Deutsche Übersetzung: r00ster
-French translation: RhenaudTheLukark
+Französische Übersetzung: RhenaudTheLukark
 
 
 Besonderen Dank an:\h#
@@ -2415,8 +2415,8 @@ Besonderen Dank an:\h#
 
 Terry Cavanagh für das machen von VVVVVV
 
-Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu machen!
-
+Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
+machen!
 
 
 

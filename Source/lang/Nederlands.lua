@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-01-28 01:44:43 (CET)
+--- Last converted: 2019-01-28 15:42:31 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -112,8 +112,8 @@ BOUNDSTOPLEFT = "Klik op de linkerbovenhoek van de begrenzing",
 BOUNDSBOTTOMRIGHT = "Klik op de rechteronderhoek",
 
 TILE = "Blok $1",
-HIDEALL = "Verberg alle",
-SHOWALL = " Toon alles ",
+HIDEALL = "Verbergen",
+SHOWALL = "Toon alles",
 SCRIPTEDITOR = "Scriptbewerker",
 FILE = "Bestand",
 NEW = "Nieuw",

@@ -286,11 +286,11 @@ msgid "Tile $1"
 msgstr ""
 
 msgctxt "L.HIDEALL"
-msgid "  Hide all  "
+msgid "Hide all"
 msgstr ""
 
 msgctxt "L.SHOWALL"
-msgid "  Show all  "
+msgid "Show all"
 msgstr ""
 
 msgctxt "L.SCRIPTEDITOR"

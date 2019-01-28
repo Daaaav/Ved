@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-01-28 01:44:42 (CET)
+--- Last converted: 2019-01-28 15:42:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -124,7 +124,7 @@ BOUNDSTOPLEFT = "Alklaku la supra-maldekstran angulon de la limo",
 BOUNDSBOTTOMRIGHT = "Alklaku la malsupra-dekstran angulon",
 
 TILE = "Bloko $1",
-HIDEALL = " Kaŝi ĉiujn ",
+HIDEALL = "Kaŝi ĉiujn",
 SHOWALL = "Montri ĉiujn",
 SCRIPTEDITOR = "Skriptilo",
 FILE = "Dosiero",
