@@ -433,7 +433,9 @@ function love.load()
 	-- If I add layers, I should probably increase the max number of sprites and just add them after each other.
 	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.
 	tile_batch = love.graphics.newSpriteBatch(tilesets["tiles.png"]["img"], 1200, "dynamic")
+	tile_batch_needs_update = false
 	tile_batch_tileset = 1
+	tile_batch_zoomscale2 = 1
 	tile_batch_tiles = {}
 	for i = 1, 1200 do
 		tile_batch_tiles[i] = 0
@@ -2445,6 +2447,8 @@ function love.keypressed(key)
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
 		-- Reload tilesets
 		loadtilesets()
+		tile_batch_needs_update = true
+		map_init()
 		temporaryroomname = L.TILESETSRELOADED
 		temporaryroomnametimer = 90
 	elseif state == 1 and selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 and (key == "lshift" or key == "rshift") then

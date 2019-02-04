@@ -63,25 +63,28 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	local ts = usedtilesets[themetadata.tileset]
 
 	-- Is our SpriteBatch still up-to-date?
-	local needs_update = false
-	if tile_batch_tileset ~= ts then
-		needs_update = true
-		if love_version_meets(9,1) then
-			tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
+	if not tile_batch_needs_update then
+		-- Doesn't need update? I mean we don't already know it does!
+		if tile_batch_tileset ~= ts then
+			tile_batch_needs_update = true
+			if love_version_meets(9,1) then
+				tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
+			else
+				tile_batch:setImage(tilesets[tilesetnames[ts]]["img"])
+			end
+			tile_batch_tileset = ts
 		else
-			tile_batch:setImage(tilesets[tilesetnames[ts]]["img"])
-		end
-		tile_batch_tileset = ts
-	else
-		for i = 1, 1200 do
-			if tile_batch_tiles[i] ~= theroomdata[i] then
-				needs_update = true
-				break
+			for i = 1, 1200 do
+				if tile_batch_tiles[i] ~= theroomdata[i] then
+					tile_batch_needs_update = true
+					break
+				end
 			end
 		end
 	end
-	if needs_update then
+	if tile_batch_needs_update then
 		tile_batch:clear()
+		tile_batch_zoomscale2 = zoomscale2
 
 		for aty = 0, 29 do
 			for atx = 0, 39 do
@@ -93,8 +96,9 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
 		end
+		tile_batch_needs_update = false
 	end
-	love.graphics.draw(tile_batch, offsetx, offsety)
+	love.graphics.draw(tile_batch, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
 
 	if not displaysolid and not displaytilenumbers then
 		return
