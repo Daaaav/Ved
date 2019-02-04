@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-01-28 15:42:30 (CET)
+--- Last converted: 2019-01-28 21:50:37 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -344,7 +344,7 @@ UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
 MAPWIDTHINVALID = "Maplarĝo estas malvalida: $1",
 MAPHEIGHTINVALID = "Mapalto estas malvalida: $1",
 LEVMUSICEMPTY = "Nivelo-muziko estas nula!",
-NOT400ROOMS = "The number of entries in levelMetaData is not 400!",
+NOT400ROOMS = "La kvanto da enskriboj en levelMetaData ne estas 400!",
 MOREERRORS = "$1 pliaj",
 
 DEBUGMODEON = "Sencimiga reĝ.: JES",
@@ -2422,14 +2422,14 @@ Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel (Doormat)
 
 Ruslingva traduko: CreepiX, Cheeprick
 Esperanta traduko: Hejmstel
-Germana traduko: r00ster
-French translation: RhenaudTheLukark
+Germanlingva traduko: r00ster
+Franclingva traduko: RhenaudTheLukark
 
 
-Specialdanke al:\h#
+Special-dank' al:\h#
 
 
-Terry Cavanagh pro fari VVVVVV
+Terry Cavanagh pro lia faro de VVVVVV
 
 Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion! 
 
