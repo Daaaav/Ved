@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-01-28 21:50:38 (CET)
+--- Last converted: 2019-02-18 23:50:50 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -14,7 +14,17 @@
 function lang_plurals(n) return (n > 1) end
 
 function fontpng_ascii(c)
-
+	if c == "à" then
+		return "a"
+	elseif c == "é" or c == "è" or c == "ê" then
+		return "e"
+	elseif c == "ç" then
+		return "c"
+	elseif c == "É" or c == "Ê" then
+		return "E"
+	elseif c == "ù" or c == "û" then
+		return "u"
+	end
 end
 
 L = {
