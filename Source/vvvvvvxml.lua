@@ -317,8 +317,17 @@ function loadlevel(path)
 
 	-- Get every room now.
 	local theselevelmetadata = {}
-	croom = 0
+	local all_platvs = {}
+	local croom = 0
+	local inboundsroom = 0
+	local inbounds
 	for room in x.levelmetadata:gmatch("<edLevelClass (.-)</edLevelClass>") do
+		if (croom % 20)+1 <= thismetadata.mapwidth and croom+1 <= thismetadata.mapheight*20 then
+			inbounds = true
+			inboundsroom = inboundsroom + 1
+		else
+			inbounds = false
+		end
 		croom = croom + 1
 		theselevelmetadata[croom] = {}
 
@@ -332,8 +341,18 @@ function loadlevel(path)
 			-- Explode yet even more
 			keyvalue = explode("=", v)
 
-			-- Leave out the quotes and convert it to number
-			theselevelmetadata[croom][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
+			if keyvalue[1] == "platv" then
+				-- Unfortunately platv is very special.
+				table.insert(all_platvs, tonumber(keyvalue[2]:sub(2, -2)))
+				if inbounds then
+					theselevelmetadata[croom].platv = all_platvs[inboundsroom]
+				else
+					theselevelmetadata[croom].platv = 4
+				end
+			else
+				-- Leave out the quotes and convert it to number
+				theselevelmetadata[croom][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
+			end
 
 			--cons("Room: " .. croom .. " Key: " .. keyvalue[1] .. " Value: " .. tonumber(keyvalue[2]:sub(2, -2)))
 		end
@@ -685,9 +704,20 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	cons("Saving room metadata...")
 	-- Now all room metadata, aka levelclass
+	local all_platvs = {}
+	for y = 0, thismetadata.mapheight-1 do
+		for x = 0, thismetadata.mapwidth-1 do
+			-- platv needs special handling, unfortunately.
+			table.insert(all_platvs, theselevelmetadata[y*20 + x+1].platv)
+		end
+	end
 	local alllevelmetadata = {}
 	for k,v in pairs(theselevelmetadata) do
-		table.insert(alllevelmetadata, "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. v.platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n")
+		local my_platv = all_platvs[k]
+		if my_platv == nil then
+			my_platv = 4
+		end
+		table.insert(alllevelmetadata, "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. my_platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n")
 	end
 
 	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (table.concat(alllevelmetadata, ""):gsub("%%", "%%%%")))
