@@ -437,8 +437,12 @@ function drawhelp()
 		local leftpartw = 8+200+8+screenxoffset-2
 
 		if onlefthelpbuttons then
+			local extrawidth = 0
+			if helprefreshable then
+				extrawidth = 20
+			end
 			love.graphics.setColor(0,0,0)
-			love.graphics.rectangle("fill", leftpartw, 0, 25*8+16-28-leftpartw, love.graphics.getHeight())
+			love.graphics.rectangle("fill", leftpartw, 0, 25*8+16-28-leftpartw+extrawidth, love.graphics.getHeight())
 			love.graphics.setColor(255,255,255)
 		else
 			love.graphics.setScissor(0, 0, leftpartw, love.graphics.getHeight())
@@ -477,6 +481,16 @@ function drawhelp()
 					gotohelparticle(rvnum)
 				end
 			end
+		end
+	end
+
+	-- If we're in "latest info", then we can refresh!
+	if helprefreshable and not updatecheckthread:isRunning() then
+		hoverdraw(refreshbtn, 25*8-16, 8, 16, 16)
+
+		if nodialog and love.mouse.isDown("l") and mouseon(25*8-16, 8, 16, 16) then
+			load_updatecheck(true)
+			tostate(6)
 		end
 	end
 

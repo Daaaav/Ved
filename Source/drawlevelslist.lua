@@ -324,6 +324,11 @@ function drawlevelslist()
 		if updatenotesavailable then
 			rbutton(L.MOREINFO, 11, 40, false, 20)
 		end
+		if updatescrollingtext ~= nil then
+			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
+			love.graphics.print(updatescrollingtext, love.graphics.getWidth()-8-math.floor(updatescrollingtext_pos), 288+6)
+			love.graphics.setScissor()
+		end
 		if backupscreen then
 			rbutton(L.RETURN, 0, nil, true)
 		else
@@ -372,6 +377,10 @@ function drawlevelslist()
 						else
 							if currentarticlename == "_VERSION" then
 								updateversion = updateversion .. v
+							elseif currentarticlename == "_SHOWREFRESH" and v == "1" then
+								updatenotesrefreshable = true
+							elseif currentarticlename == "_SCROLLINGTEXT" then
+								updatescrollingtext = unxmlspecialchars(v)
 							end
 							if currentarticle ~= nil and (currentarticlename:sub(1,1) ~= "_" or allowdebug) then
 								table.insert(currentarticlecontents, v)
@@ -418,7 +427,7 @@ function drawlevelslist()
 			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
 				stopinput()
-				tostate(15, nil, {updatenotes, false})
+				tostate(15, nil, {updatenotes, false, updatenotesrefreshable})
 			elseif not mousepressed and onrbutton(0, nil, true) then
 				-- Backups/return
 				if backupscreen and currentbackupdir ~= "" then

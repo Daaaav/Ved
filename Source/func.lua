@@ -482,6 +482,7 @@ function loadstate(new, extradata)
 		--helparticlecontent = {} -- Heette vroeger sis, geen idee waarom.
 		helparticlescroll = 0
 		helpeditingline = 0
+		helprefreshable = false
 		onlefthelpbuttons = false
 		part1parts_cache = {}
 		cachedlink = nil
@@ -506,6 +507,7 @@ function loadstate(new, extradata)
 			-- Level notes (or something custom because extradata is an array here!
 			helppages = extradata[1]
 			helpeditable = extradata[2]
+			helprefreshable = extradata[3]
 			if helppages[2] ~= nil then
 				helparticlecontent = explode("\n", helppages[helparticle].cont)
 			end
@@ -2773,6 +2775,27 @@ end
 
 function explore_lvl_dir()
 	love.system.openURL("file://" .. levelsfolder)
+end
+
+function load_updatecheck(refresh)
+	if s.pcheckforupdates and not opt_disableversioncheck then
+		if refresh then
+			if updatecheckthread:isRunning() then return end
+		else
+			updatecheckthread = love.thread.newThread("updatecheck.lua")
+
+			verchannel = love.thread.getChannel("version")
+		end
+
+		updatecheckthread:start(checkver, true, wgetavailable)
+
+		updateversion = nil
+		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
+		updatenotesavailable = false
+		updatenotesrefreshable = false
+		updatescrollingtext = nil
+		updatescrollingtext_pos = 0
+	end
 end
 
 hook("func")

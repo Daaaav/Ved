@@ -4,6 +4,7 @@ local request_base = "tolp.nl/ved/"
 local request_query = "?sys=3&ver=" .. checkver
 
 local verchannel = love.thread.getChannel("version")
+verchannel:clear()
 
 if wgetavailable then
 	local pfile = io.popen("wget -qO- 'https://" .. request_base .. "version-ssl.php" .. request_query .. "' --https-only")

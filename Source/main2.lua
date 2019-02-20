@@ -184,6 +184,7 @@ function love.load()
 	cutbtn = love.graphics.newImage("images/cut.png")
 	copybtn = love.graphics.newImage("images/copy.png")
 	pastebtn = love.graphics.newImage("images/paste.png")
+	refreshbtn = love.graphics.newImage("images/refresh.png")
 
 	eraseron = love.graphics.newImage("images/eraseron.png")
 	eraseroff = love.graphics.newImage("images/eraseroff.png")
@@ -411,16 +412,7 @@ function love.load()
 		love.filesystem.createDirectory("crash_logs")
 	end
 
-	if s.pcheckforupdates and not opt_disableversioncheck then
-		updatecheckthread = love.thread.newThread("updatecheck.lua")
-
-		verchannel = love.thread.getChannel("version")
-		updatecheckthread:start(checkver, true, wgetavailable)
-
-		updateversion = nil
-		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
-		updatenotesavailable = false
-	end
+	load_updatecheck(false)
 
 	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
 	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, L)
@@ -1330,6 +1322,13 @@ function love.update(dt)
 		generictimer = generictimer - dt
 	end
 
+	if updatescrollingtext ~= nil and state == 6 then
+		updatescrollingtext_pos = updatescrollingtext_pos + 55*dt
+		if updatescrollingtext_pos > font8:getWidth(updatescrollingtext) + 112 then
+			updatescrollingtext_pos = 0
+		end
+	end
+
 	if state == 28 and limitglow_enabled then
 		limitglow = limitglow + dt
 
@@ -1443,9 +1442,13 @@ function love.update(dt)
 		end
 	elseif state == 15 and s.psmallerscreen then
 		local leftpartw = 8+200+8-96-2
+		local extrawidth = 0
+		if helprefreshable then
+			extrawidth = 20
+		end
 		if love.mouse.getX() <= leftpartw then
 			onlefthelpbuttons = true
-		elseif love.mouse.getX() > 25*8+16-28 then
+		elseif love.mouse.getX() > 25*8+16-28+extrawidth then
 			onlefthelpbuttons = false
 		end
 	end
