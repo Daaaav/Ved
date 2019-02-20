@@ -17,7 +17,7 @@ checkver = ver -- update check, displayed in crash (used to have a or b as oppos
 
 vergroups = {4,4} -- This'll be pattern-matched later
 
-intermediate_version = true -- If true, this is a WIP version (this just affects display)
+intermediate_version = false -- If true, this is a WIP version (this just affects display)
 
 thismdeversion = 3
 
