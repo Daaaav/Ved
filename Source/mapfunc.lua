@@ -82,7 +82,7 @@ function map_resetroom(x, y)
 	local n_dirty = #rooms_map_dirty_rooms
 	if n_dirty == 0 or rooms_map_dirty_rooms[n_dirty][1] ~= x or rooms_map_dirty_rooms[n_dirty][2] ~= y then
 		table.insert(rooms_map_dirty_rooms, {x, y})
-		cons("Doing do inserting of room! " .. x .. "," .. y)
+		cons("Inserting map room! " .. x .. "," .. y)
 	end
 end
 

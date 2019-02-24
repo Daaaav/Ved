@@ -12,12 +12,12 @@ opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
 
-ver = "1.4.4" -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
+vergroups = {4,5}
+
+ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-vergroups = {4,4} -- This'll be pattern-matched later
-
-intermediate_version = false -- If true, this is a WIP version (this just affects display)
+intermediate_version = true -- If true, this is a WIP version (this just affects display)
 
 thismdeversion = 3
 

@@ -415,6 +415,12 @@ function drawmaineditor()
 						end
 					end
 
+					-- No comment.
+					if selectedsubtool[3] > 1 then
+						doorroomx = roomx
+						doorroomy = roomy
+					end
+
 					if selectedsubtool[3] == 1 then
 						-- 1 spike
 						roomdata[roomy][roomx][(aty*40)+(atx+1)] = useselectedtile
