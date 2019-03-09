@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-02-20 21:12:24 (CET)
+--- Last converted: 2019-03-09 17:16:04 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -447,6 +447,11 @@ INVALIDFILENAME_MAC = "macOS n'autorise pas le caractère : dans un nom de fichi
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "MAJ",
+
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
+SEARCHRESULTS_ROOMS = "Salles [$1]",
+SEARCHRESULTS_NOTES = "Notes [$1]",
 
 }
 

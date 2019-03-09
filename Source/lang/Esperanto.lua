@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-02-20 21:12:24 (CET)
+--- Last converted: 2019-03-09 17:16:04 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -461,6 +461,11 @@ INVALIDFILENAME_MAC = "macOS ne permesas la signon : en dosiernomoj.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "REG",
 TINY_SHIFT = "MAJUSKLO",
+
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
+SEARCHRESULTS_ROOMS = "Rooms [$1]",
+SEARCHRESULTS_NOTES = "Notes [$1]",
 
 }
 

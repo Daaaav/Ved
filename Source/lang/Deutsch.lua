@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-02-20 21:12:24 (CET)
+--- Last converted: 2019-03-09 17:16:04 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -449,6 +449,11 @@ INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "STRG",
 TINY_SHIFT = "SHIFT",
+
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Skripte [$1]",
+SEARCHRESULTS_ROOMS = "Räume [$1]",
+SEARCHRESULTS_NOTES = "Notizen [$1]",
 
 }
 

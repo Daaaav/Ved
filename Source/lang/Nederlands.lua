@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-02-20 21:12:24 (CET)
+--- Last converted: 2019-03-09 17:16:04 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -289,7 +289,7 @@ CUSTOMVVVVVVDIRECTORYEXPL = "Voer hier het volledige pad naar je VVVVVV-map in, 
 LANGUAGE = "Taal",
 DIALOGANIMATIONS = "Dialoogvenster-animaties",
 FLIPSUBTOOLSCROLL = "Scrollrichting voor subtools omkeren",
-ADJACENTROOMLINES = "Indicaties van blokken in naastgelegen kamers",
+ADJACENTROOMLINES = "Aanduidingen van blokken in naastgelegen kamers",
 ASKBEFOREQUIT = "Vragen voor afsluiten",
 NEVERASKBEFOREQUIT = "Nooit vragen voor afsluiten, zelfs als er niet-opgeslagen wĳzigingen zĳn",
 COORDS0 = "Coördinaten laten beginnen bĳ 0 (zoals in interne scripting)",
@@ -420,7 +420,7 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 -- 1.3.4
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
 MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
-REQUIRESHIGHERLOVE = " (heeft L{VE $1 of hoger nodig)",
+REQUIRESHIGHERLOVE = " (vereist L{VE $1 of hoger)",
 SYNTAXCOLOR_COMMENT = "Commentaar",
 FPSLIMIT = "FPS-limiet",
 
@@ -449,6 +449,11 @@ INVALIDFILENAME_MAC = "macOS staat het teken : niet toe in bestandsnamen.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
+SEARCHRESULTS_ROOMS = "Kamers [$1]",
+SEARCHRESULTS_NOTES = "Notities [$1]",
 
 }
 

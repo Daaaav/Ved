@@ -400,6 +400,7 @@ function loadstate(new, extradata)
 		if oldstate ~= 3 then
 			scripthistorystack = {}
 		end
+		scriptfromsearch = false
 	elseif new == 4 then
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
@@ -459,7 +460,9 @@ function loadstate(new, extradata)
 		startinput()
 		searchscripts = {}; searchrooms = {}; searchnotes = {}
 		searchedfor = "moot"
-		showresults = 100
+		showresults = math.huge
+		searchscroll = 0
+		longestsearchlist = 0
 	elseif new == 12 then
 		mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)
 		--mapxoffset = (640-(((1/mapscale)-metadata.mapwidth)*mapscale*640))/2
@@ -2087,6 +2090,19 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 					scriptlistscroll = math.min(-upperbound, 0)
 				end
 			end
+		elseif state == 11 then
+			if direction == "u" then
+				searchscroll = searchscroll + distance
+				if searchscroll > 0 then
+					searchscroll = 0
+				end
+			elseif direction == "d" then
+				searchscroll = searchscroll - distance
+				local upperbound = ((longestsearchlist*32)-2-(love.graphics.getHeight()-56)) -- scrollableHeight - visiblePart
+				if -searchscroll > upperbound then
+					searchscroll = math.min(-upperbound, 0)
+				end
+			end
 		elseif state == 15 then
 			if love.mouse.getX() <= 25*8 then
 				if direction == "u" then
@@ -2134,7 +2150,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 end
 
 function is_scrollable(x, y)
-	if state == 3 or state == 10 or state == 15 then
+	if state == 3 or state == 10 or state == 11 or state == 15 then
 		return true
 	end
 	if state == 6 and x < love.graphics.getWidth()-128 then

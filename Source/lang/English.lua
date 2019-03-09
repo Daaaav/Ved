@@ -436,6 +436,11 @@ INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
 
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
+SEARCHRESULTS_ROOMS = "Rooms [$1]",
+SEARCHRESULTS_NOTES = "Notes [$1]",
+
 }
 
 -- Please check the reference for plural forms

@@ -137,6 +137,11 @@ function drawhelp()
 						singlecharmode = true
 					elseif part2:sub(fl,fl) == ")" then
 						tostate(oldstate, true)
+						if state == 11 then
+							-- Back to search results
+							startinput()
+							input = searchedfor
+						end
 						nodialog = false
 					end
 				end

@@ -2578,6 +2578,7 @@ function love.keypressed(key)
 		searchscripts, searchrooms, searchnotes = searchtext(input)
 		searchedfor = input
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
+		stopinput()
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
@@ -2597,13 +2598,24 @@ function love.keypressed(key)
 		create_export_dialog()
 	elseif nodialog and (state == 15 or state == 19 or state == 28) and key == "escape" then
 		tostate(oldstate, true)
+		if state == 11 then
+			-- Back to search results
+			startinput()
+			input = searchedfor
+		end
 		nodialog = false
 	elseif nodialog and state == 3 and key == "escape" then
 		leavescript_to_state = function()
 			stopinput()
 			scriptlines[editingline] = input
 			scripts[scriptname] = table.copy(scriptlines)
-			tostate(10)
+			if scriptfromsearch then
+				tostate(11, true)
+				startinput()
+				input = searchedfor
+			else
+				tostate(10)
+			end
 			nodialog = false
 		end
 

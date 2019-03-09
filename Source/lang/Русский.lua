@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-02-20 21:12:23 (CET)
+--- Last converted: 2019-03-09 17:16:03 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -437,6 +437,11 @@ INVALIDFILENAME_MAC = "macOS не позволяет использовать с
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+
+-- Header for search results
+SEARCHRESULTS_SCRIPTS = "Скрипты [$1]",
+SEARCHRESULTS_ROOMS = "Комнаты [$1]",
+SEARCHRESULTS_NOTES = "Записки [$1]",
 
 }
 

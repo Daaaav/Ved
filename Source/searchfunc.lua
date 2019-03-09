@@ -93,6 +93,9 @@ function searchtext(this)
 		end
 	end
 
+	searchscroll = 0
+	longestsearchlist = math.min(showresults, math.max(#searchscripts, #searchrooms, #searchnotes))
+
 	return searchscripts, searchrooms, searchnotes
 end
 

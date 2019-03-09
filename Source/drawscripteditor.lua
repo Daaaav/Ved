@@ -226,7 +226,13 @@ function drawscripteditor()
 				stopinput()
 				scriptlines[editingline] = input
 				scripts[scriptname] = table.copy(scriptlines)
-				tostate(10)
+				if scriptfromsearch then
+					tostate(11, true)
+					startinput()
+					input = searchedfor
+				else
+					tostate(10)
+				end
 			end
 
 			if not processflaglabelsreverse() then
