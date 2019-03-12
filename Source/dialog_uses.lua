@@ -298,24 +298,22 @@ function dialog.callback.mapexport_validate(button, fields, identifier)
 	if button == DB.SAVE then
 		local x1, y1, w, h, x2, y2 = fix_map_export_input(fields, true)
 
-		-- Check if we're gonna exceed the max texture size... Unless you're on 0.9.0, update.
-		if love_version_meets(9,1) then
-			local sizelimit = love.graphics.getSystemLimit("texturesize")
-			local w_size, h_size
+		-- Check if we're gonna exceed the max texture size...
+		local sizelimit = love.graphics.getSystemLimit("texturesize")
+		local w_size, h_size
 
-			if fields.resolution == -1 then
-				w_size, h_size = 640*mapscale*w, 480*mapscale*h
-			else
-				w_size, h_size = 320*fields.resolution*w, 240*fields.resolution*h
-			end
+		if fields.resolution == -1 then
+			w_size, h_size = 640*mapscale*w, 480*mapscale*h
+		else
+			w_size, h_size = 320*fields.resolution*w, 240*fields.resolution*h
+		end
 
-			if w_size > sizelimit or h_size > sizelimit then
-				dialog.create(
-					langkeys(L.MAXTEXTURESIZE, {w_size, h_size, sizelimit})
-					.. "\n\n\n" .. renderer_info_string()
-				)
-				return true
-			end
+		if w_size > sizelimit or h_size > sizelimit then
+			dialog.create(
+				langkeys(L.MAXTEXTURESIZE, {w_size, h_size, sizelimit})
+				.. "\n\n\n" .. renderer_info_string()
+			)
+			return true
 		end
 
 		-- So is everything done?

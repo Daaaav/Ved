@@ -177,7 +177,7 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 			{L.VIEWIMAGE, DB.OK},
 			function(button)
 				if button == L.VIEWIMAGE then
-					openurl("file://" .. love.filesystem.getSaveDirectory() .. "/maps/" .. saveas)
+					love.system.openURL("file://" .. love.filesystem.getSaveDirectory() .. "/maps/" .. saveas)
 				end
 			end,
 			nil, nil,

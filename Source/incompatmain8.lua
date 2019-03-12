@@ -16,12 +16,11 @@ function love.load()
 		if v:sub(-4,-1) == ".lua" then
 			require("lang/" .. v:sub(1,-5))
 
-			message = message .. L.FATALERROR .. L.OUTDATEDLOVE .. "\n\n"
+			message = message .. L.OUTDATEDLOVE .. "\n\n\n"
 		end
 	end
 end
 
 function love.draw()
-	--love.graphics.printf("FATAL ERROR: Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from http://love2d.org/.\n\n", 10, 10, love.graphics.getWidth()-20, "left")
 	love.graphics.printf(message, 10, 10, love.graphics.getWidth()-20, "left")
 end

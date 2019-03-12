@@ -412,7 +412,7 @@ function drawhelp()
 			end
 			if not mousepressed and love.mouse.isDown("l") then
 				if matching_url then
-					openurl(hoveringlink)
+					love.system.openURL(hoveringlink)
 				elseif matching_article then
 					gotohelparticle(matching_article_num)
 				elseif matching_anchor then

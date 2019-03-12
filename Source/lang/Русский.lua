@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-03-09 17:16:03 (CET)
+--- Last converted: 2019-03-12 23:07:12 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -21,7 +21,8 @@ L = {
 
 TRANSLATIONCREDIT = "Сделано CreepiX'ом и Чиприком", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.0 или выше. Загрузите L{VE на https://love2d.org/.",
+OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.1 или выше. Загрузите L{VE на https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/.",
 UNKNOWNSTATE = "Неизвестный режим ($1), перешедший из $2",
 FATALERROR = "ФАТАЛЬНАЯ ОШИБКА: ",
 FATALEND = "Пожалуйста, закройте игру и попробуйте ещё раз.",

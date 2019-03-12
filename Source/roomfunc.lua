@@ -67,11 +67,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 		-- Doesn't need update? I mean we don't already know it does!
 		if tile_batch_tileset ~= ts then
 			tile_batch_needs_update = true
-			if love_version_meets(9,1) then
-				tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
-			else
-				tile_batch:setImage(tilesets[tilesetnames[ts]]["img"])
-			end
+			tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
 			tile_batch_tileset = ts
 		else
 			for i = 1, 1200 do

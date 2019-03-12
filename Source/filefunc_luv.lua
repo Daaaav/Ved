@@ -66,8 +66,3 @@ function readimage(levelsfolder, filename)
 
 	return false, ""
 end
-
-function openurl(url)
-	--os.execute("start " .. url)
-	dialog.create("URL: " .. url)
-end

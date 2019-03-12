@@ -260,10 +260,6 @@ function readimage(levelsfolder, filename)
 	return true, ficontents
 end
 
-function openurl(url)
-	os.execute('start "" "' .. url:gsub('"', "") .. '"')
-end
-
 function util_folderopendialog()
 	-- love.filesystem.getSaveDirectory() = C:/Users/David/AppData/Roaming/LOVE/ved
 	os.execute(love.filesystem.getSaveDirectory():gsub("/", "\\") .. "\\utils\\folderopendialog.exe")

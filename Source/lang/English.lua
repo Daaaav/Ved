@@ -19,7 +19,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.0 or higher. You can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.1 or higher. You can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/.",
 UNKNOWNSTATE = "Unknown state ($1), jumped to from state $2",
 FATALERROR = "FATAL ERROR: ",
 FATALEND = "Please close the game and try again. And if you're Dav, please fix it.",

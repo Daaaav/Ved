@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-03-09 17:16:04 (CET)
+--- Last converted: 2019-03-12 23:07:12 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -33,7 +33,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.0. Je kan de laatste versie van L{ve downloaden op https://love2d.org/.",
+OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.1. Je kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blijft L{ve 0.9.1 en hoger werken. Je kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
 UNKNOWNSTATE = "Onbekende staat ($1), naar veranderd vanaf $2",
 FATALERROR = "FATALE FOUT: ",
 FATALEND = "Sluit het spel en probeer het opnieuw. En als je Dav bent, los het alsjeblieft op.",

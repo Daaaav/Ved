@@ -164,10 +164,6 @@ function readimage(levelsfolder, filename)
 	return true, ficontents
 end
 
-function openurl(url)
-	os.execute("xdg-open '" .. escapename(url) .. "'")
-end
-
 function escapename(name)
 	-- We just need to somewhat escape '
 	return name:gsub("'", "'\\''")

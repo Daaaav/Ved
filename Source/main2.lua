@@ -323,13 +323,6 @@ function love.load()
 	loadlevelsfolder()
 	loadtilesets()
 
-	if love_version_meets(9,1) then
-		-- We're not using 0.9.0, so we can use love2d's openURL function instead of the command line
-		function openurl(url)
-			love.system.openURL(url)
-		end
-	end
-
 	local hijack_print = false
 
 	-- Are we using font.png?
@@ -768,7 +761,7 @@ function love.draw()
 				olderstate = oldstate
 				tostate(27)
 			elseif not mousepressed and onrbutton(7) then
-				openurl("https://tolp.nl/ved/feedback")
+				love.system.openURL("https://tolp.nl/ved/feedback")
 
 				mousepressed = true
 			--elseif not mousepressed and mouseon(love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) then
@@ -1752,7 +1745,7 @@ function love.update(dt)
 				love.system.setClipboardText(RCMid:sub(5, -1))
 			--[[
 			elseif RCMreturn == L.OPENLINK then
-				openurl(RCMid:sub(5, -1))
+				love.system.openURL(RCMid:sub(5, -1))
 			elseif RCMreturn == L.OPENARTICLE then
 				for rvnum = 1, #helppages do
 					if RCMid:sub(5, -1) == helppages[rvnum].subj then

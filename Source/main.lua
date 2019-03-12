@@ -70,7 +70,9 @@ love.graphics.print("Loading...", 408, 236)
 love.graphics.present()
 
 if love.window == nil then
-	require("incompatmain")
+	require("incompatmain8")
+elseif not love_version_meets(9,1) then
+	require("incompatmain9")
 else
 	-- How recent is our love2d version?
 	if love_version_meets(10) then
