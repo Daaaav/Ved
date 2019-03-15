@@ -70,6 +70,17 @@ function dialog.form.exportmap_make()
 	}
 end
 
+function dialog.form.rawentityproperties_make()
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
+	local form = {}
+
+	for k,v in pairs(entitypropkeys) do
+		table.insert(form, {v, 5, 2+k, 38, thisentity[v]})
+	end
+
+	return form
+end
+
 --function dialog.form.
 
 -- 
@@ -82,6 +93,11 @@ dialog.callback.noclose_on = {}
 
 function dialog.callback.noclose_on.save(button)
 	if button == DB.SAVE then
+		return true
+	end
+end
+function dialog.callback.noclose_on.apply(button)
+	if button == DB.APPLY then
 		return true
 	end
 end
@@ -483,4 +499,71 @@ function dialog.callback.customvvvvvvdir(button, fields)
 		-- Set the custom VVVVVV directory to this
 		s.customvvvvvvdir = fields.path
 	end
+end
+
+function dialog.callback.savebackup(button, fields)
+	-- Save copy of backup in levels folder
+	if button == DB.OK then
+		if dirsep ~= "/" then
+			input = input:gsub(dirsep, "/")
+		end
+		local ficontents = love.filesystem.read("overwrite_backups/" .. input .. ".vvvvvv")
+		if ficontents == nil then
+			dialog.create(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}))
+		else
+			local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. fields.name .. ".vvvvvv", ficontents)
+			if not success then
+				dialog.create(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg))
+			end
+		end
+	end
+end
+
+function dialog.callback.rawentityproperties(button, fields, identifier, notclosed, dialog_obj)
+	if button == DB.CANCEL then
+		return
+	end
+
+	-- thisentity is still this entity
+	local correctlines = false
+	if (thisentity.t == 11 or thisentity.t == 50) -- gravity line or warp line
+	and thisentity.p1 == anythingbutnil0(tonumber(fields.p1))
+	and thisentity.p2 == anythingbutnil0(tonumber(fields.p2))
+	and thisentity.p3 == anythingbutnil0(tonumber(fields.p3)) then
+		correctlines = true
+	end
+
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
+	local changeddata = {}
+	for i = 1, 9 do
+		table.insert(changeddata, {
+				key = entitypropkeys[i],
+				oldvalue = thisentity[entitypropkeys[i]],
+				newvalue = anythingbutnil0(tonumber(fields[entitypropkeys[i]]))
+			}
+		)
+		thisentity[entitypropkeys[i]] = anythingbutnil0(tonumber(fields[entitypropkeys[i]]))
+	end
+	thisentity.data = fields.data
+
+	if correctlines then
+		autocorrectlines()
+
+		for k,v in pairs(changeddata) do
+			if v.key == "p1" or v.key == "p2" or v.key == "p3" then
+				changeddata[k].newvalue = thisentity[v.key]
+			end
+		end
+
+		-- Do keep the fields in sync, if we're only applying
+		if button == DB.APPLY then
+			dialog_obj:set_field('p1', thisentity.p1)
+			dialog_obj:set_field('p2', thisentity.p2)
+			dialog_obj:set_field('p3', thisentity.p3)
+		end
+	end
+
+	-- entdetails[3] is still the ID of this entity
+	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
+	finish_undo("CHANGED ENTITY (PROPERTIES)")
 end

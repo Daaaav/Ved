@@ -37,6 +37,7 @@ function getlevelsfolder(ignorecustom)
 end
 
 function listdirs(directory)
+	-- Currently unused, except in a testing state
 	-- Preferably, only do directories.
 	return love.filesystem.getDirectoryItems(directory)
 end

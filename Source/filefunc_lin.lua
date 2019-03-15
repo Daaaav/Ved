@@ -83,6 +83,7 @@ function getlevelsfolder(ignorecustom)
 end
 
 function listdirs(directory)
+	-- Currently unused, except in a testing state
 	local t = {}
 	-- Only do folders.
 	local pfile = io.popen("ls '" .. escapename(directory) .. "'")

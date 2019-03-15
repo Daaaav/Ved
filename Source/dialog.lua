@@ -342,11 +342,11 @@ function cDialog:press_button(button)
 	RCMactive = false
 	local notclosed = false
 	if self.noclosechecker ~= nil then
-		notclosed = self.noclosechecker(button, self:return_fields(), self.identifier)
+		notclosed = self.noclosechecker(button, self:return_fields(), self.identifier, self)
 	end
 	if notclosed then
 		if self.handler ~= nil then
-			self.handler(button, self:return_fields(), self.identifier, notclosed)
+			self.handler(button, self:return_fields(), self.identifier, notclosed, self)
 		end
 	else
 		self:close(button)
@@ -369,7 +369,7 @@ function cDialog:closed()
 	table.remove(dialogs)
 	-- Call the close handler!
 	if self.handler ~= nil then
-		self.handler(self.return_btn, self:return_fields(), self.identifier, false)
+		self.handler(self.return_btn, self:return_fields(), self.identifier, false, self)
 	end
 end
 
@@ -394,6 +394,15 @@ function cDialog:setColor(red, green, blue, alpha, nottopmost)
 		love.graphics.setColor(red, green, blue, alpha)
 	else
 		love.graphics.setColor(red, green, blue, ((15-math.floor(self.windowani))/15)*alpha)
+	end
+end
+
+function cDialog:set_field(key, value)
+	for k,v in pairs(self.fields) do
+		if v[1] == key then
+			v[5] = value
+			break
+		end
 	end
 end
 
@@ -544,9 +553,7 @@ end
 function dialog.textboxes()
 	if DIAquestionid == 2 then
 		-- Entity properties
-		for box = 1, 10 do
-			hoverdiatext(DIAx+10+16+24, DIAy+DIAwindowani+10+24+(8*(box-1)), 300, 8, multiinput[box], box, currentmultiinput == box)
-		end
+		assert(false)
 	elseif DIAquestionid == 5 then
 		-- Level properties
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10, 20*8, 8, multiinput[1], 1, currentmultiinput == 1)
@@ -558,12 +565,12 @@ function dialog.textboxes()
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[7], 7, currentmultiinput == 7) -- 5
 		hoverdiatext(DIAx+10+(12*8), DIAy+DIAwindowani+10+(8*8), 3*8, 8, multiinput[8], 8, currentmultiinput == 8) -- 9
 		hoverdiatext(DIAx+10+(8*8), DIAy+DIAwindowani+10+(10*8), 240, 8, multiinput[9], 9, currentmultiinput == 9, 1, listmusicnames, listmusicids, "music") -- 6
-	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 then
+	elseif DIAquestionid == 9 or DIAquestionid == 11 or DIAquestionid == 12 or DIAquestionid == 13 or DIAquestionid == 15 or DIAquestionid == 19 or DIAquestionid == 20 or DIAquestionid == 21 or DIAquestionid == 22 or DIAquestionid == 26 then
 		assert(false)
 	-- !!! When migrating simple one line dialogs from this (9,11,12,13,15,19,20,21,22,26), move to above
-	elseif DIAquestionid == 26 then
+	elseif false then
 		-- Create new script or note or anything else with a single-line
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
+		--hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(1*8), 40*8, 8, multiinput[1], 1, currentmultiinput == 1)
 	elseif DIAquestionid == 10 then
 		-- Save level
 		assert(false)
@@ -620,54 +627,7 @@ function dialog.update(dt)
 			assert(false)
 		elseif (DIAquestionid == 2) then
 			-- Save entity properties
-			if DIAreturn == 2 or DIAreturn == 3 then -- cancel/ok
-				stopinput()
-			end
-
-			if DIAreturn == 1 or DIAreturn == 3 then -- apply or ok
-				-- entdetails[3] is still the ID of this entity
-				local correctlines = false
-				if (entitydata[tonumber(entdetails[3])].t == 11 or entitydata[tonumber(entdetails[3])].t == 50) -- gravity line or warp line
-				and entitydata[tonumber(entdetails[3])].p1 == anythingbutnil0(tonumber(multiinput[4]))
-				and entitydata[tonumber(entdetails[3])].p2 == anythingbutnil0(tonumber(multiinput[5]))
-				and entitydata[tonumber(entdetails[3])].p3 == anythingbutnil0(tonumber(multiinput[6])) then
-					correctlines = true
-				end
-
-				local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
-				local changeddata = {}
-				for i = 1, 9 do
-					table.insert(changeddata, {
-							key = entitypropkeys[i],
-							oldvalue = entitydata[tonumber(entdetails[3])][entitypropkeys[i]],
-							newvalue = anythingbutnil0(tonumber(multiinput[i]))
-						}
-					)
-					entitydata[tonumber(entdetails[3])][entitypropkeys[i]] = anythingbutnil0(tonumber(multiinput[i]))
-				end
-				entitydata[tonumber(entdetails[3])].data = multiinput[10]
-
-				if correctlines then
-					autocorrectlines()
-
-					for k,v in pairs(changeddata) do
-						if v.key == "p1" or v.key == "p2" or v.key == "p3" then
-							changeddata[k].newvalue = entitydata[tonumber(entdetails[3])][v.key]
-						end
-					end
-
-					-- Do keep the fields in sync, if we're only applying
-					if DIAreturn == 1 then
-						multiinput[4] = entitydata[tonumber(entdetails[3])].p1
-						multiinput[5] = entitydata[tonumber(entdetails[3])].p2
-						multiinput[6] = entitydata[tonumber(entdetails[3])].p3
-						mousepressed = true
-					end
-				end
-
-				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
-				finish_undo("CHANGED ENTITY (PROPERTIES)")
-			end
+			assert(false)
 		elseif (DIAquestionid == 3) then
 			-- load a level or not
 			if DIAreturn == 2 then -- yes
@@ -794,22 +754,7 @@ function dialog.update(dt)
 			assert(false)
 		elseif DIAquestionid == 26 then
 			-- Save copy of backup in levels folder
-			if DIAreturn == 2 then
-				if dirsep ~= "/" then
-					input = input:gsub(dirsep, "/")
-				end
-				local ficontents = love.filesystem.read("overwrite_backups/" .. input .. ".vvvvvv")
-				if ficontents == nil then
-					dialog.create(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}))
-					replacedialog = true
-				else
-					local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. multiinput[1] .. ".vvvvvv", ficontents)
-					if not success then
-						dialog.create(L.SAVENOSUCCESS .. anythingbutnil(iferrmsg))
-						replacedialog = true
-					end
-				end
-			end
+			assert(false)
 		end
 
 		-- The answer to the question has been handled now. Or has it?
