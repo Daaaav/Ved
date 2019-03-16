@@ -17,7 +17,7 @@ vergroups = {4,5}
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check ([^otek]ver[^sct])
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-intermediate_version = true -- If true, this is a WIP version (this just affects display)
+intermediate_version = false -- If true, this is a WIP version
 
 thismdeversion = 3
 
