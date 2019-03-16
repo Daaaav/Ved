@@ -1484,8 +1484,14 @@ function love.update(dt)
 					end
 
 					thisentity = entitydata[tonumber(entdetails[3])]
-					startmultiinput({thisentity.x, thisentity.y, thisentity.t, thisentity.p1, thisentity.p2, thisentity.p3, thisentity.p4, thisentity.p5, thisentity.p6, thisentity.data})
-					dialog.new(L.RAWENTITYPROPERTIES .. "\n\nx\ny\nt\np1\np2\np3\np4\np5\np6\n" .. L.SMALLENTITYDATA, (allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""), 1, 5, 2) -- ID stuff is debug mode
+					dialog.create(
+						L.RAWENTITYPROPERTIES .. "\n\nx\ny\nt\np1\np2\np3\np4\np5\np6\n" .. L.SMALLENTITYDATA,
+						DBS.OKCANCELAPPLY,
+						dialog.callback.rawentityproperties,
+						(allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""),
+						dialog.form.rawentityproperties_make(),
+						dialog.callback.noclose_on.apply
+					)
 				elseif tonumber(entdetails[2]) == 1 then
 					-- Enemy
 					if RCMreturn == L.CHANGEDIRECTION then
@@ -1734,8 +1740,10 @@ function love.update(dt)
 			end
 		elseif RCMid:sub(1, 4) == "bul_" then
 			if RCMreturn == L.SAVEBACKUP then
-				startmultiinput({""})
-				dialog.new(L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, L.SAVEBACKUP, 1, 4, 26)
+				dialog.create(
+					L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, DBS.OKCANCEL,
+					dialog.callback.savebackup, L.SAVEBACKUP, dialog.form.simplename
+				)
 				input = RCMid:sub(5, -1)
 			else
 				unrecognized_rcmreturn()
