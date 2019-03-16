@@ -5,11 +5,11 @@ msgid "<empty>"
 msgstr ""
 
 msgctxt "L.OUTDATEDLOVE"
-msgid "Your version of L{ve is outdated. Please use version 0.9.1 or higher. You can download the latest version of L{ve from https://love2d.org/."
+msgid "Your version of L{ve is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of L{ve from https://love2d.org/."
 msgstr ""
 
 msgctxt "L.OUTDATEDLOVE090"
-msgid "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/."
+msgid "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working.\nYou can download the latest version of L{ve from https://love2d.org/."
 msgstr ""
 
 msgctxt "L.UNKNOWNSTATE"

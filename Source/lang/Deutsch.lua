@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-03-12 23:07:12 (CET)
+--- Last converted: 2019-03-16 12:20:54 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -33,8 +33,8 @@ L = {
 
 TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deine LÖVE Version ist veraltet. Bitte benutze Version 0.9.1 oder höher. Du kannst die neuste LÖVE Version von https://love2d.org downloaden.",
-OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE = "Deine LÖVE Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE Version von https://love2d.org downloaden.",
+OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE Version von https://love2d.org/ herunterladen.",
 UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
 FATALERROR = "FATALER FEHLER: ",
 FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",

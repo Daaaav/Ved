@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-03-12 23:07:12 (CET)
+--- Last converted: 2019-03-16 12:20:54 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -45,8 +45,8 @@ L = {
 
 TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan. Vi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 UNKNOWNSTATE = "Saltis al nekonata stato ($1) de stato $2",
 FATALERROR = "NERIPAREBLA ERARO: ",
 FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu ripari ĝin.",
@@ -464,9 +464,9 @@ TINY_CTRL = "REG",
 TINY_SHIFT = "MAJUSKLO",
 
 -- Header for search results
-SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
-SEARCHRESULTS_ROOMS = "Rooms [$1]",
-SEARCHRESULTS_NOTES = "Notes [$1]",
+SEARCHRESULTS_SCRIPTS = "Skriptoj [$1]",
+SEARCHRESULTS_ROOMS = "Ĉambroj [$1]",
+SEARCHRESULTS_NOTES = "Notoj [$1]",
 
 }
 

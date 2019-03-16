@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-03-12 23:07:12 (CET)
+--- Last converted: 2019-03-16 12:20:55 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -31,8 +31,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Votre version de L{ve est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure. Vous pouvez télécharger la dernière version de L{ve sur le site https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working. You can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE = "Votre version de L{ve est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure.\nVous pouvez télécharger la dernière version de L{ve sur le site https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ne supporte plus L{ve 0.9.0. Cependant, L{ve 0.9.1 et toute version ultérieure seront supportées.\nVous pouvez télécharger la dernière version de L{ve sur https://love2d.org/.",
 UNKNOWNSTATE = "État inconnu ($1), entré depuis l'état $2",
 FATALERROR = "ERREUR FATALE : ",
 FATALEND = "Veuillez fermer le jeu et réessayer. Et si vous êtes Dav, veuillez le réparer.",
