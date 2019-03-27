@@ -249,7 +249,7 @@ function encodestring(thestring)
 	if thestring == nil then
 		return "nil"
 	else
-		return "\"" .. ((thestring):gsub("\\", "\\\\"):gsub("\"", "\\\"")) .. "\""
+		return "\"" .. ((thestring):gsub("\\", "\\\\"):gsub("\"", "\\\""):gsub("\r", "\\r"):gsub("\n", "\\n")) .. "\""
 	end
 end
 
@@ -268,7 +268,19 @@ loaddefaultsettings()
 
 if love.filesystem.exists("settings.lua") then
 	-- It exists
-	love.filesystem.load("settings.lua")()
+	local settings_chunk
+	settings_ok, settings_chunk = pcall(love.filesystem.load, "settings.lua")
+	if settings_ok then
+		settings_ok, settings_err = pcall(settings_chunk)
+	else
+		settings_err = settings_chunk
+	end
+	if not settings_ok then
+		love.filesystem.write("crash_logs/" .. os.time() .. "_" .. ved_ver_human() .. "_SETTINGS.txt",
+			"Error in settings.lua: " .. anythingbutnil(settings_err) .. "\r\n\r\nFull file contents:\r\n"
+			.. love.filesystem.read("settings.lua") .. "\r\n\r\nEOF"
+		)
+	end
 else
 	-- It doesn't exist, create it.
 	print("Making new config file")

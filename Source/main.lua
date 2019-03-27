@@ -20,7 +20,8 @@ checkver = ver -- update check, displayed in crash (used to have a or b as oppos
 intermediate_version = true -- If true, this is a WIP version
 
 if intermediate_version then
-	commitversion = anythingbutnil0(tonumber(love.filesystem.read("commitversion")))
+	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber
+	commitversion = anythingbutnil0(tonumber((love.filesystem.read("commitversion"))))
 end
 
 thismdeversion = 3
@@ -119,6 +120,9 @@ else
 		end
 	end
 
+	if not love.filesystem.exists("crash_logs") then
+		love.filesystem.createDirectory("crash_logs")
+	end
 	if not love.keyboard.isDown("lctrl") and not defaulterrhand then
 		require("errorhandler")
 	end

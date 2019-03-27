@@ -74,7 +74,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				love.graphics.print(v .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+				love.graphics.print(v:gsub("[\r\n]", "?") .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then

@@ -401,9 +401,6 @@ function love.load()
 	if not love.filesystem.exists("overwrite_backups") then
 		love.filesystem.createDirectory("overwrite_backups")
 	end
-	if not love.filesystem.exists("crash_logs") then
-		love.filesystem.createDirectory("crash_logs")
-	end
 
 	load_updatecheck(false)
 
@@ -424,6 +421,16 @@ function love.load()
 	tile_batch_tiles = {}
 	for i = 1, 1200 do
 		tile_batch_tiles[i] = 0
+	end
+
+	if not settings_ok then
+		-- If the settings file is broken, good chance we don't know what the language setting was.
+		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,
+			function()
+				saveconfig()
+				settings_ok = true
+			end
+		)
 	end
 
 	hook("love_load_end")
@@ -1363,7 +1370,7 @@ function love.update(dt)
 		end
 	end
 
-	if state == -2 then
+	if state == -2 and settings_ok then
 		if opt_loadlevel ~= nil then
 			if opt_loadlevel:sub(1, levelsfolder:len()) == levelsfolder then
 				opt_loadlevel = opt_loadlevel:sub(levelsfolder:len()+2, -1)
