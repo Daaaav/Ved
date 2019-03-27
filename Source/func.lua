@@ -2803,7 +2803,7 @@ function load_updatecheck(refresh)
 			verchannel = love.thread.getChannel("version")
 		end
 
-		updatecheckthread:start(checkver, true, wgetavailable)
+		updatecheckthread:start(checkver, true, wgetavailable, commitversion)
 
 		updateversion = nil
 		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}

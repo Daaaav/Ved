@@ -1,7 +1,11 @@
-local checkver, nohttps, wgetavailable = ...
+local checkver, nohttps, wgetavailable, commitversion = ...
 
 local request_base = "tolp.nl/ved/"
 local request_query = "?sys=3&ver=" .. checkver
+
+if commitversion ~= nil then
+	request_query = request_query .. "&pre=" ..  commitversion
+end
 
 local verchannel = love.thread.getChannel("version")
 verchannel:clear()

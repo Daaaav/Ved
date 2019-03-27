@@ -84,7 +84,7 @@ function ved_showerror(msg)
 	local trace = error_printer(msg, 2)
 
 	-- Decide what's going to be in the message
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_major >= 12 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_major >= 12 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	local hasplugins = false
 	if type(plugins) ~= "table" then
@@ -112,7 +112,7 @@ function ved_showerror(msg)
 	if (s == nil or s.autosavecrashlogs) and love.filesystem.exists("crash_logs") then
 		-- Make a file with a name of, for example, 1500000000_1.2.3_drawmaineditor_436.txt
 		local errorfile, errorline = msg:match("([^ ]+)%.lua:([0-9]+): .*")
-		local logfilename = "crash_logs/" .. os.time() .. "_" .. anythingbutnil(checkver) .. (intermediate_version and "-pre" or "") .. "_" .. anythingbutnil(errorfile):gsub("/", "__") .. "_" .. anythingbutnil(errorline) .. ".txt"
+		local logfilename = "crash_logs/" .. os.time() .. "_" .. ved_ver_human() .. "_" .. anythingbutnil(errorfile):gsub("/", "__") .. "_" .. anythingbutnil(errorline) .. ".txt"
 		local pluginreport = ""
 		if hasplugins then
 			pluginreport = pluginreport .. "\n\nPlugin info:"
@@ -230,12 +230,6 @@ function ved_showerror(msg)
 
 
 	table.insert(err, ERR_PLEASETELLDAV)
-	--[[
-	table.insert(err, "    " .. msg:gsub("\n", ".") .. "\n") --.."\n\n")
-	table.insert(err, "    Ved version: a" .. ver)
-	table.insert(err, "    LÖVE version: v0." .. (love.graphics.ellipse == nil and 9 or 10))
-	table.insert(err, "    State: " .. (state == nil and "nil" or state) .. "\n")
-	]]
 	table.insert(err, "    " .. mainmessage)
 
 	for l in string.gmatch(trace, "(.-)\n") do
@@ -404,7 +398,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	end
 
 
-	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. anythingbutnil(checkver) .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
@@ -426,12 +420,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	end
 
 	table.insert(err, ERR_PLEASETELLAUTHOR)
-	--[[
-	table.insert(err, "    " .. msg:gsub("\n", ".") .. "\n") --.."\n\n")
-	table.insert(err, "    Ved version: a" .. ver)
-	table.insert(err, "    LÖVE version: v0." .. (love.graphics.ellipse == nil and 9 or 10))
-	table.insert(err, "    State: " .. (state == nil and "nil" or state) .. "\n")
-	]]
 	table.insert(err, "    " .. mainmessage)
 	table.insert(err, "\n\n" .. string.format(aspattern and ERR_REPLACECODEPATTERN or ERR_REPLACECODE, anythingbutnil(fileerror)) .. "\n\n")
 

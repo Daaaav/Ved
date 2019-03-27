@@ -96,3 +96,11 @@ function langkeys(strin, thesekeys, pluralvar)
 
 	return strin
 end
+
+function ved_ver_human()
+	-- Displays Ved's version in a human-readable way. Must also work in filenames.
+	if intermediate_version then
+		return ver .. "-pre" .. (commitversion < 10 and "0" or "") .. commitversion
+	end
+	return ver
+end

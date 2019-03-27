@@ -25,7 +25,7 @@ function love.draw()
 	love.graphics.printf(message, 10, 10, love.graphics.getWidth()-20, "center")
 
 	love.graphics.print(
-		"Ved version: " .. ver .. (intermediate_version and "-pre" or "") .. "\n"
+		"Ved version: " .. ved_ver_human() .. "\n"
 		.. "LÖVE version: " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
 		8, love.graphics.getHeight()-21
 	)
