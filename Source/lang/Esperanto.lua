@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-03-16 12:20:54 (CET)
+--- Last converted: 2019-03-28 13:19:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1141,6 +1141,11 @@ iftrinkets(3,enoughtrinkets) - Se vi havas 3 aŭ pli da kolektaĵoj, la skripto
 "enoughtrinkets" estos plenumita, alie la nuntempa skripto daŭros.
 En praktiko, estas kutime uzi 0 por nombro se vi volas ŝargi skripton en ĉiu
 okazo.
+
+iftrinketsless¤(nombro,skriptnomo)\h#w
+
+Se via kvanto da kolektaĵoj < nombro, saltu al la skripto kun la nomo
+skriptnomo. Se ĝi estas >= nombro, daŭru en la nuntempa skripto.
 
 destroy¤(forigotaĵo)\h#w
 

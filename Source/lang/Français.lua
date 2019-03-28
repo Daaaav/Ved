@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-03-16 12:20:55 (CET)
+--- Last converted: 2019-03-28 13:19:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1128,6 +1128,11 @@ iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
                                script will continue.
 It is common practise to use 0 as a minimum amount of trinkets, as a way to load
 a script in any case.
+
+iftrinketsless¤(number,scriptname)\h#w
+
+If your amount of trinkets < number, go to script with name scriptname.
+If your amount of trinkets >= number, continue in the current script.
 
 destroy¤(something)\h#w
 

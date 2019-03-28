@@ -1117,6 +1117,11 @@ iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
 It is common practise to use 0 as a minimum amount of trinkets, as a way to load
 a script in any case.
 
+iftrinketsless¤(number,scriptname)\h#w
+
+If your amount of trinkets < number, go to script with name scriptname.
+If your amount of trinkets >= number, continue in the current script.
+
 destroy¤(something)\h#w
 
 Valid arguments can be:

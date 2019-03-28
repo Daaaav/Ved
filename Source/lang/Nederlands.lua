@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-03-16 12:20:55 (CET)
+--- Last converted: 2019-03-28 13:19:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1133,10 +1133,15 @@ Als je aantal trinkets >= aantal, ga naar script met naam scriptnaam.
 Als je aantal trinkets < aantal, ga dan verder in het huidige script.
 Voorbeeld:
 iftrinkets(3,enoughtrinkets) - Als je 3 of meer trinkets hebt zal het script
-                               "enoughtrinkets" worden uitgevoerd, anders za het
+                               "enoughtrinkets" worden uitgevoerd, anders zal het
                                huidige script verdergaan.
 Het is gebruikelĳk om 0 als minimum aantal trinkets te gebruiken, om een script
 altĳd te laden.
+
+iftrinketsless¤(aantal,scriptnaam)\h#w
+
+Als je aantal trinkets < aantal, ga naar script met naam scriptnaam.
+Als je aantal trinkets >= aantal, ga dan verder in het huidige script.
 
 destroy¤(iets)\h#w
 
