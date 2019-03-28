@@ -2461,6 +2461,7 @@ function love.keypressed(key)
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
 		-- Reload tilesets
 		loadtilesets()
+		loadfontpng()
 		tile_batch_needs_update = true
 		map_init()
 		temporaryroomname = L.TILESETSRELOADED
