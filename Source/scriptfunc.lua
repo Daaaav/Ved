@@ -158,7 +158,7 @@ function scriptcontext(text)
 
 	if parts[1] == "flag" and parts[2] ~= nil then
 		return "flag", tonumber(parts[2]), nil
-	elseif (parts[1] == "iftrinkets" or parts[1] == "customiftrinkets") and parts[3] ~= nil and parts[3] ~= "" then
+	elseif (parts[1] == "iftrinkets" or parts[1] == "iftrinketsless" or parts[1] == "customiftrinkets" or parts[1] == "customiftrinketsless") and parts[3] ~= nil and parts[3] ~= "" then
 		return "script", parts[3], nil
 	elseif (parts[1] == "ifflag" or parts[1] == "customifflag") and parts[2] ~= nil then
 		return "flagscript", parts[2], parts[3]
@@ -552,7 +552,7 @@ function findscriptreferences(argscriptname)
 
 			partss = explode(",", v2)
 
-			if (partss[1] == "iftrinkets" or partss[1] == "customiftrinkets" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname then
+			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname then
 				-- argscriptname is referred to in this script
 				table.insert(scriptuses, {scriptnames[rvnum], k})
 				break
@@ -579,7 +579,7 @@ function findusedscripts()
 
 			partss = explode(",", v2)
 
-			if (partss[1] == "iftrinkets" or partss[1] == "customiftrinkets" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
+			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
 				usedscripts[partss[3]] = true
 			end
 		end
