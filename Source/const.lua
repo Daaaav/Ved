@@ -153,7 +153,7 @@ knowncommands =
 	flag = true,
 	ifflag = true,
 	iftrinkets = true,
-	--iftrinketsless = true,
+	iftrinketsless = true,
 	destroy = true,
 	music = true,
 	flash = true,
@@ -281,7 +281,7 @@ knowninternalcommands =
 
 	customifflag = true,
 	customiftrinkets = true,
-	--customiftrinketsless = true,
+	customiftrinketsless = true,
 	customposition = true,
 	changecustommood = true,
 	custommap = true,
