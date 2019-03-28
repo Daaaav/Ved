@@ -2561,7 +2561,7 @@ function love.keypressed(key)
 	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
-		table.insert(files[""], {name="--[debug]--", isdir=false, lastmodified=0, overwritten=0})
+		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
 		table.remove(files[""])
 	elseif (state == 8) and (key == "return") then

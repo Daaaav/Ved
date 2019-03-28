@@ -690,8 +690,9 @@ function loadlevelsfolder()
 			{
 				name = f1,
 				isdir = love.filesystem.isDirectory("overwrite_backups/" .. f1),
-				lastmodified = 0,
-				overwritten = 0,
+				bu_lastmodified = 0,
+				bu_overwritten = 0,
+				lastmodified = nil,
 			}
 		)
 		if love.filesystem.isDirectory("overwrite_backups/" .. f1) then
@@ -710,8 +711,9 @@ function loadlevelsfolder()
 						{
 							name = f2,
 							isdir = false,
-							lastmodified = lm,
-							overwritten = ov,
+							bu_lastmodified = lm,
+							bu_overwritten = ov,
+							lastmodified = nil,
 						}
 					)
 				end
@@ -2580,6 +2582,16 @@ function languagedialog()
 end
 
 function format_date(timestamp)
+	if timestamp == nil then
+		return ""
+	elseif type(timestamp) == "table" then
+		-- Table should be {Y, M, D, H, M, S}
+		-- Temporarily only support YYYY-MM-DD HH:MM
+		return string.format("%d-%02d-%02d %02d:%02d",
+			timestamp[1], timestamp[2], timestamp[3],
+			timestamp[4], timestamp[5]
+		)
+	end
 	return os.date(s.dateformat, timestamp)
 end
 

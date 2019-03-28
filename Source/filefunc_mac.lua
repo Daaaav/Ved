@@ -21,8 +21,9 @@ function listfiles(directory)
 				{
 					name = filename,
 					isdir = false,
-					lastmodified = 0,
-					overwritten = 0,
+					bu_lastmodified = 0,
+					bu_overwritten = 0,
+					lastmodified = nil,
 				}
 			)
 		end

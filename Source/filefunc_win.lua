@@ -16,6 +16,76 @@ standardvvvvvvfolders = {
 }
 
 
+local ffi = require("ffi")
+ffi.cdef([[
+	typedef uint16_t WORD;
+	typedef uint32_t DWORD;
+	typedef char CHAR;
+	typedef void* HANDLE;
+	typedef bool BOOL;
+	typedef const char* LPCSTR;
+
+	typedef struct _FILETIME {
+	  DWORD dwLowDateTime;
+	  DWORD dwHighDateTime;
+	} FILETIME, *PFILETIME, *LPFILETIME;
+
+	typedef struct _WIN32_FIND_DATAA {
+	  DWORD    dwFileAttributes;
+	  FILETIME ftCreationTime;
+	  FILETIME ftLastAccessTime;
+	  FILETIME ftLastWriteTime;
+	  DWORD    nFileSizeHigh;
+	  DWORD    nFileSizeLow;
+	  DWORD    dwReserved0;
+	  DWORD    dwReserved1;
+	  CHAR     cFileName[260];
+	  CHAR     cAlternateFileName[14];
+	  DWORD    dwFileType;
+	  DWORD    dwCreatorType;
+	  WORD     wFinderFlags;
+	} WIN32_FIND_DATAA, *PWIN32_FIND_DATAA, *LPWIN32_FIND_DATAA;
+
+	HANDLE FindFirstFileA(
+	  LPCSTR             lpFileName,
+	  LPWIN32_FIND_DATAA lpFindFileData
+	);
+
+	BOOL FindNextFileA(
+	  HANDLE             hFindFile,
+	  LPWIN32_FIND_DATAA lpFindFileData
+	);
+
+	BOOL FindClose(
+	  HANDLE hFindFile
+	);
+
+	typedef struct _SYSTEMTIME {
+	  WORD wYear;
+	  WORD wMonth;
+	  WORD wDayOfWeek;
+	  WORD wDay;
+	  WORD wHour;
+	  WORD wMinute;
+	  WORD wSecond;
+	  WORD wMilliseconds;
+	} SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
+
+	BOOL FileTimeToSystemTime(
+	  const FILETIME *lpFileTime,
+	  LPSYSTEMTIME   lpSystemTime
+	);
+
+	typedef void TIME_ZONE_INFORMATION;
+
+	BOOL SystemTimeToTzSpecificLocalTime(
+	  const TIME_ZONE_INFORMATION *lpTimeZoneInformation,
+	  const SYSTEMTIME            *lpUniversalTime,
+	  LPSYSTEMTIME                lpLocalTime
+	);
+]])
+
+
 function cp850toutf8(text)
 	-- We're working with the command line...
 
@@ -93,53 +163,32 @@ function listfiles(directory)
 	directory = directory:gsub("/", "\\")
 	-- We can't have a trailing backslash either, or our matching system will blow up. This comes in the form of a double backslash.
 	directory = directory:gsub("\\\\", "\\")
-	-- If the levels folder is on a different drive, a plain cd will have no effect whatsoever!
-	local maybe_driveletter = directory:match("[A-Za-z]:")
-	local driveswitch = ""
-	if maybe_driveletter ~= nil then
-		driveswitch = maybe_driveletter .. " && "
+
+	filedata = ffi.new("WIN32_FIND_DATAA")
+	st_utc = ffi.new("SYSTEMTIME")
+	st_loc = ffi.new("SYSTEMTIME")
+	search_handle = ffi.C.FindFirstFileA(directory .. "\\*.vvvvvv", filedata)
+	if search_handle == -1 then -- TODO check if this is really INVALID_HANDLE_VALUE
+		return t
 	end
-	-- First list all the directories, then the files
-	local listingfiles = false
-	local pfile = io.popen(driveswitch .. 'cd "' .. escapename(directory) .. '" && dir /b /ad /s && echo //FILES// && dir /b /ad /s && dir /b /a-d /s')
-	for filename in pfile:lines() do
-		if filename == "//FILES// " then
-			listingfiles = true
-		else
-			-- Files and directories are listed as `C:\Users\...\Documents\VVVVVV\levels\subfolder\deeper` (or wherever `directory` is)
-			-- so let's get a relative path instead.
-			local relpath = filename:match(escapegsub(directory, true) .. "\\(.*)")
-			if relpath == nil then
-				cons("FILE LIST WARNING: couldn't match levels folder in \"" .. filename .. "\", our directory is \"" .. directory .. "\"")
-				lsuccess = false
-			elseif not listingfiles then
-				t[relpath] = {}
-			else
-				local currentdir = ""
-				local file = relpath
-				if string.find(relpath, "\\") ~= nil then
-					local lastindex = string.find(relpath, "\\[^\\]-$")
-					currentdir = (relpath):sub(1, lastindex-1)
-					file = (relpath):sub(lastindex+1, -1)
-				end
-				local prefix
-				if currentdir == "" then
-					prefix = ""
-				else
-					prefix = currentdir .. "\\"
-				end
-				table.insert(t[currentdir],
-					{
-						name = cp850toutf8(file),
-						isdir = t[prefix .. file] ~= nil,
-						lastmodified = 0,
-						overwritten = 0,
-					}
-				)
-			end
-		end
+	local files_left = true
+	while files_left do
+		ffi.C.FileTimeToSystemTime(filedata.ftLastWriteTime, st_utc)
+		ffi.C.SystemTimeToTzSpecificLocalTime(nil, st_utc, st_loc)
+
+		table.insert(t[""], -- currentdir
+			{
+				name = cp850toutf8(ffi.string(filedata.cFileName)),
+				isdir = false,
+				bu_lastmodified = 0,
+				bu_overwritten = 0,
+				lastmodified = {st_loc.wYear, st_loc.wMonth, st_loc.wDay, st_loc.wHour, st_loc.wMinute, st_loc.wSecond},
+			}
+		)
+		files_left = ffi.C.FindNextFileA(search_handle, filedata)
 	end
-	pfile:close()
+
+	ffi.C.FindClose(search_handle)
 	return t
 end
 

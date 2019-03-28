@@ -21,9 +21,11 @@ function drawlevelslist()
 		tabselected_k = tabselected
 		local hoverarea = 734
 		local metadatax = 422
+		local lastmodifiedx = 590
 		if s.psmallerscreen then
 			hoverarea = hoverarea - 96
 			metadatax = metadatax - 96
+			lastmodifiedx = lastmodifiedx - 96
 		end
 		-- Are we in the root, or is there a subfolder we're supposed to look in?
 		local currentdir = ""
@@ -151,15 +153,15 @@ function drawlevelslist()
 						love.graphics.draw(smallfolder, 8, 14+8*k2+levellistscroll)
 					end
 					if backupscreen and not v.isdir then
-						if v.overwritten == 0 then
+						if v.bu_overwritten == 0 then
 							-- This is kind of a weird place for that file.
 							love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
 							love.graphics.print(v.name, 18, 16+8*k2+levellistscroll)
 						else
 							-- Display the dates, we already know what the level is we're looking at.
 							love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
-							love.graphics.print(format_date(v.lastmodified), 66, 16+8*k2+levellistscroll)
-							love.graphics.print(format_date(v.overwritten), 408, 16+8*k2+levellistscroll)
+							love.graphics.print(format_date(v.bu_lastmodified), 66, 16+8*k2+levellistscroll)
+							love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 						end
 					else
 						love.graphics.print(v.name, 18, 16+8*k2+levellistscroll) -- y = 16+8*k
@@ -174,6 +176,11 @@ function drawlevelslist()
 								love.graphics.print(v.metadata.Title, metadatax, 16+8*k2+levellistscroll)
 							end
 						end
+
+						if not (mouseishovering or tabselected == k2) then
+							love.graphics.setColor(128,128,128)
+						end
+						love.graphics.print(format_date(v.lastmodified), lastmodifiedx, 16+8*k2+levellistscroll)
 					end
 
 
