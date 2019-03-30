@@ -55,7 +55,7 @@ function drawscripteditor()
 		end
 
 		if editingline == k then --and textlinestogo == 0 then
-			context, carg1, carg2 = scriptcontext(input .. input_r)
+			context, carg1, carg2, carg3 = scriptcontext(input .. input_r)
 		end
 
 		if textq ~= nil then
@@ -165,7 +165,7 @@ function drawscripteditor()
 			tostate(22)
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(2) then
 			-- Usages
-			local uentityuses, uscriptuses = findscriptreferences(scriptname)
+			local uentityuses, uloadscriptuses, uscriptuses = findscriptreferences(scriptname)
 
 			local roomsstr, scriptsstr = "", ""
 			local co = not s.coords0 and 1 or 0 -- coordoffset
@@ -254,13 +254,23 @@ function drawscripteditor()
 			editorjumpscript(carg1)
 			mousepressed = true
 		end
-	elseif context == "flagscript" then
+	elseif context == "flagscript" or context == "crewmatescript" then
 		if carg2 ~= nil and carg2 ~= "" then
 			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
 			rbutton((scripts[carg2] == nil and L.CREATE or L.GOTO), 13)
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg2)
+				mousepressed = true
+			end
+		end
+	elseif context == "positionscript" then
+		if carg3 ~= nil and carg3 ~= "" then
+			love.graphics.printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
+			rbutton((scripts[carg3] == nil and L.CREATE or L.GOTO), 13)
+
+			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
+				editorjumpscript(carg3)
 				mousepressed = true
 			end
 		end
