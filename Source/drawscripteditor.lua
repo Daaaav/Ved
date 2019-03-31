@@ -264,7 +264,7 @@ function drawscripteditor()
 				mousepressed = true
 			end
 		end
-	elseif context == "positionscript" then
+	elseif context == "roomscript" then
 		if carg3 ~= nil and carg3 ~= "" then
 			love.graphics.printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
 			rbutton((scripts[carg3] == nil and L.CREATE or L.GOTO), 13)
