@@ -165,7 +165,7 @@ function scriptcontext(text)
 	elseif (parts[1] == "ifflag" or parts[1] == "customifflag") and parts[2] ~= nil then
 		return "flagscript", parts[2], parts[3], nil
 	elseif (parts[1] == "ifcrewlost" or parts[1] == "iflast") and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
-		return "crewmatescript", tonumber(parts[2]), string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil
+		return "script", string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil, nil
 	elseif parts[1] == "ifexplored" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[4] ~= "custom_" and string.sub(parts[4], 1, string.len("custom_")) == "custom_" then
 		return "positionscript", tonumber(parts[2]), tonumber(parts[3]), string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then

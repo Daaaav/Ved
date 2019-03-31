@@ -254,7 +254,7 @@ function drawscripteditor()
 			editorjumpscript(carg1)
 			mousepressed = true
 		end
-	elseif context == "flagscript" or context == "crewmatescript" then
+	elseif context == "flagscript" then
 		if carg2 ~= nil and carg2 ~= "" then
 			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
 			rbutton((scripts[carg2] == nil and L.CREATE or L.GOTO), 13)
