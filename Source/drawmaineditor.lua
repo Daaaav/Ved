@@ -1251,6 +1251,7 @@ function drawmaineditor()
 
 			-- Up
 			for t = 0, 39 do
+				-- Wall
 				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset]) then
 					--love.graphics.line(64+64+(t*16) +1, 0, 64+64+(t*16)+15, 0)
 					--love.graphics.line(64+64+(t*16) +1, 1, 64+64+(t*16)+15, 1)
@@ -1267,9 +1268,23 @@ function drawmaineditor()
 				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
 					love.graphics.draw(smallsideimg, smallsideline[1], screenoffset+(t*16), 0, 0, 1)
 				end
+
+				-- Spikes
+				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset], false) ~= issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset], true) then
+					love.graphics.setColor(255, 0, 0)
+
+					if roomupW then
+						love.graphics.setColor(255, 192, 0)
+					end
+
+					love.graphics.draw(sideimg, sideline[1], screenoffset+(t*16), 0, 0, 2)
+
+					love.graphics.setColor(255, 255, 255)
+				end
 			end
 			-- Left
 			for t = 1, 30 do
+				-- Wall
 				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset]) then
 					--love.graphics.line(64+64, (t-1)*16 +1, 64+64, (t-1)*16 +15)
 					--love.graphics.line(64+64+1, (t-1)*16 +1, 64+64+1, (t-1)*16 +15)
@@ -1286,9 +1301,23 @@ function drawmaineditor()
 				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
 					love.graphics.draw(smallsideimg, smallsideline[2], screenoffset, (t-1)*16, 0, 1)
 				end
+
+				-- Spikes
+				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset], false) ~= issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset], true) then
+					love.graphics.setColor(255, 0, 0)
+
+					if roomleftW then
+						love.graphics.setColor(255, 192, 0)
+					end
+
+					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+
+					love.graphics.setColor(255, 255, 255)
+				end
 			end
 			-- Right
 			for t = 0, 29 do
+				-- Wall
 				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset]) then
 
 					if roomrightW then
@@ -1304,9 +1333,23 @@ function drawmaineditor()
 				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
 					love.graphics.draw(smallsideimg, smallsideline[3], screenoffset+(39*16), t*16, 0, 1)
 				end
+
+				-- Spikes
+				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset], false) ~= issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset], true) then
+					love.graphics.setColor(255, 0, 0)
+
+					if roomrightW then
+						love.graphics.setColor(255, 192, 0)
+					end
+
+					love.graphics.draw(sideimg, sideline[3], screenoffset+(39*16), t*16, 0, 2)
+
+					love.graphics.setColor(255, 255, 255)
+				end
 			end
 			-- Down
 			for t = 0, 39 do
+				-- Wall
 				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset]) then
 
 					if roomdownW then
@@ -1321,6 +1364,19 @@ function drawmaineditor()
 
 				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
 					love.graphics.draw(smallsideimg, smallsideline[4], screenoffset+(t*16), 29*16, 0, 1)
+				end
+
+				-- Spikes
+				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset], false) ~= issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset], true) then
+					love.graphics.setColor(255, 0, 0)
+
+					if roomdownW then
+						love.graphics.setColor(255, 192, 0)
+					end
+
+					love.graphics.draw(sideimg, sideline[4], screenoffset+(t*16), 29*16, 0, 2)
+
+					love.graphics.setColor(255, 255, 255)
 				end
 			end
 		end
