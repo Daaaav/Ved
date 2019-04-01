@@ -5,6 +5,17 @@ function drawmaineditor()
 		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		local aty = math.floor(getlockablemouseY() / 16)
 
+		-- If we're holding both [ and ] down, then let the cursor move only in the plus-shape created by those two lines
+		if mouselockx ~= -1 and mouselocky ~= -1 then
+			if mouselockhorizontalline then
+				aty = math.floor(love.mouse.getY() / 16)
+			end
+
+			if mouselockverticalline then
+				atx = math.floor((love.mouse.getX()-screenoffset) / 16)
+			end
+		end
+
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
 		if love.mouse.isDown("l") and not mousepressed and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
 			for k,v in pairs(entitydata) do
@@ -1433,6 +1444,30 @@ function drawmaineditor()
 	if nodialog and mouseon(screenoffset, 0, 639, 480) then
 		cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		cursory = math.floor(getlockablemouseY() / 16)
+
+		-- If we're holding [ and ] down, display the cursor inside the plus-shape created by those two lines
+		if mouselockx ~= -1 and mouselocky ~= -1 then
+			if math.floor((getlockablemouseX()-screenoffset) / 16) <= (love.mouse.getX()-screenoffset) / 16
+			and (love.mouse.getX()-screenoffset) / 16 <= math.ceil((getlockablemouseX()-screenoffset) / 16) then
+				mouselockhorizontalline = true
+				mouselockverticalline = false
+			end
+
+			if math.floor(getlockablemouseY() / 16) <= love.mouse.getY() / 16
+			and love.mouse.getY() / 16 <= math.ceil(getlockablemouseY() / 16) then
+				mouselockhorizontalline = false
+				mouselockverticalline = true
+			end
+
+
+			if mouselockhorizontalline then
+				cursory = math.floor(love.mouse.getY() / 16)
+			end
+
+			if mouselockverticalline then
+				cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
+			end
+		end
 
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then
