@@ -180,6 +180,7 @@ function listfiles(directory)
 			{
 				name = cp850toutf8(ffi.string(filedata.cFileName)),
 				isdir = false,
+				result_shown = true,
 				bu_lastmodified = 0,
 				bu_overwritten = 0,
 				lastmodified = {st_loc.wYear, st_loc.wMonth, st_loc.wDay, st_loc.wHour, st_loc.wMinute, st_loc.wSecond},

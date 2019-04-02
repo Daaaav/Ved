@@ -444,6 +444,7 @@ function loadstate(new, extradata)
 
 		--loadlevelsfolder()
 
+		oldinput = ""
 		tabselected = 0
 		backupscreen = false
 		currentbackupdir = ""
@@ -2823,6 +2824,19 @@ function load_updatecheck(refresh)
 		updatenotesrefreshable = false
 		updatescrollingtext = nil
 		updatescrollingtext_pos = 0
+	end
+end
+
+function search_levels_list(currentdir, prefix)
+	-- Marks matching levels in the levels list as shown and vice versa
+	if input .. input_r == oldinput then
+		return
+	end
+	oldinput = input .. input_r
+
+	for k,v in pairs(files[currentdir]) do
+		files[currentdir][k].result_shown =
+			(prefix .. v.name):lower():sub(1, (input .. input_r):len()) == (input .. input_r):lower()
 	end
 end
 
