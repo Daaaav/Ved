@@ -1093,15 +1093,24 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 	if not editingroomname and (love.keyboard.isDown("[") or love.keyboard.isDown("]")) then
 		love.graphics.setColor(0,0,0,92)
 
-		if love.keyboard.isDown("[") then
-			-- Horizontal
-			love.graphics.rectangle("fill", screenoffset, 0, 640, (16*(cursory-upblx)))
-			love.graphics.rectangle("fill", screenoffset, (16*(cursory-upblx+(fory+1))), 640, 480-(16*(cursory-upblx+(fory+1))))
-		end
-		if love.keyboard.isDown("]") then
-			-- Vertical
-			love.graphics.rectangle("fill", screenoffset, 0, (16*(cursorx-leftblx)), 480)
-			love.graphics.rectangle("fill", screenoffset+(16*(cursorx-leftblx+(forx+1))), 0, 640-(16*(cursorx-leftblx+(forx+1))), 480)
+		-- Are we holding both down?
+		if love.keyboard.isDown("[") and love.keyboard.isDown("]") then
+			love.graphics.rectangle("fill", screenoffset, 0, (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), (16*(math.floor(mouselocky / 16)-upblx)))
+			love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 0, 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), (16*(math.floor(mouselocky / 16)-upblx)))
+			love.graphics.rectangle("fill", screenoffset, (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
+			love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
+		else
+			-- Only one of the two, then.
+			if love.keyboard.isDown("[") then
+				-- Horizontal
+				love.graphics.rectangle("fill", screenoffset, 0, 640, (16*(math.floor(mouselocky / 16)-upblx)))
+				love.graphics.rectangle("fill", screenoffset, (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), 640, 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
+			end
+			if love.keyboard.isDown("]") then
+				-- Vertical
+				love.graphics.rectangle("fill", screenoffset, 0, (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), 480)
+				love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 0, 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 480)
+			end
 		end
 
 		love.graphics.setColor(255,255,255,255)
