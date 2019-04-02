@@ -157,17 +157,23 @@ function scriptcontext(text)
 	parts = explode(",", text2)
 
 	if parts[1] == "flag" and parts[2] ~= nil then
-		return "flag", tonumber(parts[2]), nil
+		return "flag", tonumber(parts[2]), nil, nil
 	elseif (parts[1] == "iftrinkets" or parts[1] == "iftrinketsless" or parts[1] == "customiftrinkets" or parts[1] == "customiftrinketsless") and parts[3] ~= nil and parts[3] ~= "" then
-		return "script", parts[3], nil
+		return "script", parts[3], nil, nil
+	elseif (parts[1] == "loadscript" or parts[1] == "ifskip") and parts[2] ~= nil and parts[2] ~= "custom_" and string.sub(parts[2], 1, string.len("custom_")) == "custom_" then
+		return "script", string.sub(parts[2], string.len("custom_")+1, string.len(parts[2])), nil
 	elseif (parts[1] == "ifflag" or parts[1] == "customifflag") and parts[2] ~= nil then
-		return "flagscript", parts[2], parts[3]
+		return "flagscript", parts[2], parts[3], nil
+	elseif (parts[1] == "ifcrewlost" or parts[1] == "iflast") and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
+		return "script", string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil, nil
+	elseif parts[1] == "ifexplored" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[4] ~= "custom_" and string.sub(parts[4], 1, string.len("custom_")) == "custom_" then
+		return "roomscript", tonumber(parts[2]), tonumber(parts[3]), string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
-		return "position", tonumber(parts[2]), tonumber(parts[3])
+		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
 	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
-		return "room", tonumber(parts[2]), tonumber(parts[3])
+		return "room", tonumber(parts[2]), tonumber(parts[3]), nil
 	else
-		return nil, nil, nil
+		return nil, nil, nil, nil
 	end
 end
 
@@ -528,17 +534,18 @@ function scriptineditor(scriptnamearg, rvnum)
 end
 
 function checkintscrloadscript(scriptname)
-	entityuses, scriptuses = findscriptreferences(scriptname)
+	entityuses, loadscriptuses, scriptuses = findscriptreferences(scriptname)
 
 	-- Warn in case no script is referring to this one.
-	intscrwarncache_warn_noloadscript = #scriptuses == 0
+	intscrwarncache_warn_noloadscript = #loadscriptuses == 0
 	intscrwarncache_warn_boxed = #entityuses > 0
 	intscrwarncache_script = scriptname
 end
 
 function findscriptreferences(argscriptname)
 	local entityuses = {} -- Contains entity IDs
-	local scriptuses = {} -- Contains: {argscriptname, line}
+	local loadscriptuses = {} -- Contains: {argscriptname, line}
+	local scriptuses = {} -- Also contains: {argscriptname, line}
 
 	for k,v in pairs(entitydata) do
 		if (v.t == 18 or v.t == 19) and v.data == argscriptname then
@@ -552,15 +559,27 @@ function findscriptreferences(argscriptname)
 
 			partss = explode(",", v2)
 
-			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname then
+			local loadscriptcond = (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
+			local scriptcond = (
+				((partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
+				or
+				((partss[1] == "ifcrewlost" or partss[1] == "iflast") and string.sub(partss[3], string.len("custom_")+1, string.len(partss[3])) == argscriptname)
+				or
+				(partss[1] == "ifexplored" and string.sub(partss[4], string.len("custom_")+1, string.len(partss[4])) == argscriptname)
+			)
+
+			if loadscriptcond or scriptcond then
 				-- argscriptname is referred to in this script
+				if loadscriptcond then
+					table.insert(loadscriptuses, {scriptnames[rvnum], k})
+				end
 				table.insert(scriptuses, {scriptnames[rvnum], k})
 				break
 			end
 		end
 	end
 
-	return entityuses, scriptuses
+	return entityuses, loadscriptuses, scriptuses
 end
 
 function findusedscripts()
@@ -581,6 +600,12 @@ function findusedscripts()
 
 			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
 				usedscripts[partss[3]] = true
+			elseif (partss[1] == "loadscript" or partss[1] == "ifskip") and partss[2] ~= nil and string.sub(partss[2], 1, string.len("custom_")) == "custom_" then
+				usedscripts[string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))] = true
+			elseif (partss[1] == "ifcrewlost" or partss[1] == "iflast") and partss[3] ~= nil and string.sub(partss[3], 1, string.len("custom_")) == "custom_" then
+				usedscripts[string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))] = true
+			elseif partss[1] == "ifexplored" and partss[4] ~= nil and string.sub(partss[4], 1, string.len("custom_")) == "custom_" then
+				usedscripts[string.sub(partss[4], string.len("custom_")+1, string.len(partss[4]))] = true
 			end
 		end
 	end
