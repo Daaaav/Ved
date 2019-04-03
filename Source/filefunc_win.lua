@@ -16,21 +16,37 @@ standardvvvvvvfolders = {
 }
 
 
+-- Some Windows constants
+CP_UTF8 = 65001
+FILE_ATTRIBUTE_DIRECTORY = 16
+INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF
+INVALID_HANDLE_VALUE = -1
+MAX_PATH = 260
+
+
 local ffi = require("ffi")
 ffi.cdef([[
-	typedef uint16_t WORD;
-	typedef uint32_t DWORD;
-	typedef char CHAR;
+	typedef unsigned short WORD, *PWORD, *LPWORD;
+	typedef unsigned long DWORD, *PDWORD, *LPDWORD;
+	typedef bool BOOL, *PBOOL, *LPBOOL;
+	typedef unsigned int UINT;
 	typedef void* HANDLE;
-	typedef bool BOOL;
+	typedef char CHAR, *PCHAR;
+	typedef char* PSTR, *LPSTR;
 	typedef const char* LPCSTR;
+	typedef wchar_t WCHAR, *PWCHAR;
+	typedef wchar_t* LPWSTR, *PWSTR;
+	typedef const wchar_t* LPCWSTR;
+
+	typedef LPCSTR LPCCH;
+	typedef LPCWSTR LPCWCH;
 
 	typedef struct _FILETIME {
 	  DWORD dwLowDateTime;
 	  DWORD dwHighDateTime;
 	} FILETIME, *PFILETIME, *LPFILETIME;
 
-	typedef struct _WIN32_FIND_DATAA {
+	typedef struct _WIN32_FIND_DATAW {
 	  DWORD    dwFileAttributes;
 	  FILETIME ftCreationTime;
 	  FILETIME ftLastAccessTime;
@@ -39,21 +55,21 @@ ffi.cdef([[
 	  DWORD    nFileSizeLow;
 	  DWORD    dwReserved0;
 	  DWORD    dwReserved1;
-	  CHAR     cFileName[260];
-	  CHAR     cAlternateFileName[14];
+	  WCHAR    cFileName[260];
+	  WCHAR    cAlternateFileName[14];
 	  DWORD    dwFileType;
 	  DWORD    dwCreatorType;
 	  WORD     wFinderFlags;
-	} WIN32_FIND_DATAA, *PWIN32_FIND_DATAA, *LPWIN32_FIND_DATAA;
+	} WIN32_FIND_DATAW, *PWIN32_FIND_DATAW, *LPWIN32_FIND_DATAW;
 
-	HANDLE FindFirstFileA(
-	  LPCSTR             lpFileName,
-	  LPWIN32_FIND_DATAA lpFindFileData
+	HANDLE FindFirstFileW(
+	  LPCWSTR            lpFileName,
+	  LPWIN32_FIND_DATAW lpFindFileData
 	);
 
-	BOOL FindNextFileA(
+	BOOL FindNextFileW(
 	  HANDLE             hFindFile,
-	  LPWIN32_FIND_DATAA lpFindFileData
+	  LPWIN32_FIND_DATAW lpFindFileData
 	);
 
 	BOOL FindClose(
@@ -83,79 +99,60 @@ ffi.cdef([[
 	  const SYSTEMTIME            *lpUniversalTime,
 	  LPSYSTEMTIME                lpLocalTime
 	);
+
+	DWORD GetFileAttributesW(
+	  LPCWSTR lpFileName
+	);
+
+	/* UTF-8 -> UTF-16 */
+	int MultiByteToWideChar(
+	  UINT   CodePage,
+	  DWORD  dwFlags,
+	  LPCCH  lpMultiByteStr,
+	  int    cbMultiByte,
+	  LPWSTR lpWideCharStr,
+	  int    cchWideChar
+	);
+
+	/* UTF-16 -> UTF-8 */
+	int WideCharToMultiByte(
+	  UINT   CodePage,
+	  DWORD  dwFlags,
+	  LPCWCH lpWideCharStr,
+	  int    cchWideChar,
+	  LPSTR  lpMultiByteStr,
+	  int    cbMultiByte,
+	  LPCCH  lpDefaultChar,
+	  LPBOOL lpUsedDefaultChar
+	);
 ]])
 
 
-function cp850toutf8(text)
-	-- We're working with the command line...
+buffer_filedata = ffi.new("WIN32_FIND_DATAW")
+buffer_st_utc = ffi.new("SYSTEMTIME")
+buffer_st_loc = ffi.new("SYSTEMTIME")
+buffer_path_utf8 = ffi.new("CHAR[?]", MAX_PATH*4)
+buffer_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
 
-	if text == nil then return nil end
 
-	local extended = "ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´-±‗¾¶§÷¸°¨·¹³²■ "
-
-	local convertedtext = {}
-
-	for c = 1, text:len() do
-		local chr = string.sub(text, c, c)
-		local binarychar = toBinary(chr)
-
-		if string.sub(binarychar, 1, 1) == "0" then
-			table.insert(convertedtext, chr)
-		else
-			local seekthis = string.byte(chr) - 127
-
-			local currentbytepos = 1
-			local currentnumpos = 1
-
-			while currentnumpos < seekthis do
-				local extbinarychar = toBinary(string.sub(extended, currentbytepos, currentbytepos))
-
-				if string.sub(extbinarychar, 1, 3) == "110" then
-					currentbytepos = currentbytepos + 2
-				elseif string.sub(extbinarychar, 1, 4) == "1110" then
-					currentbytepos = currentbytepos + 3
-				elseif string.sub(extbinarychar, 1, 5) == "11110" then
-					currentbytepos = currentbytepos + 4
-				else
-					currentbytepos = currentbytepos + 1
-				end
-
-				currentnumpos = currentnumpos + 1
-			end
-
-			-- So currentbytepos should now have the start of the character we're looking for.
-
-			--cons("AT POSITION " .. currentbytepos .. " #" .. currentnumpos)
-
-			table.insert(convertedtext, firstUTF8(string.sub(extended, currentbytepos)))
-		end
-	end
-
-	return table.concat(convertedtext)
-
-	--[[
-	local count1, count2, count3, count4 = 0, 0, 0, 0
-
-	for c = 1, string.len(extended) do
-		binarychar = toBinary(string.sub(extended, c, c))
-
-		if string.sub(binarychar, 1, 1) == "0" then
-			count1 = count1 + 1
-		elseif string.sub(binarychar, 1, 3) == "110" then
-			count2 = count2 + 1
-		elseif string.sub(binarychar, 1, 4) == "1110" then
-			count3 = count3 + 1
-		elseif string.sub(binarychar, 1, 5) == "11110" then
-			count4 = count4 + 1
-		end
-	end
-
-	cons(count1 .. " - " .. count2 .. " - " .. count3 .. " - " .. count4)
-	--cons(extended:len() .. "!!!!!!!!!!!!!!")
-	]]
+function path_utf8_to_utf16(lua_str)
+	ffi.C.MultiByteToWideChar(
+		CP_UTF8, 0, lua_str, -1, buffer_path_utf16, MAX_PATH
+	)
+	return buffer_path_utf16
 end
 
--- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
+function path_utf16_to_utf8(wstr)
+	ffi.C.WideCharToMultiByte(
+		CP_UTF8, 0, wstr, -1, buffer_path_utf8, MAX_PATH*4, nil, nil
+	)
+	return ffi.string(buffer_path_utf8)
+end
+
+function file_attributes_directory(dwAttributes)
+	return bit(dwAttributes, FILE_ATTRIBUTE_DIRECTORY)
+end
+
 function listfiles(directory)
 	local t = {[""] = {}}
 
@@ -164,31 +161,69 @@ function listfiles(directory)
 	-- We can't have a trailing backslash either, or our matching system will blow up. This comes in the form of a double backslash.
 	directory = directory:gsub("\\\\", "\\")
 
-	filedata = ffi.new("WIN32_FIND_DATAA")
-	st_utc = ffi.new("SYSTEMTIME")
-	st_loc = ffi.new("SYSTEMTIME")
-	search_handle = ffi.C.FindFirstFileA(directory .. "\\*.vvvvvv", filedata)
-	if search_handle == -1 then -- TODO check if this is really INVALID_HANDLE_VALUE
+	local search_handle = ffi.C.FindFirstFileW(path_utf8_to_utf16(directory .. "\\*"), buffer_filedata)
+	if tonumber(ffi.cast("intptr_t", search_handle)) == INVALID_HANDLE_VALUE then
 		return t
 	end
+	local currentdir = ""
+	local prefix = ""
+	local directory_insertion_point = 1
+	local subdirectories_left = {}
+	local isdir
+	local current_name
+	local current_data
 	local files_left = true
 	while files_left do
-		ffi.C.FileTimeToSystemTime(filedata.ftLastWriteTime, st_utc)
-		ffi.C.SystemTimeToTzSpecificLocalTime(nil, st_utc, st_loc)
+		isdir = file_attributes_directory(buffer_filedata.dwFileAttributes)
+		current_name = path_utf16_to_utf8(buffer_filedata.cFileName)
+		if current_name ~= "." and current_name ~= ".." then
+			if isdir then
+				table.insert(subdirectories_left, prefix .. current_name)
+			end
 
-		table.insert(t[""], -- currentdir
-			{
-				name = cp850toutf8(ffi.string(filedata.cFileName)),
-				isdir = false,
-				result_shown = true,
-				bu_lastmodified = 0,
-				bu_overwritten = 0,
-				lastmodified = {st_loc.wYear, st_loc.wMonth, st_loc.wDay, st_loc.wHour, st_loc.wMinute, st_loc.wSecond},
-			}
-		)
-		files_left = ffi.C.FindNextFileA(search_handle, filedata)
+			if isdir or current_name:sub(-7, -1) == ".vvvvvv" then
+				ffi.C.FileTimeToSystemTime(buffer_filedata.ftLastWriteTime, buffer_st_utc)
+				ffi.C.SystemTimeToTzSpecificLocalTime(nil, buffer_st_utc, buffer_st_loc)
+
+				current_data = {
+					name = path_utf16_to_utf8(buffer_filedata.cFileName),
+					isdir = isdir,
+					result_shown = true,
+					bu_lastmodified = 0,
+					bu_overwritten = 0,
+					lastmodified = {
+						buffer_st_loc.wYear, buffer_st_loc.wMonth, buffer_st_loc.wDay,
+						buffer_st_loc.wHour, buffer_st_loc.wMinute, buffer_st_loc.wSecond
+					},
+				}
+
+				if isdir then
+					-- Group directories first
+					table.insert(t[currentdir], directory_insertion_point, current_data)
+					directory_insertion_point = directory_insertion_point + 1
+				else
+					table.insert(t[currentdir], current_data)
+				end
+			end
+		end
+		files_left = ffi.C.FindNextFileW(search_handle, buffer_filedata)
+		if not files_left and #subdirectories_left > 0 then
+			ffi.C.FindClose(search_handle)
+
+			currentdir = table.remove(subdirectories_left, 1)
+			prefix = currentdir .. "\\"
+			directory_insertion_point = 1
+
+			t[currentdir] = {}
+
+			search_handle = ffi.C.FindFirstFileW(
+				path_utf8_to_utf16(directory .. "\\" .. prefix .. "*"),
+				buffer_filedata
+			)
+
+			files_left = true
+		end
 	end
-
 	ffi.C.FindClose(search_handle)
 	return t
 end
@@ -231,19 +266,9 @@ function listdirs(directory)
 end
 
 function directory_exists(where, what)
-	local t = {}
+	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(where .. "\\" .. what))
 
-	local pfile = io.popen('dir "' .. escapename(where) .. '" /b /ad')
-	for filename in pfile:lines() do
-		if filename == what then
-			pfile:close()
-			return true
-		end
-	end
-
-	-- If we're here, then the dir doesn't exist.
-	pfile:close()
-	return false
+	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and file_attributes_directory(dwAttributes)
 end
 
 function readlevelfile(path)
