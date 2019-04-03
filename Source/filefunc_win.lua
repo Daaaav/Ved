@@ -18,10 +18,18 @@ standardvvvvvvfolders = {
 
 -- Some Windows constants
 CP_UTF8 = 65001
-FILE_ATTRIBUTE_DIRECTORY = 16
+FILE_ATTRIBUTE_DIRECTORY = 0x10
+FILE_ATTRIBUTE_NORMAL = 0x80
+FILE_SHARE_READ = 1
+FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000
+FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200
+GENERIC_READ = 0x80000000
+GENERIC_WRITE = 0x40000000
 INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF
+INVALID_FILE_SIZE = 0xFFFFFFFF
 INVALID_HANDLE_VALUE = -1
 MAX_PATH = 260
+OPEN_EXISTING = 3; CREATE_ALWAYS = 2
 
 
 local ffi = require("ffi")
@@ -31,6 +39,8 @@ ffi.cdef([[
 	typedef bool BOOL, *PBOOL, *LPBOOL;
 	typedef unsigned int UINT;
 	typedef void* HANDLE;
+	typedef void VOID, *PVOID, *LPVOID;
+	typedef const void* LPCVOID;
 	typedef char CHAR, *PCHAR;
 	typedef char* PSTR, *LPSTR;
 	typedef const char* LPCSTR;
@@ -104,6 +114,57 @@ ffi.cdef([[
 	  LPCWSTR lpFileName
 	);
 
+	typedef void* LPSECURITY_ATTRIBUTES;
+
+	HANDLE CreateFileW(
+	  LPCWSTR               lpFileName,
+	  DWORD                 dwDesiredAccess,
+	  DWORD                 dwShareMode,
+	  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+	  DWORD                 dwCreationDisposition,
+	  DWORD                 dwFlagsAndAttributes,
+	  HANDLE                hTemplateFile
+	);
+
+	BOOL CloseHandle(
+	  HANDLE hObject
+	);
+
+	DWORD GetFileSize(
+	  HANDLE  hFile,
+	  LPDWORD lpFileSizeHigh
+	);
+
+	typedef void* LPOVERLAPPED;
+
+	BOOL ReadFile(
+	  HANDLE       hFile,
+	  LPVOID       lpBuffer,
+	  DWORD        nNumberOfBytesToRead,
+	  LPDWORD      lpNumberOfBytesRead,
+	  LPOVERLAPPED lpOverlapped
+	);
+
+	BOOL WriteFile(
+	  HANDLE       hFile,
+	  LPCVOID      lpBuffer,
+	  DWORD        nNumberOfBytesToWrite,
+	  LPDWORD      lpNumberOfBytesWritten,
+	  LPOVERLAPPED lpOverlapped
+	);
+
+	DWORD GetLastError(void);
+
+	DWORD FormatMessageW(
+	  DWORD   dwFlags,
+	  LPCVOID lpSource,
+	  DWORD   dwMessageId,
+	  DWORD   dwLanguageId,
+	  LPWSTR  lpBuffer,
+	  DWORD   nSize,
+	  va_list *Arguments
+	);
+
 	/* UTF-8 -> UTF-16 */
 	int MultiByteToWideChar(
 	  UINT   CodePage,
@@ -133,6 +194,9 @@ buffer_st_utc = ffi.new("SYSTEMTIME")
 buffer_st_loc = ffi.new("SYSTEMTIME")
 buffer_path_utf8 = ffi.new("CHAR[?]", MAX_PATH*4)
 buffer_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
+buffer_formatmessage_utf16 = ffi.new("WCHAR[?]", 512)
+buffer_formatmessage_utf8 = ffi.new("CHAR[?]", 512)
+
 
 
 function path_utf8_to_utf16(lua_str)
@@ -153,6 +217,21 @@ function file_attributes_directory(dwAttributes)
 	return bit(dwAttributes, FILE_ATTRIBUTE_DIRECTORY)
 end
 
+function handle_is_invalid(handle)
+	return tonumber(ffi.cast("intptr_t", handle)) == INVALID_HANDLE_VALUE
+end
+
+function format_last_win_error()
+	ffi.C.FormatMessageW(
+		FORMAT_MESSAGE_FROM_SYSTEM + FORMAT_MESSAGE_IGNORE_INSERTS,
+		nil, ffi.C.GetLastError(), 0, buffer_formatmessage_utf16, 512, nil
+	)
+	ffi.C.WideCharToMultiByte(
+		CP_UTF8, 0, buffer_formatmessage_utf16, -1, buffer_formatmessage_utf8, 512, nil, nil
+	)
+	return ffi.string(buffer_formatmessage_utf8):gsub("\r", "")
+end
+
 function listfiles(directory)
 	local t = {[""] = {}}
 
@@ -162,7 +241,7 @@ function listfiles(directory)
 	directory = directory:gsub("\\\\", "\\")
 
 	local search_handle = ffi.C.FindFirstFileW(path_utf8_to_utf16(directory .. "\\*"), buffer_filedata)
-	if tonumber(ffi.cast("intptr_t", search_handle)) == INVALID_HANDLE_VALUE then
+	if handle_is_invalid(search_handle) then
 		return t
 	end
 	local currentdir = ""
@@ -274,15 +353,37 @@ end
 function readlevelfile(path)
 	-- returns success, contents
 
-	local fh, everr = io.open(path, "r")
-
-	if fh == nil then
-		return false, everr
+	local file_handle = ffi.C.CreateFileW(
+		path_utf8_to_utf16(path),
+		GENERIC_READ,
+		FILE_SHARE_READ,
+		nil,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		nil
+	)
+	if handle_is_invalid(file_handle) then
+		return false, format_last_win_error()
 	end
 
-	local ficontents = fh:read("*a")
+	local dwFilesize = ffi.C.GetFileSize(file_handle, nil)
+	if dwFilesize == INVALID_FILE_SIZE then
+		-- They recommend GetFileSizeEx, but no way you'd want 4 GB VVVVVV levels
+		ffi.C.CloseHandle(file_handle)
+		return false, L.INVALIDFILESIZE
+	end
 
-	fh:close()
+	local buffer_contents = ffi.new("char[?]", dwFilesize+1)
+	local lpNumberOfBytesRead = ffi.new("DWORD[1]")
+	if not ffi.C.ReadFile(file_handle, buffer_contents, dwFilesize, lpNumberOfBytesRead, nil) then
+		-- Reading failed.
+		ffi.C.CloseHandle(file_handle)
+		return false, format_last_win_error()
+	end
+
+	ffi.C.CloseHandle(file_handle)
+
+	local ficontents = ffi.string(buffer_contents)
 
 	return true, ficontents
 end
@@ -293,15 +394,27 @@ function writelevelfile(path, contents)
 		return false, L.INVALIDFILENAME_WIN
 	end
 
-	local fh, everr = io.open(path, "w")
-
-	if fh == nil then
-		return false, everr
+	local file_handle = ffi.C.CreateFileW(
+		path_utf8_to_utf16(path),
+		GENERIC_WRITE,
+		0,
+		nil,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		nil
+	)
+	if handle_is_invalid(file_handle) then
+		return false, format_last_win_error()
 	end
 
-	local ficontents = fh:write(contents)
+	local lpNumberOfBytesWritten = ffi.new("DWORD[1]")
+	if not ffi.C.WriteFile(file_handle, contents, contents:len(), lpNumberOfBytesWritten, nil) then
+		-- Writing failed.
+		ffi.C.CloseHandle(file_handle)
+		return false, format_last_win_error()
+	end
 
-	fh:close()
+	ffi.C.CloseHandle(file_handle)
 
 	return true, nil
 end
