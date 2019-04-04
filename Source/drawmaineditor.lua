@@ -706,11 +706,10 @@ function drawmaineditor()
 					data = ""
 					})
 
+				autocorrectlines()
 				entityplaced()
 				count.entities = count.entities + 1
 				count.entity_ai = count.entity_ai + 1
-
-				autocorrectlines()
 			end
 
 			mousepressed = true
@@ -967,16 +966,15 @@ function drawmaineditor()
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
 						t = 50,
-						p1 = (atx == 0 and 0 or 1), p2 = startat, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
+						p1 = (atx == 0 and 0 or 1), p2 = aty, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
 						data = ""
 						})
+					autocorrectlines()
 					entityplaced()
 					count.entities = count.entities + 1
 					count.entity_ai = count.entity_ai + 1
 
 					mousepressed = true
-
-					autocorrectlines()
 				elseif aty == 0 or aty == 29 then
 					-- Horizontal top or bottom, type 2 or 3
 
@@ -985,16 +983,15 @@ function drawmaineditor()
 						x = 40*roomx + atx,
 						y = 30*roomy + aty,
 						t = 50,
-						p1 = (aty == 0 and 2 or 3), p2 = startat, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
+						p1 = (aty == 0 and 2 or 3), p2 = atx, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
 						data = ""
 						})
+					autocorrectlines()
 					entityplaced()
 					count.entities = count.entities + 1
 					count.entity_ai = count.entity_ai + 1
 
 					mousepressed = true
-
-					autocorrectlines()
 				end
 			end
 
