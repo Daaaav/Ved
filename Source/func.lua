@@ -420,7 +420,7 @@ function loadstate(new, extradata)
 		else
 			lerror = 4
 		end
-		files = listdirs(userprofile)
+		files = {} --listdirs(userprofile)
 	elseif new == 6 then
 		if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
 			-- We'll be able to go back. Show this by making a screenshot
@@ -524,8 +524,6 @@ function loadstate(new, extradata)
 				helparticlecontent = explode("\n", helppages[helparticle].cont)
 			end
 		end
-	elseif new == 17 then
-		util_folderopendialog()
 	elseif new == 18 then
 		undostacktext = ""
 		redostacktext = ""

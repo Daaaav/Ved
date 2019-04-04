@@ -1,11 +1,3 @@
--- Note to self: environment variables: set
-
--- These functions assume you're not on a school computer or anywhere where cmd is completely restricted.
-
-
--- We know we're on Windows for a start...
-userprofile = os.getenv("USERPROFILE")
-
 simplevvvvvvfolder = false
 standardvvvvvvfolders = {
 	display = "\\(My) Documents\\VVVVVV",
@@ -14,6 +6,8 @@ standardvvvvvvfolders = {
 		"\\My Documents\\VVVVVV"
 	}
 }
+
+local cache_modtimes = {} -- filepath => unix_timestamp
 
 
 -- Some Windows constants
@@ -135,6 +129,13 @@ ffi.cdef([[
 	  LPDWORD lpFileSizeHigh
 	);
 
+	BOOL GetFileTime(
+	  HANDLE     hFile,
+	  LPFILETIME lpCreationTime,
+	  LPFILETIME lpLastAccessTime,
+	  LPFILETIME lpLastWriteTime
+	);
+
 	typedef void* LPOVERLAPPED;
 
 	BOOL ReadFile(
@@ -165,6 +166,12 @@ ffi.cdef([[
 	  va_list *Arguments
 	);
 
+	DWORD GetEnvironmentVariableW(
+	  LPCWSTR lpName,
+	  LPWSTR  lpBuffer,
+	  DWORD   nSize
+	);
+
 	/* UTF-8 -> UTF-16 */
 	int MultiByteToWideChar(
 	  UINT   CodePage,
@@ -192,6 +199,7 @@ ffi.cdef([[
 buffer_filedata = ffi.new("WIN32_FIND_DATAW")
 buffer_st_utc = ffi.new("SYSTEMTIME")
 buffer_st_loc = ffi.new("SYSTEMTIME")
+buffer_filetime = ffi.new("FILETIME")
 buffer_path_utf8 = ffi.new("CHAR[?]", MAX_PATH*4)
 buffer_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
 buffer_formatmessage_utf16 = ffi.new("WCHAR[?]", 512)
@@ -200,16 +208,12 @@ buffer_formatmessage_utf8 = ffi.new("CHAR[?]", 512)
 
 
 function path_utf8_to_utf16(lua_str)
-	ffi.C.MultiByteToWideChar(
-		CP_UTF8, 0, lua_str, -1, buffer_path_utf16, MAX_PATH
-	)
+	ffi.C.MultiByteToWideChar(CP_UTF8, 0, lua_str, -1, buffer_path_utf16, MAX_PATH)
 	return buffer_path_utf16
 end
 
 function path_utf16_to_utf8(wstr)
-	ffi.C.WideCharToMultiByte(
-		CP_UTF8, 0, wstr, -1, buffer_path_utf8, MAX_PATH*4, nil, nil
-	)
+	ffi.C.WideCharToMultiByte(CP_UTF8, 0, wstr, -1, buffer_path_utf8, MAX_PATH*4, nil, nil)
 	return ffi.string(buffer_path_utf8)
 end
 
@@ -231,6 +235,17 @@ function format_last_win_error()
 	)
 	return ffi.string(buffer_formatmessage_utf8):gsub("\r", "")
 end
+
+
+local len_text_userprofile = ("USERPROFILE"):len()+1
+local buffer_text_userprofile_utf16 = ffi.new("WCHAR[?]", len_text_userprofile)
+ffi.C.MultiByteToWideChar(
+	CP_UTF8, 0, "USERPROFILE", -1, buffer_text_userprofile_utf16, len_text_userprofile
+)
+ffi.C.GetEnvironmentVariableW(buffer_text_userprofile_utf16, buffer_path_utf16, MAX_PATH)
+userprofile = path_utf16_to_utf8(buffer_path_utf16)
+
+
 
 function listfiles(directory)
 	local t = {[""] = {}}
@@ -332,18 +347,6 @@ function getlevelsfolder(ignorecustom)
 	end
 end
 
-function listdirs(directory)
-	-- Currently unused, except in a testing state
-	local t = {}
-	-- Only do folders.
-	local pfile = io.popen('dir "' .. escapename(directory) .. '" /b /ad')
-	for filename in pfile:lines() do
-		table.append(t, filename)
-	end
-	pfile:close()
-	return t
-end
-
 function directory_exists(where, what)
 	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(where .. "\\" .. what))
 
@@ -366,6 +369,13 @@ function readlevelfile(path)
 		return false, format_last_win_error()
 	end
 
+	-- We may need this later, don't unnecessarily create two file handles for this
+	ffi.C.GetFileTime(file_handle, nil, nil, buffer_filetime)
+	local unix_time = (
+		buffer_filetime.dwHighDateTime*2^32 + buffer_filetime.dwLowDateTime
+	) / 10000000 - 11644473600
+	cache_modtimes[path] = unix_time
+
 	local dwFilesize = ffi.C.GetFileSize(file_handle, nil)
 	if dwFilesize == INVALID_FILE_SIZE then
 		-- They recommend GetFileSizeEx, but no way you'd want 4 GB VVVVVV levels
@@ -383,7 +393,7 @@ function readlevelfile(path)
 
 	ffi.C.CloseHandle(file_handle)
 
-	local ficontents = ffi.string(buffer_contents)
+	local ficontents = ffi.string(buffer_contents, lpNumberOfBytesRead[0])
 
 	return true, ficontents
 end
@@ -420,41 +430,42 @@ function writelevelfile(path, contents)
 end
 
 function getmodtime(fullpath)
-	local pfile = io.popen(
-		escapename(
-			love.filesystem.getSaveDirectory():gsub(
-				escapegsub(love.filesystem.getAppdataDirectory(), true),
-				"%%appdata%%"
-			):gsub("/", "\\")
-		) .. '\\available_utils\\fileunix.exe "' .. escapename(fullpath) .. '"'
-	)
-	local modtime = pfile:read("*a")
-	pfile:close()
-	return modtime
+	return cache_modtimes[fullpath]
 end
 
 function readimage(levelsfolder, filename)
 	-- returns success, contents
 
-	local fh, everr = io.open(levelsfolder:sub(1, -8) .. "\\graphics\\" .. filename, "rb")
-
-	if fh == nil then
-		return false, everr
+	local file_handle = ffi.C.CreateFileW(
+		path_utf8_to_utf16(levelsfolder:sub(1, -8) .. "\\graphics\\" .. filename),
+		GENERIC_READ,
+		FILE_SHARE_READ,
+		nil,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		nil
+	)
+	if handle_is_invalid(file_handle) then
+		return false, format_last_win_error()
 	end
 
-	local ficontents = fh:read("*a")
+	local dwFilesize = ffi.C.GetFileSize(file_handle, nil)
+	if dwFilesize == INVALID_FILE_SIZE then
+		ffi.C.CloseHandle(file_handle)
+		return false, L.INVALIDFILESIZE
+	end
 
-	fh:close()
+	local buffer_contents = ffi.new("char[?]", dwFilesize+1)
+	local lpNumberOfBytesRead = ffi.new("DWORD[1]")
+	if not ffi.C.ReadFile(file_handle, buffer_contents, dwFilesize, lpNumberOfBytesRead, nil) then
+		-- Reading failed.
+		ffi.C.CloseHandle(file_handle)
+		return false, format_last_win_error()
+	end
+
+	ffi.C.CloseHandle(file_handle)
+
+	local ficontents = ffi.string(buffer_contents, lpNumberOfBytesRead[0])
 
 	return true, ficontents
-end
-
-function util_folderopendialog()
-	-- love.filesystem.getSaveDirectory() = C:/Users/David/AppData/Roaming/LOVE/ved
-	os.execute(love.filesystem.getSaveDirectory():gsub("/", "\\") .. "\\utils\\folderopendialog.exe")
-end
-
-function escapename(name)
-	-- Windows doesn't allow all sorts of characters in filenames, which is nice for programmers using the command line and can be annoying for users.
-	return name:gsub('"', "")
 end

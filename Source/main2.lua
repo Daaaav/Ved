@@ -290,12 +290,14 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_win")
 		loaded_filefunc = "win"
+		--[[
 		-- Make sure our util works
 		if not love.filesystem.exists("available_utils") then
 			love.filesystem.createDirectory("available_utils")
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
 		end
+		]]
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -795,7 +797,7 @@ function love.draw()
 	elseif state == 16 then
 
 	elseif state == 17 then
-		love.graphics.print(love.filesystem.read("folderopendialog_return.txt"), 8, 8)
+
 	elseif state == 18 then
 		love.graphics.print("Undo stack:\n" .. undostacktext, 8, 8) -- Dev/testing/debug state, not translated
 		love.graphics.print("Redo stack:\n" .. redostacktext, love.graphics.getWidth()/2 + 8, 8)

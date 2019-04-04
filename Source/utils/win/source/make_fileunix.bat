@@ -1,1 +1,0 @@
-\masm32\bin\ml /c /coff fileunix.asm && \masm32\bin\Link /SUBSYSTEM:CONSOLE fileunix.obj

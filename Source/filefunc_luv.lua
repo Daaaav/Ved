@@ -38,12 +38,6 @@ function getlevelsfolder(ignorecustom)
 	return true, "levels"
 end
 
-function listdirs(directory)
-	-- Currently unused, except in a testing state
-	-- Preferably, only do directories.
-	return love.filesystem.getDirectoryItems(directory)
-end
-
 function directory_exists(where, what)
 	return love.filesystem.isDirectory(where .. "/" .. what)
 end
