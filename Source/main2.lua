@@ -418,6 +418,7 @@ function love.load()
 	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.
 	tile_batch = love.graphics.newSpriteBatch(tilesets["tiles.png"]["img"], 1200, "dynamic")
 	tile_batch_needs_update = false
+	tile_batch_texture_needs_update = false
 	tile_batch_tileset = 1
 	tile_batch_zoomscale2 = 1
 	tile_batch_tiles = {}
@@ -2466,7 +2467,7 @@ function love.keypressed(key)
 		if love_version_meets(10) and fontpng_works then
 			loadfontpng()
 		end
-		tile_batch_needs_update = true
+		tile_batch_texture_needs_update = true
 		map_init()
 		temporaryroomname = L.TILESETSRELOADED
 		temporaryroomnametimer = 90

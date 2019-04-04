@@ -63,18 +63,18 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	local ts = usedtilesets[themetadata.tileset]
 
 	-- Is our SpriteBatch still up-to-date?
+	if tile_batch_tileset ~= ts or tile_batch_texture_needs_update then
+		tile_batch_needs_update = true
+		tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
+		tile_batch_tileset = ts
+		tile_batch_texture_needs_update = false
+	end
 	if not tile_batch_needs_update then
 		-- Doesn't need update? I mean we don't already know it does!
-		if tile_batch_tileset ~= ts then
-			tile_batch_needs_update = true
-			tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
-			tile_batch_tileset = ts
-		else
-			for i = 1, 1200 do
-				if tile_batch_tiles[i] ~= theroomdata[i] then
-					tile_batch_needs_update = true
-					break
-				end
+		for i = 1, 1200 do
+			if tile_batch_tiles[i] ~= theroomdata[i] then
+				tile_batch_needs_update = true
+				break
 			end
 		end
 	end
