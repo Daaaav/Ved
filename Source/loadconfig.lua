@@ -285,6 +285,7 @@ else
 	-- It doesn't exist, create it.
 	print("Making new config file")
 	saveconfig()
+	settings_ok = true
 end
 
 
