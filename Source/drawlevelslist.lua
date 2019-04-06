@@ -161,7 +161,7 @@ function drawlevelslist()
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
 								love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
-								love.graphics.print(v.name, 18, 16+8*k2+levellistscroll)
+								love.graphics.print(v.name:gsub("[\r\n]", "?"), 18, 16+8*k2+levellistscroll)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
 								love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
@@ -169,7 +169,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							love.graphics.print(v.name, 18, 16+8*k2+levellistscroll) -- y = 16+8*k
+							love.graphics.print(v.name:gsub("[\r\n]", "?"), 18, 16+8*k2+levellistscroll) -- y = 16+8*k
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then

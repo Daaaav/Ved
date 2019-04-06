@@ -305,7 +305,27 @@ function love.load()
 		macscrolling = false
 		wgetavailable = true
 		hook("love_load_lin")
-		loaded_filefunc = "lin"
+		if not love.filesystem.exists("available_libs") then
+			love.filesystem.createDirectory("available_libs")
+		end
+		local vedlib_filefunc_available = false
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin00.so") then
+			vedlib_filefunc_available = true
+		else
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
+			if os.execute("gcc -shared -fPIC -o "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin00.so "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
+			) == 0 then
+				vedlib_filefunc_available = true
+			end
+		end
+		if vedlib_filefunc_available then
+			loaded_filefunc = "linffi"
+		else
+			loaded_filefunc = "linfbk"
+		end
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
