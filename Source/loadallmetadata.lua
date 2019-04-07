@@ -1,4 +1,4 @@
-dirsep, levelsfolder, loaded_filefunc, L = ...
+dirsep, levelsfolder, loaded_filefunc, getOS, L = ...
 
 local inchannel = love.thread.getChannel("allmetadata_in")
 local outchannel = love.thread.getChannel("allmetadata_out")
@@ -8,6 +8,14 @@ require("love.filesystem")
 -- Workaround for including func
 love.graphics = {}
 function hook() end
+
+-- Workaround for love.system.getOS()
+if love.system == nil then
+	love.system = {}
+end
+love.system.getOS = function()
+	return getOS
+end
 
 require("corefunc")
 require("func")

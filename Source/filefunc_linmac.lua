@@ -1,15 +1,20 @@
--- Note to self: environment variables: env
-
-
--- We know we're on Linux for a start...
 userprofile = os.getenv("HOME")
 
 simplevvvvvvfolder = true
-standardvvvvvvfolder = "/.local/share/VVVVVV"
-
 
 local ffi = require("ffi")
-local libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin00.so")
+local libC
+
+if love.system.getOS() == "Linux" then
+	standardvvvvvvfolder = "/.local/share/VVVVVV"
+
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin00.so")
+elseif love.system.getOS() == "OS X" then
+	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
+
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac00.so")
+end
+
 ffi.cdef([[
 	typedef struct _ved_filedata
 	{

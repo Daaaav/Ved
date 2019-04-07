@@ -281,7 +281,14 @@ function love.load()
 		macscrolling = true
 		wgetavailable = false
 		hook("love_load_mac")
-		loaded_filefunc = "mac"
+		loaded_filefunc = "linmac"
+		if not love.filesystem.exists("available_libs") then
+			love.filesystem.createDirectory("available_libs")
+		end
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac00.so") then
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_libs/vedlib_filefunc_mac00.so", love.filesystem.read("libs/vedlib_filefunc_mac00.so"))
+		end
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -322,9 +329,9 @@ function love.load()
 			end
 		end
 		if vedlib_filefunc_available then
-			loaded_filefunc = "linffi"
+			loaded_filefunc = "linmac"
 		else
-			loaded_filefunc = "linfbk"
+			loaded_filefunc = "lin_fallback"
 		end
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
@@ -427,7 +434,7 @@ function love.load()
 	load_updatecheck(false)
 
 	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
-	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, L)
+	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, love.system.getOS(), L)
 
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
