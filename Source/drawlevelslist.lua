@@ -21,7 +21,7 @@ function drawlevelslist()
 		tabselected_k = tabselected
 		local hoverarea = 734
 		local metadatax = 422
-		local lastmodifiedx = 590
+		local lastmodifiedx = 598
 		if s.psmallerscreen then
 			hoverarea = hoverarea - 96
 			metadatax = metadatax - 96

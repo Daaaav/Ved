@@ -17,6 +17,17 @@ configs =
 		{
 		default = "%Y-%m-%d %H:%M:%S",
 		["type"] = "string",
+		comment = "Obsolete, no longer used for technical reasons."
+		},
+	new_dateformat =
+		{
+		default = "YMD",
+		["type"] = "string",
+		},
+	new_timeformat =
+		{
+		default = 24,
+		["type"] = "number",
 		},
 	dialoganimations =
 		{
@@ -120,7 +131,7 @@ configs =
 		},
 	amountoverwritebackups =
 		{
-		default = 5,
+		default = 10,
 		["type"] = "number",
 		},
 	forcescale =

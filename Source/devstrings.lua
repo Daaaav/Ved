@@ -4,3 +4,4 @@
 --L. = ""
 
 L.INVALIDFILESIZE = "Invalid file size."
+L.TIMEFORMAT = "Time format"

@@ -1,3 +1,26 @@
+function generate_dropdown_tables(tuples)
+	-- Converts a table with key-value tuples into the three dropdown/radio arguments as
+	-- described in the technical documentation.
+	-- tuples must be structured like {{0.5, "50%"}, {1, "100%"}, {2, "200%"}}
+
+	local displaylist = {}
+	local keyvalue = {}
+
+	for _,v in pairs(tuples) do
+		table.insert(displaylist, v[2])
+		keyvalue[v[1]] = v[2]
+	end
+
+	return displaylist, keyvalue,
+	function(picked)
+		for _,v in pairs(tuples) do
+			if picked == v[2] then
+				return v[1]
+			end
+		end
+	end
+end
+
 -- Some forms are tables directly, some are functions returning tables (those are prefixed _make).
 dialog.form = {}
 
@@ -79,6 +102,33 @@ function dialog.form.rawentityproperties_make()
 	end
 
 	return form
+end
+
+function dialog.form.language_make()
+	local bottomleft_text = L.TRANSLATIONCREDIT
+	if s.plang == "English" then
+		-- Yeah, hardcoded text!
+		bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
+	end
+	local year = os.date("%Y")
+	return {
+		{"language", 0, 4, 30, s.lang, 1, getalllanguages()},
+		{"", 0, 7, 40, L.DATEFORMAT, 2},
+		{
+			"dateformat", 0, 8, 0, s.new_dateformat, 4,
+			generate_dropdown_tables(
+				{{"YMD", year .. "-12-31"}, {"DMY", "31-12-" .. year}, {"MDY", "12/31/" .. year}}
+			)
+		},
+		{"", 23, 7, 40, L.TIMEFORMAT, 2},
+		{
+			"timeformat", 23, 8, 0, s.new_timeformat, 4,
+			generate_dropdown_tables(
+				{{24, "23:59"}, {12, "11:59pm"}}
+			)
+		},
+		{"", 0, 15, 30, bottomleft_text, 2}
+	}
 end
 
 --function dialog.form.
@@ -566,4 +616,14 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	-- entdetails[3] is still the ID of this entity
 	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
 	finish_undo("CHANGED ENTITY (PROPERTIES)")
+end
+
+function dialog.callback.language(button, fields)
+	if button == DB.OK then
+		s.lang = fields.language
+		s.new_dateformat = fields.dateformat
+		s.new_timeformat = fields.timeformat
+
+		saveconfig()
+	end
 end

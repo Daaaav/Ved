@@ -253,6 +253,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 	-- 1: dropdown
 	-- 2: text label (can also be function returning string)
 	-- 3: checkbox
+	-- 4: radio buttons dropdown
 	if mode == nil then
 		mode = 0
 	end
@@ -303,10 +304,10 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 		if mode == 0 then
 			love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
 		elseif mode == 1 then
-			if menuitemslabel == false then
+			if not menuitemslabel then
 				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
 			else
-				love.graphics.print(anythingbutnil(menuitemslabel[anythingbutnil0(tonumber(content))]), real_x, real_y-1)
+				love.graphics.print(anythingbutnil(menuitemslabel[content]), real_x, real_y-1)
 			end
 			love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
 		end
@@ -319,6 +320,27 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 
 			self.fields[n][5] = not content
 			mousepressed = true
+		end
+	elseif mode == 4 then
+		for k,v in pairs(menuitems) do
+			local selected
+			if not menuitemslabel then
+				selected = v == content
+			else
+				selected = v == menuitemslabel[content]
+			end
+			real_w = 16+font8:getWidth(v)
+			self:hoverdraw(topmost, selected and radioon or radiooff, real_x, real_y-11+k*8, real_w, 8)
+			self:setColor(0,0,0,255)
+			love.graphics.print(v, real_x+16, real_y-8+k*8)
+			self:setColor(255,255,255,255)
+
+			if (mouseon(real_x, real_y-11+k*8, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+				self.currentfield = n
+
+				dialogs[#dialogs]:dropdown_onchange(key, v)
+				mousepressed = true
+			end
 		end
 	end
 
@@ -582,26 +604,12 @@ function dialog.textboxes()
 		assert(false)
 	elseif DIAquestionid == 24 then
 		-- Language
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(4*8), 240, 8, multiinput[1], 1, currentmultiinput == 1, 1, languageslist, nil, "language")
-		love.graphics.setColor(0,0,0)
-		love.graphics.print(L.DATEFORMAT, DIAx+10, DIAy+DIAwindowani+10+(7*8))
-		hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(9*8), 240, 8, multiinput[2], 2, currentmultiinput == 2, 1, standarddateformat_labels, standarddateformat_labels, "dateformat")
-		if multiinput[2] == 4 then
-			hoverdiatext(DIAx+10, DIAy+DIAwindowani+10+(11*8), 240, 8, multiinput[3], 3, currentmultiinput == 3)
-		end
-
-		-- Unique, not an input field, but specific to this text box
-		local bottomleft_text = L.TRANSLATIONCREDIT
-		if s.plang == "English" then
-			-- Yeah, hardcoded text!
-			bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
-		end
-		setColorDIA(0,0,0,255)
-		love.graphics.printf(bottomleft_text, DIAx+10, DIAy+DIAwindowani+10+(15*8), DIAwidth-(2*72)-6-10, "left") -- 72 is that btnwidth up there
+		assert(false)
 	end
 end
 
 -- TODO maybe actually look in the top dialog and see what the mode is - once I migrate these
+-- TODO can be removed after migration
 function dialog.current_input_not_dropdown()
 	if DIAquestionid == 5 and currentmultiinput == 9 then
 		return false
@@ -742,14 +750,7 @@ function dialog.update(dt)
 		elseif DIAquestionid == 23 then
 			assert(false)
 		elseif DIAquestionid == 24 then
-			stopinput()
-			if DIAreturn == 2 then
-				-- Set the language
-				s.lang = multiinput[1]
-				-- The date format has to be valid. This is almost leaning toothpick syndrome, except Lua uses the very standard percent sign escape character.
-				s.dateformat = ("^" .. multiinput[3]):gsub("([^%%])%%([^aAbBcdHIMmpSwxXYy%%])", "%1%%%%%2"):sub(2,-1)
-				saveconfig()
-			end
+			assert(false)
 		elseif DIAquestionid == 25 then
 			assert(false)
 		elseif DIAquestionid == 26 then

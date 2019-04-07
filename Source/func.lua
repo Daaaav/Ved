@@ -2573,19 +2573,10 @@ function windowfits(w, h, monitorres)
 end
 
 function languagedialog()
-	languageslist = getalllanguages()
-	local standarddateformat_key, customdateformat = nil, s.dateformat
-	for k,v in pairs(standarddateformat_formats) do
-		if s.dateformat == v then
-			standarddateformat_key = k
-			break
-		end
-	end
-	if standarddateformat_key == nil then
-		standarddateformat_key = 4
-	end
-	startmultiinput({s.lang, standarddateformat_key, customdateformat})
-	dialog.new(L.RESTARTVEDLANG, L.LANGUAGE, 1, 4, 24)
+	dialog.create(
+		L.RESTARTVEDLANG, DBS.OKCANCEL,
+		dialog.callback.language, L.LANGUAGE, dialog.form.language_make()
+	)
 end
 
 function format_date(timestamp)
@@ -2593,13 +2584,59 @@ function format_date(timestamp)
 		return ""
 	elseif type(timestamp) == "table" then
 		-- Table should be {Y, M, D, H, M, S}
-		-- Temporarily only support YYYY-MM-DD HH:MM
-		return string.format("%d-%02d-%02d %02d:%02d",
+		local timestring
+		if s.new_timeformat == 12 then
+			local ampm, hour
+			if timestamp[4] < 12 then
+				ampm = "am"
+				hour = timestamp[4]
+			else
+				ampm = "pm"
+				hour = timestamp[4]-12
+			end
+			if hour == 0 then
+				hour = 12
+			end
+			timestring = string.format("%02d:%02d%s",
+				hour, timestamp[5], ampm
+			)
+		else
+			timestring = string.format("%02d:%02d",
+				timestamp[4], timestamp[5]
+			)
+		end
+		if s.new_dateformat == "DMY" then
+			return string.format("%02d-%02d-%d %s",
+				timestamp[3], timestamp[2], timestamp[1],
+				timestring
+			)
+		elseif s.new_dateformat == "MDY" then
+			return string.format("%02d/%02d/%d %s",
+				timestamp[2], timestamp[3], timestamp[1],
+				timestring
+			)
+		end
+		-- YMD
+		return string.format("%d-%02d-%02d %s",
 			timestamp[1], timestamp[2], timestamp[3],
-			timestamp[4], timestamp[5]
+			timestring
 		)
 	end
-	return os.date(s.dateformat, timestamp)
+	-- Unix timestamp
+	local datetimeformat
+	if s.new_dateformat == "DMY" then
+		datetimeformat = "%d-%m-%Y"
+	elseif s.new_dateformat == "MDY" then
+		datetimeformat = "%m/%d/%Y"
+	else
+		datetimeformat = "%Y-%m-%d"
+	end
+	if s.new_timeformat == 12 then
+		datetimeformat = datetimeformat .. " %I:%M%p"
+	else
+		datetimeformat = datetimeformat .. " %H:%M"
+	end
+	return os.date(datetimeformat, timestamp):lower()
 end
 
 function drawlink(link)

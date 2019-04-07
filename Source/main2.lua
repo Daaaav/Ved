@@ -192,6 +192,9 @@ function love.load()
 	checkon = love.graphics.newImage("images/checkon.png")
 	checkoff = love.graphics.newImage("images/checkoff.png")
 
+	radioon = love.graphics.newImage("images/radioon.png")
+	radiooff = love.graphics.newImage("images/radiooff.png")
+
 	menupijltje = love.graphics.newImage("images/menupijltje.png")
 	colorsel = love.graphics.newImage("images/colorsel.png")
 
@@ -1765,16 +1768,6 @@ function love.update(dt)
 			end
 		elseif RCMid == "language" then
 			multiinput[1] = RCMreturn
-		elseif RCMid == "dateformat" then
-			for k,v in pairs(standarddateformat_labels) do
-				if RCMreturn == v then
-					multiinput[2] = k
-					if v ~= L.CUSTOMDATEFORMAT then
-						multiinput[3] = standarddateformat_formats[k]
-					end
-					break
-				end
-			end
 		elseif RCMid:sub(1, 4) == "bul_" then
 			if RCMreturn == L.SAVEBACKUP then
 				dialog.create(
@@ -1854,7 +1847,10 @@ function love.textinput(char)
 		-- dialog.new("Actually just do a search for #dialogs as well after removing the old system")
 		elseif #dialogs > 0 and not dialogs[#dialogs].closing then
 			local cf = dialogs[#dialogs].currentfield
-			if cf ~= 0 then
+			if dialogs[#dialogs].fields[cf] ~= nil then
+				local cftype = dialogs[#dialogs].fields[cf][6]
+			end
+			if cf ~= 0 and cftype == 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
 			end
 		elseif currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
@@ -2005,7 +2001,10 @@ function love.keypressed(key)
 		end
 	elseif #dialogs > 0 and not dialogs[#dialogs].closing then
 		local cf = dialogs[#dialogs].currentfield
-		if cf ~= 0 and dialog.current_input_not_dropdown() then
+		if dialogs[#dialogs].fields[cf] ~= nil then
+			local cftype = dialogs[#dialogs].fields[cf][6]
+		end
+		if cf ~= 0 and cftype == 0 then
 			if key == "backspace" then
 				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
