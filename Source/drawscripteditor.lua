@@ -274,5 +274,37 @@ function drawscripteditor()
 				mousepressed = true
 			end
 		end
+	elseif context == "room" then
+		carg1, carg2 = tonumber(carg1), tonumber(carg2)
+		if carg1 ~= nil and carg2 ~= nil then
+			local map_x, map_y = love.graphics.getWidth()-(128-8)+16, 8+(24*12)+4
+			love.graphics.setColor(128,128,128)
+			love.graphics.rectangle("line", map_x-.5, map_y-.5, 81, 61)
+			love.graphics.setColor(255,255,255)
+			if carg1 >= 0 and carg1 < metadata.mapwidth
+			and carg2 >= 0 and carg2 < metadata.mapheight
+			and rooms_map[carg2][carg1].map ~= nil then
+				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, 0.25)
+
+				if mouseon(map_x, map_y, 80, 60) then
+					love.graphics.setColor(0,0,0)
+					love.graphics.rectangle("fill", love.mouse.getX()-380, love.mouse.getY()-120, 320, 240)
+					love.graphics.setColor(255,255,255)
+					love.graphics.draw(rooms_map[carg2][carg1].map, love.mouse.getX()-380, love.mouse.getY()-120)
+				end
+			else
+				love.graphics.draw(covered_80x60, map_x, map_y)
+			end
+
+			local disp_carg1, disp_carg2
+			if s.coords0 then
+				disp_carg1 = carg1
+				disp_carg2 = carg2
+			else
+				disp_carg1 = carg1+1
+				disp_carg2 = carg2+1
+			end
+			love.graphics.printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+64, 80, "center")
+		end
 	end
 end

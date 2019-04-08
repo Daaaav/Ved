@@ -3,7 +3,7 @@ function drawmap()
 	love.graphics.rectangle("line", mapxoffset+screenoffset-0.5, mapyoffset-0.5, 640*mapscale*metadata.mapwidth+1, 480*mapscale*metadata.mapheight+1)
 	love.graphics.setColor(255,255,255)
 	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
-	love.graphics.draw(fullcovered, mapxoffset+screenoffset, mapyoffset)
+	love.graphics.draw(covered_full, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
 	love.graphics.setBlendMode("premultiplied")
 	for mry = 0, metadata.mapheight-1 do

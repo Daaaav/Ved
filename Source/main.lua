@@ -12,7 +12,7 @@ opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
 
-vergroups = {4,6}
+vergroups = {5,0}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)

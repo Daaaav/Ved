@@ -28,9 +28,9 @@ function map_work(timelimit)
 		return
 	end
 
-	-- Apparently there's still work to do. Unless the first room in queue is the current one. Unless we're on the map.
+	-- Apparently there's still work to do. Unless the first room in queue is the current one. Unless we're on the map or in the script editor.
 	local first_dirty = rooms_map_dirty_rooms[1]
-	if rooms_map_done and #rooms_map_dirty_rooms > 0 and first_dirty[1] == roomx and first_dirty[2] == roomy and state ~= 12 then
+	if rooms_map_done and #rooms_map_dirty_rooms > 0 and first_dirty[1] == roomx and first_dirty[2] == roomy and state ~= 12 and state ~= 3 then
 		return
 	end
 
