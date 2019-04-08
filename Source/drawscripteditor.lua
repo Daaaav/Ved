@@ -287,6 +287,8 @@ function drawscripteditor()
 				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, 0.25)
 
 				if mouseon(map_x, map_y, 80, 60) then
+					love.graphics.setColor(128,128,128)
+					love.graphics.rectangle("line", love.mouse.getX()-380.5, love.mouse.getY()-120.5, 321, 241)
 					love.graphics.setColor(0,0,0)
 					love.graphics.rectangle("fill", love.mouse.getX()-380, love.mouse.getY()-120, 320, 240)
 					love.graphics.setColor(255,255,255)
