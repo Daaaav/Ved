@@ -1846,9 +1846,10 @@ function love.textinput(char)
 			end
 		-- dialog.new("Actually just do a search for #dialogs as well after removing the old system")
 		elseif #dialogs > 0 and not dialogs[#dialogs].closing then
-			local cf = dialogs[#dialogs].currentfield
+			local cf, cftype = dialogs[#dialogs].currentfield
 			if dialogs[#dialogs].fields[cf] ~= nil then
-				local cftype = dialogs[#dialogs].fields[cf][6]
+				-- Input boxes can also have their type set to nil and default to 0
+				cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
 			end
 			if cf ~= 0 and cftype == 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
@@ -2000,9 +2001,10 @@ function love.keypressed(key)
 			_, input_r = rightspace(input, input_r)
 		end
 	elseif #dialogs > 0 and not dialogs[#dialogs].closing then
-		local cf = dialogs[#dialogs].currentfield
+		local cf, cftype = dialogs[#dialogs].currentfield
 		if dialogs[#dialogs].fields[cf] ~= nil then
-			local cftype = dialogs[#dialogs].fields[cf][6]
+			-- Input boxes can also have their type set to nil and default to 0
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
 		end
 		if cf ~= 0 and cftype == 0 then
 			if key == "backspace" then

@@ -780,6 +780,10 @@ msgctxt "L.SAVENOSUCCESS"
 msgid "Saving not successful! Error: "
 msgstr ""
 
+msgctxt "L.INVALIDFILESIZE"
+msgid "Invalid file size."
+msgstr ""
+
 msgctxt "L.EDIT"
 msgid "Edit"
 msgstr ""
@@ -1295,6 +1299,11 @@ msgstr ""
 #. 1.2.0
 msgctxt "L.DATEFORMAT"
 msgid "Date format"
+msgstr ""
+
+#. 1.2.0
+msgctxt "L.TIMEFORMAT"
+msgid "Time format"
 msgstr ""
 
 #. 1.2.0

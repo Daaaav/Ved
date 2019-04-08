@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-03-28 13:19:51 (CET)
+--- Last converted: 2019-04-08 12:25:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -249,6 +249,7 @@ VERSIONDISABLED = "Update-\ncontrole uitgeschakeld",
 
 SAVESUCCESS = "Succesvol opgeslagen!",
 SAVENOSUCCESS = "Opslaan niet succesvol! Fout: ",
+INVALIDFILESIZE = "Ongeldige bestandsgrootte.",
 
 EDIT = "Bewerken",
 EDITWOBUMPING = "Bewerk, niet naar boven",
@@ -391,6 +392,7 @@ LASTMODIFIEDTIME = "Oorspronkelĳk laatst gewĳzigd", -- List header
 OVERWRITTENTIME = "Overschreven", -- List header
 SAVEBACKUP = "Opslaan in VVVVVV-map",
 DATEFORMAT = "Datumformaat",
+TIMEFORMAT = "Tĳdformaat",
 CUSTOMDATEFORMAT = "Aangepast datumformaat",
 SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳven, hiervoor wordt namelĳk GEEN backup gemaakt!",
 
@@ -1186,7 +1188,7 @@ commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 subj = "Interne scripting",
 imgs = {},
 cont = [[
-Interne scripting\wh#position of the text box,
+Interne scripting\wh#
 \C=
 
 De interne scripting geeft scripters meer controle, maar is ook een beetje
@@ -1244,7 +1246,7 @@ Laat een tekstvak verdwĳnen (fade-out)
 
 endtextfast\w#h
 
-Laat een tekstvak onmiddelĳk verdwĳnen (zonder fade-out)
+Laat een tekstvak onmiddellĳk verdwĳnen (zonder fade-out)
 
 speak\w#h
 
@@ -1393,7 +1395,7 @@ Laat het beeld herstellen
 
 befadein¤()\w#h
 
-Laat het beeld onmiddelĳk herstellen van fadeout()
+Laat het beeld onmiddellĳk herstellen van fadeout()
 
 untilfade¤()\w#h
 
@@ -1444,7 +1446,7 @@ Omgekeerde van musicfadeout() (lĳkt niet te werken)
 
 stopmusic¤()\w#h
 
-Stopt de muziek onmiddelĳk. Equivalent aan music(0) in vereenvoudigde scripting.
+Stopt de muziek onmiddellĳk. Equivalent aan music(0) in vereenvoudigde scripting.
 
 resumemusic¤()\w#h
 
@@ -1675,7 +1677,7 @@ Slaat je spel op (in het normale teleporter-bestand, dus gebruik het niet!)
 
 befadein¤()\w#h
 
-Laat het beeld onmiddelĳk herstellen van fadeout()
+Laat het beeld onmiddellĳk herstellen van fadeout()
 
 createactivityzone¤(kleur)\b#h
 
@@ -1912,7 +1914,7 @@ Entiteiten\h#
     Metadata: Munt-ID
 9 - Trinket
     Metadata: Trinket-ID
-    Opmerking: trinket-ID's beginnen bij 0, en alles boven 19 wordt niet
+    Opmerking: trinket-ID's beginnen bĳ 0, en alles boven 19 wordt niet
     opgeslagen in het bestand wanneer je het level herstart
 10 - Checkpoint
      Metadata: Checkpoint-status (0=ondersteboven, 1=normaal), Checkpoint-ID
@@ -2099,7 +2101,7 @@ Met gamestate 50-56 kun je kiezen waar te beginnen, want alles komt na elkaar
 84 - Resultaten van time trial (Ik denk dat 82 beter werkt dan 84)
 85 - De Time Trial-versie van gamestate 200 (Flits, speel Positive Force, zet
      finalstretch-mode aan)
-States 90-95 zijn gerelateerd aan time trials, maar werken niet goed in aangepaste
+States 90-95 zĳn gerelateerd aan time trials, maar werken niet goed in aangepaste
      levels. De enige echte effecten die gebeuren in aangepaste levels zĳn een
      warp, en verandering van de muziek
 90 - Space Station 1
@@ -2145,7 +2147,7 @@ State 120-128 werken een beetje zoals 102-112, d.w.z in serie, maar met minder
 1010 - You found a crewmate! op dezelfde manier als voor trinkets
 2000 - Sla het spel op
 2500-2509 - Teleporteer naar een of andere vreemde niet-bestaande locatie,
-            vermoedelijk naar The Laboratory denk ik, ga door naar state 2510
+            vermoedelĳk naar The Laboratory denk ik, ga door naar state 2510
 2510 - Viridian: "Hello?", ga door naar state 2512
 2512 - Viridian: "Is anybody there?", ga door naar state 2514
 2514 - Verwĳdert tekstvakken, speel Potential For Anything

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-03-28 13:19:51 (CET)
+--- Last converted: 2019-04-08 12:25:53 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -261,6 +261,7 @@ VERSIONDISABLED = "Kontrolado de ĝisdatigoj malŝaltita",
 
 SAVESUCCESS = "Konservita sukcese!",
 SAVENOSUCCESS = "Konservado ne sukcesa! Eraro: ",
+INVALIDFILESIZE = "Invalid file size.",
 
 EDIT = "Redakti",
 EDITWOBUMPING = "Redakti sen ŝanĝi skriptordon",
@@ -403,6 +404,7 @@ LASTMODIFIEDTIME = "Originale laste modifita", -- List header
 OVERWRITTENTIME = "Superskribita je", -- List header
 SAVEBACKUP = "Konservi al dosierujo de VVVVVV",
 DATEFORMAT = "Dato-formo",
+TIMEFORMAT = "Time format",
 CUSTOMDATEFORMAT = "Tajlorita dato-formo",
 SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
 

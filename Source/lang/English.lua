@@ -235,6 +235,7 @@ VERSIONDISABLED = "Update check disabled",
 
 SAVESUCCESS = "Saved successfully!",
 SAVENOSUCCESS = "Saving not successful! Error: ",
+INVALIDFILESIZE = "Invalid file size.",
 
 EDIT = "Edit",
 EDITWOBUMPING = "Edit without bumping",
@@ -377,6 +378,7 @@ LASTMODIFIEDTIME = "Originally last modified", -- List header
 OVERWRITTENTIME = "Overwritten", -- List header
 SAVEBACKUP = "Save to VVVVVV folder",
 DATEFORMAT = "Date format",
+TIMEFORMAT = "Time format",
 CUSTOMDATEFORMAT = "Custom date format",
 SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!",
 

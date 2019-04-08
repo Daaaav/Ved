@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-03-28 13:19:51 (CET)
+--- Last converted: 2019-04-08 12:25:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -247,6 +247,7 @@ VERSIONDISABLED = "Recherche de mise à jour désactivée",
 
 SAVESUCCESS = "Sauvegarde effectuée !",
 SAVENOSUCCESS = "La sauvegarde a échouée! Erreur : ",
+INVALIDFILESIZE = "Invalid file size.",
 
 EDIT = "Modifier",
 EDITWOBUMPING = "Modifier sans réordonner la liste",
@@ -389,6 +390,7 @@ LASTMODIFIEDTIME = "Dernière modification", -- List header
 OVERWRITTENTIME = "Remplacé", -- List header
 SAVEBACKUP = "Sauver dans le dossier de VVVVVV",
 DATEFORMAT = "Format de date",
+TIMEFORMAT = "Time format",
 CUSTOMDATEFORMAT = "Format de date personnalisé",
 SAVEBACKUPNOBACKUP = "Faites en sorte de choisir un nom unique pour ceci si vous ne voulez rien remplacer, car AUCUNE sauvegarde ne sera effectuée dans ce cas-ci !",
 
