@@ -28,6 +28,15 @@ DBS = {
 	YESNOCANCEL = {DB.YES, DB.NO, DB.CANCEL},
 }
 
+-- Field type constants
+DF = {
+	TEXT = 0,
+	DROPDOWN = 1,
+	LABEL = 2,
+	CHECKBOX = 3,
+	RADIOS = 4,
+}
+
 -- Dialog class
 cDialog =
 {

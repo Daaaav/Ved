@@ -53,9 +53,9 @@ function dialog.form.exportmap_make()
 	local br_pos = 46 - font8:getWidth(L.BOTTOMRIGHT)/8
 
 	return {
-		{"", 0, 0, 40, L.MAPRESOLUTION, 2},
+		{"", 0, 0, 40, L.MAPRESOLUTION, DF.LABEL},
 		{
-			"resolution", 0, 1, 30, -1, 1,
+			"resolution", 0, 1, 30, -1, DF.DROPDOWN,
 			map_resolutions_labels, map_resolutions_numbertolabel,
 			function(picked)
 				return map_resolutions_labeltonumber[picked]
@@ -69,27 +69,27 @@ function dialog.form.exportmap_make()
 					return 640*mapscale*w .. "x" .. 480*mapscale*h
 				end
 				return 320*fields.resolution*w .. "x" .. 240*fields.resolution*h
-			end, 2
+			end, DF.LABEL
 		},
-		{"", 0, 3, 40, L.TOPLEFT, 2},
-		{"", wh_pos, 3, 40, L.WIDTHHEIGHT, 2},
+		{"", 0, 3, 40, L.TOPLEFT, DF.LABEL},
+		{"", wh_pos, 3, 40, L.WIDTHHEIGHT, DF.LABEL},
 		{"x1", 0, 4, 3, co},
-		{"", 3, 4, 1, ",", 2},
+		{"", 3, 4, 1, ",", DF.LABEL},
 		{"y1", 4, 4, 3, co},
 		{"w", wh_pos, 4, 3, metadata.mapwidth},
 		{"h", wh_pos+4, 4, 3, metadata.mapheight},
-		{"", br_pos, 3, 40, L.BOTTOMRIGHT, 2},
+		{"", br_pos, 3, 40, L.BOTTOMRIGHT, DF.LABEL},
 		{
 			"bottomright_label", br_pos, 4, 40,
 			function(_, fields)
 				local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
 				return x2 .. "," .. y2
-			end, 2
+			end, DF.LABEL
 		},
-		{"transparentbg", 0, 7, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, 3},
-		{"", 2, 7, 40, L.TRANSPARENTMAPBG, 2},
-		{"keepdialogopen", 0, 15, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, 3},
-		{"", 2, 15, 40, L.KEEPDIALOGOPEN, 2},
+		{"transparentbg", 0, 7, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},
+		{"", 2, 7, 40, L.TRANSPARENTMAPBG, DF.LABEL},
+		{"keepdialogopen", 0, 15, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, DF.CHECKBOX},
+		{"", 2, 15, 40, L.KEEPDIALOGOPEN, DF.LABEL},
 	}
 end
 
@@ -112,22 +112,22 @@ function dialog.form.language_make()
 	end
 	local year = os.date("%Y")
 	return {
-		{"language", 0, 4, 30, s.lang, 1, getalllanguages()},
-		{"", 0, 7, 40, L.DATEFORMAT, 2},
+		{"language", 0, 4, 30, s.lang, DF.DROPDOWN, getalllanguages()},
+		{"", 0, 7, 40, L.DATEFORMAT, DF.LABEL},
 		{
-			"dateformat", 0, 8, 0, s.new_dateformat, 4,
+			"dateformat", 0, 8, 0, s.new_dateformat, DF.RADIOS,
 			generate_dropdown_tables(
 				{{"YMD", year .. "-12-31"}, {"DMY", "31-12-" .. year}, {"MDY", "12/31/" .. year}}
 			)
 		},
-		{"", 23, 7, 40, L.TIMEFORMAT, 2},
+		{"", 23, 7, 40, L.TIMEFORMAT, DF.LABEL},
 		{
-			"timeformat", 23, 8, 0, s.new_timeformat, 4,
+			"timeformat", 23, 8, 0, s.new_timeformat, DF.RADIOS,
 			generate_dropdown_tables(
 				{{24, "23:59"}, {12, "11:59pm"}}
 			)
 		},
-		{"", 0, 15, 30, bottomleft_text, 2}
+		{"", 0, 15, 30, bottomleft_text, DF.LABEL}
 	}
 end
 
