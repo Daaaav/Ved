@@ -685,6 +685,21 @@ function loadlevelsfolder()
 	end
 	metadataloaded_folders = {}
 	recentmetadata_files = {}
+	metadata_lastmodified = {}
+	for kdir,vdir in pairs(files) do
+		local dirprefix
+		if kdir == "" then
+			dirprefix = ""
+		else
+			dirprefix = kdir .. dirsep
+		end
+		for kfile,vfile in pairs(vdir) do
+			metadata_lastmodified[dirprefix .. vfile.name] = vfile.lastmodified
+		end
+	end
+	current_scrolling_leveltitle_k = nil
+	current_scrolling_leveltitle_title = nil
+	current_scrolling_leveltitle_pos = 168
 	cons("Loaded.")
 	-- Now get all the backups
 	if files == nil then
@@ -2880,6 +2895,35 @@ function search_levels_list(currentdir, prefix)
 	for k,v in pairs(files[currentdir]) do
 		files[currentdir][k].result_shown =
 			(prefix .. v.name):lower():sub(1, (input .. input_r):len()) == (input .. input_r):lower()
+	end
+end
+
+function displayable_filename(name)
+	-- This function changes the filename to make it displayable - like removing newlines.
+	-- The resulting filename may thus not be a valid filename anymore.
+	return name:gsub("[\r\n]", "?")
+end
+
+function display_levels_list_title(title, x, y, k)
+	local titletoolong = font8:getWidth(title) > 21*8
+	local sx, sy, sw, sh
+	if titletoolong then
+		sx, sy, sw, sh = love.graphics.getScissor()
+	end
+	if current_scrolling_leveltitle_k == k then
+		love.graphics.setScissor(x, sy, 21*8, sh)
+		love.graphics.print(title, x+21*8-math.floor(current_scrolling_leveltitle_pos), y)
+	else
+		if titletoolong then
+			love.graphics.setScissor(x, sy, 20*8, sh)
+		end
+		love.graphics.print(title, x, y)
+	end
+	if titletoolong then
+		love.graphics.setScissor(sx, sy, sw, sh)
+		if current_scrolling_leveltitle_k ~= k then
+			love.graphics.print(arrow_right, x+20*8, y)
+		end
 	end
 end
 

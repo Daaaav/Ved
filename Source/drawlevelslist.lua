@@ -76,7 +76,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				love.graphics.print(v:gsub("[\r\n]", "?") .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+				love.graphics.print(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -87,8 +87,16 @@ function drawlevelslist()
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
-						love.graphics.print(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+						display_levels_list_title(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1))
 					end
+				end
+
+				local lastmodified = metadata_lastmodified[v .. ".vvvvvv"]
+				if lastmodified ~= nil then
+					if not (mouseishovering or tabselected == k2) then
+						love.graphics.setColor(128,128,128)
+					end
+					love.graphics.print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-25)+8+8*k)
 				end
 
 				love.graphics.setColor(255,255,255)
@@ -161,7 +169,7 @@ function drawlevelslist()
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
 								love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
-								love.graphics.print(v.name:gsub("[\r\n]", "?"), 18, 16+8*k2+levellistscroll)
+								love.graphics.print(displayable_filename(v.name), 18, 16+8*k2+levellistscroll)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
 								love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
@@ -169,7 +177,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							love.graphics.print(v.name:gsub("[\r\n]", "?"), 18, 16+8*k2+levellistscroll) -- y = 16+8*k
+							love.graphics.print(displayable_filename(v.name), 18, 16+8*k2+levellistscroll) -- y = 16+8*k
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -178,7 +186,7 @@ function drawlevelslist()
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
-									love.graphics.print(v.metadata.Title, metadatax, 16+8*k2+levellistscroll)
+									display_levels_list_title(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k)
 								end
 							end
 
@@ -225,7 +233,7 @@ function drawlevelslist()
 				preferred_k = tabselected_k
 				preferred_k_location = tabselected
 			end
-			if preferred_k ~= nil then
+			if preferred_k ~= nil and preferred_k ~= 0 then
 				if preferred_k < 0 then
 					local recentname = s.recentfiles[#s.recentfiles+preferred_k+1]
 					-- No "falsy" nonsense here, I only want the real "false"
@@ -249,6 +257,16 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", metadatax, topy-2, 40*8, 6*8)
 					love.graphics.setColor(255,255,255,255)
 					if md.success then
+						if preferred_k ~= current_scrolling_leveltitle_k then
+							if font8:getWidth(anythingbutnil(md.Title)) > 21*8 then
+								current_scrolling_leveltitle_k = preferred_k
+								current_scrolling_leveltitle_title = md.Title
+							else
+								-- Reposition whatever was scrolling
+								current_scrolling_leveltitle_k = nil
+							end
+							current_scrolling_leveltitle_pos= 168
+						end
 						love.graphics.print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
 						love.graphics.printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
 						love.graphics.print(anythingbutnil(md.website), metadatax, topy+8)
@@ -259,6 +277,9 @@ function drawlevelslist()
 						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
+			elseif current_scrolling_leveltitle_k ~= nil then
+				-- If we're not looking at any metadata, no title should scroll
+				current_scrolling_leveltitle_k = nil
 			end
 		end
 

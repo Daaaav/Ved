@@ -1362,6 +1362,12 @@ function love.update(dt)
 			updatescrollingtext_pos = 0
 		end
 	end
+	if current_scrolling_leveltitle_k ~= nil and state == 6 then
+		current_scrolling_leveltitle_pos = current_scrolling_leveltitle_pos + 55*dt
+		if current_scrolling_leveltitle_pos > font8:getWidth(anythingbutnil(current_scrolling_leveltitle_title)) + 168 then
+			current_scrolling_leveltitle_pos = 0
+		end
+	end
 
 	if state == 28 and limitglow_enabled then
 		limitglow = limitglow + dt
