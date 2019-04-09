@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-04-08 12:25:53 (CEST)
+--- Last converted: 2019-04-09 20:15:52 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -237,7 +237,7 @@ VERSIONDISABLED = "Проверка обновлений отключена",
 
 SAVESUCCESS = "Сохранение успешно!",
 SAVENOSUCCESS = "Сохранение провалено! Ошибка: ",
-INVALIDFILESIZE = "Invalid file size.",
+INVALIDFILESIZE = "Неверный размер файла.",
 
 EDIT = "Редактировать",
 EDITWOBUMPING = "Редактировать без бампинга",
@@ -380,7 +380,7 @@ LASTMODIFIEDTIME = "Последние изменения", -- List header
 OVERWRITTENTIME = "Перезаписано", -- List header
 SAVEBACKUP = "Сохранить в папку VVVVVV",
 DATEFORMAT = "Формат даты",
-TIMEFORMAT = "Time format",
+TIMEFORMAT = "Формат времени",
 CUSTOMDATEFORMAT = "Пользовательский формат даты",
 SAVEBACKUPNOBACKUP = "Выберите уникальное имя для файла, иначе бекап не будет создан!",
 

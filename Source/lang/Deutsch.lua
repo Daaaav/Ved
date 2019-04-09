@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-04-08 12:25:53 (CEST)
+--- Last converted: 2019-04-09 20:15:53 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -249,7 +249,7 @@ VERSIONDISABLED = "Updateüberprüfung deaktiviert",
 
 SAVESUCCESS = "Erfolgreich gespeichert!",
 SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
-INVALIDFILESIZE = "Invalid file size.",
+INVALIDFILESIZE = "Ungültige Dateigröße.",
 
 EDIT = "Bearbeiten",
 EDITWOBUMPING = "Bearbeiten ohne stoßen",
@@ -392,7 +392,7 @@ LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
 OVERWRITTENTIME = "Überschrieben", -- List header
 SAVEBACKUP = "Im VVVVVV-Ordner speichern",
 DATEFORMAT = "Datumsformat",
-TIMEFORMAT = "Time format",
+TIMEFORMAT = "Zeitformat",
 CUSTOMDATEFORMAT = "Eigenes Datumsformat",
 SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird in diesem Fall gemacht!",
 
