@@ -200,9 +200,11 @@ function processflaglabels()
 		end
 
 		-- Is this an internal script?
-		if scriptlines[1] ~= nil and ((scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v") or (scriptlines[1] == "squeak(off) #v" and scriptlines[2]:sub(1,4) == "say(" and scriptlines[2]:sub(-4,-1) == ") #v")) and scriptlines[#scriptlines-1] == "loadscript(stop) #v" and (scriptlines[#scriptlines] == "text(1,0,0,4) #v" or scriptlines[#scriptlines] == "text(1,0,0,3) #v") then
+		if scriptlines[1] ~= nil and ((scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v") or (scriptlines[1] == "squeak(off) #v" and scriptlines[2]:sub(1,4) == "say(" and scriptlines[2]:sub(-4,-1) == ") #v")) and (scriptlines[#scriptlines] == "text(1,0,0,4) #v" or scriptlines[#scriptlines] == "text(1,0,0,3) #v") then
 			-- Quite so!
-			table.remove(scriptlines, #scriptlines)
+			if scriptlines[#scriptlines-1] == "loadscript(stop) #v" then
+				table.remove(scriptlines, #scriptlines)
+			end
 			table.remove(scriptlines, #scriptlines)
 			if scriptlines[1] == "squeak(off) #v" then
 				table.remove(scriptlines, 1)
@@ -228,8 +230,6 @@ function processflaglabels()
 			internalscript = true
 		else
 			internalscript = false
-		--else
-			--cons(scriptlines[1]:sub(1,4) == "say("); cons(scriptlines[1]:sub(-4,-1) == ") #v"); cons(scriptlines[#scriptlines-1] == "loadscript(stop) #v"); cons(scriptlines[#scriptlines] == "text(1,0,0,4) #v")
 		end
 	else
 		internalscript = false
@@ -253,8 +253,13 @@ function processflaglabelsreverse()
 		local scriptlinesbackup = table.copy(scriptlines)
 		local splithasfailed = false
 
-		-- Add the magic lines.
-		local saylines = #scriptlines+1
+		-- If we already end with (custom)?iftrinkets(0,... or loadscript(..., then we won't need the default loadscript(stop)
+		local final_loadscript_n = 1
+		if scriptlines[#scriptlines]:match("^iftrinkets[%(,%)]0 ?[%(,%)]")
+		or scriptlines[#scriptlines]:match("^customiftrinkets[%(,%)]0 ?[%(,%)]")
+		or scriptlines[#scriptlines]:match("^loadscript[%(,%)]") then
+			final_loadscript_n = 0
+		end
 
 		-- Alright, figured out what the sorcery was... DIT IS NU HELAAS NIET MEER ZO SIMPEL!
 		--editingline = editingline + 1
@@ -334,6 +339,8 @@ function processflaglabelsreverse()
 				-- We actually need to check for this unfortunately
 				cons("There is only one block, so no splitting required")
 
+				local saylines = #scriptlines+final_loadscript_n
+
 				table.insert(scriptlines, 1, "say(" .. saylines .. ") #v")
 				table.insert(scriptlines, 1, "squeak(off) #v")
 			else
@@ -351,7 +358,7 @@ function processflaglabelsreverse()
 
 					if k == #blocks then
 						-- This is the last one so this also behaves slightly differently because it's observed to do so.
-						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+2) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
+						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1+final_loadscript_n) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
 						table.insert(scriptlines, blockstartsat, "text(1,0,0,3) #v")
 					elseif k ~= 1 then
 						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop).
@@ -363,7 +370,9 @@ function processflaglabelsreverse()
 				end
 			end
 
-			table.insert(scriptlines, "loadscript(stop) #v")
+			if final_loadscript_n ~= 0 then
+				table.insert(scriptlines, "loadscript(stop) #v")
+			end
 			table.insert(scriptlines, "text(1,0,0,3) #v")
 		end
 	end
