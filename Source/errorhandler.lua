@@ -191,14 +191,17 @@ function ved_showerror(msg)
 	if love.graphics.newImage then
 		if love.graphics.newScreenshot then
 			crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
-		--[[ I don't think this works, since love.draw never gets run again...
 		elseif love.graphics.captureScreenshot then
 			love.graphics.captureScreenshot(
 				function(imgdata)
 					crashscreenshot = love.graphics.newImage(imgdata)
 				end
 			)
-		]]
+			-- If the fault didn't occur in the drawing code, we'll have our screenshot.
+			love.graphics.origin()
+			love.graphics.clear(love.graphics.getBackgroundColor())
+			pcall(love.draw)
+			love.graphics.present()
 		end
 	end
 
@@ -366,8 +369,21 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	-- I first want to make a screenshot of the current screen.
 	local crashscreenshot
-	if love.graphics.newImage and love.graphics.newScreenshot then
-		crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+	if love.graphics.newImage then
+		if love.graphics.newScreenshot then
+			crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
+		elseif love.graphics.captureScreenshot then
+			love.graphics.captureScreenshot(
+				function(imgdata)
+					crashscreenshot = love.graphics.newImage(imgdata)
+				end
+			)
+			-- If the fault didn't occur in the drawing code, we'll have our screenshot.
+			love.graphics.origin()
+			love.graphics.clear(love.graphics.getBackgroundColor())
+			pcall(love.draw)
+			love.graphics.present()
+		end
 	end
 
 	love.graphics.reset()
