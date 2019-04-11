@@ -570,11 +570,11 @@ function findscriptreferences(argscriptname)
 
 			local loadscriptcond = (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
 			local scriptcond = (
-				((partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
+				(partss[2] ~= nil and (partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
 				or
-				((partss[1] == "ifcrewlost" or partss[1] == "iflast") and string.sub(partss[3], string.len("custom_")+1, string.len(partss[3])) == argscriptname)
+				(partss[3] ~= nil and (partss[1] == "ifcrewlost" or partss[1] == "iflast") and string.sub(partss[3], string.len("custom_")+1, string.len(partss[3])) == argscriptname)
 				or
-				(partss[1] == "ifexplored" and string.sub(partss[4], string.len("custom_")+1, string.len(partss[4])) == argscriptname)
+				(partss[4] ~= nil and partss[1] == "ifexplored" and string.sub(partss[4], string.len("custom_")+1, string.len(partss[4])) == argscriptname)
 			)
 
 			if loadscriptcond or scriptcond then
