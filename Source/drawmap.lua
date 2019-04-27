@@ -101,7 +101,7 @@ function drawmap()
 	end
 
 	-- Maybe we're exporting the map and showing which selection will be exported?
-	if #dialogs > 0 and dialogs[#dialogs].identifier == "mapexport" then
+	if dialog.is_open() and dialogs[#dialogs].identifier == "mapexport" then
 		local x1, y1, w, h, x2, y2 = fix_map_export_input(dialogs[#dialogs]:return_fields(), true)
 
 		love.graphics.setColor(0,0,255)

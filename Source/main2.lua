@@ -94,13 +94,17 @@ function love.load()
 	__ = "_"
 	input_r = ""
 	cursorflashtime = 0
-	multiinput = {}; currentmultiinput = 0
 	no_more_quit_dialog = false
-	quitsave = false
 
 	mousepressed = false -- for some things
 	mousepressed_custombrush = false
 	middlescroll_x, middlescroll_y = -1, -1
+	middlescroll_falling = false
+	middlescroll_shatter = false
+	middlescroll_shatter_pieces = {}
+	middlescroll_rolling = 0
+	middlescroll_rolling_x = -1
+	middlescroll_t, middlescroll_v = 0, 0
 
 	temporaryroomnametimer = 0
 	generictimer = 0
@@ -117,8 +121,6 @@ function love.load()
 	sp_go = true
 	sp_got = 0
 
-	-- Dialogs. To not have an active window, set DIAwindowani to 16. To show one, just call dialog.new(message, title, showbar, canclose, questionid). -15 ~ -1 opening, 0 is normal, 1 ~ 15 closing
-	dialog.init()
 	nodialog = true
 
 	arrow_up = "↑"
@@ -207,6 +209,9 @@ function love.load()
 	solidimg = love.graphics.newImage("images/solid.png")
 	covered_full = love.graphics.newImage("images/covered_full.png")
 	covered_80x60 = love.graphics.newImage("images/covered_80x60.png")
+
+	snd_break = love.audio.newSource("sounds/break.ogg", "static")
+	snd_roll = love.audio.newSource("sounds/roll.ogg", "static")
 
 	scaleimgs = {
 		[false] = love.graphics.newImage("images/scale_normal.png"),
@@ -1269,6 +1274,27 @@ function love.draw()
 		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
+	if middlescroll_rolling ~= 0 then
+		love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
+		local furtherfall = 0
+		if middlescroll_rolling_x < 0 then
+			furtherfall = -middlescroll_rolling_x/2
+		elseif middlescroll_rolling_x > love.graphics.getWidth() then
+			furtherfall = middlescroll_rolling_x - love.graphics.getWidth()
+		end
+		love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][22], middlescroll_rolling_x, love.graphics.getHeight()-16+furtherfall/1.2, 0, 2, 2, 8, 8)
+	end
+
+	if middlescroll_shatter then
+		for k,v in pairs(middlescroll_shatter_pieces) do
+			love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
+			--love.graphics.rectangle("fill", v.x, v.y, 4, 4)
+			love.graphics.setScissor(v.x, v.y, 4, 4)
+			drawentitysprite(22, v.x-v.ox, v.y-v.oy, false)
+		end
+		love.graphics.setScissor()
+	end
+
 	love.graphics.setColor(255,255,255,255)
 
 	if allowdebug and s.fpslimit_ix ~= 4 then
@@ -1766,15 +1792,6 @@ function love.update(dt)
 			else
 				unrecognized_rcmreturn()
 			end
-		elseif RCMid == "music" then
-			for k,v in pairs(listmusicnamesids) do
-				if RCMreturn == v[1] then
-					multiinput[9] = v[2]
-					break
-				end
-			end
-		elseif RCMid == "language" then
-			multiinput[1] = RCMreturn
 		elseif RCMid:sub(1, 4) == "bul_" then
 			if RCMreturn == L.SAVEBACKUP then
 				dialog.create(
@@ -1804,7 +1821,7 @@ function love.update(dt)
 			end
 		elseif RCMid:sub(1, 4) == "dia_" then
 			-- New-style dialog dropdown
-			if #dialogs > 0 then
+			if dialog.is_open() then
 				dialogs[#dialogs]:dropdown_onchange(RCMid:sub(5, -1), RCMreturn)
 			end
 		else
@@ -1814,8 +1831,15 @@ function love.update(dt)
 		RCMreturn = ""
 	end
 
-	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) then
+	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) and not middlescroll_falling then
 		handle_scrolling(false, love.mouse.getY() < middlescroll_y and "wu" or "wd", 10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16))
+	end
+	if middlescroll_falling then
+		middlescroll_fall_update(dt)
+	elseif middlescroll_shatter then
+		middleclick_shatter_update(dt)
+	elseif middlescroll_rolling ~= 0 then
+		middleclick_roll_update(dt)
 	end
 
 	hook("love_update_end", {dt})
@@ -1851,8 +1875,7 @@ function love.textinput(char)
 			elseif state == 6 then
 				tabselected = 0
 			end
-		-- dialog.new("Actually just do a search for #dialogs as well after removing the old system")
-		elseif #dialogs > 0 and not dialogs[#dialogs].closing then
+		elseif dialog.is_open() and not dialogs[#dialogs].closing then
 			local cf, cftype = dialogs[#dialogs].currentfield
 			if dialogs[#dialogs].fields[cf] ~= nil then
 				-- Input boxes can also have their type set to nil and default to 0
@@ -1861,8 +1884,6 @@ function love.textinput(char)
 			if cf ~= 0 and cftype == 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
 			end
-		elseif currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
-			multiinput[currentmultiinput] = multiinput[currentmultiinput] .. char
 		end
 	end
 
@@ -2007,7 +2028,7 @@ function love.keypressed(key)
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
 		end
-	elseif #dialogs > 0 and not dialogs[#dialogs].closing then
+	elseif dialog.is_open() and not dialogs[#dialogs].closing then
 		local cf, cftype = dialogs[#dialogs].currentfield
 		if dialogs[#dialogs].fields[cf] ~= nil then
 			-- Input boxes can also have their type set to nil and default to 0
@@ -2053,79 +2074,12 @@ function love.keypressed(key)
 				end
 			end
 		end
-	elseif #multiinput > 0 then
-		if currentmultiinput ~= 0 and dialog.current_input_not_dropdown() then
-			if key == "backspace" then
-				multiinput[currentmultiinput] = backspace(multiinput[currentmultiinput])
-			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
-				multiinput[currentmultiinput] = multiinput[currentmultiinput] .. love.system.getClipboardText():gsub("[\r\n]", "")
-			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
-				multiinput[currentmultiinput] = ""
-			end
-		end
-		if love.keyboard.isDown("tab") and keyboard_eitherIsDown("shift") then
-			RCMactive = false
-
-			if currentmultiinput <= 1 then
-				currentmultiinput = #multiinput
-			else
-				currentmultiinput = currentmultiinput - 1
-			end
-		elseif love.keyboard.isDown("tab") then
-			RCMactive = false
-
-			if currentmultiinput >= #multiinput then
-				currentmultiinput = 1
-			else
-				currentmultiinput = currentmultiinput + 1
-			end
-		end
-
-		if RCMactive and RCMabovedialog and key == "return" then
-			RCMactive = false
-		end
 	end
 
 	handle_scrolling(true, key)
 
-	-- dialog.new("TODO change to dialog.is_open()")
-	if #dialogs > 0 then
+	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
-	elseif DIAwindowani ~= 16 then
-		if DIAcanclose == 1 and key == "return" then
-			dialog.push()
-			DIAreturn = 1
-		elseif DIAcanclose == 2 and key == "return" then
-			dialog.push()
-			DIAreturn = 1
-			DIAquitting = 1
-		elseif DIAcanclose == 4 and key == "return" then
-			dialog.push()
-			DIAreturn = 2
-		elseif DIAcanclose == 5 and key == "return" then
-			dialog.push()
-			DIAreturn = 3
-
-		elseif DIAcanclose == 3 and key == "y" then
-			dialog.push()
-			DIAreturn = 2
-		elseif DIAcanclose == 3 and key == "n" then
-			dialog.push()
-			DIAreturn = 1
-		elseif (DIAcanclose == 4 or DIAcanclose == 6) and key == "escape" then
-			dialog.push()
-			DIAreturn = 1
-		elseif DIAcanclose == 5 and key == "escape" then
-			dialog.push()
-			DIAreturn = 2
-		elseif DIAcanclose == 6 and (key == "return" or key == "s") then
-			dialog.push()
-			DIAreturn = 3
-		elseif DIAcanclose == 6 and key == "d" then
-			dialog.push()
-			DIAreturn = 2
-		end
-
 	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
@@ -2814,15 +2768,8 @@ function love.mousepressed(x, y, button)
 	hook("love_mousepressed_start", {x, y, button})
 
 
-	-- dialog.new("TODO, don't forget!")
-	if #dialogs > 0 and button == "l" then -- TODO: replace by dialog.is_open()
+	if dialog.is_open() and button == "l" then
 		dialogs[#dialogs]:mousepressed(x, y)
-	elseif DIAwindowani ~= 16 and (button == "l") and (x >= DIAx) and (x <= DIAx+DIAwidth) and (y >= DIAy-17) and (y <= DIAy) then
-		DIAmovingwindow = 1
-		DIAmovedfromwx = DIAx
-		DIAmovedfromwy = DIAy
-		DIAmovedfrommx = x
-		DIAmovedfrommy = y
 	end
 
 	if state == 1 then
@@ -2912,12 +2859,12 @@ function love.mousepressed(x, y, button)
 
 	if button == "m" then
 		if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-			middlescroll_x, middlescroll_y = -1, -1
+			unset_middlescroll()
 		elseif is_scrollable(x, y) then
-			middlescroll_x, middlescroll_y = x, y
+			set_middlescroll(x, y)
 		end
 	elseif button == "l" and middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-		middlescroll_x, middlescroll_y = -1, -1
+		unset_middlescroll()
 	end
 
 	boxmousepress()
@@ -2956,14 +2903,9 @@ function love.mousereleased(x, y, button)
 	for k,v in pairs(dialogs) do
 		v:mousereleased(x, y)
 	end
-	if DIAmovingwindow == 1 then
-		DIAx = DIAmovedfromwx + (x-DIAmovedfrommx)
-		DIAy = DIAmovedfromwy + (y-DIAmovedfrommy)
-		DIAmovingwindow = 0
-	end
 
 	if button == "m" and middlescroll_x ~= -1 and middlescroll_y ~= -1 and not mouseon(middlescroll_x-16, middlescroll_y-16, 32, 32) then
-		middlescroll_x, middlescroll_y = -1, -1
+		unset_middlescroll()
 	end
 
 	if state == 6 and not secondlevel and nodialog and not backupscreen and button == "l" and onrbutton(1, nil, true) then
@@ -3001,7 +2943,7 @@ function love.quit()
 			love.window.requestAttention(true)
 		end
 
-		if #dialogs > 0 and dialogs[#dialogs].identifier == "quit" then
+		if dialog.is_open() and dialogs[#dialogs].identifier == "quit" then
 			-- There's already a quit dialog right in front (only top layer though, for convenience)
 			return true
 		end

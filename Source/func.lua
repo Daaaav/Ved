@@ -244,7 +244,6 @@ function startinput()
 	__ = "_"
 	cursorflashtime = 0
 	takinginput = true
-	currentmultiinput = 0
 end
 
 function startinputonce()
@@ -255,7 +254,6 @@ function startinputonce()
 		__ = "_"
 		cursorflashtime = 0
 		takinginput = true
-		currentmultiinput = 0
 	end
 end
 
@@ -267,16 +265,6 @@ function stopinput()
 	__ = "_"
 	cursorflashtime = 0
 	takinginput = false
-	currentmultiinput = 0
-end
-
-function startmultiinput(usethese)
-	cons("Multi-input started: " .. #usethese)
-	multiinput = usethese -- Already by reference
-	__ = "_"
-	cursorflashtime = 0
-	takinginput = false
-	currentmultiinput = 0
 end
 
 function tostate(new, dontinitialize, extradata)
@@ -963,47 +951,6 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 	else
 		return mouseon(love.graphics.getWidth()-(128-8), yoffset+(buttonspacing*pos), 128-16, 16)
 	end
-end
-
--- dialog.new("TODO: This can probably be removed later")
-function hoverdiatext(x, y, w, h, text, minumber, active, mode, menuitems, menuitemslabel, menuid)
-	-- Mode can be 0 for text, 1 for dropdown
-	-- menuitems is used for the right click menu, menuitemslabel is used for the label on the field (but can be nil to just show text)
-	if mode == nil then
-		mode = 0
-	end
-
-	if active or mouseon(x, y-3, w, h) then
-		setColorDIA(255,255,255,255)
-		love.graphics.rectangle("fill", x, y-3, w, h)
-
-		if (active and love.keyboard.isDown("tab")) or (mouseon(x, y-3, w, h) and love.mouse.isDown("l") and not mousepressed) then
-			currentmultiinput = minumber
-
-			if mode == 1 and (not RCMactive) then
-				rightclickmenu.create(menuitems, menuid, x, (y-3)+h, true) -- y+h
-
-				mousepressed = true
-			end
-		end
-	else
-		setColorDIA(255,255,255,192)
-		love.graphics.rectangle("fill", x, y-3, w, h)
-	end
-	setColorDIA(0,0,0,255)
-
-	if mode == 0 then
-		love.graphics.print(anythingbutnil(text) .. (active and __ or ""), x, y-1)
-	elseif mode == 1 then
-		if menuitemslabel == nil then
-			love.graphics.print(anythingbutnil(text), x, y-1)
-		else
-			love.graphics.print(anythingbutnil(menuitemslabel[anythingbutnil0(tonumber(text))]), x, y-1)
-		end
-		love.graphics.draw(menupijltje, x+w-8, (y-3)+2) -- Die 8 is 7+1
-	end
-
-	setColorDIA(255,255,255,255)
 end
 
 function cycle(var, themax, themin)
@@ -2664,6 +2611,82 @@ end
 
 function unrecognized_rcmreturn()
 	dialog.create(RCMid .. " " .. RCMreturn .. " unrecognized.")
+end
+
+function set_middlescroll(x, y)
+	if middlescroll_falling then return end
+
+	middlescroll_x, middlescroll_y = x, y
+	middlescroll_t = love.timer.getTime()
+end
+
+function unset_middlescroll()
+	if middlescroll_falling then return end
+
+	if love.timer.getTime() - middlescroll_t < 24 or middlescroll_y > love.graphics.getHeight()-16 then
+		middlescroll_x, middlescroll_y = -1, -1
+	else
+		middlescroll_falling = true
+	end
+end
+
+function middlescroll_fall_update(dt)
+	middlescroll_v = middlescroll_v + 1200*dt
+	middlescroll_y = middlescroll_y + middlescroll_v*dt
+
+	if middlescroll_y > love.graphics.getHeight()-16 then
+		if middlescroll_v > 500 then
+			-- Shatter.
+			snd_break:play()
+			middlescroll_shatter = true
+			for y = 0, 15 do
+				for x = 0, 15 do
+					table.insert(middlescroll_shatter_pieces, {
+							x = middlescroll_x-16 + 4*x,
+							y = love.graphics.getHeight()-16 + 4*y,
+							ox = 4*x,
+							oy = 4*y,
+							vx = love.math.random(-50,50),
+							vy = -middlescroll_v/1.5
+						}
+					)
+				end
+			end
+		else
+			-- Roll.
+			snd_roll:play()
+			middlescroll_rolling = (middlescroll_x < love.graphics.getWidth()/2) and -1 or 1
+			middlescroll_rolling_x = middlescroll_x
+		end
+		middlescroll_x, middlescroll_y = -1, -1
+		middlescroll_falling = false
+		middlescroll_t, middlescroll_v = 0, 0
+	end
+end
+
+function middleclick_shatter_update(dt)
+	for k,v in pairs(middlescroll_shatter_pieces) do
+		if v.y > love.graphics.getHeight()+64 then
+			middlescroll_shatter = false
+			middlescroll_shatter_pieces = {}
+			break
+		end
+
+		middlescroll_shatter_pieces[k].x = v.x + v.vx*dt
+		middlescroll_shatter_pieces[k].y = v.y + v.vy*dt
+		middlescroll_shatter_pieces[k].vy = v.vy + 2400*dt
+	end
+end
+
+function middleclick_roll_update(dt)
+	middlescroll_v = middlescroll_v + 150*dt
+	middlescroll_rolling_x = middlescroll_rolling_x + middlescroll_v*middlescroll_rolling*dt
+
+	if middlescroll_rolling_x < -16 or middlescroll_rolling_x > love.graphics.getWidth() + 16 then
+		snd_roll:stop()
+		middlescroll_rolling = 0
+		middlescroll_v = 0
+	end
 end
 
 -- Returns true if there are unsaved changes.

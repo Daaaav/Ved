@@ -1928,8 +1928,13 @@ function drawmaineditor()
 		elseif onrbutton(1, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level options
-				startmultiinput({metadata.Title, metadata.Creator, metadata.website, metadata.Desc1, metadata.Desc2, metadata.Desc3, metadata.mapwidth, metadata.mapheight, metadata.levmusic})
-				dialog.new(L.OPTNAME .. "\n" .. L.OPTBY .. "\n" .. L.OPTWEBSITE .. "\n\n" .. L.OPTDESC .. "\n\n\n\n" .. L.OPTSIZE .. "\n\n" .. L.OPTMUSIC, L.LEVELOPTIONS, 1, 4, 5)
+				dialog.create(
+					"",
+					DBS.OKCANCEL,
+					dialog.callback.leveloptions,
+					L.LEVELOPTIONS,
+					dialog.form.leveloptions_make()
+				)
 			else
 				-- Ved options
 				tostate(13)

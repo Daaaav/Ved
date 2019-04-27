@@ -12,12 +12,12 @@ opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
 
-vergroups = {5,1}
+vergroups = {5,2}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-intermediate_version = false -- If true, this is a WIP version
+intermediate_version = true -- If true, this is a WIP version
 
 if intermediate_version then
 	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber

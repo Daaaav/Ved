@@ -280,7 +280,7 @@ function listfiles(directory)
 				ffi.C.SystemTimeToTzSpecificLocalTime(nil, buffer_st_utc, buffer_st_loc)
 
 				current_data = {
-					name = path_utf16_to_utf8(buffer_filedata.cFileName),
+					name = current_name,
 					isdir = isdir,
 					result_shown = true,
 					bu_lastmodified = 0,

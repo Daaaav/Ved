@@ -131,6 +131,35 @@ function dialog.form.language_make()
 	}
 end
 
+function dialog.form.leveloptions_make()
+	return {
+		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
+		{"Title", 8, 0, 20, metadata.Title},
+		{"", 0, 1, 8, L.OPTBY, DF.LABEL},
+		{"Creator", 8, 1, 37, metadata.Creator},
+		{"", 0, 2, 8, L.OPTWEBSITE, DF.LABEL},
+		{"website", 8, 2, 40, metadata.website},
+		{"", 0, 4, 8, L.OPTDESC, DF.LABEL},
+		{"Desc1", 8, 4, 40, metadata.Desc1},
+		{"Desc2", 8, 5, 40, metadata.Desc2},
+		{"Desc3", 8, 6, 40, metadata.Desc3},
+		{"", 0, 8, 8, L.OPTSIZE, DF.LABEL},
+		{"mapwidth", 8, 8, 3, metadata.mapwidth},
+		{"mapheight", 12, 8, 3, metadata.mapheight},
+		{"", 0, 10, 8, L.OPTMUSIC, DF.LABEL},
+		{
+			"levmusic", 8, 10, 30, metadata.levmusic, DF.DROPDOWN, listmusicnames, listmusicids,
+			function(picked)
+				for k,v in pairs(listmusicnamesids) do
+					if picked == v[1] then
+						return v[2]
+					end
+				end
+			end
+		},
+	}
+end
+
 --function dialog.form.
 
 -- 
@@ -626,4 +655,61 @@ function dialog.callback.language(button, fields)
 
 		saveconfig()
 	end
+end
+
+function dialog.callback.leveloptions(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	-- What are the old properties?
+	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
+	local undo_properties = {}
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k] = {
+			key = v,
+			oldvalue = metadata[v]
+		}
+	end
+
+	-- Level properties
+	metadata.Title = fields.Title
+	metadata.Creator = fields.Creator
+	metadata.website = fields.website
+	metadata.Desc1 = fields.Desc1
+	metadata.Desc2 = fields.Desc2
+	metadata.Desc3 = fields.Desc3
+	metadata.levmusic = fields.levmusic
+
+	if (tonumber(fields.mapwidth) ~= nil and tonumber(fields.mapheight) ~= nil) then
+		-- Make sure we have a dimension, and that it isn't too interesting
+		local w, h = tonumber(fields.mapwidth), tonumber(fields.mapheight)
+		if w < 1 then w = 1 end
+		if h < 1 then h = 1 end
+
+		-- Make sure our dimension has a precise width and height
+		w, h = math.floor(w), math.floor(h)
+
+		if w > 20 or h > 20 then
+			dialog.create(
+				langkeys(L.SIZELIMIT, {
+					math.min(20, w),
+					math.min(20, h)
+				})
+			)
+		end
+		metadata.mapwidth = math.min(20, w)
+		metadata.mapheight = math.min(20, h)
+		addrooms(metadata.mapwidth, metadata.mapheight)
+		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+	end
+
+	--What are the new properties again?
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k].newvalue = metadata[v]
+	end
+
+	-- Make sure we can undo and redo it
+	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
+	finish_undo("CHANGED METADATA")
 end
