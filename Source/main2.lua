@@ -1549,6 +1549,8 @@ function love.update(dt)
 					removeentity(tonumber(entdetails[3]), tonumber(entdetails[2]))
 				elseif RCMreturn == L.MOVEENTITY then
 					movingentity = tonumber(entdetails[3])
+				elseif RCMreturn == L.COPY or RCMreturn == L.COPYENTRANCE then
+					setcopyingentity(tonumber(entdetails[3]))
 				elseif RCMreturn == L.PROPERTIES then
 					-- Edit properties of this entity, whatever it is. But if we were editing room text or a name of something, stop that first.
 					if editingroomtext > 0 then
@@ -2202,6 +2204,7 @@ function love.keypressed(key)
 		editingbounds = 0
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
 		movingentity = 0
+		movingentity_copying = false
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
 		-->
 		if editingbounds == 0 then

@@ -185,29 +185,35 @@ function drawmaineditor()
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
 			if love.mouse.isDown("l") and not mousepressed then
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
-				table.insert(
-					undobuffer,
-					{
-						undotype = "changeentity",
-						rx = roomx, ry = roomy, entid = movingentity,
-						changedentitydata = {
-							{
-								key = "x",
-								oldvalue = entitydata[movingentity].x,
-								newvalue = new_x
-							},
-							{
-								key = "y",
-								oldvalue = entitydata[movingentity].y,
-								newvalue = new_y
+				if not movingentity_copying then
+					table.insert(
+						undobuffer,
+						{
+							undotype = "changeentity",
+							rx = roomx, ry = roomy, entid = movingentity,
+							changedentitydata = {
+								{
+									key = "x",
+									oldvalue = entitydata[movingentity].x,
+									newvalue = new_x
+								},
+								{
+									key = "y",
+									oldvalue = entitydata[movingentity].y,
+									newvalue = new_y
+								}
 							}
 						}
-					}
-				)
-				finish_undo("CHANGED ENTITY (X AND Y)")
+					)
+					finish_undo("CHANGED ENTITY (X AND Y)")
+				end
 				entitydata[movingentity].x = new_x
 				entitydata[movingentity].y = new_y
+				if movingentity_copying then
+					entityplaced(movingentity)
+				end
 				movingentity = 0
+				movingentity_copying = false
 				nodialog = false
 			end
 		elseif selectedtool <= 3 then

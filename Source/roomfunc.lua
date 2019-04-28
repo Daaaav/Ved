@@ -221,7 +221,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.MOVEENTITY, L.PROPERTIES}, "ent_1_" .. k,
+				{"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_1_" .. k,
 				2, 2
 			)
 		end
@@ -257,7 +257,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.MOVEENTITY, L.PROPERTIES}, "ent_2_" .. k,
+				{"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_2_" .. k,
 				v.p1 < 7 and 4 or 8, 1
 			)
 		end
@@ -276,7 +276,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[6], L.DELETE, L.MOVEENTITY, L.PROPERTIES}, "ent_3_" .. k,
+				{"#" .. toolnames[6], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_3_" .. k,
 				4, 1
 			)
 		end
@@ -286,7 +286,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, L.PROPERTIES}, "ent_9_" .. k,
+				{"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (count.trinkets >= 20 and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_9_" .. k,
 				2, 2
 			)
 		end
@@ -296,7 +296,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[5], L.DELETE, L.FLIP, L.MOVEENTITY, L.PROPERTIES}, "ent_10_" .. k,
+				{"#" .. toolnames[5], L.DELETE, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_10_" .. k,
 				2, 2
 			)
 		end
@@ -349,7 +349,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			if interact then
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[14], L.DELETE, L.GOTODESTINATION, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k,
+					{"#" .. toolnames[14], L.DELETE, L.GOTODESTINATION, L.CHANGEENTRANCE, L.CHANGEEXIT, L.COPYENTRANCE, L.PROPERTIES}, "ent_13_" .. k,
 					2, 2
 				)
 			end
@@ -363,7 +363,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			if interact then
 				entityrightclick(
 					offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16,
-					{"#" .. toolnames[14], L.DELETE, L.GOTOENTRANCE, L.CHANGEENTRANCE, L.CHANGEEXIT, L.PROPERTIES}, "ent_13_" .. k,
+					{"#" .. toolnames[14], L.DELETE, L.GOTOENTRANCE, L.CHANGEENTRANCE, L.CHANGEEXIT, L.COPYENTRANCE, L.PROPERTIES}, "ent_13_" .. k,
 					2, 2
 				)
 			end
@@ -398,7 +398,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, L.PROPERTIES}, "ent_15_" .. k,
+				{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (count.crewmates >= 20 and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_15_" .. k,
 				2, 3
 			)
 		end
@@ -427,7 +427,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.PROPERTIES}, "ent_17_" .. k,
+				{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_17_" .. k,
 				data:len(), 1
 			)
 		end
@@ -447,7 +447,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.MOVEENTITY, L.PROPERTIES}, "ent_18_" .. k,
+				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
 				2, 3
 			)
 		end
@@ -499,7 +499,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			if interact then
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.PROPERTIES}, "ent_19_" .. k,
+					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
 					v.p1, v.p2
 				)
 			end
@@ -519,7 +519,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if v.t ~= nil and interact then
 			entityrightclick(
 				x, y,
-				{"#" .. "Type " .. v.t, L.DELETE, L.MOVEENTITY, L.PROPERTIES}, "ent_" .. v.t .. "_" .. k,
+				{"#" .. "Type " .. v.t, L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_" .. v.t .. "_" .. k,
 				1, 1
 			)
 		end
@@ -582,24 +582,36 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 		if nodialog and love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
 			-- Start moving this entity, if we can! Heh, cheap trick to inspect the menu items.
 			local entdetails = explode("_", newmenuid)
-			cons("Checking alt+click to move entity...")
-			for k2,v2 in pairs(menuitems) do
-				if v2 == L.MOVEENTITY then
-					-- Just a regular, moveable entity.
-					movingentity = tonumber(entdetails[3])
-					break
-				elseif v2 == L.GOTODESTINATION then
-					-- This must be a warp token entrance, works a little different to move this.
-					selectedtool = 14
-					selectedsubtool[14] = 3
-					warpid = tonumber(entdetails[3])
-					break
-				elseif v2 == L.GOTOENTRANCE then
-					-- Warp token destination.
-					selectedtool = 14
-					selectedsubtool[14] = 4
-					warpid = tonumber(entdetails[3])
-					break
+			if not keyboard_eitherIsDown("shift") then
+				cons("Checking alt+click to move entity...")
+				for k2,v2 in pairs(menuitems) do
+					if v2 == L.MOVEENTITY then
+						-- Just a regular, moveable entity.
+						movingentity = tonumber(entdetails[3])
+						break
+					elseif v2 == L.GOTODESTINATION then
+						-- This must be a warp token entrance, works a little different to move this.
+						selectedtool = 14
+						selectedsubtool[14] = 3
+						warpid = tonumber(entdetails[3])
+						break
+					elseif v2 == L.GOTOENTRANCE then
+						-- Warp token destination.
+						selectedtool = 14
+						selectedsubtool[14] = 4
+						warpid = tonumber(entdetails[3])
+						break
+					end
+				end
+			else
+				cons("Checking alt+shift+click to copy entity...")
+				for k2,v2 in pairs(menuitems) do
+					if v2 == L.COPY or v2 == L.COPYENTRANCE then
+						-- The nice thing is, this can't be a trinket/crewmate when 20 already
+						-- exist, since the menu item would be "#Copy" to disable it
+						setcopyingentity(tonumber(entdetails[3]))
+						break
+					end
 				end
 			end
 			nodialog = false
@@ -1772,6 +1784,20 @@ function removeentity(id, thetype, undoing)
 
 	updatecountdelete(thetype, id, undoing)
 	entitydata[id] = nil
+end
+
+function setcopyingentity(id)
+	table.insert(entitydata, count.entity_ai, table.copy(entitydata[id]))
+	if entitydata[count.entity_ai].t == 9 then
+		count.trinkets = count.trinkets + 1
+	elseif entitydata[count.entity_ai].t == 15 then
+		count.crewmates = count.crewmates + 1
+	end
+	count.entities = count.entities + 1
+
+	movingentity = count.entity_ai
+	movingentity_copying = true
+	count.entity_ai = count.entity_ai + 1
 end
 
 function rcm_changingentity(entdetails, changes)

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-04-09 20:15:53 (CEST)
+--- Last converted: 2019-04-28 16:47:45 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -195,6 +195,7 @@ CHANGETOVER = "Ŝanĝi al vertikala",
 RESIZE = "Movigi/Regrandigi",
 CHANGEENTRANCE = "Movigi enirejon",
 CHANGEEXIT = "Movigi elirejon",
+COPYENTRANCE = "Copy entrance",
 LOCK = "Ŝlosi",
 UNLOCK = "Malŝlosi",
 BUG = "[Erareto!]",
@@ -1062,6 +1063,12 @@ Q¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
 [¤  ŝlosi Y de muso dum premadata (por fari horizontalajn strekojn pli facile)\C
 ]¤  ŝlosi X de muso dum premadata (por fari vertikalajn strekojn pli facile)\C
 F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
+
+Entities\gh#
+
+Shift+right click¤  Delete entity\C
+Alt+click¤          Move entity\C
+Alt+Shift+click¤    Copy entity\C
 
 Skripto-redaktilo\gh#
 

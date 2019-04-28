@@ -169,6 +169,7 @@ CHANGETOVER = "Change to vertical",
 RESIZE = "Move/Resize",
 CHANGEENTRANCE = "Move entrance",
 CHANGEEXIT = "Move exit",
+COPYENTRANCE = "Copy entrance",
 LOCK = "Lock",
 UNLOCK = "Unlock",
 BUG = "[Bug!]",
@@ -1034,6 +1035,12 @@ Q¤  Go to room (type in coordinates as four digits)\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+
+Entities\gh#
+
+Shift+right click¤  Delete entity\C
+Alt+click¤          Move entity\C
+Alt+Shift+click¤    Copy entity\C
 
 Script editor\gh#
 

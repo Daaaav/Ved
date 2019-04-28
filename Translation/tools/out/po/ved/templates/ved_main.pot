@@ -557,6 +557,10 @@ msgctxt "L.CHANGEEXIT"
 msgid "Move exit"
 msgstr ""
 
+msgctxt "L.COPYENTRANCE"
+msgid "Copy entrance"
+msgstr ""
+
 msgctxt "L.LOCK"
 msgid "Lock"
 msgstr ""

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-04-09 20:15:53 (CEST)
+--- Last converted: 2019-04-28 16:47:44 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -183,6 +183,7 @@ CHANGETOVER = "Ändern zu vertikal",
 RESIZE = "Bewegen/Größe ändern",
 CHANGEENTRANCE = "Bewege Eingang",
 CHANGEEXIT = "Bewege Ausgang",
+COPYENTRANCE = "Copy entrance",
 LOCK = "Fixieren",
 UNLOCK = "Entsperren",
 BUG = "[Fehler!]",
@@ -1048,6 +1049,12 @@ Q¤  Go to room (type in coordinates as four digits)\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+
+Entities\gh#
+
+Shift+right click¤  Delete entity\C
+Alt+click¤          Move entity\C
+Alt+Shift+click¤    Copy entity\C
 
 Script editor\gh#
 

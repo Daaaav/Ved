@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-04-09 20:15:53 (CEST)
+--- Last converted: 2019-04-28 16:47:45 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -181,6 +181,7 @@ CHANGETOVER = "Modifié à vertical",
 RESIZE = "Déplacer/Redimensionner",
 CHANGEENTRANCE = "Déplacer l'entrée",
 CHANGEEXIT = "Déplacer la sortie",
+COPYENTRANCE = "Copy entrance",
 LOCK = "Vérouiller",
 UNLOCK = "Dévérouiller",
 BUG = "[Bogue!]",
@@ -390,7 +391,7 @@ LASTMODIFIEDTIME = "Dernière modification", -- List header
 OVERWRITTENTIME = "Remplacé", -- List header
 SAVEBACKUP = "Sauver dans le dossier de VVVVVV",
 DATEFORMAT = "Format de date",
-TIMEFORMAT = "Format de date",
+TIMEFORMAT = "Format d'heure",
 CUSTOMDATEFORMAT = "Format de date personnalisé",
 SAVEBACKUPNOBACKUP = "Faites en sorte de choisir un nom unique pour ceci si vous ne voulez rien remplacer, car AUCUNE sauvegarde ne sera effectuée dans ce cas-ci !",
 
@@ -1046,6 +1047,12 @@ Q¤  Go to room (type in coordinates as four digits)\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+
+Entities\gh#
+
+Shift+right click¤  Delete entity\C
+Alt+click¤          Move entity\C
+Alt+Shift+click¤    Copy entity\C
 
 Script editor\gh#
 

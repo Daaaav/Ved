@@ -325,6 +325,7 @@ function loadstate(new, extradata)
 		newroomtext = false
 		editingroomname = false
 		movingentity = 0
+		movingentity_copying = false
 		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil

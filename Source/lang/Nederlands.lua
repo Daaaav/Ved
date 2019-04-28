@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-04-09 20:15:53 (CEST)
+--- Last converted: 2019-04-28 16:47:45 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -183,6 +183,7 @@ CHANGETOVER = "Naar verticaal veranderen",
 RESIZE = "Opnieuw plaatsen",
 CHANGEENTRANCE = "Ingang verplaatsen",
 CHANGEEXIT = "Uitgang verplaatsen",
+COPYENTRANCE = "Ingang kopiëren",
 LOCK = "Vergrendelen",
 UNLOCK = "Ontgrendelen",
 BUG = "[Bug!]",
@@ -1054,6 +1055,12 @@ Q¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 [¤  Y van muis vastzetten (om makkelĳker horizontale lĳnen te tekenen)\C
 ]¤  X van muis vastzetten (om makkelĳker verticale lĳnen te tekenen)\C
 F11¤  tilesets en sprites opnieuw laden\C
+
+Entiteiten\gh#
+
+Shift+klik rechts¤  Entiteit verwĳderen\C
+Alt+klik¤          Entiteit verplaatsen\C
+Alt+Shift+klik¤     Entiteit kopiëren\C
 
 Scriptbewerker\gh#
 
@@ -2158,7 +2165,7 @@ States 3000-3099:
             (Gamestates: 3006-3011=Verdigris, 3020-3026=Vitellary,
             3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
             3050-3056=Violet)
-3070-3072 - Do dingen na redding, normaal gesproken terug naar schip
+3070-3072 - Doe dingen na redding, normaal gesproken terug naar schip
 3501 - Game Complete
 4010 - Flits + warp
 4070 - Het Final Level, maar het spel zal crashen wanneer je Timeslip bereikt
