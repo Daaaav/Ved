@@ -1313,7 +1313,7 @@ function love.draw()
 			if musiceditorfile == "" then
 				love.graphics.print(L.MUSICEDITOR, 16, 14)
 			else
-				love.graphics.print(L.MUSICEDITOR .. " - " .. musicplayerfile, 16, 14)
+				love.graphics.print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 14)
 			end
 		else
 			love.graphics.print(musicplayerfile, 16, 14)

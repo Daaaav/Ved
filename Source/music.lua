@@ -105,11 +105,11 @@ function loadmusicsong(file, song, data, edited)
 	local m_filedata = love.filesystem.newFileData(
 		data, "song" .. song .. ".ogg", "file"
 	)
-	music[file][song] = {edited=edited, filedata=m_filedata, audio=nil}
-	if m_filedata:getSize() == 0 then
+	if m_filedata:getSize() <= 1 then
 		-- Don't bother
 		return
 	end
+	music[file][song] = {edited=edited, filedata=m_filedata, audio=nil}
 	local m_success, maybe_source = pcall(love.audio.newSource, m_filedata, "stream")
 	if not m_success then
 		cons("Could not load song " .. song .. " from " .. file ..  " because " .. maybe_source)
@@ -259,7 +259,9 @@ function savevvvvvvmusic(file, realfile)
 	for m = 0, 15 do
 		ffi.copy(music_headers[m].name, musicblobnames[m+1])
 		local filedata = getmusicfiledata(file, m)
-		if filedata ~= nil then
+		if filedata == nil then
+			music_headers[m].size = 1
+		else
 			music_headers[m].size = filedata:getSize()
 		end
 		music_headers[m].valid = true
@@ -270,7 +272,9 @@ function savevvvvvvmusic(file, realfile)
 
 	for m = 0, 15 do
 		local filedata = getmusicfiledata(file, m)
-		if filedata ~= nil then
+		if filedata == nil then
+			fh:write("\0")
+		else
 			fh:write(filedata:getString())
 		end
 	end
