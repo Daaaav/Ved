@@ -1328,8 +1328,9 @@ function love.draw()
 				hoverdraw(sound_play, 16, 32+24*m, 16, 16)
 			end
 			local can_remove = false
+			local filedata = getmusicfiledata(musicplayerfile, m)
 			if musiceditor then
-				can_remove = getmusicfiledata(musicplayerfile, m) ~= nil
+				can_remove = filedata ~= nil
 				hoverdraw(loadbtn, 32, 32+24*m, 16, 16)
 				if not can_remove then
 					love.graphics.setColor(64,64,64)
@@ -1371,6 +1372,11 @@ function love.draw()
 				love.graphics.print("-:--", 728, 38+24*m)
 			else
 				love.graphics.print(mmss_duration(audio:getDuration()), 728, 38+24*m)
+			end
+			if filedata ~= nil then
+				local readable_size = bytes_notation(filedata:getSize())
+				love.graphics.setColor(128,128,128)
+				love.graphics.print(readable_size, 680-font8:getWidth(readable_size), 38+24*m)
 			end
 			love.graphics.setColor(255,255,255)
 		end

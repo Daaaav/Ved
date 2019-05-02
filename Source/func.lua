@@ -2981,4 +2981,18 @@ function mmss_duration(seconds)
 	return string.format("%d:%02d", minutes, seconds)
 end
 
+function bytes_notation(bytes)
+	if bytes == nil then
+		bytes = 0
+	end
+	if bytes < 10^3 then
+		return langkeys(L_PLU.BYTES, {bytes})
+	elseif bytes < 10^6 then
+		return langkeys(L_PLU.KILOBYTES, {round(bytes/10^3, 1)})
+	elseif bytes < 10^9 then
+		return langkeys(L_PLU.MEGABYTES, {round(bytes/10^6, 1)})
+	end
+	return langkeys(L_PLU.GIGABYTES, {round(bytes/10^9, 1)})
+end
+
 hook("func")
