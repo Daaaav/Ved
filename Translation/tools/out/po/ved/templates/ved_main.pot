@@ -1546,6 +1546,71 @@ msgctxt "L.SEARCHRESULTS_NOTES"
 msgid "Notes [$1]"
 msgstr ""
 
+#. If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+msgctxt "L.ASSETS"
+msgid "Assets"
+msgstr ""
+
+msgctxt "L.MUSICPLAYERROR"
+msgid "Can not play this song. It may not exist or be of an unsupported type."
+msgstr ""
+
+msgctxt "L.MUSICLOADERROR"
+msgid "Can not load $1.vvv: "
+msgstr ""
+
+msgctxt "L.MUSICLOADERROR_TOOSMALL"
+msgid "The music file is too small to be valid."
+msgstr ""
+
+msgctxt "L.MUSICEXISTSYES"
+msgid "Exists"
+msgstr ""
+
+msgctxt "L.MUSICEXISTSNO"
+msgid "Does not exist"
+msgstr ""
+
+msgctxt "L.LOAD"
+msgid "Load"
+msgstr ""
+
+msgctxt "L.RELOAD"
+msgid "Reload"
+msgstr ""
+
+msgctxt "L.UNLOAD"
+msgid "Unload"
+msgstr ""
+
+msgctxt "L.MUSICEDITOR"
+msgid "Music editor"
+msgstr ""
+
+msgctxt "L.LOADMUSICNAME"
+msgid "Load this .vvv:"
+msgstr ""
+
+msgctxt "L.ENTERSONGPATH"
+msgid "Enter full file path:\n\n\n(.ogg is recommended)"
+msgstr ""
+
+msgctxt "L.INSERTSONG"
+msgid "Insert song at track $1"
+msgstr ""
+
+msgctxt "L.SUREDELETESONG"
+msgid "Are you sure you want to remove song $1?"
+msgstr ""
+
+msgctxt "L.SONGOPENFAIL"
+msgid "Unable to open $1, song not replaced."
+msgstr ""
+
+msgctxt "L.SONGREPLACEFAIL"
+msgid "Something went wrong while replacing the song."
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."

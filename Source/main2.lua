@@ -34,6 +34,8 @@ States:
 27	Display/Scale settings
 28	Level stats
 29	Plural forms test
+30	Assets
+31	Assets - music
 
 Debug keys:
 F12: change state
@@ -77,6 +79,7 @@ function love.load()
 	ved_require("slider")
 	ved_require("imagefont")
 	ved_require("mapfunc")
+	ved_require("music")
 
 	if s.pscale ~= 1 then
 		za,zb,zc = love.window.getMode()
@@ -190,6 +193,7 @@ function love.load()
 
 	eraseron = love.graphics.newImage("images/eraseron.png")
 	eraseroff = love.graphics.newImage("images/eraseroff.png")
+	eraser = love.graphics.newImage("images/eraser.png")
 
 	checkon = love.graphics.newImage("images/checkon.png")
 	checkoff = love.graphics.newImage("images/checkoff.png")
@@ -203,6 +207,15 @@ function love.load()
 	smallfolder = love.graphics.newImage("images/smallfolder.png")
 	smalllevel = love.graphics.newImage("images/smalllevel.png")
 	smallunknown = love.graphics.newImage("images/smallunknown.png")
+
+	asset_pppppp = love.graphics.newImage("images/asset_pppppp.png")
+	asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png")
+	asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png")
+
+	sound_play = love.graphics.newImage("images/sound_play.png")
+	sound_pause = love.graphics.newImage("images/sound_pause.png")
+	sound_stop = love.graphics.newImage("images/sound_stop.png")
+	sound_rewind = love.graphics.newImage("images/sound_rewind.png")
 
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
@@ -428,6 +441,10 @@ function love.load()
 	if hijack_print or love_version_meets(11) then
 		temp_print_override()
 	end
+
+	-- Music! Note that we're not yet loading the music in memory here.
+	initvvvvvvmusic()
+	musiceditorfile = ""
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]
@@ -1244,6 +1261,219 @@ function love.draw()
 			-- Shrug
 			mousepressed = true
 		end
+	elseif state == 30 then
+		-- Assets
+		for a = 0, 2 do
+			love.graphics.setColor(128,128,128)
+			love.graphics.rectangle("line", 16.5, 16.5+44*a, 744, 33)
+
+			if mouseon(16.5, 16.5+44*a, 744, 33) and not mousepressed then
+				love.graphics.setColor(48,48,48)
+				love.graphics.rectangle("fill", 17, 17+44*a, 743, 32)
+				if love.mouse.isDown("l") then
+					if a == 0 then
+						tostate(31, false, "vvvvvvmusic.vvv")
+					elseif a == 1 then
+						tostate(31, false, "mmmmmm.vvv")
+					elseif a == 2 then
+						tostate(31, false, nil)
+					end
+					mousepressed = true
+				end
+			end
+
+			love.graphics.setColor(255,255,255)
+			if a == 0 then
+				love.graphics.draw(asset_pppppp, 21, 21)
+				love.graphics.print("vvvvvvmusic.vvv", 33, 23)
+				love.graphics.print(musicfileexists("vvvvvvmusic.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39)
+			elseif a == 1 then
+				love.graphics.draw(asset_mmmmmm, 21, 21+44)
+				love.graphics.print("mmmmmm.vvv", 33, 23+44)
+				love.graphics.print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39+44)
+			elseif a == 2 then
+				love.graphics.draw(asset_musiceditor, 21, 21+88)
+				love.graphics.print(L.MUSICEDITOR, 33, 23+88)
+				--love.graphics.print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39+88)
+			end
+		end
+
+		rbutton({L.RETURN, "b"}, 0, nil, true)
+
+		if nodialog and love.mouse.isDown("l") then
+			if onrbutton(0, nil, true) then
+				-- Return
+				tostate(oldstate, true)
+				mousepressed = true
+			end
+		end
+	elseif state == 31 then
+		-- Assets - music
+		if musiceditor then
+			if musiceditorfile == "" then
+				love.graphics.print(L.MUSICEDITOR, 16, 14)
+			else
+				love.graphics.print(L.MUSICEDITOR .. " - " .. musicplayerfile, 16, 14)
+			end
+		else
+			love.graphics.print(musicplayerfile, 16, 14)
+		end
+		for m = 0, 15 do
+			local audio = getmusicaudio(musicplayerfile, m)
+			if audio == nil then
+				love.graphics.setColor(64,64,64)
+				love.graphics.draw(sound_play, 16, 32+24*m)
+				love.graphics.setColor(255,255,255)
+			else
+				hoverdraw(sound_play, 16, 32+24*m, 16, 16)
+			end
+			local can_remove = false
+			if musiceditor then
+				can_remove = getmusicfiledata(musicplayerfile, m) ~= nil
+				hoverdraw(loadbtn, 32, 32+24*m, 16, 16)
+				if not can_remove then
+					love.graphics.setColor(64,64,64)
+					love.graphics.draw(eraser, 48, 32+24*m)
+					love.graphics.setColor(255,255,255)
+				else
+					hoverdraw(eraser, 48, 32+24*m, 16, 16)
+				end
+			end
+			if love.mouse.isDown("l") and not mousepressed and nodialog then
+				if mouseon(16, 32+24*m, 16, 16) then
+					if audio == nil then
+						dialog.create(L.MUSICPLAYERROR)
+					else
+						playmusic(musicplayerfile, m)
+						mousepressed = true
+					end
+				elseif musiceditor and mouseon(32, 32+24*m, 16, 16) then
+					input = m
+					dialog.create(
+						L.ENTERSONGPATH,
+						DBS.OKCANCEL,
+						dialog.callback.replacesong,
+						langkeys(L.INSERTSONG, {m}),
+						dialog.form.simplename
+					)
+				elseif can_remove and mouseon(48, 32+24*m, 16, 16) then
+					input = m
+					dialog.create(langkeys(L.SUREDELETESONG, {m}), DBS.YESNO, dialog.callback.suredeletesong)
+				end
+			end
+			if getmusicedited(musicplayerfile, m) then
+				love.graphics.setColor(255,0,0)
+			end
+			love.graphics.print("[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]), musiceditor and 76 or 44, 38+24*m)
+			if not love_version_meets(10) then
+				love.graphics.print("?:??", 728, 38+24*m)
+			elseif audio == nil then
+				love.graphics.print("-:--", 728, 38+24*m)
+			else
+				love.graphics.print(mmss_duration(audio:getDuration()), 728, 38+24*m)
+			end
+			love.graphics.setColor(255,255,255)
+		end
+
+		local current_audio = getmusicaudioplaying()
+		local cura_y = love.graphics.getHeight()-32
+		if current_audio == nil then
+			love.graphics.setColor(64,64,64)
+			love.graphics.draw(sound_play, 16, cura_y)
+			love.graphics.draw(sound_stop, 32, cura_y)
+			love.graphics.draw(sound_rewind, 48, cura_y)
+			love.graphics.print("[--] -:--", 72, cura_y+6)
+			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
+			love.graphics.print("-:--", 728, cura_y+6)
+			love.graphics.setColor(255,255,255)
+		else
+			hoverdraw(currentmusic_paused and sound_play or sound_pause, 16, cura_y, 16, 16)
+			hoverdraw(sound_stop, 32, cura_y, 16, 16)
+			hoverdraw(sound_rewind, 48, cura_y, 16, 16)
+			local elapsed = current_audio:tell()
+			love.graphics.print("[" .. fixdig(currentmusic, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+6)
+			if nodialog and not mousepressed and love.mouse.isDown("l") then
+				if mouseon(16, cura_y, 16, 16) then
+					-- Play/pause
+					if currentmusic_paused then
+						resumemusic()
+					else
+						pausemusic()
+					end
+					mousepressed = true
+				elseif mouseon(32, cura_y, 16, 16) then
+					-- Stop
+					stopmusic()
+					mousepressed = true
+				elseif mouseon(48, cura_y, 16, 16) then
+					-- Rewind
+					current_audio:seek(0)
+					mousepressed = true
+				end
+			end
+			local duration
+			if love_version_meets(10) then
+				duration = current_audio:getDuration()
+			end
+			love.graphics.setColor(128,128,128)
+			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
+			love.graphics.setColor(255,255,255)
+			if duration ~= nil and duration ~= 0 then
+				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*568, 8)
+				if nodialog and not mousepressed and mouseon(152, cura_y+4, 568, 8) then
+					local mouse_elapsed = ((love.mouse.getX()-152)/568)*duration
+					love.graphics.print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-8)
+					if love.mouse.isDown("l") then
+						current_audio:seek(mouse_elapsed)
+						mousepressed = true
+					end
+				end
+			end
+			love.graphics.print(mmss_duration(duration), 728, cura_y+6)
+		end
+
+		rbutton({L.RETURN, "b"}, 0, nil, true)
+		rbutton((musicfileexists(musicplayerfile) and not musiceditor) and L.RELOAD or L.LOAD, 2, nil, true)
+		if musiceditor then
+			rbutton(L.SAVE, 3, nil, true)
+		end
+
+		if nodialog and love.mouse.isDown("l") then
+			if onrbutton(0, nil, true) then
+				-- Return
+				tostate(30, true)
+				oldstate = olderstate
+				mousepressed = true
+			elseif onrbutton(2, nil, true) then
+				-- Reload/Load
+				if musiceditor then
+					dialog.create(
+						L.LOADMUSICNAME,
+						DBS.OKCANCEL,
+						dialog.callback.loadvvvvvvmusic,
+						nil,
+						dialog.form.simplename_make(musiceditorfile:sub(1,-5))
+					)
+				else
+					rbutton(musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD, 2, nil, true, nil, true)
+					love.graphics.present()
+					loadvvvvvvmusic(musicplayerfile)
+				end
+				mousepressed = true
+			elseif musiceditor and onrbutton(3, nil, true) then
+				-- Save
+				dialog.create(
+					L.ENTERNAMESAVE,
+					DBS.OKCANCEL,
+					dialog.callback.savevvvvvvmusic,
+					nil,
+					dialog.form.simplename_make(musiceditorfile:sub(1,-5))
+				)
+			end
+		elseif nodialog and love.mouse.isDown("r") and onrbutton(2, nil, true) and musicfileexists(musicplayerfile) then
+			-- Reload right click menu
+			rightclickmenu.create({"#" .. musicplayerfile, L.UNLOAD}, "assets_music_load")
+		end
 	else
 		statecaught = false
 
@@ -1825,6 +2055,14 @@ function love.update(dt)
 			-- New-style dialog dropdown
 			if dialog.is_open() then
 				dialogs[#dialogs]:dropdown_onchange(RCMid:sub(5, -1), RCMreturn)
+			end
+		elseif RCMid == "assets_music_load" then
+			-- Reload button
+			if RCMreturn == L.UNLOAD then
+				unloadvvvvvvmusic(musicplayerfile)
+				collectgarbage("collect")
+			else
+				unrecognized_rcmreturn()
 			end
 		else
 			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
@@ -2607,12 +2845,14 @@ function love.keypressed(key)
 		pasteroom()
 	elseif nodialog and state == 12 and key == "s" then
 		create_export_dialog()
-	elseif nodialog and (state == 15 or state == 19 or state == 28) and key == "escape" then
+	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31) and key == "escape" then
 		tostate(oldstate, true)
 		if state == 11 then
 			-- Back to search results
 			startinput()
 			input = searchedfor
+		elseif state == 30 then
+			oldstate = olderstate
 		end
 		nodialog = false
 	elseif nodialog and state == 3 and key == "escape" then
@@ -2730,6 +2970,12 @@ function love.keypressed(key)
 		else
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
 			startinput()
+		end
+	elseif state == 31 and (key == " " or key == "space") then
+		if currentmusic_paused then
+			resumemusic()
+		else
+			pausemusic()
 		end
 	end
 end

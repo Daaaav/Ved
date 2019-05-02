@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-04-28 16:47:44 (CEST)
+--- Last converted: 2019-05-02 12:07:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -458,6 +458,23 @@ TINY_SHIFT = "SHIFT",
 SEARCHRESULTS_SCRIPTS = "Skripte [$1]",
 SEARCHRESULTS_ROOMS = "Räume [$1]",
 SEARCHRESULTS_NOTES = "Notizen [$1]",
+
+ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
+MUSICLOADERROR = "Can not load $1.vvv: ",
+MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
+MUSICEXISTSYES = "Exists",
+MUSICEXISTSNO = "Does not exist",
+LOAD = "Load",
+RELOAD = "Reload",
+UNLOAD = "Unload",
+MUSICEDITOR = "Music editor",
+LOADMUSICNAME = "Load this .vvv:",
+ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
+INSERTSONG = "Insert song at track $1",
+SUREDELETESONG = "Are you sure you want to remove song $1?",
+SONGOPENFAIL = "Unable to open $1, song not replaced.",
+SONGREPLACEFAIL = "Something went wrong while replacing the song.",
 
 }
 

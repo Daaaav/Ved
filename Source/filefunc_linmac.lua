@@ -144,7 +144,7 @@ function writelevelfile(path, contents)
 		return false, everr
 	end
 
-	local ficontents = fh:write(contents)
+	fh:write(contents)
 
 	fh:close()
 

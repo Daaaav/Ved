@@ -626,6 +626,23 @@ function loadstate(new, extradata)
 		end
 	elseif new == 29 then
 		plural_test = {val = 1}
+	elseif new == 30 then
+		olderstate = oldstate
+		if not music_loaded then
+			loadvvvvvvmusics()
+		end
+	elseif new == 31 then
+		if extradata == nil then
+			musiceditor = true
+			if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
+				musicplayerfile = musiceditorfile
+			else
+				musicplayerfile = "musiceditor"
+			end
+		else
+			musiceditor = false
+			musicplayerfile = extradata
+		end
 	end
 
 	hook("func_loadstate")
@@ -2949,6 +2966,20 @@ function display_levels_list_title(title, x, y, k)
 			love.graphics.print(arrow_right, x+20*8, y)
 		end
 	end
+end
+
+function mmss_duration(seconds)
+	if seconds == nil or seconds < 0 or seconds ~= seconds then
+		-- Yes, believe it or not, this can be unequal to itself.
+		return "?:??"
+	end
+
+	seconds = math.floor(seconds)
+
+	local minutes = math.floor(seconds/60)
+	seconds = seconds - minutes*60
+
+	return string.format("%d:%02d", minutes, seconds)
 end
 
 hook("func")

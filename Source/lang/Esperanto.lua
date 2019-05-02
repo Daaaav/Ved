@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-04-28 16:47:45 (CEST)
+--- Last converted: 2019-05-02 12:07:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -195,7 +195,7 @@ CHANGETOVER = "Ŝanĝi al vertikala",
 RESIZE = "Movigi/Regrandigi",
 CHANGEENTRANCE = "Movigi enirejon",
 CHANGEEXIT = "Movigi elirejon",
-COPYENTRANCE = "Copy entrance",
+COPYENTRANCE = "Kopii enirejon",
 LOCK = "Ŝlosi",
 UNLOCK = "Malŝlosi",
 BUG = "[Erareto!]",
@@ -470,6 +470,23 @@ TINY_SHIFT = "MAJUSKLO",
 SEARCHRESULTS_SCRIPTS = "Skriptoj [$1]",
 SEARCHRESULTS_ROOMS = "Ĉambroj [$1]",
 SEARCHRESULTS_NOTES = "Notoj [$1]",
+
+ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
+MUSICLOADERROR = "Can not load $1.vvv: ",
+MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
+MUSICEXISTSYES = "Exists",
+MUSICEXISTSNO = "Does not exist",
+LOAD = "Load",
+RELOAD = "Reload",
+UNLOAD = "Unload",
+MUSICEDITOR = "Music editor",
+LOADMUSICNAME = "Load this .vvv:",
+ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
+INSERTSONG = "Insert song at track $1",
+SUREDELETESONG = "Are you sure you want to remove song $1?",
+SONGOPENFAIL = "Unable to open $1, song not replaced.",
+SONGREPLACEFAIL = "Something went wrong while replacing the song.",
 
 }
 
@@ -1064,11 +1081,11 @@ Q¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
 ]¤  ŝlosi X de muso dum premadata (por fari vertikalajn strekojn pli facile)\C
 F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
 
-Entities\gh#
+Entoj\gh#
 
-Shift+right click¤  Delete entity\C
-Alt+click¤          Move entity\C
-Alt+Shift+click¤    Copy entity\C
+Shift+dekstra klako¤  Forigi enton\C
+Alt+klako¤          Movi enton\C
+Alt+Shift+klako¤    Kopii enton\C
 
 Skripto-redaktilo\gh#
 

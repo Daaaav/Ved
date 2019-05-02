@@ -713,3 +713,66 @@ function dialog.callback.leveloptions(button, fields)
 	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
 	finish_undo("CHANGED METADATA")
 end
+
+function dialog.callback.loadvvvvvvmusic(button, fields)
+	if button == DB.CANCEL or fields.name == "" then
+		return
+	end
+
+	local success, errormessage
+	if fields.name ~= "vvvvvvmusic" and fields.name ~= "mmmmmm" then
+		success, errormessage = loadvvvvvvmusic("musiceditor", fields.name .. ".vvv")
+	else
+		success, errormessage = loadvvvvvvmusic(fields.name .. ".vvv")
+	end
+	if not success then
+		dialog.create(langkeys(L.MUSICLOADERROR, {fields.name}) .. anythingbutnil(errormessage))
+	else
+		musiceditorfile = fields.name .. ".vvv"
+		if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
+			musicplayerfile = musiceditorfile
+		else
+			musicplayerfile = "musiceditor"
+		end
+	end
+end
+
+function dialog.callback.savevvvvvvmusic(button, fields)
+	if button == DB.CANCEL or fields.name == "" then
+		return
+	end
+
+	local success, errormessage = savevvvvvvmusic(musicplayerfile, fields.name .. ".vvv")
+	if not success then
+		dialog.create(L.SAVENOSUCCESS .. errormessage)
+	else
+		musiceditorfile = fields.name .. ".vvv"
+	end
+end
+
+function dialog.callback.suredeletesong(button)
+	if button == DB.YES then
+		-- input is the number of the song
+		musicedit_deletesong(musicplayerfile, input)
+	end
+end
+
+function dialog.callback.replacesong(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	local fh, everr = io.open(fields.name, "rb") -- TODO: Use filefunc
+	if fh == nil then
+		dialog.create(langkeys(L.SONGOPENFAIL, {fields.name}) .. "\n\n" .. everr)
+		return
+	end
+	local ficontents = fh:read("*a")
+	fh:close()
+
+	-- input is the number of the song
+	local success, err = musicedit_replacesong(musicplayerfile, input, ficontents)
+	if not success then
+		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
+	end
+end
