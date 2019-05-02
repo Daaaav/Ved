@@ -688,6 +688,8 @@ function loadlevelsfolder()
 	lsuccess, levelsfolder = getlevelsfolder()
 	if lsuccess then
 		files = listfiles(levelsfolder)
+	else
+		files = {}
 	end
 	metadataloaded_folders = {}
 	recentmetadata_files = {}
@@ -708,9 +710,6 @@ function loadlevelsfolder()
 	current_scrolling_leveltitle_pos = 168
 	cons("Loaded.")
 	-- Now get all the backups
-	if files == nil then
-		files = {}
-	end
 	files[".ved-sys" .. dirsep .. "backups"] = {}
 	local rootbackupfolders = love.filesystem.getDirectoryItems("overwrite_backups")
 	for k1, f1 in pairs(rootbackupfolders) do
