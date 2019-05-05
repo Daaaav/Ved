@@ -34,16 +34,20 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	return specificflag_n_real_usages
 end
 
-function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r)
+function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r, alttextcolor)
 	text_r = anythingbutnil(text_r)
 
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
 		if thisistext and s.colored_textboxes then
-			if textboxcolors[lasttextcolor] == nil then
+			if alttextcolor then
+				if alttextboxcolors[lasttextcolor] == nil then
+					lasttextcolor = "gray"
+				end
+			elseif textboxcolors[lasttextcolor] == nil then
 				lasttextcolor = "gray"
 			end
-			_= docolor and setColorArr(textboxcolors[lasttextcolor])
+			_= docolor and setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
 		else
 			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
@@ -55,7 +59,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			if docolor then
 				love.graphics.print(__:sub(1, 1), x+((offsetchars-1)*(textsize and 16 or 8)), y)
 				if thisistext and s.colored_textboxes then
-					_= docolor and setColorArr(textboxcolors[lasttextcolor])
+					_= docolor and setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
 				else
 					_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 				end
