@@ -1863,6 +1863,13 @@ function love.textinput(char)
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
 			elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
+			-- Pipes are newlines on PC and dollar signs are newlines on 3DS
+			elseif (state == 3) and
+			((not PleaseDo3DSHandlingThanks and char == "|") or
+			(PleaseDo3DSHandlingThanks and char == "$")) then
+				table.insert(scriptlines, editingline+1, "")
+				editingline = editingline + 1
+				input = anythingbutnil(scriptlines[editingline])
 			else
 				input = input .. char
 			end
@@ -1939,6 +1946,13 @@ function love.keypressed(key)
 			input = input .. love.system.getClipboardText()
 
 			if state == 3 then
+				-- Let's process people trying to sneak past pipes and dollar signs first before processing newlines
+				if not PleaseDo3DSHandlingThanks and input:find("|") then
+					input = input:gsub("|", "\n")
+				elseif PleaseDo3DSHandlingThanks and input:find("$") then
+					input = input:gsub("$", "\n")
+				end
+
 				if input:find("\n") then
 					-- CRLF -> LF
 					local inputparts = explode("\n", input:gsub("\r\n", "\n"))
