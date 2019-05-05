@@ -1985,6 +1985,13 @@ function love.keypressed(key)
 			elseif state == 15 then
 				helparticlecontent[helpeditingline] = input
 			end
+		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
+			-- If you like symmetry and use Linux you may like this shortcut too
+			input_r = ""
+
+			if state == 3 then
+				dirty()
+			end
 		elseif key == "left" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = leftspace(input, input_r)
 
