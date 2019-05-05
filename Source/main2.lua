@@ -1949,8 +1949,8 @@ function love.keypressed(key)
 				-- Let's process people trying to sneak past pipes and dollar signs first before processing newlines
 				if not PleaseDo3DSHandlingThanks and input:find("|") then
 					input = input:gsub("|", "\n")
-				elseif PleaseDo3DSHandlingThanks and input:find("$") then
-					input = input:gsub("$", "\n")
+				elseif PleaseDo3DSHandlingThanks and input:find("%$") then
+					input = input:gsub("%$", "\n")
 				end
 
 				if input:find("\n") then
