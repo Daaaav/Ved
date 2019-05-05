@@ -34,7 +34,7 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	return specificflag_n_real_usages
 end
 
-function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
+function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r)
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
 		if thisistext and s.colored_textboxes then
@@ -45,12 +45,22 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
 		else
 			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
-		love.graphics.print(text, x, y)
-		offsetchars = string.len(text) + 1
+		love.graphics.print(docolor and text or text:sub(1, string.len(text)-string.len(text_r)), x, y)
+		offsetchars = string.len(text) - string.len(anythingbutnil(text_r)) + 1
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
-			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			if docolor then
+				love.graphics.print(__:sub(1, 1), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				if thisistext and s.colored_textboxes then
+					_= docolor and setColorArr(textboxcolors[lasttextcolor])
+				else
+					_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
+				end
+				love.graphics.print(__:sub(2, string.len(__)), x+(offsetchars*(textsize and 16 or 8)), y)
+			else
+				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			end
 		end
 
 		return nil
@@ -87,17 +97,25 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
 			else
 				_= docolor and setColorArr(s.syntaxcolor_generic)
 			end
-			love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
+			_= docolor and love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
 
 			_= docolor and setColorArr(s.syntaxcolor_separator)
-			love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
+			_= docolor and love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
 
 			offsetchars = offsetchars + (string.len(v)+1)
 		end
 
+		if not docolor then
+			love.graphics.print(text:sub(1, string.len(text)-string.len(text_r)), x, y)
+		end
+
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
-			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			if docolor then
+				love.graphics.print(__:sub(1, 1), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+			else
+				love.graphics.print(__, x+((offsetchars-1-string.len(text_r))*(textsize and 16 or 8)), y)
+			end
 		end
 
 		if partss[1] == "say" then
