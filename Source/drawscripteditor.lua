@@ -29,6 +29,11 @@ function drawscripteditor()
 	-- I could make it #scriptlines now
 	for k = 1, math.max(table.maxn(scriptlines), editingline) do
 		v = anythingbutnil(scriptlines[k])
+		local text_r
+		if k == editingline then
+			v = v .. anythingbutnil(input_r)
+			text_r = input_r
+		end
 
 		-- Save the whales, only display this line if we can see it!
 		if (scriptscroll+24+((textsize and 16 or 8)*k) >= 16) and (scriptscroll+24+((textsize and 16 or 8)*k) <= love.graphics.getHeight()) then
@@ -44,10 +49,10 @@ function drawscripteditor()
 
 			if textsize then
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8)
-				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
+				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r)
 			else
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
-				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
+				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
