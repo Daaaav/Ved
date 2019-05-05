@@ -59,7 +59,6 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				else
 					_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 				end
-				love.graphics.print(__:sub(2, string.len(__)), x+(offsetchars*(textsize and 16 or 8)), y)
 			else
 				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 			end
