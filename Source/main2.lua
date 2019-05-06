@@ -1891,7 +1891,15 @@ function love.textinput(char)
 				cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
 			end
 			if cf ~= 0 and cftype == 0 then
-				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
+				if (dialogs[#dialogs].identifier == "newscript_editor"
+				or dialogs[#dialogs].identifier == "newscript_list"
+				or dialogs[#dialogs].identifier == "duplicate_list"
+				or dialogs[#dialogs].identifier == "renamescript")
+				and ((not PleaseDo3DSHandlingThanks and char == "|") or
+				(PleaseDo3DSHandlingThanks and char == "$")) then
+				else
+					dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
+				end
 			end
 		end
 	end
