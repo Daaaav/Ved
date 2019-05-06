@@ -1788,7 +1788,7 @@ function love.update(dt)
 				dialog.create(
 					L.NEWNAME, DBS.OKCANCEL,
 					dialog.callback.renamescript, L.RENAMESCRIPT, dialog.form.simplename_make(scriptnames[rvnum]),
-					dialog.callback.renamescript_validate
+					dialog.callback.renamescript_validate, "renamescript"
 				)
 				input = rvnum
 			else
