@@ -1862,6 +1862,9 @@ function love.textinput(char)
 		if takinginput and not dialog.is_open() then
 			-- Ugly, but at least won't need another global variable that appears here and there
 			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
+			elseif (state == 1) and nodialog and not editingroomname and makescriptroomtext and
+			((not PleaseDo3DSHandlingThanks and char == "|") or
+			(PleaseDo3DSHandlingThanks and char == "$")) then
 			elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
 			-- Pipes are newlines on PC and dollar signs are newlines on 3DS
 			elseif (state == 3) and
