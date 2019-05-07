@@ -1999,6 +1999,13 @@ function love.keypressed(key)
 				end
 			elseif state == 6 then
 				tabselected = 0
+			elseif takinginput and not dialog.is_open() and state == 1
+			and nodialog and not editingroomname and makescriptroomtext then
+				if not PleaseDo3DSHandlingThanks and input:find("|") then
+					input = input:gsub("|", "")
+				elseif PleaseDo3DSHandlingThanks and input:find("%$") then
+					input = input:gsub("$", "")
+				end
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
 			-- If you use Linux you may like this shortcut!
