@@ -404,7 +404,11 @@ function cDialog:return_fields()
 	local f = {}
 
 	for k,v in pairs(self.fields) do
-		f[v[1]] = v[5]
+		if anythingbutnil0(v[6]) == DF.TEXT then
+			f[v[1]] = v[5] .. v[10]
+		else
+			f[v[1]] = v[5]
+		end
 	end
 
 	return f

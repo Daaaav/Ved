@@ -26,20 +26,20 @@ dialog.form = {}
 
 function dialog.form.save_make()
 	return {
-		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or "")},
-		{"title", 0, 4, 40, metadata.Title},
+		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT, nil, nil, nil, ""},
+		{"title", 0, 4, 40, metadata.Title, DF.TEXT, {}, {}, "", ""},
 	}
 end
 
 function dialog.form.simplename_make(default)
 	return {
-		{"name", 0, 1, 40, default},
+		{"name", 0, 1, 40, default, DF.TEXT, {}, {}, "", ""},
 	}
 end
 
 function dialog.form.customvvvvvvdir_make()
 	return {
-		{"path", 0, 8, 47, s.customvvvvvvdir},
+		{"path", 0, 8, 47, s.customvvvvvvdir, DF.TEXT, {}, {}, "", ""},
 	}
 end
 
@@ -98,7 +98,7 @@ function dialog.form.rawentityproperties_make()
 	local form = {}
 
 	for k,v in pairs(entitypropkeys) do
-		table.insert(form, {v, 5, 2+k, 38, thisentity[v]})
+		table.insert(form, {v, 5, 2+k, 38, thisentity[v], DF.TEXT, {}, {}, "", ""})
 	end
 
 	return form
@@ -134,18 +134,18 @@ end
 function dialog.form.leveloptions_make()
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
-		{"Title", 8, 0, 20, metadata.Title},
+		{"Title", 8, 0, 20, metadata.Title, DF.TEXT, {}, {}, "", ""},
 		{"", 0, 1, 8, L.OPTBY, DF.LABEL},
-		{"Creator", 8, 1, 37, metadata.Creator},
+		{"Creator", 8, 1, 37, metadata.Creator, DF.TEXT, {}, {}, "", ""},
 		{"", 0, 2, 8, L.OPTWEBSITE, DF.LABEL},
-		{"website", 8, 2, 40, metadata.website},
+		{"website", 8, 2, 40, metadata.website, DF.TEXT, {}, {}, "", ""},
 		{"", 0, 4, 8, L.OPTDESC, DF.LABEL},
-		{"Desc1", 8, 4, 40, metadata.Desc1},
-		{"Desc2", 8, 5, 40, metadata.Desc2},
-		{"Desc3", 8, 6, 40, metadata.Desc3},
+		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT, {}, {}, "", ""},
+		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT, {}, {}, "", ""},
+		{"Desc3", 8, 6, 40, metadata.Desc3, DF.TEXT, {}, {}, "", ""},
 		{"", 0, 8, 8, L.OPTSIZE, DF.LABEL},
-		{"mapwidth", 8, 8, 3, metadata.mapwidth},
-		{"mapheight", 12, 8, 3, metadata.mapheight},
+		{"mapwidth", 8, 8, 3, metadata.mapwidth, DF.TEXT, {}, {}, "", ""},
+		{"mapheight", 12, 8, 3, metadata.mapheight, DF.TEXT, {}, {}, "", ""},
 		{"", 0, 10, 8, L.OPTMUSIC, DF.LABEL},
 		{
 			"levmusic", 8, 10, 30, metadata.levmusic, DF.DROPDOWN, listmusicnames, listmusicids,
@@ -164,7 +164,7 @@ end
 
 -- 
 dialog.form.simplename = {
-	{"name", 0, 1, 40, ""},
+	{"name", 0, 1, 40, "", DF.TEXT, {}, {}, "", ""},
 }
 
 dialog.callback = {}
