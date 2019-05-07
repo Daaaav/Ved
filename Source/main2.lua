@@ -2064,6 +2064,18 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
 				dialogs[#dialogs].fields[cf][5] = ""
+			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
+				dialogs[#dialogs].fields[cf][10] = ""
+			elseif key == "left" then
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = leftspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+			elseif key == "right" then
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+			elseif key == "home" then
+				dialogs[#dialogs].fields[cf][10] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
+				dialogs[#dialogs].fields[cf][5] = ""
+			elseif key == "end" then
+				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
+				dialogs[#dialogs].fields[cf][10] = ""
 			end
 		end
 		if key == "tab" then
