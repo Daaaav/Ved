@@ -51,10 +51,10 @@ function drawscripteditor()
 					else
 						l = scriptlines[i]
 					end
-					if l:sub(1, 13) == "createcrewman" then
+					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
 						alttextcolor = true
 						break
-					elseif l:sub(1, 5) == "speak" or l:sub(1, 12) == "speak_active" or l:sub(1, 4) == "text" then
+					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
 						alttextcolor = false
 						break
 					end
