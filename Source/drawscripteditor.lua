@@ -44,11 +44,17 @@ function drawscripteditor()
 			-- Search forward for a createcrewman unless we hit a speak(_active) first
 			local i = k + textlinestogo2 + 1
 			if i <= #scriptlines then
+				local l
 				while true do
-					if scriptlines[i]:sub(1, 13) == "createcrewman" then
+					if i == editingline then
+						l = input .. input_r
+					else
+						l = scriptlines[i]
+					end
+					if l:sub(1, 13) == "createcrewman" then
 						alttextcolor = true
 						break
-					elseif scriptlines[i]:sub(1, 5) == "speak" or scriptlines[i]:sub(1, 12) == "speak_active" then
+					elseif l:sub(1, 5) == "speak" or l:sub(1, 12) == "speak_active" then
 						alttextcolor = false
 						break
 					end
