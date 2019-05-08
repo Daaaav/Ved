@@ -308,7 +308,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 
 		if mode == 0 then
 			if active then
-				love.graphics.print(anythingbutnil(content) .. __ .. anythingbutnil(content_r):sub(2, anythingbutnil(content_r):len()), real_x, real_y-1)
+				love.graphics.print(anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)), real_x, real_y-1)
 			else
 				love.graphics.print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-1)
 			end
