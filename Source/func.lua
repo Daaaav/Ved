@@ -1289,13 +1289,24 @@ function changedmode()
 	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
 	--local oldtilecol = selectedcolor
 
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
-	elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-		levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+	if keyboard_eitherIsDown("shift") then
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
+		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		else
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+		end
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		else
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+		end
 	end
 
 	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
