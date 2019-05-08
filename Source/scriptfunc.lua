@@ -73,36 +73,38 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 
 		partss = explode(",", text2)
 
-		for k,v in pairs(partss) do
-			if offsetchars == 0 then -- First word on the line, so it's a command.
-				-- But is it recognized?
-				if (addcursor and #partss == 1) or knowncommands[v] or knowninternalcommands[v] then
-					_= docolor and setColorArr(s.syntaxcolor_command)
-				else
-					_= docolor and setColorArr(s.syntaxcolor_errortext)
-				end
-			elseif tostring(tonumber(v)) == tostring(v) then -- It's a number!
-				_= docolor and setColorArr(s.syntaxcolor_number)
-			--elseif string.sub(v, 1, 1) == "$" then
-			elseif k == 2 and (partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag") and tostring(tonumber(v)) ~= tostring(v) then
-				-- if flag name is not used yet, newflagname
-				for fl = 0, 99 do
-					if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
-						_= docolor and setColorArr(s.syntaxcolor_flagname)
-						break
+		if docolor then
+			for k,v in pairs(partss) do
+				if offsetchars == 0 then -- First word on the line, so it's a command.
+					-- But is it recognized?
+					if (addcursor and #partss == 1) or knowncommands[v] or knowninternalcommands[v] then
+						setColorArr(s.syntaxcolor_command)
+					else
+						setColorArr(s.syntaxcolor_errortext)
 					end
+				elseif tostring(tonumber(v)) == tostring(v) then -- It's a number!
+					setColorArr(s.syntaxcolor_number)
+				--elseif string.sub(v, 1, 1) == "$" then
+				elseif k == 2 and (partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag") and tostring(tonumber(v)) ~= tostring(v) then
+					-- if flag name is not used yet, newflagname
+					for fl = 0, 99 do
+						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
+							setColorArr(s.syntaxcolor_flagname)
+							break
+						end
 
-					_= docolor and setColorArr(s.syntaxcolor_newflagname)
+						setColorArr(s.syntaxcolor_newflagname)
+					end
+				else
+					setColorArr(s.syntaxcolor_generic)
 				end
-			else
-				_= docolor and setColorArr(s.syntaxcolor_generic)
+				love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
+
+				setColorArr(s.syntaxcolor_separator)
+				love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
+
+				offsetchars = offsetchars + (string.len(v)+1)
 			end
-			_= docolor and love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
-
-			_= docolor and setColorArr(s.syntaxcolor_separator)
-			_= docolor and love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
-
-			offsetchars = offsetchars + (string.len(v)+1)
 		end
 
 		if not docolor then
