@@ -65,7 +65,8 @@ function drawscripteditor()
 						i = i + 1
 					end
 				end
-			elseif textlinestogo2 > 0 then
+			end
+			if textlinestogo2 > 0 then
 				textlinestogo2 = textlinestogo2 - 1
 			end
 		end
