@@ -1322,7 +1322,11 @@ end
 
 function changewarpdir()
 	local oldwarpdir = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
-	levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	if keyboard_eitherIsDown("shift") then
+		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	else
+		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
