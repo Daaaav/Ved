@@ -39,7 +39,7 @@ function drawscripteditor()
 		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ",")
 		local partss = explode(",", text2)
 		if partss[1] == "text" and textlinestogo2 == 0 then
-			textlinestogo2 = anythingbutnil0(tonumber(partss[5])) < 0 and anythingbutnil0(tonumber(partss[5])) or 0
+			textlinestogo2 = math.max(anythingbutnil0(tonumber(partss[5])), 0)
 
 			-- Search forward for a createcrewman unless we hit a speak(_active) first
 			local i = k + textlinestogo2 + 2
