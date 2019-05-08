@@ -1360,6 +1360,20 @@ function love.update(dt)
 		else
 			__ = firstchar .. input_r:sub(1 + firstchar:len())
 		end
+	elseif dialog.is_open() and not dialogs[#dialogs].closing then
+		local cf, cftype = dialogs[#dialogs].currentfield
+		if dialogs[#dialogs].fields[cf] ~= nil then
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+		end
+		if cf ~= 0 and cftype == 0 then
+			cursorflashtime = (cursorflashtime + dt) % 1
+			firstchar = firstUTF8(dialogs[#dialogs].fields[cf][10])
+			if cursorflashtime <= .5 then
+				__ = "_"
+			else
+				__ = firstchar
+			end
+		end
 	elseif __ ~= "_" then
 		__ = "_"
 	end
@@ -1893,6 +1907,8 @@ function love.textinput(char)
 			if cf ~= 0 and cftype == 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
 			end
+
+			cursorflashtime = 0
 		end
 	end
 
@@ -2068,14 +2084,18 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][10] = ""
 			elseif key == "left" then
 				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = leftspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+				cursorflashtime = 0
 			elseif key == "right" then
 				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+				cursorflashtime = 0
 			elseif key == "home" then
 				dialogs[#dialogs].fields[cf][10] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
 				dialogs[#dialogs].fields[cf][5] = ""
+				cursorflashtime = 0
 			elseif key == "end" then
 				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
 				dialogs[#dialogs].fields[cf][10] = ""
+				cursorflashtime = 0
 			end
 		end
 		if key == "tab" then
@@ -2107,6 +2127,8 @@ function love.keypressed(key)
 					-- Only text labels are skipped
 					done = true
 				end
+
+				cursorflashtime = 0
 			end
 		end
 	end

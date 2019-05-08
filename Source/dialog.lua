@@ -307,7 +307,11 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 		self:setColor(0,0,0,255)
 
 		if mode == 0 then
-			love.graphics.print(anythingbutnil(content) .. (active and __ or "") .. anythingbutnil(content_r):sub(2, string.len(anythingbutnil(content_r))), real_x, real_y-1)
+			if active then
+				love.graphics.print(anythingbutnil(content) .. __ .. anythingbutnil(content_r):sub(2, anythingbutnil(content_r):len()), real_x, real_y-1)
+			else
+				love.graphics.print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-1)
+			end
 		elseif mode == 1 then
 			if not menuitemslabel then
 				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
