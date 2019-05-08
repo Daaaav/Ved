@@ -57,7 +57,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
-				love.graphics.print(__:sub(1, 1), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
 			else
 				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 			end
@@ -114,7 +114,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
-				love.graphics.print(__:sub(1, 1), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+				love.graphics.print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
 			else
 				love.graphics.print(__, x+((offsetchars-1-string.len(text_r))*(textsize and 16 or 8)), y)
 			end
