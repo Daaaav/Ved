@@ -54,7 +54,7 @@ function drawscripteditor()
 					if l:sub(1, 13) == "createcrewman" then
 						alttextcolor = true
 						break
-					elseif l:sub(1, 5) == "speak" or l:sub(1, 12) == "speak_active" then
+					elseif l:sub(1, 5) == "speak" or l:sub(1, 12) == "speak_active" or l:sub(1, 4) == "text" then
 						alttextcolor = false
 						break
 					end
