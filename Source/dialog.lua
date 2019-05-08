@@ -252,7 +252,7 @@ function cDialog:dropdown_onchange(key, picked)
 	end
 end
 
-function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel) -- next: dropdown onchange function
+function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel, _, content_r) -- next: dropdown onchange function
 	-- Modes:
 	-- 0: textbox (default)
 	-- 1: dropdown
@@ -307,7 +307,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 		self:setColor(0,0,0,255)
 
 		if mode == 0 then
-			love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
+			love.graphics.print(anythingbutnil(content) .. (active and __ or "") .. anythingbutnil(content_r):sub(2, string.len(anythingbutnil(content_r))), real_x, real_y-1)
 		elseif mode == 1 then
 			if not menuitemslabel then
 				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
