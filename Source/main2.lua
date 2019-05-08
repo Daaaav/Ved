@@ -2423,7 +2423,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "x" then
 			-- 5x5 brush
@@ -2431,7 +2433,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 3
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "c" then
 			-- Alright, 7x7 brush
@@ -2439,7 +2443,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 4
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "v" then
 			-- And 9x9 brush
@@ -2447,7 +2453,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 5
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "h" then
 			-- Horizontal
@@ -2455,7 +2463,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 6
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "b" then
 			-- Vertical
@@ -2463,7 +2473,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 7
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "f" then
 			-- Fill bucket
@@ -2471,7 +2483,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 9
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		end
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
