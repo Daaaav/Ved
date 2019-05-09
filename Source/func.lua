@@ -134,7 +134,7 @@ function allbutfirstUTF8(text)
 		return text
 	end
 
-	local binarychar = toBinary(lastchar)
+	local binarychar = toBinary(firstchar)
 
 	if binarychar:sub(1, 3) == "110" then
 		return text:sub(3, text:len())
