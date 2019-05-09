@@ -252,7 +252,7 @@ function cDialog:dropdown_onchange(key, picked)
 	end
 end
 
-function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel) -- next: dropdown onchange function
+function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs1, extendedargs2) -- next: dropdown onchange function
 	-- Modes:
 	-- 0: textbox (default)
 	-- 1: dropdown
@@ -261,6 +261,14 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 	-- 4: radio buttons dropdown
 	if mode == nil then
 		mode = 0
+	end
+
+	local content_r, menuitems, menuitemslabel
+	if mode == 0 then
+		content_r = extendedargs1
+	else
+		menuitems = extendedargs1
+		menuitemslabel = extendedargs2
 	end
 
 	local real_x = self.x+10+x*8
@@ -291,6 +299,10 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 
 			if (active and love.keyboard.isDown("tab"))
 			or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+				if self.fields[self.currentfield] ~= nil and self.fields[self.currentfield][6] == 0 then
+					self.fields[self.currentfield][5] = anythingbutnil(self.fields[self.currentfield][5]) .. anythingbutnil(self.fields[self.currentfield][7])
+					self.fields[self.currentfield][7] = ""
+				end
 				self.currentfield = n
 
 				if mode == 1 and not RCMactive then
@@ -307,7 +319,11 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 		self:setColor(0,0,0,255)
 
 		if mode == 0 then
-			love.graphics.print(anythingbutnil(content) .. (active and __ or ""), real_x, real_y-1)
+			if active then
+				love.graphics.print(anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)), real_x, real_y-1)
+			else
+				love.graphics.print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-1)
+			end
 		elseif mode == 1 then
 			if not menuitemslabel then
 				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
@@ -404,7 +420,11 @@ function cDialog:return_fields()
 	local f = {}
 
 	for k,v in pairs(self.fields) do
-		f[v[1]] = v[5]
+		if anythingbutnil0(v[6]) == DF.TEXT then
+			f[v[1]] = v[5] .. anythingbutnil(v[7])
+		else
+			f[v[1]] = v[5]
+		end
 	end
 
 	return f
