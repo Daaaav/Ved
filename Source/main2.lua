@@ -2004,7 +2004,7 @@ function love.keypressed(key)
 				if not PleaseDo3DSHandlingThanks and input:find("|") then
 					input = input:gsub("|", "")
 				elseif PleaseDo3DSHandlingThanks and input:find("%$") then
-					input = input:gsub("$", "")
+					input = input:gsub("%$", "")
 				end
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
