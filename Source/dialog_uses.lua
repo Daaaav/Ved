@@ -253,7 +253,7 @@ end
 
 function dialog.callback.newscript_validate(button, fields, identifier)
 	if button == DB.OK then
-		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+		if scripts[fields.name] ~= nil then
 			-- Script already exists
 			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
 			return true
