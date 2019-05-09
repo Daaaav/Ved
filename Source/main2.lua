@@ -2104,6 +2104,10 @@ function love.keypressed(key)
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
+			if cftype == 0 then
+				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
+				dialogs[#dialogs].fields[cf][7] = ""
+			end
 
 			while not done do
 				if keyboard_eitherIsDown("shift") then

@@ -299,6 +299,10 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs
 
 			if (active and love.keyboard.isDown("tab"))
 			or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+				if mode == 0 and self.fields[self.currentfield] ~= nil then
+					self.fields[self.currentfield][5] = anythingbutnil(self.fields[self.currentfield][5]) .. anythingbutnil(self.fields[self.currentfield][7])
+					self.fields[self.currentfield][7] = ""
+				end
 				self.currentfield = n
 
 				if mode == 1 and not RCMactive then
