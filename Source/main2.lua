@@ -1367,7 +1367,7 @@ function love.update(dt)
 		end
 		if cf ~= 0 and cftype == 0 then
 			cursorflashtime = (cursorflashtime + dt) % 1
-			firstchar = firstUTF8(dialogs[#dialogs].fields[cf][10])
+			firstchar = firstUTF8(anythingbutnil(dialogs[#dialogs].fields[cf][7]))
 			if cursorflashtime <= .5 then
 				__ = "_"
 			else
@@ -2081,20 +2081,20 @@ function love.keypressed(key)
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
 				dialogs[#dialogs].fields[cf][5] = ""
 			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
-				dialogs[#dialogs].fields[cf][10] = ""
+				dialogs[#dialogs].fields[cf][7] = ""
 			elseif key == "left" then
-				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = leftspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = leftspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
 				cursorflashtime = 0
 			elseif key == "right" then
-				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][10])
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
 				cursorflashtime = 0
 			elseif key == "home" then
-				dialogs[#dialogs].fields[cf][10] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
+				dialogs[#dialogs].fields[cf][7] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
 				dialogs[#dialogs].fields[cf][5] = ""
 				cursorflashtime = 0
 			elseif key == "end" then
-				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][10])
-				dialogs[#dialogs].fields[cf][10] = ""
+				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
+				dialogs[#dialogs].fields[cf][7] = ""
 				cursorflashtime = 0
 			end
 		end

@@ -252,7 +252,7 @@ function cDialog:dropdown_onchange(key, picked)
 	end
 end
 
-function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, menuitemslabel, _, content_r) -- next: dropdown onchange function
+function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs1, extendedargs2) -- next: dropdown onchange function
 	-- Modes:
 	-- 0: textbox (default)
 	-- 1: dropdown
@@ -261,6 +261,14 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, menuitems, m
 	-- 4: radio buttons dropdown
 	if mode == nil then
 		mode = 0
+	end
+
+	local content_r, menuitems, menuitemslabel
+	if mode == 0 then
+		content_r = extendedargs1
+	else
+		menuitems = extendedargs1
+		menuitemslabel = extendedargs2
 	end
 
 	local real_x = self.x+10+x*8
@@ -409,7 +417,7 @@ function cDialog:return_fields()
 
 	for k,v in pairs(self.fields) do
 		if anythingbutnil0(v[6]) == DF.TEXT then
-			f[v[1]] = v[5] .. v[10]
+			f[v[1]] = v[5] .. anythingbutnil(v[7])
 		else
 			f[v[1]] = v[5]
 		end
