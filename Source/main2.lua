@@ -2076,6 +2076,8 @@ function love.keypressed(key)
 		if cf ~= 0 and cftype == 0 then
 			if key == "backspace" then
 				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
+			elseif key == "delete" then
+				_, dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
