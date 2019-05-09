@@ -2058,17 +2058,6 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
-
-				if (dialogs[#dialogs].identifier == "newscript_editor"
-				or dialogs[#dialogs].identifier == "newscript_list"
-				or dialogs[#dialogs].identifier == "duplicate_list"
-				or dialogs[#dialogs].identifier == "renamescript") then
-					if not PleaseDo3DSHandlingThanks and dialogs[#dialogs].fields[cf][5]:find("|") then
-						dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5]:gsub("|", "")
-					elseif PleaseDo3DSHandlingThanks and dialogs[#dialogs].fields[cf][5]:find("%$") then
-						dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5]:gsub("$", "")
-					end
-				end
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
 				dialogs[#dialogs].fields[cf][5] = ""
 			end
