@@ -1894,15 +1894,7 @@ function love.textinput(char)
 				cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
 			end
 			if cf ~= 0 and cftype == 0 then
-				if (dialogs[#dialogs].identifier == "newscript_editor"
-				or dialogs[#dialogs].identifier == "newscript_list"
-				or dialogs[#dialogs].identifier == "duplicate_list"
-				or dialogs[#dialogs].identifier == "renamescript")
-				and ((not PleaseDo3DSHandlingThanks and char == "|") or
-				(PleaseDo3DSHandlingThanks and char == "$")) then
-				else
-					dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
-				end
+				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
 			end
 		end
 	end
@@ -1999,13 +1991,6 @@ function love.keypressed(key)
 				end
 			elseif state == 6 then
 				tabselected = 0
-			elseif takinginput and not dialog.is_open() and state == 1
-			and nodialog and not editingroomname and makescriptroomtext then
-				if not PleaseDo3DSHandlingThanks and input:find("|") then
-					input = input:gsub("|", "")
-				elseif PleaseDo3DSHandlingThanks and input:find("%$") then
-					input = input:gsub("%$", "")
-				end
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("u") then
 			-- If you use Linux you may like this shortcut!

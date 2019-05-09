@@ -252,10 +252,19 @@ function dialog.callback.savenewlevel(button, fields)
 end
 
 function dialog.callback.newscript_validate(button, fields, identifier)
-	if button == DB.OK and scripts[fields.name] ~= nil then
-		-- Script already exists
-		dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
-		return true
+	if button == DB.OK then
+		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+			-- Script already exists
+			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
+			return true
+		end
+
+		if (not PleaseDo3DSHandlingThanks and fields.name:match("|")) or
+		(PleaseDo3DSHandlingThanks and fields.name:match("%$")) then
+			-- Script name has | or $
+			dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+			return true
+		end
 	end
 end
 
@@ -537,10 +546,19 @@ function dialog.callback.newnote(button, fields)
 end
 
 function dialog.callback.renamescript_validate(button, fields)
-	if button == DB.OK and scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
-		-- Script already exists
-		dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
-		return true
+	if button == DB.OK then
+		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+			-- Script already exists
+			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
+			return true
+		end
+
+		if (not PleaseDo3DSHandlingThanks and fields.name:match("|")) or
+		(PleaseDo3DSHandlingThanks and fields.name:match("%$")) then
+			-- Script name has | or $
+			dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+			return true
+		end
 	end
 end
 
