@@ -2322,7 +2322,7 @@ function love.keypressed(key)
 	elseif state == 1 and editingroomtext > 0 and key == "return" then
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
-		if entitydata[editingroomtext].data == "stop" then
+		if (entitydata[editingroomtext].t == 17 and entitydata[editingroomtext].data == L.BUG) or ((entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) and entitydata[editingroomtext].data == "stop") then
 			removeentity(editingroomtext)
 		end
 		editingroomtext = 0
