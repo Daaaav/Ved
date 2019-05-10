@@ -2316,8 +2316,17 @@ function love.keypressed(key)
 		end
 	elseif state == 1 and editingroomname and key == "return" then
 		saveroomname()
+	elseif state == 1 and editingroomname and key == "escape" then
+		editingroomname = false
+		stopinput()
 	elseif state == 1 and editingroomtext > 0 and key == "return" then
 		endeditingroomtext()
+	elseif state == 1 and editingroomtext > 0 and key == "escape" then
+		if (entitydata[editingroomtext].t == 17 and entitydata[editingroomtext].data == L.BUG) or ((entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) and entitydata[editingroomtext].data == "stop") then
+			removeentity(editingroomtext)
+		end
+		editingroomtext = 0
+		stopinput()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
