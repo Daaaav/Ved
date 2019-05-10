@@ -111,7 +111,7 @@ function drawscripteditor()
 	end
 	rbutton({L.SEARCHSCRIPT, "cF"}, 6)
 	rbutton({L.GOTOLINE, "cG"}, 7)
-	rbutton({internalscript and L.INTERNALOFF or L.INTERNALON, "cI"}, 8, nil, nil, nil, internalscript)
+	rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, internalscript or cutscenebarsinternalscript)
 	--hoverrectangle(internalscript and 160 or 128, internalscript and 160 or 128, internalscript and 0 or 128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
 	--love.graphics.printf((internalscript and L.INTERNALOFF or L.INTERNALON), love.graphics.getWidth()-(128-8), 8+(24*8)+4+2, 128-16, "center")
 	--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
@@ -200,7 +200,26 @@ function drawscripteditor()
 			startscriptgotoline()
 		elseif not mousepressed and onrbutton(8) then
 			-- Internal scripting
-			internalscript = not internalscript
+			if keyboard_eitherIsDown("shift") then
+				if internalscript then
+					internalscript = false
+				elseif cutscenebarsinternalscript then
+					internalscript = true
+					cutscenebarsinternalscript = false
+				else
+					cutscenebarsinternalscript = true
+				end
+			else
+				if internalscript then
+					internalscript = false
+					cutscenebarsinternalscript = true
+				elseif cutscenebarsinternalscript then
+					internalscript = false
+					cutscenebarsinternalscript = false
+				else
+					internalscript = true
+				end
+			end
 			dirty()
 
 			mousepressed = true
