@@ -734,7 +734,7 @@ function drawmaineditor()
 				y = 30*roomy + aty,
 				t = 17,
 				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = L.BUG
+				data = ""
 				})
 
 			editingroomtext = count.entity_ai
@@ -761,7 +761,7 @@ function drawmaineditor()
 				y = 30*roomy + aty,
 				t = 18,
 				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = "stop"
+				data = ""
 				})
 
 			editingroomtext = count.entity_ai
@@ -786,7 +786,7 @@ function drawmaineditor()
 					y = 30*roomy + aty,
 					t = 19,
 					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = "stop"
+					data = ""
 					})
 				editingsboxid = count.entity_ai
 				selectedsubtool[13] = 2
