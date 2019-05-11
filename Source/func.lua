@@ -126,6 +126,26 @@ function firstUTF8(text)
 	end
 end
 
+function allbutfirstUTF8(text)
+	if text == nil then return end
+
+	local firstchar = text:sub(1, 1)
+	if firstchar == "" then
+		return text
+	end
+
+	local binarychar = toBinary(firstchar)
+
+	if binarychar:sub(1, 3) == "110" then
+		return text:sub(3, text:len())
+	elseif binarychar:sub(1, 4) == "1110" then
+		return text:sub(4, text:len())
+	elseif binarychar:sub(1, 5) == "11110" then
+		return text:sub(5, text:len())
+	else
+		return text:sub(2, text:len())
+	end
+end
 
 --
 function love.graphics.UTF8debugprint(text, x, y)
@@ -1306,13 +1326,24 @@ function changedmode()
 	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
 	--local oldtilecol = selectedcolor
 
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
-	elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-		levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-		levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+	if keyboard_eitherIsDown("shift") then
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
+		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		else
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+		end
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
+			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		else
+			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+		end
 	end
 
 	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
@@ -1339,7 +1370,11 @@ end
 
 function changewarpdir()
 	local oldwarpdir = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
-	levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	if keyboard_eitherIsDown("shift") then
+		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	else
+		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1382,6 +1417,13 @@ function saveroomname()
 end
 
 function endeditingroomtext(donotmakethisnil)
+	if entitydata[editingroomtext].t ~= 17 and
+	(not PleaseDo3DSHandlingThanks and input:find("|"))
+	or (PleaseDo3DSHandlingThanks and input:find("%$")) then
+		dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+		return
+	end
+
 	-- We were typing a text!
 	stopinput()
 	if entitydata[editingroomtext] == nil then

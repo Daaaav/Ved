@@ -18,3 +18,4 @@ L_PLU.GIGABYTES = {
 	[0] = "$1 GB",
 	[1] = "$1 GB",
 }
+L.CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!"

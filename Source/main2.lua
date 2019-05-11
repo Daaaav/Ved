@@ -1596,6 +1596,20 @@ function love.update(dt)
 		else
 			__ = firstchar .. input_r:sub(1 + firstchar:len())
 		end
+	elseif dialog.is_open() and not dialogs[#dialogs].closing then
+		local cf, cftype = dialogs[#dialogs].currentfield
+		if dialogs[#dialogs].fields[cf] ~= nil then
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+		end
+		if cf ~= 0 and cftype == 0 then
+			cursorflashtime = (cursorflashtime + dt) % 1
+			firstchar = firstUTF8(anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+			if cursorflashtime <= .5 then
+				__ = "_"
+			else
+				__ = firstchar
+			end
+		end
 	elseif __ ~= "_" then
 		__ = "_"
 	end
@@ -2137,6 +2151,8 @@ function love.textinput(char)
 			if cf ~= 0 and cftype == 0 then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
 			end
+
+			cursorflashtime = 0
 		end
 	end
 
@@ -2304,16 +2320,38 @@ function love.keypressed(key)
 		if cf ~= 0 and cftype == 0 then
 			if key == "backspace" then
 				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
+			elseif key == "delete" then
+				_, dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
 				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
 				dialogs[#dialogs].fields[cf][5] = ""
+			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
+				dialogs[#dialogs].fields[cf][7] = ""
+			elseif key == "left" then
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = leftspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+				cursorflashtime = 0
+			elseif key == "right" then
+				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+				cursorflashtime = 0
+			elseif key == "home" then
+				dialogs[#dialogs].fields[cf][7] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
+				dialogs[#dialogs].fields[cf][5] = ""
+				cursorflashtime = 0
+			elseif key == "end" then
+				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
+				dialogs[#dialogs].fields[cf][7] = ""
+				cursorflashtime = 0
 			end
 		end
 		if key == "tab" then
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
+			if cftype == 0 then
+				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
+				dialogs[#dialogs].fields[cf][7] = ""
+			end
 
 			while not done do
 				if keyboard_eitherIsDown("shift") then
@@ -2339,6 +2377,8 @@ function love.keypressed(key)
 					-- Only text labels are skipped
 					done = true
 				end
+
+				cursorflashtime = 0
 			end
 		end
 	end
@@ -2520,8 +2560,17 @@ function love.keypressed(key)
 		end
 	elseif state == 1 and editingroomname and key == "return" then
 		saveroomname()
+	elseif state == 1 and editingroomname and key == "escape" then
+		editingroomname = false
+		stopinput()
 	elseif state == 1 and editingroomtext > 0 and key == "return" then
 		endeditingroomtext()
+	elseif state == 1 and editingroomtext > 0 and key == "escape" then
+		if entitydata[editingroomtext].data == "" then
+			removeentity(editingroomtext)
+		end
+		editingroomtext = 0
+		stopinput()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
@@ -2667,7 +2716,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "x" then
 			-- 5x5 brush
@@ -2675,7 +2726,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 3
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "c" then
 			-- Alright, 7x7 brush
@@ -2683,7 +2736,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 4
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "v" then
 			-- And 9x9 brush
@@ -2691,7 +2746,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 5
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "h" then
 			-- Horizontal
@@ -2699,7 +2756,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 6
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "b" then
 			-- Vertical
@@ -2707,7 +2766,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 7
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		elseif key == "f" then
 			-- Fill bucket
@@ -2715,7 +2776,9 @@ function love.keypressed(key)
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 9
 
-				holdingzvx = true
+				if not keyboard_eitherIsDown("shift") then
+					holdingzvx = true
+				end
 			end
 		end
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
