@@ -1400,6 +1400,13 @@ function saveroomname()
 end
 
 function endeditingroomtext(donotmakethisnil)
+	if entitydata[editingroomtext].t ~= 17 and
+	(not PleaseDo3DSHandlingThanks and input:find("|"))
+	or (PleaseDo3DSHandlingThanks and input:find("%$")) then
+		dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+		return
+	end
+
 	-- We were typing a text!
 	stopinput()
 	if entitydata[editingroomtext] == nil then
