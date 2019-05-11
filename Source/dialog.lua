@@ -254,7 +254,7 @@ end
 
 function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs1, extendedargs2) -- next: dropdown onchange function
 	-- Modes:
-	-- 0: textbox (default)
+	-- 0: textbox
 	-- 1: dropdown
 	-- 2: text label (can also be function returning string)
 	-- 3: checkbox
@@ -319,11 +319,17 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs
 		self:setColor(0,0,0,255)
 
 		if mode == 0 then
+			love.graphics.setScissor(real_x, real_y-3, real_w, 8)
 			if active then
-				love.graphics.print(anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)), real_x, real_y-1)
+				love.graphics.print(
+					anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)),
+					math.min(real_x, real_x+real_w-font8:getWidth(anythingbutnil(content) .. "_")),
+					real_y-1
+				)
 			else
 				love.graphics.print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-1)
 			end
+			love.graphics.setScissor()
 		elseif mode == 1 then
 			if not menuitemslabel then
 				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
