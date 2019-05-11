@@ -183,6 +183,8 @@ function love.load()
 	newbtn = love.graphics.newImage("images/new.png")
 	helpbtn = love.graphics.newImage("images/help.png")
 	retbtn = love.graphics.newImage("images/ret.png")
+	infobtn = love.graphics.newImage("images/info.png")
+	infograybtn = love.graphics.newImage("images/infogray.png")
 
 	undobtn = love.graphics.newImage("images/undo.png")
 	redobtn = love.graphics.newImage("images/redo.png")
@@ -1318,6 +1320,15 @@ function love.draw()
 		else
 			love.graphics.print(musicplayerfile, 16, 14)
 		end
+		local file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
+		local musicnamex
+		if musiceditor then
+			musicnamex = 92
+		elseif file_metadata ~= nil then
+			musicnamex = 60
+		else
+			musicnamex = 44
+		end
 		for m = 0, 15 do
 			local audio = getmusicaudio(musicplayerfile, m)
 			if audio == nil then
@@ -1327,21 +1338,34 @@ function love.draw()
 			else
 				hoverdraw(sound_play, 16, 32+24*m, 16, 16)
 			end
+			local song_metadata, song_metadata_anyset
+			if musiceditor or file_metadata ~= nil then
+				song_metadata, song_metadata_anyset = getmusicmeta_song(musicplayerfile, m)
+				if not musiceditor and not song_metadata_anyset then
+					love.graphics.setColor(64,64,64)
+					love.graphics.draw(infograybtn, 32, 32+24*m)
+					love.graphics.setColor(255,255,255)
+				else
+					local notes_set = song_metadata_anyset and song_metadata.notes ~= ""
+					hoverdraw(notes_set and infobtn or infograybtn, 32, 32+24*m, 16, 16)
+				end
+			end
 			local can_remove = false
 			local filedata = getmusicfiledata(musicplayerfile, m)
 			if musiceditor then
 				can_remove = filedata ~= nil
-				hoverdraw(loadbtn, 32, 32+24*m, 16, 16)
+				hoverdraw(loadbtn, 48, 32+24*m, 16, 16)
 				if not can_remove then
 					love.graphics.setColor(64,64,64)
-					love.graphics.draw(eraser, 48, 32+24*m)
+					love.graphics.draw(eraser, 64, 32+24*m)
 					love.graphics.setColor(255,255,255)
 				else
-					hoverdraw(eraser, 48, 32+24*m, 16, 16)
+					hoverdraw(eraser, 64, 32+24*m, 16, 16)
 				end
 			end
 			if love.mouse.isDown("l") and not mousepressed and nodialog then
 				if mouseon(16, 32+24*m, 16, 16) then
+					-- Play
 					if audio == nil then
 						dialog.create(L.MUSICPLAYERROR)
 					else
@@ -1349,6 +1373,24 @@ function love.draw()
 						mousepressed = true
 					end
 				elseif musiceditor and mouseon(32, 32+24*m, 16, 16) then
+					-- Song metadata (editor)
+					input = m
+					dialog.create(
+						"",
+						DBS.OKCANCEL,
+						dialog.callback.songmetadata,
+						langkeys(L.SONGMETADATA, {m}),
+						dialog.form.songmetadata_make(song_metadata)
+					)
+				elseif song_metadata_anyset and mouseon(32, 32+24*m, 16, 16) then
+					-- Song metadata (player)
+					dialog.create(
+						L.MUSICTITLE .. song_metadata.name .. "\n\n"
+						.. L.MUSICFILENAME .. song_metadata.filename .. "\n\n"
+						.. L.MUSICNOTES .. "\n" .. song_metadata.notes
+					)
+				elseif musiceditor and mouseon(48, 32+24*m, 16, 16) then
+					-- Replace
 					input = m
 					dialog.create(
 						L.ENTERSONGPATH,
@@ -1357,7 +1399,8 @@ function love.draw()
 						langkeys(L.INSERTSONG, {m}),
 						dialog.form.simplename
 					)
-				elseif can_remove and mouseon(48, 32+24*m, 16, 16) then
+				elseif can_remove and mouseon(64, 32+24*m, 16, 16) then
+					-- Remove
 					input = m
 					dialog.create(langkeys(L.SUREDELETESONG, {m}), DBS.YESNO, dialog.callback.suredeletesong)
 				end
@@ -1365,7 +1408,18 @@ function love.draw()
 			if getmusicedited(musicplayerfile, m) then
 				love.graphics.setColor(255,0,0)
 			end
-			love.graphics.print("[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]), musiceditor and 76 or 44, 38+24*m)
+			love.graphics.print("[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]), musicnamex, 38+24*m)
+			if song_metadata_anyset then
+				local shown_name
+				if song_metadata.name == "" then
+					shown_name = song_metadata.filename
+				else
+					shown_name = song_metadata.name
+				end
+				love.graphics.setScissor(musicnamex+248, 36+24*m, 256, 8)
+				love.graphics.print(shown_name, musicnamex+248, 38+24*m)
+				love.graphics.setScissor()
+			end
 			if not love_version_meets(10) then
 				love.graphics.print("?:??", 728, 38+24*m)
 			elseif audio == nil then
@@ -1376,7 +1430,7 @@ function love.draw()
 			if filedata ~= nil then
 				local readable_size = bytes_notation(filedata:getSize())
 				love.graphics.setColor(128,128,128)
-				love.graphics.print(readable_size, 680-font8:getWidth(readable_size), 38+24*m)
+				love.graphics.print(readable_size, 696-font8:getWidth(readable_size), 38+24*m)
 			end
 			love.graphics.setColor(255,255,255)
 		end
@@ -1443,6 +1497,9 @@ function love.draw()
 		if musiceditor then
 			rbutton(L.SAVE, 3, nil, true)
 		end
+		if musiceditor or file_metadata_anyset then
+			rbutton(L.MUSICFILEMETADATA, 5, nil, true)
+		end
 
 		if nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, nil, true) then
@@ -1473,7 +1530,24 @@ function love.draw()
 					DBS.OKCANCEL,
 					dialog.callback.savevvvvvvmusic,
 					nil,
-					dialog.form.simplename_make(musiceditorfile:sub(1,-5))
+					dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
+				)
+			elseif musiceditor and onrbutton(5, nil, true) then
+				-- File metadata (editor)
+				dialog.create(
+					"",
+					DBS.OKCANCEL,
+					dialog.callback.musicfilemetadata,
+					L.MUSICFILEMETADATA,
+					dialog.form.musicfilemetadata_make(file_metadata)
+				)
+			elseif file_metadata_anyset and onrbutton(5, nil, true) then
+				-- File metadata (player)
+				dialog.create(
+					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
+					.. L.MUSICTITLE .. file_metadata.name .. "\n\n"
+					.. L.MUSICARTIST .. file_metadata.artist .. "\n\n"
+					.. L.MUSICNOTES .. "\n" .. file_metadata.notes
 				)
 			end
 		elseif nodialog and love.mouse.isDown("r") and onrbutton(2, nil, true) and musicfileexists(musicplayerfile) then

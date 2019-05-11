@@ -19,3 +19,11 @@ L_PLU.GIGABYTES = {
 	[1] = "$1 GB",
 }
 L.CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!"
+L.MUSICTITLE = "Title: "
+L.MUSICARTIST = "Artist: "
+L.MUSICFILENAME = "Filename: "
+L.MUSICNOTES = "Notes:"
+L.SONGMETADATA = "Metadata for song $1"
+L.MUSICFILEMETADATA = "File metadata"
+L.MUSICEXPORTEDON = "Exported: " -- Followed by date and time
+L.SAVEMETADATA = "Save metadata"

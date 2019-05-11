@@ -160,6 +160,52 @@ function dialog.form.leveloptions_make()
 	}
 end
 
+function dialog.form.songmetadata_make(song_metadata)
+	local name, filename, notes = "", "", ""
+	if song_metadata ~= nil then
+		name = song_metadata.name
+		filename = song_metadata.filename
+		notes = song_metadata.notes
+	end
+
+	return {
+		{"", 0, 0, 40, L.MUSICTITLE, DF.LABEL},
+		{"name", 0, 1, 32, name, DF.TEXT},
+		{"", 0, 3, 40, L.MUSICFILENAME, DF.LABEL},
+		{"filename", 0, 4, 32, filename, DF.TEXT},
+		{"", 0, 6, 40, L.MUSICNOTES, DF.LABEL},
+		{"notes", 0, 7, 47, notes, DF.TEXT},
+	}
+end
+
+function dialog.form.musicfilemetadata_make(file_metadata)
+	local export_time, name, artist, notes = 0, "", "", ""
+	if file_metadata ~= nil then
+		export_time = file_metadata.export_time
+		name = file_metadata.name
+		artist = file_metadata.artist
+		notes = file_metadata.notes
+	end
+
+	return {
+		{"", 0, 0, 40, L.MUSICTITLE, DF.LABEL},
+		{"name", 0, 1, 32, name, DF.TEXT},
+		{"", 0, 3, 40, L.MUSICARTIST, DF.LABEL},
+		{"artist", 0, 4, 32, artist, DF.TEXT},
+		{"", 0, 6, 40, L.MUSICNOTES, DF.LABEL},
+		{"notes", 0, 7, 47, notes, DF.TEXT},
+		{"", 0, 15, 30, L.MUSICEXPORTEDON .. "\n" .. format_date(export_time), DF.LABEL}
+	}
+end
+
+function dialog.form.savevvvvvvmusic_make(default)
+	return {
+		{"name", 0, 1, 40, default, DF.TEXT},
+		{"savemetadata", 0, 3, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX},
+		{"", 2, 3, 40, L.SAVEMETADATA, DF.LABEL}
+	}
+end
+
 --function dialog.form.
 
 -- 
@@ -760,7 +806,7 @@ function dialog.callback.savevvvvvvmusic(button, fields)
 		return
 	end
 
-	local success, errormessage = savevvvvvvmusic(musicplayerfile, fields.name .. ".vvv")
+	local success, errormessage = savevvvvvvmusic(musicplayerfile, fields.name .. ".vvv", fields.savemetadata)
 	if not success then
 		dialog.create(L.SAVENOSUCCESS .. errormessage)
 	else
@@ -792,5 +838,31 @@ function dialog.callback.replacesong(button, fields)
 	local success, err = musicedit_replacesong(musicplayerfile, input, ficontents)
 	if not success then
 		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
+	else
+		local last_dirsep = -fields.name:reverse():find(dirsep, 1, true)+1
+		local filename
+		if last_dirsep == nil then
+			filename = fields.name
+		else
+			filename = fields.name:sub(last_dirsep, -1)
+		end
+		setmusicmeta_song(musicplayerfile, input, nil, filename, nil)
 	end
+end
+
+function dialog.callback.songmetadata(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	-- input is the number of the song
+	setmusicmeta_song(musicplayerfile, input, fields.name, fields.filename, fields.notes)
+end
+
+function dialog.callback.musicfilemetadata(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	setmusicmeta_file(musicplayerfile, nil, fields.name, fields.artist, fields.notes)
 end
