@@ -41,32 +41,32 @@ function drawscripteditor()
 		if partss[1] == "text" and textlinestogo2 == 0 then
 			textlinestogo2 = math.max(anythingbutnil0(tonumber(partss[5])), 0)
 
-			-- Search forward for a createcrewman unless we hit a speak(_active) first
-			local i = k + textlinestogo2 + 1
-			if i <= #scriptlines then
-				local l
-				while true do
-					if i == editingline then
-						l = input .. input_r
-					else
-						l = scriptlines[i]
-					end
-					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
-						alttextcolor = true
-						break
-					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
-						alttextcolor = false
-						break
-					end
+			if textlinestogo2 > 0 then
+				-- Search forward for a createcrewman unless we hit a speak(_active) first
+				local i = k + textlinestogo2 + 1
+				if i <= #scriptlines then
+					local l
+					while true do
+						if i == editingline then
+							l = input .. input_r
+						else
+							l = scriptlines[i]
+						end
+						if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
+							alttextcolor = true
+							break
+						elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
+							alttextcolor = false
+							break
+						end
 
-					if i + 1 > #scriptlines then
-						break
-					else
-						i = i + 1
+						if i + 1 > #scriptlines then
+							break
+						else
+							i = i + 1
+						end
 					end
 				end
-			end
-			if textlinestogo2 > 0 then
 				textlinestogo2 = textlinestogo2 - 1
 			end
 		end
