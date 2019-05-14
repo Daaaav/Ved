@@ -925,7 +925,7 @@ function love.draw()
 		love.graphics.print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8+2)
 		love.graphics.print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8+2)
 
-		if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and mousepressed_flag_x ~= love.mouse.getX() and mousepressed_flag_y ~= love.mouse.getY() then
+		if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
 			local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
 			love.graphics.setColor(128,128,128,128)
 			love.graphics.rectangle("fill", love.mouse.getX() + 8, love.mouse.getY(), 8*#t, 8)
