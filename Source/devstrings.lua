@@ -4,5 +4,5 @@
 --L. = ""
 L.INTERNALON = "Int.sc is on"
 L.INTERNALOFF = "Int.sc is off"
-L.INTERNALYESBARS = "C.bars int.sc"
-L.INTERNALNOBARS = "No bars int.sc"
+L.INTERNALYESBARS = "say(-1) int.sc"
+L.INTERNALNOBARS = "loadscript int.sc"
