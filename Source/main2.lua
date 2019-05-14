@@ -900,7 +900,7 @@ function love.draw()
 						mousepressed_flag_y = love.mouse.getY()
 						mousepressed_flag_num = flk + (flcol == 8 and 0 or 50)
 						if vedmetadata then
-							mousepressed_flag_name = vedmetadata.flaglabel[flgnum]
+							mousepressed_flag_name = vedmetadata.flaglabel[mousepressed_flag_num]
 						end
 					end
 				else
