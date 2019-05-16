@@ -158,7 +158,7 @@ function justtext(text, thisistext)
 				end
 			elseif partss[1] == "text" then
 				if partss[5] == nil or anythingbutnil0(tonumber(partss[2])) <= 0 then
-					return 1
+					return 0
 				else
 					return tonumber(partss[5])
 				end
