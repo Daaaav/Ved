@@ -92,7 +92,7 @@ function drawscripteditor()
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
-			textq = justtext(v, textlinestogo > 0)
+			textq, textc = justtext(v, textlinestogo > 0)
 		end
 
 		if editingline == k then --and textlinestogo == 0 then

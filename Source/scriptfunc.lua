@@ -150,17 +150,23 @@ function justtext(text, thisistext)
 
 			partss = explode(",", text2)
 
-			if partss[1] == "say" or partss[1] == "reply" then
+			if partss[1] == "say" then
 				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
-					return 1
+					return 1, normalize_simplified_color(partss[3])
 				else
-					return tonumber(partss[2])
+					return tonumber(partss[2]), normalize_simplified_color(partss[3])
+				end
+			elseif partss[1] == "reply" then
+				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+					return 1, "player"
+				else
+					return tonumber(partss[2]), "player"
 				end
 			elseif partss[1] == "text" then
 				if partss[5] == nil or anythingbutnil0(tonumber(partss[2])) <= 0 then
-					return 0
+					return 0, partss[2]
 				else
-					return tonumber(partss[5])
+					return tonumber(partss[5]), partss[2]
 				end
 			end
 		end
