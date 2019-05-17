@@ -76,7 +76,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 
 		if docolor then
 			for k,v in pairs(partss) do
-				v_ignoring_spaces = anythingbutnil(v):gsub(" ", "")
+				local v_ignoring_spaces = partss_ignoring_spaces[k]
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
 					if (addcursor and #partss == 1 and lastUTF8(v) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
