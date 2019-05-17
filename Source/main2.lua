@@ -1497,8 +1497,10 @@ function love.draw()
 		if musiceditor then
 			rbutton(L.SAVE, 3, nil, true)
 		end
-		if musiceditor or file_metadata_anyset then
+		if musiceditor then
 			rbutton(L.MUSICFILEMETADATA, 5, nil, true)
+		elseif file_metadata_anyset then
+			rbutton(L.MUSICFILEMETADATA, 4, nil, true)
 		end
 
 		if nodialog and love.mouse.isDown("l") then
@@ -1541,7 +1543,7 @@ function love.draw()
 					L.MUSICFILEMETADATA,
 					dialog.form.musicfilemetadata_make(file_metadata)
 				)
-			elseif file_metadata_anyset and onrbutton(5, nil, true) then
+			elseif file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
 				dialog.create(
 					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
