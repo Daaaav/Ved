@@ -69,26 +69,28 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 
 		--if text ~= "" then
 		-- Replace characters by one with which we will split.
-		text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
+		text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
 		partss = explode(",", text2)
+		partss_ignoring_spaces = explode(",", text2:gsub(" ", ""))
 
 		if docolor then
 			for k,v in pairs(partss) do
+				v_ignoring_spaces = anythingbutnil(v):gsub(" ", "")
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
-					if (addcursor and #partss == 1) or knowncommands[v] or knowninternalcommands[v] then
+					if (addcursor and #partss == 1 and lastUTF8(v) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
 						setColorArr(s.syntaxcolor_command)
 					else
 						setColorArr(s.syntaxcolor_errortext)
 					end
-				elseif tostring(tonumber(v)) == tostring(v) then -- It's a number!
+				elseif tostring(tonumber(v_ignoring_spaces)) == tostring(v_ignoring_spaces) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)
 				--elseif string.sub(v, 1, 1) == "$" then
-				elseif k == 2 and (partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag") and tostring(tonumber(v)) ~= tostring(v) then
+				elseif k == 2 and (partss_ignoring_spaces[1] == "flag" or partss_ignoring_spaces[1] == "ifflag" or partss_ignoring_spaces[1] == "customifflag") and tostring(tonumber(v_ignoring_spaces)) ~= tostring(v_ignoring_spaces) then
 					-- if flag name is not used yet, newflagname
 					for fl = 0, 99 do
-						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
+						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_ignoring_spaces then
 							setColorArr(s.syntaxcolor_flagname)
 							break
 						end
@@ -122,23 +124,23 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			end
 		end
 
-		if partss[1] == "say" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
-				return 1, normalize_simplified_color(partss[3])
+		if partss_ignoring_spaces[1] == "say" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
+				return 1, normalize_simplified_color(partss_ignoring_spaces[3])
 			else
-				return tonumber(partss[2]), normalize_simplified_color(partss[3])
+				return tonumber(partss_ignoring_spaces[2]), normalize_simplified_color(partss_ignoring_spaces[3])
 			end
-		elseif partss[1] == "reply" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+		elseif partss_ignoring_spaces[1] == "reply" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
 				return 1, "player"
 			else
-				return tonumber(partss[2]), "player"
+				return tonumber(partss_ignoring_spaces[2]), "player"
 			end
-		elseif partss[1] == "text" then
-			if partss[5] == nil or anythingbutnil0(tonumber(partss[5])) <= 0 then
-				return 0, partss[2]
+		elseif partss_ignoring_spaces[1] == "text" then
+			if partss[5] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[5])) <= 0 then
+				return 0, partss_ignoring_spaces[2]
 			else
-				return tonumber(partss[5]), partss[2]
+				return tonumber(partss_ignoring_spaces[5]), partss_ignoring_spaces[2]
 			end
 		end
 	end
@@ -148,7 +150,7 @@ end
 function justtext(text, thisistext)
 	if not thisistext then
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
-			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
+			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", "")
 
 			partss = explode(",", text2)
 
