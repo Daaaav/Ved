@@ -804,3 +804,27 @@ function normalize_simplified_color(c)
 
 	return c
 end
+
+function swapflags(flag1, flag2)
+	if vedmetadata then
+		vedmetadata.flaglabel[flag2], vedmetadata.flaglabel[flag1] = vedmetadata.flaglabel[flag1], vedmetadata.flaglabel[flag2]
+	end
+
+	local separator = ""
+	local commands = {"flag", "ifflag", "customifflag"}
+	for rvnum = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			for _,command in pairs(commands) do
+				if #v > #command then
+					if v:match("^" .. command .. "[%(,%)]" .. flag1) then
+						separator = v:sub(#command+1, #command+1)
+						scripts[scriptnames[rvnum]][k] = command .. separator .. flag2 .. v:sub(#command+#tostring(flag1)+2, #v)
+					elseif v:match("^" .. command .. "[%(,%)]" .. flag2) then
+						separator = v:sub(#command+1, #command+1)
+						scripts[scriptnames[rvnum]][k] = command .. separator .. flag1 .. v:sub(#command+#tostring(flag2)+2, #v)
+					end
+				end
+			end
+		end
+	end
+end
