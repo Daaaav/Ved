@@ -357,9 +357,10 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 
 				-- Also make sure internal scripting mode doesn't stick
 				internalscript = false
+				cutscenebarsinternalscript = false
 			else
 				-- Splitting/duplicating the current script
-				local keepinternal
+				local keepinternal, keepcutscenebarsinternal
 				if identifier == "split_editor" then
 					-- Splitting, meaning in editor
 					scripts[fields.name] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
@@ -371,6 +372,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 
 					-- Oh, was the script an internal script by the way?
 					keepinternal = internalscript
+					keepcutscenebarsinternal = cutscenebarsinternalscript
 				else
 					-- Duplicating, meaning in menu
 					input = tonumber(input)
@@ -383,6 +385,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 				if identifier == "split_editor" then
 					-- Splitting
 					internalscript = keepinternal
+					cutscenebarsinternalscript = keepcutscenebarsinternal
 				end
 			end
 			scriptname = fields.name

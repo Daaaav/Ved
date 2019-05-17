@@ -27,3 +27,7 @@ L.SONGMETADATA = "Metadata for song $1"
 L.MUSICFILEMETADATA = "File metadata"
 L.MUSICEXPORTEDON = "Exported: " -- Followed by date and time
 L.SAVEMETADATA = "Save metadata"
+L.INTERNALON = "Int.sc is on"
+L.INTERNALOFF = "Int.sc is off"
+L.INTERNALYESBARS = "say(-1) int.sc"
+L.INTERNALNOBARS = "Loadscript int.sc"

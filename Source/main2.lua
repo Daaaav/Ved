@@ -2910,7 +2910,26 @@ function love.keypressed(key)
 		elseif key == "g" then
 			startscriptgotoline()
 		elseif key == "i" then
-			internalscript = not internalscript
+			if keyboard_eitherIsDown("shift") then
+				if internalscript then
+					internalscript = false
+				elseif cutscenebarsinternalscript then
+					internalscript = true
+					cutscenebarsinternalscript = false
+				else
+					cutscenebarsinternalscript = true
+				end
+			else
+				if internalscript then
+					internalscript = false
+					cutscenebarsinternalscript = true
+				elseif cutscenebarsinternalscript then
+					internalscript = false
+					cutscenebarsinternalscript = false
+				else
+					internalscript = true
+				end
+			end
 			dirty()
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
