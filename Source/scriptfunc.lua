@@ -79,7 +79,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				local v_ignoring_spaces = partss_ignoring_spaces[k]
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
-					if (addcursor and #partss == 1 and lastUTF8(v) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
+					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
 						setColorArr(s.syntaxcolor_command)
 					else
 						setColorArr(s.syntaxcolor_errortext)

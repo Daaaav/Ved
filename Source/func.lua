@@ -126,25 +126,6 @@ function firstUTF8(text)
 	end
 end
 
-function lastUTF8(text)
-	if text == nil then return end
-
-	local lastchar = text:sub(-1, -1)
-	if lastchar == "" then return text end
-
-	local binarychar = toBinary(lastchar)
-
-	if binarychar:sub(1, 3) == "110" then
-		return text:sub(-2, -1)
-	elseif binarychar:sub(1, 4) == "1110" then
-		return text:sub(-3, -1)
-	elseif binarychar:sub(1, 5) == "11110" then
-		return text:sub(-4, -1)
-	else
-		return text:sub(-1, -1)
-	end
-end
-
 
 --
 function love.graphics.UTF8debugprint(text, x, y)
