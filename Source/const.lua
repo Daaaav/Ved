@@ -294,6 +294,18 @@ textboxcolors =
 	gray = {174, 174, 174}
 	}
 
+alttextboxcolors =
+	{
+	player = {19, 164, 255},
+	cyan = {19, 164, 255},
+	red = {19, 60, 60},
+	yellow = {19, 255, 134},
+	green = {19, 255, 144},
+	blue = {19, 95, 255},
+	purple = {19, 134, 255},
+	gray = {19, 174, 174}
+	}
+
 tilesetblocks =
 	{
 	[0]	=
