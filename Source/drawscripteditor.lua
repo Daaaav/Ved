@@ -7,7 +7,6 @@ function drawscripteditor()
 
 	-- This can roll over, prevent that!
 	local textlinestogo = 0
-	local textlinestogo2 = 0
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
 	if textsize then
@@ -38,12 +37,12 @@ function drawscripteditor()
 
 		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
 		local partss = explode(",", text2)
-		if partss[1] == "text" and textlinestogo2 == 0 then
-			textlinestogo2 = math.max(anythingbutnil0(tonumber(partss[5])), 0)
+		if partss[1] == "text" and textlinestogo == 0 then
+			textlinestogo = math.max(anythingbutnil0(tonumber(partss[5])), 0)
 
-			if textlinestogo2 > 0 then
+			if textlinestogo > 0 then
 				-- Search forward for a createcrewman unless we hit a speak(_active) first
-				local i = k + textlinestogo2 + 1
+				local i = k + textlinestogo + 1
 				if i <= #scriptlines then
 					local l
 					while true do
@@ -67,7 +66,7 @@ function drawscripteditor()
 						end
 					end
 				end
-				textlinestogo2 = 0
+				textlinestogo = 0
 			end
 		end
 
