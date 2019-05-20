@@ -167,7 +167,7 @@ function justtext(text, thisistext)
 					return tonumber(partss[2]), "player"
 				end
 			elseif partss[1] == "text" then
-				if partss[5] == nil or anythingbutnil0(tonumber(partss[2])) <= 0 then
+				if partss[5] == nil or anythingbutnil0(tonumber(partss[5])) <= 0 then
 					return 0, partss[2]
 				else
 					return tonumber(partss[5]), partss[2]
