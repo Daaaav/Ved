@@ -149,8 +149,9 @@ end
 
 function justtext(text, thisistext)
 	if not thisistext then
+		text = text:gsub(" ", "")
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
-			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", "")
+			text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
 			partss = explode(",", text2)
 
