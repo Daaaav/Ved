@@ -2632,7 +2632,7 @@ function love.keypressed(key)
 			editorjumpscript(carg2)
 		elseif key == "right" and context == "script" then
 			editorjumpscript(carg1)
-		elseif key == "right" and context == "positionscript" then
+		elseif key == "right" and context == "roomscript" then
 			editorjumpscript(carg3)
 		elseif key == "f" then
 			startinscriptsearch()
