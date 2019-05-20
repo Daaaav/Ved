@@ -36,7 +36,7 @@ function drawscripteditor()
 			text_r = input_r
 		end
 
-		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ",")
+		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
 		local partss = explode(",", text2)
 		if partss[1] == "text" and textlinestogo2 == 0 then
 			textlinestogo2 = math.max(anythingbutnil0(tonumber(partss[5])), 0)
@@ -48,9 +48,9 @@ function drawscripteditor()
 					local l
 					while true do
 						if i == editingline then
-							l = input .. input_r
+							l = (input .. input_r):gsub(" ", "")
 						else
-							l = scriptlines[i]
+							l = (scriptlines[i]):gsub(" ", "")
 						end
 						if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
 							alttextcolor = true
