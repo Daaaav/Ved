@@ -2662,8 +2662,12 @@ function love.keypressed(key)
 			dirty()
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
-			if editingline > #scriptlines and editingline > 1 then
-				editingline = editingline - 1
+			if keyboard_eitherIsDown("shift") then
+				editingline = math.max(editingline - 1, 1)
+			else
+				if editingline > #scriptlines and editingline > 1 then
+					editingline = editingline - 1
+				end
 			end
 			input = anythingbutnil(scriptlines[editingline])
 			input_r = ""
