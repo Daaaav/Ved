@@ -2050,6 +2050,21 @@ function love.keypressed(key)
 			end
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
+
+			if state == 3 then
+				if input_r == "" and editingline < #scriptlines then
+					input_r = anythingbutnil(scriptlines[editingline + 1])
+					table.remove(scriptlines, editingline + 1)
+				end
+				dirty()
+			elseif state == 15 then
+				if input_r == "" and helpeditingline < #helparticlecontent then
+					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
+					table.remove(helparticlecontent, helpeditingline + 1)
+				end
+			elseif state == 6 then
+				tabselected = 0
+			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
 		local cf, cftype = dialogs[#dialogs].currentfield
