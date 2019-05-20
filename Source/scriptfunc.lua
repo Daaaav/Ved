@@ -57,7 +57,9 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
-				love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				if cursorflashtime <= .5 then
+					love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				end
 			else
 				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 			end
