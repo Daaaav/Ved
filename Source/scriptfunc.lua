@@ -122,7 +122,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 					love.graphics.print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
 				end
 			else
-				love.graphics.print(__, x+((offsetchars-1-string.len(text_r))*(textsize and 16 or 8)), y)
+				love.graphics.print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
 			end
 		end
 
