@@ -2662,6 +2662,9 @@ function love.keypressed(key)
 			dirty()
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
+			if editingline > #scriptlines and editingline > 1 then
+				editingline = editingline - 1
+			end
 			input = anythingbutnil(scriptlines[editingline])
 			input_r = ""
 			dirty()
