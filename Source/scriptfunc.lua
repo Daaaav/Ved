@@ -786,10 +786,10 @@ function swapflags(flag1, flag2)
 			for _,command in pairs(commands) do
 				if #v > #command then
 					if v:match("^" .. command .. "[%(,%)]" .. flag1 .. "[%(,%)]") then
-						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#flag1+2, #command+#tostring(flag1)+2)
+						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag1)+2, #command+#tostring(flag1)+2)
 						scripts[scriptnames[rvnum]][k] = command .. separator1 .. flag2 .. separator2 .. v:sub(#command+#tostring(flag1)+3, #v)
 					elseif v:match("^" .. command .. "[%(,%)]" .. flag2 .. "[%(,%)]") then
-						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#flag2+2, #command+#tostring(flag2)+2)
+						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag2)+2, #command+#tostring(flag2)+2)
 						scripts[scriptnames[rvnum]][k] = command .. separator .. flag1 .. separator2 .. v:sub(#command+#tostring(flag2)+3, #v)
 					end
 				end
