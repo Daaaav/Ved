@@ -840,18 +840,18 @@ function swapflags(flag1, flag2)
 		vedmetadata.flaglabel[flag2], vedmetadata.flaglabel[flag1] = vedmetadata.flaglabel[flag1], vedmetadata.flaglabel[flag2]
 	end
 
-	local separator = ""
+	local separator1, separator2 = "", ""
 	local commands = {"flag", "ifflag", "customifflag"}
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			for _,command in pairs(commands) do
 				if #v > #command then
-					if v:match("^" .. command .. "[%(,%)]" .. flag1) then
-						separator = v:sub(#command+1, #command+1)
-						scripts[scriptnames[rvnum]][k] = command .. separator .. flag2 .. v:sub(#command+#tostring(flag1)+2, #v)
-					elseif v:match("^" .. command .. "[%(,%)]" .. flag2) then
-						separator = v:sub(#command+1, #command+1)
-						scripts[scriptnames[rvnum]][k] = command .. separator .. flag1 .. v:sub(#command+#tostring(flag2)+2, #v)
+					if v:match("^" .. command .. "[%(,%)]" .. flag1 .. "[%(,%)]") then
+						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag1)+2, #command+#tostring(flag1)+2)
+						scripts[scriptnames[rvnum]][k] = command .. separator1 .. flag2 .. separator2 .. v:sub(#command+#tostring(flag1)+3, #v)
+					elseif v:match("^" .. command .. "[%(,%)]" .. flag2 .. "[%(,%)]") then
+						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag2)+2, #command+#tostring(flag2)+2)
+						scripts[scriptnames[rvnum]][k] = command .. separator1 .. flag1 .. separator2 .. v:sub(#command+#tostring(flag2)+3, #v)
 					end
 				end
 			end
