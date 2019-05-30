@@ -840,18 +840,17 @@ function swapflags(flag1, flag2)
 		vedmetadata.flaglabel[flag2], vedmetadata.flaglabel[flag1] = vedmetadata.flaglabel[flag1], vedmetadata.flaglabel[flag2]
 	end
 
-	local separator1, separator2 = "", ""
 	local commands = {"flag", "ifflag", "customifflag"}
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v = v:gsub(" ", "")
 			for _,command in pairs(commands) do
+				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
-					if v:match("^" .. command .. "[%(,%)]" .. flag1 .. "[%(,%)]") then
-						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag1)+2, #command+#tostring(flag1)+2)
-						scripts[scriptnames[rvnum]][k] = command .. separator1 .. flag2 .. separator2 .. v:sub(#command+#tostring(flag1)+3, #v)
-					elseif v:match("^" .. command .. "[%(,%)]" .. flag2 .. "[%(,%)]") then
-						separator1, separator2 = v:sub(#command+1, #command+1), v:sub(#command+#tostring(flag2)+2, #command+#tostring(flag2)+2)
-						scripts[scriptnames[rvnum]][k] = command .. separator1 .. flag1 .. separator2 .. v:sub(#command+#tostring(flag2)+3, #v)
+					if v:match(pattern .. flag1 .. "[%(,%)]") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+					elseif v:match(pattern .. flag2 .. "[%(,%)]") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					end
 				end
 			end
