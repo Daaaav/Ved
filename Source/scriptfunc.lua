@@ -784,7 +784,7 @@ function swapflags(flag1, flag2)
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			v = v:gsub(" ", "")
 			for _,command in pairs(commands) do
-				local pattern = "^(" .. command .. "[%(,%)])"
+				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
 					if v:match(pattern .. flag1 .. "[%(,%)]") then
 						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
