@@ -783,6 +783,7 @@ function swapflags(flag1, flag2)
 	local commands = {"flag", "ifflag", "customifflag"}
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v = v:gsub(" ", "")
 			for _,command in pairs(commands) do
 				if #v > #command then
 					if v:match("^" .. command .. "[%(,%)]" .. flag1 .. "[%(,%)]") then
