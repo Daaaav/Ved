@@ -829,13 +829,11 @@ function dialog.callback.replacesong(button, fields)
 		return
 	end
 
-	local fh, everr = io.open(fields.name, "rb") -- TODO: Use filefunc
-	if fh == nil then
-		dialog.create(langkeys(L.SONGOPENFAIL, {fields.name}) .. "\n\n" .. everr)
+	local readsuccess, ficontents = readfile(fields.name)
+	if not readsuccess then
+		dialog.create(langkeys(L.SONGOPENFAIL, {fields.name}) .. "\n\n" .. ficontents)
 		return
 	end
-	local ficontents = fh:read("*a")
-	fh:close()
 
 	-- input is the number of the song
 	local success, err = musicedit_replacesong(musicplayerfile, input, ficontents)

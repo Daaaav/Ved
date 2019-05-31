@@ -1,12 +1,3 @@
-simplevvvvvvfolder = false
-standardvvvvvvfolders = {
-	display = "\\(My) Documents\\VVVVVV",
-	folders = {
-		"\\Documents\\VVVVVV",
-		"\\My Documents\\VVVVVV"
-	}
-}
-
 local cache_modtimes = {} -- filepath => unix_timestamp
 
 
@@ -247,7 +238,7 @@ userprofile = path_utf16_to_utf8(buffer_path_utf16)
 
 
 
-function listfiles(directory)
+function listlevelfiles(directory)
 	local t = {[""] = {}}
 
 	-- We really can't have slashes here instead of backslashes, this is Windows.
@@ -322,29 +313,27 @@ function listfiles(directory)
 	return t
 end
 
-function getlevelsfolder(ignorecustom)
-	-- Returns success, path
+function getlevelsfolder()
+	-- Returns success. Sets the path variables to what they _should_ be, even if
+	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"
 
-	if s.customvvvvvvdir == "" or ignorecustom then
-		-- Spawn less cmd windows
-		if directory_exists(userprofile .. standardvvvvvvfolders.folders[1], "levels") then
-			return true, userprofile .. standardvvvvvvfolders.folders[1] .. "\\levels"
-		elseif directory_exists(userprofile .. standardvvvvvvfolders.folders[2], "levels") then
-			return true, userprofile .. standardvvvvvvfolders.folders[2] .. "\\levels"
-		else
-			-- Also return what it should have been
-			return false, userprofile .. standardvvvvvvfolders.display .. "\\levels"
-		end
+	if not directory_exists(userprofile, "\\Documents") and directory_exists(userprofile, "\\My Documents") then
+		-- Windows XP still?
+		vvvvvvfolder_expected = userprofile .. "\\My Documents\\VVVVVV"
+	else
+		vvvvvvfolder_expected = userprofile .. "\\Documents\\VVVVVV"
+	end
+
+	if s.customvvvvvvdir == "" then
+		vvvvvvfolder = vvvvvvfolder_expected
 	else
 		-- The user has supplied a custom directory.
-		if directory_exists(s.customvvvvvvdir, "levels") then
-			-- Fair enough
-			return true, s.customvvvvvvdir .. "\\levels"
-		else
-			-- What are you doing?
-			return false, s.customvvvvvvdir .. "\\levels"
-		end
+		vvvvvvfolder = s.customvvvvvvdir
 	end
+
+	levelsfolder = vvvvvvfolder .. "\\levels"
+	graphicsfolder = vvvvvvfolder .. "\\graphics"
+	return directory_exists(vvvvvvfolder, "levels")
 end
 
 function directory_exists(where, what)
@@ -433,11 +422,11 @@ function getmodtime(fullpath)
 	return cache_modtimes[fullpath]
 end
 
-function readimage(levelsfolder, filename)
+function readfile(filename)
 	-- returns success, contents
 
 	local file_handle = ffi.C.CreateFileW(
-		path_utf8_to_utf16(levelsfolder:sub(1, -8) .. "\\graphics\\" .. filename),
+		path_utf8_to_utf16(filename),
 		GENERIC_READ,
 		FILE_SHARE_READ,
 		nil,
@@ -468,4 +457,43 @@ function readimage(levelsfolder, filename)
 	local ficontents = ffi.string(buffer_contents, lpNumberOfBytesRead[0])
 
 	return true, ficontents
+end
+
+-- multiwritefile_* are meant for writing to a file multiple times in a row (handy for music files).
+-- os_fh can mean lua's file object, a Windows HANDLE, or even a filename for love.filesystem,
+-- dependent on OS.
+function multiwritefile_open(filename)
+	-- returns true, os_fh / false, error message
+	if filename:sub(3):match(".*[:%*%?\"<>|].*") ~= nil then
+		return false, L.INVALIDFILENAME_WIN
+	end
+
+	local os_fh = ffi.C.CreateFileW(
+		path_utf8_to_utf16(filename),
+		GENERIC_WRITE,
+		0,
+		nil,
+		CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL,
+		nil
+	)
+	if handle_is_invalid(os_fh) then
+		return false, format_last_win_error()
+	end
+	return true, os_fh
+end
+
+function multiwritefile_write(os_fh, data)
+	-- returns success, (if not) error message
+	local lpNumberOfBytesWritten = ffi.new("DWORD[1]")
+	if not ffi.C.WriteFile(os_fh, data, data:len(), lpNumberOfBytesWritten, nil) then
+		-- Writing failed.
+		ffi.C.CloseHandle(os_fh)
+		return false, format_last_win_error()
+	end
+	return true
+end
+
+function multiwritefile_close(os_fh)
+	ffi.C.CloseHandle(os_fh)
 end

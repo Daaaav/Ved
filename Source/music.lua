@@ -58,15 +58,13 @@ function loadvvvvvvmusic(file, realfile)
 	-- If not status, then maybe_status2 is an error message.
 	-- Blame pcall for this naming dilemma.
 	local status, maybe_status2 = pcall(function()
-		local fh, everr = io.open(levelsfolder:sub(1, -8) .. dirsep .. realfile, "rb") -- TODO: Use filefunc
-		if fh == nil then
-			cons("No " .. file .. ", " .. anythingbutnil(everr))
+		local readsuccess, ficontents = readfile(vvvvvvfolder .. dirsep .. realfile)
+		if not readsuccess then
+			cons("No " .. file .. ", " .. anythingbutnil(ficontents))
 			unloadvvvvvvmusic(file)
-			errormessage = everr
+			errormessage = ficontents
 			return false
 		end
-		local ficontents = fh:read("*a")
-		fh:close()
 
 		music[file] = {}
 
@@ -406,9 +404,9 @@ local musicblobnames = {
 
 function savevvvvvvmusic(file, realfile, savemetadata)
 	-- Again, file is one of three possible values including "musiceditor", realfile is an actual filename
-	local fh, everr = io.open(levelsfolder:sub(1, -8) .. dirsep .. realfile, "wb") -- same TODO as always
-	if fh == nil then
-		return false, everr
+	local success, os_fh = multiwritefile_open(vvvvvvfolder .. dirsep .. realfile)
+	if not success then
+		return false, os_fh -- os_fh is error message here
 	end
 	local music_headers = ffi.new("resourceheader[128]")
 
@@ -462,23 +460,28 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 	end
 
 	-- Note that 16-126/127 will just be nulls, which is good
-	fh:write(ffi.string(music_headers, ffi.sizeof("resourceheader")*128))
+	local success, everr = multiwritefile_write(os_fh, ffi.string(music_headers, ffi.sizeof("resourceheader")*128))
+	if not success then return false, everr end
 
 	for m = 0, 15 do
 		local filedata = getmusicfiledata(file, m)
+		local write
 		if filedata == nil then
-			fh:write("\0")
+			write = "\0"
 			cons("Song " .. m .. " has nil filedata! So writing one null byte.")
 		else
-			fh:write(filedata:getString())
+			write = filedata:getString()
 		end
+		local success, everr = multiwritefile_write(os_fh, write)
+		if not success then return false, everr end
 	end
 
 	if savemetadata then
-		fh:write(metadatablob)
+		local success, everr = multiwritefile_write(os_fh, metadatablob)
+		if not success then return false, everr end
 	end
 
-	fh:close()
+	multiwritefile_close(os_fh)
 
 	return true
 end

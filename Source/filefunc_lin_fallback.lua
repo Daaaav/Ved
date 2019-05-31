@@ -4,12 +4,9 @@
 -- We know we're on Linux for a start...
 userprofile = os.getenv("HOME")
 
-simplevvvvvvfolder = true
-standardvvvvvvfolder = "/.local/share/VVVVVV"
-
 
 -- (http://stackoverflow.com/questions/5303174/get-list-of-directory-in-a-lua)
-function listfiles(directory)
+function listlevelfiles(directory)
 	local t = {}
 	local namekeys = {}
 	local termoutput = {}
@@ -62,26 +59,22 @@ function listfiles(directory)
 	return t
 end
 
-function getlevelsfolder(ignorecustom)
-	-- Returns success, path
+function getlevelsfolder()
+	-- Returns success. Sets the path variables to what they _should_ be, even if
+	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"
 
-	if s.customvvvvvvdir == "" or ignorecustom then
-		if directory_exists(userprofile .. standardvvvvvvfolder, "levels") then
-			return true, userprofile .. standardvvvvvvfolder .. "/levels"
-		else
-			-- Also return what it should have been
-			return false, userprofile .. standardvvvvvvfolder .. "/levels"
-		end
+	vvvvvvfolder_expected = userprofile .. "/.local/share/VVVVVV"
+
+	if s.customvvvvvvdir == "" then
+		vvvvvvfolder = vvvvvvfolder_expected
 	else
 		-- The user has supplied a custom directory.
-		if directory_exists(s.customvvvvvvdir, "levels") then
-			-- Fair enough
-			return true, s.customvvvvvvdir .. "/levels"
-		else
-			-- What are you doing?
-			return false, s.customvvvvvvdir .. "/levels"
-		end
+		vvvvvvfolder = s.customvvvvvvdir
 	end
+
+	levelsfolder = vvvvvvfolder .. "/levels"
+	graphicsfolder = vvvvvvfolder .. "/graphics"
+	return directory_exists(vvvvvvfolder, "levels")
 end
 
 function directory_exists(where, what)
@@ -103,7 +96,7 @@ end
 function readlevelfile(path)
 	-- returns success, contents
 
-	local fh, everr = io.open(path, "r")
+	local fh, everr = io.open(path, "rb")
 
 	if fh == nil then
 		return false, everr
@@ -119,7 +112,7 @@ end
 function writelevelfile(path, contents)
 	-- returns success, (if not) error message
 
-	local fh, everr = io.open(path, "w")
+	local fh, everr = io.open(path, "wb")
 
 	if fh == nil then
 		return false, everr
@@ -139,10 +132,10 @@ function getmodtime(fullpath)
 	return modtime
 end
 
-function readimage(levelsfolder, filename)
+function readfile(filename)
 	-- returns success, contents
 
-	local fh, everr = io.open(levelsfolder:sub(1, -8) .. "/graphics/" .. filename, "rb")
+	local fh, everr = io.open(filename, "rb")
 
 	if fh == nil then
 		return false, everr
@@ -158,4 +151,27 @@ end
 function escapename(name)
 	-- We just need to somewhat escape '
 	return name:gsub("'", "'\\''")
+end
+
+-- multiwritefile_* are meant for writing to a file multiple times in a row (handy for music files).
+-- os_fh can mean lua's file object, a Windows HANDLE, or even a filename for love.filesystem,
+-- dependent on OS.
+function multiwritefile_open(filename)
+	-- returns true, os_fh / false, error message
+	local os_fh, everr = io.open(filename, "wb")
+
+	if os_fh == nil then
+		return false, everr
+	end
+	return true, os_fh
+end
+
+function multiwritefile_write(os_fh, data)
+	-- returns success, (if not) error message
+	os_fh:write(data)
+	return true
+end
+
+function multiwritefile_close(os_fh)
+	os_fh:close()
 end

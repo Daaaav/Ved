@@ -1,9 +1,9 @@
 /*
-Version 00
+Version 01
 
 Typical usage (in C):
 
-if (!ved_opendir("."))
+if (!ved_opendir(".", ".vvvvvv"))
 	return; // or error
 ved_filedata filedata;
 while (ved_nextfile(&filedata))
@@ -29,33 +29,43 @@ typedef struct _ved_filedata
 DIR *g_dir;
 char g_path[256];
 size_t g_len_prefix;
+bool g_filter_active;
+char g_filter[8];
 
 /*
- * Returns true if filename ends in ".vvvvvv"
+ * Returns true if filename ends in the filter text (like ".vvvvvv" or ".png")
  */
-bool is_vvvvvv_level(struct dirent *dirent)
+bool is_filtered_file(struct dirent *dirent)
 {
+	size_t len_filter = strlen(g_filter);
 	size_t len_name = strlen(dirent->d_name);
-	return len_name >= 7 && strcmp(dirent->d_name+len_name-7, ".vvvvvv") == 0;
+	return len_name >= len_filter
+		&& strcmp(dirent->d_name + len_name - len_filter, g_filter) == 0;
 }
 
 /*
- * Returns true if we should list this file - it's a directory, or a VVVVVV level
+ * Returns true if we should list this file - it's a directory, or is filtered
  */
 bool is_listable(struct dirent *dirent, bool isdir)
 {
 	if (dirent->d_name[0] == '.')
 		return false;
-	return isdir || is_vvvvvv_level(dirent);
+	return isdir || !g_filter_active || is_filtered_file(dirent);
 }
 
 /*
  * Opens the directory at the specified path in preparation of file listing.
  * The path must end in "/".
+ * The filter is either an extension including '.', or an empty string to not
+ * filter any files. For example, it can be ".vvvvvv" to only list VVVVVV
+ * levels and directories.
  * Returns true if successful.
  */
-bool ved_opendir(const char *path)
+bool ved_opendir(const char *path, const char *filter)
 {
+	g_filter_active = strlen(filter) > 0;
+	strncpy(g_filter, filter, 7);
+	g_filter[7] = '\0';
 	g_len_prefix = strlen(path);
 	if (g_len_prefix > 247)
 		return false;
@@ -120,6 +130,18 @@ bool ved_directory_exists(const char *path)
 		/* stat failed */
 		return false;
 	return S_ISDIR(dstat.st_mode);
+}
+
+/*
+ * Checks if a path exists and is not a directory
+ */
+bool ved_file_exists(const char *path)
+{
+	struct stat dstat;
+	if (stat(path, &dstat) == -1)
+		/* stat failed */
+		return false;
+	return !S_ISDIR(dstat.st_mode);
 }
 
 /*

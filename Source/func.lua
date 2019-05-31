@@ -423,7 +423,7 @@ function loadstate(new, extradata)
 		test = test .. test
 	elseif new == 5 then
 		userprofile = os.getenv("USERPROFILE")
-		lsuccess, levelsfolder = getlevelsfolder()
+		lsuccess = getlevelsfolder()
 		if lsuccess then
 			lerror = 0
 		else
@@ -705,9 +705,9 @@ function loadlevelsfolder()
 	if allmetadata_inchannel ~= nil then
 		allmetadata_inchannel:clear()
 	end
-	lsuccess, levelsfolder = getlevelsfolder()
+	lsuccess = getlevelsfolder()
 	if lsuccess then
-		files = listfiles(levelsfolder)
+		files = listlevelfiles(levelsfolder)
 	else
 		files = {}
 	end
@@ -781,7 +781,7 @@ function loadtileset(file)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readimage(levelsfolder, file)
+	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata
 	if readsuccess == true then
@@ -821,7 +821,7 @@ function loadsprites(file, res)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readimage(levelsfolder, file)
+	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata
 	if readsuccess then
@@ -884,7 +884,7 @@ function loadwarpbgs()
 end
 
 function loadfontpng()
-	local readsuccess, contents = readimage(levelsfolder, "font.png")
+	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. "font.png")
 
 	if not readsuccess then
 		return false

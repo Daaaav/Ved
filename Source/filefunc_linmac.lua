@@ -1,18 +1,18 @@
 userprofile = os.getenv("HOME")
 
-simplevvvvvvfolder = true
-
 local ffi = require("ffi")
 local libC
+
+local standardvvvvvvfolder
 
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin00.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin01.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac00.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac01.so")
 end
 
 ffi.cdef([[
@@ -23,13 +23,15 @@ ffi.cdef([[
 		long long lastmodified;
 	} ved_filedata;
 
-	bool ved_opendir(const char *path);
+	bool ved_opendir(const char *path, const char *filter);
 
 	bool ved_nextfile(ved_filedata *filedata);
 
 	void ved_closedir(void);
 
 	bool ved_directory_exists(const char *path);
+
+	bool ved_file_exists(const char *path);
 
 	long long ved_getmodtime(const char *path);
 ]])
@@ -39,7 +41,7 @@ buffer_filedata = ffi.new("ved_filedata")
 
 
 
-function listfiles(directory)
+function listlevelfiles(directory)
 	local t = {}
 
 	local currentdir = ""
@@ -53,7 +55,7 @@ function listfiles(directory)
 		else
 			prefix = dirs[currentdir_i] .. "/"
 		end
-		if libC.ved_opendir(directory .. "/".. prefix) then
+		if libC.ved_opendir(directory .. "/".. prefix, ".vvvvvv") then
 			t[dirs[currentdir_i]] = {}
 			while libC.ved_nextfile(buffer_filedata) do
 				current_name = ffi.string(buffer_filedata.name)
@@ -93,26 +95,22 @@ function listfiles(directory)
 	return t
 end
 
-function getlevelsfolder(ignorecustom)
-	-- Returns success, path
+function getlevelsfolder()
+	-- Returns success. Sets the path variables to what they _should_ be, even if
+	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"
 
-	if s.customvvvvvvdir == "" or ignorecustom then
-		if directory_exists(userprofile .. standardvvvvvvfolder, "levels") then
-			return true, userprofile .. standardvvvvvvfolder .. "/levels"
-		else
-			-- Also return what it should have been
-			return false, userprofile .. standardvvvvvvfolder .. "/levels"
-		end
+	vvvvvvfolder_expected = userprofile .. standardvvvvvvfolder
+
+	if s.customvvvvvvdir == "" then
+		vvvvvvfolder = vvvvvvfolder_expected
 	else
 		-- The user has supplied a custom directory.
-		if directory_exists(s.customvvvvvvdir, "levels") then
-			-- Fair enough
-			return true, s.customvvvvvvdir .. "/levels"
-		else
-			-- What are you doing?
-			return false, s.customvvvvvvdir .. "/levels"
-		end
+		vvvvvvfolder = s.customvvvvvvdir
 	end
+
+	levelsfolder = vvvvvvfolder .. "/levels"
+	graphicsfolder = vvvvvvfolder .. "/graphics"
+	return directory_exists(vvvvvvfolder, "levels")
 end
 
 function directory_exists(where, what)
@@ -122,7 +120,7 @@ end
 function readlevelfile(path)
 	-- returns success, contents
 
-	local fh, everr = io.open(path, "r")
+	local fh, everr = io.open(path, "rb")
 
 	if fh == nil then
 		return false, everr
@@ -138,7 +136,7 @@ end
 function writelevelfile(path, contents)
 	-- returns success, (if not) error message
 
-	local fh, everr = io.open(path, "w")
+	local fh, everr = io.open(path, "wb")
 
 	if fh == nil then
 		return false, everr
@@ -155,10 +153,10 @@ function getmodtime(fullpath)
 	return tonumber(libC.ved_getmodtime(fullpath))
 end
 
-function readimage(levelsfolder, filename)
+function readfile(filename)
 	-- returns success, contents
 
-	local fh, everr = io.open(levelsfolder:sub(1, -8) .. "/graphics/" .. filename, "rb")
+	local fh, everr = io.open(filename, "rb")
 
 	if fh == nil then
 		return false, everr
@@ -174,4 +172,27 @@ end
 function escapename(name)
 	-- We just need to somewhat escape '
 	return name:gsub("'", "'\\''")
+end
+
+-- multiwritefile_* are meant for writing to a file multiple times in a row (handy for music files).
+-- os_fh can mean lua's file object, a Windows HANDLE, or even a filename for love.filesystem,
+-- dependent on OS.
+function multiwritefile_open(filename)
+	-- returns true, os_fh / false, error message
+	local os_fh, everr = io.open(filename, "wb")
+
+	if os_fh == nil then
+		return false, everr
+	end
+	return true, os_fh
+end
+
+function multiwritefile_write(os_fh, data)
+	-- returns success, (if not) error message
+	os_fh:write(data)
+	return true
+end
+
+function multiwritefile_close(os_fh)
+	os_fh:close()
 end

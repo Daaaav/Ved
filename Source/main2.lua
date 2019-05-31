@@ -309,9 +309,9 @@ function love.load()
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
 		end
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac00.so") then
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac01.so") then
 			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_mac00.so", love.filesystem.read("libs/vedlib_filefunc_mac00.so"))
+			love.filesystem.write("available_libs/vedlib_filefunc_mac01.so", love.filesystem.read("libs/vedlib_filefunc_mac01.so"))
 		end
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
@@ -340,13 +340,13 @@ function love.load()
 			love.filesystem.createDirectory("available_libs")
 		end
 		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin00.so") then
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin01.so") then
 			vedlib_filefunc_available = true
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
 			if os.execute("gcc -shared -fPIC -o "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin00.so "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin01.so "
 				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
 			) == 0 then
 				vedlib_filefunc_available = true
@@ -365,7 +365,11 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
-		dialog.create(langkeys(L.OSNOTRECOGNIZED, {anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}))
+		dialog.create(
+			langkeys(L.OSNOTRECOGNIZED,
+				{anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}
+			)
+		)
 	end
 	ved_require("filefunc_" .. loaded_filefunc)
 
@@ -809,11 +813,18 @@ function love.draw()
 				end
 			elseif onrbutton(2) then
 				-- Custom VVVVVV folder
-				local _, shouldbefolder = getlevelsfolder(true)
-				dialog.create(
-					langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {shouldbefolder}), DBS.OKCANCEL,
-					dialog.callback.customvvvvvvdir, nil, dialog.form.customvvvvvvdir_make()
-				)
+				if vvvvvvfolder_expected == nil then
+					dialog.create(
+						langkeys(L.OSNOTRECOGNIZED,
+							{anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}
+						)
+					)
+				else
+					dialog.create(
+						langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {vvvvvvfolder_expected}), DBS.OKCANCEL,
+						dialog.callback.customvvvvvvdir, nil, dialog.form.customvvvvvvdir_make()
+					)
+				end
 			elseif onrbutton(3) then
 				-- Language
 				languagedialog()
