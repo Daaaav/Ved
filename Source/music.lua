@@ -34,6 +34,7 @@ end
 function loadvvvvvvmusics()
 	loadvvvvvvmusic("vvvvvvmusic.vvv")
 	loadvvvvvvmusic("mmmmmm.vvv")
+	loadvvvvvvsounds()
 	music["musiceditor"] = {}
 	music_loaded = true
 end
@@ -43,9 +44,13 @@ function unloadvvvvvvmusic(file)
 end
 
 function loadvvvvvvmusic(file, realfile)
-	-- file is the name to be stored in the table (one of vvvvvvmusic.vvv, mmmmmm.vvv or musiceditor)
+	-- file is the name to be stored in the table (one of vvvvvvmusic.vvv, mmmmmm.vvv, musiceditor or sounds)
 	-- realfile is the actual path to load, if file is musiceditor
 	-- Returns success, errormessage.
+	if file == "sounds" then
+		return loadvvvvvvsounds()
+	end
+
 	errormessage = nil
 
 	if realfile == nil then
@@ -176,8 +181,21 @@ function loadvvvvvvmusic(file, realfile)
 	return success, errormessage
 end
 
+function loadvvvvvvsounds()
+	music["sounds"] = {}
+
+	for k,v in pairs(listsoundids) do
+		local readsuccess, ficontents = readfile(soundsfolder .. dirsep .. v)
+		if readsuccess then
+			loadmusicsong("sounds", k, ficontents, false)
+		end
+	end
+
+	return true
+end
+
 function loadmusicsong(file, song, data, edited)
-	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. ".ogg", "file")
+	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. (file == "sounds" and ".wav" or ".ogg"), "file")
 	if m_filedata:getSize() <= 1 then
 		-- Don't bother
 		return
@@ -188,7 +206,7 @@ function loadmusicsong(file, song, data, edited)
 		cons("Could not load song " .. song .. " from " .. file ..  " because " .. maybe_source)
 	else
 		music[file][song].audio = maybe_source
-		if song ~= 0 and song ~= 7 then
+		if file ~= "sounds" and song ~= 0 and song ~= 7 then
 			music[file][song].audio:setLooping(true)
 		end
 	end

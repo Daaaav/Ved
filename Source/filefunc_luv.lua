@@ -38,6 +38,7 @@ function getlevelsfolder()
 	vvvvvvfolder = ""
 	levelsfolder = "levels"
 	graphicsfolder = "graphics"
+	soundsfolder = "sounds"
 	return true
 end
 

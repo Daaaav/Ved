@@ -652,15 +652,19 @@ function loadstate(new, extradata)
 			loadvvvvvvmusics()
 		end
 	elseif new == 31 then
-		if extradata == nil then
+		musiceditor = false
+		soundviewer = false
+		if extradata == "musiceditor" then
 			musiceditor = true
 			if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
 				musicplayerfile = musiceditorfile
 			else
 				musicplayerfile = "musiceditor"
 			end
+		elseif extradata == "sounds" then
+			soundviewer = true
+			musicplayerfile = "sounds"
 		else
-			musiceditor = false
 			musicplayerfile = extradata
 		end
 	end

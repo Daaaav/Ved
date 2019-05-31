@@ -77,6 +77,38 @@ for k,v in pairs(listmusicnamesids) do
 	table.insert(listmusicids, v[2], v[1])
 end
 
+listsoundids =
+{
+	[0] = "jump.wav",
+	"jump2.wav",
+	"hurt.wav",
+	"souleyeminijingle.wav",
+	"coin.wav",
+	"save.wav",
+	"crumble.wav",
+	"vanish.wav",
+	"blip.wav",
+	"preteleport.wav",
+	"teleport.wav",
+	"crew1.wav",
+	"crew2.wav",
+	"crew3.wav",
+	"crew4.wav",
+	"crew5.wav",
+	"crew6.wav",
+	"terminal.wav",
+	"gamesaved.wav",
+	"crashing.wav",
+	"blip2.wav",
+	"countdown.wav",
+	"go.wav",
+	"crash.wav",
+	"combine.wav",
+	"newrecord.wav",
+	"trophy.wav",
+	"rescue.wav",
+}
+
 --entityidtotool = {9, }
 entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
 

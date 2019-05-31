@@ -110,6 +110,7 @@ function getlevelsfolder()
 
 	levelsfolder = vvvvvvfolder .. "/levels"
 	graphicsfolder = vvvvvvfolder .. "/graphics"
+	soundsfolder = vvvvvvfolder .. "/sounds"
 	return directory_exists(vvvvvvfolder, "levels")
 end
 

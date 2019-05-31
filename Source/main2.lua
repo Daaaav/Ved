@@ -213,6 +213,8 @@ function love.load()
 	asset_pppppp = love.graphics.newImage("images/asset_pppppp.png")
 	asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png")
 	asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png")
+	asset_sounds = love.graphics.newImage("images/asset_sounds.png")
+	asset_graphics = love.graphics.newImage("images/asset_graphics.png")
 
 	sound_play = love.graphics.newImage("images/sound_play.png")
 	sound_pause = love.graphics.newImage("images/sound_pause.png")
@@ -1276,7 +1278,7 @@ function love.draw()
 		end
 	elseif state == 30 then
 		-- Assets
-		for a = 0, 2 do
+		for a = 0, 4 do
 			love.graphics.setColor(128,128,128)
 			love.graphics.rectangle("line", 16.5, 16.5+44*a, 744, 33)
 
@@ -1289,7 +1291,9 @@ function love.draw()
 					elseif a == 1 then
 						tostate(31, false, "mmmmmm.vvv")
 					elseif a == 2 then
-						tostate(31, false, nil)
+						tostate(31, false, "musiceditor")
+					elseif a == 3 then
+						tostate(31, false, "sounds")
 					end
 					mousepressed = true
 				end
@@ -1308,6 +1312,12 @@ function love.draw()
 				love.graphics.draw(asset_musiceditor, 21, 21+88)
 				love.graphics.print(L.MUSICEDITOR, 33, 23+88)
 				--love.graphics.print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39+88)
+			elseif a == 3 then
+				love.graphics.draw(asset_sounds, 21, 21+132)
+				love.graphics.print(L.SOUNDS, 33, 23+132)
+			elseif a == 4 then
+				love.graphics.draw(asset_graphics, 21, 21+176)
+				love.graphics.print(L.GRAPHICS, 33, 23+176)
 			end
 		end
 
@@ -1328,122 +1338,144 @@ function love.draw()
 			else
 				love.graphics.print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 14)
 			end
+		elseif soundviewer then
+			love.graphics.print(L.SOUNDS, 16, 14)
 		else
 			love.graphics.print(musicplayerfile, 16, 14)
 		end
 		local file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
-		local musicnamex
+		local musicnamex_offset
 		if musiceditor then
-			musicnamex = 92
+			musicnamex_offset = 76
 		elseif file_metadata ~= nil then
-			musicnamex = 60
+			musicnamex_offset = 44
 		else
-			musicnamex = 44
+			musicnamex_offset = 28
 		end
-		for m = 0, 15 do
-			local audio = getmusicaudio(musicplayerfile, m)
-			if audio == nil then
-				love.graphics.setColor(64,64,64)
-				love.graphics.draw(sound_play, 16, 32+24*m)
-				love.graphics.setColor(255,255,255)
-			else
-				hoverdraw(sound_play, 16, 32+24*m, 16, 16)
-			end
-			local song_metadata, song_metadata_anyset
-			if musiceditor or file_metadata ~= nil then
-				song_metadata, song_metadata_anyset = getmusicmeta_song(musicplayerfile, m)
-				if not musiceditor and not song_metadata_anyset then
+		for mx = 0, (soundviewer and 1 or 0) do
+			local musicx = mx == 0 and 16 or 396
+			local musicnamex = musicx + musicnamex_offset
+			local musicsizerx = soundviewer and musicx+316 or musicx+680
+			local musicdurationx = soundviewer and musicx+332 or musicx+712
+			for my = 0, 15 do
+				local m = mx*16 + my
+				if (soundviewer and m > 27) or (not soundviewer and m > 15) then
+					break
+				end
+				local audio = getmusicaudio(musicplayerfile, m)
+				if audio == nil then
 					love.graphics.setColor(64,64,64)
-					love.graphics.draw(infograybtn, 32, 32+24*m)
+					love.graphics.draw(sound_play, musicx, 32+24*my)
 					love.graphics.setColor(255,255,255)
 				else
-					local notes_set = song_metadata_anyset and song_metadata.notes ~= ""
-					hoverdraw(notes_set and infobtn or infograybtn, 32, 32+24*m, 16, 16)
+					hoverdraw(sound_play, musicx, 32+24*my, 16, 16)
 				end
-			end
-			local can_remove = false
-			local filedata = getmusicfiledata(musicplayerfile, m)
-			if musiceditor then
-				can_remove = filedata ~= nil
-				hoverdraw(loadbtn, 48, 32+24*m, 16, 16)
-				if not can_remove then
-					love.graphics.setColor(64,64,64)
-					love.graphics.draw(eraser, 64, 32+24*m)
-					love.graphics.setColor(255,255,255)
-				else
-					hoverdraw(eraser, 64, 32+24*m, 16, 16)
-				end
-			end
-			if love.mouse.isDown("l") and not mousepressed and nodialog then
-				if mouseon(16, 32+24*m, 16, 16) then
-					-- Play
-					if audio == nil then
-						dialog.create(L.MUSICPLAYERROR)
+				local song_metadata, song_metadata_anyset
+				if musiceditor or file_metadata ~= nil then
+					song_metadata, song_metadata_anyset = getmusicmeta_song(musicplayerfile, m)
+					if not musiceditor and not song_metadata_anyset then
+						love.graphics.setColor(64,64,64)
+						love.graphics.draw(infograybtn, musicx+16, 32+24*my)
+						love.graphics.setColor(255,255,255)
 					else
-						playmusic(musicplayerfile, m)
-						mousepressed = true
+						local notes_set = song_metadata_anyset and song_metadata.notes ~= ""
+						hoverdraw(notes_set and infobtn or infograybtn, musicx+16, 32+24*my, 16, 16)
 					end
-				elseif musiceditor and mouseon(32, 32+24*m, 16, 16) then
-					-- Song metadata (editor)
-					input = m
-					dialog.create(
-						"",
-						DBS.OKCANCEL,
-						dialog.callback.songmetadata,
-						langkeys(L.SONGMETADATA, {m}),
-						dialog.form.songmetadata_make(song_metadata)
-					)
-				elseif song_metadata_anyset and mouseon(32, 32+24*m, 16, 16) then
-					-- Song metadata (player)
-					dialog.create(
-						L.MUSICTITLE .. song_metadata.name .. "\n\n"
-						.. L.MUSICFILENAME .. song_metadata.filename .. "\n\n"
-						.. L.MUSICNOTES .. "\n" .. song_metadata.notes
-					)
-				elseif musiceditor and mouseon(48, 32+24*m, 16, 16) then
-					-- Replace
-					input = m
-					dialog.create(
-						L.ENTERSONGPATH,
-						DBS.OKCANCEL,
-						dialog.callback.replacesong,
-						langkeys(L.INSERTSONG, {m}),
-						dialog.form.simplename
-					)
-				elseif can_remove and mouseon(64, 32+24*m, 16, 16) then
-					-- Remove
-					input = m
-					dialog.create(langkeys(L.SUREDELETESONG, {m}), DBS.YESNO, dialog.callback.suredeletesong)
 				end
-			end
-			if getmusicedited(musicplayerfile, m) then
-				love.graphics.setColor(255,0,0)
-			end
-			love.graphics.print("[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]), musicnamex, 38+24*m)
-			if song_metadata_anyset then
-				local shown_name
-				if song_metadata.name == "" then
-					shown_name = song_metadata.filename
+				local can_remove = false
+				local filedata = getmusicfiledata(musicplayerfile, m)
+				if musiceditor then
+					can_remove = filedata ~= nil
+					hoverdraw(loadbtn, musicx+32, 32+24*my, 16, 16)
+					if not can_remove then
+						love.graphics.setColor(64,64,64)
+						love.graphics.draw(eraser, musicx+48, 32+24*my)
+						love.graphics.setColor(255,255,255)
+					else
+						hoverdraw(eraser, musicx+48, 32+24*my, 16, 16)
+					end
+				end
+				if love.mouse.isDown("l") and not mousepressed and nodialog then
+					if mouseon(musicx, 32+24*my, 16, 16) then
+						-- Play
+						if audio == nil then
+							dialog.create(soundviewer and L.SOUNDPLAYERROR or L.MUSICPLAYERROR)
+						else
+							playmusic(musicplayerfile, m)
+							mousepressed = true
+						end
+					elseif musiceditor and mouseon(musicx+16, 32+24*my, 16, 16) then
+						-- Song metadata (editor)
+						input = m
+						dialog.create(
+							"",
+							DBS.OKCANCEL,
+							dialog.callback.songmetadata,
+							langkeys(L.SONGMETADATA, {m}),
+							dialog.form.songmetadata_make(song_metadata)
+						)
+					elseif song_metadata_anyset and mouseon(musicx+16, 32+24*my, 16, 16) then
+						-- Song metadata (player)
+						dialog.create(
+							L.MUSICTITLE .. song_metadata.name .. "\n\n"
+							.. L.MUSICFILENAME .. song_metadata.filename .. "\n\n"
+							.. L.MUSICNOTES .. "\n" .. song_metadata.notes
+						)
+					elseif musiceditor and mouseon(musicx+32, 32+24*my, 16, 16) then
+						-- Replace
+						input = m
+						dialog.create(
+							L.ENTERSONGPATH,
+							DBS.OKCANCEL,
+							dialog.callback.replacesong,
+							langkeys(L.INSERTSONG, {m}),
+							dialog.form.simplename
+						)
+					elseif can_remove and mouseon(musicx+48, 32+24*my, 16, 16) then
+						-- Remove
+						input = m
+						dialog.create(langkeys(L.SUREDELETESONG, {m}), DBS.YESNO, dialog.callback.suredeletesong)
+					end
+				end
+				if getmusicedited(musicplayerfile, m) then
+					love.graphics.setColor(255,0,0)
+				end
+				if soundviewer then
+					love.graphics.print(
+						"[" .. fixdig(m, 2) .. "] " .. listsoundids[m]:sub(1, -5),
+						musicnamex, 38+24*my
+					)
 				else
-					shown_name = song_metadata.name
+					love.graphics.print(
+						"[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]),
+						musicnamex, 38+24*my
+					)
 				end
-				love.graphics.setScissor(musicnamex+248, 36+24*m, 256, 8)
-				love.graphics.print(shown_name, musicnamex+248, 38+24*m)
-				love.graphics.setScissor()
+				if song_metadata_anyset then
+					local shown_name
+					if song_metadata.name == "" then
+						shown_name = song_metadata.filename
+					else
+						shown_name = song_metadata.name
+					end
+					love.graphics.setScissor(musicnamex+248, 36+24*my, 256, 8)
+					love.graphics.print(shown_name, musicnamex+248, 38+24*my)
+					love.graphics.setScissor()
+				end
+				if not love_version_meets(10) then
+					love.graphics.print("?:??", musicdurationx, 38+24*my)
+				elseif audio == nil then
+					love.graphics.print("-:--", musicdurationx, 38+24*my)
+				else
+					love.graphics.print(mmss_duration(audio:getDuration()), musicdurationx, 38+24*my)
+				end
+				if filedata ~= nil then
+					local readable_size = bytes_notation(filedata:getSize())
+					love.graphics.setColor(128,128,128)
+					love.graphics.print(readable_size, musicsizerx-font8:getWidth(readable_size), 38+24*my)
+				end
+				love.graphics.setColor(255,255,255)
 			end
-			if not love_version_meets(10) then
-				love.graphics.print("?:??", 728, 38+24*m)
-			elseif audio == nil then
-				love.graphics.print("-:--", 728, 38+24*m)
-			else
-				love.graphics.print(mmss_duration(audio:getDuration()), 728, 38+24*m)
-			end
-			if filedata ~= nil then
-				local readable_size = bytes_notation(filedata:getSize())
-				love.graphics.setColor(128,128,128)
-				love.graphics.print(readable_size, 696-font8:getWidth(readable_size), 38+24*m)
-			end
-			love.graphics.setColor(255,255,255)
 		end
 
 		local current_audio = getmusicaudioplaying()
