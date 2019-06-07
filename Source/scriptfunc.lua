@@ -57,7 +57,9 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
-				love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				if cursorflashtime <= .5 then
+					love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				end
 			else
 				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
 			end
@@ -120,7 +122,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 					love.graphics.print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
 				end
 			else
-				love.graphics.print(__, x+((offsetchars-1-string.len(text_r))*(textsize and 16 or 8)), y)
+				love.graphics.print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
 			end
 		end
 
@@ -149,8 +151,9 @@ end
 
 function justtext(text, thisistext)
 	if not thisistext then
+		text = text:gsub(" ", "")
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
-			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", "")
+			text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
 			partss = explode(",", text2)
 
@@ -167,7 +170,7 @@ function justtext(text, thisistext)
 					return tonumber(partss[2]), "player"
 				end
 			elseif partss[1] == "text" then
-				if partss[5] == nil or anythingbutnil0(tonumber(partss[2])) <= 0 then
+				if partss[5] == nil or anythingbutnil0(tonumber(partss[5])) <= 0 then
 					return 0, partss[2]
 				else
 					return tonumber(partss[5]), partss[2]
