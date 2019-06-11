@@ -237,9 +237,11 @@ function processflaglabels()
 		or (scriptlines[1] == "squeak(off) #v" and scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" and scriptlines[4] ~= nil and scriptlines[4]:sub(1,4) == "say(" and scriptlines[4]:sub(-4,-1) == ") #v") then
 			-- Quite so!
 			if scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" then
+				internalscript = false
 				cutscenebarsinternalscript = true
 			else
 				internalscript = true
+				cutscenebarsinternalscript = false
 			end
 
 			if internalscript then
