@@ -78,9 +78,20 @@ function love.load()
 	ved_require("imagefont")
 	ved_require("mapfunc")
 
-	if s.pscale ~= 1 then
+	if s.pscale ~= 1 or s.psmallerscreen then
 		za,zb,zc = love.window.getMode()
+		zd,ze,zf = love.window.getPosition()
+		-- Fun, ugly hack to determine the display height and width
+		-- based off of position alone, because LO"VE doesn't seem to
+		-- have functions to automatically do that
+		zwidth = 2*zd+za
+		if s.psmallerscreen then
+			zwidth = zwidth + 96
+		end
+		zheight = 2*ze+zb
+		cons("DISPLAY DIMENSIONS DETECTED: " .. zwidth .. "x" .. zheight)
 		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
 
 		ved_require("scaling")
 	end
