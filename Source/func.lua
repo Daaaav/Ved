@@ -1214,7 +1214,11 @@ function switchtilecol()
 	end
 	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
 		-- lab rainbow background isn't available in auto-mode
-		selectedcolor = 0
+		if keyboard_eitherIsDown("shift") then
+			selectedcolor = 5
+		else
+			selectedcolor = 0
+		end
 	end
 
 	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
