@@ -23,12 +23,52 @@ function drawscripteditor()
 		love.graphics.setFont(font16)
 	end
 
-	local textq, textc, lasttextcolor
+	local textq, textc, alttextcolor, lasttextcolor
 
 	-- -- Make sure to display all lines but if we put the cursor further, then do display line numbers
 	-- I could make it #scriptlines now
 	for k = 1, math.max(table.maxn(scriptlines), editingline) do
 		v = anythingbutnil(scriptlines[k])
+		local text_r
+		if k == editingline then
+			v = v .. anythingbutnil(input_r)
+			text_r = input_r
+		end
+
+		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+		local partss = explode(",", text2)
+		if partss[1] == "text" and textlinestogo == 0 then
+			textlinestogo = math.max(anythingbutnil0(tonumber(partss[5])), 0)
+
+			if textlinestogo > 0 then
+				-- Search forward for a createcrewman unless we hit a speak(_active) first
+				local i = k + textlinestogo + 1
+				if i <= #scriptlines then
+					local l
+					while true do
+						if i == editingline then
+							l = (input .. input_r):gsub(" ", "")
+						else
+							l = (scriptlines[i]):gsub(" ", "")
+						end
+						if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
+							alttextcolor = true
+							break
+						elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
+							alttextcolor = false
+							break
+						end
+
+						if i + 1 > #scriptlines then
+							break
+						else
+							i = i + 1
+						end
+					end
+				end
+				textlinestogo = 0
+			end
+		end
 
 		-- Save the whales, only display this line if we can see it!
 		if (scriptscroll+24+((textsize and 16 or 8)*k) >= 16) and (scriptscroll+24+((textsize and 16 or 8)*k) <= love.graphics.getHeight()) then
@@ -44,14 +84,14 @@ function drawscripteditor()
 
 			if textsize then
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8)
-				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
+				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			else
 				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
-				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor)
+				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
-			textq = justtext(v, textlinestogo > 0)
+			textq, textc = justtext(v, textlinestogo > 0)
 		end
 
 		if editingline == k then --and textlinestogo == 0 then
@@ -64,10 +104,14 @@ function drawscripteditor()
 
 			-- Dialog bar
 			if k < table.maxn(scriptlines) and syntaxhlon then
-				if textboxcolors[textc] == nil then
+				if alttextcolor then
+					if alttextboxcolors[textc] == nil then
+						textc = "gray"
+					end
+				elseif textboxcolors[textc] == nil then
 					textc = "gray"
 				end
-				love.graphics.setColor(textboxcolors[textc])
+				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if textsize then
 					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+5, 6, textq*16)
 				else
@@ -76,6 +120,8 @@ function drawscripteditor()
 			end
 		elseif textlinestogo > 0 then
 			textlinestogo = textlinestogo - 1
+		else
+			alttextcolor = false
 		end
 	end
 

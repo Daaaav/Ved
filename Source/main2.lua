@@ -2115,6 +2115,21 @@ function love.keypressed(key)
 			end
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
+
+			if state == 3 then
+				if input_r == "" and editingline < #scriptlines then
+					input_r = anythingbutnil(scriptlines[editingline + 1])
+					table.remove(scriptlines, editingline + 1)
+				end
+				dirty()
+			elseif state == 15 then
+				if input_r == "" and helpeditingline < #helparticlecontent then
+					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
+					table.remove(helparticlecontent, helpeditingline + 1)
+				end
+			elseif state == 6 then
+				tabselected = 0
+			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
 		local cf, cftype = dialogs[#dialogs].currentfield
@@ -2632,7 +2647,7 @@ function love.keypressed(key)
 			editorjumpscript(carg2)
 		elseif key == "right" and context == "script" then
 			editorjumpscript(carg1)
-		elseif key == "right" and context == "positionscript" then
+		elseif key == "right" and context == "roomscript" then
 			editorjumpscript(carg3)
 		elseif key == "f" then
 			startinscriptsearch()
@@ -2662,6 +2677,13 @@ function love.keypressed(key)
 			dirty()
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
+			if keyboard_eitherIsDown("shift") then
+				editingline = math.max(editingline - 1, 1)
+			else
+				if editingline > #scriptlines and editingline > 1 then
+					editingline = editingline - 1
+				end
+			end
 			input = anythingbutnil(scriptlines[editingline])
 			input_r = ""
 			dirty()
