@@ -2430,6 +2430,7 @@ function roomtext_extralines(text)
 end
 
 function gotohelparticle(n)
+	if helppages[n] == nil then return end
 	helparticle = n
 	helparticlecontent = explode("\n", helppages[helparticle].cont)
 	helparticlescroll = 0
