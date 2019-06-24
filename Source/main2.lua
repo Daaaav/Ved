@@ -2129,8 +2129,12 @@ function love.keypressed(key)
 					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
 					table.remove(helparticlecontent, helpeditingline + 1)
 				end
-			elseif state == 6 then
-				tabselected = 0
+			--elseif state == 6 then
+				--tabselected = 0
+			-- DO NOT UNCOMMENT THE ABOVE:
+			-- If you do, the Delete key will no longer be able to
+			-- remove levels from the recently opened level list if
+			-- you tab over to them
 			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
