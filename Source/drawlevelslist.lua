@@ -102,7 +102,7 @@ function drawlevelslist()
 				love.graphics.setColor(255,255,255)
 
 				if tabselected == (-#s.recentfiles)+(k-1) and nodialog then
-					if love.keyboard.isDown("return") and not enterpressed then
+					if love.keyboard.isDown("return") and not returnpressed then
 						state6load(v)
 						return
 					elseif love.keyboard.isDown("delete") then
