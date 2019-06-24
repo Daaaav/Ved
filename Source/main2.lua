@@ -112,6 +112,8 @@ function love.load()
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
 
+	returnpressed = false -- also for some things
+
 	temporaryroomnametimer = 0
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
@@ -2927,6 +2929,8 @@ function love.keyreleased(key)
 	elseif tilespicker_shortcut and (key == "lshift" or key == "l" .. ctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
+	elseif key == "return" then
+		returnpressed = false
 	end
 end
 

@@ -208,6 +208,7 @@ function cDialog:keypressed(key)
 		return
 	end
 	if key == "return" then
+		returnpressed = true
 		if self.buttons_present[DB.OK] then
 			self:press_button(DB.OK)
 		elseif self.buttons_present[DB.CLOSE] then
