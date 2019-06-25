@@ -408,7 +408,7 @@ function drawmaineditor()
 						-- to out
 						-- rot
 
-						for rot = 0, toout-1 do
+						for rot = 0, anythingbutnil0(toout)-1 do
 							local tooutnow = toout - rot
 							roomdata[roomy][roomx][((aty-tooutnow)*40)+((atx+rot)+1)] = useselectedtile -- top to right
 							roomdata[roomy][roomx][((aty+rot)*40)+((atx+tooutnow)+1)] = useselectedtile -- right to bottom
@@ -416,7 +416,7 @@ function drawmaineditor()
 							roomdata[roomy][roomx][((aty-rot)*40)+((atx-tooutnow)+1)] = useselectedtile -- left to top
 						end
 
-						toout = toout + 1
+						toout = anythingbutnil0(toout) + 1
 					end
 				else
 					--cons("Tile clicked spike: " .. atx .. " " .. aty .. ", set to " .. selectedtile .. ", subtool " .. selectedsubtool[3])
