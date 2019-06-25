@@ -78,9 +78,12 @@ function love.load()
 	ved_require("imagefont")
 	ved_require("mapfunc")
 
-	if s.pscale ~= 1 then
+	if s.pscale ~= 1 or s.psmallerscreen then
 		za,zb,zc = love.window.getMode()
+		zd,ze,zf = love.window.getPosition()
+		zwidth,zheight = love.window.getDesktopDimensions(zf)
 		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
 
 		ved_require("scaling")
 	end
@@ -1718,11 +1721,11 @@ function love.update(dt)
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8, (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
+						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)*s.pscale)
 						cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.GOTOENTRANCE then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8, (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
+						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)*s.pscale)
 						cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.CHANGEENTRANCE then
 						selectedtool = 14
