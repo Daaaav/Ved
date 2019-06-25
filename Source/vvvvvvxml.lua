@@ -387,7 +387,7 @@ function loadlevel(path)
 		if theselevelmetadata[croom].tileset == nil or type(theselevelmetadata[croom].tileset) ~= "number" or (theselevelmetadata[croom].tileset > 4) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[croom].tileset = 0
-		end if theselevelmetadata[croom].tilecol == nil or type(theselevelmetadata[croom].tilecol) ~= "number" or theselevelmetadata[croom].tilecol < 0
+		end if theselevelmetadata[croom].tilecol == nil or type(theselevelmetadata[croom].tilecol) ~= "number" or ((theselevelmetadata[croom].tileset == 0 and theselevelmetadata[croom].tilecol < -1) or (theselevelmetadata[croom].tileset ~= 0 and theselevelmetadata[croom].tilecol < 0))
 		or theselevelmetadata[croom].tileset == 0 and theselevelmetadata[croom].tilecol > 31
 		or theselevelmetadata[croom].tileset == 1 and theselevelmetadata[croom].tilecol > 7
 		or theselevelmetadata[croom].tileset == 2 and theselevelmetadata[croom].tilecol > 6
