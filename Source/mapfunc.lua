@@ -104,7 +104,7 @@ function map_doroom(x, y)
 		--love.graphics.setColor(0,0,0,255)
 		--love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
-		displayroom(0, 0, roomdata[y][x], levelmetadata_get(x, y), 0.5)
+		displayroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y), 0.5)
 		love.graphics.setCanvas()
 
 		rooms_map[y][x].map = canvas

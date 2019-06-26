@@ -1220,7 +1220,7 @@ function switchtileset()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILESET")
@@ -1255,7 +1255,7 @@ function switchtilecol()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILECOL")
@@ -1623,14 +1623,14 @@ function compareleveldifferences(secondlevelname)
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
-			for k,v in pairs(roomdata2[ry][rx]) do
+			for k,v in pairs(roomdata2_get(rx, ry)) do
 				if leftblank and v ~= 0 then
 					leftblank = false
 				end
-				if rightblank and roomdata[ry][rx][k] ~= 0 then
+				if rightblank and roomdata_get(rx, ry)[k] ~= 0 then
 					rightblank = false
 				end
-				if not changed and v ~= roomdata[ry][rx][k] then
+				if not changed and v ~= roomdata_get(rx, ry)[k] then
 					changed = true
 				end
 			end
@@ -3185,6 +3185,39 @@ end
 
 function levelmetadata2_get(x, y)
 	return levelmetadata2[y*20 + x+1]
+end
+
+function roomdata_get(rx, ry, tx, ty)
+	if tx ~= nil then
+		return roomdata[ry][rx][ty*40 + tx+1]
+	else
+		return roomdata[ry][rx]
+	end
+end
+
+function roomdata_set(rx, ry, param1, param2, param3)
+	local tx, ty, value
+	if param2 ~= nil then
+		tx = param1
+		ty = param2
+		value = param3
+	else
+		value = param1
+	end
+
+	if tx ~= nil then
+		roomdata[ry][rx][ty*40 + tx+1] = value
+	else
+		roomdata[ry][rx] = value
+	end
+end
+
+function roomdata2_get(rx, ry, tx, ty)
+	if tx ~= nil then
+		return roomdata2[ry][rx][ty*40 + tx+1]
+	else
+		return roomdata2[ry][rx]
+	end
 end
 
 hook("func")

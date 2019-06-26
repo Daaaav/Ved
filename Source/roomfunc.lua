@@ -737,11 +737,13 @@ end
 
 function autocorrectroom()
 	if levelmetadata_get(roomx, roomy).directmode == 0 then
-		for thist = 1, 1200 do
-			if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata[roomy][roomx][thist]) then
-				local correctret = correcttile(roomx, roomy, thist, selectedtileset, selectedcolor)
-				if roomdata[roomy][roomx][thist] ~= correctret then
-					roomdata[roomy][roomx][thist] = correctret
+		for thisy = 0, 29 do
+			for thisx = 0, 39 do
+				if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata_get(roomx, roomy, thisx, thisy)) then
+					local correctret = correcttile(roomx, roomy, thisx, thisy, selectedtileset, selectedcolor)
+					if roomdata_get(roomx, roomy, thisx, thisy) ~= correctret then
+						roomdata_set(roomx, roomy, thisx, thisy, correctret)
+					end
 				end
 			end
 		end
@@ -822,7 +824,7 @@ function issolidforgravline(tilenum, linetype)
 	return false
 end
 
-function correcttile(inroomx, inroomy, t, tileset, tilecol)
+function correcttile(inroomx, inroomy, tx, ty, tileset, tilecol)
 	-- tilesetblocks[tileset].colors[tilecol].blocks[x]
 	ts = tilesetblocks[tileset].tileimg
 
@@ -846,11 +848,11 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	-- This is all a complete mess. Basically: wall=8 background=1 spikes=2 nothing=4  outsidebackground = 6
 	--local dowhat = issolid(adjtile(t, 0, 0), ts) and 8 or (issolid(adjtile(t, 0, 0), ts) ~= issolid(adjtile(t, 0, 0), ts, true) and 2 or (isnot0(adjtile(t, 0, 0), ts) and (tileset == 1 and 6 or 1) or 4))
 	local dowhat
-	if issolid(adjtile(t, 0, 0), ts) then
+	if issolid(adjtile(tx, ty, 0, 0), ts) then
 		dowhat = 8  -- WALL
-	elseif (issolid(adjtile(t, 0, 0), ts, false, true) ~= issolid(adjtile(t, 0, 0), ts, true, true)) then
+	elseif (issolid(adjtile(tx, ty, 0, 0), ts, false, true) ~= issolid(adjtile(tx, ty, 0, 0), ts, true, true)) then
 		dowhat = 2  -- SPIKES
-	elseif isnot0(adjtile(t, 0, 0), ts) then
+	elseif isnot0(adjtile(tx, ty, 0, 0), ts) then
 		if tileset == 1 then
 			dowhat = 6  -- OUTSIDEBACKGROUND
 		else
@@ -884,49 +886,49 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	--if myissolid(adjtile(t, 0, 0), ts) then
 	if dowhat ~= 4 and dowhat ~= 2 and dowhat ~= 6 then
 		-- W A L L S   A N D   B A C K G R O U N D S   ( N O N - O U T S I D E   B G )
-		if not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, -1, 0), ts) and not myissolid(adjtile(t, 1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) then
+		if not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- All 4 sides are empty
 			return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
-		elseif myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- All 4 sides are filled.
-			if not myissolid(adjtile(t, -1, -1), ts) then
+			if not myissolid(adjtile(tx, ty, -1, -1), ts) then
 				-- Top left corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][9] -- BOTTOM RIGHT INNER CORNER
-			elseif not myissolid(adjtile(t, 1, -1), ts) then
+			elseif not myissolid(adjtile(tx, ty, 1, -1), ts) then
 				-- Top right corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][8] -- BOTTOM LEFT INNER CORNER
-			elseif not myissolid(adjtile(t, -1, 1), ts) then
+			elseif not myissolid(adjtile(tx, ty, -1, 1), ts) then
 				-- Bottom left corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][3] -- TOP RIGHT INNER CORNER
-			elseif not myissolid(adjtile(t, 1, 1), ts) then
+			elseif not myissolid(adjtile(tx, ty, 1, 1), ts) then
 				-- Bottom right corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][2] -- TOP LEFT INNER CORNER
 			else
 				-- Tile is completely surrounded!
 				return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
 			end
-		elseif not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Top side and left side are empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][13] -- TOP LEFT CORNER
-		elseif not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Top side and right side are empty, left side is NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][15] -- TOP RIGHT CORNER
-		elseif not myissolid(adjtile(t, -1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, 0, -1), ts) then
+		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) then
 			-- Left side and bottom side are empty, top side is NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][25] -- BOTTOM LEFT CORNER
-		elseif not myissolid(adjtile(t, 1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Right side and bottom side are empty, top and left side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][27] -- BOTTOM RIGHT CORNER
-		elseif not myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
 			-- Top side is of course empty, left and right side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][14] -- TOP
-		elseif not myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- Left side is empty, top and bottom sides are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][19] -- LEFT
-		elseif not myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- Right side is empty, top and bottom sides are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][21] -- RIGHT
-		elseif not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
 			-- Bottom side is empty, left and right side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][26] -- BOTTOM
 		else
@@ -936,10 +938,10 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 		end
 	elseif dowhat == 6 then
 		-- O U T S I D E   B A C K G R O U N D S
-		if (myissolid(adjtile(t, 0, -1), ts) or myissolid(adjtile(t, 0, 1), ts)) and (myissolid(adjtile(t, -1, 0), ts) or myissolid(adjtile(t, 1, 0), ts)) then
+		if (myissolid(adjtile(tx, ty, 0, -1), ts) or myissolid(adjtile(tx, ty, 0, 1), ts)) and (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
 			-- Both the left || right side and the top || bottom side are not empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][3] -- SQUARE
-		elseif (myissolid(adjtile(t, -1, 0), ts) or myissolid(adjtile(t, 1, 0), ts)) then
+		elseif (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
 			-- Either the left or right side is not empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][2] -- HORIZONTAL
 		else
@@ -949,16 +951,16 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	elseif dowhat == 2 then
 		-- S P I K E S
 		-- The extra true for adjtile means that spikes get treated differently at the edges of the screen. The true in myissolid means that multi mode should be ignored for spikes.
-		if myissolid(adjtile(t, 0, 1, true), ts, nil, true) then
+		if myissolid(adjtile(tx, ty, 0, 1, true), ts, nil, true) then
 			-- There's a solid block below this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[9] -- UP
-		elseif myissolid(adjtile(t, 0, -1, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, 0, -1, true), ts, nil, true) then
 			-- There's a solid block above this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[21] -- DOWN
-		elseif myissolid(adjtile(t, -1, 0, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, -1, 0, true), ts, nil, true) then
 			-- There's a solid block to the left of this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[16] -- RIGHT
-		elseif myissolid(adjtile(t, 1, 0, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, 1, 0, true), ts, nil, true) then
 			-- There's a solid block to the left of this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[14] -- LEFT
 		else
@@ -968,17 +970,13 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	end
 
 	-- Just return what it already is.
-	return roomdata[inroomy][inroomx][t]
+	return roomdata_get(inroomx, inroomy, tx, ty)
 end
 
-function adjtile(tilenum, xoff, yoff, spike)
+function adjtile(tilx, tily, xoff, yoff, spike)
 	if spike == nil then
 		spike = false
 	end
-
-	-- First look if we're not gonna go offscreen
-	tily = math.floor((tilenum-1)/40)
-	tilx = (tilenum-40*tily)-1
 
 	--[[ debugging crap
 	if lastchecked ~= tilenum then
@@ -998,11 +996,11 @@ function adjtile(tilenum, xoff, yoff, spike)
 		return 0 -- Should not be solid now, because then we're gonna prioritize orienting spikes to be attached to that, and that's not what VVVVVV's automatic mode does.
 	elseif (tilx+xoff < 0) or (tilx+xoff > 39) or (tily+yoff < 0) or (tily+yoff > 29) then
 		return 1 -- a solid tile for offscreen
-	elseif roomdata[doorroomy][doorroomx][tilenum + ((yoff)*40) + (xoff)] == nil then
-		cons("THIS SHOULDN'T HAPPEN. Tilenum=" .. tilenum .. " (we're checking " .. (tilenum + ((yoff)*40) + (xoff)) .. ") tilx=" .. tilx .. " tily=" .. tily .. ". Block is nil")
+	elseif roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff) == nil then
+		cons("THIS SHOULDN'T HAPPEN. tilx=" .. tilx .. " xoff=" .. xoff .. " tily=" .. tily .. " yoff=" .. yoff .. ". Block is nil")
 		return 1
 	else
-		return roomdata[doorroomy][doorroomx][tilenum + ((yoff)*40) + (xoff)]
+		return roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff)
 	end
 end
 
@@ -1163,80 +1161,80 @@ end
 
 function spikes_floor_left(tilex, tiley, ts)
 	for loopx = tilex, 0, -1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_floor_right(tilex, tiley, ts)
 	for loopx = tilex, 39, 1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_ceiling_left(tilex, tiley, ts)
 	for loopx = tilex, 0, -1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, -1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_ceiling_right(tilex, tiley, ts)
 	for loopx = tilex, 39, 1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, -1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_leftwall_up(tilex, tiley, ts)
 	for loopy = tiley, 0, -1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), -1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_leftwall_down(tilex, tiley, ts)
 	for loopy = tiley, 29, 1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), -1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_rightwall_up(tilex, tiley, ts)
 	for loopy = tiley, 0, -1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_rightwall_down(tilex, tiley, ts)
 	for loopy = tiley, 29, 1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1253,7 +1251,7 @@ function getroomcopydata(rx, ry)
 
 	--local datatable = roomdata[ry][rx] of course this is by reference
 	local datatable = {}
-	for k,v in pairs(roomdata[ry][rx]) do
+	for k,v in pairs(roomdata_get(rx, ry)) do
 		datatable[k] = v
 	end
 
@@ -1355,7 +1353,7 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 		table.remove(explodeddata, 1)
 	end
 
-	roomdata[ry][rx] = table.copy(explodeddata)
+	roomdata_set(rx, ry, table.copy(explodeddata))
 
 	temporaryroomname = L.ROOMPASTED
 	temporaryroomnametimer = 90
@@ -1416,11 +1414,13 @@ function rotateroom180(rx, ry, undoing)
 		finish_undo("ROTATE ROOM 180")
 	end
 
-	local oldroom = table.copy(roomdata[ry][rx])
+	local oldroom = table.copy(roomdata_get(rx, ry))
 
+	local newroomdata = {}
 	for n = 1, 1200 do
-		roomdata[ry][rx][1201-n] = oldroom[n]
+		newroomdata[1201-n] = oldroom[n]
 	end
+	roomdata_set(rx, ry, newroomdata)
 
 	-- Now for the entities!
 	for k,v in pairs(entitydata) do
@@ -1525,8 +1525,8 @@ function autocorrectlines()
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(bt)], v.t) then
-						startat = bt
+					if issolidforgravline(roomdata_get(roomx, roomy, bt, v.y%30), v.t) then
+						startat = bt+1
 						break
 					end
 				end
@@ -1536,8 +1536,8 @@ function autocorrectlines()
 
 				-- Now to see how long it should be!
 				for ft = startat+1, 40 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(ft)], v.t) then
-						linelength = 8 * (ft-startat) - 8
+					if issolidforgravline(roomdata_get(roomx, roomy, ft, v.y%30), v.t) then
+						linelength = 8 * (ft-startat)
 						break
 					end
 				end
@@ -1557,7 +1557,7 @@ function autocorrectlines()
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
 					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(bt*40)+((v.x%40)+1)], v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, bt), v.t) then
 						startat = bt+1
 						break
 					end
@@ -1569,7 +1569,7 @@ function autocorrectlines()
 				-- Now to see how long it should be!
 				for ft = startat+1, 29 do
 					--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(ft*40)+((v.x%40)+1)], v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, ft), v.t) then
 						linelength = 8 * (ft-startat)
 						break
 					end
@@ -1604,7 +1604,7 @@ function undo()
 				temporaryroomname = L.UNDOFAULTY
 				temporaryroomnametimer = 90
 			else
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+				roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 				autocorrectlines()
 			end
 		elseif undobuffer[#undobuffer].undotype == "addentity" then
@@ -1629,7 +1629,7 @@ function undo()
 				levelmetadata_set(roomx, roomy, v.key, v.oldvalue)
 			end
 			if undobuffer[#undobuffer].changetiles then
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+				roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 				autocorrectlines()
 				selectedtileset = levelmetadata_get(roomx, roomy).tileset
 				selectedcolor = levelmetadata_get(roomx, roomy).tilecol
@@ -1696,7 +1696,7 @@ function redo()
 				temporaryroomname = L.UNDOFAULTY
 				temporaryroomnametimer = 90
 			else
-				roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
+				roomdata_set(roomx, roomy, table.copy(redobuffer[#redobuffer].toredotiles))
 				autocorrectlines()
 			end
 		elseif redobuffer[#redobuffer].undotype == "addentity" then

@@ -219,7 +219,7 @@ function drawmaineditor()
 		elseif selectedtool <= 3 then
 			if not (eraserlocked and love.mouse.isDown("r")) then
 				if undosaved == 0 then
-					table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata[roomy][roomx]), toredotiles = {}})
+					table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata_get(roomx, roomy)), toredotiles = {}})
 					undosaved = #undobuffer
 					finish_undo("SAVED BEGIN RESULT FOR UNDO")
 				end
@@ -240,14 +240,14 @@ function drawmaineditor()
 
 					if selectedsubtool[selectedtool] == 1 then
 						-- 1x1
-						roomdata[roomy][roomx][(aty*40)+(atx+1)] = useselectedtile
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 					elseif selectedsubtool[selectedtool] == 2 then
 						-- 3x3
 						for sty = (aty-1), (aty+1) do
 							for stx = (atx-1), (atx+1) do
 								--if roomdata[roomy][roomx][(sty*40)+(stx+1)] ~= nil then
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -256,7 +256,7 @@ function drawmaineditor()
 						for sty = (aty-2), (aty+2) do
 							for stx = (atx-2), (atx+2) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -265,7 +265,7 @@ function drawmaineditor()
 						for sty = (aty-3), (aty+3) do
 							for stx = (atx-3), (atx+3) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -274,7 +274,7 @@ function drawmaineditor()
 						for sty = (aty-4), (aty+4) do
 							for stx = (atx-4), (atx+4) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -283,14 +283,14 @@ function drawmaineditor()
 						if minsmear == -1 and maxsmear == -1 then
 							minsmear = aty; maxsmear = aty
 							for stx = 0, 39 do
-								roomdata[roomy][roomx][(aty*40)+(stx+1)] = useselectedtile
+								roomdata_set(roomx, roomy, stx, aty, useselectedtile)
 							end
 						end
 
 						if aty < minsmear or aty > maxsmear then
 							for sty = math.min(aty, minsmear), math.max(aty, maxsmear) do
 								for stx = 0, 39 do
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -305,14 +305,14 @@ function drawmaineditor()
 						if minsmear == -1 and maxsmear == -1 then
 							minsmear = atx; maxsmear = atx
 							for sty = 0, 29 do
-								roomdata[roomy][roomx][(sty*40)+(atx+1)] = useselectedtile
+								roomdata_set(roomx, roomy, atx, sty, useselectedtile)
 							end
 						end
 
 						if atx < minsmear or atx > maxsmear then
 							for stx = math.min(atx, minsmear), math.max(atx, maxsmear) do
 								for sty = 0, 29 do
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -332,9 +332,9 @@ function drawmaineditor()
 									if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
 										if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
 											-- Stamp
-											roomdata[roomy][roomx][(sty*40)+(stx+1)] = customsizetile[iy][ix]
+											roomdata_set(roomx, roomy, stx, sty, customsizetile[iy][ix])
 										elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
-											roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+											roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 										end
 									end
 									ix = ix + 1
@@ -363,7 +363,7 @@ function drawmaineditor()
 							for sty = customsizecoory, aty do
 								table.insert(customsizetile, {})
 								for stx = customsizecoorx, atx do
-									local tnum = roomdata[roomy][roomx][(sty*40)+stx+1]
+									local tnum = roomdata_get(roomx, roomy, stx, sty)
 									table.insert(customsizetile[#customsizetile], tnum)
 									if tnum ~= 0 then
 										foundnonzero = true
@@ -381,8 +381,8 @@ function drawmaineditor()
 					elseif selectedsubtool[selectedtool] == 9 then
 						-- Fill bucket
 						-- What "color" is the tile we're clicking on?
-						local oldtile = roomdata[roomy][roomx][aty*40+atx+1]
-						roomdata[roomy][roomx][aty*40+atx+1] = useselectedtile
+						local oldtile = roomdata_get(roomx, roomy, atx, aty)
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 
 						-- It's only useful to fill if we're not filling an area with exactly the same tile.
 						if oldtile ~= useselectedtile then
@@ -394,8 +394,8 @@ function drawmaineditor()
 								for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
 									if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
 									and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
-									and roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] == oldtile then
-										roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] = useselectedtile
+									and roomdata_get(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
+										roomdata_set(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
 
 										table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
 									end
@@ -410,10 +410,10 @@ function drawmaineditor()
 
 						for rot = 0, anythingbutnil0(toout)-1 do
 							local tooutnow = toout - rot
-							roomdata[roomy][roomx][((aty-tooutnow)*40)+((atx+rot)+1)] = useselectedtile -- top to right
-							roomdata[roomy][roomx][((aty+rot)*40)+((atx+tooutnow)+1)] = useselectedtile -- right to bottom
-							roomdata[roomy][roomx][((aty+tooutnow)*40)+((atx-rot)+1)] = useselectedtile -- bottom to left
-							roomdata[roomy][roomx][((aty-rot)*40)+((atx-tooutnow)+1)] = useselectedtile -- left to top
+							roomdata_set(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
+							roomdata_set(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
+							roomdata_set(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
+							roomdata_set(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
 						end
 
 						toout = anythingbutnil0(toout) + 1
@@ -440,22 +440,22 @@ function drawmaineditor()
 
 					if selectedsubtool[3] == 1 then
 						-- 1 spike
-						roomdata[roomy][roomx][(aty*40)+(atx+1)] = useselectedtile
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 					elseif selectedsubtool[3] == 2 then
 						-- <-->
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
@@ -465,16 +465,16 @@ function drawmaineditor()
 						end
 					elseif selectedsubtool[3] == 3 then
 						-- <--
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
 						else
@@ -483,16 +483,16 @@ function drawmaineditor()
 						end
 					elseif selectedsubtool[3] == 4 then
 						-- -->
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
 						else
@@ -697,7 +697,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 10 then
 			-- Gravity line
-			if not issolid(roomdata[roomy][roomx][(aty*40)+(atx+1)], usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
+			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
 				cons("Gravity line: " .. atx .. " " .. aty)
 
 				local p1, p2
@@ -967,7 +967,7 @@ function drawmaineditor()
 			-- Warp line
 			cons("Warp line: " .. atx .. " " .. aty)
 
-			if not issolid(roomdata[roomy][roomx][(aty*40)+(atx+1)], usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
+			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
 				cons("Warp line: " .. atx .. " " .. aty)
 
 				if atx == 0 or atx == 39 then
@@ -1126,7 +1126,7 @@ function drawmaineditor()
 		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
 		local aty = math.floor((love.mouse.getY()) / 16)
 
-		selectedtile = roomdata[roomy][roomx][(aty*40)+(atx+1)]
+		selectedtile = roomdata_get(roomx, roomy, atx, aty)
 	end
 
 	if tilespicker then
@@ -1213,7 +1213,7 @@ function drawmaineditor()
 			end
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata_get(roomx, roomy), nil, displaytilenumbers, displaysolid)
+		displayroom(screenoffset, 0, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), nil, displaytilenumbers, displaysolid)
 
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then
@@ -1272,7 +1272,7 @@ function drawmaineditor()
 			-- Up
 			for t = 0, 39 do
 				-- Wall
-				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata_get(roomx, roomup).tileset]) then
+				if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset]) then
 					--love.graphics.line(64+64+(t*16) +1, 0, 64+64+(t*16)+15, 0)
 					--love.graphics.line(64+64+(t*16) +1, 1, 64+64+(t*16)+15, 1)
 
@@ -1290,7 +1290,7 @@ function drawmaineditor()
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata_get(roomx, roomup).tileset], false) ~= issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata_get(roomx, roomup).tileset], true) then
+				if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], false) ~= issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomupW then
@@ -1303,9 +1303,9 @@ function drawmaineditor()
 				end
 			end
 			-- Left
-			for t = 1, 30 do
+			for t = 0, 29 do
 				-- Wall
-				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata_get(roomleft, roomy).tileset]) then
+				if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset]) then
 					--love.graphics.line(64+64, (t-1)*16 +1, 64+64, (t-1)*16 +15)
 					--love.graphics.line(64+64+1, (t-1)*16 +1, 64+64+1, (t-1)*16 +15)
 
@@ -1313,24 +1313,24 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.draw(sideimg, sideline[2], screenoffset, t*16, 0, 2)
 
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomleftW and ( (levelmetadata_get(roomleft, roomy).warpdir == 1) or (levelmetadata_get(roomleft, roomy).warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[2], screenoffset, (t-1)*16, 0, 1)
+					love.graphics.draw(smallsideimg, smallsideline[2], screenoffset, t*16, 0, 1)
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata_get(roomleft, roomy).tileset], false) ~= issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata_get(roomleft, roomy).tileset], true) then
+				if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], false) ~= issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomleftW then
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.draw(sideimg, sideline[2], screenoffset, t*16, 0, 2)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1338,7 +1338,7 @@ function drawmaineditor()
 			-- Right
 			for t = 0, 29 do
 				-- Wall
-				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata_get(roomright, roomy).tileset]) then
+				if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset]) then
 
 					if roomrightW then
 						love.graphics.setColor(0, 192, 255)
@@ -1355,7 +1355,7 @@ function drawmaineditor()
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata_get(roomright, roomy).tileset], false) ~= issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata_get(roomright, roomy).tileset], true) then
+				if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], false) ~= issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomrightW then
@@ -1370,7 +1370,7 @@ function drawmaineditor()
 			-- Down
 			for t = 0, 39 do
 				-- Wall
-				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata_get(roomx, roomdown).tileset]) then
+				if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset]) then
 
 					if roomdownW then
 						love.graphics.setColor(0, 192, 255)
@@ -1387,7 +1387,7 @@ function drawmaineditor()
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata_get(roomx, roomdown).tileset], false) ~= issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata_get(roomx, roomdown).tileset], true) then
+				if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], false) ~= issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomdownW then

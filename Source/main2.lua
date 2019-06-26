@@ -3683,7 +3683,7 @@ function love.mousereleased(x, y, button)
 
 
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
-		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
+		undobuffer[undosaved].toredotiles = table.copy(roomdata_get(roomx, roomy))
 		undosaved = 0
 		cons("[UNRE] SAVED END RESULT FOR UNDO")
 	elseif state == 32 then
