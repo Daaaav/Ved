@@ -2044,9 +2044,9 @@ function love.update(dt)
 			editingbounds = 0
 		end
 
-		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
+		if levelmetadata_get(roomx, roomy).warpdir == 3 then
 			warpbganimation = (warpbganimation + 2) % 64
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 then
+		elseif levelmetadata_get(roomx, roomy).warpdir ~= 0 then
 			warpbganimation = (warpbganimation + 3) % 32
 		end
 
@@ -2889,11 +2889,15 @@ function love.keypressed(key)
 		editingbounds = 0
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "enemyx1", 0)
+			levelmetadata_set(roomx, roomy, "enemyy1", 0)
+			levelmetadata_set(roomx, roomy, "enemyx2", 320)
+			levelmetadata_set(roomx, roomy, "enemyy2", 240)
 		else
-			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "platx1", 0)
+			levelmetadata_set(roomx, roomy, "platy1", 0)
+			levelmetadata_set(roomx, roomy, "platx2", 320)
+			levelmetadata_set(roomx, roomy, "platy2", 240)
 		end
 
 		editingbounds = 0
@@ -2962,7 +2966,7 @@ function love.keypressed(key)
 		editingroomtext = 0
 		stopinput()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
-		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
+		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata_get(roomx, roomy).tileset] .. " ***")
 		cons("First select the wall tiles")
 
 		tilescreator = true
@@ -2975,7 +2979,7 @@ function love.keypressed(key)
 		selectedtileset = "creator"
 		selectedcolor = "creator"
 
-		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]
+		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata_get(roomx, roomy).tileset]
 
 		tilespicker = true
 		selectedtool = 1
@@ -3014,12 +3018,12 @@ function love.keypressed(key)
 	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
 		-- Auto/manual mode
 		changedmode()
-		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
+		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata_get(roomx, roomy).directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
 		temporaryroomnametimer = 90
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") then
 		-- Change warp dir
 		changewarpdir()
-		temporaryroomname = warpdirchangedtext[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]
+		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") then
 		-- Edit room name
