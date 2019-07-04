@@ -886,7 +886,9 @@ function dialog.callback.replacesong(button, fields)
 		return
 	end
 
-	local readsuccess, ficontents = readfile(fields.name)
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	local readsuccess, ficontents = readfile(filepath)
 	if not readsuccess then
 		dialog.create(langkeys(L.SONGOPENFAIL, {fields.name}) .. "\n\n" .. ficontents)
 		return
@@ -897,13 +899,6 @@ function dialog.callback.replacesong(button, fields)
 	if not success then
 		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
 	else
-		local last_dirsep = fields.name:reverse():find(dirsep, 1, true)
-		local filename
-		if last_dirsep == nil then
-			filename = fields.name
-		else
-			filename = fields.name:sub(-last_dirsep+1, -1)
-		end
 		setmusicmeta_song(musicplayerfile, input, nil, filename, nil)
 	end
 end

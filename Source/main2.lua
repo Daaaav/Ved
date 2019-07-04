@@ -1427,11 +1427,11 @@ function love.draw()
 						-- Replace
 						input = m
 						dialog.create(
-							L.ENTERSONGPATH,
-							DBS.OKCANCEL,
+							"",
+							DBS.LOADCANCEL,
 							dialog.callback.replacesong,
 							langkeys(L.INSERTSONG, {m}),
-							dialog.form.simplename
+							dialog.form.files_make(userprofile, "", ".ogg", true, 11)
 						)
 					elseif can_remove and mouseon(musicx+48, 32+24*my, 16, 16) then
 						-- Remove
