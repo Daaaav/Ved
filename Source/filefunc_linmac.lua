@@ -8,11 +8,11 @@ local standardvvvvvvfolder
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin01.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac01.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac02.so")
 end
 
 ffi.cdef([[
@@ -21,9 +21,12 @@ ffi.cdef([[
 		char name[256];
 		bool isdir;
 		long long lastmodified;
+		long long filesize;
 	} ved_filedata;
 
-	bool ved_opendir(const char *path, const char *filter);
+	void init_lang(const char *(*l)(char *key));
+
+	bool ved_opendir(const char *path, const char *filter, bool show_hidden, const char **errmsg);
 
 	bool ved_nextfile(ved_filedata *filedata);
 
@@ -35,6 +38,12 @@ ffi.cdef([[
 
 	long long ved_getmodtime(const char *path);
 ]])
+
+libC.init_lang(
+	function(key)
+		return L[ffi.string(key)]
+	end
+)
 
 
 buffer_filedata = ffi.new("ved_filedata")
@@ -55,7 +64,7 @@ function listlevelfiles(directory)
 		else
 			prefix = dirs[currentdir_i] .. "/"
 		end
-		if libC.ved_opendir(directory .. "/".. prefix, ".vvvvvv") then
+		if libC.ved_opendir(directory .. "/".. prefix, ".vvvvvv", false, nil) then
 			t[dirs[currentdir_i]] = {}
 			while libC.ved_nextfile(buffer_filedata) do
 				current_name = ffi.string(buffer_filedata.name)
@@ -82,17 +91,67 @@ function listlevelfiles(directory)
 	end
 
 	for k,v in pairs(t) do
-		table.sort(t[k],
-			function(a,b)
-				if a.isdir and not b.isdir then return true end
-				if b.isdir and not a.isdir then return false end
+		sort_files(t[k])
+	end
+	return t
+end
 
-				return a.name:lower() < b.name:lower()
-			end
-		)
+function listfiles_generic(directory, filter, show_hidden)
+	-- If successful, returns: true, files.
+	-- If not, returns: false, {}, message.
+	local files = {}
+
+	local errmsg = ffi.new("const char*[1]")
+	if libC.ved_opendir(directory .. "/", filter, show_hidden, errmsg) then
+		while libC.ved_nextfile(buffer_filedata) do
+			table.insert(files,
+				{
+					name = ffi.string(buffer_filedata.name),
+					isdir = buffer_filedata.isdir,
+					lastmodified = tonumber(buffer_filedata.lastmodified),
+				}
+			)
+		end
+		libC.ved_closedir()
+	else
+		-- The dir is invalid?
+		return false, {}, ffi.string(errmsg[0])
 	end
 
-	return t
+	sort_files(files)
+	return true, files
+end
+
+function get_parent_path(directory)
+	-- "" counts as the root directory - imagine a slash after the return value.
+	local last_dirsep = directory:reverse():find("/", 1, true)
+	if last_dirsep == nil then
+		return ""
+	end
+	return directory:sub(1, -last_dirsep-1)
+end
+
+function get_child_path(directory, child)
+	return directory .. "/" .. child
+end
+
+function get_root_dir_display()
+	return "/"
+end
+
+function filepath_from_dialog(folder, name)
+	-- Returns the full path, and the final filename
+	local last_dirsep = name:reverse():find("/", 1, true)
+	local filename
+	if last_dirsep == nil then
+		filename = name
+	else
+		filename = name:sub(-last_dirsep+1, -1)
+	end
+	if name:match("^/.*") ~= nil then
+		return name, filename
+	end
+	return folder .. "/" .. name, filename
 end
 
 function getlevelsfolder()

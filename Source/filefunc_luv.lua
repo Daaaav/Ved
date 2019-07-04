@@ -21,6 +21,62 @@ function listlevelfiles(directory)
 	return files
 end
 
+function listfiles_generic(directory, filter, show_hidden)
+	-- If successful, returns: true, files.
+	-- If not, returns: false, {}, message.
+	-- Kinda TODO, but realize you'll also list all files from the .love
+	--[[
+	local files = {}
+
+	for k,v in pairs(love.filesystem.getDirectoryItems(directory)) do
+		table.insert(files,
+			{
+				name = v,
+				isdir = true,
+				lastmodified = nil
+			}
+		)
+	end
+
+	sort_files(files)
+	return true, files
+	]]
+
+	return false, {}, L.FILEDIALOGLUV
+end
+
+function get_parent_path(directory)
+	-- "" counts as the root directory - imagine a slash after the return value.
+	local last_dirsep = directory:reverse():find("/", 1, true)
+	if last_dirsep == nil then
+		return ""
+	end
+	return directory:sub(1, -last_dirsep-1)
+end
+
+function get_child_path(directory, child)
+	return directory .. "/" .. child
+end
+
+function get_root_dir_display()
+	return "/"
+end
+
+function filepath_from_dialog(folder, name)
+	-- Returns the full path, and the final filename
+	local last_dirsep = name:reverse():find("/", 1, true)
+	local filename
+	if last_dirsep == nil then
+		filename = name
+	else
+		filename = name:sub(-last_dirsep+1, -1)
+	end
+	if name:match("^/.*") ~= nil then
+		return name, filename
+	end
+	return folder .. "/" .. name, filename
+end
+
 function getlevelsfolder()
 	-- Returns success. Sets the path variables to what they _should_ be, even if
 	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"

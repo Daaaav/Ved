@@ -1,10 +1,19 @@
 -- Scroll bars!
-function scrollbar(x, y, height, scrollableheight, peronetage)
+function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
 	-- Returns nil if untouched, returns scroll value if moved
 	-- New peronetage maybe?
 	local newperonetage
 
-	love.graphics.setColor(96,96,96,96)
+	local setColor
+	if indialog == nil then
+		setColor = love.graphics.setColor
+	else
+		setColor = function(...)
+			indialog:setColor(...)
+		end
+	end
+
+	setColor(96,96,96,96)
 	love.graphics.rectangle("fill", x, y, 16, height)
 
 	if scrollableheight > height then
@@ -19,9 +28,9 @@ function scrollbar(x, y, height, scrollableheight, peronetage)
 		end
 
 		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) then
-			love.graphics.setColor(224,224,224,255)
+			setColor(224,224,224,255)
 		else
-			love.graphics.setColor(192,192,192,255)
+			setColor(192,192,192,255)
 			--[[
 			if not mousepressed and love.mouse.isDown("l") then
 				if scrollclickstart == nil then
@@ -38,7 +47,7 @@ function scrollbar(x, y, height, scrollableheight, peronetage)
 			]]
 		end
 
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and not mousepressed and nodialog and love.mouse.isDown("l") then
+		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and not mousepressed and (nodialog or indialog) and love.mouse.isDown("l") then
 			if scrollclickstart == nil then
 				scrollclickstart = love.mouse.getY()
 				savedperonetage = peronetage
@@ -57,7 +66,7 @@ function scrollbar(x, y, height, scrollableheight, peronetage)
 		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedperonetage == nil and peronetage or savedperonetage)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
 	end
 
-	love.graphics.setColor(255,255,255,255)
+	setColor(255,255,255,255)
 
 	--[[
 	if newperonetage ~= nil then

@@ -59,6 +59,71 @@ function listlevelfiles(directory)
 	return t
 end
 
+function listfiles_generic(directory, filter, show_hidden)
+	-- If successful, returns: true, files.
+	-- If not, returns: false, {}, message.
+	local files = {}
+
+	if directory == "" then
+		directory = "/"
+	end
+	local pfile = io.popen("cd '" .. escapename(directory) .. "' && ls -p" .. (show_hidden and "A" or "") .. " --group-directories-first")
+	for filename in pfile:lines() do
+		local skipped = false
+		local isdir = false
+		if filename:sub(-1,-1) == "/" then
+			isdir = true
+			filename = filename:sub(1,-2)
+		elseif filter == "/" or (filter ~= "" and filename:sub(-filter:len(), -1) ~= filter) then
+			skipped = true
+		end
+		if not skipped then
+			table.insert(files,
+				{
+					name = filename,
+					isdir = isdir,
+					lastmodified = nil
+				}
+			)
+		end
+	end
+
+	sort_files(files)
+	return true, files
+end
+
+function get_parent_path(directory)
+	-- "" counts as the root directory - imagine a slash after the return value.
+	local last_dirsep = directory:reverse():find("/", 1, true)
+	if last_dirsep == nil then
+		return ""
+	end
+	return directory:sub(1, -last_dirsep-1)
+end
+
+function get_child_path(directory, child)
+	return directory .. "/" .. child
+end
+
+function get_root_dir_display()
+	return "/"
+end
+
+function filepath_from_dialog(folder, name)
+	-- Returns the full path, and the final filename
+	local last_dirsep = name:reverse():find("/", 1, true)
+	local filename
+	if last_dirsep == nil then
+		filename = name
+	else
+		filename = name:sub(-last_dirsep+1, -1)
+	end
+	if name:match("^/.*") ~= nil then
+		return name, filename
+	end
+	return folder .. "/" .. name, filename
+end
+
 function getlevelsfolder()
 	-- Returns success. Sets the path variables to what they _should_ be, even if
 	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"

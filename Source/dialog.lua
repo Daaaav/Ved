@@ -9,6 +9,7 @@ DB = {
 	DISCARD = 7,
 	SAVE = 8,
 	CLOSE = 9,
+	LOAD = 10,
 }
 
 -- We'd also like that being indexable by the values...
@@ -26,6 +27,8 @@ DBS = {
 	OKCANCELAPPLY = {DB.OK, DB.CANCEL, DB.APPLY},
 	SAVEDISCARDCANCEL = {DB.SAVE, DB.DISCARD, DB.CANCEL},
 	YESNOCANCEL = {DB.YES, DB.NO, DB.CANCEL},
+	SAVECANCEL = {DB.SAVE, DB.CANCEL},
+	LOADCANCEL = {DB.LOAD, DB.CANCEL},
 }
 
 -- Field type constants
@@ -35,6 +38,7 @@ DF = {
 	LABEL = 2,
 	CHECKBOX = 3,
 	RADIOS = 4,
+	FILES = 5,
 }
 
 -- Dialog class
@@ -214,6 +218,8 @@ function cDialog:keypressed(key)
 			self:press_button(DB.CLOSE)
 		elseif self.buttons_present[DB.SAVE] then
 			self:press_button(DB.SAVE)
+		elseif self.buttons_present[DB.LOAD] then
+			self:press_button(DB.LOAD)
 		elseif self.buttons_present[DB.QUIT] then
 			self:press_button(DB.QUIT)
 		end
@@ -223,7 +229,7 @@ function cDialog:keypressed(key)
 		self:press_button(DB.YES)
 	elseif key == "n" and self.buttons_present[DB.NO] then
 		self:press_button(DB.NO)
-	elseif key == "s" and self.buttons_present[DB.SAVE] then
+	elseif key == "s" and self.buttons_present[DB.SAVE] and #self.fields == 0 then
 		self:press_button(DB.SAVE)
 	elseif key == "d" and self.buttons_present[DB.DISCARD] then
 		self:press_button(DB.DISCARD)
@@ -252,23 +258,29 @@ function cDialog:dropdown_onchange(key, picked)
 	end
 end
 
-function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs1, extendedargs2) -- next: dropdown onchange function
+function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 	-- Modes:
 	-- 0: textbox
 	-- 1: dropdown
 	-- 2: text label (can also be function returning string)
 	-- 3: checkbox
 	-- 4: radio buttons dropdown
+	-- 5: files list
 	if mode == nil then
 		mode = 0
 	end
 
-	local content_r, menuitems, menuitemslabel
+	local content_r
+	local menuitems, menuitemslabel, onchange
+	local folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on
 	if mode == 0 then
-		content_r = extendedargs1
-	else
-		menuitems = extendedargs1
-		menuitemslabel = extendedargs2
+		content_r = ...
+	elseif mode == 1 or mode == 4 then
+		menuitems, menuitemslabel = ...
+	elseif mode == 3 then
+		onchange = ...
+	elseif mode == 5 then
+		menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
 	end
 
 	local real_x = self.x+10+x*8
@@ -347,6 +359,10 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs
 
 			self.fields[n][5] = not content
 			mousepressed = true
+
+			if onchange ~= nil then
+				onchange(not content, self)
+			end
 		end
 	elseif mode == 4 then
 		for k,v in pairs(menuitems) do
@@ -368,6 +384,97 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, extendedargs
 				dialogs[#dialogs]:dropdown_onchange(key, v)
 				mousepressed = true
 			end
+		end
+	elseif mode == 5 then
+		self:setColor(255,255,255,255)
+		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
+		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
+			local newfolder = get_parent_path(content)
+			self.fields[n][5] = newfolder
+			local success, everr
+			success, self.fields[n][7], everr = listfiles_generic(
+				newfolder,
+				filter_on and folder_filter or "",
+				folder_show_hidden
+			)
+			if success then
+				everr = ""
+			end
+			self.fields[n][10] = 0
+			self.fields[n][11] = everr
+
+			mousepressed = true
+		end
+		self:setColor(0,0,0,255)
+		local toppath
+		if content == "" then
+			toppath = get_root_dir_display()
+		else
+			toppath = displayable_filename(content)
+		end
+		love.graphics.setScissor(real_x+12, real_y-1, real_w-12, 8)
+		love.graphics.print(toppath, real_x+real_w-font8:getWidth(toppath), real_y+1)
+		love.graphics.setScissor(real_x, real_y+9, real_w-16, 8*list_height)
+		self:setColor(100,100,100,192)
+		--self:setColor(160,160,160,192)
+		--self:setColor(223,223,223,255)
+		love.graphics.rectangle("fill", real_x, real_y+9, real_w-16, 8*list_height)
+		self:setColor(0,0,0,255)
+		for k,v in pairs(menuitems) do
+			-- Only display this item if it will be visible
+			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
+				local selected = false --v.name == content -- check if name dialog field equals v.name?
+				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height))
+				if selected or moused then
+					self:setColor(172,172,172,255)
+					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
+					self:setColor(0,0,0,255)
+					if moused and love.mouse.isDown("l") and not mousepressed then
+						if v.isdir then
+							local newfolder = get_child_path(content, v.name)
+							self.fields[n][5] = newfolder
+							local success, everr
+							success, self.fields[n][7], everr = listfiles_generic(
+								newfolder,
+								filter_on and folder_filter or "",
+								folder_show_hidden
+							)
+							if success then
+								everr = ""
+							end
+							self.fields[n][10] = 0
+							self.fields[n][11] = everr
+
+							mousepressed = true
+						else
+							--self.fields[n][5] = v.name
+							self:set_field("name", v.name)
+						end
+					end
+				end
+				if v.isdir then
+					self:setColor(255,255,255,255)
+					love.graphics.draw(smallfolder, real_x, real_y+1+k*8+listscroll)
+					self:setColor(0,0,0,255)
+				end
+				love.graphics.print(displayable_filename(v.name), real_x+8, real_y+3+k*8+listscroll)
+			end
+		end
+		if folder_error ~= "" then
+			self:setColor(192,0,0,255)
+			love.graphics.printf(folder_error, real_x, real_y+11, real_w-16, "left")
+		end
+		love.graphics.setScissor()
+
+		-- Scrollbar
+		local newperonetage = scrollbar(
+			real_x+real_w-16, real_y+9, 8*list_height, #menuitems*8,
+			(-listscroll)/((#menuitems*8)-(8*list_height)),
+			self
+		)
+
+		if newperonetage ~= nil then
+			self.fields[n][10] = -(newperonetage*((#menuitems*8)-(8*list_height)))
 		end
 	end
 
@@ -457,6 +564,19 @@ function cDialog:set_field(key, value)
 			break
 		end
 	end
+end
+
+function cDialog:get_on_scrollable_field(x, y)
+	-- If x,y is on a scrollable field, return that field's key, otherwise return nil.
+	for k,v in pairs(self.fields) do
+		local v_x, v_y = self.x+10+v[2]*8, self.y+self.windowani+10+v[3]*8+10
+		if v[6] == DF.FILES
+		and x >= v_x and x < v_x+v[4]*8
+		and y >= v_y and y < v_y+8*v[12] then
+			return k
+		end
+	end
+	return nil
 end
 
 

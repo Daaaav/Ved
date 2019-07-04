@@ -6,18 +6,9 @@ L_PLU.BYTES = {
 	[0] = "$1 byte",
 	[1] = "$1 bytes",
 }
-L_PLU.KILOBYTES = {
-	[0] = "$1 kB",
-	[1] = "$1 kB",
-}
-L_PLU.MEGABYTES = {
-	[0] = "$1 MB",
-	[1] = "$1 MB",
-}
-L_PLU.GIGABYTES = {
-	[0] = "$1 GB",
-	[1] = "$1 GB",
-}
+L.KILOBYTES = "$1 kB" -- There's also L_PLU.BYTES for "$1 byte"/"$1 bytes"
+L.MEGABYTES = "$1 MB"
+L.GIGABYTES = "$1 GB"
 L.CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!"
 L.MUSICTITLE = "Title: "
 L.MUSICARTIST = "Artist: "
@@ -34,3 +25,11 @@ L.INTERNALNOBARS = "Loadscript int.sc"
 L.SOUNDS = "Sounds"
 L.GRAPHICS = "Graphics"
 L.SOUNDPLAYERROR = "Can not play this sound. It may not exist or be of an unsupported type."
+L.FILEOPENERNAME = "Name: "
+L.PATHINVALID = "The path is invalid."
+L.DRIVES = "Drives" -- like C: or F: on Windows
+L.DOFILTER = "Only show *$1" -- "*.txt" for example
+L.DOFILTERDIR = "Only show directories"
+L.FILEDIALOGLUV = "Sorry, your operating system is unrecognized, so the file dialog does not work."
+
+L.BTN_LOAD = "Load"

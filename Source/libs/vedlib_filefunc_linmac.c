@@ -1,9 +1,9 @@
 /*
-Version 01
+Version 02
 
 Typical usage (in C):
 
-if (!ved_opendir(".", ".vvvvvv"))
+if (!ved_opendir(".", ".vvvvvv", false, NULL))
 	return; // or error
 ved_filedata filedata;
 while (ved_nextfile(&filedata))
@@ -14,6 +14,8 @@ ved_closedir();
 */
 
 #include <dirent.h>
+#include <errno.h>
+#include <locale.h>
 #include <stdbool.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -23,6 +25,7 @@ typedef struct _ved_filedata
 	char name[256];
 	bool isdir;
 	long long lastmodified;
+	long long filesize;
 } ved_filedata;
 
 
@@ -31,12 +34,28 @@ char g_path[256];
 size_t g_len_prefix;
 bool g_filter_active;
 char g_filter[8];
+bool g_show_hidden;
+
+const char *(*ved_L)(char *key);
+
+/*
+ * Register a callback to get translations from Lua, and set locale to system locale
+ */
+void init_lang(const char *(*l)(char *key))
+{
+	ved_L = l;
+
+	setlocale(LC_ALL, "");
+}
 
 /*
  * Returns true if filename ends in the filter text (like ".vvvvvv" or ".png")
  */
 bool is_filtered_file(struct dirent *dirent)
 {
+	if (strcmp(g_filter, "/") == 0)
+		/* If this were a directory, we wouldn't be calling this function. */
+		return false;
 	size_t len_filter = strlen(g_filter);
 	size_t len_name = strlen(dirent->d_name);
 	return len_name >= len_filter
@@ -48,8 +67,14 @@ bool is_filtered_file(struct dirent *dirent)
  */
 bool is_listable(struct dirent *dirent, bool isdir)
 {
-	if (dirent->d_name[0] == '.')
+	if (!g_show_hidden && dirent->d_name[0] == '.')
 		return false;
+	if (g_show_hidden && (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0))
+		return false;
+#if defined(__APPLE__)
+	if (g_show_hidden && strcmp(dirent->d_name, ".DS_Store") == 0)
+		return false;
+#endif
 	return isdir || !g_filter_active || is_filtered_file(dirent);
 }
 
@@ -58,23 +83,33 @@ bool is_listable(struct dirent *dirent, bool isdir)
  * The path must end in "/".
  * The filter is either an extension including '.', or an empty string to not
  * filter any files. For example, it can be ".vvvvvv" to only list VVVVVV
- * levels and directories.
- * Returns true if successful.
+ * levels and directories. If the filter is "/", only matches directories.
+ * Returns true if successful. If unsuccessful, and errmsg is not NULL, errmsg
+ * will point to an error string.
  */
-bool ved_opendir(const char *path, const char *filter)
+bool ved_opendir(const char *path, const char *filter, bool show_hidden, const char **errmsg)
 {
 	g_filter_active = strlen(filter) > 0;
 	strncpy(g_filter, filter, 7);
 	g_filter[7] = '\0';
+	g_show_hidden = show_hidden;
 	g_len_prefix = strlen(path);
-	if (g_len_prefix > 247)
+	if (g_len_prefix > 247 || path[g_len_prefix-1] != '/')
+	{
+		if (errmsg != NULL)
+			*errmsg = ved_L("PATHINVALID");
 		return false;
-	if (path[g_len_prefix-1] != '/')
-		return false;
+	}
 	strcpy(g_path, path);
 	g_path[255] = '\0';
 	g_dir = opendir(path);
-	return (bool)g_dir;
+	if (!(bool)g_dir)
+	{
+		if (errmsg != NULL)
+			*errmsg = strerror(errno);
+		return false;
+	}
+	return true;
 }
 
 /*
@@ -97,6 +132,7 @@ bool ved_nextfile(ved_filedata *filedata)
 			/* stat failed */
 			isdir = false;
 			dstat.st_mtime = 0;
+			dstat.st_size = 0;
 		}
 		else
 		{
@@ -108,6 +144,7 @@ bool ved_nextfile(ved_filedata *filedata)
 	filedata->name[255] = '\0';
 	filedata->isdir = isdir;
 	filedata->lastmodified = dstat.st_mtime;
+	filedata->filesize = (long long) dstat.st_size;
 
 	return true;
 }

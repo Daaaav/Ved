@@ -3,8 +3,10 @@ local cache_modtimes = {} -- filepath => unix_timestamp
 
 -- Some Windows constants
 CP_UTF8 = 65001
+FILE_ATTRIBUTE_HIDDEN = 0x2
 FILE_ATTRIBUTE_DIRECTORY = 0x10
 FILE_ATTRIBUTE_NORMAL = 0x80
+FILE_ATTRIBUTE_REPARSE_POINT = 0x400
 FILE_SHARE_READ = 1
 FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000
 FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200
@@ -163,6 +165,10 @@ ffi.cdef([[
 	  DWORD   nSize
 	);
 
+	DWORD GetLogicalDrives(
+
+	);
+
 	/* UTF-8 -> UTF-16 */
 	int MultiByteToWideChar(
 	  UINT   CodePage,
@@ -311,6 +317,99 @@ function listlevelfiles(directory)
 	end
 	ffi.C.FindClose(search_handle)
 	return t
+end
+
+function listfiles_generic(directory, filter, show_hidden)
+	-- If successful, returns: true, files.
+	-- If not, returns: false, {}, message.
+	local files = {}
+
+	if directory == "" then
+		-- Change of plans, we're above C: or whatever, list all the drives.
+		local drivebits = ffi.C.GetLogicalDrives()
+
+		for d = 0, 25 do
+			if bit(drivebits, 2^d) then
+				table.insert(files,
+					{
+						name = string.char(0x41+d) .. ":",
+						isdir = true,
+						lastmodified = 0,
+					}
+				)
+			end
+		end
+		return true, files
+	end
+
+	local search_handle = ffi.C.FindFirstFileW(path_utf8_to_utf16(directory .. "\\*"), buffer_filedata)
+	if handle_is_invalid(search_handle) then
+		return false, {}, format_last_win_error()
+	end
+	local current_name
+	local files_left = true
+	while files_left do
+		local isdir = file_attributes_directory(buffer_filedata.dwFileAttributes)
+		current_name = path_utf16_to_utf8(buffer_filedata.cFileName)
+		if current_name ~= "." and current_name ~= ".."
+		and (isdir or filter == "" or current_name:sub(-filter:len(), -1) == filter)
+		and not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_REPARSE_POINT)
+		and (show_hidden or not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_HIDDEN)) then
+			ffi.C.FileTimeToSystemTime(buffer_filedata.ftLastWriteTime, buffer_st_utc)
+			ffi.C.SystemTimeToTzSpecificLocalTime(nil, buffer_st_utc, buffer_st_loc)
+
+			table.insert(files,
+				{
+					name = current_name,
+					isdir = isdir,
+					lastmodified = {
+						buffer_st_loc.wYear, buffer_st_loc.wMonth, buffer_st_loc.wDay,
+						buffer_st_loc.wHour, buffer_st_loc.wMinute, buffer_st_loc.wSecond
+					},
+				}
+			)
+		end
+		files_left = ffi.C.FindNextFileW(search_handle, buffer_filedata)
+	end
+	ffi.C.FindClose(search_handle)
+
+	sort_files(files)
+	return true, files
+end
+
+function get_parent_path(directory)
+	-- "" counts as the list of drives.
+	local last_dirsep = directory:reverse():find("\\", 1, true)
+	if last_dirsep == nil then
+		return ""
+	end
+	return directory:sub(1, -last_dirsep-1)
+end
+
+function get_child_path(directory, child)
+	if directory == "" then
+		return child
+	end
+	return directory .. "\\" .. child
+end
+
+function get_root_dir_display()
+	return L.DRIVES
+end
+
+function filepath_from_dialog(folder, name)
+	-- Returns the full path, and the final filename
+	local last_dirsep = name:reverse():find("\\", 1, true)
+	local filename
+	if last_dirsep == nil then
+		filename = name
+	else
+		filename = name:sub(-last_dirsep+1, -1)
+	end
+	if name:match("^[A-Z]:\\.*") ~= nil then
+		return name, filename
+	end
+	return folder .. "\\" .. name, filename
 end
 
 function getlevelsfolder()

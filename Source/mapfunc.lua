@@ -249,7 +249,7 @@ function create_export_dialog()
 
 	dialog.create(
 		"",
-		{DB.SAVE, DB.CANCEL},
+		DBS.SAVECANCEL,
 		dialog.callback.mapexport,
 		L.SAVEMAP,
 		dialog.form.exportmap_make(),

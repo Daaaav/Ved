@@ -221,6 +221,8 @@ function love.load()
 	sound_stop = love.graphics.newImage("images/sound_stop.png")
 	sound_rewind = love.graphics.newImage("images/sound_rewind.png")
 
+	folder_parent = love.graphics.newImage("images/folder_parent.png")
+
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
 	solidimg = love.graphics.newImage("images/solid.png")
@@ -311,9 +313,9 @@ function love.load()
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
 		end
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac01.so") then
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac02.so") then
 			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_mac01.so", love.filesystem.read("libs/vedlib_filefunc_mac01.so"))
+			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
 		end
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
@@ -342,13 +344,13 @@ function love.load()
 			love.filesystem.createDirectory("available_libs")
 		end
 		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin01.so") then
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin02.so") then
 			vedlib_filefunc_available = true
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
 			if os.execute("gcc -shared -fPIC -o "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin01.so "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so "
 				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
 			) == 0 then
 				vedlib_filefunc_available = true
@@ -1536,7 +1538,7 @@ function love.draw()
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
-		rbutton((musicfileexists(musicplayerfile) and not musiceditor) and L.RELOAD or L.LOAD, 2, nil, true)
+		rbutton(musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), 2, nil, true)
 		if musiceditor then
 			rbutton(L.SAVE, 3, nil, true)
 		end
@@ -1556,11 +1558,11 @@ function love.draw()
 				-- Reload/Load
 				if musiceditor then
 					dialog.create(
-						L.LOADMUSICNAME,
-						DBS.OKCANCEL,
+						"",
+						DBS.LOADCANCEL,
 						dialog.callback.loadvvvvvvmusic,
-						nil,
-						dialog.form.simplename_make(musiceditorfile:sub(1,-5))
+						L.LOADMUSICNAME,
+						dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
 					)
 				else
 					rbutton(musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD, 2, nil, true, nil, true)
@@ -2211,7 +2213,12 @@ function love.update(dt)
 	end
 
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) and not middlescroll_falling then
-		handle_scrolling(false, love.mouse.getY() < middlescroll_y and "wu" or "wd", 10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16))
+		handle_scrolling(
+			false,
+			love.mouse.getY() < middlescroll_y and "wu" or "wd",
+			10*dt*(math.abs(love.mouse.getY()-middlescroll_y)-16),
+			middlescroll_x, middlescroll_y
+		)
 	end
 	if middlescroll_falling then
 		middlescroll_fall_update(dt)

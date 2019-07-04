@@ -2049,8 +2049,12 @@ function cons_fc(text)
 	cons("[CHECK] " .. text)
 end
 
-function handle_scrolling(viakeyboard, mkinput, customdistance)
+function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 	local direction, distance
+
+	if x == nil or y == nil then
+		x, y = love.mouse.getPosition()
+	end
 
 	if viakeyboard then
 		distance = 10*46
@@ -2073,6 +2077,26 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 
 
 	if direction ~= nil then
+		if dialog.is_open() then
+			local topdialog = dialogs[#dialogs]
+			local k = topdialog:get_on_scrollable_field(x, y)
+			if k ~= nil then
+				local fieldscroll = topdialog.fields[k][10]
+				if direction == "u" then
+					fieldscroll = fieldscroll + distance
+					if fieldscroll > 0 then
+						fieldscroll = 0
+					end
+				elseif direction == "d" then
+					fieldscroll = fieldscroll - distance
+					local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
+					if -fieldscroll > upperbound then
+						fieldscroll = math.min(-upperbound, 0)
+					end
+				end
+				dialogs[#dialogs].fields[k][10] = fieldscroll
+			end
+		end
 		if state == 3 and not viakeyboard then
 			if direction == "u" then
 				scriptscroll = scriptscroll + distance
@@ -2138,7 +2162,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 				end
 			end
 		elseif state == 15 then
-			if love.mouse.getX() <= 25*8 then
+			if x <= 25*8 then
 				if direction == "u" then
 					helplistscroll = helplistscroll + distance
 					if helplistscroll > 0 then
@@ -2151,7 +2175,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 						helplistscroll = math.min(-upperbound, 0)
 					end
 				end
-			elseif love.mouse.getX() >= 25*8+8 then
+			elseif x >= 25*8+8 then
 				if direction == "u" then
 					helparticlescroll = helparticlescroll + distance
 					if helparticlescroll > 0 then
@@ -2184,6 +2208,9 @@ function handle_scrolling(viakeyboard, mkinput, customdistance)
 end
 
 function is_scrollable(x, y)
+	if dialog.is_open() then
+		return dialogs[#dialogs]:get_on_scrollable_field(x, y) ~= nil
+	end
 	if state == 3 or state == 10 or state == 11 or state == 15 then
 		return true
 	end
@@ -3034,11 +3061,23 @@ function bytes_notation(bytes)
 	if bytes < 10^3 then
 		return langkeys(L_PLU.BYTES, {bytes})
 	elseif bytes < 10^6 then
-		return langkeys(L_PLU.KILOBYTES, {round(bytes/10^3, 1)})
+		return langkeys(L.KILOBYTES, {round(bytes/10^3, 1)})
 	elseif bytes < 10^9 then
-		return langkeys(L_PLU.MEGABYTES, {round(bytes/10^6, 1)})
+		return langkeys(L.MEGABYTES, {round(bytes/10^6, 1)})
 	end
-	return langkeys(L_PLU.GIGABYTES, {round(bytes/10^9, 1)})
+	return langkeys(L.GIGABYTES, {round(bytes/10^9, 1)})
+end
+
+function sort_files(files)
+	-- In place
+	table.sort(files,
+		function(a,b)
+			if a.isdir and not b.isdir then return true end
+			if b.isdir and not a.isdir then return false end
+
+			return a.name:lower() < b.name:lower()
+		end
+	)
 end
 
 hook("func")

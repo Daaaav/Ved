@@ -206,6 +206,60 @@ function dialog.form.savevvvvvvmusic_make(default)
 	}
 end
 
+function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height)
+	local len_namelabel = font8:getWidth(L.FILEOPENERNAME)/8
+	local success, files, everr = listfiles_generic(startfolder, filter, true)
+	if success then
+		everr = ""
+	end
+	form = {
+		--{"folder", 0, 0, 47, startfolder, DF.TEXT},
+		{"folder", 0, 0, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
+	}
+
+	if filter ~= dirsep then
+		table.insert(form,
+			{"", 0, 2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
+		)
+		table.insert(form,
+			{"name", len_namelabel, 2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
+		)
+	end
+	if filter ~= "" then
+		local filtertext
+		if filter == dirsep then
+			filtertext = L.DOFILTERDIR
+		else
+			filtertext = langkeys(L.DOFILTER, {filter})
+		end
+		table.insert(form, {"dofilter", 0, 15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
+				function(value, dialog)
+					for k,v in pairs(dialog.fields) do
+						if v[1] == "folder" then
+							local success, everr
+							success, dialog.fields[k][7], everr = listfiles_generic(
+								dialog.fields[k][5],
+								value and dialog.fields[k][8] or "",
+								dialog.fields[k][9]
+							)
+							if success then
+								everr = ""
+							end
+							dialog.fields[k][10] = 0
+							dialog.fields[k][11] = everr
+							dialog.fields[k][13] = value
+							break
+						end
+					end
+				end
+			}
+		)
+		table.insert(form, {"", 2, 15, 40, filtertext, DF.LABEL})
+	end
+
+	return form
+end
+
 --function dialog.form.
 
 -- 
@@ -786,16 +840,19 @@ function dialog.callback.loadvvvvvvmusic(button, fields)
 		return
 	end
 
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
 	local success, errormessage
-	if fields.name ~= "vvvvvvmusic" and fields.name ~= "mmmmmm" then
-		success, errormessage = loadvvvvvvmusic("musiceditor", fields.name .. ".vvv")
+	if filepath == vvvvvvfolder .. dirsep .. "vvvvvvmusic.vvv"
+	or filepath == vvvvvvfolder .. dirsep .. "mmmmmm.vvv" then
+		success, errormessage = loadvvvvvvmusic(filename)
 	else
-		success, errormessage = loadvvvvvvmusic(fields.name .. ".vvv")
+		success, errormessage = loadvvvvvvmusic("musiceditor", filepath)
 	end
 	if not success then
 		dialog.create(langkeys(L.MUSICLOADERROR, {fields.name}) .. anythingbutnil(errormessage))
 	else
-		musiceditorfile = fields.name .. ".vvv"
+		musiceditorfile = filename
 		if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
 			musicplayerfile = musiceditorfile
 		else
@@ -840,12 +897,12 @@ function dialog.callback.replacesong(button, fields)
 	if not success then
 		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
 	else
-		local last_dirsep = -fields.name:reverse():find(dirsep, 1, true)+1
+		local last_dirsep = fields.name:reverse():find(dirsep, 1, true)
 		local filename
 		if last_dirsep == nil then
 			filename = fields.name
 		else
-			filename = fields.name:sub(last_dirsep, -1)
+			filename = fields.name:sub(-last_dirsep+1, -1)
 		end
 		setmusicmeta_song(musicplayerfile, input, nil, filename, nil)
 	end

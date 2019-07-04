@@ -45,7 +45,9 @@ end
 
 function loadvvvvvvmusic(file, realfile)
 	-- file is the name to be stored in the table (one of vvvvvvmusic.vvv, mmmmmm.vvv, musiceditor or sounds)
-	-- realfile is the actual path to load, if file is musiceditor
+	-- realfile is the actual path to load, if file is musiceditor.
+	-- Filenames containing any directory separator will always be considered absolute.
+	-- Thus, pass full paths wherever possible, unless you want to load vvvvvvmusic.vvv or mmmmmm.vvv.
 	-- Returns success, errormessage.
 	if file == "sounds" then
 		return loadvvvvvvsounds()
@@ -63,7 +65,10 @@ function loadvvvvvvmusic(file, realfile)
 	-- If not status, then maybe_status2 is an error message.
 	-- Blame pcall for this naming dilemma.
 	local status, maybe_status2 = pcall(function()
-		local readsuccess, ficontents = readfile(vvvvvvfolder .. dirsep .. realfile)
+		if realfile:find(dirsep, 1, true) == nil then
+			realfile = vvvvvvfolder .. dirsep .. realfile
+		end
+		local readsuccess, ficontents = readfile(realfile)
 		if not readsuccess then
 			cons("No " .. file .. ", " .. anythingbutnil(ficontents))
 			unloadvvvvvvmusic(file)
