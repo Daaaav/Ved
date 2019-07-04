@@ -2775,6 +2775,11 @@ function love.keypressed(key)
 
 	handle_scrolling(true, key)
 
+	local _, voided_metadata
+	if state == 1 then
+		_, voided_metadata = levelmetadata_get(roomx, roomy)
+	end
+
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
 	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
@@ -2994,38 +2999,38 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f1" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f2" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f3" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()
 		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata_get(roomx, roomy).directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") and not voided_metadata then
 		-- Change warp dir
 		changewarpdir()
 		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") and not voided_metadata then
 		-- Edit room name
 		toggleeditroomname()
 

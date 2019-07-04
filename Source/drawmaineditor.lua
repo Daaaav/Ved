@@ -1881,11 +1881,12 @@ function drawmaineditor()
 	end
 
 	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) -- (roomoptpage2 and L.BACKB or L.MOREB)
-	rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	local _, voided_metadata = levelmetadata_get(roomx, roomy)
+	_= not voided_metadata and rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({L.ROOMNAME, "E"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
+	_= not voided_metadata and rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	_= not voided_metadata and rbutton({L.ROOMNAME, "E"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+10, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
@@ -1997,7 +1998,7 @@ function drawmaineditor()
 				autocorrectroom()
 			end
 			mousepressed = true
-		elseif onrbutton(1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Direct mode on or off
 			changedmode()
 
@@ -2007,12 +2008,12 @@ function drawmaineditor()
 			showepbounds = not showepbounds
 
 			mousepressed = true
-		elseif onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Warp dir
 			changewarpdir()
 
 			mousepressed = true
-		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Roomname
 			toggleeditroomname()
 
@@ -2026,8 +2027,8 @@ function drawmaineditor()
 
 	-- We also have buttons for enemy and platform settings!
 	if selectedtool == 8 or selectedtool == 9 then
-		rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
-		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata_get(roomx, roomy).platv}) or {langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}), -2, 164+4, true)
+		_= not voided_metadata and rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
+		_= not voided_metadata and rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata_get(roomx, roomy).platv}) or {langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}), -2, 164+4, true)
 
 		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 
@@ -2035,7 +2036,7 @@ function drawmaineditor()
 
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
-			if onrbutton(-3, 164+4, true) then
+			if onrbutton(-3, 164+4, true) and not voided_metadata then
 				-- Enemy/platform bounds
 				if selectedtool == 9 then
 					-- Enemy.
@@ -2046,7 +2047,7 @@ function drawmaineditor()
 				end
 
 				mousepressed = true
-			elseif onrbutton(-2, 164+4, true) then
+			elseif onrbutton(-2, 164+4, true) and not voided_metadata then
 				-- Enemy type // Platform speed
 				if selectedtool == 9 then
 					-- Enemy type
@@ -2061,7 +2062,7 @@ function drawmaineditor()
 			end
 		end
 
-		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
+		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed and not voided_metadata then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
 			changedplatv = true
 			levelmetadata_set(roomx, roomy, "platv", 4)
 			mousepressed = true
@@ -2118,7 +2119,7 @@ function drawmaineditor()
 	end
 
 	-- Also display a smaller tiles picker for semi-undirect mode
-	if selectedtool <= 3 then
+	if selectedtool <= 3 and not voided_metadata then
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-157, (6*16)+2, (5*16)+2) -- -(6*16)-16-24-12-1-8 => -157
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, (6*16), (5*16)) -- -(6*16)-16-24-12-8 => -156
@@ -2133,17 +2134,17 @@ function drawmaineditor()
 	love.graphics.print("<tiles2.png>", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32)
 	]]
 
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
-	love.graphics.printf((tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12+2-8, 6*16, "center")
+	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
+	_= not voided_metadata and love.graphics.printf((tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12+2-8, 6*16, "center")
 
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
-	love.graphics.printf((tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor})), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8+2-8, 6*16, "center")
+	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
+	_= not voided_metadata and love.graphics.printf((tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor})), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8+2-8, 6*16, "center")
 
-	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) then -- -16-32-2-12-8 => -70
+	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) and not voided_metadata then -- -16-32-2-12-8 => -70
 		-- Switch tileset
 		switchtileset()
 		mousepressed = true
-	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-58, (6*16), 8+4) then -- -16-24-2-8-8 => 58
+	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-58, (6*16), 8+4) and not voided_metadata then -- -16-24-2-8-8 => 58
 		-- Switch tilecol
 		switchtilecol()
 		mousepressed = true
