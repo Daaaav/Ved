@@ -87,7 +87,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				local t = theroomdata[(aty*40)+(atx+1)]
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
 				if t ~= 0 then
-					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][tonumber(t)], x, y, 0, 2*zoomscale2)
+					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
 				end
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
@@ -130,18 +130,39 @@ function addrooms(neww, newh)
 	-- This is because we can have decreased one side and increased another, then increase the other side and still have room data there we don't want to lose in case resizing was an accident
 	cons("Maybe adding rooms: new map size is " .. neww .. " " .. newh)
 
-	for y = 0, (newh-1) do
+	for y = 0, newh-1 do
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
 
-		for x = 0, (neww-1) do
-			if roomdata[y][x] == nil then
+		for x = 0, neww-1 do
+			if x >= ( y < math.min(newh, 20) and neww or 20 ) or y >= 20 then
+				map_resetroom(x, y)
+			elseif roomdata[y][x] == nil then
 				roomdata[y][x] = {}
 				for t = 1, 1200 do
 					roomdata[y][x][t] = 0
 				end
 				map_resetroom(x, y)
+			end
+		end
+	end
+
+	if neww > 20 then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (neww-1) / 20 )
+		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
+		local capped_height = math.min(newh, 20)
+		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
+			roomdata[yk] = roomdata[yk] or {}
+
+			for xk = 0, 19 do
+				roomdata[yk][xk] = roomdata[yk][xk] or {}
+
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < neww%20 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+					for xt = 0, 39 do
+						roomdata[yk][xk][yt*40 + xt+1] = roomdata[yk][xk][yt*40 + xt+1] or 0
+					end
+				end
 			end
 		end
 	end

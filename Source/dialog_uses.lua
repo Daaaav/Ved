@@ -798,6 +798,8 @@ function dialog.callback.leveloptions(button, fields)
 	end
 
 	-- What are the old properties?
+	-- WARNING: An ugly hack in dialog.callback.leveloptions_biggersize
+	-- relies on this specific property name order
 	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
 	local undo_properties = {}
 	for k,v in pairs(undo_propertynames) do
@@ -825,16 +827,31 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if w > 20 or h > 20 then
+		if metadata.mapwidth <= 20 and metadata.mapheight <= 20 and (w > 20 or h > 20) then
+			-- Hack to smuggle the fields through the bigger size confirmation dialog
+			-- Hopefully Ved doesn't update its dialog system again and break this
+			local newfields = {}
+			for k,v in pairs(dialog.form.leveloptions_make()) do
+				newfields[k] = {v[1], 0, 0, 0, v[5], -1}
+			end
+
+			newfields.mapwidth = {"mapwidth", 0, 0, 0, w, -1}
+			newfields.mapheight = {"mapheight", 0, 0, 0, h, -1}
+
 			dialog.create(
-				langkeys(L.SIZELIMIT, {
-					math.min(20, w),
-					math.min(20, h)
-				})
+				langkeys(L.CONFIRMBIGGERSIZE, {w, h}),
+				DBS.YESNOCANCEL,
+				dialog.callback.leveloptions_biggersize,
+				"",
+				newfields
 			)
+
+			metadata.mapwidth = math.min(w, 20)
+			metadata.mapheight = math.min(h, 20)
+		else
+			metadata.mapwidth = w
+			metadata.mapheight = h
 		end
-		metadata.mapwidth = math.min(20, w)
-		metadata.mapheight = math.min(20, h)
 		addrooms(metadata.mapwidth, metadata.mapheight)
 		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 	end
@@ -988,4 +1005,36 @@ function dialog.callback.openimage(button, fields)
 	or filename:sub(1,11) == "flipsprites" then
 		imageviewer_grid = 32
 	end
+end
+
+function dialog.callback.leveloptions_biggersize(button, fields)
+	if button == DB.CANCEL then
+		dialog.create(
+			"",
+			DBS.OKCANCEL,
+			dialog.callback.leveloptions,
+			L.LEVELOPTIONS,
+			dialog.form.leveloptions_make()
+		)
+		return
+	end
+
+	if button == DB.NO then
+		metadata.mapwidth = 20
+		metadata.mapheight = 20
+	elseif button == DB.YES then
+		metadata.mapwidth = fields.mapwidth
+		metadata.mapheight = fields.mapheight
+	end
+
+	addrooms(metadata.mapwidth, metadata.mapheight)
+	gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+
+	-- Uh, yeah, this is kind of an ugly hack and kind of relies on the
+	-- assumptions that (1) the user can't undo, redo, or make any other
+	-- changes while a dialog is open, and (2) the order of the changed
+	-- metadata in the undo buffer won't change in the future
+	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
+	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
+	finish_undo("CHANGED METADATA (bigger than 20x20 size, also ugly hack)")
 end

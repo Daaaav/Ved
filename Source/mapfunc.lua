@@ -12,10 +12,10 @@ function map_init()
 		collectgarbage("collect")
 	end
 
-	for y = 0, 19 do
+	for y = 0, metadata.mapheight-1 do
 		rooms_map[y] = {}
 
-		for x = 0, 19 do
+		for x = 0, metadata.mapwidth-1 do
 			map_initroom(x, y)
 		end
 	end
@@ -77,6 +77,8 @@ end
 
 function map_resetroom(x, y)
 	-- Reset one room on the map, and marks it as dirty.
+	rooms_map[y] = rooms_map[y] or {}
+	rooms_map[y][x] = rooms_map[y][x] or {}
 	rooms_map[y][x].done = false
 	rooms_map[y][x].map = nil
 	local n_dirty = #rooms_map_dirty_rooms
