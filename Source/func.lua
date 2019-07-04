@@ -3191,7 +3191,7 @@ function levelmetadata_get(x, y)
 	}
 
 	if y >= 20 then
-		return voided_metadata
+		return voided_metadata, true
 	end
 
 	local distortion = math.floor(x/20)
@@ -3202,7 +3202,7 @@ function levelmetadata_get(x, y)
 		return levelmetadata[y*20 + x+1]
 	end
 
-	return voided_metadata
+	return voided_metadata, true
 end
 
 function levelmetadata_set(x, y, param1, param2)
@@ -3254,7 +3254,7 @@ function levelmetadata2_get(x, y)
 	}
 
 	if y >= 20 then
-		return voided_metadata
+		return voided_metadata, true
 	end
 
 	local distortion = math.floor(x/20)
@@ -3265,7 +3265,7 @@ function levelmetadata2_get(x, y)
 		return levelmetadata2[y*20 + x+1]
 	end
 
-	return voided_metadata
+	return voided_metadata, true
 end
 
 function roomdata_get(rx, ry, tx, ty)
