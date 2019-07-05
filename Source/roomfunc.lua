@@ -1892,7 +1892,10 @@ function gotoroom_finish()
 	selectedcolor = levelmetadata_get(roomx, roomy).tilecol
 end
 
-function levelmetadata_get(x, y)
+function levelmetadata_get(x, y, uselevel2)
+	-- NOTE: Never call this and set uselevel2 manually.
+	-- Instead, use levelmetadata2_get()
+	--
 	-- For the rooms after the first 20 rows, they essentially have default properties that can't be changed
 	-- (Unless you're willing to risk segfaulting upon loading the level by adding more room properties, which can be done, but the more you add the more you will overwrite and segfault)
 	-- But apparently some of them (sometimes?) have tileset 0 instead? Not really sure why
@@ -1900,6 +1903,13 @@ function levelmetadata_get(x, y)
 	-- Also since plat bounds and enemy bounds are basically null, they fly off if they're not stuck in a tile
 	-- If you go further down enough script names from the script list will appear as roomnames, but I don't quite feel like emulating that in Ved
 	-- And if you keep going further down still the game will segfault
+	local usethislevelmetadata
+	if uselevel2 then
+		usethislevelmetadata = levelmetadata2
+	else
+		usethislevelmetadata = levelmetadata
+	end
+
 	local voided_metadata = {
 		tileset = 1,
 		tilecol = 0,
@@ -1928,7 +1938,7 @@ function levelmetadata_get(x, y)
 	y = y + distortion
 
 	if y < 20 then
-		return levelmetadata[y*20 + x+1]
+		return usethislevelmetadata[y*20 + x+1]
 	end
 
 	return voided_metadata, true
@@ -1963,41 +1973,19 @@ function levelmetadata_set(x, y, param1, param2)
 end
 
 function levelmetadata2_get(x, y)
-	local voided_metadata = {
-		tileset = 1,
-		tilecol = 0,
-		platx1 = 0,
-		platy1 = 0,
-		platx2 = 320,
-		platy2 = 240,
-		platv = 4,
-		enemyx1 = 0,
-		enemyy1 = 0,
-		enemyx2 = 320,
-		enemyy2 = 240,
-		enemytype = 0,
-		directmode = 1,
-		warpdir = 0,
-		roomname = "",
-		auto2mode = 0,
-	}
-
-	if y >= 20 then
-		return voided_metadata, true
-	end
-
-	local distortion = math.floor(x/20)
-	x = x % 20
-	y = y + distortion
-
-	if y < 20 then
-		return levelmetadata2[y*20 + x+1]
-	end
-
-	return voided_metadata, true
+	return levelmetadata_get(x, y, true)
 end
 
-function roomdata_get(rx, ry, tx, ty)
+function roomdata_get(rx, ry, tx, ty, uselevel2)
+	-- NOTE: Never call this and set uselevel2 manually.
+	-- Instead, use roomdata2_get()
+	local usethisroomdata
+	if uselevel2 then
+		usethisroomdata = roomdata2
+	else
+		usethisroomdata = roomdata
+	end
+
 	local just_one_tile = tx ~= nil
 
 	if just_one_tile then
@@ -2012,7 +2000,7 @@ function roomdata_get(rx, ry, tx, ty)
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
 
-		return roomdata[ry][rx][ty*40 + tx+1]
+		return usethisroomdata[ry][rx][ty*40 + tx+1]
 	end
 
 	local distortion = math.floor(rx/20)
@@ -2032,18 +2020,18 @@ function roomdata_get(rx, ry, tx, ty)
 		local repeated_roomdata = {}
 		for ity = 1, 30 do
 			for itx = 1, 40 do
-				table.insert(repeated_roomdata, roomdata[ry][rx][distortion*40 + itx])
+				table.insert(repeated_roomdata, usethisroomdata[ry][rx][distortion*40 + itx])
 			end
 		end
 		return repeated_roomdata
 	end
 
-	local distorted_roomdata = table.copy(roomdata[ry][rx])
+	local distorted_roomdata = table.copy(usethisroomdata[ry][rx])
 
 	for ity = 1, distortion do
 		for itx = 1, 40 do
 			table.remove(distorted_roomdata, 1)
-			table.insert(distorted_roomdata, roomdata[ry+1][rx][(ity-1)*40 + itx])
+			table.insert(distorted_roomdata, usethisroomdata[ry+1][rx][(ity-1)*40 + itx])
 		end
 	end
 
@@ -2109,56 +2097,5 @@ function roomdata_set(rx, ry, param1, param2, param3)
 end
 
 function roomdata2_get(rx, ry, tx, ty)
-	local just_one_tile = tx ~= nil
-
-	if just_one_tile then
-		if ry >= 20 then
-			ry = 0
-			ty = 0
-		end
-
-		local distortion = math.floor(rx/20)
-
-		rx = rx % 20
-		ry = ry + math.floor( (ty+distortion) / 30 )
-		ty = (ty+distortion) % 30
-
-		return roomdata2[ry][rx][ty*40 + tx+1]
-	end
-
-	local distortion = math.floor(rx/20)
-
-	local repeated_rows = false
-	if ry >= 20 then
-		repeated_rows = true
-		ry = 0
-	end
-
-	rx = rx % 20
-	ry = ry + math.floor(distortion/30)
-
-	distortion = distortion % 30
-
-	if repeated_rows then
-		local repeated_roomdata = {}
-		for ity = 1, 30 do
-			for itx = 1, 40 do
-				table.insert(repeated_roomdata, roomdata2[ry][rx][distortion*40 + itx])
-			end
-		end
-		return repeated_roomdata
-	end
-
-	local distorted_roomdata = table.copy(roomdata2[ry][rx])
-
-	for ity = 1, distortion do
-		for itx = 1, 40 do
-			table.remove(distorted_roomdata, 1)
-		end
-		for itx = 1, 40 do
-			table.insert(distorted_roomdata, roomdata2[ry+1][rx][(distortion-1)*40 + itx])
-		end
-	end
-
-	return distorted_roomdata
+	return roomdata_get(rx, ry, tx, ty, true)
 end
