@@ -824,9 +824,19 @@ function love.draw()
 						)
 					)
 				else
+					local explanation, buttons
+					if s.customvvvvvvdir == "" then
+						explanation = L.CUSTOMVVVVVVDIRECTORY_NOTSET
+						buttons = {L.CHANGEVERB, DB.CANCEL}
+					else
+						explanation = langkeys(L.CUSTOMVVVVVVDIRECTORY_SET, {s.customvvvvvvdir})
+						buttons = {L.CHANGEVERB, L.RESET, DB.CANCEL}
+					end
+					explanation = explanation .. langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {vvvvvvfolder_expected})
 					dialog.create(
-						langkeys(L.CUSTOMVVVVVVDIRECTORYEXPL, {vvvvvvfolder_expected}), DBS.OKCANCEL,
-						dialog.callback.customvvvvvvdir, nil, dialog.form.customvvvvvvdir_make()
+						explanation,
+						buttons,
+						dialog.callback.customvvvvvvdir1
 					)
 				end
 			elseif onrbutton(3) then

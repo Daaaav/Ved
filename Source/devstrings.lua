@@ -33,3 +33,10 @@ L.DOFILTERDIR = "Only show directories"
 L.FILEDIALOGLUV = "Sorry, your operating system is unrecognized, so the file dialog does not work."
 
 L.BTN_LOAD = "Load"
+
+-- Put these near CUSTOMVVVVVVDIRECTORYEXPL
+L.CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n\n"
+L.CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$1\n\n"
+
+L.RESET = "Reset"
+L.CHANGEVERB = "Change" -- verb

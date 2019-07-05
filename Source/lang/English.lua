@@ -274,7 +274,7 @@ FLAGNONAME = "No name",
 USEDOUTOFRANGEFLAGS = "Used out of range flags:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV folder",
-CUSTOMVVVVVVDIRECTORYEXPL = "Enter the full path to your VVVVVV directory here, if it is not \"$1\" (else leave it blank). Do not include the directory called \"levels\" here, nor a trailing (back)slash.",
+CUSTOMVVVVVVDIRECTORYEXPL = "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory.",
 LANGUAGE = "Language",
 DIALOGANIMATIONS = "Dialog animations",
 FLIPSUBTOOLSCROLL = "Flip subtool scrolling direction",
