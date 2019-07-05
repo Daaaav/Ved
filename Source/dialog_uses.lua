@@ -839,7 +839,10 @@ function dialog.callback.leveloptions(button, fields)
 			newfields.mapheight = {"mapheight", 0, 0, 0, h, -1}
 
 			dialog.create(
-				langkeys(L.CONFIRMBIGGERSIZE, {w, h}),
+				langkeys(
+					L.CONFIRMBIGGERSIZE,
+					{w, h, math.min(w, 20), math.min(h, 20)}
+				),
 				DBS.YESNOCANCEL,
 				dialog.callback.leveloptions_biggersize,
 				"",
@@ -1020,8 +1023,8 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 	end
 
 	if button == DB.NO then
-		metadata.mapwidth = 20
-		metadata.mapheight = 20
+		metadata.mapwidth = math.min(fields.mapwidth, 20)
+		metadata.mapheight = math.min(fields.mapheight, 20)
 	elseif button == DB.YES then
 		metadata.mapwidth = fields.mapwidth
 		metadata.mapheight = fields.mapheight
