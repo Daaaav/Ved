@@ -102,6 +102,12 @@ function love.load()
 
 	mousepressed = false -- for some things
 	mousepressed_custombrush = false
+	mousepressed_flag = false
+	mousepressed_flag_x = -1
+	mousepressed_flag_y = -1
+	mousepressed_flag_num = -1
+	mousepressed_flag_name = ""
+	mousereleased_flag = false
 	middlescroll_x, middlescroll_y = -1, -1
 	middlescroll_falling = false
 	middlescroll_shatter = false
@@ -892,29 +898,55 @@ function love.draw()
 				if nodialog and mouseon(ax, ay, w, h) then
 					love.graphics.setColor(128,128,128,255)
 
-					if not mousepressed and nodialog and love.mouse.isDown("l") then
+					if not mousepressed and nodialog and mousereleased_flag then
 						flgnum = flk + (flcol == 8 and 0 or 50) -- niet local, wordt gebruikt in dialog
 
-						local field_default = ""
-						if vedmetadata ~= false then
-							field_default = vedmetadata.flaglabel[flgnum]
+						if mousepressed_flag_num ~= -1 and flgnum ~= mousepressed_flag_num then
+							cons("We dropped flag " .. mousepressed_flag_num .. " onto flag " .. flgnum)
+							swapflags(flgnum, mousepressed_flag_num)
+							dirty()
+							mousepressed_flag_x = -1
+							mousepressed_flag_y = -1
+							mousepressed_flag_num = -1
+							mousepressed_flag_name = ""
+							-- We have to redraw the flags screen somehow
+							loadstate(19)
+						else
+							mousepressed_flag_x = -1
+							mousepressed_flag_y = -1
+							mousepressed_flag_num = -1
+							mousepressed_flag_name = ""
+
+							local field_default = ""
+							if vedmetadata ~= false then
+								field_default = vedmetadata.flaglabel[flgnum]
+							end
+
+							-- We also want to know where this was used.
+							local usages = {}
+							local n_usages = returnusedflags(nil, nil, flgnum, usages)
+
+							dialog.create(
+								langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"
+								.. langkeys(L_PLU.FLAGUSAGES, {n_usages, table.concat(usages, ", ")}),
+								DBS.OKCANCEL,
+								dialog.callback.changeflagname,
+								nil,
+								dialog.form.simplename_make(field_default),
+								dialog.callback.changeflagname_validate
+							)
 						end
 
-						-- We also want to know where this was used.
-						local usages = {}
-						local n_usages = returnusedflags(nil, nil, flgnum, usages)
-
-						dialog.create(
-							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"
-							.. langkeys(L_PLU.FLAGUSAGES, {n_usages, table.concat(usages, ", ")}),
-							DBS.OKCANCEL,
-							dialog.callback.changeflagname,
-							nil,
-							dialog.form.simplename_make(field_default),
-							dialog.callback.changeflagname_validate
-						)
-
+						mousereleased_flag = false
+					elseif not mousepressed and nodialog and love.mouse.isDown("l") then
 						mousepressed = true
+						mousepressed_flag = true
+						mousepressed_flag_x = love.mouse.getX()
+						mousepressed_flag_y = love.mouse.getY()
+						mousepressed_flag_num = flk + (flcol == 8 and 0 or 50)
+						if vedmetadata then
+							mousepressed_flag_name = vedmetadata.flaglabel[mousepressed_flag_num]
+						end
 					end
 				else
 					love.graphics.setColor(128,128,128,128)
@@ -924,10 +956,27 @@ function love.draw()
 			end
 		end
 
+		-- Catch anyone dropping flags into the void and then moving back to a flag
+		if nodialog and mousereleased_flag and not (mouseon(8-2, 24, love.graphics.getWidth()/2 - 16, 8*50) or mouseon(love.graphics.getWidth()/2 + 8-2, 24, love.graphics.getWidth()/2 - 16, 8*50)) then
+			mousereleased_flag = false
+			mousepressed_flag_x = -1
+			mousepressed_flag_y = -1
+			mousepressed_flag_num = -1
+			mousepressed_flag_name = ""
+		end
+
 		love.graphics.setColor(255,255,255,255)
 
 		love.graphics.print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8+2)
 		love.graphics.print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8+2)
+
+		if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
+			local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
+			love.graphics.setColor(128,128,128,128)
+			love.graphics.rectangle("fill", love.mouse.getX() + 8, love.mouse.getY(), 8*#t, 8)
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.print(t, love.mouse.getX() + 8, love.mouse.getY() + 2)
+		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
 
@@ -2598,6 +2647,21 @@ function love.keypressed(key)
 			end
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
+
+			if state == 3 then
+				if input_r == "" and editingline < #scriptlines then
+					input_r = anythingbutnil(scriptlines[editingline + 1])
+					table.remove(scriptlines, editingline + 1)
+				end
+				dirty()
+			elseif state == 15 then
+				if input_r == "" and helpeditingline < #helparticlecontent then
+					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
+					table.remove(helparticlecontent, helpeditingline + 1)
+				end
+			elseif state == 6 then
+				tabselected = 0
+			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
 		local cf, cftype = dialogs[#dialogs].currentfield
@@ -3115,7 +3179,7 @@ function love.keypressed(key)
 			editorjumpscript(carg2)
 		elseif key == "right" and context == "script" then
 			editorjumpscript(carg1)
-		elseif key == "right" and context == "positionscript" then
+		elseif key == "right" and context == "roomscript" then
 			editorjumpscript(carg3)
 		elseif key == "f" then
 			startinscriptsearch()
@@ -3145,6 +3209,13 @@ function love.keypressed(key)
 			dirty()
 		elseif key == "d" then
 			table.remove(scriptlines, editingline)
+			if keyboard_eitherIsDown("shift") then
+				editingline = math.max(editingline - 1, 1)
+			else
+				if editingline > #scriptlines and editingline > 1 then
+					editingline = editingline - 1
+				end
+			end
 			input = anythingbutnil(scriptlines[editingline])
 			input_r = ""
 			dirty()
@@ -3566,6 +3637,10 @@ function love.mousereleased(x, y, button)
 
 	mousepressed = false
 	mousepressed_custombrush = false
+	if mousepressed_flag then
+		mousepressed_flag = false
+		mousereleased_flag = true
+	end
 	minsmear = -1; maxsmear = -1
 	toout = 0
 

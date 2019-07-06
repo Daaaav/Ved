@@ -34,23 +34,35 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	return specificflag_n_real_usages
 end
 
-function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
+function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r, alttextcolor)
+	text_r = anythingbutnil(text_r)
+
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
 		if thisistext and s.colored_textboxes then
-			if textboxcolors[lasttextcolor] == nil then
+			if alttextcolor then
+				if alttextboxcolors[lasttextcolor] == nil then
+					lasttextcolor = "gray"
+				end
+			elseif textboxcolors[lasttextcolor] == nil then
 				lasttextcolor = "gray"
 			end
-			_= docolor and setColorArr(textboxcolors[lasttextcolor])
+			_= docolor and setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
 		else
 			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
-		love.graphics.print(text, x, y)
-		offsetchars = string.len(text) + 1
+		love.graphics.print(docolor and text or text:sub(1, string.len(text)-string.len(text_r)), x, y)
+		offsetchars = string.len(text) - string.len(text_r) + 1
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
-			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			if docolor then
+				if cursorflashtime <= .5 then
+					love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				end
+			else
+				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			end
 		end
 
 		return nil
@@ -59,64 +71,78 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor)
 
 		--if text ~= "" then
 		-- Replace characters by one with which we will split.
-		text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
+		text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
 		partss = explode(",", text2)
+		partss_ignoring_spaces = explode(",", text2:gsub(" ", ""))
 
-		for k,v in pairs(partss) do
-			if offsetchars == 0 then -- First word on the line, so it's a command.
-				-- But is it recognized?
-				if (addcursor and #partss == 1) or knowncommands[v] or knowninternalcommands[v] then
-					_= docolor and setColorArr(s.syntaxcolor_command)
-				else
-					_= docolor and setColorArr(s.syntaxcolor_errortext)
-				end
-			elseif tostring(tonumber(v)) == tostring(v) then -- It's a number!
-				_= docolor and setColorArr(s.syntaxcolor_number)
-			--elseif string.sub(v, 1, 1) == "$" then
-			elseif k == 2 and (partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag") and tostring(tonumber(v)) ~= tostring(v) then
-				-- if flag name is not used yet, newflagname
-				for fl = 0, 99 do
-					if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
-						_= docolor and setColorArr(s.syntaxcolor_flagname)
-						break
+		if docolor then
+			for k,v in pairs(partss) do
+				local v_ignoring_spaces = partss_ignoring_spaces[k]
+				if offsetchars == 0 then -- First word on the line, so it's a command.
+					-- But is it recognized?
+					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
+						setColorArr(s.syntaxcolor_command)
+					else
+						setColorArr(s.syntaxcolor_errortext)
 					end
+				elseif tostring(tonumber(v_ignoring_spaces)) == tostring(v_ignoring_spaces) then -- It's a number!
+					setColorArr(s.syntaxcolor_number)
+				--elseif string.sub(v, 1, 1) == "$" then
+				elseif k == 2 and (partss_ignoring_spaces[1] == "flag" or partss_ignoring_spaces[1] == "ifflag" or partss_ignoring_spaces[1] == "customifflag") and tostring(tonumber(v_ignoring_spaces)) ~= tostring(v_ignoring_spaces) then
+					-- if flag name is not used yet, newflagname
+					for fl = 0, 99 do
+						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_ignoring_spaces then
+							setColorArr(s.syntaxcolor_flagname)
+							break
+						end
 
-					_= docolor and setColorArr(s.syntaxcolor_newflagname)
+						setColorArr(s.syntaxcolor_newflagname)
+					end
+				else
+					setColorArr(s.syntaxcolor_generic)
 				end
-			else
-				_= docolor and setColorArr(s.syntaxcolor_generic)
+				love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
+
+				setColorArr(s.syntaxcolor_separator)
+				love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
+
+				offsetchars = offsetchars + (string.len(v)+1)
 			end
-			love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
+		end
 
-			_= docolor and setColorArr(s.syntaxcolor_separator)
-			love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
-
-			offsetchars = offsetchars + (string.len(v)+1)
+		if not docolor then
+			love.graphics.print(text:sub(1, string.len(text)-string.len(text_r)), x, y)
 		end
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
-			love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+			if docolor then
+				if cursorflashtime <= .5 then
+					love.graphics.print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+				end
+			else
+				love.graphics.print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+			end
 		end
 
-		if partss[1] == "say" then
-			if partss[2] == nil then
-				return 1, normalize_simplified_color(partss[3])
+		if partss_ignoring_spaces[1] == "say" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
+				return 1, normalize_simplified_color(partss_ignoring_spaces[3])
 			else
-				return tonumber(partss[2]), normalize_simplified_color(partss[3])
+				return tonumber(partss_ignoring_spaces[2]), normalize_simplified_color(partss_ignoring_spaces[3])
 			end
-		elseif partss[1] == "reply" then
-			if partss[2] == nil then
+		elseif partss_ignoring_spaces[1] == "reply" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
 				return 1, "player"
 			else
-				return tonumber(partss[2]), "player"
+				return tonumber(partss_ignoring_spaces[2]), "player"
 			end
-		elseif partss[1] == "text" then
-			if partss[5] == nil then
-				return 0, partss[2]
+		elseif partss_ignoring_spaces[1] == "text" then
+			if partss[5] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[5])) <= 0 then
+				return 0, partss_ignoring_spaces[2]
 			else
-				return tonumber(partss[5]), partss[2]
+				return tonumber(partss_ignoring_spaces[5]), partss_ignoring_spaces[2]
 			end
 		end
 	end
@@ -125,22 +151,29 @@ end
 
 function justtext(text, thisistext)
 	if not thisistext then
+		text = text:gsub(" ", "")
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
-			text2 = string.gsub(string.gsub(string.gsub(text, "%(", ","), "%)", ","), " ", ",")
+			text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
 			partss = explode(",", text2)
 
-			if partss[1] == "say" or partss[1] == "reply" then
-				if partss[2] == nil then
-					return 1
+			if partss[1] == "say" then
+				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+					return 1, normalize_simplified_color(partss[3])
 				else
-					return tonumber(partss[2])
+					return tonumber(partss[2]), normalize_simplified_color(partss[3])
+				end
+			elseif partss[1] == "reply" then
+				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+					return 1, "player"
+				else
+					return tonumber(partss[2]), "player"
 				end
 			elseif partss[1] == "text" then
-				if partss[5] == nil then
-					return 1
+				if partss[5] == nil or anythingbutnil0(tonumber(partss[5])) <= 0 then
+					return 0, partss[2]
 				else
-					return tonumber(partss[5])
+					return tonumber(partss[5]), partss[2]
 				end
 			end
 		end
@@ -204,9 +237,11 @@ function processflaglabels()
 		or (scriptlines[1] == "squeak(off) #v" and scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" and scriptlines[4] ~= nil and scriptlines[4]:sub(1,4) == "say(" and scriptlines[4]:sub(-4,-1) == ") #v") then
 			-- Quite so!
 			if scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" then
+				internalscript = false
 				cutscenebarsinternalscript = true
 			else
 				internalscript = true
+				cutscenebarsinternalscript = false
 			end
 
 			if internalscript then
@@ -803,4 +838,27 @@ function normalize_simplified_color(c)
 	end
 
 	return c
+end
+
+function swapflags(flag1, flag2)
+	if vedmetadata then
+		vedmetadata.flaglabel[flag2], vedmetadata.flaglabel[flag1] = vedmetadata.flaglabel[flag1], vedmetadata.flaglabel[flag2]
+	end
+
+	local commands = {"flag", "ifflag", "customifflag"}
+	for rvnum = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v = v:gsub(" ", "")
+			for _,command in pairs(commands) do
+				local pattern = "^(" .. command .. "[%(,%)])0-"
+				if #v > #command then
+					if v:match(pattern .. flag1 .. "[%(,%)]") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+					elseif v:match(pattern .. flag2 .. "[%(,%)]") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+					end
+				end
+			end
+		end
+	end
 end
