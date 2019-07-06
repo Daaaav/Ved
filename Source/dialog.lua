@@ -212,6 +212,7 @@ function cDialog:keypressed(key)
 		return
 	end
 	if key == "return" then
+		returnpressed = true
 		if self.buttons_present[DB.OK] then
 			self:press_button(DB.OK)
 		elseif self.buttons_present[DB.CLOSE] then
@@ -378,7 +379,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			love.graphics.print(v, real_x+16, real_y-8+k*8)
 			self:setColor(255,255,255,255)
 
-			if (mouseon(real_x, real_y-11+k*8, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+			if (mouseon(real_x, real_y-11+k*8, real_w, 8) and love.mouse.isDown("l") and not mousepressed) and not RCMactive then
 				self.currentfield = n
 
 				dialogs[#dialogs]:dropdown_onchange(key, v)
@@ -482,7 +483,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 end
 
 function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
-	if topmost and mouseon(x, y, w, h) then
+	if topmost and mouseon(x, y, w, h) and not RCMactive then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)

@@ -82,9 +82,12 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 
-	if s.pscale ~= 1 then
+	if s.pscale ~= 1 or s.psmallerscreen then
 		za,zb,zc = love.window.getMode()
+		zd,ze,zf = love.window.getPosition()
+		zwidth,zheight = love.window.getDesktopDimensions(zf)
 		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
 
 		ved_require("scaling")
 	end
@@ -115,6 +118,8 @@ function love.load()
 	middlescroll_rolling = 0
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
+
+	returnpressed = false -- also for some things
 
 	temporaryroomnametimer = 0
 	generictimer = 0
@@ -2235,11 +2240,11 @@ function love.update(dt)
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8, (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
+						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)*s.pscale)
 						cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.GOTOENTRANCE then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8, (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
+						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)*s.pscale)
 						cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.CHANGEENTRANCE then
 						selectedtool = 14
@@ -2659,8 +2664,12 @@ function love.keypressed(key)
 					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
 					table.remove(helparticlecontent, helpeditingline + 1)
 				end
-			elseif state == 6 then
-				tabselected = 0
+			--elseif state == 6 then
+				--tabselected = 0
+			-- DO NOT UNCOMMENT THE ABOVE:
+			-- If you do, the Delete key will no longer be able to
+			-- remove levels from the recently opened level list if
+			-- you tab over to them
 			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
@@ -3208,7 +3217,11 @@ function love.keypressed(key)
 			end
 			dirty()
 		elseif key == "d" then
-			table.remove(scriptlines, editingline)
+			if #scriptlines > 1 then
+				table.remove(scriptlines, editingline)
+			else
+				scriptlines[editingline] = ""
+			end
 			if keyboard_eitherIsDown("shift") then
 				editingline = math.max(editingline - 1, 1)
 			else
@@ -3479,6 +3492,8 @@ function love.keyreleased(key)
 	elseif tilespicker_shortcut and (key == "lshift" or key == "l" .. ctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
+	elseif key == "return" then
+		returnpressed = false
 	end
 end
 
