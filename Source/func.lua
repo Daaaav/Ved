@@ -287,7 +287,7 @@ function stopinput()
 	takinginput = false
 end
 
-function tostate(new, dontinitialize, extradata)
+function tostate(new, dontinitialize, ...)
 	if dontinitialize == nil then
 		dontinitialize = false
 	end
@@ -296,7 +296,7 @@ function tostate(new, dontinitialize, extradata)
 	state = anythingbutnil0(tonumber(new)) -- please
 	if not dontinitialize then
 		cons("State changed: " .. oldstate .. " => " .. state .. " (inited)")
-		loadstate(state, extradata) -- just so states can be prepared easily
+		loadstate(state, ...) -- just so states can be prepared easily
 	else
 		cons("State changed: " .. oldstate .. " => " .. state .. " (not initialized)")
 	end
@@ -312,7 +312,7 @@ function tostate(new, dontinitialize, extradata)
 
 end
 
-function loadstate(new, extradata)
+function loadstate(new, ...)
 	if new == 1 then
 
 		-- DON'T FORGET editingmap
@@ -331,7 +331,7 @@ function loadstate(new, extradata)
 		leftsubtoolscroll = 16
 		zoomscale = 1 -- Or 1/2 or 1/4 or w/e
 		dropdown = 0
-		if extradata ~= true then
+		if ... ~= true then
 			roomx = 0
 			roomy = 0
 		end
@@ -447,7 +447,7 @@ function loadstate(new, extradata)
 			--state6old1 = false
 		end
 
-		if extradata == "secondlevel" then
+		if ... == "secondlevel" then
 			-- This is the second level we're loading!
 			secondlevel = true
 		else
@@ -514,21 +514,21 @@ function loadstate(new, extradata)
 		matching_anchor_line = nil
 
 		-- Are we gonna use this for Ved help or for level notes?
-		if extradata == nil then
+		if ... == nil then
 			-- Just the Ved help
 			helppages = LH
 			helpeditable = false
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
-		elseif extradata == "plugins" then
+		elseif ... == "plugins" then
 			--helppages = {}
 			loadpluginpages()
 			helpeditable = false
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
 		else
 			-- Level notes (or something custom because extradata is an array here!
-			helppages = extradata[1]
-			helpeditable = extradata[2]
-			helprefreshable = extradata[3]
+			helppages = (...)[1]
+			helpeditable = (...)[2]
+			helprefreshable = (...)[3]
 			if helppages[2] ~= nil then
 				helparticlecontent = explode("\n", helppages[helparticle].cont)
 			end
@@ -654,18 +654,18 @@ function loadstate(new, extradata)
 	elseif new == 31 then
 		musiceditor = false
 		soundviewer = false
-		if extradata == "musiceditor" then
+		if ... == "musiceditor" then
 			musiceditor = true
 			if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
 				musicplayerfile = musiceditorfile
 			else
 				musicplayerfile = "musiceditor"
 			end
-		elseif extradata == "sounds" then
+		elseif ... == "sounds" then
 			soundviewer = true
 			musicplayerfile = "sounds"
 		else
-			musicplayerfile = extradata
+			musicplayerfile = ...
 		end
 	end
 
@@ -788,7 +788,7 @@ function loadtileset(file)
 	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata
-	if readsuccess == true then
+	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
 		--love.filesystem.write("temp/" .. file, contents)
@@ -3078,6 +3078,83 @@ function sort_files(files)
 			return a.name:lower() < b.name:lower()
 		end
 	)
+end
+
+function fix_imageviewer_position()
+	local canvas_x, canvas_y = 8, 16
+	local canvas_w, canvas_h = love.graphics.getWidth()-136, love.graphics.getHeight()-24
+	if imageviewer_w*imageviewer_s < canvas_w then
+		imageviewer_x = canvas_x + (canvas_w-imageviewer_w*imageviewer_s)/2
+	else
+		imageviewer_x = math.min(
+			canvas_x, math.max(
+				(canvas_x+canvas_w)-imageviewer_w*imageviewer_s,
+				imageviewer_x
+			)
+		)
+	end
+	if imageviewer_h*imageviewer_s < canvas_h then
+		imageviewer_y = canvas_y + (canvas_h-imageviewer_h*imageviewer_s)/2
+	else
+		imageviewer_y = math.min(
+			canvas_y, math.max(
+				(canvas_y+canvas_h)-imageviewer_h*imageviewer_s,
+				imageviewer_y
+			)
+		)
+	end
+
+	imageviewer_x, imageviewer_y = math.floor(imageviewer_x), math.floor(imageviewer_y)
+end
+
+function imageviewer_get_view_center()
+	-- Get the "coordinate" of the centermost point, for x and y, on the scale 0-1.
+	-- So, if the center of the image is on the center of the canvas precisely, return 0.5, 0.5
+	local canvas_x, canvas_y = 8, 16
+	local canvas_w, canvas_h = love.graphics.getWidth()-136, love.graphics.getHeight()-24
+
+	local x = ((canvas_x+canvas_w/2) - imageviewer_x) / imageviewer_s
+	local y = ((canvas_y+canvas_h/2) - imageviewer_y) / imageviewer_s
+
+	return x/imageviewer_w, y/imageviewer_h
+end
+
+function imageviewer_zoomin()
+	if imageviewer_s >= 8 then return end
+	local center_x, center_y = imageviewer_get_view_center()
+	imageviewer_x = imageviewer_x-(imageviewer_w*imageviewer_s)*center_x
+	imageviewer_y = imageviewer_y-(imageviewer_h*imageviewer_s)*center_y
+	imageviewer_s = imageviewer_s * 2
+	fix_imageviewer_position()
+end
+
+function imageviewer_zoomout()
+	if imageviewer_s <= 0.5 then return end
+	local center_x, center_y = imageviewer_get_view_center()
+	imageviewer_s = imageviewer_s / 2
+	imageviewer_x = imageviewer_x+(imageviewer_w*imageviewer_s)*center_x
+	imageviewer_y = imageviewer_y+(imageviewer_h*imageviewer_s)*center_y
+	fix_imageviewer_position()
+end
+
+function imageviewer_gridin()
+	if imageviewer_grid == 0 then
+		imageviewer_grid = 1
+	elseif imageviewer_grid == 1 then
+		imageviewer_grid = 8
+	elseif imageviewer_grid == 8 then
+		imageviewer_grid = 32
+	end
+end
+
+function imageviewer_gridout()
+	if imageviewer_grid == 32 then
+		imageviewer_grid = 8
+	elseif imageviewer_grid == 8 then
+		imageviewer_grid = 1
+	elseif imageviewer_grid == 1 then
+		imageviewer_grid = 0
+	end
 end
 
 hook("func")

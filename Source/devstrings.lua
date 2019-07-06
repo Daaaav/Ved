@@ -40,3 +40,7 @@ L.CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$
 
 L.RESET = "Reset"
 L.CHANGEVERB = "Change" -- verb
+
+L.LOADIMAGE = "Load image"
+L.GRID = "Grid"
+L.NOTALPHAONLY = "RGB"

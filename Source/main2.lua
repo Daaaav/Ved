@@ -35,7 +35,8 @@ States:
 28	Level stats
 29	Plural forms test
 30	Assets
-31	Assets - music
+31	Assets - music/sounds
+32	Assets - graphics
 
 Debug keys:
 F12: change state
@@ -1294,7 +1295,7 @@ function love.draw()
 			love.graphics.setColor(128,128,128)
 			love.graphics.rectangle("line", 16.5, 16.5+44*a, 744, 33)
 
-			if mouseon(16.5, 16.5+44*a, 744, 33) and not mousepressed then
+			if mouseon(16.5, 16.5+44*a, 744, 33) and not mousepressed and nodialog then
 				love.graphics.setColor(48,48,48)
 				love.graphics.rectangle("fill", 17, 17+44*a, 743, 32)
 				if love.mouse.isDown("l") then
@@ -1306,6 +1307,8 @@ function love.draw()
 						tostate(31, false, "musiceditor")
 					elseif a == 3 then
 						tostate(31, false, "sounds")
+					elseif a == 4 then
+						tostate(32)
 					end
 					mousepressed = true
 				end
@@ -1343,7 +1346,7 @@ function love.draw()
 			end
 		end
 	elseif state == 31 then
-		-- Assets - music
+		-- Assets - music/sounds
 		if musiceditor then
 			if musiceditorfile == "" then
 				love.graphics.print(L.MUSICEDITOR, 16, 14)
@@ -1610,6 +1613,127 @@ function love.draw()
 		elseif nodialog and love.mouse.isDown("r") and onrbutton(2, nil, true) and musicfileexists(musicplayerfile) then
 			-- Reload right click menu
 			rightclickmenu.create({"#" .. musicplayerfile, L.UNLOAD}, "assets_music_load")
+		end
+	elseif state == 32 then
+		-- Assets - graphics
+		love.graphics.setColor(12,12,12,255)
+		love.graphics.rectangle("fill", 8, 16, love.graphics.getWidth()-136, love.graphics.getHeight()-24)
+		love.graphics.setColor(255,255,255,255)
+		if imageviewer_image_color ~= nil then
+			love.graphics.setScissor(8, 16, love.graphics.getWidth()-136, love.graphics.getHeight()-24)
+			--[[
+			love.graphics.setColor(0,0,0,255)
+			love.graphics.rectangle(
+				"fill", imageviewer_x, imageviewer_y,
+				imageviewer_w*imageviewer_s, imageviewer_h*imageviewer_s
+			)
+			love.graphics.setColor(255,255,255,255)
+			]]
+			love.graphics.draw(
+				imageviewer_showwhite and imageviewer_image_white or imageviewer_image_color,
+				imageviewer_x, imageviewer_y, 0, imageviewer_s
+			)
+			local grid_tile
+			if imageviewer_grid ~= 0 and nodialog
+			and mouseon(8, 16, love.graphics.getWidth()-136, love.graphics.getHeight()-24)
+			and mouseon(imageviewer_x, imageviewer_y, imageviewer_w*imageviewer_s, imageviewer_h*imageviewer_s) then
+				local hover_x = (love.mouse.getX()-imageviewer_x)/imageviewer_s
+				local hover_y = (love.mouse.getY()-imageviewer_y)/imageviewer_s
+				local hover_tx, hover_ty = math.floor(hover_x/imageviewer_grid), math.floor(hover_y/imageviewer_grid)
+
+				love.graphics.setColor(192,192,192,128)
+				love.graphics.rectangle("fill",
+					imageviewer_x + hover_tx*imageviewer_grid*imageviewer_s,
+					imageviewer_y + hover_ty*imageviewer_grid*imageviewer_s,
+					imageviewer_grid*imageviewer_s, imageviewer_grid*imageviewer_s
+				)
+				love.graphics.setColor(255,255,255,255)
+
+				if imageviewer_grid == 1 then
+					grid_tile = hover_tx .. "," .. hover_ty
+				else
+					grid_tile = hover_tx + hover_ty*math.ceil(imageviewer_w/imageviewer_grid)
+				end
+			end
+			love.graphics.setScissor()
+			love.graphics.print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 6)
+
+			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
+			local check_x = love.graphics.getWidth()-64-check_w/2
+			hoverdraw(
+				(imageviewer_showwhite and checkoff or checkon),
+				check_x, love.graphics.getHeight()-288, 16, 16, 2
+			)
+			love.graphics.print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-282)
+
+			if nodialog and love.mouse.isDown("l") and not mousepressed
+			and mouseon(check_x, love.graphics.getHeight()-288, 16, 16) then
+				imageviewer_showwhite = not imageviewer_showwhite
+				mousepressed = true
+			end
+
+			love.graphics.printf(
+				L.GRID,
+				love.graphics.getWidth()-128, love.graphics.getHeight()-234, 128, "center"
+			)
+			custom_int_control(
+				love.graphics.getWidth()-100, love.graphics.getHeight()-216,
+				imageviewer_gridout, imageviewer_gridin, nil,
+				function()
+					if imageviewer_grid == 0 then
+						return "--"
+					else
+						return imageviewer_grid
+					end
+				end, 32
+			)
+			if grid_tile ~= nil then
+				love.graphics.setColor(255,255,64,255)
+				if imageviewer_w/imageviewer_grid ~= math.ceil(imageviewer_w/imageviewer_grid) then
+					grid_tile = "(" .. grid_tile .. ")"
+				end
+				love.graphics.printf(
+					grid_tile,
+					love.graphics.getWidth()-128, love.graphics.getHeight()-186, 128, "center"
+				)
+				love.graphics.setColor(255,255,255,255)
+			end
+
+			custom_int_control(
+				love.graphics.getWidth()-100, love.graphics.getHeight()-144,
+				imageviewer_zoomout, imageviewer_zoomin, nil,
+				function()
+					return (imageviewer_s*100) .. "%"
+				end, 32
+			)
+			love.graphics.printf(
+				imageviewer_w .. L.X .. imageviewer_h,
+				love.graphics.getWidth()-128, love.graphics.getHeight()-114, 128, "center"
+			)
+		else
+			love.graphics.print(L.GRAPHICS, 8, 6)
+		end
+
+		rbutton({L.RETURN, "b"}, 0, nil, true)
+		rbutton(L.LOAD, 2, nil, true)
+
+		if nodialog and love.mouse.isDown("l") and not mousepressed then
+			if onrbutton(0, nil, true) then
+				-- Return
+				tostate(30, true)
+				oldstate = olderstate
+				mousepressed = true
+			elseif onrbutton(2, nil, true) then
+				-- Load
+				dialog.create(
+					"",
+					DBS.LOADCANCEL,
+					dialog.callback.openimage,
+					L.LOADIMAGE,
+					dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
+				)
+				mousepressed = true
+			end
 		end
 	else
 		statecaught = false
@@ -1900,6 +2024,34 @@ function love.update(dt)
 			onlefthelpbuttons = true
 		elseif love.mouse.getX() > 25*8+16-28+extrawidth then
 			onlefthelpbuttons = false
+		end
+	elseif state == 32 then
+		if imageviewer_moving then
+			imageviewer_x = imageviewer_moved_from_x + (love.mouse.getX()-imageviewer_moved_from_mx)
+			imageviewer_y = imageviewer_moved_from_y + (love.mouse.getY()-imageviewer_moved_from_my)
+			fix_imageviewer_position()
+		end
+		if love.keyboard.isDown("left", "kp4", "a") then
+			imageviewer_x = imageviewer_x + 1200*dt
+			fix_imageviewer_position()
+		elseif love.keyboard.isDown("right", "kp6", "d") then
+			imageviewer_x = imageviewer_x - 1200*dt
+			fix_imageviewer_position()
+		end
+		if love.keyboard.isDown("up", "kp8", "w") then
+			imageviewer_y = imageviewer_y + 1200*dt
+			fix_imageviewer_position()
+		elseif love.keyboard.isDown("down", "kp2", "s") then
+			imageviewer_y = imageviewer_y - 1200*dt
+			fix_imageviewer_position()
+		end
+
+		if love.keyboard.isDown("pageup") then
+			imageviewer_x, imageviewer_y = 8, 16
+			fix_imageviewer_position()
+		elseif love.keyboard.isDown("pagedown") then
+			imageviewer_x, imageviewer_y = -imageviewer_w*imageviewer_s, -imageviewer_h*imageviewer_s
+			fix_imageviewer_position()
 		end
 	end
 
@@ -3090,7 +3242,7 @@ function love.keypressed(key)
 		pasteroom()
 	elseif nodialog and state == 12 and key == "s" then
 		create_export_dialog()
-	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31) and key == "escape" then
+	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
 		tostate(oldstate, true)
 		if state == 11 then
 			-- Back to search results
@@ -3222,6 +3374,22 @@ function love.keypressed(key)
 		else
 			pausemusic()
 		end
+	elseif state == 32 then
+		if key == "=" or key == "+" or key == "kp+" then
+			imageviewer_zoomin()
+		elseif key == "-" or key == "kp-" then
+			imageviewer_zoomout()
+		elseif key == "r" then
+			imageviewer_showwhite = not imageviewer_showwhite
+		elseif key == "`" then
+			imageviewer_grid = 0
+		elseif key == "1" then
+			imageviewer_grid = 1
+		elseif key == "2" then
+			imageviewer_grid = 8
+		elseif key == "3" then
+			imageviewer_grid = 32
+		end
 	end
 end
 
@@ -3347,6 +3515,11 @@ function love.mousepressed(x, y, button)
 		chr = math.floor((x-216-screenxoffset)/8) + 1
 		line = math.floor(((y-8)-helparticlescroll-3)/10) + 1
 		helpgotoline(line, chr)
+	elseif state == 32 and button == "l" and imageviewer_image_color ~= nil and nodialog and x < love.graphics.getWidth()-128 then
+		imageviewer_moving = true
+		imageviewer_moved_from_x, imageviewer_moved_from_y = imageviewer_x, imageviewer_y
+		imageviewer_moved_from_mx, imageviewer_moved_from_my = x, y
+		mousepressed = true
 	else
 		handle_scrolling(false, button)
 	end
@@ -3387,6 +3560,8 @@ function love.mousereleased(x, y, button)
 		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
 		undosaved = 0
 		cons("[UNRE] SAVED END RESULT FOR UNDO")
+	elseif state == 32 then
+		imageviewer_moving = false
 	end
 
 	mousepressed = false

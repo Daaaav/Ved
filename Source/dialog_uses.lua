@@ -933,3 +933,59 @@ function dialog.callback.musicfilemetadata(button, fields)
 
 	setmusicmeta_file(musicplayerfile, nil, fields.name, fields.artist, fields.notes)
 end
+
+function dialog.callback.openimage(button, fields)
+	if button == DB.CANCEL or fields.name == "" then
+		return
+	end
+
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	local readsuccess, contents = readfile(filepath)
+	if not readsuccess then
+		dialog.create(contents)
+		return
+	end
+
+	local success, filedata = pcall(love.filesystem.newFileData, contents, filename, "file")
+	if not success then
+		dialog.create(filedata)
+		return
+	end
+	local imgdata
+	success, imgdata = pcall(love.image.newImageData, filedata)
+	if not success then
+		dialog.create(imgdata)
+		return
+	end
+	success, imageviewer_image_color = pcall(love.graphics.newImage, imgdata)
+	if not success then
+		dialog.create(imageviewer_image_color)
+		return
+	end
+	imgdata:mapPixel(
+		function(x, y, r, g, b, a)
+			return 255, 255, 255, a
+		end
+	)
+	imageviewer_image_white = love.graphics.newImage(imgdata)
+	imageviewer_filepath, imageviewer_filename = filepath, filename
+
+	imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
+	imageviewer_w, imageviewer_h = imageviewer_image_color:getDimensions()
+	fix_imageviewer_position()
+	imageviewer_moving = false
+	imageviewer_moved_from_x, imageviewer_moved_from_y = 0, 0
+	imageviewer_moved_from_mx, imageviewer_moved_from_my = 0, 0
+	imageviewer_grid, imageviewer_showwhite = 0, false
+
+	-- Guess the grid setting
+	if filename:sub(1,10) == "entcolours"
+	or filename:sub(1,4) == "font"
+	or filename:sub(1,5) == "tiles" then
+		imageviewer_grid = 8
+	elseif filename:sub(1,7) == "sprites"
+	or filename:sub(1,11) == "flipsprites" then
+		imageviewer_grid = 32
+	end
+end
