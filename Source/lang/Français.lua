@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-05-02 12:07:14 (CEST)
+--- Last converted: 2019-07-07 00:11:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -128,8 +128,10 @@ COPYSCRIPT = "Copier le script",
 SEARCHSCRIPT = "Chercher",
 GOTOLINE = "Aller à la ligne",
 GOTOLINE2 = "Aller à la ligne :",
-INTERNALON = "Int.sc est désactivé",
-INTERNALOFF = "Int.sc est activé",
+INTERNALON = "Int.sc est activé",
+INTERNALOFF = "Int.sc est désactivé",
+INTERNALYESBARS = "say(-1) sc.int",
+INTERNALNOBARS = "Chgt script int.sc",
 VIEW = "Vue",
 SYNTAXHLOFF = "Color. syn. : oui",
 SYNTAXHLON = "Color. syn. : non",
@@ -150,6 +152,7 @@ BTN_QUIT = "Quitter",
 BTN_DISCARD = "Jeter",
 BTN_SAVE = "Sauver",
 BTN_CLOSE = "Fermer",
+BTN_LOAD = "Charger",
 
 COMPARINGTHESE = "Comparaison entre $1.vvvvvv et $2.vvvvvv en cours",
 COMPARINGTHESENEW = "Comparaison entre (niveau non sauvegardé) et $1.vvvvvv en cours",
@@ -181,7 +184,7 @@ CHANGETOVER = "Modifié à vertical",
 RESIZE = "Déplacer/Redimensionner",
 CHANGEENTRANCE = "Déplacer l'entrée",
 CHANGEEXIT = "Déplacer la sortie",
-COPYENTRANCE = "Copy entrance",
+COPYENTRANCE = "Copier l'entrée",
 LOCK = "Vérouiller",
 UNLOCK = "Dévérouiller",
 BUG = "[Bogue!]",
@@ -286,7 +289,9 @@ FLAGNONAME = "Aucun nom",
 USEDOUTOFRANGEFLAGS = "Drapeaux hors limites utilisés :",
 
 CUSTOMVVVVVVDIRECTORY = "Dossier de VVVVVV",
-CUSTOMVVVVVVDIRECTORYEXPL = "Entrez le chemin complet du dossier de VVVVVV ici, si ce n'est pas \"$1\" (dans ce cas laissez cette partie vide). N'incluez pas le dossier nommé \"levels\" ici, ni un (anti)slash à la fin du chemin.",
+CUSTOMVVVVVVDIRECTORYEXPL = "Le répertoire par défaut de VVVVVV que Ved attend est:\n$1\n\nCe chemin ne doit pas mener au dossier \"levels\".",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "Vous n'avez pas donné de dossier VVVVVV personnalisé.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Votre dossier de VVVVVV est situé dans un chemin personnalisé:\n$1\n\n",
 LANGUAGE = "Langue",
 DIALOGANIMATIONS = "Animations de dialogue",
 FLIPSUBTOOLSCROLL = "Inverser la direction de défilage des sous-outils",
@@ -457,22 +462,47 @@ SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
 SEARCHRESULTS_ROOMS = "Salles [$1]",
 SEARCHRESULTS_NOTES = "Notes [$1]",
 
-ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
-MUSICLOADERROR = "Can not load $1.vvv: ",
-MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
-MUSICEXISTSYES = "Exists",
-MUSICEXISTSNO = "Does not exist",
-LOAD = "Load",
-RELOAD = "Reload",
-UNLOAD = "Unload",
-MUSICEDITOR = "Music editor",
-LOADMUSICNAME = "Load this .vvv:",
-ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
-INSERTSONG = "Insert song at track $1",
-SUREDELETESONG = "Are you sure you want to remove song $1?",
-SONGOPENFAIL = "Unable to open $1, song not replaced.",
-SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+ASSETS = "Ressources", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+MUSICPLAYERROR = "La chanson ne peut pas être lue. Il est possible qu'elle n'existe pas ou qu'elle aie un type non supporté.",
+SOUNDPLAYERROR = "Le son ne peut pas être lu. Il est possible qu'il n'existe pas ou qu'il aie un type non supporté.",
+MUSICLOADERROR = "Impossible de charger $1 : ",
+MUSICLOADERROR_TOOSMALL = "Le fichier son est trop petit pour être valide.",
+MUSICEXISTSYES = "Existe",
+MUSICEXISTSNO = "N'existe pas",
+LOAD = "Charger",
+RELOAD = "Recharger",
+UNLOAD = "Décharger",
+MUSICEDITOR = "Editeur de musique",
+LOADMUSICNAME = "Charger .vvv",
+INSERTSONG = "Insérer une chanson dans la piste $1",
+SUREDELETESONG = "Etes-vous sûr de vouloir supprimer la chanson $1 ?",
+SONGOPENFAIL = "Impossible d'ouvrir $1, la chanson n'a pas été remplacée.",
+SONGREPLACEFAIL = "Quelque chose s'est mal passé lors du remplacement de la chanson.",
+KILOBYTES = "$1 ko",
+MEGABYTES = "$1 Mo",
+GIGABYTES = "$1 Go",
+CANNOTUSENEWLINES = "Le caractère \"$1\" ne peut pas être utilisé dans le nom d'un script !",
+MUSICTITLE = "Titre : ",
+MUSICARTIST = "Artiste : ",
+MUSICFILENAME = "Nom de fichier : ",
+MUSICNOTES = "Notes :",
+SONGMETADATA = "Métadonnées pour la chanson $1",
+MUSICFILEMETADATA = "Métadonnées du fichier",
+MUSICEXPORTEDON = "Exporté : ", -- Followed by date and time
+SAVEMETADATA = "Sauver métadonnées",
+SOUNDS = "Sons",
+GRAPHICS = "Graphismes",
+FILEOPENERNAME = "Nom : ",
+PATHINVALID = "Le chemin est invalide.",
+DRIVES = "Lecteurs", -- like C: or F: on Windows
+DOFILTER = "Seulement montrer *$1", -- "*.txt" for example
+DOFILTERDIR = "Seulement montrer les dossiers",
+FILEDIALOGLUV = "Désolé, votre système d'exploitation n'est pas reconnu, donc le dialogue de fichier ne fonctionne pas.",
+RESET = "Réinitialiser",
+CHANGEVERB = "Changer", -- verb
+LOADIMAGE = "Charger image",
+GRID = "Grille",
+NOTALPHAONLY = "RBV",
 
 }
 
@@ -513,6 +543,10 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "La tuile $1 n'est pas un nombre entier valide dans l'intervalle 0-1199",
 		[1] = "Les tuiles $1 ne sont pas des nombres entiers valides dans l'intervalle 0-1199",
+	},
+	BYTES = {
+		[0] = "$1 octet",
+		[1] = "$1 octets",
 	},
 }
 
@@ -771,7 +805,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Return",
+subj = "Retour",
 imgs = {},
 cont = [[
 \)
@@ -779,41 +813,44 @@ cont = [[
 },
 
 {
-subj = "Getting started",
+subj = "Démarrage",
 imgs = {},
 cont = [[
-Getting started\wh#
+Démarrage\wh#
 \C=
 
-This article will help you get started with using Ved. To get started with using
-the editor, you need to load a level, or create a new one.
+Cet article va vous aider à prendre Ved en main. Pour commencer à utiliser l'éditeur,
+vous devez charger ou créer un niveau.
 
 
-The editor\h#
+L'éditeur\h#
 
-On the left side, you will find the tools selection. Most tools have subtools that
-will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
-help page.
-Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
-On the right side of the screen, you will find many buttons and options. The upper
-buttons are related to the entire level, the lower buttons (under Room options)
-are specific to the current room. For more information about those buttons, refer
-to the respective help pages, where available.
+Sur le côté gauche, vous trouverez les outils de sélection. La majorité de ces
+outils ont des outils subsidiaires qui seront listés sur leur droite. Pour changer
+d'outil, utilisez leur raccourci ou utilisez la molette en appuyant sur les touches
+Ctrl et Maj. Pour changer d'outil secondaire, utilisez seulement la molette.
+Pour plus d'informations sur les outils, veuillez consulter la page d'aider sur
+les ¤Outils\nwl.
+Effectuez un clic droit sur les entités pour faire apparaître un menu contextuel pour
+cette entité. Pour supprimer une entité sans utiliser son menu contextuel, effectuez
+un clic droit sur celle-ci en appuyant sur la touche Maj.
+Sur le côté droit de l'écran, vous trouverez beaucoup de boutons et d'options.
+Les boutons supérieurs sont liés au niveau tout entier tandis que les boutons
+inférieurs (sous Options de salle) sont spécifiques à la salle courante. Pour plus
+d'informations sur ces boutons, veuillez consulter leurs pages d'aide respectives,
+si elles sont disponibles.
 
-Levels folder\h#
+Dossiers de niveau\h#
 
-Ved will normally use the same folder for storing levels as VVVVVV does, so it is
-easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
-detect your VVVVVV folder correctly, you can enter a custom path in the Ved
-options.
+Ved utilise normalement le même dossier que VVVVVV utilise pour stocker ses 
+niveaux, donc il est facile de passer de l'éditeur de niveau de VVVVVV à Ved et vice
+versa. So Ved ne détecte pas votre dossier de VVVVVV correctement, vous pouvez
+entrer un chemin personnalisé dans les options de Ved.
 ]]
 },
 
 {
-subj = "Tile placement modes",
+subj = "Modes de placement de tuiles",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
 Tile placement modes\wh#

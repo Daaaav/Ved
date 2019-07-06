@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-05-02 12:07:14 (CEST)
+--- Last converted: 2019-07-07 00:11:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -34,7 +34,7 @@ L = {
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.1.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blijft L{ve 0.9.1 en hoger werken.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blĳft L{ve 0.9.1 en hoger werken.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
 UNKNOWNSTATE = "Onbekende staat ($1), naar veranderd vanaf $2",
 FATALERROR = "FATALE FOUT: ",
 FATALEND = "Sluit het spel en probeer het opnieuw. En als je Dav bent, los het alsjeblieft op.",
@@ -130,8 +130,10 @@ COPYSCRIPT = "Alles kopiëren",
 SEARCHSCRIPT = "Zoeken",
 GOTOLINE = "Ga naar regel",
 GOTOLINE2 = "Ga naar regel:",
-INTERNALON = "Int.sc is uit",
-INTERNALOFF = "Int.sc is aan",
+INTERNALON = "Int.sc is aan",
+INTERNALOFF = "Int.sc is uit",
+INTERNALYESBARS = "say(-1)-int.sc",
+INTERNALNOBARS = "Laadscript-\nint.sc",
 VIEW = "Beeld",
 SYNTAXHLOFF = "Kleuren: aan",
 SYNTAXHLON = "Kleuren: uit",
@@ -152,6 +154,7 @@ BTN_QUIT = "Afsluiten",
 BTN_DISCARD = "Verwerpen",
 BTN_SAVE = "Opslaan",
 BTN_CLOSE = "Sluiten",
+BTN_LOAD = "Laden",
 
 COMPARINGTHESE = "$1.vvvvvv wordt vergeleken met $2.vvvvvv",
 COMPARINGTHESENEW = "(niet-opgeslagen level) wordt vergeleken met $1.vvvvvv",
@@ -288,7 +291,9 @@ FLAGNONAME = "Geen naam",
 USEDOUTOFRANGEFLAGS = "Gebruikte vlaggen buiten bereik:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-map",
-CUSTOMVVVVVVDIRECTORYEXPL = "Voer hier het volledige pad naar je VVVVVV-map in, als het niet \"$1\" is (laat het anders leeg). Neem niet de map \"levels\" hierin op, en ook niet een schuine streep.",
+CUSTOMVVVVVVDIRECTORYEXPL = "De standaard VVVVVV-map die Ved verwacht is:\n$1\n\nDit pad moet niet worden ingesteld op de \"levels\"-map.",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "Je hebt geen aangepaste VVVVVV-map ingesteld.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Je VVVVVV-map is ingesteld op een aangepast pad:\n$1\n\n",
 LANGUAGE = "Taal",
 DIALOGANIMATIONS = "Dialoogvenster-animaties",
 FLIPSUBTOOLSCROLL = "Scrollrichting voor subtools omkeren",
@@ -460,21 +465,46 @@ SEARCHRESULTS_ROOMS = "Kamers [$1]",
 SEARCHRESULTS_NOTES = "Notities [$1]",
 
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
-MUSICLOADERROR = "Can not load $1.vvv: ",
-MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
-MUSICEXISTSYES = "Exists",
-MUSICEXISTSNO = "Does not exist",
-LOAD = "Load",
-RELOAD = "Reload",
-UNLOAD = "Unload",
-MUSICEDITOR = "Music editor",
-LOADMUSICNAME = "Load this .vvv:",
-ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
-INSERTSONG = "Insert song at track $1",
-SUREDELETESONG = "Are you sure you want to remove song $1?",
-SONGOPENFAIL = "Unable to open $1, song not replaced.",
-SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+MUSICPLAYERROR = "Kan dit nummer niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zĳn.",
+SOUNDPLAYERROR = "Kan dit geluid niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zĳn.",
+MUSICLOADERROR = "Kan $1 niet laden: ",
+MUSICLOADERROR_TOOSMALL = "Het muziekbestand is te klein om geldig te zĳn.",
+MUSICEXISTSYES = "Bestaat",
+MUSICEXISTSNO = "Bestaat niet",
+LOAD = "Laden",
+RELOAD = "Herladen",
+UNLOAD = "Ontladen",
+MUSICEDITOR = "Muziekbewerker",
+LOADMUSICNAME = ".vvv laden",
+INSERTSONG = "Nummer invoegen op positie $1",
+SUREDELETESONG = "Weet je zeker dat je nummer $1 wilt verwĳderen?",
+SONGOPENFAIL = "Kon $1 niet openen, nummer niet vervangen.",
+SONGREPLACEFAIL = "Er ging iets fout bĳ het vervangen van het nummer.",
+KILOBYTES = "$1 kB",
+MEGABYTES = "$1 MB",
+GIGABYTES = "$1 GB",
+CANNOTUSENEWLINES = "Je kunt niet het \"$1\"-teken in scriptnamen gebruiken!",
+MUSICTITLE = "Titel: ",
+MUSICARTIST = "Artiest: ",
+MUSICFILENAME = "Bestandsnaam: ",
+MUSICNOTES = "Notities:",
+SONGMETADATA = "Metadata voor nummer $1",
+MUSICFILEMETADATA = "Metadata van bestand",
+MUSICEXPORTEDON = "Geëxporteerd: ", -- Followed by date and time
+SAVEMETADATA = "Metadata opslaan",
+SOUNDS = "Geluiden",
+GRAPHICS = "Afbeeldingen",
+FILEOPENERNAME = "Naam: ",
+PATHINVALID = "Het pad is ongeldig.",
+DRIVES = "Schĳven", -- like C: or F: on Windows
+DOFILTER = "Alleen *$1 tonen", -- "*.txt" for example
+DOFILTERDIR = "Alleen mappen tonen",
+FILEDIALOGLUV = "Sorry, je besturingssysteem wordt niet herkend, dus het bestandsdialoogvenster werkt niet.",
+RESET = "Resetten",
+CHANGEVERB = "Wĳzigen", -- verb
+LOADIMAGE = "Afbeelding laden",
+GRID = "Raster",
+NOTALPHAONLY = "RGB",
 
 }
 
@@ -515,6 +545,10 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
 		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199",
+	},
+	BYTES = {
+		[0] = "$1 byte",
+		[1] = "$1 bytes",
 	},
 }
 

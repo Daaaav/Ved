@@ -358,11 +358,19 @@ msgid "Go to line:"
 msgstr ""
 
 msgctxt "L.INTERNALON"
-msgid "Int.sc is off"
+msgid "Int.sc is on"
 msgstr ""
 
 msgctxt "L.INTERNALOFF"
-msgid "Int.sc is on"
+msgid "Int.sc is off"
+msgstr ""
+
+msgctxt "L.INTERNALYESBARS"
+msgid "say(-1) int.sc"
+msgstr ""
+
+msgctxt "L.INTERNALNOBARS"
+msgid "Loadscript int.sc"
 msgstr ""
 
 msgctxt "L.VIEW"
@@ -439,6 +447,10 @@ msgstr ""
 
 msgctxt "L.BTN_CLOSE"
 msgid "Close"
+msgstr ""
+
+msgctxt "L.BTN_LOAD"
+msgid "Load"
 msgstr ""
 
 msgctxt "L.COMPARINGTHESE"
@@ -898,7 +910,15 @@ msgid "VVVVVV folder"
 msgstr ""
 
 msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
-msgid "Enter the full path to your VVVVVV directory here, if it is not \"$1\" (else leave it blank). Do not include the directory called \"levels\" here, nor a trailing (back)slash."
+msgid "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory."
+msgstr ""
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_NOTSET"
+msgid "You do not have a custom VVVVVV directory set.\n\n"
+msgstr ""
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_SET"
+msgid "Your VVVVVV directory is set to a custom path:\n$1\n\n"
 msgstr ""
 
 msgctxt "L.LANGUAGE"
@@ -1555,8 +1575,12 @@ msgctxt "L.MUSICPLAYERROR"
 msgid "Can not play this song. It may not exist or be of an unsupported type."
 msgstr ""
 
+msgctxt "L.SOUNDPLAYERROR"
+msgid "Can not play this sound. It may not exist or be of an unsupported type."
+msgstr ""
+
 msgctxt "L.MUSICLOADERROR"
-msgid "Can not load $1.vvv: "
+msgid "Can not load $1: "
 msgstr ""
 
 msgctxt "L.MUSICLOADERROR_TOOSMALL"
@@ -1588,11 +1612,7 @@ msgid "Music editor"
 msgstr ""
 
 msgctxt "L.LOADMUSICNAME"
-msgid "Load this .vvv:"
-msgstr ""
-
-msgctxt "L.ENTERSONGPATH"
-msgid "Enter full file path:\n\n\n(.ogg is recommended)"
+msgid "Load .vvv"
 msgstr ""
 
 msgctxt "L.INSERTSONG"
@@ -1609,6 +1629,110 @@ msgstr ""
 
 msgctxt "L.SONGREPLACEFAIL"
 msgid "Something went wrong while replacing the song."
+msgstr ""
+
+msgctxt "L.KILOBYTES"
+msgid "$1 kB"
+msgstr ""
+
+msgctxt "L.MEGABYTES"
+msgid "$1 MB"
+msgstr ""
+
+msgctxt "L.GIGABYTES"
+msgid "$1 GB"
+msgstr ""
+
+msgctxt "L.CANNOTUSENEWLINES"
+msgid "You cannot use the \"$1\" character in script names!"
+msgstr ""
+
+msgctxt "L.MUSICTITLE"
+msgid "Title: "
+msgstr ""
+
+msgctxt "L.MUSICARTIST"
+msgid "Artist: "
+msgstr ""
+
+msgctxt "L.MUSICFILENAME"
+msgid "Filename: "
+msgstr ""
+
+msgctxt "L.MUSICNOTES"
+msgid "Notes:"
+msgstr ""
+
+msgctxt "L.SONGMETADATA"
+msgid "Metadata for song $1"
+msgstr ""
+
+msgctxt "L.MUSICFILEMETADATA"
+msgid "File metadata"
+msgstr ""
+
+#. Followed by date and time
+msgctxt "L.MUSICEXPORTEDON"
+msgid "Exported: "
+msgstr ""
+
+msgctxt "L.SAVEMETADATA"
+msgid "Save metadata"
+msgstr ""
+
+msgctxt "L.SOUNDS"
+msgid "Sounds"
+msgstr ""
+
+msgctxt "L.GRAPHICS"
+msgid "Graphics"
+msgstr ""
+
+msgctxt "L.FILEOPENERNAME"
+msgid "Name: "
+msgstr ""
+
+msgctxt "L.PATHINVALID"
+msgid "The path is invalid."
+msgstr ""
+
+#. like C: or F: on Windows
+msgctxt "L.DRIVES"
+msgid "Drives"
+msgstr ""
+
+#. "*.txt" for example
+msgctxt "L.DOFILTER"
+msgid "Only show *$1"
+msgstr ""
+
+msgctxt "L.DOFILTERDIR"
+msgid "Only show directories"
+msgstr ""
+
+msgctxt "L.FILEDIALOGLUV"
+msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
+msgstr ""
+
+msgctxt "L.RESET"
+msgid "Reset"
+msgstr ""
+
+#. verb
+msgctxt "L.CHANGEVERB"
+msgid "Change"
+msgstr ""
+
+msgctxt "L.LOADIMAGE"
+msgid "Load image"
+msgstr ""
+
+msgctxt "L.GRID"
+msgid "Grid"
+msgstr ""
+
+msgctxt "L.NOTALPHAONLY"
+msgid "RGB"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
@@ -1662,6 +1786,12 @@ msgstr[1] ""
 msgctxt "L_PLU.NOTALLTILESVALID"
 msgid "$1 tile is not a valid whole number in the range 0-1199"
 msgid_plural "$1 tiles are not a valid whole number in the range 0-1199"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.BYTES"
+msgid "$1 byte"
+msgid_plural "$1 bytes"
 msgstr[0] ""
 msgstr[1] ""
 

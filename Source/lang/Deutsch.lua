@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-05-02 12:07:14 (CEST)
+--- Last converted: 2019-07-07 00:11:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -130,8 +130,10 @@ COPYSCRIPT = "Skript kopieren",
 SEARCHSCRIPT = "Suchen",
 GOTOLINE = "Gehe zu Zeile",
 GOTOLINE2 = "Gehe zu Zeile:",
-INTERNALON = "Int.sc ist aus",
-INTERNALOFF = "Int.sc ist an",
+INTERNALON = "Int.sc ist an",
+INTERNALOFF = "Int.sc ist aus",
+INTERNALYESBARS = "say(-1) int.sc",
+INTERNALNOBARS = "Loadscript int.sc",
 VIEW = "Ansehen",
 SYNTAXHLOFF = "Syntax HL: an",
 SYNTAXHLON = "Syntax HL: aus",
@@ -152,6 +154,7 @@ BTN_QUIT = "Beenden",
 BTN_DISCARD = "Verwerfen",
 BTN_SAVE = "Speichern",
 BTN_CLOSE = "Schließen",
+BTN_LOAD = "Load",
 
 COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
 COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
@@ -288,7 +291,9 @@ FLAGNONAME = "Kein Name",
 USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "Trage den kompletten Pfad zu deinem VVVVVV-Ordner ein, falls er nicht \"$1\" ist (ansonsten lass es frei). Schließe nicht das Verzeichnis \"levels\" hier ein, und auch kein führender (Schräg)strich.",
+CUSTOMVVVVVVDIRECTORYEXPL = "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory.",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$1\n\n",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
 FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
@@ -461,7 +466,8 @@ SEARCHRESULTS_NOTES = "Notizen [$1]",
 
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
-MUSICLOADERROR = "Can not load $1.vvv: ",
+SOUNDPLAYERROR = "Can not play this sound. It may not exist or be of an unsupported type.",
+MUSICLOADERROR = "Can not load $1: ",
 MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
 MUSICEXISTSYES = "Exists",
 MUSICEXISTSNO = "Does not exist",
@@ -469,12 +475,36 @@ LOAD = "Load",
 RELOAD = "Reload",
 UNLOAD = "Unload",
 MUSICEDITOR = "Music editor",
-LOADMUSICNAME = "Load this .vvv:",
-ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
+LOADMUSICNAME = "Load .vvv",
 INSERTSONG = "Insert song at track $1",
 SUREDELETESONG = "Are you sure you want to remove song $1?",
 SONGOPENFAIL = "Unable to open $1, song not replaced.",
 SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+KILOBYTES = "$1 kB",
+MEGABYTES = "$1 MB",
+GIGABYTES = "$1 GB",
+CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!",
+MUSICTITLE = "Title: ",
+MUSICARTIST = "Artist: ",
+MUSICFILENAME = "Filename: ",
+MUSICNOTES = "Notes:",
+SONGMETADATA = "Metadata for song $1",
+MUSICFILEMETADATA = "File metadata",
+MUSICEXPORTEDON = "Exported: ", -- Followed by date and time
+SAVEMETADATA = "Save metadata",
+SOUNDS = "Sounds",
+GRAPHICS = "Graphics",
+FILEOPENERNAME = "Name: ",
+PATHINVALID = "The path is invalid.",
+DRIVES = "Drives", -- like C: or F: on Windows
+DOFILTER = "Only show *$1", -- "*.txt" for example
+DOFILTERDIR = "Only show directories",
+FILEDIALOGLUV = "Sorry, your operating system is unrecognized, so the file dialog does not work.",
+RESET = "Reset",
+CHANGEVERB = "Change", -- verb
+LOADIMAGE = "Load image",
+GRID = "Grid",
+NOTALPHAONLY = "RGB",
 
 }
 
@@ -515,6 +545,10 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
 		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
+	},
+	BYTES = {
+		[-1] = "$1 byte",
+		[-2] = "$1 bytes",
 	},
 }
 

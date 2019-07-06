@@ -116,8 +116,10 @@ COPYSCRIPT = "Copy script",
 SEARCHSCRIPT = "Search",
 GOTOLINE = "Go to line",
 GOTOLINE2 = "Go to line:",
-INTERNALON = "Int.sc is off",
-INTERNALOFF = "Int.sc is on",
+INTERNALON = "Int.sc is on",
+INTERNALOFF = "Int.sc is off",
+INTERNALYESBARS = "say(-1) int.sc",
+INTERNALNOBARS = "Loadscript int.sc",
 VIEW = "View",
 SYNTAXHLOFF = "Syntax HL: on",
 SYNTAXHLON = "Syntax HL: off",
@@ -138,6 +140,7 @@ BTN_QUIT = "Quit",
 BTN_DISCARD = "Discard",
 BTN_SAVE = "Save",
 BTN_CLOSE = "Close",
+BTN_LOAD = "Load",
 
 COMPARINGTHESE = "Comparing $1.vvvvvv to $2.vvvvvv",
 COMPARINGTHESENEW = "Comparing (unsaved level) to $1.vvvvvv",
@@ -275,6 +278,8 @@ USEDOUTOFRANGEFLAGS = "Used out of range flags:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV folder",
 CUSTOMVVVVVVDIRECTORYEXPL = "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory.",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$1\n\n",
 LANGUAGE = "Language",
 DIALOGANIMATIONS = "Dialog animations",
 FLIPSUBTOOLSCROLL = "Flip subtool scrolling direction",
@@ -447,6 +452,7 @@ SEARCHRESULTS_NOTES = "Notes [$1]",
 
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
+SOUNDPLAYERROR = "Can not play this sound. It may not exist or be of an unsupported type.",
 MUSICLOADERROR = "Can not load $1: ",
 MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
 MUSICEXISTSYES = "Exists",
@@ -460,6 +466,31 @@ INSERTSONG = "Insert song at track $1",
 SUREDELETESONG = "Are you sure you want to remove song $1?",
 SONGOPENFAIL = "Unable to open $1, song not replaced.",
 SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+KILOBYTES = "$1 kB", -- There's also L_PLU.BYTES for "$1 byte"/"$1 bytes"
+MEGABYTES = "$1 MB",
+GIGABYTES = "$1 GB",
+CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!",
+MUSICTITLE = "Title: ",
+MUSICARTIST = "Artist: ",
+MUSICFILENAME = "Filename: ",
+MUSICNOTES = "Notes:",
+SONGMETADATA = "Metadata for song $1",
+MUSICFILEMETADATA = "File metadata",
+MUSICEXPORTEDON = "Exported: ", -- Followed by date and time
+SAVEMETADATA = "Save metadata",
+SOUNDS = "Sounds",
+GRAPHICS = "Graphics",
+FILEOPENERNAME = "Name: ",
+PATHINVALID = "The path is invalid.",
+DRIVES = "Drives", -- like C: or F: on Windows
+DOFILTER = "Only show *$1", -- "*.txt" for example
+DOFILTERDIR = "Only show directories",
+FILEDIALOGLUV = "Sorry, your operating system is unrecognized, so the file dialog does not work.",
+RESET = "Reset",
+CHANGEVERB = "Change", -- verb
+LOADIMAGE = "Load image",
+GRID = "Grid",
+NOTALPHAONLY = "RGB",
 
 }
 
@@ -500,6 +531,10 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 tile is not a valid whole number in the range 0-1199",
 		[1] = "$1 tiles are not a valid whole number in the range 0-1199"
+	},
+	BYTES = {
+		[0] = "$1 byte",
+		[1] = "$1 bytes",
 	},
 }
 

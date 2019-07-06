@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-05-02 12:07:14 (CEST)
+--- Last converted: 2019-07-07 00:11:14 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -142,8 +142,10 @@ COPYSCRIPT = "Kopii skripton",
 SEARCHSCRIPT = "Serĉi",
 GOTOLINE = "Salti al linio",
 GOTOLINE2 = "Salti al linio:",
-INTERNALON = "Int.skr: NE",
-INTERNALOFF = "Int.skr: JES",
+INTERNALON = "Int.skr: JES",
+INTERNALOFF = "Int.skr: NE",
+INTERNALYESBARS = "say(-1) int.skr",
+INTERNALNOBARS = "Ŝargskripto int.skr",
 VIEW = "Vidi",
 SYNTAXHLOFF = "Sintakso: JES",
 SYNTAXHLON = "Sintakso: NE",
@@ -164,6 +166,7 @@ BTN_QUIT = "Eliri",
 BTN_DISCARD = "Ignori",
 BTN_SAVE = "Konservi",
 BTN_CLOSE = "Fermi",
+BTN_LOAD = "Ŝargi",
 
 COMPARINGTHESE = "Komparado de $1.vvvvvv al $2.vvvvvv",
 COMPARINGTHESENEW = "Komparado de nekonservita nivelo al $1.vvvvvv",
@@ -300,7 +303,9 @@ FLAGNONAME = "Sennoma",
 USEDOUTOFRANGEFLAGS = "Uzataj ekstervariejaj flagoj:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV -dosierujo",
-CUSTOMVVVVVVDIRECTORYEXPL = "Enmetu la plenan dosierindikon al via VVVVVV-dosierujo ĉi tie, se ĝi ne estas \"$1\" (se do, lasu ĝin blanka). Ne inkluzivu la dosierujon nomitan \"levels\" ĉi tie, nek vostan (mal)suprenstrekon.",
+CUSTOMVVVVVVDIRECTORYEXPL = "La defaŭlta dosierujo de VVVVVV, kiun atendas Ved estas:\n$1\n\nTiu dosieruj-indiko ne estu agordita al la dosierujo \"levels\".",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "Vi ne havas propran dosierujon de VVVVVV agordita.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Via dosierujo de VVVVVV estas agordita al propra indiko:\n$1\n\n",
 LANGUAGE = "Lingvo",
 DIALOGANIMATIONS = "Dialoganimacioj",
 FLIPSUBTOOLSCROLL = "Renversi ruluman direkton de ilido",
@@ -471,22 +476,47 @@ SEARCHRESULTS_SCRIPTS = "Skriptoj [$1]",
 SEARCHRESULTS_ROOMS = "Ĉambroj [$1]",
 SEARCHRESULTS_NOTES = "Notoj [$1]",
 
-ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
-MUSICLOADERROR = "Can not load $1.vvv: ",
-MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
-MUSICEXISTSYES = "Exists",
-MUSICEXISTSNO = "Does not exist",
-LOAD = "Load",
-RELOAD = "Reload",
-UNLOAD = "Unload",
-MUSICEDITOR = "Music editor",
-LOADMUSICNAME = "Load this .vvv:",
-ENTERSONGPATH = "Enter full file path:\n\n\n(.ogg is recommended)",
-INSERTSONG = "Insert song at track $1",
-SUREDELETESONG = "Are you sure you want to remove song $1?",
-SONGOPENFAIL = "Unable to open $1, song not replaced.",
-SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+ASSETS = "Valoraĵoj", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+MUSICPLAYERROR = "Ne eblas ludi tiun ĉi melodion. Ĝi eble ne ekzistas aŭ estas de nesubtenata tipo.",
+SOUNDPLAYERROR = "Ne eblas ludi tiun ĉi sonon. Ĝi eble ne ekzistas aŭ estas de nesubtenata tipo.",
+MUSICLOADERROR = "Ne eblas ŝargi $1: ",
+MUSICLOADERROR_TOOSMALL = "La muzikdosiero tro malgrandas por esti valida.",
+MUSICEXISTSYES = "Ekzistas",
+MUSICEXISTSNO = "Ne ekzistas",
+LOAD = "Ŝargi",
+RELOAD = "Reŝargi",
+UNLOAD = "Malŝargi",
+MUSICEDITOR = "Muzikredaktilo",
+LOADMUSICNAME = "Ŝargi .vvv",
+INSERTSONG = "Enmeti melodion ĉe trako $1",
+SUREDELETESONG = "Ĉu vi certas, ke vi volas forigi melodion $1?",
+SONGOPENFAIL = "Ne eblis malfermi $1, melodio ne anstataŭigiĝis.",
+SONGREPLACEFAIL = "Io misiris dum la anstataŭigado de la melodio.",
+KILOBYTES = "$1 kB",
+MEGABYTES = "$1 MB",
+GIGABYTES = "$1 GB",
+CANNOTUSENEWLINES = "Vi ne povas uzi la signon \"$1\" en skriptnomoj!",
+MUSICTITLE = "Titolo: ",
+MUSICARTIST = "Artisto: ",
+MUSICFILENAME = "Dosiernomo: ",
+MUSICNOTES = "Notoj:",
+SONGMETADATA = "Metadatumoj por melodio $1",
+MUSICFILEMETADATA = "Dosier-metadatumoj",
+MUSICEXPORTEDON = "Eksportita: ", -- Followed by date and time
+SAVEMETADATA = "Konservi metadatumojn",
+SOUNDS = "Sonoj",
+GRAPHICS = "Grafikoj",
+FILEOPENERNAME = "Nomo: ",
+PATHINVALID = "La dosierindiko malvalidas.",
+DRIVES = "Diskoj", -- like C: or F: on Windows
+DOFILTER = "Nur montru *$1", -- "*.txt" for example
+DOFILTERDIR = "Nur montru dosierujojn",
+FILEDIALOGLUV = "Bedaŭrinde, via operaciumo ne estas konata, do la dosierdialogujo ne funkcias.",
+RESET = "Rekomencigi",
+CHANGEVERB = "Ŝanĝi", -- verb
+LOADIMAGE = "Ŝargi bildon",
+GRID = "Krado",
+NOTALPHAONLY = "RVB",
 
 }
 
@@ -527,6 +557,10 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 kahelo ne estas valida entjero en la intervalo 0-1199",
 		[1] = "$1 kaheloj ne estas validaj entjeroj en la intervalo 0-1199",
+	},
+	BYTES = {
+		[0] = "$1 bajto",
+		[1] = "$1 bajtoj",
 	},
 }
 
@@ -1089,7 +1123,7 @@ Alt+Shift+klako¤    Kopii enton\C
 
 Skripto-redaktilo\gh#
 
-Ctrl+F¤  Trovi]C
+Ctrl+F¤  Trovi\C
 Ctrl+G¤  Salti al linio\C
 Ctrl+I¤  Baskuligi reĝimon de interna skriptado\C
 Ctrl+dekstro¤  Salti al skripto en kondiĉa komando\C
