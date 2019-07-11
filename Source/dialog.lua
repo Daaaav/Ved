@@ -143,7 +143,11 @@ function cDialog:draw(topmost)
 		else
 			btn_text = v
 		end
-		love.graphics.printf(btn_text, btn_x, btn_y+10, btnwidth, "center")
+		local textyoffset = 6
+		if font8:getWidth(btn_text) > btnwidth or btn_text:find("\n") ~= nil then
+			textyoffset = 2
+		end
+		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
 	end
 
 	-- Window border

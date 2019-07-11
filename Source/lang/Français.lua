@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-07-07 00:11:14 (CEST)
+--- Last converted: 2019-07-11 22:45:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -498,7 +498,7 @@ DRIVES = "Lecteurs", -- like C: or F: on Windows
 DOFILTER = "Seulement montrer *$1", -- "*.txt" for example
 DOFILTERDIR = "Seulement montrer les dossiers",
 FILEDIALOGLUV = "Désolé, votre système d'exploitation n'est pas reconnu, donc le dialogue de fichier ne fonctionne pas.",
-RESET = "Réinitialiser",
+RESET = "Réinit.",
 CHANGEVERB = "Changer", -- verb
 LOADIMAGE = "Charger image",
 GRID = "Grille",
@@ -819,21 +819,21 @@ cont = [[
 Démarrage\wh#
 \C=
 
-Cet article va vous aider à prendre Ved en main. Pour commencer à utiliser l'éditeur,
-vous devez charger ou créer un niveau.
+Cet article va vous aider à prendre Ved en main. Pour commencer à utiliser
+l'éditeur, vous devez charger ou créer un niveau.
 
 
 L'éditeur\h#
 
 Sur le côté gauche, vous trouverez les outils de sélection. La majorité de ces
 outils ont des outils subsidiaires qui seront listés sur leur droite. Pour changer
-d'outil, utilisez leur raccourci ou utilisez la molette en appuyant sur les touches
-Ctrl et Maj. Pour changer d'outil secondaire, utilisez seulement la molette.
-Pour plus d'informations sur les outils, veuillez consulter la page d'aider sur
-les ¤Outils\nwl.
-Effectuez un clic droit sur les entités pour faire apparaître un menu contextuel pour
-cette entité. Pour supprimer une entité sans utiliser son menu contextuel, effectuez
-un clic droit sur celle-ci en appuyant sur la touche Maj.
+d'outil, utilisez leur raccourci ou utilisez la molette en appuyant sur les
+touches Ctrl et Maj. Pour changer d'outil secondaire, utilisez seulement la
+molette. Pour plus d'informations sur les outils, veuillez consulter la page
+d'aider sur les ¤Outils¤.\nwl
+Effectuez un clic droit sur les entités pour faire apparaître un menu contextuel
+pour cette entité. Pour supprimer une entité sans utiliser son menu contextuel,
+effectuez un clic droit sur celle-ci en appuyant sur la touche Maj.
 Sur le côté droit de l'écran, vous trouverez beaucoup de boutons et d'options.
 Les boutons supérieurs sont liés au niveau tout entier tandis que les boutons
 inférieurs (sous Options de salle) sont spécifiques à la salle courante. Pour plus
@@ -843,9 +843,9 @@ si elles sont disponibles.
 Dossiers de niveau\h#
 
 Ved utilise normalement le même dossier que VVVVVV utilise pour stocker ses 
-niveaux, donc il est facile de passer de l'éditeur de niveau de VVVVVV à Ved et vice
-versa. So Ved ne détecte pas votre dossier de VVVVVV correctement, vous pouvez
-entrer un chemin personnalisé dans les options de Ved.
+niveaux, donc il est facile de passer de l'éditeur de niveau de VVVVVV à Ved et
+vice versa. So Ved ne détecte pas votre dossier de VVVVVV correctement, vous
+pouvez entrer un chemin personnalisé dans les options de Ved.
 ]]
 },
 

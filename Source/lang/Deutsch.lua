@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-07-07 00:11:14 (CEST)
+--- Last converted: 2019-07-11 22:45:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -33,8 +33,8 @@ L = {
 
 TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deine LÖVE Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE Version von https://love2d.org downloaden.",
-OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE Version von https://love2d.org/ herunterladen.",
+OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE-Version von https://love2d.org downloaden.",
+OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
 UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
 FATALERROR = "FATALER FEHLER: ",
 FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
@@ -133,7 +133,7 @@ GOTOLINE2 = "Gehe zu Zeile:",
 INTERNALON = "Int.sc ist an",
 INTERNALOFF = "Int.sc ist aus",
 INTERNALYESBARS = "say(-1) int.sc",
-INTERNALNOBARS = "Loadscript int.sc",
+INTERNALNOBARS = "Ladeskript int.sc",
 VIEW = "Ansehen",
 SYNTAXHLOFF = "Syntax HL: an",
 SYNTAXHLON = "Syntax HL: aus",
@@ -154,7 +154,7 @@ BTN_QUIT = "Beenden",
 BTN_DISCARD = "Verwerfen",
 BTN_SAVE = "Speichern",
 BTN_CLOSE = "Schließen",
-BTN_LOAD = "Load",
+BTN_LOAD = "Laden",
 
 COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
 COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
@@ -186,7 +186,7 @@ CHANGETOVER = "Ändern zu vertikal",
 RESIZE = "Bewegen/Größe ändern",
 CHANGEENTRANCE = "Bewege Eingang",
 CHANGEEXIT = "Bewege Ausgang",
-COPYENTRANCE = "Copy entrance",
+COPYENTRANCE = "Eingang kopieren",
 LOCK = "Fixieren",
 UNLOCK = "Entsperren",
 BUG = "[Fehler!]",
@@ -277,7 +277,7 @@ RENAMESCRIPT = "Skript umbennen:",
 LINE = "Zeile ",
 
 SAVEMAP = "Karte speichern",
-SAVEFULLSIZEMAP = "Karte in voller größe speichern",
+SAVEFULLSIZEMAP = "Karte in voller Größe speichern",
 COPYROOMS = "Kopiere Raum",
 SWAPROOMS = "Tausche Räume",
 
@@ -291,14 +291,14 @@ FLAGNONAME = "Kein Name",
 USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
 
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory.",
-CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n\n",
-CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$1\n\n",
+CUSTOMVVVVVVDIRECTORYEXPL = "Der normale VVVVVV-Order den Ved erwartet ist:\n$1\n\nDieser Pfad sollte nicht zum \"levels\" Ordner gesetzt werden.",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "Du hast keinen eigenen VVVVVV-Order gesetzt.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Dein VVVVVV-Order ist zu einem benutzerdefiniertem Pfad gesetzt:\n$1\n\n",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
 FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
 ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
-ASKBEFOREQUIT = "Frage vor dem Beenden",
+ASKBEFOREQUIT = "Frag vor dem Beenden",
 NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte Änderungen gibt",
 COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
 ALLOWDEBUG = "Aktiviere Debugmodus",
@@ -440,16 +440,16 @@ MAPRES_RATIO = "$1:$2 ($3x$4 pro Raum)", -- Example: 1:8 (40x30 per room)
 TOPLEFT = "Oben links",
 WIDTHHEIGHT = "Breite & Höhe",
 BOTTOMRIGHT = "Unten rechts",
-RENDERERINFO = "Renderer Information:",
+RENDERERINFO = "Rendererinformationen:",
 MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn sie fertig ist.",
 KEEPDIALOGOPEN = "Halte Dialog offen",
 TRANSPARENTMAPBG = "Transparenter Hintergrund",
 MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
 VIEWIMAGE = "Ansehen", -- Verb, view image
 INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
-OPENLEVELSFOLDER = "Öffne Level Ordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+OPENLEVELSFOLDER = "Öffne Levelordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
 MOVEENTITY = "Bewegen",
-GOTOROOM = "Gehe zum Raum",
+GOTOROOM = "Gehe zu Raum",
 ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
 
 INVALIDFILENAME_WIN = "Windows erlaubt keines der folgenden Zeichen in Dateinamen:\n\n: * ? \" < > |\n\n(| ist ein senkrechter Strich)",
@@ -465,45 +465,45 @@ SEARCHRESULTS_ROOMS = "Räume [$1]",
 SEARCHRESULTS_NOTES = "Notizen [$1]",
 
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "Can not play this song. It may not exist or be of an unsupported type.",
-SOUNDPLAYERROR = "Can not play this sound. It may not exist or be of an unsupported type.",
-MUSICLOADERROR = "Can not load $1: ",
-MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
-MUSICEXISTSYES = "Exists",
-MUSICEXISTSNO = "Does not exist",
-LOAD = "Load",
-RELOAD = "Reload",
-UNLOAD = "Unload",
-MUSICEDITOR = "Music editor",
-LOADMUSICNAME = "Load .vvv",
-INSERTSONG = "Insert song at track $1",
-SUREDELETESONG = "Are you sure you want to remove song $1?",
-SONGOPENFAIL = "Unable to open $1, song not replaced.",
-SONGREPLACEFAIL = "Something went wrong while replacing the song.",
+MUSICPLAYERROR = "Song kann nicht gespielt werden. Er existiert nicht oder der Typ wird nicht unterstützt.",
+SOUNDPLAYERROR = "Geräusch kann nicht gespielt werden. Es existiert nicht oder der Typ wird nicht unterstützt.",
+MUSICLOADERROR = "$1 kann nicht geladen werden: ",
+MUSICLOADERROR_TOOSMALL = "Die Musikdatei ist zu klein um gültig zu sein.",
+MUSICEXISTSYES = "Existiert",
+MUSICEXISTSNO = "Existiert nicht",
+LOAD = "Laden",
+RELOAD = "Neu laden",
+UNLOAD = "Entfernen",
+MUSICEDITOR = "Musikeditor",
+LOADMUSICNAME = "Lade .vvv",
+INSERTSONG = "Füge Song ein bei Spur $1",
+SUREDELETESONG = "Bist du sicher, dass du Song $1 entfernen willst?",
+SONGOPENFAIL = "$1 kann nicht geöffnet werden, Song wurde nicht ersetzt.",
+SONGREPLACEFAIL = "Irgendwas ist schief gegangen während der Song ersetzt wurde.",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
-CANNOTUSENEWLINES = "You cannot use the \"$1\" character in script names!",
-MUSICTITLE = "Title: ",
-MUSICARTIST = "Artist: ",
-MUSICFILENAME = "Filename: ",
-MUSICNOTES = "Notes:",
-SONGMETADATA = "Metadata for song $1",
-MUSICFILEMETADATA = "File metadata",
-MUSICEXPORTEDON = "Exported: ", -- Followed by date and time
-SAVEMETADATA = "Save metadata",
-SOUNDS = "Sounds",
-GRAPHICS = "Graphics",
+CANNOTUSENEWLINES = "Du kannst das \"$1\" Zeichen nicht in Skriptnamen benutzen!",
+MUSICTITLE = "Titel: ",
+MUSICARTIST = "Künstler: ",
+MUSICFILENAME = "Dateiname: ",
+MUSICNOTES = "Notizen:",
+SONGMETADATA = "Metadaten für Song $1",
+MUSICFILEMETADATA = "Dateimetadaten",
+MUSICEXPORTEDON = "Exportiert: ", -- Followed by date and time
+SAVEMETADATA = "Metadaten speichern",
+SOUNDS = "Geräusche",
+GRAPHICS = "Grafiken",
 FILEOPENERNAME = "Name: ",
-PATHINVALID = "The path is invalid.",
-DRIVES = "Drives", -- like C: or F: on Windows
-DOFILTER = "Only show *$1", -- "*.txt" for example
-DOFILTERDIR = "Only show directories",
-FILEDIALOGLUV = "Sorry, your operating system is unrecognized, so the file dialog does not work.",
-RESET = "Reset",
-CHANGEVERB = "Change", -- verb
-LOADIMAGE = "Load image",
-GRID = "Grid",
+PATHINVALID = "Der Pfad ist ungültig.",
+DRIVES = "Laufwerke", -- like C: or F: on Windows
+DOFILTER = "Nur *$1 zeigen", -- "*.txt" for example
+DOFILTERDIR = "Nur Verzeichnisse zeigen",
+FILEDIALOGLUV = "Entschuldigung, dein Betriebssystem wurde nicht erkannt, also funktioniert der Dateidialog nicht.",
+RESET = "Zurück-\nsetzen",
+CHANGEVERB = "Ändern", -- verb
+LOADIMAGE = "Lade Bild",
+GRID = "Netz",
 NOTALPHAONLY = "RGB",
 
 }
@@ -547,8 +547,8 @@ L_PLU = {
 		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
 	},
 	BYTES = {
-		[-1] = "$1 byte",
-		[-2] = "$1 bytes",
+		[0] = "$1 byte",
+		[1] = "$1 bytes",
 	},
 }
 
@@ -576,7 +576,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Farbeimer", "Kartoffel für das machen von dingen die magisch sind"},
+[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Farbeimer", "Kartoffel für das Machen von Dingen die magisch sind"},
 [2] = {},
 [3] = {"Automatisch 1", "Automatisch erweitern L+R", "Automatisch erweitern L", "Automatisch erweitern R"},
 [4] = {},
@@ -608,8 +608,8 @@ warpdirs = {
 warpdirchangedtext = {
 
 [0] = "Raumteleportation ist deaktiviert",
-[1] = "Teleportationsrichtung zu horizontal gesetzt",
-[2] = "Teleportationsrichtung zu vertikal gesetzt",
+[1] = "Teleportationsrichtung horizontal gesetzt",
+[2] = "Teleportationsrichtung vertikal gesetzt",
 [3] = "Teleportationsrichtung zu allen Richtungen gesetzt",
 
 }
@@ -630,8 +630,8 @@ long4 = "Schiff",
 }
 
 ERR_VEDHASCRASHED = "Ved ist abgestürzt!"
-ERR_VEDVERSION = "Ved Version:"
-ERR_LOVEVERSION = "LÖVE Version:"
+ERR_VEDVERSION = "Ved-Version:"
+ERR_LOVEVERSION = "LÖVE-Version:"
 ERR_STATE = "Status:"
 ERR_OS = "Betriebssystem:"
 ERR_TIMESINCESTART = "Zeit seit dem Start:"

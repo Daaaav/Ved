@@ -468,7 +468,17 @@ function drawhelp()
 		else
 			hoverrectangle(buttoncolor[1],buttoncolor[2],buttoncolor[3],128, 8, helplistscroll+8+(24*j), 25*8-28, 16)
 		end
-		love.graphics.printf((helppages[rvnum] == nil and L.ADDNEWBTN or helppages[rvnum].subj), 8, helplistscroll+8+(24*j)+4+2, 25*8-28, "center")
+		local buttonlabel
+		if helppages[rvnum] == nil then
+			buttonlabel = L.ADDNEWBTN
+		else
+			buttonlabel = helppages[rvnum].subj
+		end
+		local textyoffset = 6
+		if font8:getWidth(buttonlabel) > 25*8-28 or buttonlabel:find("\n") ~= nil then
+			textyoffset = 2
+		end
+		love.graphics.printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
 
 		-- Are we clicking on this?
 		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) then

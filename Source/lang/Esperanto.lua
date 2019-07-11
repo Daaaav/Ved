@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-07-07 00:11:14 (CEST)
+--- Last converted: 2019-07-11 22:45:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -501,7 +501,7 @@ MUSICARTIST = "Artisto: ",
 MUSICFILENAME = "Dosiernomo: ",
 MUSICNOTES = "Notoj:",
 SONGMETADATA = "Metadatumoj por melodio $1",
-MUSICFILEMETADATA = "Dosier-metadatumoj",
+MUSICFILEMETADATA = "Metadatumoj de dosiero",
 MUSICEXPORTEDON = "Eksportita: ", -- Followed by date and time
 SAVEMETADATA = "Konservi metadatumojn",
 SOUNDS = "Sonoj",

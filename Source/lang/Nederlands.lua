@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-07 00:11:14 (CEST)
+--- Last converted: 2019-07-11 22:45:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999

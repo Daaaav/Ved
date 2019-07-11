@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-07-07 00:11:13 (CEST)
+--- Last converted: 2019-07-11 22:45:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -486,9 +486,9 @@ FILEOPENERNAME = "Имя: ",
 PATHINVALID = "Неверный путь.",
 DRIVES = "Диски", -- like C: or F: on Windows
 DOFILTER = "Показывать только *$1", -- "*.txt" for example
-DOFILTERDIR = "Показывать только расположения",
+DOFILTERDIR = "Только расположения",
 FILEDIALOGLUV = "Извините, не удаётся распознать Вашу систему, поэтому файловый диалог не работает.",
-RESET = "Перезапуск",
+RESET = "По умолчанию",
 CHANGEVERB = "Изменить", -- verb
 LOADIMAGE = "Загрузить изображение",
 GRID = "Сетка",
