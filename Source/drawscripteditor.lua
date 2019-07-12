@@ -145,19 +145,22 @@ function drawscripteditor()
 	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	love.graphics.printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4+2, 128-16, "center")
 	if not PleaseDo3DSHandlingThanks then
-		rbutton(L.NEW, 1)
-		rbutton(L.SCRIPTUSAGES, 2)
+		--rbutton(L.NEW, 1)
+		rbutton(L.SCRIPTUSAGES, 1)
 	else
-		rbutton(L.OPEN, 2)
+		rbutton(L.OPEN, 1)
 	end
-	love.graphics.printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*3)+4+2, 128-16, "center")
-	rbutton(L.COPYSCRIPT, 4, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
+	love.graphics.printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4+2, 128-16, "center")
+	rbutton(L.COPYSCRIPT, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
 	if not PleaseDo3DSHandlingThanks then
-		rbutton(L.SCRIPTSPLIT, 5)
+		rbutton(L.SCRIPTSPLIT, 4)
 	end
-	rbutton({L.SEARCHSCRIPT, "cF"}, 6)
-	rbutton({L.GOTOLINE, "cG"}, 7)
-	rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, internalscript or cutscenebarsinternalscript)
+	rbutton({L.SEARCHSCRIPT, "cF"}, 5)
+	rbutton({L.GOTOLINE, "cG"}, 6)
+	rbutton({(internalscript or cutscenebarsinternalscript) and L.INTERNALON or L.INTERNALOFF, "cI"}, 7, nil, nil, nil, internalscript or cutscenebarsinternalscript)
+	if internalscript or cutscenebarsinternalscript then
+		rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, cutscenebarsinternalscript)
+	end
 	--hoverrectangle(internalscript and 160 or 128, internalscript and 160 or 128, internalscript and 0 or 128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
 	--love.graphics.printf((internalscript and L.INTERNALOFF or L.INTERNALON), love.graphics.getWidth()-(128-8), 8+(24*8)+4+2, 128-16, "center")
 	--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
@@ -197,6 +200,7 @@ function drawscripteditor()
 		if mouseon(love.graphics.getWidth()-24, 8, 16, 16) then
 			-- Help
 			tostate(15)
+		--[[
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
 			-- New
 			stopinput()
@@ -206,10 +210,11 @@ function drawscripteditor()
 				dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
 				dialog.callback.newscript_validate, "newscript_editor"
 			)
-		elseif PleaseDo3DSHandlingThanks and onrbutton(2) then
+		]]
+		elseif PleaseDo3DSHandlingThanks and onrbutton(1) then
 			-- Open ($script)
 			tostate(22)
-		elseif not PleaseDo3DSHandlingThanks and onrbutton(2) then
+		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
 			-- Usages
 			local uentityuses, uloadscriptuses, uscriptuses = findscriptreferences(scriptname)
 
@@ -225,11 +230,11 @@ function drawscripteditor()
 			end
 
 			dialog.create(langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
-		elseif onrbutton(4) then
+		elseif onrbutton(3) then
 			-- Copy script
 			love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 			setgenerictimer(1, .25)
-		elseif not PleaseDo3DSHandlingThanks and onrbutton(5) then
+		elseif not PleaseDo3DSHandlingThanks and onrbutton(4) then
 			-- Split scripts
 			stopinput()
 			scriptlines[editingline] = input
@@ -238,33 +243,31 @@ function drawscripteditor()
 				dialog.callback.newscript, L.SPLITSCRIPT, dialog.form.simplename,
 				dialog.callback.newscript_validate, "split_editor"
 			)
-		elseif onrbutton(6) then
+		elseif onrbutton(5) then
 			-- Search
 			startinscriptsearch()
-		elseif onrbutton(7) then
+		elseif onrbutton(6) then
 			-- Go to line
 			startscriptgotoline()
-		elseif not mousepressed and onrbutton(8) then
-			-- Internal scripting
-			if keyboard_eitherIsDown("shift") then
-				if internalscript then
-					internalscript = false
-				elseif cutscenebarsinternalscript then
-					internalscript = true
-					cutscenebarsinternalscript = false
-				else
-					cutscenebarsinternalscript = true
-				end
+		elseif not mousepressed and onrbutton(7) then
+			-- Internal scripting on/off
+			if internalscript or cutscenebarsinternalscript then
+				internalscript = false
+				cutscenebarsinternalscript = false
 			else
-				if internalscript then
-					internalscript = false
-					cutscenebarsinternalscript = true
-				elseif cutscenebarsinternalscript then
-					internalscript = false
-					cutscenebarsinternalscript = false
-				else
-					internalscript = true
-				end
+				internalscript = true
+			end
+			dirty()
+
+			mousepressed = true
+		elseif (internalscript or cutscenebarsinternalscript) and not mousepressed and onrbutton(8) then
+			-- Internal scripting method
+			if internalscript then
+				internalscript = false
+				cutscenebarsinternalscript = true
+			else
+				internalscript = true
+				cutscenebarsinternalscript = false
 			end
 			dirty()
 
