@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-11 22:45:55 (CEST)
+--- Last converted: 2019-07-13 23:03:51 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1028,9 +1028,9 @@ Interne scripting-modus\h#
 
 Om interne scripting te gebruiken in Ved kun je interne scripting-modus
 inschakelen, om alle commando's in dat script te laten werken als interne
-commando's. Je moet er echter zelf voor zorgen dat het script geladen wordt via
-iftrinkets() of ifflag(). Kĳk voor meer informatie over interne scripting naar de
-lĳst met interne scriptcommando's.
+commando's. Zie ¤Int.sc-modus¤ voor meer informatie over interne scripting-modus.\nwl
+Kĳk voor meer informatie over interne scripting naar de lĳst met interne
+scriptcommando's.
 
 Scripts splitsen\h#
 
@@ -1047,6 +1047,105 @@ customifflag, is het mogelĳk om naar het gegeven script te springen door te
 klikken op de knop "Ga naar" wanneer de cursor op die regel staat. Je kunt
 hiervoor ook op ¤ctrl+rechts¤ drukken, en je kunt met ¤ctrl+links¤ één stap terug\nwnw
 nemen door de keten naar waar je vandaan kwam.
+]]
+},
+
+{
+subj = "Int.sc-modus",
+imgs = {},
+cont = [[
+Internal scripting mode\wh#
+\C=
+
+To use internal scripting in Ved, you can enable internal scripting mode in the
+editor, to handle all commands in that script as internal scripting. With this
+feature, you do not have to worry much about getting internal scripting to work;
+you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
+text,,,,4¤ or whatever else your preference goes out to - just write internal\w
+scripts like they're meant for the main game. You do not even need to end with a
+final ¤loadscript¤ command.\nw
+
+Ved supports different methods of internal scripting. To highlight their technical
+differences, we'll use the following example script:
+
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+
+Lines of this internal script are ¤light green¤, lines that are added automatically\nG
+and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
+is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
+make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
+large have to be broken up into smaller ones.
+
+For more information about internal scripting, check the internal scripting
+reference.
+
+Loadscript int.sc\h#
+
+The loadscript method is probably the most commonly used method today. It's the
+method that Ved has supported since an alpha version.
+
+It requires an extra script, the loadscript, to load the internal script. The
+loadscript would, in its most basic form, contain a command like
+iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
+well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
+that your internal script is loaded from another script for it to work.
+
+The internal script would be converted more or less as follows:
+
+  squeak(off)\g
+  say(11)\g
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+  text(1,0,0,3)\g
+
+text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
+needs to be exactly one blank line after it.
+
+It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
+text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
+though.
+
+say(-1) int.sc\h#
+
+The say(-1) method is older, and has a disadvantage to the loadscript method: it
+always makes cutscene bars show. But it also has an advantage that can be
+important in levels with many scripts: it does not require a loadscript. We can
+remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
+added by VVVVVV when using this method.
+
+  squeak(off)\g
+  say(-1)\g
+  text(1,0,0,3)\g
+  say(9)\g
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+
+This method has been added as an extra internal scripting mode in Ved 1.6.0.
 ]]
 },
 
@@ -1254,8 +1353,7 @@ complexer dan vereenvoudigde scripting.
 
 Om interne scripting te gebruiken in Ved kun je interne scripting-modus
 inschakelen, om alle commando's in dat script te laten werken als interne
-commando's. Je moet er echter zelf voor zorgen dat het script geladen wordt via
-iftrinkets() of ifflag().
+commando's.
 
 Kleurcodes:\w
 Normaal - Zou veilig moeten zĳn, in het ergste geval zou VVVVVV kunnen crashen

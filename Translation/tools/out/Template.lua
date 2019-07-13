@@ -863,9 +863,17 @@ cont = [[
 
 {
 subj = "<LH.11.subj>",
-imgs = {"credits.png"},
+imgs = {},
 cont = [[
 <LH.11.cont>
+]]
+},
+
+{
+subj = "<LH.12.subj>",
+imgs = {"credits.png"},
+cont = [[
+<LH.12.cont>
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 
