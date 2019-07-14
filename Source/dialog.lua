@@ -325,7 +325,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				if mode == 1 and not RCMactive then
 					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
 
-					mousepressed = true
+					if love.mouse.isDown("l") then
+						mousepressed = true
+					end
 				end
 			end
 		else
