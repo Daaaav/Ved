@@ -828,29 +828,40 @@ function dialog.callback.leveloptions(button, fields)
 		w, h = math.floor(w), math.floor(h)
 
 		if metadata.mapwidth <= 20 and metadata.mapheight <= 20 and (w > 20 or h > 20) then
-			-- Hack to smuggle the fields through the bigger size confirmation dialog
-			-- Hopefully Ved doesn't update its dialog system again and break this
-			local newfields = {}
-			for k,v in pairs(dialog.form.leveloptions_make()) do
-				newfields[k] = {v[1], 0, 0, 0, v[5], -1}
+			if not s.allowbiggerthan20x20 then
+				dialog.create(
+					langkeys(
+						L.SIZELIMIT,
+						{math.min(w, 20), math.min(h, 20)}
+					)
+				)
+				metadata.mapwidth = math.min(w, 20)
+				metadata.mapheight = math.min(h, 20)
+			else
+				-- Hack to smuggle the fields through the bigger size confirmation dialog
+				-- Hopefully Ved doesn't update its dialog system again and break this
+				local newfields = {}
+				for k,v in pairs(dialog.form.leveloptions_make()) do
+					newfields[k] = {v[1], 0, 0, 0, v[5], -1}
+				end
+
+				newfields.mapwidth = {"mapwidth", 0, 0, 0, w, -1}
+				newfields.mapheight = {"mapheight", 0, 0, 0, h, -1}
+
+				dialog.create(
+					langkeys(
+						L.CONFIRMBIGGERSIZE,
+						{w, h, math.min(w, 20), math.min(h, 20)}
+					),
+					DBS.YESNOCANCEL,
+					dialog.callback.leveloptions_biggersize,
+					"",
+					newfields
+				)
+
+				metadata.mapwidth = math.min(w, 20)
+				metadata.mapheight = math.min(h, 20)
 			end
-
-			newfields.mapwidth = {"mapwidth", 0, 0, 0, w, -1}
-			newfields.mapheight = {"mapheight", 0, 0, 0, h, -1}
-
-			dialog.create(
-				langkeys(
-					L.CONFIRMBIGGERSIZE,
-					{w, h, math.min(w, 20), math.min(h, 20)}
-				),
-				DBS.YESNOCANCEL,
-				dialog.callback.leveloptions_biggersize,
-				"",
-				newfields
-			)
-
-			metadata.mapwidth = math.min(w, 20)
-			metadata.mapheight = math.min(h, 20)
 		else
 			metadata.mapwidth = w
 			metadata.mapheight = h

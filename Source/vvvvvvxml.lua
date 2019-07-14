@@ -114,7 +114,7 @@ function loadlevel(path)
 		end
 	end
 	-- Partial rooms due to VVVVVV's concatenated rows thing bleeding out past the normal 20xHEIGHT range and shifting rooms upward (within the first 20 room rows)
-	if thismetadata.mapwidth > 20 then
+	if s.allowbiggerthan20x20 and thismetadata.mapwidth > 20 then
 		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / 20 )
 		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
 		local capped_height = math.min(thismetadata.mapheight, 20)
@@ -534,6 +534,11 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
+	end if (thismetadata.mapwidth > 20) or (thismetadata.mapheight > 20) then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L.MAPBIGGERTHAN20X20, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight)}))
+		thismetadata.mapwidth = math.min(thismetadata.mapwidth, 20)
+		thismetadata.mapheight = math.min(thismetadata.mapheight, 20)
 	end if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.LEVMUSICEMPTY)

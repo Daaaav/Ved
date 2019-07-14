@@ -2,4 +2,5 @@
 -- This file gets loaded after the language files do, so keys can overwrite existing ones, and will show up in all languages.
 
 --L. = ""
-L.CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than 20 by 20. This will result in different behavior in rooms outside the normal 20x20 size, which Ved will mirror. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to 20 by 20. Press Cancel to go back to the level options.\n\nIf unsure, press No."
+L.CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than 20 by 20. This will result in different behavior in rooms outside the normal 20x20 size, which Ved will mirror. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $3 by $4. Press Cancel to go back to the level options.\n\nIf unsure, press No."
+L.MAPBIGGERTHAN20X20 = "Map size $1 by $2 is bigger than 20 by 20! (Bigger than 20 by 20 support not enabled)"
