@@ -798,8 +798,6 @@ function dialog.callback.leveloptions(button, fields)
 	end
 
 	-- What are the old properties?
-	-- WARNING: An ugly hack in dialog.callback.leveloptions_biggersize
-	-- relies on this specific property name order
 	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
 	local undo_properties = {}
 	for k,v in pairs(undo_propertynames) do
@@ -840,20 +838,18 @@ function dialog.callback.leveloptions(button, fields)
 			else
 				-- Hack to smuggle the fields through the bigger size confirmation dialog
 				-- Hopefully Ved doesn't update its dialog system again and break this
-				local newfields = {}
-				for k,v in pairs(dialog.form.leveloptions_make()) do
-					newfields[k] = {v[1], 0, 0, 0, v[5], -1}
-				end
-
-				newfields.mapwidth = {"mapwidth", 0, 0, 0, w, -1}
-				newfields.mapheight = {"mapheight", 0, 0, 0, h, -1}
+				local newfields =
+					{
+					mapwidth = {"mapwidth", 0, 0, 0, w, -1},
+					mapheight = {"mapheight", 0, 0, 0, h, -1},
+					}
 
 				dialog.create(
 					langkeys(
 						L.CONFIRMBIGGERSIZE,
 						{w, h, math.min(w, 20), math.min(h, 20)}
 					),
-					DBS.YESNOCANCEL,
+					DBS.YESNO,
 					dialog.callback.leveloptions_biggersize,
 					"",
 					newfields
@@ -1022,17 +1018,6 @@ function dialog.callback.openimage(button, fields)
 end
 
 function dialog.callback.leveloptions_biggersize(button, fields)
-	if button == DB.CANCEL then
-		dialog.create(
-			"",
-			DBS.OKCANCEL,
-			dialog.callback.leveloptions,
-			L.LEVELOPTIONS,
-			dialog.form.leveloptions_make()
-		)
-		return
-	end
-
 	if button == DB.NO then
 		metadata.mapwidth = math.min(fields.mapwidth, 20)
 		metadata.mapheight = math.min(fields.mapheight, 20)
