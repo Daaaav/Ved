@@ -305,6 +305,11 @@ function processflaglabelsreverse()
 		local scriptlinesbackup = table.copy(scriptlines)
 		local splithasfailed = false
 
+		if #scriptlines == 0 then
+			-- Let's at least have one blank line.
+			scriptlines[1] = ""
+		end
+
 		-- If we already end with (custom)?iftrinkets(0,... or loadscript(..., then we won't need the default loadscript(stop)
 		local final_loadscript_n = 1
 		if scriptlines[#scriptlines]:match("^iftrinkets[%(,%)]0 ?[%(,%)]")
