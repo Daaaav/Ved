@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-07-13 23:03:50 (CEST)
+--- Last converted: 2019-07-19 18:58:07 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2571,6 +2571,8 @@ Credits\wh#
 
 Ved ist gemacht von Dav999
 
+Further code contributors: Info Teddy
+
 Manche der Grafiken und Schriftarten wurden von Doormat gemacht
 
 Russische Übersetzung: CreepiX, Cheeprick
@@ -2586,8 +2588,6 @@ Terry Cavanagh für das machen von VVVVVV
 
 Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
 machen!
-
-
 
 
 

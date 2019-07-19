@@ -2557,6 +2557,8 @@ Credits\wh#
 
 Ved is made by Dav999
 
+Further code contributors: Info Teddy
+
 Some of the graphics and the font were made by Doormat
 
 Russian translation: CreepiX, Cheeprick
@@ -2571,8 +2573,6 @@ Special thanks to:\h#
 Terry Cavanagh for making VVVVVV
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
-
 
 
 

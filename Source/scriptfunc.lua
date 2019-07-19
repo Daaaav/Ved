@@ -867,3 +867,12 @@ function swapflags(flag1, flag2)
 		end
 	end
 end
+
+function copyscript()
+	love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+	setgenerictimer(1, .25)
+end
+
+function copyscriptline()
+	love.system.setClipboardText(input .. input_r)
+end

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-07-13 23:03:50 (CEST)
+--- Last converted: 2019-07-19 18:58:07 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2617,6 +2617,8 @@ cont = [[
 
 Создатель Ved: Dav999
 
+Другие программисты: Info Teddy
+
 Некоторая графика и шрифт: Doormat
 
 Перевод на русский: CreepiX, Чиприк
@@ -2631,8 +2633,6 @@ cont = [[
 Терри Кавана, создателю VVVVVV
 
 Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
-
-
 
 
 

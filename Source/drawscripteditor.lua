@@ -151,7 +151,7 @@ function drawscripteditor()
 		rbutton(L.OPEN, 1)
 	end
 	love.graphics.printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4+2, 128-16, "center")
-	rbutton(L.COPYSCRIPT, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
+	rbutton({L.COPYSCRIPT, "cA"}, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
 	if not PleaseDo3DSHandlingThanks then
 		rbutton(L.SCRIPTSPLIT, 4)
 	end
@@ -232,8 +232,7 @@ function drawscripteditor()
 			dialog.create(langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
 		elseif onrbutton(3) then
 			-- Copy script
-			love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
-			setgenerictimer(1, .25)
+			copyscript()
 		elseif not PleaseDo3DSHandlingThanks and onrbutton(4) then
 			-- Split scripts
 			stopinput()
@@ -316,7 +315,7 @@ function drawscripteditor()
 
 	if context == "script" then
 		love.graphics.printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-		rbutton((scripts[carg1] == nil and L.CREATE or L.GOTO), 13)
+		rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 			editorjumpscript(carg1)
@@ -325,7 +324,7 @@ function drawscripteditor()
 	elseif context == "flagscript" then
 		if carg2 ~= nil and carg2 ~= "" then
 			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-			rbutton((scripts[carg2] == nil and L.CREATE or L.GOTO), 13)
+			rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg2)
@@ -335,7 +334,7 @@ function drawscripteditor()
 	elseif context == "roomscript" then
 		if carg3 ~= nil and carg3 ~= "" then
 			love.graphics.printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-			rbutton((scripts[carg3] == nil and L.CREATE or L.GOTO), 13)
+			rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg3)

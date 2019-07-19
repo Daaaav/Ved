@@ -3190,6 +3190,10 @@ function love.keypressed(key)
 			editorjumpscript(carg1)
 		elseif key == "right" and context == "roomscript" then
 			editorjumpscript(carg3)
+		elseif key == "c" then
+			copyscriptline()
+		elseif key == "a" then
+			copyscript()
 		elseif key == "f" then
 			startinscriptsearch()
 		elseif key == "g" then
@@ -3277,6 +3281,9 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "a" and keyboard_eitherIsDown(ctrl) then
+		stopinput()
+		tostate(30)
 	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then

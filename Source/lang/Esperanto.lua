@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-07-13 23:03:50 (CEST)
+--- Last converted: 2019-07-19 18:58:07 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2587,6 +2587,8 @@ Kreditoj\wh#
 
 Ved estas farita de Dav999
 
+Pluaj kod-kontribuantoj: Info Teddy
+
 Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel (Doormat)
 
 Ruslingva traduko: CreepiX, Cheeprick
@@ -2601,8 +2603,6 @@ Special-dank' al:\h#
 Terry Cavanagh pro lia faro de VVVVVV
 
 Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion! 
-
-
 
 
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-13 23:03:51 (CEST)
+--- Last converted: 2019-07-19 18:58:08 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2608,6 +2608,8 @@ Credits\wh#
 
 Ved is gemaakt door Dav999
 
+Andere code-bĳdragers: Info Teddy
+
 Sommige afbeeldingen en het lettertype zĳn gemaakt door Doormat
 
 Russische vertaling: CreepiX, Cheeprick
@@ -2629,9 +2631,7 @@ gemotiveerd om dit te maken!
 
 
 
-
-
-License\h#
+Licentie\h#
 
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)

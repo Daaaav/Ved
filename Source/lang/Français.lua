@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-07-13 23:03:51 (CEST)
+--- Last converted: 2019-07-19 18:58:08 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2572,6 +2572,8 @@ Credits\wh#
 
 Ved is made by Dav999
 
+Further code contributors: Info Teddy
+
 Some of the graphics and the font were made by Doormat
 
 Russian translation: CreepiX, Cheeprick
@@ -2586,8 +2588,6 @@ Special thanks to:\h#
 Terry Cavanagh for making VVVVVV
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
-
 
 
 
