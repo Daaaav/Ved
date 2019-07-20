@@ -1196,7 +1196,8 @@ function switchtileset()
 	else
 		selectedtileset = cycle(selectedtileset, 4, 0)
 	end
-	if selectedcolor > #tilesetblocks[selectedtileset].colors or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0) then
+	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
+	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0) then
 		selectedcolor = 0
 	end
 
