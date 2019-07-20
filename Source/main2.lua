@@ -1345,6 +1345,7 @@ function love.draw()
 		end
 	elseif state == 30 then
 		-- Assets
+		local selecting
 		for a = 0, 4 do
 			love.graphics.setColor(128,128,128)
 			love.graphics.rectangle("line", 16.5, 16.5+44*a, 744, 33)
@@ -1353,17 +1354,7 @@ function love.draw()
 				love.graphics.setColor(48,48,48)
 				love.graphics.rectangle("fill", 17, 17+44*a, 743, 32)
 				if love.mouse.isDown("l") then
-					if a == 0 then
-						tostate(31, false, "vvvvvvmusic.vvv")
-					elseif a == 1 then
-						tostate(31, false, "mmmmmm.vvv")
-					elseif a == 2 then
-						tostate(31, false, "musiceditor")
-					elseif a == 3 then
-						tostate(31, false, "sounds")
-					elseif a == 4 then
-						tostate(32)
-					end
+					selecting = a
 					mousepressed = true
 				end
 			end
@@ -1388,6 +1379,44 @@ function love.draw()
 				love.graphics.draw(asset_graphics, 21, 21+176)
 				love.graphics.print(L.GRAPHICS, 33, 23+176)
 			end
+
+			if love.keyboard.isDown("f9") then
+				local hotkey = ({"P", "sP", "M", "S", "G"})[a+1]
+				love.graphics.setFont(tinynumbers)
+				local hotkey_w = tinynumbers:getWidth(hotkey)
+				love.graphics.setColor(255,255,255,192)
+				love.graphics.rectangle("fill", (17+744-1)-hotkey_w, (16+44*a)-2, hotkey_w+3, 10)
+				love.graphics.setColor(0,0,0)
+				love.graphics.print(hotkey, (17+744+1)-hotkey_w, 16+44*a)
+				love.graphics.setColor(255,255,255)
+				love.graphics.setFont(font8)
+			end
+		end
+
+		if love.keyboard.isDown("p") then
+			if keyboard_eitherIsDown("shift") then
+				selecting = 1
+			else
+				selecting = 0
+			end
+		elseif love.keyboard.isDown("m") then
+			selecting = 2
+		elseif love.keyboard.isDown("s") then
+			selecting = 3
+		elseif love.keyboard.isDown("g") then
+			selecting = 4
+		end
+
+		if selecting == 0 then
+			tostate(31, false, "vvvvvvmusic.vvv")
+		elseif selecting == 1 then
+			tostate(31, false, "mmmmmm.vvv")
+		elseif selecting == 2 then
+			tostate(31, false, "musiceditor")
+		elseif selecting == 3 then
+			tostate(31, false, "sounds")
+		elseif selecting == 4 then
+			tostate(32)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
