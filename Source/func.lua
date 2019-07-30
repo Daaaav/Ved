@@ -3164,4 +3164,20 @@ function imageviewer_gridout()
 	end
 end
 
+function showhotkey(hotkey, x, y, rightalign)
+	if love.keyboard.isDown("f9") then
+		love.graphics.setFont(tinynumbers)
+		local hotkey_w = tinynumbers:getWidth(hotkey)
+		if rightalign then
+			x = x - hotkey_w
+		end
+		love.graphics.setColor(255,255,255,192)
+		love.graphics.rectangle("fill", x, y, hotkey_w+3, 10)
+		love.graphics.setColor(0,0,0)
+		love.graphics.print(hotkey, x+2, y+2)
+		love.graphics.setColor(255,255,255)
+		love.graphics.setFont(font8)
+	end
+end
+
 hook("func")
