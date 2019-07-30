@@ -3345,8 +3345,8 @@ function love.keypressed(key)
 			nodialog = false -- Terrible
 		end
 	elseif state == 11 and key == "return" then
-		searchscripts, searchrooms, searchnotes = searchtext(input)
-		searchedfor = input
+		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
+		searchedfor = input .. input_r
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
 		stopinput()
 		tostate(1, true)
