@@ -1488,7 +1488,7 @@ function drawmaineditor()
 			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
 			local textx = (screenoffset+320)-(font16:getWidth(text)/2)
 
-			love.graphics.setColor(0,0,0,128)
+			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
