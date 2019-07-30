@@ -1396,7 +1396,9 @@ function drawmaineditor()
 		end
 
 		love.graphics.setFont(font8)
-		displayentities(screenoffset, 0, roomx, roomy)
+		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
+		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
+		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
@@ -1483,7 +1485,7 @@ function drawmaineditor()
 			love.graphics.setFont(font16)
 			love.graphics.printf(text, screenoffset, 29*16 +3 - extralines*16 - 2, 40*16, "center")
 			love.graphics.setFont(font8)
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= "" then
+		elseif hasroomname then
 			-- Display it
 			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
 			local textx = (screenoffset+320)-(font16:getWidth(text)/2)
@@ -1496,6 +1498,11 @@ function drawmaineditor()
 			love.graphics.print(text, textx, 29*16 +3-2)
 			love.graphics.setScissor()
 			love.graphics.setFont(font8)
+		end
+
+		-- Display the bottom 2 rows of roomtexts ABOVE the roomname
+		if hasroomname and not overwritename then
+			displaybottom2rowstexts(screenoffset, 0, roomx, roomy)
 		end
 	end
 
@@ -1538,7 +1545,7 @@ function drawmaineditor()
 			displayentity(
 				screenoffset, 0, roomx, roomy, movingentity, entitydata[movingentity],
 				cursorx, cursory,
-				false, false, {}, false, false
+				false, false, {}, false, false, true
 			)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
