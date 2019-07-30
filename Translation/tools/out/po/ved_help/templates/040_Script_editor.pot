@@ -1,0 +1,34 @@
+
+msgctxt "LHS.040_Script_editor.subj"
+msgid "Script editor"
+msgstr ""
+
+msgid "Script editor\\wh#\n\\C="
+msgstr ""
+
+msgid "With the script editor, you can manage and edit scripts in your level."
+msgstr ""
+
+msgid "Flag names\\h#"
+msgstr ""
+
+msgid "For convenience and script readability, it is possible to use flag names instead\nof numbers. When you use a name instead of a number, a number will automatically\nbe associated with that name, in the background. It is also possible to choose\nwhich number to use for which flag name."
+msgstr ""
+
+msgid "Internal scripting mode\\h#"
+msgstr ""
+
+msgid "To use internal scripting in Ved, you can enable internal scripting mode in the\neditor, to handle all commands in that script as internal scripting. See\nInt.sc mode¤ for more information about internal scripting mode. For more\\wl\ninformation about internal scripting, check the internal scripting reference."
+msgstr ""
+
+msgid "Splitting scripts\\h#"
+msgstr ""
+
+msgid "It is possible to split a script in two scripts with the script editor. After\nputting the text cursor on the first line you want to be in the new script, click\nthe Split button and enter the name of the new script. The lines before the cursor\nwill remain in the original script, the lines from the cursor onward will be moved\nto the new script."
+msgstr ""
+
+msgid "Jumping to scripts\\h#"
+msgstr ""
+
+msgid "On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it\nis possible to jump to the given script by clicking the \"Go to\" button when the\ncursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\\nw\nuse ¤ctrl+left¤ to jump one step back through the chain to where you came from.\\nw"
+msgstr ""

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-07-19 18:58:07 (CEST)
+--- Last converted: 2019-07-26 14:11:34 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -813,6 +813,7 @@ cont = [[
 },
 
 {
+splitid = "010_Getting_started",
 subj = "Перед началом",
 imgs = {},
 cont = [[
@@ -821,6 +822,7 @@ cont = [[
 
 Данная статья поможет Вам разобраться, как пользоваться Ved. Перед тем, как начать
 пользоваться редактором, Вам необходимо открыть уровень или создать новый.
+
 
 Редактор\h#
 
@@ -847,6 +849,7 @@ Ved неверно обнаруживает папку VVVVVV, Вы можете
 },
 
 {
+splitid = "020_Tile_placement_modes",
 subj = "Режимы расп-ния стен",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
@@ -880,6 +883,7 @@ Ved поддерживает три разных режима создания �
 },
 
 {
+splitid = "030_Tools",
 subj = "Инструменты",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
@@ -1003,6 +1007,7 @@ cont = [[
 ]]
 },
 {
+splitid = "040_Script_editor",
 subj = "Редактор скриптов",
 imgs = {},
 cont = [[
@@ -1045,22 +1050,23 @@ cont = [[
 },
 
 {
+splitid = "050_Int_sc_mode",
 subj = "Режим вн. скр.",
 imgs = {},
 cont = [[
-Internal scripting mode\wh#
+Режим нутреннего скриптинга\wh#
 \C=
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. With this
-feature, you do not have to worry much about getting internal scripting to work;
-you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
-text,,,,4¤ or whatever else your preference goes out to - just write internal\w
-scripts like they're meant for the main game. You do not even need to end with a
-final ¤loadscript¤ command.\nw
+Чтобы использовать внутренний скриптинг в Ved, можно включить режим внутреннего
+скриптинга в редакторе, чтобы все команды в данном скрипте воспринимались
+внутренним скриптингом. Таким способом вам не придётся тратить больше усилий на
+то, чтобы внутренний скриптинг работал; не нужно будет использовать команды ¤say¤,\nw
+считать строки, или писать ¤text(1,0,0,4)¤ или ¤text,,,,4¤, смотря, какие у Вас\nwnw
+предпочтения - просто пишите внутренние скрипты, как будто они были созданы для
+основной игры. Вам даже не нужно заканчивать их командой ¤loadscript¤.\nw
 
-Ved supports different methods of internal scripting. To highlight their technical
-differences, we'll use the following example script:
+Ved поддерживает разные способы внутреннего скриптинга. Чтобы представить их
+технические отличия, приведём в пример следующий скрипт:
 
   cutscene()\G
   untilbars()\G
@@ -1073,19 +1079,19 @@ differences, we'll use the following example script:
   endcutscene()\G
   untilbars()\G
 
-Lines of this internal script are ¤light green¤, lines that are added automatically\nG
-and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
-is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
-make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
-large have to be broken up into smaller ones.
+Строки этого внутреннего скрипта ¤светло-зелёные¤; автоматически добавленные\nG
+строки, необходимые для работы такого скриптинга будут ¤серыми¤. Заметьте, что это\ng
+всё немного упрощено; в примере Ved добавляет ¤#v¤ на концах серых строк, чтобы\nw
+убедиться, что написанные вручную скрипты не будут изменены, и что слишком большие
+блоки ¤say¤ разбиты на более мелкие.\nw
 
-For more information about internal scripting, check the internal scripting
-reference.
+Для дополнительной информации о внутреннем скриптинге смотрите пункт внутреннего
+скриптинга.
 
-Loadscript int.sc\h#
+Вн. скриптинг через loadscript\h#
 
-The loadscript method is probably the most commonly used method today. It's the
-method that Ved has supported since an alpha version.
+Метод loadscript, пожалуй, самый распространённый на сегодняшний день. Ved
+поддерживал его ещё с версии alpha.
 
 It requires an extra script, the loadscript, to load the internal script. The
 loadscript would, in its most basic form, contain a command like
@@ -1144,6 +1150,7 @@ This method has been added as an extra internal scripting mode in Ved 1.6.0.
 },
 
 {
+splitid = "060_Shortcuts",
 subj = "Горячие клавиши",
 imgs = {},
 cont = [[
@@ -1222,6 +1229,7 @@ F¤  Перейти к списку скриптов\C
 },
 
 {
+splitid = "070_Simp_script_reference",
 subj = "Простые скрипты",
 imgs = {},
 cont = [[
@@ -1329,10 +1337,12 @@ speaker¤(цвет)\h#w
 
 Меняет цвет и положение последующих текстовых рамок, созданных командой "say".
 Может использоваться как второй аргумент в команде "say".
+
 ]]
 },
 
 {
+splitid = "080_Int_script_reference",
 subj = "Внутренний скриптинг",
 imgs = {},
 cont = [[
@@ -1358,10 +1368,11 @@ cont = [[
           основной игры (что не желательно, даже если все уже её прошли), или
           повредить файлы сохранения в целом.
 
-          
+
 squeak¤(цвет)\w#h
 
 Заставляет члена команды взвизгнуть, или терминал - издать звук.
+
 цвет - cyan   /player/blue /red    /yellow/green  /purple    /terminal
       (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый/терминал)
 
@@ -1454,7 +1465,7 @@ endcutscene¤()\w#h
 
 untilbars¤()\w#h
 
-Ждать, пока закончится выполнение cutscene()/endcutscene() 
+Ждать, пока закончится выполнение cutscene()/endcutscene()
 
 customifflag¤(номер флага,название скипта)\w#h
 
@@ -1554,7 +1565,7 @@ fadein¤()\w#h
 
 befadein¤()\w#h
 
-Немедленно отменяет fadeout()
+Instantly fade in from fadeout()
 
 untilfade¤()\w#h
 
@@ -1565,7 +1576,7 @@ gotoroom¤(x,y)\w#h
 Поменять комнату на x,y (x и y принимают значения больше нуля)
 
 x - координата x комнаты, больше нуля
-x - координата y комнаты, больше нуля
+y - координата y комнаты, больше нуля
 
 gotoposition¤(x,y,f)\w#h
 
@@ -1759,7 +1770,6 @@ iflast¤(член экипажа,скрипт)\b#h
 
 ifskip¤(x)\b#h
 
-If you skip the cutscenes in No Death Mode, go to script x
 Если игрок пропускает катсцену в Режиме Без Смертей, выполнить скрипт x
 
 ifcrewlost¤(член экипажа,скрипт)\b#h
@@ -1848,7 +1858,7 @@ telesave¤()\r#h
 
 befadein¤()\w#h
 
-Немедленное затемнение после fadeout()
+Instantly fade in from fadeout()
 
 createactivityzone¤(цвет)\b#h
 
@@ -1876,7 +1886,6 @@ teleportscript¤(скрипт)\b#h
 
 clearteleportscript¤()\b#h
 
-Clears the teleporter script set with teleporterscript(x)
 Удаляет скрипт телепортирования, созданный teleporterscript(скрипт)
 
 moveplayer¤(x,y)\w#h
@@ -1900,7 +1909,6 @@ shake¤(n)\w#h
 
 Трясёт экран n тиков. Не создаёт задержку.
 
-
 activateteleporter¤()\w#h
 
 Если в комнате есть телепорт, он засветится при его касании и это не уничтожит
@@ -1911,10 +1919,6 @@ customposition¤(x,y)\w#h
 Переопределяет x,y текстовой команды, тем самым устанавливая позицию текстовой
 рамки, а в случае с членами экипажа это работает только на спасаемых членах
 экипажа, не созданных с помощью createenity.
-
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple (rescuable)
-y - Only used if x is a color name. Can be above/below
 
 x - center/centerx/centery, или цвет
    (центр /центр x/центр y)
@@ -1981,6 +1985,7 @@ entersecretlab\r#h
 },
 
 {
+splitid = "090_Lists_reference",
 subj = "Списки номеров",
 imgs = {},
 cont = [[
@@ -1989,6 +1994,7 @@ cont = [[
 
 Здесь представлены номера, используемые в VVVVVV, в основном скопированных с
 постов на форуме. Спасибо всем, кто помог собрать этот список!
+
 
 Пункты\w&Z+
 \&Z+
@@ -2344,10 +2350,11 @@ cont = [[
 },
 
 {
+splitid = "100_Formatting",
 subj = "Оформление",
 imgs = {},
 cont = [[
-Formatting\wh#
+Оформление\wh#
 \C=
 
 In notes you can use formatting codes to make your text larger, color it, and some
@@ -2388,13 +2395,13 @@ Example:\h#
 
 \-
 Large orange text ("oh" has same result)\ho\
-
+\
 Large orange text ("oh" has same result)\ho
 
 \-
 Underlined large text\wh\
 \r=\
-
+\
 Underlined large text\wh
 \r=
 \-
@@ -2411,11 +2418,11 @@ space or another character.
 
 \-
 You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
-
+\
 You can ¤color¤ specific ¤words¤ with this!\nrnv
 \-
 Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
-
+\
 Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 \-
 
@@ -2427,7 +2434,7 @@ the character you want to color, and enable it with the formatting code¤ ( ¤af
 
 \-
 You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
-
+\
 You can c¤o§¤lor a ¤single¤ character like this!\nrny(
 \-
 
@@ -2445,19 +2452,19 @@ the (last) background color to the end of the line.
 
 \-
 Black text on white background!\z&w\
-
+\
 Black text on white background!\z&w
 \-
 Black text on expanded white background!\z&w+\
-
+\
 Black text on expanded white background!\z&w+
 \-
 Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
-
+\
 Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
 \-
 This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
-
+\
 This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
 \-
 
@@ -2474,7 +2481,7 @@ If you like, you can also make graphics using background colors:
     ¤¤    ¤¤  \&C n n&C\
  ¤¤        \n n&C\
    ¤¤    \n n&C\
-
+\
  ¤        \n n&C
           \&C
    ¤  ¤  ¤  ¤ \&C n n&C n n&C
@@ -2496,7 +2503,7 @@ If you like, you can also make graphics using background colors:
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
           \&o\
-
+\
           \&o
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
@@ -2521,7 +2528,7 @@ You can link to articles by simply using the name of the article:
 
 \-
 Tools\bl\
-
+\
 Tools\bl
 \-
 
@@ -2535,7 +2542,7 @@ top of the article with just a hash character (¤#§¤).\nY(
 
 \-
 #Using multiple colors on a line\bl\
-
+\
 #Using multiple colors on a line\bl
 \-
 
@@ -2543,7 +2550,7 @@ You can link to an anchor in a different article in a similar way:
 
 \-
 Lists reference#Gamestates\bl\
-
+\
 Lists reference#Gamestates\bl
 \-
 
@@ -2551,7 +2558,7 @@ Linking to websites is straightforward too:
 
 \-
 https://example.com/\bl\
-
+\
 https://example.com/\bl
 \-
 
@@ -2560,24 +2567,24 @@ before the link text, and make the link show a different text that way:
 
 \-
 Tools¤¤Go to another article\Lbl\
-
+\
 Tools¤Go to another article\Lbl
 \-
 Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
-
+\
 Click ¤Tools¤here¤ to go to another article\nLbl
 \-
 [¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
-
+\
 [¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
 \-
 #Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
-
+\
 #Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
 \-
 
 Images (only available in plugin\h#
-
+\
 descriptions):\h
 
 0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
@@ -2593,6 +2600,7 @@ _ - Put this before the image number to decrease the image number by 10.
 },
 
 {
+splitid = "990_Credits",
 subj = "Авторы",
 imgs = {"credits.png"},
 cont = [[
@@ -2633,27 +2641,27 @@ cont = [[
 Терри Кавана, создателю VVVVVV
 
 Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
-
-
+\
+\
 
 
 
 
 
 License\h#
-
+\
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
-
+\
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
-
+\
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other
 materials provided with the distribution.
-
+\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.

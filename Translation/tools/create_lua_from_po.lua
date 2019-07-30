@@ -26,6 +26,21 @@ else
 	all_languages = languages
 end
 
+pofiles = {
+	{"ved_main", "ved", false},
+	{"ved_help", "ved_help", false},
+	{"ved_lua_func", "ved", false}
+}
+
+load_lua_lang("templates")
+index_splithelp = {}
+for k,v in pairs(LH) do
+	if v.splitid ~= nil then
+		table.insert(pofiles, {v.splitid, "ved_help", true})
+		index_splithelp[v.splitid] = k
+	end
+end
+
 for lang_code, lang_name in pairs(all_languages) do
 	if lang_code ~= "templates" then
 		print(lang_code .. ":")
@@ -57,10 +72,11 @@ for lang_code, lang_name in pairs(all_languages) do
 		local number_plurals = 1
 		local plural_equation = "0"
 
-		for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
-			print("Doing " .. pofile .. "...")
+		for _, pofile_t in pairs(pofiles) do
+			local pofile, project, splithelp = unpack(pofile_t)
+			print("Doing " .. pofile .. " in proj " .. project .. "...")
 
-			local po_list = {}
+			local keyless_strings = {}
 
 			local current_key = nil
 			local current_english = nil
@@ -180,6 +196,20 @@ for lang_code, lang_name in pairs(all_languages) do
 						"function lang_plurals%(n%) return 0 end\n",
 						"function lang_plurals(n) return " .. lua_plural_equation .. " end\n"
 					)
+				elseif current_english ~= nil then
+					-- No key, are we in the help by chance? Just add this to our array.
+					current_english = unescape_po_str(current_english)
+					current_translated = unescape_po_str(current_translated)
+					if current_translated == "" or fuzzy then
+						-- Just use the English string if it's untranslated
+						current_translated = current_english
+						count_translated = count_translated - 1 -- elegant
+					end
+					if current_translated == "<empty>" then
+						-- It's actually supposed to be empty.
+						current_translated = ""
+					end
+					keyless_strings[current_english] = current_translated
 				end
 				current_key = nil
 				current_english = nil
@@ -192,11 +222,6 @@ for lang_code, lang_name in pairs(all_languages) do
 
 				count_translated = count_translated + 1
 				count_total = count_total + 1
-			end
-
-			local project = "ved"
-			if pofile == "ved_help" then
-				project = "ved_help"
 			end
 
 			local line_number = 0
@@ -305,6 +330,25 @@ for lang_code, lang_name in pairs(all_languages) do
 				end
 			end
 			save_translation()
+
+			if splithelp then
+				-- If this is a .po for one help article, we're not done yet!
+				local paragraphs, blanklines = split_help_page(LH[index_splithelp[pofile]].cont)
+
+				for k,v in pairs(paragraphs) do
+					if keyless_strings[v] ~= nil then
+						paragraphs[k] = keyless_strings[v]
+					end
+				end
+
+				-- This is a multiline string
+				local fillin = escape_lua_blockstr(merge_help_page(paragraphs, blanklines))
+				fillin = fillin:gsub("%%", "%%%%")
+				template = template:gsub(
+					"<LHS%." .. pofile:gsub("%.", "%%%.") .. "%.cont>",
+					fillin
+				)
+			end
 
 			fh, everr = io.open("out/" .. lang_name .. ".lua", "w")
 			if fh == nil then

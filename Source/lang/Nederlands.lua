@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-19 18:58:08 (CEST)
+--- Last converted: 2019-07-26 14:11:35 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -815,6 +815,7 @@ cont = [[
 },
 
 {
+splitid = "010_Getting_started",
 subj = "Aan de slag",
 imgs = {},
 cont = [[
@@ -850,6 +851,7 @@ Ved-opties.
 },
 
 {
+splitid = "020_Tile_placement_modes",
 subj = "Plaatsingsmodi",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
@@ -884,6 +886,7 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
 },
 
 {
+splitid = "030_Tools",
 subj = "Tools",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
@@ -961,6 +964,7 @@ Hiermee kun je zwaartekrachtlĳnen plaatsen.
 
 Hiermee kun je tekst plaatsen.
 
+
 \^1
    Terminal\h#
 
@@ -1007,6 +1011,7 @@ Hiermee kun je het startpunt plaatsen.
 ]]
 },
 {
+splitid = "040_Script_editor",
 subj = "Scriptbewerker",
 imgs = {},
 cont = [[
@@ -1051,22 +1056,23 @@ nemen door de keten naar waar je vandaan kwam.
 },
 
 {
+splitid = "050_Int_sc_mode",
 subj = "Int.sc-modus",
 imgs = {},
 cont = [[
-Internal scripting mode\wh#
+Interne scripting-modus\wh#
 \C=
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. With this
-feature, you do not have to worry much about getting internal scripting to work;
-you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
-text,,,,4¤ or whatever else your preference goes out to - just write internal\w
-scripts like they're meant for the main game. You do not even need to end with a
-final ¤loadscript¤ command.\nw
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Met deze functie hoef je je niet veel zorgen te maken om interne
+scripting aan de praat te krĳgen; je hoeft geen ¤say¤-commando's te gebruiken,\nw
+regels te tellen, of ¤text(1,0,0,4)¤ of ¤text,,,,4¤ of waar je voorkeur ook naar uit\nwnw
+gaat te typen - je kunt gewoon interne scripts schrĳven alsof ze bedoeld zĳn voor
+het echte spel. Je hoeft niet eens te eindigen met een ¤loadscript¤-commando.\nw
 
-Ved supports different methods of internal scripting. To highlight their technical
-differences, we'll use the following example script:
+Ved ondersteunt verschillende methoden van interne scripting. Om hun technische
+verschillen te tonen gebruiken we het volgende voorbeeldscript:
 
   cutscene()\G
   untilbars()\G
@@ -1150,6 +1156,7 @@ This method has been added as an extra internal scripting mode in Ved 1.6.0.
 },
 
 {
+splitid = "060_Shortcuts",
 subj = "Snelkoppelingen",
 imgs = {},
 cont = [[
@@ -1229,6 +1236,7 @@ F¤  Ga naar vlaggenlĳst\C
 },
 
 {
+splitid = "070_Simp_script_reference",
 subj = "Eenvoudige scripting",
 imgs = {},
 cont = [[
@@ -1342,6 +1350,7 @@ commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 },
 
 {
+splitid = "080_Int_script_reference",
 subj = "Interne scripting",
 imgs = {},
 cont = [[
@@ -1491,14 +1500,14 @@ customiftrinketsless¤(n,script)\w#h
 Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting (maar onthoud
 dat het stuk is)
 
-createcrewman¤(x,y,kleur,stemming,ki1,ki2)\w#h
+createcrewman¤(x,y,kleur,stemming,ai1,ai2)\w#h
 
 Maakt een bemanningslid (kan niet gered worden)
 
 stemming - 0 voor blĳ, 1 voor verdrietig
-ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
       faceplayer/panic/faceleft/faceright/followposition,ai2
-ki2 - nodig als followposition gebruikt wordt voor ki1
+ai2 - nodig als followposition gebruikt wordt voor ai1
 
 createentity¤(x,y,n,meta1,meta2)\o#h
 
@@ -1574,7 +1583,7 @@ gotoposition(x,y) gebruiken, dan heb je standaard normale zwaartekracht)
 
 flash¤(x)\w#h
 
-Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lnag het scherm wit moet
+Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lang het scherm wit moet
 blĳven (alleen flash zal niet werken, je moet flash(5) gebruiken in combinatie met
 playef(9) en shake(20) als je een normale flits wil)
 
@@ -1650,14 +1659,14 @@ companion¤(x)\b#h
 Laat het opgegeven bemanningslid de speler volgen (voor zover ik me kan herinneren
 hangt dit ook af van de locatie op de kaart)
 
-changeai¤(bemanningslid,ki1,ki2)\w#h
+changeai¤(bemanningslid,ai1,ai2)\w#h
 
 Kan de gezichtsrichting van een bemanningslid veranderen of het loopgedrag
 
 bemanningslid - cyan/player/blue/red/yellow/green/purple
-ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ki2
-ki2 - nodig als followposition gebruikt wordt voor ki1
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+      faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - nodig als followposition gebruikt wordt voor ai1
 
 changedir¤(kleur,richting)\w#h
 
@@ -1685,7 +1694,7 @@ Corrigeer verticale positionering van meerdere tekstvakken in flip mode
 
 tofloor\w#h
 
-Laat de speler naar de grond gaan als hĳ daar niet al staat.
+Laat de speler naar de grond gaan als deze daar niet al staat.
 
 flip\w#h
 
@@ -1964,6 +1973,7 @@ effect is voor een aangepast level om te hebben. Zet "secret lab mode" aan.
 },
 
 {
+splitid = "090_Lists_reference",
 subj = "Lĳsten",
 imgs = {},
 cont = [[
@@ -2329,6 +2339,7 @@ States 3000-3099:
 },
 
 {
+splitid = "100_Formatting",
 subj = "Opmaak",
 imgs = {},
 cont = [[
@@ -2584,6 +2595,7 @@ _ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
 },
 
 {
+splitid = "990_Credits",
 subj = "Credits",
 imgs = {"credits.png"},
 cont = [[
@@ -2625,26 +2637,26 @@ Terry Cavanagh voor het maken van VVVVVV
 
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
-
+\
 
 
 
 
 
 Licentie\h#
-
+\
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
-
+\
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
-
+\
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other
 materials provided with the distribution.
-
+\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
