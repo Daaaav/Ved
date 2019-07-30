@@ -343,12 +343,15 @@ function processflaglabelsreverse()
 		local splitpoints = {}
 		local marksafe = true
 		for k = #scriptlines, 1, -1 do
-			local v = scriptlines[k]
+			local v = scriptlines[k]:gsub(" ", "")
 
 			if v:sub(1,5) == "speak" then
 				marksafe = false
-			elseif v:sub(1,4) == "text" then
-				marksafe = true
+			elseif v:match("^text[%(,%)]") then
+				local _, sepcount = v:gsub("[%(,%)]", "")
+				if sepcount >= 4 then
+					marksafe = true
+				end
 			end
 
 			splitpoints[k] = marksafe
