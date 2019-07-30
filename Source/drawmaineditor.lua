@@ -1836,9 +1836,13 @@ function drawmaineditor()
 	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
+	showhotkey("cq", love.graphics.getWidth()-120-8, 16-12)
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
+	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
+	showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
 	hoverdraw(savebtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
+	showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
@@ -1857,9 +1861,17 @@ function drawmaineditor()
 		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, 40)
 		love.graphics.setColor(255,255,255)
 	end
+
+	showhotkey("cZ", love.graphics.getWidth()-120-8, 40-4)
+	showhotkey("cY", love.graphics.getWidth()-120+16-2, 40+8)
+
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
+
+	showhotkey("cX", love.graphics.getWidth()-120+64-6, 40-4)
+	showhotkey("cC", love.graphics.getWidth()-120+80-4, 40+8)
+	showhotkey("cV", love.graphics.getWidth()-120+96-2, 40-4)
 
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
@@ -2152,6 +2164,10 @@ function drawmaineditor()
 
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-46, (6*16), 8+4) -- -16-16-2-4-8 => -46
 	love.graphics.printf(tilespicker and L.HIDEALL or L.SHOWALL, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-42, 6*16, "center") -- -16-16-4+2-8 => -42
+
+	showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, true)
+	showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, true)
+	showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, true)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
