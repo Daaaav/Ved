@@ -1516,6 +1516,7 @@ end
 
 function createmde()
 	cons("Creating metadata entity...")
+	count.entities = count.entities + 1
 	return {
 		mdeversion = thismdeversion,
 		-- This is of course an ugly way to do it
