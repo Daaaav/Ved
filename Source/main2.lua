@@ -722,7 +722,8 @@ function love.draw()
 				false,
 				"autosavecrashlogs",
 				"loadallmetadata",
-				false
+				false,
+				"opaqueroomnamebackground"
 			}
 		) do
 			if v then
@@ -817,6 +818,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*14), 16, 16) then
 				-- Use font.png
 				s.usefontpng = not s.usefontpng
+			elseif mouseon(8, 8+(24*15), 16, 16) then
+				-- Make the black roomname backgrounds opaque
+				s.opaqueroomnamebackground = not s.opaqueroomnamebackground
 
 			elseif onrbutton(0) then
 				-- Save
