@@ -148,6 +148,22 @@ function cDialog:draw(topmost)
 			textyoffset = 2
 		end
 		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
+		local args = {btn_x+btnwidth, btn_y-2, true}
+		if topmost then
+			if DB_keys[v] == "OK" then
+				showhotkey("n", unpack(args))
+			elseif DB_keys[v] == "CANCEL" then
+				showhotkey("b", unpack(args))
+			elseif DB_keys[v] == "YES" then
+				showhotkey("Y", unpack(args))
+			elseif DB_keys[v] == "NO" then
+				showhotkey("N", unpack(args))
+			elseif DB_keys[v] == "DISCARD" then
+				showhotkey("D", unpack(args))
+			elseif DB_keys[v] == "SAVE" then
+				showhotkey("S", unpack(args))
+			end
+		end
 	end
 
 	-- Window border
