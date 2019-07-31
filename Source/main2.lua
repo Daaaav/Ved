@@ -3211,6 +3211,7 @@ function love.keypressed(key)
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
 	elseif (state == 3 or state == 6) and key == "f1" then
+		stopinput()
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
