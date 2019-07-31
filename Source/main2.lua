@@ -2890,14 +2890,76 @@ function love.keypressed(key)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "tab" then
 		eraserlocked = not eraserlocked
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "escape" then
+		if editingbounds == 1 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (esc cancelled)")
+		elseif editingbounds == 2 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (esc cancelled)")
+		end
+
 		editingbounds = 0
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+			end
+
 			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = 0, 0
 			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (deleted)")
 		else
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+			end
+
 			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
 			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (deleted)")
 		end
 
 		editingbounds = 0
