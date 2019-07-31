@@ -113,6 +113,10 @@ function cDialog:draw(topmost)
 		self:drawfield(topmost, k, unpack(v))
 	end
 
+	-- Window border
+	self:setColor(255,255,255,239)
+	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
+
 	-- Buttons
 	local btnwidth = 72
 	for k,v in pairs(self.buttons) do
@@ -166,9 +170,6 @@ function cDialog:draw(topmost)
 		end
 	end
 
-	-- Window border
-	self:setColor(255,255,255,239)
-	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
 	-- Bar
 	self:setColor(64,64,64,128, not topmost)
 	love.graphics.rectangle("fill", self.x-1, self.y+self.windowani-17, self.width+2, 16)
