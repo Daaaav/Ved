@@ -886,3 +886,13 @@ end
 function copyscriptline()
 	love.system.setClipboardText(input .. input_r)
 end
+
+function scriptinstack(script)
+	for _,v in pairs(scripthistorystack) do
+		if script == v[1] then
+			return true
+		end
+	end
+
+	return false
+end
