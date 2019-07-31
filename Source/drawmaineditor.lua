@@ -1808,6 +1808,7 @@ function drawmaineditor()
 		end
 
 		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)
+		showhotkey("f", 88-1, 16-8)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(88, 0, 16, 16) then
 			eraserlocked = not eraserlocked
