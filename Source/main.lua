@@ -47,7 +47,7 @@ font8 = love.graphics.newFont("Space Station.ttf", 8)
 font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
-tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsamqwertyuiopkl<>/[]zxnb", love_version_meets(10) and 1 or nil)
+tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsamqwertyuiopkl<>/[]zxnbdf", love_version_meets(10) and 1 or nil)
 
 love.graphics.setFont(font8)
 
