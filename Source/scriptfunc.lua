@@ -204,7 +204,14 @@ function scriptcontext(text)
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
 		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
 	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
-		return "room", tonumber(parts[2]), tonumber(parts[3]), nil
+		local x, y = tonumber(parts[2]), tonumber(parts[3])
+		if x == nil or y == nil then
+			return "room", x, y, nil
+		end
+		if parts[1] == "gotoroom" then
+			x, y = x % metadata.mapwidth, y % metadata.mapheight
+		end
+		return "room", x, y, nil
 	else
 		return nil, nil, nil, nil
 	end
