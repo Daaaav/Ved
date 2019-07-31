@@ -2066,8 +2066,14 @@ function drawmaineditor()
 					switchenemies()
 				else
 					-- Platform speed
-					changedplatv = true
-					levelmetadata[(roomy)*20 + (roomx+1)].platv = cycle(levelmetadata[(roomy)*20 + (roomx+1)].platv, 8, 0)
+					dialog.create(
+						L.PLATVCHANGE_MSG,
+						DBS.OKCANCEL,
+						nil,
+						L.PLATVCHANGE_TITLE,
+						dialog.form.simplename_make(tostring(levelmetadata[(roomy)*20 + (roomx+1)].platv)),
+						dialog.callback.platv_validate
+					)
 				end
 
 				mousepressed = true
@@ -2091,7 +2097,7 @@ function drawmaineditor()
 					switchtool = 8
 				}
 			)
-			finish_undo("PLATV")
+			finish_undo("PLATV (reset to 4)")
 		end
 	end
 

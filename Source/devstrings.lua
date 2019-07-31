@@ -3,3 +3,6 @@
 
 --L. = ""
 L.OPAQUEROOMNAMEBACKGROUND = "Make the black roomname backgrounds opaque"
+L.PLATVCHANGE_TITLE = "Change platform speed"
+L.PLATVCHANGE_MSG = "Speed:"
+L.PLATVCHANGE_INVALID = "You have to type in a number."
