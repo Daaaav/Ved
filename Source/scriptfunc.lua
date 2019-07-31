@@ -896,3 +896,12 @@ function scriptinstack(script)
 
 	return false
 end
+
+function renamescriptline(line, pattern, newname)
+	local endings = {"$", "([%(,%)].*)$"}
+	if line:match(pattern .. endings[1]) then
+		return line:gsub(pattern .. endings[1], "%1" .. newname)
+	elseif line:match(pattern .. endings[2]) then
+		return line:gsub(pattern .. endings[2], "%1" .. newname .. "%2")
+	end
+end

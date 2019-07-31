@@ -670,6 +670,102 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 	-- And of course, as long as a script with that name doesn't already exist.
 	-- input is the 'number' of the script
 	if fields.name ~= scriptnames[input] then
+		local oldname = scriptnames[input]
+		local newname = fields.name
+
+		scripts[fields.name] = scripts[scriptnames[input]] -- Copy script from old to new name
+		scripts[scriptnames[input]] = nil -- Remove old name
+
+		scriptnames[input] = fields.name -- Administrative rename
+
+		-- Ok, now time to update ALL the references to this script.
+
+		-- Scripts
+		local field3cmds = {"iftrinkets", "customiftrinkets", "iftrinketsless", "customiftrinketsless", "ifflag", "customifflag"}
+		local field3intcmds = {"ifcrewlost", "iflast"}
+		local field2intcmds = {"loadscript", "ifskip"}
+		local field4intcmds = {"ifexplored"}
+
+		local tmp
+		for rvnum = #scriptnames, 1, -1 do
+			for k,v in pairs(scripts[scriptnames[rvnum]]) do
+				v = v:gsub(" ", "")
+				for _,command in pairs(field3cmds) do
+					if #v > #command then
+						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)])" .. oldname
+						tmp = renamescriptline(v, pattern, newname)
+						if tmp ~= nil then
+							scripts[scriptnames[rvnum]][k] = tmp
+						end
+					end
+				end
+				for _, command in pairs(field3intcmds) do
+					if #v > #command then
+						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+						tmp = renamescriptline(v, pattern, newname)
+						if tmp ~= nil then
+							scripts[scriptnames[rvnum]][k] = tmp
+						end
+					end
+				end
+				for _, command in pairs(field2intcmds) do
+					if #v > #command then
+						local pattern = "^(" .. command .. "[%(,%)]custom_)" .. oldname
+						tmp = renamescriptline(v, pattern, newname)
+						if tmp ~= nil then
+							scripts[scriptnames[rvnum]][k] = tmp
+						end
+					end
+				end
+				for _, command in pairs(field4intcmds) do
+					if #v > #command then
+						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+						tmp = renamescriptline(v, pattern, newname)
+						if tmp ~= nil then
+							scripts[scriptnames[rvnum]][k] = tmp
+						end
+					end
+				end
+			end
+		end
+
+		-- Terminals and script boxes
+		for k,v in pairs(entitydata) do
+			if (v.t == 18 or v.t == 19) and v.data == oldname then
+				entitydata[k].data = newname
+			end
+		end
+	end
+end
+
+function dialog.callback.renamescriptworeferences_validate(button, fields)
+	if button == DB.OK then
+		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+			-- Script already exists
+			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
+			return true
+		end
+
+		if (not PleaseDo3DSHandlingThanks and fields.name:match("|")) or
+		(PleaseDo3DSHandlingThanks and fields.name:match("%$")) then
+			-- Script name has | or $
+			dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+			return true
+		end
+	end
+end
+
+function dialog.callback.renamescriptworeferences(button, fields, _, notclosed)
+	if notclosed or button ~= DB.OK then
+		return
+	end
+
+	input = tonumber(input)
+	-- Rename this script... As long as the names aren't the same,
+	-- because then we'd end up *removing* the script (just read the code)
+	-- And of course, as long as a script with that name doesn't already exist.
+	-- input is the 'number' of the script
+	if fields.name ~= scriptnames[input] then
 		scripts[fields.name] = scripts[scriptnames[input]] -- Copy script from old to new name
 		scripts[scriptnames[input]] = nil -- Remove old name
 
