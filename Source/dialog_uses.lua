@@ -735,6 +735,8 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 				entitydata[k].data = newname
 			end
 		end
+
+		dirty()
 	end
 end
 
@@ -770,6 +772,8 @@ function dialog.callback.renamescriptworeferences(button, fields, _, notclosed)
 		scripts[scriptnames[input]] = nil -- Remove old name
 
 		scriptnames[input] = fields.name -- Administrative rename
+
+		dirty()
 	end
 end
 
