@@ -15,13 +15,13 @@ msgstr ""
 msgid "Music numbers (simplified scripting)\\h#"
 msgstr ""
 
-msgid "0 - Silence (no music)\n1 - Pushing onwards\n2 - Positive force\n3 - Potential for anything\n4 - Passion for exploring\n5 - Presenting VVVVVV\n6 - Predestined fate\n7 - Popular potpurri\n8 - Pipe dream\n9 - Pressure cooker\n10 - Paced energy\n11 - Piercing the sky"
+msgid "0 - Silence (no music)\n1 - Pushing Onwards\n2 - Positive Force\n3 - Potential For Anything\n4 - Passion For Exploring\n5 - Presenting VVVVVV\n6 - Predestined Fate\n7 - Popular Potpourri\n8 - Pipe Dream\n9 - Pressure Cooker\n10 - Paced Energy\n11 - Piercing The Sky"
 msgstr ""
 
 msgid "Music numbers (internal)\\h#"
 msgstr ""
 
-msgid "0 - Path Complete\n1 - Pushing Onwards\n2 - Positive Force\n3 - Potential For Anything\n4 - Passion For Exploring\n5 - Pause\n6 - Presenting VVVVVV\n7 - Plenary\n8 - Predestined Fate\n9 - ecroF evitisoP\n10 - Popular Potpurri\n11 - Pipe Dream\n12 - Pressure Cooker\n13 - Paced Energy\n14 - Piercing The Sky\n15 - Predestined Fate remixed"
+msgid "0 - Path Complete\n1 - Pushing Onwards\n2 - Positive Force\n3 - Potential For Anything\n4 - Passion For Exploring\n5 - Pause\n6 - Presenting VVVVVV\n7 - Plenary\n8 - Predestined Fate\n9 - ecroF evitisoP\n10 - Popular Potpourri\n11 - Pipe Dream\n12 - Pressure Cooker\n13 - Paced Energy\n14 - Piercing The Sky\n15 - Predestined Fate remixed"
 msgstr ""
 
 msgid "Sound effect numbers\\h#"
