@@ -2114,7 +2114,7 @@ function love.update(dt)
 		elseif love.mouse.getX() > 25*8+16-28+extrawidth then
 			onlefthelpbuttons = false
 		end
-	elseif state == 32 then
+	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if imageviewer_moving then
 			imageviewer_x = imageviewer_moved_from_x + (love.mouse.getX()-imageviewer_moved_from_mx)
 			imageviewer_y = imageviewer_moved_from_y + (love.mouse.getY()-imageviewer_moved_from_my)
@@ -3500,7 +3500,7 @@ function love.keypressed(key)
 		else
 			pausemusic()
 		end
-	elseif state == 32 then
+	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
 		elseif key == "-" or key == "kp-" then
