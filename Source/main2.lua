@@ -613,8 +613,11 @@ function love.draw()
 			or scriptdisplay_unused and not usedscripts[scriptnames[rvnum]]
 			then
 				j = j + 1
-				hoverrectangle(128,128,128,128, 8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16)
-				love.graphics.printf(scriptnames[rvnum], 8, scriptlistscroll+8+(24*j)+4+2, screenoffset+640-8-24, "center")
+				local y = scriptlistscroll+8+(24*j)
+				if y >= -16 and y <= love.graphics.getHeight() then
+					hoverrectangle(128,128,128,128, 8, y, screenoffset+640-8-24, 16)
+					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-24, "center")
+				end
 
 				-- Are we clicking on this?
 				if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
