@@ -229,6 +229,7 @@ function love.load()
 	asset_graphics = love.graphics.newImage("images/asset_graphics.png")
 
 	sound_play = love.graphics.newImage("images/sound_play.png")
+	sound_play_current = love.graphics.newImage("images/sound_play_current.png")
 	sound_pause = love.graphics.newImage("images/sound_pause.png")
 	sound_stop = love.graphics.newImage("images/sound_stop.png")
 	sound_rewind = love.graphics.newImage("images/sound_rewind.png")
@@ -1465,6 +1466,8 @@ function love.draw()
 					love.graphics.setColor(64,64,64)
 					love.graphics.draw(sound_play, musicx, 32+24*my)
 					love.graphics.setColor(255,255,255)
+				elseif currentmusic_file == musicplayerfile and currentmusic == m then
+					hoverdraw(sound_play_current, musicx, 32+24*my, 16, 16)
 				else
 					hoverdraw(sound_play, musicx, 32+24*my, 16, 16)
 				end
