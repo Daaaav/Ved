@@ -2040,8 +2040,30 @@ function drawmaineditor()
 
 	-- We also have buttons for enemy and platform settings!
 	if selectedtool == 8 or selectedtool == 9 then
+		local roomsettings = {platv = levelmetadata[(roomy)*20 + (roomx+1)].platv}
 		rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
-		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata[(roomy)*20 + (roomx+1)].platv}) or {langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}), -2, 164+4, true)
+		if selectedtool == 9 then
+			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
+		else
+			love.graphics.print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(24*(-2+1))-(160)+6)
+			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(roomsettings.platv) + 8, 16)
+			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()-(24*(-2+1))-(160), "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
+			local oldplatv = levelmetadata[roomy*20 + roomx+1].platv
+			if roomsettings.platv ~= oldplatv then
+				levelmetadata[roomy*20 + roomx+1].platv = roomsettings.platv
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+							{
+								key = "platv",
+								oldvalue = oldplatv,
+								newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+							}
+						},
+						switchtool = 8
+					}
+				)
+				finish_undo("PLATV (slider)")
+			end
+		end
 
 		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 
@@ -2060,22 +2082,20 @@ function drawmaineditor()
 				end
 
 				mousepressed = true
-			elseif onrbutton(-2, 164+4, true) then
-				-- Enemy type // Platform speed
-				if selectedtool == 9 then
-					-- Enemy type
-					switchenemies()
-				else
-					-- Platform speed
-					dialog.create(
-						L.PLATVCHANGE_MSG,
-						DBS.OKCANCEL,
-						nil,
-						L.PLATVCHANGE_TITLE,
-						dialog.form.simplename_make(tostring(levelmetadata[(roomy)*20 + (roomx+1)].platv)),
-						dialog.callback.platv_validate
-					)
-				end
+			elseif onrbutton(-2, 164+4, true) and selectedtool == 9 then
+				-- Enemy type
+				switchenemies()
+				mousepressed = true
+			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv) + 8, 16) and selectedtool == 8 then
+				-- Platform speed
+				dialog.create(
+					L.PLATVCHANGE_MSG,
+					DBS.OKCANCEL,
+					nil,
+					L.PLATVCHANGE_TITLE,
+					dialog.form.simplename_make(tostring(levelmetadata[(roomy)*20 + (roomx+1)].platv)),
+					dialog.callback.platv_validate
+				)
 
 				mousepressed = true
 			end
