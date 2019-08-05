@@ -2093,7 +2093,7 @@ function drawmaineditor()
 					DBS.OKCANCEL,
 					nil,
 					L.PLATVCHANGE_TITLE,
-					dialog.form.simplename_make(),
+					dialog.form.simplename,
 					dialog.callback.platv_validate
 				)
 
