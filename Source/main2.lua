@@ -626,7 +626,7 @@ function love.draw()
 						--bumpscript(rvnum)
 						--tostate(3)
 					elseif love.mouse.isDown("r") then
-						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.RENAMEWOREFERENCES, L.DELETE}, "spt_" .. rvnum)
+						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
 					end
 				end
 			end
@@ -2407,15 +2407,13 @@ function love.update(dt)
 			elseif RCMreturn == L.RENAME then
 				dialog.create(
 					L.NEWNAME, DBS.OKCANCEL,
-					dialog.callback.renamescript, L.RENAMESCRIPT, dialog.form.simplename_make(scriptnames[rvnum]),
+					dialog.callback.renamescript, L.RENAMESCRIPT,
+					{
+						{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
+						{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES), true, DF.CHECKBOX},
+						{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
+					},
 					dialog.callback.renamescript_validate
-				)
-				input = rvnum
-			elseif RCMreturn == L.RENAMEWOREFERENCES then
-				dialog.create(
-					L.NEWNAME, DBS.OKCANCEL,
-					dialog.callback.renamescriptworeferences, L.RENAMESCRIPTWOREFERENCES, dialog.form.simplename_make(scriptnames[rvnum]),
-					dialog.callback.renamescriptworeferences_validate
 				)
 				input = rvnum
 			else
