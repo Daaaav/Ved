@@ -1690,7 +1690,7 @@ function love.draw()
 					L.MUSICFILEMETADATA,
 					dialog.form.musicfilemetadata_make(file_metadata)
 				)
-			elseif file_metadata_anyset and onrbutton(4, nil, true) then
+			elseif not musiceditor and file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
 				dialog.create(
 					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
