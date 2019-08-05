@@ -2093,7 +2093,7 @@ function drawmaineditor()
 					DBS.OKCANCEL,
 					nil,
 					L.PLATVCHANGE_TITLE,
-					dialog.form.simplename_make(tostring(levelmetadata[(roomy)*20 + (roomx+1)].platv)),
+					dialog.form.simplename_make(),
 					dialog.callback.platv_validate
 				)
 
