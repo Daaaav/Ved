@@ -143,6 +143,7 @@ function drawscripteditor()
 
 	-- Now put some buttons on the right!
 	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
+	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
 	love.graphics.printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4+2, 128-16, "center")
 	if not PleaseDo3DSHandlingThanks then
 		--rbutton(L.NEW, 1)
