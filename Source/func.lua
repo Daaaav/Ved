@@ -1516,7 +1516,9 @@ end
 
 function createmde()
 	cons("Creating metadata entity...")
-	count.entities = count.entities + 1
+	if count ~= nil then
+		count.entities = count.entities + 1
+	end
 	return {
 		mdeversion = thismdeversion,
 		-- This is of course an ugly way to do it
