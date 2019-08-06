@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-26 14:11:35 (CEST)
+--- Last converted: 2019-08-04 17:21:33 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1085,27 +1085,28 @@ verschillen te tonen gebruiken we het volgende voorbeeldscript:
   endcutscene()\G
   untilbars()\G
 
-Lines of this internal script are ¤light green¤, lines that are added automatically\nG
-and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
-is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
-make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
-large have to be broken up into smaller ones.
+Regels van dit interne script zijn ¤lichtgroen¤, regels die automatisch worden\nG
+toegevoegd en die nodig zĳn om het script te laten werken zullen ¤grĳs¤ zijn. Merk\ng
+op dat dit een beetje vereenvoudigd is; Ved voegt ¤#v¤ toe aan het einde van de\nw
+grĳze regels in de voorbeelden om te zorgen dat handmatig geschreven scripts niet
+zomaar aangepast zullen worden, en ¤say¤-blokken die te groot zĳn moeten worden\nw
+opgesplitst in kleinere stukjes.
 
-For more information about internal scripting, check the internal scripting
-reference.
+Kĳk voor meer informatie over interne scripting naar de lĳst met interne
+scriptcommando's.
 
-Loadscript int.sc\h#
+Laadscript-int.sc\h#
 
-The loadscript method is probably the most commonly used method today. It's the
-method that Ved has supported since an alpha version.
+De laadscript-methode is waarschĳnlijk de meest gebruikte methode vandaag de dag.
+Het is de methode die Ved al ondersteunt sinds een alfa-versie.
 
-It requires an extra script, the loadscript, to load the internal script. The
-loadscript would, in its most basic form, contain a command like
-iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
-well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
-that your internal script is loaded from another script for it to work.
+Dit heeft een extra script nodig, het laadscript, om het interne script te laden.
+Het laadscript zal, in de meest basale vorm, een commando bevatten zoals
+iftrinkets(0,jouwscript)¤, maar kan ook andere vereenvoudigde commando's bevatten,\w
+en je kunt ook ¤ifflag¤ gebruiken in plaats van ¤iftrinkets¤. Wat belangrĳk is is dat\nwnw
+je interne script vanuit een ander script wordt geladen om het te laten werken.
 
-The internal script would be converted more or less as follows:
+Het interne script zal min of meer als volgt geconverteerd worden:
 
   squeak(off)\g
   say(11)\g
@@ -1122,20 +1123,20 @@ The internal script would be converted more or less as follows:
   loadscript(stop)\g
   text(1,0,0,3)\g
 
-text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
-needs to be exactly one blank line after it.
+text(1,0,0,3)¤ moet de laatste regel zĳn, of in de scriptbewerker van VVVVVV moet\w
+er precies één lege regel onder staan.
 
-It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
-text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
-though.
+Het is ook mogelĳk om ¤squeak(off)¤ niet te gebruiken, en ¤text(1,0,0,4)¤ te gebruiken\nwnw
+in plaats van ¤text(1,0,0,3)¤. Met ¤squeak(off)¤ worden echter een paar waardevolle\nwnw
+regels bespaard in langere scripts.
 
-say(-1) int.sc\h#
+say(-1)-int.sc\h#
 
-The say(-1) method is older, and has a disadvantage to the loadscript method: it
-always makes cutscene bars show. But it also has an advantage that can be
-important in levels with many scripts: it does not require a loadscript. We can
-remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
-added by VVVVVV when using this method.
+De say(-1)-methode is ouder, en heeft een nadeel ten opzichte van de laadscript-
+methode: er zullen altĳd cutscene-balken verschĳnen. Maar het heeft ook een
+voordeel dat belangrĳk kan zĳn in levels met veel scripts: het heeft geen
+laadscript nodig. We kunnen ¤cutscene()¤ en ¤untilbars()¤ uit ons script weglaten,\nwnw
+omdat deze al worden toegevoegd door VVVVVV als je deze methode gebruikt.
 
   squeak(off)\g
   say(-1)\g
@@ -1151,7 +1152,7 @@ added by VVVVVV when using this method.
   untilbars()\G
   loadscript(stop)\g
 
-This method has been added as an extra internal scripting mode in Ved 1.6.0.
+Deze methode is toegevoegd als een extra interne scripting-modus in Ved 1.6.0.
 ]]
 },
 
@@ -1997,18 +1998,18 @@ Inhoud\w&Z+
 
 Muzieknummers (vereenvoudigde scripting)\h#
 
-0 - Silence (geen muziek)
-1 - Pushing onwards
-2 - Positive force
-3 - Potential for anything
-4 - Passion for exploring
+0 - Stilte (geen muziek)
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential For Anything
+4 - Passion For Exploring
 5 - Presenting VVVVVV
-6 - Predestined fate
-7 - Popular potpurri
-8 - Pipe dream
-9 - Pressure cooker
-10 - Paced energy
-11 - Piercing the sky
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing The Sky
 
 Muzieknummers (intern)\h#
 
@@ -2022,7 +2023,7 @@ Muzieknummers (intern)\h#
 7 - Plenary
 8 - Predestined Fate
 9 - ecroF evitisoP
-10 - Popular Potpurri
+10 - Popular Potpourri
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy

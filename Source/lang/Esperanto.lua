@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-07-26 14:11:35 (CEST)
+--- Last converted: 2019-08-04 17:21:32 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1987,17 +1987,17 @@ Tabelo\w&Z+
 Muziknumeroj (simpligita skriptado)\h#
 
 0 - Silento (nul muziko)
-1 - Pushing onwards
-2 - Positive force
-3 - Potential for anything
-4 - Passion for exploring
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential For Anything
+4 - Passion For Exploring
 5 - Presenting VVVVVV
-6 - Predestined fate
-7 - Popular potpurri
-8 - Pipe dream
-9 - Pressure cooker
-10 - Paced energy
-11 - Piercing the sky
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing The Sky
 
 Muziknumeroj (internaj)\h#
 
@@ -2011,7 +2011,7 @@ Muziknumeroj (internaj)\h#
 7 - Plenary
 8 - Predestined Fate
 9 - ecroF evitisoP
-10 - Popular Potpurri
+10 - Popular Potpourri
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy

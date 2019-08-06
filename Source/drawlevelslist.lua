@@ -319,7 +319,10 @@ function drawlevelslist()
 
 	if not secondlevel then
 		hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
+		hoverdraw(refreshbtn, love.graphics.getWidth()-128+8+16, 8, 16, 16, 1)
+
 		showhotkey("q", love.graphics.getWidth()-128+8+8-2, 16)
+		showhotkey("t", love.graphics.getWidth()-128+8+16+8-2, 16)
 	end
 	if not state6old1 then
 		hoverdraw(newbtn, love.graphics.getWidth()-32, 0, 32, 32, 2) -- -96
@@ -331,8 +334,14 @@ function drawlevelslist()
 
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if not secondlevel and mouseon(love.graphics.getWidth()-128+8, 8, 16, 16) then
+			-- Help
 			stopinput()
 			tostate(15)
+			mousepressed = true
+		elseif not secondlevel and mouseon(love.graphics.getWidth()-128+8+16, 8, 16, 16) then
+			-- Refresh
+			loadlevelsfolder()
+			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then -- -96
 			if not state6old1 then
 				-- New
