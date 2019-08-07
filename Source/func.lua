@@ -1,3 +1,10 @@
+-- For showhotkey()
+ALIGN = {
+	LEFT = 1,
+	CENTER = 2,
+	RIGHT = 3,
+}
+
 love.graphics.clearOR = love.graphics.clear
 love.graphics.clear = function()
 	if not s.pausedrawunfocused or love.window.hasFocus() then
@@ -3166,12 +3173,16 @@ function imageviewer_gridout()
 	end
 end
 
-function showhotkey(hotkey, x, y, rightalign)
+function showhotkey(hotkey, x, y, align)
+	align = align or ALIGN.LEFT
+
 	if love.keyboard.isDown("f9") then
 		love.graphics.setFont(tinynumbers)
 		local hotkey_w = tinynumbers:getWidth(hotkey)
-		if rightalign then
+		if align == ALIGN.RIGHT then
 			x = x - hotkey_w
+		elseif align == ALIGN.CENTER then
+			x = x - math.floor(hotkey_w / 2) -- Don't want subpixels now
 		end
 		love.graphics.setColor(255,255,255,192)
 		love.graphics.rectangle("fill", x, y, hotkey_w+3, 10)

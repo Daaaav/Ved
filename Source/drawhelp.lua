@@ -480,7 +480,7 @@ function drawhelp()
 		end
 		love.graphics.printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
 		if rvnum == 1 then -- Return button
-			showhotkey("b", 8+25*8-28, helplistscroll+8+(24*j)-2, true)
+			showhotkey("b", 8+25*8-28, helplistscroll+8+(24*j)-2, ALIGN.RIGHT)
 		end
 
 		-- Are we clicking on this?
