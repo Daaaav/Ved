@@ -294,7 +294,7 @@ function drawlevelslist()
 			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 		end
 
-		if (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
+		if (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab")) and nodialog) then
 			if tabselected == 0 and #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
 				tabselected = -1
 			elseif tabselected == 0 or tabselected < -#s.recentfiles then
