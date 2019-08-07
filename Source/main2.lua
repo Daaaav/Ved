@@ -2590,7 +2590,7 @@ function love.keypressed(key)
 				else
 					helparticlecontent[helpeditingline] = input
 				end
-			elseif state == 6 then
+			elseif state == 6 and nodialog then
 				tabselected = 0
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
