@@ -3166,10 +3166,10 @@ function imageviewer_gridout()
 	end
 end
 
-function showhotkey(hotkey, x, y, align)
+function showhotkey(hotkey, x, y, align, topmost)
 	align = align or ALIGN.LEFT
 
-	if love.keyboard.isDown("f9") then
+	if love.keyboard.isDown("f9") and (nodialog or topmost) then
 		love.graphics.setFont(tinynumbers)
 		local hotkey_w = tinynumbers:getWidth(hotkey)
 		if align == ALIGN.RIGHT then
