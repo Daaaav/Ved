@@ -1759,6 +1759,7 @@ function love.draw()
 				(imageviewer_showwhite and checkoff or checkon),
 				check_x, love.graphics.getHeight()-288, 16, 16, 2
 			)
+			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
 			love.graphics.print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-282)
 
 			if nodialog and love.mouse.isDown("l") and not mousepressed
@@ -1801,6 +1802,8 @@ function love.draw()
 					return (imageviewer_s*100) .. "%"
 				end, 32
 			)
+			showhotkey("-", love.graphics.getWidth()-100+16, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
+			showhotkey("+", love.graphics.getWidth()-100+64+8, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
 			love.graphics.printf(
 				imageviewer_w .. L.X .. imageviewer_h,
 				love.graphics.getWidth()-128, love.graphics.getHeight()-114, 128, "center"
