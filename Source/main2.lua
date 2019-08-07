@@ -2421,7 +2421,7 @@ function love.update(dt)
 					dialog.callback.renamescript, L.RENAMESCRIPT,
 					{
 						{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
-						{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES), true, DF.CHECKBOX},
+						{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
 						{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
 					},
 					dialog.callback.renamescript_validate
