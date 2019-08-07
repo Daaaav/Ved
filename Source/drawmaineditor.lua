@@ -1837,7 +1837,7 @@ function drawmaineditor()
 	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
-	showhotkey("cq", love.graphics.getWidth()-120-8, 16-12)
+	showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
 	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
@@ -1863,16 +1863,16 @@ function drawmaineditor()
 		love.graphics.setColor(255,255,255)
 	end
 
-	showhotkey("cZ", love.graphics.getWidth()-120-8, 40-4)
-	showhotkey("cY", love.graphics.getWidth()-120+16-2, 40+8)
+	showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
+	showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8, ALIGN.CENTER)
 
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
-	showhotkey("cX", love.graphics.getWidth()-120+64-6, 40-4)
-	showhotkey("cC", love.graphics.getWidth()-120+80-4, 40+8)
-	showhotkey("cV", love.graphics.getWidth()-120+96-2, 40-4)
+	showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4, ALIGN.CENTER)
+	showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
+	showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
