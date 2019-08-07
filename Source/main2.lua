@@ -1399,14 +1399,7 @@ function love.draw()
 
 			if love.keyboard.isDown("f9") then
 				local hotkey = ({"P", "sP", "M", "S", "G"})[a+1]
-				love.graphics.setFont(tinynumbers)
-				local hotkey_w = tinynumbers:getWidth(hotkey)
-				love.graphics.setColor(255,255,255,192)
-				love.graphics.rectangle("fill", (17+744-1)-hotkey_w, (16+44*a)-2, hotkey_w+3, 10)
-				love.graphics.setColor(0,0,0)
-				love.graphics.print(hotkey, (17+744+1)-hotkey_w, 16+44*a)
-				love.graphics.setColor(255,255,255)
-				love.graphics.setFont(font8)
+				showhotkey(hotkey, (17+744-1), (16+44*a)-2, ALIGN.RIGHT)
 			end
 		end
 
