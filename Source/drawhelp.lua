@@ -135,7 +135,7 @@ function drawhelp()
 						-- Leaving this thing undocumented except in the code.
 						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
 						singlecharmode = true
-					elseif part2:sub(fl,fl) == ")" then
+					elseif part2:sub(fl,fl) == ")" and helparticle == 1 then
 						tostate(oldstate, true)
 						if state == 11 then
 							-- Back to search results
