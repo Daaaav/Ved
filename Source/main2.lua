@@ -83,11 +83,13 @@ function love.load()
 	ved_require("music")
 
 	if s.pscale ~= 1 or s.psmallerscreen then
-		za,zb,zc = love.window.getMode()
-		zd,ze,zf = love.window.getPosition()
-		zwidth,zheight = love.window.getDesktopDimensions(zf)
+		local za,zb,zc = love.window.getMode()
+		if love_version_meets(9,2) then
+			local zd,ze,zf = love.window.getPosition()
+			local zwidth,zheight = love.window.getDesktopDimensions(zf)
+			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+		end
 		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
 
 		ved_require("scaling")
 	end
