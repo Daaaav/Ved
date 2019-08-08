@@ -3166,7 +3166,7 @@ function imageviewer_gridout()
 	end
 end
 
-function showhotkey(hotkey, x, y, align, topmost)
+function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 
 	if love.keyboard.isDown("f9") and (nodialog or topmost) then
@@ -3177,11 +3177,23 @@ function showhotkey(hotkey, x, y, align, topmost)
 		elseif align == ALIGN.CENTER then
 			x = x - math.floor(hotkey_w / 2) -- Don't want subpixels now
 		end
-		love.graphics.setColor(255,255,255,192)
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(255,255,255,192)
+		else
+			love.graphics.setColor(255,255,255,192)
+		end
 		love.graphics.rectangle("fill", x, y, hotkey_w+3, 10)
-		love.graphics.setColor(0,0,0)
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(0,0,0,255)
+		else
+			love.graphics.setColor(0,0,0,255)
+		end
 		love.graphics.print(hotkey, x+2, y+2)
-		love.graphics.setColor(255,255,255)
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(255,255,255,255)
+		else
+			love.graphics.setColor(255,255,255)
+		end
 		love.graphics.setFont(font8)
 	end
 end
