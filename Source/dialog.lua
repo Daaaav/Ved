@@ -633,6 +633,10 @@ function dialog.create(message, buttons, handler, title, fields, noclosechecker,
 	end
 
 	RCMactive = false
+	if tilespicker_shortcut then
+		tilespicker = false
+		tilespicker_shortcut = false
+	end
 
 	table.insert(dialogs,
 		cDialog:new{

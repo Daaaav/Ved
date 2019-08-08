@@ -2822,7 +2822,9 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		tilespicker_shortcut = true
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("rctrl") then
+			tilespicker_shortcut = true
+		end
 
 		if key == "left" then
 			selectedtile = selectedtile - 1
