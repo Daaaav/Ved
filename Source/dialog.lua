@@ -153,7 +153,7 @@ function cDialog:draw(topmost)
 		end
 		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
 		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost}
-		if topmost then
+		if topmost and not self.closing then
 			if DB_keys[v] == "OK" then
 				showhotkey("n", unpack(args))
 			elseif DB_keys[v] == "CANCEL" then
