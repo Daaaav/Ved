@@ -1,10 +1,3 @@
--- For showhotkey()
-ALIGN = {
-	LEFT = 1,
-	CENTER = 2,
-	RIGHT = 3,
-}
-
 love.graphics.clearOR = love.graphics.clear
 love.graphics.clear = function()
 	if not s.pausedrawunfocused or love.window.hasFocus() then
