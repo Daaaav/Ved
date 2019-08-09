@@ -83,11 +83,15 @@ function love.load()
 	ved_require("music")
 
 	if s.pscale ~= 1 or s.psmallerscreen then
-		za,zb,zc = love.window.getMode()
-		zd,ze,zf = love.window.getPosition()
-		zwidth,zheight = love.window.getDesktopDimensions(zf)
-		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+		local za,zb,zc = love.window.getMode()
+		if love_version_meets(9,2) then
+			local zd,ze,zf = love.window.getPosition()
+			local zwidth,zheight = love.window.getDesktopDimensions(zf)
+			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+		else
+			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		end
 
 		ved_require("scaling")
 	end
@@ -229,6 +233,7 @@ function love.load()
 	asset_graphics = love.graphics.newImage("images/asset_graphics.png")
 
 	sound_play = love.graphics.newImage("images/sound_play.png")
+	sound_play_current = love.graphics.newImage("images/sound_play_current.png")
 	sound_pause = love.graphics.newImage("images/sound_pause.png")
 	sound_stop = love.graphics.newImage("images/sound_stop.png")
 	sound_rewind = love.graphics.newImage("images/sound_rewind.png")
@@ -467,6 +472,7 @@ function love.load()
 	-- Music! Note that we're not yet loading the music in memory here.
 	initvvvvvvmusic()
 	musiceditorfile = ""
+	musiceditorfile_forcevvvvvvfolder = false
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]
@@ -612,8 +618,11 @@ function love.draw()
 			or scriptdisplay_unused and not usedscripts[scriptnames[rvnum]]
 			then
 				j = j + 1
-				hoverrectangle(128,128,128,128, 8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16)
-				love.graphics.printf(scriptnames[rvnum], 8, scriptlistscroll+8+(24*j)+4+2, screenoffset+640-8-24, "center")
+				local y = scriptlistscroll+8+(24*j)
+				if y >= -16 and y <= love.graphics.getHeight() then
+					hoverrectangle(128,128,128,128, 8, y, screenoffset+640-8-24, 16)
+					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-24, "center")
+				end
 
 				-- Are we clicking on this?
 				if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
@@ -1465,6 +1474,8 @@ function love.draw()
 					love.graphics.setColor(64,64,64)
 					love.graphics.draw(sound_play, musicx, 32+24*my)
 					love.graphics.setColor(255,255,255)
+				elseif currentmusic_file == musicplayerfile and currentmusic == m then
+					hoverdraw(sound_play_current, musicx, 32+24*my, 16, 16)
 				else
 					hoverdraw(sound_play, musicx, 32+24*my, 16, 16)
 				end
@@ -1684,7 +1695,7 @@ function love.draw()
 					L.MUSICFILEMETADATA,
 					dialog.form.musicfilemetadata_make(file_metadata)
 				)
-			elseif file_metadata_anyset and onrbutton(4, nil, true) then
+			elseif not musiceditor and file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
 				dialog.create(
 					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
@@ -2108,7 +2119,7 @@ function love.update(dt)
 		elseif love.mouse.getX() > 25*8+16-28+extrawidth then
 			onlefthelpbuttons = false
 		end
-	elseif state == 32 then
+	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if imageviewer_moving then
 			imageviewer_x = imageviewer_moved_from_x + (love.mouse.getX()-imageviewer_moved_from_mx)
 			imageviewer_y = imageviewer_moved_from_y + (love.mouse.getY()-imageviewer_moved_from_my)
@@ -3503,7 +3514,7 @@ function love.keypressed(key)
 		else
 			pausemusic()
 		end
-	elseif state == 32 then
+	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
 		elseif key == "-" or key == "kp-" then

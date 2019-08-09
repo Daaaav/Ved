@@ -1,0 +1,34 @@
+
+msgctxt "LHS.990_Credits.subj"
+msgid "Credits"
+msgstr ""
+
+msgid "\\0"
+msgstr ""
+
+msgid "Credits\\wh#\n\\C="
+msgstr ""
+
+msgid "Ved is made by Dav999"
+msgstr ""
+
+msgid "Further code contributors: Info Teddy"
+msgstr ""
+
+msgid "Some of the graphics and the font were made by Doormat"
+msgstr ""
+
+msgid "Russian translation: CreepiX, Cheeprick\nEsperanto translation: Doormat\nGerman translation: r00ster\nFrench translation: RhenaudTheLukark"
+msgstr ""
+
+msgid "Special thanks to:\\h#"
+msgstr ""
+
+msgid "Terry Cavanagh for making VVVVVV"
+msgstr ""
+
+msgid "Everyone who reported bugs, came up with ideas and motivated me to make this!\n\\\n\\\n\\"
+msgstr ""
+
+msgid "License\\h#\n\\\nCopyright 2015-2019  Dav999              (I do not claim ownership of or copyright\n                                                  on VVVVVV or any of its assets.)\n\\\nRedistribution and use in source and binary forms, with or without modification,\nare permitted provided that the following conditions are met:\n\\\n1. Redistributions of source code must retain the above copyright notice, this\nlist of conditions and the following disclaimer.\n2. Redistributions in binary form must reproduce the above copyright notice, this\nlist of conditions and the following disclaimer in the documentation and/or other\nmaterials provided with the distribution.\n\\\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND\nANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED\nWARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.\nIN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,\nINDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT\nNOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR\nPROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,\nWHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\nPOSSIBILITY OF SUCH DAMAGE."
+msgstr ""

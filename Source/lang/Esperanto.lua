@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-07-19 18:58:07 (CEST)
+--- Last converted: 2019-08-04 17:21:32 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -827,6 +827,7 @@ cont = [[
 },
 
 {
+splitid = "010_Getting_started",
 subj = "Kiel komenci",
 imgs = {},
 cont = [[
@@ -860,6 +861,7 @@ en la agordoj de Ved.
 },
 
 {
+splitid = "020_Tile_placement_modes",
 subj = "Reĝimoj de kahel-metado",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
@@ -893,6 +895,7 @@ Ved subtenas tri diversajn reĝimojn por meti kahelojn.
 },
 
 {
+splitid = "030_Tools",
 subj = "Iloj",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
@@ -1018,6 +1021,7 @@ Tiu ĉi ilo estas uzebla por meti la komencejon.
 ]]
 },
 {
+splitid = "040_Script_editor",
 subj = "Skripto-redaktilo",
 imgs = {},
 cont = [[
@@ -1060,6 +1064,7 @@ kaj vi povas uzi ¤ctrl+maldekstro¤ por retrosalti unu paŝon tra la ĉeno.\nw
 },
 
 {
+splitid = "050_Int_sc_mode",
 subj = "Reĝimo Int.skr",
 imgs = {},
 cont = [[
@@ -1159,6 +1164,7 @@ This method has been added as an extra internal scripting mode in Ved 1.6.0.
 },
 
 {
+splitid = "060_Shortcuts",
 subj = "Klavkombinoj",
 imgs = {},
 cont = [[
@@ -1237,6 +1243,7 @@ F¤  Iri al flaglisto\C
 },
 
 {
+splitid = "070_Simp_script_reference",
 subj = "Simpla skriptado",
 imgs = {},
 cont = [[
@@ -1346,6 +1353,7 @@ komando "say". Tio ĉi uzeblas anstataŭ doni duan argumenton al "say".
 },
 
 {
+splitid = "080_Int_script_reference",
 subj = "Interna skriptado",
 imgs = {},
 cont = [[
@@ -1570,11 +1578,13 @@ renversita aŭ ne. (1 por renverso, 0 por nerenverso)
 
 flash¤(x)\w#h
 
-Blankigas la ekranon dum x kadroj (30 kadroj = Unu sekundo). Por flash
-simila al tiu de simpligita skriptado, uzu:
-flash(5)
-playef(9)
-shake(20)
+flash¤(x)\w#h
+
+Blankigas la ekranon, vi povas ŝanĝi kiom longe la ekrano restu blanka
+(nur flash ne funkcios, vi devas uzi flash(5) kombine kun playef(9) kaj
+shake(20) se vi volas normalan flash)
+
+x - La kvanto da kadroj. 30 kadroj estas preskaŭ unu sekundo.
 
 play¤(x)\w#h
 
@@ -1603,9 +1613,12 @@ resumemusic¤()\w#h
 
 Malo de stopmusic() (ne ŝajnas funkcii)
 
-playef¤(x)\w#h
+playef¤(x,n)\w#h
 
-Ludi sonon. Vidu la listan referencon por la listo de son-numeroj.
+Ludi sonon.
+
+n - Fakte neuzata, kaj povas esti forlasita. En VVVVVV 1.x, tio iam regis la
+deŝovon, en milisekundoj, je kio la sono ekis.
 
 changemood¤(koloro,animstato)\w#h
 
@@ -1822,7 +1835,7 @@ ne uzu ĝin!)
 
 befadein¤()\w#h
 
-Tuje maldissolvi de fadeout()
+Tuje maldissolvigas la ekranon de fadeout()
 
 createactivityzone¤(koloro)\b#h
 
@@ -1853,7 +1866,7 @@ clearteleportscript¤()\b#h
 
 Viŝas la teleportilan skripton agorditan per la supra komando.
 
-moveplater¤(x,y)\w#h
+moveplayer¤(x,y)\w#h
 
 Movas la ludanton x bilderojn dekstren kaj y malsupren. Kompreneble vi ankaŭ povas
 uzi minusajn nombrojn por movi lin maldekstren/supren
@@ -1949,6 +1962,7 @@ efiko por propra nivelo. Ŝaltas sekretlaboratorian reĝimon.
 },
 
 {
+splitid = "090_Lists_reference",
 subj = "Lista referenco",
 imgs = {},
 cont = [[
@@ -1973,17 +1987,17 @@ Tabelo\w&Z+
 Muziknumeroj (simpligita skriptado)\h#
 
 0 - Silento (nul muziko)
-1 - Pushing onwards
-2 - Positive force
-3 - Potential for anything
-4 - Passion for exploring
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential For Anything
+4 - Passion For Exploring
 5 - Presenting VVVVVV
-6 - Predestined fate
-7 - Popular potpurri
-8 - Pipe dream
-9 - Pressure cooker
-10 - Paced energy
-11 - Piercing the sky
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing The Sky
 
 Muziknumeroj (internaj)\h#
 
@@ -1997,14 +2011,14 @@ Muziknumeroj (internaj)\h#
 7 - Plenary
 8 - Predestined Fate
 9 - ecroF evitisoP
-10 - Popular Potpurri
+10 - Popular Potpourri
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy
 14 - Piercing The Sky
 15 - Predestined Fate remixed
 
-Son-numeroj
+Son-numeroj\h#
 
 0 - Renverso al plafono
 1 - Rerenverso al planko
@@ -2309,6 +2323,7 @@ Statoj 3000-3099:
 },
 
 {
+splitid = "100_Formatting",
 subj = "Aranĝado",
 imgs = {},
 cont = [[
@@ -2476,7 +2491,7 @@ Se vi volas, vi ankaŭ povas krei grafikojn pere de fonkoloroj:
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
           \&o 
-\- 
+\-
 
 Ligiloj\h#
 
@@ -2563,6 +2578,7 @@ _ - Metu ĉi tion antaŭ la bildnumero por malpliigi la bildnumeron je 10.
 },
 
 {
+splitid = "990_Credits",
 subj = "Kreditoj",
 imgs = {"credits.png"},
 cont = [[
@@ -2602,28 +2618,28 @@ Special-dank' al:\h#
 
 Terry Cavanagh pro lia faro de VVVVVV
 
-Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion! 
-
-
+Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion!
+\
+\
 
 
 
 
 
 Permesilo\h#
-
+\
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
-
+\
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
-
+\
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other
 materials provided with the distribution.
-
+\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.

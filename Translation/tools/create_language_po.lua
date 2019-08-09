@@ -14,6 +14,13 @@
 
 	template .pot files are read and are filled with translated
 	strings from the given language
+
+	This script is kinda outdated in two ways:
+	- It wasn't updated for supporting plural forms
+	- It wasn't updated for supporting split help pages
+	So these things would need to be done manually. Not much of a problem,
+	since this should be rarely needed anyway, and the vast majority of the
+	file would be handled.
 ]]
 
 require("inc")

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-07-19 18:58:08 (CEST)
+--- Last converted: 2019-08-04 17:21:33 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -815,6 +815,7 @@ cont = [[
 },
 
 {
+splitid = "010_Getting_started",
 subj = "Aan de slag",
 imgs = {},
 cont = [[
@@ -850,6 +851,7 @@ Ved-opties.
 },
 
 {
+splitid = "020_Tile_placement_modes",
 subj = "Plaatsingsmodi",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
@@ -884,6 +886,7 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
 },
 
 {
+splitid = "030_Tools",
 subj = "Tools",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
@@ -961,6 +964,7 @@ Hiermee kun je zwaartekrachtlĳnen plaatsen.
 
 Hiermee kun je tekst plaatsen.
 
+
 \^1
    Terminal\h#
 
@@ -1007,6 +1011,7 @@ Hiermee kun je het startpunt plaatsen.
 ]]
 },
 {
+splitid = "040_Script_editor",
 subj = "Scriptbewerker",
 imgs = {},
 cont = [[
@@ -1051,22 +1056,23 @@ nemen door de keten naar waar je vandaan kwam.
 },
 
 {
+splitid = "050_Int_sc_mode",
 subj = "Int.sc-modus",
 imgs = {},
 cont = [[
-Internal scripting mode\wh#
+Interne scripting-modus\wh#
 \C=
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. With this
-feature, you do not have to worry much about getting internal scripting to work;
-you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
-text,,,,4¤ or whatever else your preference goes out to - just write internal\w
-scripts like they're meant for the main game. You do not even need to end with a
-final ¤loadscript¤ command.\nw
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Met deze functie hoef je je niet veel zorgen te maken om interne
+scripting aan de praat te krĳgen; je hoeft geen ¤say¤-commando's te gebruiken,\nw
+regels te tellen, of ¤text(1,0,0,4)¤ of ¤text,,,,4¤ of waar je voorkeur ook naar uit\nwnw
+gaat te typen - je kunt gewoon interne scripts schrĳven alsof ze bedoeld zĳn voor
+het echte spel. Je hoeft niet eens te eindigen met een ¤loadscript¤-commando.\nw
 
-Ved supports different methods of internal scripting. To highlight their technical
-differences, we'll use the following example script:
+Ved ondersteunt verschillende methoden van interne scripting. Om hun technische
+verschillen te tonen gebruiken we het volgende voorbeeldscript:
 
   cutscene()\G
   untilbars()\G
@@ -1079,27 +1085,28 @@ differences, we'll use the following example script:
   endcutscene()\G
   untilbars()\G
 
-Lines of this internal script are ¤light green¤, lines that are added automatically\nG
-and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
-is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
-make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
-large have to be broken up into smaller ones.
+Regels van dit interne script zijn ¤lichtgroen¤, regels die automatisch worden\nG
+toegevoegd en die nodig zĳn om het script te laten werken zullen ¤grĳs¤ zijn. Merk\ng
+op dat dit een beetje vereenvoudigd is; Ved voegt ¤#v¤ toe aan het einde van de\nw
+grĳze regels in de voorbeelden om te zorgen dat handmatig geschreven scripts niet
+zomaar aangepast zullen worden, en ¤say¤-blokken die te groot zĳn moeten worden\nw
+opgesplitst in kleinere stukjes.
 
-For more information about internal scripting, check the internal scripting
-reference.
+Kĳk voor meer informatie over interne scripting naar de lĳst met interne
+scriptcommando's.
 
-Loadscript int.sc\h#
+Laadscript-int.sc\h#
 
-The loadscript method is probably the most commonly used method today. It's the
-method that Ved has supported since an alpha version.
+De laadscript-methode is waarschĳnlijk de meest gebruikte methode vandaag de dag.
+Het is de methode die Ved al ondersteunt sinds een alfa-versie.
 
-It requires an extra script, the loadscript, to load the internal script. The
-loadscript would, in its most basic form, contain a command like
-iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
-well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
-that your internal script is loaded from another script for it to work.
+Dit heeft een extra script nodig, het laadscript, om het interne script te laden.
+Het laadscript zal, in de meest basale vorm, een commando bevatten zoals
+iftrinkets(0,jouwscript)¤, maar kan ook andere vereenvoudigde commando's bevatten,\w
+en je kunt ook ¤ifflag¤ gebruiken in plaats van ¤iftrinkets¤. Wat belangrĳk is is dat\nwnw
+je interne script vanuit een ander script wordt geladen om het te laten werken.
 
-The internal script would be converted more or less as follows:
+Het interne script zal min of meer als volgt geconverteerd worden:
 
   squeak(off)\g
   say(11)\g
@@ -1116,20 +1123,20 @@ The internal script would be converted more or less as follows:
   loadscript(stop)\g
   text(1,0,0,3)\g
 
-text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
-needs to be exactly one blank line after it.
+text(1,0,0,3)¤ moet de laatste regel zĳn, of in de scriptbewerker van VVVVVV moet\w
+er precies één lege regel onder staan.
 
-It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
-text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
-though.
+Het is ook mogelĳk om ¤squeak(off)¤ niet te gebruiken, en ¤text(1,0,0,4)¤ te gebruiken\nwnw
+in plaats van ¤text(1,0,0,3)¤. Met ¤squeak(off)¤ worden echter een paar waardevolle\nwnw
+regels bespaard in langere scripts.
 
-say(-1) int.sc\h#
+say(-1)-int.sc\h#
 
-The say(-1) method is older, and has a disadvantage to the loadscript method: it
-always makes cutscene bars show. But it also has an advantage that can be
-important in levels with many scripts: it does not require a loadscript. We can
-remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
-added by VVVVVV when using this method.
+De say(-1)-methode is ouder, en heeft een nadeel ten opzichte van de laadscript-
+methode: er zullen altĳd cutscene-balken verschĳnen. Maar het heeft ook een
+voordeel dat belangrĳk kan zĳn in levels met veel scripts: het heeft geen
+laadscript nodig. We kunnen ¤cutscene()¤ en ¤untilbars()¤ uit ons script weglaten,\nwnw
+omdat deze al worden toegevoegd door VVVVVV als je deze methode gebruikt.
 
   squeak(off)\g
   say(-1)\g
@@ -1145,11 +1152,12 @@ added by VVVVVV when using this method.
   untilbars()\G
   loadscript(stop)\g
 
-This method has been added as an extra internal scripting mode in Ved 1.6.0.
+Deze methode is toegevoegd als een extra interne scripting-modus in Ved 1.6.0.
 ]]
 },
 
 {
+splitid = "060_Shortcuts",
 subj = "Snelkoppelingen",
 imgs = {},
 cont = [[
@@ -1229,6 +1237,7 @@ F¤  Ga naar vlaggenlĳst\C
 },
 
 {
+splitid = "070_Simp_script_reference",
 subj = "Eenvoudige scripting",
 imgs = {},
 cont = [[
@@ -1342,6 +1351,7 @@ commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 },
 
 {
+splitid = "080_Int_script_reference",
 subj = "Interne scripting",
 imgs = {},
 cont = [[
@@ -1491,14 +1501,14 @@ customiftrinketsless¤(n,script)\w#h
 Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting (maar onthoud
 dat het stuk is)
 
-createcrewman¤(x,y,kleur,stemming,ki1,ki2)\w#h
+createcrewman¤(x,y,kleur,stemming,ai1,ai2)\w#h
 
 Maakt een bemanningslid (kan niet gered worden)
 
 stemming - 0 voor blĳ, 1 voor verdrietig
-ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
       faceplayer/panic/faceleft/faceright/followposition,ai2
-ki2 - nodig als followposition gebruikt wordt voor ki1
+ai2 - nodig als followposition gebruikt wordt voor ai1
 
 createentity¤(x,y,n,meta1,meta2)\o#h
 
@@ -1574,7 +1584,7 @@ gotoposition(x,y) gebruiken, dan heb je standaard normale zwaartekracht)
 
 flash¤(x)\w#h
 
-Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lnag het scherm wit moet
+Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lang het scherm wit moet
 blĳven (alleen flash zal niet werken, je moet flash(5) gebruiken in combinatie met
 playef(9) en shake(20) als je een normale flits wil)
 
@@ -1650,14 +1660,14 @@ companion¤(x)\b#h
 Laat het opgegeven bemanningslid de speler volgen (voor zover ik me kan herinneren
 hangt dit ook af van de locatie op de kaart)
 
-changeai¤(bemanningslid,ki1,ki2)\w#h
+changeai¤(bemanningslid,ai1,ai2)\w#h
 
 Kan de gezichtsrichting van een bemanningslid veranderen of het loopgedrag
 
 bemanningslid - cyan/player/blue/red/yellow/green/purple
-ki1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ki2
-ki2 - nodig als followposition gebruikt wordt voor ki1
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+      faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - nodig als followposition gebruikt wordt voor ai1
 
 changedir¤(kleur,richting)\w#h
 
@@ -1685,7 +1695,7 @@ Corrigeer verticale positionering van meerdere tekstvakken in flip mode
 
 tofloor\w#h
 
-Laat de speler naar de grond gaan als hĳ daar niet al staat.
+Laat de speler naar de grond gaan als deze daar niet al staat.
 
 flip\w#h
 
@@ -1964,6 +1974,7 @@ effect is voor een aangepast level om te hebben. Zet "secret lab mode" aan.
 },
 
 {
+splitid = "090_Lists_reference",
 subj = "Lĳsten",
 imgs = {},
 cont = [[
@@ -1987,18 +1998,18 @@ Inhoud\w&Z+
 
 Muzieknummers (vereenvoudigde scripting)\h#
 
-0 - Silence (geen muziek)
-1 - Pushing onwards
-2 - Positive force
-3 - Potential for anything
-4 - Passion for exploring
+0 - Stilte (geen muziek)
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential For Anything
+4 - Passion For Exploring
 5 - Presenting VVVVVV
-6 - Predestined fate
-7 - Popular potpurri
-8 - Pipe dream
-9 - Pressure cooker
-10 - Paced energy
-11 - Piercing the sky
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing The Sky
 
 Muzieknummers (intern)\h#
 
@@ -2012,7 +2023,7 @@ Muzieknummers (intern)\h#
 7 - Plenary
 8 - Predestined Fate
 9 - ecroF evitisoP
-10 - Popular Potpurri
+10 - Popular Potpourri
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy
@@ -2329,6 +2340,7 @@ States 3000-3099:
 },
 
 {
+splitid = "100_Formatting",
 subj = "Opmaak",
 imgs = {},
 cont = [[
@@ -2584,6 +2596,7 @@ _ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
 },
 
 {
+splitid = "990_Credits",
 subj = "Credits",
 imgs = {"credits.png"},
 cont = [[
@@ -2625,26 +2638,26 @@ Terry Cavanagh voor het maken van VVVVVV
 
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
-
+\
 
 
 
 
 
 Licentie\h#
-
+\
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
-
+\
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
-
+\
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other
 materials provided with the distribution.
-
+\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.

@@ -1,0 +1,55 @@
+
+msgctxt "LHS.050_Int_sc_mode.subj"
+msgid "Int.sc mode"
+msgstr ""
+
+msgid "Internal scripting mode\\wh#\n\\C="
+msgstr ""
+
+msgid "To use internal scripting in Ved, you can enable internal scripting mode in the\neditor, to handle all commands in that script as internal scripting. With this\nfeature, you do not have to worry much about getting internal scripting to work;\nyou do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\\nwnw\ntext,,,,4¤ or whatever else your preference goes out to - just write internal\\w\nscripts like they're meant for the main game. You do not even need to end with a\nfinal ¤loadscript¤ command.\\nw"
+msgstr ""
+
+msgid "Ved supports different methods of internal scripting. To highlight their technical\ndifferences, we'll use the following example script:"
+msgstr ""
+
+msgid "  cutscene()\\G\n  untilbars()\\G\n  squeak(player)\\G\n  text(cyan,0,0,1)\\G\n  ...\\G\n  position(player,above)\\G\n  speak_active\\G\n  endtext\\G\n  endcutscene()\\G\n  untilbars()\\G"
+msgstr ""
+
+msgid "Lines of this internal script are ¤light green¤, lines that are added automatically\\nG\nand are necessary for the scripting exploit to work will be ¤gray¤. Note that this\\ng\nis simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\\nw\nmake sure manually written scripts won't be changed, and ¤say¤ blocks that are too\\nw\nlarge have to be broken up into smaller ones."
+msgstr ""
+
+msgid "For more information about internal scripting, check the internal scripting\nreference."
+msgstr ""
+
+msgid "Loadscript int.sc\\h#"
+msgstr ""
+
+msgid "The loadscript method is probably the most commonly used method today. It's the\nmethod that Ved has supported since an alpha version."
+msgstr ""
+
+msgid "It requires an extra script, the loadscript, to load the internal script. The\nloadscript would, in its most basic form, contain a command like\niftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\\w\nwell, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\\nwnw\nthat your internal script is loaded from another script for it to work."
+msgstr ""
+
+msgid "The internal script would be converted more or less as follows:"
+msgstr ""
+
+msgid "  squeak(off)\\g\n  say(11)\\g\n  cutscene()\\G\n  untilbars()\\G\n  squeak(player)\\G\n  text(cyan,0,0,1)\\G\n  ...\\G\n  position(player,above)\\G\n  speak_active\\G\n  endtext\\G\n  endcutscene()\\G\n  untilbars()\\G\n  loadscript(stop)\\g\n  text(1,0,0,3)\\g"
+msgstr ""
+
+msgid "text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\\w\nneeds to be exactly one blank line after it."
+msgstr ""
+
+msgid "It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\\nwnw\ntext(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\\wnw\nthough."
+msgstr ""
+
+msgid "say(-1) int.sc\\h#"
+msgstr ""
+
+msgid "The say(-1) method is older, and has a disadvantage to the loadscript method: it\nalways makes cutscene bars show. But it also has an advantage that can be\nimportant in levels with many scripts: it does not require a loadscript. We can\nremove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\\nwnw\nadded by VVVVVV when using this method."
+msgstr ""
+
+msgid "  squeak(off)\\g\n  say(-1)\\g\n  text(1,0,0,3)\\g\n  say(9)\\g\n  squeak(player)\\G\n  text(cyan,0,0,1)\\G\n  ...\\G\n  position(player,above)\\G\n  speak_active\\G\n  endtext\\G\n  endcutscene()\\G\n  untilbars()\\G\n  loadscript(stop)\\g"
+msgstr ""
+
+msgid "This method has been added as an extra internal scripting mode in Ved 1.6.0."
+msgstr ""

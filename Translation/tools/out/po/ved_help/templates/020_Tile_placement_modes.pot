@@ -1,0 +1,28 @@
+
+msgctxt "LHS.020_Tile_placement_modes.subj"
+msgid "Tile placement modes"
+msgstr ""
+
+msgid "Tile placement modes\\wh#\n\\C="
+msgstr ""
+
+msgid "Ved supports three different modes to draw tiles."
+msgstr ""
+
+msgid "     Automatic mode\\h#0"
+msgstr ""
+
+msgid "          This is the mode that is easiest to use. In this mode, you can draw\n          walls and backgrounds and the edges will automatically get placed\n          correctly. However, while editing in this mode, all walls and\n          backgrounds in the room must use the same tileset and color."
+msgstr ""
+
+msgid "     Multi-tileset mode\\h#1"
+msgstr ""
+
+msgid "          This is similar to automatic mode, except that you can have multiple\n          different tilesets in the same room. That is, changing the tileset will\n          not affect already-placed walls and backgrounds, and you can draw in\n          multiple different types of tiles in the same room."
+msgstr ""
+
+msgid "     Manual mode\\h#2"
+msgstr ""
+
+msgid "          Also called Direct Mode, in this mode you can place down any tile\n          manually, so you are not bound to the pre-defined tileset combinations\n          and edges will not automatically get added to walls, giving you complete\n          control over how the room will look. However, this editing mode is often\n          slower to use."
+msgstr ""

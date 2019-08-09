@@ -1,0 +1,112 @@
+
+msgctxt "LHS.100_Formatting.subj"
+msgid "Formatting"
+msgstr ""
+
+msgid "Formatting\\wh#\n\\C="
+msgstr ""
+
+msgid "In notes you can use formatting codes to make your text larger, color it, and some\nother things. To add formatting to a line, add a backslash (\\) at the end of it.\\\nAfter the \\, you can add any amount of the following characters, in any order:\\"
+msgstr ""
+
+msgid "h - Double font size\\h"
+msgstr ""
+
+msgid "# - Anchor. You can jump to anchors quickly with ¤#Links¤links¤.\\nLCl\n- - Horizontal line:\n\\-\n= - Horizontal line underneath large text"
+msgstr ""
+
+msgid "Text colors:\\h#"
+msgstr ""
+
+msgid "n - Normal\\n\nr - Red\\r\ng - Gray\\g\nw - White\\w\nb - Blue\\b\no - Orange\\o\nv - Green\\v\nc - Cyan\\c\ny - Yellow\\y\np - Purple\\p\nV - Dark green\\V\nz - Black¤ (background color is not included)\\z&Z\nZ - Dark gray\\Z\nC - Cyan (Viridian)\\C\nP - Pink (Violet)\\P\nY - Yellow (Vitellary)\\Y\nR - Red (Vermilion)\\R\nG - Green (Verdigris)\\G\nB - Blue (Victoria)\\B"
+msgstr ""
+
+msgid "Example:\\h#"
+msgstr ""
+
+msgid "\\-\nLarge orange text (\"oh\" has same result)\\ho\\\n\\\nLarge orange text (\"oh\" has same result)\\ho"
+msgstr ""
+
+msgid "\\-\nUnderlined large text\\wh\\\n\\r=\\\n\\\nUnderlined large text\\wh\n\\r=\n\\-"
+msgstr ""
+
+msgid "Using multiple colors on a line\\h#"
+msgstr ""
+
+msgid "It is possible to use multiple colors on a line by separating colored parts with\nthe¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\\nYnw\ncodes in order after¤ \\¤. If the last color on the line is the default color (n), it\\nC\nis not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\\nY\nline which uses¤ \\¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\\nCnYnR(\ncolor a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\\nY(\nspace or another character."
+msgstr ""
+
+msgid "\\-\nYou can ¤¤color¤¤ specific ¤¤words¤¤ with this!\\nrnv\\\n\\\nYou can ¤color¤ specific ¤words¤ with this!\\nrnv\n\\-\nSome ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\\RYGCBP\\\n\\\nSome ¤te¤xt¤ co¤lo¤rs\\RYGCBP\n\\-"
+msgstr ""
+
+msgid "Coloring a single character\\h#"
+msgstr ""
+
+msgid "OK, I lied, it is possible to color a single character without including a space.\nTo do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\\nYnw\nthe character you want to color, and enable it with the formatting code¤ ( ¤after¤ \\¤:\\nCnC"
+msgstr ""
+
+msgid "\\-\nYou can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\\nrny(\\\n\\\nYou can c¤o§¤lor a ¤single¤ character like this!\\nrny(\n\\-"
+msgstr ""
+
+msgid "This is not necessary if the single character is the first or last on a line."
+msgstr ""
+
+msgid "Background colors\\h#"
+msgstr ""
+
+msgid "Not only can text be colored, it can also be ¤highlighted¤ in any of the text\\nZ&y\ncolors. To do this, you can put¤ & ¤after the regular text color code, and then a\\nY\ncolor code for the background color. This can be done in combination with the ¤\nsystem described above, note that regular text colors start the next \"block\",\nbut background colors do not. The following examples use spaces to make everything\nmore readable, but this is completely optional. You can use the code¤ + ¤to expand\\nY\nthe (last) background color to the end of the line."
+msgstr ""
+
+msgid "\\-\nBlack text on white background!\\z&w\\\n\\\nBlack text on white background!\\z&w\n\\-\nBlack text on expanded white background!\\z&w+\\\n\\\nBlack text on expanded white background!\\z&w+\n\\-\nRed on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\\r&y n z&w\\\n\\\nRed on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\\r&y n z&w\n\\-\nThis still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\\n P n n&r (\\\n\\\nThis still ¤works¤ to color si¤n§¤gle characters\\n P n n&r (\n\\-"
+msgstr ""
+
+msgid "If you like, you can also make graphics using background colors:"
+msgstr ""
+
+msgid "\\-\n ¤¤        \\n n&C\\\n          \\&C\\\n   ¤¤  ¤¤  ¤¤  ¤¤ \\&C n n&C n n&C\\\n   ¤¤  ¤¤  ¤¤  ¤¤ \\&C n n&C n n&C\\\n          \\&C\\\n          \\&C\\\n   ¤¤      ¤¤ \\&C n n&C\\\n    ¤¤    ¤¤  \\&C n n&C\\\n ¤¤        \\n n&C\\\n   ¤¤    \\n n&C\\\n\\\n ¤        \\n n&C\n          \\&C\n   ¤  ¤  ¤  ¤ \\&C n n&C n n&C\n   ¤  ¤  ¤  ¤ \\&C n n&C n n&C\n          \\&C\n          \\&C\n   ¤      ¤ \\&C n n&C\n    ¤    ¤  \\&C n n&C\n ¤        \\n n&C\n   ¤    \\n n&C\n\\-\n          \\&o\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\\\n ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\\\n          \\&o\\\n\\\n          \\&o\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\n ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \\&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\n          \\&o\n\\-"
+msgstr ""
+
+msgid "Links\\h#"
+msgstr ""
+
+msgid "Links can be used for two things: linking to somewhere else in the articles/notes,\nor linking to websites. Links use the semi-color code¤ l¤. This code does not switch\\nY\nto the next \"colored block\", it only applies to the current one, as opposed to\nregular (non-background) color codes. It also does not change color, so you can\nchange the style of the link to anything you want."
+msgstr ""
+
+msgid "You can link to articles by simply using the name of the article:"
+msgstr ""
+
+msgid "\\-\nTools\\bl\\\n\\\nTools\\bl\n\\-"
+msgstr ""
+
+msgid "Clicking the \"Tools\" above will bring you to the Tools help article. I used the\ncolor code¤ b ¤here to make the link blue, and as you can see, the¤ l ¤applies to\\nbnY\nthat same colored part."
+msgstr ""
+
+msgid "You can link to anchors in the same article by linking to a¤ # ¤followed by all text\\nY\non that line. (Instances of¤ ¤¤ ¤are completely ignored there.) You can link to the\\nY\ntop of the article with just a hash character (¤#§¤).\\nY("
+msgstr ""
+
+msgid "\\-\n#Using multiple colors on a line\\bl\\\n\\\n#Using multiple colors on a line\\bl\n\\-"
+msgstr ""
+
+msgid "You can link to an anchor in a different article in a similar way:"
+msgstr ""
+
+msgid "\\-\nLists reference#Gamestates\\bl\\\n\\\nLists reference#Gamestates\\bl\n\\-"
+msgstr ""
+
+msgid "Linking to websites is straightforward too:"
+msgstr ""
+
+msgid "\\-\nhttps://example.com/\\bl\\\n\\\nhttps://example.com/\\bl\n\\-"
+msgstr ""
+
+msgid "You can use a color block with color code¤ L ¤that contains the actual destination\\nY\nbefore the link text, and make the link show a different text that way:"
+msgstr ""
+
+msgid "\\-\nTools¤¤Go to another article\\Lbl\\\n\\\nTools¤Go to another article\\Lbl\n\\-\nClick ¤¤Tools¤¤here¤¤ to go to another article\\nLbl\\\n\\\nClick ¤Tools¤here¤ to go to another article\\nLbl\n\\-\n[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\\n L vl n L rl\\\n\\\n[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\\n L vl n L rl\n\\-\n#Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \\L w&Zl n L w&Z l(\\\n\\\n#Links¤ Button A ¤ §¤#Links¤ Button B \\L w&Zl n L w&Z l(\n\\-"
+msgstr ""
+
+msgid "Images (only available in plugin\\h#\n\\\ndescriptions):\\h"
+msgstr ""
+
+msgid "0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,\n       and remember to keep lines blank to accommodate for the image height)\n^ - Put this before the image number, shift image number by 10. So ^4 makes image\n    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.\n_ - Put this before the image number to decrease the image number by 10.\n> - Put this before the image number to shift further images to the right by 8\n    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and\n    image 1 at x=32.\n< - Same, but shift to the left."
+msgstr ""

@@ -17,6 +17,7 @@ load_lua_lang("templates")
 -- This avoids heaps of string concatenation during execution.
 po_list_main = {}
 po_list_help = {}
+po_list_help_articles = {} -- this one is new, one element per article. Key is name.
 
 -- The current po to add to
 po_list = po_list_main
@@ -48,12 +49,15 @@ luatemplate_list = {}
 	help
 	help_com
 	help_article
+	help_splitarticle (switched to from help_article for that article)
 	help_articlecontent
+	help_splitarticlecontent
 ]]
 main_mode = "root"
 current_arr = nil
 vc_key = 1 -- in case there's incremental keys in the current var
 batch_comment = nil
+current_splitarticle = nil
 
 current_arr_sub = nil -- nested
 
@@ -276,25 +280,42 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			main_mode = "help"
 		end
 		handled = true
-	elseif main_mode == "help_article" then
+	elseif main_mode == "help_article" or main_mode == "help_splitarticle" then
 		if line == "" then
 			handled = true
+		elseif line:match("^splitid = \".*\",$") ~= nil then
+			main_mode = "help_splitarticle"
+			current_splitarticle = _G[current_arr][vc_key].splitid
+			po_list_help_articles[current_splitarticle] = {}
+			po_list = po_list_help_articles[current_splitarticle]
+			handled = true
 		elseif line:match("^subj = \".*\",$") ~= nil then
-			key = current_arr .. "." .. vc_key .. ".subj"
+			if main_mode == "help_splitarticle" then
+				key = "LHS." .. current_splitarticle .. ".subj"
+			else
+				key = current_arr .. "." .. vc_key .. ".subj"
+			end
 			value = _G[current_arr][vc_key].subj
 			export_line = "subj = \"<" .. key .. ">\","
 			handled = true
 		elseif line:match("^imgs = {.*},$") ~= nil then
 			handled = true
 		elseif line == "cont = [[" then
-			main_mode = "help_articlecontent"
+			if main_mode == "help_splitarticle" then
+				main_mode = "help_splitarticlecontent"
+			else
+				main_mode = "help_articlecontent"
+			end
 			handled = true
 		elseif line == "}," then
+			if main_mode == "help_splitarticle" then
+				po_list = po_list_help
+			end
 			main_mode = "help"
 			vc_key = vc_key + 1
 			handled = true
 		end
-	elseif main_mode == "help_articlecontent" then
+	elseif main_mode == "help_articlecontent" or main_mode == "help_splitarticlecontent" then
 		local ended = false
 		if line == "]]" then
 			ended = true
@@ -303,11 +324,27 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			ended = true
 		end
 		if ended then
-			main_mode = "help_article"
+			if main_mode == "help_splitarticlecontent" then
+				main_mode = "help_splitarticle"
+				key = "LHS." .. current_splitarticle .. ".cont"
+				local paragraphs, blanklines = split_help_page(_G[current_arr][vc_key].cont)
+				local seen = {}
+				for k,v in pairs(paragraphs) do
+					if not seen[v] then
+						seen[v] = true
+
+						value_escaped = escape_po_str(v)
+						table.insert(po_list, "msgid \"" .. value_escaped .. "\"\nmsgstr \"\"\n")
+					end
+				end
+				no_single = true
+			else
+				main_mode = "help_article"
+				key = current_arr .. "." .. vc_key .. ".cont"
+				value = _G[current_arr][vc_key].cont
+			end
 			no_lua_export = false
 
-			key = current_arr .. "." .. vc_key .. ".cont"
-			value = _G[current_arr][vc_key].cont
 			export_line = "<" .. key .. ">\n" .. line
 		else
 			no_lua_export = true
@@ -393,6 +430,17 @@ if fh == nil then
 else
 	fh:write("\n" .. table.concat(po_list_help, "\n"))
 	fh:close()
+end
+
+for k,v in pairs(po_list_help_articles) do
+	fh, everr = io.open("out/po/ved_help/templates/" .. k .. ".pot", "w")
+	if fh == nil then
+		print("ERROR: Cannot open new help " .. k .. " pot file for writing")
+		print(everr)
+	else
+		fh:write("\n" .. table.concat(v, "\n"))
+		fh:close()
+	end
 end
 
 -- Also make a pot for fontpng, which shall not be defined in English

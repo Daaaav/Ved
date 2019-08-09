@@ -444,6 +444,13 @@ INVALIDFILENAME_MAC = "<L.INVALIDFILENAME_MAC>",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "<L.TINY_CTRL>",
 TINY_SHIFT = "<L.TINY_SHIFT>",
+TINY_ALT = "<L.TINY_ALT>",
+TINY_ESC = "<L.TINY_ESC>",
+TINY_TAB = "<L.TINY_TAB>",
+TINY_HOME = "<L.TINY_HOME>",
+TINY_END = "<L.TINY_END>",
+TINY_INSERT = "<L.TINY_INSERT>",
+TINY_DEL = "<L.TINY_DEL>",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "<L.SEARCHRESULTS_SCRIPTS>",
@@ -791,89 +798,100 @@ cont = [[
 },
 
 {
-subj = "<LH.2.subj>",
+splitid = "010_Getting_started",
+subj = "<LHS.010_Getting_started.subj>",
 imgs = {},
 cont = [[
-<LH.2.cont>
+<LHS.010_Getting_started.cont>
 ]]
 },
 
 {
-subj = "<LH.3.subj>",
+splitid = "020_Tile_placement_modes",
+subj = "<LHS.020_Tile_placement_modes.subj>",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
-<LH.3.cont>
+<LHS.020_Tile_placement_modes.cont>
 ]]
 },
 
 {
-subj = "<LH.4.subj>",
+splitid = "030_Tools",
+subj = "<LHS.030_Tools.subj>",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
-<LH.4.cont>
+<LHS.030_Tools.cont>
 ]]
 },
 {
-subj = "<LH.5.subj>",
+splitid = "040_Script_editor",
+subj = "<LHS.040_Script_editor.subj>",
 imgs = {},
 cont = [[
-<LH.5.cont>
+<LHS.040_Script_editor.cont>
 ]]
 },
 
 {
-subj = "<LH.6.subj>",
+splitid = "050_Int_sc_mode",
+subj = "<LHS.050_Int_sc_mode.subj>",
 imgs = {},
 cont = [[
-<LH.6.cont>
+<LHS.050_Int_sc_mode.cont>
 ]]
 },
 
 {
-subj = "<LH.7.subj>",
+splitid = "060_Shortcuts",
+subj = "<LHS.060_Shortcuts.subj>",
 imgs = {},
 cont = [[
-<LH.7.cont>
+<LHS.060_Shortcuts.cont>
 ]]
 },
 
 {
-subj = "<LH.8.subj>",
+splitid = "070_Simp_script_reference",
+subj = "<LHS.070_Simp_script_reference.subj>",
 imgs = {},
 cont = [[
-<LH.8.cont>
+<LHS.070_Simp_script_reference.cont>
 ]]
 },
 
 {
-subj = "<LH.9.subj>",
+splitid = "080_Int_script_reference",
+subj = "<LHS.080_Int_script_reference.subj>",
 imgs = {},
 cont = [[
-<LH.9.cont>
+<LHS.080_Int_script_reference.cont>
 ]]
 },
 
 {
-subj = "<LH.10.subj>",
+splitid = "090_Lists_reference",
+subj = "<LHS.090_Lists_reference.subj>",
 imgs = {},
 cont = [[
-<LH.10.cont>
+<LHS.090_Lists_reference.cont>
 ]]
 },
 
 {
-subj = "<LH.11.subj>",
+splitid = "100_Formatting",
+subj = "<LHS.100_Formatting.subj>",
 imgs = {},
 cont = [[
-<LH.11.cont>
+<LHS.100_Formatting.cont>
 ]]
 },
 
 {
-subj = "<LH.12.subj>",
+splitid = "990_Credits",
+subj = "<LHS.990_Credits.subj>",
 imgs = {"credits.png"},
 cont = [[
-<LH.12.cont>
+<LHS.990_Credits.cont>
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

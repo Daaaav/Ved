@@ -1,0 +1,22 @@
+
+msgctxt "LHS.010_Getting_started.subj"
+msgid "Getting started"
+msgstr ""
+
+msgid "Getting started\\wh#\n\\C="
+msgstr ""
+
+msgid "This article will help you get started with using Ved. To get started with using\nthe editor, you need to load a level, or create a new one."
+msgstr ""
+
+msgid "The editor\\h#"
+msgstr ""
+
+msgid "On the left side, you will find the tools selection. Most tools have subtools that\nwill be listed to the right of it. To switch between tools, use their respective\nshortcut or scroll with shift or ctrl held down. To switch between subtools, you\ncan scroll anywhere. For more information about the tools, refer to the ¤Tools\\nwl\nhelp page.\nEntities can be right clicked for a menu of actions for that entity. To delete\nentities without having to use the context menu, shift-right click on them.\nOn the right side of the screen, you will find many buttons and options. The upper\nbuttons are related to the entire level, the lower buttons (under Room options)\nare specific to the current room. For more information about those buttons, refer\nto the respective help pages, where available."
+msgstr ""
+
+msgid "Levels folder\\h#"
+msgstr ""
+
+msgid "Ved will normally use the same folder for storing levels as VVVVVV does, so it is\neasy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not\ndetect your VVVVVV folder correctly, you can enter a custom path in the Ved\noptions."
+msgstr ""

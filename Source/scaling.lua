@@ -3,11 +3,21 @@ cons("Scaling modifications included")
 love.graphics.setScissorOR = love.graphics.setScissor
 
 love.graphics.setScissor = function(x,y,width,height)
-	if x == nil then
+	if x == nil or y == nil or width == nil or height == nil then
 		love.graphics.setScissorOR()
 	else
 		love.graphics.setScissorOR(x*s.pscale, y*s.pscale, width*s.pscale, height*s.pscale)
 	end
+end
+
+love.graphics.getScissorOR = love.graphics.getScissor
+
+love.graphics.getScissor = function()
+	local x, y, width, height = love.graphics.getScissorOR()
+	if x == nil or y == nil or width == nil or height == nil then
+		return x, y, width, height
+	end
+	return x/s.pscale, y/s.pscale, width/s.pscale, height/s.pscale
 end
 
 

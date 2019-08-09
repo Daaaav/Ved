@@ -1,0 +1,106 @@
+
+msgctxt "LHS.070_Simp_script_reference.subj"
+msgid "Simp.script reference"
+msgstr ""
+
+msgid "Simplified scripting reference\\wh#\n\\C="
+msgstr ""
+
+msgid "VVVVVV's simplified scripting language is a basic language that can be used to\nscript VVVVVV levels.\nNote: whenever something is between quotes, it needs to be typed without them."
+msgstr ""
+
+msgid "say¤([lines[,color]])\\h#w"
+msgstr ""
+
+msgid "Display a text box. Without any arguments, this will make a text box with one\nline, and by default this will result in a centered terminal text box. The color\nargument can be a color, or the name of a crewmate.\nIf you use a color and a rescuable crewmate with that color is in the room, then\nthe text box will be displayed above that crewmate."
+msgstr ""
+
+msgid "reply¤([lines])\\h#w"
+msgstr ""
+
+msgid "Display a text box for Viridian. Without the lines argument, this will make a text\nbox with one line."
+msgstr ""
+
+msgid "delay¤(n)\\h#w"
+msgstr ""
+
+msgid "Delays further action by n ticks. 30 ticks is almost one second."
+msgstr ""
+
+msgid "happy¤([crewmate])\\h#w"
+msgstr ""
+
+msgid "Makes a crewmate happy. Without an argument, this will make Viridian happy. You\ncan also use \"all\", \"everyone\" or \"everybody\" as an argument to make everybody\nhappy."
+msgstr ""
+
+msgid "sad¤([crewmate])\\h#w"
+msgstr ""
+
+msgid "Makes a crewmate sad. Without an argument, this will make Viridian sad. You\ncan also use \"all\", \"everyone\" or \"everybody\" as an argument to make everybody\nsad."
+msgstr ""
+
+msgid "flag¤(flag,on/off)\\h#w"
+msgstr ""
+
+msgid "Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.\nThere are 100 flags, numbered from 0 to 99.\nBy default, all flags are off when you start playing a level.\nNote: In Ved, you can also use flag names instead of the numbers."
+msgstr ""
+
+msgid "ifflag¤(flag,scriptname)\\h#w"
+msgstr ""
+
+msgid "If a given flag is ON, then go to script with name scriptname.\nIf a given flag is OFF, continue in the current script.\nExample:\nifflag(20,cutscene) - If flag 20 is ON, go to script \"cutscene\", else continue in\n                      the current script.\nNote: In Ved, you can also use flag names instead of the numbers."
+msgstr ""
+
+msgid "iftrinkets¤(number,scriptname)\\h#w"
+msgstr ""
+
+msgid "If your amount of trinkets >= number, go to script with name scriptname.\nIf your amount of trinkets < number, continue in the current script.\nExample:\niftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script\n                               \"enoughtrinkets\" will be run, else the current\n                               script will continue.\nIt is common practise to use 0 as a minimum amount of trinkets, as a way to load\na script in any case."
+msgstr ""
+
+msgid "iftrinketsless¤(number,scriptname)\\h#w"
+msgstr ""
+
+msgid "If your amount of trinkets < number, go to script with name scriptname.\nIf your amount of trinkets >= number, continue in the current script."
+msgstr ""
+
+msgid "destroy¤(something)\\h#w"
+msgstr ""
+
+msgid "Valid arguments can be:\nwarptokens - Remove all warp tokens from the room until you re-enter the room.\ngravitylines - Remove all gravity lines from the room until you re-enter the room.\nThe option \"platforms\" also exists, but it doesn't work properly."
+msgstr ""
+
+msgid "music¤(number)\\h#w"
+msgstr ""
+
+msgid "Change the song to a certain song number.\nFor the list of song numbers, refer to the \"Lists reference\" article."
+msgstr ""
+
+msgid "playremix\\h#w"
+msgstr ""
+
+msgid "Plays the remix of Predestined Fate as music."
+msgstr ""
+
+msgid "flash\\h#w"
+msgstr ""
+
+msgid "Flashes the screen white, makes a bang sound and shakes the screen for a bit."
+msgstr ""
+
+msgid "map¤(on/off)\\h#w"
+msgstr ""
+
+msgid "Turn the map on or off. If you turn the map off, it will display \"NO SIGNAL\" until\nyou turn it on again. Rooms will still be uncovered while the map is off to be\nvisible when the map is turned on."
+msgstr ""
+
+msgid "squeak¤(crewmate/on/off)\\h#w"
+msgstr ""
+
+msgid "Make a crewmate squeak, or turn the squeak sound when a text box is displayed on\nor off."
+msgstr ""
+
+msgid "speaker¤(color)\\h#w"
+msgstr ""
+
+msgid "Changes the color and position of the next text boxes created with the \"say\"\ncommand. This can be used instead of giving a second argument to \"say\"."
+msgstr ""

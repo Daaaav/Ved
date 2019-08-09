@@ -444,6 +444,13 @@ INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "DEL",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
@@ -801,6 +808,7 @@ cont = [[
 },
 
 {
+splitid = "010_Getting_started",
 subj = "Getting started",
 imgs = {},
 cont = [[
@@ -835,6 +843,7 @@ options.
 },
 
 {
+splitid = "020_Tile_placement_modes",
 subj = "Tile placement modes",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
@@ -868,6 +877,7 @@ Ved supports three different modes to draw tiles.
 },
 
 {
+splitid = "030_Tools",
 subj = "Tools",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
@@ -991,6 +1001,7 @@ The start point tool can be used to place the start point.
 ]]
 },
 {
+splitid = "040_Script_editor",
 subj = "Script editor",
 imgs = {},
 cont = [[
@@ -1032,6 +1043,7 @@ use ¤ctrl+left¤ to jump one step back through the chain to where you came from
 },
 
 {
+splitid = "050_Int_sc_mode",
 subj = "Int.sc mode",
 imgs = {},
 cont = [[
@@ -1131,6 +1143,7 @@ This method has been added as an extra internal scripting mode in Ved 1.6.0.
 },
 
 {
+splitid = "060_Shortcuts",
 subj = "Shortcuts",
 imgs = {},
 cont = [[
@@ -1209,6 +1222,7 @@ F¤  Go to flags list\C
 },
 
 {
+splitid = "070_Simp_script_reference",
 subj = "Simp.script reference",
 imgs = {},
 cont = [[
@@ -1320,6 +1334,7 @@ command. This can be used instead of giving a second argument to "say".
 },
 
 {
+splitid = "080_Int_script_reference",
 subj = "Int. script reference",
 imgs = {},
 cont = [[
@@ -1928,6 +1943,7 @@ effect for a custom level to have. Turns on secret lab mode.
 },
 
 {
+splitid = "090_Lists_reference",
 subj = "Lists reference",
 imgs = {},
 cont = [[
@@ -1952,17 +1968,17 @@ Index\w&Z+
 Music numbers (simplified scripting)\h#
 
 0 - Silence (no music)
-1 - Pushing onwards
-2 - Positive force
-3 - Potential for anything
-4 - Passion for exploring
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential For Anything
+4 - Passion For Exploring
 5 - Presenting VVVVVV
-6 - Predestined fate
-7 - Popular potpurri
-8 - Pipe dream
-9 - Pressure cooker
-10 - Paced energy
-11 - Piercing the sky
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing The Sky
 
 Music numbers (internal)\h#
 
@@ -1976,7 +1992,7 @@ Music numbers (internal)\h#
 7 - Plenary
 8 - Predestined Fate
 9 - ecroF evitisoP
-10 - Popular Potpurri
+10 - Popular Potpourri
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy
@@ -2284,6 +2300,7 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
 },
 
 {
+splitid = "100_Formatting",
 subj = "Formatting",
 imgs = {},
 cont = [[
@@ -2328,13 +2345,13 @@ Example:\h#
 
 \-
 Large orange text ("oh" has same result)\ho\
-
+\
 Large orange text ("oh" has same result)\ho
 
 \-
 Underlined large text\wh\
 \r=\
-
+\
 Underlined large text\wh
 \r=
 \-
@@ -2351,11 +2368,11 @@ space or another character.
 
 \-
 You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
-
+\
 You can ¤color¤ specific ¤words¤ with this!\nrnv
 \-
 Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
-
+\
 Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 \-
 
@@ -2367,7 +2384,7 @@ the character you want to color, and enable it with the formatting code¤ ( ¤af
 
 \-
 You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
-
+\
 You can c¤o§¤lor a ¤single¤ character like this!\nrny(
 \-
 
@@ -2385,19 +2402,19 @@ the (last) background color to the end of the line.
 
 \-
 Black text on white background!\z&w\
-
+\
 Black text on white background!\z&w
 \-
 Black text on expanded white background!\z&w+\
-
+\
 Black text on expanded white background!\z&w+
 \-
 Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
-
+\
 Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
 \-
 This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
-
+\
 This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
 \-
 
@@ -2414,7 +2431,7 @@ If you like, you can also make graphics using background colors:
     ¤¤    ¤¤  \&C n n&C\
  ¤¤        \n n&C\
    ¤¤    \n n&C\
-
+\
  ¤        \n n&C
           \&C
    ¤  ¤  ¤  ¤ \&C n n&C n n&C
@@ -2436,7 +2453,7 @@ If you like, you can also make graphics using background colors:
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
           \&o\
-
+\
           \&o
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
  ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
@@ -2461,7 +2478,7 @@ You can link to articles by simply using the name of the article:
 
 \-
 Tools\bl\
-
+\
 Tools\bl
 \-
 
@@ -2475,7 +2492,7 @@ top of the article with just a hash character (¤#§¤).\nY(
 
 \-
 #Using multiple colors on a line\bl\
-
+\
 #Using multiple colors on a line\bl
 \-
 
@@ -2483,7 +2500,7 @@ You can link to an anchor in a different article in a similar way:
 
 \-
 Lists reference#Gamestates\bl\
-
+\
 Lists reference#Gamestates\bl
 \-
 
@@ -2491,7 +2508,7 @@ Linking to websites is straightforward too:
 
 \-
 https://example.com/\bl\
-
+\
 https://example.com/\bl
 \-
 
@@ -2500,24 +2517,24 @@ before the link text, and make the link show a different text that way:
 
 \-
 Tools¤¤Go to another article\Lbl\
-
+\
 Tools¤Go to another article\Lbl
 \-
 Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
-
+\
 Click ¤Tools¤here¤ to go to another article\nLbl
 \-
 [¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
-
+\
 [¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
 \-
 #Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
-
+\
 #Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
 \-
 
 Images (only available in plugin\h#
-
+\
 descriptions):\h
 
 0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
@@ -2533,6 +2550,7 @@ _ - Put this before the image number to decrease the image number by 10.
 },
 
 {
+splitid = "990_Credits",
 subj = "Credits",
 imgs = {"credits.png"},
 cont = [[
@@ -2573,27 +2591,27 @@ Special thanks to:\h#
 Terry Cavanagh for making VVVVVV
 
 Everyone who reported bugs, came up with ideas and motivated me to make this!
-
-
-
+\
+\
+\
 
 
 
 
 License\h#
-
+\
 Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
                                                   on VVVVVV or any of its assets.)
-
+\
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
-
+\
 1. Redistributions of source code must retain the above copyright notice, this
 list of conditions and the following disclaimer.
 2. Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or other
 materials provided with the distribution.
-
+\
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.

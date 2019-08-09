@@ -57,7 +57,7 @@ listmusicnamesids =
 	{"Plenary", 7},
 	{"Predestined Fate", 8},
 	{"ecroF evitisoP", 9},
-	{"Popular Potpurri", 10},
+	{"Popular Potpourri", 10},
 	{"Pipe Dream", 11},
 	{"Pressure Cooker", 12},
 	{"Paced Energy", 13},

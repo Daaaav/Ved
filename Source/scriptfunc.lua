@@ -343,12 +343,15 @@ function processflaglabelsreverse()
 		local splitpoints = {}
 		local marksafe = true
 		for k = #scriptlines, 1, -1 do
-			local v = scriptlines[k]
+			local v = scriptlines[k]:gsub(" ", "")
 
 			if v:sub(1,5) == "speak" then
 				marksafe = false
-			elseif v:sub(1,4) == "text" then
-				marksafe = true
+			elseif v:match("^text[%(,%)]") then
+				local _, sepcount = v:gsub("[%(,%)]", "")
+				if sepcount >= 4 then
+					marksafe = true
+				end
 			end
 
 			splitpoints[k] = marksafe
@@ -869,6 +872,9 @@ function swapflags(flag1, flag2)
 end
 
 function copyscript()
+	input = input .. input_r
+	input_r = ""
+	scriptlines[editingline] = input
 	love.system.setClipboardText(table.concat(scriptlines, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 	setgenerictimer(1, .25)
 end
