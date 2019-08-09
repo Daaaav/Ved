@@ -3168,4 +3168,15 @@ function imageviewer_gridout()
 	end
 end
 
+function exitvedoptions()
+	saveconfig()
+	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
+		-- Immediately apply the new custom VVVVVV directory.
+		loadlevelsfolder()
+		tostate(6)
+	else
+		tostate(oldstate, true)
+	end
+end
+
 hook("func")

@@ -775,7 +775,7 @@ function love.draw()
 		end
 
 
-		rbutton(L.BTN_OK, 0)
+		rbutton({L.BTN_OK, "b"}, 0)
 
 		rbutton(L.CUSTOMVVVVVVDIRECTORY, 2)
 		rbutton(L.LANGUAGE, 3)
@@ -829,13 +829,7 @@ function love.draw()
 
 			elseif onrbutton(0) then
 				-- Save
-				saveconfig()
-				if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
-					-- Immediately apply the new custom VVVVVV directory.
-					tostate(6)
-				else
-					tostate(oldstate, true)
-				end
+				exitvedoptions()
 			elseif onrbutton(2) then
 				-- Custom VVVVVV folder
 				if vvvvvvfolder_expected == nil then
@@ -3382,6 +3376,8 @@ function love.keypressed(key)
 		pasteroom()
 	elseif nodialog and state == 12 and key == "s" then
 		create_export_dialog()
+	elseif nodialog and state == 13 and key == "escape" then
+		exitvedoptions()
 	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
 		tostate(oldstate, true)
 		if state == 11 then
