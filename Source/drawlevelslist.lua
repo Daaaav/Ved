@@ -326,7 +326,7 @@ function drawlevelslist()
 	end
 	if not state6old1 then
 		hoverdraw(newbtn, love.graphics.getWidth()-32, 0, 32, 32, 2) -- -96
-		showhotkey("N", love.graphics.getWidth()-32-2, 32-8)
+		showhotkey("cN", love.graphics.getWidth()-32-2, 32-8)
 	else
 		hoverdraw(retbtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
 		showhotkey("b", love.graphics.getWidth()-32-2, 32-8)
