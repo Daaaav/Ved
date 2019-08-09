@@ -553,6 +553,11 @@ function love.draw()
 		startinputonce()
 	elseif state == 1 then
 		drawmaineditor()
+
+		if gotostateonnextdraw == 6 then
+			gotostateonnextdraw = nil
+			tostate(6)
+		end
 	elseif state == 2 then
 		love.graphics.print("Syntax highlighting" .. input .. __, 10, 10)
 
@@ -3151,7 +3156,10 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "l") then
 		-- Load
-		tostate(6)
+		--
+		-- We have to do this in love.draw() or else the
+		-- editorscreenshot will be of the wrong state
+		gotostateonnextdraw = 6
 	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if state == 6 and not state6old1 then
