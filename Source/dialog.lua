@@ -109,8 +109,26 @@ function cDialog:draw(topmost)
 	love.graphics.setScissor()
 
 	-- Text boxes
+	local fieldactive = false
+	local active_x, active_y, active_w, active_type
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
+		if self.currentfield == k then
+			fieldactive = true
+			active_x = v[2]
+			active_y = v[3]
+			active_w = v[4]
+			active_type = v[6]
+		end
+	end
+
+	if fieldactive and showtabrect and topmost then
+		active_x = self.x+10+active_x*8
+		active_y = self.y+self.windowani+10+active_y*8 + 1
+		active_w = active_w*8
+
+		self:setColor(255,255,127,255,not topmost)
+		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, 10)
 	end
 
 	-- Window border
@@ -205,6 +223,7 @@ end
 
 function cDialog:mousepressed(x, y)
 	-- Left mouse button pressed on the dialog
+	showtabrect = false
 	if self.closing then
 		return
 	end
@@ -538,6 +557,7 @@ function cDialog:close(button)
 	-- Button is assumed to exist here, no questions asked.
 	self.return_btn = button
 
+	showtabrect = false
 	self.closing = true
 
 	if not s.dialoganimations then
