@@ -147,6 +147,8 @@ function love.load()
 
 	nodialog = true
 
+	showtabrect = false
+
 	arrow_up = "↑"
 	arrow_down = "↓"
 	arrow_left = "←"
@@ -2755,6 +2757,7 @@ function love.keypressed(key)
 			end
 		end
 		if key == "tab" then
+			showtabrect = true
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
@@ -3610,7 +3613,7 @@ function love.keyreleased(key)
 		mouselockx = -1
 	elseif key == "[" then
 		mouselocky = -1
-	elseif tilespicker_shortcut and (key == "lshift" or key == "l" .. ctrl) then
+	elseif nodialog and (key == "lshift" or key == "l" .. ctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
 	elseif key == "return" then
