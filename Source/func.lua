@@ -3029,6 +3029,10 @@ function display_levels_list_title(title, x, y, k)
 	if titletoolong then
 		sx, sy, sw, sh = love.graphics.getScissor()
 	end
+	if sy == nil or sh == nil then
+		sy = 0
+		sh = love.graphics.getHeight()
+	end
 	if current_scrolling_leveltitle_k == k then
 		love.graphics.setScissor(x, sy, 21*8, sh)
 		love.graphics.print(title, x+21*8-math.floor(current_scrolling_leveltitle_pos), y)
