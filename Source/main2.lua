@@ -472,6 +472,7 @@ function love.load()
 	-- Music! Note that we're not yet loading the music in memory here.
 	initvvvvvvmusic()
 	musiceditorfile = ""
+	musiceditorfile_forcevvvvvvfolder = false
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]

@@ -854,12 +854,15 @@ function dialog.callback.loadvvvvvvmusic(button, fields)
 		return
 	end
 
+	musiceditorfile_forcevvvvvvfolder = false
+
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
 	local success, errormessage
 	if filepath == vvvvvvfolder .. dirsep .. "vvvvvvmusic.vvv"
 	or filepath == vvvvvvfolder .. dirsep .. "mmmmmm.vvv" then
 		success, errormessage = loadvvvvvvmusic(filename)
+		musiceditorfile_forcevvvvvvfolder = true
 	else
 		success, errormessage = loadvvvvvvmusic("musiceditor", filepath)
 	end
@@ -867,7 +870,7 @@ function dialog.callback.loadvvvvvvmusic(button, fields)
 		dialog.create(langkeys(L.MUSICLOADERROR, {fields.name}) .. anythingbutnil(errormessage))
 	else
 		musiceditorfile = filename
-		if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
+		if musiceditorfile_forcevvvvvvfolder then
 			musicplayerfile = musiceditorfile
 		else
 			musicplayerfile = "musiceditor"

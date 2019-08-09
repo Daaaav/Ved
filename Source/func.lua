@@ -656,7 +656,7 @@ function loadstate(new, ...)
 		soundviewer = false
 		if ... == "musiceditor" then
 			musiceditor = true
-			if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
+			if musiceditorfile_forcevvvvvvfolder then
 				musicplayerfile = musiceditorfile
 			else
 				musicplayerfile = "musiceditor"
