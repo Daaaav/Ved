@@ -40,6 +40,7 @@ function loadvvvvvvmusics()
 end
 
 function unloadvvvvvvmusic(file)
+	stopmusic()
 	music[file] = nil
 end
 

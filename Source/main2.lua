@@ -92,11 +92,15 @@ function love.load()
 	ved_require("music")
 
 	if s.pscale ~= 1 or s.psmallerscreen then
-		za,zb,zc = love.window.getMode()
-		zd,ze,zf = love.window.getPosition()
-		zwidth,zheight = love.window.getDesktopDimensions(zf)
-		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+		local za,zb,zc = love.window.getMode()
+		if love_version_meets(9,2) then
+			local zd,ze,zf = love.window.getPosition()
+			local zwidth,zheight = love.window.getDesktopDimensions(zf)
+			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+		else
+			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		end
 
 		ved_require("scaling")
 	end
@@ -479,6 +483,7 @@ function love.load()
 	-- Music! Note that we're not yet loading the music in memory here.
 	initvvvvvvmusic()
 	musiceditorfile = ""
+	musiceditorfile_forcevvvvvvfolder = false
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]

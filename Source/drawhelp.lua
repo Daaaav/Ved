@@ -135,7 +135,7 @@ function drawhelp()
 						-- Leaving this thing undocumented except in the code.
 						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
 						singlecharmode = true
-					elseif part2:sub(fl,fl) == ")" then
+					elseif part2:sub(fl,fl) == ")" and helparticle == 1 then
 						tostate(oldstate, true)
 						if state == 11 then
 							-- Back to search results
@@ -344,6 +344,9 @@ function drawhelp()
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Copy
+						input = input .. input_r
+						input_r = ""
+						helparticlecontent[helpeditingline] = input
 						love.system.setClipboardText(table.concat(helparticlecontent, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 						setgenerictimer(1, .25)
 					elseif not mousepressed and mouseon(love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16) then

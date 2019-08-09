@@ -656,7 +656,7 @@ function loadstate(new, ...)
 		soundviewer = false
 		if ... == "musiceditor" then
 			musiceditor = true
-			if musiceditorfile == "vvvvvvmusic.vvv" or musiceditorfile == "mmmmmm.vvv" then
+			if musiceditorfile_forcevvvvvvfolder then
 				musicplayerfile = musiceditorfile
 			else
 				musicplayerfile = "musiceditor"
@@ -3024,6 +3024,10 @@ function display_levels_list_title(title, x, y, k)
 	local sx, sy, sw, sh
 	if titletoolong then
 		sx, sy, sw, sh = love.graphics.getScissor()
+	end
+	if sy == nil or sh == nil then
+		sy = 0
+		sh = love.graphics.getHeight()
 	end
 	if current_scrolling_leveltitle_k == k then
 		love.graphics.setScissor(x, sy, 21*8, sh)
