@@ -444,6 +444,13 @@ INVALIDFILENAME_MAC = "macOS doesn't allow the : character in filenames.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "DEL",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
