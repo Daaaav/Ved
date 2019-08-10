@@ -76,7 +76,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				love.graphics.print(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+				display_levels_list_filename(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1))
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -177,7 +177,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							love.graphics.print(displayable_filename(v.name), 18, 16+8*k2+levellistscroll) -- y = 16+8*k
+							display_levels_list_filename(v.name, 18, 16+8*k2+levellistscroll, k)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -225,7 +225,7 @@ function drawlevelslist()
 			end
 
 			-- Draw level metadata
-			local preferred_k, preferred_k_location, md, topy
+			local preferred_k, preferred_k_location, md, topy, filename
 			if hoveringlevel_k ~= nil then
 				preferred_k = hoveringlevel_k
 				preferred_k_location = hoveringlevel_k_location
@@ -248,6 +248,20 @@ function drawlevelslist()
 				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
 					md = files[currentdir][preferred_k].metadata
 					topy = 24+8*preferred_k_location+levellistscroll
+				end
+				if preferred_k < 0 then
+					filename = s.recentfiles[#s.recentfiles+preferred_k+1] .. ".vvvvvv"
+				else
+					filename = files[currentdir][preferred_k].name
+				end
+				if preferred_k ~= current_scrolling_levelfilename_k then
+					if font8:getWidth(displayable_filename(filename)) > 50*8 then
+						current_scrolling_levelfilename_k = preferred_k
+						current_scrolling_levelfilename_filename = displayable_filename(filename)
+					else
+						current_scrolling_levelfilename_k = nil
+					end
+					current_scrolling_levelfilename_pos = 400
 				end
 				if md ~= nil then
 					if topy+48 > love.graphics.getHeight() then
@@ -277,9 +291,13 @@ function drawlevelslist()
 						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
-			elseif current_scrolling_leveltitle_k ~= nil then
+			elseif current_scrolling_leveltitle_k ~= nil or current_scrolling_levelfilename_k ~= nil then
 				-- If we're not looking at any metadata, no title should scroll
-				current_scrolling_leveltitle_k = nil
+				if current_scrolling_leveltitle_k ~= nil then
+					current_scrolling_leveltitle_k = nil
+				elseif current_scrolling_levelfilename_k ~= nil then
+					current_scrolling_levelfilename_k = nil
+				end
 			end
 		end
 

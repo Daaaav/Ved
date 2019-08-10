@@ -732,6 +732,9 @@ function loadlevelsfolder()
 	current_scrolling_leveltitle_k = nil
 	current_scrolling_leveltitle_title = nil
 	current_scrolling_leveltitle_pos = 168
+	current_scrolling_levelfilename_k = nil
+	current_scrolling_levelfilename_filename = nil
+	current_scrolling_levelfilename_pos = 400
 	cons("Loaded.")
 	-- Now get all the backups
 	files[".ved-sys" .. dirsep .. "backups"] = {}
@@ -3042,6 +3045,33 @@ function display_levels_list_title(title, x, y, k)
 		love.graphics.setScissor(sx, sy, sw, sh)
 		if current_scrolling_leveltitle_k ~= k then
 			love.graphics.print(arrow_right, x+20*8, y)
+		end
+	end
+end
+
+function display_levels_list_filename(filename, x, y, k)
+	local filenametoolong = font8:getWidth(filename) > 50*8
+	local sx, sy, sw, sh
+	if filenametoolong then
+		sx, sy, sw, sh = love.graphics.getScissor()
+	end
+	if sy == nil or sh == nil then
+		sy = 0
+		sh = love.graphics.getHeight()
+	end
+	if current_scrolling_levelfilename_k == k then
+		love.graphics.setScissor(x, sy, 50*8, sh)
+		love.graphics.print(filename, x+50*8-math.floor(current_scrolling_levelfilename_pos), y)
+	else
+		if filenametoolong then
+			love.graphics.setScissor(x, sy, 49*8, sh)
+		end
+		love.graphics.print(filename, x, y)
+	end
+	if filenametoolong then
+		love.graphics.setScissor(sx, sy, sw, sh)
+		if current_scrolling_levelfilename_k ~= k then
+			love.graphics.print(arrow_right, x+49*8, y)
 		end
 	end
 end
