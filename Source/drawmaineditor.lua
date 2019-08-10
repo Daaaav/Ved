@@ -2091,7 +2091,7 @@ function drawmaineditor()
 				dialog.create(
 					L.PLATVCHANGE_MSG,
 					DBS.OKCANCEL,
-					nil,
+					dialog.callback.platv,
 					L.PLATVCHANGE_TITLE,
 					dialog.form.simplename,
 					dialog.callback.platv_validate
