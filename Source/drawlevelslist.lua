@@ -177,7 +177,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							display_levels_list_string(v.name, 18, 16+8*k2+levellistscroll, k, 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
+							display_levels_list_string(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k, 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
