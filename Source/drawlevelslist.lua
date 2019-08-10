@@ -291,13 +291,10 @@ function drawlevelslist()
 						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
-			elseif current_scrolling_leveltitle_k ~= nil or current_scrolling_levelfilename_k ~= nil then
+			else
 				-- If we're not looking at any metadata, no title should scroll
-				if current_scrolling_leveltitle_k ~= nil then
-					current_scrolling_leveltitle_k = nil
-				elseif current_scrolling_levelfilename_k ~= nil then
-					current_scrolling_levelfilename_k = nil
-				end
+				current_scrolling_leveltitle_k = nil
+				current_scrolling_levelfilename_k = nil
 			end
 		end
 
