@@ -3022,56 +3022,29 @@ function displayable_filename(name)
 	return name:gsub("[\r\n]", "?")
 end
 
-function display_levels_list_title(title, x, y, k)
-	local titletoolong = font8:getWidth(title) > 21*8
+function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos)
+	local stringtoolong = font8:getWidth(string) > len*8
 	local sx, sy, sw, sh
-	if titletoolong then
+	if stringtoolong then
 		sx, sy, sw, sh = love.graphics.getScissor()
 	end
 	if sy == nil or sh == nil then
 		sy = 0
 		sh = love.graphics.getHeight()
 	end
-	if current_scrolling_leveltitle_k == k then
-		love.graphics.setScissor(x, sy, 21*8, sh)
-		love.graphics.print(title, x+21*8-math.floor(current_scrolling_leveltitle_pos), y)
+	if scroll_k == k then
+		love.graphics.setScissor(x, sy, len*8, sh)
+		love.graphics.print(string, x+len*8-math.floor(scroll_pos), y)
 	else
-		if titletoolong then
-			love.graphics.setScissor(x, sy, 20*8, sh)
+		if stringtoolong then
+			love.graphics.setScissor(x, sy, (len-1)*8, sh)
 		end
-		love.graphics.print(title, x, y)
+		love.graphics.print(string, x, y)
 	end
-	if titletoolong then
+	if stringtoolong then
 		love.graphics.setScissor(sx, sy, sw, sh)
-		if current_scrolling_leveltitle_k ~= k then
-			love.graphics.print(arrow_right, x+20*8, y)
-		end
-	end
-end
-
-function display_levels_list_filename(filename, x, y, k)
-	local filenametoolong = font8:getWidth(filename) > 50*8
-	local sx, sy, sw, sh
-	if filenametoolong then
-		sx, sy, sw, sh = love.graphics.getScissor()
-	end
-	if sy == nil or sh == nil then
-		sy = 0
-		sh = love.graphics.getHeight()
-	end
-	if current_scrolling_levelfilename_k == k then
-		love.graphics.setScissor(x, sy, 50*8, sh)
-		love.graphics.print(filename, x+50*8-math.floor(current_scrolling_levelfilename_pos), y)
-	else
-		if filenametoolong then
-			love.graphics.setScissor(x, sy, 49*8, sh)
-		end
-		love.graphics.print(filename, x, y)
-	end
-	if filenametoolong then
-		love.graphics.setScissor(sx, sy, sw, sh)
-		if current_scrolling_levelfilename_k ~= k then
-			love.graphics.print(arrow_right, x+49*8, y)
+		if scroll_k ~= k then
+			love.graphics.print(arrow_right, x+(len-1)*8, y)
 		end
 	end
 end

@@ -76,7 +76,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				display_levels_list_filename(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1))
+				display_levels_list_string(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -87,7 +87,7 @@ function drawlevelslist()
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
-						display_levels_list_title(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1))
+						display_levels_list_string(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
 					end
 				end
 
@@ -177,7 +177,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							display_levels_list_filename(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k)
+							display_levels_list_string(v.name, 18, 16+8*k2+levellistscroll, k, 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -186,7 +186,7 @@ function drawlevelslist()
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
-									display_levels_list_title(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k)
+									display_levels_list_string(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
 								end
 							end
 
