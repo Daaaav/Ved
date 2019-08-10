@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-08-04 17:21:32 (CEST)
+--- Last converted: 2019-08-10 18:43:23 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -446,6 +446,13 @@ INVALIDFILENAME_MAC = "macOS не позволяет использовать с
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "DEL",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Скрипты [$1]",
@@ -493,6 +500,14 @@ CHANGEVERB = "Изменить", -- verb
 LOADIMAGE = "Загрузить изображение",
 GRID = "Сетка",
 NOTALPHAONLY = "RGB",
+
+OPAQUEROOMNAMEBACKGROUND = "Сделать фон названия комнаты непрозрачным",
+PLATVCHANGE_TITLE = "Изменить скорость платформы",
+PLATVCHANGE_MSG = "Скорость:",
+PLATVCHANGE_INVALID = "Необходимо ввести число",
+RENAMESCRIPTREFERENCES = "Переименовать ссылки",
+PLATFORMSPEEDSLIDER = "Скор.",
+
 
 }
 
@@ -1565,7 +1580,7 @@ fadein¤()\w#h
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Немедленная отмена fadeout()
 
 untilfade¤()\w#h
 
@@ -1855,10 +1870,6 @@ flag¤(x,on/off)\w#h
 telesave¤()\r#h
 
 Сохраняет игру (только при обычном сохранении у телепорта; не использовать!)
-
-befadein¤()\w#h
-
-Instantly fade in from fadeout()
 
 createactivityzone¤(цвет)\b#h
 
