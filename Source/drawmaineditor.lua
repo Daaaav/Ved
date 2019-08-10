@@ -1396,7 +1396,9 @@ function drawmaineditor()
 		end
 
 		love.graphics.setFont(font8)
-		displayentities(screenoffset, 0, roomx, roomy)
+		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
+		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
+		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
@@ -1463,10 +1465,10 @@ function drawmaineditor()
 			local extralines = roomtext_extralines(temporaryroomname)
 
 			love.graphics.setColor(160,160,0,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16, 40*16, 16 + extralines*16)
+			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, 16 + extralines*16 + 4)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.printf(temporaryroomname, screenoffset, 29*16 +3 - extralines*16, 40*16, "center")
+			love.graphics.printf(temporaryroomname, screenoffset, 29*16 +3 - extralines*16 - 2, 40*16, "center")
 			love.graphics.setFont(font8)
 		elseif editingroomname then
 			-- We're editing this room name! If it doesn't fit, then just make it higher, we're editing it anyway
@@ -1474,28 +1476,33 @@ function drawmaineditor()
 			local extralines = roomtext_extralines(text)
 
 			love.graphics.setColor(128,128,128,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16, 40*16, 16)
+			love.graphics.rectangle("fill", screenoffset, 29*16 - 4, 40*16, 16 + 4)
 			if extralines > 0 then
 				love.graphics.setColor(255,0,0,128)
-				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16, 40*16, extralines*16)
+				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, extralines*16 + 1)
 			end
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.printf(text, screenoffset, 29*16 +3 - extralines*16, 40*16, "center")
+			love.graphics.printf(text, screenoffset, 29*16 +3 - extralines*16 - 2, 40*16, "center")
 			love.graphics.setFont(font8)
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= "" then
+		elseif hasroomname then
 			-- Display it
 			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
 			local textx = (screenoffset+320)-(font16:getWidth(text)/2)
 
-			love.graphics.setColor(0,0,0,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16, 40*16, 16)
+			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
+			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setFont(font16)
-			love.graphics.setScissor(screenoffset, 29*16, 40*16, 16)
-			love.graphics.print(text, textx, 29*16 +3)
+			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
+			love.graphics.print(text, textx, 29*16 +3-2)
 			love.graphics.setScissor()
 			love.graphics.setFont(font8)
+		end
+
+		-- Display the bottom 2 rows of roomtexts ABOVE the roomname
+		if hasroomname and not overwritename then
+			displaybottom2rowstexts(screenoffset, 0, roomx, roomy)
 		end
 	end
 
@@ -1538,7 +1545,7 @@ function drawmaineditor()
 			displayentity(
 				screenoffset, 0, roomx, roomy, movingentity, entitydata[movingentity],
 				cursorx, cursory,
-				false, false, {}, false, false
+				false, false, {}, false, false, true
 			)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
@@ -1801,6 +1808,7 @@ function drawmaineditor()
 		end
 
 		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)
+		showhotkey("f", 88-1, 16-8)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(88, 0, 16, 16) then
 			eraserlocked = not eraserlocked
@@ -1829,9 +1837,13 @@ function drawmaineditor()
 	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
+	showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
+	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
+	showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
 	hoverdraw(savebtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
+	showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
@@ -1850,9 +1862,17 @@ function drawmaineditor()
 		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, 40)
 		love.graphics.setColor(255,255,255)
 	end
+
+	showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
+	showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8, ALIGN.CENTER)
+
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
+
+	showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4, ALIGN.CENTER)
+	showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
+	showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
@@ -2020,8 +2040,30 @@ function drawmaineditor()
 
 	-- We also have buttons for enemy and platform settings!
 	if selectedtool == 8 or selectedtool == 9 then
+		local roomsettings = {platv = levelmetadata[(roomy)*20 + (roomx+1)].platv}
 		rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
-		rbutton((selectedtool == 8 and langkeys(L.PLATFORMSPEED, {levelmetadata[(roomy)*20 + (roomx+1)].platv}) or {langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}), -2, 164+4, true)
+		if selectedtool == 9 then
+			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
+		else
+			love.graphics.print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(24*(-2+1))-(160)+6)
+			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(roomsettings.platv) + 8, 16)
+			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()-(24*(-2+1))-(160), "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
+			local oldplatv = levelmetadata[roomy*20 + roomx+1].platv
+			if roomsettings.platv ~= oldplatv then
+				levelmetadata[roomy*20 + roomx+1].platv = roomsettings.platv
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+							{
+								key = "platv",
+								oldvalue = oldplatv,
+								newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+							}
+						},
+						switchtool = 8
+					}
+				)
+				finish_undo("PLATV (slider)")
+			end
+		end
 
 		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 
@@ -2040,16 +2082,20 @@ function drawmaineditor()
 				end
 
 				mousepressed = true
-			elseif onrbutton(-2, 164+4, true) then
-				-- Enemy type // Platform speed
-				if selectedtool == 9 then
-					-- Enemy type
-					switchenemies()
-				else
-					-- Platform speed
-					changedplatv = true
-					levelmetadata[(roomy)*20 + (roomx+1)].platv = cycle(levelmetadata[(roomy)*20 + (roomx+1)].platv, 8, 0)
-				end
+			elseif onrbutton(-2, 164+4, true) and selectedtool == 9 then
+				-- Enemy type
+				switchenemies()
+				mousepressed = true
+			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv) + 8, 16) and selectedtool == 8 then
+				-- Platform speed
+				dialog.create(
+					L.PLATVCHANGE_MSG,
+					DBS.OKCANCEL,
+					nil,
+					L.PLATVCHANGE_TITLE,
+					dialog.form.simplename,
+					dialog.callback.platv_validate
+				)
 
 				mousepressed = true
 			end
@@ -2072,7 +2118,7 @@ function drawmaineditor()
 					switchtool = 8
 				}
 			)
-			finish_undo("PLATV")
+			finish_undo("PLATV (reset to 4)")
 		end
 	end
 
@@ -2145,6 +2191,10 @@ function drawmaineditor()
 
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-46, (6*16), 8+4) -- -16-16-2-4-8 => -46
 	love.graphics.printf(tilespicker and L.HIDEALL or L.SHOWALL, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-42, 6*16, "center") -- -16-16-4+2-8 => -42
+
+	showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
+	showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
+	showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")

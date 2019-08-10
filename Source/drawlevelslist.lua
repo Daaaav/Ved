@@ -76,7 +76,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				love.graphics.print(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+				display_levels_list_string(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -87,7 +87,7 @@ function drawlevelslist()
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
-						display_levels_list_title(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1))
+						display_levels_list_string(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
 					end
 				end
 
@@ -177,7 +177,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							love.graphics.print(displayable_filename(v.name), 18, 16+8*k2+levellistscroll) -- y = 16+8*k
+							display_levels_list_string(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k, 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -186,7 +186,7 @@ function drawlevelslist()
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
-									display_levels_list_title(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k)
+									display_levels_list_string(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
 								end
 							end
 
@@ -225,7 +225,7 @@ function drawlevelslist()
 			end
 
 			-- Draw level metadata
-			local preferred_k, preferred_k_location, md, topy
+			local preferred_k, preferred_k_location, md, topy, filename
 			if hoveringlevel_k ~= nil then
 				preferred_k = hoveringlevel_k
 				preferred_k_location = hoveringlevel_k_location
@@ -248,6 +248,20 @@ function drawlevelslist()
 				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
 					md = files[currentdir][preferred_k].metadata
 					topy = 24+8*preferred_k_location+levellistscroll
+				end
+				if preferred_k < 0 then
+					filename = s.recentfiles[#s.recentfiles+preferred_k+1] .. ".vvvvvv"
+				else
+					filename = files[currentdir][preferred_k].name
+				end
+				if preferred_k ~= current_scrolling_levelfilename_k then
+					if font8:getWidth(displayable_filename(filename)) > 50*8 then
+						current_scrolling_levelfilename_k = preferred_k
+						current_scrolling_levelfilename_filename = displayable_filename(filename)
+					else
+						current_scrolling_levelfilename_k = nil
+					end
+					current_scrolling_levelfilename_pos = 400
 				end
 				if md ~= nil then
 					if topy+48 > love.graphics.getHeight() then
@@ -277,9 +291,10 @@ function drawlevelslist()
 						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
-			elseif current_scrolling_leveltitle_k ~= nil then
+			else
 				-- If we're not looking at any metadata, no title should scroll
 				current_scrolling_leveltitle_k = nil
+				current_scrolling_levelfilename_k = nil
 			end
 		end
 
@@ -294,7 +309,7 @@ function drawlevelslist()
 			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 		end
 
-		if (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) then
+		if (love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab")) and nodialog) then
 			if tabselected == 0 and #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
 				tabselected = -1
 			elseif tabselected == 0 or tabselected < -#s.recentfiles then
@@ -320,11 +335,16 @@ function drawlevelslist()
 	if not secondlevel then
 		hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
 		hoverdraw(refreshbtn, love.graphics.getWidth()-128+8+16, 8, 16, 16, 1)
+
+		showhotkey("q", love.graphics.getWidth()-128+8+8-2, 16)
+		showhotkey("t", love.graphics.getWidth()-128+8+16+8-2, 16)
 	end
 	if not state6old1 then
 		hoverdraw(newbtn, love.graphics.getWidth()-32, 0, 32, 32, 2) -- -96
+		showhotkey("cN", love.graphics.getWidth()-32-2, 32-8)
 	else
 		hoverdraw(retbtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
+		showhotkey("b", love.graphics.getWidth()-32-2, 32-8)
 	end
 
 	if not mousepressed and nodialog and love.mouse.isDown("l") then

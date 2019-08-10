@@ -57,6 +57,15 @@ function love.load()
 		ved_require("lang/" .. s.lang)
 	end
 
+	if love.system.getOS() == "OS X" then
+		table.insert(tinynumbers_fallbacks, tinynumbers_cmd)
+	end
+	if s.lang == "Deutsch" --[[ German, not Dutch ]] then
+		table.insert(tinynumbers_fallbacks, tinynumbers_strg)
+	end
+	table.insert(tinynumbers_fallbacks, tinynumbers_ctrl)
+	tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
+
 	ved_require("devstrings")
 	ved_require("const")
 	ved_require("func")
@@ -141,6 +150,8 @@ function love.load()
 	sp_got = 0
 
 	nodialog = true
+
+	showtabrect = false
 
 	arrow_up = "↑"
 	arrow_down = "↓"
@@ -542,6 +553,11 @@ function love.draw()
 		startinputonce()
 	elseif state == 1 then
 		drawmaineditor()
+
+		if gotostateonnextdraw == 6 then
+			gotostateonnextdraw = nil
+			tostate(6)
+		end
 	elseif state == 2 then
 		love.graphics.print("Syntax highlighting" .. input .. __, 10, 10)
 
@@ -731,7 +747,8 @@ function love.draw()
 				false,
 				"autosavecrashlogs",
 				"loadallmetadata",
-				false
+				false,
+				"opaqueroomnamebackground"
 			}
 		) do
 			if v then
@@ -826,6 +843,9 @@ function love.draw()
 			elseif mouseon(8, 8+(24*14), 16, 16) then
 				-- Use font.png
 				s.usefontpng = not s.usefontpng
+			elseif mouseon(8, 8+(24*15), 16, 16) then
+				-- Make the black roomname backgrounds opaque
+				s.opaqueroomnamebackground = not s.opaqueroomnamebackground
 
 			elseif onrbutton(0) then
 				-- Save
@@ -1385,14 +1405,7 @@ function love.draw()
 
 			if love.keyboard.isDown("f9") then
 				local hotkey = ({"P", "sP", "M", "S", "G"})[a+1]
-				love.graphics.setFont(tinynumbers)
-				local hotkey_w = tinynumbers:getWidth(hotkey)
-				love.graphics.setColor(255,255,255,192)
-				love.graphics.rectangle("fill", (17+744-1)-hotkey_w, (16+44*a)-2, hotkey_w+3, 10)
-				love.graphics.setColor(0,0,0)
-				love.graphics.print(hotkey, (17+744+1)-hotkey_w, 16+44*a)
-				love.graphics.setColor(255,255,255)
-				love.graphics.setFont(font8)
+				showhotkey(hotkey, (17+744-1), (16+44*a)-2, ALIGN.RIGHT)
 			end
 		end
 
@@ -1752,6 +1765,7 @@ function love.draw()
 				(imageviewer_showwhite and checkoff or checkon),
 				check_x, love.graphics.getHeight()-288, 16, 16, 2
 			)
+			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
 			love.graphics.print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-282)
 
 			if nodialog and love.mouse.isDown("l") and not mousepressed
@@ -1794,6 +1808,8 @@ function love.draw()
 					return (imageviewer_s*100) .. "%"
 				end, 32
 			)
+			showhotkey("-", love.graphics.getWidth()-100+16, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
+			showhotkey("+", love.graphics.getWidth()-100+64+8, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
 			love.graphics.printf(
 				imageviewer_w .. L.X .. imageviewer_h,
 				love.graphics.getWidth()-128, love.graphics.getHeight()-114, 128, "center"
@@ -1985,6 +2001,12 @@ function love.update(dt)
 		current_scrolling_leveltitle_pos = current_scrolling_leveltitle_pos + 55*dt
 		if current_scrolling_leveltitle_pos > font8:getWidth(anythingbutnil(current_scrolling_leveltitle_title)) + 168 then
 			current_scrolling_leveltitle_pos = 0
+		end
+	end
+	if current_scrolling_levelfilename_k ~= nil and state == 6 then
+		current_scrolling_levelfilename_pos = current_scrolling_levelfilename_pos + 55*dt
+		if current_scrolling_levelfilename_pos > font8:getWidth(current_scrolling_levelfilename_filename) + 400 then
+			current_scrolling_levelfilename_pos = 0
 		end
 	end
 
@@ -2408,7 +2430,12 @@ function love.update(dt)
 			elseif RCMreturn == L.RENAME then
 				dialog.create(
 					L.NEWNAME, DBS.OKCANCEL,
-					dialog.callback.renamescript, L.RENAMESCRIPT, dialog.form.simplename_make(scriptnames[rvnum]),
+					dialog.callback.renamescript, L.RENAMESCRIPT,
+					{
+						{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
+						{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
+						{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
+					},
 					dialog.callback.renamescript_validate
 				)
 				input = rvnum
@@ -2575,7 +2602,7 @@ function love.keypressed(key)
 				else
 					helparticlecontent[helpeditingline] = input
 				end
-			elseif state == 6 then
+			elseif state == 6 and nodialog then
 				tabselected = 0
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
@@ -2740,6 +2767,7 @@ function love.keypressed(key)
 			end
 		end
 		if key == "tab" then
+			showtabrect = true
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
@@ -2807,7 +2835,9 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		tilespicker_shortcut = true
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("rctrl") then
+			tilespicker_shortcut = true
+		end
 
 		if key == "left" then
 			selectedtile = selectedtile - 1
@@ -2891,14 +2921,76 @@ function love.keypressed(key)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "tab" then
 		eraserlocked = not eraserlocked
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "escape" then
+		if editingbounds == 1 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (esc cancelled)")
+		elseif editingbounds == 2 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (esc cancelled)")
+		end
+
 		editingbounds = 0
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+			end
+
 			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = 0, 0
 			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (deleted)")
 		else
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+			end
+
 			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
 			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (deleted)")
 		end
 
 		editingbounds = 0
@@ -3070,7 +3162,10 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "l") then
 		-- Load
-		tostate(6)
+		--
+		-- We have to do this in love.draw() or else the
+		-- editorscreenshot will be of the wrong state
+		gotostateonnextdraw = 6
 	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if state == 6 and not state6old1 then
@@ -3212,17 +3307,18 @@ function love.keypressed(key)
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
 	elseif (state == 3 or state == 6) and key == "f1" then
+		stopinput()
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
 	elseif state == 3 and keyboard_eitherIsDown(ctrl) then
 		if key == "left" and #scripthistorystack > 0 then
 			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
-		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" then
+		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" and not scriptinstack(carg2) then
 			editorjumpscript(carg2)
-		elseif key == "right" and context == "script" then
+		elseif key == "right" and context == "script" and not scriptinstack(carg1) then
 			editorjumpscript(carg1)
-		elseif key == "right" and context == "roomscript" then
+		elseif key == "right" and context == "roomscript" and not scriptinstack(carg3) then
 			editorjumpscript(carg3)
 		elseif key == "c" then
 			copyscriptline()
@@ -3346,8 +3442,8 @@ function love.keypressed(key)
 			nodialog = false -- Terrible
 		end
 	elseif state == 11 and key == "return" then
-		searchscripts, searchrooms, searchnotes = searchtext(input)
-		searchedfor = input
+		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
+		searchedfor = input .. input_r
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
 		stopinput()
 		tostate(1, true)
@@ -3532,7 +3628,7 @@ function love.keyreleased(key)
 		mouselockx = -1
 	elseif key == "[" then
 		mouselocky = -1
-	elseif tilespicker_shortcut and (key == "lshift" or key == "l" .. ctrl) then
+	elseif nodialog and (key == "lshift" or key == "l" .. ctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
 	elseif key == "return" then

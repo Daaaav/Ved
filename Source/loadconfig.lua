@@ -213,6 +213,11 @@ configs =
 		{
 		default = {0, 128, 0},
 		["type"] = "numbersarray",
+		},
+	opaqueroomnamebackground =
+		{
+		default = false,
+		["type"] = "bool",
 		}
 	}
 

@@ -732,6 +732,9 @@ function loadlevelsfolder()
 	current_scrolling_leveltitle_k = nil
 	current_scrolling_leveltitle_title = nil
 	current_scrolling_leveltitle_pos = 168
+	current_scrolling_levelfilename_k = nil
+	current_scrolling_levelfilename_filename = nil
+	current_scrolling_levelfilename_pos = 400
 	cons("Loaded.")
 	-- Now get all the backups
 	files[".ved-sys" .. dirsep .. "backups"] = {}
@@ -969,15 +972,8 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 	end
 	hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), y, 128-16, 16)
 	love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
-	if love.keyboard.isDown("f9") and hotkey ~= nil then
-		love.graphics.setFont(tinynumbers)
-		local hotkey_w = tinynumbers:getWidth(hotkey)
-		love.graphics.setColor(255,255,255,192)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-9-hotkey_w, y-2, hotkey_w+3, 10)
-		love.graphics.setColor(0,0,0)
-		love.graphics.print(hotkey, love.graphics.getWidth()-7-hotkey_w, y)
-		love.graphics.setColor(255,255,255)
-		love.graphics.setFont(font8)
+	if hotkey ~= nil then
+		showhotkey(hotkey, love.graphics.getWidth()-9, y-2, ALIGN.RIGHT)
 	end
 end
 
@@ -1516,6 +1512,9 @@ end
 
 function createmde()
 	cons("Creating metadata entity...")
+	if count ~= nil then
+		count.entities = count.entities + 1
+	end
 	return {
 		mdeversion = thismdeversion,
 		-- This is of course an ugly way to do it
@@ -3023,29 +3022,29 @@ function displayable_filename(name)
 	return name:gsub("[\r\n]", "?")
 end
 
-function display_levels_list_title(title, x, y, k)
-	local titletoolong = font8:getWidth(title) > 21*8
+function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos)
+	local stringtoolong = font8:getWidth(string) > len*8
 	local sx, sy, sw, sh
-	if titletoolong then
+	if stringtoolong then
 		sx, sy, sw, sh = love.graphics.getScissor()
 	end
 	if sy == nil or sh == nil then
 		sy = 0
 		sh = love.graphics.getHeight()
 	end
-	if current_scrolling_leveltitle_k == k then
-		love.graphics.setScissor(x, sy, 21*8, sh)
-		love.graphics.print(title, x+21*8-math.floor(current_scrolling_leveltitle_pos), y)
+	if scroll_k == k then
+		love.graphics.setScissor(x, sy, len*8, sh)
+		love.graphics.print(string, x+len*8-math.floor(scroll_pos), y)
 	else
-		if titletoolong then
-			love.graphics.setScissor(x, sy, 20*8, sh)
+		if stringtoolong then
+			love.graphics.setScissor(x, sy, (len-1)*8, sh)
 		end
-		love.graphics.print(title, x, y)
+		love.graphics.print(string, x, y)
 	end
-	if titletoolong then
+	if stringtoolong then
 		love.graphics.setScissor(sx, sy, sw, sh)
-		if current_scrolling_leveltitle_k ~= k then
-			love.graphics.print(arrow_right, x+20*8, y)
+		if scroll_k ~= k then
+			love.graphics.print(arrow_right, x+(len-1)*8, y)
 		end
 	end
 end
@@ -3175,6 +3174,38 @@ function exitvedoptions()
 		tostate(6)
 	else
 		tostate(oldstate, true)
+	end
+end
+
+function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
+	align = align or ALIGN.LEFT
+
+	if love.keyboard.isDown("f9") and (nodialog or topmost) then
+		love.graphics.setFont(tinynumbers)
+		local hotkey_w = tinynumbers:getWidth(hotkey)
+		if align == ALIGN.RIGHT then
+			x = x - hotkey_w
+		elseif align == ALIGN.CENTER then
+			x = x - math.floor(hotkey_w / 2) -- Don't want subpixels now
+		end
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(255,255,255,192)
+		else
+			love.graphics.setColor(255,255,255,192)
+		end
+		love.graphics.rectangle("fill", x, y, hotkey_w+3, 10)
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(0,0,0,255)
+		else
+			love.graphics.setColor(0,0,0,255)
+		end
+		love.graphics.print(hotkey, x+2, y+2)
+		if dialog_obj ~= nil then
+			dialog_obj:setColor(255,255,255,255)
+		else
+			love.graphics.setColor(255,255,255)
+		end
+		love.graphics.setFont(font8)
 	end
 end
 

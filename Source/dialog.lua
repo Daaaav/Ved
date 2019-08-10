@@ -109,9 +109,31 @@ function cDialog:draw(topmost)
 	love.graphics.setScissor()
 
 	-- Text boxes
+	local fieldactive = false
+	local active_x, active_y, active_w, active_type
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
+		if self.currentfield == k then
+			fieldactive = true
+			active_x = v[2]
+			active_y = v[3]
+			active_w = v[4]
+			active_type = v[6]
+		end
 	end
+
+	if fieldactive and showtabrect and topmost then
+		active_x = self.x+10+active_x*8
+		active_y = self.y+self.windowani+10+active_y*8 + 1
+		active_w = active_w*8
+
+		self:setColor(255,255,127,255,not topmost)
+		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, 10)
+	end
+
+	-- Window border
+	self:setColor(255,255,255,239)
+	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
 
 	-- Buttons
 	local btnwidth = 72
@@ -148,11 +170,24 @@ function cDialog:draw(topmost)
 			textyoffset = 2
 		end
 		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
+		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost, self}
+		if topmost and not self.closing then
+			if DB_keys[v] == "OK" then
+				showhotkey("n", unpack(args))
+			elseif DB_keys[v] == "CANCEL" then
+				showhotkey("b", unpack(args))
+			elseif DB_keys[v] == "YES" then
+				showhotkey("Y", unpack(args))
+			elseif DB_keys[v] == "NO" then
+				showhotkey("N", unpack(args))
+			elseif DB_keys[v] == "DISCARD" then
+				showhotkey("D", unpack(args))
+			elseif DB_keys[v] == "SAVE" then
+				showhotkey("S", unpack(args))
+			end
+		end
 	end
 
-	-- Window border
-	self:setColor(255,255,255,239)
-	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
 	-- Bar
 	self:setColor(64,64,64,128, not topmost)
 	love.graphics.rectangle("fill", self.x-1, self.y+self.windowani-17, self.width+2, 16)
@@ -188,6 +223,7 @@ end
 
 function cDialog:mousepressed(x, y)
 	-- Left mouse button pressed on the dialog
+	showtabrect = false
 	if self.closing then
 		return
 	end
@@ -521,6 +557,7 @@ function cDialog:close(button)
 	-- Button is assumed to exist here, no questions asked.
 	self.return_btn = button
 
+	showtabrect = false
 	self.closing = true
 
 	if not s.dialoganimations then
@@ -616,6 +653,10 @@ function dialog.create(message, buttons, handler, title, fields, noclosechecker,
 	end
 
 	RCMactive = false
+	if tilespicker_shortcut then
+		tilespicker = false
+		tilespicker_shortcut = false
+	end
 
 	table.insert(dialogs,
 		cDialog:new{
