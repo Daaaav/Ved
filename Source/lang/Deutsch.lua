@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-08-04 17:21:32 (CEST)
+--- Last converted: 2019-08-10 18:43:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -458,6 +458,13 @@ INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "STRG",
 TINY_SHIFT = "SHIFT",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "EINFG",
+TINY_DEL = "ENTF",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Skripte [$1]",
@@ -505,6 +512,14 @@ CHANGEVERB = "Ändern", -- verb
 LOADIMAGE = "Lade Bild",
 GRID = "Netz",
 NOTALPHAONLY = "RGB",
+
+OPAQUEROOMNAMEBACKGROUND = "Mache die schwarzen Raumnamenhintergründe undurchsichtig",
+PLATVCHANGE_TITLE = "Plattformgeschwindigkeit ändern",
+PLATVCHANGE_MSG = "Geschwindigkeit:",
+PLATVCHANGE_INVALID = "Du musst eine Nummer eingeben.",
+RENAMESCRIPTREFERENCES = "Hinweise umbenennen",
+PLATFORMSPEEDSLIDER = "Tempo",
+
 
 }
 
@@ -1820,10 +1835,6 @@ telesave¤()\r#h
 
 Saves your game (in the regular teleporter save, so don't use it!)
 
-befadein¤()\w#h
-
-Instantly fade in from fadeout()
-
 createactivityzone¤(colour)\b#h
 
 Creates a zone where you are standing which says "Press ACTION to talk to
@@ -2582,7 +2593,7 @@ Credits\wh#
 
 Ved ist gemacht von Dav999
 
-Further code contributors: Info Teddy
+Weitere Code-Beiträge: Info Teddy
 
 Manche der Grafiken und Schriftarten wurden von Doormat gemacht
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-08-04 17:21:33 (CEST)
+--- Last converted: 2019-08-10 18:43:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -217,7 +217,7 @@ ROTATE180UNI = "180° draaien",
 HIDEBOUNDS = "Grenzen verb.",
 SHOWBOUNDS = "Grenzen tonen",
 
-ROOMPLATFORMS = "Kamer-platforms", -- basically, platforms/enemies in/for this room
+ROOMPLATFORMS = "Platformen", -- basically, platforms/enemies in/for this room
 ROOMENEMIES = "Kamer-vĳanden",
 
 OPTNAME = "Naam",
@@ -458,6 +458,13 @@ INVALIDFILENAME_MAC = "macOS staat het teken : niet toe in bestandsnamen.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "DEL",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
@@ -505,6 +512,14 @@ CHANGEVERB = "Wĳzigen", -- verb
 LOADIMAGE = "Afbeelding laden",
 GRID = "Raster",
 NOTALPHAONLY = "RGB",
+
+OPAQUEROOMNAMEBACKGROUND = "Maak de zwarte achtergrond van kamernamen ondoorzichtig",
+PLATVCHANGE_TITLE = "Platformsnelheid wĳzigen",
+PLATVCHANGE_MSG = "Snelheid:",
+PLATVCHANGE_INVALID = "Je moet een getal invoeren.",
+RENAMESCRIPTREFERENCES = "Verwĳzingen hernoemen",
+PLATFORMSPEEDSLIDER = "Tempo",
+
 
 }
 
@@ -1840,10 +1855,6 @@ Hetzelfde gedrag als het vereenvoudigde commando
 telesave¤()\r#h
 
 Slaat je spel op (in het normale teleporter-bestand, dus gebruik het niet!)
-
-befadein¤()\w#h
-
-Laat het beeld onmiddellĳk herstellen van fadeout()
 
 createactivityzone¤(kleur)\b#h
 

@@ -499,6 +499,14 @@ LOADIMAGE = "Load image",
 GRID = "Grid",
 NOTALPHAONLY = "RGB",
 
+OPAQUEROOMNAMEBACKGROUND = "Make the black roomname backgrounds opaque",
+PLATVCHANGE_TITLE = "Change platform speed",
+PLATVCHANGE_MSG = "Speed:",
+PLATVCHANGE_INVALID = "You have to type in a number.",
+RENAMESCRIPTREFERENCES = "Rename references",
+PLATFORMSPEEDSLIDER = "Spd.:",
+
+
 }
 
 -- Please check the reference for plural forms
@@ -1812,10 +1820,6 @@ Same behaviour as simplified command
 telesave¤()\r#h
 
 Saves your game (in the regular teleporter save, so don't use it!)
-
-befadein¤()\w#h
-
-Instantly fade in from fadeout()
 
 createactivityzone¤(colour)\b#h
 
