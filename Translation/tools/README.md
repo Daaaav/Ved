@@ -6,7 +6,7 @@ This needs to be done whenever the strings get updated (or when starting out alt
 Starting with the bare .lua language files in the `Source/lang/` folder for Ved, you can run `./create_template_pot.lua`. This will create `Template.lua`, which is a lua language file template with all strings replaced by tokens, which are the same as the keys. It will also create gettext PO template files which can be uploaded to Pootle.
 
 # Uploading new templates to Pootle
-Whenever the strings are changed, after running `./create_template_pot.lua` to create new templates, simply run `./upload_new_templates.sh`. This will copy the template files to the translations folder in Pootle, and will then update the files and database as described (here)[http://docs.translatehouse.org/projects/pootle/en/stable-2.8.x/server/project_setup.html].
+Whenever the strings are changed, after running `./create_template_pot.lua` to create new templates, simply run `./upload_new_templates.sh`. This will copy the template files to the translations folder in Pootle, and will then update the files and database as described [here](http://docs.translatehouse.org/projects/pootle/en/stable-2.8.x/server/project_setup.html).
 
 # Downloading all translations from Pootle
 To download everything, simply run `./download_everything.sh`. This will sync the Pootle stores, then download all the language folders to in/po/.

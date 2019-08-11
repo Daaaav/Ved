@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-08-04 17:21:33 (CEST)
+--- Last converted: 2019-08-10 18:43:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -128,10 +128,10 @@ COPYSCRIPT = "Copier le script",
 SEARCHSCRIPT = "Chercher",
 GOTOLINE = "Aller à la ligne",
 GOTOLINE2 = "Aller à la ligne :",
-INTERNALON = "Int.sc est activé",
-INTERNALOFF = "Int.sc est désactivé",
+INTERNALON = "Sc.int est activé",
+INTERNALOFF = "Sc.int est désactivé",
 INTERNALYESBARS = "say(-1) sc.int",
-INTERNALNOBARS = "Chgt script int.sc",
+INTERNALNOBARS = "Chgt script sc.int",
 VIEW = "Vue",
 SYNTAXHLOFF = "Color. syn. : oui",
 SYNTAXHLON = "Color. syn. : non",
@@ -456,6 +456,13 @@ INVALIDFILENAME_MAC = "macOS n'autorise pas le caractère : dans un nom de fichi
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "MAJ",
+TINY_ALT = "ALT",
+TINY_ESC = "ECHAP",
+TINY_TAB = "TAB",
+TINY_HOME = "MENU",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "SUPPR",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
@@ -503,6 +510,14 @@ CHANGEVERB = "Changer", -- verb
 LOADIMAGE = "Charger image",
 GRID = "Grille",
 NOTALPHAONLY = "RBV",
+
+OPAQUEROOMNAMEBACKGROUND = "Rendre l'arrière-plan du nom de salle opaque",
+PLATVCHANGE_TITLE = "Changer la vitesse de la plateforme",
+PLATVCHANGE_MSG = "Vitesse:",
+PLATVCHANGE_INVALID = "Vous devez entrer un nombre.",
+RENAMESCRIPTREFERENCES = "Renommer les références",
+PLATFORMSPEEDSLIDER = "Vit.:",
+
 
 }
 
@@ -858,29 +873,32 @@ cont = [[
 Modes de placement de tuiles\wh#
 \C=
 
-Ved supports three different modes to draw tiles.
+Ved supporte trois modes différents pour placer des tuiles.
 
-     Automatic mode\h#0
+     Mode automatique\h#0
 
-          This is the mode that is easiest to use. In this mode, you can draw
-          walls and backgrounds and the edges will automatically get placed
-          correctly. However, while editing in this mode, all walls and
-          backgrounds in the room must use the same tileset and color.
+          Ce mode est le plus facile à utiliser. Dans ce mode, vous pouvez
+          ajouter des murs et arrière-plans et les bordures vont être placées
+          correctement. Cependant, en utilisant ce mode, tous les murs et
+          arrière-plans dans la salle doivent utiliser les mêmes couleurs et
+          jeux de tuiles.
 
-     Multi-tileset mode\h#1
+     Mode multi-jeu de tuiles\h#1
 
-          This is similar to automatic mode, except that you can have multiple
-          different tilesets in the same room. That is, changing the tileset will
-          not affect already-placed walls and backgrounds, and you can draw in
-          multiple different types of tiles in the same room.
+          Très similaire au mode automatique, mis à part qu'il est possible
+          d'utiliser plusieurs jeux de tuiles dans la même salle. Cela veut dire
+          que changer un jeu de tuiles n'affectera pas les tuiles de mur et
+          d'arrière-plan déjà placées, et multiples types de tuiles peuvent être
+          ajoutés dans la même salle.
 
-     Manual mode\h#2
+     Mode manuel\h#2
 
-          Also called Direct Mode, in this mode you can place down any tile
-          manually, so you are not bound to the pre-defined tileset combinations
-          and edges will not automatically get added to walls, giving you complete
-          control over how the room will look. However, this editing mode is often
-          slower to use.
+          Aussi appelé Mode Direct, dans ce mode vous pouvez placer
+          n'importe quel tuile manuellement, donc vous n'êtes pas limité par
+          les différents groupes dans les jeux de tuiles, et les bords ne seront
+          pas ajoutés automatiquement aux murs, vous donnant un contrôle
+          complet sur l'aspect de la salle. Cependant, ce mode d'édition est
+          plus lent à utiliser.
 ]]
 },
 
@@ -892,161 +910,174 @@ cont = [[
 Outils\wh#
 \C=
 
-You can use the following tools to fill rooms in your level:
+Vous pouvez utiliser ces différents outils pour remplir les salles de votre
+niveau :
 
 \0
-   Wall\h#
+   Mur\h#
 
 
-The wall tool can be used to place walls.
+L'outil de mur peut être utiliser pour placer des murs.
 
 \1
-   Background\h#
+   Arrière-plan\h#
 
 
-The background tool can be used to place backgrounds.
+L'outil d'arrière-plan peut être utilisé pour placer des arrière-plans.
 
 \2
-   Spike\h#
+   Pointes\h#
 
 
-The spike tool can be used to place spikes. You can use the expand subtool to
-place spikes on a surface with one click (or slide).
+L'outil de pointes peut être utiliser pour placer des pointes. Vous pouvez
+utiliser le sous-outil d'expansion pour placer des pointes sur un mur en un clic
+(ou glissement).
 
 \3
-   Trinket\h#
+   Médaille\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+L'outil de médaille peut être utiliser pour placer des médailles. Veuillez noter
+qu'il existe une limite de vingt médailles dans un niveau.
 
 \4
-   Checkpoint\h#
+   Point de sauvegarde\h#
 
 
-The checkpoint tool can be used to place checkpoints.
+L'outil de point de sauvegarde peut être utilisé pour placer des points de
+sauvegarde.
 
 \5
-   Disappearing platform\h#
+   Plateforme disparaissante\h#
 
 
-The disappearing platform tool can be used to place disappearing platforms.
+L'outil de plateforme disparaissante peut être utilisé pour places des plateformes
+disparaissantes.
 
 \6
-   Conveyor\h#
+   Tapis roulant\h#
 
 
-The conveyor tool can be used to place conveyors.
+L'outil de tapis roulant peut être utilisé pour placer des tapis roulants.
 
 \7
-   Moving platform\h#
+   Plateforme mobile\h#
 
 
-The moving platform tool can be used to place moving platforms.
+L'outil de plateforme mobile peut être utilisé pour placer des plateformes
+mobiles.
 
 \8
-   Enemy\h#
+   Ennemi\h#
 
 
-The enemy tool can be used to place enemies. The shape and color of the enemy are
-determined by the enemy type setting and the tileset (color) respectively.
+L'outil d'ennemi permet de placer des ennemis. La forme et couleur de l'ennemi est
+déterminé respectivement par l'option de type d'ennemi et le jeu de tuiles
+(couleur).
 
 \9
-   Gravity line\h#
+   Ligne de gravité\h#
 
 
-The gravity line tool can be used to place gravity lines.
+L'outil de ligne de gravité permet de placer des lignes de gravité.
 
 \^0
-   Roomtext\h#
+   Texte de salle\h#
 
 
-The roomtext tool can be used to place text.
+L'outil de texte de salle permet de placer du texte.
 
 \^1
    Terminal\h#
 
 
-The terminal tool can be used to place terminals. First place the terminal, then
-type a name for the script. For more information about scripting, please refer to
-the scripting references.
+L'outil de terminal permet de placer des terminaux. En premier, placer le
+terminal, ensuite entrer un nom pour son script. Pour plus d'informations sur la
+programmation de script, veuillez référer aux références de programmation de
+script.
 
 \^2
-   Script box\h#
+   Boite de script\h#
 
 
-The script box tool can be used to place script boxes. First click on the top left
-corner, then on the bottom right corner, then type a name for the script. For more
-information about scripting, please refer to the scripting references.
+L'outil de boite de script permet de placer des boits de script. Tout d'abord
+cliquez sur le coin en haut à gauche, puis en bas à droite et enfin entrez le nom
+du script. Pour plus d'informations sur la programmation de script, veuillez
+référer aux références de programmation de script.
 
 \^3
-   Warp token\h#
+   Jeton de téléportation\h#
 
 
-The warp token tool can be used to place warp tokens. First click where the
-entrance should be, then where the exit should be.
+L'outil de jeton de téléportation peut être utilisé pour placer des jetons de 
+téléportation. Tout d'abord cliquez à l'endroit où l'entrée doit être, puis à
+l'endroit où la sortie doit être.
 
 \^4
-   Warp line\h#
+   Ligne de téléportation\h#
 
 
-The warp line tool can be used to place warp lines. Please note that warp lines
-can only be placed on the edges of a room.
+L'outil de ligne de téléportation peut être utilisé pour placer des lignes de
+téléportation. Veuillez noter que les lignes de téléportation ne peuvent être
+placées que sur les bords d'une salle.
 
 \^5
-   Crewmate\h#
+   Équipier\h#
 
 
-The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+L'outil d'équipier peut être utilisé pour placer des équipiers disparus qui
+peuvent être secourus. Si tous les équipiers sont secourus, le niveau est terminé.
+Veuillez noter qu'il y a une limite de vingt équipiers dans un niveau.
 
 \^6
-   Start point\h#
+   Point de départ\h#
 
 
-The start point tool can be used to place the start point.
+L'outil de point de départ peut être utilisé pour placer le point de départ.
 ]]
 },
 {
 splitid = "040_Script_editor",
-subj = "Script editor",
+subj = "Éditeur de script",
 imgs = {},
 cont = [[
-Script editor\wh#
+Éditeur de script\wh#
 \C=
 
-With the script editor, you can manage and edit scripts in your level.
+Avec l'éditeur de script, vous pouvez gérer et éditer les scripts de votre niveau.
 
 
-Flag names\h#
+Noms de drapeaux\h#
 
-For convenience and script readability, it is possible to use flag names instead
-of numbers. When you use a name instead of a number, a number will automatically
-be associated with that name, in the background. It is also possible to choose
-which number to use for which flag name.
+Pour un confort et une lisibilité de script, il est possible d'utiliser des noms
+de drapeaux plutôt que des nombres. Quand un nombre est utilisé à la place d'un
+drapeau, un nombre est automatiquement associé à ce nom en arrière-plan.
+Il est alors possible de choisir quel nombre utiliser avec chaque nom de drapeau.
 
-Internal scripting mode\h#
+Mode de création de script interne\h#
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. See
-Int.sc mode¤ for more information about internal scripting mode. For more\wl
-information about internal scripting, check the internal scripting reference.
+Pour utiliser un script interne dans Ved, vous pouvez activer le mode de création
+de script interne dans l'éditeur pour gérer toutes les commandes de ce script
+en tant que script interne. Voir le mode Sc.int¤ pour plus d'informations sur le
+mode de création de scripte interne. Pour plus d'informations sur la création de
+script interne, veuillez consulter la référence sur la création de script interne.
 
-Splitting scripts\h#
+Séparer les scripts\h#
 
-It is possible to split a script in two scripts with the script editor. After
-putting the text cursor on the first line you want to be in the new script, click
-the Split button and enter the name of the new script. The lines before the cursor
-will remain in the original script, the lines from the cursor onward will be moved
-to the new script.
+Il est possible de séparer un script en deux scripts avec l'éditeur de script.
+Après avoir placé le curseur de texte sur la première ligne qui doit faire partie
+du nouveau script, appuyez sur le bouton Séparer et entrez le nom du nouveau
+script. Les lignes avant le curseur resteront dans le script original, et toute
+ligne en dessous du curseur seront déplacées dans le nouveau script.
 
-Jumping to scripts\h#
+Sauter dans les scripts\h#
 
-On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
-is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
+Dans les lignes avec les commandes iftrinkets, ifflag, customiftrinkets ou
+customifflag, il est possible de sauter dans un script donné en cliquant sur le
+bouton "Aller à" quand le curseur est sur cette ligne. Vous pouvez aussi entrer
+Ctrl+Droite¤ pour faire ceci, et vous pouvez utiliser ¤Ctrl+Gauche¤ pour revenir en\wnw
+arrière d'un pas dans la chaîne de scripts dans lesquels vous vous trouviez
+précédemment.
 ]]
 },
 
@@ -1152,39 +1183,40 @@ This method has been added as an extra internal scripting mode in Ved 1.6.0.
 
 {
 splitid = "060_Shortcuts",
-subj = "Shortcuts",
+subj = "Raccourcis clavier",
 imgs = {},
 cont = [[
-Editor shortcuts\wh#
+Raccourcis clavier de l'éditeur\wh#
 \C=
 
-Most shortcuts that can be used in VVVVVV can also be used in Ved.
+La majorité des raccourcis clavier utilisable dans VVVVVV peuvent être
+utilisés dans Ved.
 
-F1¤  Change tileset\C
-F2¤  Change color\C
-F3¤  Change enemies\C
-F4¤  Enemy bounds\C
-F5¤  Platform bounds\C
+F1¤  Changer de jeu de tuiles\C
+F2¤  Changer de couleur\C
+F3¤  Changer d'ennemi\C
+F4¤  Limites des ennemis\C
+F5¤  Limites des plateformes\C
 
-F10¤  Manual/automatic mode (direct mode/undirect mode)\C
+F10¤  Mode manuel/automatique (mode direct/mode indirect)\C
 
-W¤  Change warp direction\C
-E¤  Change roomname\C
+W¤  Changer la direction de la téléportation\C
+E¤  Changer le nom de la salle\C
 
-L¤  Load map\C
-S¤  Save map\C
+L¤  Charger carte\C
+S¤  Sauver carte\C
 
-Z¤  3x3 brush (walls and backgrounds)\C
-X¤  5x5 brush (")\C
+Z¤  Pinceau 3x3 (murs et arrière-plans)\C
+X¤  Pinceau 5x5 (")\C
 
-< ¤and¤ >¤  change tool\CnC
-Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  change subtool\CnC
+< ¤et¤ >¤  Changer d'outil\CnC
+Ctrl/Cmd+< ¤et¤ Ctrl/Cmd+>¤  Changer d'outil secondaire\CnC
 
-More shortcuts\h#
+Plus de raccourcis clavier\h#
 
-Ved also introduces a few shortcuts.
+Ved introduit aussi quelques raccourcis clavier.
 
-Main editor\gh#
+Éditeur principal\gh#
 
 Ctrl+P¤  Jump to the room containing the startpoint\C
 Ctrl+S¤  Quicksave\C
@@ -1349,8 +1381,8 @@ cont = [[
 Internal scripting reference\wh#
 \C=
 
-The internal scripting provides more power to scripters, but is also a bit more
-complex than simplified scripting.
+La création de script interne donne plus de pouvoir au scripteur, mais c'est
+aussi un peu plus compliqué que la création de script simplifié.
 
 To use internal scripting in Ved, you can enable internal scripting mode in the
 editor, to handle all commands in that script as internal scripting.
@@ -1820,10 +1852,6 @@ Same behaviour as simplified command
 telesave¤()\r#h
 
 Saves your game (in the regular teleporter save, so don't use it!)
-
-befadein¤()\w#h
-
-Instantly fade in from fadeout()
 
 createactivityzone¤(colour)\b#h
 
@@ -2559,7 +2587,7 @@ _ - Put this before the image number to decrease the image number by 10.
 
 {
 splitid = "990_Credits",
-subj = "Credits",
+subj = "Remerciements",
 imgs = {"credits.png"},
 cont = [[
 \0
@@ -2578,38 +2606,39 @@ cont = [[
 
 
 
-Credits\wh#
+Remerciements\wh#
 \C=
 
-Ved is made by Dav999
+Ved a été créé par Dav999
 
-Further code contributors: Info Teddy
+Autres contributeurs de code: Info Teddy
 
-Some of the graphics and the font were made by Doormat
+Quelques graphismes et la police ont été créés par Doormat
 
-Russian translation: CreepiX, Cheeprick
-Esperanto translation: Doormat
-German translation: r00ster
-French translation: RhenaudTheLukark
-
-
-Special thanks to:\h#
+Traduction en russe: CreepiX, Cheeprick
+Traduction en esperanto: Doormat
+Traduction en allemand: r00ster
+Traduction en français: RhenaudTheLukark
 
 
-Terry Cavanagh for making VVVVVV
+Remerciements spéciaux à :\h#
 
-Everyone who reported bugs, came up with ideas and motivated me to make this!
+
+Terry Cavanagh pour avoir créé VVVVVV
+
+Tous ceux qui ont signalé des bogues, qui ont eu des idées et qui m'ont motivé à
+créer ce logiciel!
 \
 \
+
+
+
+
+Licence\h#
 \
-
-
-
-
-License\h#
-\
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Droit d'auteur 2015-2019  Dav999       (Je n'affirme pas la possession ou le droit
+                                             d'auteur de VVVVVV ou d'aucune de ses
+                                                                      ressources.)
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

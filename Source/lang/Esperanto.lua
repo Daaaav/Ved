@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-08-04 17:21:32 (CEST)
+--- Last converted: 2019-08-10 18:43:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -470,6 +470,13 @@ INVALIDFILENAME_MAC = "macOS ne permesas la signon : en dosiernomoj.",
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "REG",
 TINY_SHIFT = "MAJUSKLO",
+TINY_ALT = "ALT",
+TINY_ESC = "ESC",
+TINY_TAB = "TAB",
+TINY_HOME = "HOME",
+TINY_END = "END",
+TINY_INSERT = "INS",
+TINY_DEL = "DEL",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Skriptoj [$1]",
@@ -517,6 +524,14 @@ CHANGEVERB = "Ŝanĝi", -- verb
 LOADIMAGE = "Ŝargi bildon",
 GRID = "Krado",
 NOTALPHAONLY = "RVB",
+
+OPAQUEROOMNAMEBACKGROUND = "Faru la nigrajn ĉambronomo-fonojn opakaj",
+PLATVCHANGE_TITLE = "Ŝanĝi rapidon de platformoj",
+PLATVCHANGE_MSG = "Rapido:",
+PLATVCHANGE_INVALID = "Vi devas entajpi numeron.",
+RENAMESCRIPTREFERENCES = "Renomi referencojn",
+PLATFORMSPEEDSLIDER = "Rpd.:",
+
 
 }
 
@@ -1832,10 +1847,6 @@ telesave¤()\r#h
 
 Konservas vian ludon (superskribas viajn konservitajn datumojn de la ĉefa ludo, do
 ne uzu ĝin!)
-
-befadein¤()\w#h
-
-Tuje maldissolvigas la ekranon de fadeout()
 
 createactivityzone¤(koloro)\b#h
 

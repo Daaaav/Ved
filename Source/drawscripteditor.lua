@@ -143,6 +143,7 @@ function drawscripteditor()
 
 	-- Now put some buttons on the right!
 	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
+	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
 	love.graphics.printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4+2, 128-16, "center")
 	if not PleaseDo3DSHandlingThanks then
 		--rbutton(L.NEW, 1)
@@ -315,30 +316,36 @@ function drawscripteditor()
 
 	if context == "script" then
 		love.graphics.printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-		rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+		if not scriptinstack(carg1) then
+			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
-		if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
-			editorjumpscript(carg1)
-			mousepressed = true
+			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
+				editorjumpscript(carg1)
+				mousepressed = true
+			end
 		end
 	elseif context == "flagscript" then
 		if carg2 ~= nil and carg2 ~= "" then
 			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-			rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+			if not scriptinstack(carg2) then
+				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
-			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
-				editorjumpscript(carg2)
-				mousepressed = true
+				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
+					editorjumpscript(carg2)
+					mousepressed = true
+				end
 			end
 		end
 	elseif context == "roomscript" then
 		if carg3 ~= nil and carg3 ~= "" then
 			love.graphics.printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
-			rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+			if not scriptinstack(carg3) then
+				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
-			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
-				editorjumpscript(carg3)
-				mousepressed = true
+				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
+					editorjumpscript(carg3)
+					mousepressed = true
+				end
 			end
 		end
 	elseif context == "room" then

@@ -168,8 +168,11 @@ function addrooms(neww, newh)
 	end
 end
 
-function displayentities(offsetx, offsety, myroomx, myroomy)
+function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	-- This assumes the entities for this room are already loaded in entitydata. It just displays all entities.
+	if bottom2rowstext == nil then
+		bottom2rowstext = true
+	end
 	local showtooltip
 	if allowdebug then
 		showtooltip = true
@@ -189,7 +192,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 				removeentity(k, entitydata[k].t)
 			else
 				showtooltip, scriptname_shown, scriptname_editingshown = displayentity(
-					offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true
+					offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext
 				)
 
 				if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
@@ -212,7 +215,19 @@ function displayentities(offsetx, offsety, myroomx, myroomy)
 	end
 end
 
-function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, forcetiley, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, interact)
+function displaybottom2rowstexts(offsetx, offsety, myroomx, myroomy)
+	local showtooltip = allowdebug
+	local scriptname_shown = false
+	local scriptname_args = {}
+	local scriptname_editingshown = false
+	for k,v in pairs(entitydata) do
+		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+			displayentity(offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, true)
+		end
+	end
+end
+
+function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, forcetiley, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, interact, bottom2rowstext)
 	local x, y
 	if forcetilex ~= nil then
 		x = offsetx+forcetilex*16
@@ -437,20 +452,23 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 17 then
 		-- Roomtext
-		love.graphics.setFont(font16)
-		local data = v.data
-		if editingroomtext == k then
-			-- We're editing this text at the moment.
-			data = input .. __
-		end
-		love.graphics.print(data, x, y + 3)
-		love.graphics.setFont(font8)
-		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_17_" .. k,
-				data:len(), 1
-			)
+		if not bottom2rowstext and (v.y%30 == 28 or v.y%30 == 29) then
+		else
+			love.graphics.setFont(font16)
+			local data = v.data
+			if editingroomtext == k then
+				-- We're editing this text at the moment.
+				data = input .. __
+			end
+			love.graphics.print(data, x, y + 3)
+			love.graphics.setFont(font8)
+			if interact then
+				entityrightclick(
+					x, y,
+					{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_17_" .. k,
+					data:len(), 1
+				)
+			end
 		end
 	elseif v.t == 18 then
 		-- Terminal

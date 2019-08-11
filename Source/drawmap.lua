@@ -160,9 +160,17 @@ function drawmap()
 		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, strip_ypos)
 		love.graphics.setColor(255,255,255)
 	end
+
+	showhotkey("cZ", love.graphics.getWidth()-120+7, strip_ypos-4, ALIGN.CENTER)
+	showhotkey("cY", love.graphics.getWidth()-120+16+6, strip_ypos+8, ALIGN.CENTER)
+
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, strip_ypos, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, strip_ypos, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, strip_ypos, 16, 16, 1)
+
+	showhotkey("cX", love.graphics.getWidth()-120+64+6, strip_ypos-4, ALIGN.CENTER)
+	showhotkey("cC", love.graphics.getWidth()-120+80+6, strip_ypos+8, ALIGN.CENTER)
+	showhotkey("cV", love.graphics.getWidth()-120+96+6, strip_ypos-4, ALIGN.CENTER)
 
 	-- The buttons are clickable
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
