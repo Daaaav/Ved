@@ -534,7 +534,7 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
-	end if (thismetadata.mapwidth > 20) or (thismetadata.mapheight > 20) then
+	end if ((thismetadata.mapwidth > 20) or (thismetadata.mapheight > 20)) and not s.allowbiggerthan20x20 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPBIGGERTHAN20X20, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapwidth = math.min(thismetadata.mapwidth, 20)
