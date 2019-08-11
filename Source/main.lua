@@ -17,7 +17,7 @@ vergroups = {6,1}
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-intermediate_version = true -- If true, this is a WIP version
+intermediate_version = false -- If true, this is a WIP version
 
 if intermediate_version then
 	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber
@@ -53,6 +53,9 @@ tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", l
 tinynumbers_ctrl = love.graphics.newImageFont("tinynumbersfont_ctrl.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
+
+-- Temporary
+tinynumbers_love9 = love.graphics.newImageFont("tinynumbersfont_love9.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWsaqwertyuiopkl<>/[]zxnbf+-c", love_version_meets(10) and 1 or nil)
 
 love.graphics.setFont(font8)
 

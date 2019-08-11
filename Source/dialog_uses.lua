@@ -678,6 +678,8 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 
 		scriptnames[input] = fields.name -- Administrative rename
 
+		dirty()
+
 		if not fields.references then
 			return
 		end
@@ -739,8 +741,6 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 				entitydata[k].data = newname
 			end
 		end
-
-		dirty()
 	end
 end
 
@@ -1078,26 +1078,30 @@ function dialog.callback.openimage(button, fields)
 end
 
 function dialog.callback.platv_validate(button, fields)
-	local oldplatv = levelmetadata_get(roomx, roomy).platv
-	if button == DB.OK then
-		if fields.name ~= tostring(tonumber(fields.name)) then
-			dialog.create(L.PLATVCHANGE_INVALID)
-			return true
-		end
-
-		levelmetadata_set(roomx, roomy, "platv", tonumber(fields.name))
-		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
-					{
-						key = "platv",
-						oldvalue = oldplatv,
-						newvalue = levelmetadata_get(roomx, roomy).platv
-					}
-				},
-				switchtool = 8
-			}
-		)
-		finish_undo("PLATV")
+	if button == DB.OK and fields.name ~= tostring(tonumber(fields.name)) then
+		dialog.create(L.PLATVCHANGE_INVALID)
+		return true
 	end
+end
+
+function dialog.callback.platv(button, fields, _, notclosed)
+	if notclosed or button ~= DB.OK then
+		return
+	end
+
+	local oldplatv = levelmetadata[(roomy)*20 + (roomx+1)].platv
+	levelmetadata[(roomy)*20 + (roomx+1)].platv = tonumber(fields.name)
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "platv",
+					oldvalue = oldplatv,
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+				}
+			},
+			switchtool = 8
+		}
+	)
+	finish_undo("PLATV")
 end
 
 function dialog.callback.leveloptions_maxlevelsize(button, fields)
