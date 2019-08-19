@@ -1808,7 +1808,7 @@ function drawmaineditor()
 		end
 
 		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)
-		showhotkey("f", 88-1, 16-8)
+		_= not editingroomname and showhotkey("f", 88-1, 16-8)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(88, 0, 16, 16) then
 			eraserlocked = not eraserlocked
@@ -1837,13 +1837,13 @@ function drawmaineditor()
 	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
-	showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
 	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
-	showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
+	_= not editingroomname and showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
 	hoverdraw(savebtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
-	showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
+	_= not editingroomname and showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
@@ -1863,24 +1863,24 @@ function drawmaineditor()
 		love.graphics.setColor(255,255,255)
 	end
 
-	showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
-	showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8, ALIGN.CENTER)
 
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
-	showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4, ALIGN.CENTER)
-	showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
-	showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
 	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
-	rbutton((upperoptpage2 and {L.COMPARE, "cD"} or {L.MAP, "M"}), 2, 40, false, 20)
-	rbutton((upperoptpage2 and L.STATS or {L.SCRIPTS, "/"}), 3, 40, false, 20)
+	rbutton((upperoptpage2 and (not editingroomname and {L.COMPARE, "cD"} or L.COMPARE) or (not editingroomname and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
+	rbutton((upperoptpage2 and L.STATS or (not editingroomname and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton({L.SEARCH, "cF"}, 4, 40, false, 20)
-		rbutton({L.LEVELNOTEPAD, "c/"}, 5, 40, false, 20)
+		rbutton(not editingroomname and {L.SEARCH, "cF"} or L.SEARCH, 4, 40, false, 20)
+		rbutton(not editingroomname and {L.LEVELNOTEPAD, "c/"} or L.LEVELNOTEPAD, 5, 40, false, 20)
 	end
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
@@ -1898,8 +1898,8 @@ function drawmaineditor()
 	rbutton({(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.MANUALMODE or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({L.ROOMNAME, "E"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
+	rbutton(not editingroomname and {langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+10, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
@@ -2041,7 +2041,7 @@ function drawmaineditor()
 	-- We also have buttons for enemy and platform settings!
 	if selectedtool == 8 or selectedtool == 9 then
 		local roomsettings = {platv = levelmetadata[(roomy)*20 + (roomx+1)].platv}
-		rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
+		rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
 		if selectedtool == 9 then
 			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
 		else
@@ -2194,7 +2194,7 @@ function drawmaineditor()
 
 	showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
 	showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
-	showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
+	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
