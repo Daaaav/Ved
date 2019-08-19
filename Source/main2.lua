@@ -642,6 +642,9 @@ function love.draw()
 				if y >= -16 and y <= love.graphics.getHeight() then
 					hoverrectangle(128,128,128,128, 8, y, screenoffset+640-8-24, 16)
 					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-24, "center")
+					if rvnum == #scriptnames then
+						showhotkey("/", 8+screenoffset+640-8-24, y-2, ALIGN.RIGHT)
+					end
 				end
 
 				-- Are we clicking on this?
