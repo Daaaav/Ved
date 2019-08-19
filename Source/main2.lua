@@ -2546,7 +2546,10 @@ function love.textinput(char)
 
 			if state == 3 then
 				scriptlines[editingline] = input
-				dirty()
+				-- nodialog as a temp global var is checked here too
+				if nodialog and not char == "/" and not char == "?" then
+					dirty()
+				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			elseif state == 6 then
