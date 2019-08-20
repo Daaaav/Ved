@@ -258,6 +258,7 @@ function love.load()
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
 	solidimg = love.graphics.newImage("images/solid.png")
+	solidhalfimg = love.graphics.newImage("images/solidhalf.png")
 	covered_full = love.graphics.newImage("images/covered_full.png")
 	covered_80x60 = love.graphics.newImage("images/covered_80x60.png")
 
