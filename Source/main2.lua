@@ -65,9 +65,10 @@ function love.load()
 			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
 		end
 		table.insert(tinynumbers_fallbacks, tinynumbers_ctrl)
+		table.insert(tinynumbers_fallbacks, tinynumbers_all)
 		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
 	else
-		tinynumbers = tinynumbers_love9
+		tinynumbers = tinynumbers_all
 	end
 
 	ved_require("devstrings")
