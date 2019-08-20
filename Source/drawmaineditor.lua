@@ -1961,6 +1961,7 @@ function drawmaineditor()
 					L.LEVELOPTIONS,
 					dialog.form.leveloptions_make()
 				)
+				editingroomname = false
 			else
 				-- Ved options
 				tostate(13)
@@ -2096,6 +2097,7 @@ function drawmaineditor()
 					dialog.form.simplename,
 					dialog.callback.platv_validate
 				)
+				editingroomname = false
 
 				mousepressed = true
 			end
