@@ -2141,7 +2141,7 @@ function drawmaineditor()
 					DBS.OKCANCEL,
 					dialog.callback.platv,
 					L.PLATVCHANGE_TITLE,
-					dialog.form.simplename,
+					{{"name", 0, 1, 5, ""}},
 					dialog.callback.platv_validate
 				)
 				editingroomname = false
