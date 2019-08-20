@@ -1571,6 +1571,8 @@ function rotateroom180(rx, ry, undoing)
 
 	-- If we have any gravity lines or warp lines, let the autocorrect do the job of fixing them!
 	autocorrectlines()
+	-- Same with tiles
+	autocorrectroom()
 end
 
 function autocorrectlines()
