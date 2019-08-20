@@ -810,7 +810,7 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode)
 			return true
 		elseif tilenum == 49 or tilenum == 50 then
 			return true
-		elseif tileset == 2 and tilenum >= 51 and tilenum < 80 then
+		elseif tileset == 2 and tilenum >= 51 and tilenum <= 74 then
 			return true
 		end
 	end
