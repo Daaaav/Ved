@@ -2865,7 +2865,7 @@ function love.keypressed(key)
 		end
 
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
-		if keyboard_eitherIsDown(ctrl) then
+		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] > 1 then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] - 1
@@ -2885,7 +2885,7 @@ function love.keypressed(key)
 			toolscroll()
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "." then
-		if keyboard_eitherIsDown(ctrl) then
+		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] < #subtoolimgs[selectedtool] then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] + 1
