@@ -2039,11 +2039,15 @@ function drawmaineditor()
 		-- Nee want dan kun je hieronder geen klikken meer opvangen
 	end
 
-	-- We also have buttons for enemy and platform settings!
-	if selectedtool == 8 or selectedtool == 9 then
+	-- We also have buttons for trinkets, and enemy and platform settings!
+	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 then
 		local roomsettings = {platv = levelmetadata[(roomy)*20 + (roomx+1)].platv}
-		rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
-		if selectedtool == 9 then
+		if selectedtool ~= 4 then
+			rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
+		end
+		if selectedtool == 4 then
+			rbutton(L.LISTALLTRINKETS, -2, 164+4, true)
+		elseif selectedtool == 9 then
 			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
 		else
 			love.graphics.print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(24*(-2+1))-(160)+6)
@@ -2066,13 +2070,35 @@ function drawmaineditor()
 			end
 		end
 
-		love.graphics.printf((selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
+		love.graphics.printf((selectedtool == 4 and L.TRINKETS or (selectedtool == 8 and L.ROOMPLATFORMS or L.ROOMENEMIES)), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
 
 		local changedplatv, oldplatv = false, levelmetadata[(roomy)*20 + (roomx+1)].platv
 
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
-			if onrbutton(-3, 164+4, true) then
+			if onrbutton(-2, 164+4, true) and selectedtool == 4 then
+				-- List all trinkets
+				local trinkets = {}
+				for _,ent in pairs(entitydata) do
+					if ent.t == 9 then
+						local x, y = math.floor(ent.x/40), math.floor(ent.y/30)
+						if x < 0 then x = 0 end
+						if y < 0 then y = 0 end
+						if not s.coords0 then
+							x = x + 1
+							y = y + 1
+						end
+						table.insert(trinkets, "(" .. x .. "," .. y .. ")")
+					end
+				end
+
+				trinkets = table.concat(trinkets, ", ")
+				if trinkets == "" then
+					trinkets = L.NOTRINKETSINLEVEL
+				end
+				dialog.create(trinkets, nil, nil, L.LISTOFALLTRINKETS)
+			elseif selectedtool == 4 then
+			elseif onrbutton(-3, 164+4, true) then
 				-- Enemy/platform bounds
 				if selectedtool == 9 then
 					-- Enemy.
