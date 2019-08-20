@@ -54,6 +54,9 @@ tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", l
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
 
+-- Temporary
+tinynumbers_love9 = love.graphics.newImageFont("tinynumbersfont_love9.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWsaqwertyuiopkl<>/[]zxnbf+-c", love_version_meets(10) and 1 or nil)
+
 love.graphics.setFont(font8)
 
 -- We also want this font on a possible crash screen...
