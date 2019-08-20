@@ -1036,7 +1036,13 @@ function love.draw()
 						end
 					end
 				else
-					love.graphics.setColor(128,128,128,128)
+					love.graphics.setColor(64,64,64,128)
+
+					local flgnum2 = flk + (flcol == 8 and 0 or 50)
+					local used = usedflags[flgnum2]
+					if used then
+						love.graphics.setColor(128,128,128,128)
+					end
 				end
 
 				love.graphics.rectangle("fill", ax, ay, w, h)
