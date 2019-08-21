@@ -64,7 +64,6 @@ function love.load()
 		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
 			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
 		end
-		table.insert(tinynumbers_fallbacks, tinynumbers_ctrl)
 		table.insert(tinynumbers_fallbacks, tinynumbers_all)
 		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
 	else
