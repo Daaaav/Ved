@@ -2581,10 +2581,10 @@ Ved is made by Dav999
 
 Further code contributors: Info Teddy
 
-Some of the graphics and the font were made by Doormat
+Some of the graphics and the font were made by Hejmstel
 
-Russian translation: CreepiX, Cheeprick
-Esperanto translation: Doormat
+Russian translation: CreepiX, Cheep
+Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
 

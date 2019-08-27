@@ -15,10 +15,10 @@ msgstr ""
 msgid "Further code contributors: Info Teddy"
 msgstr ""
 
-msgid "Some of the graphics and the font were made by Doormat"
+msgid "Some of the graphics and the font were made by Hejmstel"
 msgstr ""
 
-msgid "Russian translation: CreepiX, Cheeprick\nEsperanto translation: Doormat\nGerman translation: r00ster\nFrench translation: RhenaudTheLukark"
+msgid "Russian translation: CreepiX, Cheep\nEsperanto translation: Hejmstel\nGerman translation: r00ster\nFrench translation: RhenaudTheLukark"
 msgstr ""
 
 msgid "Special thanks to:\\h#"
