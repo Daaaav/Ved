@@ -922,3 +922,26 @@ function renamescriptline(line, pattern, newname)
 		return line:gsub(pattern .. endings[2], "%1" .. newname .. "%2")
 	end
 end
+
+function updateroomline(line, pattern, transform, direction)
+	local endings = {"$", "([%(,%)].*)$"}
+	local match = {false, false}
+
+	local _, x, _, y = line:match(pattern .. endings[1])
+	if x == nil or y == nil then
+		_, x, _, y = line:match(pattern .. endings[2])
+		match[2] = true
+	else
+		match[1] = true
+	end
+
+	x, y = transform(x, y, direction)
+
+	if x ~= nil and y ~= nil then
+		if match[1] then
+			return line:gsub(pattern .. endings[1], "%1" .. x .. "%3" .. y)
+		elseif match[2] then
+			return line:gsub(pattern .. endings[2], "%1" .. x .. "%3" .. y .. "%5")
+		end
+	end
+end

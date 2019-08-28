@@ -495,6 +495,8 @@ function loadstate(new, ...)
 		mapmovedroom = false
 
 		setgenerictimer(2, 2.75)
+
+		shiftroomsupdatescripts = true
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then

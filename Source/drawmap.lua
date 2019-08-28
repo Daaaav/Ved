@@ -172,6 +172,18 @@ function drawmap()
 	showhotkey("cC", love.graphics.getWidth()-120+80+6, strip_ypos+8, ALIGN.CENTER)
 	showhotkey("cV", love.graphics.getWidth()-120+96+6, strip_ypos-4, ALIGN.CENTER)
 
+	love.graphics.printf(L.SHIFTROOMS, love.graphics.getWidth()-120-8, love.graphics.getHeight()-120+4+4, 8*12, "center")
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10)
+	love.graphics.print(arrow_left, love.graphics.getWidth()-120+8*10+1, love.graphics.getHeight()-120+4+3)
+	love.graphics.print(arrow_right, love.graphics.getWidth()-120+8*13+1, love.graphics.getHeight()-120+4+3)
+	love.graphics.print(arrow_up, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120-4+3)
+	love.graphics.print(arrow_down, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120+4+8+3)
+	hoverdraw(shiftroomsupdatescripts and checkon or checkoff, love.graphics.getWidth()-120, love.graphics.getHeight()-96, 16, 16, 2)
+	love.graphics.print(L.SHIFTROOMSUPDATESCRIPTS, love.graphics.getWidth()-120+16+4, love.graphics.getHeight()-96+6)
+
 	-- The buttons are clickable
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then
@@ -200,6 +212,16 @@ function drawmap()
 			copyroom()
 		elseif mouseon(love.graphics.getWidth()-120+98, strip_ypos, 16, 16) then
 			pasteroom()
+		elseif mouseon(love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10) then
+			shiftrooms(SHIFT.LEFT, shiftroomsupdatescripts)
+		elseif mouseon(love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10) then
+			shiftrooms(SHIFT.RIGHT, shiftroomsupdatescripts)
+		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10) then
+			shiftrooms(SHIFT.UP, shiftroomsupdatescripts)
+		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10) then
+			shiftrooms(SHIFT.DOWN, shiftroomsupdatescripts)
+		elseif mouseon(love.graphics.getWidth()-120, love.graphics.getHeight()-96, 16, 16) then
+			shiftroomsupdatescripts = not shiftroomsupdatescripts
 		end
 
 		mousepressed = true
