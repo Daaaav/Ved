@@ -1117,7 +1117,7 @@ function drawmaineditor()
 		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 
 		selectedtile = (aty*40)+(atx+1)-1
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 then --and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		editingroomname = false
 		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
 		local aty = math.floor((love.mouse.getY()) / 16)

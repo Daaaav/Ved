@@ -2906,14 +2906,16 @@ function love.keypressed(key)
 			tilespicker_shortcut = true
 		end
 
-		if key == "left" then
-			selectedtile = selectedtile - 1
-		elseif key == "right" then
-			selectedtile = (selectedtile + 1) % 1200
-		elseif key == "up" then
-			selectedtile = selectedtile - 40
-		elseif key == "down" then
-			selectedtile = (selectedtile + 40) % 1200
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+			if key == "left" then
+				selectedtile = selectedtile - 1
+			elseif key == "right" then
+				selectedtile = (selectedtile + 1) % 1200
+			elseif key == "up" then
+				selectedtile = selectedtile - 40
+			elseif key == "down" then
+				selectedtile = (selectedtile + 40) % 1200
+			end
 		end
 
 		if selectedtile < 0 then
