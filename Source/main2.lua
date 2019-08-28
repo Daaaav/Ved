@@ -2491,6 +2491,9 @@ function love.update(dt)
 					dialog.callback.suredeletescript
 				)
 				input = rvnum
+				if keyboard_eitherIsDown("shift") then
+					dialogs[#dialogs]:press_button(DB.YES)
+				end
 			elseif RCMreturn == L.RENAME then
 				dialog.create(
 					L.NEWNAME, DBS.OKCANCEL,
