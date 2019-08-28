@@ -1400,6 +1400,7 @@ function toggleeditroomname()
 		saveroomname()
 	else
 		editingroomname = true
+		tilespicker = false
 		startinputonce()
 		input = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
 	end

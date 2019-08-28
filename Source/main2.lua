@@ -3737,6 +3737,7 @@ function love.mousepressed(x, y, button)
 			end
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
+			editingroomname = false
 
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then

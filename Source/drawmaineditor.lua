@@ -2,6 +2,7 @@ function drawmaineditor()
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
+		editingroomname = false
 		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		local aty = math.floor(getlockablemouseY() / 16)
 
@@ -1117,6 +1118,7 @@ function drawmaineditor()
 
 		selectedtile = (aty*40)+(atx+1)-1
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 then --and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1
+		editingroomname = false
 		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
 		local aty = math.floor((love.mouse.getY()) / 16)
 
@@ -1911,6 +1913,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
+			editingroomname = false
 			if has_unsaved_changes() then
 				dialog.create(
 					L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
@@ -1923,11 +1926,13 @@ function drawmaineditor()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
+			editingroomname = false
 			tostate(6)
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
+			editingroomname = false
 			dialog.create(
 				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make()
@@ -2096,6 +2101,7 @@ function drawmaineditor()
 				if trinkets == "" then
 					trinkets = L.NOTRINKETSINLEVEL
 				end
+				editingroomname = false
 				dialog.create(trinkets, nil, nil, L.LISTOFALLTRINKETS)
 			elseif onrbutton(-2, 164+4, true) and selectedtool == 16 then
 				-- List all crewmates
@@ -2117,6 +2123,7 @@ function drawmaineditor()
 				if crewmates == "" then
 					crewmates = L.NOCREWMATESINLEVEL
 				end
+				editingroomname = false
 				dialog.create(crewmates, nil, nil, L.LISTOFALLCREWMATES)
 			elseif selectedtool == 4 or selectedtool == 16 then
 			elseif onrbutton(-3, 164+4, true) then

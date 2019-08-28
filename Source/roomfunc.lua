@@ -606,6 +606,7 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 			rightclickmenu.create(menuitems, newmenuid)
 		end
 		if nodialog and love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
+			editingroomname = false
 			-- Start moving this entity, if we can! Heh, cheap trick to inspect the menu items.
 			local entdetails = explode("_", newmenuid)
 			if not keyboard_eitherIsDown("shift") then
