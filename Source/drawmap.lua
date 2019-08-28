@@ -141,10 +141,10 @@ function drawmap()
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
 	rbutton({L.SAVEMAP, "S"}, 1, nil, true)
-	rbutton(L.COPYROOMS, 3, nil, true)
-	rbutton(L.SWAPROOMS, 4, nil, true)
+	rbutton(L.COPYROOMS, 5, nil, true)
+	rbutton(L.SWAPROOMS, 6, nil, true)
 
-	local strip_ypos = love.graphics.getHeight()-144
+	local strip_ypos = love.graphics.getHeight()-192
 
 	if #undobuffer >= 1 then
 		hoverdraw(undobtn, love.graphics.getWidth()-120, strip_ypos, 16, 16, 1)
@@ -180,12 +180,12 @@ function drawmap()
 		elseif onrbutton(1, nil, true) then
 			-- Save map
 			create_export_dialog()
-		elseif onrbutton(3, nil, true) then
+		elseif onrbutton(5, nil, true) then
 			-- Copy rooms
 			selectingrooms = 1
 			selected1x = -1; selected1y = -1
 			selected2x = -1; selected2y = -1
-		elseif onrbutton(4, nil, true) then
+		elseif onrbutton(6, nil, true) then
 			-- Swap rooms
 			selectingrooms = 2
 			selected1x = -1; selected1y = -1
