@@ -110,7 +110,7 @@ function cDialog:draw(topmost)
 
 	-- Text boxes
 	local fieldactive = false
-	local active_x, active_y, active_w, active_type
+	local active_x, active_y, active_w, active_h, active_type, active_dropdowns
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
 		if self.currentfield == k then
@@ -119,16 +119,27 @@ function cDialog:draw(topmost)
 			active_y = v[3]
 			active_w = v[4]
 			active_type = v[6]
+			active_dropdowns = v[7]
 		end
 	end
 
 	if fieldactive and showtabrect and topmost then
 		active_x = self.x+10+active_x*8
 		active_y = self.y+self.windowani+10+active_y*8 + 1
+		if active_type == DF.RADIOS then
+			local tmp = {}
+			for k,v in pairs(active_dropdowns) do
+				tmp[k] = #v
+			end
+			active_w = math.max(unpack(tmp)) + 2
+			active_h = #active_dropdowns * 8
+		else
+			active_h = 8
+		end
 		active_w = active_w*8
 
 		self:setColor(255,255,127,255,not topmost)
-		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, 10)
+		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
 	end
 
 	-- Window border
