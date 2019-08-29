@@ -2874,6 +2874,39 @@ function love.keypressed(key)
 				cursorflashtime = 0
 			end
 		end
+		if cftype == DF.DROPDOWN and (key == "up" or key == "down") then
+			local dropdown
+			local cfinput = dialogs[#dialogs].fields[cf][5]
+			local dropdowns = dialogs[#dialogs].fields[cf][7]
+			local mapping = dialogs[#dialogs].fields[cf][8]
+			local usethisvalue
+			if mapping ~= nil then
+				usethisvalue = mapping[cfinput]
+			else
+				usethisvalue = cfinput
+			end
+
+			for k,v in pairs(dropdowns) do
+				if v == usethisvalue then
+					dropdown = k
+					break
+				end
+			end
+			if key == "up" then
+				dropdown = dropdown - 1
+				if dropdown < 1 then
+					dropdown = #dropdowns
+				end
+			end
+			if key == "down" then
+				dropdown = dropdown + 1
+				if dropdown > #dropdowns then
+					dropdown = 1
+				end
+			end
+
+			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
+		end
 	end
 
 	handle_scrolling(true, key)
