@@ -2649,7 +2649,7 @@ function love.keypressed(key)
 
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)
-	elseif takinginput then
+	elseif takinginput and nodialog then
 		if key == "backspace" then
 			input = backspace(input)
 
