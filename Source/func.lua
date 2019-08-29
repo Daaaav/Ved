@@ -497,6 +497,8 @@ function loadstate(new, ...)
 		setgenerictimer(2, 2.75)
 
 		shiftroomsupdatescripts = true
+
+		locatetrinketscrewmates()
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then

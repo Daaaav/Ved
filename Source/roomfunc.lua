@@ -393,29 +393,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 15 then
 		-- Rescuable crewmate
-		if v.p1 == 0 then
-			-- Cyan
-			--love.graphics.setColor(95, 154, 140)
-			love.graphics.setColor(132, 181, 255)
-		elseif v.p1 == 1 then
-			-- Pink
-			love.graphics.setColor(255, 135, 255)
-		elseif v.p1 == 2 then
-			-- Yellow
-			love.graphics.setColor(255, 255, 135)
-		elseif v.p1 == 3 then
-			-- Red
-			love.graphics.setColor(255, 61, 61)
-		elseif v.p1 == 4 then
-			-- Green
-			love.graphics.setColor(144, 255, 144)
-		elseif v.p1 == 5 then
-			-- Blue
-			love.graphics.setColor(75, 75, 230)
-		else
-			-- What?
-			love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
-		end
+		setrescuablecolor(v.p1)
 		drawentitysprite(144, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
@@ -1936,30 +1914,38 @@ function shiftrooms(direction, updatescripts)
 	dirty()
 
 	-- Copy the rooms that are on the edge
-	local edgeroomdata, edgelevelmetadata, edgemapdata = {}, {}, {}
+	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
 	if direction == SHIFT.LEFT then
 		for y = 0, metadata.mapheight-1 do
 			edgeroomdata[y] = table.copy(roomdata[y][0])
 			edgelevelmetadata[y] = table.copy(levelmetadata[y*20 + 1])
 			edgemapdata[y] = table.copy(rooms_map[y][0])
+			edgetrinketsdata[y] = map_trinkets[y][0]
+			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
 		end
 	elseif direction == SHIFT.RIGHT then
 		for y = 0, metadata.mapheight-1 do
 			edgeroomdata[y] = table.copy(roomdata[y][metadata.mapwidth-1])
 			edgelevelmetadata[y] = table.copy(levelmetadata[y*20 + metadata.mapwidth])
 			edgemapdata[y] = table.copy(rooms_map[y][metadata.mapwidth-1])
+			edgetrinketsdata[y] = map_trinkets[y][0]
+			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
 		end
 	elseif direction == SHIFT.UP then
 		for x = 0, metadata.mapwidth-1 do
 			edgeroomdata[x] = table.copy(roomdata[0][x])
 			edgelevelmetadata[x] = table.copy(levelmetadata[x+1])
 			edgemapdata[x] = table.copy(rooms_map[0][x])
+			edgetrinketsdata[x] = map_trinkets[0][x]
+			edgecrewmatesdata[x] = table.copy(map_crewmates[0][x])
 		end
 	elseif direction == SHIFT.DOWN then
 		for x = 0, metadata.mapwidth-1 do
 			edgeroomdata[x] = table.copy(roomdata[metadata.mapheight-1][x])
 			edgelevelmetadata[x] = table.copy(levelmetadata[(metadata.mapheight-1)*20 + x+1])
 			edgemapdata[x] = table.copy(rooms_map[metadata.mapheight-1][x])
+			edgetrinketsdata[x] = map_trinkets[metadata.mapheight-1][x]
+			edgecrewmatesdata[x] = table.copy(map_crewmates[metadata.mapheight-1][x])
 		end
 	end
 
@@ -1972,12 +1958,16 @@ function shiftrooms(direction, updatescripts)
 				roomdata[y][x] = table.copy(roomdata[y][x+1])
 				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[y*20 + x+2])
 				rooms_map[y][x] = table.copy(rooms_map[y][x+1])
+				map_trinkets[y][x] = map_trinkets[y][x+1]
+				map_crewmates[y][x] = table.copy(map_crewmates[y][x+1])
 			end
 		end
 		for y = 0, metadata.mapheight-1 do
 			roomdata[y][metadata.mapwidth-1] = table.copy(edgeroomdata[y])
 			levelmetadata[y*20 + metadata.mapwidth] = table.copy(edgelevelmetadata[y])
 			rooms_map[y][metadata.mapwidth-1] = table.copy(edgemapdata[y])
+			map_trinkets[y][metadata.mapwidth-1] = edgetrinketsdata[y]
+			map_crewmates[y][metadata.mapwidth-1] = table.copy(edgecrewmatesdata[y])
 		end
 	elseif direction == SHIFT.RIGHT then
 		for y = 0, metadata.mapheight-1 do
@@ -1985,12 +1975,16 @@ function shiftrooms(direction, updatescripts)
 				roomdata[y][x] = table.copy(roomdata[y][x-1])
 				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[y*20 + x])
 				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
+				map_trinkets[y][x] = map_trinkets[y][x-1]
+				map_crewmates[y][x] = table.copy(map_crewmates[y][x-1])
 			end
 		end
 		for y = 0, metadata.mapheight-1 do
 			roomdata[y][0] = table.copy(edgeroomdata[y])
 			levelmetadata[y*20 + 1] = table.copy(edgelevelmetadata[y])
 			rooms_map[y][0] = table.copy(edgemapdata[y])
+			map_trinkets[y][0] = edgetrinketsdata[y]
+			map_crewmates[y][0] = table.copy(edgecrewmatesdata[y])
 		end
 	elseif direction == SHIFT.UP then
 		for y = 0, metadata.mapheight-2 do
@@ -1998,12 +1992,16 @@ function shiftrooms(direction, updatescripts)
 				roomdata[y][x] = table.copy(roomdata[y+1][x])
 				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[(y+1)*20 + x+1])
 				rooms_map[y][x] = table.copy(rooms_map[y+1][x])
+				map_trinkets[y][x] = map_trinkets[y+1][x]
+				map_crewmates[y][x] = table.copy(map_crewmates[y+1][x])
 			end
 		end
 		for x = 0, metadata.mapwidth-1 do
 			roomdata[metadata.mapheight-1][x] = table.copy(edgeroomdata[x])
 			levelmetadata[(metadata.mapheight-1)*20 + x+1] = table.copy(edgelevelmetadata[x])
 			rooms_map[metadata.mapheight-1][x] = table.copy(edgemapdata[x])
+			map_trinkets[metadata.mapheight-1][x] = edgetrinketsdata[x]
+			map_crewmates[metadata.mapheight-1][x] = table.copy(edgecrewmatesdata[x])
 		end
 	elseif direction == SHIFT.DOWN then
 		for y = metadata.mapheight-1, 1, -1 do
@@ -2011,12 +2009,16 @@ function shiftrooms(direction, updatescripts)
 				roomdata[y][x] = table.copy(roomdata[y-1][x])
 				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[(y-1)*20 + x+1])
 				rooms_map[y][x] = table.copy(rooms_map[y-1][x])
+				map_trinkets[y][x] = map_trinkets[y-1][x]
+				map_crewmates[y][x] = table.copy(map_crewmates[y-1][x])
 			end
 		end
 		for x = 0, metadata.mapwidth-1 do
 			roomdata[0][x] = table.copy(edgeroomdata[x])
 			levelmetadata[x+1] = table.copy(edgelevelmetadata[x])
 			rooms_map[0][x] = table.copy(edgemapdata[x])
+			map_trinkets[0][x] = edgetrinketsdata[x]
+			map_crewmates[0][x] = table.copy(edgecrewmatesdata[x])
 		end
 	end
 
@@ -2182,5 +2184,30 @@ function shiftrooms(direction, updatescripts)
 				end
 			end
 		end
+	end
+end
+
+function setrescuablecolor(color)
+	if color == 0 then
+		-- Cyan
+		love.graphics.setColor(132, 181, 255)
+	elseif color == 1 then
+		-- Pink
+		love.graphics.setColor(255, 135, 255)
+	elseif color == 2 then
+		-- Yellow
+		love.graphics.setColor(255, 255, 135)
+	elseif color == 3 then
+		-- Red
+		love.graphics.setColor(255, 61, 61)
+	elseif color == 4 then
+		-- Green
+		love.graphics.setColor(144, 255, 144)
+	elseif color == 5 then
+		-- Blue
+		love.graphics.setColor(75, 75, 230)
+	else
+		-- What?
+		love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
 	end
 end
