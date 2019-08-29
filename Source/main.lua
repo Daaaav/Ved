@@ -47,12 +47,35 @@ font8 = love.graphics.newFont("Space Station.ttf", 8)
 font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
+function loadtinynumbers()
+	tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+end
+loadtinynumbers()
 tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
 tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-", love_version_meets(10) and 1 or nil)
 tinynumbers_cmd = love.graphics.newImageFont("tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
+
+-- But this func is put here to avoid chicken-and-egg problems
+function swaptinynumbersglyphs()
+	loadtinynumbers()
+	tinynumbers_fallbacks = {}
+
+	if love_version_meets(10) then
+		if love.system.getOS() == "OS X" then
+			table.insert(tinynumbers_fallbacks, tinynumbers_cmd)
+		end
+		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
+			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
+		end
+		table.insert(tinynumbers_fallbacks, tinynumbers_all)
+		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
+	else
+		tinynumbers = tinynumbers_all
+	end
+end
 
 love.graphics.setFont(font8)
 

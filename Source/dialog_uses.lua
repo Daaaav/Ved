@@ -106,17 +106,17 @@ function dialog.form.language_make()
 	end
 	local year = os.date("%Y")
 	return {
-		{"language", 0, 4, 30, s.lang, DF.DROPDOWN, getalllanguages()},
-		{"", 0, 7, 40, L.DATEFORMAT, DF.LABEL},
+		{"language", 0, 0, 30, s.lang, DF.DROPDOWN, getalllanguages()},
+		{"", 0, 3, 40, L.DATEFORMAT, DF.LABEL},
 		{
-			"dateformat", 0, 8, 0, s.new_dateformat, DF.RADIOS,
+			"dateformat", 0, 4, 0, s.new_dateformat, DF.RADIOS,
 			generate_dropdown_tables(
 				{{"YMD", year .. "-12-31"}, {"DMY", "31-12-" .. year}, {"MDY", "12/31/" .. year}}
 			)
 		},
-		{"", 23, 7, 40, L.TIMEFORMAT, DF.LABEL},
+		{"", 23, 3, 40, L.TIMEFORMAT, DF.LABEL},
 		{
-			"timeformat", 23, 8, 0, s.new_timeformat, DF.RADIOS,
+			"timeformat", 23, 4, 0, s.new_timeformat, DF.RADIOS,
 			generate_dropdown_tables(
 				{{24, "23:59"}, {12, "11:59pm"}}
 			)
@@ -851,11 +851,30 @@ end
 
 function dialog.callback.language(button, fields)
 	if button == DB.OK then
+		local previouslang = s.lang
 		s.lang = fields.language
 		s.new_dateformat = fields.dateformat
 		s.new_timeformat = fields.timeformat
 
 		saveconfig()
+
+		package.loaded["lang/English"] = false
+		package.loaded["lang/" .. previouslang] = false
+		-- Reload const.lua as well, since that is language-dependent too
+		package.loaded.const = false
+
+		s.plang = s.lang
+
+		ved_require("lang/English")
+		if s.lang ~= "English" and love.filesystem.exists("lang/" .. s.lang .. ".lua") then
+			ved_require("lang/" .. s.lang)
+		end
+
+		swaptinynumbersglyphs()
+
+		package.loaded.devstrings = false
+		ved_require("devstrings")
+		ved_require("const")
 	end
 end
 

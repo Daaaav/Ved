@@ -57,18 +57,7 @@ function love.load()
 		ved_require("lang/" .. s.lang)
 	end
 
-	if love_version_meets(10) then
-		if love.system.getOS() == "OS X" then
-			table.insert(tinynumbers_fallbacks, tinynumbers_cmd)
-		end
-		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
-			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
-		end
-		table.insert(tinynumbers_fallbacks, tinynumbers_all)
-		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
-	else
-		tinynumbers = tinynumbers_all
-	end
+	swaptinynumbersglyphs()
 
 	ved_require("devstrings")
 	ved_require("const")

@@ -2636,7 +2636,7 @@ end
 
 function languagedialog()
 	dialog.create(
-		L.RESTARTVEDLANG, DBS.OKCANCEL,
+		"", DBS.OKCANCEL,
 		dialog.callback.language, L.LANGUAGE, dialog.form.language_make()
 	)
 end
