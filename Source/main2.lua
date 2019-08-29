@@ -2874,7 +2874,9 @@ function love.keypressed(key)
 				cursorflashtime = 0
 			end
 		end
-		if (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down") then
+		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
+			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
+		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down") then
 			showtabrect = true
 
 			local dropdown
