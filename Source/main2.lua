@@ -2875,6 +2875,8 @@ function love.keypressed(key)
 			end
 		end
 		if (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down") then
+			showtabrect = true
+
 			local dropdown
 			local cfinput = dialogs[#dialogs].fields[cf][5]
 			local dropdowns = dialogs[#dialogs].fields[cf][7]
