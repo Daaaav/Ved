@@ -2862,11 +2862,11 @@ function love.keypressed(key)
 				end
 
 				cf = dialogs[#dialogs].currentfield
-				if cf == original and dialogs[#dialogs].fields[cf][6] < 2 then
+				if cf == original and dialogs[#dialogs].fields[cf][6] ~= 2 then
 					-- Don't keep looping around forever
 					done = true
 				end
-				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] < 2 then
+				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] ~= 2 then
 					-- Only text labels are skipped
 					done = true
 				end
