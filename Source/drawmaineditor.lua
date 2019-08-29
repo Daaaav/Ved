@@ -1689,6 +1689,8 @@ function drawmaineditor()
 			if nodialog and not mousepressed and love.mouse.isDown("r") and t == 17 and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then
 				-- Find the start point
 				gotostartpointroom()
+				-- This works with right click as well
+				mousepressed = true
 			end
 
 			if selectedtool == t then
