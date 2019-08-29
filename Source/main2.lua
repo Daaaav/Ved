@@ -2862,7 +2862,7 @@ function love.keypressed(key)
 				end
 
 				cf = dialogs[#dialogs].currentfield
-				if cf == original and dialogs[#dialogs].fields[cf][6] ~= 2 then
+				if cf == original and anythingbutnil(dialogs[#dialogs].fields[cf])[6] ~= 2 then
 					-- Don't keep looping around forever
 					done = true
 				end
