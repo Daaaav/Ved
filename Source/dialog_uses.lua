@@ -858,7 +858,7 @@ function dialog.callback.language(button, fields)
 		saveconfig()
 
 		package.loaded["lang/English"] = false
-		package.loaded["lang/" .. previouslang] = false
+		package.loaded["lang/" .. s.plang] = false
 		-- Reload const.lua as well, since that is language-dependent too
 		package.loaded.const = false
 
