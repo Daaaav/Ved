@@ -672,11 +672,11 @@ function love.draw()
 					elseif scriptlistscroll+8+24*(j-1) < 0 then
 						newscroll = scriptlistscroll + 24
 						if newscroll > 0 then -- the correction can be farther than the top of the list
-							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-newscroll) * s.pscale)
+							love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()-newscroll)
 							newscroll = 0
 						end
 					else
-						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-24) * s.pscale)
+						love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()-24)
 					end
 				elseif rvnum ~= 1 and mouseon(8+screenoffset+640-8-24 -36 +4 +16 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
 					movescriptup(rvnum)
@@ -690,11 +690,11 @@ function love.draw()
 						local height = -(((#scriptnames)*24-8)-(love.graphics.getHeight()-16))
 						if newscroll < height then -- correction is too far past the bottom
 							local diff = height-newscroll
-							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+diff) * s.pscale)
+							love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()+diff)
 							newscroll = height
 						end
 					else
-						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+24) * s.pscale)
+						love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()+24)
 					end
 				end
 
@@ -2349,11 +2349,11 @@ function love.update(dt)
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)*s.pscale)
+						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
 						cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.GOTOENTRANCE then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)*s.pscale)
+						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
 						cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.CHANGEENTRANCE then
 						selectedtool = 14
