@@ -875,7 +875,6 @@ function swapflags(flag1, flag2)
 	end
 
 	local commands = {"flag", "ifflag", "customifflag"}
-	local tmp
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			v = v:gsub(" ", "")
