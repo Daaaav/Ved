@@ -1323,7 +1323,7 @@ function love.draw()
 		end
 
 
-		rbutton(L.BTN_OK, 0)
+		rbutton({L.BTN_OK, "b"}, 0)
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
@@ -1348,14 +1348,7 @@ function love.draw()
 				s.forcescale = not s.forcescale
 			elseif onrbutton(0) then
 				-- Save
-				if nonintscale then
-					stopinput()
-					s.scale = num_scale
-				end
-				saveconfig()
-				tostate(oldstate, true)
-				-- Just to make sure we don't get stuck in the settings
-				oldstate = olderstate
+				exitdisplayoptions()
 			end
 
 			mousepressed = true
@@ -3716,6 +3709,8 @@ function love.keypressed(key)
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
 			startinput()
 		end
+	elseif state == 27 and key == "escape" then
+		exitdisplayoptions()
 	elseif state == 31 and (key == " " or key == "space") then
 		if currentmusic_paused then
 			resumemusic()

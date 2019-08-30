@@ -3182,6 +3182,17 @@ function exitvedoptions()
 	end
 end
 
+function exitdisplayoptions()
+	if nonintscale then
+		stopinput()
+		s.scale = num_scale
+	end
+	saveconfig()
+	tostate(oldstate, true)
+	-- Just to make sure we don't get stuck in the settings
+	oldstate = olderstate
+end
+
 function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 
