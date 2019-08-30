@@ -79,6 +79,54 @@ end
 
 love.graphics.setFont(font8)
 
+-- Avoiding chicken-and-egg problems here as well
+function dodisplaysettings(reload)
+	if reload then
+		constraindisplaysettings(true)
+	end
+
+	local za,zb,zc = love.window.getMode()
+	if s.psmallerscreen then
+		za = 800
+	else
+		za = 896
+	end
+	zb = 480
+	if love_version_meets(9,2) then
+		local zd,ze,zf = love.window.getPosition()
+		local zwidth,zheight = love.window.getDesktopDimensions(zf)
+		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+	else
+		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+	end
+
+	if s.psmallerscreen then
+		screenoffset = 32
+	else
+		screenoffset = 128
+	end
+
+	if reload then
+		package.loaded.scaling = false
+		love.graphics.push()
+		love.graphics.scale(s.pscale,s.pscale)
+		graphics_skipnextpush = true
+
+		-- Do this or tiles will be white, and that's not really right!
+		-- (I am a rhyming legend)
+		-- (If you're going to sing the above, "tiles will be white" and
+		-- "that's not really right" should be 4 sixteenth notes and 1 eighth note)
+		loadtilesets()
+		tile_batch_texture_needs_update = true
+
+		-- Also do this or we'll have a blank map (no clever rhymes here)
+		map_init()
+	else
+		ved_require("scaling")
+	end
+end
+
 -- We also want this font on a possible crash screen...
 --love.graphics.setNewFont = function() end
 

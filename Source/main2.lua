@@ -84,19 +84,7 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 
-	if s.pscale ~= 1 or s.psmallerscreen then
-		local za,zb,zc = love.window.getMode()
-		if love_version_meets(9,2) then
-			local zd,ze,zf = love.window.getPosition()
-			local zwidth,zheight = love.window.getDesktopDimensions(zf)
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
-		else
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		end
-
-		ved_require("scaling")
-	end
+	dodisplaysettings()
 
 	cons("love.load() reached")
 
@@ -310,12 +298,6 @@ function love.load()
 
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
-
-	if s.psmallerscreen then
-		screenoffset = 32
-	else
-		screenoffset = 128
-	end
 
 	savedwindowtitle = ""
 
@@ -532,8 +514,12 @@ function love.draw()
 	end
 
 	if s.pscale ~= 1 then
-		love.graphics.push()
-		love.graphics.scale(s.pscale,s.pscale)
+		if graphics_skipnextpush then
+			graphics_skipnextpush = nil
+		else
+			love.graphics.push()
+			love.graphics.scale(s.pscale,s.pscale)
+		end
 	end
 
 	if state == -3 then
@@ -826,17 +812,11 @@ function love.draw()
 			8+16+8, 8+(24*14)+4+2
 		)
 
-		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
-			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
-			love.graphics.setColor(255,255,255)
-		else
-			love.graphics.print(
-				ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
-				.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
-				8, love.graphics.getHeight()-21
-			)
-		end
+		love.graphics.print(
+			ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
+			.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+			8, love.graphics.getHeight()-21
+		)
 
 
 		rbutton({L.BTN_OK, "b"}, 0)
@@ -1250,7 +1230,6 @@ function love.draw()
 		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*4)+4+2)
 
 
-		local num_scale
 		if nonintscale then
 			num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
 		else
@@ -1315,10 +1294,6 @@ function love.draw()
 		elseif not fits then
 			love.graphics.setColor(255,0,0)
 			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-15)
-			love.graphics.setColor(255,255,255)
-		elseif s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
-			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
 		end
 

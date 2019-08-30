@@ -609,6 +609,7 @@ function loadstate(new, ...)
 	elseif new == 26 then
 		startinput()
 	elseif new == 27 then
+		oldforcescale = s.forcescale
 		nonintscale = s.scale ~= math.floor(anythingbutnil0(tonumber(s.scale)))
 		if nonintscale then
 			startinput()
@@ -3188,6 +3189,16 @@ function exitdisplayoptions()
 		s.scale = num_scale
 	end
 	saveconfig()
+
+	if s.smallerscreen ~= s.psmallerscreen or s.scale ~= s.pscale or s.forcescale ~= oldforcescale then
+		s.pscale = s.scale
+		s.psmallerscreen = s.smallerscreen
+		dodisplaysettings(true)
+	end
+
+	-- Re-center dialogs
+	cDialog.x = (love.graphics.getWidth()-400)/2
+
 	tostate(oldstate, true)
 	-- Just to make sure we don't get stuck in the settings
 	oldstate = olderstate
