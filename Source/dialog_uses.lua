@@ -851,7 +851,6 @@ end
 
 function dialog.callback.language(button, fields)
 	if button == DB.OK then
-		local previouslang = s.lang
 		s.lang = fields.language
 		s.new_dateformat = fields.dateformat
 		s.new_timeformat = fields.timeformat
