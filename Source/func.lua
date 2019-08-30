@@ -3204,6 +3204,13 @@ function exitdisplayoptions()
 	oldstate = olderstate
 end
 
+function exitsyntaxcoloroptions()
+	saveconfig()
+	tostate(oldstate, true)
+	-- Just to make sure we don't get stuck in the settings
+	oldstate = olderstate
+end
+
 function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 

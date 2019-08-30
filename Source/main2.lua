@@ -1106,16 +1106,13 @@ function love.draw()
 		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
 		love.graphics.print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4+2)
 
-		rbutton(L.BTN_OK, 0)
+		rbutton({L.BTN_OK, "b"}, 0)
 		rbutton(L.RESETCOLORS, 2)
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if onrbutton(0) then
 				-- Save
-				saveconfig()
-				tostate(oldstate, true)
-				-- Just to make sure we don't get stuck in the settings
-				oldstate = olderstate
+				exitsyntaxcoloroptions()
 			elseif onrbutton(2) then
 				-- Reset colors
 				for k,v in pairs(s) do
@@ -3684,6 +3681,8 @@ function love.keypressed(key)
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
 			startinput()
 		end
+	elseif state == 25 and key == "escape" then
+		exitsyntaxcoloroptions()
 	elseif state == 27 and key == "escape" then
 		exitdisplayoptions()
 	elseif state == 31 and (key == " " or key == "space") then
