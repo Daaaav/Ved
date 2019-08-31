@@ -1089,13 +1089,13 @@ function dialog.callback.platv(button, fields, _, notclosed)
 		return
 	end
 
-	local oldplatv = levelmetadata[(roomy)*20 + (roomx+1)].platv
-	levelmetadata[(roomy)*20 + (roomx+1)].platv = tonumber(fields.name)
+	local oldplatv = levelmetadata_get(roomx, roomy).platv
+	levelmetadata_set(roomx, roomy, "platv", tonumber(fields.name))
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "platv",
 					oldvalue = oldplatv,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+					newvalue = levelmetadata_get(roomx, roomy).platv
 				}
 			},
 			switchtool = 8

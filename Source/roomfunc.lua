@@ -109,8 +109,16 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				if issolid(t, ts, false, true) then
 					-- Wall
 					love.graphics.draw(solidimg, x, y)
+				-- Spikes
+				elseif istophalfspike(t, ts) then
+					love.graphics.setColor(255,0,0)
+					love.graphics.draw(solidhalfimg, x, y)
+					love.graphics.setColor(255,255,255)
+				elseif isbottomhalfspike(t, ts) then
+					love.graphics.setColor(255,0,0)
+					love.graphics.draw(solidhalfimg, x, y+8)
+					love.graphics.setColor(255,255,255)
 				elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
-					-- Spikes
 					love.graphics.setColor(255,0,0)
 					love.graphics.draw(solidimg, x, y)
 					love.graphics.setColor(255,255,255)
@@ -676,8 +684,16 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 					if issolid(t, ts, false, true) then
 						-- Wall
 						love.graphics.draw(solidimg, x, y)
+					-- Spikes
+					elseif istophalfspike(t, ts) then
+						love.graphics.setColor(255,0,0)
+						love.graphics.draw(solidhalfimg, x, y)
+						love.graphics.setColor(255,255,255)
+					elseif isbottomhalfspike(t, ts) then
+						love.graphics.setColor(255,0,0)
+						love.graphics.draw(solidhalfimg, x, y+8)
+						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
-						-- Spikes
 						love.graphics.setColor(255,0,0)
 						love.graphics.draw(solidimg, x, y)
 						love.graphics.setColor(255,255,255)
@@ -833,9 +849,31 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode)
 			return true
 		elseif tilenum == 49 or tilenum == 50 then
 			return true
-		elseif tileset == 2 and tilenum >= 51 and tilenum < 80 then
+		elseif tileset == 2 and tilenum >= 51 and tilenum <= 74 then
 			return true
 		end
+	end
+	return false
+end
+
+function istophalfspike(tilenum, tileset)
+	if tilenum == nil then
+		return false
+	elseif tilenum == 7 or tilenum == 9 then
+		return true
+	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 0 then
+		return true
+	end
+	return false
+end
+
+function isbottomhalfspike(tilenum, tileset)
+	if tilenum == nil then
+		return false
+	elseif tilenum == 6 or tilenum == 8 then
+		return true
+	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 1 then
+		return true
 	end
 	return false
 end
@@ -1552,6 +1590,8 @@ function rotateroom180(rx, ry, undoing)
 
 	-- If we have any gravity lines or warp lines, let the autocorrect do the job of fixing them!
 	autocorrectlines()
+	-- Same with tiles
+	autocorrectroom()
 end
 
 function autocorrectlines()

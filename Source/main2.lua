@@ -64,10 +64,10 @@ function love.load()
 		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
 			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
 		end
-		table.insert(tinynumbers_fallbacks, tinynumbers_ctrl)
+		table.insert(tinynumbers_fallbacks, tinynumbers_all)
 		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
 	else
-		tinynumbers = tinynumbers_love9
+		tinynumbers = tinynumbers_all
 	end
 
 	ved_require("devstrings")
@@ -258,6 +258,7 @@ function love.load()
 	bggrid = love.graphics.newImage("images/bggrid.png")
 
 	solidimg = love.graphics.newImage("images/solid.png")
+	solidhalfimg = love.graphics.newImage("images/solidhalf.png")
 	covered_full = love.graphics.newImage("images/covered_full.png")
 	covered_80x60 = love.graphics.newImage("images/covered_80x60.png")
 
@@ -632,6 +633,7 @@ function love.draw()
 		end
 		]]
 		local j = -1
+		local newscroll
 		for rvnum = #scriptnames, 1, -1 do
 			if scriptdisplay_used and scriptdisplay_unused
 			or scriptdisplay_used and usedscripts[scriptnames[rvnum]]
@@ -639,13 +641,29 @@ function love.draw()
 			then
 				j = j + 1
 				local y = scriptlistscroll+8+(24*j)
-				if y >= -16 and y <= love.graphics.getHeight() then
-					hoverrectangle(128,128,128,128, 8, y, screenoffset+640-8-24, 16)
-					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-24, "center")
+				if skipnextscripthoverrect then
+					skipnextscripthoverrect = nil
+				elseif y >= -16 and y <= love.graphics.getHeight() then
+					local used = usedscripts[scriptnames[rvnum]]
+					hoverrectangle(used and 128 or 64, used and 128 or 64, used and 128 or 64, 128, 8, y, screenoffset+640-8-24 -36, 16)
+					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-36, "center")
+					if rvnum == #scriptnames then
+						showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
+					end
+
+					if rvnum ~= #scriptnames then
+						hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4, y, 16, 16)
+						love.graphics.printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4+2, 16, "center")
+					end
+					if rvnum ~= 1 then
+						hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4 +16 +4, y, 16, 16)
+						love.graphics.printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4+2, 16, "center")
+					end
 				end
 
 				-- Are we clicking on this?
-				if not mousepressed and nodialog and mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24, 16) then
+				if mousepressed or not nodialog then
+				elseif mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24 -36, 16) then
 					if love.mouse.isDown("l") then
 						--##SCRIPT##  DONE
 						scriptineditor(scriptnames[rvnum], rvnum)
@@ -657,7 +675,40 @@ function love.draw()
 					elseif love.mouse.isDown("r") then
 						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
 					end
+				elseif rvnum ~= #scriptnames and mouseon(8+screenoffset+640-8-24 -36 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
+					movescriptdown(rvnum)
+					mousepressed = true
+					local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[rvnum]]) or (scriptdisplay_unused and not usedscripts[scriptnames[rvnum]])
+					if not nextscriptvisible then
+					elseif scriptlistscroll+8+24*(j-1) < 0 then
+						newscroll = scriptlistscroll + 24
+						if newscroll > 0 then -- the correction can be farther than the top of the list
+							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-newscroll) * s.pscale)
+							newscroll = 0
+						end
+					else
+						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-24) * s.pscale)
+					end
+				elseif rvnum ~= 1 and mouseon(8+screenoffset+640-8-24 -36 +4 +16 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
+					movescriptup(rvnum)
+					mousepressed = true
+					local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[rvnum]]) or (scriptdisplay_unused and not usedscripts[scriptnames[rvnum]])
+					if not nextscriptvisible then
+						j = j - 1 -- prevents flickering
+						skipnextscripthoverrect = true
+					elseif scriptlistscroll+8+24*(j+1) +16 > love.graphics.getHeight() then
+						newscroll = scriptlistscroll - 24
+						local height = -(((#scriptnames)*24-8)-(love.graphics.getHeight()-16))
+						if newscroll < height then -- correction is too far past the bottom
+							local diff = height-newscroll
+							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+diff) * s.pscale)
+							newscroll = height
+						end
+					else
+						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+24) * s.pscale)
+					end
 				end
+
 			end
 		end
 
@@ -666,6 +717,9 @@ function love.draw()
 
 		if newperonetage ~= nil then
 			scriptlistscroll = -(newperonetage*(((j+1)*24-8)-(love.graphics.getHeight()-16)))
+		end
+		if newscroll ~= nil then
+			scriptlistscroll = newscroll -- to prevent flickering
 		end
 
 		rbutton({L.NEW, "N"}, 0)
@@ -981,7 +1035,13 @@ function love.draw()
 						end
 					end
 				else
-					love.graphics.setColor(128,128,128,128)
+					love.graphics.setColor(64,64,64,128)
+
+					local flgnum2 = flk + (flcol == 8 and 0 or 50)
+					local used = usedflags[flgnum2]
+					if used then
+						love.graphics.setColor(128,128,128,128)
+					end
 				end
 
 				love.graphics.rectangle("fill", ax, ay, w, h)
@@ -2543,7 +2603,10 @@ function love.textinput(char)
 
 			if state == 3 then
 				scriptlines[editingline] = input
-				dirty()
+				-- nodialog as a temp global var is checked here too
+				if nodialog and not char == "/" and not char == "?" then
+					dirty()
+				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			elseif state == 6 then
@@ -2863,7 +2926,7 @@ function love.keypressed(key)
 		end
 
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
-		if keyboard_eitherIsDown(ctrl) then
+		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] > 1 then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] - 1
@@ -2883,7 +2946,7 @@ function love.keypressed(key)
 			toolscroll()
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "." then
-		if keyboard_eitherIsDown(ctrl) then
+		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] < #subtoolimgs[selectedtool] then
 					selectedsubtool[selectedtool] = selectedsubtool[selectedtool] + 1

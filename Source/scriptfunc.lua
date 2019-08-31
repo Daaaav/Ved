@@ -605,6 +605,20 @@ function bumpscript(scriptid)
 	table.insert(scriptnames, temp)
 end
 
+function movescriptup(scriptid)
+	-- Since Ved displays scripts descending, it will actually appear to move down
+	local temp = scriptnames[scriptid]
+	table.remove(scriptnames, scriptid)
+	table.insert(scriptnames, scriptid-1, temp)
+end
+
+function movescriptdown(scriptid)
+	-- Scripts in the script list are shown in reverse order, so it'll look like it's moving up
+	local temp = scriptnames[scriptid]
+	table.remove(scriptnames, scriptid)
+	table.insert(scriptnames, scriptid+1, temp)
+end
+
 function scriptineditor(scriptnamearg, rvnum)
 	if rvnum == nil then
 		-- Zoek hier uit wat rvnum is

@@ -12,12 +12,12 @@ opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
 
-vergroups = {6,1}
+vergroups = {6,2}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-intermediate_version = false -- If true, this is a WIP version
+intermediate_version = true -- If true, this is a WIP version
 
 if intermediate_version then
 	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber
@@ -47,15 +47,12 @@ font8 = love.graphics.newFont("Space Station.ttf", 8)
 font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
-tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWsaqwertyuiopkl<>/[]zxnbf+-", love_version_meets(10) and 1 or nil)
+tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-", love_version_meets(10) and 1 or nil)
 tinynumbers_cmd = love.graphics.newImageFont("tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
-tinynumbers_ctrl = love.graphics.newImageFont("tinynumbersfont_ctrl.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
-
--- Temporary
-tinynumbers_love9 = love.graphics.newImageFont("tinynumbersfont_love9.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWsaqwertyuiopkl<>/[]zxnbf+-c", love_version_meets(10) and 1 or nil)
 
 love.graphics.setFont(font8)
 
