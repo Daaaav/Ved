@@ -361,7 +361,7 @@ function drawmap()
 	end
 
 	-- Put this here, otherwise we get tripped up when clicking on the tools
-	if love.mouse.isDown("l") then
+	if love.mouse.isDown("l") and not nodialog then
 		mousepressed = true
 	end
 end
