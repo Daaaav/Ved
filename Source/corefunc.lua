@@ -97,6 +97,96 @@ function langkeys(strin, thesekeys, pluralvar)
 	return strin
 end
 
+function getalllanguages()
+	local languagesarray = love.filesystem.getDirectoryItems("lang")
+	local returnarray = {}
+
+	for k,v in pairs(languagesarray) do
+		if v:sub(-4,-1) == ".lua" then
+			table.insert(returnarray, v:sub(1,-5))
+		end
+	end
+
+	return returnarray
+end
+
+function autolang()
+	-- Figure out the language based on the operating system's language,
+	-- which, of course, is OS-dependent
+	if love.system.getOS() ~= "Windows" and love.system.getOS() ~= "OS X" and love.system.getOS() ~= "Linux" then
+		return nil
+	end
+
+	local langs = getalllanguages()
+	local function in_table(thistable, item)
+		for _,thing in pairs(thistable) do
+			if thing == item then
+				return true
+			end
+		end
+		return false
+	end
+
+	if love.system.getOS() == "OS X" or love.system.getOS() == "Linux" then
+		local lang = os.getenv("LANG")
+		if lang == nil or lang == "" then
+			return nil
+		end
+		lang = lang:sub(1, 2)
+		if #lang ~= 2 then
+			return nil
+		end
+
+		local mapping = {
+			de = "Deutsch",
+			en = "English",
+			eo = "Esperanto",
+			fr = "Français",
+			nl = "Nederlands",
+			ru = "Русский",
+		}
+
+		if mapping[lang] ~= nil and in_table(langs, mapping[lang]) then
+			return mapping[lang]
+		else
+			return nil
+		end
+	elseif love.system.getOS() == "Windows" then
+		-- https://stackoverflow.com/a/25691701/
+		-- But for Lua instead of Python
+		-- and also: https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings
+		local ffi = require("ffi")
+		ffi.cdef([[
+		int GetUserDefaultUILanguage();
+		]])
+		local lang = ffi.C.GetUserDefaultUILanguage()
+
+		lang = ("%x"):format(lang)
+		if lang == nil or lang == "" then
+			return nil
+		end
+		if #lang == 1 then
+			lang = "0" .. lang
+		end
+		lang = lang:sub(-2, -1)
+
+		local mapping = {
+			["07"] = "Deutsch",
+			["09"] = "English",
+			-- Unfortunately, Windows does not allow you to use Esperanto as a language
+			["0c"] = "Français",
+			["13"] = "Nederlands",
+			["19"] = "Русский",
+		}
+
+		if mapping[lang] ~= nil and in_table(langs, mapping[lang]) then
+			return mapping[lang]
+		else
+			return nil
+		end
+	end
+end
+
 function ved_ver_human()
 	-- Displays Ved's version in a human-readable way. Must also work in filenames.
 	if intermediate_version then

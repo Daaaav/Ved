@@ -53,6 +53,12 @@ function love.load()
 
 	ved_require("loadconfig")
 	ved_require("lang/English") -- just as a fallback. Doesn't work for the most part.
+	if s.autolang then
+		s.lang = autolang()
+		if s.lang == nil then
+			s.lang = "English"
+		end
+	end
 	if s.lang ~= "English" and love.filesystem.exists("lang/" .. s.lang .. ".lua") then
 		ved_require("lang/" .. s.lang)
 	end

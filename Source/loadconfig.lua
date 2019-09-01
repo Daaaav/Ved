@@ -13,6 +13,11 @@ configs =
 		default = "English",
 		["type"] = "string",
 		},
+	autolang =
+		{
+		default = true,
+		["type"] = "bool",
+		},
 	dateformat =
 		{
 		default = "%Y-%m-%d %H:%M:%S",
