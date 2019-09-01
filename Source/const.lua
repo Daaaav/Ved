@@ -2294,3 +2294,11 @@ ALIGN = {
 	CENTER = 2,
 	RIGHT = 3,
 }
+
+-- For map_correspondreset()
+DIRTY = {
+	ROW = 1,
+	OUTROW29 = 2,
+	PROPERTY = 3,
+	ENTITY = 4,
+}

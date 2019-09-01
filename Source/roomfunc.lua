@@ -1459,8 +1459,6 @@ function mapcopy(x1, y1, x2, y2, skip_undo)
 		)
 		finish_undo("MAPCOPY")
 	end
-
-	map_resetroom(x2, y2)
 end
 
 function mapswap(x1, y1, x2, y2, skip_undo)
@@ -1480,9 +1478,6 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	copymoveentities(x2, y2, x1, y1, true)
 	copymoveentities(22, 22, x2, y2, true)
 	cons("Done...")
-
-	map_resetroom(x1, y1)
-	map_resetroom(x2, y2)
 end
 
 function rotateroom180(rx, ry, undoing)
@@ -1671,7 +1666,6 @@ function undo()
 	if #undobuffer >= 1 then
 		if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
 			gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-			map_resetroom(roomx, roomy)
 		end
 		if undobuffer[#undobuffer].switchtool ~= nil then
 			selectedtool = undobuffer[#undobuffer].switchtool
@@ -1763,7 +1757,6 @@ function redo()
 	if #redobuffer >= 1 then
 		if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
 			gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
-			map_resetroom(roomx, roomy)
 		end
 		if redobuffer[#redobuffer].switchtool ~= nil then
 			selectedtool = redobuffer[#redobuffer].switchtool
@@ -1901,9 +1894,6 @@ function finish_undo(description)
 		-- We just lost the state at which we saved, so we can't undo/redo back to that!
 		unsavedchanges = true
 	end
-
-	-- Also remove the current room from the map, as it was probably changed. Unless it wasn't, but no biggie.
-	map_resetroom(roomx, roomy)
 end
 
 function cutroom()
@@ -2028,6 +2018,8 @@ function levelmetadata_set(x, y, param1, param2)
 	else
 		levelmetadata[y*20 + x+1] = value
 	end
+
+	map_correspondreset(x, y, {DIRTY.PROPERTY})
 end
 
 function levelmetadata2_get(x, y)
@@ -2121,6 +2113,13 @@ function roomdata_set(rx, ry, param1, param2, param3)
 		ty = (ty+distortion) % 30
 
 		roomdata[ry][rx][ty*40 + tx+1] = value
+
+		if ry >= 20 then
+			local absolute_outrow = (ry-20) * 30 + ty
+			map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+		else
+			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
+		end
 		return
 	end
 
@@ -2140,17 +2139,40 @@ function roomdata_set(rx, ry, param1, param2, param3)
 		for itx = 1, 40 do
 			roomdata[ry][rx][distortion*40 + itx] = value[itx]
 		end
+
+		map_correspondreset(rx, ry, {DIRTY.ROW}, {distortion})
 		return
 	end
 
+	local topsectrows = {}
+	local bottomsectrows = {}
 	for ity = 0, 29 do
 		for itx = 0, 39 do
 			if ity < 30-distortion then
 				roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
+				if ry >= 20 then
+					local absolute_outrow = (ry-20) * 30 + ity
+					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				else
+					table.insert(topsectrows, ity+distortion)
+				end
 			else
 				roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
+				if ry+1 >= 20 then
+					local absolute_outrow = (ry-19) * 30 + (ity+distortion) % 30
+					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				else
+					table.insert(bottomsectrows, (ity+distortion) % 30)
+				end
 			end
 		end
+	end
+
+	if ry < 20 then
+		map_correspondreset(rx, ry, {DIRTY.ROW}, topsectrows)
+	end
+	if ry+1 < 20 then
+		map_correspondreset(rx, ry+1, {DIRTY.ROW}, bottomsectrows)
 	end
 end
 
