@@ -122,7 +122,7 @@ function loadlevel(path)
 			theserooms[yk] = {}
 			for xk = 0, 19 do
 				theserooms[yk][xk] = {}
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%20 --[[wraparound here is inaccurate]] and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%20 and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%20 == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
 					for xt = 0, 39 do
 						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*20 + (xk+19)*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
 						if t == nil or t < 0 or t >= 1200 then
