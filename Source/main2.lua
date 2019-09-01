@@ -2440,13 +2440,14 @@ function love.update(dt)
 				)
 				input = rvnum
 			elseif RCMreturn == L.DELETE then
-				dialog.create(
-					langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
-					dialog.callback.suredeletescript
-				)
 				input = rvnum
 				if keyboard_eitherIsDown("shift") then
-					dialogs[#dialogs]:press_button(DB.YES)
+					dialog.callback.suredeletescript(DB.YES)
+				else
+					dialog.create(
+						langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
+						dialog.callback.suredeletescript
+					)
 				end
 			elseif RCMreturn == L.RENAME then
 				dialog.create(
