@@ -680,67 +680,68 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 
 		dirty()
 
-		if not fields.references then
-			return
-		end
+		if fields.references then
+			-- Ok, now time to update ALL the references to this script.
 
-		-- Ok, now time to update ALL the references to this script.
+			-- Scripts
+			local field3cmds = {"iftrinkets", "customiftrinkets", "iftrinketsless", "customiftrinketsless", "ifflag", "customifflag"}
+			local field3intcmds = {"ifcrewlost", "iflast"}
+			local field2intcmds = {"loadscript", "ifskip"}
+			local field4intcmds = {"ifexplored"}
 
-		-- Scripts
-		local field3cmds = {"iftrinkets", "customiftrinkets", "iftrinketsless", "customiftrinketsless", "ifflag", "customifflag"}
-		local field3intcmds = {"ifcrewlost", "iflast"}
-		local field2intcmds = {"loadscript", "ifskip"}
-		local field4intcmds = {"ifexplored"}
-
-		local tmp
-		for rvnum = #scriptnames, 1, -1 do
-			for k,v in pairs(scripts[scriptnames[rvnum]]) do
-				v = v:gsub(" ", "")
-				for _,command in pairs(field3cmds) do
-					if #v > #command then
-						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)])" .. oldname
-						tmp = renamescriptline(v, pattern, newname)
-						if tmp ~= nil then
-							scripts[scriptnames[rvnum]][k] = tmp
+			local tmp
+			for rvnum = #scriptnames, 1, -1 do
+				for k,v in pairs(scripts[scriptnames[rvnum]]) do
+					v = v:gsub(" ", "")
+					for _,command in pairs(field3cmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)])" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
 						end
 					end
-				end
-				for _, command in pairs(field3intcmds) do
-					if #v > #command then
-						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
-						tmp = renamescriptline(v, pattern, newname)
-						if tmp ~= nil then
-							scripts[scriptnames[rvnum]][k] = tmp
+					for _, command in pairs(field3intcmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
 						end
 					end
-				end
-				for _, command in pairs(field2intcmds) do
-					if #v > #command then
-						local pattern = "^(" .. command .. "[%(,%)]custom_)" .. oldname
-						tmp = renamescriptline(v, pattern, newname)
-						if tmp ~= nil then
-							scripts[scriptnames[rvnum]][k] = tmp
+					for _, command in pairs(field2intcmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)]custom_)" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
 						end
 					end
-				end
-				for _, command in pairs(field4intcmds) do
-					if #v > #command then
-						local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
-						tmp = renamescriptline(v, pattern, newname)
-						if tmp ~= nil then
-							scripts[scriptnames[rvnum]][k] = tmp
+					for _, command in pairs(field4intcmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
 						end
 					end
 				end
 			end
-		end
 
-		-- Terminals and script boxes
-		for k,v in pairs(entitydata) do
-			if (v.t == 18 or v.t == 19) and v.data == oldname then
-				entitydata[k].data = newname
+			-- Terminals and script boxes
+			for k,v in pairs(entitydata) do
+				if (v.t == 18 or v.t == 19) and v.data == oldname then
+					entitydata[k].data = newname
+				end
 			end
 		end
+
+		-- Update referenced scripts, since we changed some around
+		usedscripts, n_usedscripts = findusedscripts()
 	end
 end
 
@@ -752,6 +753,9 @@ function dialog.callback.suredeletescript(button)
 		scripts[scriptnames[input]] = nil
 		table.remove(scriptnames, input)
 		dirty()
+
+		-- We might have removed a script reference, so update usages
+		usedscripts, n_usedscripts = findusedscripts()
 	end
 end
 
