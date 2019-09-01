@@ -632,6 +632,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Assembling contents......")
 	thenewcontents = {}
 	--for roomy, yv in pairs(theserooms) do
+	local nested_break = false
 	for lroomy = 0, math.min(thismetadata.mapheight, 20)-1 do
 		yv = theserooms[lroomy]
 		-- We now have each y.....
@@ -648,10 +649,17 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				--end
 				-- Heeey
 				table.insert(thenewcontents, table.concat({unpack(theserooms[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
-				if lroomy == thismetadata.mapheight and x == 19 and line == 29 then
+				if lroomy == math.min(thismetadata.mapheight, 20)-1 and lroomx == 19 and line == 29 then
+					nested_break = true
 					break
 				end
 			end
+			if nested_break then
+				break
+			end
+		end
+		if nested_break then
+			break
 		end
 	end
 	if thismetadata.mapwidth > 20 then
@@ -664,14 +672,9 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			cons("Y: " .. lroomy)
 			for line = 0, 29 do
 				for lroomx = 0, 19 do
-					-- The upper bound on lroomx being 19 writes more tiles than necessary,
-					-- but if I figured out how to calculate only the maximum amount of tiles to write,
-					-- it would be a big ugly expression and also be very error-prone.
-					-- Also I checked just now and VVVVVV seems to deal fine with these extra tiles anyway,
-					-- as opposed to extra room properties
-					potential_line = unpack(theserooms[lroomy][lroomx], line*40 + 1, line*40 + 40)
-					if potential_line ~= nil then
-						table.insert(thenewcontents, table.concat({potential_line}, ","))
+					potential_line = {unpack(theserooms[lroomy][lroomx], line*40 + 1, line*40 + 40)}
+					if #potential_line > 0 --[[ just to check that it's not nil ]] then
+						table.insert(thenewcontents, table.concat(potential_line, ","))
 					end
 				end
 			end
