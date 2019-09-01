@@ -2834,6 +2834,7 @@ function love.keypressed(key)
 			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down") then
 			showtabrect = true
+			RCMactive = false
 
 			local dropdown
 			local cfinput = dialogs[#dialogs].fields[cf][5]
