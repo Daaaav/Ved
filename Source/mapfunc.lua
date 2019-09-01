@@ -154,7 +154,7 @@ function map_resetroom(x, y)
 	rooms_map[y] = rooms_map[y] or {}
 	rooms_map[y][x] = rooms_map[y][x] or {}
 
-	if not rooms_map[y][x].done and rooms_map[y][x].map == nil then
+	if rooms_map[y][x].done ~= nil and not rooms_map[y][x].done and rooms_map[y][x].map == nil then
 		-- We've already reset this, so don't do it again
 		return
 	end
