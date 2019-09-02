@@ -1676,6 +1676,8 @@ function drawmaineditor()
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 
+		local thistooltip = ""
+
 		for t = 1, 17 do
 			-- love.graphics.rectangle("fill", 16, (16+(48*(t-1)))+lefttoolscroll, 32, 32)
 			-- Are we hovering over it? Or maybe even clicking it?
@@ -1709,13 +1711,7 @@ function drawmaineditor()
 			tinyprint(toolshortcuts[t], coorx-2+32+1, coory)
 
 			if nodialog and ((not mouseon(16, 0, 32, 16)) and not (mouseon(16, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) then
-				-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
-				love.graphics.setScissor()
-				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(toolnames[t]), 8) -- string.len(toolnames[t])*8
-				love.graphics.setColor(255,255,255,255)
-				love.graphics.print(toolnames[t], love.mouse.getX()+16, love.mouse.getY()-8)
-				love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
+				thistooltip = toolnames[t]
 			end
 		end
 
@@ -1780,6 +1776,16 @@ function drawmaineditor()
 				love.graphics.print(tooltip_text, love.mouse.getX()+16, love.mouse.getY()-8)
 				love.graphics.setScissor(16+64, 16, 32+4, love.graphics.getHeight()-32)
 			end
+		end
+
+		if thistooltip ~= "" then
+			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
+			love.graphics.setScissor()
+			love.graphics.setColor(128,128,128,192)
+			love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(thistooltip), 8) -- string.len(toolnames[t])*8
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-8)
+			love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 		end
 
 		-- We're done with the scrollable menus now.
