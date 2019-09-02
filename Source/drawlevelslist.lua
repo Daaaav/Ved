@@ -250,9 +250,9 @@ function drawlevelslist()
 					topy = 24+8*preferred_k_location+levellistscroll
 				end
 				if preferred_k < 0 then
-					filename = s.recentfiles[#s.recentfiles+preferred_k+1] .. ".vvvvvv"
+					filename = anythingbutnil(s.recentfiles[#s.recentfiles+preferred_k+1]) .. ".vvvvvv"
 				else
-					filename = files[currentdir][preferred_k].name
+					filename = anythingbutnil(anythingbutnil(files[currentdir][preferred_k]).name)
 				end
 				if preferred_k ~= current_scrolling_levelfilename_k then
 					if font8:getWidth(displayable_filename(filename)) > 50*8 then
