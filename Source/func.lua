@@ -496,8 +496,6 @@ function loadstate(new, ...)
 
 		setgenerictimer(2, 2.75)
 
-		shiftroomsupdatescripts = true
-
 		locatetrinketscrewmates()
 	elseif new == 13 then
 		oldusefontpng = s.usefontpng

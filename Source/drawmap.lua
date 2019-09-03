@@ -250,8 +250,6 @@ function drawmap()
 	love.graphics.print(arrow_right, love.graphics.getWidth()-120+8*13+1, love.graphics.getHeight()-120+4+3)
 	love.graphics.print(arrow_up, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120-4+3)
 	love.graphics.print(arrow_down, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120+4+8+3)
-	hoverdraw(shiftroomsupdatescripts and checkon or checkoff, love.graphics.getWidth()-120, love.graphics.getHeight()-96, 16, 16, 2)
-	love.graphics.print(L.SHIFTROOMSUPDATESCRIPTS, love.graphics.getWidth()-120+16+4, love.graphics.getHeight()-96+6)
 
 	-- The buttons are clickable
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -282,15 +280,13 @@ function drawmap()
 		elseif mouseon(love.graphics.getWidth()-120+98, strip_ypos, 16, 16) then
 			pasteroom()
 		elseif mouseon(love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10) then
-			shiftrooms(SHIFT.LEFT, shiftroomsupdatescripts)
+			shiftrooms(SHIFT.LEFT, true)
 		elseif mouseon(love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10) then
-			shiftrooms(SHIFT.RIGHT, shiftroomsupdatescripts)
+			shiftrooms(SHIFT.RIGHT, true)
 		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10) then
-			shiftrooms(SHIFT.UP, shiftroomsupdatescripts)
+			shiftrooms(SHIFT.UP, true)
 		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10) then
-			shiftrooms(SHIFT.DOWN, shiftroomsupdatescripts)
-		elseif mouseon(love.graphics.getWidth()-120, love.graphics.getHeight()-96, 16, 16) then
-			shiftroomsupdatescripts = not shiftroomsupdatescripts
+			shiftrooms(SHIFT.DOWN, true)
 		end
 	end
 
