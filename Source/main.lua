@@ -112,7 +112,6 @@ function dodisplaysettings(reload)
 		package.loaded.scaling = false
 		love.graphics.push()
 		love.graphics.scale(s.pscale,s.pscale)
-		graphics_skipnextpush = true
 
 		-- Do this or tiles will be white, and that's not really right!
 		-- (I am a rhyming legend)

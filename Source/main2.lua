@@ -463,12 +463,8 @@ function love.draw()
 	end
 
 	if s.pscale ~= 1 then
-		if graphics_skipnextpush then
-			graphics_skipnextpush = nil
-		else
-			love.graphics.push()
-			love.graphics.scale(s.pscale,s.pscale)
-		end
+		love.graphics.push()
+		love.graphics.scale(s.pscale,s.pscale)
 	end
 
 	if state == -3 then
