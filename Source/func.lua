@@ -500,6 +500,7 @@ function loadstate(new, ...)
 
 		locatetrinketscrewmates()
 	elseif new == 13 then
+		oldusefontpng = s.usefontpng
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
 		helplistscroll = 0
@@ -3161,6 +3162,9 @@ end
 
 function exitvedoptions()
 	saveconfig()
+	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
+		handlefontpng()
+	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
 		-- Immediately apply the new custom VVVVVV directory.
 		loadlevelsfolder()
