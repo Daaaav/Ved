@@ -394,7 +394,7 @@ function love.load()
 	loadlevelsfolder()
 	loadtilesets()
 
-	local hijack_print = false
+	hijack_print = false
 
 	-- Are we using font.png?
 	if love_version_meets(10) then

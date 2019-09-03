@@ -45,6 +45,7 @@ end
 -- TTF
 font8 = love.graphics.newFont("Space Station.ttf", 8)
 font16 = love.graphics.newFont("Space Station.ttf", 16)
+font_skipnextreset = true
 
 -- Since the other fonts are done here anyways
 function loadtinynumbers()
