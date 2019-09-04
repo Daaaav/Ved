@@ -1,4 +1,7 @@
 function drawmaineditor()
+	love.graphics.setColor(128,128,128)
+	love.graphics.rectangle("line", screenoffset-0.5, -0.5, 640+1, 480+1)
+	love.graphics.setColor(255,255,255)
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
@@ -1672,7 +1675,7 @@ function drawmaineditor()
 	if (not s.psmallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
 		-- We also want the tools on the left. But it's a scrollable area.
 		love.graphics.setColor(0, 0, 0, 192)
-		love.graphics.rectangle("fill", 0, 0, 128, love.graphics.getHeight())
+		love.graphics.rectangle("fill", 0, 0, 127, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 
@@ -1825,7 +1828,7 @@ function drawmaineditor()
 	else
 		-- Still have a background, in case we have a brush that's so big it overlaps with this part of the screen
 		love.graphics.setColor(0, 0, 0, 192)
-		love.graphics.rectangle("fill", 0, 0, 32, love.graphics.getHeight())
+		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
 		tinyprint(L.TINY_CTRL, 0, 0)
 
@@ -1842,7 +1845,7 @@ function drawmaineditor()
 
 	-- Now stuff on the right.
 	love.graphics.setColor(0, 0, 0, 192)
-	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
+	love.graphics.rectangle("fill", love.graphics.getWidth()-127, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
 	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
@@ -2260,7 +2263,7 @@ function drawmaineditor()
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
-	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset, love.graphics.getHeight()-16-8, 128, "left")
+	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset+2, love.graphics.getHeight()-16-8, 128, "left")
 
 
 	-- Dropdown for tileset?
