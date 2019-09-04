@@ -1,7 +1,7 @@
 love.graphics.clearOR = love.graphics.clear
-love.graphics.clear = function()
+love.graphics.clear = function(...)
 	if not s.pausedrawunfocused or love.window.hasFocus() then
-		love.graphics.clearOR()
+		love.graphics.clearOR(...)
 	end
 end
 
