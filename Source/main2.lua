@@ -2787,7 +2787,7 @@ function love.keypressed(key)
 			showtabrect = true
 			RCMactive = false
 
-			local dropdown
+			local dropdown = 0
 			local cfinput = dialogs[#dialogs].fields[cf][5]
 			local dropdowns = dialogs[#dialogs].fields[cf][7]
 			local mapping = dialogs[#dialogs].fields[cf][8]
