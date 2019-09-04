@@ -2783,7 +2783,7 @@ function love.keypressed(key)
 			showtabrect = true
 
 			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
-		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down") then
+		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
 			showtabrect = true
 			RCMactive = false
 
@@ -2804,13 +2804,13 @@ function love.keypressed(key)
 					break
 				end
 			end
-			if key == "up" then
+			if key == "up" or key == "kp8" then
 				dropdown = dropdown - 1
 				if dropdown < 1 then
 					dropdown = #dropdowns
 				end
 			end
-			if key == "down" then
+			if key == "down" or key == "kp2" then
 				dropdown = dropdown + 1
 				if dropdown > #dropdowns then
 					dropdown = 1
