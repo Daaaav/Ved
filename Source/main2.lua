@@ -3465,7 +3465,7 @@ function love.keypressed(key)
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
+	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
