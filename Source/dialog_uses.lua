@@ -105,14 +105,8 @@ function dialog.form.language_make()
 		bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
 	end
 	local year = os.date("%Y")
-	local langs = getalllanguages()
-	detectedautolang = autolang()
-	if detectedautolang == nil then
-		detectedautolang = "???"
-	end
-	table.insert(langs, 1, langkeys(L.AUTODETECTLANG, {detectedautolang}))
 	return {
-		{"language", 0, 0, 30, s.lang, DF.DROPDOWN, langs},
+		{"language", 0, 0, 30, s.lang, DF.DROPDOWN, getalllanguages()},
 		{"", 0, 3, 40, L.DATEFORMAT, DF.LABEL},
 		{
 			"dateformat", 0, 4, 0, s.new_dateformat, DF.RADIOS,
@@ -861,14 +855,7 @@ end
 
 function dialog.callback.language(button, fields)
 	if button == DB.OK then
-		if fields.language == langkeys(L.AUTODETECTLANG, {thisautolang}) then
-			s.lang = autolang()
-			s.autolang = true
-		else
-			s.lang = fields.language
-			s.autolang = false
-		end
-
+		s.lang = fields.language
 		s.new_dateformat = fields.dateformat
 		s.new_timeformat = fields.timeformat
 

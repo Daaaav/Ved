@@ -2260,6 +2260,19 @@ function is_scrollable(x, y)
 	return false
 end
 
+function getalllanguages()
+	local languagesarray = love.filesystem.getDirectoryItems("lang")
+	local returnarray = {}
+
+	for k,v in pairs(languagesarray) do
+		if v:sub(-4,-1) == ".lua" then
+			table.insert(returnarray, v:sub(1,-5))
+		end
+	end
+
+	return returnarray
+end
+
 function colorsetting(label, pos, mycolor)
 	--hoverdraw(checkoff, 8, 8+(24*pos), 16, 16, 2)
 	love.graphics.setColor(255,255,255)
