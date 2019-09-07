@@ -3387,7 +3387,7 @@ function love.keypressed(key)
 			end
 		end
 		for k,v in pairs(knowninternalcommands) do
-			if k:sub(1, input:len()) == input then
+			if k:sub(1, input:len()) == input and not table.contains(matching, k) then
 				table.insert(matching, k)
 			end
 		end
