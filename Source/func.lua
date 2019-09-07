@@ -3334,23 +3334,25 @@ function handlefontpng()
 		arrow_down = "V"
 		arrow_left = "<"
 		arrow_right = ">"
-		return
-	end
-
-	if font_skipnextreset then
-		font_skipnextreset = false
 	else
-		font8 = love.graphics.newFont("Space Station.ttf", 8)
-		font16 = love.graphics.newFont("Space Station.ttf", 16)
+		if font_skipnextreset then
+			font_skipnextreset = false
+		else
+			font8 = love.graphics.newFont("Space Station.ttf", 8)
+			font16 = love.graphics.newFont("Space Station.ttf", 16)
+		end
+
+		hijack_print = false
+		fontpng_works = false
+
+		arrow_up = "↑"
+		arrow_down = "↓"
+		arrow_left = "←"
+		arrow_right = "→"
 	end
 
-	hijack_print = false
-	fontpng_works = false
-
-	arrow_up = "↑"
-	arrow_down = "↓"
-	arrow_left = "←"
-	arrow_right = "→"
+	-- Update the font to the new object
+	love.graphics.setFont(font8)
 end
 
 hook("func")
