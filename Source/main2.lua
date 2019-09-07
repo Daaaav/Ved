@@ -3629,8 +3629,6 @@ function love.keypressed(key)
 		end
 	elseif state == 25 and key == "escape" then
 		exitsyntaxcoloroptions()
-	elseif state == 27 and key == "escape" then
-		exitdisplayoptions()
 	elseif state == 31 and (key == " " or key == "space") then
 		if currentmusic_paused then
 			resumemusic()
@@ -3673,6 +3671,10 @@ function love.keyreleased(key)
 		tilespicker_shortcut = false
 	elseif key == "return" then
 		returnpressed = false
+	elseif state == 27 and key == "escape" then
+		-- Put it here instead of love.keypressed,
+		-- otherwise the new window will interpret a hold as a press
+		exitdisplayoptions()
 	end
 end
 
