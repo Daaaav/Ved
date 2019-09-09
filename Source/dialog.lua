@@ -460,8 +460,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		self:setColor(255,255,255,255)
 		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
 		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
-			self:cd_to_parent(n, content, ...)
+			self.currentfield = n
 
+			self:cd_to_parent(n, content, ...)
 			mousepressed = true
 		end
 		self:setColor(0,0,0,255)
@@ -489,6 +490,8 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
 					self:setColor(0,0,0,255)
 					if moused and love.mouse.isDown("l") and not mousepressed then
+						self.currentfield = n
+
 						if v.isdir then
 							local newfolder = get_child_path(content, v.name)
 							self.fields[n][5] = newfolder
