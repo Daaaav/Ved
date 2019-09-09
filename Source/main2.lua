@@ -2812,11 +2812,47 @@ function love.keypressed(key)
 			end
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
-		elseif cftype == DF.FILES and key == "backspace" then
+		elseif cftype == DF.FILES then
 			showtabrect = true
 
-			dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
-			dialogs[#dialogs]:set_field("name", "")
+			if key == "backspace" then
+				dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:set_field("name", "")
+			elseif key == "up" or key == "kp8" or key == "down" or key == "kp2" then
+				local files = dialogs[#dialogs].fields[cf][7]
+				local file = 0
+				local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf])
+				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][2]*8
+				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][3]*8 + 1
+				local real_w = dialogs[#dialogs].fields[cf][4]*8
+
+				for k,v in pairs(files) do
+					if v.name == dialogs[#dialogs]:return_fields().name then
+						file = k
+						break
+					end
+				end
+				if key == "up" or key == "kp8" then
+					file = file - 1
+					if file < 1 then
+						file = #files
+					end
+				end
+				if key == "down" or key == "kp2" then
+					file = file + 1
+					if file > #files then
+						file = 1
+					end
+				end
+
+				dialogs[#dialogs]:set_field("name", files[file].name)
+
+				if 8*file - 8 < math.abs(listscroll) then
+					dialogs[#dialogs].fields[cf][10] = -8*file + 8
+				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
+					dialogs[#dialogs].fields[cf][10] = -8*file + 8*list_height
+				end
+			end
 		end
 	end
 
