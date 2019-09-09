@@ -2812,7 +2812,7 @@ function love.keypressed(key)
 			end
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
-		elseif cftype == DF.FILES then
+		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
 			showtabrect = true
 
 			local files = dialogs[#dialogs].fields[cf][7]
