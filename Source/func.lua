@@ -3228,8 +3228,11 @@ function exitvedoptions()
 		handlefontpng()
 
 		-- Re-execute this bit from main2.lua
+		-- But account for if we're not hijacking
 		if hijack_print or love_version_meets(11) then
 			temp_print_override()
+		else
+			undo_temp_print_override()
 		end
 	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
