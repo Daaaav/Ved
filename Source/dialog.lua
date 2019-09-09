@@ -454,19 +454,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		self:setColor(255,255,255,255)
 		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
 		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
-			local newfolder = get_parent_path(content)
-			self.fields[n][5] = newfolder
-			local success, everr
-			success, self.fields[n][7], everr = listfiles_generic(
-				newfolder,
-				filter_on and folder_filter or "",
-				folder_show_hidden
-			)
-			if success then
-				everr = ""
-			end
-			self.fields[n][10] = 0
-			self.fields[n][11] = everr
+			self:cd_to_parent(n, content, ...)
 
 			mousepressed = true
 		end
@@ -643,6 +631,24 @@ function cDialog:get_on_scrollable_field(x, y)
 		end
 	end
 	return nil
+end
+
+function cDialog:cd_to_parent(cf, currentdir, ...)
+	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
+
+	local newfolder = get_parent_path(currentdir)
+	self.fields[cf][5] = newfolder
+	local success, everr
+	success, self.fields[cf][7], everr = listfiles_generic(
+		newfolder,
+		filter_on and folder_filter or "",
+		folder_show_hidden
+	)
+	if success then
+		everr = ""
+	end
+	self.fields[cf][10] = 0
+	self.fields[cf][11] = everr
 end
 
 
