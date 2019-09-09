@@ -874,7 +874,9 @@ function dialog.callback.language(button, fields)
 		end
 
 		swaptinynumbersglyphs()
-		handleasciireplace()
+		if s.usefontpng then
+			handleasciireplace()
+		end
 
 		package.loaded.devstrings = false
 		ved_require("devstrings")
