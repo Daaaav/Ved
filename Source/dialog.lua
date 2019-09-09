@@ -480,7 +480,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		for k,v in pairs(menuitems) do
 			-- Only display this item if it will be visible
 			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
-				local selected = false --v.name == content -- check if name dialog field equals v.name?
+				local selected = self:return_fields().name == v.name
 				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height))
 				if selected or moused then
 					self:setColor(172,172,172,255)
