@@ -2815,23 +2815,24 @@ function love.keypressed(key)
 		elseif cftype == DF.FILES then
 			showtabrect = true
 
+			local files = dialogs[#dialogs].fields[cf][7]
+			local file = 0
+			for k,v in pairs(files) do
+				if v.name == dialogs[#dialogs]:return_fields().name then
+					file = k
+					break
+				end
+			end
+
 			if key == "backspace" then
 				dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
 				dialogs[#dialogs]:set_field("name", "")
 			elseif key == "up" or key == "kp8" or key == "down" or key == "kp2" then
-				local files = dialogs[#dialogs].fields[cf][7]
-				local file = 0
 				local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf])
 				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][2]*8
 				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][3]*8 + 1
 				local real_w = dialogs[#dialogs].fields[cf][4]*8
 
-				for k,v in pairs(files) do
-					if v.name == dialogs[#dialogs]:return_fields().name then
-						file = k
-						break
-					end
-				end
 				if key == "up" or key == "kp8" then
 					file = file - 1
 					if file < 1 then
@@ -2852,6 +2853,9 @@ function love.keypressed(key)
 				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
 					dialogs[#dialogs].fields[cf][10] = -8*file + 8*list_height
 				end
+			elseif (key == " " or key == "space") and files[file].isdir then
+				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:set_field("name", "")
 			end
 		end
 	end
