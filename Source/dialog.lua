@@ -151,6 +151,11 @@ function cDialog:draw(topmost)
 
 	-- Buttons
 	local btnwidth = 72
+	-- The Enter key can press different buttons depending on their priority
+	-- and whether or not they are one of the buttons in this dialog
+	-- Make sure we don't end up displaying it twice, if there happen to be
+	-- multiple for whatever reason
+	local returnalreadyshown = false
 	for k,v in pairs(self.buttons) do
 		local rapos = (#self.buttons)-k+1 -- right-aligned position
 		local btn_x = self.x+self.width-rapos*btnwidth-(5*(rapos-1))-1
@@ -186,8 +191,11 @@ function cDialog:draw(topmost)
 		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
 		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost, self}
 		if topmost and not self.closing then
-			if DB_keys[v] == "OK" then
+			-- For the Enter key, make sure to put the most prioritized buttons on the left,
+			-- in the same order as in cDialog:keypressed()
+			if not returnalreadyshown and (DB_keys[v] == "OK" or DB_keys[v] == "CLOSE" or DB_keys[v] == "SAVE" or DB_keys[v] == "LOAD" or DB_keys[v] == "QUIT") then
 				showhotkey("n", unpack(args))
+				returnalreadyshown = true
 			elseif DB_keys[v] == "CANCEL" then
 				showhotkey("b", unpack(args))
 			elseif DB_keys[v] == "YES" then
