@@ -124,7 +124,7 @@ function cDialog:draw(topmost)
 		end
 	end
 
-	if fieldactive and showtabrect and topmost then
+	if fieldactive and topmost then
 		active_x = self.x+10+active_x*8
 		active_y = self.y+self.windowani+10+active_y*8 + 1
 		if active_type == DF.RADIOS then
@@ -141,8 +141,14 @@ function cDialog:draw(topmost)
 		end
 		active_w = active_w*8
 
-		self:setColor(255,255,127,255,not topmost)
-		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
+		if showtabrect then
+			self:setColor(255,255,127,255,not topmost)
+			love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
+		end
+
+		if active_type == DF.FILES then
+			showhotkey("d", active_x+12, active_y-6, ALIGN.RIGHT, topmost, self)
+		end
 	end
 
 	-- Window border
