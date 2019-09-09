@@ -120,6 +120,7 @@ function cDialog:draw(topmost)
 			active_w = v[4]
 			active_type = v[6]
 			active_dropdowns = v[7]
+			active_listheight = v[12]
 		end
 	end
 
@@ -133,6 +134,8 @@ function cDialog:draw(topmost)
 			end
 			active_w = math.max(unpack(tmp)) + 2
 			active_h = #active_dropdowns * 8
+		elseif active_type == DF.FILES then
+			active_h = active_listheight*8 + 8 + 4
 		else
 			active_h = 8
 		end
