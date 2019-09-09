@@ -2861,13 +2861,17 @@ function temp_print_override()
 		func(unpack(args))
 	end
 
-	love.graphics.print11 = love.graphics.print
+	if love.graphics.print11 == nil then
+		love.graphics.print11 = love.graphics.print
+	end
 
 	love.graphics.print = function(...)
 		love11_tempfixfontpos(love.graphics.print11, ...)
 	end
 
-	love.graphics.printf11 = love.graphics.printf
+	if love.graphics.printf11 == nil then
+		love.graphics.printf11 = love.graphics.printf
+	end
 
 	love.graphics.printf = function(...)
 		love11_tempfixfontpos(love.graphics.printf11, ...)
@@ -3206,6 +3210,11 @@ function exitvedoptions()
 	saveconfig()
 	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
 		handlefontpng()
+
+		-- Re-execute this bit from main2.lua
+		if hijack_print or love_version_meets(11) then
+			temp_print_override()
+		end
 	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
 		-- Immediately apply the new custom VVVVVV directory.
@@ -3288,12 +3297,8 @@ function handlefontpng()
 		arrow_left = "<"
 		arrow_right = ">"
 	else
-		if font_skipnextreset then
-			font_skipnextreset = false
-		else
-			font8 = love.graphics.newFont("Space Station.ttf", 8)
-			font16 = love.graphics.newFont("Space Station.ttf", 16)
-		end
+		font8 = love.graphics.newFont("Space Station.ttf", 8)
+		font16 = love.graphics.newFont("Space Station.ttf", 16)
 
 		hijack_print = false
 		fontpng_works = false
