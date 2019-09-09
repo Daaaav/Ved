@@ -505,6 +505,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				if v.isdir then
 					self:setColor(255,255,255,255)
 					love.graphics.draw(smallfolder, real_x, real_y+1+k*8+listscroll)
+					if active and selected then
+						showhotkey(" ", real_x+real_w-20, real_y+k*8+listscroll, ALIGN.RIGHT, topmost, self)
+					end
 					self:setColor(0,0,0,255)
 				end
 				love.graphics.print(displayable_filename(v.name), real_x+8, real_y+3+k*8+listscroll)
