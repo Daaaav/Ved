@@ -2812,6 +2812,11 @@ function love.keypressed(key)
 			end
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
+		elseif cftype == DF.FILES and key == "backspace" then
+			showtabrect = true
+
+			dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+			dialogs[#dialogs]:set_field("name", "")
 		end
 	end
 
