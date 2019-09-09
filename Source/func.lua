@@ -2878,6 +2878,22 @@ function temp_print_override()
 	end
 end
 
+function undo_temp_print_override()
+	love11_tempfixfontpos = nil
+
+	if love.graphics.print11 ~= nil then
+		love.graphics.print = love.graphics.print11
+	end
+
+	love.graphics.print11 = nil
+
+	if love.graphics.printf11 ~= nil then
+		love.graphics.printf = love.graphics.printf11
+	end
+
+	love.graphics.printf11 = nil
+end
+
 
 -- Some helper functions for level-specific vars in the metadata entity
 function cast_level_var_type(t, v)
