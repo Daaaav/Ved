@@ -2849,6 +2849,9 @@ function temp_print_override()
 	-- Basically, in LÖVE 0.9 and 0.10, the TTF font is displaced, and the correction for this has
 	-- always been hardcoded. This doesn't happen in 11+, and also doesn't happen for bitmap fonts.
 	-- Plan is to remove the hardcoded offset EVERYWHERE and hijack lg.print[f] for 0.9/0.10 with TTF instead.
+	--
+	-- WARNING!
+	-- Ignore the fact that all the names have '11' in them, this function is used in LÖVE 0.10, too
 
 	function love11_tempfixfontpos(func, ...)
 		local args = {...}
