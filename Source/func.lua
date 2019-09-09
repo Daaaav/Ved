@@ -667,6 +667,8 @@ function loadstate(new, ...)
 		else
 			musicplayerfile = ...
 		end
+	elseif new == 33 then
+		alllanguages = getalllanguages()
 	end
 
 	hook("func_loadstate")

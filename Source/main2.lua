@@ -37,6 +37,7 @@ States:
 30	Assets
 31	Assets - music/sounds
 32	Assets - graphics
+33	Language screen
 
 Debug keys:
 F12: change state
@@ -233,6 +234,8 @@ function love.load()
 
 	radioon = love.graphics.newImage("images/radioon.png")
 	radiooff = love.graphics.newImage("images/radiooff.png")
+	radioon_hq = love.graphics.newImage("images/radioon_hq.png")
+	radiooff_hq = love.graphics.newImage("images/radiooff_hq.png")
 
 	menupijltje = love.graphics.newImage("images/menupijltje.png")
 	colorsel = love.graphics.newImage("images/colorsel.png")
@@ -1901,6 +1904,21 @@ function love.draw()
 					dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
 				)
 				mousepressed = true
+			end
+		end
+	elseif state == 33 then
+		love.graphics.print(L.LANGUAGE, 16, 16+4+2)
+
+		for k,v in pairs(alllanguages) do
+			local clickable_w = 8+16+font8:getWidth(v)
+			hoverdraw(s.lang == v and radioon_hq or radiooff_hq, 16, 16+(24*k), clickable_w, 16)
+			if s.lang == v then
+				love.graphics.setColor(255,255,128)
+			end
+			love.graphics.print(v, 16+16+8, 16+(24*k)+4+2)
+			love.graphics.setColor(255,255,255)
+			if mouseon(16, 16+(24*k), clickable_w, 16) and love.mouse.isDown("l") then
+				s.lang = v
 			end
 		end
 	else
