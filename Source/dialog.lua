@@ -493,19 +493,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 						self.currentfield = n
 
 						if v.isdir then
-							local newfolder = get_child_path(content, v.name)
-							self.fields[n][5] = newfolder
-							local success, everr
-							success, self.fields[n][7], everr = listfiles_generic(
-								newfolder,
-								filter_on and folder_filter or "",
-								folder_show_hidden
-							)
-							if success then
-								everr = ""
-							end
-							self.fields[n][10] = 0
-							self.fields[n][11] = everr
+							self:cd(v.name, n, content, ...)
 
 							mousepressed = true
 						else
@@ -646,6 +634,24 @@ function cDialog:cd_to_parent(cf, currentdir, ...)
 	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
 
 	local newfolder = get_parent_path(currentdir)
+	self.fields[cf][5] = newfolder
+	local success, everr
+	success, self.fields[cf][7], everr = listfiles_generic(
+		newfolder,
+		filter_on and folder_filter or "",
+		folder_show_hidden
+	)
+	if success then
+		everr = ""
+	end
+	self.fields[cf][10] = 0
+	self.fields[cf][11] = everr
+end
+
+function cDialog:cd(dir, cf, currentdir, ...)
+	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
+
+	local newfolder = get_child_path(currentdir, dir)
 	self.fields[cf][5] = newfolder
 	local success, everr
 	success, self.fields[cf][7], everr = listfiles_generic(
