@@ -146,7 +146,9 @@ function cDialog:draw(topmost)
 			love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
 		end
 
-		if active_type == DF.FILES then
+		if active_type == DF.CHECKBOX then
+			showhotkey(" ", active_x+2, active_y, ALIGN.CENTER, topmost, self)
+		elseif active_type == DF.FILES then
 			showhotkey("d", active_x+12, active_y-6, ALIGN.RIGHT, topmost, self)
 		end
 	end
