@@ -110,7 +110,7 @@ function cDialog:draw(topmost)
 
 	-- Text boxes
 	local fieldactive = false
-	local active_x, active_y, active_w, active_h, active_type, active_dropdowns
+	local active_x, active_y, active_w, active_h, active_type, active_dropdowns, active_listheight
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
 		if self.currentfield == k then
