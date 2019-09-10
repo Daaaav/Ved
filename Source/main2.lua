@@ -2857,7 +2857,7 @@ function love.keypressed(key)
 				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
 					dialogs[#dialogs].fields[cf][10] = -8*file + 8*list_height
 				end
-			elseif (key == " " or key == "space") and files[file].isdir then
+			elseif (key == " " or key == "space") and files[file] ~= nil and files[file].isdir then
 				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
 				dialogs[#dialogs]:set_field("name", "")
 			end
