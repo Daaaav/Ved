@@ -2850,7 +2850,7 @@ function love.keypressed(key)
 					end
 				end
 
-				dialogs[#dialogs]:set_field("name", files[file].name)
+				dialogs[#dialogs]:set_field("name", anythingbutnil(files[file]).name)
 
 				if 8*file - 8 < math.abs(listscroll) then
 					dialogs[#dialogs].fields[cf][10] = -8*file + 8
