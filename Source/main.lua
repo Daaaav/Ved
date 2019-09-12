@@ -5,6 +5,7 @@ love.graphics.setFont(font_scale1)
 print("BITMAP")
 ]]
 
+require("enablescreensaver")
 require("corefunc")
 
 allowdebug = false
