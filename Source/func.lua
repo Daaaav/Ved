@@ -738,7 +738,7 @@ function loadlevelsfolder()
 	current_scrolling_leveltitle_pos = 168
 	current_scrolling_levelfilename_k = nil
 	current_scrolling_levelfilename_filename = nil
-	current_scrolling_levelfilename_pos = 400
+	current_scrolling_levelfilename_pos = (s.psmallerscreen and 50-12 or 50)*8
 	cons("Loaded.")
 	-- Now get all the backups
 	files[".ved-sys" .. dirsep .. "backups"] = {}

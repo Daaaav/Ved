@@ -47,6 +47,10 @@ function drawlevelslist()
 			end
 		end
 		local lessheight = 48
+		local width = 50
+		if s.psmallerscreen then
+			width = width-12
+		end
 		if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
 			lessheight = lessheight + 16 + #s.recentfiles*8
 			love.graphics.setColor(64,64,64)
@@ -76,7 +80,7 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				display_levels_list_string(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
+				display_levels_list_string(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -177,7 +181,7 @@ function drawlevelslist()
 								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
 							end
 						else
-							display_levels_list_string(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k, 50, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
+							display_levels_list_string(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k, width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -255,13 +259,13 @@ function drawlevelslist()
 					filename = anythingbutnil(anythingbutnil(files[currentdir][preferred_k]).name)
 				end
 				if preferred_k ~= current_scrolling_levelfilename_k then
-					if font8:getWidth(displayable_filename(filename)) > 50*8 then
+					if font8:getWidth(displayable_filename(filename)) > width*8 then
 						current_scrolling_levelfilename_k = preferred_k
 						current_scrolling_levelfilename_filename = displayable_filename(filename)
 					else
 						current_scrolling_levelfilename_k = nil
 					end
-					current_scrolling_levelfilename_pos = 400
+					current_scrolling_levelfilename_pos = width*8
 				end
 				if md ~= nil then
 					if topy+48 > love.graphics.getHeight() then
