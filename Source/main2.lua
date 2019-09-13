@@ -1414,7 +1414,8 @@ function love.draw()
 		else
 			love.graphics.print(musicplayerfile, 16, 14)
 		end
-		local file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
+		local file_metadata
+		file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
 		local musicnamex_offset
 		if musiceditor then
 			musicnamex_offset = 76
@@ -1625,7 +1626,7 @@ function love.draw()
 		if musiceditor then
 			rbutton({L.MUSICFILEMETADATA, "M"}, 5, nil, true)
 		elseif file_metadata_anyset then
-			rbutton(L.MUSICFILEMETADATA, 4, nil, true)
+			rbutton({L.MUSICFILEMETADATA, "M"}, 4, nil, true)
 		end
 
 		if nodialog and love.mouse.isDown("l") then
@@ -3680,6 +3681,8 @@ function love.keypressed(key)
 		assets_savedialog()
 	elseif state == 31 and musiceditor and key == "m" then
 		assets_metadataeditordialog()
+	elseif state == 31 and not musiceditor and file_metadata_anyset and key == "m" then
+		assets_metadataplayerdialog()
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
