@@ -1640,8 +1640,7 @@ function love.draw()
 				if musiceditor then
 					assets_loaddialog()
 				else
-					setgenerictimer(1, .25)
-					loadvvvvvvmusic(musicplayerfile)
+					assets_reload()
 				end
 				mousepressed = true
 			elseif musiceditor and onrbutton(3, nil, true) then

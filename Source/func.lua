@@ -3425,4 +3425,9 @@ function assets_loaddialog()
 	)
 end
 
+function assets_reload()
+	setgenerictimer(1, .25)
+	loadvvvvvvmusic(musicplayerfile)
+end
+
 hook("func")
