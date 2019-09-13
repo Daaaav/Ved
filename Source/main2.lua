@@ -3664,7 +3664,7 @@ function love.keypressed(key)
 		end
 	elseif state == 25 and key == "escape" then
 		exitsyntaxcoloroptions()
-	elseif state == 31 and (key == " " or key == "space") then
+	elseif state == 31 and (key == " " or key == "space" or key == "kp5") then
 		if currentmusic_paused then
 			resumemusic()
 		else
