@@ -1762,7 +1762,7 @@ function love.draw()
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
-		rbutton(L.LOAD, 2, nil, true)
+		rbutton({L.LOAD, "L"}, 2, nil, true)
 
 		if nodialog and love.mouse.isDown("l") and not mousepressed then
 			if onrbutton(0, nil, true) then
@@ -3716,6 +3716,8 @@ function love.keypressed(key)
 		elseif key == "3" then
 			imageviewer_grid = 32
 		end
+	elseif state == 32 and key == "l" then
+		assets_graphicsloaddialog()
 	end
 end
 
