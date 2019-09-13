@@ -1428,6 +1428,10 @@ function love.draw()
 			local musicnamex = musicx + musicnamex_offset
 			local musicsizerx = soundviewer and musicx+316 or musicx+680
 			local musicdurationx = soundviewer and musicx+332 or musicx+712
+			if s.psmallerscreen and not soundviewer then
+				musicsizerx = musicsizerx - 128 + 16
+				musicdurationx = musicdurationx - 128 + 16
+			end
 			for my = 0, 15 do
 				local m = mx*16 + my
 				if (soundviewer and m > 27) or (not soundviewer and m > 15) then
@@ -1553,14 +1557,18 @@ function love.draw()
 
 		local current_audio = getmusicaudioplaying()
 		local cura_y = love.graphics.getHeight()-32
+		local width = 568
+		if s.psmallerscreen then
+			width = width - 128 + 16
+		end
 		if current_audio == nil then
 			love.graphics.setColor(64,64,64)
 			love.graphics.draw(sound_play, 16, cura_y)
 			love.graphics.draw(sound_stop, 32, cura_y)
 			love.graphics.draw(sound_rewind, 48, cura_y)
 			love.graphics.print("[--] -:--", 72, cura_y+6)
-			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
-			love.graphics.print("-:--", 728, cura_y+6)
+			love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
+			love.graphics.print("-:--", width+160, cura_y+6)
 			love.graphics.setColor(255,255,255)
 		else
 			hoverdraw(currentmusic_paused and sound_play or sound_pause, 16, cura_y, 16, 16)
@@ -1592,12 +1600,12 @@ function love.draw()
 				duration = current_audio:getDuration()
 			end
 			love.graphics.setColor(128,128,128)
-			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
+			love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
 			love.graphics.setColor(255,255,255)
 			if duration ~= nil and duration ~= 0 then
-				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*568, 8)
-				if nodialog and not mousepressed and mouseon(152, cura_y+4, 568, 8) then
-					local mouse_elapsed = ((love.mouse.getX()-152)/568)*duration
+				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*width, 8)
+				if nodialog and not mousepressed and mouseon(152, cura_y+4, width, 8) then
+					local mouse_elapsed = ((love.mouse.getX()-152)/width)*duration
 					love.graphics.print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-8)
 					if love.mouse.isDown("l") then
 						current_audio:seek(mouse_elapsed)
@@ -1605,7 +1613,7 @@ function love.draw()
 					end
 				end
 			end
-			love.graphics.print(mmss_duration(duration), 728, cura_y+6)
+			love.graphics.print(mmss_duration(duration), width+160, cura_y+6)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
