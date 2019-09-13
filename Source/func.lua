@@ -3415,4 +3415,14 @@ function assets_metadataplayerdialog()
 	)
 end
 
+function assets_loaddialog()
+	dialog.create(
+		"",
+		DBS.LOADCANCEL,
+		dialog.callback.loadvvvvvvmusic,
+		L.LOADMUSICNAME,
+		dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
+	)
+end
+
 hook("func")

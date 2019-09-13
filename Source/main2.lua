@@ -1638,13 +1638,7 @@ function love.draw()
 			elseif onrbutton(2, nil, true) then
 				-- Reload/Load
 				if musiceditor then
-					dialog.create(
-						"",
-						DBS.LOADCANCEL,
-						dialog.callback.loadvvvvvvmusic,
-						L.LOADMUSICNAME,
-						dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
-					)
+					assets_loaddialog()
 				else
 					rbutton(musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD, 2, nil, true, nil, true)
 					love.graphics.present()
