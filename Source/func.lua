@@ -288,6 +288,12 @@ function stopinput()
 end
 
 function tostate(new, dontinitialize, ...)
+	-- The feedback from the button should be over by now
+	-- Make sure it doesn't carry into another state
+	if generictimer_mode == 1 then
+		setgenerictimer(0, 0)
+	end
+
 	if dontinitialize == nil then
 		dontinitialize = false
 	end
