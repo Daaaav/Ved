@@ -300,8 +300,6 @@ function cDialog:keypressed(key)
 		self:press_button(DB.YES)
 	elseif key == "n" and self.buttons_present[DB.NO] then
 		self:press_button(DB.NO)
-	elseif key == "s" and self.buttons_present[DB.SAVE] and #self.fields == 0 then
-		self:press_button(DB.SAVE)
 	elseif key == "d" and self.buttons_present[DB.DISCARD] then
 		self:press_button(DB.DISCARD)
 	end
