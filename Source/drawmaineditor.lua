@@ -1552,6 +1552,12 @@ function drawmaineditor()
 				cursorx, cursory,
 				false, false, {}, false, false, true
 			)
+		elseif (table.contains({3, 4}, selectedsubtool[14])) and entitydata[warpid] ~= nil then
+			if selectedsubtool[14] == 4 then
+				love.graphics.setColor(255, 255, 255, 64)
+			end
+			drawentitysprite(18, screenoffset + 16*cursorx, 16*cursory)
+			love.graphics.setColor(255, 255, 255, 255)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
 			if selectedsubtool[selectedtool] == 1 or selectedsubtool[selectedtool] == 9 then
