@@ -3415,7 +3415,7 @@ function assets_metadataplayerdialog()
 	)
 end
 
-function assets_loaddialog()
+function assets_musicloaddialog()
 	dialog.create(
 		"",
 		DBS.LOADCANCEL,
@@ -3425,7 +3425,7 @@ function assets_loaddialog()
 	)
 end
 
-function assets_reload()
+function assets_musicreload()
 	setgenerictimer(1, .25)
 	loadvvvvvvmusic(musicplayerfile)
 end

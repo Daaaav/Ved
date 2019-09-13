@@ -1639,9 +1639,9 @@ function love.draw()
 			elseif onrbutton(2, nil, true) then
 				-- Reload/Load
 				if musiceditor then
-					assets_loaddialog()
+					assets_musicloaddialog()
 				else
-					assets_reload()
+					assets_musicreload()
 				end
 				mousepressed = true
 			elseif musiceditor and onrbutton(3, nil, true) then
@@ -3677,9 +3677,9 @@ function love.keypressed(key)
 	elseif state == 31 and not musiceditor and file_metadata_anyset and key == "m" then
 		assets_metadataplayerdialog()
 	elseif state == 31 and musiceditor and key == "l" then
-		assets_loaddialog()
+		assets_musicloaddialog()
 	elseif state == 31 and not musiceditor and key == "l" then
-		assets_reload()
+		assets_musicreload()
 	elseif state == 31 and love_version_meets(10) and key == "home" or key == "kp7" then
 		local current_audio = getmusicaudioplaying()
 		if current_audio ~= nil then
