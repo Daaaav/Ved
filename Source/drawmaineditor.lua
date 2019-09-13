@@ -1552,7 +1552,7 @@ function drawmaineditor()
 				cursorx, cursory,
 				false, false, {}, false, false, true
 			)
-		elseif (table.contains({3, 4}, selectedsubtool[14])) and entitydata[warpid] ~= nil then
+		elseif table.contains({3, 4}, selectedsubtool[14]) and entitydata[warpid] ~= nil then
 			if selectedsubtool[14] == 4 then
 				love.graphics.setColor(255, 255, 255, 64)
 			end
