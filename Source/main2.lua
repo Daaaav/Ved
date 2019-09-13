@@ -3680,9 +3680,12 @@ function love.keypressed(key)
 		assets_loaddialog()
 	elseif state == 31 and not musiceditor and key == "l" then
 		assets_reload()
-	elseif state == 31 and key == "home" or key == "kp7" then
-		getmusicaudioplaying():seek(0)
-	elseif state == 31 and (key == "left" or key == "kp4" or key == "right" or key == "kp6") then
+	elseif state == 31 and love_version_meets(10) and key == "home" or key == "kp7" then
+		local current_audio = getmusicaudioplaying()
+		if current_audio ~= nil then
+			current_audio:seek(0)
+		end
+	elseif state == 31 and love_version_meets(10) and (key == "left" or key == "kp4" or key == "right" or key == "kp6") then
 		local seconds = 0
 		if key == "left" or key == "kp4" then
 			seconds = -5
@@ -3693,13 +3696,15 @@ function love.keypressed(key)
 			seconds = seconds * 2
 		end
 		local current_audio = getmusicaudioplaying()
-		local duration = current_audio:getDuration("seconds")
-		if duration ~= nil and duration > 0 then
-			local seek = math.max(current_audio:tell("seconds") + seconds, 0)
-			if seek > duration then
-				seek = 0
+		if current_audio ~= nil then
+			local duration = current_audio:getDuration("seconds")
+			if duration ~= nil and duration > 0 then
+				local seek = math.max(current_audio:tell("seconds") + seconds, 0)
+				if seek > duration then
+					seek = 0
+				end
+				current_audio:seek(seek, "seconds")
 			end
-			current_audio:seek(seek, "seconds")
 		end
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
