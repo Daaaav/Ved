@@ -1658,12 +1658,7 @@ function love.draw()
 				assets_metadataeditordialog()
 			elseif not musiceditor and file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
-				dialog.create(
-					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
-					.. L.MUSICTITLE .. file_metadata.name .. "\n\n"
-					.. L.MUSICARTIST .. file_metadata.artist .. "\n\n"
-					.. L.MUSICNOTES .. "\n" .. file_metadata.notes
-				)
+				assets_metadataplayerdialog()
 			end
 		elseif nodialog and love.mouse.isDown("r") and onrbutton(2, nil, true) and musicfileexists(musicplayerfile) then
 			-- Reload right click menu

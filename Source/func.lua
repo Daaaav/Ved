@@ -3406,4 +3406,13 @@ function assets_metadataeditordialog()
 	)
 end
 
+function assets_metadataplayerdialog()
+	dialog.create(
+		L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
+		.. L.MUSICTITLE .. file_metadata.name .. "\n\n"
+		.. L.MUSICARTIST .. file_metadata.artist .. "\n\n"
+		.. L.MUSICNOTES .. "\n" .. file_metadata.notes
+	)
+end
+
 hook("func")
