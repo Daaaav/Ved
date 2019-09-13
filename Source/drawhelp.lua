@@ -470,7 +470,7 @@ function drawhelp()
 			love.graphics.setColor(255,255,255,128)
 		else
 			local oldnodialog
-			if not onlefthelpbuttons then
+			if s.psmallerscreen and not onlefthelpbuttons then
 				oldnodialog = nodialog
 				nodialog = false
 			end
@@ -495,7 +495,7 @@ function drawhelp()
 		end
 
 		-- Are we clicking on this?
-		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and onlefthelpbuttons then
+		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and (not s.psmallerscreen or onlefthelpbuttons) then
 			if love.mouse.isDown("l") then
 				if helppages[rvnum] == nil then
 					-- This is just the "add new" button.
