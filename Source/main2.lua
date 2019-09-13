@@ -3041,6 +3041,9 @@ function love.keypressed(key)
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
 		movingentity = 0
 		movingentity_copying = false
+	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
+		selectedsubtool[14] = 1
+		warpid = nil
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
 		-->
 		if editingbounds == 0 then
