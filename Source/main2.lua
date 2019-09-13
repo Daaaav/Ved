@@ -2526,6 +2526,10 @@ function love.keypressed(key)
 		debug.debug()
 	end
 
+	if key == "escape" then
+		RCMactive = false
+	end
+
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)
 	elseif takinginput and nodialog then
