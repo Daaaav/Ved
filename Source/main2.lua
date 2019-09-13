@@ -3674,7 +3674,7 @@ function love.keypressed(key)
 		assets_musicloaddialog()
 	elseif state == 31 and not musiceditor and key == "l" then
 		assets_musicreload()
-	elseif state == 31 and love_version_meets(10) and key == "home" or key == "kp7" then
+	elseif state == 31 and (key == "home" or key == "kp7") then
 		local current_audio = getmusicaudioplaying()
 		if current_audio ~= nil then
 			current_audio:seek(0)
