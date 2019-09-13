@@ -3682,6 +3682,25 @@ function love.keypressed(key)
 		assets_reload()
 	elseif state == 31 and key == "home" or key == "kp7" then
 		getmusicaudioplaying():seek(0)
+	elseif state == 31 and (key == "left" or key == "kp4" or key == "right" or key == "kp6") then
+		local seconds = 0
+		if key == "left" or key == "kp4" then
+			seconds = -5
+		elseif key == "right" or key == "kp6" then
+			seconds = 5
+		end
+		if keyboard_eitherIsDown("shift") then
+			seconds = seconds * 2
+		end
+		local current_audio = getmusicaudioplaying()
+		local duration = current_audio:getDuration("seconds")
+		if duration ~= nil and duration > 0 then
+			local seek = math.max(current_audio:tell("seconds") + seconds, 0)
+			if seek > duration then
+				seek = 0
+			end
+			current_audio:seek(seek, "seconds")
+		end
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
