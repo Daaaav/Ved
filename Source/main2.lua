@@ -1772,13 +1772,7 @@ function love.draw()
 				mousepressed = true
 			elseif onrbutton(2, nil, true) then
 				-- Load
-				dialog.create(
-					"",
-					DBS.LOADCANCEL,
-					dialog.callback.openimage,
-					L.LOADIMAGE,
-					dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
-				)
+				assets_graphicsloaddialog()
 				mousepressed = true
 			end
 		end

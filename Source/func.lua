@@ -3430,4 +3430,14 @@ function assets_musicreload()
 	loadvvvvvvmusic(musicplayerfile)
 end
 
+function assets_graphicsloaddialog()
+	dialog.create(
+		"",
+		DBS.LOADCANCEL,
+		dialog.callback.openimage,
+		L.LOADIMAGE,
+		dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
+	)
+end
+
 hook("func")
