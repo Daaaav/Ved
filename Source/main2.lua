@@ -1619,7 +1619,7 @@ function love.draw()
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
-		rbutton(musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), 2, nil, true)
+		rbutton(musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), 2, nil, true, nil, generictimer_mode == 1 and generictimer > 0)
 		if musiceditor then
 			rbutton({L.SAVE, "S"}, 3, nil, true)
 		end
@@ -1640,8 +1640,7 @@ function love.draw()
 				if musiceditor then
 					assets_loaddialog()
 				else
-					rbutton(musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD, 2, nil, true, nil, true)
-					love.graphics.present()
+					setgenerictimer(1, .25)
 					loadvvvvvvmusic(musicplayerfile)
 				end
 				mousepressed = true
