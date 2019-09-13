@@ -1655,13 +1655,7 @@ function love.draw()
 				assets_savedialog()
 			elseif musiceditor and onrbutton(5, nil, true) then
 				-- File metadata (editor)
-				dialog.create(
-					"",
-					DBS.OKCANCEL,
-					dialog.callback.musicfilemetadata,
-					L.MUSICFILEMETADATA,
-					dialog.form.musicfilemetadata_make(file_metadata)
-				)
+				assets_metadataeditordialog()
 			elseif not musiceditor and file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
 				dialog.create(

@@ -3396,4 +3396,14 @@ function assets_savedialog()
 	)
 end
 
+function assets_metadataeditordialog()
+	dialog.create(
+		"",
+		DBS.OKCANCEL,
+		dialog.callback.musicfilemetadata,
+		L.MUSICFILEMETADATA,
+		dialog.form.musicfilemetadata_make(file_metadata)
+	)
+end
+
 hook("func")
