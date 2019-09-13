@@ -1652,13 +1652,7 @@ function love.draw()
 				mousepressed = true
 			elseif musiceditor and onrbutton(3, nil, true) then
 				-- Save
-				dialog.create(
-					L.ENTERNAMESAVE,
-					DBS.OKCANCEL,
-					dialog.callback.savevvvvvvmusic,
-					nil,
-					dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
-				)
+				assets_savedialog()
 			elseif musiceditor and onrbutton(5, nil, true) then
 				-- File metadata (editor)
 				dialog.create(

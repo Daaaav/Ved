@@ -3386,4 +3386,14 @@ function handleasciireplace()
 	end
 end
 
+function assets_savedialog()
+	dialog.create(
+		L.ENTERNAMESAVE,
+		DBS.OKCANCEL,
+		dialog.callback.savevvvvvvmusic,
+		nil,
+		dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
+	)
+end
+
 hook("func")
