@@ -2202,7 +2202,12 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				end
 			end
 		elseif state == 15 then
-			if x <= 25*8 then
+			local usethiscondition = x <= 25*8
+			if s.psmallerscreen then
+				usethiscondition = onlefthelpbuttons
+			end
+
+			if usethiscondition then
 				if direction == "u" then
 					helplistscroll = helplistscroll + distance
 					if helplistscroll > 0 then
@@ -2215,7 +2220,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 						helplistscroll = math.min(-upperbound, 0)
 					end
 				end
-			elseif x >= 25*8+8 then
+			else
 				if direction == "u" then
 					helparticlescroll = helparticlescroll + distance
 					if helparticlescroll > 0 then

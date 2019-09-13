@@ -469,7 +469,15 @@ function drawhelp()
 			love.graphics.rectangle("fill", 8, helplistscroll+8+(24*j), 25*8-28, 16)
 			love.graphics.setColor(255,255,255,128)
 		else
+			local oldnodialog
+			if not onlefthelpbuttons then
+				oldnodialog = nodialog
+				nodialog = false
+			end
 			hoverrectangle(buttoncolor[1],buttoncolor[2],buttoncolor[3],128, 8, helplistscroll+8+(24*j), 25*8-28, 16)
+			if oldnodialog ~= nil then
+				nodialog = oldnodialog
+			end
 		end
 		local buttonlabel
 		if helppages[rvnum] == nil then
@@ -487,7 +495,7 @@ function drawhelp()
 		end
 
 		-- Are we clicking on this?
-		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) then
+		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and onlefthelpbuttons then
 			if love.mouse.isDown("l") then
 				if helppages[rvnum] == nil then
 					-- This is just the "add new" button.
