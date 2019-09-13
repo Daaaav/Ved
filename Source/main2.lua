@@ -1623,7 +1623,7 @@ function love.draw()
 			rbutton({L.SAVE, "S"}, 3, nil, true)
 		end
 		if musiceditor then
-			rbutton(L.MUSICFILEMETADATA, 5, nil, true)
+			rbutton({L.MUSICFILEMETADATA, "M"}, 5, nil, true)
 		elseif file_metadata_anyset then
 			rbutton(L.MUSICFILEMETADATA, 4, nil, true)
 		end
@@ -3683,6 +3683,8 @@ function love.keypressed(key)
 		end
 	elseif state == 31 and musiceditor and key == "s" then
 		assets_savedialog()
+	elseif state == 31 and musiceditor and key == "m" then
+		assets_metadataeditordialog()
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
