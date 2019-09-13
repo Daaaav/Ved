@@ -1616,6 +1616,7 @@ function love.draw()
 			end
 			love.graphics.print(mmss_duration(duration), width+160, cura_y+6)
 			showhotkey(" ", 16+16, cura_y-2, ALIGN.RIGHT)
+			showhotkey("h", 48+16, cura_y-2, ALIGN.RIGHT)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -3679,6 +3680,8 @@ function love.keypressed(key)
 		assets_loaddialog()
 	elseif state == 31 and not musiceditor and key == "l" then
 		assets_reload()
+	elseif state == 31 and key == "home" or key == "kp7" then
+		getmusicaudioplaying():seek(0)
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
