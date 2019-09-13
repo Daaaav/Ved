@@ -1614,6 +1614,7 @@ function love.draw()
 				end
 			end
 			love.graphics.print(mmss_duration(duration), width+160, cura_y+6)
+			showhotkey(" ", 16+16, cura_y-2, ALIGN.RIGHT)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
