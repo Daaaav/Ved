@@ -53,7 +53,7 @@ function loadtinynumbers()
 end
 loadtinynumbers()
 tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
-tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d ", love_version_meets(10) and 1 or nil)
+tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h", love_version_meets(10) and 1 or nil)
 tinynumbers_cmd = love.graphics.newImageFont("tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
