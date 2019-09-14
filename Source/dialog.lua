@@ -212,7 +212,7 @@ function cDialog:draw(topmost)
 				showhotkey("N", unpack(args))
 			elseif DB_keys[v] == "DISCARD" then
 				showhotkey("D", unpack(args))
-			elseif DB_keys[v] == "SAVE" then
+			elseif DB_keys[v] == "SAVE" and #self.fields == 0 then
 				showhotkey("S", unpack(args))
 			end
 		end
