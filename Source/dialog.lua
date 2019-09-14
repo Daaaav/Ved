@@ -201,7 +201,9 @@ function cDialog:draw(topmost)
 		if topmost and not self.closing then
 			-- For the Enter key, make sure to put the most prioritized buttons on the left,
 			-- in the same order as in cDialog:keypressed()
-			if not returnalreadyshown and (DB_keys[v] == "OK" or DB_keys[v] == "CLOSE" or DB_keys[v] == "SAVE" or DB_keys[v] == "LOAD" or DB_keys[v] == "QUIT") then
+			if DB_keys[v] == "SAVE" and #self.fields == 0 then
+				showhotkey("S", unpack(args))
+			elseif not returnalreadyshown and (DB_keys[v] == "OK" or DB_keys[v] == "CLOSE" or DB_keys[v] == "SAVE" or DB_keys[v] == "LOAD" or DB_keys[v] == "QUIT") then
 				showhotkey("n", unpack(args))
 				returnalreadyshown = true
 			elseif DB_keys[v] == "CANCEL" then
@@ -212,8 +214,6 @@ function cDialog:draw(topmost)
 				showhotkey("N", unpack(args))
 			elseif DB_keys[v] == "DISCARD" then
 				showhotkey("D", unpack(args))
-			elseif DB_keys[v] == "SAVE" and #self.fields == 0 then
-				showhotkey("S", unpack(args))
 			end
 		end
 	end
