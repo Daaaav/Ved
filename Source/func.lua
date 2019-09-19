@@ -503,6 +503,38 @@ function loadstate(new, ...)
 		setgenerictimer(2, 2.75)
 
 		locatetrinketscrewmates()
+
+		if editingbounds ~= 0 then
+			if editingbounds == 1 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "enemy" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("ENEMY BOUNDS (map canceled)")
+			elseif editingbounds == 2 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "plat" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("PLATFORM BOUNDS (map canceled)")
+			end
+
+			editingbounds = 0
+		end
 	elseif new == 13 then
 		oldusefontpng = s.usefontpng
 		firstvvvvvvfolder = s.customvvvvvvdir
