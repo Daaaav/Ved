@@ -2977,7 +2977,7 @@ function love.keypressed(key)
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("ENEMY BOUNDS (esc cancelled)")
+			finish_undo("ENEMY BOUNDS (esc canceled)")
 		elseif editingbounds == 2 then
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -2990,7 +2990,7 @@ function love.keypressed(key)
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("PLATFORM BOUNDS (esc cancelled)")
+			finish_undo("PLATFORM BOUNDS (esc canceled)")
 		end
 
 		editingbounds = 0

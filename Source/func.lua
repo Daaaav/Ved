@@ -1349,7 +1349,7 @@ function changeenemybounds()
 			)
 		end
 		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-		finish_undo("ENEMY BOUNDS (cancelled)")
+		finish_undo("ENEMY BOUNDS (canceled)")
 	else
 		if editingbounds == 2 then
 			local changeddata = {}
@@ -1363,7 +1363,7 @@ function changeenemybounds()
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("PLATFORM BOUNDS (cancelled by enemy bounds)")
+			finish_undo("PLATFORM BOUNDS (canceled by enemy bounds)")
 		end
 		editingbounds = -1
 	end
@@ -1391,7 +1391,7 @@ function changeplatformbounds()
 			)
 		end
 		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-		finish_undo("PLATFORM BOUNDS (cancelled)")
+		finish_undo("PLATFORM BOUNDS (canceled)")
 	else
 		if editingbounds == 1 then
 			local changeddata = {}
@@ -1405,7 +1405,7 @@ function changeplatformbounds()
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("ENEMY BOUNDS (cancelled by platform bounds)")
+			finish_undo("ENEMY BOUNDS (canceled by platform bounds)")
 		end
 		editingbounds = -2
 	end
