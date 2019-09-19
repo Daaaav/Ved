@@ -2003,8 +2003,38 @@ function love.update(dt)
 		end
 	elseif state == 1 then
 		if (editingbounds == -1 or editingbounds == 1) and selectedtool ~= 9 then
+			if editingbounds == 1 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "enemy" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("ENEMY BOUNDS (tool canceled)")
+			end
+
 			editingbounds = 0
 		elseif (editingbounds == -2 or editingbounds == 2) and selectedtool ~= 8 then
+			if editingbounds == 2 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "plat" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("PLATFORM BOUNDS (tool canceled)")
+			end
+
 			editingbounds = 0
 		end
 
