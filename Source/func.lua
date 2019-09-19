@@ -1336,12 +1336,35 @@ function changeenemybounds()
 	-- Make sure we see the bounds
 	showepbounds = true
 
-	if editingbounds == -1 then
-		--editingbounds = 1
+	if math.abs(editingbounds) == 1 then
 		editingbounds = 0
-	elseif editingbounds == 1 then
-		editingbounds = 0
+		local changeddata = {}
+		for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+			table.insert(changeddata,
+				{
+					key = "enemy" .. v,
+					oldvalue = oldbounds[k],
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+				}
+			)
+		end
+		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		finish_undo("ENEMY BOUNDS (cancelled)")
 	else
+		if editingbounds == 2 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (cancelled by enemy bounds)")
+		end
 		editingbounds = -1
 	end
 end
@@ -1355,12 +1378,35 @@ function changeplatformbounds()
 	-- Make sure we see the bounds
 	showepbounds = true
 
-	if editingbounds == -2 then
-		--editingbounds = 2
+	if math.abs(editingbounds) == 2 then
 		editingbounds = 0
-	elseif editingbounds == 2 then
-		editingbounds = 0
+		local changeddata = {}
+		for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+			table.insert(changeddata,
+				{
+					key = "plat" .. v,
+					oldvalue = oldbounds[k],
+					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+				}
+			)
+		end
+		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		finish_undo("PLATFORM BOUNDS (cancelled)")
 	else
+		if editingbounds == 1 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (cancelled by platform bounds)")
+		end
 		editingbounds = -2
 	end
 end
