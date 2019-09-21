@@ -5,6 +5,7 @@ love.graphics.setFont(font_scale1)
 print("BITMAP")
 ]]
 
+require("enablescreensaver")
 require("corefunc")
 
 allowdebug = false
@@ -43,18 +44,88 @@ if love.graphics.setDefaultFilter ~= nil then
 end
 
 -- TTF
-font8 = love.graphics.newFont("Space Station.ttf", 8)
-font16 = love.graphics.newFont("Space Station.ttf", 16)
+font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
-tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
-tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-", love_version_meets(10) and 1 or nil)
-tinynumbers_cmd = love.graphics.newImageFont("tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
-tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
+function loadtinynumbers()
+	tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+end
+loadtinynumbers()
+tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+tinynumbers_all = love.graphics.newImageFont("fonts/tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h", love_version_meets(10) and 1 or nil)
+tinynumbers_cmd = love.graphics.newImageFont("fonts/tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
+tinynumbers_strg = love.graphics.newImageFont("fonts/tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
 
+-- But this func is put here to avoid chicken-and-egg problems
+function swaptinynumbersglyphs()
+	loadtinynumbers()
+	tinynumbers_fallbacks = {}
+
+	if love_version_meets(10) then
+		if love.system.getOS() == "OS X" then
+			table.insert(tinynumbers_fallbacks, tinynumbers_cmd)
+		end
+		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
+			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
+		end
+		table.insert(tinynumbers_fallbacks, tinynumbers_all)
+		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
+	else
+		tinynumbers = tinynumbers_all
+	end
+end
+
 love.graphics.setFont(font8)
+
+-- Avoiding chicken-and-egg problems here as well
+function dodisplaysettings(reload)
+	if reload then
+		constraindisplaysettings(true)
+	end
+
+	local za,zb,zc = love.window.getMode()
+	if s.psmallerscreen then
+		za = 800
+	else
+		za = 896
+	end
+	zb = 480
+	if love_version_meets(9,2) then
+		local zd,ze,zf = love.window.getPosition()
+		local zwidth,zheight = love.window.getDesktopDimensions(zf)
+		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+		love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
+	else
+		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+	end
+
+	if s.psmallerscreen then
+		screenoffset = 32
+	else
+		screenoffset = 128
+	end
+
+	if reload then
+		package.loaded.scaling = false
+		love.graphics.push()
+		love.graphics.scale(s.pscale,s.pscale)
+
+		-- Do this or tiles will be white, and that's not really right!
+		-- (I am a rhyming legend)
+		-- (If you're going to sing the above, "tiles will be white" and
+		-- "that's not really right" should be 4 sixteenth notes and 1 eighth note)
+		loadtilesets()
+		tile_batch_texture_needs_update = true
+
+		-- Also do this or we'll have a blank map (no clever rhymes here)
+		map_init()
+	else
+		ved_require("scaling")
+	end
+end
 
 -- We also want this font on a possible crash screen...
 --love.graphics.setNewFont = function() end

@@ -208,8 +208,8 @@ function ved_showerror(msg)
 	love.graphics.reset()
 	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
 
-	local font8 = love.graphics.newFont("Space Station.ttf", 8)
-	local font16 = love.graphics.newFont("Space Station.ttf", 16)
+	local font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+	local font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
@@ -365,46 +365,17 @@ end
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
 
-	--msg = tostring(msg)
-
-	-- I first want to make a screenshot of the current screen.
-	local crashscreenshot
-	if love.graphics.newImage then
-		if love.graphics.newScreenshot then
-			crashscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
-		elseif love.graphics.captureScreenshot then
-			love.graphics.captureScreenshot(
-				function(imgdata)
-					crashscreenshot = love.graphics.newImage(imgdata)
-				end
-			)
-			-- If the fault didn't occur in the drawing code, we'll have our screenshot.
-			love.graphics.origin()
-			love.graphics.clear(love.graphics.getBackgroundColor())
-			pcall(love.draw)
-			love.graphics.present()
-		end
+	local lg_clear
+	if love.graphics.clearOR ~= nil then
+		lg_clear = love.graphics.clearOR
+	else
+		lg_clear = love.graphics.clear
 	end
 
-	love.graphics.reset()
-	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
-
-	-- We may need that line again
-	if love.graphics.setDefaultFilter ~= nil then
-		love.graphics.setDefaultFilter("nearest", "nearest")
-	end
-
-	local font8 = love.graphics.newFont("Space Station.ttf", 8)
-	local font16 = love.graphics.newFont("Space Station.ttf", 16)
-
-	--love.graphics.setBackgroundColor(89, 157, 220)
-	love.graphics.setBackgroundColor(255, 128, 0)
+	love.graphics.setBackgroundColor(192, 96, 0)
 	love.graphics.setColor(255, 255, 255, 255)
 
-	--local trace = debug.traceback()
-	local trace = ""
-
-	love.graphics.clear(love.graphics.getBackgroundColor())
+	lg_clear(love.graphics.getBackgroundColor())
 	love.graphics.origin()
 
 	local err = {}
@@ -470,13 +441,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	table.insert(err, "\n\n\n" .. ERR_CONTINUE)
 
-	for l in string.gmatch(trace, "(.-)\n") do
-		if not string.match(l, "boot.lua") then
-			l = string.gsub(l, "stack traceback:", "Traceback\n")
-			table.insert(err, l)
-		end
-	end
-
 	local p = table.concat(err, "\n")
 
 	p = string.gsub(p, "\t", "")
@@ -485,11 +449,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	local function draw()
 		local pos = 40
-		love.graphics.clear(love.graphics.getBackgroundColor())
-		love.graphics.setColor(255,255,255,64)
-		if crashscreenshot ~= nil then
-			love.graphics.draw(crashscreenshot, 0, 0) --, 0, s.pscale^-1)
-		end
+		lg_clear(love.graphics.getBackgroundColor())
 
 		-- Title
 		love.graphics.setFont(font16)
@@ -509,7 +469,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		love.graphics.setColor(0,0,0,255)
 		--love.graphics.printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos)
+		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
 
 		--dialog.draw()
 		love.graphics.setColor(255,255,255,255)
@@ -529,7 +489,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				return
 			elseif e == "keypressed" and (a == "escape" or a == "return") then
 				love.graphics.setBackgroundColor(0,0,0)
-				love.graphics.clear()
+				lg_clear()
 
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown("l" .. ctrl) or love.keyboard.isDown("r" .. ctrl)) then

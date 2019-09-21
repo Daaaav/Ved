@@ -1,7 +1,7 @@
 love.graphics.clearOR = love.graphics.clear
-love.graphics.clear = function()
+love.graphics.clear = function(...)
 	if not s.pausedrawunfocused or love.window.hasFocus() then
-		love.graphics.clearOR()
+		love.graphics.clearOR(...)
 	end
 end
 
@@ -288,6 +288,12 @@ function stopinput()
 end
 
 function tostate(new, dontinitialize, ...)
+	-- The feedback from the button should be over by now
+	-- Make sure it doesn't carry into another state
+	if generictimer_mode == 1 then
+		setgenerictimer(0, 0)
+	end
+
 	if dontinitialize == nil then
 		dontinitialize = false
 	end
@@ -422,7 +428,6 @@ function loadstate(new, ...)
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
-		userprofile = os.getenv("USERPROFILE")
 		lsuccess = getlevelsfolder()
 		if lsuccess then
 			lerror = 0
@@ -495,7 +500,42 @@ function loadstate(new, ...)
 		mapmovedroom = false
 
 		setgenerictimer(2, 2.75)
+
+		locatetrinketscrewmates()
+
+		if editingbounds ~= 0 then
+			if editingbounds == 1 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "enemy" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("ENEMY BOUNDS (map canceled)")
+			elseif editingbounds == 2 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "plat" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("PLATFORM BOUNDS (map canceled)")
+			end
+
+			editingbounds = 0
+		end
 	elseif new == 13 then
+		oldusefontpng = s.usefontpng
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
 		helplistscroll = 0
@@ -605,6 +645,7 @@ function loadstate(new, ...)
 	elseif new == 26 then
 		startinput()
 	elseif new == 27 then
+		oldforcescale = s.forcescale
 		nonintscale = s.scale ~= math.floor(anythingbutnil0(tonumber(s.scale)))
 		if nonintscale then
 			startinput()
@@ -667,6 +708,8 @@ function loadstate(new, ...)
 		else
 			musicplayerfile = ...
 		end
+	elseif new == 33 then
+		alllanguages = getalllanguages()
 	end
 
 	hook("func_loadstate")
@@ -734,7 +777,7 @@ function loadlevelsfolder()
 	current_scrolling_leveltitle_pos = 168
 	current_scrolling_levelfilename_k = nil
 	current_scrolling_levelfilename_filename = nil
-	current_scrolling_levelfilename_pos = 400
+	current_scrolling_levelfilename_pos = (s.psmallerscreen and 50-12 or 50)*8
 	cons("Loaded.")
 	-- Now get all the backups
 	files[".ved-sys" .. dirsep .. "backups"] = {}
@@ -801,6 +844,37 @@ function loadtileset(file)
 		cons("No custom image for " .. file .. ", " .. contents)
 		asimgdata = love.image.newImageData(file)
 	end
+
+	-- VVVVVV doesn't like translucent pixels in 'tiles' and tiles2
+	-- Display them how the game does
+	asimgdata:mapPixel(function(_, _, r, g, b, a)
+		local lovecolor
+		if love_version_meets(11) then
+			r = r * 255
+			g = g * 255
+			b = b * 255
+			lovecolor = 1
+		else
+			lovecolor = 255
+		end
+		a = a / lovecolor
+		if a <= 0 or a >= lovecolor then
+			if love_version_meets(11) then
+				return r/255, g/255, b/255, a
+			else
+			end
+		else
+			r = a*r + (1-a)*172
+			g = a*g + (1-a)*189
+			b = a*b + (1-a)*238
+		end
+		if love_version_meets(11) then
+			return r/255, g/255, b/255, lovecolor
+		else
+			return r, g, b, lovecolor
+		end
+	end)
+
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
@@ -1193,7 +1267,7 @@ function switchtileset()
 		selectedtileset = cycle(selectedtileset, 4, 0)
 	end
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
-	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0) then
+	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then
 		selectedcolor = 0
 	end
 
@@ -1230,7 +1304,7 @@ function switchtilecol()
 	else
 		selectedcolor = cycle(selectedcolor, #tilesetblocks[selectedtileset].colors, selectedtileset == 0 and -1 or 0)
 	end
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		if keyboard_eitherIsDown("shift") then
 			selectedcolor = 5
@@ -1295,12 +1369,35 @@ function changeenemybounds()
 	-- Make sure we see the bounds
 	showepbounds = true
 
-	if editingbounds == -1 then
-		--editingbounds = 1
+	if math.abs(editingbounds) == 1 then
 		editingbounds = 0
-	elseif editingbounds == 1 then
-		editingbounds = 0
+		local changeddata = {}
+		for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+			table.insert(changeddata,
+				{
+					key = "enemy" .. v,
+					oldvalue = oldbounds[k],
+					newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+				}
+			)
+		end
+		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		finish_undo("ENEMY BOUNDS (canceled)")
 	else
+		if editingbounds == 2 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "plat" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("PLATFORM BOUNDS (canceled by enemy bounds)")
+		end
 		editingbounds = -1
 	end
 end
@@ -1314,12 +1411,35 @@ function changeplatformbounds()
 	-- Make sure we see the bounds
 	showepbounds = true
 
-	if editingbounds == -2 then
-		--editingbounds = 2
+	if math.abs(editingbounds) == 2 then
 		editingbounds = 0
-	elseif editingbounds == 2 then
-		editingbounds = 0
+		local changeddata = {}
+		for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+			table.insert(changeddata,
+				{
+					key = "plat" .. v,
+					oldvalue = oldbounds[k],
+					newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+				}
+			)
+		end
+		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		finish_undo("PLATFORM BOUNDS (canceled)")
 	else
+		if editingbounds == 1 then
+			local changeddata = {}
+			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+				table.insert(changeddata,
+					{
+						key = "enemy" .. v,
+						oldvalue = oldbounds[k],
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+					}
+				)
+			end
+			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			finish_undo("ENEMY BOUNDS (canceled by platform bounds)")
+		end
 		editingbounds = -2
 	end
 end
@@ -1351,7 +1471,7 @@ function changedmode()
 		end
 	end
 
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
 	end
@@ -1398,6 +1518,7 @@ function toggleeditroomname()
 		saveroomname()
 	else
 		editingroomname = true
+		tilespicker = false
 		startinputonce()
 		input = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
 	end
@@ -2167,7 +2288,12 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				end
 			end
 		elseif state == 15 then
-			if x <= 25*8 then
+			local usethiscondition = x <= 25*8
+			if s.psmallerscreen then
+				usethiscondition = onlefthelpbuttons
+			end
+
+			if usethiscondition then
 				if direction == "u" then
 					helplistscroll = helplistscroll + distance
 					if helplistscroll > 0 then
@@ -2180,7 +2306,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 						helplistscroll = math.min(-upperbound, 0)
 					end
 				end
-			elseif x >= 25*8+8 then
+			else
 				if direction == "u" then
 					helparticlescroll = helparticlescroll + distance
 					if helparticlescroll > 0 then
@@ -2632,7 +2758,7 @@ end
 
 function languagedialog()
 	dialog.create(
-		L.RESTARTVEDLANG, DBS.OKCANCEL,
+		"", DBS.OKCANCEL,
 		dialog.callback.language, L.LANGUAGE, dialog.form.language_make()
 	)
 end
@@ -2814,6 +2940,9 @@ function temp_print_override()
 	-- Basically, in LÖVE 0.9 and 0.10, the TTF font is displaced, and the correction for this has
 	-- always been hardcoded. This doesn't happen in 11+, and also doesn't happen for bitmap fonts.
 	-- Plan is to remove the hardcoded offset EVERYWHERE and hijack lg.print[f] for 0.9/0.10 with TTF instead.
+	--
+	-- WARNING!
+	-- Ignore the fact that all the names have '11' in them, this function is used in LÖVE 0.10, too
 
 	function love11_tempfixfontpos(func, ...)
 		local args = {...}
@@ -2826,17 +2955,37 @@ function temp_print_override()
 		func(unpack(args))
 	end
 
-	love.graphics.print11 = love.graphics.print
+	if love.graphics.print11 == nil then
+		love.graphics.print11 = love.graphics.print
+	end
 
 	love.graphics.print = function(...)
 		love11_tempfixfontpos(love.graphics.print11, ...)
 	end
 
-	love.graphics.printf11 = love.graphics.printf
+	if love.graphics.printf11 == nil then
+		love.graphics.printf11 = love.graphics.printf
+	end
 
 	love.graphics.printf = function(...)
 		love11_tempfixfontpos(love.graphics.printf11, ...)
 	end
+end
+
+function undo_temp_print_override()
+	love11_tempfixfontpos = nil
+
+	if love.graphics.print11 ~= nil then
+		love.graphics.print = love.graphics.print11
+	end
+
+	love.graphics.print11 = nil
+
+	if love.graphics.printf11 ~= nil then
+		love.graphics.printf = love.graphics.printf11
+	end
+
+	love.graphics.printf11 = nil
 end
 
 
@@ -3169,6 +3318,17 @@ end
 
 function exitvedoptions()
 	saveconfig()
+	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
+		handlefontpng()
+
+		-- Re-execute this bit from main2.lua
+		-- But account for if we're not hijacking
+		if hijack_print or love_version_meets(11) then
+			temp_print_override()
+		else
+			undo_temp_print_override()
+		end
+	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
 		-- Immediately apply the new custom VVVVVV directory.
 		loadlevelsfolder()
@@ -3176,6 +3336,34 @@ function exitvedoptions()
 	else
 		tostate(oldstate, true)
 	end
+end
+
+function exitdisplayoptions()
+	if nonintscale then
+		stopinput()
+		s.scale = num_scale
+	end
+	saveconfig()
+
+	if s.smallerscreen ~= s.psmallerscreen or s.scale ~= s.pscale or s.forcescale ~= oldforcescale then
+		s.pscale = s.scale
+		s.psmallerscreen = s.smallerscreen
+		dodisplaysettings(true)
+	end
+
+	-- Re-center dialogs
+	cDialog.x = (love.graphics.getWidth()-400)/2
+
+	tostate(oldstate, true)
+	-- Just to make sure we don't get stuck in the settings
+	oldstate = olderstate
+end
+
+function exitsyntaxcoloroptions()
+	saveconfig()
+	tostate(oldstate, true)
+	-- Just to make sure we don't get stuck in the settings
+	oldstate = olderstate
 end
 
 function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
@@ -3208,6 +3396,139 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 		end
 		love.graphics.setFont(font8)
 	end
+end
+
+function handlefontpng()
+	if s.usefontpng and loadfontpng() then
+		handleasciireplace()
+
+		hijack_print = true
+		fontpng_works = true
+
+		arrow_up = "^"
+		arrow_down = "V"
+		arrow_left = "<"
+		arrow_right = ">"
+	else
+		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+		font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
+
+		hijack_print = false
+		fontpng_works = false
+
+		arrow_up = "↑"
+		arrow_down = "↓"
+		arrow_left = "←"
+		arrow_right = "→"
+	end
+
+	-- Update the font to the new object
+	love.graphics.setFont(font8)
+end
+
+function handleasciireplace()
+	--[[
+		If we're using font.png, and the language file defines a function to replace
+		certain non-ASCII characters with ASCII, then apply that to the entire file.
+		Should work fine as anything not translated will be ASCII and shouldn't be replaced.
+		And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
+		For example, a language may use a small amount of accented characters,
+		but if only ASCII is allowed, would prefer to leave the accent off rather
+		than have that character not be displayed at all.
+		And yes, this means a language file will have to be loaded 3 times (English first)
+	]]
+
+	if fontpng_ascii == nil then
+		fontpng_ascii = function(c) end
+	end
+
+	local any_unsupported = false
+	local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
+	if readlua ~= nil then
+		cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
+		local newlua, replacements = readlua:gsub(
+			"([\194-\244][\128-\191]*)",
+			function(c)
+				if c == "¤" or c == "§" or c == "°" then
+					return
+				end
+
+				local newc = fontpng_ascii(c)
+
+				if newc == nil then
+					any_unsupported = true
+					print(c)
+				end
+				return newc
+			end
+		)
+		if not any_unsupported then
+			print("(All characters apparently supported!)")
+		end
+		cons("Replacements: " .. replacements)
+
+		assert(loadstring(newlua))()
+
+		-- But also load devstrings again, otherwise we might crash during development!
+		-- Don't care as much about the fontpng replacements here...
+		-- Override `require` not wanting to load this file another time >:o
+		package.loaded.devstrings = false
+		ved_require("devstrings")
+	end
+end
+
+function assets_savedialog()
+	dialog.create(
+		L.ENTERNAMESAVE,
+		DBS.OKCANCEL,
+		dialog.callback.savevvvvvvmusic,
+		nil,
+		dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
+	)
+end
+
+function assets_metadataeditordialog()
+	dialog.create(
+		"",
+		DBS.OKCANCEL,
+		dialog.callback.musicfilemetadata,
+		L.MUSICFILEMETADATA,
+		dialog.form.musicfilemetadata_make(file_metadata)
+	)
+end
+
+function assets_metadataplayerdialog()
+	dialog.create(
+		L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
+		.. L.MUSICTITLE .. file_metadata.name .. "\n\n"
+		.. L.MUSICARTIST .. file_metadata.artist .. "\n\n"
+		.. L.MUSICNOTES .. "\n" .. file_metadata.notes
+	)
+end
+
+function assets_musicloaddialog()
+	dialog.create(
+		"",
+		DBS.LOADCANCEL,
+		dialog.callback.loadvvvvvvmusic,
+		L.LOADMUSICNAME,
+		dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
+	)
+end
+
+function assets_musicreload()
+	setgenerictimer(1, .25)
+	loadvvvvvvmusic(musicplayerfile)
+end
+
+function assets_graphicsloaddialog()
+	dialog.create(
+		"",
+		DBS.LOADCANCEL,
+		dialog.callback.openimage,
+		L.LOADIMAGE,
+		dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
+	)
 end
 
 hook("func")

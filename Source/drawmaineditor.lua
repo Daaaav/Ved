@@ -1,7 +1,11 @@
 function drawmaineditor()
+	love.graphics.setColor(128,128,128)
+	love.graphics.rectangle("line", screenoffset-0.5, -0.5, 640+1, 480+1)
+	love.graphics.setColor(255,255,255)
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
+		editingroomname = false
 		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		local aty = math.floor(getlockablemouseY() / 16)
 
@@ -17,7 +21,8 @@ function drawmaineditor()
 		end
 
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
-		if love.mouse.isDown("l") and not mousepressed and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
+		local entityalreadyhere = false
+		if love.mouse.isDown("l") and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
 			for k,v in pairs(entitydata) do
 				-- Exceptions related to whatever entity we're clicking on!
 				if selectedtool == 13 and selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
@@ -33,6 +38,7 @@ function drawmaineditor()
 					elseif selectedtool >= 4 and v.t == entitytooltoid[selectedtool] then
 						-- Yep, "You are already checked in"
 						mousepressed = true
+						entityalreadyhere = true
 					end
 				end
 			end
@@ -509,7 +515,7 @@ function drawmaineditor()
 			end
 
 			mousepressed = true
-		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 4 then
+		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
 			if count.trinkets >= 20 then
 				dialog.create(L.MAXTRINKETS)
@@ -529,11 +535,8 @@ function drawmaineditor()
 				count.trinkets = count.trinkets + 1
 				count.entities = count.entities + 1
 				count.entity_ai = count.entity_ai + 1
-
-				if not love.keyboard.isDown("v") then
-					mousepressed = true
-				end
 			end
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 5 then
 			-- Checkpoint
 			cons("Checkpoint: " .. atx .. " " .. aty)
@@ -924,6 +927,7 @@ function drawmaineditor()
 					end
 				else
 					dialog.create(L.WARPTOKENENT404)
+					mousepressed = true
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
@@ -955,11 +959,13 @@ function drawmaineditor()
 					nodialog = false
 				else
 					dialog.create(L.WARPTOKENENT404)
+					mousepressed = true
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
 			else
 				dialog.create(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)")
+				mousepressed = true
 			end
 
 			mousepressed = true
@@ -1011,6 +1017,7 @@ function drawmaineditor()
 			-- Rescuable crewmate				
 			if count.crewmates >= 20 then
 				dialog.create(L.MAXCREWMATES)
+				mousepressed = true
 			else
 				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
 
@@ -1105,6 +1112,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
+			mousepressed = true
 		end
 	--[[
 	elseif nodialog and love.mouse.isDown("r") and mouseon(64+64, 0, 639, 480) then
@@ -1122,7 +1130,8 @@ function drawmaineditor()
 		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 
 		selectedtile = (aty*40)+(atx+1)-1
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 then --and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata_get(roomx, roomy).directmode == 1 then
+		editingroomname = false
 		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
 		local aty = math.floor((love.mouse.getY()) / 16)
 
@@ -1553,6 +1562,12 @@ function drawmaineditor()
 				cursorx, cursory,
 				false, false, {}, false, false, true
 			)
+		elseif table.contains({3, 4}, selectedsubtool[14]) and entitydata[warpid] ~= nil then
+			if selectedsubtool[14] == 4 then
+				love.graphics.setColor(255, 255, 255, 64)
+			end
+			drawentitysprite(18, screenoffset + 16*cursorx, 16*cursory)
+			love.graphics.setColor(255, 255, 255, 255)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes
 			if selectedsubtool[selectedtool] == 1 or selectedsubtool[selectedtool] == 9 then
@@ -1676,9 +1691,11 @@ function drawmaineditor()
 	if (not s.psmallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
 		-- We also want the tools on the left. But it's a scrollable area.
 		love.graphics.setColor(0, 0, 0, 192)
-		love.graphics.rectangle("fill", 0, 0, 128, love.graphics.getHeight())
+		love.graphics.rectangle("fill", 0, 0, 127, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
 		love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
+
+		local thistooltip = ""
 
 		for t = 1, 17 do
 			-- love.graphics.rectangle("fill", 16, (16+(48*(t-1)))+lefttoolscroll, 32, 32)
@@ -1695,6 +1712,8 @@ function drawmaineditor()
 			if nodialog and not mousepressed and love.mouse.isDown("r") and t == 17 and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then
 				-- Find the start point
 				gotostartpointroom()
+				-- This works with right click as well
+				mousepressed = true
 			end
 
 			if selectedtool == t then
@@ -1713,13 +1732,7 @@ function drawmaineditor()
 			tinyprint(toolshortcuts[t], coorx-2+32+1, coory)
 
 			if nodialog and ((not mouseon(16, 0, 32, 16)) and not (mouseon(16, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) then
-				-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
-				love.graphics.setScissor()
-				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(toolnames[t]), 8) -- string.len(toolnames[t])*8
-				love.graphics.setColor(255,255,255,255)
-				love.graphics.print(toolnames[t], love.mouse.getX()+16, love.mouse.getY()-8)
-				love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
+				thistooltip = toolnames[t]
 			end
 		end
 
@@ -1768,7 +1781,7 @@ function drawmaineditor()
 
 			-- Shortcut text, but only for ZXCV
 			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 9 then
-				tinyprint((" ZXCVHB F"):sub(k,k), coorx-2+32+1, coory)
+				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then
@@ -1784,6 +1797,16 @@ function drawmaineditor()
 				love.graphics.print(tooltip_text, love.mouse.getX()+16, love.mouse.getY()-8)
 				love.graphics.setScissor(16+64, 16, 32+4, love.graphics.getHeight()-32)
 			end
+		end
+
+		if thistooltip ~= "" then
+			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
+			love.graphics.setScissor()
+			love.graphics.setColor(128,128,128,192)
+			love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(thistooltip), 8) -- string.len(toolnames[t])*8
+			love.graphics.setColor(255,255,255,255)
+			love.graphics.print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-8)
+			love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 		end
 
 		-- We're done with the scrollable menus now.
@@ -1823,7 +1846,7 @@ function drawmaineditor()
 	else
 		-- Still have a background, in case we have a brush that's so big it overlaps with this part of the screen
 		love.graphics.setColor(0, 0, 0, 192)
-		love.graphics.rectangle("fill", 0, 0, 32, love.graphics.getHeight())
+		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
 		tinyprint(L.TINY_CTRL, 0, 0)
 
@@ -1840,7 +1863,7 @@ function drawmaineditor()
 
 	-- Now stuff on the right.
 	love.graphics.setColor(0, 0, 0, 192)
-	love.graphics.rectangle("fill", love.graphics.getWidth()-128, 0, 128, love.graphics.getHeight())
+	love.graphics.rectangle("fill", love.graphics.getWidth()-127, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
 	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
 	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
@@ -1918,6 +1941,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
+			editingroomname = false
 			if has_unsaved_changes() then
 				dialog.create(
 					L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
@@ -1930,11 +1954,13 @@ function drawmaineditor()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
+			editingroomname = false
 			tostate(6)
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
+			editingroomname = false
 			dialog.create(
 				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make()
@@ -2104,6 +2130,7 @@ function drawmaineditor()
 				if trinkets == "" then
 					trinkets = L.NOTRINKETSINLEVEL
 				end
+				editingroomname = false
 				dialog.create(trinkets, nil, nil, L.LISTOFALLTRINKETS)
 			elseif onrbutton(-2, 164+4, true) and selectedtool == 16 then
 				-- List all crewmates
@@ -2125,6 +2152,7 @@ function drawmaineditor()
 				if crewmates == "" then
 					crewmates = L.NOCREWMATESINLEVEL
 				end
+				editingroomname = false
 				dialog.create(crewmates, nil, nil, L.LISTOFALLCREWMATES)
 			elseif selectedtool == 4 or selectedtool == 16 or voided_metadata then
 			elseif onrbutton(-3, 164+4, true) then
@@ -2255,7 +2283,7 @@ function drawmaineditor()
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
-	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset, love.graphics.getHeight()-16-8, 128, "left")
+	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset+2, love.graphics.getHeight()-16-8, 128, "left")
 
 
 	-- Dropdown for tileset?

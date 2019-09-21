@@ -69,6 +69,15 @@ function table.copy(t)
 	return t2
 end
 
+function table.contains(t, thing)
+	for _,element in pairs(t) do
+		if element == thing then
+			return true
+		end
+	end
+	return false
+end
+
 function langkeys(strin, thesekeys, pluralvar)
 	-- Fills in $1 $2 etc in the strings.
 	if type(strin) == "table" then

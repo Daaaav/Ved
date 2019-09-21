@@ -345,6 +345,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			)
 		end
 	elseif v.t == 11 or v.t == 50 then
+		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
 		-- Gravity line or warp line. This is kind of a special story.
 		if v.t == 50 then
 			love.graphics.setColor(0,255,0,255)
@@ -357,14 +358,37 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sel_y = y
 			sel_w = v.p3/8
 			sel_h = 1
-			love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
+			if v.t == 11 then
+				-- Accurate gravity line pixels
+				if showhitbox then
+					-- Accurate hitbox
+					love.graphics.setColor(255,0,0,255)
+					love.graphics.rectangle("line", sel_x + .5, sel_y + 10.5, 16*sel_w - 1, sel_h)
+				else
+					love.graphics.rectangle("line", sel_x + .5, sel_y + 8.5, 16*sel_w - 1, sel_h)
+				end
+			else
+				love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
+			end
 		else
 			-- Vertical
 			sel_x = x
 			sel_y = offsety+(v.p2)*16
 			sel_w = 1
 			sel_h = v.p3/8
-			love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
+			if v.t == 11 then
+				-- Accurate gravity line pixels
+				if showhitbox then
+					-- Accurate hitbox
+					love.graphics.setColor(255,0,0,255)
+					love.graphics.rectangle("line", sel_x + 8.5, sel_y + .5, sel_w, 16*sel_h - 1)
+					love.graphics.rectangle("line", sel_x + 10.5, sel_y + .5, sel_w, 16*sel_h - 1)
+				else
+					love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
+				end
+			else
+				love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
+			end
 		end
 		love.graphics.setColor(255,255,255,255)
 
@@ -414,29 +438,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 15 then
 		-- Rescuable crewmate
-		if v.p1 == 0 then
-			-- Cyan
-			--love.graphics.setColor(95, 154, 140)
-			love.graphics.setColor(132, 181, 255)
-		elseif v.p1 == 1 then
-			-- Pink
-			love.graphics.setColor(255, 135, 255)
-		elseif v.p1 == 2 then
-			-- Yellow
-			love.graphics.setColor(255, 255, 135)
-		elseif v.p1 == 3 then
-			-- Red
-			love.graphics.setColor(255, 61, 61)
-		elseif v.p1 == 4 then
-			-- Green
-			love.graphics.setColor(144, 255, 144)
-		elseif v.p1 == 5 then
-			-- Blue
-			love.graphics.setColor(75, 75, 230)
-		else
-			-- What?
-			love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
-		end
+		setrescuablecolor(v.p1)
 		drawentitysprite(144, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
@@ -612,7 +614,7 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 	-- sel_* are used for the cyan selection rectangle - w and h are number of tiles,
 	-- x and y are used to specify alternative values for x and y (first two args)
 	-- which are thus in pixels!
-	if lockablemouseon(x, y, 16, 16) then
+	if lockablemouseon(x, y, 16, 16) and nodialog then
 		if sel_w ~= nil and sel_h ~= nil then
 			if sel_x == nil or sel_y == nil then
 				sel_x = x; sel_y = y
@@ -627,6 +629,7 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 			rightclickmenu.create(menuitems, newmenuid)
 		end
 		if nodialog and love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
+			editingroomname = false
 			-- Start moving this entity, if we can! Heh, cheap trick to inspect the menu items.
 			local entdetails = explode("_", newmenuid)
 			if not keyboard_eitherIsDown("shift") then
@@ -2178,4 +2181,318 @@ end
 
 function roomdata2_get(rx, ry, tx, ty)
 	return roomdata_get(rx, ry, tx, ty, true)
+end
+
+function shiftrooms(direction, updatescripts)
+	dirty()
+
+	local width, height
+	width = math.min(metadata.mapwidth, 20)
+	height = math.min(metadata.mapheight, 20)
+
+	-- Copy the rooms that are on the edge
+	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
+	if direction == SHIFT.LEFT then
+		for y = 0, height-1 do
+			edgeroomdata[y] = table.copy(roomdata_get(0, y))
+			edgelevelmetadata[y] = table.copy(levelmetadata_get(0, y))
+			edgemapdata[y] = table.copy(rooms_map[y][0])
+			edgetrinketsdata[y] = map_trinkets[y][0]
+			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
+		end
+	elseif direction == SHIFT.RIGHT then
+		for y = 0, height-1 do
+			edgeroomdata[y] = table.copy(roomdata_get(width-1, y))
+			edgelevelmetadata[y] = table.copy(levelmetadata_get(width-1, y))
+			edgemapdata[y] = table.copy(rooms_map[y][width-1])
+			edgetrinketsdata[y] = map_trinkets[y][0]
+			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
+		end
+	elseif direction == SHIFT.UP then
+		for x = 0, width-1 do
+			edgeroomdata[x] = table.copy(roomdata_get(x, 0))
+			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, 0))
+			edgemapdata[x] = table.copy(rooms_map[0][x])
+			edgetrinketsdata[x] = map_trinkets[0][x]
+			edgecrewmatesdata[x] = table.copy(map_crewmates[0][x])
+		end
+	elseif direction == SHIFT.DOWN then
+		for x = 0, width-1 do
+			edgeroomdata[x] = table.copy(roomdata_get(x, height-1))
+			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, height-1))
+			edgemapdata[x] = table.copy(rooms_map[height-1][x])
+			edgetrinketsdata[x] = map_trinkets[height-1][x]
+			edgecrewmatesdata[x] = table.copy(map_crewmates[height-1][x])
+		end
+	end
+
+	-- Room tiles and room properties, and the map image
+	-- Reverse the direction of updates as necessary, otherwise we'll trip over ourselves
+	-- and smear the row/column with the exact same room
+	if direction == SHIFT.LEFT then
+		for y = 0, height-1 do
+			for x = 0, width-2 do
+				roomdata_set(x, y, table.copy(roomdata_get(x+1, y)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x+1, y)))
+				rooms_map[y][x] = table.copy(rooms_map[y][x+1])
+				map_trinkets[y][x] = map_trinkets[y][x+1]
+				map_crewmates[y][x] = table.copy(map_crewmates[y][x+1])
+			end
+		end
+		for y = 0, height-1 do
+			roomdata_set(width-1, y, table.copy(edgeroomdata[y]))
+			levelmetadata_set(width-1, y, table.copy(edgelevelmetadata[y]))
+			rooms_map[y][width-1] = table.copy(edgemapdata[y])
+			map_trinkets[y][width-1] = edgetrinketsdata[y]
+			map_crewmates[y][width-1] = table.copy(edgecrewmatesdata[y])
+		end
+	elseif direction == SHIFT.RIGHT then
+		for y = 0, height-1 do
+			for x = width-1, 1, -1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x-1, y)))
+				levelmetadata_get(x, y, table.copy(levelmetadata_get(x-1, y)))
+				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
+				map_trinkets[y][x] = map_trinkets[y][x-1]
+				map_crewmates[y][x] = table.copy(map_crewmates[y][x-1])
+			end
+		end
+		for y = 0, height-1 do
+			roomdata_set(0, y, table.copy(edgeroomdata[y]))
+			levelmetadata_set(0, y, table.copy(edgelevelmetadata[y]))
+			rooms_map[y][0] = table.copy(edgemapdata[y])
+			map_trinkets[y][0] = edgetrinketsdata[y]
+			map_crewmates[y][0] = table.copy(edgecrewmatesdata[y])
+		end
+	elseif direction == SHIFT.UP then
+		for y = 0, height-2 do
+			for x = 0, width-1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x, y+1)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y+1)))
+				rooms_map[y][x] = table.copy(rooms_map[y+1][x])
+				map_trinkets[y][x] = map_trinkets[y+1][x]
+				map_crewmates[y][x] = table.copy(map_crewmates[y+1][x])
+			end
+		end
+		for x = 0, width-1 do
+			roomdata_set(x, height-1, table.copy(edgeroomdata[x]))
+			levelmetadata_set(x, height-1, table.copy(edgelevelmetadata[x]))
+			rooms_map[height-1][x] = table.copy(edgemapdata[x])
+			map_trinkets[height-1][x] = edgetrinketsdata[x]
+			map_crewmates[height-1][x] = table.copy(edgecrewmatesdata[x])
+		end
+	elseif direction == SHIFT.DOWN then
+		for y = height-1, 1, -1 do
+			for x = 0, width-1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x, y-1)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y-1)))
+				rooms_map[y][x] = table.copy(rooms_map[y-1][x])
+				map_trinkets[y][x] = map_trinkets[y-1][x]
+				map_crewmates[y][x] = table.copy(map_crewmates[y-1][x])
+			end
+		end
+		for x = 0, metadata.mapwidth-1 do
+			roomdata_set(x, 0, table.copy(edgeroomdata[x]))
+			levelmetadata_set(x, 0, table.copy(edgelevelmetadata[x]))
+			rooms_map[0][x] = table.copy(edgemapdata[x])
+			map_trinkets[0][x] = edgetrinketsdata[x]
+			map_crewmates[0][x] = table.copy(edgecrewmatesdata[x])
+		end
+	end
+
+	-- Entities, making sure to take care of warp token destinations as well
+	local newx, newy, newp1, newp2
+	for idx, ent in pairs(entitydata) do
+		if ent.x < 0 or ent.y < 0 or ent.x >= 40*width or ent.y >= 30*height then
+		elseif direction == SHIFT.LEFT then
+			newx = ent.x - 40
+			if newx < 0 then
+				newx = newx + 40*width
+			end
+			entitydata[idx].x = newx
+			if ent.t == 13 then
+				newp1 = ent.p1 - 40
+				if newp1 < 0 then
+					newp1 = newp1 + 40*width
+				end
+				entitydata[idx].p1 = newp1
+			end
+		elseif direction == SHIFT.RIGHT then
+			newx = ent.x + 40
+			if newx >= 40*width then
+				newx = newx - 40*width
+			end
+			entitydata[idx].x = newx
+			if ent.t == 13 then
+				newp1 = ent.p1 + 40
+				if newp1 >= 40*width then
+					newp1 = newp1 - 40*width
+				end
+				entitydata[idx].p1 = newp1
+			end
+		elseif direction == SHIFT.UP then
+			newy = ent.y - 30
+			if newy < 0 then
+				newy = newy + 30*height
+			end
+			entitydata[idx].y = newy
+			if ent.t == 13 then
+				newp2 = ent.p2 - 30
+				if newp2 < 0 then
+					newp2 = newp2 + 30*height
+				end
+				entitydata[idx].p2 = newp2
+			end
+		elseif direction == SHIFT.DOWN then
+			newy = ent.y + 30
+			if newy >= 30*height then
+				newy = newy - 30*height
+			end
+			entitydata[idx].y = newy
+			if ent.t == 13 then
+				newp2 = ent.p2 + 30
+				if newp2 >= 30*height then
+					newp2 = newp2 - 30*height
+				end
+				entitydata[idx].p2 = newp2
+			end
+		end
+	end
+
+	-- Change the current room
+	local rx, ry = roomx, roomy
+	if direction == SHIFT.LEFT then
+		rx = rx - 1
+	elseif direction == SHIFT.RIGHT then
+		rx = rx + 1
+	elseif direction == SHIFT.UP then
+		ry = ry - 1
+	elseif direction == SHIFT.DOWN then
+		ry = ry + 1
+	end
+	rx = rx % width
+	ry = ry % height
+	gotoroom(rx, ry)
+
+	-- Scripts
+	if not updatescripts then
+		return
+	end
+	local field2_3cmdswrap = {"gotoroom"}
+	local field2_3cmdsnowrap = {"ifexplored", "showcoordinates", "hidecoordinates"}
+	local transform = {}
+	transform[1] = (function(x, y, direction)
+		x, y = tonumber(x), tonumber(y)
+		local width, height
+		width = math.min(metadata.mapwidth, 20)
+		height = math.min(metadata.mapheight, 20)
+		if x ~= nil and y ~= nil then
+			local x_outofbounds = x < 0 or x >= width
+			local y_outofbounds = y < 0 or y >= width
+			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			elseif direction == SHIFT.LEFT then
+				x = x - 1
+				if x < 0 and not x_outofbounds and not y_outofbounds then
+					x = x + metadata.mapwidth
+				elseif x_outofbounds and x < metadata.mapwidth and not y_outofbounds then
+					x = x - metadata.mapwidth
+				end
+			elseif direction == SHIFT.RIGHT then
+				x = x + 1
+				if x >= metadata.mapwidth and not x_outofbounds and not y_outofbounds then
+					x = x - metadata.mapwidth
+				elseif x_outofbounds and x >= 0 and not y_outofbounds then
+					x = x + metadata.mapwidth
+				end
+			elseif direction == SHIFT.UP then
+				y = y - 1
+				if y < 0 and not y_outofbounds and not x_outofbounds then
+					y = y + metadata.mapheight
+				elseif y_outofbounds and y < metadata.mapheight and not x_outofbounds then
+					y = y - metadata.mapheight
+				end
+			elseif direction == SHIFT.DOWN then
+				y = y + 1
+				if y >= metadata.mapheight and not x_outofbounds and not y_outofbounds then
+					y = y - metadata.mapheight
+				elseif y_outofbounds and y >= 0 and not x_outofbounds then
+					y = y + metadata.mapheight
+				end
+			end
+		end
+		return x, y
+	end)
+	transform[2] = (function(x, y, direction)
+		x, y = tonumber(x), tonumber(y)
+		local width, height
+		width = math.min(metadata.mapwidth, 20)
+		height = math.min(metadata.mapheight, 20)
+		if x ~= nil and y ~= nil then
+			local x_outofbounds = x < 0 or x >= metadata.mapwidth
+			local y_outofbounds = y < 0 or y >= metadata.mapwidth
+			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			elseif not x_outofbounds and not y_outofbounds then
+				if direction == SHIFT.LEFT then
+					x = x - 1
+				elseif direction == SHIFT.RIGHT then
+					x = x + 1
+				elseif direction == SHIFT.UP then
+					y = y - 1
+				elseif direction == SHIFT.DOWN then
+					y = y + 1
+				end
+				x = x % metadata.mapwidth
+				y = y % metadata.mapheight
+			end
+		end
+		return x, y
+	end)
+	local tmp
+	for rvnum = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v = v:gsub(" ", "")
+			for _,command in pairs(field2_3cmdswrap) do
+				if #v > #command then
+					local pattern = "^(" .. command .. "[%(,%)]0*)([0-9]+)([%(,%)]0*)([0-9]+)"
+					tmp = updateroomline(v, pattern, transform[1], direction)
+					if tmp ~= nil then
+						scripts[scriptnames[rvnum]][k] = tmp
+					end
+				end
+			end
+			for _, command in pairs(field2_3cmdsnowrap) do
+				if #v > #command then
+					local pattern = "^(" .. command .. "[%(,%)]0*)([0-9]+)([%(,%)]0*)([0-9]+)"
+					tmp = updateroomline(v, pattern, transform[2], direction)
+					if tmp ~= nil then
+						scripts[scriptnames[rvnum]][k] = tmp
+					end
+				end
+			end
+		end
+	end
+end
+
+function setrescuablecolor(color)
+	if color == 0 then
+		-- Cyan
+		love.graphics.setColor(132, 181, 255)
+	elseif color == 1 then
+		-- Pink
+		love.graphics.setColor(255, 135, 255)
+	elseif color == 2 then
+		-- Yellow
+		love.graphics.setColor(255, 255, 135)
+	elseif color == 3 then
+		-- Red
+		love.graphics.setColor(255, 61, 61)
+	elseif color == 4 then
+		-- Green
+		love.graphics.setColor(144, 255, 144)
+	elseif color == 5 then
+		-- Blue
+		love.graphics.setColor(75, 75, 230)
+	else
+		-- What?
+		love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
+	end
 end

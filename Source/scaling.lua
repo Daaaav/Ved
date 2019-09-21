@@ -52,3 +52,17 @@ love.mouse.getYOR = love.mouse.getY
 love.mouse.getY = function()
 	return love.mouse.getYOR()*s.pscale^-1
 end
+
+
+love.mouse.getPositionOR = love.mouse.getPosition
+
+love.mouse.getPosition = function()
+	return love.mouse.getX(), love.mouse.getY()
+end
+
+
+love.mouse.setPositionOR = love.mouse.setPosition
+
+love.mouse.setPosition = function(x, y)
+	love.mouse.setPositionOR(x*s.pscale, y*s.pscale)
+end

@@ -2295,6 +2295,14 @@ ALIGN = {
 	RIGHT = 3,
 }
 
+-- For shiftrooms()
+SHIFT = {
+	LEFT = 1,
+	RIGHT = 2,
+	UP = 3,
+	DOWN = 4,
+}
+
 -- For map_correspondreset()
 DIRTY = {
 	ROW = 1,

@@ -314,7 +314,7 @@ end
 
 --- Handling of scaling options
 
-do
+function constraindisplaysettings(reload)
 	s.scale = tonumber(s.scale)
 	if s.scale == nil or s.scale <= 0 then
 		s.scale = 1
@@ -358,13 +358,17 @@ do
 		end
 	end
 
-	if s.smallerscreen then
-		_, _, graphicsflags = love.window.getMode()
-		love.window.setMode(800, 480, graphicsflags)
+	if not reload then
+		if s.smallerscreen then
+			_, _, graphicsflags = love.window.getMode()
+			love.window.setMode(800, 480, graphicsflags)
+		end
 	end
 
 	s.pscale = s.scale
 	s.psmallerscreen = s.smallerscreen
-	s.pcheckforupdates = s.checkforupdates
-	s.plang = s.lang
 end
+constraindisplaysettings()
+
+s.pcheckforupdates = s.checkforupdates
+s.plang = s.lang
