@@ -57,9 +57,9 @@ function convertfontpng(imagedata)
 	love.graphics.setCanvas()
 	font16 = love.graphics.newImageFont(font16canvas:newImageData(), glyphstring, -4)
 
-	local fallback_chars = love.filesystem.read("imagefont_fallback.txt")
-	font8:setFallbacks(love.graphics.newImageFont("imagefont_fallback8.png", fallback_chars))
-	font16:setFallbacks(love.graphics.newImageFont("imagefont_fallback16.png", fallback_chars))
+	local fallback_chars = love.filesystem.read("fonts/imagefont_fallback.txt")
+	font8:setFallbacks(love.graphics.newImageFont("fonts/imagefont_fallback8.png", fallback_chars))
+	font16:setFallbacks(love.graphics.newImageFont("fonts/imagefont_fallback16.png", fallback_chars))
 
 	love.graphics.setFont(font8)
 

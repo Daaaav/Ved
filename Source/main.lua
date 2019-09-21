@@ -44,18 +44,18 @@ if love.graphics.setDefaultFilter ~= nil then
 end
 
 -- TTF
-font8 = love.graphics.newFont("Space Station.ttf", 8)
-font16 = love.graphics.newFont("Space Station.ttf", 16)
+font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
 
 -- Since the other fonts are done here anyways
 function loadtinynumbers()
-	tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+	tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
 end
 loadtinynumbers()
-tinynumbers = love.graphics.newImageFont("tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
-tinynumbers_all = love.graphics.newImageFont("tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h", love_version_meets(10) and 1 or nil)
-tinynumbers_cmd = love.graphics.newImageFont("tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
-tinynumbers_strg = love.graphics.newImageFont("tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
+tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
+tinynumbers_all = love.graphics.newImageFont("fonts/tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h", love_version_meets(10) and 1 or nil)
+tinynumbers_cmd = love.graphics.newImageFont("fonts/tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
+tinynumbers_strg = love.graphics.newImageFont("fonts/tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_fallbacks = {}
 -- Fallback is handled when config is loaded, because we need to know the language
 

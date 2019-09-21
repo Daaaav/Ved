@@ -3409,8 +3409,8 @@ function handlefontpng()
 		arrow_left = "<"
 		arrow_right = ">"
 	else
-		font8 = love.graphics.newFont("Space Station.ttf", 8)
-		font16 = love.graphics.newFont("Space Station.ttf", 16)
+		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+		font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
 
 		hijack_print = false
 		fontpng_works = false
