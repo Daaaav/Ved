@@ -110,7 +110,7 @@ function cDialog:draw(topmost)
 
 	-- Text boxes
 	local fieldactive = false
-	local active_x, active_y, active_w, active_type
+	local active_x, active_y, active_w, active_h, active_type, active_dropdowns, active_listheight
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
 		if self.currentfield == k then
@@ -119,16 +119,38 @@ function cDialog:draw(topmost)
 			active_y = v[3]
 			active_w = v[4]
 			active_type = v[6]
+			active_dropdowns = v[7]
+			active_listheight = v[12]
 		end
 	end
 
-	if fieldactive and showtabrect and topmost then
+	if fieldactive and topmost then
 		active_x = self.x+10+active_x*8
 		active_y = self.y+self.windowani+10+active_y*8 + 1
+		if active_type == DF.RADIOS then
+			local tmp = {}
+			for k,v in pairs(active_dropdowns) do
+				tmp[k] = #v
+			end
+			active_w = math.max(unpack(tmp)) + 2
+			active_h = #active_dropdowns * 8
+		elseif active_type == DF.FILES then
+			active_h = active_listheight*8 + 8 + 4
+		else
+			active_h = 8
+		end
 		active_w = active_w*8
 
-		self:setColor(255,255,127,255,not topmost)
-		love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, 10)
+		if showtabrect then
+			self:setColor(255,255,127,255,not topmost)
+			love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
+		end
+
+		if active_type == DF.CHECKBOX then
+			showhotkey(" ", active_x+2, active_y, ALIGN.CENTER, topmost, self)
+		elseif active_type == DF.FILES then
+			showhotkey("d", active_x+12, active_y-6, ALIGN.RIGHT, topmost, self)
+		end
 	end
 
 	-- Window border
@@ -137,6 +159,11 @@ function cDialog:draw(topmost)
 
 	-- Buttons
 	local btnwidth = 72
+	-- The Enter key can press different buttons depending on their priority
+	-- and whether or not they are one of the buttons in this dialog
+	-- Make sure we don't end up displaying it twice, if there happen to be
+	-- multiple for whatever reason
+	local returnalreadyshown = false
 	for k,v in pairs(self.buttons) do
 		local rapos = (#self.buttons)-k+1 -- right-aligned position
 		local btn_x = self.x+self.width-rapos*btnwidth-(5*(rapos-1))-1
@@ -172,8 +199,13 @@ function cDialog:draw(topmost)
 		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
 		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost, self}
 		if topmost and not self.closing then
-			if DB_keys[v] == "OK" then
+			-- For the Enter key, make sure to put the most prioritized buttons on the left,
+			-- in the same order as in cDialog:keypressed()
+			if DB_keys[v] == "SAVE" and #self.fields == 0 then
+				showhotkey("S", unpack(args))
+			elseif not returnalreadyshown and (DB_keys[v] == "OK" or DB_keys[v] == "CLOSE" or DB_keys[v] == "SAVE" or DB_keys[v] == "LOAD" or DB_keys[v] == "QUIT") then
 				showhotkey("n", unpack(args))
+				returnalreadyshown = true
 			elseif DB_keys[v] == "CANCEL" then
 				showhotkey("b", unpack(args))
 			elseif DB_keys[v] == "YES" then
@@ -182,8 +214,6 @@ function cDialog:draw(topmost)
 				showhotkey("N", unpack(args))
 			elseif DB_keys[v] == "DISCARD" then
 				showhotkey("D", unpack(args))
-			elseif DB_keys[v] == "SAVE" then
-				showhotkey("S", unpack(args))
 			end
 		end
 	end
@@ -432,20 +462,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		self:setColor(255,255,255,255)
 		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
 		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
-			local newfolder = get_parent_path(content)
-			self.fields[n][5] = newfolder
-			local success, everr
-			success, self.fields[n][7], everr = listfiles_generic(
-				newfolder,
-				filter_on and folder_filter or "",
-				folder_show_hidden
-			)
-			if success then
-				everr = ""
-			end
-			self.fields[n][10] = 0
-			self.fields[n][11] = everr
+			self.currentfield = n
 
+			self:cd_to_parent(n, content, ...)
 			mousepressed = true
 		end
 		self:setColor(0,0,0,255)
@@ -466,27 +485,17 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		for k,v in pairs(menuitems) do
 			-- Only display this item if it will be visible
 			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
-				local selected = false --v.name == content -- check if name dialog field equals v.name?
+				local selected = self:return_fields().name == v.name
 				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height))
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
 					self:setColor(0,0,0,255)
 					if moused and love.mouse.isDown("l") and not mousepressed then
+						self.currentfield = n
+
 						if v.isdir then
-							local newfolder = get_child_path(content, v.name)
-							self.fields[n][5] = newfolder
-							local success, everr
-							success, self.fields[n][7], everr = listfiles_generic(
-								newfolder,
-								filter_on and folder_filter or "",
-								folder_show_hidden
-							)
-							if success then
-								everr = ""
-							end
-							self.fields[n][10] = 0
-							self.fields[n][11] = everr
+							self:cd(v.name, n, content, ...)
 
 							mousepressed = true
 						else
@@ -498,6 +507,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				if v.isdir then
 					self:setColor(255,255,255,255)
 					love.graphics.draw(smallfolder, real_x, real_y+1+k*8+listscroll)
+					if active and selected then
+						showhotkey(" ", real_x+real_w-20, real_y+k*8+listscroll, ALIGN.RIGHT, topmost, self)
+					end
 					self:setColor(0,0,0,255)
 				end
 				love.graphics.print(displayable_filename(v.name), real_x+8, real_y+3+k*8+listscroll)
@@ -621,6 +633,42 @@ function cDialog:get_on_scrollable_field(x, y)
 		end
 	end
 	return nil
+end
+
+function cDialog:cd_to_parent(cf, currentdir, ...)
+	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
+
+	local newfolder = get_parent_path(currentdir)
+	self.fields[cf][5] = newfolder
+	local success, everr
+	success, self.fields[cf][7], everr = listfiles_generic(
+		newfolder,
+		filter_on and folder_filter or "",
+		folder_show_hidden
+	)
+	if success then
+		everr = ""
+	end
+	self.fields[cf][10] = 0
+	self.fields[cf][11] = everr
+end
+
+function cDialog:cd(dir, cf, currentdir, ...)
+	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
+
+	local newfolder = get_child_path(currentdir, dir)
+	self.fields[cf][5] = newfolder
+	local success, everr
+	success, self.fields[cf][7], everr = listfiles_generic(
+		newfolder,
+		filter_on and folder_filter or "",
+		folder_show_hidden
+	)
+	if success then
+		everr = ""
+	end
+	self.fields[cf][10] = 0
+	self.fields[cf][11] = everr
 end
 
 

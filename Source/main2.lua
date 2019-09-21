@@ -58,18 +58,7 @@ function love.load()
 		ved_require("lang/" .. s.lang)
 	end
 
-	if love_version_meets(10) then
-		if love.system.getOS() == "OS X" then
-			table.insert(tinynumbers_fallbacks, tinynumbers_cmd)
-		end
-		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
-			table.insert(tinynumbers_fallbacks, tinynumbers_strg)
-		end
-		table.insert(tinynumbers_fallbacks, tinynumbers_all)
-		tinynumbers:setFallbacks(unpack(tinynumbers_fallbacks))
-	else
-		tinynumbers = tinynumbers_all
-	end
+	swaptinynumbersglyphs()
 
 	ved_require("devstrings")
 	ved_require("const")
@@ -96,19 +85,7 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 
-	if s.pscale ~= 1 or s.psmallerscreen then
-		local za,zb,zc = love.window.getMode()
-		if love_version_meets(9,2) then
-			local zd,ze,zf = love.window.getPosition()
-			local zwidth,zheight = love.window.getDesktopDimensions(zf)
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
-		else
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-		end
-
-		ved_require("scaling")
-	end
+	dodisplaysettings()
 
 	cons("love.load() reached")
 
@@ -325,12 +302,6 @@ function love.load()
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
 
-	if s.psmallerscreen then
-		screenoffset = 32
-	else
-		screenoffset = 128
-	end
-
 	savedwindowtitle = ""
 
 	-- eeeeeeeeee
@@ -420,68 +391,11 @@ function love.load()
 	loadlevelsfolder()
 	loadtilesets()
 
-	local hijack_print = false
+	hijack_print = false
 
 	-- Are we using font.png?
-	if love_version_meets(10) and s.usefontpng then
-		if loadfontpng() then
-			--[[
-				If we're using font.png, and the language file defines a function to replace
-				certain non-ASCII characters with ASCII, then apply that to the entire file.
-				Should work fine as anything not translated will be ASCII and shouldn't be replaced.
-				And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
-				For example, a language may use a small amount of accented characters,
-				but if only ASCII is allowed, would prefer to leave the accent off rather
-				than have that character not be displayed at all.
-				And yes, this means a language file will have to be loaded 3 times (English first)
-			]]
-
-			if fontpng_ascii == nil then
-				fontpng_ascii = function(c) end
-			end
-
-			local any_unsupported = false
-			local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
-			if readlua ~= nil then
-				cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
-				local newlua, replacements = readlua:gsub(
-					"([\194-\244][\128-\191]*)",
-					function(c)
-						if c == "¤" or c == "§" or c == "°" then
-							return
-						end
-
-						local newc = fontpng_ascii(c)
-
-						if newc == nil then
-							any_unsupported = true
-							print(c)
-						end
-						return newc
-					end
-				)
-				if not any_unsupported then
-					print("(All characters apparently supported!)")
-				end
-				cons("Replacements: " .. replacements)
-
-				assert(loadstring(newlua))()
-
-				-- But also load devstrings again, otherwise we might crash during development!
-				-- Don't care as much about the fontpng replacements here...
-				-- Override `require` not wanting to load this file another time >:o
-				package.loaded.devstrings = false
-				ved_require("devstrings")
-			end
-
-			hijack_print = true
-			fontpng_works = true
-
-			arrow_up = "^"
-			arrow_down = "V"
-			arrow_left = "<"
-			arrow_right = ">"
-		end
+	if love_version_meets(10) then
+		handlefontpng()
 	end
 
 	if hijack_print or love_version_meets(11) then
@@ -686,11 +600,11 @@ function love.draw()
 					elseif scriptlistscroll+8+24*(j-1) < 0 then
 						newscroll = scriptlistscroll + 24
 						if newscroll > 0 then -- the correction can be farther than the top of the list
-							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-newscroll) * s.pscale)
+							love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()-newscroll)
 							newscroll = 0
 						end
 					else
-						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()-24) * s.pscale)
+						love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()-24)
 					end
 				elseif rvnum ~= 1 and mouseon(8+screenoffset+640-8-24 -36 +4 +16 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
 					movescriptup(rvnum)
@@ -704,11 +618,11 @@ function love.draw()
 						local height = -(((#scriptnames)*24-8)-(love.graphics.getHeight()-16))
 						if newscroll < height then -- correction is too far past the bottom
 							local diff = height-newscroll
-							love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+diff) * s.pscale)
+							love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()+diff)
 							newscroll = height
 						end
 					else
-						love.mouse.setPosition(love.mouse.getX()*s.pscale, (love.mouse.getY()+24) * s.pscale)
+						love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()+24)
 					end
 				end
 
@@ -840,17 +754,11 @@ function love.draw()
 			8+16+8, 8+(24*14)+4+2
 		)
 
-		if s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
-			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
-			love.graphics.setColor(255,255,255)
-		else
-			love.graphics.print(
-				ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
-				.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
-				8, love.graphics.getHeight()-21
-			)
-		end
+		love.graphics.print(
+			ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
+			.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+			8, love.graphics.getHeight()-21
+		)
 
 
 		rbutton({L.BTN_OK, "b"}, 0)
@@ -1140,16 +1048,13 @@ function love.draw()
 		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
 		love.graphics.print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4+2)
 
-		rbutton(L.BTN_OK, 0)
+		rbutton({L.BTN_OK, "b"}, 0)
 		rbutton(L.RESETCOLORS, 2)
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if onrbutton(0) then
 				-- Save
-				saveconfig()
-				tostate(oldstate, true)
-				-- Just to make sure we don't get stuck in the settings
-				oldstate = olderstate
+				exitsyntaxcoloroptions()
 			elseif onrbutton(2) then
 				-- Reset colors
 				for k,v in pairs(s) do
@@ -1264,7 +1169,6 @@ function love.draw()
 		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*4)+4+2)
 
 
-		local num_scale
 		if nonintscale then
 			num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
 		else
@@ -1330,14 +1234,10 @@ function love.draw()
 			love.graphics.setColor(255,0,0)
 			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-15)
 			love.graphics.setColor(255,255,255)
-		elseif s.pscale ~= s.scale or s.psmallerscreen ~= s.smallerscreen then
-			love.graphics.setColor(255,128,0)
-			love.graphics.print(L.SCALEREBOOT, 8, love.graphics.getHeight()-15)
-			love.graphics.setColor(255,255,255)
 		end
 
 
-		rbutton(L.BTN_OK, 0)
+		rbutton({L.BTN_OK, "b"}, 0)
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
@@ -1362,14 +1262,7 @@ function love.draw()
 				s.forcescale = not s.forcescale
 			elseif onrbutton(0) then
 				-- Save
-				if nonintscale then
-					stopinput()
-					s.scale = num_scale
-				end
-				saveconfig()
-				tostate(oldstate, true)
-				-- Just to make sure we don't get stuck in the settings
-				oldstate = olderstate
+				exitdisplayoptions()
 			end
 
 			mousepressed = true
@@ -1524,7 +1417,7 @@ function love.draw()
 		else
 			love.graphics.print(musicplayerfile, 16, 14)
 		end
-		local file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
+		file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
 		local musicnamex_offset
 		if musiceditor then
 			musicnamex_offset = 76
@@ -1538,6 +1431,10 @@ function love.draw()
 			local musicnamex = musicx + musicnamex_offset
 			local musicsizerx = soundviewer and musicx+316 or musicx+680
 			local musicdurationx = soundviewer and musicx+332 or musicx+712
+			if s.psmallerscreen and not soundviewer then
+				musicsizerx = musicsizerx - 128 + 16
+				musicdurationx = musicdurationx - 128 + 16
+			end
 			for my = 0, 15 do
 				local m = mx*16 + my
 				if (soundviewer and m > 27) or (not soundviewer and m > 15) then
@@ -1663,14 +1560,18 @@ function love.draw()
 
 		local current_audio = getmusicaudioplaying()
 		local cura_y = love.graphics.getHeight()-32
+		local width = 568
+		if s.psmallerscreen then
+			width = width - 128 + 16
+		end
 		if current_audio == nil then
 			love.graphics.setColor(64,64,64)
 			love.graphics.draw(sound_play, 16, cura_y)
 			love.graphics.draw(sound_stop, 32, cura_y)
 			love.graphics.draw(sound_rewind, 48, cura_y)
 			love.graphics.print("[--] -:--", 72, cura_y+6)
-			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
-			love.graphics.print("-:--", 728, cura_y+6)
+			love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
+			love.graphics.print("-:--", width+160, cura_y+6)
 			love.graphics.setColor(255,255,255)
 		else
 			hoverdraw(currentmusic_paused and sound_play or sound_pause, 16, cura_y, 16, 16)
@@ -1702,12 +1603,12 @@ function love.draw()
 				duration = current_audio:getDuration()
 			end
 			love.graphics.setColor(128,128,128)
-			love.graphics.rectangle("fill", 152, cura_y+4, 568, 8)
+			love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
 			love.graphics.setColor(255,255,255)
 			if duration ~= nil and duration ~= 0 then
-				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*568, 8)
-				if nodialog and not mousepressed and mouseon(152, cura_y+4, 568, 8) then
-					local mouse_elapsed = ((love.mouse.getX()-152)/568)*duration
+				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*width, 8)
+				if nodialog and not mousepressed and mouseon(152, cura_y+4, width, 8) then
+					local mouse_elapsed = ((love.mouse.getX()-152)/width)*duration
 					love.graphics.print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-8)
 					if love.mouse.isDown("l") then
 						current_audio:seek(mouse_elapsed)
@@ -1715,18 +1616,20 @@ function love.draw()
 					end
 				end
 			end
-			love.graphics.print(mmss_duration(duration), 728, cura_y+6)
+			love.graphics.print(mmss_duration(duration), width+160, cura_y+6)
+			showhotkey(" ", 16+16, cura_y-2, ALIGN.RIGHT)
+			showhotkey("h", 48+16, cura_y-2, ALIGN.RIGHT)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
-		rbutton(musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), 2, nil, true)
+		rbutton({musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), "L"}, 2, nil, true, nil, generictimer_mode == 1 and generictimer > 0)
 		if musiceditor then
-			rbutton(L.SAVE, 3, nil, true)
+			rbutton({L.SAVE, "S"}, 3, nil, true)
 		end
 		if musiceditor then
-			rbutton(L.MUSICFILEMETADATA, 5, nil, true)
+			rbutton({L.MUSICFILEMETADATA, "M"}, 5, nil, true)
 		elseif file_metadata_anyset then
-			rbutton(L.MUSICFILEMETADATA, 4, nil, true)
+			rbutton({L.MUSICFILEMETADATA, "M"}, 4, nil, true)
 		end
 
 		if nodialog and love.mouse.isDown("l") then
@@ -1738,45 +1641,20 @@ function love.draw()
 			elseif onrbutton(2, nil, true) then
 				-- Reload/Load
 				if musiceditor then
-					dialog.create(
-						"",
-						DBS.LOADCANCEL,
-						dialog.callback.loadvvvvvvmusic,
-						L.LOADMUSICNAME,
-						dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
-					)
+					assets_musicloaddialog()
 				else
-					rbutton(musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD, 2, nil, true, nil, true)
-					love.graphics.present()
-					loadvvvvvvmusic(musicplayerfile)
+					assets_musicreload()
 				end
 				mousepressed = true
 			elseif musiceditor and onrbutton(3, nil, true) then
 				-- Save
-				dialog.create(
-					L.ENTERNAMESAVE,
-					DBS.OKCANCEL,
-					dialog.callback.savevvvvvvmusic,
-					nil,
-					dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
-				)
+				assets_savedialog()
 			elseif musiceditor and onrbutton(5, nil, true) then
 				-- File metadata (editor)
-				dialog.create(
-					"",
-					DBS.OKCANCEL,
-					dialog.callback.musicfilemetadata,
-					L.MUSICFILEMETADATA,
-					dialog.form.musicfilemetadata_make(file_metadata)
-				)
+				assets_metadataeditordialog()
 			elseif not musiceditor and file_metadata_anyset and onrbutton(4, nil, true) then
 				-- File metadata (player)
-				dialog.create(
-					L.MUSICEXPORTEDON .. format_date(file_metadata.export_time) .. "\n\n"
-					.. L.MUSICTITLE .. file_metadata.name .. "\n\n"
-					.. L.MUSICARTIST .. file_metadata.artist .. "\n\n"
-					.. L.MUSICNOTES .. "\n" .. file_metadata.notes
-				)
+				assets_metadataplayerdialog()
 			end
 		elseif nodialog and love.mouse.isDown("r") and onrbutton(2, nil, true) and musicfileexists(musicplayerfile) then
 			-- Reload right click menu
@@ -1886,7 +1764,7 @@ function love.draw()
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
-		rbutton(L.LOAD, 2, nil, true)
+		rbutton({L.LOAD, "L"}, 2, nil, true)
 
 		if nodialog and love.mouse.isDown("l") and not mousepressed then
 			if onrbutton(0, nil, true) then
@@ -1896,13 +1774,7 @@ function love.draw()
 				mousepressed = true
 			elseif onrbutton(2, nil, true) then
 				-- Load
-				dialog.create(
-					"",
-					DBS.LOADCANCEL,
-					dialog.callback.openimage,
-					L.LOADIMAGE,
-					dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
-				)
+				assets_graphicsloaddialog()
 				mousepressed = true
 			end
 		end
@@ -2087,7 +1959,7 @@ function love.update(dt)
 	end
 	if current_scrolling_levelfilename_k ~= nil and state == 6 then
 		current_scrolling_levelfilename_pos = current_scrolling_levelfilename_pos + 55*dt
-		if current_scrolling_levelfilename_pos > font8:getWidth(current_scrolling_levelfilename_filename) + 400 then
+		if current_scrolling_levelfilename_pos > font8:getWidth(current_scrolling_levelfilename_filename) + (s.psmallerscreen and 50-12 or 50)*8 then
 			current_scrolling_levelfilename_pos = 0
 		end
 	end
@@ -2148,8 +2020,38 @@ function love.update(dt)
 		end
 	elseif state == 1 then
 		if (editingbounds == -1 or editingbounds == 1) and selectedtool ~= 9 then
+			if editingbounds == 1 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "enemy" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("ENEMY BOUNDS (tool canceled)")
+			end
+
 			editingbounds = 0
 		elseif (editingbounds == -2 or editingbounds == 2) and selectedtool ~= 8 then
+			if editingbounds == 2 then
+				local changeddata = {}
+				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
+					table.insert(changeddata,
+						{
+							key = "plat" .. v,
+							oldvalue = oldbounds[k],
+							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						}
+					)
+				end
+				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				finish_undo("PLATFORM BOUNDS (tool canceled)")
+			end
+
 			editingbounds = 0
 		end
 
@@ -2197,7 +2099,10 @@ function love.update(dt)
 		local chanmessage = allmetadata_outchannel:pop()
 
 		if chanmessage ~= nil and chanmessage.refresh == levels_refresh then
-			files[chanmessage.dir][chanmessage.id].metadata = chanmessage
+			-- This file could have been (visually) removed by the debug function Shift+F3
+			if files[chanmessage.dir][chanmessage.id] ~= nil then
+				files[chanmessage.dir][chanmessage.id].metadata = chanmessage
+			end
 
 			-- Is this also the metadata for any recent file? TODO: Support subdirectories
 			for k,v in pairs(s.recentfiles) do
@@ -2378,11 +2283,11 @@ function love.update(dt)
 					-- Warp token
 					if RCMreturn == L.GOTODESTINATION then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)*s.pscale)
+						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
 						cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.GOTOENTRANCE then
 						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-						love.mouse.setPosition((64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0))*s.pscale, ((entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)*s.pscale)
+						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
 						cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
 					elseif RCMreturn == L.CHANGEENTRANCE then
 						selectedtool = 14
@@ -2504,11 +2409,15 @@ function love.update(dt)
 				)
 				input = rvnum
 			elseif RCMreturn == L.DELETE then
-				dialog.create(
-					langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
-					dialog.callback.suredeletescript
-				)
 				input = rvnum
+				if keyboard_eitherIsDown("shift") then
+					dialog.callback.suredeletescript(DB.YES)
+				else
+					dialog.create(
+						langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
+						dialog.callback.suredeletescript
+					)
+				end
 			elseif RCMreturn == L.RENAME then
 				dialog.create(
 					L.NEWNAME, DBS.OKCANCEL,
@@ -2622,8 +2531,13 @@ function love.textinput(char)
 			if state == 3 then
 				scriptlines[editingline] = input
 				-- nodialog as a temp global var is checked here too
-				if nodialog and not char == "/" and not char == "?" then
-					dirty()
+				if nodialog then
+					if char ~= "/" and char ~= "?" then
+						-- But we don't want pressing '/' to not dirty when we're actually typing
+						nodialog = true
+					else
+						dirty()
+					end
 				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
@@ -2662,9 +2576,13 @@ function love.keypressed(key)
 		debug.debug()
 	end
 
+	if key == "escape" then
+		RCMactive = false
+	end
+
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)
-	elseif takinginput then
+	elseif takinginput and nodialog then
 		if key == "backspace" then
 			input = backspace(input)
 
@@ -2877,16 +2795,105 @@ function love.keypressed(key)
 				end
 
 				cf = dialogs[#dialogs].currentfield
-				if cf == original then
+				if cf == original and anythingbutnil(dialogs[#dialogs].fields[cf])[6] ~= 2 then
 					-- Don't keep looping around forever
 					done = true
 				end
-				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] < 2 then
+				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] ~= 2 then
 					-- Only text labels are skipped
 					done = true
 				end
 
 				cursorflashtime = 0
+			end
+		end
+		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
+			showtabrect = true
+
+			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
+
+			if dialogs[#dialogs].fields[cf][7] ~= nil then
+				dialogs[#dialogs].fields[cf][7](not dialogs[#dialogs].fields[cf][5], dialogs[#dialogs])
+			end
+		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
+			showtabrect = true
+			RCMactive = false
+
+			local dropdown = 0
+			local cfinput = dialogs[#dialogs].fields[cf][5]
+			local dropdowns = dialogs[#dialogs].fields[cf][7]
+			local mapping = dialogs[#dialogs].fields[cf][8]
+			local usethisvalue
+			if mapping ~= nil then
+				usethisvalue = mapping[cfinput]
+			else
+				usethisvalue = cfinput
+			end
+
+			for k,v in pairs(dropdowns) do
+				if v == usethisvalue then
+					dropdown = k
+					break
+				end
+			end
+			if key == "up" or key == "kp8" then
+				dropdown = dropdown - 1
+				if dropdown < 1 then
+					dropdown = #dropdowns
+				end
+			end
+			if key == "down" or key == "kp2" then
+				dropdown = dropdown + 1
+				if dropdown > #dropdowns then
+					dropdown = 1
+				end
+			end
+
+			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
+		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
+			showtabrect = true
+
+			local files = dialogs[#dialogs].fields[cf][7]
+			local file = 0
+			for k,v in pairs(files) do
+				if v.name == dialogs[#dialogs]:return_fields().name then
+					file = k
+					break
+				end
+			end
+
+			if key == "backspace" then
+				dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:set_field("name", "")
+			elseif key == "up" or key == "kp8" or key == "down" or key == "kp2" then
+				local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf])
+				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][2]*8
+				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][3]*8 + 1
+				local real_w = dialogs[#dialogs].fields[cf][4]*8
+
+				if key == "up" or key == "kp8" then
+					file = file - 1
+					if file < 1 then
+						file = #files
+					end
+				end
+				if key == "down" or key == "kp2" then
+					file = file + 1
+					if file > #files then
+						file = 1
+					end
+				end
+
+				dialogs[#dialogs]:set_field("name", anythingbutnil(files[file]).name)
+
+				if 8*file - 8 < math.abs(listscroll) then
+					dialogs[#dialogs].fields[cf][10] = -8*file + 8
+				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
+					dialogs[#dialogs].fields[cf][10] = -8*file + 8*list_height
+				end
+			elseif (key == " " or key == "space") and files[file] ~= nil and files[file].isdir then
+				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:set_field("name", "")
 			end
 		end
 	end
@@ -2920,18 +2927,20 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("rctrl") then
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("r" .. ctrl) then
 			tilespicker_shortcut = true
 		end
 
-		if key == "left" then
-			selectedtile = selectedtile - 1
-		elseif key == "right" then
-			selectedtile = (selectedtile + 1) % 1200
-		elseif key == "up" then
-			selectedtile = selectedtile - 40
-		elseif key == "down" then
-			selectedtile = (selectedtile + 40) % 1200
+		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+			if key == "left" then
+				selectedtile = selectedtile - 1
+			elseif key == "right" then
+				selectedtile = (selectedtile + 1) % 1200
+			elseif key == "up" then
+				selectedtile = selectedtile - 40
+			elseif key == "down" then
+				selectedtile = (selectedtile + 40) % 1200
+			end
 		end
 
 		if selectedtile < 0 then
@@ -2995,7 +3004,7 @@ function love.keypressed(key)
 		tostate(15)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and keyboard_eitherIsDown(ctrl) then
 		tostate(11)
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and keyboard_eitherIsDown(ctrl) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and key == "p" and keyboard_eitherIsDown(ctrl) then
 		gotostartpointroom()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "d" and keyboard_eitherIsDown(ctrl) then
 		tostate(6, nil, "secondlevel")
@@ -3018,7 +3027,7 @@ function love.keypressed(key)
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("ENEMY BOUNDS (esc cancelled)")
+			finish_undo("ENEMY BOUNDS (esc canceled)")
 		elseif editingbounds == 2 then
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -3031,7 +3040,7 @@ function love.keypressed(key)
 				)
 			end
 			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-			finish_undo("PLATFORM BOUNDS (esc cancelled)")
+			finish_undo("PLATFORM BOUNDS (esc canceled)")
 		end
 
 		editingbounds = 0
@@ -3082,6 +3091,9 @@ function love.keypressed(key)
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
 		movingentity = 0
 		movingentity_copying = false
+	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
+		selectedsubtool[14] = 1
+		warpid = nil
 	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
 		-->
 		if editingbounds == 0 then
@@ -3143,7 +3155,7 @@ function love.keypressed(key)
 		end
 		editingroomtext = 0
 		stopinput()
-	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
+	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("l" .. ctrl) then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
 
@@ -3163,7 +3175,7 @@ function love.keypressed(key)
 		selectedtool = 1
 
 		mousepressed = false
-	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("lctrl") then
+	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("l" .. ctrl) then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
 			cons("==== " .. k .. " ====")
@@ -3359,8 +3371,8 @@ function love.keypressed(key)
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
 		-- Reload tilesets
 		loadtilesets()
-		if love_version_meets(10) and fontpng_works then
-			loadfontpng()
+		if love_version_meets(10) then
+			handlefontpng()
 		end
 		tile_batch_texture_needs_update = true
 		map_init()
@@ -3461,7 +3473,7 @@ function love.keypressed(key)
 			end
 		end
 		for k,v in pairs(knowninternalcommands) do
-			if k:sub(1, input:len()) == input then
+			if k:sub(1, input:len()) == input and not table.contains(matching, k) then
 				table.insert(matching, k)
 			end
 		end
@@ -3502,7 +3514,7 @@ function love.keypressed(key)
 	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
-		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0})
+		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
 		table.remove(files[""])
 	elseif (state == 8) and (key == "return") then
@@ -3533,7 +3545,7 @@ function love.keypressed(key)
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "kp5") then
+	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
@@ -3548,6 +3560,31 @@ function love.keypressed(key)
 		pasteroom()
 	elseif nodialog and state == 12 and key == "s" then
 		create_export_dialog()
+	elseif nodialog and state == 12 and (key == "," or key == ".") then
+		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
+		if key == "," then
+			if not toolanyofthese then
+				selectedtool = 17
+			elseif selectedtool == 17 then
+				selectedtool = 16
+			elseif selectedtool == 16 then
+				selectedtool = 4
+			elseif selectedtool == 4 then
+				selectedtool = 1
+			end
+		elseif key == "." then
+			if not toolanyofthese then
+				selectedtool = 4
+			elseif selectedtool == 4 then
+				selectedtool = 16
+			elseif selectedtool == 16 then
+				selectedtool = 17
+			elseif selectedtool == 17 then
+				selectedtool = 1
+			end
+		end
+		updatewindowicon()
+		toolscroll()
 	elseif nodialog and state == 13 and key == "escape" then
 		exitvedoptions()
 	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
@@ -3648,10 +3685,10 @@ function love.keypressed(key)
 		end
 	elseif allowdebug and (key == "f12") then
 		tostate(0, true)
-	elseif not editingroomname and (editingroomtext == 0) and nodialog and state == 1 then
+	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
 		for k,v in pairs(toolshortcuts) do
 			if key == string.lower(v) and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
-				if selectedtool == k and k ~= 13 and k ~= 14 then
+				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
 				elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
@@ -3676,11 +3713,49 @@ function love.keypressed(key)
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
 			startinput()
 		end
-	elseif state == 31 and (key == " " or key == "space") then
+	elseif state == 25 and key == "escape" then
+		exitsyntaxcoloroptions()
+	elseif state == 31 and (key == " " or key == "space" or key == "kp5") then
 		if currentmusic_paused then
 			resumemusic()
 		else
 			pausemusic()
+		end
+	elseif state == 31 and musiceditor and key == "s" then
+		assets_savedialog()
+	elseif state == 31 and musiceditor and key == "m" then
+		assets_metadataeditordialog()
+	elseif state == 31 and not musiceditor and file_metadata_anyset and key == "m" then
+		assets_metadataplayerdialog()
+	elseif state == 31 and musiceditor and key == "l" then
+		assets_musicloaddialog()
+	elseif state == 31 and not musiceditor and key == "l" then
+		assets_musicreload()
+	elseif state == 31 and (key == "home" or key == "kp7") then
+		local current_audio = getmusicaudioplaying()
+		if current_audio ~= nil then
+			current_audio:seek(0)
+		end
+	elseif state == 31 and love_version_meets(10) and (key == "left" or key == "kp4" or key == "right" or key == "kp6") then
+		local seconds = 0
+		if key == "left" or key == "kp4" then
+			seconds = -5
+		elseif key == "right" or key == "kp6" then
+			seconds = 5
+		end
+		if keyboard_eitherIsDown("shift") then
+			seconds = seconds * 2
+		end
+		local current_audio = getmusicaudioplaying()
+		if current_audio ~= nil then
+			local duration = current_audio:getDuration("seconds")
+			if duration ~= nil and duration > 0 then
+				local seek = math.max(current_audio:tell("seconds") + seconds, 0)
+				if seek > duration then
+					seek = 0
+				end
+				current_audio:seek(seek, "seconds")
+			end
 		end
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
@@ -3698,6 +3773,8 @@ function love.keypressed(key)
 		elseif key == "3" then
 			imageviewer_grid = 32
 		end
+	elseif state == 32 and key == "l" then
+		assets_graphicsloaddialog()
 	end
 end
 
@@ -3718,6 +3795,10 @@ function love.keyreleased(key)
 		tilespicker_shortcut = false
 	elseif key == "return" then
 		returnpressed = false
+	elseif state == 27 and key == "escape" then
+		-- Put it here instead of love.keypressed,
+		-- otherwise the new window will interpret a hold as a press
+		exitdisplayoptions()
 	end
 end
 
@@ -3755,6 +3836,7 @@ function love.mousepressed(x, y, button)
 			end
 		elseif nodialog and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-16-2-4-8, (6*16), 8+4) then -- show all tiles
 			tilespicker = not tilespicker
+			editingroomname = false
 
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
@@ -3816,6 +3898,31 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
+	elseif state == 12 and (button == "wu" or button == "wd") and nodialog then
+		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
+		if button == flipscrollmore(macscrolling and "wd" or "wu") then
+			if not toolanyofthese then
+				selectedtool = 17
+			elseif selectedtool == 17 then
+				selectedtool = 16
+			elseif selectedtool == 16 then
+				selectedtool = 4
+			elseif selectedtool == 4 then
+				selectedtool = 1
+			end
+		elseif button == flipscrollmore(macscrolling and "wu" or "wd") then
+			if not toolanyofthese then
+				selectedtool = 4
+			elseif selectedtool == 4 then
+				selectedtool = 16
+			elseif selectedtool == 16 then
+				selectedtool = 17
+			elseif selectedtool == 17 then
+				selectedtool = 1
+			end
+		end
+		updatewindowicon()
+		toolscroll()
 	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.psmallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.psmallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
 		local screenxoffset = 0

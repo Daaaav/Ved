@@ -881,9 +881,13 @@ function swapflags(flag1, flag2)
 			for _,command in pairs(commands) do
 				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
-					if v:match(pattern .. flag1 .. "[%(,%)]") then
+					if v:match(pattern .. flag1 .. "([%(,%)].*)$") then
 						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
-					elseif v:match(pattern .. flag2 .. "[%(,%)]") then
+					elseif v:match(pattern .. flag1 .. "$") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+					elseif v:match(pattern .. flag2 .. "([%(,%)].*)$") then
+						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+					elseif v:match(pattern .. flag2 .. "$") then
 						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					end
 				end
@@ -905,6 +909,10 @@ function copyscriptline()
 end
 
 function scriptinstack(script)
+	if script == scriptname then
+		return true
+	end
+
 	for _,v in pairs(scripthistorystack) do
 		if script == v[1] then
 			return true
@@ -920,5 +928,28 @@ function renamescriptline(line, pattern, newname)
 		return line:gsub(pattern .. endings[1], "%1" .. newname)
 	elseif line:match(pattern .. endings[2]) then
 		return line:gsub(pattern .. endings[2], "%1" .. newname .. "%2")
+	end
+end
+
+function updateroomline(line, pattern, transform, direction)
+	local endings = {"$", "([%(,%)].*)$"}
+	local match = {false, false}
+
+	local _, x, _, y = line:match(pattern .. endings[1])
+	if x == nil or y == nil then
+		_, x, _, y = line:match(pattern .. endings[2])
+		match[2] = true
+	else
+		match[1] = true
+	end
+
+	x, y = transform(x, y, direction)
+
+	if x ~= nil and y ~= nil then
+		if match[1] then
+			return line:gsub(pattern .. endings[1], "%1" .. x .. "%3" .. y)
+		elseif match[2] then
+			return line:gsub(pattern .. endings[2], "%1" .. x .. "%3" .. y .. "%5")
+		end
 	end
 end

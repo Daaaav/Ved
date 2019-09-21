@@ -257,3 +257,34 @@ function create_export_dialog()
 		"mapexport"
 	)
 end
+
+function locatetrinketscrewmates()
+	map_trinkets, map_crewmates = {}, {}
+	-- For each room in crewmates, we'll also store the color of each crewmate.
+
+	-- Instantiation
+	for mry = 0, metadata.mapheight-1 do
+		map_trinkets[mry] = {}
+		map_crewmates[mry] = {}
+		for mrx = 0, metadata.mapwidth-1 do
+			map_trinkets[mry][mrx] = 0
+			map_crewmates[mry][mrx] = {0, {}}
+		end
+	end
+
+	for _,ent in pairs(entitydata) do
+		if ent.t == 9 or ent.t == 15 then
+			local rx, ry = math.floor(ent.x/40), math.floor(ent.y/30)
+			rx = math.max(rx, 0)
+			ry = math.max(ry, 0)
+			if rx < metadata.mapwidth and ry < metadata.mapheight then
+				if ent.t == 9 then
+					map_trinkets[ry][rx] = map_trinkets[ry][rx] + 1
+				elseif ent.t == 15 then
+					map_crewmates[ry][rx][1] = map_crewmates[ry][rx][1] + 1
+					table.insert(map_crewmates[ry][rx][2], ent.p1)
+				end
+			end
+		end
+	end
+end

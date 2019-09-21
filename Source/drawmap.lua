@@ -5,9 +5,18 @@ function drawmap()
 	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
 	love.graphics.draw(covered_full, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
-	love.graphics.setBlendMode("premultiplied")
+
+	local startx, starty
+	if entitydata[count.startpoint] ~= nil then
+		startx = math.floor(entitydata[count.startpoint].x/40)
+		starty = math.floor(entitydata[count.startpoint].y/30)
+		startx = math.max(startx, 0)
+		starty = math.max(starty, 0)
+	end
+
 	for mry = 0, metadata.mapheight-1 do
 		for mrx = 0, metadata.mapwidth-1 do
+			love.graphics.setScissor(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 			if rooms_map[mry][mrx].map ~= nil then
 				-- First draw a black background
 				love.graphics.setColor(0,0,0,255)
@@ -16,19 +25,79 @@ function drawmap()
 
 				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, mapscale*2)
 			end
+
+			if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
+				love.graphics.setColor(0,0,0,128)
+				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+				love.graphics.setColor(255,255,255,255)
+			end
+
+			-- Draw one thing if there is one, draw two if there is two,
+			-- draw three if there is three.
+			-- Else, just draw the number instead.
+			if selectedtool == 4 and map_trinkets[mry][mrx] > 0 then
+				if map_trinkets[mry][mrx] == 1 then
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 16) / 2, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+				elseif map_trinkets[mry][mrx] == 2 then
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 2*16) / 3, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 2*16) / 3 + 16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+				elseif map_trinkets[mry][mrx] == 3 then
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 3*16) / 4, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 3*16) / 4 + 16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 3 * (mapscale*640 - 3*16) / 4 + 2*16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+				else
+					love.graphics.printf(map_trinkets[mry][mrx], mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 2, mapscale*640, "center")
+				end
+			elseif selectedtool == 16 and map_crewmates[mry][mrx][1] > 0 then
+				if map_crewmates[mry][mrx][1] == 1 then
+					setrescuablecolor(map_crewmates[mry][mrx][2][1])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 12) / 2 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21) / 2 - 2, true)
+				elseif map_crewmates[mry][mrx][1] == 2 then
+					setrescuablecolor(map_crewmates[mry][mrx][2][1])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 2*12) / 3 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+					setrescuablecolor(map_crewmates[mry][mrx][2][2])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 2*12) / 3 + 12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+				elseif map_crewmates[mry][mrx][1] == 3 then
+					setrescuablecolor(map_crewmates[mry][mrx][2][1])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 3*12) / 4 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+					setrescuablecolor(map_crewmates[mry][mrx][2][2])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 3*12) / 4 + 12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+					setrescuablecolor(map_crewmates[mry][mrx][2][3])
+					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 3 * (mapscale*640 - 3*12) / 4 + 2*12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+				else
+					love.graphics.printf(map_crewmates[mry][mrx][1], mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 2, mapscale*640, "center")
+				end
+			elseif selectedtool == 17 and mrx == startx and mry == starty then
+				love.graphics.setColor(132, 181, 255)
+				drawentitysprite(3*entitydata[count.startpoint].p1, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 12) / 2 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21) / 2 - 2, true)
+			end
 		end
 	end
 	love.graphics.setBlendMode("alpha")
+	love.graphics.setScissor()
 
 	-- We should be able to hover over rooms
 	hoverx = nil
 	hovery = nil
 	hovername = nil
 
+	-- Just so if we click on a tool in smallerscreen mode,
+	-- we won't click on the room behind it
+	-- (and also we won't highlight the room behind it either if we're not clicking)
+	local mouseontools = false
+	if keyboard_eitherIsDown(ctrl) then
+		for t = 1, 4 do
+			if mouseon(16, (16+(48*(t-1))), 32, 32) then
+				mouseontools = true
+				break
+			end
+		end
+	end
+
 	if nodialog then
 		for mry = 0, metadata.mapheight-1 do
 			for mrx = 0, metadata.mapwidth-1 do
-				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) then
+				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) and not mouseontools then
 					love.graphics.setColor(255,255,255,64)
 					love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 					love.graphics.setColor(255,255,255,255)
@@ -141,10 +210,10 @@ function drawmap()
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
 	rbutton({L.SAVEMAP, "S"}, 1, nil, true)
-	rbutton(L.COPYROOMS, 3, nil, true)
-	rbutton(L.SWAPROOMS, 4, nil, true)
+	rbutton(L.COPYROOMS, 5, nil, true)
+	rbutton(L.SWAPROOMS, 6, nil, true)
 
-	local strip_ypos = love.graphics.getHeight()-144
+	local strip_ypos = love.graphics.getHeight()-192
 
 	if #undobuffer >= 1 then
 		hoverdraw(undobtn, love.graphics.getWidth()-120, strip_ypos, 16, 16, 1)
@@ -172,6 +241,16 @@ function drawmap()
 	showhotkey("cC", love.graphics.getWidth()-120+80+6, strip_ypos+8, ALIGN.CENTER)
 	showhotkey("cV", love.graphics.getWidth()-120+96+6, strip_ypos-4, ALIGN.CENTER)
 
+	love.graphics.printf(L.SHIFTROOMS, love.graphics.getWidth()-120, love.graphics.getHeight()-120+4, 8*10, "center")
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10)
+	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10)
+	love.graphics.print(arrow_left, love.graphics.getWidth()-120+8*10+1, love.graphics.getHeight()-120+4+3)
+	love.graphics.print(arrow_right, love.graphics.getWidth()-120+8*13+1, love.graphics.getHeight()-120+4+3)
+	love.graphics.print(arrow_up, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120-4+3)
+	love.graphics.print(arrow_down, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120+4+8+3)
+
 	-- The buttons are clickable
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then
@@ -180,12 +259,12 @@ function drawmap()
 		elseif onrbutton(1, nil, true) then
 			-- Save map
 			create_export_dialog()
-		elseif onrbutton(3, nil, true) then
+		elseif onrbutton(5, nil, true) then
 			-- Copy rooms
 			selectingrooms = 1
 			selected1x = -1; selected1y = -1
 			selected2x = -1; selected2y = -1
-		elseif onrbutton(4, nil, true) then
+		elseif onrbutton(6, nil, true) then
 			-- Swap rooms
 			selectingrooms = 2
 			selected1x = -1; selected1y = -1
@@ -200,8 +279,85 @@ function drawmap()
 			copyroom()
 		elseif mouseon(love.graphics.getWidth()-120+98, strip_ypos, 16, 16) then
 			pasteroom()
+		elseif mouseon(love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10) then
+			shiftrooms(SHIFT.LEFT, true)
+		elseif mouseon(love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10) then
+			shiftrooms(SHIFT.RIGHT, true)
+		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10) then
+			shiftrooms(SHIFT.UP, true)
+		elseif mouseon(love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10) then
+			shiftrooms(SHIFT.DOWN, true)
 		end
+	end
 
+	local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
+
+	local pluraltoolnames = table.copy(toolnames)
+	pluraltoolnames[4] = L.TRINKETS
+	pluraltoolnames[16] = L.CREWMATES
+	if not s.psmallerscreen or keyboard_eitherIsDown(ctrl) then
+		for t = 1, 4 do
+			local actual_t
+			if t == 1 then
+				actual_t = 1
+			elseif t == 2 then
+				actual_t = 4
+			elseif t == 3 then
+				actual_t = 16
+			elseif t == 4 then
+				actual_t = 17
+			end
+			love.graphics.setColor(255,255,255,255)
+
+			if not nodialog or (not mouseon(16, (16+(48*(t-1))), 32, 32) and ((t == 1 and not toolanyofthese) or selectedtool ~= actual_t)) then
+				love.graphics.setColor(255,255,255,128)
+			end
+			if nodialog and t == 1 and not toolanyofthese then
+				love.graphics.setColor(255,255,255,255)
+			end
+
+			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1))), 32, 32) then
+				selectedtool = actual_t
+				updatewindowicon()
+				toolscroll()
+			end
+			if nodialog and not mousepressed and love.mouse.isDown("r") and mouseon(16, (16+(48*(t-1))), 32, 32) and t == 4 then
+				gotostartpointroom()
+			end
+
+			if (t ~= 1 and selectedtool == actual_t) or (t == 1 and not toolanyofthese) then
+				love.graphics.draw(selectedtoolborder,  16, (16+(48*(t-1))))
+			else
+				love.graphics.draw(unselectedtoolborder,  16, (16+(48*(t-1))))
+			end
+			if t ~= 1 then
+				local cx, cy = 16+2, (16+2+(48*(t-1)))
+				love.graphics.draw(toolimg[actual_t], cx, cy)
+				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) then
+					love.graphics.setColor(128,128,128,192)
+					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(pluraltoolnames[actual_t]), 8)
+					love.graphics.setColor(255,255,255,255)
+					love.graphics.print(pluraltoolnames[actual_t], love.mouse.getX()+16, love.mouse.getY()-8)
+				end
+			end
+		end
+	end
+
+	-- Smaller screen? Display a "CTRL" and the current tool, just like the main editor
+	if s.psmallerscreen and not keyboard_eitherIsDown(ctrl) then
+		love.graphics.setColor(0, 0, 0, 192)
+		love.graphics.rectangle("fill", 0, 0, 32, love.graphics.getHeight())
+		love.graphics.setColor(255,255,255,255)
+		tinyprint(L.TINY_CTRL, 0, 0)
+
+		love.graphics.draw(selectedtoolborder, 0, love.graphics.getHeight()-32)
+		if toolanyofthese then
+			love.graphics.draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
+		end
+	end
+
+	-- Put this here, otherwise we get tripped up when clicking on the tools
+	if love.mouse.isDown("l") and nodialog then
 		mousepressed = true
 	end
 end
