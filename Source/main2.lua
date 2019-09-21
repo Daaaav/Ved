@@ -2909,7 +2909,7 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("rctrl") then
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("r" .. ctrl) then
 			tilespicker_shortcut = true
 		end
 
@@ -3137,7 +3137,7 @@ function love.keypressed(key)
 		end
 		editingroomtext = 0
 		stopinput()
-	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("lctrl") then
+	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("l" .. ctrl) then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
 
@@ -3157,7 +3157,7 @@ function love.keypressed(key)
 		selectedtool = 1
 
 		mousepressed = false
-	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("lctrl") then
+	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("l" .. ctrl) then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
 			cons("==== " .. k .. " ====")
