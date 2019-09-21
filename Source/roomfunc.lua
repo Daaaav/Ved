@@ -324,6 +324,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			)
 		end
 	elseif v.t == 11 or v.t == 50 then
+		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
 		-- Gravity line or warp line. This is kind of a special story.
 		if v.t == 50 then
 			love.graphics.setColor(0,255,0,255)
@@ -338,7 +339,13 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sel_h = 1
 			if v.t == 11 then
 				-- Accurate gravity line pixels
-				love.graphics.rectangle("line", sel_x + .5, sel_y + 8.5, 16*sel_w - 1, sel_h)
+				if showhitbox then
+					-- Accurate hitbox
+					love.graphics.setColor(255,0,0,255)
+					love.graphics.rectangle("line", sel_x + .5, sel_y + 10.5, 16*sel_w - 1, sel_h)
+				else
+					love.graphics.rectangle("line", sel_x + .5, sel_y + 8.5, 16*sel_w - 1, sel_h)
+				end
 			else
 				love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
 			end
@@ -350,7 +357,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sel_h = v.p3/8
 			if v.t == 11 then
 				-- Accurate gravity line pixels
-				love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
+				if showhitbox then
+					-- Accurate hitbox
+					love.graphics.setColor(255,0,0,255)
+					love.graphics.rectangle("line", sel_x + 8.5, sel_y + .5, sel_w, 16*sel_h - 1)
+					love.graphics.rectangle("line", sel_x + 10.5, sel_y + .5, sel_w, 16*sel_h - 1)
+				else
+					love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
+				end
 			else
 				love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
 			end
