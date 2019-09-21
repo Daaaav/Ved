@@ -1414,7 +1414,6 @@ function love.draw()
 		else
 			love.graphics.print(musicplayerfile, 16, 14)
 		end
-		local file_metadata
 		file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
 		local musicnamex_offset
 		if musiceditor then
