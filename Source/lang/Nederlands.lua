@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-08-10 18:43:24 (CEST)
+--- Last converted: 2019-09-22 00:14:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -519,6 +519,16 @@ PLATVCHANGE_MSG = "Snelheid:",
 PLATVCHANGE_INVALID = "Je moet een getal invoeren.",
 RENAMESCRIPTREFERENCES = "Verwĳzingen hernoemen",
 PLATFORMSPEEDSLIDER = "Tempo",
+
+TRINKETS = "Trinkets",
+LISTALLTRINKETS = "List all trinkets",
+LISTOFALLTRINKETS = "List of all trinkets",
+NOTRINKETSINLEVEL = "There are no trinkets in this level.",
+CREWMATES = "Crewmates",
+LISTALLCREWMATES = "List all rescuables",
+LISTOFALLCREWMATES = "List of all rescuable crewmates",
+NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
+SHIFTROOMS = "Shift rooms",
 
 
 }
@@ -2634,10 +2644,10 @@ Ved is gemaakt door Dav999
 
 Andere code-bĳdragers: Info Teddy
 
-Sommige afbeeldingen en het lettertype zĳn gemaakt door Doormat
+Sommige afbeeldingen en het lettertype zĳn gemaakt door Hejmstel
 
-Russische vertaling: CreepiX, Cheeprick
-Esperanto vertaling: Doormat
+Russische vertaling: CreepiX, Cheep
+Esperanto vertaling: Hejmstel
 Duitse vertaling: r00ster
 Franse vertaling: RhenaudTheLukark
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-08-10 18:43:24 (CEST)
+--- Last converted: 2019-09-22 00:14:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -43,7 +43,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Esperantigo de Hejmstel (Format)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Esperantigo de Hejmstel", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
@@ -531,6 +531,16 @@ PLATVCHANGE_MSG = "Rapido:",
 PLATVCHANGE_INVALID = "Vi devas entajpi numeron.",
 RENAMESCRIPTREFERENCES = "Renomi referencojn",
 PLATFORMSPEEDSLIDER = "Rpd.:",
+
+TRINKETS = "Trinkets",
+LISTALLTRINKETS = "List all trinkets",
+LISTOFALLTRINKETS = "List of all trinkets",
+NOTRINKETSINLEVEL = "There are no trinkets in this level.",
+CREWMATES = "Crewmates",
+LISTALLCREWMATES = "List all rescuables",
+LISTOFALLCREWMATES = "List of all rescuable crewmates",
+NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
+SHIFTROOMS = "Shift rooms",
 
 
 }
@@ -2616,9 +2626,9 @@ Ved estas farita de Dav999
 
 Pluaj kod-kontribuantoj: Info Teddy
 
-Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel (Doormat)
+Some of the graphics and the font were made by Hejmstel
 
-Ruslingva traduko: CreepiX, Cheeprick
+Ruslingva traduko: CreepiX, Cheep
 Esperanta traduko: Hejmstel
 Germanlingva traduko: r00ster
 Franclingva traduko: RhenaudTheLukark

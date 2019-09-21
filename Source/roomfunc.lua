@@ -2428,7 +2428,7 @@ function shiftrooms(direction, updatescripts)
 		height = math.min(metadata.mapheight, 20)
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= metadata.mapwidth
-			local y_outofbounds = y < 0 or y >= metadata.mapwidth
+			local y_outofbounds = y < 0 or y >= metadata.mapheight
 			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
 			elseif not x_outofbounds and not y_outofbounds then
 				if direction == SHIFT.LEFT then

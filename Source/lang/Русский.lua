@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-08-10 18:43:23 (CEST)
+--- Last converted: 2019-09-22 00:14:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -507,6 +507,16 @@ PLATVCHANGE_MSG = "Скорость:",
 PLATVCHANGE_INVALID = "Необходимо ввести число",
 RENAMESCRIPTREFERENCES = "Переименовать ссылки",
 PLATFORMSPEEDSLIDER = "Скор.",
+
+TRINKETS = "Trinkets",
+LISTALLTRINKETS = "List all trinkets",
+LISTOFALLTRINKETS = "List of all trinkets",
+NOTRINKETSINLEVEL = "There are no trinkets in this level.",
+CREWMATES = "Crewmates",
+LISTALLCREWMATES = "List all rescuables",
+LISTOFALLCREWMATES = "List of all rescuable crewmates",
+NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
+SHIFTROOMS = "Shift rooms",
 
 
 }
@@ -2638,10 +2648,10 @@ cont = [[
 
 Другие программисты: Info Teddy
 
-Некоторая графика и шрифт: Doormat
+Некоторая графика и шрифт: Hejmstel
 
-Перевод на русский: CreepiX, Чиприк
-Перевод на эсперанто: Doormat
+Перевод на русский: CreepiX, Чип
+Перевод на эсперанто: Hejmstel
 Перевод на немецкий: r00ster
 Перевод на французский: RhenaudTheLukark
 

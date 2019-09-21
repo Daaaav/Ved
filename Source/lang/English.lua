@@ -506,6 +506,16 @@ PLATVCHANGE_INVALID = "You have to type in a number.",
 RENAMESCRIPTREFERENCES = "Rename references",
 PLATFORMSPEEDSLIDER = "Spd.:",
 
+TRINKETS = "Trinkets",
+LISTALLTRINKETS = "List all trinkets",
+LISTOFALLTRINKETS = "List of all trinkets",
+NOTRINKETSINLEVEL = "There are no trinkets in this level.",
+CREWMATES = "Crewmates",
+LISTALLCREWMATES = "List all rescuables",
+LISTOFALLCREWMATES = "List of all rescuable crewmates",
+NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
+SHIFTROOMS = "Shift rooms",
+
 
 }
 
