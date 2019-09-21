@@ -1769,7 +1769,7 @@ function drawmaineditor()
 
 			-- Shortcut text, but only for ZXCV
 			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 9 then
-				tinyprint((" ZXCVHB F"):sub(k,k), coorx-2+32+1, coory)
+				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then
