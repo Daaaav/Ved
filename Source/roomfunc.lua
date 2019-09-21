@@ -336,14 +336,24 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sel_y = y
 			sel_w = v.p3/8
 			sel_h = 1
-			love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
+			if v.t == 11 then
+				-- Accurate gravity line pixels
+				love.graphics.rectangle("line", sel_x + .5, sel_y + 8.5, 16*sel_w - 1, sel_h)
+			else
+				love.graphics.line(sel_x + 1, sel_y + 8, sel_x + 16*sel_w - 1, sel_y + 8)
+			end
 		else
 			-- Vertical
 			sel_x = x
 			sel_y = offsety+(v.p2)*16
 			sel_w = 1
 			sel_h = v.p3/8
-			love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
+			if v.t == 11 then
+				-- Accurate gravity line pixels
+				love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
+			else
+				love.graphics.line(sel_x + 8, sel_y + 1, sel_x + 8, sel_y + 16*sel_h - 1)
+			end
 		end
 		love.graphics.setColor(255,255,255,255)
 
