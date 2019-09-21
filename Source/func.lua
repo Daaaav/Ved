@@ -428,7 +428,6 @@ function loadstate(new, ...)
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
-		userprofile = os.getenv("USERPROFILE")
 		lsuccess = getlevelsfolder()
 		if lsuccess then
 			lerror = 0
