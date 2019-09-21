@@ -569,7 +569,7 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 	-- sel_* are used for the cyan selection rectangle - w and h are number of tiles,
 	-- x and y are used to specify alternative values for x and y (first two args)
 	-- which are thus in pixels!
-	if lockablemouseon(x, y, 16, 16) then
+	if lockablemouseon(x, y, 16, 16) and nodialog then
 		if sel_w ~= nil and sel_h ~= nil then
 			if sel_x == nil or sel_y == nil then
 				sel_x = x; sel_y = y
