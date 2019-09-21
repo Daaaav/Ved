@@ -2168,7 +2168,7 @@ function shiftrooms(direction, updatescripts)
 		x, y = tonumber(x), tonumber(y)
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= metadata.mapwidth
-			local y_outofbounds = y < 0 or y >= metadata.mapwidth
+			local y_outofbounds = y < 0 or y >= metadata.mapheight
 			if not x_outofbounds and not y_outofbounds then
 				if direction == SHIFT.LEFT then
 					x = x - 1
