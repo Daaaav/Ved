@@ -2081,7 +2081,10 @@ function love.update(dt)
 		local chanmessage = allmetadata_outchannel:pop()
 
 		if chanmessage ~= nil and chanmessage.refresh == levels_refresh then
-			files[chanmessage.dir][chanmessage.id].metadata = chanmessage
+			-- This file could have been (visually) removed by the debug function Shift+F3
+			if files[chanmessage.dir][chanmessage.id] ~= nil then
+				files[chanmessage.dir][chanmessage.id].metadata = chanmessage
+			end
 
 			-- Is this also the metadata for any recent file? TODO: Support subdirectories
 			for k,v in pairs(s.recentfiles) do
