@@ -1794,6 +1794,42 @@ msgctxt "L.PLATFORMSPEEDSLIDER"
 msgid "Spd.:"
 msgstr ""
 
+msgctxt "L.TRINKETS"
+msgid "Trinkets"
+msgstr ""
+
+msgctxt "L.LISTALLTRINKETS"
+msgid "List all trinkets"
+msgstr ""
+
+msgctxt "L.LISTOFALLTRINKETS"
+msgid "List of all trinkets"
+msgstr ""
+
+msgctxt "L.NOTRINKETSINLEVEL"
+msgid "There are no trinkets in this level."
+msgstr ""
+
+msgctxt "L.CREWMATES"
+msgid "Crewmates"
+msgstr ""
+
+msgctxt "L.LISTALLCREWMATES"
+msgid "List all rescuables"
+msgstr ""
+
+msgctxt "L.LISTOFALLCREWMATES"
+msgid "List of all rescuable crewmates"
+msgstr ""
+
+msgctxt "L.NOCREWMATESINLEVEL"
+msgid "There are no rescuable crewmates in this level."
+msgstr ""
+
+msgctxt "L.SHIFTROOMS"
+msgid "Shift rooms"
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."

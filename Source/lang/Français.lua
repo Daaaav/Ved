@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-08-10 18:43:24 (CEST)
+--- Last converted: 2019-09-22 00:14:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -18,10 +18,14 @@ function fontpng_ascii(c)
 		return "a"
 	elseif c == "é" or c == "è" or c == "ê" then
 		return "e"
-	elseif c == "ç" then
-		return "c"
 	elseif c == "É" or c == "Ê" then
 		return "E"
+	elseif c == "ç" then
+		return "c"
+	elseif c == "ô" then
+		return "o"
+	elseif c == "î" then
+		return "i"
 	elseif c == "ù" or c == "û" then
 		return "u"
 	end
@@ -517,6 +521,16 @@ PLATVCHANGE_MSG = "Vitesse:",
 PLATVCHANGE_INVALID = "Vous devez entrer un nombre.",
 RENAMESCRIPTREFERENCES = "Renommer les références",
 PLATFORMSPEEDSLIDER = "Vit.:",
+
+TRINKETS = "Trinkets",
+LISTALLTRINKETS = "List all trinkets",
+LISTOFALLTRINKETS = "List of all trinkets",
+NOTRINKETSINLEVEL = "There are no trinkets in this level.",
+CREWMATES = "Crewmates",
+LISTALLCREWMATES = "List all rescuables",
+LISTOFALLCREWMATES = "List of all rescuable crewmates",
+NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
+SHIFTROOMS = "Shift rooms",
 
 
 }
@@ -2613,10 +2627,10 @@ Ved a été créé par Dav999
 
 Autres contributeurs de code: Info Teddy
 
-Quelques graphismes et la police ont été créés par Doormat
+Quelques graphismes et la police ont été créés par Hejmstel
 
-Traduction en russe: CreepiX, Cheeprick
-Traduction en esperanto: Doormat
+Traduction en russe: CreepiX, Cheep
+Traduction en esperanto: Hejmstel
 Traduction en allemand: r00ster
 Traduction en français: RhenaudTheLukark
 
