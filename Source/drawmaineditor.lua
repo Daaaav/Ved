@@ -517,6 +517,7 @@ function drawmaineditor()
 			-- Trinket
 			if count.trinkets >= 20 then
 				dialog.create(L.MAXTRINKETS)
+				mousepressed = true
 			else
 				cons("Trinket: " .. atx .. " " .. aty)
 
@@ -922,6 +923,7 @@ function drawmaineditor()
 					end
 				else
 					dialog.create(L.WARPTOKENENT404)
+					mousepressed = true
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
@@ -953,11 +955,13 @@ function drawmaineditor()
 					nodialog = false
 				else
 					dialog.create(L.WARPTOKENENT404)
+					mousepressed = true
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
 			else
 				dialog.create(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)")
+				mousepressed = true
 			end
 
 			mousepressed = true
@@ -1009,6 +1013,7 @@ function drawmaineditor()
 			-- Rescuable crewmate				
 			if count.crewmates >= 20 then
 				dialog.create(L.MAXCREWMATES)
+				mousepressed = true
 			else
 				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
 
@@ -1103,6 +1108,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
+			mousepressed = true
 		end
 	--[[
 	elseif nodialog and love.mouse.isDown("r") and mouseon(64+64, 0, 639, 480) then
