@@ -909,6 +909,10 @@ function copyscriptline()
 end
 
 function scriptinstack(script)
+	if script == scriptname then
+		return true
+	end
+
 	for _,v in pairs(scripthistorystack) do
 		if script == v[1] then
 			return true
