@@ -21,7 +21,8 @@ function drawmaineditor()
 		end
 
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
-		if love.mouse.isDown("l") and not mousepressed and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
+		local entityalreadyhere = false
+		if love.mouse.isDown("l") and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
 			for k,v in pairs(entitydata) do
 				-- Exceptions related to whatever entity we're clicking on!
 				if selectedtool == 13 and selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
@@ -37,6 +38,7 @@ function drawmaineditor()
 					elseif selectedtool >= 4 and v.t == entitytooltoid[selectedtool] then
 						-- Yep, "You are already checked in"
 						mousepressed = true
+						entityalreadyhere = true
 					end
 				end
 			end
@@ -513,11 +515,10 @@ function drawmaineditor()
 			end
 
 			mousepressed = true
-		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 4 then
+		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
 			if count.trinkets >= 20 then
 				dialog.create(L.MAXTRINKETS)
-				mousepressed = true
 			else
 				cons("Trinket: " .. atx .. " " .. aty)
 
@@ -534,11 +535,8 @@ function drawmaineditor()
 				count.trinkets = count.trinkets + 1
 				count.entities = count.entities + 1
 				count.entity_ai = count.entity_ai + 1
-
-				if not love.keyboard.isDown("v") then
-					mousepressed = true
-				end
 			end
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 5 then
 			-- Checkpoint
 			cons("Checkpoint: " .. atx .. " " .. aty)
