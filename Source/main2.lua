@@ -53,14 +53,87 @@ function love.load()
 	hook("love_load_start")
 
 	ved_require("loadconfig")
-	ved_require("lang/English") -- just as a fallback. Doesn't work for the most part.
-	if s.lang ~= "English" and love.filesystem.exists("lang/" .. s.lang .. ".lua") then
-		ved_require("lang/" .. s.lang)
-	end
 
+	local loaded_filefunc
+	if love.system.getOS() == "OS X" then
+		-- Cmd
+		ctrl = "gui"
+		dirsep = "/"
+		macscrolling = true
+		wgetavailable = false
+		hook("love_load_mac")
+		loaded_filefunc = "linmac"
+		if not love.filesystem.exists("available_libs") then
+			love.filesystem.createDirectory("available_libs")
+		end
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac02.so") then
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
+		end
+	elseif love.system.getOS() == "Windows" then
+		-- Ctrl
+		ctrl = "ctrl"
+		dirsep = "\\"
+		macscrolling = false
+		wgetavailable = false
+		hook("love_load_win")
+		loaded_filefunc = "win"
+		--[[
+		-- Make sure our util works
+		if not love.filesystem.exists("available_utils") then
+			love.filesystem.createDirectory("available_utils")
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
+		end
+		]]
+	elseif love.system.getOS() == "Linux" then
+		-- Ctrl
+		ctrl = "ctrl"
+		dirsep = "/"
+		macscrolling = false
+		wgetavailable = true
+		hook("love_load_lin")
+		if not love.filesystem.exists("available_libs") then
+			love.filesystem.createDirectory("available_libs")
+		end
+		local vedlib_filefunc_available = false
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin02.so") then
+			vedlib_filefunc_available = true
+		else
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
+			if os.execute("gcc -shared -fPIC -o "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so "
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
+			) == 0 then
+				vedlib_filefunc_available = true
+			end
+		end
+		if vedlib_filefunc_available then
+			loaded_filefunc = "linmac"
+		else
+			loaded_filefunc = "lin_fallback"
+		end
+	else
+		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
+		ctrl = "ctrl"
+		dirsep = "/"
+		macscrolling = false
+		wgetavailable = false
+		hook("love_load_luv")
+		loaded_filefunc = "luv"
+	end
+	ved_require("filefunc_" .. loaded_filefunc)
+	setvvvvvvpaths()
+
+	hijack_print = false
+
+	ved_require("imagefont")
+
+	loadfonts()
+	loadlanguage()
 	swaptinynumbersglyphs()
 
-	ved_require("devstrings")
 	ved_require("const")
 	ved_require("func")
 	ved_require("roomfunc")
@@ -81,9 +154,13 @@ function love.load()
 	ved_require("drawmap")
 	ved_require("drawhelp")
 	ved_require("slider")
-	ved_require("imagefont")
 	ved_require("mapfunc")
 	ved_require("music")
+
+	-- Really, this is temporary. TODO
+	if hijack_print or love_version_meets(11) then
+		temp_print_override()
+	end
 
 	dodisplaysettings()
 
@@ -134,11 +211,6 @@ function love.load()
 	nodialog = true
 
 	showtabrect = false
-
-	arrow_up = "↑"
-	arrow_down = "↓"
-	arrow_left = "←"
-	arrow_right = "→"
 
 	vvvvvv_textboxes = {}
 
@@ -308,81 +380,13 @@ function love.load()
 	love.keyboard.setKeyRepeat(true)
 	thingk()
 
-	local loaded_filefunc
-	if love.system.getOS() == "OS X" then
-		-- Cmd
-		ctrl = "gui"
-		dirsep = "/"
-		macscrolling = true
-		wgetavailable = false
-		hook("love_load_mac")
-		loaded_filefunc = "linmac"
-		if not love.filesystem.exists("available_libs") then
-			love.filesystem.createDirectory("available_libs")
-		end
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac02.so") then
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
-		end
-	elseif love.system.getOS() == "Windows" then
-		-- Ctrl
-		ctrl = "ctrl"
-		dirsep = "\\"
-		macscrolling = false
-		wgetavailable = false
-		hook("love_load_win")
-		loaded_filefunc = "win"
-		--[[
-		-- Make sure our util works
-		if not love.filesystem.exists("available_utils") then
-			love.filesystem.createDirectory("available_utils")
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
-		end
-		]]
-	elseif love.system.getOS() == "Linux" then
-		-- Ctrl
-		ctrl = "ctrl"
-		dirsep = "/"
-		macscrolling = false
-		wgetavailable = true
-		hook("love_load_lin")
-		if not love.filesystem.exists("available_libs") then
-			love.filesystem.createDirectory("available_libs")
-		end
-		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin02.so") then
-			vedlib_filefunc_available = true
-		else
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
-			if os.execute("gcc -shared -fPIC -o "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
-			) == 0 then
-				vedlib_filefunc_available = true
-			end
-		end
-		if vedlib_filefunc_available then
-			loaded_filefunc = "linmac"
-		else
-			loaded_filefunc = "lin_fallback"
-		end
-	else
-		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
-		ctrl = "ctrl"
-		dirsep = "/"
-		macscrolling = false
-		wgetavailable = false
-		hook("love_load_luv")
-		loaded_filefunc = "luv"
+	if loaded_filefunc == "luv" then
 		dialog.create(
 			langkeys(L.OSNOTRECOGNIZED,
 				{anythingbutnil(love.system.getOS()), love.filesystem.getSaveDirectory()}
 			)
 		)
 	end
-	ved_require("filefunc_" .. loaded_filefunc)
 
 	secondlevel = false
 	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
@@ -390,17 +394,6 @@ function love.load()
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
 	loadtilesets()
-
-	hijack_print = false
-
-	-- Are we using font.png?
-	if love_version_meets(10) then
-		handlefontpng()
-	end
-
-	if hijack_print or love_version_meets(11) then
-		temp_print_override()
-	end
 
 	-- Music! Note that we're not yet loading the music in memory here.
 	initvvvvvvmusic()
@@ -3371,9 +3364,7 @@ function love.keypressed(key)
 	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
 		-- Reload tilesets
 		loadtilesets()
-		if love_version_meets(10) then
-			handlefontpng()
-		end
+		loadfonts()
 		tile_batch_texture_needs_update = true
 		map_init()
 		temporaryroomname = L.TILESETSRELOADED

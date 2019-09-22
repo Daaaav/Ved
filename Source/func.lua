@@ -428,7 +428,7 @@ function loadstate(new, ...)
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
-		lsuccess = getlevelsfolder()
+		lsuccess = directory_exists(vvvvvvfolder, "levels")
 		if lsuccess then
 			lerror = 0
 		else
@@ -752,7 +752,7 @@ function loadlevelsfolder()
 	if allmetadata_inchannel ~= nil then
 		allmetadata_inchannel:clear()
 	end
-	lsuccess = getlevelsfolder()
+	lsuccess = directory_exists(vvvvvvfolder, "levels")
 	if lsuccess then
 		files = listlevelfiles(levelsfolder)
 	else
@@ -962,19 +962,6 @@ function loadwarpbgs()
 			end
 		end
 	end
-end
-
-function loadfontpng()
-	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. "font.png")
-
-	if not readsuccess then
-		return false
-	end
-
-	-- The following function can be found in imagefont.lua
-	convertfontpng(love.image.newImageData(love.filesystem.newFileData(contents, "font.png", "file")))
-
-	return true
 end
 
 function mousein(x1, y1, x2, y2)
@@ -3318,7 +3305,9 @@ end
 function exitvedoptions()
 	saveconfig()
 	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
-		handlefontpng()
+		loadfonts()
+		unloadlanguage()
+		loadlanguage()
 
 		-- Re-execute this bit from main2.lua
 		-- But account for if we're not hijacking
@@ -3394,85 +3383,6 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 			love.graphics.setColor(255,255,255)
 		end
 		love.graphics.setFont(font8)
-	end
-end
-
-function handlefontpng()
-	if s.usefontpng and loadfontpng() then
-		handleasciireplace()
-
-		hijack_print = true
-		fontpng_works = true
-
-		arrow_up = "^"
-		arrow_down = "V"
-		arrow_left = "<"
-		arrow_right = ">"
-	else
-		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
-		font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
-
-		hijack_print = false
-		fontpng_works = false
-
-		arrow_up = "↑"
-		arrow_down = "↓"
-		arrow_left = "←"
-		arrow_right = "→"
-	end
-
-	-- Update the font to the new object
-	love.graphics.setFont(font8)
-end
-
-function handleasciireplace()
-	--[[
-		If we're using font.png, and the language file defines a function to replace
-		certain non-ASCII characters with ASCII, then apply that to the entire file.
-		Should work fine as anything not translated will be ASCII and shouldn't be replaced.
-		And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
-		For example, a language may use a small amount of accented characters,
-		but if only ASCII is allowed, would prefer to leave the accent off rather
-		than have that character not be displayed at all.
-		And yes, this means a language file will have to be loaded 3 times (English first)
-	]]
-
-	if fontpng_ascii == nil then
-		fontpng_ascii = function(c) end
-	end
-
-	local any_unsupported = false
-	local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
-	if readlua ~= nil then
-		cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
-		local newlua, replacements = readlua:gsub(
-			"([\194-\244][\128-\191]*)",
-			function(c)
-				if c == "¤" or c == "§" or c == "°" then
-					return
-				end
-
-				local newc = fontpng_ascii(c)
-
-				if newc == nil then
-					any_unsupported = true
-					print(c)
-				end
-				return newc
-			end
-		)
-		if not any_unsupported then
-			print("(All characters apparently supported!)")
-		end
-		cons("Replacements: " .. replacements)
-
-		assert(loadstring(newlua))()
-
-		-- But also load devstrings again, otherwise we might crash during development!
-		-- Don't care as much about the fontpng replacements here...
-		-- Override `require` not wanting to load this file another time >:o
-		package.loaded.devstrings = false
-		ved_require("devstrings")
 	end
 end
 

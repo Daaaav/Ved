@@ -1,10 +1,3 @@
---[[ bitmap font
-font_scale1 = love.graphics.newImageFont("font_scale1.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~§") -- {|}~ öäÁå
-font_scale2 = love.graphics.newImageFont("font_scale2.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~§") -- {|}~ öäÁå
-love.graphics.setFont(font_scale1)
-print("BITMAP")
-]]
-
 require("enablescreensaver")
 require("corefunc")
 
@@ -43,16 +36,11 @@ if love.graphics.setDefaultFilter ~= nil then
 	love.graphics.setDefaultFilter("linear", "nearest")
 end
 
--- TTF
-font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
-font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
-
 -- Since the other fonts are done here anyways
 function loadtinynumbers()
 	tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
 end
 loadtinynumbers()
-tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", love_version_meets(10) and 1 or nil)
 tinynumbers_all = love.graphics.newImageFont("fonts/tinynumbersfont.png", "0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h", love_version_meets(10) and 1 or nil)
 tinynumbers_cmd = love.graphics.newImageFont("fonts/tinynumbersfont_cmd.png", "c", love_version_meets(10) and 1 or nil)
 tinynumbers_strg = love.graphics.newImageFont("fonts/tinynumbersfont_strg.png", "c", love_version_meets(10) and 1 or nil)
@@ -77,8 +65,6 @@ function swaptinynumbersglyphs()
 		tinynumbers = tinynumbers_all
 	end
 end
-
-love.graphics.setFont(font8)
 
 -- Avoiding chicken-and-egg problems here as well
 function dodisplaysettings(reload)
@@ -146,13 +132,19 @@ print(_VERSION)
 
 print("begint: " .. begint)
 
-love.graphics.print("Loading...", 408, 236)
-
+love.graphics.clear()
+local loadingimg = love.graphics.newImage("images/loading.png")
+love.graphics.draw(loadingimg,
+	(love.graphics.getWidth()-loadingimg:getWidth())/2,
+	(love.graphics.getHeight()-loadingimg:getHeight())/2
+)
 love.graphics.present()
 
 if love.window == nil then
+	loadfonts()
 	require("incompatmain8")
 elseif not love_version_meets(9,1) then
+	loadfonts()
 	require("incompatmain9")
 else
 	-- How recent is our love2d version?

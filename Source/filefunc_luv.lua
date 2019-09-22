@@ -77,9 +77,9 @@ function filepath_from_dialog(folder, name)
 	return folder .. "/" .. name, filename
 end
 
-function getlevelsfolder()
-	-- Returns success. Sets the path variables to what they _should_ be, even if
-	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"
+function setvvvvvvpaths()
+	-- Sets the path variables to what they _should_ be, even if they don't exist.
+	-- That way we can say "check {levelsfolder} exists and try again"
 
 	-- We can't really set a custom directory if we don't know what commands to use :/
 	vvvvvvfolder_expected = nil
@@ -95,7 +95,6 @@ function getlevelsfolder()
 	levelsfolder = "levels"
 	graphicsfolder = "graphics"
 	soundsfolder = "sounds"
-	return true
 end
 
 function directory_exists(where, what)

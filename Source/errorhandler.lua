@@ -51,7 +51,7 @@ function love.errhand(msg)
 		love.graphics.origin()
 		love.graphics.clear(0,0,0)
 		love.graphics.setColor(255,0,0)
-		love.graphics.printf("Ved's crash screen has crashed.\n\n" .. msg .. "\n\n" .. err, 10, 10, love.graphics.getWidth()-20, "left")
+		love.graphics.printf("Ved's crash screen has crashed! Please tell Dav999 about this problem.\n\nOriginal error:\n" .. msg .. "\n\nError in crash screen:\n" .. err, 10, 10, love.graphics.getWidth()-20, "left")
 		love.graphics.present()
 		while true do
 			love.event.pump()
@@ -71,6 +71,10 @@ end
 
 function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
+
+	if font8 == nil or font16 == nil then
+		loadfonts()
+	end
 
 	msg = tostring(msg)
 
@@ -206,10 +210,6 @@ function ved_showerror(msg)
 	end
 
 	love.graphics.reset()
-	--local font = love.graphics.setNewFont(math.floor(love.window.toPixels(14)))
-
-	local font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
-	local font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
@@ -364,6 +364,10 @@ end
 
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
+
+	if font8 == nil or font16 == nil then
+		loadfonts()
+	end
 
 	local lg_clear
 	if love.graphics.clearOR ~= nil then

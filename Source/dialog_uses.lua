@@ -100,7 +100,7 @@ end
 
 function dialog.form.language_make()
 	local bottomleft_text = L.TRANSLATIONCREDIT
-	if s.plang == "English" then
+	if s.lang == "English" then
 		-- Yeah, hardcoded text!
 		bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
 	end
@@ -855,32 +855,16 @@ end
 
 function dialog.callback.language(button, fields)
 	if button == DB.OK then
-		s.lang = fields.language
 		s.new_dateformat = fields.dateformat
 		s.new_timeformat = fields.timeformat
 
+		unloadlanguage()
+		s.lang = fields.language
+		loadlanguage()
+
 		saveconfig()
 
-		package.loaded["lang/English"] = false
-		package.loaded["lang/" .. s.plang] = false
-		-- Reload const.lua as well, since that is language-dependent too
-		package.loaded.const = false
-
-		s.plang = s.lang
-
-		ved_require("lang/English")
-		if s.lang ~= "English" and love.filesystem.exists("lang/" .. s.lang .. ".lua") then
-			ved_require("lang/" .. s.lang)
-		end
-
 		swaptinynumbersglyphs()
-		if s.usefontpng then
-			handleasciireplace()
-		end
-
-		package.loaded.devstrings = false
-		ved_require("devstrings")
-		ved_require("const")
 	end
 end
 

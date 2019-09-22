@@ -113,3 +113,119 @@ function ved_ver_human()
 	end
 	return ver
 end
+
+function loadfonts()
+	-- load font8 and font16, either TTF or font.png, depending on setting for font.png
+	-- Set up alignment offset values depending on font and LÖVE version
+
+	fontpng_works = false
+	local fontpngcontents
+
+	if s ~= nil and s.usefontpng and love_version_meets(10) then
+		fontpng_works, fontpngcontents = readfile(graphicsfolder .. dirsep .. "font.png")
+	end
+
+	if fontpng_works then
+		-- Use font.png
+
+		-- The following function can be found in imagefont.lua
+		convertfontpng(
+			love.image.newImageData(love.filesystem.newFileData(fontpngcontents, "font.png", "file"))
+		)
+
+		hijack_print = true
+
+		arrow_up = "^"
+		arrow_down = "V"
+		arrow_left = "<"
+		arrow_right = ">"
+	else
+		-- Use the TTF
+		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+		font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
+
+		hijack_print = false
+
+		arrow_up = "↑"
+		arrow_down = "↓"
+		arrow_left = "←"
+		arrow_right = "→"
+	end
+
+	-- Update the font to the new object
+	love.graphics.setFont(font8)
+end
+
+function unloadlanguage()
+	-- Prepare for language change
+	package.loaded["lang/" .. s.lang] = false
+	package.loaded.devstrings = false
+end
+
+function loadlanguage()
+	-- Load current language files depending on setting, and devstrings
+	-- Possibly reload files that depend on language (const)
+	-- Apply non-ASCII replacements if font.png is active
+	if love.filesystem.exists("lang/" .. s.lang .. ".lua") then
+		ved_require("lang/" .. s.lang)
+	else
+		ved_require("lang/English")
+	end
+
+	if fontpng_works then
+		--[[
+			If we're using font.png, and the language file defines a function to replace
+			certain non-ASCII characters with ASCII, then apply that to the entire file.
+			Should work fine as anything not translated will be ASCII and shouldn't be replaced.
+			And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
+			For example, a language may use a small amount of accented characters,
+			but if only ASCII is allowed, would prefer to leave the accent off rather
+			than have that character not be displayed at all.
+			And yes, this means a language file will have to be loaded 3 times (English first)
+		]]
+
+		if fontpng_ascii == nil then
+			fontpng_ascii = function(c) end
+		end
+
+		local any_unsupported = false
+		local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
+		if readlua ~= nil then
+			cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
+			local newlua, replacements = readlua:gsub(
+				"([\194-\244][\128-\191]*)",
+				function(c)
+					if c == "¤" or c == "§" or c == "°" then
+						return
+					end
+
+					local newc = fontpng_ascii(c)
+
+					if newc == nil then
+						any_unsupported = true
+						print(c)
+					end
+					return newc
+				end
+			)
+			if not any_unsupported then
+				print("(All characters apparently supported!)")
+			end
+			cons("Replacements: " .. replacements)
+
+			assert(loadstring(newlua))()
+		end
+	end
+
+	ved_require("devstrings")
+
+	if package.loaded.const then
+		package.loaded.const = false
+		ved_require("const")
+	end
+end
+
+function loadtinynumbersfont()
+	-- Load the tinynumbers font, accounting for the current language
+	-- TODO
+end
