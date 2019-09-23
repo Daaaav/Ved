@@ -181,7 +181,7 @@ function loadlanguage()
 			For example, a language may use a small amount of accented characters,
 			but if only ASCII is allowed, would prefer to leave the accent off rather
 			than have that character not be displayed at all.
-			And yes, this means a language file will have to be loaded 3 times (English first)
+			And yes, this means a language file will have to be loaded 2 times
 		]]
 
 		if fontpng_ascii == nil then
@@ -227,5 +227,27 @@ end
 
 function loadtinynumbersfont()
 	-- Load the tinynumbers font, accounting for the current language
-	-- TODO
+	tinynumbers_all = love.graphics.newImageFont(
+		"fonts/tinynumbersfont.png",
+		"0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h",
+		love_version_meets(10) and 1 or nil
+	)
+	if not love_version_meets(10) then
+		tinynumbers = tinynumbers_all
+	else
+		tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", 1)
+
+		-- First has highest priority
+		local fallbacks = {}
+		if love.system.getOS() == "OS X" then
+			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_mac.png", "c", 1))
+		end
+		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
+			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_de.png", "c", 1))
+		elseif s.lang == "Français" then
+			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_fr.png", "b", 1))
+		end
+		table.insert(fallbacks, tinynumbers_all)
+		tinynumbers:setFallbacks(unpack(fallbacks))
+	end
 end

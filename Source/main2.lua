@@ -132,7 +132,7 @@ function love.load()
 
 	loadfonts()
 	loadlanguage()
-	swaptinynumbersglyphs()
+	loadtinynumbersfont()
 
 	ved_require("const")
 	ved_require("func")

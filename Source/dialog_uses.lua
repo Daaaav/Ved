@@ -864,7 +864,7 @@ function dialog.callback.language(button, fields)
 
 		saveconfig()
 
-		swaptinynumbersglyphs()
+		loadtinynumbersfont()
 	end
 end
 
