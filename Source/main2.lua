@@ -3669,7 +3669,18 @@ function love.keypressed(key)
 			end
 			helparticlecontent[helpeditingline] = input
 		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
-			table.remove(helparticlecontent, helpeditingline)
+			if #helparticlecontent > 1 then
+				table.remove(helparticlecontent, helpeditingline)
+			else
+				helparticlecontent[helpeditingline] = ""
+			end
+			if keyboard_eitherIsDown("shift") then
+				helpeditingline = math.max(helpeditingline - 1, 1)
+			else
+				if helpeditingline > #helparticlecontent and helpeditingline > 1 then
+					helpeditingline = helpeditingline - 1
+				end
+			end
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			input_r = ""
 		end
