@@ -382,14 +382,6 @@ function love.load()
 	scrollup = love.graphics.newImage("images/scrollup.png")
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
 
-	sideimg = love.graphics.newImage("images/sides.png");      smallsideimg = love.graphics.newImage("images/smallsides.png")
-
-	sideline = {};                                             smallsideline = {}
-	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
-	sideline[2] = love.graphics.newQuad(8, 0, 8, 8, 32, 8);    smallsideline[2] = love.graphics.newQuad(16, 0, 16, 16, 64, 16)
-	sideline[3] = love.graphics.newQuad(16, 0, 8, 8, 32, 8);   smallsideline[3] = love.graphics.newQuad(32, 0, 16, 16, 64, 16)
-	sideline[4] = love.graphics.newQuad(24, 0, 8, 8, 32, 8);   smallsideline[4] = love.graphics.newQuad(48, 0, 16, 16, 64, 16)
-
 	platformimg = love.graphics.newImage("images/platform.png")
 	platformpart =
 		{

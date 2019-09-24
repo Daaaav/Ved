@@ -1283,13 +1283,13 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[1], screenoffset+(t*16), 0, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, .5, 15, 1)
 
 					if roomupW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[1], screenoffset+(t*16), 0, 0, 1)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, 0, 15, .5)
 				end
 
 				-- Spikes
@@ -1300,7 +1300,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[1], screenoffset+(t*16), 0, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, .5, 15, 1)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1316,13 +1316,13 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+.5, (t-1)*16+.5, 1, 15)
 
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[2], screenoffset, (t-1)*16, 0, 1)
+					love.graphics.rectangle("line", screenoffset, (t-1)*16+.5, .5, 15)
 				end
 
 				-- Spikes
@@ -1333,7 +1333,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+.5, (t-1)*16+.5, 1, 15)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1347,14 +1347,14 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[3], screenoffset+(39*16), t*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(39*16)+16-1-.5, t*16+.5, 1, 15)
 
 					if roomrightW then
 						love.graphics.setColor(255, 255, 255)
 					end
 
 				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[3], screenoffset+(39*16), t*16, 0, 1)
+					love.graphics.rectangle("line", screenoffset+(39*16)+16-1+.5, t*16+.5, .5, 15)
 				end
 
 				-- Spikes
@@ -1365,7 +1365,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[3], screenoffset+(39*16), t*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(39*16)+16-1-.5, t*16+.5, 1, 15)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1379,14 +1379,14 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[4], screenoffset+(t*16), 29*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, 29*16+16-1-.5, 15, 1)
 
 					if roomdownW then
 						love.graphics.setColor(255, 255, 255)
 					end
 
 				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[4], screenoffset+(t*16), 29*16, 0, 1)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, 29*16+16-1+.5, 15, .5)
 				end
 
 				-- Spikes
@@ -1397,7 +1397,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[4], screenoffset+(t*16), 29*16, 0, 2)
+					love.graphics.rectangle("line", screenoffset+(t*16)+.5, 29*16+16-1-.5, 15, 1)
 
 					love.graphics.setColor(255, 255, 255)
 				end
