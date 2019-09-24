@@ -3668,7 +3668,7 @@ function love.keypressed(key)
 				input = input .. "¤"
 			end
 			helparticlecontent[helpeditingline] = input
-		elseif key == "d" and keyboard_eitherIsDown("ctrl") then
+		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
 			table.remove(helparticlecontent, helpeditingline)
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			input_r = ""
