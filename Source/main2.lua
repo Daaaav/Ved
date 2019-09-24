@@ -197,6 +197,33 @@ function love.load()
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
 
+	focusregainedtimer = 0
+	skipnextkeys = {}
+	skipnextmouses = {}
+
+	love.keyboard.isDownOR = love.keyboard.isDown
+
+	love.keyboard.isDown = function(...)
+		for _,key in pairs({...}) do
+			if table.contains(skipnextkeys, key) then
+			elseif love.keyboard.isDownOR(key) then
+				return true
+			end
+		end
+		return false
+	end
+
+	love.mouse.isDownOR = love.mouse.isDown
+
+	love.mouse.isDown = function(...)
+		for _,button in pairs({...}) do
+			if table.contains(skipnextmouses, button) then
+			elseif love.mouse.isDownOR(button) then
+				return true
+			end
+		end
+	end
+
 	limitglow = 0
 	limitglow_enabled = false
 
@@ -1893,6 +1920,12 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
+	if love.window.hasFocus() then
+		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
+	else
+		focusregainedtimer = 0
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
@@ -2496,8 +2529,7 @@ function love.update(dt)
 end
 
 function love.textinput(char)
-	-- Are we holding down windows/super? Won't matter on Windows, but could for Linux...
-	if love.system.getOS() ~= "OS X" and keyboard_eitherIsDown("gui") then
+	if focusregainedtimer < .1 then
 		return
 	end
 
@@ -2557,6 +2589,13 @@ function love.textinput(char)
 end
 
 function love.keypressed(key)
+	if focusregainedtimer < .1 then
+		if not table.contains(skipnextkeys, key) then
+			table.insert(skipnextkeys, key)
+		end
+		return
+	end
+
 	hook("love_keypressed_start", {key})
 
 	-- Your privacy is respected.
@@ -3177,28 +3216,28 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f1" then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f2" then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f3" then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f10" then
 		-- Auto/manual mode
 		changedmode()
 		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
@@ -3678,7 +3717,7 @@ function love.keypressed(key)
 		tostate(0, true)
 	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
 		for k,v in pairs(toolshortcuts) do
-			if key == string.lower(v) and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+			if key == string.lower(v) then
 				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
@@ -3770,6 +3809,13 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
+	for k,v in pairs(skipnextkeys) do
+		if v == key then
+			table.remove(skipnextkeys, k)
+			return
+		end
+	end
+
 	hook("love_keyreleased_start", {key})
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
@@ -3803,6 +3849,13 @@ function love.mousepressed(x, y, button)
 		elseif button == 3 then
 			button = "m"
 		end
+	end
+
+	if focusregainedtimer < .1 and not table.contains({"wu", "wd"}, button) then
+		if not table.contains(skipnextmouses, button) then
+			table.insert(skipnextmouses, button)
+		end
+		return
 	end
 
 	if s.pscale ~= 1 then
@@ -3954,6 +4007,13 @@ function love.mousereleased(x, y, button)
 			button = "r"
 		elseif button == 3 then
 			button = "m"
+		end
+	end
+
+	for k,v in pairs(skipnextmouses) do
+		if v == button then
+			table.remove(skipnextmouses, k)
+			return
 		end
 	end
 
