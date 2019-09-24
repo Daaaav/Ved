@@ -3862,6 +3862,12 @@ function love.mousepressed(x, y, button)
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
 
+	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+		-- When drawing is paused it won't look like the scrollbar has moved,
+		-- so just don't move it so the visual will be accurate
+		return
+	end
+
 	hook("love_mousepressed_start", {x, y, button})
 
 
