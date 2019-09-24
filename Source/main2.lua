@@ -3392,7 +3392,7 @@ function love.keypressed(key)
 				end
 			end
 		end
-	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
+	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
 		-- Reload tilesets
 		loadtilesets()
 		loadfonts()
