@@ -3414,6 +3414,8 @@ function love.keypressed(key)
 		else
 			customsizemode = 1
 		end
+	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
+		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
 		if key == "up" then
 			scriptgotoline(editingline-1)
