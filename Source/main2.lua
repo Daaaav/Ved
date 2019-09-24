@@ -3687,14 +3687,10 @@ function love.keypressed(key)
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
-				elseif type(v) == "function" then
-					print(k .. "\t\t\t[function]")
-				elseif type(v) == "table" then
-					print(k .. "\t\t\t[table]")
-				elseif type(v) == "userdata" then
-					print(k .. "\t\t\t[userdata]")
+				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
+					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
-					print(k .. " = " .. v .. "\t\t\t[" .. type(v) .. "]")
+					print(k .. " = " .. tostring(v) .. "\t\t\t[" .. type(v) .. "]")
 				end
 			end
 			cons("\n***********************************\n* E N D                           *\n***********************************\n")
