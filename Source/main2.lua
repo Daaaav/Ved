@@ -2926,10 +2926,10 @@ function love.keypressed(key)
 
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
-	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
-	elseif state == 0 and key == "return" then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		tostate(input)
 	elseif sp_t ~= 0 and key == "escape" then
@@ -3166,12 +3166,12 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif state == 1 and editingroomname and key == "return" then
+	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then
 		saveroomname()
 	elseif state == 1 and editingroomname and key == "escape" then
 		editingroomname = false
 		stopinput()
-	elseif state == 1 and editingroomtext > 0 and key == "return" then
+	elseif state == 1 and editingroomtext > 0 and table.contains({"return", "kpenter"}, key) then
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
 		if entitydata[editingroomtext].data == "" then
@@ -3418,7 +3418,7 @@ function love.keypressed(key)
 		elseif key == "pagedown" then
 			scriptgotoline(editingline+57)
 		end
-	elseif state == 3 and key == "return" then
+	elseif state == 3 and table.contains({"return", "kpenter"}, key) then
 		-- We can split lines because the current line is in input and input_r.
 		-- So input_r is simply transferred to the newly inserted line along with the cursor.
 		table.insert(scriptlines, editingline+1, "")
@@ -3509,7 +3509,7 @@ function love.keypressed(key)
 			scriptlines[editingline] = input
 			dirty()
 		end
-	elseif (state == 6) and key == "return" and tabselected == 0 then
+	elseif (state == 6) and table.contains({"return", "kpenter"}, key) and tabselected == 0 then
 		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
 		if tabselected ~= 0 then
@@ -3543,7 +3543,7 @@ function love.keypressed(key)
 		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
 		table.remove(files[""])
-	elseif (state == 8) and (key == "return") then
+	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 		if savedsuccess then
@@ -3564,14 +3564,14 @@ function love.keypressed(key)
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)
 			nodialog = false -- Terrible
 		end
-	elseif state == 11 and key == "return" then
+	elseif state == 11 and table.contains({"return", "kpenter"}, key) then
 		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
 		searchedfor = input .. input_r
 	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
+	elseif nodialog and state == 12 and (table.contains({"return", "kpenter"}, key) or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
@@ -3656,7 +3656,7 @@ function love.keypressed(key)
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			helplineonscreen()
-		elseif key == "return" then
+		elseif table.contains({"return", "kpenter"}, key) then
 			table.insert(helparticlecontent, helpeditingline+1, "")
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
@@ -3725,7 +3725,7 @@ function love.keypressed(key)
 				toolscroll()
 			end
 		end
-	elseif (state == 22 or state == 23) and key == "return" then
+	elseif (state == 22 or state == 23) and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		scsuccess, sccontents = readlevelfile(input)
 		if scsuccess then
@@ -3826,7 +3826,7 @@ function love.keyreleased(key)
 	elseif nodialog and (key == "lshift" or key == "l" .. ctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
-	elseif key == "return" then
+	elseif table.contains({"return", "kpenter"}, key) then
 		returnpressed = false
 	elseif state == 27 and key == "escape" then
 		-- Put it here instead of love.keypressed,

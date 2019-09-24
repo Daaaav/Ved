@@ -281,7 +281,7 @@ function cDialog:keypressed(key)
 	if self.closing then
 		return
 	end
-	if key == "return" then
+	if table.contains({"return", "kpenter"}, key) then
 		returnpressed = true
 		if self.buttons_present[DB.OK] then
 			self:press_button(DB.OK)
