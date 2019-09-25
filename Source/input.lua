@@ -151,6 +151,8 @@ function input.resume()
 end
 
 function input.bump(id)
+	input.active = true
+
 	local oldn = input_ns[id]
 
 	table.remove(nth_input, oldn)
