@@ -2288,7 +2288,7 @@ tilesetblocks =
 		},
 	}
 
--- For showhotkey()
+-- For showhotkey() and input
 ALIGN = {
 	LEFT = 1,
 	CENTER = 2,
@@ -2301,4 +2301,10 @@ SHIFT = {
 	RIGHT = 2,
 	UP = 3,
 	DOWN = 4,
+}
+
+-- For input
+INPUT = {
+	ONELINE = 1,
+	MULTILINE = 2,
 }

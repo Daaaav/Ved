@@ -710,6 +710,8 @@ function loadstate(new, ...)
 		end
 	elseif new == 33 then
 		alllanguages = getalllanguages()
+	elseif new == 34 then
+		require("input")
 	end
 
 	hook("func_loadstate")

@@ -38,6 +38,7 @@ States:
 31	Assets - music/sounds
 32	Assets - graphics
 33	Language screen
+34	New-input-system-that-is-not-2-or-3-vars-concated-together test
 
 Debug keys:
 F12: change state
@@ -1786,6 +1787,11 @@ function love.draw()
 				s.lang = v
 			end
 		end
+	elseif state == 34 then
+		input.create(INPUT.ONELINE, "inputtest", "This is the caret test", 5)
+
+		love.graphics.print(inputs.inputtest, 100, 100)
+		input.drawcaret("inputtest", 100, 100)
 	else
 		statecaught = false
 
