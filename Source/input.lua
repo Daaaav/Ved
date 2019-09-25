@@ -52,11 +52,11 @@ inputpos = {}
 inputflash = {}
 
 function input.create(type_, id, initial, ix, iy)
+	input.active = true
+
 	if inputs[id] ~= nil then
 		return
 	end
-
-	input.active = true
 
 	if type_ == INPUT.ONELINE then
 		initial = tostring(anythingbutnil(initial))
