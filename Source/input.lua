@@ -203,7 +203,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		local thispos = 0
 		local thischar = 0
 		local line = inputs[id][carety]
-		for char = 1, #line do
+		for _ = 1, #line do
 			thispos = thispos + 1
 			thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
 			if thispos == inputpos[id][1] then
@@ -215,7 +215,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		local thispos = 0
 		local thischar = 0
 		for n, line in pairs(lines) do
-			for char = 1, #line do
+			for _ = 1, #line do
 				thispos = thispos + 1
 				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
 				if thispos == inputpos[id] then
