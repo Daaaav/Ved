@@ -214,6 +214,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 	elseif #lines > 0 then
 		local thispos = 0
 		local thischar = 0
+		local nested_break = false
 		for n, line in pairs(lines) do
 			for _ = 1, #line do
 				thispos = thispos + 1
@@ -221,8 +222,12 @@ function input.drawcaret(id, x, y, scale, limit, align)
 				if thispos == inputpos[id] then
 					caretx = thischar
 					carety = n - 1
+					nested_break = true
 					break
 				end
+			end
+			if nested_break then
+				break
 			end
 		end
 	end
