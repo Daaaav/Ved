@@ -1,5 +1,6 @@
 require("enablescreensaver")
 require("corefunc")
+require("coretext")
 
 allowdebug = false
 opt_disableversioncheck = false

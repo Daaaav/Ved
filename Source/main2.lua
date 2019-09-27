@@ -126,8 +126,6 @@ function love.load()
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
-	hijack_print = false
-
 	ved_require("imagefont")
 
 	loadfonts()
@@ -156,11 +154,6 @@ function love.load()
 	ved_require("slider")
 	ved_require("mapfunc")
 	ved_require("music")
-
-	-- Really, this is temporary. TODO
-	if hijack_print or love_version_meets(11) then
-		temp_print_override()
-	end
 
 	dodisplaysettings()
 
@@ -462,9 +455,9 @@ function love.draw()
 	elseif state == -2 then
 		-- Init state - see love.update()
 	elseif state == -1 then
-		love.graphics.printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
+		ved_printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
 	elseif state == 0 then
-		love.graphics.print("Placeholder main menu. Enter state: " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\nShift+ENTER: Go without loadstate() (tostate(x, true))", 10, 10)
+		ved_print("Placeholder main menu. Enter state: " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\nShift+ENTER: Go without loadstate() (tostate(x, true))", 10, 10)
 		startinputonce()
 	elseif state == 1 then
 		drawmaineditor()
@@ -474,33 +467,33 @@ function love.draw()
 			tostate(6)
 		end
 	elseif state == 2 then
-		love.graphics.print("Syntax highlighting" .. input .. __, 10, 10)
+		ved_print("Syntax highlighting" .. input .. __, 10, 10)
 
 		syntaxhl(input, 10, 30, false, true)
 		startinputonce()
 	elseif state == 3 then
 		drawscripteditor()
 	elseif state == 4 then
-		love.graphics.print(metadata.Creator, 10, 10)
-		love.graphics.print("That should say Unknown.", 10, 20)
+		ved_print(metadata.Creator, 10, 10)
+		ved_print("That should say Unknown.", 10, 20)
 	elseif state == 5 then
-		love.graphics.print("Userprofile: " .. userprofile, 8, 8)
+		ved_print("Userprofile: " .. userprofile, 8, 8)
 		for k,v in pairs(files) do
-			love.graphics.print(v, 8, 16+8*k)
+			ved_print(v, 8, 16+8*k)
 
 			lastk = k
 		end
 
-		love.graphics.print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
-		love.graphics.print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
-		love.graphics.print("Identity: " .. love.filesystem.getIdentity() .. "\nSaveDirectory: " .. love.filesystem.getSaveDirectory(), 8, 16+8*lastk+24+16)
+		ved_print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
+		ved_print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
+		ved_print("Identity: " .. love.filesystem.getIdentity() .. "\nSaveDirectory: " .. love.filesystem.getSaveDirectory(), 8, 16+8*lastk+24+16)
 	elseif state == 6 then
 		drawlevelslist()
 	elseif state == 7 then
 		for y = 0, 7 do
 			for x = 0, 23 do
 				if mouseon(x*32, y*32, 32, 32) then
-					love.graphics.print((y*24)+x, love.graphics.getWidth()-24, love.graphics.getHeight()-8)
+					ved_print((y*24)+x, love.graphics.getWidth()-24, love.graphics.getHeight()-8)
 					love.graphics.setColor(255,255,255,64)
 					love.graphics.rectangle("fill", x*32, y*32, 32, 32)
 					love.graphics.setColor(255,255,255)
@@ -510,17 +503,17 @@ function love.draw()
 			end
 		end
 	elseif state == 8 then
-		love.graphics.print(L.ENTERNAMESAVE .. input .. __, 10, 10)
+		ved_print(L.ENTERNAMESAVE .. input .. __, 10, 10)
 		startinputonce()
 		if savedsuccess ~= nil then
 			if savedsuccess == true then
-				love.graphics.print(L.SAVESUCCESS, 10, 50)
+				ved_print(L.SAVESUCCESS, 10, 50)
 			else
-				love.graphics.print(L.SAVENOSUCCESS .. anythingbutnil(savederror), 10, 50)
+				ved_print(L.SAVENOSUCCESS .. anythingbutnil(savederror), 10, 50)
 			end
 		end
 	elseif state == 9 then
-		love.graphics.print("\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
+		ved_print("\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
 
 		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
 		vvvvvv_textbox("red", 0, 50, {"Red"})
@@ -539,7 +532,7 @@ function love.draw()
 		for k,v in pairs(scripts) do
 			j = j + 1
 			hoverrectangle(128,128,128,128, 8, 8+(24*j), 640, 16)
-			love.graphics.printf(k, 8, 8+(24*j)+4+2, 640, "center")
+			ved_printf(k, 8, 8+(24*j)+4, 640, "center")
 		end
 		]]
 		local j = -1
@@ -556,18 +549,18 @@ function love.draw()
 				elseif y >= -16 and y <= love.graphics.getHeight() then
 					local used = usedscripts[scriptnames[rvnum]]
 					hoverrectangle(used and 128 or 64, used and 128 or 64, used and 128 or 64, 128, 8, y, screenoffset+640-8-24 -36, 16)
-					love.graphics.printf(scriptnames[rvnum], 8, y+4+2, screenoffset+640-8-36, "center")
+					ved_printf(scriptnames[rvnum], 8, y+4, screenoffset+640-8-36, "center")
 					if rvnum == #scriptnames then
 						showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
 					end
 
 					if rvnum ~= #scriptnames then
 						hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4, y, 16, 16)
-						love.graphics.printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4+2, 16, "center")
+						ved_printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4, 16, "center")
 					end
 					if rvnum ~= 1 then
 						hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4 +16 +4, y, 16, 16)
-						love.graphics.printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4+2, 16, "center")
+						ved_printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4, 16, "center")
 					end
 				end
 
@@ -635,18 +628,21 @@ function love.draw()
 		rbutton({L.NEW, "N"}, 0)
 		rbutton({L.FLAGS, "F"}, 1)
 
-		love.graphics.printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 86, 112, "center")
+		ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 84, 112, "center")
 		hoverdraw((scriptdisplay_used and checkon or checkoff), love.graphics.getWidth()-120, 104, 16, 16, 2)
-		love.graphics.print(L.SCRIPTDISPLAY_USED, (love.graphics.getWidth()-120)+24, 110)
+		ved_print(L.SCRIPTDISPLAY_USED, (love.graphics.getWidth()-120)+24, 108)
 		hoverdraw((scriptdisplay_unused and checkon or checkoff), love.graphics.getWidth()-120, 128, 16, 16, 2)
-		love.graphics.print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 134)
+		ved_print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 132)
 
 		if not (scriptdisplay_used and scriptdisplay_unused) then
-			love.graphics.printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 182, 112, "center")
+			ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 180, 112, "center")
 		end
 
 		-- Script count
-		love.graphics.printf(L.COUNT .. #scriptnames .. "/500", love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
+		ved_printf(
+			L.COUNT .. #scriptnames .. "/500",
+			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left"
+		)
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
 
@@ -699,7 +695,7 @@ function love.draw()
 		-- Options screen
 		--love.graphics.draw(checkon, love.graphics.getWidth()-98, 50, 0, 2)
 		--love.graphics.draw(checkoff, love.graphics.getWidth()-98, 70, 0, 2)
-		love.graphics.print(L.VEDOPTIONS, 8, 8+4+2)
+		ved_print(L.VEDOPTIONS, 8, 8+4)
 
 		for k,v in pairs({
 				"dialoganimations",
@@ -721,11 +717,11 @@ function love.draw()
 		) do
 			if v then
 				hoverdraw((s[v] and checkon or checkoff), 8, 8+(24*k), 16, 16, 2)
-				love.graphics.print(L[v:upper()], 8+16+8, 8+(24*k)+4+2)
+				ved_print(L[v:upper()], 8+16+8, 8+(24*k)+4)
 			end
 		end
 
-		love.graphics.print(L.FPSLIMIT, 8, 8+(24*7)+4+2)
+		ved_print(L.FPSLIMIT, 8, 8+(24*7)+4)
 		int_control(16+font8:getWidth(L.FPSLIMIT), 8+(24*7), "fpslimit_ix", 1, 4, nil, nil,
 			function(value)
 				local ret = ({"30", "60", "120", "---"})[value]
@@ -737,20 +733,20 @@ function love.draw()
 		)
 
 		if s.enableoverwritebackups then
-			love.graphics.print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4+2)
+			ved_print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4)
 			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
 		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*14), 16, 16, 2)
-		love.graphics.print(
+		ved_print(
 			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or L.MAKESLANGUAGEUNREADABLE),
-			8+16+8, 8+(24*14)+4+2
+			8+16+8, 8+(24*14)+4
 		)
 
-		love.graphics.print(
+		ved_print(
 			ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
 			.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
-			8, love.graphics.getHeight()-21
+			8, love.graphics.getHeight()-23
 		)
 
 
@@ -762,9 +758,6 @@ function love.draw()
 		rbutton(L.DISPLAYSETTINGS, 5)
 
 		rbutton(L.SENDFEEDBACK, 7)
-
-		--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*1), 128-16, 16) -- love.graphics.getHeight()-(24*(X+1)) instead of 8+(24*X)
-		--love.graphics.printf("Cancel", love.graphics.getWidth()-(128-8), (8+(24*1))+4+2, 128-16, "center")
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
@@ -877,8 +870,8 @@ function love.draw()
 	elseif state == 17 then
 
 	elseif state == 18 then
-		love.graphics.print("Undo stack:\n" .. undostacktext, 8, 8) -- Dev/testing/debug state, not translated
-		love.graphics.print("Redo stack:\n" .. redostacktext, love.graphics.getWidth()/2 + 8, 8)
+		ved_print("Undo stack:\n" .. undostacktext, 8, 8) -- Dev/testing/debug state, not translated
+		ved_print("Redo stack:\n" .. redostacktext, love.graphics.getWidth()/2 + 8, 8)
 	elseif state == 19 then
 		-- Columns 1 and 2
 		for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- dit was misschien niet handig om te doen
@@ -963,15 +956,15 @@ function love.draw()
 
 		love.graphics.setColor(255,255,255,255)
 
-		love.graphics.print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8+2)
-		love.graphics.print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8+2)
+		ved_print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8)
+		ved_print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8)
 
 		if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
 			local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
 			love.graphics.setColor(128,128,128,128)
 			love.graphics.rectangle("fill", love.mouse.getX() + 8, love.mouse.getY(), 8*#t, 8)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print(t, love.mouse.getX() + 8, love.mouse.getY() + 2)
+			ved_print(t, love.mouse.getX() + 8, love.mouse.getY())
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -997,7 +990,7 @@ function love.draw()
 
 		love.graphics.rectangle("line", box_x, box_y, box_w, box_h)
 
-		love.graphics.print((box_exists and "Box exists" or "Box exists not") .. "\nPeri xywh " .. boxperi_x .. " " .. boxperi_y .. " " .. boxperi_w .. " " .. boxperi_h .. "\nBox xywh " .. box_x .. " " .. box_y .. " " .. box_w .. " " .. box_h .. "\nMoving HV: " .. box_moving_h .. box_moving_v .. "\n\nType " .. box_type .. "\nM for switching type -1/0\nV for shrinking the allowed perimeter\nR Reset\nE Re-enable", 10, 10)
+		ved_print((box_exists and "Box exists" or "Box exists not") .. "\nPeri xywh " .. boxperi_x .. " " .. boxperi_y .. " " .. boxperi_w .. " " .. boxperi_h .. "\nBox xywh " .. box_x .. " " .. box_y .. " " .. box_w .. " " .. box_h .. "\nMoving HV: " .. box_moving_h .. box_moving_v .. "\n\nType " .. box_type .. "\nM for switching type -1/0\nV for shrinking the allowed perimeter\nR Reset\nE Re-enable", 10, 10)
 
 		if love.keyboard.isDown("m") then
 			if box_type == 0 then
@@ -1014,18 +1007,18 @@ function love.draw()
 			box_exists = true
 		end
 	elseif state == 21 then
-		love.graphics.print(text21, 8, 8)
+		ved_print(text21, 8, 8)
 	elseif state == 22 then -- These are not translate-worthy I'm guessing
-		love.graphics.printf("Filename to a script file (IN the 3DS format) (lines separated by dollars): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
+		ved_printf("Filename to a script file (IN the 3DS format) (lines separated by dollars): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
 		startinputonce()
 	elseif state == 23 then
-		love.graphics.printf("Filename to a script file (NOT in the 3DS format) (lines separated by \\r\\n or \\n): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
+		ved_printf("Filename to a script file (NOT in the 3DS format) (lines separated by \\r\\n or \\n): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
 		startinputonce()
 	elseif state == 24 then
-		love.graphics.printf("Plugins\n\n\n" .. pluginstext, 8, 8, love.graphics.getWidth()-16, "left")
+		ved_printf("Plugins\n\n\n" .. pluginstext, 8, 8, love.graphics.getWidth()-16, "left")
 	elseif state == 25 then
 		-- Syntax highlighting color settings
-		love.graphics.print(L.SYNTAXCOLORSETTINGSTITLE, 8, 8+4+2)
+		ved_print(L.SYNTAXCOLORSETTINGSTITLE, 8, 8+4)
 
 		colorsetting(L.SYNTAXCOLOR_COMMAND,     1, s.syntaxcolor_command    )
 		colorsetting(L.SYNTAXCOLOR_GENERIC,     2, s.syntaxcolor_generic    )
@@ -1039,7 +1032,7 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
 		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
-		love.graphics.print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4+2)
+		ved_print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4)
 
 		rbutton({L.BTN_OK, "b"}, 0)
 		rbutton(L.RESETCOLORS, 2)
@@ -1082,9 +1075,9 @@ function love.draw()
 
 			-- The numbers
 			love.graphics.setColor(255,255,255)
-			love.graphics.printf(editingcolor[1], love.graphics.getWidth()-160, love.graphics.getHeight()-263, 50, "center")
-			love.graphics.printf(editingcolor[2], love.graphics.getWidth()-105, love.graphics.getHeight()-263, 50, "center")
-			love.graphics.printf(editingcolor[3], love.graphics.getWidth()-50, love.graphics.getHeight()-263, 50, "center")
+			ved_printf(editingcolor[1], love.graphics.getWidth()-160, love.graphics.getHeight()-265, 50, "center")
+			ved_printf(editingcolor[2], love.graphics.getWidth()-105, love.graphics.getHeight()-265, 50, "center")
+			ved_printf(editingcolor[3], love.graphics.getWidth()-50, love.graphics.getHeight()-265, 50, "center")
 
 			-- The arrows
 			love.graphics.draw(colorsel, love.graphics.getWidth()-164, love.graphics.getHeight()-editingcolor[1]-4)
@@ -1103,34 +1096,29 @@ function love.draw()
 			end
 		end
 	elseif state == 26 then
-		local printfunc = love.graphics.print
-		if love.graphics.print11 ~= nil then
-			printfunc = love.graphics.print11
-		end
 		love.graphics.setColor(128,128,255,64)
 		love.graphics.rectangle("line", 32.5, 32.5, font8:getWidth(input), 8)
-		love.graphics.rectangle("line", 32.5, 64.5, font16:getWidth(input), 16)
+		love.graphics.rectangle("line", 32.5, 64.5, font8:getWidth(input)*2, 16)
 		love.graphics.rectangle("line", 32.5, 96.5, tinynumbers:getWidth(input), 7)
 		love.graphics.setColor(255,128,128,64)
 		love.graphics.rectangle("line", 32.5, 32.5-2, font8:getWidth(input), 8)
-		love.graphics.rectangle("line", 32.5, 64.5-4, font16:getWidth(input), 16)
+		love.graphics.rectangle("line", 32.5, 64.5-4, font8:getWidth(input)*2, 16)
 		love.graphics.setColor(255,255,255)
-		printfunc(input, 32, 32)
-		love.graphics.setFont(font16)
-		printfunc(input, 32, 64)
-		love.graphics.setFont(tinynumbers)
-		printfunc(input, 32, 96)
-		love.graphics.setFont(font8)
+		ved_print(input, 32, 32)
+		ved_print(input, 32, 64, 2)
+		ved_setFont(tinynumbers)
+		ved_print(input, 32, 96)
+		ved_setFont(font8)
 
-		love.graphics.print("Font test", 10, 10)
+		ved_print("Font test", 10, 10)
 	elseif state == 27 then
 		-- Display/Scale settings
-		love.graphics.print(L.DISPLAYSETTINGSTITLE, 8, 8+4+2)
+		ved_print(L.DISPLAYSETTINGSTITLE, 8, 8+4)
 
-		love.graphics.print(L.SCALE, 8, 8+(24*1)+4+2)
+		ved_print(L.SCALE, 8, 8+(24*1)+4)
 		if nonintscale then
 			-- Something
-			love.graphics.print(input .. __, 16+font8:getWidth(L.SCALE), 8+(24*1)+4+2)
+			ved_print(input .. __, 16+font8:getWidth(L.SCALE), 8+(24*1)+4)
 		else
 			int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
 				function(value)
@@ -1153,13 +1141,13 @@ function love.draw()
 		end
 
 		hoverdraw((nonintscale and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
-		love.graphics.print(L.NONINTSCALE, 8+16+8, 8+(24*2)+4+2)
+		ved_print(L.NONINTSCALE, 8+16+8, 8+(24*2)+4)
 
 		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
-		love.graphics.print(L.SMALLERSCREEN, 8+16+8, 8+(24*3)+4+2)
+		ved_print(L.SMALLERSCREEN, 8+16+8, 8+(24*3)+4)
 
 		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
-		love.graphics.print(L.FORCESCALE, 8+16+8, 8+(24*4)+4+2)
+		ved_print(L.FORCESCALE, 8+16+8, 8+(24*4)+4)
 
 
 		if nonintscale then
@@ -1212,20 +1200,24 @@ function love.draw()
 				0, pixelscale*num_scale
 			)
 			love.graphics.setScissor()
-			love.graphics.printf((love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "") .. langkeys(L.MONITORSIZE, {monw, monh}), dispx, 135 + (166 + (monh*pixelscale)/2), monw*pixelscale, "center")
+			ved_printf(
+				(love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "")
+				.. langkeys(L.MONITORSIZE, {monw, monh}),
+				dispx, 135 + (164 + (monh*pixelscale)/2), monw*pixelscale, "center"
+			)
 			currentmon_x = currentmon_x + monw*pixelscale + 16
 		end
 
-		love.graphics.printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 131, love.graphics.getWidth(), "center")
+		ved_printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 129, love.graphics.getWidth(), "center")
 
 
 		if num_scale ~= tonumber(num_scale) or num_scale == nil or num_scale <= 0 then
 			love.graphics.setColor(255,0,0)
-			love.graphics.print(L.SCALENONUM, 8, love.graphics.getHeight()-15)
+			ved_print(L.SCALENONUM, 8, love.graphics.getHeight()-17)
 			love.graphics.setColor(255,255,255)
 		elseif not fits then
 			love.graphics.setColor(255,0,0)
-			love.graphics.print(L.SCALENOFIT, 8, love.graphics.getHeight()-15)
+			ved_print(L.SCALENOFIT, 8, love.graphics.getHeight()-17)
 			love.graphics.setColor(255,255,255)
 		end
 
@@ -1265,7 +1257,7 @@ function love.draw()
 		-- basic_stats has elements: {name, value, max}
 		local p100 = love.graphics.getWidth() - 40 - basic_stats_max_text_width
 		for k,v in pairs(basic_stats) do
-			love.graphics.print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k+2)
+			ved_print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k)
 
 			-- Background
 			love.graphics.setColor(32, 32, 32)
@@ -1312,8 +1304,8 @@ function love.draw()
 	elseif state == 29 then
 		-- Plural forms test
 		int_control(20, 20, "val", 0, 9999, nil, plural_test)
-		love.graphics.print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
-		love.graphics.print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, plural_test.val}, 2), 20, 100)
+		ved_print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
+		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, plural_test.val}, 2), 20, 100)
 
 		if nodialog and love.mouse.isDown("l") then
 			-- Shrug
@@ -1338,22 +1330,22 @@ function love.draw()
 			love.graphics.setColor(255,255,255)
 			if a == 0 then
 				love.graphics.draw(asset_pppppp, 21, 21)
-				love.graphics.print("vvvvvvmusic.vvv", 33, 23)
-				love.graphics.print(musicfileexists("vvvvvvmusic.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39)
+				ved_print("vvvvvvmusic.vvv", 33, 21)
+				ved_print(musicfileexists("vvvvvvmusic.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37)
 			elseif a == 1 then
 				love.graphics.draw(asset_mmmmmm, 21, 21+44)
-				love.graphics.print("mmmmmm.vvv", 33, 23+44)
-				love.graphics.print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39+44)
+				ved_print("mmmmmm.vvv", 33, 21+44)
+				ved_print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37+44)
 			elseif a == 2 then
 				love.graphics.draw(asset_musiceditor, 21, 21+88)
-				love.graphics.print(L.MUSICEDITOR, 33, 23+88)
-				--love.graphics.print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 39+88)
+				ved_print(L.MUSICEDITOR, 33, 21+88)
+				--ved_print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37+88)
 			elseif a == 3 then
 				love.graphics.draw(asset_sounds, 21, 21+132)
-				love.graphics.print(L.SOUNDS, 33, 23+132)
+				ved_print(L.SOUNDS, 33, 21+132)
 			elseif a == 4 then
 				love.graphics.draw(asset_graphics, 21, 21+176)
-				love.graphics.print(L.GRAPHICS, 33, 23+176)
+				ved_print(L.GRAPHICS, 33, 21+176)
 			end
 
 			if love.keyboard.isDown("f9") then
@@ -1401,14 +1393,14 @@ function love.draw()
 		-- Assets - music/sounds
 		if musiceditor then
 			if musiceditorfile == "" then
-				love.graphics.print(L.MUSICEDITOR, 16, 14)
+				ved_print(L.MUSICEDITOR, 16, 12)
 			else
-				love.graphics.print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 14)
+				ved_print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 12)
 			end
 		elseif soundviewer then
-			love.graphics.print(L.SOUNDS, 16, 14)
+			ved_print(L.SOUNDS, 16, 12)
 		else
-			love.graphics.print(musicplayerfile, 16, 14)
+			ved_print(musicplayerfile, 16, 12)
 		end
 		file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
 		local musicnamex_offset
@@ -1514,14 +1506,14 @@ function love.draw()
 					love.graphics.setColor(255,0,0)
 				end
 				if soundviewer then
-					love.graphics.print(
+					ved_print(
 						"[" .. fixdig(m, 2) .. "] " .. listsoundids[m]:sub(1, -5),
-						musicnamex, 38+24*my
+						musicnamex, 36+24*my
 					)
 				else
-					love.graphics.print(
+					ved_print(
 						"[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]),
-						musicnamex, 38+24*my
+						musicnamex, 36+24*my
 					)
 				end
 				if song_metadata_anyset then
@@ -1532,20 +1524,20 @@ function love.draw()
 						shown_name = song_metadata.name
 					end
 					love.graphics.setScissor(musicnamex+248, 36+24*my, 256, 8)
-					love.graphics.print(shown_name, musicnamex+248, 38+24*my)
+					ved_print(shown_name, musicnamex+248, 36+24*my)
 					love.graphics.setScissor()
 				end
 				if not love_version_meets(10) then
-					love.graphics.print("?:??", musicdurationx, 38+24*my)
+					ved_print("?:??", musicdurationx, 36+24*my)
 				elseif audio == nil then
-					love.graphics.print("-:--", musicdurationx, 38+24*my)
+					ved_print("-:--", musicdurationx, 36+24*my)
 				else
-					love.graphics.print(mmss_duration(audio:getDuration()), musicdurationx, 38+24*my)
+					ved_print(mmss_duration(audio:getDuration()), musicdurationx, 36+24*my)
 				end
 				if filedata ~= nil then
 					local readable_size = bytes_notation(filedata:getSize())
 					love.graphics.setColor(128,128,128)
-					love.graphics.print(readable_size, musicsizerx-font8:getWidth(readable_size), 38+24*my)
+					ved_print(readable_size, musicsizerx-font8:getWidth(readable_size), 36+24*my)
 				end
 				love.graphics.setColor(255,255,255)
 			end
@@ -1562,16 +1554,16 @@ function love.draw()
 			love.graphics.draw(sound_play, 16, cura_y)
 			love.graphics.draw(sound_stop, 32, cura_y)
 			love.graphics.draw(sound_rewind, 48, cura_y)
-			love.graphics.print("[--] -:--", 72, cura_y+6)
+			ved_print("[--] -:--", 72, cura_y+4)
 			love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
-			love.graphics.print("-:--", width+160, cura_y+6)
+			ved_print("-:--", width+160, cura_y+4)
 			love.graphics.setColor(255,255,255)
 		else
 			hoverdraw(currentmusic_paused and sound_play or sound_pause, 16, cura_y, 16, 16)
 			hoverdraw(sound_stop, 32, cura_y, 16, 16)
 			hoverdraw(sound_rewind, 48, cura_y, 16, 16)
 			local elapsed = current_audio:tell()
-			love.graphics.print("[" .. fixdig(currentmusic, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+6)
+			ved_print("[" .. fixdig(currentmusic, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
 			if nodialog and not mousepressed and love.mouse.isDown("l") then
 				if mouseon(16, cura_y, 16, 16) then
 					-- Play/pause
@@ -1602,14 +1594,14 @@ function love.draw()
 				love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*width, 8)
 				if nodialog and not mousepressed and mouseon(152, cura_y+4, width, 8) then
 					local mouse_elapsed = ((love.mouse.getX()-152)/width)*duration
-					love.graphics.print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-8)
+					ved_print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-10)
 					if love.mouse.isDown("l") then
 						current_audio:seek(mouse_elapsed)
 						mousepressed = true
 					end
 				end
 			end
-			love.graphics.print(mmss_duration(duration), width+160, cura_y+6)
+			ved_print(mmss_duration(duration), width+160, cura_y+4)
 			showhotkey(" ", 16+16, cura_y-2, ALIGN.RIGHT)
 			showhotkey("h", 48+16, cura_y-2, ALIGN.RIGHT)
 		end
@@ -1695,7 +1687,7 @@ function love.draw()
 				end
 			end
 			love.graphics.setScissor()
-			love.graphics.print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 6)
+			ved_print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 4)
 
 			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 			local check_x = love.graphics.getWidth()-64-check_w/2
@@ -1704,7 +1696,7 @@ function love.draw()
 				check_x, love.graphics.getHeight()-288, 16, 16, 2
 			)
 			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
-			love.graphics.print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-282)
+			ved_print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-284)
 
 			if nodialog and love.mouse.isDown("l") and not mousepressed
 			and mouseon(check_x, love.graphics.getHeight()-288, 16, 16) then
@@ -1712,9 +1704,9 @@ function love.draw()
 				mousepressed = true
 			end
 
-			love.graphics.printf(
+			ved_printf(
 				L.GRID,
-				love.graphics.getWidth()-128, love.graphics.getHeight()-234, 128, "center"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-236, 128, "center"
 			)
 			custom_int_control(
 				love.graphics.getWidth()-100, love.graphics.getHeight()-216,
@@ -1732,9 +1724,9 @@ function love.draw()
 				if imageviewer_w/imageviewer_grid ~= math.ceil(imageviewer_w/imageviewer_grid) then
 					grid_tile = "(" .. grid_tile .. ")"
 				end
-				love.graphics.printf(
+				ved_printf(
 					grid_tile,
-					love.graphics.getWidth()-128, love.graphics.getHeight()-186, 128, "center"
+					love.graphics.getWidth()-128, love.graphics.getHeight()-188, 128, "center"
 				)
 				love.graphics.setColor(255,255,255,255)
 			end
@@ -1748,12 +1740,12 @@ function love.draw()
 			)
 			showhotkey("-", love.graphics.getWidth()-100+16, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
 			showhotkey("+", love.graphics.getWidth()-100+64+8, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
-			love.graphics.printf(
+			ved_printf(
 				imageviewer_w .. L.X .. imageviewer_h,
-				love.graphics.getWidth()-128, love.graphics.getHeight()-114, 128, "center"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-116, 128, "center"
 			)
 		else
-			love.graphics.print(L.GRAPHICS, 8, 6)
+			ved_print(L.GRAPHICS, 8, 4)
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -1772,7 +1764,7 @@ function love.draw()
 			end
 		end
 	elseif state == 33 then
-		love.graphics.print(L.LANGUAGE, 16, 16+4+2)
+		ved_print(L.LANGUAGE, 16, 16+4)
 
 		for k,v in pairs(alllanguages) do
 			local clickable_w = 8+16+font8:getWidth(v)
@@ -1780,7 +1772,7 @@ function love.draw()
 			if s.lang == v then
 				love.graphics.setColor(255,255,128)
 			end
-			love.graphics.print(v, 16+16+8, 16+(24*k)+4+2)
+			ved_print(v, 16+16+8, 16+(24*k)+4)
 			love.graphics.setColor(255,255,255)
 			if mouseon(16, 16+(24*k), clickable_w, 16) and love.mouse.isDown("l") then
 				s.lang = v
@@ -1807,7 +1799,7 @@ function love.draw()
 	end
 
 	if love.keyboard.isDown("f9") and state_hotkeys[state] ~= nil then
-		--love.graphics.print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
+		--ved_print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
 	end
 
 	-- Middle click cursor
@@ -1841,15 +1833,13 @@ function love.draw()
 
 	if allowdebug and s.fpslimit_ix ~= 4 then
 		love.graphics.setColor(255,0,0)
-		love.graphics.setFont(font16)
 		if s.fpslimit_ix == 3 then
-			love.graphics.print("120", love.graphics.getWidth()-48, love.graphics.getHeight()-16)
+			ved_print("120", love.graphics.getWidth()-48, love.graphics.getHeight()-16, 2)
 		elseif s.fpslimit_ix == 2 then
-			love.graphics.print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+			ved_print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16, 2)
 		elseif s.fpslimit_ix == 1 then
-			love.graphics.print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16)
+			ved_print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16, 2)
 		end
-		love.graphics.setFont(font8)
 		love.graphics.setColor(255,255,255)
 	end
 
@@ -1858,7 +1848,7 @@ function love.draw()
 		love.graphics.setColor(255,160,0,192)
 		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-16, 128, 16)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-10, 128, "center")
+		ved_printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
 	end
 
 	-- Taking input warning
@@ -1866,12 +1856,12 @@ function love.draw()
 		love.graphics.setColor(255,160,0,192)
 		love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf("TAKING INPUT", 128, love.graphics.getHeight()-10, 128, "center")
+		ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
 	end
 
 	--[[ some debug stuff for the new map
 	if rooms_map_current_x ~= nil then
-	love.graphics.print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 5)
+	ved_print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 3)
 	end
 	]]
 

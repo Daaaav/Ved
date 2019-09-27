@@ -106,18 +106,18 @@ function highlightresult(text, result, x, y)
 
 	-- Well then, this changed into some awkward code
 	if text:lower():find(result, 1) == nil then
-		love.graphics.print(text, x+(offsetchars-1)*8, y)
+		ved_print(text, x+(offsetchars-1)*8, y)
 	else
 		repeat
 			pos, endpos = text:lower():find(result, offsetchars)
-			love.graphics.print(text:sub(offsetchars, pos-1), x+(offsetchars-1)*8, y)
+			ved_print(text:sub(offsetchars, pos-1), x+(offsetchars-1)*8, y)
 			love.graphics.setColor(255,255,0,255)
-			love.graphics.print(text:sub(pos, endpos), x+(pos-1)*8, y)
+			ved_print(text:sub(pos, endpos), x+(pos-1)*8, y)
 			love.graphics.setColor(255,255,255,255)
 			offsetchars = endpos + 1
 		until text:lower():find(result, offsetchars) == nil
 
-		love.graphics.print(text:sub(endpos+1, -1), x+endpos*8, y)
+		ved_print(text:sub(endpos+1, -1), x+endpos*8, y)
 	end
 end
 
