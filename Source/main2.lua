@@ -1780,8 +1780,8 @@ function love.draw()
 			end
 		end
 	elseif state == 34 then
-		input.create(INPUT.ONELINE, "inputtest", "This is the caret test", 5)
-		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second line, this is", "Third line"}, 2, 2)
+		input.create(INPUT.ONELINE, "inputtest", "This is the §¤ caret test", 5)
+		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcaret("inputtest", 100, 100)
