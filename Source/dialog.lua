@@ -639,27 +639,18 @@ function cDialog:get_on_scrollable_field(x, y)
 end
 
 function cDialog:cd_to_parent(cf, currentdir, ...)
-	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
-
-	local newfolder = get_parent_path(currentdir)
-	self.fields[cf][5] = newfolder
-	local success, everr
-	success, self.fields[cf][7], everr = listfiles_generic(
-		newfolder,
-		filter_on and folder_filter or "",
-		folder_show_hidden
-	)
-	if success then
-		everr = ""
-	end
-	self.fields[cf][10] = 0
-	self.fields[cf][11] = everr
+	self:cd(nil, cf, currentdir, ...)
 end
 
 function cDialog:cd(dir, cf, currentdir, ...)
 	local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
 
-	local newfolder = get_child_path(currentdir, dir)
+	local newfolder
+	if dir == nil then
+		newfolder = get_parent_path(currentdir)
+	else
+		newfolder = get_child_path(currentdir, dir)
+	end
 	self.fields[cf][5] = newfolder
 	local success, everr
 	success, self.fields[cf][7], everr = listfiles_generic(
