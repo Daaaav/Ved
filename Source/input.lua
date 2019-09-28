@@ -184,6 +184,7 @@ end
 function input.drawcaret(id, x, y, scale, limit, align)
 	-- TODO: Can't use this in LÖVE 0.9.x and lower,
 	-- due to lack of ability to get the wrapped text from Font:getWrap()
+	-- Also can't use this in LÖVE 0.9.1 exactly due to utf8 module
 	if not love_version_meets(10) then
 		return
 	end
@@ -199,6 +200,30 @@ function input.drawcaret(id, x, y, scale, limit, align)
 	-- Make sure we're drawing the caret of the currently focused input
 	if id ~= input_ids[#nth_input] then
 		return
+	end
+
+	local utf8 = require("utf8")
+
+	-- Can we actually get a complete library without having to find the missing pieces ourselves? Jesus fucking christ
+	-- http://lua-users.org/lists/lua-l/2014-04/msg00590.html
+	function utf8.sub(s,i,j)
+		i = i or 1
+		j = j or -1
+		if i<1 or j<1 then
+			local n = utf8.len(s)
+			if not n then return nil end
+			if i<0 then i = n+1+i end
+			if j<0 then j = n+1+j end
+			if i<0 then i = 1 elseif i>n then i = n end
+			if j<0 then j = 1 elseif j>n then j = n end
+		end
+		if j<i then return "" end
+		i = utf8.offset(s,i)
+		j = utf8.offset(s,j+1)
+		if i and j then return s:sub(i,j-1)
+		elseif i then return s:sub(i)
+		else return ""
+		end
 	end
 
 	local multiline = type(inputs[id]) == "table"
@@ -234,7 +259,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 			local posfound = false
 			for _ = 1, #line do
 				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
+				thischar = thischar + thisfont:getWidth(utf8.sub(line,thispos,thispos))
 				if thispos == postoget then
 					caretx = thischar
 					break
@@ -259,7 +284,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		for n, line in pairs(lines) do
 			for _ = 1, #line do
 				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
+				thischar = thischar + thisfont:getWidth(utf8.sub(line,thispos,thispos))
 				if thispos == postoget then
 					caretx = thischar
 					carety = n - 1
