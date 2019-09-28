@@ -1781,9 +1781,15 @@ function love.draw()
 		end
 	elseif state == 34 then
 		input.create(INPUT.ONELINE, "inputtest", "This is the caret test", 5)
+		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second line, this is", "Third line"}, 2, 2)
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcaret("inputtest", 100, 100)
+
+		for k,v in pairs(inputs.inputtest2) do
+			ved_print(v, 100, 8*k + 150)
+		end
+		input.drawcaret("inputtest2", 100, 150)
 	else
 		statecaught = false
 
@@ -2578,6 +2584,12 @@ function love.keypressed(key)
 			input.movex(input_ids[#nth_input], -1)
 		elseif key == "right" then
 			input.movex(input_ids[#nth_input], 1)
+		elseif key == "up" then
+			input.movey(input_ids[#nth_input], -1)
+		elseif key == "down" then
+			input.movey(input_ids[#nth_input], 1)
+		elseif key == "tab" then
+			input.bump(input_ids[#nth_input - 1])
 		end
 	end
 
