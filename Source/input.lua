@@ -275,3 +275,21 @@ function input.movex(id, chars)
 
 	cursorflashtime = 0
 end
+
+function input.movey(id, chars)
+	local multiline = type(inputpos[id]) == "table"
+
+	if not multiline then
+		return
+	end
+
+	local lines = inputs[id]
+	local y = inputpos[id][2]
+
+	y = y + chars
+	y = math.min(math.max(y, 1), #lines)
+
+	inputpos[id][2] = y
+
+	cursorflashtime = 0
+end
