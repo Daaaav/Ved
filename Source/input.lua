@@ -180,15 +180,17 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		return
 	end
 
+	local multiline = type(inputs[id]) == "table"
+
 	scale = scale or 1
 	align = align or ALIGN.LEFT
-	if type(inputs[id]) == "table" then
+	if multiline then
 		align = ALIGN.LEFT
 	end
 
 	local lines = {}
 	local thisfont = love.graphics.getFont()
-	if type(inputs[id]) == "table" then
+	if multiline then
 		lines = inputs[id]
 	elseif limit ~= nil then
 		-- TODO: Deal with LÖVE 0.9.x and lower, later
@@ -198,7 +200,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 	end
 
 	local caretx, carety = 0, 0
-	if type(inputs[id]) == "table" then
+	if multiline then
 		carety = inputpos[id][2]
 		local thispos = 0
 		local thischar = 0
@@ -244,8 +246,10 @@ function input.movex(id, chars)
 
 	local utf8 = require("utf8")
 
+	local multiline = type(inputpos[id]) == "table"
+
 	local x, y, line
-	if type(inputs[id]) == "table" then
+	if multiline then
 		x, y = unpack(inputpos[id])
 		line = inputs[id][y]
 	else
@@ -263,7 +267,7 @@ function input.movex(id, chars)
 	end
 	x = math.min(math.max(x, 0), #line)
 
-	if type(inputs[id]) == "table" then
+	if multiline then
 		inputpos[id][1] = x
 	else
 		inputpos[id] = x
