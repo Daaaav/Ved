@@ -174,6 +174,8 @@ function input.bump(id)
 	input_ns[id] = #nth_input
 
 	input.updatemappings()
+
+	cursorflashtime = 0
 end
 
 function input.drawcaret(id, x, y, scale, limit, align)
