@@ -396,7 +396,7 @@ function input.deletechars(id, chars)
 	end
 
 	if inputsrightmost[id] then
-		x = #line
+		x = utf8.len(line)
 	end
 
 	x = math.min(math.max(x, 0), utf8.len(line))
@@ -404,7 +404,7 @@ function input.deletechars(id, chars)
 	local lineremoved = false
 	for _ = 1, math.abs(chars) do
 		if chars > 0 then
-			if x == #line then
+			if x == utf8.len(line) then
 				if multiline and y < #inputs[id] then
 					inputs[id][y] = inputs[id][y] .. inputs[id][y+1]
 					table.remove(inputs[id], y+1)
