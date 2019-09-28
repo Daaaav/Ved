@@ -710,6 +710,13 @@ function loadstate(new, ...)
 		end
 	elseif new == 33 then
 		alllanguages = getalllanguages()
+		widestlang = 0
+		for k,v in pairs(alllanguages) do
+			local w = font8:getWidth(v)
+			if w > widestlang then
+				widestlang = w
+			end
+		end
 	end
 
 	hook("func_loadstate")
@@ -2742,13 +2749,6 @@ function windowfits(w, h, monitorres)
 	return w <= monitorres[1] and h <= monitorres[2]
 end
 
-function languagedialog()
-	dialog.create(
-		"", DBS.OKCANCEL,
-		dialog.callback.language, L.LANGUAGE, dialog.form.language_make()
-	)
-end
-
 function format_date(timestamp)
 	if timestamp == nil then
 		return ""
@@ -3248,6 +3248,14 @@ function imageviewer_gridout()
 	end
 end
 
+function changelanguage(newlanguage)
+	unloadlanguage()
+	s.lang = newlanguage
+	loadlanguage()
+
+	loadtinynumbersfont()
+end
+
 function exitvedoptions()
 	saveconfig()
 	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
@@ -3277,9 +3285,6 @@ function exitdisplayoptions()
 		dodisplaysettings(true)
 	end
 
-	-- Re-center dialogs
-	cDialog.x = (love.graphics.getWidth()-400)/2
-
 	tostate(oldstate, true)
 	-- Just to make sure we don't get stuck in the settings
 	oldstate = olderstate
@@ -3289,6 +3294,14 @@ function exitsyntaxcoloroptions()
 	saveconfig()
 	tostate(oldstate, true)
 	-- Just to make sure we don't get stuck in the settings
+	oldstate = olderstate
+end
+
+function exitlanguageoptions()
+	s.langchosen = true
+	saveconfig()
+	tostate(oldstate, true)
+	-- We may not come from the settings, but otherwise
 	oldstate = olderstate
 end
 

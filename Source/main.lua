@@ -6,6 +6,7 @@ allowdebug = false
 opt_disableversioncheck = false
 opt_loadlevel = nil
 opt_newlevel = false
+opt_forcelanguagescreen = false
 
 vergroups = {6,2}
 

@@ -123,6 +123,8 @@ function love.load()
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
 	end
+	lctrl = "l" .. ctrl
+	rctrl = "r" .. ctrl
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
@@ -739,7 +741,7 @@ function love.draw()
 
 		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*14), 16, 16, 2)
 		ved_print(
-			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or L.MAKESLANGUAGEUNREADABLE),
+			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or ""),
 			8+16+8, 8+(24*14)+4
 		)
 
@@ -831,7 +833,8 @@ function love.draw()
 				end
 			elseif onrbutton(3) then
 				-- Language
-				languagedialog()
+				olderstate = oldstate
+				tostate(33)
 			elseif onrbutton(4) then
 				-- Syntax colors
 				olderstate = oldstate
@@ -1764,19 +1767,83 @@ function love.draw()
 			end
 		end
 	elseif state == 33 then
-		ved_print(L.LANGUAGE, 16, 16+4)
-
-		for k,v in pairs(alllanguages) do
-			local clickable_w = 8+16+font8:getWidth(v)
-			hoverdraw(s.lang == v and radioon_hq or radiooff_hq, 16, 16+(24*k), clickable_w, 16)
-			if s.lang == v then
+		local function radio(selected, x, y, key, label, onclickfunc)
+			local clickable_w = 8+32+font8:getWidth(label)
+			hoverdraw(
+				selected and radioon_hq or radiooff_hq,
+				x, y, clickable_w, 16
+			)
+			if selected then
 				love.graphics.setColor(255,255,128)
 			end
-			ved_print(v, 16+16+8, 16+(24*k)+4)
+			ved_print(label, x+16+8, y+4)
 			love.graphics.setColor(255,255,255)
-			if mouseon(16, 16+(24*k), clickable_w, 16) and love.mouse.isDown("l") then
-				s.lang = v
+
+			if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
+				onclickfunc(key)
+				mousepressed = true
 			end
+		end
+
+		local language_x = love.graphics.getWidth()/2-64-widestlang
+		ved_print(L.LANGUAGE, language_x, 32+4)
+
+		for k,v in pairs(alllanguages) do
+			radio(s.lang == v, language_x, 32+(24*k), v, v,
+				function(key)
+					changelanguage(v)
+				end
+			)
+		end
+
+		local dateformat_x = love.graphics.getWidth()/2+64
+		local year = os.date("%Y")
+		ved_print(L.DATEFORMAT, dateformat_x, 32+4)
+
+		for k,v in pairs({
+			{"YMD", year .. "-12-31"},
+			{"DMY", "31-12-" .. year},
+			{"MDY", "12/31/" .. year},
+		}) do
+			radio(s.new_dateformat == v[1], dateformat_x, 32+(24*k), v[1], v[2],
+				function(key)
+					s.new_dateformat = v[1]
+				end
+			)
+		end
+
+		ved_print(L.TIMEFORMAT, dateformat_x, 32+96+24+4)
+
+		for k,v in pairs({
+			{24, "23:59"},
+			{12, "11:59pm"}
+		}) do
+			radio(s.new_timeformat == v[1], dateformat_x, 32+96+24+(24*k), v[1], v[2],
+				function(key)
+					s.new_timeformat = v[1]
+				end
+			)
+		end
+
+		local bottomleft_text = L.TRANSLATIONCREDIT
+		if s.lang == "English" then
+			-- Yeah, hardcoded text!
+			bottomleft_text = "Want to help translate Ved? Please contact Dav999!"
+		end
+
+		ved_printf(bottomleft_text, 64, love.graphics.getHeight()-40, love.graphics.getWidth()-128, "center")
+
+
+		rbutton({L.BTN_OK, "b"}, 0)
+
+
+		if nodialog and not mousepressed and love.mouse.isDown("l") then
+			if onrbutton(0) then
+				-- Save
+				exitlanguageoptions()
+			end
+
+			mousepressed = true
 		end
 	else
 		statecaught = false
@@ -1989,7 +2056,10 @@ function love.update(dt)
 	end
 
 	if state == -2 and settings_ok then
-		if opt_loadlevel ~= nil then
+		if not s.langchosen or opt_forcelanguagescreen then
+			opt_forcelanguagescreen = false
+			tostate(33)
+		elseif opt_loadlevel ~= nil then
 			if opt_loadlevel:sub(1, levelsfolder:len()) == levelsfolder then
 				opt_loadlevel = opt_loadlevel:sub(levelsfolder:len()+2, -1)
 			end
@@ -2553,9 +2623,9 @@ function love.keypressed(key)
 	keyva.keypressed(key)
 
 	-- DEBUG FOR FPS CAP
-	if allowdebug and key == "pagedown" and love.keyboard.isDown("r" .. ctrl) then
+	if allowdebug and key == "pagedown" and love.keyboard.isDown(rctrl) then
 		s.fpslimit_ix = (s.fpslimit_ix % 4) + 1
-	elseif allowdebug and key == "pageup" and love.keyboard.isDown("r" .. ctrl) then
+	elseif allowdebug and key == "pageup" and love.keyboard.isDown(rctrl) then
 		debug.debug()
 	end
 
@@ -2910,7 +2980,7 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("r" .. ctrl) then
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown(rctrl) then
 			tilespicker_shortcut = true
 		end
 
@@ -3138,7 +3208,7 @@ function love.keypressed(key)
 		end
 		editingroomtext = 0
 		stopinput()
-	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("l" .. ctrl) then
+	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown(lctrl) then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
 		cons("First select the wall tiles")
 
@@ -3158,7 +3228,7 @@ function love.keypressed(key)
 		selectedtool = 1
 
 		mousepressed = false
-	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("l" .. ctrl) then
+	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown(lctrl) then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
 			cons("==== " .. k .. " ====")
@@ -3637,7 +3707,7 @@ function love.keypressed(key)
 	elseif allowdebug and (key == "f10") then
 
 	elseif allowdebug and (key == "f11") then
-		if love.keyboard.isDown("l" .. ctrl) then
+		if love.keyboard.isDown(lctrl) then
 			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
@@ -3756,6 +3826,35 @@ function love.keypressed(key)
 		end
 	elseif state == 32 and key == "l" then
 		assets_graphicsloaddialog()
+	elseif state == 33 then
+		if key == "escape" or key == "return" then
+			exitlanguageoptions()
+		elseif key == "up" or key == "down" then
+			local curlang
+			for k,v in pairs(alllanguages) do
+				if v == s.lang then
+					curlang = k
+					break
+				end
+			end
+			if curlang == nil then
+				changelanguage("English")
+			else
+				local newlang
+				if key == "up" then
+					newlang = curlang - 1
+					if newlang < 1 then
+						newlang = #alllanguages
+					end
+				elseif key == "down" then
+					newlang = curlang + 1
+					if newlang > #alllanguages then
+						newlang = 1
+					end
+				end
+				changelanguage(alllanguages[newlang])
+			end
+		end
 	end
 end
 
@@ -3771,7 +3870,7 @@ function love.keyreleased(key)
 		mouselockx = -1
 	elseif key == "[" then
 		mouselocky = -1
-	elseif nodialog and (key == "lshift" or key == "l" .. ctrl) then
+	elseif nodialog and (key == "lshift" or key == lctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
 	elseif key == "return" then
