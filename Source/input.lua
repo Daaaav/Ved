@@ -328,17 +328,9 @@ function input.movex(id, chars)
 		x = #line
 	end
 
-	x = math.min(math.max(x, 0), #line)
-
-	local byteoffset
+	x = math.min(math.max(x, 0), utf8.len(line))
 	x = x + chars
-	if x > 0 and x < #line then
-		byteoffset = utf8.offset(line, x)
-	end
-	if byteoffset then
-		x = byteoffset
-	end
-	x = math.min(math.max(x, 0), #line)
+	x = math.min(math.max(x, 0), utf8.len(line))
 
 	if multiline then
 		inputpos[id][1] = x
