@@ -1889,6 +1889,10 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
+	if input.active then
+		cursorflashtime = (cursorflashtime+dt) % 1
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
