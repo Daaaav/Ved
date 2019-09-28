@@ -35,41 +35,56 @@ function drawmap()
 			-- Draw one thing if there is one, draw two if there is two,
 			-- draw three if there is three.
 			-- Else, just draw the number instead.
-			if selectedtool == 4 and map_trinkets[mry][mrx] > 0 then
-				if map_trinkets[mry][mrx] == 1 then
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 16) / 2, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
-				elseif map_trinkets[mry][mrx] == 2 then
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 2*16) / 3, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 2*16) / 3 + 16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
-				elseif map_trinkets[mry][mrx] == 3 then
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 3*16) / 4, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 3*16) / 4 + 16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
-					drawentitysprite(22, mapxoffset + screenoffset + mrx*mapscale*640 + 3 * (mapscale*640 - 3*16) / 4 + 2*16, mapyoffset + mry*mapscale*480 + (mapscale*480 - 16) / 2, true)
+			if (selectedtool == 4 and map_trinkets[mry][mrx] > 0)
+			or (selectedtool == 16 and map_crewmates[mry][mrx][1] > 0)
+			or (selectedtool == 17 and mrx == startx and mry == starty) then
+				-- Having mystrious variables like "widthb" is still better than what this code looked like before, without abstraction at all.
+				local amount, sprite, width, widthb, extray, scalesubtract, colorfunc
+
+				if selectedtool == 4 then
+					amount = map_trinkets[mry][mrx]
+					sprite = 22
+					width = 16
+					widthb = 16
+					extray = 0
+					scalesubtract = 16
+					colorfunc = function(n) end
+				elseif selectedtool == 16 then
+					amount = map_crewmates[mry][mrx][1]
+					sprite = 144
+					width = 10
+					widthb = 12
+					extray = -2
+					scalesubtract = 21
+					colorfunc = function(n)
+						setrescuablecolor(map_crewmates[mry][mrx][2][n])
+					end
 				else
-					love.graphics.printf(map_trinkets[mry][mrx], mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 2, mapscale*640, "center")
+					amount = 1
+					sprite = 3*entitydata[count.startpoint].p1
+					width = 10
+					widthb = 12
+					extray = -2
+					scalesubtract = 21
+					colorfunc = function(n)
+						love.graphics.setColor(132, 181, 255)
+					end
 				end
-			elseif selectedtool == 16 and map_crewmates[mry][mrx][1] > 0 then
-				if map_crewmates[mry][mrx][1] == 1 then
-					setrescuablecolor(map_crewmates[mry][mrx][2][1])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 12) / 2 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21) / 2 - 2, true)
-				elseif map_crewmates[mry][mrx][1] == 2 then
-					setrescuablecolor(map_crewmates[mry][mrx][2][1])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 2*12) / 3 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
-					setrescuablecolor(map_crewmates[mry][mrx][2][2])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 2*12) / 3 + 12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
-				elseif map_crewmates[mry][mrx][1] == 3 then
-					setrescuablecolor(map_crewmates[mry][mrx][2][1])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 3*12) / 4 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
-					setrescuablecolor(map_crewmates[mry][mrx][2][2])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 2 * (mapscale*640 - 3*12) / 4 + 12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
-					setrescuablecolor(map_crewmates[mry][mrx][2][3])
-					drawentitysprite(144, mapxoffset + screenoffset + mrx*mapscale*640 + 3 * (mapscale*640 - 3*12) / 4 + 2*12 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21)/2 - 2, true)
+
+				if amount <= 3 then
+					for i = 1, amount do
+						colorfunc(i)
+
+						drawentitysprite(
+							sprite,
+							mapxoffset + screenoffset + mrx*mapscale*640 + i * (mapscale*640 - amount*widthb) / (amount+1) + (i-1)*widthb - (16-width),
+							mapyoffset + mry*mapscale*480 + (mapscale*480 - scalesubtract)/2 + extray,
+							true
+						)
+					end
 				else
-					love.graphics.printf(map_crewmates[mry][mrx][1], mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 2, mapscale*640, "center")
+					ved_printf(amount, mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 4, mapscale*640, "center")
 				end
-			elseif selectedtool == 17 and mrx == startx and mry == starty then
-				love.graphics.setColor(132, 181, 255)
-				drawentitysprite(3*entitydata[count.startpoint].p1, mapxoffset + screenoffset + mrx*mapscale*640 + (mapscale*640 - 12) / 2 - 6, mapyoffset + mry*mapscale*480 + (mapscale*480-21) / 2 - 2, true)
 			end
 		end
 	end
@@ -186,26 +201,26 @@ function drawmap()
 
 	if (hoverx ~= nil) and (hovery ~= nil) then
 		if s.coords0 then
-			love.graphics.print("(" .. hoverx .. "," .. hovery .. ")", screenoffset+640, 3)
+			ved_print("(" .. hoverx .. "," .. hovery .. ")", screenoffset+640, 1)
 		else
-			love.graphics.print("(" .. (hoverx+1) .. "," .. (hovery+1) .. ")", screenoffset+640, 3)
+			ved_print("(" .. (hoverx+1) .. "," .. (hovery+1) .. ")", screenoffset+640, 1)
 		end
 	end
 	if (hovername ~= nil) then
-		love.graphics.printf(hovername, screenoffset+640, 11, love.graphics.getWidth()-screenoffset-640, "left")
+		ved_printf(hovername, screenoffset+640, 9, love.graphics.getWidth()-screenoffset-640, "left")
 	end
 	if selectingrooms == 1 and selected1x == -1 then
 		-- Copy 1
-		love.graphics.printf(L.SELECTCOPY1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		ved_printf(L.SELECTCOPY1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 	elseif selectingrooms == 1 then
 		-- Copy 2
-		love.graphics.printf(L.SELECTCOPY2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		ved_printf(L.SELECTCOPY2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 	elseif selectingrooms == 2 and selected1x == -1 then
 		-- Swap 1
-		love.graphics.printf(L.SELECTSWAP1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		ved_printf(L.SELECTSWAP1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 	elseif selectingrooms == 2 then
 		-- Swap 2
-		love.graphics.printf(L.SELECTSWAP2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		ved_printf(L.SELECTSWAP2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 	end
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -241,15 +256,15 @@ function drawmap()
 	showhotkey("cC", love.graphics.getWidth()-120+80+6, strip_ypos+8, ALIGN.CENTER)
 	showhotkey("cV", love.graphics.getWidth()-120+96+6, strip_ypos-4, ALIGN.CENTER)
 
-	love.graphics.printf(L.SHIFTROOMS, love.graphics.getWidth()-120, love.graphics.getHeight()-120+4, 8*10, "center")
+	ved_printf(L.SHIFTROOMS, love.graphics.getWidth()-120, love.graphics.getHeight()-120+2, 8*10, "center")
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*10, love.graphics.getHeight()-120+4, 10, 10)
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*13, love.graphics.getHeight()-120+4, 10, 10)
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120-4, 10, 10)
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-120+8*11+4, love.graphics.getHeight()-120+4+8, 10, 10)
-	love.graphics.print(arrow_left, love.graphics.getWidth()-120+8*10+1, love.graphics.getHeight()-120+4+3)
-	love.graphics.print(arrow_right, love.graphics.getWidth()-120+8*13+1, love.graphics.getHeight()-120+4+3)
-	love.graphics.print(arrow_up, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120-4+3)
-	love.graphics.print(arrow_down, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120+4+8+3)
+	ved_print(arrow_left, love.graphics.getWidth()-120+8*10+1, love.graphics.getHeight()-120+4+1)
+	ved_print(arrow_right, love.graphics.getWidth()-120+8*13+1, love.graphics.getHeight()-120+4+1)
+	ved_print(arrow_up, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120-4+1)
+	ved_print(arrow_down, love.graphics.getWidth()-120+8*11+4+1, love.graphics.getHeight()-120+4+8+1)
 
 	-- The buttons are clickable
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -338,9 +353,9 @@ function drawmap()
 				love.graphics.draw(toolimg[actual_t], cx, cy)
 				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and love.window.hasFocus() then
 					love.graphics.setColor(128,128,128,192)
-					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(pluraltoolnames[actual_t]), 8)
+					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font8:getWidth(pluraltoolnames[actual_t]), 8)
 					love.graphics.setColor(255,255,255,255)
-					love.graphics.print(pluraltoolnames[actual_t], love.mouse.getX()+16, love.mouse.getY()-8)
+					ved_print(pluraltoolnames[actual_t], love.mouse.getX()+16, love.mouse.getY()-8)
 				end
 			end
 		end

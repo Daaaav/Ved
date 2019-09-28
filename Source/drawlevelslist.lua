@@ -7,12 +7,12 @@ function drawlevelslist()
 	end
 
 	if not backupscreen then
-		love.graphics.print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
+		ved_print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
 	end
 
 	if not lsuccess and not backupscreen then
 		love.graphics.setColor(255,128,0)
-		love.graphics.printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-136, "left")
+		ved_printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-136, "left")
 		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil
@@ -32,12 +32,12 @@ function drawlevelslist()
 
 		if backupscreen then
 			if currentbackupdir == "" then
-				love.graphics.print(L.BACKUPS, 8, 4)
+				ved_print(L.BACKUPS, 8, 2)
 				currentdir = ".ved-sys" .. dirsep .. "backups"
 			else
-				love.graphics.print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 4)
-				love.graphics.print(L.LASTMODIFIEDTIME, 66, 15)
-				love.graphics.print(L.OVERWRITTENTIME, 408, 15)
+				ved_print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 2)
+				ved_print(L.LASTMODIFIEDTIME, 66, 13)
+				ved_print(L.OVERWRITTENTIME, 408, 13)
 				currentdir = currentbackupdir
 			end
 		else
@@ -65,7 +65,7 @@ function drawlevelslist()
 				20.5+font8:getWidth(L.RECENTLYOPENED), love.graphics.getHeight()-lessheight+34.5
 			)
 			love.graphics.setColor(255,255,255)
-			love.graphics.print(L.RECENTLYOPENED, 18, love.graphics.getHeight()-(lessheight-25)+8)
+			ved_print(L.RECENTLYOPENED, 18, love.graphics.getHeight()-(lessheight-23)+8)
 			love.graphics.setScissor(8, love.graphics.getHeight()-(lessheight-23)+12, hoverarea, lessheight-48-12)
 
 			local removerecent
@@ -80,7 +80,11 @@ function drawlevelslist()
 					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
 					love.graphics.setColor(255,255,0)
 				end
-				display_levels_list_string(displayable_filename(v) .. ".vvvvvv", 18, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
+				display_levels_list_string(
+					displayable_filename(v) .. ".vvvvvv",
+					18, love.graphics.getHeight()-(lessheight-23)+8+8*k,
+					(-#s.recentfiles)+(k-1), width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
+				)
 
 				local actualfile = recentmetadata_files[v]
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
@@ -91,7 +95,11 @@ function drawlevelslist()
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
-						display_levels_list_string(md.Title, metadatax, love.graphics.getHeight()-(lessheight-25)+8+8*k, (-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
+						display_levels_list_string(
+							md.Title,
+							metadatax, love.graphics.getHeight()-(lessheight-23)+8+8*k,
+							(-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
+						)
 					end
 				end
 
@@ -100,7 +108,7 @@ function drawlevelslist()
 					if not (mouseishovering or tabselected == k2) then
 						love.graphics.setColor(128,128,128)
 					end
-					love.graphics.print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+					ved_print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-23)+8+8*k)
 				end
 
 				love.graphics.setColor(255,255,255)
@@ -173,15 +181,19 @@ function drawlevelslist()
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
 								love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
-								love.graphics.print(displayable_filename(v.name), 18, 16+8*k2+levellistscroll)
+								ved_print(displayable_filename(v.name), 18, 14+8*k2+levellistscroll)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
-								love.graphics.print("[" .. k .. "]", 18, 16+8*k2+levellistscroll)
-								love.graphics.print(format_date(v.bu_lastmodified), 66, 16+8*k2+levellistscroll)
-								love.graphics.print(format_date(v.bu_overwritten), 408, 16+8*k2+levellistscroll)
+								ved_print("[" .. k .. "]", 18, 14+8*k2+levellistscroll)
+								ved_print(format_date(v.bu_lastmodified), 66, 14+8*k2+levellistscroll)
+								ved_print(format_date(v.bu_overwritten), 408, 14+8*k2+levellistscroll)
 							end
 						else
-							display_levels_list_string(displayable_filename(v.name), 18, 16+8*k2+levellistscroll, k, width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos)
+							display_levels_list_string(
+								displayable_filename(v.name),
+								18, 14+8*k2+levellistscroll,
+								k, width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
+							)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
@@ -190,14 +202,18 @@ function drawlevelslist()
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
-									display_levels_list_string(v.metadata.Title, metadatax, 16+8*k2+levellistscroll, k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos)
+									display_levels_list_string(
+										v.metadata.Title,
+										metadatax, 14+8*k2+levellistscroll,
+										k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
+									)
 								end
 							end
 
 							if not (mouseishovering or tabselected == k2) then
 								love.graphics.setColor(128,128,128)
 							end
-							love.graphics.print(format_date(v.lastmodified), lastmodifiedx, 16+8*k2+levellistscroll)
+							ved_print(format_date(v.lastmodified), lastmodifiedx, 14+8*k2+levellistscroll)
 						end
 
 
@@ -246,12 +262,12 @@ function drawlevelslist()
 							-- Wasn't found, apparently
 						elseif files[currentdir][recentmetadata_files[recentname]] ~= nil and files[currentdir][recentmetadata_files[recentname]].metadata ~= nil then
 							md = files[currentdir][recentmetadata_files[recentname]].metadata
-							topy = love.graphics.getHeight()-(lessheight-25)+16+8*(#s.recentfiles+preferred_k+1)
+							topy = love.graphics.getHeight()-(lessheight-23)+16+8*(#s.recentfiles+preferred_k+1)
 						end
 					end
 				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
 					md = files[currentdir][preferred_k].metadata
-					topy = 24+8*preferred_k_location+levellistscroll
+					topy = 22+8*preferred_k_location+levellistscroll
 				end
 				if preferred_k < 0 then
 					filename = anythingbutnil(s.recentfiles[#s.recentfiles+preferred_k+1]) .. ".vvvvvv"
@@ -272,7 +288,7 @@ function drawlevelslist()
 						topy = topy-56
 					end
 					love.graphics.setColor(73,73,73,224)
-					love.graphics.rectangle("fill", metadatax, topy-2, 40*8, 6*8)
+					love.graphics.rectangle("fill", metadatax, topy, 40*8, 6*8)
 					love.graphics.setColor(255,255,255,255)
 					if md.success then
 						if preferred_k ~= current_scrolling_leveltitle_k then
@@ -285,14 +301,14 @@ function drawlevelslist()
 							end
 							current_scrolling_leveltitle_pos= 168
 						end
-						love.graphics.print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
-						love.graphics.printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
-						love.graphics.print(anythingbutnil(md.website), metadatax, topy+8)
-						love.graphics.print(anythingbutnil(md.Desc1), metadatax, topy+24)
-						love.graphics.print(anythingbutnil(md.Desc2), metadatax, topy+32)
-						love.graphics.print(anythingbutnil(md.Desc3), metadatax, topy+40)
+						ved_print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
+						ved_printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
+						ved_print(anythingbutnil(md.website), metadatax, topy+8)
+						ved_print(anythingbutnil(md.Desc1), metadatax, topy+24)
+						ved_print(anythingbutnil(md.Desc2), metadatax, topy+32)
+						ved_print(anythingbutnil(md.Desc3), metadatax, topy+40)
 					else
-						love.graphics.printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
+						ved_printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
 			else
@@ -330,7 +346,7 @@ function drawlevelslist()
 	end
 
 	if not backupscreen then
-		love.graphics.print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-18)
+		ved_print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-20)
 		if nodialog then
 			startinputonce()
 		end
@@ -378,9 +394,6 @@ function drawlevelslist()
 		end
 	end
 
-	--love.graphics.print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
-	--love.graphics.print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
-
 	if not secondlevel then
 		rbutton(L.VEDOPTIONS, 0, 40)
 		rbutton(L.PLUGINS, 1, 40)
@@ -391,7 +404,7 @@ function drawlevelslist()
 		end
 		if updatescrollingtext ~= nil then
 			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
-			love.graphics.print(updatescrollingtext, love.graphics.getWidth()-8-math.floor(updatescrollingtext_pos), 288+6)
+			ved_print(updatescrollingtext, love.graphics.getWidth()-8-math.floor(updatescrollingtext_pos), 288+4)
 			love.graphics.setScissor()
 		end
 		if backupscreen then
@@ -416,10 +429,10 @@ function drawlevelslist()
 			love.graphics.setColor(255,128,0)
 		end
 		if not s.pcheckforupdates or opt_disableversioncheck then
-			love.graphics.printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left") -- 40+120+16+3+8+30 = 217
+			ved_printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left") -- 40+120+16+3+8+30 = 217
 		elseif versionchecked ~= nil then		
 			if versionchecked == "connecterror" or versionchecked == "error" then
-				love.graphics.printf(L.VERSIONERROR .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+				ved_printf(L.VERSIONERROR .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 			else
 				if updateversion == nil then
 					updateversion = ""
@@ -458,14 +471,14 @@ function drawlevelslist()
 					end
 				end
 				if updateversion == "latest" then
-					love.graphics.printf(L.VERSIONUPTODATE .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+					ved_printf(L.VERSIONUPTODATE .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 				else
-					love.graphics.printf(langkeys(L.VERSIONOLD, {updateversion}) .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+					ved_printf(langkeys(L.VERSIONOLD, {updateversion}) .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 					updatebutton = true
 				end
 			end
 		else
-			love.graphics.printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 217, 128-16, "left")
+			ved_printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 		end
 		if intermediate_version then
 			love.graphics.setColor(255,255,255)

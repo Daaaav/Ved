@@ -105,7 +105,7 @@ function cDialog:draw(topmost)
 	-- Text
 	self:setColor(0,0,0,255)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
-	love.graphics.printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, "left")
+	ved_printf(self.text, self.x+10, self.y+self.windowani+8, self.width-20, "left")
 	love.graphics.setScissor()
 
 	-- Text boxes
@@ -192,11 +192,11 @@ function cDialog:draw(topmost)
 		else
 			btn_text = v
 		end
-		local textyoffset = 6
+		local textyoffset = 8
 		if font8:getWidth(btn_text) > btnwidth or btn_text:find("\n") ~= nil then
-			textyoffset = 2
+			textyoffset = 4
 		end
-		love.graphics.printf(btn_text, btn_x, btn_y+4+textyoffset, btnwidth, "center")
+		ved_printf(btn_text, btn_x, btn_y+textyoffset, btnwidth, "center")
 		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost, self}
 		if topmost and not self.closing then
 			-- For the Enter key, make sure to put the most prioritized buttons on the left,
@@ -224,9 +224,9 @@ function cDialog:draw(topmost)
 
 	-- Also display the title text (if not empty). Shadow first
 	self:setColor(0,0,0,255, not topmost)
-	love.graphics.print(self.title, self.x+4, self.y+self.windowani-10)
+	ved_print(self.title, self.x+4, self.y+self.windowani-12)
 	self:setColor(255,255,255,255, not topmost)
-	love.graphics.print(self.title, self.x+3, self.y+self.windowani-11)
+	ved_print(self.title, self.x+3, self.y+self.windowani-13)
 end
 
 function cDialog:update(dt, topmost)
@@ -367,7 +367,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		else
 			textcontent = content
 		end
-		love.graphics.printf(anythingbutnil(textcontent), real_x, real_y-1, real_w, "left")
+		ved_printf(anythingbutnil(textcontent), real_x, real_y-1-2, real_w, "left")
 		self:setColor(255,255,255,255)
 		return
 	end
@@ -406,20 +406,20 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		if mode == 0 then
 			love.graphics.setScissor(real_x, real_y-3, real_w, 8)
 			if active then
-				love.graphics.print(
+				ved_print(
 					anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)),
 					math.min(real_x, real_x+real_w-font8:getWidth(anythingbutnil(content) .. "_")),
-					real_y-1
+					real_y-3
 				)
 			else
-				love.graphics.print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-1)
+				ved_print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3)
 			end
 			love.graphics.setScissor()
 		elseif mode == 1 then
 			if not menuitemslabel then
-				love.graphics.print(anythingbutnil(content), real_x, real_y-1)
+				ved_print(anythingbutnil(content), real_x, real_y-3)
 			else
-				love.graphics.print(anythingbutnil(menuitemslabel[content]), real_x, real_y-1)
+				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3)
 			end
 			love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
 		end
@@ -448,7 +448,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			real_w = 16+font8:getWidth(v)
 			self:hoverdraw(topmost, selected and radioon or radiooff, real_x, real_y-11+k*8, real_w, 8)
 			self:setColor(0,0,0,255)
-			love.graphics.print(v, real_x+16, real_y-8+k*8)
+			ved_print(v, real_x+16, real_y-10+k*8)
 			self:setColor(255,255,255,255)
 
 			if (mouseon(real_x, real_y-11+k*8, real_w, 8) and love.mouse.isDown("l") and not mousepressed) and not RCMactive then
@@ -475,7 +475,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			toppath = displayable_filename(content)
 		end
 		love.graphics.setScissor(real_x+12, real_y-1, real_w-12, 8)
-		love.graphics.print(toppath, real_x+real_w-font8:getWidth(toppath), real_y+1)
+		ved_print(toppath, real_x+real_w-font8:getWidth(toppath), real_y-1)
 		love.graphics.setScissor(real_x, real_y+9, real_w-16, 8*list_height)
 		self:setColor(100,100,100,192)
 		--self:setColor(160,160,160,192)
@@ -512,12 +512,12 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 					end
 					self:setColor(0,0,0,255)
 				end
-				love.graphics.print(displayable_filename(v.name), real_x+8, real_y+3+k*8+listscroll)
+				ved_print(displayable_filename(v.name), real_x+8, real_y+1+k*8+listscroll)
 			end
 		end
 		if folder_error ~= "" then
 			self:setColor(192,0,0,255)
-			love.graphics.printf(folder_error, real_x, real_y+11, real_w-16, "left")
+			ved_printf(folder_error, real_x, real_y+9, real_w-16, "left")
 		end
 		love.graphics.setScissor()
 

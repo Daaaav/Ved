@@ -36,6 +36,7 @@ end
 
 function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r, alttextcolor)
 	text_r = anythingbutnil(text_r)
+	local textscale = textsize and 2 or 1
 
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
@@ -51,17 +52,17 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		else
 			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
-		love.graphics.print(docolor and text or text:sub(1, string.len(text)-string.len(text_r)), x, y)
+		ved_print(docolor and text or text:sub(1, string.len(text)-string.len(text_r)), x, y, textscale)
 		offsetchars = string.len(text) - string.len(text_r) + 1
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
 				if cursorflashtime <= .5 then
-					love.graphics.print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y)
+					ved_print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y, textscale)
 				end
 			else
-				love.graphics.print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y)
+				ved_print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y, textscale)
 			end
 		end
 
@@ -102,27 +103,27 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				else
 					setColorArr(s.syntaxcolor_generic)
 				end
-				love.graphics.print(v, x+(offsetchars*(textsize and 16 or 8)), y)
+				ved_print(v, x+(offsetchars*(textsize and 16 or 8)), y, textscale)
 
 				setColorArr(s.syntaxcolor_separator)
-				love.graphics.print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y)
+				ved_print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y, textscale)
 
 				offsetchars = offsetchars + (string.len(v)+1)
 			end
 		end
 
 		if not docolor then
-			love.graphics.print(text:sub(1, string.len(text)-string.len(text_r)), x, y)
+			ved_print(text:sub(1, string.len(text)-string.len(text_r)), x, y, textscale)
 		end
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
 				if cursorflashtime <= .5 then
-					love.graphics.print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+					ved_print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y, textscale)
 				end
 			else
-				love.graphics.print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y)
+				ved_print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y, textscale)
 			end
 		end
 
