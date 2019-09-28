@@ -49,6 +49,7 @@ input_ids = {}
 input_ns = {}
 
 inputpos = {}
+inputsrightmost = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -93,6 +94,7 @@ function input.create(type_, id, initial, ix, iy)
 	cursorflashtime = 0
 	input_ids[#nth_input] = id
 	input_ns[id] = #nth_input
+	inputsrightmost[id] = false
 end
 
 function input.close(id, updatemappings)
@@ -117,6 +119,7 @@ function input.close(id, updatemappings)
 	end
 
 	cursorflashtime = 0
+	inputsrightmost[id] = nil
 end
 
 function input.updatemappings()
@@ -220,34 +223,44 @@ function input.drawcaret(id, x, y, scale, limit, align)
 	local caretx, carety
 	if multiline then
 		carety = inputpos[id][2]
+		local line = inputs[id][carety]
+		local postoget = inputpos[id][1]
+		if inputsrightmost[id] then
+			postoget = #line
+		end
 		if inputpos[id][1] ~= 0 then
 			local thispos = 0
 			local thischar = 0
-			local line = inputs[id][carety]
 			local posfound = false
 			for _ = 1, #line do
 				thispos = thispos + 1
 				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
-				if thispos == inputpos[id][1] then
+				if thispos == postoget then
 					caretx = thischar
 					break
 				end
 			end
-			if caretx == nil then
-				-- Must be coming from a line with more chars
-				-- Just treat it like it's at the end of the line
-				caretx = thisfont:getWidth(line)
-			end
+		elseif not inputsrightmost[id] then
+			caretx = 0
+		end
+		if caretx == nil then
+			-- Must be coming from a line with more chars
+			-- Just treat it like it's at the end of the line
+			caretx = thisfont:getWidth(line)
 		end
 	elseif #lines > 0 then
 		local thispos = 0
 		local thischar = 0
+		local postoget = inputpos[id]
+		if inputsrightmost[id] then
+			postoget = #inputs[id]
+		end
 		local nested_break = false
 		for n, line in pairs(lines) do
 			for _ = 1, #line do
 				thispos = thispos + 1
 				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
-				if thispos == inputpos[id] then
+				if thispos == postoget then
 					caretx = thischar
 					carety = n - 1
 					nested_break = true
@@ -286,6 +299,10 @@ function input.movex(id, chars)
 		line = inputs[id]
 	end
 
+	if inputsrightmost[id] then
+		x = #line
+	end
+
 	x = math.min(math.max(x, 0), #line)
 
 	local byteoffset
@@ -305,6 +322,8 @@ function input.movex(id, chars)
 	end
 
 	cursorflashtime = 0
+
+	inputsrightmost[id] = false
 end
 
 function input.movey(id, chars)
@@ -321,6 +340,26 @@ function input.movey(id, chars)
 	y = math.min(math.max(y, 1), #lines)
 
 	inputpos[id][2] = y
+
+	cursorflashtime = 0
+end
+
+function input.leftmost(id)
+	local multiline = type(inputpos[id]) == "table"
+
+	if multiline then
+		inputpos[id][1] = 0
+	else
+		inputpos[id] = 0
+	end
+
+	cursorflashtime = 0
+
+	inputsrightmost[id] = false
+end
+
+function input.rightmost(id)
+	inputsrightmost[id] = true
 
 	cursorflashtime = 0
 end

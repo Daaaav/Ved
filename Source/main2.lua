@@ -2588,6 +2588,10 @@ function love.keypressed(key)
 			input.movey(input_ids[#nth_input], -1)
 		elseif key == "down" then
 			input.movey(input_ids[#nth_input], 1)
+		elseif key == "home" then
+			input.leftmost(input_ids[#nth_input])
+		elseif key == "end" then
+			input.rightmost(input_ids[#nth_input])
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 1])
 		end
