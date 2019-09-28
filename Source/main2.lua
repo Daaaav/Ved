@@ -123,6 +123,8 @@ function love.load()
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
 	end
+	lctrl = "l" .. ctrl
+	rctrl = "r" .. ctrl
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
@@ -629,10 +631,24 @@ function love.draw()
 		rbutton({L.FLAGS, "F"}, 1)
 
 		ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 84, 112, "center")
-		hoverdraw((scriptdisplay_used and checkon or checkoff), love.graphics.getWidth()-120, 104, 16, 16, 2)
-		ved_print(L.SCRIPTDISPLAY_USED, (love.graphics.getWidth()-120)+24, 108)
-		hoverdraw((scriptdisplay_unused and checkon or checkoff), love.graphics.getWidth()-120, 128, 16, 16, 2)
-		ved_print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 132)
+		checkbox(scriptdisplay_used, love.graphics.getWidth()-120, 104, nil, L.SCRIPTDISPLAY_USED,
+			function(key, newvalue)
+				scriptdisplay_used = newvalue
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_unused = true
+				end
+				changed_scriptdisplay = true
+			end
+		)
+		checkbox(scriptdisplay_unused, love.graphics.getWidth()-120, 128, nil, L.SCRIPTDISPLAY_UNUSED,
+			function(key, newvalue)
+				scriptdisplay_unused = newvalue
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_used = true
+				end
+				changed_scriptdisplay = true
+			end
+		)
 
 		if not (scriptdisplay_used and scriptdisplay_unused) then
 			ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 180, 112, "center")
@@ -663,20 +679,6 @@ function love.draw()
 			elseif onrbutton(0, nil, true) then
 				-- Return
 				tostate(1, true)
-			elseif mouseon(love.graphics.getWidth()-120, 104, 16, 16) then
-				-- Show used
-				scriptdisplay_used = not scriptdisplay_used
-				if not scriptdisplay_used and not scriptdisplay_unused then
-					scriptdisplay_unused = true
-				end
-				changed_scriptdisplay = true
-			elseif mouseon(love.graphics.getWidth()-120, 128, 16, 16) then
-				-- Show unused
-				scriptdisplay_unused = not scriptdisplay_unused
-				if not scriptdisplay_used and not scriptdisplay_unused then
-					scriptdisplay_used = true
-				end
-				changed_scriptdisplay = true
 			end
 			if changed_scriptdisplay then
 				scriptlistscroll = 0
@@ -711,13 +713,28 @@ function love.draw()
 				false,
 				"autosavecrashlogs",
 				"loadallmetadata",
-				false,
+				"usefontpng",
 				"opaqueroomnamebackground"
 			}
 		) do
 			if v then
-				hoverdraw((s[v] and checkon or checkoff), 8, 8+(24*k), 16, 16, 2)
-				ved_print(L[v:upper()], 8+16+8, 8+(24*k)+4)
+				local label = L[v:upper()]
+				if v == "usefontpng" then
+					label = L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or "")
+				end
+
+				checkbox(s[v], 8, 8+(24*k), v, label,
+					function(key, newvalue)
+						s[key] = newvalue
+						if key == "showfps" then
+							savedwindowtitle = ""
+						elseif key == "usefontpng" and love_version_meets(10) then
+							loadfonts()
+							unloadlanguage()
+							loadlanguage()
+						end
+					end
+				)
 			end
 		end
 
@@ -737,12 +754,6 @@ function love.draw()
 			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
-		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*14), 16, 16, 2)
-		ved_print(
-			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or L.MAKESLANGUAGEUNREADABLE),
-			8+16+8, 8+(24*14)+4
-		)
-
 		ved_print(
 			ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
 			.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
@@ -761,48 +772,7 @@ function love.draw()
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
-			if mouseon(8, 8+(24*1), 16, 16) then
-				-- Dialog animations
-				s.dialoganimations = not s.dialoganimations
-			elseif mouseon(8, 8+(24*2), 16, 16) then
-				-- Flip subtool scrolling direction
-				s.flipsubtoolscroll = not s.flipsubtoolscroll
-			elseif mouseon(8, 8+(24*3), 16, 16) then
-				-- Indicators of tiles in adjacent rooms
-				s.adjacentroomlines = not s.adjacentroomlines
-			elseif mouseon(8, 8+(24*4), 16, 16) then
-				-- Ask before quitting
-				s.neveraskbeforequit = not s.neveraskbeforequit
-			elseif mouseon(8, 8+(24*5), 16, 16) then
-				-- Coords0
-				s.coords0 = not s.coords0
-			elseif mouseon(8, 8+(24*6), 16, 16) then
-				-- Show FPS
-				s.showfps = not s.showfps
-				savedwindowtitle = ""
-			elseif mouseon(8, 8+(24*8), 16, 16) then
-				-- Check for updates
-				s.checkforupdates = not s.checkforupdates
-			elseif mouseon(8, 8+(24*9), 16, 16) then
-				-- Pause drawing when window is unfocused
-				s.pausedrawunfocused = not s.pausedrawunfocused
-			elseif mouseon(8, 8+(24*10), 16, 16) then
-				-- Make backups of level files that are overwritten
-				s.enableoverwritebackups = not s.enableoverwritebackups
-			elseif mouseon(8, 8+(24*12), 16, 16) then
-				-- Auto save crash logs
-				s.autosavecrashlogs = not s.autosavecrashlogs
-			elseif mouseon(8, 8+(24*13), 16, 16) then
-				-- Load all metadata
-				s.loadallmetadata = not s.loadallmetadata
-			elseif mouseon(8, 8+(24*14), 16, 16) then
-				-- Use font.png
-				s.usefontpng = not s.usefontpng
-			elseif mouseon(8, 8+(24*15), 16, 16) then
-				-- Make the black roomname backgrounds opaque
-				s.opaqueroomnamebackground = not s.opaqueroomnamebackground
-
-			elseif onrbutton(0) then
+			if onrbutton(0) then
 				-- Save
 				exitvedoptions()
 			elseif onrbutton(2) then
@@ -831,7 +801,8 @@ function love.draw()
 				end
 			elseif onrbutton(3) then
 				-- Language
-				languagedialog()
+				olderstate = oldstate
+				tostate(33)
 			elseif onrbutton(4) then
 				-- Syntax colors
 				olderstate = oldstate
@@ -1031,8 +1002,11 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
 		colorsetting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
-		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
-		ved_print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4)
+		checkbox(s.colored_textboxes, 8, 8+(24*12), "colored_textboxes", L.COLORED_TEXTBOXES,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
 		rbutton({L.BTN_OK, "b"}, 0)
 		rbutton(L.RESETCOLORS, 2)
@@ -1049,9 +1023,6 @@ function love.draw()
 					end
 				end
 				editingcolor = nil
-			elseif mouseon(8, 8+(24*12), 16, 16) then
-				-- Use true textbox colors
-				s.colored_textboxes = not s.colored_textboxes
 			end
 
 			mousepressed = true
@@ -1140,15 +1111,33 @@ function love.draw()
 			)
 		end
 
-		hoverdraw((nonintscale and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
-		ved_print(L.NONINTSCALE, 8+16+8, 8+(24*2)+4)
+		checkbox(nonintscale, 8, 8+(24*2), nil, L.NONINTSCALE,
+			function(key, newvalue)
+				nonintscale = newvalue
+				if nonintscale then
+					startinput()
+					input = tostring(s.scale)
+				else
+					stopinput()
+					s.scale = math.floor(num_scale)
+					if s.scale <= 0 then
+						s.scale = 1
+					end
+				end
+			end
+		)
 
-		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
-		ved_print(L.SMALLERSCREEN, 8+16+8, 8+(24*3)+4)
+		checkbox(s.smallerscreen, 8, 8+(24*3), "smallerscreen", L.SMALLERSCREEN,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
-		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
-		ved_print(L.FORCESCALE, 8+16+8, 8+(24*4)+4)
-
+		checkbox(s.forcescale, 8, 8+(24*4), "forcescale", L.FORCESCALE,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
 		if nonintscale then
 			num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
@@ -1226,26 +1215,7 @@ function love.draw()
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
-			if mouseon(8, 8+(24*2), 16, 16) then
-				-- Non-int scaling
-				nonintscale = not nonintscale
-				if nonintscale then
-					startinput()
-					input = tostring(s.scale)
-				else
-					stopinput()
-					s.scale = math.floor(num_scale)
-					if s.scale <= 0 then
-						s.scale = 1
-					end
-				end
-			elseif mouseon(8, 8+(24*3), 16, 16) then
-				-- Smaller screen
-				s.smallerscreen = not s.smallerscreen
-			elseif mouseon(8, 8+(24*4), 16, 16) then
-				-- Force scale settings
-				s.forcescale = not s.forcescale
-			elseif onrbutton(0) then
+			if onrbutton(0) then
 				-- Save
 				exitdisplayoptions()
 			end
@@ -1691,18 +1661,12 @@ function love.draw()
 
 			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 			local check_x = love.graphics.getWidth()-64-check_w/2
-			hoverdraw(
-				(imageviewer_showwhite and checkoff or checkon),
-				check_x, love.graphics.getHeight()-288, 16, 16, 2
+			checkbox(imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
+				function(key, newvalue)
+					imageviewer_showwhite = newvalue
+				end
 			)
 			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
-			ved_print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-284)
-
-			if nodialog and love.mouse.isDown("l") and not mousepressed
-			and mouseon(check_x, love.graphics.getHeight()-288, 16, 16) then
-				imageviewer_showwhite = not imageviewer_showwhite
-				mousepressed = true
-			end
 
 			ved_printf(
 				L.GRID,
@@ -1764,19 +1728,65 @@ function love.draw()
 			end
 		end
 	elseif state == 33 then
-		ved_print(L.LANGUAGE, 16, 16+4)
+		local language_x = love.graphics.getWidth()/2-64-widestlang
+		ved_print(L.LANGUAGE, language_x, 32+4)
 
 		for k,v in pairs(alllanguages) do
-			local clickable_w = 8+16+font8:getWidth(v)
-			hoverdraw(s.lang == v and radioon_hq or radiooff_hq, 16, 16+(24*k), clickable_w, 16)
-			if s.lang == v then
-				love.graphics.setColor(255,255,128)
+			radio(s.lang == v, language_x, 32+(24*k), v, v,
+				function(key)
+					changelanguage(v)
+				end
+			)
+		end
+
+		local dateformat_x = love.graphics.getWidth()/2+64
+		local year = os.date("%Y")
+		ved_print(L.DATEFORMAT, dateformat_x, 32+4)
+
+		for k,v in pairs({
+			{"YMD", year .. "-12-31"},
+			{"DMY", "31-12-" .. year},
+			{"MDY", "12/31/" .. year},
+		}) do
+			radio(s.new_dateformat == v[1], dateformat_x, 32+(24*k), v[1], v[2],
+				function(key)
+					s.new_dateformat = v[1]
+				end
+			)
+		end
+
+		ved_print(L.TIMEFORMAT, dateformat_x, 32+96+24+4)
+
+		for k,v in pairs({
+			{24, "23:59"},
+			{12, "11:59pm"}
+		}) do
+			radio(s.new_timeformat == v[1], dateformat_x, 32+96+24+(24*k), v[1], v[2],
+				function(key)
+					s.new_timeformat = v[1]
+				end
+			)
+		end
+
+		local bottomleft_text = L.TRANSLATIONCREDIT
+		if s.lang == "English" then
+			-- Yeah, hardcoded text!
+			bottomleft_text = "Want to help translate Ved? Please contact Dav999!"
+		end
+
+		ved_printf(bottomleft_text, 64, love.graphics.getHeight()-40, love.graphics.getWidth()-128, "center")
+
+
+		rbutton({L.BTN_OK, "b"}, 0)
+
+
+		if nodialog and not mousepressed and love.mouse.isDown("l") then
+			if onrbutton(0) then
+				-- Save
+				exitlanguageoptions()
 			end
-			ved_print(v, 16+16+8, 16+(24*k)+4)
-			love.graphics.setColor(255,255,255)
-			if mouseon(16, 16+(24*k), clickable_w, 16) and love.mouse.isDown("l") then
-				s.lang = v
-			end
+
+			mousepressed = true
 		end
 	else
 		statecaught = false
@@ -1989,7 +1999,10 @@ function love.update(dt)
 	end
 
 	if state == -2 and settings_ok then
-		if opt_loadlevel ~= nil then
+		if not s.langchosen or opt_forcelanguagescreen then
+			opt_forcelanguagescreen = false
+			tostate(33)
+		elseif opt_loadlevel ~= nil then
 			if opt_loadlevel:sub(1, levelsfolder:len()) == levelsfolder then
 				opt_loadlevel = opt_loadlevel:sub(levelsfolder:len()+2, -1)
 			end
@@ -2553,9 +2566,9 @@ function love.keypressed(key)
 	keyva.keypressed(key)
 
 	-- DEBUG FOR FPS CAP
-	if allowdebug and key == "pagedown" and love.keyboard.isDown("r" .. ctrl) then
+	if allowdebug and key == "pagedown" and love.keyboard.isDown(rctrl) then
 		s.fpslimit_ix = (s.fpslimit_ix % 4) + 1
-	elseif allowdebug and key == "pageup" and love.keyboard.isDown("r" .. ctrl) then
+	elseif allowdebug and key == "pageup" and love.keyboard.isDown(rctrl) then
 		debug.debug()
 	end
 
@@ -2915,7 +2928,7 @@ function love.keypressed(key)
 		end
 	elseif nodialog and editingroomtext == 0 and not editingroomname and state == 1 and keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
-		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown("r" .. ctrl) then
+		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown(rctrl) then
 			tilespicker_shortcut = true
 		end
 
@@ -3147,7 +3160,7 @@ function love.keypressed(key)
 		end
 		editingroomtext = 0
 		stopinput()
-	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown("l" .. ctrl) then
+	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown(lctrl) then
 		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata_get(roomx, roomy).tileset] .. " ***")
 		cons("First select the wall tiles")
 
@@ -3167,7 +3180,7 @@ function love.keypressed(key)
 		selectedtool = 1
 
 		mousepressed = false
-	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown("l" .. ctrl) then
+	elseif allowdebug and state == 1 and key == "'" and love.keyboard.isDown(lctrl) then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
 			cons("==== " .. k .. " ====")
@@ -3646,7 +3659,7 @@ function love.keypressed(key)
 	elseif allowdebug and (key == "f10") then
 
 	elseif allowdebug and (key == "f11") then
-		if love.keyboard.isDown("l" .. ctrl) then
+		if love.keyboard.isDown(lctrl) then
 			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
@@ -3765,6 +3778,35 @@ function love.keypressed(key)
 		end
 	elseif state == 32 and key == "l" then
 		assets_graphicsloaddialog()
+	elseif state == 33 then
+		if key == "escape" or key == "return" then
+			exitlanguageoptions()
+		elseif key == "up" or key == "down" then
+			local curlang
+			for k,v in pairs(alllanguages) do
+				if v == s.lang then
+					curlang = k
+					break
+				end
+			end
+			if curlang == nil then
+				changelanguage("English")
+			else
+				local newlang
+				if key == "up" then
+					newlang = curlang - 1
+					if newlang < 1 then
+						newlang = #alllanguages
+					end
+				elseif key == "down" then
+					newlang = curlang + 1
+					if newlang > #alllanguages then
+						newlang = 1
+					end
+				end
+				changelanguage(alllanguages[newlang])
+			end
+		end
 	end
 end
 
@@ -3780,7 +3822,7 @@ function love.keyreleased(key)
 		mouselockx = -1
 	elseif key == "[" then
 		mouselocky = -1
-	elseif nodialog and (key == "lshift" or key == "l" .. ctrl) then
+	elseif nodialog and (key == "lshift" or key == lctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
 	elseif key == "return" then
