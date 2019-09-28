@@ -507,14 +507,14 @@ RENAMESCRIPTREFERENCES = "Rename references",
 PLATFORMSPEEDSLIDER = "Spd.:",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets",
+LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
 LISTOFALLTRINKETS = "List of all trinkets",
 NOTRINKETSINLEVEL = "There are no trinkets in this level.",
 CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all rescuables",
+LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "List of all rescuable crewmates",
 NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms",
+SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
 
 
 }

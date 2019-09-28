@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-09-22 00:14:39 (CEST)
+--- Last converted: 2019-09-26 17:43:00 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -521,14 +521,14 @@ RENAMESCRIPTREFERENCES = "Verwĳzingen hernoemen",
 PLATFORMSPEEDSLIDER = "Tempo",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets",
-LISTOFALLTRINKETS = "List of all trinkets",
-NOTRINKETSINLEVEL = "There are no trinkets in this level.",
-CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all rescuables",
-LISTOFALLCREWMATES = "List of all rescuable crewmates",
-NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms",
+LISTALLTRINKETS = "Alle trinkets vinden", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Lĳst met alle trinkets",
+NOTRINKETSINLEVEL = "Er zĳn geen trinkets in dit level.",
+CREWMATES = "Bemanning",
+LISTALLCREWMATES = "Alle leden vinden", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Lĳst met alle bemanningsleden",
+NOCREWMATESINLEVEL = "Er zĳn geen bemanningsleden in dit level.",
+SHIFTROOMS = "Kamers verschuiven", -- In the map. Move all rooms in the entire level in any direction
 
 
 }

@@ -371,4 +371,3 @@ end
 constraindisplaysettings()
 
 s.pcheckforupdates = s.checkforupdates
-s.plang = s.lang

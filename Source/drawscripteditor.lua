@@ -1,27 +1,19 @@
 function drawscripteditor()
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.print(L.SCRIPTEDITOR .. " - " .. scriptname, 8, 8)
-	--love.graphics.print(L.FILE .. "   " .. L.EDIT .. "   " .. L.INSERT .. "   " .. L.HELP, 8, 24)
-	-- Script display starts at 8, 48 --- now 24 instead of 48
-	--for k,v in pairs(scriptlines) do
+	ved_print(L.SCRIPTEDITOR .. " - " .. scriptname, 8, 8)
 
 	-- This can roll over, prevent that!
 	local textlinestogo = 0
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
 	if textsize then
-		love.graphics.line(42*16-9, 24, 42*16-9, love.graphics.getHeight())
+		love.graphics.line(42*16-9, 24, 42*16-12, love.graphics.getHeight())
 	else
 		love.graphics.line(42*8, 24, 42*8, love.graphics.getHeight())
 	end
 
 	-- The comment below is a bad way of doing it.
 	love.graphics.setScissor(0, 24, love.graphics.getWidth(), love.graphics.getHeight()-24)
-
-	-- Are we displaying with large text?
-	if textsize then
-		love.graphics.setFont(font16)
-	end
 
 	local textq, textc, alttextcolor, lasttextcolor
 
@@ -83,10 +75,10 @@ function drawscripteditor()
 			end
 
 			if textsize then
-				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8)
+				ved_print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8, 2)
 				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			else
-				love.graphics.print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
+				ved_print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
 				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
@@ -113,9 +105,9 @@ function drawscripteditor()
 				end
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if textsize then
-					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+5, 6, textq*16)
+					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+8, 6, textq*16)
 				else
-					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+6, 3, textq*8)
+					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+8, 3, textq*8)
 				end
 			end
 		elseif textlinestogo > 0 then
@@ -123,11 +115,6 @@ function drawscripteditor()
 		else
 			alttextcolor = false
 		end
-	end
-
-	-- Put an end to the madness
-	if textsize then
-		love.graphics.setFont(font8)
 	end
 
 	love.graphics.setScissor()
@@ -144,14 +131,14 @@ function drawscripteditor()
 	-- Now put some buttons on the right!
 	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
-	love.graphics.printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4+2, 128-16, "center")
+	ved_printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4, 128-16, "center")
 	if not PleaseDo3DSHandlingThanks then
 		--rbutton(L.NEW, 1)
 		rbutton(L.SCRIPTUSAGES, 1)
 	else
 		rbutton(L.OPEN, 1)
 	end
-	love.graphics.printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4+2, 128-16, "center")
+	ved_printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4, 128-16, "center")
 	rbutton({L.COPYSCRIPT, "cA"}, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
 	if not PleaseDo3DSHandlingThanks then
 		rbutton(L.SCRIPTSPLIT, 4)
@@ -163,9 +150,9 @@ function drawscripteditor()
 		rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, cutscenebarsinternalscript)
 	end
 	--hoverrectangle(internalscript and 160 or 128, internalscript and 160 or 128, internalscript and 0 or 128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
-	--love.graphics.printf((internalscript and L.INTERNALOFF or L.INTERNALON), love.graphics.getWidth()-(128-8), 8+(24*8)+4+2, 128-16, "center")
+	--ved_printf((internalscript and L.INTERNALOFF or L.INTERNALON), love.graphics.getWidth()-(128-8), 8+(24*8)+4, 128-16, "center")
 	--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
-	love.graphics.printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4+2, 128-16, "center")
+	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
 	rbutton(textsize and L.TEXTSIZEL or L.TEXTSIZEN, 11)
 
@@ -182,13 +169,13 @@ function drawscripteditor()
 			if intscrwarncache_warn_noloadscript then
 				warnmessage = warnmessage .. L.INTSCRWARNING_NOLOADSCRIPT
 			end
-			love.graphics.printf(warnmessage, love.graphics.getWidth()-(128-8), ((love.graphics.getHeight()-(24*2))+4+2)-24-40, 128-16, "left")
+			ved_printf(warnmessage, love.graphics.getWidth()-(128-8), ((love.graphics.getHeight()-(24*2))+4)-24-40, 128-16, "left")
 			love.graphics.setColor(255,255,255)
 		end
 	end
 
 	-- Column
-	love.graphics.printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4+2, 128-16, "left")
+	ved_printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")
 
 	if not PleaseDo3DSHandlingThanks then
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -315,7 +302,7 @@ function drawscripteditor()
 	end
 
 	if context == "script" then
-		love.graphics.printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
+		ved_printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		if not scriptinstack(carg1) then
 			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
@@ -326,7 +313,7 @@ function drawscripteditor()
 		end
 	elseif context == "flagscript" then
 		if carg2 ~= nil and carg2 ~= "" then
-			love.graphics.printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
+			ved_printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg2) then
 				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
@@ -338,7 +325,7 @@ function drawscripteditor()
 		end
 	elseif context == "roomscript" then
 		if carg3 ~= nil and carg3 ~= "" then
-			love.graphics.printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4+2, 128-16, "center")
+			ved_printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg3) then
 				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "cx"}, 13)
 
@@ -380,7 +367,7 @@ function drawscripteditor()
 				disp_carg1 = carg1+1
 				disp_carg2 = carg2+1
 			end
-			love.graphics.printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+64, 80, "center")
+			ved_printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+62, 80, "center")
 		end
 	end
 end

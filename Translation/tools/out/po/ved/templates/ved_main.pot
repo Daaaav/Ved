@@ -1798,6 +1798,7 @@ msgctxt "L.TRINKETS"
 msgid "Trinkets"
 msgstr ""
 
+#. "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
 msgctxt "L.LISTALLTRINKETS"
 msgid "List all trinkets"
 msgstr ""
@@ -1814,8 +1815,9 @@ msgctxt "L.CREWMATES"
 msgid "Crewmates"
 msgstr ""
 
+#. "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 msgctxt "L.LISTALLCREWMATES"
-msgid "List all rescuables"
+msgid "List all crewmates"
 msgstr ""
 
 msgctxt "L.LISTOFALLCREWMATES"
@@ -1826,6 +1828,7 @@ msgctxt "L.NOCREWMATESINLEVEL"
 msgid "There are no rescuable crewmates in this level."
 msgstr ""
 
+#. In the map. Move all rooms in the entire level in any direction
 msgctxt "L.SHIFTROOMS"
 msgid "Shift rooms"
 msgstr ""

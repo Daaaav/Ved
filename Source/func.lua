@@ -195,7 +195,7 @@ function love.graphics.UTF8debugprint(text, x, y)
 		end
 	end
 
-	love.graphics.print(displaythis, x, y)
+	ved_print(displaythis, x, y)
 end
 --
 
@@ -428,7 +428,7 @@ function loadstate(new, ...)
 		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
-		lsuccess = getlevelsfolder()
+		lsuccess = directory_exists(vvvvvvfolder, "levels")
 		if lsuccess then
 			lerror = 0
 		else
@@ -752,7 +752,7 @@ function loadlevelsfolder()
 	if allmetadata_inchannel ~= nil then
 		allmetadata_inchannel:clear()
 	end
-	lsuccess = getlevelsfolder()
+	lsuccess = directory_exists(vvvvvvfolder, "levels")
 	if lsuccess then
 		files = listlevelfiles(levelsfolder)
 	else
@@ -964,19 +964,6 @@ function loadwarpbgs()
 	end
 end
 
-function loadfontpng()
-	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. "font.png")
-
-	if not readsuccess then
-		return false
-	end
-
-	-- The following function can be found in imagefont.lua
-	convertfontpng(love.image.newImageData(love.filesystem.newFileData(contents, "font.png", "file")))
-
-	return true
-end
-
 function mousein(x1, y1, x2, y2)
 	-- Determines whether mouse is in a box with corners x1,y1 and x2,y2
 	return (love.mouse.getX() >= x1) and (love.mouse.getX() <= x2) and (love.mouse.getY() >= y1) and (love.mouse.getY() <= y2)
@@ -1033,9 +1020,9 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 	end
 
 	-- Text too long to fit?
-	local textyoffset = 6 -- 4+2
+	local textyoffset = 4
 	if (font8:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
-		textyoffset = 2
+		textyoffset = 0
 	end
 
 	local y
@@ -1045,7 +1032,7 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 		y = yoffset+(buttonspacing*pos)
 	end
 	hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), y, 128-16, 16)
-	love.graphics.printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
+	ved_printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
 	if hotkey ~= nil then
 		showhotkey(hotkey, love.graphics.getWidth()-9, y-2, ALIGN.RIGHT)
 	end
@@ -2375,7 +2362,7 @@ function colorsetting(label, pos, mycolor)
 	else
 		love.graphics.setColor(128,128,128)
 	end
-	love.graphics.print(label, 8+32+8, 8+(24*pos)+4+2)
+	ved_print(label, 8+32+8, 8+(24*pos)+4)
 
 	if mouseon(8, 8+(24*pos), 32, 16) then
 		love.graphics.setColor(255,255,255,64)
@@ -2531,7 +2518,7 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 			if s_ge2ten > 99 then
 				tinyprint(s_ge2ten, ox+4, oy+4)
 			else
-				love.graphics.print(s_ge2ten, ox+3, oy+5)
+				ved_print(s_ge2ten, ox+3, oy+3)
 			end
 		else
 			for y = 0, 6 do
@@ -2598,7 +2585,7 @@ function updatewindowicon()
 end
 
 function roomtext_extralines(text)
-	_, thelines = font16:getWrap(text, 40*16)
+	_, thelines = font8:getWrap(text, 40*8)
 
 	-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
 	if type(thelines) == "table" then
@@ -2621,14 +2608,14 @@ end
 
 -- Simply print a string in the tiny font
 function tinyprint(text, x, y)
-	love.graphics.setFont(tinynumbers)
-	love.graphics.print(text, x, y)
-	love.graphics.setFont(font8)
+	ved_setFont(tinynumbers)
+	ved_print(text, x, y)
+	ved_setFont(font8)
 end
 
 function textshadow(text, x, y, largefont)
 	love.graphics.setColor(128,128,128,192)
-	love.graphics.rectangle("fill", x, y, love.graphics.getFont():getWidth(text), largefont and 16 or 8)
+	love.graphics.rectangle("fill", x, y, love.graphics.getFont():getWidth(text)*(largefont and 2 or 1), largefont and 16 or 8)
 	love.graphics.setColor(255,255,255,255)
 end
 
@@ -2827,7 +2814,7 @@ function drawlink(link)
 	love.graphics.setColor(255,255,255,192)
 	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-10, font8:getWidth(link)+8, 10)
 	love.graphics.setColor(0,0,0)
-	love.graphics.print(link, 4, love.graphics.getHeight()-7)
+	ved_print(link, 4, love.graphics.getHeight()-9)
 	love.graphics.setColor(255,255,255)
 end
 
@@ -2934,60 +2921,6 @@ function dirty()
 		unsavedchanges = true
 	end
 end
-
-function temp_print_override()
-	-- This will stop being used later.
-	-- Basically, in LÖVE 0.9 and 0.10, the TTF font is displaced, and the correction for this has
-	-- always been hardcoded. This doesn't happen in 11+, and also doesn't happen for bitmap fonts.
-	-- Plan is to remove the hardcoded offset EVERYWHERE and hijack lg.print[f] for 0.9/0.10 with TTF instead.
-	--
-	-- WARNING!
-	-- Ignore the fact that all the names have '11' in them, this function is used in LÖVE 0.10, too
-
-	function love11_tempfixfontpos(func, ...)
-		local args = {...}
-		local currentfont = love.graphics.getFont()
-		if currentfont == font8 then
-			args[3] = args[3] - 2 -- y
-		elseif currentfont == font16 then
-			args[3] = args[3] - 3
-		end
-		func(unpack(args))
-	end
-
-	if love.graphics.print11 == nil then
-		love.graphics.print11 = love.graphics.print
-	end
-
-	love.graphics.print = function(...)
-		love11_tempfixfontpos(love.graphics.print11, ...)
-	end
-
-	if love.graphics.printf11 == nil then
-		love.graphics.printf11 = love.graphics.printf
-	end
-
-	love.graphics.printf = function(...)
-		love11_tempfixfontpos(love.graphics.printf11, ...)
-	end
-end
-
-function undo_temp_print_override()
-	love11_tempfixfontpos = nil
-
-	if love.graphics.print11 ~= nil then
-		love.graphics.print = love.graphics.print11
-	end
-
-	love.graphics.print11 = nil
-
-	if love.graphics.printf11 ~= nil then
-		love.graphics.printf = love.graphics.printf11
-	end
-
-	love.graphics.printf11 = nil
-end
-
 
 -- Some helper functions for level-specific vars in the metadata entity
 function cast_level_var_type(t, v)
@@ -3184,17 +3117,17 @@ function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos)
 	end
 	if scroll_k == k then
 		love.graphics.setScissor(x, sy, len*8, sh)
-		love.graphics.print(string, x+len*8-math.floor(scroll_pos), y)
+		ved_print(string, x+len*8-math.floor(scroll_pos), y)
 	else
 		if stringtoolong then
 			love.graphics.setScissor(x, sy, (len-1)*8, sh)
 		end
-		love.graphics.print(string, x, y)
+		ved_print(string, x, y)
 	end
 	if stringtoolong then
 		love.graphics.setScissor(sx, sy, sw, sh)
 		if scroll_k ~= k then
-			love.graphics.print(arrow_right, x+(len-1)*8, y)
+			ved_print(arrow_right, x+(len-1)*8, y)
 		end
 	end
 end
@@ -3319,15 +3252,9 @@ end
 function exitvedoptions()
 	saveconfig()
 	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
-		handlefontpng()
-
-		-- Re-execute this bit from main2.lua
-		-- But account for if we're not hijacking
-		if hijack_print or love_version_meets(11) then
-			temp_print_override()
-		else
-			undo_temp_print_override()
-		end
+		loadfonts()
+		unloadlanguage()
+		loadlanguage()
 	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
 		-- Immediately apply the new custom VVVVVV directory.
@@ -3370,7 +3297,7 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 
 	if love.keyboard.isDown("f9") and (nodialog or topmost) then
-		love.graphics.setFont(tinynumbers)
+		ved_setFont(tinynumbers)
 		local hotkey_w = tinynumbers:getWidth(hotkey)
 		if align == ALIGN.RIGHT then
 			x = x - hotkey_w
@@ -3388,92 +3315,13 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 		else
 			love.graphics.setColor(0,0,0,255)
 		end
-		love.graphics.print(hotkey, x+2, y+2)
+		ved_print(hotkey, x+2, y+2)
 		if dialog_obj ~= nil then
 			dialog_obj:setColor(255,255,255,255)
 		else
 			love.graphics.setColor(255,255,255)
 		end
-		love.graphics.setFont(font8)
-	end
-end
-
-function handlefontpng()
-	if s.usefontpng and loadfontpng() then
-		handleasciireplace()
-
-		hijack_print = true
-		fontpng_works = true
-
-		arrow_up = "^"
-		arrow_down = "V"
-		arrow_left = "<"
-		arrow_right = ">"
-	else
-		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
-		font16 = love.graphics.newFont("fonts/Space Station.ttf", 16)
-
-		hijack_print = false
-		fontpng_works = false
-
-		arrow_up = "↑"
-		arrow_down = "↓"
-		arrow_left = "←"
-		arrow_right = "→"
-	end
-
-	-- Update the font to the new object
-	love.graphics.setFont(font8)
-end
-
-function handleasciireplace()
-	--[[
-		If we're using font.png, and the language file defines a function to replace
-		certain non-ASCII characters with ASCII, then apply that to the entire file.
-		Should work fine as anything not translated will be ASCII and shouldn't be replaced.
-		And the fontpng_ascii function itself will be destroyed, but we only use it once so /care.
-		For example, a language may use a small amount of accented characters,
-		but if only ASCII is allowed, would prefer to leave the accent off rather
-		than have that character not be displayed at all.
-		And yes, this means a language file will have to be loaded 3 times (English first)
-	]]
-
-	if fontpng_ascii == nil then
-		fontpng_ascii = function(c) end
-	end
-
-	local any_unsupported = false
-	local readlua = love.filesystem.read("lang/" .. s.lang .. ".lua")
-	if readlua ~= nil then
-		cons("Replacing non-ASCII in language file... Characters unsupported by font.png:")
-		local newlua, replacements = readlua:gsub(
-			"([\194-\244][\128-\191]*)",
-			function(c)
-				if c == "¤" or c == "§" or c == "°" then
-					return
-				end
-
-				local newc = fontpng_ascii(c)
-
-				if newc == nil then
-					any_unsupported = true
-					print(c)
-				end
-				return newc
-			end
-		)
-		if not any_unsupported then
-			print("(All characters apparently supported!)")
-		end
-		cons("Replacements: " .. replacements)
-
-		assert(loadstring(newlua))()
-
-		-- But also load devstrings again, otherwise we might crash during development!
-		-- Don't care as much about the fontpng replacements here...
-		-- Override `require` not wanting to load this file another time >:o
-		package.loaded.devstrings = false
-		ved_require("devstrings")
+		ved_setFont(font8)
 	end
 end
 

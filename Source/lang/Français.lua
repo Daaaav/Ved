@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-09-22 00:14:39 (CEST)
+--- Last converted: 2019-09-26 17:43:00 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -523,14 +523,14 @@ RENAMESCRIPTREFERENCES = "Renommer les références",
 PLATFORMSPEEDSLIDER = "Vit.:",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets",
+LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
 LISTOFALLTRINKETS = "List of all trinkets",
 NOTRINKETSINLEVEL = "There are no trinkets in this level.",
 CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all rescuables",
+LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "List of all rescuable crewmates",
 NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms",
+SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
 
 
 }

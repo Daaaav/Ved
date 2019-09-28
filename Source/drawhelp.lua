@@ -24,7 +24,7 @@ function drawhelp()
 			if helparticlescroll+14+(10*linee) < -1024 or helparticlescroll+14+(10*linee) > 480 then
 				-- Don't render
 			elseif helpeditingline == k then
-				love.graphics.print(s .. __, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+				ved_print(s .. __, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4)
 			elseif s:find("\\") then
 				local imageshift = 0
 				local imagex = 0
@@ -34,6 +34,7 @@ function drawhelp()
 				local rowlinkmodes = {}
 
 				local doublesize = false -- Only used for background colors, the font is just set
+				local textsx, textsy = 1, 1
 
 				local singlecharmode = false
 				local bgexpandmode = false
@@ -42,8 +43,8 @@ function drawhelp()
 
 				for fl = 1, part2:len() do
 					if part2:sub(fl,fl) == "h" then
-						love.graphics.setFont(font16)
 						doublesize = true
+						textsx, textsy = 2, 2
 					elseif part2:sub(fl,fl) == "#" then
 
 					elseif tonumber(part2:sub(fl,fl)) ~= nil then
@@ -175,7 +176,7 @@ function drawhelp()
 						if rowlinkmodes[kn] ~= 1 then
 							-- It's not the link belonging to a link text
 							local currenttextxoffset = textxoffset
-							textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))
+							textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))*textsx
 							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
 
 							if rowcolors[kn] == nil then
@@ -193,7 +194,7 @@ function drawhelp()
 								setColorArr(rowcolors[kn])
 							end
 
-							love.graphics.print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+							ved_print(vn:gsub("¤¤","¤"), 8+200+8+currenttextxoffset+screenxoffset, helparticlescroll+8+(10*linee)+4, textsx, textsy)
 
 							if rowlinkmodes[kn] == 2 and mouseon(bgx, bgy, textxoffset-currenttextxoffset, doublesize and 20 or 10) then
 								if link == nil then
@@ -225,7 +226,7 @@ function drawhelp()
 					if rowcolors[1] ~= nil then
 						if #rowcolors[1] >= 6 then
 							love.graphics.setColor(rowcolors[1][4], rowcolors[1][5], rowcolors[1][6])
-							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
+							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10)
 
 							setColorArr(rowcolors[1])
 						else
@@ -233,10 +234,9 @@ function drawhelp()
 						end
 					end
 
-					love.graphics.print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+					ved_print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4, textsx, textsy)
 
-					--love.graphics.rectangle("line", bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10)
-					if rowlinkmodes[1] == 2 and mouseon(bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤")), doublesize and 20 or 10) then
+					if rowlinkmodes[1] == 2 and mouseon(bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10) then
 						hoveringlink = part1
 						if startinghash then
 							hoveringlink = "#" .. hoveringlink
@@ -244,13 +244,12 @@ function drawhelp()
 					end
 
 					if doublesize then
-						lastheaderwidth = love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))/8
+						lastheaderwidth = love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx/8
 					end
 				end
-				love.graphics.setFont(font8)
 				love.graphics.setColor(192,192,192,255)
 			else
-				love.graphics.print(s, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4+2)
+				ved_print(s, 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4)
 			end
 
 			linee = linee + 1
@@ -274,15 +273,15 @@ function drawhelp()
 				love.graphics.rectangle("fill", love.graphics.getWidth()-140-116-116-20-20-4, love.graphics.getHeight()-28, 116+116+116+20+24, 24)
 
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116-20-20, love.graphics.getHeight()-24, 16, 16)
-				love.graphics.printf(arrow_up, love.graphics.getWidth()-140-116-116-20-20, (love.graphics.getHeight()-24)+4+2, 16, "center")
+				ved_printf(arrow_up, love.graphics.getWidth()-140-116-116-20-20, (love.graphics.getHeight()-24)+4, 16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116-20, love.graphics.getHeight()-24, 16, 16)
-				love.graphics.printf(arrow_down, love.graphics.getWidth()-140-116-116-20, (love.graphics.getHeight()-24)+4+2, 16, "center")
+				ved_printf(arrow_down, love.graphics.getWidth()-140-116-116-20, (love.graphics.getHeight()-24)+4, 16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116-116, love.graphics.getHeight()-24, 128-16, 16)
-				love.graphics.printf(L.RENAME, love.graphics.getWidth()-140-116-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				ved_printf(L.RENAME, love.graphics.getWidth()-140-116-116, (love.graphics.getHeight()-24)+4, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16)
-				love.graphics.printf(L.EDIT, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				ved_printf(L.EDIT, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16)
-				love.graphics.printf(L.DELETE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				ved_printf(L.DELETE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4, 128-16, "center")
 
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-140-116-116-20-20, love.graphics.getHeight()-24, 16, 16) then
@@ -337,9 +336,9 @@ function drawhelp()
 					yellow = true
 				end
 				hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16)
-				love.graphics.printf(L.COPY, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				ved_printf(L.COPY, love.graphics.getWidth()-140-116, (love.graphics.getHeight()-24)+4, 128-16, "center")
 				hoverrectangle(128,128,128,128, love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16)
-				love.graphics.printf(L.SAVE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4+2, 128-16, "center")
+				ved_printf(L.SAVE, love.graphics.getWidth()-140, (love.graphics.getHeight()-24)+4, 128-16, "center")
 
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-140-116, love.graphics.getHeight()-24, 128-16, 16) then
@@ -485,11 +484,11 @@ function drawhelp()
 		else
 			buttonlabel = helppages[rvnum].subj
 		end
-		local textyoffset = 6
+		local textyoffset = 4
 		if font8:getWidth(buttonlabel) > 25*8-28 or buttonlabel:find("\n") ~= nil then
-			textyoffset = 2
+			textyoffset = 0
 		end
-		love.graphics.printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
+		ved_printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
 		if rvnum == 1 then -- Return button
 			showhotkey("b", 8+25*8-28, helplistscroll+8+(24*j)-2, ALIGN.RIGHT)
 		end

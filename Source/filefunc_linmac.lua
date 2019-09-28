@@ -154,9 +154,9 @@ function filepath_from_dialog(folder, name)
 	return folder .. "/" .. name, filename
 end
 
-function getlevelsfolder()
-	-- Returns success. Sets the path variables to what they _should_ be, even if
-	-- they don't exist. That way we can say "check {levelsfolder} exists and try again"
+function setvvvvvvpaths()
+	-- Sets the path variables to what they _should_ be, even if they don't exist.
+	-- That way we can say "check {levelsfolder} exists and try again"
 
 	vvvvvvfolder_expected = userprofile .. standardvvvvvvfolder
 
@@ -170,7 +170,6 @@ function getlevelsfolder()
 	levelsfolder = vvvvvvfolder .. "/levels"
 	graphicsfolder = vvvvvvfolder .. "/graphics"
 	soundsfolder = vvvvvvfolder .. "/sounds"
-	return directory_exists(vvvvvvfolder, "levels")
 end
 
 function directory_exists(where, what)

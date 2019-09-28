@@ -43,11 +43,9 @@ function vvvvvv_textbox(color, x, y, text)
 	end
 
 	-- Now put the text in
-	love.graphics.setFont(font16)
 	for k,v in pairs(text) do
-		love.graphics.print(v, x*2+16, y*2+k*16 +3)
+		ved_print(v, x*2+16, y*2+k*16, 2)
 	end
-	love.graphics.setFont(font8)
 
 	love.graphics.setColor(255,255,255)
 end

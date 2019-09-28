@@ -126,7 +126,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 
 			if displaytilenumbers then
-				love.graphics.print(t, x, y)
+				ved_print(t, x, y)
 			end
 		end
 	end
@@ -212,7 +212,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 
 	-- Here so that other entities won't cover the tooltip
 	if showtooltipof ~= nil then
-		love.graphics.print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
+		ved_print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
 	end
 
 	if scriptname_editingshown then
@@ -258,9 +258,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setFont(font16)
-		love.graphics.print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), x  + 8, y + 3  + 8)
-		love.graphics.setFont(font8)
+		ved_print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), x + 8, y + 8, 2)
 
 		if interact then
 			entityrightclick(
@@ -289,14 +287,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Now indicate what this actually is.
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setFont(font16)
 		if platform_labels[v.p1] ~= nil then
-			love.graphics.print(platform_labels[v.p1], x, y + 3)
+			ved_print(platform_labels[v.p1], x, y, 2)
 		else
 			-- What
-			love.graphics.print("...?", x, y + 3)
+			ved_print("...?", x, y, 2)
 		end
-		love.graphics.setFont(font8)
 
 		if interact then
 			entityrightclick(
@@ -314,9 +310,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(platformimg, platformpart[3], x + 48, y, 0, 2)
 		-- This is a disappearing platform.
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setFont(font16)
-		love.graphics.print("////", x, y + 3)
-		love.graphics.setFont(font8)
+		ved_print("////", x, y, 2)
 		if interact then
 			entityrightclick(
 				x, y,
@@ -464,14 +458,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Roomtext
 		if not bottom2rowstext and (v.y%30 == 28 or v.y%30 == 29) then
 		else
-			love.graphics.setFont(font16)
 			local data = v.data
 			if editingroomtext == k then
 				-- We're editing this text at the moment.
 				data = input .. __
 			end
-			love.graphics.print(data, x, y + 3)
-			love.graphics.setFont(font8)
+			ved_print(data, x, y, 2)
 			if interact then
 				entityrightclick(
 					x, y,
@@ -591,18 +583,16 @@ function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroom
 end
 
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
-	love.graphics.setFont(font16)
 	local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
 		local dispx = math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
 		textshadow(input, dispx, dispy, true)
-		love.graphics.print(input .. __, dispx, dispy+3)
+		ved_print(input .. __, dispx, dispy, 2)
 	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
 		local dispx = math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16)
 		textshadow(v.data, dispx, dispy, true)
-		love.graphics.print(v.data, dispx, dispy+3)
+		ved_print(v.data, dispx, dispy, 2)
 	end
-	love.graphics.setFont(font8)
 end
 
 function displaymapentities()
@@ -704,7 +694,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 				end
 
 				if displaytilenumbers then
-					love.graphics.print(t, x, y)
+					ved_print(t, x, y)
 				end
 			end
 		end
