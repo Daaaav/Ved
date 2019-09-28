@@ -49,7 +49,6 @@ input_ids = {}
 input_ns = {}
 
 inputpos = {}
-inputflash = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -91,7 +90,7 @@ function input.create(type_, id, initial, ix, iy)
 		inputpos[id] = {ix, iy}
 	end
 
-	inputflash[id] = 0
+	cursorflashtime = 0
 	input_ids[#nth_input] = id
 	input_ns[id] = #nth_input
 end
@@ -108,7 +107,6 @@ function input.close(id, updatemappings)
 	table.remove(input_ids, removethisn)
 	input_ns[id] = nil
 	inputpos[id] = nil
-	inputflash[id] = nil
 
 	if updatemappings then
 		input.updatemappings()
@@ -117,6 +115,8 @@ function input.close(id, updatemappings)
 	if #nth_input == 0 then
 		input.active = false
 	end
+
+	cursorflashtime = 0
 end
 
 function input.updatemappings()
@@ -146,7 +146,7 @@ end
 function input.resume()
 	if #nth_input > 0 then
 		input.active = true
-		inputflash[input_ids[#nth_input]] = 0
+		cursorflashtime = 0
 	end
 end
 
@@ -176,7 +176,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		return
 	end
 
-	if inputflash[id] > .5 then
+	if cursorflashtime > .5 then
 		return
 	end
 
