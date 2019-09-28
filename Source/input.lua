@@ -235,3 +235,39 @@ function input.drawcaret(id, x, y, scale, limit, align)
 
 	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight())
 end
+
+function input.movex(id, chars)
+	-- TODO: Uses utf8 module, which is LÖVE 0.9.2+ only
+	if not love_version_meets(9, 2) then
+		return
+	end
+
+	local utf8 = require("utf8")
+
+	local x, y, line
+	if type(inputs[id]) == "table" then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	local byteoffset
+	x = x + chars
+	if x > 0 and x < #line then
+		byteoffset = utf8.offset(line, x)
+	end
+	if byteoffset then
+		x = byteoffset
+	end
+	x = math.min(math.max(x, 0), #line)
+
+	if type(inputs[id]) == "table" then
+		inputpos[id][1] = x
+	else
+		inputpos[id] = x
+	end
+
+	cursorflashtime = 0
+end

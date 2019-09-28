@@ -2573,6 +2573,14 @@ function love.keypressed(key)
 		RCMactive = false
 	end
 
+	if input.active then
+		if key == "left" then
+			input.movex(input_ids[#nth_input], -1)
+		elseif key == "right" then
+			input.movex(input_ids[#nth_input], 1)
+		end
+	end
+
 	if coordsdialog.active and key == "backspace" then
 		coordsdialog.input = coordsdialog.input:sub(1, -2)
 	elseif takinginput and nodialog then
