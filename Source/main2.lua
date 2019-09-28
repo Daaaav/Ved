@@ -2605,6 +2605,10 @@ function love.keypressed(key)
 			input.leftmost(input_ids[#nth_input])
 		elseif key == "end" then
 			input.rightmost(input_ids[#nth_input])
+		elseif key == "backspace" then
+			input.deletechars(input_ids[#nth_input], -1)
+		elseif key == "delete" then
+			input.deletechars(input_ids[#nth_input], 1)
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 1])
 		end

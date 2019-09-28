@@ -1,3 +1,27 @@
+local utf8 = require("utf8")
+
+-- Can we actually get a complete library without having to find the missing pieces ourselves? Jesus fucking christ
+-- http://lua-users.org/lists/lua-l/2014-04/msg00590.html
+function utf8.sub(s,i,j)
+	i = i or 1
+	j = j or -1
+	if i<1 or j<1 then
+		local n = utf8.len(s)
+		if not n then return nil end
+		if i<0 then i = n+1+i end
+		if j<0 then j = n+1+j end
+		if i<0 then i = 1 elseif i>n then i = n end
+		if j<0 then j = 1 elseif j>n then j = n end
+	end
+	if j<i then return "" end
+	i = utf8.offset(s,i)
+	j = utf8.offset(s,j+1)
+	if i and j then return s:sub(i,j-1)
+	elseif i then return s:sub(i)
+	else return ""
+	end
+end
+
 --[[ A brief guide:
 
 Create a new input by doing `input.create(<type>, <id>, [initial], [initial_x], [initial_y])`.
@@ -202,30 +226,6 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		return
 	end
 
-	local utf8 = require("utf8")
-
-	-- Can we actually get a complete library without having to find the missing pieces ourselves? Jesus fucking christ
-	-- http://lua-users.org/lists/lua-l/2014-04/msg00590.html
-	function utf8.sub(s,i,j)
-		i = i or 1
-		j = j or -1
-		if i<1 or j<1 then
-			local n = utf8.len(s)
-			if not n then return nil end
-			if i<0 then i = n+1+i end
-			if j<0 then j = n+1+j end
-			if i<0 then i = 1 elseif i>n then i = n end
-			if j<0 then j = 1 elseif j>n then j = n end
-		end
-		if j<i then return "" end
-		i = utf8.offset(s,i)
-		j = utf8.offset(s,j+1)
-		if i and j then return s:sub(i,j-1)
-		elseif i then return s:sub(i)
-		else return ""
-		end
-	end
-
 	local multiline = type(inputs[id]) == "table"
 
 	scale = scale or 1
@@ -311,8 +311,6 @@ function input.movex(id, chars)
 		return
 	end
 
-	local utf8 = require("utf8")
-
 	local multiline = type(inputpos[id]) == "table"
 
 	local x, y, line
@@ -379,4 +377,71 @@ function input.rightmost(id)
 	inputsrightmost[id] = true
 
 	cursorflashtime = 0
+end
+
+function input.deletechars(id, chars)
+	if chars == 0 then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = #line
+	end
+
+	x = math.min(math.max(x, 0), utf8.len(line))
+
+	local lineremoved = false
+	for _ = 1, math.abs(chars) do
+		if chars > 0 then
+			if x == #line then
+				if multiline and y < #inputs[id] then
+					inputs[id][y] = inputs[id][y] .. inputs[id][y+1]
+					table.remove(inputs[id], y+1)
+					lineremoved = true
+				end
+			else
+				line = utf8.sub(line, 1, x) .. utf8.sub(line, x+2, #line)
+			end
+		else
+			if x == 0 then
+				if multiline and y > 1 then
+					local len_oldline = #inputs[id][y-1]
+					inputs[id][y] = inputs[id][y-1] .. inputs[id][y]
+					table.remove(inputs[id], y-1)
+					y = y - 1
+					x = len_oldline
+					lineremoved = true
+				end
+			else
+				line = utf8.sub(line, 1, x-1) .. utf8.sub(line, x+1, #line)
+				x = x - 1
+			end
+		end
+	end
+
+	if multiline then
+		inputpos[id] = {x, y}
+
+		if not lineremoved then
+			inputs[id][y] = line
+		end
+	else
+		inputs[id] = line
+		inputpos[id] = x
+	end
+
+	cursorflashtime = 0
+
+	inputsrightmost[id] = false
 end
