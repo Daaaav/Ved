@@ -17,6 +17,14 @@ local clargs = {
 		end
 	},
 
+	["l"] = "language-screen",
+	["language-screen"] = {
+		help = "Force showing the language screen on startup",
+		func = function()
+			opt_forcelanguagescreen = true
+		end
+	},
+
 	["n"] = "new",
 	["new"] = {
 		help = "Start with a blank level (unless file name is given)",

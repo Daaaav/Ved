@@ -98,33 +98,6 @@ function dialog.form.rawentityproperties_make()
 	return form
 end
 
-function dialog.form.language_make()
-	local bottomleft_text = L.TRANSLATIONCREDIT
-	if s.lang == "English" then
-		-- Yeah, hardcoded text!
-		bottomleft_text = "Want to help translating Ved? Please contact Dav999!"
-	end
-	local year = os.date("%Y")
-	return {
-		{"language", 0, 0, 30, s.lang, DF.DROPDOWN, getalllanguages()},
-		{"", 0, 3, 40, L.DATEFORMAT, DF.LABEL},
-		{
-			"dateformat", 0, 4, 0, s.new_dateformat, DF.RADIOS,
-			generate_dropdown_tables(
-				{{"YMD", year .. "-12-31"}, {"DMY", "31-12-" .. year}, {"MDY", "12/31/" .. year}}
-			)
-		},
-		{"", 23, 3, 40, L.TIMEFORMAT, DF.LABEL},
-		{
-			"timeformat", 23, 4, 0, s.new_timeformat, DF.RADIOS,
-			generate_dropdown_tables(
-				{{24, "23:59"}, {12, "11:59pm"}}
-			)
-		},
-		{"", 0, 15, 30, bottomleft_text, DF.LABEL}
-	}
-end
-
 function dialog.form.leveloptions_make()
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
@@ -851,21 +824,6 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	-- entdetails[3] is still the ID of this entity
 	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
 	finish_undo("CHANGED ENTITY (PROPERTIES)")
-end
-
-function dialog.callback.language(button, fields)
-	if button == DB.OK then
-		s.new_dateformat = fields.dateformat
-		s.new_timeformat = fields.timeformat
-
-		unloadlanguage()
-		s.lang = fields.language
-		loadlanguage()
-
-		saveconfig()
-
-		loadtinynumbersfont()
-	end
 end
 
 function dialog.callback.leveloptions(button, fields)

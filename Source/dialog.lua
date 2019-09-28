@@ -44,8 +44,8 @@ DF = {
 -- Dialog class
 cDialog =
 {
-	x = (love.graphics.getWidth()-400)/2,
-	y = (love.graphics.getHeight()-150)/2,
+	x = 16,
+	y = 16,
 	width = 400,
 	height = 150,
 	moving = false,
@@ -81,6 +81,9 @@ function cDialog:new(o)
 	for k,v in pairs(o.buttons) do
 		o.buttons_present[v] = true
 	end
+
+	o.x = (love.graphics.getWidth()-400)/2
+	o.y = (love.graphics.getHeight()-150)/2
 
 	-- Offset x and y based on length of dialogs stack
 	local cascade_offset = #dialogs * 14
