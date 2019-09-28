@@ -180,6 +180,11 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		return
 	end
 
+	-- Make sure we're drawing the caret of the currently focused input
+	if id ~= input_ids[#nth_input] then
+		return
+	end
+
 	local multiline = type(inputs[id]) == "table"
 
 	scale = scale or 1
