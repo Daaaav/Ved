@@ -286,6 +286,8 @@ function input.movex(id, chars)
 		line = inputs[id]
 	end
 
+	x = math.min(math.max(x, 0), #line)
+
 	local byteoffset
 	x = x + chars
 	if x > 0 and x < #line then
