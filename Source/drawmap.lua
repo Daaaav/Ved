@@ -99,15 +99,7 @@ function drawmap()
 	-- Just so if we click on a tool in smallerscreen mode,
 	-- we won't click on the room behind it
 	-- (and also we won't highlight the room behind it either if we're not clicking)
-	local mouseontools = false
-	if keyboard_eitherIsDown(ctrl) then
-		for t = 1, 4 do
-			if mouseon(16, (16+(48*(t-1))), 32, 32) then
-				mouseontools = true
-				break
-			end
-		end
-	end
+	local mouseontools = keyboard_eitherIsDown(ctrl) and love.mouse.getX() <= 64
 
 	if nodialog then
 		for mry = 0, metadata.mapheight-1 do
@@ -311,6 +303,10 @@ function drawmap()
 	pluraltoolnames[4] = L.TRINKETS
 	pluraltoolnames[16] = L.CREWMATES
 	if not s.psmallerscreen or keyboard_eitherIsDown(ctrl) then
+		love.graphics.setColor(0, 0, 0, 192)
+		love.graphics.rectangle("fill", 0, 0, 64, love.graphics.getHeight())
+		love.graphics.setColor(255,255,255,255)
+
 		for t = 1, 4 do
 			local actual_t
 			if t == 1 then
