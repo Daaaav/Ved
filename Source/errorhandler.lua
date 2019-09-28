@@ -72,7 +72,7 @@ end
 function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
 
-	if font8 == nil or font16 == nil then
+	if font8 == nil then
 		loadfonts()
 	end
 
@@ -210,6 +210,7 @@ function ved_showerror(msg)
 	end
 
 	love.graphics.reset()
+	ved_setFont(font8)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
@@ -260,30 +261,28 @@ function ved_showerror(msg)
 		end
 
 		-- Title
-		love.graphics.setFont(font16)
 		love.graphics.setColor(0,0,0,255)
-		love.graphics.print(ERR_VEDHASCRASHED, pos+4, pos+4)
+		ved_print(ERR_VEDHASCRASHED, pos+4, pos+4, 2)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.print(ERR_VEDHASCRASHED, pos, pos)
+		ved_print(ERR_VEDHASCRASHED, pos, pos, 2)
 
 		-- Draw a box for the important details
 		love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
-		love.graphics.rectangle("fill", pos-2, pos+40+40-1, love.graphics.getWidth()-(2*pos)+4, 80)
+		love.graphics.rectangle("fill", pos-2, pos+40+40+1, love.graphics.getWidth()-(2*pos)+4, 80)
 
 		-- Main text
-		love.graphics.setFont(font8)
 		love.graphics.setColor(0,0,0,255)
-		love.graphics.printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
+		ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos)
+		ved_printf(p, pos, pos+40, love.graphics.getWidth() - pos)
 
 		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
-			love.graphics.printf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
+			ved_printf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
 			love.graphics.setColor(255,255,255,255)
 		--else
-			--love.graphics.print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
+			--ved_print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
 		end
 
 		if logwassaved ~= nil then
@@ -292,14 +291,14 @@ function ved_showerror(msg)
 				text = text:gsub("/", "\\")
 			end
 			love.graphics.setColor(0,0,0,255)
-			love.graphics.print(text, pos+2, (love.graphics.getHeight()-24)+2)
+			ved_print(text, pos+2, (love.graphics.getHeight()-24)+2)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print(text, pos, love.graphics.getHeight()-24)
+			ved_print(text, pos, love.graphics.getHeight()-24)
 		end
 
 		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
 		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		
-		--love.graphics.print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
+		--ved_print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
 
 		--dialog.draw()
 		--love.graphics.setColor(255,255,255,255)
@@ -365,7 +364,7 @@ end
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
 
-	if font8 == nil or font16 == nil then
+	if font8 == nil then
 		loadfonts()
 	end
 
@@ -456,24 +455,23 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		lg_clear(love.graphics.getBackgroundColor())
 
 		-- Title
-		love.graphics.setFont(font16)
-		love.graphics.setColor(0,0,0,255)
-		--love.graphics.print(ERR_PLUGINERROR, pos+4, pos+4)
+		--love.graphics.setColor(0,0,0,255)
+		--ved_print(ERR_PLUGINERROR, pos+4, pos+4, 2)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.print(ERR_PLUGINERROR, pos, pos)
+		ved_print(ERR_PLUGINERROR, pos, pos, 2)
 
 		-- Draw boxes for the important details
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
-		love.graphics.rectangle("fill", pos-2, pos+40+48-1, love.graphics.getWidth()-(2*pos)+4, 56)
+		love.graphics.rectangle("fill", pos-2, pos+40+48+1, love.graphics.getWidth()-(2*pos)+4, 56)
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
-		love.graphics.rectangle("fill", pos-2, pos+40+47+80, love.graphics.getWidth()-(2*pos)+4, 56+8)
+		love.graphics.rectangle("fill", pos-2, pos+40+49+80, love.graphics.getWidth()-(2*pos)+4, 56+8)
 
 		-- Main text
-		love.graphics.setFont(font8)
-		love.graphics.setColor(0,0,0,255)
-		--love.graphics.printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
+		ved_setFont(font8)
+		--love.graphics.setColor(0,0,0,255)
+		--ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
+		ved_printf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
 
 		--dialog.draw()
 		love.graphics.setColor(255,255,255,255)

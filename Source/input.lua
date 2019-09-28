@@ -233,8 +233,5 @@ function input.drawcaret(id, x, y, scale, limit, align)
 	end
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
-	-- Correct for the Y misalignment correction
-	carety = carety - 3
-
 	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight())
 end

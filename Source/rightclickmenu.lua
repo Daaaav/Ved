@@ -23,11 +23,11 @@ function rightclickmenu.draw()
 				love.graphics.setColor(128,128,128,192)
 				love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, 240, 16) -- 150 -> 188 -> 240
 				love.graphics.setColor(192,192,192,255)
-				love.graphics.print(v:sub(2, -1), RCMx+1, (k-1)*16+RCMy+6)
+				ved_print(v:sub(2, -1), RCMx+1, (k-1)*16+RCMy+4)
 				love.graphics.setColor(255,255,255,255)
 			else
 				hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, 240, 16, true)
-				love.graphics.print(v, RCMx+1, (k-1)*16+RCMy+6)
+				ved_print(v, RCMx+1, (k-1)*16+RCMy+4)
 
 				if not mousepressed and love.mouse.isDown("l") and mouseon(RCMx, (k-1)*16+RCMy, 240, 16) then
 					RCMactive = false

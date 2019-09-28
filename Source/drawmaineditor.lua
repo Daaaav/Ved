@@ -1136,7 +1136,7 @@ function drawmaineditor()
 		local displaytilenumbers, displaysolid
 		if nodialog and editingroomtext == 0 and not editingroomname then
 			if love.keyboard.isDown("n") then
-				love.graphics.setFont(tinynumbers)
+				ved_setFont(tinynumbers)
 				displaytilenumbers = true
 			end
 			if love.keyboard.isDown("j") then
@@ -1208,7 +1208,7 @@ function drawmaineditor()
 		local displaytilenumbers, displaysolid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
-				love.graphics.setFont(tinynumbers)
+				ved_setFont(tinynumbers)
 				displaytilenumbers = true
 			end
 			if love.keyboard.isDown("j") then
@@ -1404,7 +1404,7 @@ function drawmaineditor()
 			end
 		end
 
-		love.graphics.setFont(font8)
+		ved_setFont(font8)
 		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
@@ -1476,9 +1476,7 @@ function drawmaineditor()
 			love.graphics.setColor(160,160,0,128)
 			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, 16 + extralines*16 + 4)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.setFont(font16)
-			love.graphics.printf(temporaryroomname, screenoffset, 29*16 +3 - extralines*16 - 2, 40*16, "center")
-			love.graphics.setFont(font8)
+			ved_printf(temporaryroomname, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
 		elseif editingroomname then
 			-- We're editing this room name! If it doesn't fit, then just make it higher, we're editing it anyway
 			local text = input .. (__:sub(1,1) == "_" and __ or " " .. __:sub(2,-1))
@@ -1491,22 +1489,18 @@ function drawmaineditor()
 				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, extralines*16 + 1)
 			end
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.setFont(font16)
-			love.graphics.printf(text, screenoffset, 29*16 +3 - extralines*16 - 2, 40*16, "center")
-			love.graphics.setFont(font8)
+			ved_printf(text, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
 		elseif hasroomname then
 			-- Display it
 			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
-			local textx = (screenoffset+320)-(font16:getWidth(text)/2)
+			local textx = (screenoffset+320)-font8:getWidth(text) -- We want double font size, /2. So, width of regular font.
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.setFont(font16)
 			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
-			love.graphics.print(text, textx, 29*16 +3-2)
+			ved_print(text, textx, 29*16 -2, 2)
 			love.graphics.setScissor()
-			love.graphics.setFont(font8)
 		end
 
 		-- Display the bottom 2 rows of roomtexts ABOVE the roomname
@@ -1779,17 +1773,13 @@ function drawmaineditor()
 			end
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then
-				-- Ugh this code but we're hovering over it. So display a tooltip, but don't get snipped away by the scissors.
 				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
 				if selectedtool <= 2 and k == 8 then
 					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
 				end
 				love.graphics.setScissor()
 				love.graphics.setColor(128,128,128,192)
-				love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(tooltip_text), 8+(tooltip_text:find("\n") ~= nil and 8 or 0))
-				love.graphics.setColor(255,255,255,255)
-				love.graphics.print(tooltip_text, love.mouse.getX()+16, love.mouse.getY()-8)
-				love.graphics.setScissor(16+64, 16, 32+4, love.graphics.getHeight()-32)
+				thistooltip = tooltip_text
 			end
 		end
 
@@ -1797,9 +1787,12 @@ function drawmaineditor()
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
 			love.graphics.setScissor()
 			love.graphics.setColor(128,128,128,192)
-			love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-10, font8:getWidth(thistooltip), 8) -- string.len(toolnames[t])*8
+			love.graphics.rectangle("fill",
+				love.mouse.getX()+15, love.mouse.getY()-10,
+				font8:getWidth(thistooltip), 8+(thistooltip:find("\n") ~= nil and 8 or 0)
+			)
 			love.graphics.setColor(255,255,255,255)
-			love.graphics.print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-8)
+			ved_print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-10)
 			love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 		end
 
@@ -1924,7 +1917,7 @@ function drawmaineditor()
 	rbutton(not editingroomname and {langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
-	love.graphics.printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+10, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
+	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
 	-- Well make them actually do something!
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -2076,9 +2069,9 @@ function drawmaineditor()
 		elseif selectedtool == 9 then
 			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
 		else
-			love.graphics.print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()-(24*(-2+1))-(160)+6)
-			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(roomsettings.platv) + 8, 16)
-			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()-(24*(-2+1))-(160), "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
+			ved_print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4)
+			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(roomsettings.platv) + 8, 16)
+			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()+24-160, "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
 			local oldplatv = levelmetadata[roomy*20 + roomx+1].platv
 			if roomsettings.platv ~= oldplatv then
 				levelmetadata[roomy*20 + roomx+1].platv = roomsettings.platv
@@ -2096,7 +2089,12 @@ function drawmaineditor()
 			end
 		end
 
-		love.graphics.printf(selectedtool == 4 and L.TRINKETS or selectedtool == 8 and L.ROOMPLATFORMS or selectedtool == 9 and L.ROOMENEMIES or L.CREWMATES, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+6, 128-16, "center") -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4+2 => -156)+6
+		ved_printf(
+			selectedtool == 4 and L.TRINKETS or
+			selectedtool == 8 and L.ROOMPLATFORMS or
+			selectedtool == 9 and L.ROOMENEMIES or L.CREWMATES,
+			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+4, 128-16, "center"
+		) -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4 => -156)+4
 
 		local changedplatv, oldplatv = false, levelmetadata[(roomy)*20 + (roomx+1)].platv
 
@@ -2162,7 +2160,7 @@ function drawmaineditor()
 				-- Enemy type
 				switchenemies()
 				mousepressed = true
-			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv))/2 - 4, love.graphics.getHeight()-(24*(-2+1))-(160), font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv) + 8, 16) and selectedtool == 8 then
+			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv) + 8, 16) and selectedtool == 8 then
 				-- Platform speed
 				dialog.create(
 					L.PLATVCHANGE_MSG,
@@ -2204,33 +2202,33 @@ function drawmaineditor()
 	if s.coords0 then
 		tinyprint("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
-		love.graphics.printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
+		ved_printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	else
 		tinyprint("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
-		love.graphics.printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-8, 56, "right")
+		ved_printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	end
 
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
 	if tilespicker then
 		if (cursorx ~= "--") and (cursory ~= "--") then
-			love.graphics.printf(
+			ved_printf(
 				langkeys(L.TILE, {(cursory*40)+(cursorx+1)-1}),
-				love.graphics.getWidth()-128, love.graphics.getHeight()-8-8, 128, "right"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
-			love.graphics.printf(
+			ved_printf(
 				(issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]) and L.SOLID or L.NOTSOLID),
-				love.graphics.getWidth()-128, love.graphics.getHeight()-8, 128, "right"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
-			love.graphics.printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-8, 128, "right")
+			ved_printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right")
 		end
 	else
-		love.graphics.printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-8, 56, "right")
+		ved_printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
 		if (cursorx ~= "--") and (cursory ~= "--") then
-			love.graphics.printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-8, 72, "right") -- 56+16=72
+			ved_printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right") -- 56+16=72
 		else
-			love.graphics.printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-8, 72, "right")
+			ved_printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
 		end
 	end
 
@@ -2244,17 +2242,19 @@ function drawmaineditor()
 		displaysmalltilespicker(love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, selectedtileset, selectedcolor) -- -(6*16)-16-24-12-8 => -156
 	end
 
-	-- And text below it.
-	--[[
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-2, (6*16), 8)
-	love.graphics.print("<tiles2.png>", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32)
-	]]
-
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
-	love.graphics.printf((tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12+2-8, 6*16, "center")
+	ved_printf(
+		tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset,
+		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12-8, 6*16, "center"
+	)
 
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
-	love.graphics.printf((tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor})), love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8+2-8, 6*16, "center")
+	ved_printf(
+		tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil
+		and tilesetblocks[selectedtileset].colors[selectedcolor].name
+		or langkeys(L.TSCOLOR, {selectedcolor}),
+		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8-8, 6*16, "center"
+	)
 
 	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) then -- -16-32-2-12-8 => -70
 		-- Switch tileset
@@ -2267,28 +2267,35 @@ function drawmaineditor()
 	end
 
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-46, (6*16), 8+4) -- -16-16-2-4-8 => -46
-	love.graphics.printf(tilespicker and L.HIDEALL or L.SHOWALL, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-42, 6*16, "center") -- -16-16-4+2-8 => -42
+	ved_printf(
+		tilespicker and L.HIDEALL or L.SHOWALL,
+		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-44, 6*16, "center"
+	) -- -16-16-4-8 => -44
 
 	showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
 	showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
 	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
-	--love.graphics.printf("Trinkets: " .. anythingbutnil(count.trinkets) .. "/20\nCrewmates: " .. anythingbutnil(count.crewmates) .. "/20", 768, love.graphics.getHeight()-(6*16)-16-24-12-16, 128, "right")
-	love.graphics.printf(L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n" .. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""), 640+screenoffset+2, love.graphics.getHeight()-16-8, 128, "left")
+	ved_printf(
+		L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
+		.. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
+		.. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""),
+		640+screenoffset+2, love.graphics.getHeight()-16-10, 128, "left"
+	)
 
 
 	-- Dropdown for tileset?
 	--[[
 	if dropdown == 1 then
 		--[ [
-		love.graphics.print([ [-1-
+		ved_print([ [-1-
 		 Space St.
 		-2-
 		 Outside
 		 Lab
 		 Warp Zone
-		 Ship] ], love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-2-12-56)
+		 Ship] ], love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-12-56)
 		 ] ]
 		if not nodialog then
 			rightclickmenu.create({"#1", "Space St.", "#2", "Outside", "Lab", "Warp Zone", "Ship"}, "tileset")
