@@ -217,18 +217,26 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		lines = {inputs[id]}
 	end
 
-	local caretx, carety = 0, 0
+	local caretx, carety
 	if multiline then
 		carety = inputpos[id][2]
-		local thispos = 0
-		local thischar = 0
-		local line = inputs[id][carety]
-		for _ = 1, #line do
-			thispos = thispos + 1
-			thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
-			if thispos == inputpos[id][1] then
-				caretx = thischar
-				break
+		if inputpos[id][1] ~= 0 then
+			local thispos = 0
+			local thischar = 0
+			local line = inputs[id][carety]
+			local posfound = false
+			for _ = 1, #line do
+				thispos = thispos + 1
+				thischar = thischar + thisfont:getWidth(line:sub(thispos,thispos))
+				if thispos == inputpos[id][1] then
+					caretx = thischar
+					break
+				end
+			end
+			if caretx == nil then
+				-- Must be coming from a line with more chars
+				-- Just treat it like it's at the end of the line
+				caretx = thisfont:getWidth(line)
 			end
 		end
 	elseif #lines > 0 then
@@ -251,6 +259,9 @@ function input.drawcaret(id, x, y, scale, limit, align)
 			end
 		end
 	end
+	caretx = anythingbutnil0(caretx)
+	carety = anythingbutnil0(carety)
+
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
 	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight())
