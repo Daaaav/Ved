@@ -497,6 +497,7 @@ function drawlevelslist()
 				tostate(15, nil, "plugins")
 			elseif onrbutton(2, 40) then
 				-- Language
+				stopinput()
 				tostate(33)
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
