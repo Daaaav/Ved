@@ -631,10 +631,24 @@ function love.draw()
 		rbutton({L.FLAGS, "F"}, 1)
 
 		ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 84, 112, "center")
-		hoverdraw((scriptdisplay_used and checkon or checkoff), love.graphics.getWidth()-120, 104, 16, 16, 2)
-		ved_print(L.SCRIPTDISPLAY_USED, (love.graphics.getWidth()-120)+24, 108)
-		hoverdraw((scriptdisplay_unused and checkon or checkoff), love.graphics.getWidth()-120, 128, 16, 16, 2)
-		ved_print(L.SCRIPTDISPLAY_UNUSED, (love.graphics.getWidth()-120)+24, 132)
+		checkbox(scriptdisplay_used, love.graphics.getWidth()-120, 104, nil, L.SCRIPTDISPLAY_USED,
+			function(key, newvalue)
+				scriptdisplay_used = newvalue
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_unused = true
+				end
+				changed_scriptdisplay = true
+			end
+		)
+		checkbox(scriptdisplay_unused, love.graphics.getWidth()-120, 128, nil, L.SCRIPTDISPLAY_UNUSED,
+			function(key, newvalue)
+				scriptdisplay_unused = newvalue
+				if not scriptdisplay_used and not scriptdisplay_unused then
+					scriptdisplay_used = true
+				end
+				changed_scriptdisplay = true
+			end
+		)
 
 		if not (scriptdisplay_used and scriptdisplay_unused) then
 			ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 180, 112, "center")
@@ -665,20 +679,6 @@ function love.draw()
 			elseif onrbutton(0, nil, true) then
 				-- Return
 				tostate(1, true)
-			elseif mouseon(love.graphics.getWidth()-120, 104, 16, 16) then
-				-- Show used
-				scriptdisplay_used = not scriptdisplay_used
-				if not scriptdisplay_used and not scriptdisplay_unused then
-					scriptdisplay_unused = true
-				end
-				changed_scriptdisplay = true
-			elseif mouseon(love.graphics.getWidth()-120, 128, 16, 16) then
-				-- Show unused
-				scriptdisplay_unused = not scriptdisplay_unused
-				if not scriptdisplay_used and not scriptdisplay_unused then
-					scriptdisplay_used = true
-				end
-				changed_scriptdisplay = true
 			end
 			if changed_scriptdisplay then
 				scriptlistscroll = 0
@@ -713,13 +713,28 @@ function love.draw()
 				false,
 				"autosavecrashlogs",
 				"loadallmetadata",
-				false,
+				"usefontpng",
 				"opaqueroomnamebackground"
 			}
 		) do
 			if v then
-				hoverdraw((s[v] and checkon or checkoff), 8, 8+(24*k), 16, 16, 2)
-				ved_print(L[v:upper()], 8+16+8, 8+(24*k)+4)
+				local label = L[v:upper()]
+				if v == "usefontpng" then
+					label = L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or "")
+				end
+
+				checkbox(s[v], 8, 8+(24*k), v, label,
+					function(key, newvalue)
+						s[key] = newvalue
+						if key == "showfps" then
+							savedwindowtitle = ""
+						elseif key == "usefontpng" and love_version_meets(10) then
+							loadfonts()
+							unloadlanguage()
+							loadlanguage()
+						end
+					end
+				)
 			end
 		end
 
@@ -739,12 +754,6 @@ function love.draw()
 			int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 		end
 
-		hoverdraw((s.usefontpng and checkon or checkoff), 8, 8+(24*14), 16, 16, 2)
-		ved_print(
-			L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or ""),
-			8+16+8, 8+(24*14)+4
-		)
-
 		ved_print(
 			ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
 			.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
@@ -763,48 +772,7 @@ function love.draw()
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
-			if mouseon(8, 8+(24*1), 16, 16) then
-				-- Dialog animations
-				s.dialoganimations = not s.dialoganimations
-			elseif mouseon(8, 8+(24*2), 16, 16) then
-				-- Flip subtool scrolling direction
-				s.flipsubtoolscroll = not s.flipsubtoolscroll
-			elseif mouseon(8, 8+(24*3), 16, 16) then
-				-- Indicators of tiles in adjacent rooms
-				s.adjacentroomlines = not s.adjacentroomlines
-			elseif mouseon(8, 8+(24*4), 16, 16) then
-				-- Ask before quitting
-				s.neveraskbeforequit = not s.neveraskbeforequit
-			elseif mouseon(8, 8+(24*5), 16, 16) then
-				-- Coords0
-				s.coords0 = not s.coords0
-			elseif mouseon(8, 8+(24*6), 16, 16) then
-				-- Show FPS
-				s.showfps = not s.showfps
-				savedwindowtitle = ""
-			elseif mouseon(8, 8+(24*8), 16, 16) then
-				-- Check for updates
-				s.checkforupdates = not s.checkforupdates
-			elseif mouseon(8, 8+(24*9), 16, 16) then
-				-- Pause drawing when window is unfocused
-				s.pausedrawunfocused = not s.pausedrawunfocused
-			elseif mouseon(8, 8+(24*10), 16, 16) then
-				-- Make backups of level files that are overwritten
-				s.enableoverwritebackups = not s.enableoverwritebackups
-			elseif mouseon(8, 8+(24*12), 16, 16) then
-				-- Auto save crash logs
-				s.autosavecrashlogs = not s.autosavecrashlogs
-			elseif mouseon(8, 8+(24*13), 16, 16) then
-				-- Load all metadata
-				s.loadallmetadata = not s.loadallmetadata
-			elseif mouseon(8, 8+(24*14), 16, 16) then
-				-- Use font.png
-				s.usefontpng = not s.usefontpng
-			elseif mouseon(8, 8+(24*15), 16, 16) then
-				-- Make the black roomname backgrounds opaque
-				s.opaqueroomnamebackground = not s.opaqueroomnamebackground
-
-			elseif onrbutton(0) then
+			if onrbutton(0) then
 				-- Save
 				exitvedoptions()
 			elseif onrbutton(2) then
@@ -1034,8 +1002,11 @@ function love.draw()
 		colorsetting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
 		colorsetting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
-		hoverdraw((s.colored_textboxes and checkon or checkoff), 8, 8+(24*12), 16, 16, 2)
-		ved_print(L.COLORED_TEXTBOXES, 8+16+8, 8+(24*12)+4)
+		checkbox(s.colored_textboxes, 8, 8+(24*12), "colored_textboxes", L.COLORED_TEXTBOXES,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
 		rbutton({L.BTN_OK, "b"}, 0)
 		rbutton(L.RESETCOLORS, 2)
@@ -1052,9 +1023,6 @@ function love.draw()
 					end
 				end
 				editingcolor = nil
-			elseif mouseon(8, 8+(24*12), 16, 16) then
-				-- Use true textbox colors
-				s.colored_textboxes = not s.colored_textboxes
 			end
 
 			mousepressed = true
@@ -1143,15 +1111,33 @@ function love.draw()
 			)
 		end
 
-		hoverdraw((nonintscale and checkon or checkoff), 8, 8+(24*2), 16, 16, 2)
-		ved_print(L.NONINTSCALE, 8+16+8, 8+(24*2)+4)
+		checkbox(nonintscale, 8, 8+(24*2), nil, L.NONINTSCALE,
+			function(key, newvalue)
+				nonintscale = newvalue
+				if nonintscale then
+					startinput()
+					input = tostring(s.scale)
+				else
+					stopinput()
+					s.scale = math.floor(num_scale)
+					if s.scale <= 0 then
+						s.scale = 1
+					end
+				end
+			end
+		)
 
-		hoverdraw((s.smallerscreen and checkon or checkoff), 8, 8+(24*3), 16, 16, 2)
-		ved_print(L.SMALLERSCREEN, 8+16+8, 8+(24*3)+4)
+		checkbox(s.smallerscreen, 8, 8+(24*3), "smallerscreen", L.SMALLERSCREEN,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
-		hoverdraw((s.forcescale and checkon or checkoff), 8, 8+(24*4), 16, 16, 2)
-		ved_print(L.FORCESCALE, 8+16+8, 8+(24*4)+4)
-
+		checkbox(s.forcescale, 8, 8+(24*4), "forcescale", L.FORCESCALE,
+			function(key, newvalue)
+				s[key] = newvalue
+			end
+		)
 
 		if nonintscale then
 			num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
@@ -1229,26 +1215,7 @@ function love.draw()
 
 
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
-			if mouseon(8, 8+(24*2), 16, 16) then
-				-- Non-int scaling
-				nonintscale = not nonintscale
-				if nonintscale then
-					startinput()
-					input = tostring(s.scale)
-				else
-					stopinput()
-					s.scale = math.floor(num_scale)
-					if s.scale <= 0 then
-						s.scale = 1
-					end
-				end
-			elseif mouseon(8, 8+(24*3), 16, 16) then
-				-- Smaller screen
-				s.smallerscreen = not s.smallerscreen
-			elseif mouseon(8, 8+(24*4), 16, 16) then
-				-- Force scale settings
-				s.forcescale = not s.forcescale
-			elseif onrbutton(0) then
+			if onrbutton(0) then
 				-- Save
 				exitdisplayoptions()
 			end
@@ -1694,18 +1661,12 @@ function love.draw()
 
 			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 			local check_x = love.graphics.getWidth()-64-check_w/2
-			hoverdraw(
-				(imageviewer_showwhite and checkoff or checkon),
-				check_x, love.graphics.getHeight()-288, 16, 16, 2
+			checkbox(imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
+				function(key, newvalue)
+					imageviewer_showwhite = newvalue
+				end
 			)
 			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
-			ved_print(L.NOTALPHAONLY, check_x+24, love.graphics.getHeight()-284)
-
-			if nodialog and love.mouse.isDown("l") and not mousepressed
-			and mouseon(check_x, love.graphics.getHeight()-288, 16, 16) then
-				imageviewer_showwhite = not imageviewer_showwhite
-				mousepressed = true
-			end
 
 			ved_printf(
 				L.GRID,
@@ -1767,24 +1728,6 @@ function love.draw()
 			end
 		end
 	elseif state == 33 then
-		local function radio(selected, x, y, key, label, onclickfunc)
-			local clickable_w = 8+32+font8:getWidth(label)
-			hoverdraw(
-				selected and radioon_hq or radiooff_hq,
-				x, y, clickable_w, 16
-			)
-			if selected then
-				love.graphics.setColor(255,255,128)
-			end
-			ved_print(label, x+16+8, y+4)
-			love.graphics.setColor(255,255,255)
-
-			if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
-				onclickfunc(key)
-				mousepressed = true
-			end
-		end
-
 		local language_x = love.graphics.getWidth()/2-64-widestlang
 		ved_print(L.LANGUAGE, language_x, 32+4)
 

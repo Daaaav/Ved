@@ -535,7 +535,6 @@ function loadstate(new, ...)
 			editingbounds = 0
 		end
 	elseif new == 13 then
-		oldusefontpng = s.usefontpng
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
 		helplistscroll = 0
@@ -1057,6 +1056,39 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 		return mouseon(love.graphics.getWidth()-(128-8), yoffset+(buttonspacing*pos), 128-16, 16)
 	end
 end
+
+function radio(selected, x, y, key, label, onclickfunc)
+	local clickable_w = 8+32+font8:getWidth(label)
+	hoverdraw(
+		selected and radioon_hq or radiooff_hq,
+		x, y, clickable_w, 16
+	)
+	if selected then
+		love.graphics.setColor(255,255,128)
+	end
+	ved_print(label, x+16+8, y+4)
+	love.graphics.setColor(255,255,255)
+
+	if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
+		onclickfunc(key)
+		mousepressed = true
+	end
+end
+
+function checkbox(selected, x, y, key, label, onclickfunc)
+	local clickable_w = 8+32+font8:getWidth(label)
+	hoverdraw(
+		selected and checkon or checkoff,
+		x, y, clickable_w, 16, 2
+	)
+	ved_print(label, x+16+8, y+4)
+
+	if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
+		onclickfunc(key, not selected)
+		mousepressed = true
+	end
+end
+
 
 function cycle(var, themax, themin)
 	if themin == nil then
@@ -3258,11 +3290,6 @@ end
 
 function exitvedoptions()
 	saveconfig()
-	if oldusefontpng ~= s.usefontpng and love_version_meets(10) then
-		loadfonts()
-		unloadlanguage()
-		loadlanguage()
-	end
 	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
 		-- Immediately apply the new custom VVVVVV directory.
 		loadlevelsfolder()
