@@ -228,7 +228,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 		if inputsrightmost[id] then
 			postoget = #line
 		end
-		if inputpos[id][1] ~= 0 then
+		if postoget ~= 0 then
 			local thispos = 0
 			local thischar = 0
 			local posfound = false
@@ -240,7 +240,7 @@ function input.drawcaret(id, x, y, scale, limit, align)
 					break
 				end
 			end
-		elseif not inputsrightmost[id] then
+		else
 			caretx = 0
 		end
 		if caretx == nil then
