@@ -131,6 +131,18 @@ function input.updatemappings()
 	for id_ in pairs(input_ns) do
 		input_ns[id_] = get_n(id_)
 	end
+
+	local function get_id(n)
+		for id in pairs(inputs) do
+			if inputs[id] == nth_input[n] then
+				return id
+			end
+		end
+	end
+
+	for n_ in pairs(input_ids) do
+		input_ids[n_] = get_id(n_)
+	end
 end
 
 function input.closeall()
@@ -156,7 +168,6 @@ function input.bump(id)
 	local oldn = input_ns[id]
 
 	table.remove(nth_input, oldn)
-	input_ids[oldn] = nil
 
 	table.insert(nth_input, inputs[id])
 	input_ids[#nth_input] = id
