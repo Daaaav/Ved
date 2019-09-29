@@ -380,6 +380,11 @@ function input.rightmost(id)
 end
 
 function input.deletechars(id, chars)
+	-- TODO: Uses utf8 module, which doesn't exist in exactly LÖVE 0.9.1
+	if not love_version_meets(9, 2) then
+		return
+	end
+
 	if chars == 0 then
 		return
 	end
