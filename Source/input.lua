@@ -504,3 +504,30 @@ function input.insertchars(id, text)
 		inputpos[id] = x
 	end
 end
+
+function input.newline(id)
+	local multiline = type(inputpos[id]) == "table"
+
+	if not multiline then
+		return
+	end
+
+	local x, y = unpack(inputpos[id])
+	local line = inputs[id][y]
+
+	if inputsrightmost[id] then
+		x = #line
+	end
+
+	local restofline = utf8.sub(line, x+1, #line)
+
+	table.insert(inputs[id], y+1, restofline)
+	inputs[id][y] = utf8.sub(line, 1, x)
+
+	x = 0
+	y = y + 1
+
+	inputpos[id] = {x, y}
+
+	cursorflashtime = 0
+end

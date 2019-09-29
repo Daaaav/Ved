@@ -2625,6 +2625,8 @@ function love.keypressed(key)
 			input.deletechars(input_ids[#nth_input], -1)
 		elseif key == "delete" then
 			input.deletechars(input_ids[#nth_input], 1)
+		elseif table.contains({"return", "kpenter"}, key) then
+			input.newline(input_ids[#nth_input])
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 3])
 		end
