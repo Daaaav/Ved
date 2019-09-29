@@ -1797,6 +1797,9 @@ function love.draw()
 		input.create(INPUT.ONELINE, "inputtest5", "This is one line but it's overflowing")
 		input.create(INPUT.ONELINE, "inputtest6", "Overflowing, and also double-scaled")
 		input.create(INPUT.ONELINE, "inputtest7", "Overflowing, and yet also stretched")
+		input.create(INPUT.ONELINE, "inputtest8", "I'm centered and overflowing")
+		input.create(INPUT.ONELINE, "inputtest9", "But I'm double-scaled")
+		input.create(INPUT.ONELINE, "inputtest10", "But I'm stretched")
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcaret("inputtest", 100, 100)
@@ -1824,6 +1827,15 @@ function love.draw()
 
 		ved_printf(inputs.inputtest7, 400, 100, 8*10, nil, 1, 2)
 		input.drawcaret("inputtest7", 400, 100, 8*10, nil, 1, 2)
+
+		ved_printf(inputs.inputtest8, 450, 200, 8*10, "center")
+		input.drawcaret("inputtest8", 450, 200, 8*10, ALIGN.CENTER)
+
+		ved_printf(inputs.inputtest9, 450, 250, 8*10, "center", 2)
+		input.drawcaret("inputtest9", 450, 250, 8*10, ALIGN.CENTER, 2)
+
+		ved_printf(inputs.inputtest10, 450, 350, 8*10, "center", 1, 2)
+		input.drawcaret("inputtest10", 450, 350, 8*10, ALIGN.CENTER, 1, 2)
 	else
 		statecaught = false
 
@@ -2640,7 +2652,7 @@ function love.keypressed(key)
 		elseif table.contains({"return", "kpenter"}, key) then
 			input.newline(input_ids[#nth_input])
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 6])
+			input.bump(input_ids[#nth_input - 9])
 		end
 	end
 
