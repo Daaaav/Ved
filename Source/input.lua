@@ -264,7 +264,6 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 		if postoget ~= 0 then
 			local thispos = 0
 			local thischar = 0
-			local posfound = false
 			for _ = 1, #line do
 				thispos = thispos + 1
 				thischar = thischar + thisfont:getWidth(utf8.sub(line,thispos,thispos))
