@@ -508,6 +508,11 @@ function input.insertchars(id, text)
 end
 
 function input.newline(id)
+	-- TODO: utf8 module is only available in LÖVE 0.9.2+
+	if not love_version_meets(9, 2) then
+		return
+	end
+
 	local multiline = type(inputpos[id]) == "table"
 
 	if not multiline then
