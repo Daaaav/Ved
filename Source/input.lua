@@ -432,7 +432,7 @@ function input.deletechars(id, chars)
 		else
 			if x == 0 then
 				if multiline and y > 1 then
-					local len_oldline = #inputs[id][y-1]
+					local len_oldline = utf8.len(inputs[id][y-1])
 					inputs[id][y] = inputs[id][y-1] .. inputs[id][y]
 					table.remove(inputs[id], y-1)
 					y = y - 1
