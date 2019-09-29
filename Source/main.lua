@@ -1,4 +1,4 @@
-require("enablescreensaver")
+--require("enablescreensaver")
 require("corefunc")
 require("coretext")
 
