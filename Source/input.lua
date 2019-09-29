@@ -266,7 +266,7 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 			local thischar = 0
 			for _ = 1, #line do
 				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(utf8.sub(line,thispos,thispos))
+				thischar = thischar + thisfont:getWidth(utf8.sub(line, thispos, thispos))
 				if thispos == postoget then
 					caretx = thischar
 					break
