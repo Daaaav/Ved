@@ -2520,6 +2520,10 @@ function love.textinput(char)
 		return
 	end
 
+	if input.active then
+		input.insertchars(input_ids[#nth_input], char)
+	end
+
 	-- Ved should really only accept printable ASCII only when typing...
 	if s.acceptutf8 or (state == 13 or state == 15 or char:byte(2, 2) == nil) then
 		-- Textual input isn't needed with a dialog on the screen, we have multiinput

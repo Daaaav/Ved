@@ -450,3 +450,44 @@ function input.deletechars(id, chars)
 
 	inputsrightmost[id] = false
 end
+
+function input.insertchars(id, text)
+	-- TODO: Add blacklisting chars for certain types of input?
+	-- E.g. number inputs should be numbers-only, VVVVVV inputs should be ASCII-only
+
+	-- TODO: Uses utf8 module, only available since LÖVE 0.9.2+
+	if not love_version_meets(9, 2) then
+		return
+	end
+
+	if text == "" then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = #line
+	end
+
+	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, #line)
+
+	x = x + utf8.len(text)
+
+	if multiline then
+		inputpos[id] = {x, y}
+		inputs[id][y] = line
+	else
+		inputs[id] = line
+		inputpos[id] = x
+	end
+end
