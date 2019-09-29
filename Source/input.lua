@@ -285,12 +285,12 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 		local thischar = 0
 		local postoget = inputpos[id]
 		if inputsrightmost[id] then
-			postoget = #inputs[id]
+			postoget = utf8.len(inputs[id])
 		end
 		local nested_break = false
 		for n, line in pairs(lines) do
 			thischar = 0
-			for pos = 1, #line do
+			for pos = 1, utf8.len(line) do
 				thispos = thispos + 1
 				thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
 				if thispos == postoget then
