@@ -503,6 +503,8 @@ function input.insertchars(id, text)
 		inputs[id] = line
 		inputpos[id] = x
 	end
+
+	cursorflashtime = 0
 end
 
 function input.newline(id)
