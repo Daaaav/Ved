@@ -1794,6 +1794,7 @@ function love.draw()
 		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
 		input.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
 		input.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
+		input.create(INPUT.ONELINE, "inputtest5", "This is one line but it's overflowing")
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcaret("inputtest", 100, 100)
@@ -1812,6 +1813,9 @@ function love.draw()
 			ved_print(v, 100, 16*k + 250, 1, 2)
 		end
 		input.drawcaret("inputtest4", 100, 250, nil, nil, 1, 2)
+
+		ved_printf(inputs.inputtest5, 100, 300, 8*10)
+		input.drawcaret("inputtest5", 100, 300, 8*10)
 	else
 		statecaught = false
 
@@ -2628,7 +2632,7 @@ function love.keypressed(key)
 		elseif table.contains({"return", "kpenter"}, key) then
 			input.newline(input_ids[#nth_input])
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 3])
+			input.bump(input_ids[#nth_input - 4])
 		end
 	end
 
