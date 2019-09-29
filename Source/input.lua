@@ -208,7 +208,7 @@ function input.bump(id)
 	cursorflashtime = 0
 end
 
-function input.drawcaret(id, x, y, scale, limit, align)
+function input.drawcaret(id, x, y, limit, align, sx, sy)
 	-- TODO: Can't use this in LÖVE 0.9.x and lower,
 	-- due to lack of ability to get the wrapped text from Font:getWrap()
 	-- Also can't use this in LÖVE 0.9.1 exactly due to utf8 module
@@ -231,7 +231,12 @@ function input.drawcaret(id, x, y, scale, limit, align)
 
 	local multiline = type(inputs[id]) == "table"
 
-	scale = scale or 1
+	if sx ~= nil and limit ~= nil and not multiline then
+		limit = limit/sx
+	end
+
+	sx = sx or 1
+	sy = sy or sx
 	align = align or ALIGN.LEFT
 	if multiline then
 		align = ALIGN.LEFT
@@ -305,7 +310,10 @@ function input.drawcaret(id, x, y, scale, limit, align)
 
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
-	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight())
+	caretx = caretx * sx
+	carety = carety * sy
+
+	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight()*sy)
 end
 
 function input.movex(id, chars)

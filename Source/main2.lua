@@ -1792,6 +1792,8 @@ function love.draw()
 	elseif state == 34 then
 		input.create(INPUT.ONELINE, "inputtest", "This is the §¤ caret test", 5)
 		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
+		input.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
+		input.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcaret("inputtest", 100, 100)
@@ -1800,6 +1802,16 @@ function love.draw()
 			ved_print(v, 100, 8*k + 150)
 		end
 		input.drawcaret("inputtest2", 100, 150)
+
+		for k,v in pairs(inputs.inputtest3) do
+			ved_print(v, 100, 16*k + 200, 2)
+		end
+		input.drawcaret("inputtest3", 100, 200, nil, nil, 2)
+
+		for k,v in pairs(inputs.inputtest4) do
+			ved_print(v, 100, 16*k + 250, 1, 2)
+		end
+		input.drawcaret("inputtest4", 100, 250, nil, nil, 1, 2)
 	else
 		statecaught = false
 
@@ -2614,7 +2626,7 @@ function love.keypressed(key)
 		elseif key == "delete" then
 			input.deletechars(input_ids[#nth_input], 1)
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 1])
+			input.bump(input_ids[#nth_input - 3])
 		end
 	end
 
