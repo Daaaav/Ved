@@ -254,6 +254,7 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 	end
 
 	local caretx, carety
+	local linefound = 1
 	if multiline then
 		carety = inputpos[id][2]
 		local line = inputs[id][carety]
@@ -296,6 +297,7 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 				if thispos == postoget then
 					caretx = thischar
 					carety = n - 1
+					linefound = n
 					nested_break = true
 					break
 				end
@@ -307,6 +309,10 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 	end
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
+
+	if not multiline and align == ALIGN.CENTER and #lines > 0 and limit ~= nil then
+		caretx = caretx + (limit-thisfont:getWidth(lines[linefound]:match("^(.-)%s*$"))) / 2
+	end
 
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
