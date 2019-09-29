@@ -1,6 +1,9 @@
---require("enablescreensaver")
 require("corefunc")
 require("coretext")
+
+if love_version_meets(10) then
+	love.window.setDisplaySleepEnabled(true)
+end
 
 allowdebug = false
 opt_disableversioncheck = false
@@ -8,7 +11,7 @@ opt_loadlevel = nil
 opt_newlevel = false
 opt_forcelanguagescreen = false
 
-vergroups = {6,2}
+vergroups = {7,0}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
