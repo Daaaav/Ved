@@ -290,9 +290,10 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 		end
 		local nested_break = false
 		for n, line in pairs(lines) do
-			for _ = 1, #line do
+			thischar = 0
+			for pos = 1, #line do
 				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(utf8.sub(line,thispos,thispos))
+				thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
 				if thispos == postoget then
 					caretx = thischar
 					carety = n - 1
