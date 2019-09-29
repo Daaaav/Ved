@@ -492,7 +492,9 @@ function input.insertchars(id, text)
 
 	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, #line)
 
-	x = x + utf8.len(text)
+	if x < #line then
+		x = x + utf8.len(text)
+	end
 
 	if multiline then
 		inputpos[id] = {x, y}
