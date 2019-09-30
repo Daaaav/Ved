@@ -228,16 +228,16 @@ function love.load()
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
 
 	cursorobjs = {}
-	--cursorobjs[11] = love.mouse.newCursor(cursorimg[11]:getData(), 8, 10)
-	--cursorobjs[12] = love.mouse.newCursor(cursorimg[12]:getData(), 10, 8)
-	cursorobjs[11] = love.mouse.getSystemCursor("sizens")
-	cursorobjs[12] = love.mouse.getSystemCursor("sizewe")
-	cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
-	cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
-	cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
+	if love.mouse.hasCursor() then
+		cursorobjs[11] = love.mouse.getSystemCursor("sizens")
+		cursorobjs[12] = love.mouse.getSystemCursor("sizewe")
+		cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
+		cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
+		cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
 
-	hand_cursor = love.mouse.getSystemCursor("hand")
-	forbidden_cursor = love.mouse.getSystemCursor("no")
+		hand_cursor = love.mouse.getSystemCursor("hand")
+		forbidden_cursor = love.mouse.getSystemCursor("no")
+	end
 	special_cursor = false
 
 	scriptboximg = {}

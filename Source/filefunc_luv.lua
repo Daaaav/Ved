@@ -4,10 +4,10 @@ userprofile = ""
 
 function listlevelfiles(directory)
 	-- Preferably, only do files.
-	files = {}
+	files = {[""] = {}}
 	for _,f in pairs(love.filesystem.getDirectoryItems(directory)) do
 		if not love.filesystem.isDirectory(f) then
-			table.insert(files, {
+			table.insert(files[""], {
 					name = f,
 					isdir = false,
 					result_shown = true,
@@ -104,7 +104,11 @@ end
 function readlevelfile(path)
 	-- returns success, contents
 
-	local ficontents = love.filesystem.read(path)
+	local ficontents, everr = love.filesystem.read(path)
+
+	if ficontents == nil then
+		return false, everr
+	end
 
 	return true, ficontents
 end
@@ -115,6 +119,10 @@ function writelevelfile(path, contents)
 	local success = love.filesystem.write(path, contents)
 
 	return success, ""
+end
+
+function getmodtime(fullpath)
+	return love.filesystem.getLastModified(fullpath) -- convenient UNIX timestamp
 end
 
 function readfile(filename)
