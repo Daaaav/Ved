@@ -32,3 +32,13 @@ end
 love.filesystem.isDirectory = function(filename)
 	return love.filesystem.getInfo(filename, "directory") ~= nil
 end
+
+love.filesystem.getLastModified = function(filename)
+	local info = love.filesystem.getInfo(filename)
+	if info == nil then return nil end
+	return info.modtime
+end
+
+love.mouse.hasCursor = function()
+	return love.mouse.isCursorSupported()
+end
