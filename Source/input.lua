@@ -527,6 +527,10 @@ function input.movex(id, chars)
 	cursorflashtime = 0
 
 	inputsrightmost[id] = false
+
+	if inputpos[id] == inputselpos[id] then
+		input.clearselpos(id)
+	end
 end
 
 function input.movey(id, chars)
@@ -545,6 +549,10 @@ function input.movey(id, chars)
 	inputpos[id][2] = y
 
 	cursorflashtime = 0
+
+	if inputpos[id] == inputselpos[id] then
+		input.clearselpos(id)
+	end
 end
 
 function input.leftmost(id)
@@ -559,12 +567,20 @@ function input.leftmost(id)
 	cursorflashtime = 0
 
 	inputsrightmost[id] = false
+
+	if inputpos[id] == inputselpos[id] then
+		input.clearselpos(id)
+	end
 end
 
 function input.rightmost(id)
 	inputsrightmost[id] = true
 
 	cursorflashtime = 0
+
+	if inputpos[id] == inputselpos[id] then
+		input.clearselpos(id)
+	end
 end
 
 function input.deletechars(id, chars)
