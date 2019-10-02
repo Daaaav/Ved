@@ -2669,6 +2669,13 @@ function love.keypressed(key)
 			input.deletechars(input_ids[#nth_input], 1)
 		elseif table.contains({"return", "kpenter"}, key) then
 			input.newline(input_ids[#nth_input])
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) then
+			love.system.setClipboardText(input.getseltext(input_ids[#nth_input]))
+			if key == "x" then
+				input.delseltext(input_ids[#nth_input])
+			end
+		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
+			input.insertchars(input_ids[#nth_input], love.system.getClipboardText():gsub("[\r\n]", ""))
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 9])
 		end
