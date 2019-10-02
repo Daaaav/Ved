@@ -2672,7 +2672,7 @@ function love.keypressed(key)
 			input.deletechars(input_ids[#nth_input], 1)
 		elseif table.contains({"return", "kpenter"}, key) then
 			input.newline(input_ids[#nth_input])
-		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) then
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[input_ids[#nth_input]] ~= nil then
 			love.system.setClipboardText(input.getseltext(input_ids[#nth_input]))
 			if key == "x" then
 				input.delseltext(input_ids[#nth_input])
