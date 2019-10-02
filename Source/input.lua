@@ -310,8 +310,10 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
 
-	if not multiline and align == ALIGN.CENTER and #lines > 0 and limit ~= nil then
-		caretx = caretx + (limit-thisfont:getWidth(lines[linefound]:match("^(.-)%s*$"))) / 2
+	if not multiline and align == ALIGN.CENTER and limit ~= nil then
+		-- :match() to remove trailing whitespace, anythingbutnil() to account for if there's no text
+		local thisline = anythingbutnil(lines[linefound]):match("^(.-)%s*$")
+		caretx = caretx + (limit-thisfont:getWidth(thisline)) / 2
 	end
 
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
