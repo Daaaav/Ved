@@ -1802,40 +1802,40 @@ function love.draw()
 		input.create(INPUT.ONELINE, "inputtest10", "But I'm stretched")
 
 		ved_print(inputs.inputtest, 100, 100)
-		input.drawcaret("inputtest", 100, 100)
+		input.drawcas("inputtest", 100, 100)
 
 		for k,v in pairs(inputs.inputtest2) do
 			ved_print(v, 100, 8*k + 150)
 		end
-		input.drawcaret("inputtest2", 100, 150)
+		input.drawcas("inputtest2", 100, 150)
 
 		for k,v in pairs(inputs.inputtest3) do
 			ved_print(v, 100, 16*k + 200, 2)
 		end
-		input.drawcaret("inputtest3", 100, 200, nil, nil, 2)
+		input.drawcas("inputtest3", 100, 200, nil, nil, 2)
 
 		for k,v in pairs(inputs.inputtest4) do
 			ved_print(v, 100, 16*k + 250, 1, 2)
 		end
-		input.drawcaret("inputtest4", 100, 250, nil, nil, 1, 2)
+		input.drawcas("inputtest4", 100, 250, nil, nil, 1, 2)
 
 		ved_printf(inputs.inputtest5, 100, 300, 8*10)
-		input.drawcaret("inputtest5", 100, 300, 8*10)
+		input.drawcas("inputtest5", 100, 300, 8*10)
 
 		ved_printf(inputs.inputtest6, 100, 350, 8*10, nil, 2)
-		input.drawcaret("inputtest6", 100, 350, 8*10, nil, 2)
+		input.drawcas("inputtest6", 100, 350, 8*10, nil, 2)
 
 		ved_printf(inputs.inputtest7, 400, 100, 8*10, nil, 1, 2)
-		input.drawcaret("inputtest7", 400, 100, 8*10, nil, 1, 2)
+		input.drawcas("inputtest7", 400, 100, 8*10, nil, 1, 2)
 
 		ved_printf(inputs.inputtest8, 450, 200, 8*10, "center")
-		input.drawcaret("inputtest8", 450, 200, 8*10, ALIGN.CENTER)
+		input.drawcas("inputtest8", 450, 200, 8*10, ALIGN.CENTER)
 
 		ved_printf(inputs.inputtest9, 450, 250, 8*10, "center", 2)
-		input.drawcaret("inputtest9", 450, 250, 8*10, ALIGN.CENTER, 2)
+		input.drawcas("inputtest9", 450, 250, 8*10, ALIGN.CENTER, 2)
 
 		ved_printf(inputs.inputtest10, 450, 350, 8*10, "center", 1, 2)
-		input.drawcaret("inputtest10", 450, 350, 8*10, ALIGN.CENTER, 1, 2)
+		input.drawcas("inputtest10", 450, 350, 8*10, ALIGN.CENTER, 1, 2)
 	else
 		statecaught = false
 
@@ -2633,6 +2633,16 @@ function love.keypressed(key)
 	end
 
 	if input.active then
+		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
+			if keyboard_eitherIsDown("shift") then
+				if inputselpos[input_ids[#nth_input]] == nil then
+					input.setselpos(input_ids[#nth_input])
+				end
+			else
+				input.clearselpos(input_ids[#nth_input])
+			end
+		end
+
 		if key == "left" then
 			input.movex(input_ids[#nth_input], -1)
 		elseif key == "right" then

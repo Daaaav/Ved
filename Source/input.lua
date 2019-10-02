@@ -42,9 +42,10 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.drawcaret(<id>, <x>, <y>, [scale], [limit], [align])`
+You also need to call `input.drawcas(<id>, <x>, <y>, [scale], [limit], [align])`
 with the top-left corner of whatever text you're drawing for the blinking cursor
 (aka caret), after you print the text.
+(Read "drawcas" as "draw caret and selection".)
 `[scale]` defaults to 1.
 `[align]` is either ALIGN.LEFT or ALIGN.CENTER, defaults to ALIGN.LEFT.
 `[align]` and `[limit]` are ignored for multiline inputs, and all multiline
@@ -77,6 +78,7 @@ input_ns = {}
 
 inputpos = {}
 inputsrightmost = {}
+inputselpos = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -147,6 +149,7 @@ function input.close(id, updatemappings)
 
 	cursorflashtime = 0
 	inputsrightmost[id] = nil
+	inputselpos[id] = nil
 end
 
 function input.updatemappings()
@@ -208,7 +211,7 @@ function input.bump(id)
 	cursorflashtime = 0
 end
 
-function input.drawcaret(id, x, y, limit, align, sx, sy)
+function input.drawcas(id, x, y, limit, align, sx, sy)
 	-- TODO: Can't use this in LÖVE 0.9.x and lower,
 	-- due to lack of ability to get the wrapped text from Font:getWrap()
 	-- Also can't use this in LÖVE 0.9.1 exactly due to utf8 module
@@ -217,10 +220,6 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 	end
 
 	if not input.active then
-		return
-	end
-
-	if cursorflashtime > .5 then
 		return
 	end
 
@@ -251,6 +250,104 @@ function input.drawcaret(id, x, y, limit, align, sx, sy)
 		_, lines = thisfont:getWrap(inputs[id], limit)
 	else
 		lines = {inputs[id]}
+	end
+
+	-- Selection
+
+	if inputselpos[id] ~= nil then
+		local selrects = {} -- each table in this table: {x (pixels), y (line), width (pixels)}
+		local whichfirst -- 1 = caret pos, 2 = selection pos
+		local startx, starty, endx, endy
+
+		if multiline then
+			local curx, cury = unpack(inputpos[id])
+			local selx, sely = unpack(inputselpos[id])
+			if inputsrightmost[id] then
+				curx = #lines[cury]
+			end
+
+			if cury < sely then
+				whichfirst = 1
+			elseif sely < cury then
+				whichfirst = 2
+			elseif curx < selx then
+				whichfirst = 1
+			elseif selx < curx then
+				whichfirst = 2
+			end
+
+			if whichfirst == 1 then
+				startx, starty = curx, cury
+				endx, endy = selx, sely
+			elseif whichfirst == 2 then
+				startx, starty = selx, sely
+				endx, endy = curx, cury
+			end
+
+			local curlinewidth = 0
+			local firstoffset = 0
+
+			local line
+			local thiswidth
+
+			local nested_break = false
+			if whichfirst ~= nil then
+				for l = starty, endy do
+					line = lines[l]
+					for thispos = 1, #line do
+						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
+
+						if l > starty or thispos > startx then
+							curlinewidth = curlinewidth + thiswidth
+						else
+							firstoffset = firstoffset + thiswidth
+						end
+
+						if l == endy and thispos == endx then
+							if l == starty then
+								table.insert(selrects, {firstoffset, l, curlinewidth})
+							else
+								table.insert(selrects, {0, l, curlinewidth})
+							end
+							nested_break = true
+							break
+						end
+					end
+
+					if nested_break then
+						break
+					end
+
+					if l == starty then
+						table.insert(selrects, {firstoffset, l, curlinewidth})
+					else
+						table.insert(selrects, {0, l, curlinewidth})
+					end
+
+					curlinewidth = 0
+				end
+			end
+		else
+			for n, line in pairs(lines) do
+				-- TODO implement this
+			end
+		end
+
+		local oldcol = {love.graphics.getColor()}
+
+		love.graphics.setColor(0, 128, 255, 128) -- Blue-ish, like a typical selection
+
+		for _, rect in pairs(selrects) do
+			love.graphics.rectangle("fill", x + rect[1]*sx, y + rect[2]*thisfont:getHeight()*sy, rect[3]*sx, thisfont:getHeight()*sy)
+		end
+
+		love.graphics.setColor(unpack(oldcol))
+	end
+
+	-- Caret
+
+	if cursorflashtime > .5 then
+		return
 	end
 
 	local caretx, carety
@@ -545,4 +642,31 @@ function input.newline(id)
 	inputpos[id] = {x, y}
 
 	cursorflashtime = 0
+end
+
+function input.setselpos(id)
+	local multiline = type(inputpos[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = #line
+	end
+
+	if multiline then
+		inputselpos[id] = {x, y}
+	else
+		inputselpos[id] = x
+	end
+end
+
+function input.clearselpos(id)
+	inputselpos[id] = nil
 end
