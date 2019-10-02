@@ -855,8 +855,6 @@ function input.getseltext(id)
 			return ""
 		end
 
-		local actualpos = 0
-
 		local thischar
 		local line = inputs[id]
 
