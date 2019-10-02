@@ -1022,3 +1022,30 @@ function input.delseltext(id)
 
 	input.clearselpos(id)
 end
+
+function input.setpos(id, x, y)
+	local multiline = type(inputs[id]) == "table"
+
+	if multiline then
+		inputpos[id] = {x, y}
+	else
+		inputpos[id] = x
+	end
+
+	inputsrightmost[id] = false
+end
+
+function input.selall(id)
+	local multiline = type(inputs[id]) == "table"
+
+	if multiline then
+		input.setpos(id, 0, 1)
+		input.setselpos(id)
+		inputpos[id][2] = #inputs[id]
+		inputsrightmost[id] = true
+	else
+		input.setpos(id, 0)
+		input.setselpos(id)
+		inputsrightmost[id] = true
+	end
+end
