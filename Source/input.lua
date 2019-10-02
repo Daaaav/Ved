@@ -866,3 +866,108 @@ function input.getseltext(id)
 
 	return table.concat(rope, "")
 end
+
+function input.delseltext(id)
+	-- TODO: 'utf8' module is only for LÖVE 0.9.2 and above
+	if not love_version_meets(9, 2) then
+		return
+	end
+
+	if inputselpos[id] == nil then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
+	local whichfirst -- 1 = caret pos, 2 = selection pos
+	local startx, starty, endx, endy
+
+	local deletethismanychars = 0
+
+	if multiline then
+		local curx, cury = unpack(inputpos[id])
+		local selx, sely = unpack(inputselpos[id])
+		local lines = inputs[id]
+		if inputsrightmost[id] then
+			curx = #lines[cury]
+		end
+
+		if cury < sely then
+			whichfirst = 1
+		elseif sely < cury then
+			whichfirst = 2
+		elseif curx < selx then
+			whichfirst = 1
+		elseif selx < curx then
+			whichfirst = 2
+		end
+
+		if whichfirst == 1 then
+			startx, starty = curx, cury
+			endx, endy = selx, sely
+		elseif whichfirst == 2 then
+			startx, starty = selx, sely
+			endx, endy = curx, cury
+		end
+
+		if whichfirst == nil then
+			return
+		end
+
+		local line
+
+		local nested_break = false
+		for l = starty, endy do
+			line = lines[l]
+			for thispos = 1, utf8.len(line) do
+				if (l ~= endy or endx ~= 0) and (l > starty or thispos > startx) then
+					deletethismanychars = deletethismanychars + 1
+				end
+
+				if l == endy and thispos == endx then
+					nested_break = true
+					break
+				end
+			end
+
+			if nested_break then
+				break
+			end
+
+			-- Delete the newline
+			deletethismanychars = deletethismanychars + 1
+		end
+	else
+		local curx = inputpos[id]
+		local selx = inputselpos[id]
+		if inputsrightmost[id] then
+			curx = #inputs[id]
+		end
+
+		if curx < selx then
+			whichfirst = 1
+		elseif selx < curx then
+			whichfirst = 2
+		end
+
+		if whichfirst == 1 then
+			startx, endx = curx, selx
+		elseif whichfirst == 2 then
+			startx, endx = selx, curx
+		end
+
+		if whichfirst == nil then
+			return
+		end
+
+		deletethismanychars = endx - startx + 2
+	end
+
+	if whichfirst == 1 then
+		input.deletechars(id, deletethismanychars)
+	elseif whichfirst == 2 then
+		input.deletechars(id, -deletethismanychars)
+	end
+
+	input.clearselpos(id)
+end

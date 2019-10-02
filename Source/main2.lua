@@ -2661,6 +2661,8 @@ function love.keypressed(key)
 			input.leftmost(input_ids[#nth_input])
 		elseif key == "end" then
 			input.rightmost(input_ids[#nth_input])
+		elseif table.contains({"backspace", "delete"}, key) and inputselpos[input_ids[#nth_input]] ~= nil then
+			input.delseltext(input_ids[#nth_input])
 		elseif key == "backspace" then
 			input.deletechars(input_ids[#nth_input], -1)
 		elseif key == "delete" then
