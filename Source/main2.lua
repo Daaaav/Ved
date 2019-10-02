@@ -2678,6 +2678,9 @@ function love.keypressed(key)
 				input.delseltext(input_ids[#nth_input])
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
+			if inputselpos[input_ids[#nth_input]] ~= nil then
+				input.delseltext(input_ids[#nth_input])
+			end
 			input.insertchars(input_ids[#nth_input], love.system.getClipboardText():gsub("[\r\n]", ""))
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 9])
