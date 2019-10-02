@@ -303,7 +303,7 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 							else
 								firstoffset = firstoffset + thiswidth
 							end
-							if thispos == #line and endy - starty > 0 then
+							if thispos == #line and l ~= endy then
 								-- Add a small space to represent the newline
 								curlinewidth = curlinewidth + 4
 							end
