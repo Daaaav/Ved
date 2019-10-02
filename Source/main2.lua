@@ -1836,6 +1836,12 @@ function love.draw()
 
 		ved_printf(inputs.inputtest10, 450, 350, 8*10, "center", 1, 2)
 		input.drawcas("inputtest10", 450, 350, 8*10, ALIGN.CENTER, 1, 2)
+
+		local youhaveselected = "You have selected: "
+		local tmp = input.getseltext(input_ids[#nth_input])
+		if tmp ~= nil then
+			ved_print(youhaveselected .. tmp, 580, 112)
+		end
 	else
 		statecaught = false
 

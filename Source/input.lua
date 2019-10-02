@@ -742,3 +742,111 @@ end
 function input.clearselpos(id)
 	inputselpos[id] = nil
 end
+
+function input.getseltext(id)
+	-- TODO: utf8 lib is unavailable in LÖVE 0.9.1 (I didn't list LÖVE 0.9.0 because Ved doesn't support it)
+	if not love_version_meets(9, 2) then
+		return
+	end
+
+	if inputselpos[id] == nil then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
+	local whichfirst -- 1 = caret pos, 2 = selection pos
+	local startx, starty, endx, endy
+
+	local rope = {}
+
+	if multiline then
+		local curx, cury = unpack(inputpos[id])
+		local selx, sely = unpack(inputselpos[id])
+		local lines = inputs[id]
+		if inputsrightmost[id] then
+			curx = #lines[cury]
+		end
+
+		if cury < sely then
+			whichfirst = 1
+		elseif sely < cury then
+			whichfirst = 2
+		elseif curx < selx then
+			whichfirst = 1
+		elseif selx < curx then
+			whichfirst = 2
+		end
+
+		if whichfirst == 1 then
+			startx, starty = curx, cury
+			endx, endy = selx, sely
+		elseif whichfirst == 2 then
+			startx, starty = selx, sely
+			endx, endy = curx, cury
+		end
+
+		if whichfirst == nil then
+			return ""
+		end
+
+		local line
+		local thischar
+
+		local nested_break = false
+		for l = starty, endy do
+			line = lines[l]
+			for thispos = 1, utf8.len(line) do
+				if l > starty or thispos > startx then
+					thischar = utf8.sub(line, thispos, thispos)
+					table.insert(rope, thischar)
+				end
+
+				if l == endy and thispos == endx then
+					nested_break = true
+					break
+				end
+			end
+
+			if nested_break then
+				break
+			end
+
+			table.insert(rope, "\n")
+		end
+	else
+		local curx = inputpos[id]
+		local selx = inputselpos[id]
+		if inputsrightmost[id] then
+			curx = #inputs[id]
+		end
+
+		if curx < selx then
+			whichfirst = 1
+		elseif selx < curx then
+			whichfirst = 2
+		end
+
+		if whichfirst == 1 then
+			startx, endx = curx, selx
+		elseif whichfirst == 2 then
+			startx, endx = selx, curx
+		end
+
+		if whichfirst == nil then
+			return ""
+		end
+
+		local actualpos = 0
+
+		local thischar
+		local line = inputs[id]
+
+		for thispos = startx+1, endx do
+			thischar = utf8.sub(line, thispos, thispos)
+			table.insert(rope, thischar)
+		end
+	end
+
+	return table.concat(rope, "")
+end
