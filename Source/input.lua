@@ -647,31 +647,33 @@ function input.deletechars(id, chars)
 	local multiline = type(inputpos[id]) == "table"
 
 	local x, y, line
-	if multiline then
-		x, y = unpack(inputpos[id])
-		line = inputs[id][y]
-	else
-		x = inputpos[id]
-		line = inputs[id]
-	end
-
-	if inputsrightmost[id] then
-		x = utf8.len(line)
-	end
-
-	x = math.min(math.max(x, 0), utf8.len(line))
-
-	local lineremoved = false
 	for _ = 1, math.abs(chars) do
+		if multiline then
+			x, y = unpack(inputpos[id])
+			line = inputs[id][y]
+		else
+			x = inputpos[id]
+			line = inputs[id]
+		end
+
+		if inputsrightmost[id] then
+			x = utf8.len(line)
+		end
+
+		x = math.min(math.max(x, 0), utf8.len(line))
+
 		if chars > 0 then
 			if x == utf8.len(line) then
 				if multiline and y < #inputs[id] then
 					inputs[id][y] = inputs[id][y] .. inputs[id][y+1]
 					table.remove(inputs[id], y+1)
-					lineremoved = true
 				end
 			else
-				line = utf8.sub(line, 1, x) .. utf8.sub(line, x+2, #line)
+				if multiline then
+					inputs[id][y] = utf8.sub(inputs[id][y], 1, x) .. utf8.sub(inputs[id][y], x+2, #inputs[id][y])
+				else
+					inputs[id] = utf8.sub(inputs[id], 1, x) .. utf8.sub(inputs[id], x+2, #inputs[id])
+				end
 			end
 		else
 			if x == 0 then
@@ -681,29 +683,27 @@ function input.deletechars(id, chars)
 					table.remove(inputs[id], y-1)
 					y = y - 1
 					x = len_oldline
-					lineremoved = true
 				end
 			else
-				line = utf8.sub(line, 1, x-1) .. utf8.sub(line, x+1, #line)
+				if multiline then
+					inputs[id][y] = utf8.sub(inputs[id][y], 1, x-1) .. utf8.sub(inputs[id][y], x+1, #inputs[id][y])
+				else
+					inputs[id] = utf8.sub(inputs[id], 1, x-1) .. utf8.sub(inputs[id], x+1, #inputs[id])
+				end
 				x = x - 1
 			end
 		end
-	end
 
-	if multiline then
-		inputpos[id] = {x, y}
-
-		if not lineremoved then
-			inputs[id][y] = line
+		if multiline then
+			inputpos[id] = {x, y}
+		else
+			inputpos[id] = x
 		end
-	else
-		inputs[id] = line
-		inputpos[id] = x
+
+		inputsrightmost[id] = false
 	end
 
 	cursorflashtime = 0
-
-	inputsrightmost[id] = false
 end
 
 function input.insertchars(id, text)
