@@ -933,10 +933,10 @@ function input.delseltext(id)
 			if nested_break then
 				break
 			end
-
-			-- Delete the newline
-			deletethismanychars = deletethismanychars + 1
 		end
+
+		-- Delete the newlines
+		deletethismanychars = deletethismanychars + endy - starty
 	else
 		local curx = inputpos[id]
 		local selx = inputselpos[id]
