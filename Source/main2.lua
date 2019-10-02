@@ -2563,6 +2563,9 @@ function love.textinput(char)
 	end
 
 	if input.active then
+		if inputselpos[input_ids[#nth_input]] ~= nil then
+			input.delseltext(input_ids[#nth_input])
+		end
 		input.insertchars(input_ids[#nth_input], char)
 	end
 
