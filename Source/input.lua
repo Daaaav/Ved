@@ -513,7 +513,7 @@ function input.movex(id, chars)
 	end
 
 	if inputsrightmost[id] then
-		x = #line
+		x = utf8.len(line)
 	end
 
 	x = math.min(math.max(x, 0), utf8.len(line))
@@ -530,8 +530,16 @@ function input.movex(id, chars)
 
 	inputsrightmost[id] = false
 
-	if inputpos[id] == inputselpos[id] then
-		input.clearselpos(id)
+	if inputselpos[id] ~= nil then
+		local conditional
+		if multiline then
+			conditional = x == inputselpos[id][1] and y == inputselpos[id][2]
+		else
+			conditional = x == inputselpos[id]
+		end
+		if conditional then
+			input.clearselpos(id)
+		end
 	end
 end
 
@@ -539,6 +547,9 @@ function input.movey(id, chars)
 	local multiline = type(inputpos[id]) == "table"
 
 	if not multiline then
+		if inputselpos[id] ~= nil then
+			input.clearselpos(id)
+		end
 		return
 	end
 
@@ -552,7 +563,7 @@ function input.movey(id, chars)
 
 	cursorflashtime = 0
 
-	if inputpos[id] == inputselpos[id] then
+	if inputselpos[id] ~= nil and inputpos[id][1] == inputselpos[id][1] and inputpos[id][2] == inputselpos[id][2] then
 		input.clearselpos(id)
 	end
 end
@@ -570,18 +581,52 @@ function input.leftmost(id)
 
 	inputsrightmost[id] = false
 
-	if inputpos[id] == inputselpos[id] then
-		input.clearselpos(id)
+	if inputselpos[id] ~= nil then
+		local conditional
+		if multiline then
+			conditional = inputpos[id][1] == inputselpos[id][1] and inputpos[id][2] == inputselpos[id][2]
+		else
+			conditional = inputpos[id] == inputselpos[id]
+		end
+		if conditional then
+			input.clearselpos(id)
+		end
 	end
 end
 
 function input.rightmost(id)
+	-- TODO: Uses utf8 module
+	if not love_version_meets(9, 2) then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
 	inputsrightmost[id] = true
 
 	cursorflashtime = 0
 
-	if inputpos[id] == inputselpos[id] then
-		input.clearselpos(id)
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	x = utf8.len(line)
+
+	if inputselpos[id] ~= nil then
+		local conditional
+		if multiline then
+			conditional = x == inputselpos[id][1] and y == inputselpos[id][2]
+		else
+			conditional = x == inputselpos[id]
+		end
+		if conditional then
+			input.clearselpos(id)
+		end
 	end
 end
 
@@ -682,7 +727,7 @@ function input.insertchars(id, text)
 	end
 
 	if inputsrightmost[id] then
-		x = #line
+		x = utf8.len(line)
 	end
 
 	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, #line)
@@ -718,7 +763,7 @@ function input.newline(id)
 	local line = inputs[id][y]
 
 	if inputsrightmost[id] then
-		x = #line
+		x = utf8.len(line)
 	end
 
 	local restofline = utf8.sub(line, x+1, #line)
@@ -747,8 +792,10 @@ function input.setselpos(id)
 	end
 
 	if inputsrightmost[id] then
-		x = #line
+		x = utf8.len(line)
 	end
+
+	x = math.min(math.max(x, 0), utf8.len(line))
 
 	if multiline then
 		inputselpos[id] = {x, y}
