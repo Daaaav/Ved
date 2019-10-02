@@ -328,8 +328,80 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 				end
 			end
 		else
-			for n, line in pairs(lines) do
-				-- TODO implement this
+			local curx = inputpos[id]
+			local selx = inputselpos[id]
+			if inputsrightmost[id] then
+				curx = #inputs[id]
+			end
+
+			if curx < selx then
+				whichfirst = 1
+			elseif selx < curx then
+				whichfirst = 2
+			end
+
+			if whichfirst == 1 then
+				startx, endx = curx, selx
+			elseif whichfirst == 2 then
+				startx, endx = selx, curx
+			end
+
+			local actualpos = 0
+
+			local curlinewidth = 0
+			local firstoffset = 0
+			local firstlinefound = false
+
+			local thisline
+			local centeroffset = 0
+
+			local thiswidth
+
+			local nested_break = false
+			if whichfirst ~= nil then
+				for n, line in pairs(lines) do
+					if limit ~= nil and align == ALIGN.CENTER then
+						thisline = anythingbutnil(lines[n]):match("^(.-)%s*$")
+						centeroffset = (limit-thisfont:getWidth(thisline)) / 2
+					end
+
+					for thispos = 1, #line do
+						actualpos = actualpos + 1
+
+						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
+
+						if actualpos > startx then
+							curlinewidth = curlinewidth + thiswidth
+							firstlinefound = true
+						else
+							firstoffset = firstoffset + thiswidth
+						end
+
+						if actualpos == endx then
+							if firstlinefound then
+								table.insert(selrects, {centeroffset + firstoffset, n-1, curlinewidth})
+							else
+								table.insert(selrects, {centeroffset, n-1, curlinewidth})
+							end
+							nested_break = true
+							break
+						end
+					end
+
+					if nested_break then
+						break
+					end
+
+					if firstlinefound then
+						table.insert(selrects, {centeroffset + firstoffset, n-1, curlinewidth})
+					else
+						table.insert(selrects, {centeroffset, n-1, curlinewidth})
+					end
+
+					curlinewidth = 0
+					firstlinefound = false
+					firstoffset = 0
+				end
 			end
 		end
 
