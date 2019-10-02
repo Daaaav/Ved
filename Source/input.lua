@@ -1011,7 +1011,7 @@ function input.delseltext(id)
 			return
 		end
 
-		deletethismanychars = endx - startx + 2
+		deletethismanychars = endx - startx
 	end
 
 	if whichfirst == 1 then
