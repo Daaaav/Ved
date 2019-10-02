@@ -297,10 +297,12 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 					for thispos = 1, #line do
 						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
 
-						if l > starty or thispos > startx then
-							curlinewidth = curlinewidth + thiswidth
-						else
-							firstoffset = firstoffset + thiswidth
+						if l ~= endy or endx ~= 0 then
+							if l > starty or thispos > startx then
+								curlinewidth = curlinewidth + thiswidth
+							else
+								firstoffset = firstoffset + thiswidth
+							end
 						end
 
 						if l == endy and thispos == endx then
@@ -813,7 +815,7 @@ function input.getseltext(id)
 		for l = starty, endy do
 			line = lines[l]
 			for thispos = 1, utf8.len(line) do
-				if l > starty or thispos > startx then
+				if (l ~= endy or endx ~= 0) and (l > starty or thispos > startx) then
 					thischar = utf8.sub(line, thispos, thispos)
 					table.insert(rope, thischar)
 				end
