@@ -44,7 +44,7 @@ you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
 You also need to call `input.drawcas(<id>, <x>, <y>, [scale], [limit], [align])`
 with the top-left corner of whatever text you're drawing for the blinking cursor
-(aka caret), after you print the text.
+(aka caret) and selection box after you print the text.
 (Read "drawcas" as "draw caret and selection".)
 `[scale]` defaults to 1.
 `[align]` is either ALIGN.LEFT or ALIGN.CENTER, defaults to ALIGN.LEFT.
@@ -64,6 +64,9 @@ When typing, the input prioritized will be the most recently-opened input.
 If you need to temporarily stop taking input, just do `input.pause()`. Though
 don't forget to do `input.resume()` when you want to enable it again (and don't
 want to create a new input, which enables it automatically)
+
+To focus an input so all further typing will go there, just do
+`input.bump(<id>)`.
 
 When you're done, close it by doing `input.close(<id>)`.
 
