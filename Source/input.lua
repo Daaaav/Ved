@@ -764,6 +764,11 @@ function input.newline(id)
 end
 
 function input.setselpos(id)
+	-- TODO: This function uses the utf8 table, which is only accessible since 0.9.2
+	if not love_version_meets(9, 2) then
+		return
+	end
+
 	local multiline = type(inputpos[id]) == "table"
 
 	local x, y, line
