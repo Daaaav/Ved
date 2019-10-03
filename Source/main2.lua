@@ -3967,6 +3967,8 @@ function love.keypressed(key)
 				current_audio:seek(seek, "seconds")
 			end
 		end
+	elseif state == 32 and key == "l" then
+		assets_graphicsloaddialog()
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
@@ -3983,8 +3985,6 @@ function love.keypressed(key)
 		elseif key == "3" then
 			imageviewer_grid = 32
 		end
-	elseif state == 32 and key == "l" then
-		assets_graphicsloaddialog()
 	elseif state == 33 then
 		if key == "escape" or key == "return" then
 			exitlanguageoptions()
