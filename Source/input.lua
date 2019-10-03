@@ -94,7 +94,7 @@ function input.create(type_, id, initial, ix, iy)
 		initial = tostring(anythingbutnil(initial))
 	elseif type_ == INPUT.MULTILINE then
 		initial = initial or {""}
-		if initial == {} or type(initial) ~= "table" then
+		if #initial == 0 or type(initial) ~= "table" then
 			-- wtf, why would you take the time to type {} or anything else
 			-- if you want it empty?
 			initial = {""}
