@@ -354,7 +354,7 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 						centeroffset = (limit-thisfont:getWidth(thisline)) / 2
 					end
 
-					for thispos = 1, #line do
+					for thispos = 1, utf8.len(line) do
 						actualpos = actualpos + 1
 
 						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
