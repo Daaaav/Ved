@@ -400,9 +400,9 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 
 		local oldcol = {love.graphics.getColor()}
 
-		love.graphics.setColor(0, 128, 255, 128) -- Blue-ish, like a typical selection
+		love.graphics.setColor(0, 127, 255, 127) -- Blue-ish, like a typical selection
 		if inputcopiedtimer > 0 then
-			love.graphics.setColor(255, 255, 128, 128) -- To let the user know they've copied the text
+			love.graphics.setColor(255, 255, 127, 127) -- To let the user know they've copied the text
 		end
 
 		for _, rect in pairs(selrects) do
