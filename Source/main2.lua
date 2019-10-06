@@ -2680,6 +2680,7 @@ function love.keypressed(key)
 			input.newline(input_ids[#nth_input])
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[input_ids[#nth_input]] ~= nil then
 			inputcopiedtimer = .25
+			cursorflashtime = 0
 			love.system.setClipboardText(input.getseltext(input_ids[#nth_input]))
 			if key == "x" then
 				input.delseltext(input_ids[#nth_input])
