@@ -194,11 +194,6 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 		align = ALIGN.LEFT
 	end
 
-	-- TODO: We can draw the cas just fine in 0.9 and lower, as long as the input isn't wrapped
-	if not love_version_meets(10) and not multiline and not limit == nil then
-		return
-	end
-
 	local lines = {}
 	local thisfont = love.graphics.getFont()
 	if multiline then
@@ -206,6 +201,16 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 	elseif limit ~= nil then
 		-- TODO: Deal with LÖVE 0.9.x and lower, later
 		_, lines = thisfont:getWrap(inputs[id], limit)
+		if not love_version_meets(10) then
+			-- `lines` will be an actual number instead
+			-- It's ok to keep going as long as wrapping isn't being applied,
+			-- meaning all the text is on one line
+			if lines > 1 then
+				return
+			else
+				lines = {inputs[id]}
+			end
+		end
 	else
 		lines = {inputs[id]}
 	end
