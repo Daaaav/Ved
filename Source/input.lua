@@ -124,6 +124,7 @@ function input.create(type_, id, initial, ix, iy)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 	input_ids[#nth_input] = id
 	input_ns[id] = #nth_input
 	inputsrightmost[id] = false
@@ -151,6 +152,7 @@ function input.close(id, updatemappings)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 	inputsrightmost[id] = nil
 	inputselpos[id] = nil
 end
@@ -175,6 +177,7 @@ function input.resume()
 	if #nth_input > 0 then
 		input.active = true
 		cursorflashtime = 0
+		inputcopiedtimer = 0
 	end
 end
 
@@ -192,6 +195,7 @@ function input.bump(id)
 	input.updatemappings()
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
 
 function input.drawcas(id, x, y, limit, align, sx, sy)
@@ -397,6 +401,9 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 		local oldcol = {love.graphics.getColor()}
 
 		love.graphics.setColor(0, 128, 255, 128) -- Blue-ish, like a typical selection
+		if inputcopiedtimer > 0 then
+			love.graphics.setColor(255, 255, 128, 128) -- To let the user know they've copied the text
+		end
 
 		for _, rect in pairs(selrects) do
 			love.graphics.rectangle("fill", x + rect[1]*sx, y + rect[2]*thisfont:getHeight()*sy, rect[3]*sx, thisfont:getHeight()*sy)
@@ -514,6 +521,7 @@ function input.movex(id, chars)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 
 	inputsrightmost[id] = false
 
@@ -549,6 +557,7 @@ function input.movey(id, chars)
 	inputpos[id][2] = y
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 
 	if inputselpos[id] ~= nil and inputpos[id][1] == inputselpos[id][1] and inputpos[id][2] == inputselpos[id][2] then
 		input.clearselpos(id)
@@ -565,6 +574,7 @@ function input.leftmost(id)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 
 	inputsrightmost[id] = false
 
@@ -592,6 +602,7 @@ function input.rightmost(id)
 	inputsrightmost[id] = true
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 
 	local x, y, line
 	if multiline then
@@ -687,6 +698,7 @@ function input.deletechars(id, chars)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
 
 function input.insertchars(id, text)
@@ -732,6 +744,7 @@ function input.insertchars(id, text)
 	end
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
 
 function input.newline(id)
@@ -764,6 +777,7 @@ function input.newline(id)
 	inputpos[id] = {x, y}
 
 	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
 
 function input.setselpos(id)

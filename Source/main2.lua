@@ -193,6 +193,8 @@ function love.load()
 	generictimer = 0
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
 
+	inputcopiedtimer = 0
+
 	limitglow = 0
 	limitglow_enabled = false
 
@@ -1996,6 +1998,10 @@ function love.update(dt)
 		generictimer = generictimer - dt
 	end
 
+	if inputcopiedtimer > 0 then
+		inputcopiedtimer = inputcopiedtimer - dt
+	end
+
 	if updatescrollingtext ~= nil and state == 6 then
 		updatescrollingtext_pos = updatescrollingtext_pos + 55*dt
 		if updatescrollingtext_pos > font8:getWidth(updatescrollingtext) + 112 then
@@ -2673,6 +2679,7 @@ function love.keypressed(key)
 		elseif table.contains({"return", "kpenter"}, key) then
 			input.newline(input_ids[#nth_input])
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[input_ids[#nth_input]] ~= nil then
+			inputcopiedtimer = .25
 			love.system.setClipboardText(input.getseltext(input_ids[#nth_input]))
 			if key == "x" then
 				input.delseltext(input_ids[#nth_input])
