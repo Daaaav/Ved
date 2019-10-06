@@ -158,6 +158,8 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 
+	utf8 = require("utf8lib_wrapper")
+
 	dodisplaysettings()
 
 	cons("love.load() reached")

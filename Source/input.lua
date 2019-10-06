@@ -1,30 +1,3 @@
-local utf8
-if love_version_meets(9, 2) then
-	utf8 = require("utf8")
-
-	-- Can we actually get a complete library without having to find the missing pieces ourselves? Jesus fucking christ
-	-- http://lua-users.org/lists/lua-l/2014-04/msg00590.html
-	function utf8.sub(s,i,j)
-		i = i or 1
-		j = j or -1
-		if i<1 or j<1 then
-			local n = utf8.len(s)
-			if not n then return nil end
-			if i<0 then i = n+1+i end
-			if j<0 then j = n+1+j end
-			if i<0 then i = 1 elseif i>n then i = n end
-			if j<0 then j = 1 elseif j>n then j = n end
-		end
-		if j<i then return "" end
-		i = utf8.offset(s,i)
-		j = utf8.offset(s,j+1)
-		if i and j then return s:sub(i,j-1)
-		elseif i then return s:sub(i)
-		else return ""
-		end
-	end
-end
-
 --[[ A brief guide:
 
 Create a new input by doing `input.create(<type>, <id>, [initial], [initial_x], [initial_y])`.
@@ -201,7 +174,6 @@ end
 function input.drawcas(id, x, y, limit, align, sx, sy)
 	-- TODO: Can't use this in LÖVE 0.9.x and lower,
 	-- due to lack of ability to get the wrapped text from Font:getWrap()
-	-- Also can't use this in LÖVE 0.9.1 exactly due to utf8 module
 	if not love_version_meets(10) then
 		return
 	end
@@ -490,11 +462,6 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 end
 
 function input.movex(id, chars)
-	-- TODO: Uses utf8 module, which is LÖVE 0.9.2+ only
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	local multiline = type(inputpos[id]) == "table"
 
 	local x, y, line
@@ -592,11 +559,6 @@ function input.leftmost(id)
 end
 
 function input.rightmost(id)
-	-- TODO: Uses utf8 module
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	local multiline = type(inputpos[id]) == "table"
 
 	inputsrightmost[id] = true
@@ -629,11 +591,6 @@ function input.rightmost(id)
 end
 
 function input.deletechars(id, chars)
-	-- TODO: Uses utf8 module, which doesn't exist in exactly LÖVE 0.9.1
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	if chars == 0 then
 		return
 	end
@@ -705,11 +662,6 @@ function input.insertchars(id, text)
 	-- TODO: Add blacklisting chars for certain types of input?
 	-- E.g. number inputs should be numbers-only, VVVVVV inputs should be ASCII-only
 
-	-- TODO: Uses utf8 module, only available since LÖVE 0.9.2+
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	if text == "" then
 		return
 	end
@@ -748,11 +700,6 @@ function input.insertchars(id, text)
 end
 
 function input.newline(id)
-	-- TODO: utf8 module is only available in LÖVE 0.9.2+
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	local multiline = type(inputpos[id]) == "table"
 
 	if not multiline then
@@ -781,11 +728,6 @@ function input.newline(id)
 end
 
 function input.setselpos(id)
-	-- TODO: This function uses the utf8 table, which is only accessible since 0.9.2
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	local multiline = type(inputpos[id]) == "table"
 
 	local x, y, line
@@ -815,11 +757,6 @@ function input.clearselpos(id)
 end
 
 function input.getseltext(id)
-	-- TODO: utf8 lib is unavailable in LÖVE 0.9.1 (I didn't list LÖVE 0.9.0 because Ved doesn't support it)
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	if inputselpos[id] == nil then
 		return
 	end
@@ -921,11 +858,6 @@ function input.getseltext(id)
 end
 
 function input.delseltext(id)
-	-- TODO: 'utf8' module is only for LÖVE 0.9.2 and above
-	if not love_version_meets(9, 2) then
-		return
-	end
-
 	if inputselpos[id] == nil then
 		return
 	end
