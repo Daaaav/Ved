@@ -172,12 +172,6 @@ function input.bump(id)
 end
 
 function input.drawcas(id, x, y, limit, align, sx, sy)
-	-- TODO: Can't use this in LÖVE 0.9.x and lower,
-	-- due to lack of ability to get the wrapped text from Font:getWrap()
-	if not love_version_meets(10) then
-		return
-	end
-
 	if not input.active then
 		return
 	end
@@ -198,6 +192,11 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 	align = align or ALIGN.LEFT
 	if multiline then
 		align = ALIGN.LEFT
+	end
+
+	-- TODO: We can draw the cas just fine in 0.9 and lower, as long as the input isn't wrapped
+	if not love_version_meets(10) and not multiline and not limit == nil then
+		return
 	end
 
 	local lines = {}
