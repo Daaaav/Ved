@@ -228,7 +228,7 @@ function love.load()
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
 
 	cursorobjs = {}
-	if love.mouse.hasCursor() then
+	if not love_version_meets(10) or love.mouse.hasCursor() then
 		cursorobjs[11] = love.mouse.getSystemCursor("sizens")
 		cursorobjs[12] = love.mouse.getSystemCursor("sizewe")
 		cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
