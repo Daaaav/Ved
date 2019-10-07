@@ -199,17 +199,10 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 	if multiline then
 		lines = inputs[id]
 	elseif limit ~= nil then
-		-- TODO: Deal with LÖVE 0.9.x and lower, later
-		_, lines = thisfont:getWrap(inputs[id], limit)
-		if not love_version_meets(10) then
-			-- `lines` will be an actual number instead
-			-- It's ok to keep going as long as wrapping isn't being applied,
-			-- meaning all the text is on one line
-			if lines > 1 then
-				return
-			else
-				lines = {inputs[id]}
-			end
+		if love_version_meets(10) then
+			_, lines = thisfont:getWrap(inputs[id], limit)
+		else
+			_, lines = Font_getWrap9(thisfont, inputs[id], limit)
 		end
 	else
 		lines = {inputs[id]}
@@ -326,6 +319,8 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 
 			local thiswidth
 
+			local pastfirstnonspace = false
+
 			local nested_break = false
 			if whichfirst ~= nil then
 				for n, line in pairs(lines) do
@@ -334,16 +329,30 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 						centeroffset = (limit-thisfont:getWidth(thisline)) / 2
 					end
 
-					for thispos = 1, utf8.len(line) do
+					local thispos = 1
+					while thispos <= utf8.len(line) do
 						actualpos = actualpos + 1
+
+						if utf8.sub(inputs[id], actualpos, actualpos) ~= " " then
+							pastfirstnonspace = true
+						end
+
+						local love9skipspace = not pastfirstnonspace
+						or (actualpos > 1 and utf8.sub(inputs[id], actualpos-1, actualpos-1) == " " and utf8.sub(inputs[id], actualpos, actualpos) == " ")
+						local skipthispos = not love_version_meets(10) and limit ~= nil and love9skipspace
 
 						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
 
 						if actualpos > startx then
-							curlinewidth = curlinewidth + thiswidth
+							if not skipthispos then
+								curlinewidth = curlinewidth + thiswidth
+							end
 							firstlinefound = true
-						else
+						elseif not skipthispos then
 							firstoffset = firstoffset + thiswidth
+						end
+						if not skipthispos then
+							thispos = thispos + 1
 						end
 
 						if actualpos == endx then
@@ -370,6 +379,7 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 					curlinewidth = 0
 					firstlinefound = false
 					firstoffset = 0
+					pastfirstnonspace = false
 				end
 			end
 		end
@@ -429,12 +439,25 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 		if inputsrightmost[id] then
 			postoget = utf8.len(inputs[id])
 		end
+		local pastfirstnonspace = false
 		local nested_break = false
 		for n, line in pairs(lines) do
 			thischar = 0
-			for pos = 1, utf8.len(line) do
+			local pos = 1
+			while pos <= utf8.len(line) do
+				if utf8.sub(inputs[id], thispos+1, thispos+1) ~= " " then
+					pastfirstnonspace = true
+				end
+
+				local love9skipspace = not pastfirstnonspace
+				or (thispos > 1 and utf8.sub(inputs[id], thispos, thispos) == " " and utf8.sub(inputs[id], thispos+1, thispos+1) == " ")
+				local skipthispos = not love_version_meets(10) and limit ~= nil and love9skipspace
+
 				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
+				if not skipthispos then
+					thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
+					pos = pos + 1
+				end
 				if thispos == postoget then
 					caretx = thischar
 					carety = n - 1
@@ -446,6 +469,7 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 			if nested_break then
 				break
 			end
+			pastfirstnonspace = false
 		end
 	end
 	caretx = anythingbutnil0(caretx)
