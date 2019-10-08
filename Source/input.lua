@@ -173,7 +173,7 @@ function input.drawcas(id, x, y, sx, sy)
 		return
 	end
 
-	-- Make sure we're drawing the caret of the currently focused input
+	-- Make sure we're drawing the cas of the currently focused input
 	if id ~= input_ids[#nth_input] then
 		return
 	end
