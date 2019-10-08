@@ -2626,58 +2626,60 @@ function love.keypressed(key)
 	end
 
 	if input.active then
+		local id = input_ids[#nth_input]
+
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
 			if keyboard_eitherIsDown("shift") then
-				if inputselpos[input_ids[#nth_input]] == nil then
-					input.setselpos(input_ids[#nth_input])
+				if inputselpos[id] == nil then
+					input.setselpos(id)
 				end
 			else
-				input.clearselpos(input_ids[#nth_input])
+				input.clearselpos(id)
 			end
 		end
 
 		if key == "left" then
-			input.movex(input_ids[#nth_input], -1)
+			input.movex(id, -1)
 		elseif key == "right" then
-			input.movex(input_ids[#nth_input], 1)
+			input.movex(id, 1)
 		elseif key == "up" then
-			input.movey(input_ids[#nth_input], -1)
+			input.movey(id, -1)
 		elseif key == "down" then
-			input.movey(input_ids[#nth_input], 1)
+			input.movey(id, 1)
 		elseif key == "home" then
-			input.leftmost(input_ids[#nth_input])
+			input.leftmost(id)
 		elseif key == "end" then
-			input.rightmost(input_ids[#nth_input])
-		elseif table.contains({"backspace", "delete"}, key) and inputselpos[input_ids[#nth_input]] ~= nil then
-			input.delseltext(input_ids[#nth_input])
+			input.rightmost(id)
+		elseif table.contains({"backspace", "delete"}, key) and inputselpos[id] ~= nil then
+			input.delseltext(id)
 		elseif key == "backspace" then
-			input.deletechars(input_ids[#nth_input], -1)
+			input.deletechars(id, -1)
 		elseif key == "delete" then
-			input.deletechars(input_ids[#nth_input], 1)
+			input.deletechars(id, 1)
 		elseif table.contains({"return", "kpenter"}, key) then
-			input.newline(input_ids[#nth_input])
-		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[input_ids[#nth_input]] ~= nil then
+			input.newline(id)
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[id] ~= nil then
 			inputcopiedtimer = .25
 			cursorflashtime = 0
-			love.system.setClipboardText(input.getseltext(input_ids[#nth_input]))
+			love.system.setClipboardText(input.getseltext(id))
 			if key == "x" then
-				input.delseltext(input_ids[#nth_input])
+				input.delseltext(id)
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
-			if inputselpos[input_ids[#nth_input]] ~= nil then
-				input.delseltext(input_ids[#nth_input])
+			if inputselpos[id] ~= nil then
+				input.delseltext(id)
 			end
-			input.insertchars(input_ids[#nth_input], love.system.getClipboardText():gsub("[\r\n]", ""))
+			input.insertchars(id, love.system.getClipboardText():gsub("[\r\n]", ""))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
-			input.selall(input_ids[#nth_input])
+			input.selall(id)
 		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
-			if inputselpos[input_ids[#nth_input]] ~= nil then
-				input.delseltext(input_ids[#nth_input])
+			if inputselpos[id] ~= nil then
+				input.delseltext(id)
 			else
 				if key == "u" then
-					input.deltoleftmost(input_ids[#nth_input])
+					input.deltoleftmost(id)
 				elseif key == "k" then
-					input.deltorightmost(input_ids[#nth_input])
+					input.deltorightmost(id)
 				end
 			end
 		elseif key == "tab" then
