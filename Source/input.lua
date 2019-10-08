@@ -863,6 +863,9 @@ function input.selall(id)
 		input.setselpos(id)
 		inputsrightmost[id] = true
 	end
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
 
 function input.deltoleftmost(id)
