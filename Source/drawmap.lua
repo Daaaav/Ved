@@ -357,7 +357,7 @@ function drawmap()
 	-- Smaller screen? Display a "CTRL" and the current tool, just like the main editor
 	if s.psmallerscreen and not keyboard_eitherIsDown(ctrl) then
 		love.graphics.setColor(0, 0, 0, 192)
-		love.graphics.rectangle("fill", 0, 0, 32, love.graphics.getHeight())
+		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
 		tinyprint(L.TINY_CTRL, 0, 0)
 
