@@ -396,7 +396,11 @@ function input.movey(id, chars)
 	end
 
 	local lines = inputs[id]
-	local y = inputpos[id][2]
+	local x, y = unpack(inputpos[id])
+
+	if inputsrightmost[id] then
+		x = utf8.len(inputs[id][y])
+	end
 
 	y = y + chars
 	y = math.min(math.max(y, 1), #lines)
@@ -406,7 +410,7 @@ function input.movey(id, chars)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	if inputselpos[id] ~= nil and inputpos[id][1] == inputselpos[id][1] and inputpos[id][2] == inputselpos[id][2] then
+	if inputselpos[id] ~= nil and x == inputselpos[id][1] and y == inputselpos[id][2] then
 		input.clearselpos(id)
 	end
 end
