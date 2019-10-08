@@ -959,3 +959,15 @@ function input.removelines(id, lines)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
+
+function input.sellinetoright(id)
+	input.leftmost(id)
+	input.setselpos(id)
+	input.rightmost(id)
+end
+
+function input.sellinetoleft(id)
+	input.rightmost(id)
+	input.setselpos(id)
+	input.leftmost(id)
+end

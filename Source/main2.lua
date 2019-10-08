@@ -2692,6 +2692,12 @@ function love.keypressed(key)
 					input.removelines(id, 1)
 				end
 			end
+		elseif key == "l" and keyboard_eitherIsDown(ctrl) then
+			if keyboard_eitherIsDown("shift") then
+				input.sellinetoleft(id)
+			else
+				input.sellinetoright(id)
+			end
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 3])
 		end
