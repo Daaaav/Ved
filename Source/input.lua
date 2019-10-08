@@ -919,3 +919,40 @@ function input.deltorightmost(id)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
+
+function input.removelines(id, lines)
+	if lines == 0 then
+		return
+	end
+
+	local multiline = type(inputpos[id]) == "table"
+
+	if not multiline then
+		inputs[id] = ""
+		cursorflashtime = 0
+		inputcopiedtimer = 0
+		return
+	end
+
+	local y = inputpos[id][2]
+	for _ = 1, math.abs(lines) do
+		if #inputs[id] > 1 then
+			table.remove(inputs[id], y)
+		else
+			inputs[id][y] = ""
+		end
+
+		if lines > 0 then
+			if y > #inputs[id] and y > 1 then
+				y = y - 1
+			end
+		else
+			y = math.max(y - 1, 1)
+		end
+	end
+
+	inputpos[id][2] = y
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end

@@ -2682,6 +2682,16 @@ function love.keypressed(key)
 					input.deltorightmost(id)
 				end
 			end
+		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
+			if inputselpos[id] ~= nil then
+				input.delseltext(id)
+			else
+				if keyboard_eitherIsDown("shift") then
+					input.removelines(id, -1)
+				else
+					input.removelines(id, 1)
+				end
+			end
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 3])
 		end
