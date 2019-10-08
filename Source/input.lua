@@ -15,11 +15,12 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.drawcas(<id>, <x>, <y>, [scale])`
+You also need to call `input.drawcas(<id>, <x>, <y>, [scale_x], [scale_y])`
 with the top-left corner of whatever text you're drawing for the blinking cursor
 (aka caret) and selection box after you print the text.
 (Read "drawcas" as "draw caret and selection".)
-`[scale]` defaults to 1.
+`[scale_x]` defaults to 1.
+`[scale_y]` defaults to `[scale_x]`.
 
 If you want to index by number (where the last number is the most
 recently-opened input), then use `nth_input`. Use `input_ids` and `input_ns` to
