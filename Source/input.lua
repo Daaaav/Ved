@@ -228,43 +228,27 @@ function input.drawcas(id, x, y, sx, sy)
 			if whichfirst ~= nil then
 				for l = starty, endy do
 					line = lines[l]
-					for thispos = 1, #line do
-						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
-
-						if l ~= endy or endx ~= 0 then
-							if l > starty or thispos > startx then
-								curlinewidth = curlinewidth + thiswidth
-							else
-								firstoffset = firstoffset + thiswidth
-							end
-							if thispos == #line and l ~= endy then
-								-- Add a small space to represent the newline
-								curlinewidth = curlinewidth + 4
-							end
-						end
-
-						if l == endy and thispos == endx then
-							if l == starty then
-								table.insert(selrects, {firstoffset, l, curlinewidth})
-							else
-								table.insert(selrects, {0, l, curlinewidth})
-							end
-							nested_break = true
-							break
-						end
-					end
-
-					if nested_break then
-						break
-					end
 
 					if l == starty then
+						firstoffset = thisfont:getWidth(utf8.sub(line, 1, startx))
+						if l == endy then
+							curlinewidth = thisfont:getWidth(utf8.sub(line, startx+1, endx))
+						else
+							curlinewidth = thisfont:getWidth(utf8.sub(line, startx+1, utf8.len(line)))
+							-- Add a small space to represent the newline
+							curlinewidth = curlinewidth + 4
+						end
 						table.insert(selrects, {firstoffset, l, curlinewidth})
 					else
+						if l == endy then
+							curlinewidth = thisfont:getWidth(utf8.sub(line, 1, endx))
+						else
+							curlinewidth = thisfont:getWidth(utf8.sub(line, 1, utf8.len(line)))
+							-- Again, add a small space to represent the newline
+							curlinewidth = curlinewidth + 4
+						end
 						table.insert(selrects, {0, l, curlinewidth})
 					end
-
-					curlinewidth = 0
 				end
 			end
 		else
@@ -296,20 +280,9 @@ function input.drawcas(id, x, y, sx, sy)
 			local thiswidth
 
 			if whichfirst ~= nil then
-				for thispos = 1, utf8.len(line) do
-					thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
-
-					if thispos > startx then
-						curlinewidth = curlinewidth + thiswidth
-					else
-						firstoffset = firstoffset + thiswidth
-					end
-
-					if thispos == endx then
-						table.insert(selrects, {firstoffset, 0, curlinewidth})
-						break
-					end
-				end
+				firstoffset = thisfont:getWidth(utf8.sub(line, 1, startx))
+				curlinewidth = thisfont:getWidth(utf8.sub(line, startx+1, endx))
+				table.insert(selrects, {firstoffset, 0, curlinewidth})
 			end
 		end
 
@@ -341,41 +314,20 @@ function input.drawcas(id, x, y, sx, sy)
 		if inputsrightmost[id] then
 			postoget = #line
 		end
-		if postoget ~= 0 then
-			local thispos = 0
-			local thischar = 0
-			for _ = 1, #line do
-				thispos = thispos + 1
-				thischar = thischar + thisfont:getWidth(utf8.sub(line, thispos, thispos))
-				if thispos == postoget then
-					caretx = thischar
-					break
-				end
-			end
-		else
-			caretx = 0
-		end
-		if caretx == nil then
-			-- Must be coming from a line with more chars
-			-- Just treat it like it's at the end of the line
-			caretx = thisfont:getWidth(line)
-		end
+		-- If we're coming from a line with more chars,
+		-- treat it like it's at the end of the line
+		postoget = math.min(postoget, #line)
+
+		caretx = thisfont:getWidth(utf8.sub(line, 1, postoget))
 	else
 		local line = inputs[id]
-		local thispos = 0
-		local thischar = 0
 		local postoget = inputpos[id]
 		if inputsrightmost[id] then
 			postoget = utf8.len(line)
 		end
 		carety = 0
-		for pos = 1, utf8.len(line) do
-			thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
-			if pos == postoget then
-				caretx = thischar
-				break
-			end
-		end
+
+		caretx = thisfont:getWidth(utf8.sub(line, 1, postoget))
 	end
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
