@@ -1798,12 +1798,6 @@ function love.draw()
 		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
 		input.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
 		input.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
-		input.create(INPUT.ONELINE, "inputtest5", "This is one line but it's overflowing")
-		input.create(INPUT.ONELINE, "inputtest6", "Overflowing, and also double-scaled")
-		input.create(INPUT.ONELINE, "inputtest7", "Overflowing, and yet also stretched")
-		input.create(INPUT.ONELINE, "inputtest8", "I'm centered and overflowing")
-		input.create(INPUT.ONELINE, "inputtest9", "But I'm double-scaled")
-		input.create(INPUT.ONELINE, "inputtest10", "But I'm stretched")
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcas("inputtest", 100, 100)
@@ -1816,30 +1810,12 @@ function love.draw()
 		for k,v in pairs(inputs.inputtest3) do
 			ved_print(v, 100, 16*k + 200, 2)
 		end
-		input.drawcas("inputtest3", 100, 200, nil, nil, 2)
+		input.drawcas("inputtest3", 100, 200, 2)
 
 		for k,v in pairs(inputs.inputtest4) do
 			ved_print(v, 100, 16*k + 250, 1, 2)
 		end
-		input.drawcas("inputtest4", 100, 250, nil, nil, 1, 2)
-
-		ved_printf(inputs.inputtest5, 100, 300, 8*10)
-		input.drawcas("inputtest5", 100, 300, 8*10)
-
-		ved_printf(inputs.inputtest6, 100, 350, 8*10, nil, 2)
-		input.drawcas("inputtest6", 100, 350, 8*10, nil, 2)
-
-		ved_printf(inputs.inputtest7, 400, 100, 8*10, nil, 1, 2)
-		input.drawcas("inputtest7", 400, 100, 8*10, nil, 1, 2)
-
-		ved_printf(inputs.inputtest8, 450, 200, 8*10, "center")
-		input.drawcas("inputtest8", 450, 200, 8*10, ALIGN.CENTER)
-
-		ved_printf(inputs.inputtest9, 450, 250, 8*10, "center", 2)
-		input.drawcas("inputtest9", 450, 250, 8*10, ALIGN.CENTER, 2)
-
-		ved_printf(inputs.inputtest10, 450, 350, 8*10, "center", 1, 2)
-		input.drawcas("inputtest10", 450, 350, 8*10, ALIGN.CENTER, 1, 2)
+		input.drawcas("inputtest4", 100, 250, 1, 2)
 
 		local youhaveselected = "You have selected: "
 		local tmp = input.getseltext(input_ids[#nth_input])
@@ -2695,7 +2671,7 @@ function love.keypressed(key)
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			input.selall(input_ids[#nth_input])
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 9])
+			input.bump(input_ids[#nth_input - 3])
 		end
 	end
 

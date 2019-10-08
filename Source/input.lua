@@ -15,14 +15,11 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.drawcas(<id>, <x>, <y>, [scale], [limit], [align])`
+You also need to call `input.drawcas(<id>, <x>, <y>, [scale])`
 with the top-left corner of whatever text you're drawing for the blinking cursor
 (aka caret) and selection box after you print the text.
 (Read "drawcas" as "draw caret and selection".)
 `[scale]` defaults to 1.
-`[align]` is either ALIGN.LEFT or ALIGN.CENTER, defaults to ALIGN.LEFT.
-`[align]` and `[limit]` are ignored for multiline inputs, and all multiline
-inputs should be left-aligned.
 
 If you want to index by number (where the last number is the most
 recently-opened input), then use `nth_input`. Use `input_ids` and `input_ns` to
@@ -171,7 +168,7 @@ function input.bump(id)
 	inputcopiedtimer = 0
 end
 
-function input.drawcas(id, x, y, limit, align, sx, sy)
+function input.drawcas(id, x, y, sx, sy)
 	if not input.active then
 		return
 	end
@@ -183,30 +180,10 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 
 	local multiline = type(inputs[id]) == "table"
 
-	if sx ~= nil and limit ~= nil and not multiline then
-		limit = limit/sx
-	end
-
 	sx = sx or 1
 	sy = sy or sx
-	align = align or ALIGN.LEFT
-	if multiline then
-		align = ALIGN.LEFT
-	end
 
-	local lines = {}
 	local thisfont = love.graphics.getFont()
-	if multiline then
-		lines = inputs[id]
-	elseif limit ~= nil then
-		if love_version_meets(10) then
-			_, lines = thisfont:getWrap(inputs[id], limit)
-		else
-			_, lines = Font_getWrap9(thisfont, inputs[id], limit)
-		end
-	else
-		lines = {inputs[id]}
-	end
 
 	-- Selection
 
@@ -216,6 +193,7 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 		local startx, starty, endx, endy
 
 		if multiline then
+			local lines = inputs[id]
 			local curx, cury = unpack(inputpos[id])
 			local selx, sely = unpack(inputselpos[id])
 			if inputsrightmost[id] then
@@ -290,10 +268,11 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 				end
 			end
 		else
+			local line = inputs[id]
 			local curx = inputpos[id]
 			local selx = inputselpos[id]
 			if inputsrightmost[id] then
-				curx = #inputs[id]
+				curx = #line
 			end
 
 			if curx < selx then
@@ -308,78 +287,28 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 				startx, endx = selx, curx
 			end
 
-			local actualpos = 0
-
 			local curlinewidth = 0
 			local firstoffset = 0
-			local firstlinefound = false
 
 			local thisline
 			local centeroffset = 0
 
 			local thiswidth
 
-			local pastfirstnonspace = false
-
-			local nested_break = false
 			if whichfirst ~= nil then
-				for n, line in pairs(lines) do
-					if limit ~= nil and align == ALIGN.CENTER then
-						thisline = anythingbutnil(lines[n]):match("^(.-)%s*$")
-						centeroffset = (limit-thisfont:getWidth(thisline)) / 2
+				for thispos = 1, utf8.len(line) do
+					thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
+
+					if thispos > startx then
+						curlinewidth = curlinewidth + thiswidth
+					else
+						firstoffset = firstoffset + thiswidth
 					end
 
-					local thispos = 1
-					while thispos <= utf8.len(line) do
-						actualpos = actualpos + 1
-
-						if utf8.sub(inputs[id], actualpos, actualpos) ~= " " then
-							pastfirstnonspace = true
-						end
-
-						local love9skipspace = not pastfirstnonspace
-						or (actualpos > 1 and utf8.sub(inputs[id], actualpos-1, actualpos-1) == " " and utf8.sub(inputs[id], actualpos, actualpos) == " ")
-						local skipthispos = not love_version_meets(10) and limit ~= nil and love9skipspace
-
-						thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
-
-						if actualpos > startx then
-							if not skipthispos then
-								curlinewidth = curlinewidth + thiswidth
-							end
-							firstlinefound = true
-						elseif not skipthispos then
-							firstoffset = firstoffset + thiswidth
-						end
-						if not skipthispos then
-							thispos = thispos + 1
-						end
-
-						if actualpos == endx then
-							if firstlinefound then
-								table.insert(selrects, {centeroffset + firstoffset, n-1, curlinewidth})
-							else
-								table.insert(selrects, {centeroffset, n-1, curlinewidth})
-							end
-							nested_break = true
-							break
-						end
-					end
-
-					if nested_break then
+					if thispos == endx then
+						table.insert(selrects, {firstoffset, 0, curlinewidth})
 						break
 					end
-
-					if firstlinefound then
-						table.insert(selrects, {centeroffset + firstoffset, n-1, curlinewidth})
-					else
-						table.insert(selrects, {centeroffset, n-1, curlinewidth})
-					end
-
-					curlinewidth = 0
-					firstlinefound = false
-					firstoffset = 0
-					pastfirstnonspace = false
 				end
 			end
 		end
@@ -405,7 +334,6 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 	end
 
 	local caretx, carety
-	local linefound = 1
 	if multiline then
 		carety = inputpos[id][2]
 		local line = inputs[id][carety]
@@ -432,54 +360,25 @@ function input.drawcas(id, x, y, limit, align, sx, sy)
 			-- Just treat it like it's at the end of the line
 			caretx = thisfont:getWidth(line)
 		end
-	elseif #lines > 0 then
+	else
+		local line = inputs[id]
 		local thispos = 0
 		local thischar = 0
 		local postoget = inputpos[id]
 		if inputsrightmost[id] then
-			postoget = utf8.len(inputs[id])
+			postoget = utf8.len(line)
 		end
-		local pastfirstnonspace = false
-		local nested_break = false
-		for n, line in pairs(lines) do
-			thischar = 0
-			local pos = 1
-			while pos <= utf8.len(line) do
-				if utf8.sub(inputs[id], thispos+1, thispos+1) ~= " " then
-					pastfirstnonspace = true
-				end
-
-				local love9skipspace = not pastfirstnonspace
-				or (thispos > 1 and utf8.sub(inputs[id], thispos, thispos) == " " and utf8.sub(inputs[id], thispos+1, thispos+1) == " ")
-				local skipthispos = not love_version_meets(10) and limit ~= nil and love9skipspace
-
-				thispos = thispos + 1
-				if not skipthispos then
-					thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
-					pos = pos + 1
-				end
-				if thispos == postoget then
-					caretx = thischar
-					carety = n - 1
-					linefound = n
-					nested_break = true
-					break
-				end
-			end
-			if nested_break then
+		carety = 0
+		for pos = 1, utf8.len(line) do
+			thischar = thischar + thisfont:getWidth(utf8.sub(line, pos, pos))
+			if pos == postoget then
+				caretx = thischar
 				break
 			end
-			pastfirstnonspace = false
 		end
 	end
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
-
-	if not multiline and align == ALIGN.CENTER and limit ~= nil then
-		-- :match() to remove trailing whitespace, anythingbutnil() to account for if there's no text
-		local thisline = anythingbutnil(lines[linefound]):match("^(.-)%s*$")
-		caretx = caretx + (limit-thisfont:getWidth(thisline)) / 2
-	end
 
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
