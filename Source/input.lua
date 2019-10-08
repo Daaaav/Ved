@@ -864,3 +864,58 @@ function input.selall(id)
 		inputsrightmost[id] = true
 	end
 end
+
+function input.deltoleftmost(id)
+	local multiline = type(inputs[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = utf8.len(line)
+	end
+
+	if x == 0 then
+		-- Fast path: we're already at the left end, so we don't need to do anything
+		return
+	end
+
+	input.deletechars(id, -x)
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end
+
+function input.deltorightmost(id)
+	local multiline = type(inputpos[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		-- Fast path: This is already cleared, so we don't need to do anything
+		return
+	end
+
+	if x == utf8.len(line) then
+		-- Again, fast path, already cleared, don't need to do anything
+		return
+	end
+
+	input.deletechars(id, utf8.len(line) - x)
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end

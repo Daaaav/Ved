@@ -2670,6 +2670,16 @@ function love.keypressed(key)
 			input.insertchars(input_ids[#nth_input], love.system.getClipboardText():gsub("[\r\n]", ""))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			input.selall(input_ids[#nth_input])
+		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
+			if inputselpos[input_ids[#nth_input]] ~= nil then
+				input.delseltext(input_ids[#nth_input])
+			else
+				if key == "u" then
+					input.deltoleftmost(input_ids[#nth_input])
+				elseif key == "k" then
+					input.deltorightmost(input_ids[#nth_input])
+				end
+			end
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 3])
 		end
