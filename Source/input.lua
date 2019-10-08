@@ -563,8 +563,9 @@ function input.insertchars(id, text)
 
 	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, #line)
 
-	if x < #line then
+	if x < utf8.len(line) then
 		x = x + utf8.len(text)
+		x = math.min(x, utf8.len(line))
 	end
 
 	if multiline then
