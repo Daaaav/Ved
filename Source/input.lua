@@ -207,7 +207,7 @@ function input.drawcas(id, x, y, sx, sy)
 			local curx, cury = unpack(inputpos[id])
 			local selx, sely = unpack(inputselpos[id])
 			if inputsrightmost[id] then
-				curx = #lines[cury]
+				curx = utf8.len(lines[cury])
 			end
 
 			if cury < sely then
@@ -266,7 +266,7 @@ function input.drawcas(id, x, y, sx, sy)
 			local curx = inputpos[id]
 			local selx = inputselpos[id]
 			if inputsrightmost[id] then
-				curx = #line
+				curx = utf8.len(line)
 			end
 
 			if curx < selx then
@@ -322,11 +322,11 @@ function input.drawcas(id, x, y, sx, sy)
 		local line = inputs[id][carety]
 		local postoget = inputpos[id][1]
 		if inputsrightmost[id] then
-			postoget = #line
+			postoget = utf8.len(line)
 		end
 		-- If we're coming from a line with more chars,
 		-- treat it like it's at the end of the line
-		postoget = math.min(postoget, #line)
+		postoget = math.min(postoget, utf8.len(line))
 
 		caretx = thisfont:getWidth(utf8.sub(line, 1, postoget))
 	else
@@ -516,9 +516,9 @@ function input.deletechars(id, chars)
 				end
 			else
 				if multiline then
-					inputs[id][y] = utf8.sub(inputs[id][y], 1, x) .. utf8.sub(inputs[id][y], x+2, #inputs[id][y])
+					inputs[id][y] = utf8.sub(inputs[id][y], 1, x) .. utf8.sub(inputs[id][y], x+2, utf8.len(inputs[id][y]))
 				else
-					inputs[id] = utf8.sub(inputs[id], 1, x) .. utf8.sub(inputs[id], x+2, #inputs[id])
+					inputs[id] = utf8.sub(inputs[id], 1, x) .. utf8.sub(inputs[id], x+2, utf8.len(inputs[id]))
 				end
 			end
 		else
@@ -532,9 +532,9 @@ function input.deletechars(id, chars)
 				end
 			else
 				if multiline then
-					inputs[id][y] = utf8.sub(inputs[id][y], 1, x-1) .. utf8.sub(inputs[id][y], x+1, #inputs[id][y])
+					inputs[id][y] = utf8.sub(inputs[id][y], 1, x-1) .. utf8.sub(inputs[id][y], x+1, utf8.len(inputs[id][y]))
 				else
-					inputs[id] = utf8.sub(inputs[id], 1, x-1) .. utf8.sub(inputs[id], x+1, #inputs[id])
+					inputs[id] = utf8.sub(inputs[id], 1, x-1) .. utf8.sub(inputs[id], x+1, utf8.len(inputs[id]))
 				end
 				x = x - 1
 			end
@@ -580,7 +580,7 @@ function input.insertchars(id, text)
 		x = utf8.len(line)
 	end
 
-	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, #line)
+	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, utf8.len(line))
 
 	if x < utf8.len(line) then
 		x = x + utf8.len(text)
@@ -617,7 +617,7 @@ function input.newline(id)
 		x = utf8.len(line)
 	end
 
-	local restofline = utf8.sub(line, x+1, #line)
+	local restofline = utf8.sub(line, x+1, utf8.len(line))
 
 	table.insert(inputs[id], y+1, restofline)
 	inputs[id][y] = utf8.sub(line, 1, x)
@@ -679,7 +679,7 @@ function input.getseltext(id)
 		local selx, sely = unpack(inputselpos[id])
 		local lines = inputs[id]
 		if inputsrightmost[id] then
-			curx = #lines[cury]
+			curx = utf8.len(lines[cury])
 		end
 
 		if cury < sely then
@@ -732,7 +732,7 @@ function input.getseltext(id)
 		local curx = inputpos[id]
 		local selx = inputselpos[id]
 		if inputsrightmost[id] then
-			curx = #inputs[id]
+			curx = utf8.len(inputs[id])
 		end
 
 		if curx < selx then
@@ -780,7 +780,7 @@ function input.delseltext(id)
 		local selx, sely = unpack(inputselpos[id])
 		local lines = inputs[id]
 		if inputsrightmost[id] then
-			curx = #lines[cury]
+			curx = utf8.len(lines[cury])
 		end
 
 		if cury < sely then
@@ -832,7 +832,7 @@ function input.delseltext(id)
 		local curx = inputpos[id]
 		local selx = inputselpos[id]
 		if inputsrightmost[id] then
-			curx = #inputs[id]
+			curx = utf8.len(inputs[id])
 		end
 
 		if curx < selx then
