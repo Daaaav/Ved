@@ -1104,3 +1104,110 @@ function input.redo(id)
 	table.remove(inputredo[id])
 	table.insert(inputundo[id], table.copy(last))
 end
+
+function input.movexwords(id, wordsep, words)
+	if words == 0 then
+		return
+	end
+
+	local multiline = type(inputs[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = utf8.len(line)
+	end
+
+	if (words > 0 and x == utf8.len(line)) or (words < 0 and x == 0) then
+		cursorflashtime = 0
+		inputcopiedtimer = 0
+		return
+	end
+
+	local issep
+	if type(wordsep) == "table" then
+		issep = function(thing)
+			return table.contains(wordsep, thing)
+		end
+	else
+		issep = function(thing)
+			return wordsep == thing
+		end
+	end
+
+	for _ = 1, math.abs(words) do
+		-- We have to use the somewhat inelegant "loop through each char of the string"
+		-- instead of using something fancier like string.find()
+		-- because string.find() isn't UTF-8 aware!
+		-- (Also I'm not copypasting in / stealing yet another function from yet another library, fuck that shit)
+
+		-- It'd be un-useful if we kept searching for separators when we're already on one
+		local ignoreseps
+		if words > 0 then
+			ignoreseps = issep(utf8.sub(line, x + 1, x + 1))
+		else
+			ignoreseps = issep(utf8.sub(line, x, x))
+		end
+		local sepfound = false
+
+		local counter = 0
+		if words > 0 then
+			for pos = x + 1, utf8.len(line) do
+				if issep(utf8.sub(line, pos, pos)) then
+					if not ignoreseps then
+						x = pos - 1
+						sepfound = true
+						break
+					else
+						counter = counter + 1
+					end
+				else
+					-- We've stumbled upon the actual next word, stop ignoring spaces!
+					ignoreseps = false
+					counter = counter + 1
+				end
+			end
+
+			if not sepfound then
+				-- Must be at the end of the line
+				counter = utf8.len(line) - x
+			end
+		else
+			for pos = x, 1, -1 do
+				if issep(utf8.sub(line, pos, pos)) then
+					if not ignoreseps then
+						x = pos
+						sepfound = true
+						break
+					else
+						counter = counter - 1
+					end
+				else
+					-- New word detected
+					ignoreseps = false
+					counter = counter - 1
+				end
+			end
+
+			if not sepfound then
+				-- The word's at the end of the line
+				counter = -x
+			end
+		end
+
+		input.movex(id, counter)
+
+		if multiline then
+			x = inputpos[id][1]
+		else
+			x = inputpos[id]
+		end
+	end
+end

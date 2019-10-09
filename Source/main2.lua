@@ -59,6 +59,7 @@ function love.load()
 	if love.system.getOS() == "OS X" then
 		-- Cmd
 		ctrl = "gui"
+		modifier = "alt"
 		dirsep = "/"
 		macscrolling = true
 		wgetavailable = false
@@ -74,6 +75,7 @@ function love.load()
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "\\"
 		macscrolling = false
 		wgetavailable = false
@@ -90,6 +92,7 @@ function love.load()
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = true
@@ -118,6 +121,7 @@ function love.load()
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = false
@@ -2639,9 +2643,17 @@ function love.keypressed(key)
 		end
 
 		if key == "left" then
-			input.movex(id, -1)
+			if keyboard_eitherIsDown(modifier) then
+				input.movexwords(id, " ", -1)
+			else
+				input.movex(id, -1)
+			end
 		elseif key == "right" then
-			input.movex(id, 1)
+			if keyboard_eitherIsDown(modifier) then
+				input.movexwords(id, " ", 1)
+			else
+				input.movex(id, 1)
+			end
 		elseif key == "up" then
 			input.movey(id, -1)
 		elseif key == "down" then
