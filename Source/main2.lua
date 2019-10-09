@@ -2651,28 +2651,41 @@ function love.keypressed(key)
 		elseif key == "end" then
 			input.rightmost(id)
 		elseif table.contains({"backspace", "delete"}, key) and inputselpos[id] ~= nil then
+			local oldstate = {input.getstate(id)}
 			input.delseltext(id)
+			input.unre(id, unpack(oldstate))
 		elseif key == "backspace" then
+			local oldstate = {input.getstate(id)}
 			input.deletechars(id, -1)
+			input.unre(id, unpack(oldstate))
 		elseif key == "delete" then
+			local oldstate = {input.getstate(id)}
 			input.deletechars(id, 1)
+			input.unre(id, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
+			local oldstate = {input.getstate(id)}
 			input.newline(id)
+			input.unre(id, unpack(oldstate))
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[id] ~= nil then
 			inputcopiedtimer = .25
 			cursorflashtime = 0
 			love.system.setClipboardText(input.getseltext(id))
 			if key == "x" then
+				local oldstate = {input.getstate(id)}
 				input.delseltext(id)
+				input.unre(id, unpack(oldstate))
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
+			local oldstate = {input.getstate(id)}
 			if inputselpos[id] ~= nil then
 				input.delseltext(id)
 			end
 			input.insertchars(id, love.system.getClipboardText():gsub("[\r\n]", ""))
+			input.unre(id, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			input.selall(id)
 		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
+			local oldstate = {input.getstate(id)}
 			if inputselpos[id] ~= nil then
 				input.delseltext(id)
 			else
@@ -2682,7 +2695,9 @@ function love.keypressed(key)
 					input.deltorightmost(id)
 				end
 			end
+			input.unre(id, unpack(oldstate))
 		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
+			local oldstate = {input.getstate(id)}
 			if inputselpos[id] ~= nil then
 				input.delseltext(id)
 			else
@@ -2692,6 +2707,7 @@ function love.keypressed(key)
 					input.removelines(id, 1)
 				end
 			end
+			input.unre(id, unpack(oldstate))
 		elseif key == "l" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
 				input.sellinetoleft(id)
