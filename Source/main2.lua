@@ -2552,12 +2552,22 @@ function love.textinput(char)
 
 	if input.active then
 		local id = input_ids[#nth_input]
-		local oldstate = {input.getstate(id)}
-		if inputselpos[id] ~= nil then
-			input.delseltext(id)
+		if inputhex[id] ~= nil then
+			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know
+				local oldstate = {input.getstate(id)}
+				input.finishhex(id)
+				input.unre(id, unpack(oldstate))
+			else
+				input.inserthexchars(id, char)
+			end
+		else
+			local oldstate = {input.getstate(id)}
+			if inputselpos[id] ~= nil then
+				input.delseltext(id)
+			end
+			input.insertchars(id, char)
+			input.unre(id, unpack(oldstate))
 		end
-		input.insertchars(id, char)
-		input.unre(id, unpack(oldstate))
 	end
 
 	-- Ved should really only accept printable ASCII only when typing...
@@ -2635,6 +2645,10 @@ function love.keypressed(key)
 	if input.active then
 		local id = input_ids[#nth_input]
 
+		if table.contains({"left", "right", "up", "down", "home", "end", "delete", "return", "kpenter"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
+			input.stophex(id)
+		end
+
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
 			if keyboard_eitherIsDown("shift") then
 				if inputselpos[id] == nil then
@@ -2670,9 +2684,13 @@ function love.keypressed(key)
 			input.delseltext(id)
 			input.unre(id, unpack(oldstate))
 		elseif key == "backspace" then
-			local oldstate = {input.getstate(id)}
-			input.deletechars(id, -1)
-			input.unre(id, unpack(oldstate))
+			if inputhex[id] ~= nil then
+				input.deletehexchars(id, 1)
+			else
+				local oldstate = {input.getstate(id)}
+				input.deletechars(id, -1)
+				input.unre(id, unpack(oldstate))
+			end
 		elseif key == "delete" then
 			local oldstate = {input.getstate(id)}
 			input.deletechars(id, 1)
@@ -2700,17 +2718,21 @@ function love.keypressed(key)
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			input.selall(id)
 		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
-			local oldstate = {input.getstate(id)}
-			if inputselpos[id] ~= nil then
-				input.delseltext(id)
+			if key == "u" and keyboard_eitherIsDown("shift") then
+				input.starthex(id)
 			else
-				if key == "u" then
-					input.deltoleftmost(id)
-				elseif key == "k" then
-					input.deltorightmost(id)
+				local oldstate = {input.getstate(id)}
+				if inputselpos[id] ~= nil then
+					input.delseltext(id)
+				else
+					if key == "u" then
+						input.deltoleftmost(id)
+					elseif key == "k" then
+						input.deltorightmost(id)
+					end
 				end
+				input.unre(id, unpack(oldstate))
 			end
-			input.unre(id, unpack(oldstate))
 		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
 			local oldstate = {input.getstate(id)}
 			if inputselpos[id] ~= nil then

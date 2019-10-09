@@ -57,6 +57,8 @@ inputselpos = {}
 inputundo = {}
 inputredo = {}
 
+inputhex = {}
+
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
 
@@ -182,6 +184,8 @@ function input.drawcas(id, x, y, sx, sy)
 	if not input.active then
 		return
 	end
+
+	-- This function draws: the caret, the selection box, and the hexadecimal input
 
 	-- Make sure we're drawing the cas of the currently focused input
 	if id ~= input_ids[#nth_input] then
@@ -312,10 +316,6 @@ function input.drawcas(id, x, y, sx, sy)
 
 	-- Caret
 
-	if cursorflashtime > .5 then
-		return
-	end
-
 	local caretx, carety
 	if multiline then
 		carety = inputpos[id][2]
@@ -347,7 +347,31 @@ function input.drawcas(id, x, y, sx, sy)
 	caretx = caretx * sx
 	carety = carety * sy
 
-	love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight()*sy)
+	-- Hex input, before the caret is actually drawn so it doesn't get in the way
+
+	if inputhex[id] ~= nil then
+		-- Not really the best look, but I don't want to reposition the caret,
+		-- so I have to stop rendering it or cover it up somehow
+
+		local oldcol = {love.graphics.getColor()}
+
+		local prefix = "u" -- not like we're gonna change it LOL
+
+		local text = prefix .. inputhex[id]
+
+		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
+		love.graphics.setColor(unpack(invertcol))
+		love.graphics.rectangle("fill", x + caretx, y + carety, thisfont:getWidth(text)*sx, thisfont:getHeight()*sy)
+
+		love.graphics.setColor(unpack(oldcol))
+
+		love.graphics.rectangle("line", x + caretx, y + carety, thisfont:getWidth(text)*sx, thisfont:getHeight()*sy)
+
+		ved_print(text, x + caretx, y + carety, sx, sy)
+		--love.graphics.line(x + caretx, y + carety + thisfont:getHeight()*sy, x + caretx + thisfont:getWidth(prefix)*sx, y + carety + thisfont:getHeight()*sy)
+	elseif cursorflashtime <= .5 then
+		love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight()*sy)
+	end
 end
 
 function input.movex(id, chars)
@@ -1210,4 +1234,76 @@ function input.movexwords(id, wordsep, words)
 			x = inputpos[id]
 		end
 	end
+end
+
+function input.starthex(id)
+	inputhex[id] = ""
+end
+
+function input.stophex(id)
+	inputhex[id] = nil
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end
+
+function input.inserthexchars(id, text)
+	local tmp = {}
+	for char in text:gmatch("%x") do
+		table.insert(tmp, char)
+	end
+	text = table.concat(tmp)
+
+	inputhex[id] = inputhex[id] .. text
+
+	inputhex[id] = inputhex[id]:sub(1, 8)
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end
+
+function input.deletehexchars(id, chars)
+	-- Since you can only delete backwards, positive chars means backwards
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+
+	if chars == 0 then
+		return
+	end
+
+	if chars > #inputhex[id] then
+		input.stophex(id)
+		return
+	end
+
+	if chars == #inputhex[id] then
+		inputhex[id] = ""
+		return
+	end
+
+	inputhex[id] = inputhex[id]:sub(1, #inputhex[id]-chars)
+end
+
+function input.finishhex(id)
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+
+	if anythingbutnil(inputhex[id]) == "" then
+		return
+	end
+
+	local hex = tonumber(inputhex[id], 16)
+
+	local MAXUNICODE = 0x10FFFF -- Magic constant, please don't forget to update if it updates
+
+	if hex <= MAXUNICODE then
+		local char = utf8.char(hex)
+		if inputselpos[id] ~= nil then
+			input.delseltext(id)
+		end
+		input.insertchars(id, char)
+	end
+
+	input.stophex(id)
 end
