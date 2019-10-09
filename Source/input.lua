@@ -1301,7 +1301,7 @@ function input.finishhex(id)
 
 	local MAXUNICODE = 0x10FFFF -- Magic constant, please don't forget to update if it updates
 
-	if hex <= MAXUNICODE then
+	if hex <= MAXUNICODE and hex ~= 0 --[[ we don't want nulls ]] then
 		local char = utf8.char(hex)
 		if inputselpos[id] ~= nil then
 			input.delseltext(id)
