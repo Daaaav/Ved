@@ -2551,10 +2551,13 @@ function love.textinput(char)
 	end
 
 	if input.active then
-		if inputselpos[input_ids[#nth_input]] ~= nil then
-			input.delseltext(input_ids[#nth_input])
+		local id = input_ids[#nth_input]
+		local oldstate = {input.getstate(id)}
+		if inputselpos[id] ~= nil then
+			input.delseltext(id)
 		end
-		input.insertchars(input_ids[#nth_input], char)
+		input.insertchars(id, char)
+		input.unre(id, unpack(oldstate))
 	end
 
 	-- Ved should really only accept printable ASCII only when typing...
