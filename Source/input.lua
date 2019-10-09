@@ -1169,7 +1169,7 @@ function input.movexwords(id, wordsep, words)
 						counter = counter + 1
 					end
 				else
-					-- We've stumbled upon the actual next word, stop ignoring spaces!
+					-- We've stumbled upon the actual next word, stop ignoring separators!
 					ignoreseps = false
 					counter = counter + 1
 				end
