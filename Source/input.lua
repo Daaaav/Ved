@@ -54,6 +54,9 @@ inputpos = {}
 inputsrightmost = {}
 inputselpos = {}
 
+inputundo = {}
+inputredo = {}
+
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
 
@@ -99,6 +102,9 @@ function input.create(type_, id, initial, ix, iy)
 	input_ids[#nth_input] = id
 	input_ns[id] = #nth_input
 	inputsrightmost[id] = false
+
+	inputundo[id] = {}
+	inputredo[id] = {}
 end
 
 function input.close(id, updatemappings)
@@ -126,6 +132,9 @@ function input.close(id, updatemappings)
 	inputcopiedtimer = 0
 	inputsrightmost[id] = nil
 	inputselpos[id] = nil
+
+	inputundo = nil
+	inputredo = nil
 end
 
 function input.updatemappings()
@@ -481,6 +490,8 @@ function input.deletechars(id, chars)
 
 	local multiline = type(inputs[id]) == "table"
 
+	local oldstate = {input.getstate(id)}
+
 	local x, y, line
 	for _ = 1, math.abs(chars) do
 		if multiline then
@@ -538,6 +549,8 @@ function input.deletechars(id, chars)
 		inputsrightmost[id] = false
 	end
 
+	input.unre(id, unpack(oldstate))
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -549,6 +562,8 @@ function input.insertchars(id, text)
 	if text == "" then
 		return
 	end
+
+	local oldstate = {input.getstate(id)}
 
 	local multiline = type(inputs[id]) == "table"
 
@@ -580,6 +595,8 @@ function input.insertchars(id, text)
 		inputpos[id] = x
 	end
 
+	input.unre(id, unpack(oldstate))
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -590,6 +607,8 @@ function input.newline(id)
 	if not multiline then
 		return
 	end
+
+	local oldstate = {input.getstate(id)}
 
 	local x, y = unpack(inputpos[id])
 	local line = inputs[id][y]
@@ -607,6 +626,8 @@ function input.newline(id)
 	y = y + 1
 
 	inputpos[id] = {x, y}
+
+	input.unre(id, unpack(oldstate))
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -932,12 +953,15 @@ function input.removelines(id, lines)
 		return
 	end
 
+	local oldstate = {input.getstate(id)}
+
 	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
 		inputs[id] = ""
 		cursorflashtime = 0
 		inputcopiedtimer = 0
+		input.unre(id, unpack(oldstate))
 		return
 	end
 
@@ -960,6 +984,8 @@ function input.removelines(id, lines)
 
 	inputpos[id][2] = y
 
+	input.unre(id, unpack(oldstate))
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -974,4 +1000,124 @@ function input.sellinetoleft(id)
 	input.rightmost(id)
 	input.setselpos(id)
 	input.leftmost(id)
+end
+
+function input.unre(id, oldinput, oldpos, oldrightmost, oldselpos)
+	-- Insert an undoable action into the input's undo buffer
+	inputredo[id] = {}
+
+	local multiline = type(inputs[id]) == "table"
+
+	local old
+	if multiline then
+		local oldinput2 = table.copy(oldinput)
+		local oldpos2 = table.copy(oldpos)
+		local oldselpos2
+		if oldselpos ~= "" then
+			oldselpos2 = table.copy(oldselpos)
+		else
+			oldselpos2 = ""
+		end
+		old = {oldinput2, oldpos2, oldrightmost, oldselpos2}
+	else
+		old = {oldinput, oldpos, oldrightmost, oldselpos}
+	end
+
+	local new
+	if multiline then
+		local newinput = table.copy(inputs[id])
+		local newpos = table.copy(inputpos[id])
+		local newselpos
+		if inputselpos[id] ~= nil then
+			newselpos = table.copy(inputselpos[id])
+		else
+			newselpos = ""
+		end
+		new = {newinput, newpos, inputsrightmost[id], newselpos}
+	else
+		local newselpos
+		if inputselpos[id] ~= nil then
+			newselpos = inputselpos[id]
+		else
+			newselpos = ""
+		end
+		new = {inputs[id], inputpos[id], inputsrightmost[id], newselpos}
+	end
+
+	table.insert(inputundo[id], {old = old, new = new})
+end
+
+function input.getstate(id)
+	-- Not really a pure getstate, selpos will have to be "" because tables and nil don't mix
+	-- (and it can't be -1 because numbers are already used for oneline positions)
+	local multiline = type(inputs[id]) == "table"
+
+	if multiline then
+		local stateinput = table.copy(inputs[id])
+		local statepos = table.copy(inputpos[id])
+		local stateselpos
+		if inputselpos[id] ~= nil then
+			stateselpos = table.copy(inputselpos[id])
+		else
+			stateselpos = ""
+		end
+		return stateinput, statepos, inputsrightmost[id], stateselpos
+	else
+		local stateselpos
+		if inputselpos[id] ~= nil then
+			stateselpos = inputselpos[id]
+		else
+			stateselpos = ""
+		end
+		return inputs[id], inputpos[id], inputsrightmost[id], stateselpos
+	end
+end
+
+function input.tothisstate(id, state)
+	local multiline = type(inputs[id]) == "table"
+
+	if multiline then
+		inputs[id] = table.copy(state[1])
+		inputpos[id] = table.copy(state[2])
+		inputsrightmost[id] = state[3]
+		if state[4] ~= "" then
+			inputselpos[id] = table.copy(state[4])
+		else
+			inputselpos[id] = nil
+		end
+	else
+		inputs[id], inputpos[id], inputsrightmost[id], inputselpos[id] = unpack(state)
+		if state[4] == "" then
+			inputselpos[id] = nil
+		end
+	end
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end
+
+function input.undo(id)
+	if #inputundo[id] == 0 then
+		return
+	end
+
+	local last = table.copy(inputundo[id][#inputundo[id]])
+
+	input.tothisstate(id, last.old)
+
+	table.remove(inputundo[id])
+	table.insert(inputredo[id], table.copy(last))
+end
+
+function input.redo(id)
+	if #inputredo[id] == 0 then
+		return
+	end
+
+	local last = table.copy(inputredo[id][#inputredo[id]])
+
+	input.tothisstate(id, last.new)
+
+	table.remove(inputredo[id])
+	table.insert(inputundo[id], table.copy(last))
 end

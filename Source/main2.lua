@@ -2698,6 +2698,10 @@ function love.keypressed(key)
 			else
 				input.sellinetoright(id)
 			end
+		elseif key == "z" and keyboard_eitherIsDown(ctrl) then
+			input.undo(id)
+		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
+			input.redo(id)
 		elseif key == "tab" then
 			input.bump(input_ids[#nth_input - 3])
 		end
