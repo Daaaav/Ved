@@ -1294,6 +1294,7 @@ function input.finishhex(id)
 	inputcopiedtimer = 0
 
 	if anythingbutnil(inputhex[id]) == "" then
+		input.stophex(id)
 		return
 	end
 
