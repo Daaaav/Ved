@@ -316,6 +316,10 @@ function input.drawcas(id, x, y, sx, sy)
 
 	-- Caret
 
+	if cursorflashtime > .5 and inputhex[id] == nil then
+		return
+	end
+
 	local caretx, carety
 	if multiline then
 		carety = inputpos[id][2]
