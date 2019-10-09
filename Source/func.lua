@@ -2642,8 +2642,23 @@ function gotohelparticle(n)
 	helparticlescroll = 0
 end
 
-function keyboard_eitherIsDown(button)
-	return love.keyboard.isDown("l" .. button) or love.keyboard.isDown("r" .. button)
+function keyboard_eitherIsDown(...)
+	local args = {...}
+
+	if #args == 1 then -- Fast path
+		return love.keyboard.isDown("l" .. args[1], "r" .. args[1])
+	end
+
+	local list = {}
+	local alreadyseen = {}
+	for _, button in pairs(args) do
+		if not table.contains(alreadyseen, button) then
+			table.insert(list, "l" .. button)
+			table.insert(list, "r" .. button)
+			table.insert(alreadyseen, button)
+		end
+	end
+	return love.keyboard.isDown(unpack(list))
 end
 
 -- Simply print a string in the tiny font
