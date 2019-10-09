@@ -22,6 +22,19 @@ with the top-left corner of whatever text you're drawing for the blinking cursor
 `[scale_x]` defaults to 1.
 `[scale_y]` defaults to `[scale_x]`.
 
+By default, the newline characters are set to `[\r\n]` (Lua pattern) to match
+the conventional newline characters '\r' and '\n'. If you don't want this for
+your input, you will need to call `input.newlinechars(<id>, <pattern>)` to set
+the Lua pattern for newline characters. For example, VVVVVV input fields don't
+use '\r' or '\n' as newline characters and allow these literal chars to be
+embedded on a line. And especially more important, script lines use `|` as
+their newline char (`$` on 3DS).
+
+If you want to blacklist or whitelist characters from your input, do
+`input.blacklist(<id>, <pattern>)` or `input.whitelist(<id>, <pattern>)`
+respectively. `<pattern>` is any Lua pattern, so you can (for example)
+whitelist only number characters by doing `input.whitelist(<id>, "%d")`.
+
 If you want to index by number (where the last number is the most
 recently-opened input), then use `nth_input`. Use `input_ids` and `input_ns` to
 convert between indexing by ID and indexing by number.
@@ -58,6 +71,10 @@ inputundo = {}
 inputredo = {}
 
 inputhex = {}
+
+inputwhitelist = {}
+inputblacklist = {}
+inputnewlinechars = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -137,6 +154,10 @@ function input.close(id, updatemappings)
 
 	inputundo = nil
 	inputredo = nil
+
+	inputwhitelist[id] = nil
+	inputblacklist[id] = nil
+	inputnewlinechars[id] = nil
 end
 
 function input.updatemappings()
@@ -580,9 +601,37 @@ function input.deletechars(id, chars)
 end
 
 function input.insertchars(id, text)
-	-- TODO: Add blacklisting chars for certain types of input?
-	-- E.g. number inputs should be numbers-only, VVVVVV inputs should be ASCII-only
+	if inputwhitelist[id] ~= nil then
+		local tmp = {}
+		for char in text:gmatch(inputwhitelist[id]) do
+			table.insert(tmp, char)
+		end
+		text = table.concat(tmp)
+	end
 
+	if inputblacklist[id] ~= nil then
+		text = text:gsub(inputblacklist[id], "")
+	end
+
+	if inputnewlinechars[id] ~= nil then
+		local lines = text:split(inputnewlinechars[id])
+		if #lines == 1 then
+			input.actualinsertchars(id, lines[1])
+			return
+		end
+
+		for l, line in pairs(lines) do
+			if l ~= 1 then
+				input.newline(id)
+			end
+			input.actualinsertchars(id, line)
+		end
+	else
+		input.actualinsertchars(id, text)
+	end
+end
+
+function input.actualinsertchars(id, text)
 	if text == "" then
 		return
 	end
@@ -1311,4 +1360,16 @@ function input.finishhex(id)
 	end
 
 	input.stophex(id)
+end
+
+function input.whitelist(id, pattern)
+	inputwhitelist[id] = pattern
+end
+
+function input.blacklist(id, pattern)
+	inputblacklist[id] = pattern
+end
+
+function input.setnewlinechars(id, pattern)
+	inputnewlinechars[id] = pattern
 end

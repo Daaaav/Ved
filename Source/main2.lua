@@ -1802,6 +1802,14 @@ function love.draw()
 		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
 		input.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
 		input.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
+		input.create(INPUT.ONELINE, "inputtest5", "This is a VVVVVV script line")
+		input.setnewlinechars("inputtest5", "|") -- Don't care about PleaseDo3DSHandlingThanks in a test state
+		input.create(INPUT.MULTILINE, "inputtest6", {"These are VVVVVV script lines", "The one after this one is numbers-only"})
+		input.setnewlinechars("inputtest6", "|")
+		input.create(INPUT.ONELINE, "inputtest7", "0123456789")
+		input.whitelist("inputtest7", "%d")
+		input.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
+		input.blacklist("inputtest8", "[^\x01-\x7F]")
 
 		ved_print(inputs.inputtest, 100, 100)
 		input.drawcas("inputtest", 100, 100)
@@ -1820,6 +1828,22 @@ function love.draw()
 			ved_print(v, 100, 16*k + 250, 1, 2)
 		end
 		input.drawcas("inputtest4", 100, 250, 1, 2)
+
+		ved_print(inputs.inputtest5, 100, 300)
+		input.drawcas("inputtest5", 100, 300)
+
+		for k,v in pairs(inputs.inputtest6) do
+			ved_print(v, 100, 8*k + 350)
+		end
+		input.drawcas("inputtest6", 100, 350)
+
+		ved_print(inputs.inputtest7, 100, 400)
+		input.drawcas("inputtest7", 100, 400)
+
+		for k,v in pairs(inputs.inputtest8) do
+			ved_print(v, 100, 8*k + 430)
+		end
+		input.drawcas("inputtest8", 100, 430)
 
 		local youhaveselected = "You have selected: "
 		local tmp = input.getseltext(input_ids[#nth_input])
@@ -2713,7 +2737,7 @@ function love.keypressed(key)
 			if inputselpos[id] ~= nil then
 				input.delseltext(id)
 			end
-			input.insertchars(id, love.system.getClipboardText():gsub("[\r\n]", ""))
+			input.insertchars(id, love.system.getClipboardText())
 			input.unre(id, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			input.selall(id)
@@ -2756,7 +2780,7 @@ function love.keypressed(key)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			input.redo(id)
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 3])
+			input.bump(input_ids[#nth_input - 7])
 		end
 	end
 
