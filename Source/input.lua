@@ -342,7 +342,7 @@ function input.drawcas(id, x, y, sx, sy)
 end
 
 function input.movex(id, chars)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
 	if multiline then
@@ -386,7 +386,7 @@ function input.movex(id, chars)
 end
 
 function input.movey(id, chars)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
 		if inputselpos[id] ~= nil then
@@ -416,7 +416,7 @@ function input.movey(id, chars)
 end
 
 function input.leftmost(id)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	if multiline then
 		inputpos[id][1] = 0
@@ -443,7 +443,7 @@ function input.leftmost(id)
 end
 
 function input.rightmost(id)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	inputsrightmost[id] = true
 
@@ -479,7 +479,7 @@ function input.deletechars(id, chars)
 		return
 	end
 
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
 	for _ = 1, math.abs(chars) do
@@ -550,7 +550,7 @@ function input.insertchars(id, text)
 		return
 	end
 
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
 	if multiline then
@@ -585,7 +585,7 @@ function input.insertchars(id, text)
 end
 
 function input.newline(id)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
 		return
@@ -613,7 +613,7 @@ function input.newline(id)
 end
 
 function input.setselpos(id)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
 	if multiline then
@@ -646,7 +646,7 @@ function input.getseltext(id)
 		return
 	end
 
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local whichfirst -- 1 = caret pos, 2 = selection pos
 	local startx, starty, endx, endy
@@ -747,7 +747,7 @@ function input.delseltext(id)
 		return
 	end
 
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local whichfirst -- 1 = caret pos, 2 = selection pos
 	local startx, starty, endx, endy
@@ -900,7 +900,7 @@ function input.deltoleftmost(id)
 end
 
 function input.deltorightmost(id)
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
 	if multiline then
@@ -932,7 +932,7 @@ function input.removelines(id, lines)
 		return
 	end
 
-	local multiline = type(inputpos[id]) == "table"
+	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
 		inputs[id] = ""
