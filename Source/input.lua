@@ -490,8 +490,6 @@ function input.deletechars(id, chars)
 
 	local multiline = type(inputs[id]) == "table"
 
-	local oldstate = {input.getstate(id)}
-
 	local x, y, line
 	for _ = 1, math.abs(chars) do
 		if multiline then
@@ -549,8 +547,6 @@ function input.deletechars(id, chars)
 		inputsrightmost[id] = false
 	end
 
-	input.unre(id, unpack(oldstate))
-
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -562,8 +558,6 @@ function input.insertchars(id, text)
 	if text == "" then
 		return
 	end
-
-	local oldstate = {input.getstate(id)}
 
 	local multiline = type(inputs[id]) == "table"
 
@@ -595,8 +589,6 @@ function input.insertchars(id, text)
 		inputpos[id] = x
 	end
 
-	input.unre(id, unpack(oldstate))
-
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -607,8 +599,6 @@ function input.newline(id)
 	if not multiline then
 		return
 	end
-
-	local oldstate = {input.getstate(id)}
 
 	local x, y = unpack(inputpos[id])
 	local line = inputs[id][y]
@@ -626,8 +616,6 @@ function input.newline(id)
 	y = y + 1
 
 	inputpos[id] = {x, y}
-
-	input.unre(id, unpack(oldstate))
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -953,15 +941,12 @@ function input.removelines(id, lines)
 		return
 	end
 
-	local oldstate = {input.getstate(id)}
-
 	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
 		inputs[id] = ""
 		cursorflashtime = 0
 		inputcopiedtimer = 0
-		input.unre(id, unpack(oldstate))
 		return
 	end
 
@@ -983,8 +968,6 @@ function input.removelines(id, lines)
 	end
 
 	inputpos[id][2] = y
-
-	input.unre(id, unpack(oldstate))
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
