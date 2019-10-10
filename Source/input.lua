@@ -124,6 +124,8 @@ function input.create(type_, id, initial, ix, iy)
 
 	inputundo[id] = {}
 	inputredo[id] = {}
+
+	input.setnewlinechars(id, "[\r\n]")
 end
 
 function input.close(id, updatemappings)
