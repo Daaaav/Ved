@@ -2737,7 +2737,7 @@ function love.keypressed(key)
 			if inputselpos[id] ~= nil then
 				input.delseltext(id)
 			end
-			input.insertchars(id, love.system.getClipboardText())
+			input.insertchars(id, love.system.getClipboardText():gsub("\r\n", "\n"))
 			input.unre(id, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
