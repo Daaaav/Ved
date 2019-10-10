@@ -940,7 +940,7 @@ function input.setpos(id, x, y)
 	inputsrightmost[id] = false
 end
 
-function input.selall(id)
+function input.selallright(id)
 	local multiline = type(inputs[id]) == "table"
 
 	if multiline then
@@ -952,6 +952,24 @@ function input.selall(id)
 		input.setpos(id, 0)
 		input.setselpos(id)
 		inputsrightmost[id] = true
+	end
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
+end
+
+function input.selallleft(id)
+	local multiline = type(inputs[id]) == "table"
+
+	if multiline then
+		input.setpos(id, 0, #inputs[id])
+		inputsrightmost[id] = true
+		input.setselpos(id)
+		input.setpos(id, 0, 1)
+	else
+		inputsrightmost[id] = true
+		input.setselpos(id)
+		input.setpos(id, 0)
 	end
 
 	cursorflashtime = 0

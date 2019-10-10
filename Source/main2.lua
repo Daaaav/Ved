@@ -2740,7 +2740,11 @@ function love.keypressed(key)
 			input.insertchars(id, love.system.getClipboardText())
 			input.unre(id, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
-			input.selall(id)
+			if keyboard_eitherIsDown("shift") then
+				input.selallleft(id)
+			else
+				input.selallright(id)
+			end
 		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
 			if key == "u" and keyboard_eitherIsDown("shift") then
 				input.starthex(id)
