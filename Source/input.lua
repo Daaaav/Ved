@@ -274,7 +274,7 @@ function input.drawcas(id, x, y, sx, sy)
 							-- Add a small space to represent the newline
 							curlinewidth = curlinewidth + 4
 						end
-						table.insert(selrects, {firstoffset, l, curlinewidth})
+						table.insert(selrects, {firstoffset, l-1, curlinewidth})
 					else
 						if l == endy then
 							curlinewidth = thisfont:getWidth(utf8.sub(line, 1, endx))
@@ -283,7 +283,7 @@ function input.drawcas(id, x, y, sx, sy)
 							-- Again, add a small space to represent the newline
 							curlinewidth = curlinewidth + 4
 						end
-						table.insert(selrects, {0, l, curlinewidth})
+						table.insert(selrects, {0, l-1, curlinewidth})
 					end
 				end
 			end
@@ -362,6 +362,10 @@ function input.drawcas(id, x, y, sx, sy)
 	end
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
+
+	if multiline then
+		carety = carety - 1 -- We've been doing our calculations as 1-indexing up until this point...
+	end
 
 	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
 
