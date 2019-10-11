@@ -777,22 +777,18 @@ function input.getseltext(id)
 		local nested_break = false
 		for l = starty, endy do
 			line = lines[l]
-			for thispos = 1, utf8.len(line) do
-				if (l ~= endy or endx ~= 0) and (l > starty or thispos > startx) then
-					thischar = utf8.sub(line, thispos, thispos)
-					if not table.contains({"\r", "\n"}, thischar) then
-						table.insert(rope, thischar)
-					end
+			if l == starty then
+				if l == endy then
+					table.insert(rope, utf8.sub(line, startx+1, endx))
+				else
+					table.insert(rope, utf8.sub(line, startx+1, utf8.len(line)))
 				end
-
-				if l == endy and thispos == endx then
-					nested_break = true
-					break
+			else
+				if l == endy then
+					table.insert(rope, utf8.sub(line, 1, endx))
+				else
+					table.insert(rope, utf8.sub(line, 1, utf8.len(line)))
 				end
-			end
-
-			if nested_break then
-				break
 			end
 
 			if l < endy then
@@ -825,10 +821,7 @@ function input.getseltext(id)
 		local thischar
 		local line = inputs[id]
 
-		for thispos = startx+1, endx do
-			thischar = utf8.sub(line, thispos, thispos)
-			table.insert(rope, thischar)
-		end
+		table.insert(rope, utf8.sub(line, startx+1, endx))
 	end
 
 	return table.concat(rope)
