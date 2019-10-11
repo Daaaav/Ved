@@ -1272,6 +1272,69 @@ function input.setwordseps(id, sep)
 	end
 end
 
+function input.charsofoneword(issep, line, x, words)
+	-- We have to use the somewhat inelegant "loop through each char of the string"
+	-- instead of using something fancier like string.find()
+	-- because string.find() isn't UTF-8 aware!
+	-- (Also I'm not copypasting in / stealing yet another function from yet another library, fuck that shit)
+
+	-- It'd be un-useful if we kept searching for separators when we're already on one
+	local ignoreseps
+	if words > 0 then
+		ignoreseps = issep(utf8.sub(line, x + 1, x + 1))
+	else
+		ignoreseps = issep(utf8.sub(line, x, x))
+	end
+	local sepfound = false
+
+	local counter = 0
+	if words > 0 then
+		for pos = x + 1, utf8.len(line) do
+			if issep(utf8.sub(line, pos, pos)) then
+				if not ignoreseps then
+					x = pos - 1
+					sepfound = true
+					break
+				else
+					counter = counter + 1
+				end
+			else
+				-- We've stumbled upon the actual next word, stop ignoring separators!
+				ignoreseps = false
+				counter = counter + 1
+			end
+		end
+
+		if not sepfound then
+			-- Must be at the end of the line
+			counter = utf8.len(line) - x
+		end
+	else
+		for pos = x, 1, -1 do
+			if issep(utf8.sub(line, pos, pos)) then
+				if not ignoreseps then
+					x = pos
+					sepfound = true
+					break
+				else
+					counter = counter - 1
+				end
+			else
+				-- New word detected
+				ignoreseps = false
+				counter = counter - 1
+			end
+		end
+
+		if not sepfound then
+			-- The word's at the end of the line
+			counter = -x
+		end
+	end
+
+	return counter
+end
+
 function input.movexwords(id, words)
 	if words == 0 then
 		return
@@ -1312,64 +1375,7 @@ function input.movexwords(id, words)
 	end
 
 	for _ = 1, math.abs(words) do
-		-- We have to use the somewhat inelegant "loop through each char of the string"
-		-- instead of using something fancier like string.find()
-		-- because string.find() isn't UTF-8 aware!
-		-- (Also I'm not copypasting in / stealing yet another function from yet another library, fuck that shit)
-
-		-- It'd be un-useful if we kept searching for separators when we're already on one
-		local ignoreseps
-		if words > 0 then
-			ignoreseps = issep(utf8.sub(line, x + 1, x + 1))
-		else
-			ignoreseps = issep(utf8.sub(line, x, x))
-		end
-		local sepfound = false
-
-		local counter = 0
-		if words > 0 then
-			for pos = x + 1, utf8.len(line) do
-				if issep(utf8.sub(line, pos, pos)) then
-					if not ignoreseps then
-						x = pos - 1
-						sepfound = true
-						break
-					else
-						counter = counter + 1
-					end
-				else
-					-- We've stumbled upon the actual next word, stop ignoring separators!
-					ignoreseps = false
-					counter = counter + 1
-				end
-			end
-
-			if not sepfound then
-				-- Must be at the end of the line
-				counter = utf8.len(line) - x
-			end
-		else
-			for pos = x, 1, -1 do
-				if issep(utf8.sub(line, pos, pos)) then
-					if not ignoreseps then
-						x = pos
-						sepfound = true
-						break
-					else
-						counter = counter - 1
-					end
-				else
-					-- New word detected
-					ignoreseps = false
-					counter = counter - 1
-				end
-			end
-
-			if not sepfound then
-				-- The word's at the end of the line
-				counter = -x
-			end
-		end
+		local counter = input.charsofoneword(issep, line, x, words)
 
 		input.movex(id, counter)
 
