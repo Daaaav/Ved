@@ -259,7 +259,6 @@ function input.drawcas(id, x, y, sx, sy)
 			local firstoffset = 0
 
 			local line
-			local thiswidth
 
 			local nested_break = false
 			if whichfirst ~= nil then
@@ -310,11 +309,6 @@ function input.drawcas(id, x, y, sx, sy)
 
 			local curlinewidth = 0
 			local firstoffset = 0
-
-			local thisline
-			local centeroffset = 0
-
-			local thiswidth
 
 			if whichfirst ~= nil then
 				firstoffset = thisfont:getWidth(utf8.sub(line, 1, startx))
