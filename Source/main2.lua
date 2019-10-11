@@ -4235,6 +4235,49 @@ function love.mousereleased(x, y, button)
 	minsmear = -1; maxsmear = -1
 	toout = 0
 
+	if input.active then
+		local id = input_ids[#nth_input]
+		local multiline = type(inputs[id]) == "table"
+
+		if inputselpos[id] ~= nil then
+			local whichfirst
+			if multiline then
+				local curx, cury = unpack(inputpos[id])
+				local selx, sely = unpack(inputselpos[id])
+				local lines = inputs[id]
+				if inputsrightmost[id] then
+					curx = utf8.len(lines[cury])
+				end
+
+				if cury < sely then
+					whichfirst = 1
+				elseif sely < cury then
+					whichfirst = 2
+				elseif curx < selx then
+					whichfirst = 1
+				elseif selx < curx then
+					whichfirst = 2
+				end
+			else
+				local curx = inputpos[id]
+				local selx = inputselpos[id]
+				if inputsrightmost[id] then
+					curx = utf8.len(inputs[id])
+				end
+
+				if curx < selx then
+					whichfirst = 1
+				elseif selx < curx then
+					whichfirst = 2
+				end
+			end
+
+			if whichfirst == nil then
+				input.clearselpos(id)
+			end
+		end
+	end
+
 	for k,v in pairs(dialogs) do
 		v:mousereleased(x, y)
 	end
