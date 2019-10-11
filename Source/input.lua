@@ -1515,6 +1515,11 @@ function input.moused(id, x, y, sx, sy)
 		inputpos[id] = posx
 	end
 
+	-- We want to reset the timer on the first click, but not when we're holding it
+	if not mousepressed then
+		inputcopiedtimer = 0
+	end
+
 	if inputdoubleclicktimer > 0 and not mousepressed then
 		-- Double-click to select the word
 
@@ -1556,9 +1561,7 @@ function input.moused(id, x, y, sx, sy)
 		input.setselpos(id)
 	end
 
-
 	inputsrightmost[id] = false
 
 	cursorflashtime = 0
-	inputcopiedtimer = 0
 end
