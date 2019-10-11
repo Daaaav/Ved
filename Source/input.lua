@@ -1493,10 +1493,12 @@ function input.moused(id, x, y, sx, sy)
 	mousex = math.min(math.max(mousex, 0), thisfont:getWidth(line))
 
 	local currentx = 0
+	local thiswidth
 	for thispos = 1, utf8.len(line) do
-		currentx = currentx + thisfont:getWidth(utf8.sub(line, thispos, thispos))
+		thiswidth = thisfont:getWidth(utf8.sub(line, thispos, thispos))
+		currentx = currentx + thiswidth
 
-		if currentx > mousex then
+		if currentx - thiswidth/2 > mousex then
 			posx = thispos - 1
 			break
 		end
