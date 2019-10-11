@@ -2689,13 +2689,13 @@ function love.keypressed(key)
 
 		if key == "left" then
 			if keyboard_eitherIsDown(modifier) then
-				input.movexwords(id, " ", -1)
+				input.movexwords(id, -1)
 			else
 				input.movex(id, -1)
 			end
 		elseif key == "right" then
 			if keyboard_eitherIsDown(modifier) then
-				input.movexwords(id, " ", 1)
+				input.movexwords(id, 1)
 			else
 				input.movex(id, 1)
 			end

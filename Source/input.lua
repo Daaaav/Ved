@@ -30,6 +30,12 @@ use '\r' or '\n' as newline characters and allow these literal chars to be
 embedded on a line. And especially more important, script lines use `|` as
 their newline char (`$` on 3DS).
 
+By default, the word separator is a space. You can set it to be any character
+you want by doing `input.setwordseps(<id>, <sep>)`. `<sep>` can be a string, or
+a table of strings to match any one of those strings (e.g. in the script
+editor, you might want to set it to `{"(", ",", ")"}` to match any of the
+command argument separators, unless you're in a `say`/`text` command).
+
 If you want to blacklist or whitelist characters from your input, do
 `input.blacklist(<id>, <pattern>)` or `input.whitelist(<id>, <pattern>)`
 respectively. `<pattern>` is any Lua pattern, so you can (for example)
@@ -69,6 +75,8 @@ inputselpos = {}
 
 inputundo = {}
 inputredo = {}
+
+inputwordseps = {}
 
 inputhex = {}
 
@@ -126,6 +134,7 @@ function input.create(type_, id, initial, ix, iy)
 	inputredo[id] = {}
 
 	input.setnewlinechars(id, "[\r\n]")
+	input.setwordseps(id, " ")
 end
 
 function input.close(id, updatemappings)
@@ -1197,7 +1206,13 @@ function input.redo(id)
 	table.insert(inputundo[id], table.copy(last))
 end
 
-function input.movexwords(id, wordsep, words)
+function input.setwordseps(id, sep)
+	if anythingbutnil(sep) ~= "" then
+		inputwordseps[id] = sep
+	end
+end
+
+function input.movexwords(id, words)
 	if words == 0 then
 		return
 	end
@@ -1222,6 +1237,8 @@ function input.movexwords(id, wordsep, words)
 		inputcopiedtimer = 0
 		return
 	end
+
+	local wordsep = inputwordseps[id]
 
 	local issep
 	if type(wordsep) == "table" then
