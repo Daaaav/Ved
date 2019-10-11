@@ -204,6 +204,7 @@ function love.load()
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
 
 	inputcopiedtimer = 0
+	inputdoubleclicktimer = 0
 
 	limitglow = 0
 	limitglow_enabled = false
@@ -250,6 +251,7 @@ function love.load()
 
 		hand_cursor = love.mouse.getSystemCursor("hand")
 		forbidden_cursor = love.mouse.getSystemCursor("no")
+		text_cursor = love.mouse.getSystemCursor("ibeam")
 	end
 	special_cursor = false
 
@@ -2010,6 +2012,10 @@ function love.update(dt)
 
 	if inputcopiedtimer > 0 then
 		inputcopiedtimer = inputcopiedtimer - dt
+	end
+
+	if inputdoubleclicktimer > 0 then
+		inputdoubleclicktimer = inputdoubleclicktimer - dt
 	end
 
 	if updatescrollingtext ~= nil and state == 6 then

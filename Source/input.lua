@@ -16,11 +16,19 @@ Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
 You also need to call `input.drawcas(<id>, <x>, <y>, [scale_x], [scale_y])`
-with the top-left corner of whatever text you're drawing for the blinking cursor
-(aka caret) and selection box after you print the text.
-(Read "drawcas" as "draw caret and selection".)
+with the top-left corner of whatever text you're drawing for the CAS (the
+blinking cursor (aka caret), selection box, and other things) after you print
+the text.
 `[scale_x]` defaults to 1.
 `[scale_y]` defaults to `[scale_x]`.
+
+By default, the clicking area (the area will clicks, double-clicks, and
+clicking-and-dragging will apply to the input) is set to be the current scissor
+(from `love.graphics.getScissor()`), and if there is none, will just be the
+smallest rectangle that surrounds the input (with 4px padding). You can
+override this with `input.setmousearea(<id>, <x>, <y>, <width>, <height>)`. If
+you don't want to be able to click on the input, you can effectively disable
+clicking by doing `input.setmousearea(<id>, nil)`.
 
 By default, the newline characters are set to `[\r\n]` (Lua pattern) to match
 the conventional newline characters '\r' and '\n'. If you don't want this for
@@ -83,6 +91,8 @@ inputhex = {}
 inputwhitelist = {}
 inputblacklist = {}
 inputnewlinechars = {}
+
+inputareas = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -169,6 +179,8 @@ function input.close(id, updatemappings)
 	inputwhitelist[id] = nil
 	inputblacklist[id] = nil
 	inputnewlinechars[id] = nil
+
+	inputareas[id] = nil
 end
 
 function input.updatemappings()
@@ -218,6 +230,7 @@ function input.drawcas(id, x, y, sx, sy)
 	end
 
 	-- This function draws: the caret, the selection box, and the hexadecimal input
+	-- This function also handles clicking, double-clicking, and clicking-and-dragging on text
 
 	-- Make sure we're drawing the cas of the currently focused input
 	if id ~= input_ids[#nth_input] then
@@ -230,6 +243,53 @@ function input.drawcas(id, x, y, sx, sy)
 	sy = sy or sx
 
 	local thisfont = love.graphics.getFont()
+
+	-- Clicking
+
+	local area = inputareas[id]
+	if area == nil then
+		area = {love.graphics.getScissor()}
+		if #area == 0 then -- Table is empty because getScissor() returned all nils because there's no scissor
+			local width
+			if multiline then
+				local tmp = {}
+				for _, l in pairs(inputs[id]) do
+					table.insert(tmp, thisfont:getWidth(l))
+				end
+				width = math.max(unpack(tmp))
+			else
+				width = thisfont:getWidth(inputs[id])
+			end
+
+			local lines
+			if multiline then
+				lines = #inputs[id]
+			else
+				lines = 1
+			end
+			local height = thisfont:getHeight() * lines
+
+			width = width * sx
+			height = height * sy
+
+			area = {x-4, y-4, width+8, height+8} -- 4px of padding added to be nice
+		end
+	end
+
+	local mouseoninput
+	if area ~= nil and #area > 0 then
+		mouseoninput = mouseon(unpack(area))
+	end
+
+	if mouseoninput then
+		love.mouse.setCursor(text_cursor)
+
+		if love.mouse.isDown("l") then
+			input.moused(id, x, y, sx, sy)
+		end
+	else
+		love.mouse.setCursor()
+	end
 
 	-- Selection
 
@@ -1404,4 +1464,101 @@ end
 
 function input.setnewlinechars(id, pattern)
 	inputnewlinechars[id] = pattern
+end
+
+function input.setmousearea(id, ...)
+	inputareas[id] = {...}
+end
+
+function input.moused(id, x, y, sx, sy)
+	local multiline = type(inputs[id]) == "table"
+	local thisfont = love.graphics.getFont()
+
+	if not keyboard_eitherIsDown("shift") and not mousepressed then
+		input.clearselpos(id)
+	end
+
+	local posx, posy, line
+	local mousex, mousey = love.mouse.getPosition()
+	mousex = (mousex-x) / sx
+	mousey = (mousey-y) / sy
+	if multiline then
+		posy = math.floor(mousey/thisfont:getHeight()) + 1
+		posy = math.min(math.max(posy, 1), #inputs[id])
+		line = inputs[id][posy]
+	else
+		line = inputs[id]
+	end
+
+	mousex = math.min(math.max(mousex, 0), thisfont:getWidth(line))
+
+	local currentx = 0
+	for thispos = 1, utf8.len(line) do
+		currentx = currentx + thisfont:getWidth(utf8.sub(line, thispos, thispos))
+
+		if currentx > mousex then
+			posx = thispos - 1
+			break
+		end
+	end
+
+	if posx == nil then
+		-- We've ruled out that the mouse is on the leftmost side,
+		-- and we haven't reached the mouse even though we've gone through the entire line...
+		-- The mouse must be on the rightmost end of the line!
+		posx = utf8.len(line)
+	end
+
+	if multiline then
+		inputpos[id] = {posx, posy}
+	else
+		inputpos[id] = posx
+	end
+
+	if inputdoubleclicktimer > 0 and not mousepressed then
+		-- Double-click to select the word
+
+		-- Copied from input.movexwords, bleh
+		local wordsep = inputwordseps[id]
+
+		local issep
+		if type(wordsep) == "table" then
+			issep = function(thing)
+				return table.contains(wordsep, thing)
+			end
+		else
+			issep = function(thing)
+				return wordsep == thing
+			end
+		end
+
+		if issep(utf8.sub(line, posx+1, posx+1)) then
+			-- Do this highly complicated maneuver to select the space in between the words
+			input.movexwords(id, -1)
+			input.movexwords(id, 1)
+			input.setselpos(id)
+			input.movexwords(id, 1)
+			input.movexwords(id, -1)
+		else
+			input.movexwords(id, -1)
+			input.setselpos(id)
+			input.movexwords(id, 1)
+		end
+
+		-- ???
+		-- Seems like if this isn't constantly set to some nonzero value,
+		-- if you keep holding down left-click when the timer runs out
+		-- it'll cancel your double-click selection
+		inputdoubleclicktimer = .1
+	elseif not mousepressed then
+		mousepressed = true
+		inputdoubleclicktimer = .25
+		input.setselpos(id)
+	end
+
+
+	inputsrightmost[id] = false
+
+	cursorflashtime = 0
+	inputcopiedtimer = 0
 end
