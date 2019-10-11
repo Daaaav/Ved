@@ -793,7 +793,9 @@ function input.getseltext(id)
 				break
 			end
 
-			table.insert(rope, "\n")
+			if l < endy then
+				table.insert(rope, "\n")
+			end
 		end
 	else
 		local curx = inputpos[id]
