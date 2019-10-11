@@ -829,7 +829,7 @@ function input.getseltext(id)
 		end
 	end
 
-	return table.concat(rope, "")
+	return table.concat(rope)
 end
 
 function input.delseltext(id)
