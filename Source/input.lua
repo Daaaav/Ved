@@ -1599,7 +1599,7 @@ function input.mousepressed(id, x, y, sx, sy)
 			end
 		end
 
-		if issep(utf8.sub(line, posx+1, posx+1)) then
+		if issep(utf8.sub(line, posx, posx)) or issep(utf8.sub(line, posx+1, posx+1)) then
 			-- Do this highly complicated maneuver to select the space in between the words
 			input.movexwords(id, -1)
 			input.movexwords(id, 1)
