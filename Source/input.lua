@@ -780,7 +780,9 @@ function input.getseltext(id)
 			for thispos = 1, utf8.len(line) do
 				if (l ~= endy or endx ~= 0) and (l > starty or thispos > startx) then
 					thischar = utf8.sub(line, thispos, thispos)
-					table.insert(rope, thischar)
+					if not table.contains({"\r", "\n"}, thischar) then
+						table.insert(rope, thischar)
+					end
 				end
 
 				if l == endy and thispos == endx then
