@@ -346,7 +346,7 @@ function drawhelp()
 						input = input .. input_r
 						input_r = ""
 						helparticlecontent[helpeditingline] = input
-						love.system.setClipboardText(table.concat(helparticlecontent, (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+						love.system.setClipboardText(table.concat(helparticlecontent, newline))
 						setgenerictimer(1, .25)
 					elseif not mousepressed and mouseon(love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Save

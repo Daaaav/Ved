@@ -63,6 +63,7 @@ function love.load()
 		dirsep = "/"
 		macscrolling = true
 		wgetavailable = false
+		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
 		if not love.filesystem.exists("available_libs") then
@@ -79,6 +80,7 @@ function love.load()
 		dirsep = "\\"
 		macscrolling = false
 		wgetavailable = false
+		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
 		--[[
@@ -96,6 +98,7 @@ function love.load()
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = true
+		newline = "\n"
 		hook("love_load_lin")
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
@@ -125,6 +128,7 @@ function love.load()
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = false
+		newline = "\n"
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
 	end
@@ -2466,7 +2470,7 @@ function love.update(dt)
 			elseif RCMreturn == L.COPYNAME then
 				love.system.setClipboardText(scriptnames[rvnum])
 			elseif RCMreturn == L.COPYCONTENTS then
-				love.system.setClipboardText(table.concat(scripts[scriptnames[rvnum]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+				love.system.setClipboardText(table.concat(scripts[scriptnames[rvnum]], newline))
 			elseif RCMreturn == L.DUPLICATE then
 				dialog.create(
 					L.NEWSCRIPTNAME, DBS.OKCANCEL,
