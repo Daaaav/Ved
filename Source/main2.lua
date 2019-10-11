@@ -2722,12 +2722,20 @@ function love.keypressed(key)
 				input.deletehexchars(id, 1)
 			else
 				local oldstate = {input.getstate(id)}
-				input.deletechars(id, -1)
+				if keyboard_eitherIsDown(modifier) then
+					input.deletewords(id, -1)
+				else
+					input.deletechars(id, -1)
+				end
 				input.unre(id, unpack(oldstate))
 			end
 		elseif key == "delete" then
 			local oldstate = {input.getstate(id)}
-			input.deletechars(id, 1)
+			if keyboard_eitherIsDown(modifier) then
+				input.deletewords(id, 1)
+			else
+				input.deletechars(id, 1)
+			end
 			input.unre(id, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
 			local oldstate = {input.getstate(id)}

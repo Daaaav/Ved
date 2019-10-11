@@ -1387,6 +1387,60 @@ function input.movexwords(id, words)
 	end
 end
 
+function input.deletewords(id, words)
+	-- The same as the above, except we use one different function
+
+	if words == 0 then
+		return
+	end
+
+	local multiline = type(inputs[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(inputpos[id])
+		line = inputs[id][y]
+	else
+		x = inputpos[id]
+		line = inputs[id]
+	end
+
+	if inputsrightmost[id] then
+		x = utf8.len(line)
+	end
+
+	if (words > 0 and x == utf8.len(line)) or (words < 0 and x == 0) then
+		cursorflashtime = 0
+		inputcopiedtimer = 0
+		return
+	end
+
+	local wordsep = inputwordseps[id]
+
+	local issep
+	if type(wordsep) == "table" then
+		issep = function(thing)
+			return table.contains(wordsep, thing)
+		end
+	else
+		issep = function(thing)
+			return wordsep == thing
+		end
+	end
+
+	for _ = 1, math.abs(words) do
+		local counter = input.charsofoneword(issep, line, x, words)
+
+		input.deletechars(id, counter)
+
+		if multiline then
+			x = inputpos[id][1]
+		else
+			x = inputpos[id]
+		end
+	end
+end
+
 function input.starthex(id)
 	inputhex[id] = ""
 end
