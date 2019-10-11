@@ -285,7 +285,7 @@ function input.drawcas(id, x, y, sx, sy)
 		love.mouse.setCursor(text_cursor)
 
 		if love.mouse.isDown("l") then
-			input.moused(id, x, y, sx, sy)
+			input.mousepressed(id, x, y, sx, sy)
 		end
 	else
 		love.mouse.setCursor()
@@ -1470,7 +1470,7 @@ function input.setmousearea(id, ...)
 	inputareas[id] = {...}
 end
 
-function input.moused(id, x, y, sx, sy)
+function input.mousepressed(id, x, y, sx, sy)
 	local multiline = type(inputs[id]) == "table"
 	local thisfont = love.graphics.getFont()
 
