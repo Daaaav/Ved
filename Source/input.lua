@@ -794,7 +794,7 @@ function input.getseltext(id)
 			end
 
 			if l < endy then
-				table.insert(rope, "\n")
+				table.insert(rope, love.system.getOS() == "Windows" and "\r\n" or "\n")
 			end
 		end
 	else
