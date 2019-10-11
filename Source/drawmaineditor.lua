@@ -1777,8 +1777,6 @@ function drawmaineditor()
 				if selectedtool <= 2 and k == 8 then
 					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
 				end
-				love.graphics.setScissor()
-				love.graphics.setColor(128,128,128,192)
 				thistooltip = tooltip_text
 			end
 		end
