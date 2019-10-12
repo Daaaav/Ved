@@ -683,7 +683,7 @@ function input.insertchars(id, text)
 	end
 
 	if inputnewlinechars[id] ~= nil then
-		local lines = text:split(inputnewlinechars[id])
+		local lines = explode(inputnewlinechars[id], text)
 		if #lines == 1 then
 			input.actualinsertchars(id, lines[1])
 			return
