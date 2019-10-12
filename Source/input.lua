@@ -1577,6 +1577,8 @@ function input.mousepressed(id, x, y, sx, sy)
 		inputpos[id] = posx
 	end
 
+	inputsrightmost[id] = false
+
 	-- We want to reset the timer on the first click, but not when we're holding it
 	if not mousepressed then
 		inputcopiedtimer = 0
@@ -1626,8 +1628,6 @@ function input.mousepressed(id, x, y, sx, sy)
 		inputdoubleclicktimer = .25
 		input.setselpos(id)
 	end
-
-	inputsrightmost[id] = false
 
 	cursorflashtime = 0
 end
