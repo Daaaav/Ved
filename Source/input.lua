@@ -40,10 +40,8 @@ embedded on a line. And especially more important, script lines use `|` as
 their newline char (`$` on 3DS).
 
 By default, the word separator is a space. You can set it to be any character
-you want by doing `input.setwordseps(<id>, <sep>)`. `<sep>` can be a string, or
-a table of strings to match any one of those strings (e.g. in the script
-editor, you might want to set it to `{"(", ",", ")"}` to match any of the
-command argument separators, unless you're in a `say`/`text` command).
+(class) you want by doing `input.setwordseps(<id>, <pattern>)`. `<pattern>` can
+be any Lua pattern if needed.
 
 If you want to blacklist or whitelist characters from your input, do
 `input.blacklist(<id>, <pattern>)` or `input.whitelist(<id>, <pattern>)`
@@ -1286,13 +1284,13 @@ function input.redo(id)
 	table.insert(inputundo[id], table.copy(last))
 end
 
-function input.setwordseps(id, sep)
-	if anythingbutnil(sep) ~= "" then
-		inputwordseps[id] = sep
+function input.setwordseps(id, pattern)
+	if anythingbutnil(pattern) ~= "" then
+		inputwordseps[id] = pattern
 	end
 end
 
-function input.charsofoneword(issep, line, x, words)
+function input.charsofoneword(wordsep, line, x, words)
 	-- We have to use the somewhat inelegant "loop through each char of the string"
 	-- instead of using something fancier like string.find()
 	-- because string.find() isn't UTF-8 aware!
@@ -1301,16 +1299,16 @@ function input.charsofoneword(issep, line, x, words)
 	-- It'd be un-useful if we kept searching for separators when we're already on one
 	local ignoreseps
 	if words > 0 then
-		ignoreseps = issep(utf8.sub(line, x + 1, x + 1))
+		ignoreseps = utf8.sub(line, x + 1, x + 1):match(wordsep) ~= nil
 	else
-		ignoreseps = issep(utf8.sub(line, x, x))
+		ignoreseps = utf8.sub(line, x, x):match(wordsep) ~= nil
 	end
 	local sepfound = false
 
 	local counter = 0
 	if words > 0 then
 		for pos = x + 1, utf8.len(line) do
-			if issep(utf8.sub(line, pos, pos)) then
+			if utf8.sub(line, pos, pos):match(wordsep) then
 				if not ignoreseps then
 					x = pos - 1
 					sepfound = true
@@ -1331,7 +1329,7 @@ function input.charsofoneword(issep, line, x, words)
 		end
 	else
 		for pos = x, 1, -1 do
-			if issep(utf8.sub(line, pos, pos)) then
+			if utf8.sub(line, pos, pos):match(wordsep) then
 				if not ignoreseps then
 					x = pos
 					sepfound = true
@@ -1383,19 +1381,8 @@ function input.movexwords(id, words)
 
 	local wordsep = inputwordseps[id]
 
-	local issep
-	if type(wordsep) == "table" then
-		issep = function(thing)
-			return table.contains(wordsep, thing)
-		end
-	else
-		issep = function(thing)
-			return wordsep == thing
-		end
-	end
-
 	for _ = 1, math.abs(words) do
-		local counter = input.charsofoneword(issep, line, x, words)
+		local counter = input.charsofoneword(wordsep, line, x, words)
 
 		input.movex(id, counter)
 
@@ -1437,19 +1424,8 @@ function input.deletewords(id, words)
 
 	local wordsep = inputwordseps[id]
 
-	local issep
-	if type(wordsep) == "table" then
-		issep = function(thing)
-			return table.contains(wordsep, thing)
-		end
-	else
-		issep = function(thing)
-			return wordsep == thing
-		end
-	end
-
 	for _ = 1, math.abs(words) do
-		local counter = input.charsofoneword(issep, line, x, words)
+		local counter = input.charsofoneword(wordsep, line, x, words)
 
 		input.deletechars(id, counter)
 
@@ -1607,21 +1583,9 @@ function input.mousepressed(id, x, y, sx, sy)
 	if inputdoubleclicktimer > 0 and not mousepressed then
 		-- Double-click to select the word
 
-		-- Copied from input.movexwords, bleh
 		local wordsep = inputwordseps[id]
 
-		local issep
-		if type(wordsep) == "table" then
-			issep = function(thing)
-				return table.contains(wordsep, thing)
-			end
-		else
-			issep = function(thing)
-				return wordsep == thing
-			end
-		end
-
-		if issep(utf8.sub(line, posx, posx)) or issep(utf8.sub(line, posx+1, posx+1)) then
+		if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
 			-- Do this highly complicated maneuver to select the space in between the words
 			input.movexwords(id, -1)
 			if not (multiline and inputpos[id][1] == 0 or inputpos[id] == 0) then
