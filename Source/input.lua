@@ -15,10 +15,11 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.drawcas(<id>, <x>, <y>, [scale_x], [scale_y])`
-with the top-left corner of whatever text you're drawing for the CAS (the
-blinking cursor (aka caret), selection box, and other things) after you print
-the text.
+You also need to call `input.print(<id>, <x>, <y>, [scale_x], [scale_y])`
+with the top-left corner of whatever text you're drawing to print it along with
+the caret, the selection box, and other things. If you want to handle the
+printing yourself and want to draw the CAS (caret/selection/others) manually,
+just do `input.drawcas()` on the top-left corner with the same arguments.
 `[scale_x]` defaults to 1.
 `[scale_y]` defaults to `[scale_x]`.
 
@@ -222,6 +223,22 @@ function input.bump(id)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
+end
+
+function input.print(id, x, y, sx, sy)
+	local multiline = type(inputs[id]) == "table"
+
+	local fontheight = love.graphics.getFont():getHeight()
+
+	if multiline then
+		for n, line in pairs(inputs[id]) do
+			ved_print(line, x, y + (n-1) * fontheight, sx, sy)
+		end
+	else
+		ved_print(inputs[id], x, y, sx, sy)
+	end
+
+	input.drawcas(id, x, y, sx, sy)
 end
 
 function input.drawcas(id, x, y, sx, sy)

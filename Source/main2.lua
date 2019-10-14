@@ -1817,39 +1817,14 @@ function love.draw()
 		input.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
 		input.blacklist("inputtest8", "[^\x01-\x7F]")
 
-		ved_print(inputs.inputtest, 100, 100)
-		input.drawcas("inputtest", 100, 100)
-
-		for k,v in pairs(inputs.inputtest2) do
-			ved_print(v, 100, 8*(k-1) + 150)
-		end
-		input.drawcas("inputtest2", 100, 150)
-
-		for k,v in pairs(inputs.inputtest3) do
-			ved_print(v, 100, 16*(k-1) + 200, 2)
-		end
-		input.drawcas("inputtest3", 100, 200, 2)
-
-		for k,v in pairs(inputs.inputtest4) do
-			ved_print(v, 100, 16*(k-1) + 250, 1, 2)
-		end
-		input.drawcas("inputtest4", 100, 250, 1, 2)
-
-		ved_print(inputs.inputtest5, 100, 300)
-		input.drawcas("inputtest5", 100, 300)
-
-		for k,v in pairs(inputs.inputtest6) do
-			ved_print(v, 100, 8*(k-1) + 350)
-		end
-		input.drawcas("inputtest6", 100, 350)
-
-		ved_print(inputs.inputtest7, 100, 400)
-		input.drawcas("inputtest7", 100, 400)
-
-		for k,v in pairs(inputs.inputtest8) do
-			ved_print(v, 100, 8*(k-1) + 430)
-		end
-		input.drawcas("inputtest8", 100, 430)
+		input.print("inputtest", 100, 100)
+		input.print("inputtest2", 100, 150)
+		input.print("inputtest3", 100, 200, 2)
+		input.print("inputtest4", 100, 250, 1, 2)
+		input.print("inputtest5", 100, 300)
+		input.print("inputtest6", 100, 350)
+		input.print("inputtest7", 100, 400)
+		input.print("inputtest8", 100, 430)
 
 		local youhaveselected = "You have selected: "
 		local tmp = input.getseltext(input_ids[#nth_input])
