@@ -230,9 +230,12 @@ function input.print(id, x, y, sx, sy)
 
 	local fontheight = love.graphics.getFont():getHeight()
 
+	sx = sx or 1
+	sy = sy or sx
+
 	if multiline then
 		for n, line in pairs(inputs[id]) do
-			ved_print(line, x, y + (n-1) * fontheight, sx, sy)
+			ved_print(line, x, y + (n-1) * fontheight * sy, sx, sy)
 		end
 	else
 		ved_print(inputs[id], x, y, sx, sy)
