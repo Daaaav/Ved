@@ -2288,7 +2288,7 @@ tilesetblocks =
 		},
 	}
 
--- For showhotkey() and input
+-- For showhotkey()
 ALIGN = {
 	LEFT = 1,
 	CENTER = 2,
