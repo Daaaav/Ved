@@ -2714,6 +2714,9 @@ function love.keypressed(key)
 			input.unre(id, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
 			local oldstate = {input.getstate(id)}
+			if inputselpos[id] ~= nil then
+				input.delseltext(id)
+			end
 			input.newline(id)
 			input.unre(id, unpack(oldstate))
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[id] ~= nil then
