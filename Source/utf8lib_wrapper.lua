@@ -12,7 +12,6 @@ if not love_version_meets(10) then
 	utf8.char = require("utf8lib_092fixedchar")
 end
 
--- Can we actually get a complete library without having to find the missing pieces ourselves? Jesus fucking christ
 -- http://lua-users.org/lists/lua-l/2014-04/msg00590.html
 function utf8.sub(s,i,j)
 	i = i or 1

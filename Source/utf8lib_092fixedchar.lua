@@ -40,7 +40,7 @@ local function pushutfchar(n, arg)
 	local buff = {}
 	local l = utf8esc(buff, code) -- Classic C side-effect-oriented programming: `buff` is modified in `utf8esc`
 
-	-- Classic C fucking-with-integer-types-oriented programming: these bytes are unsigned and can't be negative...
+	-- Classic C small-type-oriented programming: these bytes are unsigned and can't be negative...
 	for thischar = UTF8BUFFSZ - l, UTF8BUFFSZ - 1 do
 		buff[thischar] = buff[thischar] % 256
 	end

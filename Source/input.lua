@@ -1294,7 +1294,6 @@ function input.charsofoneword(wordsep, line, x, words)
 	-- We have to use the somewhat inelegant "loop through each char of the string"
 	-- instead of using something fancier like string.find()
 	-- because string.find() isn't UTF-8 aware!
-	-- (Also I'm not copypasting in / stealing yet another function from yet another library, fuck that shit)
 
 	-- It'd be un-useful if we kept searching for separators when we're already on one
 	local ignoreseps
