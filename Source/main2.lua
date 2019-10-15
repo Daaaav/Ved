@@ -2654,7 +2654,7 @@ function love.keypressed(key)
 	if input.active then
 		local id = input_ids[#nth_input]
 
-		if table.contains({"left", "right", "up", "down", "home", "end", "delete", "return", "kpenter"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
 			input.stophex(id)
 		end
 
@@ -2714,10 +2714,14 @@ function love.keypressed(key)
 			input.unre(id, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
 			local oldstate = {input.getstate(id)}
-			if inputselpos[id] ~= nil then
-				input.delseltext(id)
+			if inputhex[id] ~= nil then
+				input.finishhex(id)
+			else
+				if inputselpos[id] ~= nil then
+					input.delseltext(id)
+				end
+				input.newline(id)
 			end
-			input.newline(id)
 			input.unre(id, unpack(oldstate))
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[id] ~= nil then
 			inputcopiedtimer = .25
