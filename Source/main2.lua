@@ -1817,15 +1817,17 @@ function love.draw()
 		input.whitelist("inputtest7", "%d")
 		input.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
 		input.blacklist("inputtest8", "[^\x01-\x7F]")
+		input.create(INPUT.MULTILINE, "inputtest9", {"This input has a line height of 10 pixels", "Instead of 8 pixels like normal", "so things are spaced out more"})
 
-		input.print("inputtest", 100, 100)
-		input.print("inputtest2", 100, 150)
-		input.print("inputtest3", 100, 200, 2)
-		input.print("inputtest4", 100, 250, 1, 2)
-		input.print("inputtest5", 100, 300)
-		input.print("inputtest6", 100, 350)
-		input.print("inputtest7", 100, 400)
-		input.print("inputtest8", 100, 430)
+		input.print("inputtest", 100, 0)
+		input.print("inputtest2", 100, 50)
+		input.print("inputtest3", 100, 100, 2)
+		input.print("inputtest4", 100, 150, 1, 2)
+		input.print("inputtest5", 100, 200)
+		input.print("inputtest6", 100, 250)
+		input.print("inputtest7", 100, 300)
+		input.print("inputtest8", 100, 350)
+		input.print("inputtest9", 100, 400, nil, nil, 10)
 
 		local youhaveselected = "You have selected: "
 		local tmp = input.getseltext(input_ids[#nth_input])
@@ -2787,7 +2789,7 @@ function love.keypressed(key)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			input.redo(id)
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 7])
+			input.bump(input_ids[#nth_input - 8])
 		end
 	end
 

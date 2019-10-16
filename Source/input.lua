@@ -15,13 +15,14 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.print(<id>, <x>, <y>, [scale_x], [scale_y])`
+You also need to call `input.print(<id>, <x>, <y>, [scale_x], [scale_y], [line_height])`
 with the top-left corner of whatever text you're drawing to print it along with
 the caret, the selection box, and other things. If you want to handle the
 printing yourself and want to draw the CAS (caret/selection/others) manually,
 just do `input.drawcas()` on the top-left corner with the same arguments.
 `[scale_x]` defaults to 1.
 `[scale_y]` defaults to `[scale_x]`.
+`[line_height]` defaults to the height of the current font.
 
 By default, the clicking area (the area will clicks, double-clicks, and
 clicking-and-dragging will apply to the input) is set to be the current scissor
@@ -223,26 +224,26 @@ function input.bump(id)
 	inputcopiedtimer = 0
 end
 
-function input.print(id, x, y, sx, sy)
+function input.print(id, x, y, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
 
-	local fontheight = love.graphics.getFont():getHeight()
+	lineh = lineh or love.graphics.getFont():getHeight()
 
 	sx = sx or 1
 	sy = sy or sx
 
 	if multiline then
 		for n, line in pairs(inputs[id]) do
-			ved_print(line, x, y + (n-1) * fontheight * sy, sx, sy)
+			ved_print(line, x, y + (n-1) * lineh * sy, sx, sy)
 		end
 	else
 		ved_print(inputs[id], x, y, sx, sy)
 	end
 
-	input.drawcas(id, x, y, sx, sy)
+	input.drawcas(id, x, y, sx, sy, lineh)
 end
 
-function input.drawcas(id, x, y, sx, sy)
+function input.drawcas(id, x, y, sx, sy, lineh)
 	if not input.active then
 		return
 	end
@@ -261,6 +262,8 @@ function input.drawcas(id, x, y, sx, sy)
 	sy = sy or sx
 
 	local thisfont = love.graphics.getFont()
+	local fontheight = thisfont:getHeight()
+	lineh = lineh or fontheight
 
 	-- Clicking
 
@@ -285,7 +288,7 @@ function input.drawcas(id, x, y, sx, sy)
 			else
 				lines = 1
 			end
-			local height = thisfont:getHeight() * lines
+			local height = fontheight * lines
 
 			width = width * sx
 			height = height * sy
@@ -303,7 +306,7 @@ function input.drawcas(id, x, y, sx, sy)
 		love.mouse.setCursor(text_cursor)
 
 		if love.mouse.isDown("l") then
-			input.mousepressed(id, x, y, sx, sy)
+			input.mousepressed(id, x, y, sx, sy, lineh)
 		end
 	else
 		love.mouse.setCursor()
@@ -412,7 +415,7 @@ function input.drawcas(id, x, y, sx, sy)
 		end
 
 		for _, rect in pairs(selrects) do
-			love.graphics.rectangle("fill", x + rect[1]*sx, y + rect[2]*thisfont:getHeight()*sy, rect[3]*sx, thisfont:getHeight()*sy)
+			love.graphics.rectangle("fill", x + rect[1]*sx, y + rect[2]*lineh*sy, rect[3]*sx, fontheight*sy)
 		end
 
 		love.graphics.setColor(unpack(oldcol))
@@ -454,7 +457,7 @@ function input.drawcas(id, x, y, sx, sy)
 		carety = carety - 1 -- We've been doing our calculations as 1-indexing up until this point...
 	end
 
-	carety = carety * thisfont:getHeight() -- not accounting for other things like line height, I suppose
+	carety = carety * lineh
 
 	caretx = caretx * sx
 	carety = carety * sy
@@ -473,16 +476,16 @@ function input.drawcas(id, x, y, sx, sy)
 
 		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
 		love.graphics.setColor(unpack(invertcol))
-		love.graphics.rectangle("fill", x + caretx, y + carety, thisfont:getWidth(text)*sx, thisfont:getHeight()*sy)
+		love.graphics.rectangle("fill", x + caretx, y + carety, thisfont:getWidth(text)*sx, fontheight*sy)
 
 		love.graphics.setColor(unpack(oldcol))
 
-		love.graphics.rectangle("line", x + caretx, y + carety, thisfont:getWidth(text)*sx, thisfont:getHeight()*sy)
+		love.graphics.rectangle("line", x + caretx, y + carety, thisfont:getWidth(text)*sx, fontheight*sy)
 
 		ved_print(text, x + caretx, y + carety, sx, sy)
-		--love.graphics.line(x + caretx, y + carety + thisfont:getHeight()*sy, x + caretx + thisfont:getWidth(prefix)*sx, y + carety + thisfont:getHeight()*sy)
+		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + thisfont:getWidth(prefix)*sx, y + carety + fontheight*sy)
 	elseif cursorflashtime <= .5 then
-		love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + thisfont:getHeight()*sy)
+		love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + fontheight*sy)
 	end
 end
 
@@ -1525,9 +1528,10 @@ function input.setmousearea(id, ...)
 	inputareas[id] = {...}
 end
 
-function input.mousepressed(id, x, y, sx, sy)
+function input.mousepressed(id, x, y, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
 	local thisfont = love.graphics.getFont()
+	local fontheight = lineh or thisfont:getHeight()
 
 	local skipsettingselposlater = false
 	if not mousepressed then
@@ -1546,7 +1550,7 @@ function input.mousepressed(id, x, y, sx, sy)
 	mousex = (mousex-x) / sx
 	mousey = (mousey-y) / sy
 	if multiline then
-		posy = math.floor(mousey/thisfont:getHeight()) + 1
+		posy = math.floor(mousey/fontheight) + 1
 		posy = math.min(math.max(posy, 1), #inputs[id])
 		line = inputs[id][posy]
 	else
