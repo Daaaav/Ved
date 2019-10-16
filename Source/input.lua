@@ -1529,8 +1529,16 @@ function input.mousepressed(id, x, y, sx, sy)
 	local multiline = type(inputs[id]) == "table"
 	local thisfont = love.graphics.getFont()
 
-	if not keyboard_eitherIsDown("shift") and not mousepressed then
-		input.clearselpos(id)
+	local skipsettingselposlater = false
+	if not mousepressed then
+		if keyboard_eitherIsDown("shift") then
+			if inputselpos[id] == nil then
+				input.setselpos(id)
+			end
+			skipsettingselposlater = true
+		else
+			input.clearselpos(id)
+		end
 	end
 
 	local posx, posy, line
@@ -1638,7 +1646,7 @@ function input.mousepressed(id, x, y, sx, sy)
 
 			inputsrightmost[id] = false
 		end
-	elseif not mousepressed then
+	elseif not mousepressed and not skipsettingselposlater then
 		input.setselpos(id)
 	end
 
