@@ -468,6 +468,11 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		-- Not really the best look, but I don't want to reposition the caret,
 		-- so I have to stop rendering it or cover it up somehow
 
+		local oldscissor = {love.graphics.getScissor()}
+		if #oldscissor > 0 then
+			love.graphics.setScissor()
+		end
+
 		local oldcol = {love.graphics.getColor()}
 
 		local prefix = "u" -- not like we're gonna change it LOL
@@ -484,6 +489,10 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 		ved_print(text, x + caretx, y + carety, sx, sy)
 		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + thisfont:getWidth(prefix)*sx, y + carety + fontheight*sy)
+
+		if #oldscissor > 0 then
+			love.graphics.setScissor(unpack(oldscissor))
+		end
 	elseif cursorflashtime <= .5 then
 		love.graphics.line(x + caretx, y + carety, x + caretx, y + carety + fontheight*sy)
 	end
