@@ -1566,13 +1566,19 @@ function input.mousepressed(id, x, y, sx, sy)
 		posx = utf8.len(line)
 	end
 
-	if multiline then
-		inputpos[id] = {posx, posy}
-	else
-		inputpos[id] = posx
+	if inputnumclicks <= 1 then
+		if multiline then
+			inputpos[id] = {posx, posy}
+		else
+			inputpos[id] = posx
+		end
+
+		inputsrightmost[id] = false
 	end
 
-	inputsrightmost[id] = false
+	if not mousepressed then
+		inputnumclicks = inputnumclicks + 1
+	end
 
 	-- We want to reset the timer on the first click, but not when we're holding it
 	if not mousepressed then
@@ -1580,47 +1586,61 @@ function input.mousepressed(id, x, y, sx, sy)
 	end
 
 	if inputdoubleclicktimer > 0 and not mousepressed then
-		-- Double-click to select the word
+		if inputnumclicks == 2 then
+			-- Double-click to select the word
 
-		local wordsep = inputwordseps[id]
+			local wordsep = inputwordseps[id]
 
-		if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
-			-- Do this highly complicated maneuver to select the space in between the words
-			local conditional
-			input.movexwords(id, -1)
-			if multiline then
-				conditional = inputpos[id][1] == 0
+			if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
+				-- Do this highly complicated maneuver to select the space in between the words
+				local conditional
+				input.movexwords(id, -1)
+				if multiline then
+					conditional = inputpos[id][1] == 0
+				else
+					conditional = inputpos[id] == 0
+				end
+				if not conditional then
+					input.movexwords(id, 1)
+				end
+				input.setselpos(id)
+				input.movexwords(id, 1)
+				if multiline then
+					conditional = inputpos[id][1] == utf8.len(line)
+				else
+					conditional = inputpos[id] == utf8.len(line)
+				end
+				if not conditional then
+					input.movexwords(id, -1)
+				end
 			else
-				conditional = inputpos[id] == 0
-			end
-			if not conditional then
+				input.movexwords(id, -1)
+				input.setselpos(id)
 				input.movexwords(id, 1)
 			end
-			input.setselpos(id)
-			input.movexwords(id, 1)
-			if multiline then
-				conditional = inputpos[id][1] == utf8.len(line)
-			else
-				conditional = inputpos[id] == utf8.len(line)
-			end
-			if not conditional then
-				input.movexwords(id, -1)
-			end
-		else
-			input.movexwords(id, -1)
-			input.setselpos(id)
-			input.movexwords(id, 1)
-		end
+		elseif inputnumclicks == 3 then
+			-- Triple-click to select the entire line
 
-		-- ???
-		-- Seems like if this isn't constantly set to some nonzero value,
-		-- if you keep holding down left-click when the timer runs out
-		-- it'll cancel your double-click selection
-		inputdoubleclicktimer = .1
+			input.sellinetoright(id)
+		else
+			input.clearselpos(id)
+
+			-- Too many clicks!
+			if multiline then
+				inputpos[id] = {posx, posy}
+			else
+				inputpos[id] = posx
+			end
+
+			inputsrightmost[id] = false
+		end
 	elseif not mousepressed then
+		input.setselpos(id)
+	end
+
+	if not mousepressed then
 		mousepressed = true
 		inputdoubleclicktimer = .25
-		input.setselpos(id)
 	end
 
 	cursorflashtime = 0

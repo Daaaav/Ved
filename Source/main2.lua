@@ -205,6 +205,7 @@ function love.load()
 
 	inputcopiedtimer = 0
 	inputdoubleclicktimer = 0
+	inputnumclicks = 0
 
 	limitglow = 0
 	limitglow_enabled = false
@@ -1991,6 +1992,8 @@ function love.update(dt)
 
 	if inputdoubleclicktimer > 0 then
 		inputdoubleclicktimer = inputdoubleclicktimer - dt
+	elseif not love.mouse.isDown("l") then
+		inputnumclicks = 0
 	end
 
 	if updatescrollingtext ~= nil and state == 6 then
