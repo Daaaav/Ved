@@ -1622,6 +1622,10 @@ function input.mousepressed(id, x, y, sx, sy)
 			-- Triple-click to select the entire line
 
 			input.sellinetoright(id)
+		elseif inputnumclicks == 4 then
+			-- Quadruple-click to select the entire thing!
+
+			input.selallright(id)
 		else
 			input.clearselpos(id)
 
