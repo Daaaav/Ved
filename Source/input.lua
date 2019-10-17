@@ -1512,6 +1512,57 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 	if inputnumclicks <= 1 then
 		input.setpos(id, posx, posy)
+	elseif inputnumclicks == 2 then
+		local words = input.getwords(id, posy)
+
+		local whichfirst -- 1 = caret pos, 2 = selection pos
+		if multiline then
+			local selx, sely = unpack(input.selpos[id])
+
+			if posy < sely then
+				whichfirst = 1
+			elseif sely < posy then
+				whichfirst = 2
+			elseif posx < selx then
+				whichfirst = 1
+			elseif selx < posx then
+				whichfirst = 2
+			end
+		else
+			local selx = input.selpos[id]
+
+			if posx < selx then
+				whichfirst = 1
+			elseif selx < posx then
+				whichfirst = 2
+			end
+		end
+
+		local pos = 0
+		local postoget = posx
+		local posbeforeword
+		local nested_break = false
+		for _, word in pairs(words) do
+			posbeforeword = pos
+			for _ = 1, utf8.len(word) do
+				pos = pos + 1
+				if pos - 1 == postoget then
+					if whichfirst == 1 then
+						posx = posbeforeword
+					elseif whichfirst == 2 then
+						posx = posbeforeword + utf8.len(word)
+					end
+
+					nested_break = true
+					break
+				end
+			end
+			if nested_break then
+				break
+			end
+		end
+
+		input.setpos(id, posx, posy)
 	end
 
 	if not mousepressed then
@@ -1584,4 +1635,38 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	if #input.undostack[id] > 0 then
 		input.undostack[id][#input.undostack[id]].group = nil
 	end
+end
+
+function input.getwords(id, linenum)
+	local line
+	if linenum ~= nil then
+		line = inputs[id][linenum]
+	else
+		line = inputs[id]
+	end
+
+	local words = {}
+	local currentword = {}
+	local char
+	local previslinesep, islinesep
+	local wordsep = input.wordseps[id]
+	for pos = 1, utf8.len(line) do
+		char = utf8.sub(line, pos, pos)
+		islinesep = char:match(wordsep) ~= nil
+		if pos > 1 and previslinesep ~= islinesep then
+			table.insert(words, table.concat(currentword))
+			currentword = {}
+			table.insert(currentword, char)
+		else
+			table.insert(currentword, char)
+		end
+		previslinesep = islinesep
+	end
+
+	-- Last word
+	if #currentword > 0 then
+		table.insert(words, table.concat(currentword))
+	end
+
+	return words
 end
