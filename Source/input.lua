@@ -511,11 +511,7 @@ function input.movex(id, chars)
 	x = x + chars
 	x = math.min(math.max(x, 0), utf8.len(line))
 
-	if multiline then
-		input.pos[id][1] = x
-	else
-		input.pos[id] = x
-	end
+	input.setpos(id, x)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -564,11 +560,7 @@ end
 function input.leftmost(id)
 	local multiline = type(inputs[id]) == "table"
 
-	if multiline then
-		input.pos[id][1] = 0
-	else
-		input.pos[id] = 0
-	end
+	input.setpos(id, 0)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -656,13 +648,7 @@ function input.deletechars(id, chars)
 			end
 		end
 
-		if multiline then
-			input.pos[id] = {x, y}
-		else
-			input.pos[id] = x
-		end
-
-		input.rightmosts[id] = false
+		input.setpos(id, x, y)
 	end
 
 	cursorflashtime = 0
@@ -745,7 +731,7 @@ function input.newline(id)
 	x = 0
 	y = y + 1
 
-	input.pos[id] = {x, y}
+	input.setpos(id, x, y)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1353,11 +1339,7 @@ function input.movexwords(id, words)
 
 		input.movex(id, counter)
 
-		if multiline then
-			x = input.pos[id][1]
-		else
-			x = input.pos[id]
-		end
+		input.setpos(id, x)
 	end
 end
 
@@ -1385,11 +1367,7 @@ function input.deletewords(id, words)
 
 		input.deletechars(id, counter)
 
-		if multiline then
-			x = input.pos[id][1]
-		else
-			x = input.pos[id]
-		end
+		input.setpos(id, x)
 	end
 end
 
@@ -1533,13 +1511,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	end
 
 	if inputnumclicks <= 1 then
-		if multiline then
-			input.pos[id] = {posx, posy}
-		else
-			input.pos[id] = posx
-		end
-
-		input.rightmosts[id] = false
+		input.setpos(id, posx, posy)
 	end
 
 	if not mousepressed then
@@ -1596,13 +1568,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 			input.clearselpos(id)
 
 			-- Too many clicks!
-			if multiline then
-				input.pos[id] = {posx, posy}
-			else
-				input.pos[id] = posx
-			end
-
-			input.rightmosts[id] = false
+			input.setpos(id, posx, posy)
 		end
 	elseif not mousepressed and not skipsettingselposlater then
 		input.setselpos(id)
