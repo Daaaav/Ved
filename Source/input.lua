@@ -1004,7 +1004,12 @@ function input.setpos(id, x, ...)
 	end
 
 	if multiline then
-		input.pos[id] = {x, y}
+		if x ~= nil then
+			input.pos[id][1] = x
+		end
+		if y ~= nil then
+			input.pos[id][2] = y
+		end
 	else
 		input.pos[id] = x
 	end
