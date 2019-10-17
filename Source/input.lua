@@ -1569,6 +1569,31 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 				input.setpos(id, posx, posy)
 			end
 		end
+	elseif inputnumclicks == 3 then
+		if multiline then
+			if input.selpos[id] ~= nil then
+				input.pos[id][2] = posy
+
+				local whichfirst -- 1 = caret pos, 2 = selection pos
+				local selx, sely = unpack(input.selpos[id])
+
+				if posy < sely then
+					whichfirst = 1
+				elseif sely < posy then
+					whichfirst = 2
+				elseif posx < selx then
+					whichfirst = 1
+				elseif selx < posx then
+					whichfirst = 2
+				end
+
+				if whichfirst == 1 then
+					input.leftmost(id)
+				elseif whichfirst == 2 then
+					input.rightmost(id)
+				end
+			end
+		end
 	end
 
 	if not mousepressed then
