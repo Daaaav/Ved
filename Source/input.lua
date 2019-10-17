@@ -70,7 +70,8 @@ When you're done, close it by doing `input.close(<id>)`.
 
 ]]
 
-input = {
+-- temporarily renamed to `newinputsys` to ease transition from old input system to new
+local input = {
 	active = false,
 
 	nth_input = {},
@@ -93,7 +94,7 @@ input = {
 	newlinechars = {},
 
 	areas = {},
-}
+}; newinputsys = input
 
 inputs = {}
 

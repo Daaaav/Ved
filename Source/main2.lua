@@ -1805,32 +1805,32 @@ function love.draw()
 			mousepressed = true
 		end
 	elseif state == 34 then
-		input.create(INPUT.ONELINE, "inputtest", "This is the §¤ caret test", 5)
-		input.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
-		input.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
-		input.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
-		input.create(INPUT.ONELINE, "inputtest5", "This is a VVVVVV script line")
-		input.setnewlinechars("inputtest5", "|") -- Don't care about PleaseDo3DSHandlingThanks in a test state
-		input.create(INPUT.MULTILINE, "inputtest6", {"These are VVVVVV script lines", "The one after this one is numbers-only"})
-		input.setnewlinechars("inputtest6", "|")
-		input.create(INPUT.ONELINE, "inputtest7", "0123456789")
-		input.whitelist("inputtest7", "%d")
-		input.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
-		input.blacklist("inputtest8", "[^\x01-\x7F]")
-		input.create(INPUT.MULTILINE, "inputtest9", {"This input has a line height of 10 pixels", "Instead of 8 pixels like normal", "so things are spaced out more"})
+		newinputsys.create(INPUT.ONELINE, "inputtest", "This is the §¤ caret test", 5)
+		newinputsys.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
+		newinputsys.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
+		newinputsys.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
+		newinputsys.create(INPUT.ONELINE, "inputtest5", "This is a VVVVVV script line")
+		newinputsys.setnewlinechars("inputtest5", "|") -- Don't care about PleaseDo3DSHandlingThanks in a test state
+		newinputsys.create(INPUT.MULTILINE, "inputtest6", {"These are VVVVVV script lines", "The one after this one is numbers-only"})
+		newinputsys.setnewlinechars("inputtest6", "|")
+		newinputsys.create(INPUT.ONELINE, "inputtest7", "0123456789")
+		newinputsys.whitelist("inputtest7", "%d")
+		newinputsys.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
+		newinputsys.blacklist("inputtest8", "[^\x01-\x7F]")
+		newinputsys.create(INPUT.MULTILINE, "inputtest9", {"This input has a line height of 10 pixels", "Instead of 8 pixels like normal", "so things are spaced out more"})
 
-		input.print("inputtest", 100, 0)
-		input.print("inputtest2", 100, 50)
-		input.print("inputtest3", 100, 100, 2)
-		input.print("inputtest4", 100, 150, 1, 2)
-		input.print("inputtest5", 100, 200)
-		input.print("inputtest6", 100, 250)
-		input.print("inputtest7", 100, 300)
-		input.print("inputtest8", 100, 350)
-		input.print("inputtest9", 100, 400, nil, nil, 10)
+		newinputsys.print("inputtest", 100, 0)
+		newinputsys.print("inputtest2", 100, 50)
+		newinputsys.print("inputtest3", 100, 100, 2)
+		newinputsys.print("inputtest4", 100, 150, 1, 2)
+		newinputsys.print("inputtest5", 100, 200)
+		newinputsys.print("inputtest6", 100, 250)
+		newinputsys.print("inputtest7", 100, 300)
+		newinputsys.print("inputtest8", 100, 350)
+		newinputsys.print("inputtest9", 100, 400, nil, nil, 10)
 
 		local youhaveselected = "You have selected: "
-		local tmp = input.getseltext(input.input_ids[#input.nth_input])
+		local tmp = newinputsys.getseltext(newinputsys.input_ids[#newinputsys.nth_input])
 		if tmp ~= nil then
 			ved_print(youhaveselected .. tmp, 580, 112)
 		end
@@ -1939,7 +1939,7 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
-	if input.active then
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
 		cursorflashtime = (cursorflashtime+dt) % 1
 	end
 
@@ -2564,23 +2564,23 @@ function love.textinput(char)
 		return
 	end
 
-	if input.active then
-		local id = input.input_ids[#input.nth_input]
-		if input.hex[id] ~= nil then
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+		local id = newinputsys.input_ids[#newinputsys.nth_input]
+		if newinputsys.hex[id] ~= nil then
 			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know
-				local oldstate = {input.getstate(id)}
-				input.finishhex(id)
-				input.unre(id, UNRE.INSERT, unpack(oldstate))
+				local oldstate = {newinputsys.getstate(id)}
+				newinputsys.finishhex(id)
+				newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
 			else
-				input.inserthexchars(id, char)
+				newinputsys.inserthexchars(id, char)
 			end
 		else
-			local oldstate = {input.getstate(id)}
-			if input.selpos[id] ~= nil then
-				input.delseltext(id)
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.selpos[id] ~= nil then
+				newinputsys.delseltext(id)
 			end
-			input.insertchars(id, char)
-			input.unre(id, UNRE.INSERT, unpack(oldstate))
+			newinputsys.insertchars(id, char)
+			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
 		end
 	end
 
@@ -2656,146 +2656,146 @@ function love.keypressed(key)
 		RCMactive = false
 	end
 
-	if input.active then
-		local id = input.input_ids[#input.nth_input]
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+		local id = newinputsys.input_ids[#newinputsys.nth_input]
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
-			input.stophex(id)
+			newinputsys.stophex(id)
 		end
 
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
-			if #input.undostack[id] > 0 then
-				input.undostack[id][#input.undostack[id]].group = nil
+			if #newinputsys.undostack[id] > 0 then
+				newinputsys.undostack[id][#newinputsys.undostack[id]].group = nil
 			end
 		end
 
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
 			if keyboard_eitherIsDown("shift") then
-				if input.selpos[id] == nil then
-					input.setselpos(id)
+				if newinputsys.selpos[id] == nil then
+					newinputsys.setselpos(id)
 				end
 			else
-				input.clearselpos(id)
+				newinputsys.clearselpos(id)
 			end
 		end
 
 		if key == "left" then
 			if keyboard_eitherIsDown(modifier) then
-				input.movexwords(id, -1)
+				newinputsys.movexwords(id, -1)
 			else
-				input.movex(id, -1)
+				newinputsys.movex(id, -1)
 			end
 		elseif key == "right" then
 			if keyboard_eitherIsDown(modifier) then
-				input.movexwords(id, 1)
+				newinputsys.movexwords(id, 1)
 			else
-				input.movex(id, 1)
+				newinputsys.movex(id, 1)
 			end
 		elseif key == "up" then
-			input.movey(id, -1)
+			newinputsys.movey(id, -1)
 		elseif key == "down" then
-			input.movey(id, 1)
+			newinputsys.movey(id, 1)
 		elseif key == "home" then
-			input.leftmost(id)
+			newinputsys.leftmost(id)
 		elseif key == "end" then
-			input.rightmost(id)
-		elseif table.contains({"backspace", "delete"}, key) and input.selpos[id] ~= nil then
-			local oldstate = {input.getstate(id)}
-			input.delseltext(id)
-			input.unre(id, nil, unpack(oldstate))
+			newinputsys.rightmost(id)
+		elseif table.contains({"backspace", "delete"}, key) and newinputsys.selpos[id] ~= nil then
+			local oldstate = {newinputsys.getstate(id)}
+			newinputsys.delseltext(id)
+			newinputsys.unre(id, nil, unpack(oldstate))
 		elseif key == "backspace" then
-			if input.hex[id] ~= nil then
-				input.deletehexchars(id, 1)
+			if newinputsys.hex[id] ~= nil then
+				newinputsys.deletehexchars(id, 1)
 			else
-				local oldstate = {input.getstate(id)}
+				local oldstate = {newinputsys.getstate(id)}
 				if keyboard_eitherIsDown(modifier) then
-					input.deletewords(id, -1)
+					newinputsys.deletewords(id, -1)
 				else
-					input.deletechars(id, -1)
+					newinputsys.deletechars(id, -1)
 				end
-				input.unre(id, UNRE.DELETE, unpack(oldstate))
+				newinputsys.unre(id, UNRE.DELETE, unpack(oldstate))
 			end
 		elseif key == "delete" then
-			local oldstate = {input.getstate(id)}
+			local oldstate = {newinputsys.getstate(id)}
 			if keyboard_eitherIsDown(modifier) then
-				input.deletewords(id, 1)
+				newinputsys.deletewords(id, 1)
 			else
-				input.deletechars(id, 1)
+				newinputsys.deletechars(id, 1)
 			end
-			input.unre(id, UNRE.DELETE, unpack(oldstate))
+			newinputsys.unre(id, UNRE.DELETE, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
-			local oldstate = {input.getstate(id)}
-			if input.hex[id] ~= nil then
-				input.finishhex(id)
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.hex[id] ~= nil then
+				newinputsys.finishhex(id)
 			else
-				if input.selpos[id] ~= nil then
-					input.delseltext(id)
+				if newinputsys.selpos[id] ~= nil then
+					newinputsys.delseltext(id)
 				end
-				input.newline(id)
+				newinputsys.newline(id)
 			end
-			input.unre(id, UNRE.INSERT, unpack(oldstate))
-		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and input.selpos[id] ~= nil then
+			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil then
 			inputcopiedtimer = .25
 			cursorflashtime = 0
-			love.system.setClipboardText(input.getseltext(id))
+			love.system.setClipboardText(newinputsys.getseltext(id))
 			if key == "x" then
-				local oldstate = {input.getstate(id)}
-				input.delseltext(id)
-				input.unre(id, nil, unpack(oldstate))
+				local oldstate = {newinputsys.getstate(id)}
+				newinputsys.delseltext(id)
+				newinputsys.unre(id, nil, unpack(oldstate))
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
-			local oldstate = {input.getstate(id)}
-			if input.selpos[id] ~= nil then
-				input.delseltext(id)
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.selpos[id] ~= nil then
+				newinputsys.delseltext(id)
 			end
-			input.insertchars(id, love.system.getClipboardText():gsub("\r\n", "\n"))
-			input.unre(id, nil, unpack(oldstate))
+			newinputsys.insertchars(id, love.system.getClipboardText():gsub("\r\n", "\n"))
+			newinputsys.unre(id, nil, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
-				input.selallleft(id)
+				newinputsys.selallleft(id)
 			else
-				input.selallright(id)
+				newinputsys.selallright(id)
 			end
 		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
 			if key == "u" and keyboard_eitherIsDown("shift") then
-				input.starthex(id)
+				newinputsys.starthex(id)
 			else
-				local oldstate = {input.getstate(id)}
-				if input.selpos[id] ~= nil then
-					input.delseltext(id)
+				local oldstate = {newinputsys.getstate(id)}
+				if newinputsys.selpos[id] ~= nil then
+					newinputsys.delseltext(id)
 				else
 					if key == "u" then
-						input.deltoleftmost(id)
+						newinputsys.deltoleftmost(id)
 					elseif key == "k" then
-						input.deltorightmost(id)
+						newinputsys.deltorightmost(id)
 					end
 				end
-				input.unre(id, nil, unpack(oldstate))
+				newinputsys.unre(id, nil, unpack(oldstate))
 			end
 		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
-			local oldstate = {input.getstate(id)}
-			if input.selpos[id] ~= nil then
-				input.delseltext(id)
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.selpos[id] ~= nil then
+				newinputsys.delseltext(id)
 			else
 				if keyboard_eitherIsDown("shift") then
-					input.removelines(id, -1)
+					newinputsys.removelines(id, -1)
 				else
-					input.removelines(id, 1)
+					newinputsys.removelines(id, 1)
 				end
 			end
-			input.unre(id, nil, unpack(oldstate))
+			newinputsys.unre(id, nil, unpack(oldstate))
 		elseif key == "l" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
-				input.sellinetoleft(id)
+				newinputsys.sellinetoleft(id)
 			else
-				input.sellinetoright(id)
+				newinputsys.sellinetoright(id)
 			end
 		elseif key == "z" and keyboard_eitherIsDown(ctrl) then
-			input.undo(id)
+			newinputsys.undo(id)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
-			input.redo(id)
+			newinputsys.redo(id)
 		elseif key == "tab" then
-			input.bump(input.input_ids[#input.nth_input - 8])
+			newinputsys.bump(newinputsys.input_ids[#newinputsys.nth_input - 8])
 		end
 	end
 
@@ -4236,17 +4236,17 @@ function love.mousereleased(x, y, button)
 	minsmear = -1; maxsmear = -1
 	toout = 0
 
-	if input.active then
-		local id = input.input_ids[#input.nth_input]
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+		local id = newinputsys.input_ids[#newinputsys.nth_input]
 		local multiline = type(inputs[id]) == "table"
 
-		if input.selpos[id] ~= nil then
+		if newinputsys.selpos[id] ~= nil then
 			local whichfirst
 			if multiline then
-				local curx, cury = unpack(input.pos[id])
-				local selx, sely = unpack(input.selpos[id])
+				local curx, cury = unpack(newinputsys.pos[id])
+				local selx, sely = unpack(newinputsys.selpos[id])
 				local lines = inputs[id]
-				if input.rightmosts[id] then
+				if newinputsys.rightmosts[id] then
 					curx = utf8.len(lines[cury])
 				end
 
@@ -4260,9 +4260,9 @@ function love.mousereleased(x, y, button)
 					whichfirst = 2
 				end
 			else
-				local curx = input.pos[id]
-				local selx = input.selpos[id]
-				if input.rightmosts[id] then
+				local curx = newinputsys.pos[id]
+				local selx = newinputsys.selpos[id]
+				if newinputsys.rightmosts[id] then
 					curx = utf8.len(inputs[id])
 				end
 
@@ -4274,7 +4274,7 @@ function love.mousereleased(x, y, button)
 			end
 
 			if whichfirst == nil then
-				input.clearselpos(id)
+				newinputsys.clearselpos(id)
 			end
 		end
 	end
