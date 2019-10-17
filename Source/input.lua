@@ -505,18 +505,7 @@ end
 function input.movex(id, chars)
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	x = math.min(math.max(x, 0), utf8.len(line))
 	x = x + chars
@@ -557,11 +546,7 @@ function input.movey(id, chars)
 	end
 
 	local lines = inputs[id]
-	local x, y = unpack(input.pos[id])
-
-	if input.rightmosts[id] then
-		x = utf8.len(inputs[id][y])
-	end
+	local x, y = input.getpos(id)
 
 	y = y + chars
 	y = math.min(math.max(y, 1), #lines)
@@ -611,16 +596,7 @@ function input.rightmost(id)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	x = utf8.len(line)
+	local x, y, line = input.getpos(id)
 
 	if input.selpos[id] ~= nil then
 		local conditional
@@ -644,17 +620,7 @@ function input.deletechars(id, chars)
 
 	local x, y, line
 	for _ = 1, math.abs(chars) do
-		if multiline then
-			x, y = unpack(input.pos[id])
-			line = inputs[id][y]
-		else
-			x = input.pos[id]
-			line = inputs[id]
-		end
-
-		if input.rightmosts[id] then
-			x = utf8.len(line)
-		end
+		x, y, line = input.getpos(id)
 
 		x = math.min(math.max(x, 0), utf8.len(line))
 
@@ -741,18 +707,7 @@ function input.actualinsertchars(id, text)
 
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, utf8.len(line))
 
@@ -780,12 +735,7 @@ function input.newline(id)
 		return
 	end
 
-	local x, y = unpack(input.pos[id])
-	local line = inputs[id][y]
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	local restofline = utf8.sub(line, x+1, utf8.len(line))
 
@@ -804,18 +754,7 @@ end
 function input.setselpos(id)
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	x = math.min(math.max(x, 0), utf8.len(line))
 
@@ -1112,18 +1051,7 @@ end
 function input.deltoleftmost(id)
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	if x == 0 then
 		-- Fast path: we're already at the left end, so we don't need to do anything
@@ -1139,14 +1067,7 @@ end
 function input.deltorightmost(id)
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
+	local x, y, line = input.getpos(id)
 
 	if input.rightmosts[id] then
 		-- Fast path: This is already cleared, so we don't need to do anything
@@ -1412,18 +1333,7 @@ function input.movexwords(id, words)
 
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	if (words > 0 and x == utf8.len(line)) or (words < 0 and x == 0) then
 		cursorflashtime = 0
@@ -1455,18 +1365,7 @@ function input.deletewords(id, words)
 
 	local multiline = type(inputs[id]) == "table"
 
-	local x, y, line
-	if multiline then
-		x, y = unpack(input.pos[id])
-		line = inputs[id][y]
-	else
-		x = input.pos[id]
-		line = inputs[id]
-	end
-
-	if input.rightmosts[id] then
-		x = utf8.len(line)
-	end
+	local x, y, line = input.getpos(id)
 
 	if (words > 0 and x == utf8.len(line)) or (words < 0 and x == 0) then
 		cursorflashtime = 0
