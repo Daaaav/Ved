@@ -50,12 +50,12 @@ respectively. `<pattern>` is any Lua pattern, so you can (for example)
 whitelist only number characters by doing `input.whitelist(<id>, "%d")`.
 
 If you want to index by number (where the last number is the most
-recently-opened input), then use `nth_input`. Use `input_ids` and `input_ns` to
-convert between indexing by ID and indexing by number.
+recently-opened input), then use `input.nth_input`. Use `input.input_ids` and
+`input.input_ns` to convert between indexing by ID and indexing by number.
 
-If you need the current position, for oneline it's `inputpos.<id>`
-For multiline, the x-position is `inputpos.<id>[1]`,
-the y-position `inputpos.<id>[2]`
+If you need the current position, for oneline it's `input.pos.<id>`
+For multiline, the x-position is `input.pos.<id>[1]`,
+the y-position `input.pos.<id>[2]`
 
 When typing, the input prioritized will be the most recently-opened input.
 
@@ -70,29 +70,32 @@ When you're done, close it by doing `input.close(<id>)`.
 
 ]]
 
-input = {active = false}
+input = {
+	active = false,
+
+	nth_input = {},
+	input_ids = {},
+	input_ns = {},
+
+	pos = {},
+	rightmosts = {},
+	selpos = {},
+
+	undostack = {},
+	redostack = {},
+
+	wordseps = {},
+
+	hex = {},
+
+	whitelists = {},
+	blacklists = {},
+	newlinechars = {},
+
+	areas = {},
+}
 
 inputs = {}
-nth_input = {}
-input_ids = {}
-input_ns = {}
-
-inputpos = {}
-inputsrightmost = {}
-inputselpos = {}
-
-inputundo = {}
-inputredo = {}
-
-inputwordseps = {}
-
-inputhex = {}
-
-inputwhitelist = {}
-inputblacklist = {}
-inputnewlinechars = {}
-
-inputareas = {}
 
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
@@ -127,21 +130,21 @@ function input.create(type_, id, initial, ix, iy)
 	end
 
 	inputs[id] = initial
-	table.insert(nth_input, inputs[id])
+	table.insert(input.nth_input, inputs[id])
 	if type_ == INPUT.ONELINE then
-		inputpos[id] = ix
+		input.pos[id] = ix
 	elseif type_ == INPUT.MULTILINE then
-		inputpos[id] = {ix, iy}
+		input.pos[id] = {ix, iy}
 	end
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
-	input_ids[#nth_input] = id
-	input_ns[id] = #nth_input
-	inputsrightmost[id] = false
+	input.input_ids[#input.nth_input] = id
+	input.input_ns[id] = #input.nth_input
+	input.rightmosts[id] = false
 
-	inputundo[id] = {}
-	inputredo[id] = {}
+	input.undostack[id] = {}
+	input.redostack[id] = {}
 
 	input.setnewlinechars(id, "[\r\n]")
 	input.setwordseps(id, " ")
@@ -152,40 +155,40 @@ function input.close(id, updatemappings)
 		updatemappings = true
 	end
 
-	local removethisn = input_ns[id]
+	local removethisn = input.input_ns[id]
 
-	table.remove(nth_input, removethisn)
+	table.remove(input.nth_input, removethisn)
 	inputs[id] = nil
-	table.remove(input_ids, removethisn)
-	input_ns[id] = nil
-	inputpos[id] = nil
+	table.remove(input.input_ids, removethisn)
+	input.input_ns[id] = nil
+	input.pos[id] = nil
 
 	if updatemappings then
 		input.updatemappings()
 	end
 
-	if #nth_input == 0 then
+	if #input.nth_input == 0 then
 		input.active = false
 	end
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
-	inputsrightmost[id] = nil
-	inputselpos[id] = nil
+	input.rightmosts[id] = nil
+	input.selpos[id] = nil
 
-	inputundo = nil
-	inputredo = nil
+	input.undostack = nil
+	input.redostack = nil
 
-	inputwhitelist[id] = nil
-	inputblacklist[id] = nil
-	inputnewlinechars[id] = nil
+	input.whitelists[id] = nil
+	input.blacklists[id] = nil
+	input.newlinechars[id] = nil
 
-	inputareas[id] = nil
+	input.areas[id] = nil
 end
 
 function input.updatemappings()
-	for n, id in pairs(input_ids) do
-		input_ns[id] = n
+	for n, id in pairs(input.input_ids) do
+		input.input_ns[id] = n
 	end
 end
 
@@ -200,7 +203,7 @@ function input.pause()
 end
 
 function input.resume()
-	if #nth_input > 0 then
+	if #input.nth_input > 0 then
 		input.active = true
 		cursorflashtime = 0
 		inputcopiedtimer = 0
@@ -210,13 +213,13 @@ end
 function input.bump(id)
 	input.active = true
 
-	local oldn = input_ns[id]
+	local oldn = input.input_ns[id]
 
-	table.remove(nth_input, oldn)
-	table.insert(nth_input, inputs[id])
+	table.remove(input.nth_input, oldn)
+	table.insert(input.nth_input, inputs[id])
 
-	table.remove(input_ids, oldn)
-	table.insert(input_ids, id)
+	table.remove(input.input_ids, oldn)
+	table.insert(input.input_ids, id)
 
 	input.updatemappings()
 
@@ -252,7 +255,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 	-- This function also handles clicking, double-clicking, and clicking-and-dragging on text
 
 	-- Make sure we're drawing the cas of the currently focused input
-	if id ~= input_ids[#nth_input] then
+	if id ~= input.input_ids[#input.nth_input] then
 		return
 	end
 
@@ -267,7 +270,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 	-- Clicking
 
-	local area = inputareas[id]
+	local area = input.areas[id]
 	if area == nil then
 		area = {love.graphics.getScissor()}
 		if #area == 0 then -- Table is empty because getScissor() returned all nils because there's no scissor
@@ -314,16 +317,16 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 	-- Selection
 
-	if inputselpos[id] ~= nil then
+	if input.selpos[id] ~= nil then
 		local selrects = {} -- each table in this table: {x (pixels), y (line), width (pixels)}
 		local whichfirst -- 1 = caret pos, 2 = selection pos
 		local startx, starty, endx, endy
 
 		if multiline then
 			local lines = inputs[id]
-			local curx, cury = unpack(inputpos[id])
-			local selx, sely = unpack(inputselpos[id])
-			if inputsrightmost[id] then
+			local curx, cury = unpack(input.pos[id])
+			local selx, sely = unpack(input.selpos[id])
+			if input.rightmosts[id] then
 				curx = utf8.len(lines[cury])
 			end
 
@@ -379,9 +382,9 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 			end
 		else
 			local line = inputs[id]
-			local curx = inputpos[id]
-			local selx = inputselpos[id]
-			if inputsrightmost[id] then
+			local curx = input.pos[id]
+			local selx = input.selpos[id]
+			if input.rightmosts[id] then
 				curx = utf8.len(line)
 			end
 
@@ -423,16 +426,16 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 	-- Caret
 
-	if cursorflashtime > .5 and inputhex[id] == nil then
+	if cursorflashtime > .5 and input.hex[id] == nil then
 		return
 	end
 
 	local caretx, carety
 	if multiline then
-		carety = inputpos[id][2]
+		carety = input.pos[id][2]
 		local line = inputs[id][carety]
-		local postoget = inputpos[id][1]
-		if inputsrightmost[id] then
+		local postoget = input.pos[id][1]
+		if input.rightmosts[id] then
 			postoget = utf8.len(line)
 		end
 		-- If we're coming from a line with more chars,
@@ -442,8 +445,8 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		caretx = thisfont:getWidth(utf8.sub(line, 1, postoget))
 	else
 		local line = inputs[id]
-		local postoget = inputpos[id]
-		if inputsrightmost[id] then
+		local postoget = input.pos[id]
+		if input.rightmosts[id] then
 			postoget = utf8.len(line)
 		end
 		carety = 0
@@ -464,7 +467,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 	-- Hex input, before the caret is actually drawn so it doesn't get in the way
 
-	if inputhex[id] ~= nil then
+	if input.hex[id] ~= nil then
 		-- Not really the best look, but I don't want to reposition the caret,
 		-- so I have to stop rendering it or cover it up somehow
 
@@ -477,7 +480,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 		local prefix = "u" -- not like we're gonna change it LOL
 
-		local text = prefix .. inputhex[id]
+		local text = prefix .. input.hex[id]
 
 		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
 		love.graphics.setColor(unpack(invertcol))
@@ -503,14 +506,14 @@ function input.movex(id, chars)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -519,22 +522,22 @@ function input.movex(id, chars)
 	x = math.min(math.max(x, 0), utf8.len(line))
 
 	if multiline then
-		inputpos[id][1] = x
+		input.pos[id][1] = x
 	else
-		inputpos[id] = x
+		input.pos[id] = x
 	end
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	inputsrightmost[id] = false
+	input.rightmosts[id] = false
 
-	if inputselpos[id] ~= nil then
+	if input.selpos[id] ~= nil then
 		local conditional
 		if multiline then
-			conditional = x == inputselpos[id][1] and y == inputselpos[id][2]
+			conditional = x == input.selpos[id][1] and y == input.selpos[id][2]
 		else
-			conditional = x == inputselpos[id]
+			conditional = x == input.selpos[id]
 		end
 		if conditional then
 			input.clearselpos(id)
@@ -546,28 +549,28 @@ function input.movey(id, chars)
 	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
-		if inputselpos[id] ~= nil then
+		if input.selpos[id] ~= nil then
 			input.clearselpos(id)
 		end
 		return
 	end
 
 	local lines = inputs[id]
-	local x, y = unpack(inputpos[id])
+	local x, y = unpack(input.pos[id])
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(inputs[id][y])
 	end
 
 	y = y + chars
 	y = math.min(math.max(y, 1), #lines)
 
-	inputpos[id][2] = y
+	input.pos[id][2] = y
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	if inputselpos[id] ~= nil and x == inputselpos[id][1] and y == inputselpos[id][2] then
+	if input.selpos[id] ~= nil and x == input.selpos[id][1] and y == input.selpos[id][2] then
 		input.clearselpos(id)
 	end
 end
@@ -576,22 +579,22 @@ function input.leftmost(id)
 	local multiline = type(inputs[id]) == "table"
 
 	if multiline then
-		inputpos[id][1] = 0
+		input.pos[id][1] = 0
 	else
-		inputpos[id] = 0
+		input.pos[id] = 0
 	end
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	inputsrightmost[id] = false
+	input.rightmosts[id] = false
 
-	if inputselpos[id] ~= nil then
+	if input.selpos[id] ~= nil then
 		local conditional
 		if multiline then
-			conditional = inputpos[id][1] == inputselpos[id][1] and inputpos[id][2] == inputselpos[id][2]
+			conditional = input.pos[id][1] == input.selpos[id][1] and input.pos[id][2] == input.selpos[id][2]
 		else
-			conditional = inputpos[id] == inputselpos[id]
+			conditional = input.pos[id] == input.selpos[id]
 		end
 		if conditional then
 			input.clearselpos(id)
@@ -602,28 +605,28 @@ end
 function input.rightmost(id)
 	local multiline = type(inputs[id]) == "table"
 
-	inputsrightmost[id] = true
+	input.rightmosts[id] = true
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
 	x = utf8.len(line)
 
-	if inputselpos[id] ~= nil then
+	if input.selpos[id] ~= nil then
 		local conditional
 		if multiline then
-			conditional = x == inputselpos[id][1] and y == inputselpos[id][2]
+			conditional = x == input.selpos[id][1] and y == input.selpos[id][2]
 		else
-			conditional = x == inputselpos[id]
+			conditional = x == input.selpos[id]
 		end
 		if conditional then
 			input.clearselpos(id)
@@ -641,14 +644,14 @@ function input.deletechars(id, chars)
 	local x, y, line
 	for _ = 1, math.abs(chars) do
 		if multiline then
-			x, y = unpack(inputpos[id])
+			x, y = unpack(input.pos[id])
 			line = inputs[id][y]
 		else
-			x = inputpos[id]
+			x = input.pos[id]
 			line = inputs[id]
 		end
 
-		if inputsrightmost[id] then
+		if input.rightmosts[id] then
 			x = utf8.len(line)
 		end
 
@@ -687,12 +690,12 @@ function input.deletechars(id, chars)
 		end
 
 		if multiline then
-			inputpos[id] = {x, y}
+			input.pos[id] = {x, y}
 		else
-			inputpos[id] = x
+			input.pos[id] = x
 		end
 
-		inputsrightmost[id] = false
+		input.rightmosts[id] = false
 	end
 
 	cursorflashtime = 0
@@ -700,20 +703,20 @@ function input.deletechars(id, chars)
 end
 
 function input.insertchars(id, text)
-	if inputwhitelist[id] ~= nil then
+	if input.whitelists[id] ~= nil then
 		local tmp = {}
-		for char in text:gmatch(inputwhitelist[id]) do
+		for char in text:gmatch(input.whitelists[id]) do
 			table.insert(tmp, char)
 		end
 		text = table.concat(tmp)
 	end
 
-	if inputblacklist[id] ~= nil then
-		text = text:gsub(inputblacklist[id], "")
+	if input.blacklists[id] ~= nil then
+		text = text:gsub(input.blacklists[id], "")
 	end
 
-	if inputnewlinechars[id] ~= nil then
-		local lines = explode(inputnewlinechars[id], text)
+	if input.newlinechars[id] ~= nil then
+		local lines = explode(input.newlinechars[id], text)
 		if #lines == 1 then
 			input.actualinsertchars(id, lines[1])
 			return
@@ -739,14 +742,14 @@ function input.actualinsertchars(id, text)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -758,11 +761,11 @@ function input.actualinsertchars(id, text)
 	end
 
 	if multiline then
-		inputpos[id] = {x, y}
+		input.pos[id] = {x, y}
 		inputs[id][y] = line
 	else
 		inputs[id] = line
-		inputpos[id] = x
+		input.pos[id] = x
 	end
 
 	cursorflashtime = 0
@@ -776,10 +779,10 @@ function input.newline(id)
 		return
 	end
 
-	local x, y = unpack(inputpos[id])
+	local x, y = unpack(input.pos[id])
 	local line = inputs[id][y]
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -791,7 +794,7 @@ function input.newline(id)
 	x = 0
 	y = y + 1
 
-	inputpos[id] = {x, y}
+	input.pos[id] = {x, y}
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -802,32 +805,32 @@ function input.setselpos(id)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
 	x = math.min(math.max(x, 0), utf8.len(line))
 
 	if multiline then
-		inputselpos[id] = {x, y}
+		input.selpos[id] = {x, y}
 	else
-		inputselpos[id] = x
+		input.selpos[id] = x
 	end
 end
 
 function input.clearselpos(id)
-	inputselpos[id] = nil
+	input.selpos[id] = nil
 end
 
 function input.getseltext(id)
-	if inputselpos[id] == nil then
+	if input.selpos[id] == nil then
 		return
 	end
 
@@ -839,10 +842,10 @@ function input.getseltext(id)
 	local rope = {}
 
 	if multiline then
-		local curx, cury = unpack(inputpos[id])
-		local selx, sely = unpack(inputselpos[id])
+		local curx, cury = unpack(input.pos[id])
+		local selx, sely = unpack(input.selpos[id])
 		local lines = inputs[id]
-		if inputsrightmost[id] then
+		if input.rightmosts[id] then
 			curx = utf8.len(lines[cury])
 		end
 
@@ -893,9 +896,9 @@ function input.getseltext(id)
 			end
 		end
 	else
-		local curx = inputpos[id]
-		local selx = inputselpos[id]
-		if inputsrightmost[id] then
+		local curx = input.pos[id]
+		local selx = input.selpos[id]
+		if input.rightmosts[id] then
 			curx = utf8.len(inputs[id])
 		end
 
@@ -925,7 +928,7 @@ function input.getseltext(id)
 end
 
 function input.delseltext(id)
-	if inputselpos[id] == nil then
+	if input.selpos[id] == nil then
 		return
 	end
 
@@ -937,10 +940,10 @@ function input.delseltext(id)
 	local deletethismanychars = 0
 
 	if multiline then
-		local curx, cury = unpack(inputpos[id])
-		local selx, sely = unpack(inputselpos[id])
+		local curx, cury = unpack(input.pos[id])
+		local selx, sely = unpack(input.selpos[id])
 		local lines = inputs[id]
-		if inputsrightmost[id] then
+		if input.rightmosts[id] then
 			curx = utf8.len(lines[cury])
 		end
 
@@ -990,9 +993,9 @@ function input.delseltext(id)
 		-- Delete the newlines
 		deletethismanychars = deletethismanychars + endy - starty
 	else
-		local curx = inputpos[id]
-		local selx = inputselpos[id]
-		if inputsrightmost[id] then
+		local curx = input.pos[id]
+		local selx = input.selpos[id]
+		if input.rightmosts[id] then
 			curx = utf8.len(inputs[id])
 		end
 
@@ -1028,12 +1031,12 @@ function input.setpos(id, x, y)
 	local multiline = type(inputs[id]) == "table"
 
 	if multiline then
-		inputpos[id] = {x, y}
+		input.pos[id] = {x, y}
 	else
-		inputpos[id] = x
+		input.pos[id] = x
 	end
 
-	inputsrightmost[id] = false
+	input.rightmosts[id] = false
 end
 
 function input.selallright(id)
@@ -1042,12 +1045,12 @@ function input.selallright(id)
 	if multiline then
 		input.setpos(id, 0, 1)
 		input.setselpos(id)
-		inputpos[id][2] = #inputs[id]
-		inputsrightmost[id] = true
+		input.pos[id][2] = #inputs[id]
+		input.rightmosts[id] = true
 	else
 		input.setpos(id, 0)
 		input.setselpos(id)
-		inputsrightmost[id] = true
+		input.rightmosts[id] = true
 	end
 
 	cursorflashtime = 0
@@ -1059,11 +1062,11 @@ function input.selallleft(id)
 
 	if multiline then
 		input.setpos(id, 0, #inputs[id])
-		inputsrightmost[id] = true
+		input.rightmosts[id] = true
 		input.setselpos(id)
 		input.setpos(id, 0, 1)
 	else
-		inputsrightmost[id] = true
+		input.rightmosts[id] = true
 		input.setselpos(id)
 		input.setpos(id, 0)
 	end
@@ -1077,14 +1080,14 @@ function input.deltoleftmost(id)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -1104,14 +1107,14 @@ function input.deltorightmost(id)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		-- Fast path: This is already cleared, so we don't need to do anything
 		return
 	end
@@ -1141,7 +1144,7 @@ function input.removelines(id, lines)
 		return
 	end
 
-	local y = inputpos[id][2]
+	local y = input.pos[id][2]
 	for _ = 1, math.abs(lines) do
 		if #inputs[id] > 1 then
 			table.remove(inputs[id], y)
@@ -1158,7 +1161,7 @@ function input.removelines(id, lines)
 		end
 	end
 
-	inputpos[id][2] = y
+	input.pos[id][2] = y
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1178,7 +1181,7 @@ end
 
 function input.unre(id, group, oldinput, oldpos, oldrightmost, oldselpos)
 	-- Insert an undoable action into the input's undo buffer
-	inputredo[id] = {}
+	input.redostack[id] = {}
 
 	local multiline = type(inputs[id]) == "table"
 
@@ -1200,28 +1203,28 @@ function input.unre(id, group, oldinput, oldpos, oldrightmost, oldselpos)
 	local new
 	if multiline then
 		local newinput = table.copy(inputs[id])
-		local newpos = table.copy(inputpos[id])
+		local newpos = table.copy(input.pos[id])
 		local newselpos
-		if inputselpos[id] ~= nil then
-			newselpos = table.copy(inputselpos[id])
+		if input.selpos[id] ~= nil then
+			newselpos = table.copy(input.selpos[id])
 		else
 			newselpos = ""
 		end
-		new = {newinput, newpos, inputsrightmost[id], newselpos}
+		new = {newinput, newpos, input.rightmosts[id], newselpos}
 	else
 		local newselpos
-		if inputselpos[id] ~= nil then
-			newselpos = inputselpos[id]
+		if input.selpos[id] ~= nil then
+			newselpos = input.selpos[id]
 		else
 			newselpos = ""
 		end
-		new = {inputs[id], inputpos[id], inputsrightmost[id], newselpos}
+		new = {inputs[id], input.pos[id], input.rightmosts[id], newselpos}
 	end
 
-	if #inputundo[id] > 0 and group ~= nil and inputundo[id][#inputundo[id]].group == group then
-		inputundo[id][#inputundo[id]].new = new
+	if #input.undostack[id] > 0 and group ~= nil and input.undostack[id][#input.undostack[id]].group == group then
+		input.undostack[id][#input.undostack[id]].new = new
 	else
-		table.insert(inputundo[id], {old = old, new = new, group = group})
+		table.insert(input.undostack[id], {old = old, new = new, group = group})
 	end
 end
 
@@ -1232,22 +1235,22 @@ function input.getstate(id)
 
 	if multiline then
 		local stateinput = table.copy(inputs[id])
-		local statepos = table.copy(inputpos[id])
+		local statepos = table.copy(input.pos[id])
 		local stateselpos
-		if inputselpos[id] ~= nil then
-			stateselpos = table.copy(inputselpos[id])
+		if input.selpos[id] ~= nil then
+			stateselpos = table.copy(input.selpos[id])
 		else
 			stateselpos = ""
 		end
-		return stateinput, statepos, inputsrightmost[id], stateselpos
+		return stateinput, statepos, input.rightmosts[id], stateselpos
 	else
 		local stateselpos
-		if inputselpos[id] ~= nil then
-			stateselpos = inputselpos[id]
+		if input.selpos[id] ~= nil then
+			stateselpos = input.selpos[id]
 		else
 			stateselpos = ""
 		end
-		return inputs[id], inputpos[id], inputsrightmost[id], stateselpos
+		return inputs[id], input.pos[id], input.rightmosts[id], stateselpos
 	end
 end
 
@@ -1256,17 +1259,17 @@ function input.tothisstate(id, state)
 
 	if multiline then
 		inputs[id] = table.copy(state[1])
-		inputpos[id] = table.copy(state[2])
-		inputsrightmost[id] = state[3]
+		input.pos[id] = table.copy(state[2])
+		input.rightmosts[id] = state[3]
 		if state[4] ~= "" then
-			inputselpos[id] = table.copy(state[4])
+			input.selpos[id] = table.copy(state[4])
 		else
-			inputselpos[id] = nil
+			input.selpos[id] = nil
 		end
 	else
-		inputs[id], inputpos[id], inputsrightmost[id], inputselpos[id] = unpack(state)
+		inputs[id], input.pos[id], input.rightmosts[id], input.selpos[id] = unpack(state)
 		if state[4] == "" then
-			inputselpos[id] = nil
+			input.selpos[id] = nil
 		end
 	end
 
@@ -1275,34 +1278,34 @@ function input.tothisstate(id, state)
 end
 
 function input.undo(id)
-	if #inputundo[id] == 0 then
+	if #input.undostack[id] == 0 then
 		return
 	end
 
-	local last = table.copy(inputundo[id][#inputundo[id]])
+	local last = table.copy(input.undostack[id][#input.undostack[id]])
 
 	input.tothisstate(id, last.old)
 
-	table.remove(inputundo[id])
-	table.insert(inputredo[id], table.copy(last))
+	table.remove(input.undostack[id])
+	table.insert(input.redostack[id], table.copy(last))
 end
 
 function input.redo(id)
-	if #inputredo[id] == 0 then
+	if #input.redostack[id] == 0 then
 		return
 	end
 
-	local last = table.copy(inputredo[id][#inputredo[id]])
+	local last = table.copy(input.redostack[id][#input.redostack[id]])
 
 	input.tothisstate(id, last.new)
 
-	table.remove(inputredo[id])
-	table.insert(inputundo[id], table.copy(last))
+	table.remove(input.redostack[id])
+	table.insert(input.undostack[id], table.copy(last))
 end
 
 function input.setwordseps(id, pattern)
 	if anythingbutnil(pattern) ~= "" then
-		inputwordseps[id] = pattern
+		input.wordseps[id] = pattern
 	end
 end
 
@@ -1377,14 +1380,14 @@ function input.movexwords(id, words)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -1394,7 +1397,7 @@ function input.movexwords(id, words)
 		return
 	end
 
-	local wordsep = inputwordseps[id]
+	local wordsep = input.wordseps[id]
 
 	for _ = 1, math.abs(words) do
 		local counter = input.charsofoneword(wordsep, line, x, words)
@@ -1402,9 +1405,9 @@ function input.movexwords(id, words)
 		input.movex(id, counter)
 
 		if multiline then
-			x = inputpos[id][1]
+			x = input.pos[id][1]
 		else
-			x = inputpos[id]
+			x = input.pos[id]
 		end
 	end
 end
@@ -1420,14 +1423,14 @@ function input.deletewords(id, words)
 
 	local x, y, line
 	if multiline then
-		x, y = unpack(inputpos[id])
+		x, y = unpack(input.pos[id])
 		line = inputs[id][y]
 	else
-		x = inputpos[id]
+		x = input.pos[id]
 		line = inputs[id]
 	end
 
-	if inputsrightmost[id] then
+	if input.rightmosts[id] then
 		x = utf8.len(line)
 	end
 
@@ -1437,7 +1440,7 @@ function input.deletewords(id, words)
 		return
 	end
 
-	local wordsep = inputwordseps[id]
+	local wordsep = input.wordseps[id]
 
 	for _ = 1, math.abs(words) do
 		local counter = input.charsofoneword(wordsep, line, x, words)
@@ -1445,19 +1448,19 @@ function input.deletewords(id, words)
 		input.deletechars(id, counter)
 
 		if multiline then
-			x = inputpos[id][1]
+			x = input.pos[id][1]
 		else
-			x = inputpos[id]
+			x = input.pos[id]
 		end
 	end
 end
 
 function input.starthex(id)
-	inputhex[id] = ""
+	input.hex[id] = ""
 end
 
 function input.stophex(id)
-	inputhex[id] = nil
+	input.hex[id] = nil
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1470,9 +1473,9 @@ function input.inserthexchars(id, text)
 	end
 	text = table.concat(tmp)
 
-	inputhex[id] = inputhex[id] .. text
+	input.hex[id] = input.hex[id] .. text
 
-	inputhex[id] = inputhex[id]:sub(1, 8)
+	input.hex[id] = input.hex[id]:sub(1, 8)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1488,35 +1491,35 @@ function input.deletehexchars(id, chars)
 		return
 	end
 
-	if chars > #inputhex[id] then
+	if chars > #input.hex[id] then
 		input.stophex(id)
 		return
 	end
 
-	if chars == #inputhex[id] then
-		inputhex[id] = ""
+	if chars == #input.hex[id] then
+		input.hex[id] = ""
 		return
 	end
 
-	inputhex[id] = inputhex[id]:sub(1, #inputhex[id]-chars)
+	input.hex[id] = input.hex[id]:sub(1, #input.hex[id]-chars)
 end
 
 function input.finishhex(id)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	if anythingbutnil(inputhex[id]) == "" then
+	if anythingbutnil(input.hex[id]) == "" then
 		input.stophex(id)
 		return
 	end
 
-	local hex = tonumber(inputhex[id], 16)
+	local hex = tonumber(input.hex[id], 16)
 
 	local MAXUNICODE = 0x10FFFF -- Magic constant, please don't forget to update if it updates
 
 	if hex <= MAXUNICODE and hex ~= 0 --[[ we don't want nulls ]] then
 		local char = utf8.char(hex)
-		if inputselpos[id] ~= nil then
+		if input.selpos[id] ~= nil then
 			input.delseltext(id)
 		end
 		input.insertchars(id, char)
@@ -1526,19 +1529,19 @@ function input.finishhex(id)
 end
 
 function input.whitelist(id, pattern)
-	inputwhitelist[id] = pattern
+	input.whitelists[id] = pattern
 end
 
 function input.blacklist(id, pattern)
-	inputblacklist[id] = pattern
+	input.blacklists[id] = pattern
 end
 
 function input.setnewlinechars(id, pattern)
-	inputnewlinechars[id] = pattern
+	input.newlinechars[id] = pattern
 end
 
 function input.setmousearea(id, ...)
-	inputareas[id] = {...}
+	input.areas[id] = {...}
 end
 
 function input.mousepressed(id, x, y, sx, sy, lineh)
@@ -1549,7 +1552,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	local skipsettingselposlater = false
 	if not mousepressed then
 		if keyboard_eitherIsDown("shift") then
-			if inputselpos[id] == nil then
+			if input.selpos[id] == nil then
 				input.setselpos(id)
 			end
 			skipsettingselposlater = true
@@ -1593,12 +1596,12 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 	if inputnumclicks <= 1 then
 		if multiline then
-			inputpos[id] = {posx, posy}
+			input.pos[id] = {posx, posy}
 		else
-			inputpos[id] = posx
+			input.pos[id] = posx
 		end
 
-		inputsrightmost[id] = false
+		input.rightmosts[id] = false
 	end
 
 	if not mousepressed then
@@ -1614,16 +1617,16 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 		if inputnumclicks == 2 then
 			-- Double-click to select the word
 
-			local wordsep = inputwordseps[id]
+			local wordsep = input.wordseps[id]
 
 			if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
 				-- Do this highly complicated maneuver to select the space in between the words
 				local conditional
 				input.movexwords(id, -1)
 				if multiline then
-					conditional = inputpos[id][1] == 0
+					conditional = input.pos[id][1] == 0
 				else
-					conditional = inputpos[id] == 0
+					conditional = input.pos[id] == 0
 				end
 				if not conditional then
 					input.movexwords(id, 1)
@@ -1631,9 +1634,9 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 				input.setselpos(id)
 				input.movexwords(id, 1)
 				if multiline then
-					conditional = inputpos[id][1] == utf8.len(line)
+					conditional = input.pos[id][1] == utf8.len(line)
 				else
-					conditional = inputpos[id] == utf8.len(line)
+					conditional = input.pos[id] == utf8.len(line)
 				end
 				if not conditional then
 					input.movexwords(id, -1)
@@ -1656,12 +1659,12 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 			-- Too many clicks!
 			if multiline then
-				inputpos[id] = {posx, posy}
+				input.pos[id] = {posx, posy}
 			else
-				inputpos[id] = posx
+				input.pos[id] = posx
 			end
 
-			inputsrightmost[id] = false
+			input.rightmosts[id] = false
 		end
 	elseif not mousepressed and not skipsettingselposlater then
 		input.setselpos(id)
@@ -1674,7 +1677,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 	cursorflashtime = 0
 
-	if #inputundo[id] > 0 then
-		inputundo[id][#inputundo[id]].group = nil
+	if #input.undostack[id] > 0 then
+		input.undostack[id][#input.undostack[id]].group = nil
 	end
 end

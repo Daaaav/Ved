@@ -1830,7 +1830,7 @@ function love.draw()
 		input.print("inputtest9", 100, 400, nil, nil, 10)
 
 		local youhaveselected = "You have selected: "
-		local tmp = input.getseltext(input_ids[#nth_input])
+		local tmp = input.getseltext(input.input_ids[#input.nth_input])
 		if tmp ~= nil then
 			ved_print(youhaveselected .. tmp, 580, 112)
 		end
@@ -2565,8 +2565,8 @@ function love.textinput(char)
 	end
 
 	if input.active then
-		local id = input_ids[#nth_input]
-		if inputhex[id] ~= nil then
+		local id = input.input_ids[#input.nth_input]
+		if input.hex[id] ~= nil then
 			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know
 				local oldstate = {input.getstate(id)}
 				input.finishhex(id)
@@ -2576,7 +2576,7 @@ function love.textinput(char)
 			end
 		else
 			local oldstate = {input.getstate(id)}
-			if inputselpos[id] ~= nil then
+			if input.selpos[id] ~= nil then
 				input.delseltext(id)
 			end
 			input.insertchars(id, char)
@@ -2657,21 +2657,21 @@ function love.keypressed(key)
 	end
 
 	if input.active then
-		local id = input_ids[#nth_input]
+		local id = input.input_ids[#input.nth_input]
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
 			input.stophex(id)
 		end
 
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
-			if #inputundo[id] > 0 then
-				inputundo[id][#inputundo[id]].group = nil
+			if #input.undostack[id] > 0 then
+				input.undostack[id][#input.undostack[id]].group = nil
 			end
 		end
 
 		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
 			if keyboard_eitherIsDown("shift") then
-				if inputselpos[id] == nil then
+				if input.selpos[id] == nil then
 					input.setselpos(id)
 				end
 			else
@@ -2699,12 +2699,12 @@ function love.keypressed(key)
 			input.leftmost(id)
 		elseif key == "end" then
 			input.rightmost(id)
-		elseif table.contains({"backspace", "delete"}, key) and inputselpos[id] ~= nil then
+		elseif table.contains({"backspace", "delete"}, key) and input.selpos[id] ~= nil then
 			local oldstate = {input.getstate(id)}
 			input.delseltext(id)
 			input.unre(id, nil, unpack(oldstate))
 		elseif key == "backspace" then
-			if inputhex[id] ~= nil then
+			if input.hex[id] ~= nil then
 				input.deletehexchars(id, 1)
 			else
 				local oldstate = {input.getstate(id)}
@@ -2725,16 +2725,16 @@ function love.keypressed(key)
 			input.unre(id, UNRE.DELETE, unpack(oldstate))
 		elseif table.contains({"return", "kpenter"}, key) then
 			local oldstate = {input.getstate(id)}
-			if inputhex[id] ~= nil then
+			if input.hex[id] ~= nil then
 				input.finishhex(id)
 			else
-				if inputselpos[id] ~= nil then
+				if input.selpos[id] ~= nil then
 					input.delseltext(id)
 				end
 				input.newline(id)
 			end
 			input.unre(id, UNRE.INSERT, unpack(oldstate))
-		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and inputselpos[id] ~= nil then
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and input.selpos[id] ~= nil then
 			inputcopiedtimer = .25
 			cursorflashtime = 0
 			love.system.setClipboardText(input.getseltext(id))
@@ -2745,7 +2745,7 @@ function love.keypressed(key)
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
 			local oldstate = {input.getstate(id)}
-			if inputselpos[id] ~= nil then
+			if input.selpos[id] ~= nil then
 				input.delseltext(id)
 			end
 			input.insertchars(id, love.system.getClipboardText():gsub("\r\n", "\n"))
@@ -2761,7 +2761,7 @@ function love.keypressed(key)
 				input.starthex(id)
 			else
 				local oldstate = {input.getstate(id)}
-				if inputselpos[id] ~= nil then
+				if input.selpos[id] ~= nil then
 					input.delseltext(id)
 				else
 					if key == "u" then
@@ -2774,7 +2774,7 @@ function love.keypressed(key)
 			end
 		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
 			local oldstate = {input.getstate(id)}
-			if inputselpos[id] ~= nil then
+			if input.selpos[id] ~= nil then
 				input.delseltext(id)
 			else
 				if keyboard_eitherIsDown("shift") then
@@ -2795,7 +2795,7 @@ function love.keypressed(key)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			input.redo(id)
 		elseif key == "tab" then
-			input.bump(input_ids[#nth_input - 8])
+			input.bump(input.input_ids[#input.nth_input - 8])
 		end
 	end
 
@@ -4237,16 +4237,16 @@ function love.mousereleased(x, y, button)
 	toout = 0
 
 	if input.active then
-		local id = input_ids[#nth_input]
+		local id = input.input_ids[#input.nth_input]
 		local multiline = type(inputs[id]) == "table"
 
-		if inputselpos[id] ~= nil then
+		if input.selpos[id] ~= nil then
 			local whichfirst
 			if multiline then
-				local curx, cury = unpack(inputpos[id])
-				local selx, sely = unpack(inputselpos[id])
+				local curx, cury = unpack(input.pos[id])
+				local selx, sely = unpack(input.selpos[id])
 				local lines = inputs[id]
-				if inputsrightmost[id] then
+				if input.rightmosts[id] then
 					curx = utf8.len(lines[cury])
 				end
 
@@ -4260,9 +4260,9 @@ function love.mousereleased(x, y, button)
 					whichfirst = 2
 				end
 			else
-				local curx = inputpos[id]
-				local selx = inputselpos[id]
-				if inputsrightmost[id] then
+				local curx = input.pos[id]
+				local selx = input.selpos[id]
+				if input.rightmosts[id] then
 					curx = utf8.len(inputs[id])
 				end
 
