@@ -1028,6 +1028,29 @@ function input.delseltext(id)
 	input.clearselpos(id)
 end
 
+function input.getpos(id)
+	local multiline = type(inputs[id]) == "table"
+
+	local x, y, line
+	if multiline then
+		x, y = unpack(input.pos[id])
+		line = inputs[id][y]
+	else
+		x = input.pos[id]
+		line = inputs[id]
+	end
+
+	if input.rightmosts[id] then
+		x = utf8.len(line)
+	end
+
+	if multiline then
+		return x, y, line
+	else
+		return x, nil, line
+	end
+end
+
 function input.setpos(id, x, ...)
 	local multiline = type(inputs[id]) == "table"
 
