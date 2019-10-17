@@ -1339,7 +1339,7 @@ function input.movexwords(id, words)
 
 		input.movex(id, counter)
 
-		input.setpos(id, x)
+		x = input.getpos(id)
 	end
 end
 
@@ -1367,7 +1367,7 @@ function input.deletewords(id, words)
 
 		input.deletechars(id, counter)
 
-		input.setpos(id, x)
+		x = input.getpos(id)
 	end
 end
 
