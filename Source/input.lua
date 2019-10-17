@@ -1176,7 +1176,7 @@ function input.sellinetoleft(id)
 	input.leftmost(id)
 end
 
-function input.unre(id, oldinput, oldpos, oldrightmost, oldselpos)
+function input.unre(id, group, oldinput, oldpos, oldrightmost, oldselpos)
 	-- Insert an undoable action into the input's undo buffer
 	inputredo[id] = {}
 
@@ -1218,7 +1218,11 @@ function input.unre(id, oldinput, oldpos, oldrightmost, oldselpos)
 		new = {inputs[id], inputpos[id], inputsrightmost[id], newselpos}
 	end
 
-	table.insert(inputundo[id], {old = old, new = new})
+	if #inputundo[id] > 0 and group ~= nil and inputundo[id][#inputundo[id]].group == group then
+		inputundo[id][#inputundo[id]].new = new
+	else
+		table.insert(inputundo[id], {old = old, new = new, group = group})
+	end
 end
 
 function input.getstate(id)
@@ -1669,4 +1673,8 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	end
 
 	cursorflashtime = 0
+
+	if #inputundo[id] > 0 then
+		inputundo[id][#inputundo[id]].group = nil
+	end
 end

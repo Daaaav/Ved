@@ -2308,3 +2308,9 @@ INPUT = {
 	ONELINE = 1,
 	MULTILINE = 2,
 }
+
+-- Also for input
+UNRE = {
+	INSERT = 1,
+	DELETE = 2,
+}
