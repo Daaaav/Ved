@@ -1517,55 +1517,57 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 		local oldposx, oldposy = posx, posy
 
-		local whichfirst -- 1 = caret pos, 2 = selection pos
-		if multiline then
-			local selx, sely = unpack(input.selpos[id])
+		if input.selpos[id] ~= nil then
+			local whichfirst -- 1 = caret pos, 2 = selection pos
+			if multiline then
+				local selx, sely = unpack(input.selpos[id])
 
-			if posy < sely then
-				whichfirst = 1
-			elseif sely < posy then
-				whichfirst = 2
-			elseif posx < selx then
-				whichfirst = 1
-			elseif selx < posx then
-				whichfirst = 2
+				if posy < sely then
+					whichfirst = 1
+				elseif sely < posy then
+					whichfirst = 2
+				elseif posx < selx then
+					whichfirst = 1
+				elseif selx < posx then
+					whichfirst = 2
+				end
+			else
+				local selx = input.selpos[id]
+
+				if posx < selx then
+					whichfirst = 1
+				elseif selx < posx then
+					whichfirst = 2
+				end
 			end
-		else
-			local selx = input.selpos[id]
 
-			if posx < selx then
-				whichfirst = 1
-			elseif selx < posx then
-				whichfirst = 2
-			end
-		end
+			local pos = 0
+			local postoget = posx
+			local posbeforeword
+			local nested_break = false
+			for _, word in pairs(words) do
+				posbeforeword = pos
+				for _ = 1, utf8.len(word) do
+					pos = pos + 1
+					if pos - 1 == postoget then
+						if whichfirst == 1 then
+							posx = posbeforeword
+						elseif whichfirst == 2 then
+							posx = posbeforeword + utf8.len(word)
+						end
 
-		local pos = 0
-		local postoget = posx
-		local posbeforeword
-		local nested_break = false
-		for _, word in pairs(words) do
-			posbeforeword = pos
-			for _ = 1, utf8.len(word) do
-				pos = pos + 1
-				if pos - 1 == postoget then
-					if whichfirst == 1 then
-						posx = posbeforeword
-					elseif whichfirst == 2 then
-						posx = posbeforeword + utf8.len(word)
+						nested_break = true
+						break
 					end
-
-					nested_break = true
+				end
+				if nested_break then
 					break
 				end
 			end
-			if nested_break then
-				break
-			end
-		end
 
-		if oldposx ~= posx or oldposy ~= posy then
-			input.setpos(id, posx, posy)
+			if oldposx ~= posx or oldposy ~= posy then
+				input.setpos(id, posx, posy)
+			end
 		end
 	end
 
