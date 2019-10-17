@@ -1515,6 +1515,8 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	elseif inputnumclicks == 2 then
 		local words = input.getwords(id, posy)
 
+		local oldposx, oldposy = posx, posy
+
 		local whichfirst -- 1 = caret pos, 2 = selection pos
 		if multiline then
 			local selx, sely = unpack(input.selpos[id])
@@ -1562,7 +1564,9 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 			end
 		end
 
-		input.setpos(id, posx, posy)
+		if oldposx ~= posx or oldposy ~= posy then
+			input.setpos(id, posx, posy)
+		end
 	end
 
 	if not mousepressed then
