@@ -2659,17 +2659,17 @@ function love.keypressed(key)
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
 		local id = newinputsys.input_ids[#newinputsys.nth_input]
 
-		if table.contains({"left", "right", "up", "down", "home", "end", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
 			newinputsys.stophex(id)
 		end
 
-		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) then
 			if #newinputsys.undostack[id] > 0 then
 				newinputsys.undostack[id][#newinputsys.undostack[id]].group = nil
 			end
 		end
 
-		if table.contains({"left", "right", "up", "down", "home", "end"}, key) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) then
 			if keyboard_eitherIsDown("shift") then
 				if newinputsys.selpos[id] == nil then
 					newinputsys.setselpos(id)
@@ -2699,6 +2699,13 @@ function love.keypressed(key)
 			newinputsys.leftmost(id)
 		elseif key == "end" then
 			newinputsys.rightmost(id)
+		elseif key == "pageup" then
+			-- Hardcoded (and pagedown is too)
+			-- unless there's big multiline inputs other than the script and article editors
+			-- and they aren't 57 lines tall
+			newinputsys.movey(id, -57)
+		elseif key == "pagedown" then
+			newinputsys.movey(id, 57)
 		elseif table.contains({"backspace", "delete"}, key) and newinputsys.selpos[id] ~= nil then
 			local oldstate = {newinputsys.getstate(id)}
 			newinputsys.delseltext(id)
