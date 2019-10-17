@@ -288,7 +288,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 			else
 				lines = 1
 			end
-			local height = fontheight * lines
+			local height = lineh * lines
 
 			width = width * sx
 			height = height * sy
