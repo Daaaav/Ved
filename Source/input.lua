@@ -1465,6 +1465,12 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 	local thisfont = love.graphics.getFont()
 	local fontheight = lineh or thisfont:getHeight()
 
+	if input.hex[id] ~= nil then
+		-- Don't use input.stophex(),
+		-- it has the side effect of resetting inputcopiedtimer when we don't want it to
+		input.hex[id] = nil
+	end
+
 	local skipsettingselposlater = false
 	if not mousepressed then
 		if keyboard_eitherIsDown("shift") then
