@@ -2741,7 +2741,7 @@ function love.keypressed(key)
 				newinputsys.newline(id)
 			end
 			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
-		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil then
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil and not love.mouse.isDown("l") then
 			inputcopiedtimer = .25
 			cursorflashtime = 0
 			love.system.setClipboardText(newinputsys.getseltext(id))
