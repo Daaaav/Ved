@@ -1548,32 +1548,40 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 				end
 			end
 
-			local pos = 0
-			local postoget = posx
-			local posbeforeword
-			local nested_break = false
-			for _, word in pairs(words) do
-				posbeforeword = pos
-				for _ = 1, utf8.len(word) do
-					pos = pos + 1
-					if pos - 1 == postoget then
+			if whichfirst ~= nil then
+				local pos = 0
+				local postoget = posx
+				local posbeforeword
+				local nested_break = false
+				for _, word in pairs(words) do
+					posbeforeword = pos
+					for _ = 1, utf8.len(word) do
+						pos = pos + 1
+						local conditional
 						if whichfirst == 1 then
-							posx = posbeforeword
+							conditional = pos == postoget
 						elseif whichfirst == 2 then
-							posx = posbeforeword + utf8.len(word)
+							conditional = pos - 1 == postoget
 						end
+						if conditional then
+							if whichfirst == 1 then
+								posx = posbeforeword
+							elseif whichfirst == 2 then
+								posx = posbeforeword + utf8.len(word)
+							end
 
-						nested_break = true
+							nested_break = true
+							break
+						end
+					end
+					if nested_break then
 						break
 					end
 				end
-				if nested_break then
-					break
-				end
-			end
 
-			if oldposx ~= posx or oldposy ~= posy then
-				input.setpos(id, posx, posy)
+				if oldposx ~= posx or oldposy ~= posy then
+					input.setpos(id, posx, posy)
+				end
 			end
 		end
 	elseif inputnumclicks == 3 then
