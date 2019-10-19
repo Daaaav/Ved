@@ -1229,6 +1229,7 @@ function input.undo(id)
 	end
 
 	local last = table.copy(input.undostack[id][#input.undostack[id]])
+	last.group = nil
 
 	input.tothisstate(id, last.old)
 
