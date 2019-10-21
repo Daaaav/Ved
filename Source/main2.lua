@@ -1940,7 +1940,11 @@ function love.update(dt)
 	hook("love_update_start", {dt})
 
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
-		cursorflashtime = (cursorflashtime+dt) % 1
+		if RCMactive then
+			cursorflashtime = 0
+		else
+			cursorflashtime = (cursorflashtime+dt) % 1
+		end
 	end
 
 	if takinginput or sp_t > 0 then
@@ -2529,6 +2533,30 @@ function love.update(dt)
 			else
 				unrecognized_rcmreturn()
 			end
+		elseif RCMid:sub(1, 5) == "input" and newinputsys ~= nil and --[[ nil check only because we're slowly transitioning to the new system ]] newinputsys.active then
+			local id = newinputsys.input_ids[#newinputsys.nth_input] -- Sidestep putting the id in RCMid, because if we did it'd convert it to a string
+			if RCMreturn == L.UNDO then
+				newinputsys.undo(id)
+			elseif RCMreturn == L.REDO then
+				newinputsys.redo(id)
+			elseif table.contains({L.COPY, L.CUT}, RCMreturn) then
+				newinputsys.atomiccopycut(id, RCMreturn == L.CUT)
+			elseif RCMreturn == L.PASTE then
+				newinputsys.atomicpaste(id)
+			elseif RCMreturn == L.DELETE then
+				newinputsys.atomicdelete(id)
+			elseif RCMreturn == L.SELECTWORD then
+				newinputsys.selectword(id, ({newinputsys.getpos(id)})[1])
+			elseif RCMreturn == L.SELECTLINE then
+				newinputsys.sellinetoright(id)
+			elseif RCMreturn == L.SELECTALL then
+				newinputsys.selallright(id)
+			elseif RCMreturn == L.INSERTRAWHEX then
+				newinputsys.starthex(id)
+			else
+				unrecognized_rcmreturn()
+			end
+			newinputsys.ignoremousepressed = true
 		else
 			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 		end
@@ -2707,9 +2735,7 @@ function love.keypressed(key)
 		elseif key == "pagedown" then
 			newinputsys.movey(id, 57)
 		elseif table.contains({"backspace", "delete"}, key) and newinputsys.selpos[id] ~= nil then
-			local oldstate = {newinputsys.getstate(id)}
-			newinputsys.delseltext(id)
-			newinputsys.unre(id, nil, unpack(oldstate))
+			newinputsys.atomicdelete(id)
 		elseif key == "backspace" then
 			if newinputsys.hex[id] ~= nil then
 				newinputsys.deletehexchars(id, 1)
@@ -2742,27 +2768,9 @@ function love.keypressed(key)
 			end
 			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil and not love.mouse.isDown("l") then
-			local clipboard = newinputsys.getseltext(id)
-			if clipboard ~= "" then
-				inputcopiedtimer = .25
-				cursorflashtime = 0
-				love.system.setClipboardText(clipboard)
-				if key == "x" then
-					local oldstate = {newinputsys.getstate(id)}
-					newinputsys.delseltext(id)
-					newinputsys.unre(id, nil, unpack(oldstate))
-				end
-			end
+			newinputsys.atomiccopycut(id, key == "x")
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
-			local clipboard = love.system.getClipboardText():gsub("\r\n", "\n")
-			if clipboard ~= "" then
-				local oldstate = {newinputsys.getstate(id)}
-				if newinputsys.selpos[id] ~= nil then
-					newinputsys.delseltext(id)
-				end
-				newinputsys.insertchars(id, clipboard)
-				newinputsys.unre(id, nil, unpack(oldstate))
-			end
+			newinputsys.atomicpaste(id)
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
 				newinputsys.selallleft(id)
@@ -4250,6 +4258,8 @@ function love.mousereleased(x, y, button)
 	toout = 0
 
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+		newinputsys.ignoremousepressed = false
+
 		local id = newinputsys.input_ids[#newinputsys.nth_input]
 		local multiline = type(inputs[id]) == "table"
 

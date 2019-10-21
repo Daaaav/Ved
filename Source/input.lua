@@ -73,6 +73,7 @@ When you're done, close it by doing `input.close(<id>)`.
 -- temporarily renamed to `newinputsys` to ease transition from old input system to new
 local input = {
 	active = false,
+	ignoremousepressed = false,
 
 	nth_input = {},
 	input_ids = {},
@@ -226,6 +227,8 @@ function input.bump(id)
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
+
+	RCMactive = false
 end
 
 function input.print(id, x, y, sx, sy, lineh)
@@ -306,10 +309,10 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		mouseoninput = mouseon(unpack(area))
 	end
 
-	if mouseoninput then
+	if mouseoninput and not RCMactive then
 		love.mouse.setCursor(text_cursor)
 
-		if love.mouse.isDown("l") then
+		if (love.mouse.isDown("l") or love.mouse.isDown("r")) and not input.ignoremousepressed then
 			input.mousepressed(id, x, y, sx, sy, lineh)
 		end
 	else
@@ -1472,6 +1475,43 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 		input.hex[id] = nil
 	end
 
+	if love.mouse.isDown("r") and not mousepressed then
+		local items = {}
+		local separator = "#------"
+		if #input.undostack[id] > 0 then
+			table.insert(items, L.UNDO)
+		end
+		if #input.redostack[id] > 0 then
+			table.insert(items, L.REDO)
+		end
+		if #items > 0 then
+			table.insert(items, separator)
+		end
+		local hassel = input.selpos[id] ~= nil and input.getseltext(id) ~= ""
+		if hassel then
+			table.insert(items, L.COPY)
+			table.insert(items, L.CUT)
+		end
+		if love.system.getClipboardText():gsub("\r\n", "\n") ~= "" then -- Ugh duplicating code that can easily get out of line with updates
+			table.insert(items, L.PASTE)
+		end
+		if hassel then
+			table.insert(items, L.DELETE)
+		end
+		if #items > 0 and items[#items] ~= separator then
+			table.insert(items, separator)
+		end
+		table.insert(items, L.SELECTWORD)
+		if multiline and #inputs[id] > 1 then -- A bit redundant to have this for single-lines
+			table.insert(items, L.SELECTLINE)
+		end
+		table.insert(items, L.SELECTALL)
+		table.insert(items, L.INSERTRAWHEX)
+
+		rightclickmenu.create(items, "input")
+		return
+	end
+
 	local skipsettingselposlater = false
 	if not mousepressed then
 		if keyboard_eitherIsDown("shift") then
@@ -1624,35 +1664,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 		if inputnumclicks == 2 then
 			-- Double-click to select the word
 
-			local wordsep = input.wordseps[id]
-
-			if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
-				-- Do this highly complicated maneuver to select the space in between the words
-				local conditional
-				input.movexwords(id, -1)
-				if multiline then
-					conditional = input.pos[id][1] == 0
-				else
-					conditional = input.pos[id] == 0
-				end
-				if not conditional then
-					input.movexwords(id, 1)
-				end
-				input.setselpos(id)
-				input.movexwords(id, 1)
-				if multiline then
-					conditional = input.pos[id][1] == utf8.len(line)
-				else
-					conditional = input.pos[id] == utf8.len(line)
-				end
-				if not conditional then
-					input.movexwords(id, -1)
-				end
-			else
-				input.movexwords(id, -1)
-				input.setselpos(id)
-				input.movexwords(id, 1)
-			end
+			input.selectword(id, posx)
 		elseif inputnumclicks == 3 then
 			-- Triple-click to select the entire line
 
@@ -1715,4 +1727,71 @@ function input.getwords(id, linenum)
 	end
 
 	return words
+end
+
+function input.atomiccopycut(id, do_cut)
+	local clipboard = input.getseltext(id)
+	if clipboard ~= "" then
+		inputcopiedtimer = .25
+		cursorflashtime = 0
+		love.system.setClipboardText(clipboard)
+		if do_cut then
+			local oldstate = {input.getstate(id)}
+			input.delseltext(id)
+			input.unre(id, nil, unpack(oldstate))
+		end
+	end
+end
+
+function input.atomicpaste(id)
+	local clipboard = love.system.getClipboardText():gsub("\r\n", "\n")
+	if clipboard ~= "" then
+		local oldstate = {input.getstate(id)}
+		if input.selpos[id] ~= nil then
+			input.delseltext(id)
+		end
+		input.insertchars(id, clipboard)
+		input.unre(id, nil, unpack(oldstate))
+	end
+end
+
+function input.atomicdelete(id)
+	local oldstate = {input.getstate(id)}
+	input.delseltext(id)
+	input.unre(id, nil, unpack(oldstate))
+end
+
+function input.selectword(id, posx)
+	local multiline = type(inputs[id]) == "table"
+	local _, _, line = input.getpos(id)
+
+	local wordsep = input.wordseps[id]
+
+	if utf8.sub(line, posx, posx):match(wordsep) or utf8.sub(line, posx+1, posx+1):match(wordsep) then
+		-- Do this highly complicated maneuver to select the space in between the words
+		local conditional
+		input.movexwords(id, -1)
+		if multiline then
+			conditional = input.pos[id][1] == 0
+		else
+			conditional = input.pos[id] == 0
+		end
+		if not conditional then
+			input.movexwords(id, 1)
+		end
+		input.setselpos(id)
+		input.movexwords(id, 1)
+		if multiline then
+			conditional = input.pos[id][1] == utf8.len(line)
+		else
+			conditional = input.pos[id] == utf8.len(line)
+		end
+		if not conditional then
+			input.movexwords(id, -1)
+		end
+	else
+		input.movexwords(id, -1)
+		input.setselpos(id)
+		input.movexwords(id, 1)
+	end
 end
