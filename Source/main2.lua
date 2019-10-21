@@ -2815,8 +2815,6 @@ function love.keypressed(key)
 			newinputsys.undo(id)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			newinputsys.redo(id)
-		elseif key == "tab" then
-			newinputsys.bump(newinputsys.input_ids[#newinputsys.nth_input - 8])
 		end
 	end
 
@@ -4041,6 +4039,10 @@ function love.keypressed(key)
 				end
 				changelanguage(alllanguages[newlang])
 			end
+		end
+	elseif state == 34 then
+		if key == "tab" then
+			newinputsys.bump(newinputsys.input_ids[#newinputsys.nth_input - 8])
 		end
 	end
 end
