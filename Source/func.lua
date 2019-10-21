@@ -308,6 +308,9 @@ function tostate(new, dontinitialize, ...)
 		editingroomname = false
 	end
 
+	if newinputsys ~= nil then -- nil check only because we're in a temporary transitional period
+		newinputsys.pause()
+	end
 end
 
 function loadstate(new, ...)
