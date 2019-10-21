@@ -2742,21 +2742,27 @@ function love.keypressed(key)
 			end
 			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
 		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil and not love.mouse.isDown("l") then
-			inputcopiedtimer = .25
-			cursorflashtime = 0
-			love.system.setClipboardText(newinputsys.getseltext(id))
-			if key == "x" then
-				local oldstate = {newinputsys.getstate(id)}
-				newinputsys.delseltext(id)
-				newinputsys.unre(id, nil, unpack(oldstate))
+			local clipboard = newinputsys.getseltext(id)
+			if clipboard ~= "" then
+				inputcopiedtimer = .25
+				cursorflashtime = 0
+				love.system.setClipboardText(clipboard)
+				if key == "x" then
+					local oldstate = {newinputsys.getstate(id)}
+					newinputsys.delseltext(id)
+					newinputsys.unre(id, nil, unpack(oldstate))
+				end
 			end
 		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
-			local oldstate = {newinputsys.getstate(id)}
-			if newinputsys.selpos[id] ~= nil then
-				newinputsys.delseltext(id)
+			local clipboard = love.system.getClipboardText():gsub("\r\n", "\n")
+			if clipboard ~= "" then
+				local oldstate = {newinputsys.getstate(id)}
+				if newinputsys.selpos[id] ~= nil then
+					newinputsys.delseltext(id)
+				end
+				newinputsys.insertchars(id, clipboard)
+				newinputsys.unre(id, nil, unpack(oldstate))
 			end
-			newinputsys.insertchars(id, love.system.getClipboardText():gsub("\r\n", "\n"))
-			newinputsys.unre(id, nil, unpack(oldstate))
 		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
 			if keyboard_eitherIsDown("shift") then
 				newinputsys.selallleft(id)
