@@ -1661,9 +1661,9 @@ function love.draw()
 
 			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 			local check_x = love.graphics.getWidth()-64-check_w/2
-			checkbox(imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
+			checkbox(not imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
 				function(key, newvalue)
-					imageviewer_showwhite = newvalue
+					imageviewer_showwhite = not newvalue
 				end
 			)
 			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
