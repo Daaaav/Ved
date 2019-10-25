@@ -40,6 +40,7 @@ function rightclickmenu.draw()
 		if not mousepressed and love.mouse.isDown("l") then
 			RCMactive = false
 			mousepressed = true
+			newinputsys.ignoremousepressed = true
 		end
 	end
 end

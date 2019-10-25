@@ -2556,7 +2556,6 @@ function love.update(dt)
 			else
 				unrecognized_rcmreturn()
 			end
-			newinputsys.ignoremousepressed = true
 		else
 			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 		end
