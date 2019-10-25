@@ -3430,4 +3430,9 @@ function assets_graphicsloaddialog()
 	)
 end
 
+function isclear(key)
+	-- On macOS, Numlock turns into the Clear key and behaves differently
+	return key == "numlock" and love.system.getOS() == "OS X"
+end
+
 hook("func")

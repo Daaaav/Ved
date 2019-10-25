@@ -2687,11 +2687,11 @@ function love.keypressed(key)
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
 		local id = newinputsys.input_ids[#newinputsys.nth_input]
 
-		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) or isclear(key) then
 			newinputsys.stophex(id)
 		end
 
-		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) then
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) or isclear(key) then
 			if #newinputsys.undostack[id] > 0 then
 				newinputsys.undostack[id][#newinputsys.undostack[id]].group = nil
 			end
@@ -2734,7 +2734,7 @@ function love.keypressed(key)
 			newinputsys.movey(id, -57)
 		elseif key == "pagedown" then
 			newinputsys.movey(id, 57)
-		elseif table.contains({"backspace", "delete"}, key) and newinputsys.selpos[id] ~= nil then
+		elseif (table.contains({"backspace", "delete"}, key) or isclear(key)) and newinputsys.selpos[id] ~= nil then
 			newinputsys.atomicdelete(id)
 		elseif key == "backspace" then
 			if newinputsys.hex[id] ~= nil then
