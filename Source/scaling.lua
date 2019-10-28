@@ -40,6 +40,13 @@ love.graphics.getHeight = function()
 end
 
 
+love.graphics.getDimensionsOR = love.graphics.getDimensions
+
+love.graphics.getDimensions = function()
+	return love.graphics.getWidth(), love.graphics.getHeight()
+end
+
+
 love.mouse.getXOR = love.mouse.getX
 
 love.mouse.getX = function()
