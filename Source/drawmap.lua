@@ -215,8 +215,6 @@ function drawmap()
 		ved_printf(L.SELECTSWAP2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
 	end
 
-	rbutton({L.RETURN, "b"}, 0, nil, true)
-	rbutton({L.SAVEMAP, "S"}, 1, nil, true)
 	rbutton(L.COPYROOMS, 5, nil, true)
 	rbutton(L.SWAPROOMS, 6, nil, true)
 
@@ -262,10 +260,8 @@ function drawmap()
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then
 			-- Return
-			tostate(1, true)
 		elseif onrbutton(1, nil, true) then
 			-- Save map
-			create_export_dialog()
 		elseif onrbutton(5, nil, true) then
 			-- Copy rooms
 			selectingrooms = 1
@@ -352,6 +348,8 @@ function drawmap()
 				end
 			end
 		end
+
+		love.graphics.setColor(255,255,255,255)
 	end
 
 	-- Smaller screen? Display a "CTRL" and the current tool, just like the main editor

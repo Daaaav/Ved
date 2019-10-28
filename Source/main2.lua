@@ -147,11 +147,11 @@ function love.load()
 	ved_require("coordsdialog")
 	ved_require("vvvvvv_textbox")
 	ved_require("resizablebox")
+	ved_require("ui_elements")
 	ved_require("drawmaineditor")
 	ved_require("drawscripteditor")
 	ved_require("drawlevelslist")
 	ved_require("drawsearch")
-	ved_require("drawmap")
 	ved_require("drawhelp")
 	ved_require("slider")
 	ved_require("mapfunc")
@@ -370,6 +370,10 @@ function love.load()
 	helpimages = {}
 
 	savedwindowtitle = ""
+
+	uis = {}
+
+	uis[12] = ved_require("uis/map")
 
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)
@@ -692,7 +696,6 @@ function love.draw()
 	elseif state == 11 then
 		drawsearch()
 	elseif state == 12 then
-		drawmap()
 	elseif state == 13 then
 		-- Options screen
 		--love.graphics.draw(checkon, love.graphics.getWidth()-98, 50, 0, 2)
@@ -1798,6 +1801,20 @@ function love.draw()
 		end
 	end
 
+	if uis[state] ~= nil and uis[state].draw ~= nil then
+		-- A UI can have its own dedicated drawing function and not use elements, sure.
+		uis[state].draw(dt)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		-- Draw every element in this state's master element "container".
+		-- This master container doesn't define positions,
+		-- and just gives the window width and height as information.
+		local w, h = love.graphics.getDimensions()
+		for k,v in pairs(uis[state].elements) do
+			v:draw(0, 0, w, h)
+		end
+	end
+
 	if not RCMabovedialog then
 		rightclickmenu.draw()
 	end
@@ -2492,6 +2509,23 @@ function love.update(dt)
 		middleclick_roll_update(dt)
 	end
 
+	if uis[state] ~= nil and uis[state].update ~= nil then
+		uis[state].update(dt)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, dt)
+				if e.update ~= nil then
+					e:update(dt)
+				end
+			end
+			caller(v, dt)
+			if v.recurse ~= nil then
+				v:recurse("update", caller, dt)
+			end
+		end
+	end
+
 	hook("love_update_end", {dt})
 
 	dialog.update(dt)
@@ -2556,6 +2590,27 @@ function love.textinput(char)
 
 	if coordsdialog.active then
 		coordsdialog.type(char)
+	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].textinput ~= nil then
+		uis[state].textinput(char)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, char)
+				if e.textinput ~= nil then
+					e:textinput(char)
+				end
+			end
+			caller(v, char)
+			if v.recurse ~= nil then
+				v:recurse("textinput", caller, char)
+			end
+		end
 	end
 end
 
@@ -3535,7 +3590,7 @@ function love.keypressed(key)
 	elseif state == 11 and key == "return" then
 		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
 		searchedfor = input .. input_r
-	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
+	elseif nodialog and (state == 10 or state == 11) and key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false
@@ -3552,8 +3607,6 @@ function love.keypressed(key)
 		copyroom()
 	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "v" then
 		pasteroom()
-	elseif nodialog and state == 12 and key == "s" then
-		create_export_dialog()
 	elseif nodialog and state == 12 and (key == "," or key == ".") then
 		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
 		if key == "," then
@@ -3799,6 +3852,27 @@ function love.keypressed(key)
 			end
 		end
 	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].keypressed ~= nil then
+		uis[state].keypressed(key)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, key)
+				if e.keypressed ~= nil then
+					e:keypressed(key)
+				end
+			end
+			caller(v, key)
+			if v.recurse ~= nil then
+				v:recurse("keypressed", caller, key)
+			end
+		end
+	end
 end
 
 function love.keyreleased(key)
@@ -3822,6 +3896,27 @@ function love.keyreleased(key)
 		-- Put it here instead of love.keypressed,
 		-- otherwise the new window will interpret a hold as a press
 		exitdisplayoptions()
+	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].keyreleased ~= nil then
+		uis[state].keyreleased(key)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, key)
+				if e.keyreleased ~= nil then
+					e:keyreleased(key)
+				end
+			end
+			caller(v, key)
+			if v.recurse ~= nil then
+				v:recurse("keyreleased", caller, key)
+			end
+		end
 	end
 end
 
@@ -3975,6 +4070,30 @@ function love.mousepressed(x, y, button)
 	end
 
 	boxmousepress()
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].mousepressed ~= nil then
+		uis[state].mousepressed(x, y, button)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, x, y, button)
+				if e.mousepressed ~= nil
+				and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+				and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+					e:mousepressed(x-e.px, y-e.py, button)
+				end
+			end
+			caller(v, x, y, button)
+			if v.recurse ~= nil then
+				v:recurse("mousepressed", caller, x, y, button)
+			end
+		end
+	end
 end
 
 function love.mousereleased(x, y, button)
@@ -4029,6 +4148,31 @@ function love.mousereleased(x, y, button)
 	end
 
 	boxmouserelease()
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].mousereleased ~= nil then
+		uis[state].mousereleased(x, y, button)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
+		-- Also, since this is mouse released, maybe only call this iff we already called mousepressed??
+		for k,v in pairs(uis[state].elements) do
+			local function caller(e, x, y, button)
+				if e.mousereleased ~= nil
+				and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+				and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+					e:mousereleased(x-e.px, y-e.py, button)
+				end
+			end
+			caller(v, x, y, button)
+			if v.recurse ~= nil then
+				v:recurse("mousereleased", caller, x, y, button)
+			end
+		end
+	end
 end
 
 function love.directorydropped(path)
