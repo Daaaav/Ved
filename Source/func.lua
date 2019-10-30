@@ -3367,4 +3367,10 @@ function assets_graphicsloaddialog()
 	)
 end
 
+function hotkey(checkkey, checkmod)
+	return function(detectedkey)
+		return detectedkey == checkkey and (checkmod == nil or keyboard_eitherIsDown(checkmod))
+	end
+end
+
 hook("func")

@@ -1813,6 +1813,30 @@ function love.draw()
 		for k,v in pairs(uis[state].elements) do
 			v:draw(0, 0, w, h)
 		end
+
+		-- Debug view
+		if allowdebug and love.keyboard.isDown("f8") then
+			love.graphics.setColor(0,255,0)
+			local function drawcoords(el)
+				if el.px == nil or el.py == nil then
+					return
+				end
+
+				local w, h = el.pw, el.ph
+				if w == nil then w = love.graphics.getWidth() end
+				if h == nil then h = love.graphics.getHeight() end
+
+				love.graphics.line(el.px, el.py, el.px+w, el.py)
+				love.graphics.line(el.px, el.py, el.px, el.py+h)
+			end
+			for k,v in pairs(uis[state].elements) do
+				drawcoords(v)
+				if v.recurse ~= nil then
+					v:recurse("debug_drawcoords", drawcoords)
+				end
+			end
+			love.graphics.setColor(255,255,255)
+		end
 	end
 
 	if not RCMabovedialog then
@@ -2513,12 +2537,12 @@ function love.update(dt)
 		uis[state].update(dt)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
-		for k,v in pairs(uis[state].elements) do
-			local function caller(e, dt)
-				if e.update ~= nil then
-					e:update(dt)
-				end
+		local function caller(e, dt)
+			if e.update ~= nil then
+				e:update(dt)
 			end
+		end
+		for k,v in pairs(uis[state].elements) do
 			caller(v, dt)
 			if v.recurse ~= nil then
 				v:recurse("update", caller, dt)
@@ -2600,12 +2624,12 @@ function love.textinput(char)
 		uis[state].textinput(char)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
-		for k,v in pairs(uis[state].elements) do
-			local function caller(e, char)
-				if e.textinput ~= nil then
-					e:textinput(char)
-				end
+		local function caller(e, char)
+			if e.textinput ~= nil then
+				e:textinput(char)
 			end
+		end
+		for k,v in pairs(uis[state].elements) do
 			caller(v, char)
 			if v.recurse ~= nil then
 				v:recurse("textinput", caller, char)
@@ -3597,16 +3621,6 @@ function love.keypressed(key)
 	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
-		undo()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "y" then
-		redo()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "x" then
-		cutroom()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "c" then
-		copyroom()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "v" then
-		pasteroom()
 	elseif nodialog and state == 12 and (key == "," or key == ".") then
 		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
 		if key == "," then
@@ -3861,12 +3875,12 @@ function love.keypressed(key)
 		uis[state].keypressed(key)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
-		for k,v in pairs(uis[state].elements) do
-			local function caller(e, key)
-				if e.keypressed ~= nil then
-					e:keypressed(key)
-				end
+		local function caller(e, key)
+			if e.keypressed ~= nil then
+				e:keypressed(key)
 			end
+		end
+		for k,v in pairs(uis[state].elements) do
 			caller(v, key)
 			if v.recurse ~= nil then
 				v:recurse("keypressed", caller, key)
@@ -3906,12 +3920,12 @@ function love.keyreleased(key)
 		uis[state].keyreleased(key)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
-		for k,v in pairs(uis[state].elements) do
-			local function caller(e, key)
-				if e.keyreleased ~= nil then
-					e:keyreleased(key)
-				end
+		local function caller(e, key)
+			if e.keyreleased ~= nil then
+				e:keyreleased(key)
 			end
+		end
+		for k,v in pairs(uis[state].elements) do
 			caller(v, key)
 			if v.recurse ~= nil then
 				v:recurse("keyreleased", caller, key)
@@ -4079,15 +4093,15 @@ function love.mousepressed(x, y, button)
 		uis[state].mousepressed(x, y, button)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, x, y, button)
+			if e.mousepressed ~= nil
+			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+			and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+				e:mousepressed(x-e.px, y-e.py, button)
+			end
+		end
 		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
 		for k,v in pairs(uis[state].elements) do
-			local function caller(e, x, y, button)
-				if e.mousepressed ~= nil
-				and e.px <= x and (e.pw == nil or e.px+e.pw > x)
-				and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
-					e:mousepressed(x-e.px, y-e.py, button)
-				end
-			end
 			caller(v, x, y, button)
 			if v.recurse ~= nil then
 				v:recurse("mousepressed", caller, x, y, button)
@@ -4157,16 +4171,16 @@ function love.mousereleased(x, y, button)
 		uis[state].mousereleased(x, y, button)
 	end
 	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, x, y, button)
+			if e.mousereleased ~= nil
+			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+			and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+				e:mousereleased(x-e.px, y-e.py, button)
+			end
+		end
 		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
 		-- Also, since this is mouse released, maybe only call this iff we already called mousepressed??
 		for k,v in pairs(uis[state].elements) do
-			local function caller(e, x, y, button)
-				if e.mousereleased ~= nil
-				and e.px <= x and (e.pw == nil or e.px+e.pw > x)
-				and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
-					e:mousereleased(x-e.px, y-e.py, button)
-				end
-			end
 			caller(v, x, y, button)
 			if v.recurse ~= nil then
 				v:recurse("mousereleased", caller, x, y, button)
