@@ -1,6 +1,6 @@
 ved_require("drawmap")
 
-local ui = {}
+local ui = {name = "map"}
 
 function ui.load(...)
 	mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)

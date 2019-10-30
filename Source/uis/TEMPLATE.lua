@@ -1,4 +1,4 @@
-local ui = {}
+local ui = {name = "TEMPLATE"}
 
 function ui.load(...) -- any args you want/need
 end

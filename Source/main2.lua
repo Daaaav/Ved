@@ -371,9 +371,7 @@ function love.load()
 
 	savedwindowtitle = ""
 
-	uis = {}
-
-	uis[12] = ved_require("uis/map")
+	loaduis()
 
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)

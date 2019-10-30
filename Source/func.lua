@@ -3373,4 +3373,22 @@ function hotkey(checkkey, checkmod)
 	end
 end
 
+function unloaduis()
+	-- Unload the UI files, just so we can reload them.
+	if uis == nil then
+		-- What are you doing here?
+		return
+	end
+
+	for k,v in pairs(uis) do
+		package.loaded["uis/" .. v.name] = false
+	end
+end
+
+function loaduis()
+	uis = {}
+
+	uis[12] = ved_require("uis/map")
+end
+
 hook("func")
