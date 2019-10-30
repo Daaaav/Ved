@@ -56,31 +56,8 @@ end
 -- UI elements can be little things like buttons, but also entire drawing functions.
 ui.elements = {
 	DrawingFunction(drawmap),
-	FloatContainer(
-		ImageButton(checkon, 2, function() dialog.create("hello world") end, "Z", hotkey("z"),
-			function() return ui_demo == true end
-		),
-		64, 64
-	),
 	RightBar(
 		{
-			ImageButton(checkon, 2,
-				function() dialog.create("hello world 1 (right click to remove this)") end,
-				"X", hotkey("x"),
-				function() return ui_demo == true and not ui_demo_thing_gone end, -- active func
-				function()
-					dialog.create("oh you right clicked thing. Now it's gone.")
-					ui_demo_thing_gone = true
-				end, -- action_r
-				hotkey("x", "shift") -- right hotkey func (no text ofc!)
-			),
-			LabelButton("Label button!", function() dialog.create("hello world 2") end,
-				"C", hotkey("c"),
-				function() return ui_demo == true, true, true end, -- shown, enabled, yellow
-				function() dialog.create("right clicked button!") end,
-				hotkey("l")
-			),
-			LabelButton("Toggle UI demo", function() ui_demo = not ui_demo end, "U", hotkey("u")),
 		},
 		{
 			EditorIconBar(),
