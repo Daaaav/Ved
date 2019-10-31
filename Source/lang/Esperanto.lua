@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-09-26 17:43:00 (CEST)
+--- Last converted: 2019-10-31 23:22:36 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -440,7 +440,6 @@ NONINTSCALE = "Neentjera skalado",
 
 -- 1.3.4
 USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
 SYNTAXCOLOR_COMMENT = "Komento",
 FPSLIMIT = "KS-limo",
@@ -532,15 +531,20 @@ PLATVCHANGE_INVALID = "Vi devas entajpi numeron.",
 RENAMESCRIPTREFERENCES = "Renomi referencojn",
 PLATFORMSPEEDSLIDER = "Rpd.:",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "List of all trinkets",
-NOTRINKETSINLEVEL = "There are no trinkets in this level.",
-CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "List of all rescuable crewmates",
-NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
+TRINKETS = "Kolektaĵoj:",
+LISTALLTRINKETS = "Listigi ĉiujn kolektaĵojn", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Listo de ĉiuj kolektaĵoj",
+NOTRINKETSINLEVEL = "Ne estas kolektaĵoj en tiu ĉi nivelo.",
+CREWMATES = "Ŝipanoj:",
+LISTALLCREWMATES = "Listigi ĉiujn ŝipanojn", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Listo de ĉiuj saveblaj ŝipanoj",
+NOCREWMATESINLEVEL = "Ne estas saveblaj ŝipanoj en tiu ĉi nivelo.",
+SHIFTROOMS = "Ŝovi ĉambrojn", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "REG+(mal)dekstra klavo ĉesos funkcii baldaŭ, anstataŭ tio uzu ALT+(mal)dekstra klavo", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "REG+A ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+R",
+OLDSHORTCUT_OPENLVLDIR = "REG+D ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+F",
 
 
 }
@@ -675,7 +679,7 @@ ERR_TIMESINCESTART = "Tempo ekde starto:"
 ERR_PLUGINS = "Aldonaĵoj:"
 ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
-ERR_PLEASETELLDAV = "Bonvolu raportu al Dav999 pri la problemo.\n\n\nDetaloj: (premu ctrl+C/cmd+C por kopii al la tondejo)\n\n"
+ERR_PLEASETELLDAV = "Bonvolu raportu al Dav999 pri la problemo.\n\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_INTERMEDIATE = " (intermeza versio)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (tro nova)"
 
@@ -683,7 +687,7 @@ ERR_PLUGINERROR = "Eraro de aldonaĵo!"
 ERR_FILE = "Dosiero redaktata:"
 ERR_FILEEDITORS = "Aldonaĵoj, kiuj redaktas tiun dosieron:"
 ERR_CURRENTPLUGIN = "Aldonaĵo, kiu ekagigis la eraron:"
-ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu ctrl+C/cmd+C por kopii al la tondejo)\n\n"
+ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_CONTINUE = "Vi povas daŭrigi per premi ESC aŭ ENTER, sed notu ke tiu malsukcesinta redakto eble kaŭzos erarojn."
 ERR_REPLACECODE = "Malsukceso trovi ĉi tiun en %s.lua:"
 ERR_REPLACECODEPATTERN = "Malsukceso trovi ĉi tiun en %s.lua (kiel modelo):"
@@ -867,10 +871,10 @@ La redaktilo\h#
 
 Ĉe la maldekstra flanko, vi trovos la ilaron. La plimulto da iloj havas ilidojn
 kiuj listiĝos ĉe ĝia dekstro. Por ŝanĝi la uzatan ilon, uzu la taŭgan klavaro-
-komandon aŭ rulumu kun shift aŭ ctrl premata. Por interŝanĝi ilidojn, vi povas
+komandon aŭ rulumu kun Shift aŭ Ctrl premata. Por interŝanĝi ilidojn, vi povas
 rulumi ie ajn. Por pli da informoj pri la iloj, legu la helpopaĝon ¤Iloj.\nwl
 Entoj povas dekstre alklakiĝi por menuo de agoj por tiu ento. Por forigi entojn
-sen uzi la kuntekstan menuon, dekstre alklaku ilin dum premadi shift.
+sen uzi la kuntekstan menuon, dekstre alklaku ilin dum premadi Shift.
 Ĉe la dekstra flanko de la ekrano, vi trovos multajn butonojn kaj agordojn. La
 supraj butonoj rilatas al la tuta nivelo, dum la malsupraj (sub Ĉambro-agordoj)
 estas specifaj al la aktuala ĉambro. Por pli da informoj pri tiuj butonoj, legu
@@ -1083,8 +1087,8 @@ Saltado al skriptoj\h#
 
 Sur linioj kun komando iftrinkets, ifflag, customiftrinkets aŭ customifflag,
 eblas salti al la donita skripto per alklaki la butonon "Alsalti" kiam la
-kursoro estas sur tiu linio. Vi ankaŭ povas premi ¤ctrl+dekstro¤ por fari do,
-kaj vi povas uzi ¤ctrl+maldekstro¤ por retrosalti unu paŝon tra la ĉeno.\nw
+kursoro estas sur tiu linio. Vi ankaŭ povas premi ¤Alt+dekstro¤ por fari do,
+kaj vi povas uzi ¤Alt+maldekstro¤ por retrosalti unu paŝon tra la ĉeno.\nw
 ]]
 },
 
@@ -1256,8 +1260,8 @@ Skripto-redaktilo\gh#
 Ctrl+F¤  Trovi\C
 Ctrl+G¤  Salti al linio\C
 Ctrl+I¤  Baskuligi reĝimon de interna skriptado\C
-Ctrl+dekstro¤  Salti al skripto en kondiĉa komando\C
-Ctrl+maldesktro¤  Retrosalti unu paŝon\C
+Alt+dekstro¤  Salti al skripto en kondiĉa komando\C
+Alt+maldesktro¤  Retrosalti unu paŝon\C
 
 Skriptlisto\gh#
 
@@ -2427,7 +2431,7 @@ Kelkaj ¤te¤ks¤ta¤j ¤ko¤lo¤ro¤j\RYGCBPRYG
 Kolorigi unu signon sole\h#
 
 Okej, mi mensogis, ja eblas kolorigi unu signon sole sen inkluzivi spaceton.
-Por fari do, meti la signon¤ § ¤(tajpebla per uzi ¤shift+insert¤), post\nYnw
+Por fari do, meti la signon¤ § ¤(tajpebla per uzi ¤Shift+insert¤), post\nYnw
 la signo, kiun vi volas kolorigi, kaj ebligi ĝin per la aranĝokodo¤ ( ¤post¤ \¤:\nCnC
 
 \-
@@ -2626,7 +2630,7 @@ Ved estas farita de Dav999
 
 Pluaj kod-kontribuantoj: Info Teddy
 
-Some of the graphics and the font were made by Hejmstel
+Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel
 
 Ruslingva traduko: CreepiX, Cheep
 Esperanta traduko: Hejmstel

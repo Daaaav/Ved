@@ -1435,11 +1435,6 @@ msgctxt "L.USEFONTPNG"
 msgid "Use font.png from VVVVVV graphics folder as font"
 msgstr ""
 
-#. If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language. / 1.3.4
-msgctxt "L.MAKESLANGUAGEUNREADABLE"
-msgid "<empty>"
-msgstr ""
-
 #. 1.3.4
 msgctxt "L.REQUIRESHIGHERLOVE"
 msgid " (requires L{VE $1 or higher)"
@@ -1833,6 +1828,19 @@ msgctxt "L.SHIFTROOMS"
 msgid "Shift rooms"
 msgstr ""
 
+#. CTRL and ALT are capitalized here for extra clarity in this string
+msgctxt "L.OLDSHORTCUT_SCRIPTJUMP"
+msgid "CTRL+left/right will stop working soon, use ALT+left/right instead"
+msgstr ""
+
+msgctxt "L.OLDSHORTCUT_ASSETS"
+msgid "Ctrl+A will stop working soon, use Ctrl+R instead"
+msgstr ""
+
+msgctxt "L.OLDSHORTCUT_OPENLVLDIR"
+msgid "Ctrl+D will stop working soon, use Ctrl+F instead"
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."
@@ -2218,7 +2226,7 @@ msgid "(none)"
 msgstr ""
 
 msgctxt "ERR_PLEASETELLDAV"
-msgid "Please tell Dav999 about this problem.\n\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+msgid "Please tell Dav999 about this problem.\n\n\nDetails: (press Ctrl/Cmd+C to copy to the clipboard)\n\n"
 msgstr ""
 
 #. pre-release version, so a version in between officially released versions
@@ -2247,7 +2255,7 @@ msgid "Plugin that triggered the error:"
 msgstr ""
 
 msgctxt "ERR_PLEASETELLAUTHOR"
-msgid "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+msgid "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press Ctrl/Cmd+C to copy to the clipboard)\n\n"
 msgstr ""
 
 msgctxt "ERR_CONTINUE"

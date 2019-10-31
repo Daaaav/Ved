@@ -30,5 +30,5 @@ msgstr ""
 msgid "Jumping to scripts\\h#"
 msgstr ""
 
-msgid "On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it\nis possible to jump to the given script by clicking the \"Go to\" button when the\ncursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\\nw\nuse ¤ctrl+left¤ to jump one step back through the chain to where you came from.\\nw"
+msgid "On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it\nis possible to jump to the given script by clicking the \"Go to\" button when the\ncursor is on that line. You can also press ¤Alt+right¤ to do this, and you can\\nw\nuse ¤Alt+left¤ to jump one step back through the chain to where you came from.\\nw"
 msgstr ""

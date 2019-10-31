@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-09-26 17:43:00 (CEST)
+--- Last converted: 2019-10-31 23:22:36 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -430,7 +430,6 @@ NONINTSCALE = "Échelonnage non entière",
 
 -- 1.3.4
 USEFONTPNG = "Utiliser font.png du dossier d'images de VVVVVV comme police",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (requiert L{VE $1 ou version ultérieure)",
 SYNTAXCOLOR_COMMENT = "Commentaire",
 FPSLIMIT = "Limite de FPS",
@@ -461,12 +460,12 @@ INVALIDFILENAME_MAC = "macOS n'autorise pas le caractère : dans un nom de fichi
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "MAJ",
 TINY_ALT = "ALT",
-TINY_ESC = "ECHAP",
+TINY_ESC = "Échap",
 TINY_TAB = "TAB",
-TINY_HOME = "MENU",
+TINY_HOME = "Menu",
 TINY_END = "END",
 TINY_INSERT = "INS",
-TINY_DEL = "SUPPR",
+TINY_DEL = "Suppr",
 
 -- Header for search results
 SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
@@ -517,20 +516,25 @@ NOTALPHAONLY = "RBV",
 
 OPAQUEROOMNAMEBACKGROUND = "Rendre l'arrière-plan du nom de salle opaque",
 PLATVCHANGE_TITLE = "Changer la vitesse de la plateforme",
-PLATVCHANGE_MSG = "Vitesse:",
+PLATVCHANGE_MSG = "Vitesse :",
 PLATVCHANGE_INVALID = "Vous devez entrer un nombre.",
 RENAMESCRIPTREFERENCES = "Renommer les références",
-PLATFORMSPEEDSLIDER = "Vit.:",
+PLATFORMSPEEDSLIDER = "Vit. :",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "List of all trinkets",
-NOTRINKETSINLEVEL = "There are no trinkets in this level.",
-CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "List of all rescuable crewmates",
-NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
+TRINKETS = "Médailles",
+LISTALLTRINKETS = "Lister toutes les médailles", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Liste de toutes les médailles",
+NOTRINKETSINLEVEL = "Il n'y a pas de médaille dans ce niveau.",
+CREWMATES = "Équipiers",
+LISTALLCREWMATES = "Lister tous les équipiers", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Liste de tous les équipiers secourables",
+NOCREWMATESINLEVEL = "Il n'a pas d'équipier secourable dans ce niveau.",
+SHIFTROOMS = "Déplacer la salle", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+gauche/droite sera bientôt enlevé, utilisez ALT+gauche/droite à la place", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "Ctrl+A sera bientôt enlevé, utilisez Ctrl+R à la place",
+OLDSHORTCUT_OPENLVLDIR = "Ctrl+D sera bientôt enlevé, utilisez Ctrl+F à la place",
 
 
 }
@@ -1089,7 +1093,7 @@ Sauter dans les scripts\h#
 Dans les lignes avec les commandes iftrinkets, ifflag, customiftrinkets ou
 customifflag, il est possible de sauter dans un script donné en cliquant sur le
 bouton "Aller à" quand le curseur est sur cette ligne. Vous pouvez aussi entrer
-Ctrl+Droite¤ pour faire ceci, et vous pouvez utiliser ¤Ctrl+Gauche¤ pour revenir en\wnw
+Alt+Droite¤ pour faire ceci, et vous pouvez utiliser ¤Alt+Gauche¤ pour revenir en\wnw
 arrière d'un pas dans la chaîne de scripts dans lesquels vous vous trouviez
 précédemment.
 ]]
@@ -1097,22 +1101,25 @@ précédemment.
 
 {
 splitid = "050_Int_sc_mode",
-subj = "Int.sc mode",
+subj = "Mode sc.int",
 imgs = {},
 cont = [[
-Internal scripting mode\wh#
+Mode de création de script interne\wh#
 \C=
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. With this
-feature, you do not have to worry much about getting internal scripting to work;
-you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
-text,,,,4¤ or whatever else your preference goes out to - just write internal\w
-scripts like they're meant for the main game. You do not even need to end with a
-final ¤loadscript¤ command.\nw
+Pour utiliser le mode de création de script interne dans Ved, vous devez activer
+le mode de création de script interne dans l'éditeur afin de gérer toutes les
+commandes dans ce script en tant que script interne. Avec cette fonctionnalité,
+vous n'avez pas à beaucoup vous soucier de comment faire fonctionner le
+script interne; vous n'avez pas à utiliser de commande ¤say¤, de compter les\nw
+lignes, d'entrer ¤text(1,0,0,4)¤ ou ¤text,,,,4¤ ou n'importe quelle forme de ces\nwnw
+commandes - vous n'avez qu'à écrire vos scripts internes comme s'ils étaient
+pour le vrai jeu. Vous n'avez même pas besoin de finir avec une commande
+¤loadscript¤.\nw
 
-Ved supports different methods of internal scripting. To highlight their technical
-differences, we'll use the following example script:
+Ved supporte différentes méthodes de création de script interne. Pour mettre
+en évidence leurs différences techniques, nous allons utiliser ce script d'exemple
+ci-dessous :
 
   cutscene()\G
   untilbars()\G
@@ -1125,27 +1132,29 @@ differences, we'll use the following example script:
   endcutscene()\G
   untilbars()\G
 
-Lines of this internal script are ¤light green¤, lines that are added automatically\nG
-and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
-is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
-make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
-large have to be broken up into smaller ones.
+Les lignes de ce script interne sont en ¤vert clair¤, les lignes qui sont ajoutées\nG
+automatiquement et sont nécessaires pour que l'exploit de script fonctionne seront
+en ¤gris¤. Veuillez noter que cet exemple a été un peu simplifié; Ved ajoute ¤#v¤\ngnw
+à la fin des lignes grises pour être sûr que les scripts modifiés manuellement ne
+seront pas changés, et les blocs ¤say¤ qui sont trop grands devront être séparés\nw
+en des blocs plus petits.
 
-For more information about internal scripting, check the internal scripting
-reference.
+Pour plus d'informations sur la création de script interne, veuillez vous référer
+à la référence sur la création de script interne.
 
-Loadscript int.sc\h#
+Sc.int loadscript\h#
 
-The loadscript method is probably the most commonly used method today. It's the
-method that Ved has supported since an alpha version.
+La méthode loadscript est probablement la méthode la plus utilisée aujourd'hui.
+C'est la méthode que Ved a supporté depuis sa version alpha.
 
-It requires an extra script, the loadscript, to load the internal script. The
-loadscript would, in its most basic form, contain a command like
-iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
-well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
-that your internal script is loaded from another script for it to work.
+Elle requiert un script supplémentaire, le script de chargement, pour charger le
+script interne. Le script de chargement, dans sa forme la plus basique, doit
+contenir une commande telle que ¤iftrinkets(0,yourscript)¤, mais il y a d'autres\nw
+commandes utilisables à sa place, et vous pouvez aussi utiliser ¤ifflag¤ à la place\nw
+de ¤iftrinkets¤. Le plus important est que votre script interne doit être chargé\nw
+depuis un autre script pour qu'il fonctionne.
 
-The internal script would be converted more or less as follows:
+Le script interne serait converti plus ou moins en tant que ceci :
 
   squeak(off)\g
   say(11)\g
@@ -1162,20 +1171,22 @@ The internal script would be converted more or less as follows:
   loadscript(stop)\g
   text(1,0,0,3)\g
 
-text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
-needs to be exactly one blank line after it.
+text(1,0,0,3)¤ doit être la dernière ligne, ou dans l'éditeur de script de VVVVVV,\w
+il doit y avoir exactement une ligne vide après le script.
 
-It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
-text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
-though.
+Il est aussi possible de ne pas utiliser ¤squeak(off)¤ et d'utiliser ¤text(1,0,0,4)\nwnw
+au lieu de ¤text(1,0,0,3)¤. Cependant, utiliser ¤squeak(off)¤ permet de raccourcir le\nwnw
+script de quelques lignes dans un script plus long.
 
-say(-1) int.sc\h#
+Sc.int say(-1)\h#
 
-The say(-1) method is older, and has a disadvantage to the loadscript method: it
-always makes cutscene bars show. But it also has an advantage that can be
-important in levels with many scripts: it does not require a loadscript. We can
-remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
-added by VVVVVV when using this method.
+La commande say(-1) est plus ancienne et a un désavantage comparé à la méthode
+loadscript: elle fait toujours apparaître les barres qui apparaissent lors d'une
+cinématique. Cependant, elle a aussi un avantage qui peut être important dans des
+niveaux avec beaucoup de scripts: elle n'a pas besoin de script de chargement.
+Nous pouvons enlever les commandes ¤cutscene()¤ et ¤untilbars()¤ de ce script car\nwnw
+celles-ci seront déjà automatiquement ajoutées par VVVVVV lorsqu'on utilise cette
+méthode.
 
   squeak(off)\g
   say(-1)\g
@@ -1191,7 +1202,8 @@ added by VVVVVV when using this method.
   untilbars()\G
   loadscript(stop)\g
 
-This method has been added as an extra internal scripting mode in Ved 1.6.0.
+Cette méthode a été ajoutée en tant que méthode de création de script interne
+supplémentaire dans Ved 1.6.0.
 ]]
 },
 
@@ -1232,42 +1244,44 @@ Ved introduit aussi quelques raccourcis clavier.
 
 Éditeur principal\gh#
 
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
-Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
-N¤  display all tile numbers\C
-J¤  display tile solidity\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
+Ctrl+P¤  Aller à la salle contenant le point de départ\C
+Ctrl+S¤  Sauvegarde rapide\C
+Ctrl+X¤  Couper la salle dans le presse-papier\C
+Ctrl+C¤  Copier la salle dans le presse-papier\C
+Ctrl+V¤  Coller la salle depuis le presse-papier (si elle est valide)\C
+Ctrl+D¤  Comparer ce niveau avec un autre niveau\C
+Ctrl+Z¤  Défaire\C
+Ctrl+Y¤  Refaire\C
+Ctrl+F¤  Recherche\C
+Ctrl+/¤  Bloc-notes du niveau\C
+Ctrl+F1¤  Aide\C
+(NOTE: Sur Mac, replacer Ctrl par Cmd)
+N¤  Afficher tous les nombres de tuiles\C
+J¤  Afficher la solidité des tuiles\C
+M¤  Afficher la carte\C
+Q¤  Aller à la salle (entrer les coordonnées avec 4 chiffres)\C
 /¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
-F11¤  reload tilesets and sprites\C
+[¤  Bloquer la position Y de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes horizontales facilement)
+]¤  Bloquer la position X de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes verticales facilement)
+F11¤  Recharger les jeux de tuiles et images\C
 
-Entities\gh#
+Entités\gh#
 
-Shift+right click¤  Delete entity\C
-Alt+click¤          Move entity\C
-Alt+Shift+click¤    Copy entity\C
+Maj+Clic droit¤  Supprimer l'entité\C
+Alt+Clic¤        Déplacer l'entité\C
+Alt+Maj+Clic¤    Copier l'entité\C
 
-Script editor\gh#
+Éditeur de script\gh#
 
-Ctrl+F¤  Find\C
-Ctrl+G¤  Go to line\C
-Ctrl+I¤  Toggle internal scripting mode\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
+Ctrl+F¤  Chercher\C
+Ctrl+G¤  Aller à la ligne\C
+Ctrl+I¤  Activer/Désactiver le mode de création de script interne\C
+Alt+droite¤  Sauter dans le script de la commande conditionnelle\C
+Alt+gauche¤  Sauter dans le script précédent\C
 
-Script list\gh#
+Liste de scripts\gh#
 
 N¤  Create new script\C
 F¤  Go to flags list\C
@@ -2429,7 +2443,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-

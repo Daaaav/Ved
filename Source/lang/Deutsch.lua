@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-09-26 17:43:00 (CEST)
+--- Last converted: 2019-10-31 23:22:35 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -428,7 +428,6 @@ NONINTSCALE = "Nicht-ganzzahlige Skalierung",
 
 -- 1.3.4
 USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
 SYNTAXCOLOR_COMMENT = "Kommentar",
 FPSLIMIT = "FPS-Limit",
@@ -521,14 +520,19 @@ RENAMESCRIPTREFERENCES = "Hinweise umbenennen",
 PLATFORMSPEEDSLIDER = "Tempo",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "List of all trinkets",
-NOTRINKETSINLEVEL = "There are no trinkets in this level.",
-CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "List of all rescuable crewmates",
-NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
+LISTALLTRINKETS = "Trinkets auflisten", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Liste aller Trinkets",
+NOTRINKETSINLEVEL = "Es gibt keine Trinkets in diesem Level.",
+CREWMATES = "Crewmitglieder",
+LISTALLCREWMATES = "Crewmitglieder auflisten", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Liste aller rettbaren Crewmitglieder",
+NOCREWMATESINLEVEL = "Es gibt keine rettbaren Crewmitglieder in diesem Level.",
+SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "Strg+A wird bald nicht mehr funktionieren, benutze stattdessen Strg+R",
+OLDSHORTCUT_OPENLVLDIR = "Strg+D wird bald nicht mehr funktionieren, benutze stattdessen Strg+F",
 
 
 }
@@ -663,7 +667,7 @@ ERR_TIMESINCESTART = "Zeit seit dem Start:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(nicht geladen)"
 ERR_PLUGINSNONE = "(keine)"
-ERR_PLEASETELLDAV = "Bitte erzähl Dav999 über dieses Problem.\n\n\nDetails: (drücke strg/cmd+C um es zur Zwischenablage zu kopieren)\n\n"
+ERR_PLEASETELLDAV = "Bitte erzähl Dav999 über dieses Problem.\n\n\nDetails: (drücke Strg/Cmd+C um es zur Zwischenablage zu kopieren)\n\n"
 ERR_INTERMEDIATE = " (Zwischenversion)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (zu neu)"
 
@@ -671,7 +675,7 @@ ERR_PLUGINERROR = "Plugin Fehler!"
 ERR_FILE = "Datei die bearbeitet wird:"
 ERR_FILEEDITORS = "Plugins die diese Datei bearbeiten:"
 ERR_CURRENTPLUGIN = "Plugin das diesen Fehler verursacht hat:"
-ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke strg/cmd+C um es zur Zwischenable zu kopieren)\n\n"
+ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke Strg/Cmd+C um es zur Zwischenable zu kopieren)\n\n"
 ERR_CONTINUE = "Du kannst fortfahren indem du ESC oder Enter drückst, aber beachte dass diese gescheiterte Bearbeitung vielleicht Probleme verursacht."
 ERR_REPLACECODE = "Konnte dies nicht finden in %s.lua:"
 ERR_REPLACECODEPATTERN = "Konnte dies nicht finden in %s.lua (als Muster):"
@@ -855,11 +859,11 @@ The editor\h#
 
 On the left side, you will find the tools selection. Most tools have subtools that
 will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
+shortcut or scroll with Shift or Ctrl held down. To switch between subtools, you
 can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
 help page.
 Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
+entities without having to use the context menu, Shift-right click on them.
 On the right side of the screen, you will find many buttons and options. The upper
 buttons are related to the entire level, the lower buttons (under Room options)
 are specific to the current room. For more information about those buttons, refer
@@ -1069,8 +1073,8 @@ Jumping to scripts\h#
 
 On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
 is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
+cursor is on that line. You can also press ¤Alt+right¤ to do this, and you can\nw
+use ¤Alt+left¤ to jump one step back through the chain to where you came from.\nw
 ]]
 },
 
@@ -1221,7 +1225,7 @@ Ctrl+Y¤  Redo\C
 Ctrl+F¤  Search\C
 Ctrl+/¤  Level notepad\C
 Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
+(NOTE: On Mac, replace Ctrl by Cmd)
 N¤  display all tile numbers\C
 J¤  display tile solidity\C
 M¤  Show map\C
@@ -1242,8 +1246,8 @@ Script editor\gh#
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
 Ctrl+I¤  Toggle internal scripting mode\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
+Alt+right¤  Jump to script in conditional command\C
+Alt+left¤  Jump one step back\C
 
 Script list\gh#
 
@@ -2407,7 +2411,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-

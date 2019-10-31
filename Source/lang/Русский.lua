@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-09-26 17:42:59 (CEST)
+--- Last converted: 2019-10-31 23:22:35 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -416,7 +416,6 @@ NONINTSCALE = "Масштаб с дробным значением",
 
 -- 1.3.4
 USEFONTPNG = "Использовать font.png из папки графики VVVVVV как шрифт",
-MAKESLANGUAGEUNREADABLE = " (делает Русский нечитаемым!)", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (необходим L{VE версии $1 или выше)",
 SYNTAXCOLOR_COMMENT = "Комментарий",
 FPSLIMIT = "Ограничение FPS",
@@ -508,15 +507,20 @@ PLATVCHANGE_INVALID = "Необходимо ввести число",
 RENAMESCRIPTREFERENCES = "Переименовать ссылки",
 PLATFORMSPEEDSLIDER = "Скор.",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "List all trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "List of all trinkets",
-NOTRINKETSINLEVEL = "There are no trinkets in this level.",
-CREWMATES = "Crewmates",
-LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "List of all rescuable crewmates",
-NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
-SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
+TRINKETS = "Тринкеты",
+LISTALLTRINKETS = "Показать все тринкеты", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Список тринкетов",
+NOTRINKETSINLEVEL = "В этом уровне нет тринкетов.",
+CREWMATES = "Члены экипажа",
+LISTALLCREWMATES = "Показать всех членов экипажа", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Список всех членов экипажа",
+NOCREWMATESINLEVEL = "В этом уровне нет членов экипажа.",
+SHIFTROOMS = "Сдвинуть комнаты", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+влево/вправо скоро перестанет работать. Используйте ALT+влево/вправо", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "Ctrl+A скоро перестанет работать. Используйте Ctrl+R",
+OLDSHORTCUT_OPENLVLDIR = "Ctrl+D скоро перестанет работать. Используйте Ctrl+F",
 
 
 }
@@ -1069,8 +1073,8 @@ cont = [[
 
 В строках с командами iftrinkets, ifflag, customiftrinkets или customifflag есть
 возможность переходить к скриптам используя кнопку "Перейти" когда курсор
-находится на строке с этой командой. Также можно нажать ¤ctrl+ПКМ¤ чтобы это\nw
-сделать, или можно нажать ¤ctrl+ЛКМ¤ чтобы вернуться на исходный скрипт.\nw
+находится на строке с этой командой. Также можно нажать ¤Alt+ПКМ¤ чтобы это\nw
+сделать, или можно нажать ¤Alt+ЛКМ¤ чтобы вернуться на исходный скрипт.\nw
 ]]
 },
 
@@ -1221,7 +1225,7 @@ Ctrl+Y¤  Восстановить\C
 Ctrl+F¤  Поиск\C
 Ctrl+/¤  Записки уровня\C
 Ctrl+F1¤  Помощь\C
-(ВНИМАНИЕ: на версии Mac используйте cmd вместо ctrl)
+(ВНИМАНИЕ: на версии Mac используйте Cmd вместо Ctrl)
 N¤  Покозать номера плиток в комнате\C
 J¤  Показать твёрдость\C
 M¤  Открыть карту\C
@@ -1242,8 +1246,8 @@ Alt+Shift+click¤    Copy entity\C
 Ctrl+F¤  Поиск\C
 Ctrl+G¤  Перейти к строке\C
 Ctrl+I¤  Переключить внутренний скриптинг\C
-Ctrl+right¤  Перейти к скрипту с ссылкой на данной строке\C
-Ctrl+left¤  Перейти к предыдущему скрипту по ссылке\C
+Alt+right¤  Перейти к скрипту с ссылкой на данной строке\C
+Alt+left¤  Перейти к предыдущему скрипту по ссылке\C
 
 Список скриптов\gh#
 
@@ -2450,7 +2454,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-

@@ -42,7 +42,7 @@ msgstr ""
 msgid "Coloring a single character\\h#"
 msgstr ""
 
-msgid "OK, I lied, it is possible to color a single character without including a space.\nTo do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\\nYnw\nthe character you want to color, and enable it with the formatting code¤ ( ¤after¤ \\¤:\\nCnC"
+msgid "OK, I lied, it is possible to color a single character without including a space.\nTo do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\\nYnw\nthe character you want to color, and enable it with the formatting code¤ ( ¤after¤ \\¤:\\nCnC"
 msgstr ""
 
 msgid "\\-\nYou can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\\nrny(\\\n\\\nYou can c¤o§¤lor a ¤single¤ character like this!\\nrny(\n\\-"

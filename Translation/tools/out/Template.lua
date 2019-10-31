@@ -414,7 +414,6 @@ NONINTSCALE = "<L.NONINTSCALE>",
 
 -- 1.3.4
 USEFONTPNG = "<L.USEFONTPNG>",
-MAKESLANGUAGEUNREADABLE = "<L.MAKESLANGUAGEUNREADABLE>", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = "<L.REQUIRESHIGHERLOVE>",
 SYNTAXCOLOR_COMMENT = "<L.SYNTAXCOLOR_COMMENT>",
 FPSLIMIT = "<L.FPSLIMIT>",
@@ -515,6 +514,11 @@ LISTALLCREWMATES = "<L.LISTALLCREWMATES>", -- "Give a list of all rescuable crew
 LISTOFALLCREWMATES = "<L.LISTOFALLCREWMATES>",
 NOCREWMATESINLEVEL = "<L.NOCREWMATESINLEVEL>",
 SHIFTROOMS = "<L.SHIFTROOMS>", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "<L.OLDSHORTCUT_SCRIPTJUMP>", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "<L.OLDSHORTCUT_ASSETS>",
+OLDSHORTCUT_OPENLVLDIR = "<L.OLDSHORTCUT_OPENLVLDIR>",
 
 
 }
