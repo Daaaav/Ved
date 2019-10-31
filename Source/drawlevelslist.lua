@@ -411,8 +411,8 @@ function drawlevelslist()
 			rbutton(L.RETURN, 0, nil, true)
 		else
 			rbutton(L.BACKUPS, 0, nil, true)
-			rbutton({L.OPENLEVELSFOLDER, "cD"}, 1, nil, true)
-			rbutton({L.ASSETS, "cA"}, 2, nil, true)
+			rbutton({L.OPENLEVELSFOLDER, "cF"}, 1, nil, true)
+			rbutton({L.ASSETS, "cR"}, 2, nil, true)
 		end
 
 		if s.pcheckforupdates and not opt_disableversioncheck then

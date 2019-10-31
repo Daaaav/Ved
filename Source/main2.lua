@@ -190,7 +190,9 @@ function love.load()
 
 	temporaryroomnametimer = 0
 	generictimer = 0
-	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
+	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing, 3 for notification
+
+	notification_text = ""
 
 	limitglow = 0
 	limitglow_enabled = false
@@ -1847,6 +1849,21 @@ function love.draw()
 		rightclickmenu.draw()
 	end
 
+	if generictimer_mode == 3 and generictimer > 0 then
+		local width, lines = font8:getWrap(notification_text, 80*8)
+
+		-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+		if type(lines) == "table" then
+			lines = #lines
+		end
+
+		local boxy = love.graphics.getHeight()-16-lines*8
+		love.graphics.setColor(128,128,128,192)
+		love.graphics.rectangle("fill", 8, boxy, width+16, lines*8+8)
+		love.graphics.setColor(0,0,0,255)
+		ved_printf(notification_text, 16, boxy+4, 80*8, "left")
+	end
+
 	if love.keyboard.isDown("f9") and state_hotkeys[state] ~= nil then
 		--ved_print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
 	end
@@ -3479,15 +3496,22 @@ function love.keypressed(key)
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
-	elseif state == 3 and keyboard_eitherIsDown(ctrl) then
+	elseif state == 3 and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("alt")) then
+		local temp_jumped_lr = false
 		if key == "left" and #scripthistorystack > 0 then
 			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
+			temp_jumped_lr = true
 		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" and not scriptinstack(carg2) then
 			editorjumpscript(carg2)
+			temp_jumped_lr = true
 		elseif key == "right" and context == "script" and not scriptinstack(carg1) then
 			editorjumpscript(carg1)
+			temp_jumped_lr = true
 		elseif key == "right" and context == "roomscript" and not scriptinstack(carg3) then
 			editorjumpscript(carg3)
+			temp_jumped_lr = true
+		elseif not keyboard_eitherIsDown(ctrl) then
+			-- Temporary catch while both ctrl/alt+left/right are possible, from here on only ctrl
 		elseif key == "c" then
 			copyscriptline()
 		elseif key == "a" then
@@ -3535,6 +3559,10 @@ function love.keypressed(key)
 			input_r = ""
 			dirty()
 		end
+
+		if temp_jumped_lr and not keyboard_eitherIsDown("alt") then
+			show_notification(L.OLDSHORTCUT_SCRIPTJUMP)
+		end
 	elseif state == 3 and key == "tab" then
 		matching = {}
 
@@ -3579,11 +3607,17 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
-	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "a" and keyboard_eitherIsDown(ctrl) then
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and (key == "a" or key == "r") and keyboard_eitherIsDown(ctrl) then
 		stopinput()
 		tostate(30)
-	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
+		if key == "a" then
+			show_notification(L.OLDSHORTCUT_ASSETS)
+		end
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and (key == "d" or key == "f") and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
+		if key == "d" then
+			show_notification(L.OLDSHORTCUT_OPENLVLDIR)
+		end
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
 		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then

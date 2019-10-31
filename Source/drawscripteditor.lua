@@ -304,7 +304,7 @@ function drawscripteditor()
 	if context == "script" then
 		ved_printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		if not scriptinstack(carg1) then
-			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg1)
@@ -315,7 +315,7 @@ function drawscripteditor()
 		if carg2 ~= nil and carg2 ~= "" then
 			ved_printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg2) then
-				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 					editorjumpscript(carg2)
@@ -327,7 +327,7 @@ function drawscripteditor()
 		if carg3 ~= nil and carg3 ~= "" then
 			ved_printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg3) then
-				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "cx"}, 13)
+				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 					editorjumpscript(carg3)

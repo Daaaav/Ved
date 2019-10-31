@@ -3391,4 +3391,10 @@ function loaduis()
 	uis[12] = ved_require("uis/map")
 end
 
+function show_notification(text)
+	notification_text = text
+
+	setgenerictimer(3, 5)
+end
+
 hook("func")

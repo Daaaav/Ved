@@ -1054,8 +1054,8 @@ Jumping to scripts\h#
 
 On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
 is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
+cursor is on that line. You can also press ¤alt+right¤ to do this, and you can\nw
+use ¤alt+left¤ to jump one step back through the chain to where you came from.\nw
 ]]
 },
 
@@ -1227,8 +1227,8 @@ Script editor\gh#
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
 Ctrl+I¤  Toggle internal scripting mode\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
+Alt+right¤  Jump to script in conditional command\C
+Alt+left¤  Jump one step back\C
 
 Script list\gh#
 
