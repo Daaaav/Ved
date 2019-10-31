@@ -2295,6 +2295,12 @@ ALIGN = {
 	RIGHT = 3,
 }
 
+VALIGN = {
+	TOP = 1,
+	CENTER = 2,
+	BOTTOM = 3,
+}
+
 -- For shiftrooms()
 SHIFT = {
 	LEFT = 1,

@@ -482,53 +482,6 @@ function loadstate(new, ...)
 		searchscroll = 0
 		longestsearchlist = 0
 	elseif new == 12 then
-		mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)
-		--mapxoffset = (640-(((1/mapscale)-metadata.mapwidth)*mapscale*640))/2
-		--mapyoffset = (480-(((1/mapscale)-metadata.mapheight)*mapscale*480))/2
-		mapxoffset = (((1/mapscale)-metadata.mapwidth)*mapscale*640)/2
-		mapyoffset = (((1/mapscale)-metadata.mapheight)*mapscale*480)/2
-
-		selectingrooms = 0
-		selected1x = -1; selected1y = -1
-		selected2x = -1; selected2y = -1
-
-		mapmovedroom = false
-
-		setgenerictimer(2, 2.75)
-
-		locatetrinketscrewmates()
-
-		if editingbounds ~= 0 then
-			if editingbounds == 1 then
-				local changeddata = {}
-				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					table.insert(changeddata,
-						{
-							key = "enemy" .. v,
-							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
-						}
-					)
-				end
-				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-				finish_undo("ENEMY BOUNDS (map canceled)")
-			elseif editingbounds == 2 then
-				local changeddata = {}
-				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					table.insert(changeddata,
-						{
-							key = "plat" .. v,
-							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
-						}
-					)
-				end
-				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
-				finish_undo("PLATFORM BOUNDS (map canceled)")
-			end
-
-			editingbounds = 0
-		end
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
@@ -713,6 +666,10 @@ function loadstate(new, ...)
 		end
 	elseif new == 34 then
 		require("input")
+	end
+
+	if uis[new] ~= nil and uis[new].load ~= nil then
+		uis[new].load(...)
 	end
 
 	hook("func_loadstate")
@@ -3428,6 +3385,36 @@ function assets_graphicsloaddialog()
 		L.LOADIMAGE,
 		dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
 	)
+end
+
+function hotkey(checkkey, checkmod)
+	return function(detectedkey)
+		return detectedkey == checkkey and (checkmod == nil or keyboard_eitherIsDown(checkmod))
+	end
+end
+
+function unloaduis()
+	-- Unload the UI files, just so we can reload them.
+	if uis == nil then
+		-- What are you doing here?
+		return
+	end
+
+	for k,v in pairs(uis) do
+		package.loaded["uis/" .. v.name] = false
+	end
+end
+
+function loaduis()
+	uis = {}
+
+	uis[12] = ved_require("uis/map")
+end
+
+function show_notification(text)
+	notification_text = text
+
+	setgenerictimer(3, 5)
 end
 
 function isclear(key)
