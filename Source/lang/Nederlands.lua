@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-10-31 23:22:36 (CET)
+--- Last converted: 2019-11-01 01:16:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2425,7 +2425,7 @@ Onderstreepte grote tekst\wh
 Meerdere kleuren op een regel gebruiken\h#
 
 Het is mogelĳk om meerdere kleuren op een regel te gebruiken door gekleurde delen
-te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤insert¤ te drukken) en de\nYnw
+te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤Insert¤ te drukken) en de\nYnw
 kleuren in de juiste volgorde na¤ \ ¤te zetten. Als de laatste kleur op de regel de\nC
 standaardkleur is (n), is het niet nodig om deze code op het eind neer te zetten.
 Als je het¤ ¤¤§¤-teken wilt gebruiken op een regel met¤ \¤, kun je in plaats daarvan¤ ¤¤¤¤\nYnCnY(
@@ -2447,7 +2447,7 @@ Een enkel teken een kleur geven\h#
 
 Oké, ik loog, het is wel mogelĳk om een enkel teken een kleur te geven zonder een
 spatie mee te nemen. Om dit te doen kun je het teken¤ § ¤(dat je kunt typen met\nY
-Shift+insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
+Shift+Insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
 opmaakcode¤ ( ¤na¤ \¤:\nCnC
 
 \-

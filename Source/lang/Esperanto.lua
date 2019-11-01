@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-10-31 23:22:36 (CET)
+--- Last converted: 2019-11-01 01:16:29 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -531,11 +531,11 @@ PLATVCHANGE_INVALID = "Vi devas entajpi numeron.",
 RENAMESCRIPTREFERENCES = "Renomi referencojn",
 PLATFORMSPEEDSLIDER = "Rpd.:",
 
-TRINKETS = "Kolektaĵoj:",
+TRINKETS = "Kolektaĵoj",
 LISTALLTRINKETS = "Listigi ĉiujn kolektaĵojn", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
 LISTOFALLTRINKETS = "Listo de ĉiuj kolektaĵoj",
 NOTRINKETSINLEVEL = "Ne estas kolektaĵoj en tiu ĉi nivelo.",
-CREWMATES = "Ŝipanoj:",
+CREWMATES = "Ŝipanoj",
 LISTALLCREWMATES = "Listigi ĉiujn ŝipanojn", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "Listo de ĉiuj saveblaj ŝipanoj",
 NOCREWMATESINLEVEL = "Ne estas saveblaj ŝipanoj en tiu ĉi nivelo.",
@@ -2431,7 +2431,7 @@ Kelkaj ¤te¤ks¤ta¤j ¤ko¤lo¤ro¤j\RYGCBPRYG
 Kolorigi unu signon sole\h#
 
 Okej, mi mensogis, ja eblas kolorigi unu signon sole sen inkluzivi spaceton.
-Por fari do, meti la signon¤ § ¤(tajpebla per uzi ¤Shift+insert¤), post\nYnw
+Por fari do, meti la signon¤ § ¤(tajpebla per uzi ¤Shift+Insert¤), post\nYnw
 la signo, kiun vi volas kolorigi, kaj ebligi ĝin per la aranĝokodo¤ ( ¤post¤ \¤:\nCnC
 
 \-

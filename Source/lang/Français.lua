@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-10-31 23:22:36 (CET)
+--- Last converted: 2019-11-01 01:16:29 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2423,7 +2423,7 @@ Underlined large text\wh
 Using multiple colors on a line\h#
 
 It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
+the¤ ¤¤ ¤character (which you can type using the ¤Insert¤ key), and putting the color\nYnw
 codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
 is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
 line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
@@ -2443,7 +2443,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+Insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-

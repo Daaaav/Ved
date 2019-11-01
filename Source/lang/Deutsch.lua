@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-10-31 23:22:35 (CET)
+--- Last converted: 2019-11-01 01:16:29 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -530,7 +530,7 @@ NOCREWMATESINLEVEL = "Es gibt keine rettbaren Crewmitglieder in diesem Level.",
 SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire level in any direction
 
 
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_SCRIPTJUMP = "STRG+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
 OLDSHORTCUT_ASSETS = "Strg+A wird bald nicht mehr funktionieren, benutze stattdessen Strg+R",
 OLDSHORTCUT_OPENLVLDIR = "Strg+D wird bald nicht mehr funktionieren, benutze stattdessen Strg+F",
 
@@ -2391,7 +2391,7 @@ Underlined large text\wh
 Using multiple colors on a line\h#
 
 It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
+the¤ ¤¤ ¤character (which you can type using the ¤Insert¤ key), and putting the color\nYnw
 codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
 is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
 line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
@@ -2411,7 +2411,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤Shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+Insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-
