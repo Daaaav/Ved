@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-09-26 17:43:00 (CEST)
+--- Last converted: 2019-11-01 01:16:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -428,7 +428,6 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 
 -- 1.3.4
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
-MAKESLANGUAGEUNREADABLE = "", -- If your language uses another alphabet/writing system (thus becomes completely unreadable if only ASCII is used), please translate the following: " (makes Language unreadable!)" where Language is the name of your language.
 REQUIRESHIGHERLOVE = " (vereist L{VE $1 of hoger)",
 SYNTAXCOLOR_COMMENT = "Commentaar",
 FPSLIMIT = "FPS-limiet",
@@ -521,14 +520,19 @@ RENAMESCRIPTREFERENCES = "Verwĳzingen hernoemen",
 PLATFORMSPEEDSLIDER = "Tempo",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "Alle trinkets vinden", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTALLTRINKETS = "Alle trinkets opsommen", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
 LISTOFALLTRINKETS = "Lĳst met alle trinkets",
 NOTRINKETSINLEVEL = "Er zĳn geen trinkets in dit level.",
 CREWMATES = "Bemanning",
-LISTALLCREWMATES = "Alle leden vinden", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTALLCREWMATES = "Alle leden opsommen", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "Lĳst met alle bemanningsleden",
 NOCREWMATESINLEVEL = "Er zĳn geen bemanningsleden in dit level.",
-SHIFTROOMS = "Kamers verschuiven", -- In the map. Move all rooms in the entire level in any direction
+SHIFTROOMS = "Verschuif kamers", -- In the map. Move all rooms in the entire level in any direction
+
+
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+links/rechts werkt binnenkort niet meer, gebruik in plaats daarvan ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "Ctrl+A werkt binnenkort niet meer, gebruik in plaats daarvan Ctrl+R",
+OLDSHORTCUT_OPENLVLDIR = "Ctrl+D werkt binnenkort niet meer, gebruik in plaats daarvan Ctrl+F",
 
 
 }
@@ -663,7 +667,7 @@ ERR_TIMESINCESTART = "Tĳd sinds opstarten:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(niet geladen)"
 ERR_PLUGINSNONE = "(geen)"
-ERR_PLEASETELLDAV = "Vertel Dav999 alsjeblieft over dit probleem.\n\n\nDetails: (druk ctrl/cmd+C om naar het klembord te kopiëren)\n\n"
+ERR_PLEASETELLDAV = "Vertel Dav999 alsjeblieft over dit probleem.\n\n\nDetails: (druk Ctrl/Cmd+C om naar het klembord te kopiëren)\n\n"
 ERR_INTERMEDIATE = " (tussenversie)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (te nieuw)"
 
@@ -671,7 +675,7 @@ ERR_PLUGINERROR = "Pluginfout!"
 ERR_FILE = "Bestand om te bewerken:"
 ERR_FILEEDITORS = "Plugins die dit bestand bewerken:"
 ERR_CURRENTPLUGIN = "Plugin die de fout heeft veroorzaakt:"
-ERR_PLEASETELLAUTHOR = "Een plugin moest een wĳziging aanbrengen in code in Ved, maar de te vervangen code werd niet gevonden.\nHet is mogelĳk dat dit wordt veroorzaakt door een conflict tussen twee plugins, of een update van Ved heeft deze plugin onbruikbaar gemaakt.\n\nDetails: (druk ctrl/cmd+C om naar het klembord te kopiëren)\n\n"
+ERR_PLEASETELLAUTHOR = "Een plugin moest een wĳziging aanbrengen in code in Ved, maar de te vervangen code werd niet gevonden.\nHet is mogelĳk dat dit wordt veroorzaakt door een conflict tussen twee plugins, of een update van Ved heeft deze plugin onbruikbaar gemaakt.\n\nDetails: (druk Ctrl/Cmd+C om naar het klembord te kopiëren)\n\n"
 ERR_CONTINUE = "Je kunt verdergaan door op ESC of enter te drukken, maar wees bewust dat deze mislukte bewerking voor problemen kan zorgen."
 ERR_REPLACECODE = "Kon dit niet vinden in %s.lua:"
 ERR_REPLACECODEPATTERN = "Kon dit niet vinden in %s.lua (als pattern):"
@@ -855,12 +859,12 @@ De editor\h#
 
 Aan de linkerkant staan de verschillende gereedschappen, de tools. De meeste tools
 hebben subtools die rechts ervan worden weergegeven. Om tussen tools te schakelen
-kun je de bĳbehorende snelkoppelingen gebruiken of scrollen met shift of ctrl
+kun je de bĳbehorende snelkoppelingen gebruiken of scrollen met Shift of Ctrl
 ingedrukt. Om tussen subtools te schakelen kun je overal scrollen. Kĳk voor meer
 informatie over de tools op de ¤Tools¤-helppagina.\nwl
 Je kunt op entiteiten klikken met de rechtermuisknop voor een menu met acties voor
 die entiteit. Om entiteiten te verwĳderen zonder dat menu te gebruiken kun je er
-rechts op klikken met shift ingedrukt.
+rechts op klikken met Shift ingedrukt.
 Aan de rechterkant van het scherm staan veel knoppen en opties. De bovenste
 knoppen zĳn voor het hele level, de onderste knoppen (onder Kamer-opties) zĳn
 specifiek voor de huidige kamer. Kĳk voor meer informatie over deze knoppen op de
@@ -1075,7 +1079,7 @@ Naar scripts springen\h#
 Op regels met een van de commando's iftrinkets, ifflag, customiftrinkets of
 customifflag, is het mogelĳk om naar het gegeven script te springen door te
 klikken op de knop "Ga naar" wanneer de cursor op die regel staat. Je kunt
-hiervoor ook op ¤ctrl+rechts¤ drukken, en je kunt met ¤ctrl+links¤ één stap terug\nwnw
+hiervoor ook op ¤Alt+rechts¤ drukken, en je kunt met ¤Alt+links¤ één stap terug\nwnw
 nemen door de keten naar waar je vandaan kwam.
 ]]
 },
@@ -1229,7 +1233,7 @@ Ctrl+Y¤  Herhalen\C
 Ctrl+F¤  Zoeken\C
 Ctrl+/¤  Level-kladblok\C
 Ctrl+F1¤  Help\C
-(LET OP: Gebruik op Mac cmd in plaats van ctrl)
+(LET OP: Gebruik op Mac Cmd in plaats van Ctrl)
 N¤  Nummers van alle blokken tonen\C
 J¤  Soliditeit van blokken tonen\C
 M¤  Kaart tonen\C
@@ -1250,8 +1254,8 @@ Scriptbewerker\gh#
 Ctrl+F¤  Zoeken\C
 Ctrl+G¤  Ga naar regel\C
 Ctrl+I¤  Schakel internescriptmodus in/uit\C
-Ctrl+rechts¤  Spring naar script in voorwaardelĳk commando\C
-Ctrl+links¤  Spring één stap terug\C
+Alt+rechts¤  Spring naar script in voorwaardelĳk commando\C
+Alt+links¤  Spring één stap terug\C
 
 Scriptlĳst\gh#
 
@@ -2421,7 +2425,7 @@ Onderstreepte grote tekst\wh
 Meerdere kleuren op een regel gebruiken\h#
 
 Het is mogelĳk om meerdere kleuren op een regel te gebruiken door gekleurde delen
-te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤insert¤ te drukken) en de\nYnw
+te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤Insert¤ te drukken) en de\nYnw
 kleuren in de juiste volgorde na¤ \ ¤te zetten. Als de laatste kleur op de regel de\nC
 standaardkleur is (n), is het niet nodig om deze code op het eind neer te zetten.
 Als je het¤ ¤¤§¤-teken wilt gebruiken op een regel met¤ \¤, kun je in plaats daarvan¤ ¤¤¤¤\nYnCnY(
@@ -2443,7 +2447,7 @@ Een enkel teken een kleur geven\h#
 
 Oké, ik loog, het is wel mogelĳk om een enkel teken een kleur te geven zonder een
 spatie mee te nemen. Om dit te doen kun je het teken¤ § ¤(dat je kunt typen met\nY
-shift+insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
+Shift+Insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
 opmaakcode¤ ( ¤na¤ \¤:\nCnC
 
 \-

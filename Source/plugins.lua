@@ -286,7 +286,10 @@ No plugins\wh#
 
 You do not have any plugins yet. Please go to ¤https://tolp.nl/ved/plugins.php\nCl
 for more information about plugins and hooks.
-]])
+]]) .. [[
+
+Your plugins folder is:
+]] .. love.filesystem.getSaveDirectory() .. "/plugins\\Y"
 		})
 	--end
 end
