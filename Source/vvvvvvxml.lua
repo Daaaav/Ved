@@ -467,7 +467,13 @@ function loadlevel(path)
 			if v:sub(-1, -1) == ":" then
 				-- This is a script name!
 				currentscript = v:sub(1, -2)
-				table.insert(myscriptnames, currentscript)
+				if allscripts[currentscript] == nil then
+					table.insert(myscriptnames, currentscript)
+				else
+					-- We've seen this script before, that's not good
+					mycount.FC = mycount.FC + 1
+					cons_fc(langkeys(L.DUPLICATESCRIPT, {currentscript}))
+				end
 				allscripts[currentscript] = {}
 				sline = 1
 			else

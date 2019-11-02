@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-11-01 01:16:29 (CET)
+--- Last converted: 2019-11-02 01:01:31 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -349,6 +349,7 @@ AMOUNTSPIKES = "Pintaĵoj:",
 
 
 UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Maplarĝo estas malvalida: $1",
 MAPHEIGHTINVALID = "Mapalto estas malvalida: $1",
 LEVMUSICEMPTY = "Nivelo-muziko estas nula!",

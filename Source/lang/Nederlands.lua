@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-11-01 01:16:30 (CET)
+--- Last converted: 2019-11-02 01:01:31 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -337,6 +337,7 @@ AMOUNTSPIKES = "Spĳkers:",
 
 
 UNEXPECTEDSCRIPTLINE = "Onverwachte scriptregel zonder script: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Levelbreedte is ongeldig: $1",
 MAPHEIGHTINVALID = "Levelhoogte is ongeldig: $1",
 LEVMUSICEMPTY = "Levelmuziek is leeg!",

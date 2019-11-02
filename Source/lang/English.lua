@@ -323,6 +323,7 @@ AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unexpected script line without script: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Map width is invalid: $1",
 MAPHEIGHTINVALID = "Map height is invalid: $1",
 LEVMUSICEMPTY = "Level music is empty!",

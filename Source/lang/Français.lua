@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-11-01 01:16:29 (CET)
+--- Last converted: 2019-11-02 01:01:31 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -339,6 +339,7 @@ AMOUNTSPIKES = "Pointes :",
 
 
 UNEXPECTEDSCRIPTLINE = "Ligne de script sans script inattendue : $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "La largeur de la carte est invalide : $1",
 MAPHEIGHTINVALID = "La hauteur de la carte est invalide : $1",
 LEVMUSICEMPTY = "La musique du niveau est vide !",
