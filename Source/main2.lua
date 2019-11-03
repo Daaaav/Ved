@@ -1995,7 +1995,7 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
 		if RCMactive then
 			cursorflashtime = 0
 		else
@@ -2664,8 +2664,8 @@ function love.textinput(char)
 		return
 	end
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
-		local id = newinputsys.input_ids[#newinputsys.nth_input]
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		local id = newinputsys.getfocused()
 		if newinputsys.hex[id] ~= nil then
 			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know
 				local oldstate = {newinputsys.getstate(id)}
@@ -2777,8 +2777,8 @@ function love.keypressed(key)
 		RCMactive = false
 	end
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
-		local id = newinputsys.input_ids[#newinputsys.nth_input]
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		local id = newinputsys.getfocused()
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) or isclear(key) then
 			newinputsys.stophex(id)
@@ -4423,10 +4423,10 @@ function love.mousereleased(x, y, button)
 	minsmear = -1; maxsmear = -1
 	toout = 0
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active then
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
 		newinputsys.ignoremousepressed = false
 
-		local id = newinputsys.input_ids[#newinputsys.nth_input]
+		local id = newinputsys.getfocused()
 		local multiline = type(inputs[id]) == "table"
 
 		if newinputsys.selpos[id] ~= nil then

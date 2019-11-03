@@ -75,6 +75,9 @@ local input = {
 	active = false,
 	ignoremousepressed = false,
 
+	stateof = {},
+	focused = {},
+
 	nth_input = {},
 	input_ids = {},
 	input_ns = {},
@@ -105,6 +108,9 @@ function input.create(type_, id, initial, ix, iy)
 	if inputs[id] ~= nil then
 		return
 	end
+
+	-- Local rename here, in case state is added as an arg later
+	local thestate = state
 
 	if type_ == INPUT.ONELINE then
 		initial = tostring(anythingbutnil(initial))
@@ -150,6 +156,9 @@ function input.create(type_, id, initial, ix, iy)
 
 	input.setnewlinechars(id, "[\r\n]")
 	input.setwordseps(id, " ")
+
+	input.stateof[id] = thestate
+	input.focused[thestate] = id
 end
 
 function input.close(id, updatemappings)
@@ -186,6 +195,38 @@ function input.close(id, updatemappings)
 	input.newlinechars[id] = nil
 
 	input.areas[id] = nil
+
+	local thestate = input.stateof[id]
+	input.stateof[id] = nil
+
+	local function updatestatemappings()
+		local inputfound = false
+		local thisid
+		for n = #input.nth_input, 1, -1 do
+			thisid = input.nth_input[n]
+
+			if input.stateof[thisid] == thestate then
+				input.focused[thestate] = thisid
+				inputfound = true
+				break
+			end
+		end
+		if not inputfound then
+			-- That was the last input in the state
+			input.focused[thestate] = nil
+		end
+	end
+
+	if updatemappings then
+		updatestatemappings()
+	end
+end
+
+function input.getfocused()
+	local thestate = state
+	local id = input.focused[thestate]
+
+	return id
 end
 
 function input.updatemappings()
@@ -197,6 +238,10 @@ end
 function input.closeall()
 	for id in pairs(inputs) do
 		input.close(id, false)
+	end
+
+	for thestate in pairs(input.focused) do
+		input.focused[thestate] = nil
 	end
 end
 
@@ -229,6 +274,9 @@ function input.bump(id)
 	inputcopiedtimer = 0
 
 	RCMactive = false
+
+	local thestate = input.stateof[id]
+	input.focused[thestate] = id
 end
 
 function input.print(id, x, y, sx, sy, lineh)
@@ -259,7 +307,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 	-- This function also handles clicking, double-clicking, and clicking-and-dragging on text
 
 	-- Make sure we're drawing the cas of the currently focused input
-	if id ~= input.input_ids[#input.nth_input] then
+	if id ~= input.getfocused() then
 		return
 	end
 
