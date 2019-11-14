@@ -3022,13 +3022,13 @@ function love.keypressed(key)
 		end
 
 		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-			if key == "left" then
+			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
-			elseif key == "right" then
+			elseif table.contains({"right", "d"}, key) then
 				selectedtile = (selectedtile + 1) % 1200
-			elseif key == "up" then
+			elseif table.contains({"up", "w"}, key) then
 				selectedtile = selectedtile - 40
-			elseif key == "down" then
+			elseif table.contains({"down", "s"}, key) then
 				selectedtile = (selectedtile + 40) % 1200
 			end
 		end
