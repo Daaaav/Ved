@@ -208,7 +208,7 @@ function displaybottom2rowstexts(offsetx, offsety, myroomx, myroomy)
 	local scriptname_args = {}
 	local scriptname_editingshown = false
 	for k,v in pairs(entitydata) do
-		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= (myroomy*30)+28) and (v.y <= (myroomy*30)+29) then
 			displayentity(offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, true)
 		end
 	end
