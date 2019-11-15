@@ -1601,7 +1601,7 @@ function endeditingroomtext(donotmakethisnil)
 			table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingroomtext, changedentitydata = {{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}}})
 		end
 	else
-		removeentity(editingroomtext)
+		removeentity(editingroomtext, nil, true)
 	end
 	editingroomtext = 0
 end

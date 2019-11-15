@@ -3241,7 +3241,7 @@ function love.keypressed(key)
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
 		if entitydata[editingroomtext].data == "" then
-			removeentity(editingroomtext)
+			removeentity(editingroomtext, nil, true)
 		end
 		editingroomtext = 0
 		stopinput()
