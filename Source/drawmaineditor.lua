@@ -1216,7 +1216,10 @@ function drawmaineditor()
 			end
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid)
+		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		if showroom then
+			displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid)
+		end
 
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then
@@ -1407,7 +1410,9 @@ function drawmaineditor()
 		ved_setFont(font8)
 		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
-		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		if showroom then
+			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		end
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
