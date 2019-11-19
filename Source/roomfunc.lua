@@ -232,7 +232,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
-		love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
+		v6_setcol(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].v6col)
 		drawentitysprite(enemysprites[levelmetadata[(myroomy)*20 + (myroomx+1)].enemytype], x, y) -- 78
 
 		-- Where is it going?
@@ -299,7 +299,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 9 then
 		-- Trinket
+		v6_setcol(3)
 		drawentitysprite(22, x, y)
+		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
 				x, y,
@@ -309,7 +311,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 10 then
 		-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
+		v6_setcol(4)
 		drawentitysprite(20+v.p1, x, y)
+		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
 				x, y,
@@ -321,7 +325,11 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
 		-- Gravity line or warp line. This is kind of a special story.
 		if v.t == 50 then
+			-- Warp line
 			love.graphics.setColor(0,255,0,255)
+		elseif v.t == 11 then
+			-- Gravity line
+			v6_setgravitylinecol()
 		end
 		local sel_x, sel_y, sel_w, sel_h
 		-- Gravity lines and warp lines have a different p1!
@@ -386,7 +394,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Warp token. But are we currently displaying the entrance or the destination? Or both?
 		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
 			-- Entrance
+			v6_setcol(10)
 			drawentitysprite(18, x, y)
+			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
 					x, y,
@@ -424,7 +434,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 16 then
 		-- Start point
-		love.graphics.setColor(132, 181, 255)
+		v6_setcol(0)
 		drawentitysprite(3*v.p1, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
@@ -443,7 +453,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				-- We're editing this text at the moment.
 				data = input .. __
 			end
+			v6_setroomprintcol()
 			ved_print(data, x, y, 2)
+			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
 					x, y,
@@ -457,7 +469,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if math.abs(sp_t) == k then
 			sp_teken(v, offsetx, offsety, myroomx, myroomy)
 		end
+		v6_setcol(4)
 		drawentitysprite(17, x, y + 16)
+		love.graphics.setColor(255, 255, 255)
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
 			scriptname_editingshown = true
@@ -2205,25 +2219,25 @@ end
 function setrescuablecolor(color)
 	if color == 0 then
 		-- Cyan
-		love.graphics.setColor(132, 181, 255)
+		v6_setcol(0)
 	elseif color == 1 then
 		-- Pink
-		love.graphics.setColor(255, 135, 255)
+		v6_setcol(20)
 	elseif color == 2 then
 		-- Yellow
-		love.graphics.setColor(255, 255, 135)
+		v6_setcol(14)
 	elseif color == 3 then
 		-- Red
-		love.graphics.setColor(255, 61, 61)
+		v6_setcol(15)
 	elseif color == 4 then
 		-- Green
-		love.graphics.setColor(144, 255, 144)
+		v6_setcol(13)
 	elseif color == 5 then
 		-- Blue
-		love.graphics.setColor(75, 75, 230)
+		v6_setcol(16)
 	else
 		-- Cyan, but happy
-		love.graphics.setColor(132, 181, 255)
+		v6_setcol(0)
 	end
 end
 

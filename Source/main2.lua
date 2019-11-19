@@ -156,6 +156,7 @@ function love.load()
 	ved_require("slider")
 	ved_require("mapfunc")
 	ved_require("music")
+	ved_require("vvvvvvfunc")
 
 	dodisplaysettings()
 
@@ -185,6 +186,19 @@ function love.load()
 	middlescroll_rolling = 0
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
+
+	v6_help = UtilityClass()
+	v6_graphics = Graphics()
+	function v6_setcol(t)
+		v6_graphics:setcol(t, v6_help)
+	end
+	function v6_setgravitylinecol()
+		v6_graphics:setgravitylinecol()
+	end
+	function v6_setroomprintcol()
+		v6_graphics:setroomprintcol(v6_help)
+	end
+	v6_frametimer = 0
 
 	returnpressed = false -- also for some things
 
@@ -1870,7 +1884,7 @@ function love.draw()
 
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-		love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
+		v6_setcol(3)
 		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
@@ -1992,6 +2006,14 @@ function love.update(dt)
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
+	end
+
+	v6_frametimer = v6_frametimer + dt
+	while v6_frametimer > .034 do
+		v6_help:updateglow()
+		v6_graphics:updatelinestate()
+
+		v6_frametimer = v6_frametimer - .034
 	end
 
 	if updatescrollingtext ~= nil and state == 6 then

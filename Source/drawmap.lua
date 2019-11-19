@@ -48,7 +48,7 @@ function drawmap()
 					widthb = 16
 					extray = 0
 					scalesubtract = 16
-					colorfunc = function(n) end
+					colorfunc = function(n) v6_setcol(3) end
 				elseif selectedtool == 16 then
 					amount = map_crewmates[mry][mrx][1]
 					spritefunc = function(n)

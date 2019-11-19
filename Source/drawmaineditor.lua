@@ -1502,9 +1502,10 @@ function drawmaineditor()
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
-			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
+			v6_setroomprintcol()
 			ved_print(text, textx, 29*16 -2, 2)
+			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor()
 		end
 
