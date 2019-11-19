@@ -163,7 +163,11 @@ function drawlevelslist()
 						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21)
 
 						if mouseishovering then
-							hoveringlevel = prefix .. barename
+							local trailingdirsep = ""
+							if v.isdir then
+								trailingdirsep = dirsep
+							end
+							hoveringlevel = prefix .. barename .. trailingdirsep
 							hoveringlevel_k = k
 							hoveringlevel_k_location = k2
 						end
@@ -229,7 +233,11 @@ function drawlevelslist()
 						tabselected_k = k
 
 						if love.keyboard.isDown("return") and nodialog and not returnpressed then
-							state6load(prefix .. barename)
+							local trailingdirsep = ""
+							if v.isdir then
+								trailingdirsep = dirsep
+							end
+							state6load(prefix .. barename .. trailingdirsep)
 							return
 						end
 					end
