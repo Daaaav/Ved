@@ -568,7 +568,7 @@ function love.draw()
 					skipnextscripthoverrect = nil
 				elseif y >= -16 and y <= love.graphics.getHeight() then
 					local used = usedscripts[scriptnames[rvnum]]
-					hoverrectangle(used and 128 or 64, used and 128 or 64, used and 128 or 64, 128, 8, y, screenoffset+640-8-24 -36, 16)
+					hoverrectangle(128,128,128, used and 128 or 64, 8, y, screenoffset+640-8-24 -36, 16)
 					ved_printf(scriptnames[rvnum], 8, y+4, screenoffset+640-8-36, "center")
 					if rvnum == #scriptnames then
 						showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
