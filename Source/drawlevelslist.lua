@@ -422,7 +422,7 @@ function drawlevelslist()
 		local unsupportedpluginstext = ""
 
 		if unsupportedplugins > 0 then
-			unsupportedpluginstext = "\n\n" .. langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
+			unsupportedpluginstext = "\n\n\n\n" .. langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
 		end
 
 		if intermediate_version then
