@@ -412,7 +412,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 15 then
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
-		drawentitysprite(144, x - 8, y + 2)
+		local sprite = getrescuablesprite(v.p1)
+		drawentitysprite(sprite, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -2221,7 +2222,15 @@ function setrescuablecolor(color)
 		-- Blue
 		love.graphics.setColor(75, 75, 230)
 	else
-		-- What?
-		love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
+		-- Cyan, but happy
+		love.graphics.setColor(132, 181, 255)
+	end
+end
+
+function getrescuablesprite(color)
+	if color >= 0 and color <= 5 then
+		return 144
+	else
+		return 0
 	end
 end

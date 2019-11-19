@@ -43,7 +43,7 @@ function drawmap()
 
 				if selectedtool == 4 then
 					amount = map_trinkets[mry][mrx]
-					sprite = 22
+					spritefunc = function() return 22 end
 					width = 16
 					widthb = 16
 					extray = 0
@@ -51,7 +51,9 @@ function drawmap()
 					colorfunc = function(n) end
 				elseif selectedtool == 16 then
 					amount = map_crewmates[mry][mrx][1]
-					sprite = 144
+					spritefunc = function(n)
+						return getrescuablesprite(map_crewmates[mry][mrx][2][n])
+					end
 					width = 10
 					widthb = 12
 					extray = -2
@@ -61,7 +63,7 @@ function drawmap()
 					end
 				else
 					amount = 1
-					sprite = 3*entitydata[count.startpoint].p1
+					spritefunc = function() return 3*entitydata[count.startpoint].p1 end
 					width = 10
 					widthb = 12
 					extray = -2
@@ -74,6 +76,7 @@ function drawmap()
 				if amount <= 3 then
 					for i = 1, amount do
 						colorfunc(i)
+						local sprite = spritefunc(i)
 
 						drawentitysprite(
 							sprite,
