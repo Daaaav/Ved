@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2019-11-02 01:01:31 (CET)
+--- Last converted: 2019-11-22 22:10:59 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -339,7 +339,7 @@ AMOUNTSPIKES = "Pointes :",
 
 
 UNEXPECTEDSCRIPTLINE = "Ligne de script sans script inattendue : $1",
-DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
+DUPLICATESCRIPT = "Le script $1 est un doublon! Il ne peut être chargé qu'une seule fois.",
 MAPWIDTHINVALID = "La largeur de la carte est invalide : $1",
 MAPHEIGHTINVALID = "La hauteur de la carte est invalide : $1",
 LEVMUSICEMPTY = "La musique du niveau est vide !",
@@ -1284,755 +1284,815 @@ Alt+gauche¤  Sauter dans le script précédent\C
 
 Liste de scripts\gh#
 
-N¤  Create new script\C
-F¤  Go to flags list\C
-/¤  Go to topmost/latest script\C
+N¤  Créer un nouveau script\C
+F¤  Aller dans la liste de drapeaux\C
+/¤  Aller dans le script tout en haut\C
 ]]
 },
 
 {
 splitid = "070_Simp_script_reference",
-subj = "Simp.script reference",
+subj = "Référence script simple",
 imgs = {},
 cont = [[
-Simplified scripting reference\wh#
+Référence de création de script simple\wh#
 \C=
 
-VVVVVV's simplified scripting language is a basic language that can be used to
-script VVVVVV levels.
-Note: whenever something is between quotes, it needs to be typed without them.
+Le langage de création d'un script simplifié de VVVVVV est un langage basique
+qui peut être utilisé pour utiliser des scripts dans des niveaux VVVVVV.
+Note: quand quelque chose est entre des guillemets, ceux-ci doivent être enlevés.
 
 
-say¤([lines[,color]] .. "]]" .. [[)\h#w
+say¤([lignes[,couleur]] .. "]]" .. [[)\h#w
 
-Display a text box. Without any arguments, this will make a text box with one
-line, and by default this will result in a centered terminal text box. The color
-argument can be a color, or the name of a crewmate.
-If you use a color and a rescuable crewmate with that color is in the room, then
-the text box will be displayed above that crewmate.
+Affiche une boite de dialogue. Sans aucun argument, cette fonction créée
+une boite de dialogue avec une seule ligne, et ressemblera à une boite de
+dialogue centrée de terminal par défaut. L'argument couleur peut être une
+couleur ou le nom d'un équipier.
+Si vous utilisez une couleur et un équipier secourable de cette couleur
+est dans la salle, alors la boite de dialogue sera affichée au dessus de
+cet équipier.
 
-reply¤([lines])\h#w
+reply¤([lignes])\h#w
 
-Display a text box for Viridian. Without the lines argument, this will make a text
-box with one line.
+Affiche une boite de dialogue pour Viridian. Sans aucun argument, cette
+fonction créée une boite de dialogue avec une seule ligne.
 
 delay¤(n)\h#w
 
-Delays further action by n ticks. 30 ticks is almost one second.
+Retarde la prochaine action par n trames. 30 trames fait presque une seconde.
 
-happy¤([crewmate])\h#w
+happy¤([équipier])\h#w
 
-Makes a crewmate happy. Without an argument, this will make Viridian happy. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-happy.
+Rend un équipier heureux. Sans argument, cette fonction rendre Viridian heureux.
+Vous pouvez aussi utiliser "all", "everyone" ou "everybody" comme argument pour
+rendre tout le monde triste.
 
-sad¤([crewmate])\h#w
+sad¤([équipier])\h#w
 
-Makes a crewmate sad. Without an argument, this will make Viridian sad. You
-can also use "all", "everyone" or "everybody" as an argument to make everybody
-sad.
+Rend un équipier triste. Sans argument, cette fonction rendre Viridian triste.
+Vous pouvez aussi utiliser "all", "everyone" ou "everybody" comme argument pour
+rendre tout le monde triste.
 
-flag¤(flag,on/off)\h#w
+flag¤(drapeau,on/off)\h#w
 
-Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
-There are 100 flags, numbered from 0 to 99.
-By default, all flags are off when you start playing a level.
-Note: In Ved, you can also use flag names instead of the numbers.
+Allume ou éteint un drapeau donné. Par exemple, flag(4,on) allumera le
+drapeau 4.
+Il y a 100 drapeaux, numérotés de 0 à 99.
+Par défaut, tous les drapeaux sont éteints quand on démarre un niveau.
+Note: Dans Ved, vous pouvez aussi utiliser les noms de drapeaux au lieu
+de nombres.
 
-ifflag¤(flag,scriptname)\h#w
+ifflag¤(drapeau,nom de script)\h#w
 
-If a given flag is ON, then go to script with name scriptname.
-If a given flag is OFF, continue in the current script.
-Example:
-ifflag(20,cutscene) - If flag 20 is ON, go to script "cutscene", else continue in
-                      the current script.
-Note: In Ved, you can also use flag names instead of the numbers.
+Si un drapeau donné est ALLUMÉ, exécuter le script ayant comme nom 
+nom de script.
+Si un drapeau donné est ÉTEINT, continuer dans ce script.
+Exemple :
+ifflag(20,cutscene) - Si le drapeau 20 est ALLUMÉ, exécuter le script
+                      "cutscene", sinon on continue dans ce script.
+Note: Dans Ved, vous pouvez aussi utiliser les noms de drapeaux au lieu
+de nombres.
 
-iftrinkets¤(number,scriptname)\h#w
+iftrinkets¤(nombre,nom de script)\h#w
 
-If your amount of trinkets >= number, go to script with name scriptname.
-If your amount of trinkets < number, continue in the current script.
-Example:
-iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
-                               "enoughtrinkets" will be run, else the current
-                               script will continue.
-It is common practise to use 0 as a minimum amount of trinkets, as a way to load
-a script in any case.
+Si votre nombre de médailles >= nombre, exécuter le script ayant pour
+nom nom de script.
+Si votre nombre de médailles < nombre, continuer dans ce script.
+Exemple :
+iftrinkets(3,enoughtrinkets) - Si vous avez 3 médailles ou plus, le script
+                               "enoughtrinkets" sera exécuté, sinon ce
+                               script sera continué.
+Une pratique répandue est d'utiliser 0 comme nombre minimum de
+médailles afin de charger un script dans tous les cas.
 
-iftrinketsless¤(number,scriptname)\h#w
+iftrinketsless¤(nombre,nom de script)\h#w
 
-If your amount of trinkets < number, go to script with name scriptname.
-If your amount of trinkets >= number, continue in the current script.
+Si votre nombre de médailles < nombre, exécuter le script ayant pour
+nom nom de script.
+Si votre nombre de médailles >= nombre, continuer dans ce script.
 
-destroy¤(something)\h#w
+destroy(objet)\h#w
 
-Valid arguments can be:
-warptokens - Remove all warp tokens from the room until you re-enter the room.
-gravitylines - Remove all gravity lines from the room until you re-enter the room.
-The option "platforms" also exists, but it doesn't work properly.
+Les arguments valides peuvent être :
+warptokens : Supprime tous les jetons de téléportation de la salle jusqu'à que
+vous y entrez une nouvelle fois.
+warptokens : Supprime toutes les lignes de gravité de la salle jusqu'à que
+vous y entrez une nouvelle fois.
+L'option "platforms" existe aussi, mais elle ne marche pas correctement.
 
-music¤(number)\h#w
+music¤(index)\h#w
 
-Change the song to a certain song number.
-For the list of song numbers, refer to the "Lists reference" article.
+Change la musique en une autre en utilisant l'index de la chanson.
+Pour une liste d'index des chansons, veuillez vous référer à l'article
+"Référence de listes".
 
 playremix\h#w
 
-Plays the remix of Predestined Fate as music.
+Joue le remix de Predestined Fate en tant que chanson.
 
 flash\h#w
 
-Flashes the screen white, makes a bang sound and shakes the screen for a bit.
+Éclaire l'écran en blanc, émet un son de détonation et fait trembler l'écran
+pour un court moment.
 
 map¤(on/off)\h#w
 
-Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
-you turn it on again. Rooms will still be uncovered while the map is off to be
-visible when the map is turned on.
+Active (on) ou désactive (off) la carte. Si la carte est désactivée, elle
+affichera "NO SIGNAL" jusqu'à ce qu'elle soit activée une nouvelle fois.
+Les salles seront toujours découvertes pendant que la carte est désactivée
+et seront visibles quand la carte sera activée.
 
-squeak¤(crewmate/on/off)\h#w
+squeak¤(équipier/on/off)\h#w
 
-Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
-or off.
+Fait couiner un équipier, ou active (on) / désactive (off) le couinement lorsqu'une
+boite de dialogue est affichée.
 
-speaker¤(color)\h#w
+speaker¤(couleur)\h#w
 
-Changes the color and position of the next text boxes created with the "say"
-command. This can be used instead of giving a second argument to "say".
+Change la couleur et la position des prochaines boites de dialogue créées
+avec la commande "say". Cette commande peut être utilisée à la place de
+donner un second argument à "say".
 ]]
 },
 
 {
 splitid = "080_Int_script_reference",
-subj = "Int. script reference",
+subj = "Référence script int.",
 imgs = {},
 cont = [[
-Internal scripting reference\wh#
+Référence de création de script interne\wh#
 \C=
 
 La création de script interne donne plus de pouvoir au scripteur, mais c'est
 aussi un peu plus compliqué que la création de script simplifié.
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting.
+Pour utiliser la création de script interne dans Ved, vous pouvez activer le
+mode de création de script interne dans l'éditeur afin de gérer toutes les
+commandes dans ce script en tant que commandes de script interne.
 
-Color coding:\w
-Normal - Should be safe, worst case scenario is VVVVVV crashing because you made a
-         mistake.
-Blue¤   - Some of these don't work in custom levels, others don't make a lot of\b
-         sense in custom levels, or are only half useful because they were really
-         designed for the main game.
-Orange¤ - These work and nothing will go wrong normally, unless you give some\o
-         specific arguments to them that will cause your save data to go away.
-Red¤    - Red commands shouldn't be used in custom levels because they will either\r
-         unlock certain parts of the main game (which you shouldn't want a custom
-         level to do, even if you say everyone has already completed the game), or
-         corrupt the save data altogether.
+Codage de couleurs: \w
+Normal - Devrait être sûr, dans le pire des cas VVVVVV va planter car vous avez fait
+         une erreur.
+Bleu¤   - Certaines de ces commandes ne marchent pas dans un niveau\b
+         personnalisé, d'autres ne font aucun sens dans un niveau personnalisé,
+         ou sont seulement à moitié utile car elles ont surtout été pensées pour
+         le jeu principal.
+Orange¤ - Celles-ci marchent et normalement rien ne devrait mal se passer, à\o
+         moins que vous leur donnez des arguments spécifiques qui peuvent
+         effacer votre sauvegarde.
+Rouge¤  - Les commandes rouges ne doivent pas être utilisées dans un niveau\r
+         personnalisé car elles vont soit débloquer certaines parties du jeu
+         principal (ce qui n'est pas le genre de chose que vous voulez qu'un
+         niveau personnalisé ne fasse, même si tout le monde a complété le
+         jeu) ou complètement corrompre votre sauvegarde.
 
 
-squeak¤(color)\w#h
+squeak¤(couleur)\w#h
 
-Makes a squeak sound from a crewmate, or a terminal sound
+Émet un couinement depuis un équipier, ou un son de terminal.
 
-color - cyan/player/blue/red/yellow/green/purple/terminal
+couleur - cyan/player/blue/red/yellow/green/purple/terminal
 
-text¤(color,x,y,lines)\w#h
+text¤(couleur,x,y,lignes)\w#h
 
-Store a text box in memory with color, position and number of lines. Usually, the
-position command is used after the text command (and its lines of text), which
-will overwrite the coordinates given here, so these are usually left as 0.
+Sauvegarde une boite de dialogue en mémoire avec une couleur, une position
+et un nombre de lignes. Normalement, la commande de position est utilisée
+après la commande de texte (et ses lignes de texte), ce qui écrase les
+coordonnées données ici, donc elles sont usuellement laissées à 0.
 
-color - cyan/player/blue/red/yellow/green/purple/gray
-x - The x position of the text box
-y - The y position of the text box
-lines - The number of lines
+couleur - cyan/player/blue/red/yellow/green/purple/gray
+x - La position x de la boite de dialogue
+y - La position y de la boite de dialogue
+lignes - Le nombre de lignes
 
 position¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box.
+Écrase les valeurs x,y d'une commande de texte, fixant la position de la boite
+de dialogue.
 
-x - center/centerx/centery, or a color name
+x - center/centerx/centery ou un nom de couleur
 cyan/player/blue/red/yellow/green/purple
-y - Only used if x is a color name. Can be above/below
+y - Seulement utilisé si x est un nom de couleur. Peut prendre comme
+valeur above (au-dessus)/below (au-dessous)
 
 endtext\w#h
 
-Makes a text box disappear (fade out)
+Force une boite de dialogue à disparaître (en fondu)
 
 endtextfast\w#h
 
-Makes a text box disappear immediately (without fading out)
+Force une boite de dialogue à disparaître immédiatement (sans fondu)
 
 speak\w#h
 
-Shows a text box, without removing old text boxes. Also pauses the script until
-you press action (unless there's a backgroundtext command above it)
+Affiche une boite de dialogue sans enlever les anciennes. Pause aussi le script
+jusqu'à ce que vous appuyez sur la touche d'action (à moins que la commande
+backgroundtext soit au-dessus de celle-ci)
 
 speak_active\w#h
 
-Shows a text box, and removes any old text box. Also pauses the script until you
-press action (unless there's a backgroundtext command above it)
+Affiche une boite de dialogue, et supprime toute autre boite de dialogue. Pause
+aussi le script jusqu'à ce que vous appuyez sur la touche d'action (à moins que
+la commande backgroundtext soit au-dessus de celle-ci)
 
 backgroundtext\w#h
 
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
+Si vous ajoutez cette commande au-dessus de speak ou speak_active, le jeu
+n'attendra pas que vous appuyer sur la touche d'action après avoir créé la boite
+de dialogue. Cette commande peut être utilisée pour afficher plusieurs boites de
+dialogue en même temps.
 
-changeplayercolour¤(color)\w#h
+changeplayercolour¤(couleur)\w#h
 
-Changes the player's color
+Change la couleur du joueur
 
-color - cyan/player/blue/red/yellow/green/purple/teleporter
+couleur - cyan/player/blue/red/yellow/green/purple/teleporter
 
 restoreplayercolour¤()\w#h
 
-Changes the player's color back to cyan
+Restaure la couleur du joueur par défaut (cyan)
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
+Change la couleur d'un équipier (note: cette commande ne marque qu'avec les
+équipiers créés via la commande createcrewman)
 
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
+a - Couleur de l'équipier à changer cyan/player/blue/red/yellow/green/purple
+b - Nouvelle couleur de l'équipier
 
 alarmon\w#h
 
-Turns the alarm on
+Active l'alarme
 
 alarmoff\w#h
 
-Turns the alarm off
+Désactive l'alarme
 
 cutscene¤()\w#h
 
-Makes cutscene bars appear
+Affiche les barres de cinématique
 
 endcutscene¤()\w#h
 
-Makes cutscene bars disappear
+Fais disparaître les barres de cinématique
 
 untilbars¤()\w#h
 
-Wait until cutscene()/endcutscene() is completed
+Attend que cutscene()/endcutscene() soit terminé
 
 customifflag¤(n,script)\w#h
 
-Same as ifflag(n,script) in simplified scripting
+Même comportement que ifflag(n,script) dans un script simplifié
 
 ifflag¤(n,script)\b#h
 
-Same as customifflag, but loads an internal (main game) script
+Même comportement que customifflag mais charge un script interne
+(du jeu principal)
 
 loadscript¤(script)\b#h
 
-Load an internal (main game) script. Commonly used in custom levels as
-loadscript(stop)
+Charge un script interne (du jeu principal). Souvent utilisé dans des niveaux
+personnalisés en tant que loadscript(stop)
 
 iftrinkets¤(n,script)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Même comportement que iftrinkets(n,script) dans un script simplifié,
+mais exécute un script interne (du jeu principal)
 
 iftrinketsless¤(n,script)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Même comportement que iftrinkets(n,script) dans un script simplifié,
+mais exécute un script interne (du jeu principal)
 
 customiftrinkets¤(n,script)\w#h
 
-Same as iftrinkets(n,script) in simplfied scripting
+Même comportement que iftrinkets(n,script) dans un script simplifié
 
 customiftrinketsless¤(n,script)\w#h
 
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
+Même comportement que iftrinketsless(n,script) dans un script simplifié
+(mais rappelez-vous que cette fonction ne marche pas)
 
-createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
+createcrewman¤(x,y,couleur,humeur,ia1,ia2)\w#h
 
-Creates a crewmate (not rescuable)
+Créée un équipier (non secourable)
 
-mood - 0 for happy, 1 for sad
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+humeur - 0 pour heureux, 1 pour triste
+ia1 - followplayer/followpurple/followyellow/followred/followgreen/followblue
+      faceplayer/panic/faceleft/faceright/followposition,ia2
+ia2 - Position X requise si followposition est utilisé pour ia1
 
 createentity¤(x,y,n,meta1,meta2)\o#h
 
-Creates an entity, check the lists reference for entity numbers
+Créée une entité, veuillez vous référencer à la référence de listes
+pour les index d'entités
 
-n - The entity number
+n - L'index d'entité
 
 vvvvvvman¤()\w#h
 
-Makes the player huge
+Rend le joueur énorme
 
 undovvvvvvman¤()\w#h
 
-Back to normal
+Fait revenir le joueur à la normale
 
 hideplayer¤()\w#h
 
-Makes the player invisible
+Rend le joueur invisible
 
 showplayer¤()\w#h
 
-Makes the player visible
+Rend le joueur visible
 
 gamestate¤(x)\o#h
 
-Change the gamestate to the specified state number
+Change l'état de jeu à l'index d'état spécifié
 
 gamemode¤(x)\b#h
 
-teleporter to show the map, game to hide it (shows teleporters of the main game)
+teleporter pour afficher la carte, game pour la cacher (affiche les téléporteurs du
+jeu principal)
 
 x - teleporter/game
 
 blackout¤()\w#h
 
-Make the screen black/freezes the screen
+Rend l'écran noir / bloque l'écran
 
 blackon¤()\w#h
 
-Back to normal from blackout()
+Annule la commande blackout() et revient à la normale
 
 fadeout¤()\w#h
 
-Fades the screen to black
+Rend l'écran noir en fondu
 
 fadein¤()\w#h
 
-Fades back
+Affiche l'écran en fondu
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Affiche l'écran instantanément sans fondu après un appel à la
+commande fadeout()
 
 untilfade¤()\w#h
 
-Wait until fadeout()/fadein() is completed
+Attend que fadeout()/fadein() soit terminé
 
 gotoroom¤(x,y)\w#h
 
-Change the current room to x,y, where x and y start at 0.
+Change la salle courante à x,y, avec x et y commençant à 0
 
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
+x - Coordonnée x de la salle, commence à 0
+y - Coordonnée y de la salle, commence à 0
 
 gotoposition¤(x,y,f)\w#h
 
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
+Change la position de Viridian à x,y dans cette salle, et f indique s'il est à
+l'envers ou non (1 si à l'envers, 0 si à l'endroit)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
+f - 1 si à l'envers, 0 si à l'endroit (vous pouvez aussi utiliser gotoposition(x,y),
+dans ce cas-ci la gravité du joueur ne sera pas changée par défaut)
 
 flash¤(x)\w#h
 
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
+Rend l'écran blanc, vous pouvez changer le temps pendant lequel l'écran doit
+être blanc (flash tout seul ne marchera pas, vous devez utiliser flash(5) avec
+playef(9) et shake(20) si vous voulez un flash normal)
 
-x - The amount of ticks. 30 ticks is almost one second.
+x - Le nombre de trames. 30 trames fait presque une seconde.
 
 play¤(x)\w#h
 
-Start playing a song with internal song number.
+Joue la chanson ayant l'identifiant de chanson interne donné.
 
-x - Internal song number
+x - Index de chanson interne
 
 jukebox¤(x)\w#h
 
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
+Rend un terminal jukebox blanc et désactive la couleur de tous les autres
+terminaux (dans un niveau personnalisé, on dirait que cette commande
+ne fait qu'enlever la couleur blanche de tous les terminaux actifs).
 
 musicfadeout¤()\w#h
 
-Fades out the music.
+Termine la musique en fondu.
 
 musicfadein¤()\w#h
 
-Opposite of musicfadeout() (doesn't seem to work)
+Opposé de musicfadeout() (n'a pas l'air de fonctionner)
 
 stopmusic¤()\w#h
 
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
+Arrête la musique immédiatement. Équivalent de music(0) dans un script simplifié.
 
 resumemusic¤()\w#h
 
-Opposite of stopmusic() (doesn't seem to work)
+Opposé de stopmusic() (n'a pas l'air de fonctionner)
 
 playef¤(x,n)\w#h
 
-Play a sound effect.
+Joue un effet sonore.
 
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
+n - Actuellement non utilisé, et peut être omis. Dans VVVVVV 1.x, cet argument
+permettait de contrôler le temps en millisecondes auquel le son devait
+commencer.
 
-changemood¤(colour,mood)\w#h
+changemood¤(couleur,humeur)\w#h
 
-Changes the mood of a crewmate (only works for crewmates created with
-createcrewman)
+Change l'humeur d'un équipier (marche seulement sur les équipiers créés
+avec la commande createcrewman)
 
-colour - cyan/player/blue/red/yellow/green/purple
-mood - 0 for happy, 1 for sad
+couleur - cyan/player/blue/red/yellow/green/purple
+humeur - 0 pour heureux, 1 pour triste
 
 everybodysad¤()\w#h
 
-Makes everybody sad (only for crewmates created with createcrewman and the player)
+Rend tout le monde triste (marche seulement pour les équipiers créés avec la
+commande createcrewman et le joueur)
 
-changetile¤(colour,tile)\w#h
+changetile¤(couleur,tuile)\w#h
 
-Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
-and it only works for crewmates created with createcrewman)
+Change la tuile d'un équipier (vous pouvez la changer en n'importe quelle image
+dans sprites.png, et cette commande marche seulement sur les équipiers via
+avec la commande createcrewman)
 
-colour - cyan/player/blue/red/yellow/green/purple/gray
-tile - Tile number
+couleur - cyan/player/blue/red/yellow/green/purple/gray
+tuile - Index de la tuile
 
 face¤(a,b)\w#h
 
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
+Force la tête d'un équipier a à regarder l'équipier b (fonctionne seulement pour
+les équipiers créés via la commande createcrewman)
 
 a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
+b - pareil
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Force l'équipier spécifié en tant que compagnon (d'après mes souvenirs,
+il me semble que cette commande dépend de la position sur la carte)
 
-changeai¤(crewmate,ai1,ai2)\w#h
+changeai¤(équipier,ia1,ia2)\w#h
 
-Can change the face direction of a crewmate or the walking behaviour
+Change la direction dans laquelle l'équipier regarde ou son comportement
+de marche
 
-crewmate - cyan/player/blue/red/yellow/green/purple
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
+équipier - cyan/player/blue/red/yellow/green/purple
 
-changedir¤(colour,direction)\w#h
+ia1 - followplayer/followpurple/followyellow/followred/followgreen/followblue
+      faceplayer/panic/faceleft/faceright/followposition,ia2
+ia2 - Position X requise si followposition est utilisé pour ia1
 
-Just like changeai(colour,faceleft/faceright), this changes face direction.
+changedir¤(couleur,direction)\w#h
 
-colour - cyan/player/blue/red/yellow/green/purple
-direction - 0 is left, 1 is right
+Comme changeai(couleur,faceleft/faceright), cette fonction change la
+direction du regard d'un équipier.
+
+couleur - cyan/player/blue/red/yellow/green/purple
+direction - 0 est gauche, 1 est droite
 
 walk¤(direction,x)\w#h
 
-Makes the player walk for the specified number of ticks
+Force le joueur à marcher pour un certain nombre de trames
 
-direction - left/right
+direction - left (gauche) / right (droite)
 
-flipgravity¤(colour)\w#h
+flipgravity¤(couleur)\w#h
 
-Flips the gravity of a certain crewmate (it won't always work on yourself)
+Change la gravité d'un équipier (peut ne pas marcher sur le joueur)
 
-colour - cyan/player/blue/red/yellow/green/purple
+couleur - cyan/player/blue/red/yellow/green/purple
 
 flipme\w#h
 
-Correct vertical positioning of multiple text boxes in flip mode
+Corrige la position verticale de plusieurs boites de dialogues en mode
+inversé
 
 tofloor\w#h
 
-Makes the player flip to the floor if he isn't already on the floor.
+Force le joueur à inverser sa gravité vers le sol s'il est inversé.
 
 flip\w#h
 
-Make the player flip
+Retourne le joueur
 
 foundtrinket¤(x)\w#h
 
-Makes a trinket found
+Force la récupération d'une médaille
 
-x - Number of the trinket
+x - Index de la médaille
 
 runtrinketscript\b#h
 
-Play Passion For Exploring?
+Joue Passion For Exploring?
 
 altstates¤(x)\b#h
 
-Changes the layout of some rooms, like the trinket room in the ship before and
-after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
+Change l'agencement de quelques salles, telles que la salle des médailles
+dans le vaisseau ou l'entrée du laboratoire (les niveaux personnalisés ne
+supportent pas du tout altstates)
 
 createlastrescued¤(x,y)\b#h
 
-Creates the last rescued crewmate at position x,y (?)
+Créée le dernier équipier secouru à la position x,y (?)
 
-rescued¤(colour)\b#h
+rescued¤(couleur)\b#h
 
-Makes someone rescued
+Force la rescousse d'un équipier
 
-missing¤(colour)\b#h
+missing¤(couleur)\b#h
 
-Makes someone missing
+Force la disparition d'un équipier
 
 finalmode¤(x,y)\b#h
 
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
-Final Level
+Vous téléporte dans la Dimension Externe VVVVVV, (46,54) est la première
+salle du dernier niveau
 
 setcheckpoint¤()\w#h
 
-Sets the checkpoint to the current location
+Créée un point de sauvegarde à la position actuelle
 
 textboxactive\w#h
 
-Makes all text boxes on the screen disappear except for the last created one
+Supprime toutes les boites de dialogue à l'écran sauf la dernière que vous
+avez créée
 
 ifexplored¤(x,y,script)\w#h
 
-If x+1,y+1 is explored, go to (internal) script
+Si la salle x+1,y+1 est explorée, exécuter le script (interne) script
 
-iflast¤(crewmate,script)\b#h
+iflast¤(équipier,script)\b#h
 
-If crewmate x was rescued last, go to script
+Si le dernier équipier secouru est x, exécuter le script script
 
-crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
-Victoria (I don't know the number for Viridian and Violet)
+équipier - Des index sont utilisés ici: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
+Victoria (Je ne connais pas les index pour Viridian et Violet)
 
 ifskip¤(x)\b#h
 
-If you skip the cutscenes in No Death Mode, go to script x
+Si vous passez les cinématiques en Mode Sans Mort, exécuter le
+script x
 
-ifcrewlost¤(crewmate,script)\b#h
+ifcrewlost¤(équipier,script)\b#h
 
-If crewmate is lost, go to script
+Si l'équipier est manquant, exécuter le script donné
 
 showcoordinates¤(x,y)\w#h
 
-Show coordinates x,y on the map (This works for the map for custom levels)
+Montre les coordonnés x,y sur la carte (Cette commande marche pour la
+carte d'un niveau personnalisé)
 
 hidecoordinates¤(x,y)\w#h
 
-Hide coordinates x,y on the map (This works for the map for custom levels)
+Cache les coordonnés x,y sur la carte (Cette commande marche sur la
+carte d'un niveau personnalisé)
 
 showship\w#h
 
-Show the ship on the map
+Affiche le vaisseau sur la carte
 
 hideship\w#h
 
-Hide the ship on the map
+Cache le vaisseau sur la carte
 
 showsecretlab\w#h
 
-Show the secret lab on the map
+Affiche le laboratoire secret sur la carte
 
 hidesecretlab\w#h
 
-Hide the secret lab on the map
+Cache le laboratoire secret sur la carte
 
 showteleporters¤()\b#h
 
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
+Affiche les téléporteurs sur la carte (Je suppose que cette commande affiche
+seulement le téléporteur dans Space Station 1)
 
 hideteleporters¤()\b#h
 
-Hide the teleporters on the map
+Cache les téléporteurs sur la carte
 
 showtargets¤()\b#h
 
-Show the targets on the map (unknown teleporters which show up as ?s)
+Affiche les cibles sur la carte (téléporteurs inconnus affichés en
+tant que ?s)
 
 hidetargets¤()\b#h
 
-Hide the targets on the map
+Cache les cibles sur la carte
 
 showtrinkets¤()\b#h
 
-Show the trinkets on the map
+Affiche les médailles sur la carte
 
 hidetrinkets¤()\b#h
 
-Hide the trinkets on the map
+Cache les médailles sur la carte
 
 hascontrol¤()\w#h
 
-Makes the player have control, however doesn't work in the middle of scripts
+Rend le contrôle au joueur, cependant cette commande ne marche pas au
+milieu d'un script
 
 nocontrol¤()\w#h
 
-The opposite of hascontrol()
+Contraire de hascontrol()
 
 specialline¤(x)\b#h
 
-Special dialogs that show up in the main game
+Dialogue spéciaux qui n'apparaissent que dans le jeu principal
 
 destroy¤(x)\w#h
 
-Same behaviour as simplified command
+Même comportement que la commande dans un script simplifié
 
 x - gravitylines/warptokens/platforms
 
 delay¤(x)\w#h
 
-Same behaviour as simplified command
+Même comportement que la commande dans un script simplifié
 
 flag¤(x,on/off)\w#h
 
-Same behaviour as simplified command
+Même comportement que la commande dans un script simplifié
 
 telesave¤()\r#h
 
-Saves your game (in the regular teleporter save, so don't use it!)
+Sauvegarde votre partie (dans la sauvegarde de téléporteur normale,
+donc ne l'utilisez pas!)
 
-createactivityzone¤(colour)\b#h
+createactivityzone¤(couleur)\b#h
 
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
+Créée une zone dans laquelle le joueur peut être qui dira "Press ACTION to
+talk to (Équipier)"
 
 createrescuedcrew¤()\b#h
 
-Creates all rescued crewmates
+Créée tous les équipiers secourus
 
 trinketyellowcontrol¤()\b#h
 
-Dialog of Vitellary when he gives you a trinket in the real game
+Dialogue de Vitellary quand il vous donne une médaille dans le jeu de base
 
 trinketbluecontrol¤()\b#h
 
-Dialog of Victoria when she gives you a trinket in the real game
+Dialogue de Victoria quand elle vous donne une médaille dans le jeu de base
 
 rollcredits¤()\r#h
 
-Makes the credits roll. It destroys your save after the credits are completed!
+Affiche les crédits de fin. Cette commande détruit votre sauvegarde après
+que les crédits de fin soient finis!
 
 teleportscript¤(script)\b#h
 
-Used to set a script which is run when you use a teleporter
+Utilisé pour déterminer quel script est utilisé lorsqu'un téléporteur est
+utilisé
 
 clearteleportscript¤()\b#h
 
-Clears the teleporter script set with teleporterscript(x)
+Supprime le script de téléportation instauré précédemment avec
+teleporterscript(x)
 
 moveplayer¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make him move up or to the left
+Déplace le joueur x pixels à droite et y pixels en bas. Vous pouvez bien sûr
+utiliser des valeurs négatives pour le déplacer en haut ou à gauche
 
 do¤(n)\w#h
 
-Starts a loop block which will repeat n times
+Commence une boucle de code qui va s'effectuer n fois
 
 loop\w#h
 
-Put this at the end of the loop block
+Ajoutez cette commande à la fin d'une boucle de code
 
 leavesecretlab¤()\b#h
 
-Turn off "secret lab mode"
+Désactive le "Mode laboratoire secret"
 
 shake¤(n)\w#h
 
-Shake the screen for n ticks. This will not create a delay.
+Fait trembler l'écran pour n trames. Cette commande ne délayera pas
+les commandes suivantes.
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will glow white and touching it will not
-annihilate your save data. May not work if there are multiple teleporters.
+S'il y a un téléporteur dans la salle, il deviendra blanc et le toucher ne
+détruira pas votre sauvegarde. Peut ne pas fonctionner s'il y a plusieurs
+téléporteurs.
 
 customposition¤(x,y)\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box,
-but for crewmates, rescuable crewmates are used to position against, instead of
-createentity crewmates.
+Remplace les valeurs x,y d'une commande de texte et par conséquent change la
+position de la boite de dialogue, mais pour les équipiers, les équipiers à secourir
+sont utilisés pour positionner la boite de dialogue à la place des équipiers créés
+via la commande createentity.
 
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple (rescuable)
-y - Only used if x is a color name. Can be above/below
+x - center/centerx/centery, ou un nom de couleur
+cyan/player/blue/red/yellow/green/purple (secourable)
+y - Seulement utilisé si x est un nom de couleur. Peut prendre comme
+valeur above (au-dessus)/below (au-dessous)
 
 custommap¤(on/off)\w#h
 
-The internal variant of the map command
+La variante interne de la commande map
 
 trinketscriptmusic\w#h
 
-Plays passion for exploring, without taking arguments(?)
+Joue Passion For Exploring sans aucun argument (?)
 
 startintermission2\w#h
 
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
+Fonctionne comme la commande finalmode(46,54), et téléporte le
+joueur dans le dernier niveau sans argument. Plante le jeu en mode
+chronométré.
 
 resetgame\w#h
 
-Resets all trinkets, collected crewmates and flags, and teleports the player to
-the last checkpoint.
+Réinitialise toutes les médailles, les équipiers collectés et les drapeaux, et
+téléporte le joueur vers le dernier point de sauvegarde.
 
 redcontrol\b#h
 
-Start a conversation with Vermilion just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Commence une conversation avec Vermilion comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 greencontrol\b#h
 
-Start a conversation with Verdigris just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Commence une conversation avec Verdigris comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 bluecontrol\b#h
 
-Start a conversation with Victoria just like when you meet her in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Commence une conversation avec Victoria comme si vous venez de la
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 yellowcontrol\b#h
 
-Start a conversation with Vitellary just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
+Commence une conversation avec Vitellary comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 purplecontrol\b#h
 
-Start a conversation with Violet just like when you meet her in the main game and
-press ENTER. Also creates an activity zone afterwards.
+Commence une conversation avec Violet comme si vous venez de la
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 foundlab\b#h
 
-Plays sound effect 3, shows text box with "Congratulations! You have found the
-secret lab!" Does not endtext, also has no further unwanted effects.
+Jour l'effet sonore 3, affiche la boite de dialogue "Congratulations! You
+have found the secret lab!" Cette commande ne finit pas le texte, et n'a
+aucun autre effet indésirable.
 
 foundlab2\b#h
 
-Displays the second text box you see after discovering the secret lab. Also does
-not endtext, and also does not have any further unwanted effects.
+Affiche la seconde boite de dialogue que vous pouvez voir après avoir
+découvert le laboratoire secret. Cette commande ne finit pas non plus le
+texte, et n'a aucun autre effet indésirable.
 
 entersecretlab\r#h
 
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
+Débloque le laboratoire secret pour le jeu principal, ce qui n'est
+probablement pas quelque chose qu'un niveau personnalisé devrait
+faire. Active le mode laboratoire secret.
 ]]
 },
 
 {
 splitid = "090_Lists_reference",
-subj = "Lists reference",
+subj = "Référence listes",
 imgs = {},
 cont = [[
-Lists reference\wh#
-\C=
+Références des listes
 
-These are lists of numbers that are used in VVVVVV, mostly copied from forum
-posts. Thanks to everyone who assembled these lists!
+Ce qui suit sont des listes d'index utilisés dans VVVVVV, en grande majorité
+copiées depuis des postes de forums. Un grand merci à tout ceux qui ont
+assemblé ces listes!
 
 
 Index\w&Z+
 \&Z+
-#Music numbers (simplified scripting)\C&Z+l
-#Music numbers (internal)\C&Z+l
-#Sound effect numbers\C&Z+l
-#Entities\C&Z+l
-#Colors for createentity() crewmates\C&Z+l
-#Enemy movement types\C&Z+l
-#Gamestates\C&Z+l
+#Index de musiques (script simplifié)\C&Z+l
+#Index de musiques (script interne)\C&Z+l
+#Index d'effets sonores\C&Z+l
+#Entités\C&Z+l
+#Couleurs pour les équipiers créés via createentity()\C&Z+l
+#Type de mouvement des ennemis\C&Z+l
+#États de jeu\C&Z+l
 
 
-Music numbers (simplified scripting)\h#
+Index de musiques (script simplifié)\h#
 
-0 - Silence (no music)
+0 - Silence (pas de musique)
 1 - Pushing Onwards
 2 - Positive Force
 3 - Potential For Anything
@@ -2045,9 +2105,9 @@ Music numbers (simplified scripting)\h#
 10 - Paced Energy
 11 - Piercing The Sky
 
-Music numbers (internal)\h#
+Index de musiques (script externe)\h#
 
-0 - Path Complete
+0 - Path Complete (niveau complété)
 1 - Pushing Onwards
 2 - Positive Force
 3 - Potential For Anything
@@ -2062,40 +2122,40 @@ Music numbers (internal)\h#
 12 - Pressure Cooker
 13 - Paced Energy
 14 - Piercing The Sky
-15 - Predestined Fate remixed
+15 - Remix de Predestined Fate
 
-Sound effect numbers\h#
+Index d'effets sonores\h#
 
-0 - Flip to ceiling
-1 - Flip back to floor
-2 - Cry
-3 - Trinket collected
-4 - Coin collected
-5 - Checkpoint touched
-6 - Quicker quicksand block touched
-7 - Normal quicksand block touched
-8 - Gravity line touched
+0 - Retourner vers le plafond
+1 - Retourner vers le sol
+2 - Pleur
+3 - Médaille collectée
+4 - Pièce collectée
+5 - Point de sauvegarde touché
+6 - Sable mouvant rapide touché
+7 - Sable mouvant lent touché
+8 - Ligne de gravité touchée
 9 - Flash
-10 - Warp
-11 - Viridian squeak
-12 - Verdigris squeak
-13 - Victoria squeak
-14 - Vitellary squeak
-15 - Violet squeak
-16 - Vermilion squeak
-17 - Terminal touched
-18 - Teleporter touched
-19 - Alarm
-20 - Terminal squeak
-21 - Time trial countdown "3", "2", "1"
-22 - Time trial countdown "Go!"
-23 - VVVVVV Man breaking walls
-24 - Crewmates (de)combining into VVVVVV Man
-25 - New record in Super Gravitron
-26 - New trophy in Super Gravitron
-27 - Rescued crewmate (in custom levels)
+10 - Téléportation
+11 - Couinement de Viridian
+12 - Couinement de Verdigris
+13 - Couinement de Victoria
+14 - Couinement de Vitellary
+15 - Couinement de Violet
+16 - Couinement de Vermilion
+17 - Terminal touché
+18 - Téléporteur touché
+19 - Alarme
+20 - Couinement de terminal
+21 - Compte à rebours mode chronométré "3", "2", "1"
+22 - Compte à rebours mode chronométré "Go!"
+23 - VVVVVV Man cassant des murs
+24 - Équipiers (dé)fusionnant en VVVVVV Man
+25 - Nouveau record dans Super Gravitron
+26 - Nouveau trophé dans Super Gravitron
+27 - Équipier secouru (dans un niveau personnalisé)
 
-Entities\h#
+Entités\h#
 
 0 - The player
 1 - Enemy

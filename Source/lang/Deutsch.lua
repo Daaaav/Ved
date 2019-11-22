@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-11-02 01:01:30 (CET)
+--- Last converted: 2019-11-22 22:10:59 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1592,7 +1592,7 @@ gotoposition¤(x,y,f)\w#h
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
 will have normal gravity by default)
 
 flash¤(x)\w#h

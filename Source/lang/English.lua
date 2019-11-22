@@ -1578,7 +1578,7 @@ gotoposition¤(x,y,f)\w#h
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
 will have normal gravity by default)
 
 flash¤(x)\w#h

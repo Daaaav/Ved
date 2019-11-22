@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-11-02 01:01:31 (CET)
+--- Last converted: 2019-11-22 22:10:59 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -349,7 +349,7 @@ AMOUNTSPIKES = "Pintaĵoj:",
 
 
 UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
-DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
+DUPLICATESCRIPT = "Skripto $1 estas duplikato! Nur unu povas esti ŝargita.",
 MAPWIDTHINVALID = "Maplarĝo estas malvalida: $1",
 MAPHEIGHTINVALID = "Mapalto estas malvalida: $1",
 LEVMUSICEMPTY = "Nivelo-muziko estas nula!",
@@ -1606,7 +1606,8 @@ gotoposition¤(x,y[,f])\w#h
 Ŝanĝi la pozicion de Viridian al x,y en tiu ĉi ĉambro, kaj f estas ĉu vi estas
 renversita aŭ ne. (1 por renverso, 0 por nerenverso)
 
-flash¤(x)\w#h
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+will have normal gravity by default)
 
 flash¤(x)\w#h
 
