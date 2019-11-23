@@ -35,28 +35,22 @@ function drawscripteditor()
 			if textlinestogo > 0 then
 				-- Search forward for a createcrewman unless we hit a speak(_active) first
 				local i = k + textlinestogo + 1
-				if i <= #scriptlines then
-					local l
-					while true do
-						if i == editingline then
-							l = (input .. input_r):gsub(" ", "")
-						else
-							l = (scriptlines[i]):gsub(" ", "")
-						end
-						if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
-							alttextcolor = true
-							break
-						elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
-							alttextcolor = false
-							break
-						end
-
-						if i + 1 > #scriptlines then
-							break
-						else
-							i = i + 1
-						end
+				local l
+				while scriptlines[i] ~= nil do
+					if i == editingline then
+						l = (input .. input_r):gsub(" ", "")
+					else
+						l = (scriptlines[i]):gsub(" ", "")
 					end
+					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
+						alttextcolor = true
+						break
+					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
+						alttextcolor = false
+						break
+					end
+
+					i = i + 1
 				end
 				textlinestogo = 0
 			end
