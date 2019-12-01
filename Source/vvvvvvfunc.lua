@@ -25,6 +25,10 @@ end
 local o_Graphics = {
 	linestate = 0, -- 0 to 9, inclusive
 	linedelay = 0, -- 0, 1, or 2. The game doesn't even initialize this
+	trinketcolset = false, -- So all trinkets have the same color per-frame. Make sure to set this to false every 34/1000ths of a second
+	trinketr = 0,
+	trinketg = 0,
+	trinketb = 0,
 }
 
 function o_Graphics:Graphics(o)
@@ -104,7 +108,7 @@ end
 -- This function is copied straight from Terry's post of it on Distractionware,
 -- complete with the comments
 -- http://distractionware.com/forum/index.php?topic=1992.msg21312#msg21312
-local function getcol(t, help)
+function o_Graphics:getcol(t, help)
 	local temp
 
 	-- Setup predefinied [sic] colours as per our zany palette
@@ -119,8 +123,13 @@ local function getcol(t, help)
 		return 225-(help.glow/2), 75, 30
 	elseif t == 3 then
 		-- Trinket
-		-- Editor's note: the source has something about `trinketcolset`, which I'm just going to ignore
-		return 200 - (fRandom() * 64), 200 - (fRandom() * 128), 164 + (fRandom() * 60)
+		if not self.trinketcolset then
+			self.trinketr = 200 - (fRandom() * 64)
+			self.trinketg = 200 - (fRandom() * 128)
+			self.trinketb = 164 + (fRandom() * 60)
+			self.trinketcolset = true
+		end
+		return self.trinketr, self.trinketg, self.trinketb
 	elseif t == 4 then
 		-- Inactive savepoint
 		temp = (help.glow/2) + (fRandom() * 8)
@@ -218,7 +227,7 @@ local function getcol(t, help)
 	elseif t == 37 then
 		-- Trinket
 		-- Editor's note: the difference between this and color 3 is that this one has RGBf() called on it
-		return RGBf(getcol(3, help))
+		return RGBf(self:getcol(3, help))
 	elseif t == 38 then
 		-- Silver
 		return RGBf(196, 196, 196)
@@ -230,7 +239,7 @@ local function getcol(t, help)
 	elseif t == 40 then
 		-- Teleporter in action!
 		-- Editor's note: the difference between this and color 102 is that this one has RGBf() called on it
-		return RGBf(getcol(102, help))
+		return RGBf(self:getcol(102, help))
 		-- Editor's note: be warned that 41 through 99 simply don't exist
 
 	elseif t == 100 then
@@ -292,7 +301,7 @@ end
 
 -- Exports
 function o_Graphics:setcol(t, help)
-	love.graphics.setColor(getcol(t, help))
+	love.graphics.setColor(self:getcol(t, help))
 end
 
 function o_Graphics:setgravitylinecol()

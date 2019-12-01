@@ -2012,6 +2012,7 @@ function love.update(dt)
 	while v6_frametimer > .034 do
 		v6_help:updateglow()
 		v6_graphics:updatelinestate()
+		v6_graphics.trinketcolset = false
 
 		v6_frametimer = v6_frametimer - .034
 	end
