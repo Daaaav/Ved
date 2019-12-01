@@ -70,6 +70,7 @@ function love.load()
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
 		end
+		playtesting_available = false -- until we get libvloader for macOS
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -78,6 +79,7 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_win")
 		loaded_filefunc = "win"
+		playtesting_available = false -- until we get libvloader for Windows
 		--[[
 		-- Make sure our util works
 		if not love.filesystem.exists("available_utils") then
@@ -109,11 +111,17 @@ function love.load()
 				vedlib_filefunc_available = true
 			end
 		end
+		if not love.filesystem.exists("available_libs/libvloader_linA05.so") then
+			-- Too bad there's no love.filesystem.copy()
+			love.filesystem.write("available_libs/libvloader_linA05.so", love.filesystem.read("libs/libvloader_linA05.so"))
+		end
+		libvloader = "libvloader_linA05.so"
 		if vedlib_filefunc_available then
 			loaded_filefunc = "linmac"
 		else
 			loaded_filefunc = "lin_fallback"
 		end
+		playtesting_available = true
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
@@ -122,6 +130,7 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
+		playtesting_available = false
 	end
 	lctrl = "l" .. ctrl
 	rctrl = "r" .. ctrl
@@ -156,6 +165,7 @@ function love.load()
 	ved_require("slider")
 	ved_require("mapfunc")
 	ved_require("music")
+	ved_require("playtesting")
 
 	dodisplaysettings()
 
@@ -270,6 +280,10 @@ function love.load()
 	copybtn = love.graphics.newImage("images/copy.png")
 	pastebtn = love.graphics.newImage("images/paste.png")
 	refreshbtn = love.graphics.newImage("images/refresh.png")
+
+	playbtn = love.graphics.newImage("images/play.png")
+	playgraybtn = love.graphics.newImage("images/playgray.png")
+	stopbtn = love.graphics.newImage("images/stop.png")
 
 	eraseron = love.graphics.newImage("images/eraseron.png")
 	eraseroff = love.graphics.newImage("images/eraseroff.png")
@@ -387,6 +401,16 @@ function love.load()
 		)
 	end
 
+	if playtesting_available then
+		local temp_symlinks = playtesting_init_veduser() -- Replace with just 'playtesting_init_veduser()' when Ved can create symlinks on its own
+		if #temp_symlinks > 0 then
+			dialog.create( -- Yes, hardcoded English text
+				"Ved can't make symlinks yet, so please make these symlinks to where they are in the real VVVVVV directory:\n"
+				.. table.concat(temp_symlinks, "\n")
+			)
+		end
+	end
+
 	secondlevel = false
 	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
 
@@ -417,6 +441,9 @@ function love.load()
 
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
+
+	playtestthread_inchannel = love.thread.getChannel("playtestthread_in")
+	playtestthread_outchannel = love.thread.getChannel("playtestthread_out")
 
 	next_frame_time = love.timer.getTime()
 
@@ -1949,6 +1976,16 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
+	if playtesting_active then
+		local chanmessage = playtestthread_outchannel:pop()
+
+		if chanmessage ~= nil then
+			if chanmessage == PLAYTESTING.DONE then
+				playtesting_active = false
+			end
+		end
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
@@ -2215,7 +2252,7 @@ function love.update(dt)
 		map_work(0.005)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
 		nodialog = false
 	elseif not love.mouse.isDown("l") then
 		nodialog = true
@@ -2631,7 +2668,7 @@ function love.textinput(char)
 		coordsdialog.type(char)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
 		return
 	end
 
@@ -3078,12 +3115,14 @@ function love.keypressed(key)
 			toolscroll()
 		end
 
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "q" then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and state == 1 and key == "q" then
 		coordsdialog.activate()
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
+	elseif playtesting_askwherestart and not editingroomname and editingroomtext == 0 and state == 1 and key == "escape" then
+		playtesting_cancelask()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
 			tonotepad()
@@ -3184,7 +3223,7 @@ function love.keypressed(key)
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
 		selectedsubtool[14] = 1
 		warpid = nil
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
 		-->
 		if editingbounds == 0 then
 			if roomx+1 >= metadata.mapwidth then
@@ -3196,7 +3235,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") and (not keyboardmode or state == 12) then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") and (not keyboardmode or state == 12) then
 		--<
 		if editingbounds == 0 then
 			if roomx+1 <= 1 then
@@ -3208,7 +3247,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") and (not keyboardmode or state == 12) then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") and (not keyboardmode or state == 12) then
 		--v
 		if editingbounds == 0 then
 			if roomy+1 >= metadata.mapheight then
@@ -3220,7 +3259,7 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") and (not keyboardmode or state == 12) then
+	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") and (not keyboardmode or state == 12) then
 		--^
 		if editingbounds == 0 then
 			if roomy+1 <= 1 then
@@ -3353,6 +3392,9 @@ function love.keypressed(key)
 		-- We have to do this in love.draw() or else the
 		-- editorscreenshot will be of the wrong state
 		gotostateonnextdraw = 6
+	elseif nodialog and editingroomtext == 0 and not editingroomname and editingbounds == 0 and state == 1 and table.contains({"return", "kpenter"}, key) then
+		-- Play
+		playtesting_start()
 	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if state == 6 and not state6old1 then
@@ -3650,7 +3692,7 @@ function love.keypressed(key)
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
+	elseif (nodialog or playtesting_askwherestart) and state == 12 and (key == "return" or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and (key == "," or key == ".") then

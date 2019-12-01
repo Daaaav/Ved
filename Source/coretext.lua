@@ -121,7 +121,7 @@ function loadtinynumbersfont()
 	-- Load the tinynumbers font, accounting for the current language
 	tinynumbers_all = love.graphics.newImageFont(
 		"fonts/tinynumbersfont.png",
-		"0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d h",
+		"0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d hgvj;",
 		love_version_meets(10) and 1 or nil
 	)
 	if not love_version_meets(10) then

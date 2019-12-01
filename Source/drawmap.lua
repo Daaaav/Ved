@@ -1,7 +1,12 @@
 function drawmap()
 	love.graphics.setColor(128,128,128)
 	love.graphics.rectangle("line", mapxoffset+screenoffset-0.5, mapyoffset-0.5, 640*mapscale*metadata.mapwidth+1, 480*mapscale*metadata.mapheight+1)
-	love.graphics.setColor(255,255,255)
+	if playtesting_askwherestart then
+		-- Darken the map border
+		love.graphics.setColor(0, 0, 0, 127)
+		love.graphics.rectangle("fill", mapxoffset+screenoffset-1, mapyoffset-1, 640*mapscale*metadata.mapwidth+2, 480*mapscale*metadata.mapheight+2)
+	end
+	love.graphics.setColor(255,255,255,255)
 	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
 	love.graphics.draw(covered_full, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
@@ -101,7 +106,8 @@ function drawmap()
 	-- (and also we won't highlight the room behind it either if we're not clicking)
 	local mouseontools = keyboard_eitherIsDown(ctrl) and love.mouse.getX() <= 64
 
-	if nodialog then
+	local mousepressed_in_nodialog = false
+	if nodialog or playtesting_askwherestart then
 		for mry = 0, metadata.mapheight-1 do
 			for mrx = 0, metadata.mapwidth-1 do
 				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) and not mouseontools then
@@ -122,8 +128,10 @@ function drawmap()
 
 							-- We don't want to click the first tile we press
 							nodialog = false
+							mousepressed_in_nodialog = true
 
 							tostate(1, true)
+						elseif not nodialog then -- End of playtesting_askwherestart exceptions to nodialog
 						elseif not mousepressed and selected1x == -1 then
 							-- Select 1
 							selected1x = hoverx
@@ -155,6 +163,7 @@ function drawmap()
 						-- We just want to go there
 						gotoroom(hoverx, hovery)
 						mapmovedroom = true
+						mousepressed_in_nodialog = true
 					end
 				end
 			end
@@ -288,7 +297,25 @@ function drawmap()
 	end
 
 	-- Put this here, otherwise we get tripped up when clicking on the tools
-	if love.mouse.isDown("l") and nodialog then
+	if love.mouse.isDown("l") and (nodialog or mousepressed_in_nodialog) then
 		mousepressed = true
 	end
+
+	if playtesting_askwherestart then
+		-- Darken the left side panel
+		love.graphics.setColor(0, 0, 0, 127)
+		love.graphics.rectangle("fill", 0, 0, screenoffset-16, love.graphics.getHeight())
+		love.graphics.setColor(255, 255, 255, 255)
+	end
+end
+
+function drawmapplayask()
+	if not playtesting_askwherestart then
+		return
+	end
+
+	-- Darken the right side panel
+	love.graphics.setColor(0, 0, 0, 127)
+	love.graphics.rectangle("fill", love.graphics.getWidth()-124, love.graphics.getHeight()/2, love.graphics.getWidth()-124, love.graphics.getHeight()/2-32)
+	love.graphics.setColor(255, 255, 255, 255)
 end

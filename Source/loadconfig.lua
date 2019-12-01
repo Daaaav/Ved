@@ -223,7 +223,13 @@ configs =
 		{
 		default = false,
 		["type"] = "bool",
-		}
+		},
+	vvvvvvnonsteam =
+		{
+		default = "",
+		["type"] = "string",
+		comment = "Do not put a trailing (back)slash. On Windows, point this to the folder containing 'VVVVVV.exe'. On Linux and macOS, point this to the folder ABOVE 'x86_64/' or 'osx/'.",
+		},
 	}
 
 function saveconfig()

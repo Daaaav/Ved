@@ -2308,3 +2308,8 @@ SHIFT = {
 	UP = 3,
 	DOWN = 4,
 }
+
+-- For playtesting
+PLAYTESTING = {
+	DONE = 1,
+}

@@ -63,6 +63,7 @@ ui.elements = {
 			EditorIconBar(),
 			LabelButton(L.COPYROOMS,
 				function()
+					if playtesting_askwherestart then return end
 					selectingrooms = 1
 					selected1x = -1; selected1y = -1
 					selected2x = -1; selected2y = -1
@@ -70,6 +71,7 @@ ui.elements = {
 			),
 			LabelButton(L.SWAPROOMS,
 				function()
+					if playtesting_askwherestart then return end
 					selectingrooms = 2
 					selected1x = -1; selected1y = -1
 					selected2x = -1; selected2y = -1
@@ -90,18 +92,19 @@ ui.elements = {
 							ved_print(arrow_down, x+8*11+4+1, y+10+8+1)
 						end
 					),
-					FloatContainer(InvisibleButton(10, 10, function() shiftrooms(SHIFT.LEFT, true) end), 8*10, 10),
-					FloatContainer(InvisibleButton(10, 10, function() shiftrooms(SHIFT.RIGHT, true) end), 8*13, 10),
-					FloatContainer(InvisibleButton(10, 10, function() shiftrooms(SHIFT.UP, true) end), 8*11+4, 0),
-					FloatContainer(InvisibleButton(10, 10, function() shiftrooms(SHIFT.DOWN, true) end), 8*11+4, 10+8),
+					FloatContainer(InvisibleButton(10, 10, function() if not playtesting_askwherestart then shiftrooms(SHIFT.LEFT, true) end end), 8*10, 10),
+					FloatContainer(InvisibleButton(10, 10, function() if not playtesting_askwherestart then shiftrooms(SHIFT.RIGHT, true) end end), 8*13, 10),
+					FloatContainer(InvisibleButton(10, 10, function() if not playtesting_askwherestart then shiftrooms(SHIFT.UP, true) end end), 8*11+4, 0),
+					FloatContainer(InvisibleButton(10, 10, function() if not playtesting_askwherestart then shiftrooms(SHIFT.DOWN, true) end end), 8*11+4, 10+8),
 				},
 				114, 26
 			),
 			LabelButtonSpacer(),
-			LabelButton(L.SAVEMAP, create_export_dialog, "S", hotkey("s")),
+			LabelButton(L.SAVEMAP, function() if not playtesting_askwherestart then create_export_dialog() end end, "S", hotkey("s")),
 			LabelButton(L.RETURN, function() tostate(1, true) end, "b", hotkey("escape")),
 		}
 	),
+	DrawingFunction(drawmapplayask),
 }
 
 -- Just some functions called by their respective main callbacks.
