@@ -2324,9 +2324,10 @@ function drawmaineditor()
 	-- Please put this in a better place, both in the code and in the UI
 	--[[do
 		local atx, aty = getcursor()
+		local zoom = getminimapzoom(metadata)
 		love.graphics.setColor(0, 0, 0, 255)
 		love.graphics.rectangle("fill", 72, 440, 48, 36)
-		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 1, atx, aty)
+		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
 		love.graphics.setColor(255, 255, 255, 255)
 	end]]
 end
