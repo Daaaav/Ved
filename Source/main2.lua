@@ -198,29 +198,6 @@ function love.load()
 	skipnextkeys = {}
 	skipnextmouses = {}
 
-	love.keyboard.isDownOR = love.keyboard.isDown
-
-	love.keyboard.isDown = function(...)
-		for _,key in pairs({...}) do
-			if table.contains(skipnextkeys, key) then
-			elseif love.keyboard.isDownOR(key) then
-				return true
-			end
-		end
-		return false
-	end
-
-	love.mouse.isDownOR = love.mouse.isDown
-
-	love.mouse.isDown = function(...)
-		for _,button in pairs({...}) do
-			if table.contains(skipnextmouses, button) then
-			elseif love.mouse.isDownOR(button) then
-				return true
-			end
-		end
-	end
-
 	limitglow = 0
 	limitglow_enabled = false
 

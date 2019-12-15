@@ -5,6 +5,27 @@ love.graphics.clear = function(...)
 	end
 end
 
+love.keyboard.isDownOR = love.keyboard.isDown
+love.keyboard.isDown = function(...)
+	for _,key in pairs({...}) do
+		if table.contains(skipnextkeys, key) then
+		elseif love.keyboard.isDownOR(key) then
+			return true
+		end
+	end
+	return false
+end
+
+love.mouse.isDownOR = love.mouse.isDown
+love.mouse.isDown = function(...)
+	for _,button in pairs({...}) do
+		if table.contains(skipnextmouses, button) then
+		elseif love.mouse.isDownOR(button) then
+			return true
+		end
+	end
+end
+
 function limit_draw_fps()
 	local cur_frame_time = love.timer.getTime()
 	if next_frame_time <= cur_frame_time then
