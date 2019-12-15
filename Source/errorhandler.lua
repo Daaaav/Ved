@@ -495,7 +495,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			if e == "quit" then
 				love.event.quit()
 				return
-			elseif e == "keypressed" and (a == "escape" or table.contains({"return", "kpenter"}, a) or a == "kpenter") then
+			elseif e == "keypressed" and table.contains({"escape", "return", "kpenter"}, a) then
 				love.graphics.setBackgroundColor(0,0,0)
 				lg_clear()
 
