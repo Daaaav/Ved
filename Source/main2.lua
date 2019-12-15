@@ -194,6 +194,33 @@ function love.load()
 
 	notification_text = ""
 
+	focusregainedtimer = 0
+	skipnextkeys = {}
+	skipnextmouses = {}
+
+	love.keyboard.isDownOR = love.keyboard.isDown
+
+	love.keyboard.isDown = function(...)
+		for _,key in pairs({...}) do
+			if table.contains(skipnextkeys, key) then
+			elseif love.keyboard.isDownOR(key) then
+				return true
+			end
+		end
+		return false
+	end
+
+	love.mouse.isDownOR = love.mouse.isDown
+
+	love.mouse.isDown = function(...)
+		for _,button in pairs({...}) do
+			if table.contains(skipnextmouses, button) then
+			elseif love.mouse.isDownOR(button) then
+				return true
+			end
+		end
+	end
+
 	limitglow = 0
 	limitglow_enabled = false
 
@@ -351,14 +378,6 @@ function love.load()
 
 	scrollup = love.graphics.newImage("images/scrollup.png")
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
-
-	sideimg = love.graphics.newImage("images/sides.png");      smallsideimg = love.graphics.newImage("images/smallsides.png")
-
-	sideline = {};                                             smallsideline = {}
-	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
-	sideline[2] = love.graphics.newQuad(8, 0, 8, 8, 32, 8);    smallsideline[2] = love.graphics.newQuad(16, 0, 16, 16, 64, 16)
-	sideline[3] = love.graphics.newQuad(16, 0, 8, 8, 32, 8);   smallsideline[3] = love.graphics.newQuad(32, 0, 16, 16, 64, 16)
-	sideline[4] = love.graphics.newQuad(24, 0, 8, 8, 32, 8);   smallsideline[4] = love.graphics.newQuad(48, 0, 16, 16, 64, 16)
 
 	platformimg = love.graphics.newImage("images/platform.png")
 	platformpart =
@@ -1949,6 +1968,12 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
+	if love.window.hasFocus() then
+		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
+	else
+		focusregainedtimer = 0
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
@@ -2572,8 +2597,7 @@ function love.update(dt)
 end
 
 function love.textinput(char)
-	-- Are we holding down windows/super? Won't matter on Windows, but could for Linux...
-	if love.system.getOS() ~= "OS X" and keyboard_eitherIsDown("gui") then
+	if focusregainedtimer < .1 then
 		return
 	end
 
@@ -2654,6 +2678,13 @@ function love.textinput(char)
 end
 
 function love.keypressed(key)
+	if focusregainedtimer < .1 then
+		if not table.contains(skipnextkeys, key) then
+			table.insert(skipnextkeys, key)
+		end
+		return
+	end
+
 	hook("love_keypressed_start", {key})
 
 	-- Your privacy is respected.
@@ -2992,10 +3023,10 @@ function love.keypressed(key)
 
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
-	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
-	elseif state == 0 and key == "return" then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		tostate(input)
 	elseif sp_t ~= 0 and key == "escape" then
@@ -3232,12 +3263,12 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif state == 1 and editingroomname and key == "return" then
+	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then
 		saveroomname()
 	elseif state == 1 and editingroomname and key == "escape" then
 		editingroomname = false
 		stopinput()
-	elseif state == 1 and editingroomtext > 0 and key == "return" then
+	elseif state == 1 and editingroomtext > 0 and table.contains({"return", "kpenter"}, key) then
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
 		if entitydata[editingroomtext].data == "" then
@@ -3274,28 +3305,28 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f1" then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f2" then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f3" then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+	elseif nodialog and state == 1 and key == "f10" then
 		-- Auto/manual mode
 		changedmode()
 		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
@@ -3458,7 +3489,7 @@ function love.keypressed(key)
 				end
 			end
 		end
-	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
+	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
 		-- Reload tilesets
 		loadtilesets()
 		loadfonts()
@@ -3472,6 +3503,8 @@ function love.keypressed(key)
 		else
 			customsizemode = 1
 		end
+	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
+		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
 		if key == "up" then
 			scriptgotoline(editingline-1)
@@ -3482,7 +3515,7 @@ function love.keypressed(key)
 		elseif key == "pagedown" then
 			scriptgotoline(editingline+57)
 		end
-	elseif state == 3 and key == "return" then
+	elseif state == 3 and table.contains({"return", "kpenter"}, key) then
 		-- We can split lines because the current line is in input and input_r.
 		-- So input_r is simply transferred to the newly inserted line along with the cursor.
 		table.insert(scriptlines, editingline+1, "")
@@ -3492,7 +3525,9 @@ function love.keypressed(key)
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
 	elseif (state == 3 or state == 6) and key == "f1" then
-		stopinput()
+		if state == 6 then
+			stopinput()
+		end
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
@@ -3582,7 +3617,7 @@ function love.keypressed(key)
 			scriptlines[editingline] = input
 			dirty()
 		end
-	elseif (state == 6) and key == "return" and tabselected == 0 then
+	elseif (state == 6) and table.contains({"return", "kpenter"}, key) and tabselected == 0 then
 		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
 		if tabselected ~= 0 then
@@ -3622,7 +3657,7 @@ function love.keypressed(key)
 		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
 		table.remove(files[""])
-	elseif (state == 8) and (key == "return") then
+	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 		if savedsuccess then
@@ -3643,14 +3678,14 @@ function love.keypressed(key)
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)
 			nodialog = false -- Terrible
 		end
-	elseif state == 11 and key == "return" then
+	elseif state == 11 and table.contains({"return", "kpenter"}, key) then
 		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
 		searchedfor = input .. input_r
 	elseif nodialog and (state == 10 or state == 11) and key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
+	elseif nodialog and state == 12 and (table.contains({"return", "kpenter"}, key) or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
 	elseif nodialog and state == 12 and (key == "," or key == ".") then
@@ -3723,7 +3758,7 @@ function love.keypressed(key)
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			helplineonscreen()
-		elseif key == "return" then
+		elseif table.contains({"return", "kpenter"}, key) then
 			table.insert(helparticlecontent, helpeditingline+1, "")
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
@@ -3735,8 +3770,19 @@ function love.keypressed(key)
 				input = input .. "¤"
 			end
 			helparticlecontent[helpeditingline] = input
-		elseif key == "d" and keyboard_eitherIsDown("ctrl") then
-			table.remove(helparticlecontent, helpeditingline)
+		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
+			if #helparticlecontent > 1 then
+				table.remove(helparticlecontent, helpeditingline)
+			else
+				helparticlecontent[helpeditingline] = ""
+			end
+			if keyboard_eitherIsDown("shift") then
+				helpeditingline = math.max(helpeditingline - 1, 1)
+			else
+				if helpeditingline > #helparticlecontent and helpeditingline > 1 then
+					helpeditingline = helpeditingline - 1
+				end
+			end
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			input_r = ""
 		end
@@ -3754,14 +3800,10 @@ function love.keypressed(key)
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
-				elseif type(v) == "function" then
-					print(k .. "\t\t\t[function]")
-				elseif type(v) == "table" then
-					print(k .. "\t\t\t[table]")
-				elseif type(v) == "userdata" then
-					print(k .. "\t\t\t[userdata]")
+				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
+					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
-					print(k .. " = " .. v .. "\t\t\t[" .. type(v) .. "]")
+					print(k .. " = " .. tostring(v) .. "\t\t\t[" .. type(v) .. "]")
 				end
 			end
 			cons("\n***********************************\n* E N D                           *\n***********************************\n")
@@ -3780,7 +3822,7 @@ function love.keypressed(key)
 		tostate(0, true)
 	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
 		for k,v in pairs(toolshortcuts) do
-			if key == string.lower(v) and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+			if key == string.lower(v) then
 				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
@@ -3792,7 +3834,7 @@ function love.keypressed(key)
 				toolscroll()
 			end
 		end
-	elseif (state == 22 or state == 23) and key == "return" then
+	elseif (state == 22 or state == 23) and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		scsuccess, sccontents = readlevelfile(input)
 		if scsuccess then
@@ -3922,6 +3964,13 @@ function love.keypressed(key)
 end
 
 function love.keyreleased(key)
+	for k,v in pairs(skipnextkeys) do
+		if v == key then
+			table.remove(skipnextkeys, k)
+			return
+		end
+	end
+
 	hook("love_keyreleased_start", {key})
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
@@ -3936,7 +3985,7 @@ function love.keyreleased(key)
 	elseif nodialog and (key == "lshift" or key == lctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
-	elseif key == "return" then
+	elseif table.contains({"return", "kpenter"}, key) then
 		returnpressed = false
 	elseif state == 27 and key == "escape" then
 		-- Put it here instead of love.keypressed,
@@ -3978,8 +4027,21 @@ function love.mousepressed(x, y, button)
 		end
 	end
 
+	if focusregainedtimer < .1 and not table.contains({"wu", "wd"}, button) then
+		if not table.contains(skipnextmouses, button) then
+			table.insert(skipnextmouses, button)
+		end
+		return
+	end
+
 	if s.pscale ~= 1 then
 		x, y = x*s.pscale^-1, y*s.pscale^-1
+	end
+
+	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+		-- When drawing is paused it won't look like the scrollbar has moved,
+		-- so just don't move it so the visual will be accurate
+		return
 	end
 
 	hook("love_mousepressed_start", {x, y, button})
@@ -4151,6 +4213,13 @@ function love.mousereleased(x, y, button)
 			button = "r"
 		elseif button == 3 then
 			button = "m"
+		end
+	end
+
+	for k,v in pairs(skipnextmouses) do
+		if v == button then
+			table.remove(skipnextmouses, k)
+			return
 		end
 	end
 
