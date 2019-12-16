@@ -2615,6 +2615,12 @@ function love.update(dt)
 				newinputsys.atomicpaste(id)
 			elseif RCMreturn == L.DELETE then
 				newinputsys.atomicdelete(id)
+			elseif RCMreturn == L.MOVELINEUP then
+				newinputsys.atomicmovevertical(id, -1)
+			elseif RCMreturn == L.MOVELINEDOWN then
+				newinputsys.atomicmovevertical(id, 1)
+			elseif RCMreturn == L.DUPLICATELINE then
+				newinputsys.atomicdupeline(id)
 			elseif RCMreturn == L.SELECTWORD then
 				newinputsys.selectword(id, ({newinputsys.getpos(id)})[1])
 			elseif RCMreturn == L.SELECTLINE then
@@ -2931,13 +2937,7 @@ function love.keypressed(key)
 			newinputsys.redo(id)
 		elseif table.contains({"up", "down"}, key) and keyboard_eitherIsDown("alt") and multiline then
 			if keyboard_eitherIsDown("shift") then
-				local oldstate = {newinputsys.getstate(id)}
-				local _, y, line = newinputsys.getpos(id)
-				table.insert(inputs[id], y+1, line)
-				if key == "down" then
-					newinputsys.pos[id][2] = newinputsys.pos[id][2] + 1
-				end
-				newinputsys.unre(id, nil, unpack(oldstate))
+				newinputsys.atomicdupeline(id, key == "down")
 			else
 				if key == "up" then
 					newinputsys.atomicmovevertical(id, -1)

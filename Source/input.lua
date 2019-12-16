@@ -1549,6 +1549,18 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 		if #items > 0 and items[#items] ~= separator then
 			table.insert(items, separator)
 		end
+		if multiline then
+			if input.pos[id][2] > 1 then
+				table.insert(items, L.MOVELINEUP)
+			end
+			if input.pos[id][2] < #inputs[id] then
+				table.insert(items, L.MOVELINEDOWN)
+			end
+			table.insert(items, L.DUPLICATELINE)
+		end
+		if #items > 0 and items[#items] ~= separator then
+			table.insert(items, separator)
+		end
 		table.insert(items, L.SELECTWORD)
 		if multiline and #inputs[id] > 1 then -- A bit redundant to have this for single-lines
 			table.insert(items, L.SELECTLINE)
@@ -1843,6 +1855,16 @@ function input.atomicmovevertical(id, lines)
 	if table.contains(successes, true) then
 		input.unre(id, nil, unpack(oldstate))
 	end
+end
+
+function input.atomicdupeline(id, move_cursor)
+	local oldstate = {input.getstate(id)}
+	local _, y, line = input.getpos(id)
+	table.insert(inputs[id], y+1, line)
+	if move_cursor then
+		input.pos[id][2] = input.pos[id][2] + 1
+	end
+	input.unre(id, nil, unpack(oldstate))
 end
 
 function input.selectword(id, posx)
