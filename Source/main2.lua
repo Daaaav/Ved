@@ -2812,7 +2812,7 @@ function love.keypressed(key)
 		end
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) then
-			if keyboard_eitherIsDown("shift") then
+			if keyboard_eitherIsDown("shift") and not keyboard_eitherIsDown("alt") then
 				if newinputsys.selpos[id] == nil then
 					newinputsys.setselpos(id)
 				end
@@ -2930,10 +2930,20 @@ function love.keypressed(key)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			newinputsys.redo(id)
 		elseif table.contains({"up", "down"}, key) and keyboard_eitherIsDown("alt") and multiline then
-			if key == "up" then
-				newinputsys.atomicmovevertical(id, -1)
-			elseif key == "down" then
-				newinputsys.atomicmovevertical(id, 1)
+			if keyboard_eitherIsDown("shift") then
+				local oldstate = {newinputsys.getstate(id)}
+				local _, y, line = newinputsys.getpos(id)
+				table.insert(inputs[id], y+1, line)
+				if key == "down" then
+					newinputsys.pos[id][2] = newinputsys.pos[id][2] + 1
+				end
+				newinputsys.unre(id, nil, unpack(oldstate))
+			else
+				if key == "up" then
+					newinputsys.atomicmovevertical(id, -1)
+				elseif key == "down" then
+					newinputsys.atomicmovevertical(id, 1)
+				end
 			end
 		end
 	end
