@@ -1809,6 +1809,42 @@ function input.atomicdelete(id)
 	input.unre(id, nil, unpack(oldstate))
 end
 
+function input.atomicmovevertical(id, lines)
+	local multiline = type(inputs[id]) == "table"
+
+	if not multiline or lines == 0 then
+		return
+	end
+
+	local oldstate = {input.getstate(id)}
+
+	local successes = {}
+
+	for _ = 1, math.abs(lines) do
+		local _, y, line = input.getpos(id)
+		local do_something
+		if lines > 0 then
+			do_something = y < #inputs[id]
+			if do_something then
+				table.remove(inputs[id], y)
+				table.insert(inputs[id], y+1, line)
+				input.pos[id][2] = input.pos[id][2] + 1
+			end
+		elseif lines < 0 then
+			do_something = y > 1
+			if do_something then
+				table.remove(inputs[id], y)
+				table.insert(inputs[id], y-1, line)
+				input.pos[id][2] = input.pos[id][2] - 1
+			end
+		end
+		table.insert(successes, do_something)
+	end
+	if table.contains(successes, true) then
+		input.unre(id, nil, unpack(oldstate))
+	end
+end
+
 function input.selectword(id, posx)
 	local multiline = type(inputs[id]) == "table"
 	local _, _, line = input.getpos(id)

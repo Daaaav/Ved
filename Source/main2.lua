@@ -2799,6 +2799,7 @@ function love.keypressed(key)
 
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
 		local id = newinputsys.getfocused()
+		local multiline = type(inputs[id]) == "table"
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) or isclear(key) then
 			newinputsys.stophex(id)
@@ -2832,9 +2833,9 @@ function love.keypressed(key)
 			else
 				newinputsys.movex(id, 1)
 			end
-		elseif key == "up" then
+		elseif key == "up" and not keyboard_eitherIsDown("alt") then
 			newinputsys.movey(id, -1)
-		elseif key == "down" then
+		elseif key == "down" and not keyboard_eitherIsDown("alt") then
 			newinputsys.movey(id, 1)
 		elseif key == "home" then
 			newinputsys.leftmost(id)
@@ -2928,6 +2929,12 @@ function love.keypressed(key)
 			newinputsys.undo(id)
 		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
 			newinputsys.redo(id)
+		elseif table.contains({"up", "down"}, key) and keyboard_eitherIsDown("alt") and multiline then
+			if key == "up" then
+				newinputsys.atomicmovevertical(id, -1)
+			elseif key == "down" then
+				newinputsys.atomicmovevertical(id, 1)
+			end
 		end
 	end
 
