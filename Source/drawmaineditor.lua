@@ -1224,6 +1224,9 @@ function drawmaineditor()
 				displayminimapgrid = true
 			end
 		end
+		if roomx >= 20 or roomy >= 20 then
+			displayminimapgrid = false
+		end
 		-- Display the room now including its entities
 		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
 		if showroom then
@@ -2337,6 +2340,7 @@ function drawmaineditor()
 	end
 	-- Temporary placement of the minimap preview, uncomment if you want to use it
 	-- Please put this in a better place, both in the code and in the UI
+	-- NOTE: For bigger than 20x20 maps, minimaps don't render outside the 20x20 area. So don't render it if you're outside 20x20
 	--[[do
 		local atx, aty = getcursor()
 		local zoom = getminimapzoom(metadata)
