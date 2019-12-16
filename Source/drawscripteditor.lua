@@ -6,7 +6,7 @@ function drawscripteditor()
 	local textlinestogo = 0
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
-	if textsize then
+	if s.scripteditor_largefont then
 		love.graphics.line(42*16-9, 24, 42*16-12, love.graphics.getHeight())
 	else
 		love.graphics.line(42*8, 24, 42*8, love.graphics.getHeight())
@@ -57,7 +57,8 @@ function drawscripteditor()
 		end
 
 		-- Save the whales, only display this line if we can see it!
-		if (scriptscroll+24+((textsize and 16 or 8)*k) >= 16) and (scriptscroll+24+((textsize and 16 or 8)*k) <= love.graphics.getHeight()) then
+		local fontsize = s.scripteditor_largefont and 16 or 8
+		if (scriptscroll+24+(fontsize*k) >= 16) and (scriptscroll+24+(fontsize*k) <= love.graphics.getHeight()) then
 			if k >= 500 and editingline == k then
 				love.graphics.setColor(255,128,128,255) -- 255 64 64?
 			elseif editingline == k then
@@ -68,7 +69,7 @@ function drawscripteditor()
 				love.graphics.setColor(128,128,128,255)
 			end
 
-			if textsize then
+			if s.scripteditor_largefont then
 				ved_print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8, 2)
 				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			else
@@ -98,7 +99,7 @@ function drawscripteditor()
 					textc = "gray"
 				end
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
-				if textsize then
+				if s.scripteditor_largefont then
 					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+8, 6, textq*16)
 				else
 					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+8, 3, textq*8)
@@ -116,10 +117,11 @@ function drawscripteditor()
 	love.graphics.setColor(255,255,255,255)
 
 	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
-	local newperonetage = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*(textsize and 2 or 1), ((-scriptscroll))/(((#scriptlines*8)*(textsize and 2 or 1))-(love.graphics.getHeight()-32)))
+	local textscale = s.scripteditor_largefont and 2 or 1
+	local newperonetage = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*textscale, ((-scriptscroll))/(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
 
 	if newperonetage ~= nil then
-		scriptscroll = -(newperonetage*(((#scriptlines*8)*(textsize and 2 or 1))-(love.graphics.getHeight()-32)))
+		scriptscroll = -(newperonetage*(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
 	end
 
 	-- Now put some buttons on the right!
@@ -148,7 +150,7 @@ function drawscripteditor()
 	--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
 	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
-	rbutton(textsize and L.TEXTSIZEL or L.TEXTSIZEN, 11)
+	rbutton(s.scripteditor_largefont and L.TEXTSIZEL or L.TEXTSIZEN, 11)
 
 	-- Internal scripting load script warning
 	if internalscript then
@@ -260,9 +262,10 @@ function drawscripteditor()
 			mousepressed = true
 		elseif not mousepressed and onrbutton(11) then
 			-- Text size
-			textsize = not textsize
+			s.scripteditor_largefont = not s.scripteditor_largefont
+			saveconfig()
 
-			if textsize then
+			if s.scripteditor_largefont then
 				scriptscroll = scriptscroll*2
 			else
 				scriptscroll = scriptscroll/2

@@ -2,12 +2,14 @@ function drawmaineditor()
 	love.graphics.setColor(128,128,128)
 	love.graphics.rectangle("line", screenoffset-0.5, -0.5, 640+1, 480+1)
 	love.graphics.setColor(255,255,255)
+	local function getcursor()
+		return math.floor((getlockablemouseX()-screenoffset) / 16), math.floor(getlockablemouseY() / 16)
+	end
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
 		editingroomname = false
-		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
-		local aty = math.floor(getlockablemouseY() / 16)
+		local atx, aty = getcursor()
 
 		-- If we're holding both [ and ] down, then let the cursor move only in the plus-shape created by those two lines
 		if mouselockx ~= -1 and mouselocky ~= -1 then
@@ -1118,16 +1120,14 @@ function drawmaineditor()
 		roomdata[roomy][roomx][(aty*40)+(atx+1)] = 0
 	]]
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
-		local aty = math.floor((love.mouse.getY()) / 16)
+		local atx, aty = getcursor()
 
 		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 
 		selectedtile = (aty*40)+(atx+1)-1
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		editingroomname = false
-		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
-		local aty = math.floor((love.mouse.getY()) / 16)
+		local atx, aty = getcursor()
 
 		selectedtile = roomdata[roomy][roomx][(aty*40)+(atx+1)]
 	end
@@ -1205,7 +1205,7 @@ function drawmaineditor()
 			cons(k .. "->" .. v)
 		end
 		]]
-		local displaytilenumbers, displaysolid
+		local displaytilenumbers, displaysolid, displayminimapgrid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
 				ved_setFont(tinynumbers)
@@ -1214,9 +1214,15 @@ function drawmaineditor()
 			if love.keyboard.isDown("j") then
 				displaysolid = true
 			end
+			if love.keyboard.isDown(";") then
+				displayminimapgrid = true
+			end
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid)
+		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		if showroom then
+			displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid, displayminimapgrid)
+		end
 
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then
@@ -1283,13 +1289,13 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[1], screenoffset+(t*16), 0, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 2)
 
 					if roomupW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[1], screenoffset+(t*16), 0, 0, 1)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
 				end
 
 				-- Spikes
@@ -1300,7 +1306,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[1], screenoffset+(t*16), 0, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 2)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1316,13 +1322,13 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 2, 16)
 
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[2], screenoffset, (t-1)*16, 0, 1)
+					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 1, 16)
 				end
 
 				-- Spikes
@@ -1333,7 +1339,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[2], screenoffset, (t-1)*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 2, 16)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1347,14 +1353,14 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[3], screenoffset+(39*16), t*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(39*16)+16-2, t*16, 2, 16)
 
 					if roomrightW then
 						love.graphics.setColor(255, 255, 255)
 					end
 
 				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[3], screenoffset+(39*16), t*16, 0, 1)
+					love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
 				end
 
 				-- Spikes
@@ -1365,7 +1371,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[3], screenoffset+(39*16), t*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(39*16)+16-2, t*16, 2, 16)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1379,14 +1385,14 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.draw(sideimg, sideline[4], screenoffset+(t*16), 29*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-2, 16, 2)
 
 					if roomdownW then
 						love.graphics.setColor(255, 255, 255)
 					end
 
 				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
-					love.graphics.draw(smallsideimg, smallsideline[4], screenoffset+(t*16), 29*16, 0, 1)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
 				end
 
 				-- Spikes
@@ -1397,7 +1403,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.draw(sideimg, sideline[4], screenoffset+(t*16), 29*16, 0, 2)
+					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-2, 16, 2)
 
 					love.graphics.setColor(255, 255, 255)
 				end
@@ -1407,7 +1413,9 @@ function drawmaineditor()
 		ved_setFont(font8)
 		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
-		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		if showroom then
+			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		end
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
@@ -1497,9 +1505,10 @@ function drawmaineditor()
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
-			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
+			v6_setroomprintcol()
 			ved_print(text, textx, 29*16 -2, 2)
+			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor()
 		end
 
@@ -1690,6 +1699,8 @@ function drawmaineditor()
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or ((mouseon(16, 0, 32, 16)) or (mouseon(16, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) and selectedtool ~= t then
 				love.graphics.setColor(255,255,255,128)
+			elseif not love.window.hasFocus() then
+				love.graphics.setColor(255,255,255,128)
 			end
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
@@ -1742,6 +1753,8 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			elseif not nodialog or ((mouseon(16+64, 0, 32, 16)) or (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and selectedsubtool[selectedtool] ~= k then
 				love.graphics.setColor(255,255,255,128)
+			elseif not love.window.hasFocus() then
+				love.graphics.setColor(255,255,255,128)
 			end
 
 			if nodialog and not mousepressed and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32) and not mouseon(16+64, 0, 32, 16) and not mouseon(16+64, love.graphics.getHeight()-16, 32, 16) and selectedtool ~= 14 then
@@ -1772,7 +1785,7 @@ function drawmaineditor()
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
-			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) then
+			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and love.window.hasFocus() then
 				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
 				if selectedtool <= 2 and k == 8 then
 					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
@@ -1781,7 +1794,7 @@ function drawmaineditor()
 			end
 		end
 
-		if thistooltip ~= "" then
+		if thistooltip ~= "" and love.window.hasFocus() then
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
 			love.graphics.setScissor()
 			love.graphics.setColor(128,128,128,192)
@@ -1833,6 +1846,9 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
+		if not love.window.hasFocus() then
+			love.graphics.setColor(255,255,255,128)
+		end
 		tinyprint(L.TINY_CTRL, 0, 0)
 
 		-- Also display the current (sub)tool!
@@ -2361,7 +2377,7 @@ function drawmaineditor()
 			atx = atx * 2
 			aty = aty * 2
 			atx = atx + screenoffset
-			love.graphics.setColor(132, 181, 255, 255) -- When general-improvements-2 gets merged, make sure to change this to a v6_setcol
+			v6_setcol(0)
 			love.graphics.setScissor(screenoffset, 0, 640, love.graphics.getHeight())
 
 			if keyboard_eitherIsDown("shift") then
@@ -2432,4 +2448,14 @@ function drawmaineditor()
 	if allowdebug and love.keyboard.isDown("f11") then
 
 	end
+	-- Temporary placement of the minimap preview, uncomment if you want to use it
+	-- Please put this in a better place, both in the code and in the UI
+	--[[do
+		local atx, aty = getcursor()
+		local zoom = getminimapzoom(metadata)
+		love.graphics.setColor(0, 0, 0, 255)
+		love.graphics.rectangle("fill", 72, 440, 48, 36)
+		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
+		love.graphics.setColor(255, 255, 255, 255)
+	end]]
 end

@@ -48,15 +48,17 @@ function drawmap()
 
 				if selectedtool == 4 then
 					amount = map_trinkets[mry][mrx]
-					sprite = 22
+					spritefunc = function() return 22 end
 					width = 16
 					widthb = 16
 					extray = 0
 					scalesubtract = 16
-					colorfunc = function(n) end
+					colorfunc = function(n) v6_setcol(3) end
 				elseif selectedtool == 16 then
 					amount = map_crewmates[mry][mrx][1]
-					sprite = 144
+					spritefunc = function(n)
+						return getrescuablesprite(map_crewmates[mry][mrx][2][n])
+					end
 					width = 10
 					widthb = 12
 					extray = -2
@@ -66,7 +68,7 @@ function drawmap()
 					end
 				else
 					amount = 1
-					sprite = 3*entitydata[count.startpoint].p1
+					spritefunc = function() return 3*entitydata[count.startpoint].p1 end
 					width = 10
 					widthb = 12
 					extray = -2
@@ -79,6 +81,7 @@ function drawmap()
 				if amount <= 3 then
 					for i = 1, amount do
 						colorfunc(i)
+						local sprite = spritefunc(i)
 
 						drawentitysprite(
 							sprite,
@@ -253,6 +256,9 @@ function drawmap()
 			if nodialog and t == 1 and not toolanyofthese then
 				love.graphics.setColor(255,255,255,255)
 			end
+			if not love.window.hasFocus() then
+				love.graphics.setColor(255,255,255,128)
+			end
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1))), 32, 32) then
 				selectedtool = actual_t
@@ -271,7 +277,7 @@ function drawmap()
 			if t ~= 1 then
 				local cx, cy = 16+2, (16+2+(48*(t-1)))
 				love.graphics.draw(toolimg[actual_t], cx, cy)
-				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) then
+				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and love.window.hasFocus() then
 					love.graphics.setColor(128,128,128,192)
 					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font8:getWidth(pluraltoolnames[actual_t]), 8)
 					love.graphics.setColor(255,255,255,255)
@@ -288,6 +294,9 @@ function drawmap()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
+		if not love.window.hasFocus() then
+			love.graphics.setColor(255,255,255,128)
+		end
 		tinyprint(L.TINY_CTRL, 0, 0)
 
 		love.graphics.draw(selectedtoolborder, 0, love.graphics.getHeight()-32)
