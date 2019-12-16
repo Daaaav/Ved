@@ -311,3 +311,15 @@ end
 function o_Graphics:setroomprintcol(help)
 	love.graphics.setColor(getroomprintcol(help))
 end
+
+v6_help = UtilityClass()
+v6_graphics = Graphics()
+function v6_setcol(t)
+	v6_graphics:setcol(t, v6_help)
+end
+function v6_setgravitylinecol()
+	v6_graphics:setgravitylinecol()
+end
+function v6_setroomprintcol()
+	v6_graphics:setroomprintcol(v6_help)
+end

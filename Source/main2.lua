@@ -187,17 +187,6 @@ function love.load()
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
 
-	v6_help = UtilityClass()
-	v6_graphics = Graphics()
-	function v6_setcol(t)
-		v6_graphics:setcol(t, v6_help)
-	end
-	function v6_setgravitylinecol()
-		v6_graphics:setgravitylinecol()
-	end
-	function v6_setroomprintcol()
-		v6_graphics:setroomprintcol(v6_help)
-	end
 	v6_frametimer = 0
 
 	returnpressed = false -- also for some things
