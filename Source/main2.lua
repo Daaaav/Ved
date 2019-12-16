@@ -156,6 +156,7 @@ function love.load()
 	ved_require("slider")
 	ved_require("mapfunc")
 	ved_require("music")
+	ved_require("vvvvvvfunc")
 
 	dodisplaysettings()
 
@@ -185,6 +186,8 @@ function love.load()
 	middlescroll_rolling = 0
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
+
+	v6_frametimer = 0
 
 	returnpressed = false -- also for some things
 
@@ -550,7 +553,7 @@ function love.draw()
 					skipnextscripthoverrect = nil
 				elseif y >= -16 and y <= love.graphics.getHeight() then
 					local used = usedscripts[scriptnames[rvnum]]
-					hoverrectangle(used and 128 or 64, used and 128 or 64, used and 128 or 64, 128, 8, y, screenoffset+640-8-24 -36, 16)
+					hoverrectangle(128,128,128, used and 128 or 64, 8, y, screenoffset+640-8-24 -36, 16)
 					ved_printf(scriptnames[rvnum], 8, y+4, screenoffset+640-8-36, "center")
 					if rvnum == #scriptnames then
 						showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
@@ -1866,7 +1869,7 @@ function love.draw()
 
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-		love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
+		v6_setcol(3)
 		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
@@ -1994,6 +1997,15 @@ function love.update(dt)
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
+	end
+
+	v6_frametimer = v6_frametimer + dt
+	while v6_frametimer > .034 do
+		v6_help:updateglow()
+		v6_graphics:updatelinestate()
+		v6_graphics.trinketcolset = false
+
+		v6_frametimer = v6_frametimer - .034
 	end
 
 	if updatescrollingtext ~= nil and state == 6 then
@@ -3030,13 +3042,13 @@ function love.keypressed(key)
 		end
 
 		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-			if key == "left" then
+			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
-			elseif key == "right" then
+			elseif table.contains({"right", "d"}, key) then
 				selectedtile = (selectedtile + 1) % 1200
-			elseif key == "up" then
+			elseif table.contains({"up", "w"}, key) then
 				selectedtile = selectedtile - 40
-			elseif key == "down" then
+			elseif table.contains({"down", "s"}, key) then
 				selectedtile = (selectedtile + 40) % 1200
 			end
 		end
@@ -3249,7 +3261,7 @@ function love.keypressed(key)
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
 		if entitydata[editingroomtext].data == "" then
-			removeentity(editingroomtext)
+			removeentity(editingroomtext, nil, true)
 		end
 		editingroomtext = 0
 		stopinput()

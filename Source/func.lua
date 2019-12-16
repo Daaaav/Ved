@@ -1622,7 +1622,7 @@ function endeditingroomtext(donotmakethisnil)
 			table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingroomtext, changedentitydata = {{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}}})
 		end
 	else
-		removeentity(editingroomtext)
+		removeentity(editingroomtext, nil, true)
 	end
 	editingroomtext = 0
 end
@@ -1642,6 +1642,11 @@ function createmde()
 end
 
 function state6load(levelname)
+	local hastrailingdirsep = levelname:sub(-#dirsep) == dirsep
+	if hastrailingdirsep then
+		levelname = levelname:sub(1, -#dirsep - 1)
+	end
+
 	if backupscreen then
 		if files[levelname] ~= nil then
 			currentbackupdir = levelname
@@ -1651,10 +1656,14 @@ function state6load(levelname)
 	end
 
 	if files[levelname] ~= nil then
-		input = levelname .. dirsep
-		input_r = ""
-		tabselected = 0
-		return
+		if not hastrailingdirsep then
+			-- Oh, it's just a level that has the same name as a directory. Carry on.
+		else
+			input = levelname .. dirsep
+			input_r = ""
+			tabselected = 0
+			return
+		end
 	end
 
 	stopinput()

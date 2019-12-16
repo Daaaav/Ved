@@ -2,12 +2,14 @@ function drawmaineditor()
 	love.graphics.setColor(128,128,128)
 	love.graphics.rectangle("line", screenoffset-0.5, -0.5, 640+1, 480+1)
 	love.graphics.setColor(255,255,255)
+	local function getcursor()
+		return math.floor((getlockablemouseX()-screenoffset) / 16), math.floor(getlockablemouseY() / 16)
+	end
 	-- Are we clicking?
 	if nodialog and (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3) then
 		editingroomname = false
-		local atx = math.floor((getlockablemouseX()-screenoffset) / 16)
-		local aty = math.floor(getlockablemouseY() / 16)
+		local atx, aty = getcursor()
 
 		-- If we're holding both [ and ] down, then let the cursor move only in the plus-shape created by those two lines
 		if mouselockx ~= -1 and mouselocky ~= -1 then
@@ -1118,16 +1120,14 @@ function drawmaineditor()
 		roomdata[roomy][roomx][(aty*40)+(atx+1)] = 0
 	]]
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
-		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
-		local aty = math.floor((love.mouse.getY()) / 16)
+		local atx, aty = getcursor()
 
 		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 
 		selectedtile = (aty*40)+(atx+1)-1
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		editingroomname = false
-		local atx = math.floor((love.mouse.getX()-screenoffset) / 16)
-		local aty = math.floor((love.mouse.getY()) / 16)
+		local atx, aty = getcursor()
 
 		selectedtile = roomdata[roomy][roomx][(aty*40)+(atx+1)]
 	end
@@ -1205,7 +1205,7 @@ function drawmaineditor()
 			cons(k .. "->" .. v)
 		end
 		]]
-		local displaytilenumbers, displaysolid
+		local displaytilenumbers, displaysolid, displayminimapgrid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
 				ved_setFont(tinynumbers)
@@ -1214,9 +1214,15 @@ function drawmaineditor()
 			if love.keyboard.isDown("j") then
 				displaysolid = true
 			end
+			if love.keyboard.isDown(";") then
+				displayminimapgrid = true
+			end
 		end
 		-- Display the room now including its entities
-		displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid)
+		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		if showroom then
+			displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid, displayminimapgrid)
+		end
 
 		-- Display indicators for tiles in adjacent rooms
 		if s.adjacentroomlines then
@@ -1407,7 +1413,9 @@ function drawmaineditor()
 		ved_setFont(font8)
 		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
-		displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		if showroom then
+			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+		end
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
@@ -1497,9 +1505,10 @@ function drawmaineditor()
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
-			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
+			v6_setroomprintcol()
 			ved_print(text, textx, 29*16 -2, 2)
+			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor()
 		end
 
@@ -2318,4 +2327,14 @@ function drawmaineditor()
 	if allowdebug and love.keyboard.isDown("f11") then
 
 	end
+	-- Temporary placement of the minimap preview, uncomment if you want to use it
+	-- Please put this in a better place, both in the code and in the UI
+	--[[do
+		local atx, aty = getcursor()
+		local zoom = getminimapzoom(metadata)
+		love.graphics.setColor(0, 0, 0, 255)
+		love.graphics.rectangle("fill", 72, 440, 48, 36)
+		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
+		love.graphics.setColor(255, 255, 255, 255)
+	end]]
 end
