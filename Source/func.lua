@@ -416,7 +416,6 @@ function loadstate(new, ...)
 		scriptscroll = 0
 		input = scriptlines[editingline]
 		syntaxhlon = true
-		textsize = false
 
 		-- Little bit of caching
 		rememberflagnumber = -1
@@ -2235,7 +2234,8 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				end
 			elseif direction == "d" then
 				scriptscroll = scriptscroll - distance
-				local upperbound = (((#scriptlines*8+16)*(textsize and 2 or 1)-(textsize and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
+				local textscale = s.scripteditor_largefont and 2 or 1
+				local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
 				if -scriptscroll > upperbound then
 					scriptscroll = math.min(-upperbound, 0)
 				end

@@ -4088,7 +4088,7 @@ function love.mousepressed(x, y, button)
 		end
 	elseif state == 3 and button == "l" and nodialog and mouseon(48, 24, love.graphics.getWidth()-192, love.graphics.getHeight()-24) then
 		local chr, line
-		if textsize then
+		if s.scripteditor_largefont then
 			chr = math.floor((x-88)/16) + 1
 			line = math.floor(((y-24)-scriptscroll-4)/16) + 1
 		else
