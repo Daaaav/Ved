@@ -27,7 +27,7 @@ function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
 			scrollclickoffset = love.mouse.getY()-scrollclickstart
 		end
 
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) then
+		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and love.window.hasFocus() then
 			setColor(224,224,224,255)
 		else
 			setColor(192,192,192,255)

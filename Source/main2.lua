@@ -147,15 +147,16 @@ function love.load()
 	ved_require("coordsdialog")
 	ved_require("vvvvvv_textbox")
 	ved_require("resizablebox")
+	ved_require("ui_elements")
 	ved_require("drawmaineditor")
 	ved_require("drawscripteditor")
 	ved_require("drawlevelslist")
 	ved_require("drawsearch")
-	ved_require("drawmap")
 	ved_require("drawhelp")
 	ved_require("slider")
 	ved_require("mapfunc")
 	ved_require("music")
+	ved_require("vvvvvvfunc")
 
 	dodisplaysettings()
 
@@ -186,11 +187,19 @@ function love.load()
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
 
+	v6_frametimer = 0
+
 	returnpressed = false -- also for some things
 
 	temporaryroomnametimer = 0
 	generictimer = 0
-	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing
+	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing, 3 for notification
+
+	notification_text = ""
+
+	focusregainedtimer = 0
+	skipnextkeys = {}
+	skipnextmouses = {}
 
 	limitglow = 0
 	limitglow_enabled = false
@@ -228,16 +237,16 @@ function love.load()
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
 
 	cursorobjs = {}
-	--cursorobjs[11] = love.mouse.newCursor(cursorimg[11]:getData(), 8, 10)
-	--cursorobjs[12] = love.mouse.newCursor(cursorimg[12]:getData(), 10, 8)
-	cursorobjs[11] = love.mouse.getSystemCursor("sizens")
-	cursorobjs[12] = love.mouse.getSystemCursor("sizewe")
-	cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
-	cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
-	cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
+	if not love_version_meets(10) or love.mouse.hasCursor() then
+		cursorobjs[11] = love.mouse.getSystemCursor("sizens")
+		cursorobjs[12] = love.mouse.getSystemCursor("sizewe")
+		cursorobjs[16] = love.mouse.getSystemCursor("sizenwse")
+		cursorobjs[17] = love.mouse.getSystemCursor("sizenesw")
+		cursorobjs[19] = love.mouse.getSystemCursor("sizeall")
 
-	hand_cursor = love.mouse.getSystemCursor("hand")
-	forbidden_cursor = love.mouse.getSystemCursor("no")
+		hand_cursor = love.mouse.getSystemCursor("hand")
+		forbidden_cursor = love.mouse.getSystemCursor("no")
+	end
 	special_cursor = false
 
 	scriptboximg = {}
@@ -350,14 +359,6 @@ function love.load()
 	scrollup = love.graphics.newImage("images/scrollup.png")
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
 
-	sideimg = love.graphics.newImage("images/sides.png");      smallsideimg = love.graphics.newImage("images/smallsides.png")
-
-	sideline = {};                                             smallsideline = {}
-	sideline[1] = love.graphics.newQuad(0, 0, 8, 8, 32, 8);    smallsideline[1] = love.graphics.newQuad(0, 0, 16, 16, 64, 16)
-	sideline[2] = love.graphics.newQuad(8, 0, 8, 8, 32, 8);    smallsideline[2] = love.graphics.newQuad(16, 0, 16, 16, 64, 16)
-	sideline[3] = love.graphics.newQuad(16, 0, 8, 8, 32, 8);   smallsideline[3] = love.graphics.newQuad(32, 0, 16, 16, 64, 16)
-	sideline[4] = love.graphics.newQuad(24, 0, 8, 8, 32, 8);   smallsideline[4] = love.graphics.newQuad(48, 0, 16, 16, 64, 16)
-
 	platformimg = love.graphics.newImage("images/platform.png")
 	platformpart =
 		{
@@ -370,6 +371,8 @@ function love.load()
 	helpimages = {}
 
 	savedwindowtitle = ""
+
+	loaduis()
 
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)
@@ -550,7 +553,7 @@ function love.draw()
 					skipnextscripthoverrect = nil
 				elseif y >= -16 and y <= love.graphics.getHeight() then
 					local used = usedscripts[scriptnames[rvnum]]
-					hoverrectangle(used and 128 or 64, used and 128 or 64, used and 128 or 64, 128, 8, y, screenoffset+640-8-24 -36, 16)
+					hoverrectangle(128,128,128, used and 128 or 64, 8, y, screenoffset+640-8-24 -36, 16)
 					ved_printf(scriptnames[rvnum], 8, y+4, screenoffset+640-8-36, "center")
 					if rvnum == #scriptnames then
 						showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
@@ -692,7 +695,6 @@ function love.draw()
 	elseif state == 11 then
 		drawsearch()
 	elseif state == 12 then
-		drawmap()
 	elseif state == 13 then
 		-- Options screen
 		--love.graphics.draw(checkon, love.graphics.getWidth()-98, 50, 0, 2)
@@ -1661,9 +1663,9 @@ function love.draw()
 
 			local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 			local check_x = love.graphics.getWidth()-64-check_w/2
-			checkbox(imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
+			checkbox(not imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
 				function(key, newvalue)
-					imageviewer_showwhite = newvalue
+					imageviewer_showwhite = not newvalue
 				end
 			)
 			showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
@@ -1798,6 +1800,44 @@ function love.draw()
 		end
 	end
 
+	if uis[state] ~= nil and uis[state].draw ~= nil then
+		-- A UI can have its own dedicated drawing function and not use elements, sure.
+		uis[state].draw(dt)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		-- Draw every element in this state's master element "container".
+		-- This master container doesn't define positions,
+		-- and just gives the window width and height as information.
+		local w, h = love.graphics.getDimensions()
+		for k,v in pairs(uis[state].elements) do
+			v:draw(0, 0, w, h)
+		end
+
+		-- Debug view
+		if allowdebug and love.keyboard.isDown("f8") then
+			love.graphics.setColor(0,255,0)
+			local function drawcoords(el)
+				if el.px == nil or el.py == nil then
+					return
+				end
+
+				local w, h = el.pw, el.ph
+				if w == nil then w = love.graphics.getWidth() end
+				if h == nil then h = love.graphics.getHeight() end
+
+				love.graphics.line(el.px, el.py, el.px+w, el.py)
+				love.graphics.line(el.px, el.py, el.px, el.py+h)
+			end
+			for k,v in pairs(uis[state].elements) do
+				drawcoords(v)
+				if v.recurse ~= nil then
+					v:recurse("debug_drawcoords", drawcoords)
+				end
+			end
+			love.graphics.setColor(255,255,255)
+		end
+	end
+
 	if not RCMabovedialog then
 		rightclickmenu.draw()
 	end
@@ -1808,13 +1848,28 @@ function love.draw()
 		rightclickmenu.draw()
 	end
 
+	if generictimer_mode == 3 and generictimer > 0 then
+		local width, lines = font8:getWrap(notification_text, 80*8)
+
+		-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+		if type(lines) == "table" then
+			lines = #lines
+		end
+
+		local boxy = love.graphics.getHeight()-16-lines*8
+		love.graphics.setColor(128,128,128,192)
+		love.graphics.rectangle("fill", 8, boxy, width+16, lines*8+8)
+		love.graphics.setColor(0,0,0,255)
+		ved_printf(notification_text, 16, boxy+4, 80*8, "left")
+	end
+
 	if love.keyboard.isDown("f9") and state_hotkeys[state] ~= nil then
 		--ved_print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
 	end
 
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
-		love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
+		v6_setcol(3)
 		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
@@ -1893,6 +1948,12 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
+	if love.window.hasFocus() then
+		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
+	else
+		focusregainedtimer = 0
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
@@ -1936,6 +1997,15 @@ function love.update(dt)
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
+	end
+
+	v6_frametimer = v6_frametimer + dt
+	while v6_frametimer > .034 do
+		v6_help:updateglow()
+		v6_graphics:updatelinestate()
+		v6_graphics.trinketcolset = false
+
+		v6_frametimer = v6_frametimer - .034
 	end
 
 	if updatescrollingtext ~= nil and state == 6 then
@@ -2492,6 +2562,23 @@ function love.update(dt)
 		middleclick_roll_update(dt)
 	end
 
+	if uis[state] ~= nil and uis[state].update ~= nil then
+		uis[state].update(dt)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, dt)
+			if e.update ~= nil then
+				e:update(dt)
+			end
+		end
+		for k,v in pairs(uis[state].elements) do
+			caller(v, dt)
+			if v.recurse ~= nil then
+				v:recurse("update", caller, dt)
+			end
+		end
+	end
+
 	hook("love_update_end", {dt})
 
 	dialog.update(dt)
@@ -2499,8 +2586,7 @@ function love.update(dt)
 end
 
 function love.textinput(char)
-	-- Are we holding down windows/super? Won't matter on Windows, but could for Linux...
-	if love.system.getOS() ~= "OS X" and keyboard_eitherIsDown("gui") then
+	if focusregainedtimer < .1 then
 		return
 	end
 
@@ -2557,9 +2643,37 @@ function love.textinput(char)
 	if coordsdialog.active then
 		coordsdialog.type(char)
 	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].textinput ~= nil then
+		uis[state].textinput(char)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, char)
+			if e.textinput ~= nil then
+				e:textinput(char)
+			end
+		end
+		for k,v in pairs(uis[state].elements) do
+			caller(v, char)
+			if v.recurse ~= nil then
+				v:recurse("textinput", caller, char)
+			end
+		end
+	end
 end
 
 function love.keypressed(key)
+	if focusregainedtimer < .1 then
+		if not table.contains(skipnextkeys, key) then
+			table.insert(skipnextkeys, key)
+		end
+		return
+	end
+
 	hook("love_keypressed_start", {key})
 
 	-- Your privacy is respected.
@@ -2903,10 +3017,10 @@ function love.keypressed(key)
 
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
-	elseif state == 0 and key == "return" and keyboard_eitherIsDown("shift") then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
-	elseif state == 0 and key == "return" then
+	elseif state == 0 and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		tostate(input)
 	elseif sp_t ~= 0 and key == "escape" then
@@ -2933,13 +3047,13 @@ function love.keypressed(key)
 		end
 
 		if levelmetadata_get(roomx, roomy).directmode == 1 then
-			if key == "left" then
+			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
-			elseif key == "right" then
+			elseif table.contains({"right", "d"}, key) then
 				selectedtile = (selectedtile + 1) % 1200
-			elseif key == "up" then
+			elseif table.contains({"up", "w"}, key) then
 				selectedtile = selectedtile - 40
-			elseif key == "down" then
+			elseif table.contains({"down", "s"}, key) then
 				selectedtile = (selectedtile + 40) % 1200
 			end
 		end
@@ -3147,16 +3261,16 @@ function love.keypressed(key)
 			gotoroom_finish()
 			mapmovedroom = true
 		end
-	elseif state == 1 and editingroomname and key == "return" then
+	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then
 		saveroomname()
 	elseif state == 1 and editingroomname and key == "escape" then
 		editingroomname = false
 		stopinput()
-	elseif state == 1 and editingroomtext > 0 and key == "return" then
+	elseif state == 1 and editingroomtext > 0 and table.contains({"return", "kpenter"}, key) then
 		endeditingroomtext()
 	elseif state == 1 and editingroomtext > 0 and key == "escape" then
 		if entitydata[editingroomtext].data == "" then
-			removeentity(editingroomtext)
+			removeentity(editingroomtext, nil, true)
 		end
 		editingroomtext = 0
 		stopinput()
@@ -3189,28 +3303,28 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and state == 1 and key == "f1" and not voided_metadata then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and state == 1 and key == "f2" and not voided_metadata then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and state == 1 and key == "f3" and not voided_metadata then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not voided_metadata then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") and not voided_metadata then
+	elseif nodialog and state == 1 and key == "f10" and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()
 		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata_get(roomx, roomy).directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
@@ -3373,7 +3487,7 @@ function love.keypressed(key)
 				end
 			end
 		end
-	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 then
+	elseif (state == 1 or state == 6) and nodialog and key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
 		-- Reload tilesets
 		loadtilesets()
 		loadfonts()
@@ -3387,6 +3501,8 @@ function love.keypressed(key)
 		else
 			customsizemode = 1
 		end
+	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
+		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
 		if key == "up" then
 			scriptgotoline(editingline-1)
@@ -3397,7 +3513,7 @@ function love.keypressed(key)
 		elseif key == "pagedown" then
 			scriptgotoline(editingline+57)
 		end
-	elseif state == 3 and key == "return" then
+	elseif state == 3 and table.contains({"return", "kpenter"}, key) then
 		-- We can split lines because the current line is in input and input_r.
 		-- So input_r is simply transferred to the newly inserted line along with the cursor.
 		table.insert(scriptlines, editingline+1, "")
@@ -3407,19 +3523,28 @@ function love.keypressed(key)
 		-- We also want to scroll the screen if necessary
 		scriptlineonscreen()
 	elseif (state == 3 or state == 6) and key == "f1" then
-		stopinput()
+		if state == 6 then
+			stopinput()
+		end
 		tostate(15)
 	elseif state == 3 and key == "f3" then
 		inscriptsearch(scriptsearchterm)
-	elseif state == 3 and keyboard_eitherIsDown(ctrl) then
+	elseif state == 3 and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("alt")) then
+		local temp_jumped_lr = false
 		if key == "left" and #scripthistorystack > 0 then
 			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
+			temp_jumped_lr = true
 		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" and not scriptinstack(carg2) then
 			editorjumpscript(carg2)
+			temp_jumped_lr = true
 		elseif key == "right" and context == "script" and not scriptinstack(carg1) then
 			editorjumpscript(carg1)
+			temp_jumped_lr = true
 		elseif key == "right" and context == "roomscript" and not scriptinstack(carg3) then
 			editorjumpscript(carg3)
+			temp_jumped_lr = true
+		elseif not keyboard_eitherIsDown(ctrl) then
+			-- Temporary catch while both ctrl/alt+left/right are possible, from here on only ctrl
 		elseif key == "c" then
 			copyscriptline()
 		elseif key == "a" then
@@ -3467,6 +3592,10 @@ function love.keypressed(key)
 			input_r = ""
 			dirty()
 		end
+
+		if temp_jumped_lr and not keyboard_eitherIsDown("alt") then
+			show_notification(L.OLDSHORTCUT_SCRIPTJUMP)
+		end
 	elseif state == 3 and key == "tab" then
 		matching = {}
 
@@ -3486,7 +3615,7 @@ function love.keypressed(key)
 			scriptlines[editingline] = input
 			dirty()
 		end
-	elseif (state == 6) and key == "return" and tabselected == 0 then
+	elseif (state == 6) and table.contains({"return", "kpenter"}, key) and tabselected == 0 then
 		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
 		if tabselected ~= 0 then
@@ -3511,16 +3640,22 @@ function love.keypressed(key)
 		loadlevelsfolder()
 	elseif state == 6 and backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
 		currentbackupdir = ""
-	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "a" and keyboard_eitherIsDown(ctrl) then
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and (key == "a" or key == "r") and keyboard_eitherIsDown(ctrl) then
 		stopinput()
 		tostate(30)
-	elseif state == 6 and not secondlevel and nodialog and not backupscreen and key == "d" and keyboard_eitherIsDown(ctrl) then
+		if key == "a" then
+			show_notification(L.OLDSHORTCUT_ASSETS)
+		end
+	elseif state == 6 and not secondlevel and nodialog and not backupscreen and (key == "d" or key == "f") and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
+		if key == "d" then
+			show_notification(L.OLDSHORTCUT_OPENLVLDIR)
+		end
 	elseif state == 6 and allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
 		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif state == 6 and allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then
 		table.remove(files[""])
-	elseif (state == 8) and (key == "return") then
+	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
 		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
 		if savedsuccess then
@@ -3541,28 +3676,16 @@ function love.keypressed(key)
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)
 			nodialog = false -- Terrible
 		end
-	elseif state == 11 and key == "return" then
+	elseif state == 11 and table.contains({"return", "kpenter"}, key) then
 		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
 		searchedfor = input .. input_r
-	elseif nodialog and (state == 10 or state == 11 or state == 12) and key == "escape" then
+	elseif nodialog and (state == 10 or state == 11) and key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (key == "return" or key == "m" or key == "kp5") then
+	elseif nodialog and state == 12 and (table.contains({"return", "kpenter"}, key) or key == "m" or key == "kp5") then
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "z" then
-		undo()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "y" then
-		redo()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "x" then
-		cutroom()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "c" then
-		copyroom()
-	elseif nodialog and state == 12 and keyboard_eitherIsDown(ctrl) and key == "v" then
-		pasteroom()
-	elseif nodialog and state == 12 and key == "s" then
-		create_export_dialog()
 	elseif nodialog and state == 12 and (key == "," or key == ".") then
 		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
 		if key == "," then
@@ -3633,7 +3756,7 @@ function love.keypressed(key)
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			helplineonscreen()
-		elseif key == "return" then
+		elseif table.contains({"return", "kpenter"}, key) then
 			table.insert(helparticlecontent, helpeditingline+1, "")
 			helpeditingline = helpeditingline + 1
 			input = anythingbutnil(helparticlecontent[helpeditingline])
@@ -3645,8 +3768,19 @@ function love.keypressed(key)
 				input = input .. "¤"
 			end
 			helparticlecontent[helpeditingline] = input
-		elseif key == "d" and keyboard_eitherIsDown("ctrl") then
-			table.remove(helparticlecontent, helpeditingline)
+		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
+			if #helparticlecontent > 1 then
+				table.remove(helparticlecontent, helpeditingline)
+			else
+				helparticlecontent[helpeditingline] = ""
+			end
+			if keyboard_eitherIsDown("shift") then
+				helpeditingline = math.max(helpeditingline - 1, 1)
+			else
+				if helpeditingline > #helparticlecontent and helpeditingline > 1 then
+					helpeditingline = helpeditingline - 1
+				end
+			end
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			input_r = ""
 		end
@@ -3664,14 +3798,10 @@ function love.keypressed(key)
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
-				elseif type(v) == "function" then
-					print(k .. "\t\t\t[function]")
-				elseif type(v) == "table" then
-					print(k .. "\t\t\t[table]")
-				elseif type(v) == "userdata" then
-					print(k .. "\t\t\t[userdata]")
+				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
+					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
-					print(k .. " = " .. v .. "\t\t\t[" .. type(v) .. "]")
+					print(k .. " = " .. tostring(v) .. "\t\t\t[" .. type(v) .. "]")
 				end
 			end
 			cons("\n***********************************\n* E N D                           *\n***********************************\n")
@@ -3690,7 +3820,7 @@ function love.keypressed(key)
 		tostate(0, true)
 	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
 		for k,v in pairs(toolshortcuts) do
-			if key == string.lower(v) and not keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("gui") then
+			if key == string.lower(v) then
 				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
@@ -3702,7 +3832,7 @@ function love.keypressed(key)
 				toolscroll()
 			end
 		end
-	elseif (state == 22 or state == 23) and key == "return" then
+	elseif (state == 22 or state == 23) and table.contains({"return", "kpenter"}, key) then
 		stopinput()
 		scsuccess, sccontents = readlevelfile(input)
 		if scsuccess then
@@ -3760,6 +3890,8 @@ function love.keypressed(key)
 				current_audio:seek(seek, "seconds")
 			end
 		end
+	elseif state == 32 and key == "l" then
+		assets_graphicsloaddialog()
 	elseif state == 32 and imageviewer_image_color ~= nil and nodialog then
 		if key == "=" or key == "+" or key == "kp+" then
 			imageviewer_zoomin()
@@ -3776,8 +3908,6 @@ function love.keypressed(key)
 		elseif key == "3" then
 			imageviewer_grid = 32
 		end
-	elseif state == 32 and key == "l" then
-		assets_graphicsloaddialog()
 	elseif state == 33 then
 		if key == "escape" or key == "return" then
 			exitlanguageoptions()
@@ -3808,9 +3938,37 @@ function love.keypressed(key)
 			end
 		end
 	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].keypressed ~= nil then
+		uis[state].keypressed(key)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, key)
+			if e.keypressed ~= nil then
+				e:keypressed(key)
+			end
+		end
+		for k,v in pairs(uis[state].elements) do
+			caller(v, key)
+			if v.recurse ~= nil then
+				v:recurse("keypressed", caller, key)
+			end
+		end
+	end
 end
 
 function love.keyreleased(key)
+	for k,v in pairs(skipnextkeys) do
+		if v == key then
+			table.remove(skipnextkeys, k)
+			return
+		end
+	end
+
 	hook("love_keyreleased_start", {key})
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
@@ -3825,12 +3983,33 @@ function love.keyreleased(key)
 	elseif nodialog and (key == "lshift" or key == lctrl) then
 		tilespicker = false
 		tilespicker_shortcut = false
-	elseif key == "return" then
+	elseif table.contains({"return", "kpenter"}, key) then
 		returnpressed = false
 	elseif state == 27 and key == "escape" then
 		-- Put it here instead of love.keypressed,
 		-- otherwise the new window will interpret a hold as a press
 		exitdisplayoptions()
+	end
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].keyreleased ~= nil then
+		uis[state].keyreleased(key)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, key)
+			if e.keyreleased ~= nil then
+				e:keyreleased(key)
+			end
+		end
+		for k,v in pairs(uis[state].elements) do
+			caller(v, key)
+			if v.recurse ~= nil then
+				v:recurse("keyreleased", caller, key)
+			end
+		end
 	end
 end
 
@@ -3846,8 +4025,21 @@ function love.mousepressed(x, y, button)
 		end
 	end
 
+	if focusregainedtimer < .1 and not table.contains({"wu", "wd"}, button) then
+		if not table.contains(skipnextmouses, button) then
+			table.insert(skipnextmouses, button)
+		end
+		return
+	end
+
 	if s.pscale ~= 1 then
 		x, y = x*s.pscale^-1, y*s.pscale^-1
+	end
+
+	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+		-- When drawing is paused it won't look like the scrollbar has moved,
+		-- so just don't move it so the visual will be accurate
+		return
 	end
 
 	hook("love_mousepressed_start", {x, y, button})
@@ -3905,7 +4097,7 @@ function love.mousepressed(x, y, button)
 		end
 	elseif state == 3 and button == "l" and nodialog and mouseon(48, 24, love.graphics.getWidth()-192, love.graphics.getHeight()-24) then
 		local chr, line
-		if textsize then
+		if s.scripteditor_largefont then
 			chr = math.floor((x-88)/16) + 1
 			line = math.floor(((y-24)-scriptscroll-4)/16) + 1
 		else
@@ -3984,6 +4176,30 @@ function love.mousepressed(x, y, button)
 	end
 
 	boxmousepress()
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].mousepressed ~= nil then
+		uis[state].mousepressed(x, y, button)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, x, y, button)
+			if e.mousepressed ~= nil
+			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+			and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+				e:mousepressed(x-e.px, y-e.py, button)
+			end
+		end
+		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
+		for k,v in pairs(uis[state].elements) do
+			caller(v, x, y, button)
+			if v.recurse ~= nil then
+				v:recurse("mousepressed", caller, x, y, button)
+			end
+		end
+	end
 end
 
 function love.mousereleased(x, y, button)
@@ -3995,6 +4211,13 @@ function love.mousereleased(x, y, button)
 			button = "r"
 		elseif button == 3 then
 			button = "m"
+		end
+	end
+
+	for k,v in pairs(skipnextmouses) do
+		if v == button then
+			table.remove(skipnextmouses, k)
+			return
 		end
 	end
 
@@ -4038,6 +4261,31 @@ function love.mousereleased(x, y, button)
 	end
 
 	boxmouserelease()
+
+	if coordsdialog.active or RCMactive or dialog.is_open() then
+		return
+	end
+
+	if uis[state] ~= nil and uis[state].mousereleased ~= nil then
+		uis[state].mousereleased(x, y, button)
+	end
+	if uis[state] ~= nil and uis[state].elements ~= nil then
+		local function caller(e, x, y, button)
+			if e.mousereleased ~= nil
+			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
+			and e.py <= y and (e.ph == nil or e.py+e.ph > y) then
+				e:mousereleased(x-e.px, y-e.py, button)
+			end
+		end
+		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
+		-- Also, since this is mouse released, maybe only call this iff we already called mousepressed??
+		for k,v in pairs(uis[state].elements) do
+			caller(v, x, y, button)
+			if v.recurse ~= nil then
+				v:recurse("mousereleased", caller, x, y, button)
+			end
+		end
+	end
 end
 
 function love.directorydropped(path)

@@ -662,6 +662,8 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			local field2intcmds = {"loadscript", "ifskip"}
 			local field4intcmds = {"ifexplored"}
 
+			oldname = escapegsub(oldname, true)
+
 			local tmp
 			for rvnum = #scriptnames, 1, -1 do
 				for k,v in pairs(scripts[scriptnames[rvnum]]) do

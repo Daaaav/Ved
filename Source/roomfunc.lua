@@ -57,7 +57,7 @@ function loadrohiom(x, y)
 	return myroomdata, myentitydata, mymetadata
 end
 
-function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid)
+function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid, displayminimapgrid)
 	if zoomscale2 == nil then zoomscale2 = 1 end
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
 	local ts = usedtilesets[themetadata.tileset]
@@ -96,8 +96,13 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	end
 	love.graphics.draw(tile_batch, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
 
-	if not displaysolid and not displaytilenumbers then
+	if not displaysolid and not displaytilenumbers and not displayminimapgrid then
 		return
+	end
+
+	local zoom
+	if displayminimapgrid then
+		zoom = getminimapzoom(metadata)
 	end
 
 	for aty = 0, 29 do
@@ -127,6 +132,25 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 
 			if displaytilenumbers then
 				ved_print(t, x, y)
+			end
+
+			if displayminimapgrid then
+				love.graphics.setColor(96, 96, 96)
+				local function draw()
+					love.graphics.draw(solidimg, x, y)
+				end
+				if zoom == 1 then
+					if atx >= 3 and atx <= 36 and atx % 3 == 0 and aty <= 24 and aty % 3 == 0 then
+						draw()
+					end
+				elseif zoom == 2 then
+					if atx <= 36 and islineon24x18(atx) and aty <= 27 and islineon24x18(aty) then
+						draw()
+					end
+				elseif zoom == 4 then
+					draw()
+				end
+				love.graphics.setColor(255, 255, 255)
 			end
 		end
 	end
@@ -229,7 +253,7 @@ function displaybottom2rowstexts(offsetx, offsety, myroomx, myroomy)
 	local scriptname_args = {}
 	local scriptname_editingshown = false
 	for k,v in pairs(entitydata) do
-		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= (myroomy*30)+28) and (v.y <= (myroomy*30)+29) then
 			displayentity(offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, true)
 		end
 	end
@@ -253,7 +277,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
-		love.graphics.setColor(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].entcolor)
+		v6_setcol(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].v6col)
 		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y) -- 78
 
 		-- Where is it going?
@@ -320,7 +344,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 9 then
 		-- Trinket
+		v6_setcol(3)
 		drawentitysprite(22, x, y)
+		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
 				x, y,
@@ -330,7 +356,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 10 then
 		-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
+		v6_setcol(4)
 		drawentitysprite(20+v.p1, x, y)
+		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
 				x, y,
@@ -342,7 +370,11 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
 		-- Gravity line or warp line. This is kind of a special story.
 		if v.t == 50 then
+			-- Warp line
 			love.graphics.setColor(0,255,0,255)
+		elseif v.t == 11 then
+			-- Gravity line
+			v6_setgravitylinecol()
 		end
 		local sel_x, sel_y, sel_w, sel_h
 		-- Gravity lines and warp lines have a different p1!
@@ -357,7 +389,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				if showhitbox then
 					-- Accurate hitbox
 					love.graphics.setColor(255,0,0,255)
-					love.graphics.rectangle("line", sel_x + .5, sel_y + 10.5, 16*sel_w - 1, sel_h)
+					love.graphics.rectangle("line", sel_x - .5, sel_y + 10.5, 16*sel_w + 1, sel_h)
 				else
 					love.graphics.rectangle("line", sel_x + .5, sel_y + 8.5, 16*sel_w - 1, sel_h)
 				end
@@ -375,8 +407,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				if showhitbox then
 					-- Accurate hitbox
 					love.graphics.setColor(255,0,0,255)
-					love.graphics.rectangle("line", sel_x + 8.5, sel_y + .5, sel_w, 16*sel_h - 1)
-					love.graphics.rectangle("line", sel_x + 10.5, sel_y + .5, sel_w, 16*sel_h - 1)
+					love.graphics.rectangle("line", sel_x + 8.5, sel_y - .5, sel_w, 16*sel_h + 1)
+					love.graphics.rectangle("line", sel_x + 10.5, sel_y - .5, sel_w, 16*sel_h + 1)
 				else
 					love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
 				end
@@ -407,7 +439,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Warp token. But are we currently displaying the entrance or the destination? Or both?
 		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
 			-- Entrance
+			v6_setcol(10)
 			drawentitysprite(18, x, y)
+			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
 					x, y,
@@ -433,7 +467,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 15 then
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
-		drawentitysprite(144, x - 8, y + 2)
+		local sprite = getrescuablesprite(v.p1)
+		drawentitysprite(sprite, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -444,7 +479,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 16 then
 		-- Start point
-		love.graphics.setColor(132, 181, 255)
+		v6_setcol(0)
 		drawentitysprite(3*v.p1, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
@@ -463,7 +498,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				-- We're editing this text at the moment.
 				data = input .. __
 			end
+			v6_setroomprintcol()
 			ved_print(data, x, y, 2)
+			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
 					x, y,
@@ -477,7 +514,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if math.abs(sp_t) == k then
 			sp_teken(v, offsetx, offsety, myroomx, myroomy)
 		end
+		v6_setcol(4)
 		drawentitysprite(17, x, y + 16)
+		love.graphics.setColor(255, 255, 255)
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
 			scriptname_editingshown = true
@@ -2465,24 +2504,143 @@ end
 function setrescuablecolor(color)
 	if color == 0 then
 		-- Cyan
-		love.graphics.setColor(132, 181, 255)
+		v6_setcol(0)
 	elseif color == 1 then
 		-- Pink
-		love.graphics.setColor(255, 135, 255)
+		v6_setcol(20)
 	elseif color == 2 then
 		-- Yellow
-		love.graphics.setColor(255, 255, 135)
+		v6_setcol(14)
 	elseif color == 3 then
 		-- Red
-		love.graphics.setColor(255, 61, 61)
+		v6_setcol(15)
 	elseif color == 4 then
 		-- Green
-		love.graphics.setColor(144, 255, 144)
+		v6_setcol(13)
 	elseif color == 5 then
 		-- Blue
-		love.graphics.setColor(75, 75, 230)
+		v6_setcol(16)
 	else
-		-- What?
-		love.graphics.setColor(love.math.random(0, 255), love.math.random(0, 255), love.math.random(0, 255))
+		-- Cyan, but happy
+		v6_setcol(0)
+	end
+end
+
+function getrescuablesprite(color)
+	if color >= 0 and color <= 5 then
+		return 144
+	else
+		return 0
+	end
+end
+
+function islineon24x18(coord) -- Global because used in both displayroom()'s displayminimapgrid and displayminimaproom()
+	return table.contains({0, 1, 3, 4, 6}, coord % 8)
+end
+
+function displayminimaproom(offsetx, offsety, theroomdata, themetadata, zoomscale2, atx, aty)
+	-- Doesn't display the black behind it
+
+	zoomscale2 = zoomscale2 or 1
+
+	local actualtileset = themetadata.tileset
+	local ts = usedtilesets[actualtileset]
+	local zoom = getminimapzoom(metadata)
+
+	local function setcolor()
+		if actualtileset == 1 then -- Outside tileset
+			love.graphics.setColor(96, 96, 96)
+		else
+			love.graphics.setColor(196, 196, 196)
+		end
+	end
+
+	local function draw_pixel(actualx, actualy)
+		love.graphics.rectangle("fill", offsetx + zoomscale2*actualx, offsety + zoomscale2*actualy, zoomscale2, zoomscale2)
+	end
+
+	local function do_pixel(t, tilex, tiley, actualx, actualy)
+		if tilex == atx and tiley == aty then
+			if issolid(t, ts, nil, true) then
+				love.graphics.setColor(192, 255, 192)
+			else
+				love.graphics.setColor(127, 192, 127)
+			end
+			draw_pixel(actualx, actualy)
+			setcolor()
+		elseif issolid(t, ts, nil, true) then
+			draw_pixel(actualx, actualy)
+		end
+	end
+
+
+	setcolor()
+
+	if zoom == 1 then -- 12x9
+		-- Easiest to do
+		local t
+		local actualx, actualy = 0, 0
+		for tiley = 0, 24, 3 do
+			for tilex = 3, 36, 3 do
+				t = theroomdata[(tiley*40)+(tilex+1)]
+				do_pixel(t, tilex, tiley, actualx, actualy)
+				actualx = actualx + 1
+			end
+			actualx = 0
+			actualy = actualy + 1
+		end
+	elseif zoom == 2 then -- 24x18
+		-- A bit harder
+		local t
+		local actualx, actualy = 0, 0
+		for tiley = 0, 27 do
+			if islineon24x18(tiley) then
+				for tilex = 0, 36 do
+					t = theroomdata[(tiley*40)+(tilex+1)]
+					if islineon24x18(tilex) then
+						do_pixel(t, tilex, tiley, actualx, actualy)
+						actualx = actualx + 1
+					end
+				end
+				actualy = actualy + 1
+			end
+			actualx = 0
+		end
+	elseif zoom == 4 then -- 48x36
+		-- At this point the minimap pixels are larger than 40x30,
+		-- meaning the minimap image is actually stretched and distorted
+		local t
+		local actualx, actualy = 0, 0
+		local function islinedoubled(coord, axis)
+			assert(axis == "x" or axis == "y", "axis has to be the string 'x' or 'y'")
+			local lastcoord
+			if axis == "x" then
+				lastcoord = 39
+			elseif axis == "y" then
+				lastcoord = 29
+			end
+			return (coord % 5 == 4 or coord == 0) and coord ~= lastcoord
+		end
+		local function do_row(tiley, actualy)
+			for tilex = 0, 39 do
+				t = theroomdata[(tiley*40)+(tilex+1)]
+				do_pixel(t, tilex, tiley, actualx, actualy)
+				actualx = actualx + 1
+				if islinedoubled(tilex, "x") then
+					do_pixel(t, tilex, tiley, actualx, actualy)
+					actualx = actualx + 1
+				end
+			end
+		end
+		for tiley = 0, 29 do
+			do_row(tiley, actualy)
+			actualx = 0
+			actualy = actualy + 1
+			if islinedoubled(tiley, "y") then
+				do_row(tiley, actualy)
+				actualx = 0
+				actualy = actualy + 1
+			end
+		end
 	end
 end

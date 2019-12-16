@@ -36,7 +36,8 @@ end
 
 function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, text_r, alttextcolor)
 	text_r = anythingbutnil(text_r)
-	local textscale = textsize and 2 or 1
+	local textscale = s.scripteditor_largefont and 2 or 1
+	local fontsize = s.scripteditor_largefont and 16 or 8
 
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
@@ -59,10 +60,10 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
 				if cursorflashtime <= .5 then
-					ved_print(firstUTF8(__), x+((offsetchars-1)*(textsize and 16 or 8)), y, textscale)
+					ved_print(firstUTF8(__), x+((offsetchars-1)*fontsize), y, textscale)
 				end
 			else
-				ved_print(__, x+((offsetchars-1)*(textsize and 16 or 8)), y, textscale)
+				ved_print(__, x+((offsetchars-1)*fontsize), y, textscale)
 			end
 		end
 
@@ -103,10 +104,10 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				else
 					setColorArr(s.syntaxcolor_generic)
 				end
-				ved_print(v, x+(offsetchars*(textsize and 16 or 8)), y, textscale)
+				ved_print(v, x+(offsetchars*fontsize), y, textscale)
 
 				setColorArr(s.syntaxcolor_separator)
-				ved_print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*(textsize and 16 or 8))+(string.len(v)*(textsize and 16 or 8)), y, textscale)
+				ved_print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*fontsize)+(string.len(v)*fontsize), y, textscale)
 
 				offsetchars = offsetchars + (string.len(v)+1)
 			end
@@ -120,10 +121,10 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
 				if cursorflashtime <= .5 then
-					ved_print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y, textscale)
+					ved_print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*fontsize), y, textscale)
 				end
 			else
-				ved_print(__, x+((string.len(text)-string.len(text_r))*(textsize and 16 or 8)), y, textscale)
+				ved_print(__, x+((string.len(text)-string.len(text_r))*fontsize), y, textscale)
 			end
 		end
 
@@ -815,7 +816,7 @@ function scriptlineonscreen(ln)
 		ln = editingline
 	end
 
-	if textsize then
+	if s.scripteditor_largefont then
 		scriptscroll = math.max(scriptscroll, -(16*(ln-1)))
 		scriptscroll = math.min(scriptscroll, -(16*ln-16*28))
 	else

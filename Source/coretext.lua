@@ -110,6 +110,11 @@ function loadlanguage()
 		package.loaded.const = false
 		ved_require("const")
 	end
+	if uis ~= nil then
+		-- Need to reload this for all the buttons that are in there
+		unloaduis()
+		loaduis()
+	end
 end
 
 function loadtinynumbersfont()

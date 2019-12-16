@@ -323,6 +323,7 @@ AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unexpected script line without script: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Map width is invalid: $1",
 MAPHEIGHTINVALID = "Map height is invalid: $1",
 LEVMUSICEMPTY = "Level music is empty!",
@@ -516,6 +517,11 @@ NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
 SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
 
 
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+left/right will stop working soon, use ALT+left/right instead", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "Ctrl+A will stop working soon, use Ctrl+R instead",
+OLDSHORTCUT_OPENLVLDIR = "Ctrl+D will stop working soon, use Ctrl+F instead",
+
+
 }
 
 -- Please check the reference for plural forms
@@ -648,7 +654,7 @@ ERR_TIMESINCESTART = "Time since start:"
 ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(not loaded)"
 ERR_PLUGINSNONE = "(none)"
-ERR_PLEASETELLDAV = "Please tell Dav999 about this problem.\n\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+ERR_PLEASETELLDAV = "Please tell Dav999 about this problem.\n\n\nDetails: (press Ctrl/Cmd+C to copy to the clipboard)\n\n"
 ERR_INTERMEDIATE = " (intermediate version)" -- pre-release version, so a version in between officially released versions
 ERR_TOONEW = " (too new)"
 
@@ -656,7 +662,7 @@ ERR_PLUGINERROR = "Plugin error!"
 ERR_FILE = "File to be edited:"
 ERR_FILEEDITORS = "Plugins that edit this file:"
 ERR_CURRENTPLUGIN = "Plugin that triggered the error:"
-ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
+ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press Ctrl/Cmd+C to copy to the clipboard)\n\n"
 ERR_CONTINUE = "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
 ERR_REPLACECODE = "Failed to find this in %s.lua:"
 ERR_REPLACECODEPATTERN = "Failed to find this in %s.lua (as pattern):"
@@ -840,11 +846,11 @@ The editor\h#
 
 On the left side, you will find the tools selection. Most tools have subtools that
 will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with shift or ctrl held down. To switch between subtools, you
+shortcut or scroll with Shift or Ctrl held down. To switch between subtools, you
 can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
 help page.
 Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, shift-right click on them.
+entities without having to use the context menu, Shift-right click on them.
 On the right side of the screen, you will find many buttons and options. The upper
 buttons are related to the entire level, the lower buttons (under Room options)
 are specific to the current room. For more information about those buttons, refer
@@ -1054,8 +1060,8 @@ Jumping to scripts\h#
 
 On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
 is possible to jump to the given script by clicking the "Go to" button when the
-cursor is on that line. You can also press ¤ctrl+right¤ to do this, and you can\nw
-use ¤ctrl+left¤ to jump one step back through the chain to where you came from.\nw
+cursor is on that line. You can also press ¤Alt+right¤ to do this, and you can\nw
+use ¤Alt+left¤ to jump one step back through the chain to where you came from.\nw
 ]]
 },
 
@@ -1206,7 +1212,7 @@ Ctrl+Y¤  Redo\C
 Ctrl+F¤  Search\C
 Ctrl+/¤  Level notepad\C
 Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace ctrl by cmd)
+(NOTE: On Mac, replace Ctrl by Cmd)
 N¤  display all tile numbers\C
 J¤  display tile solidity\C
 M¤  Show map\C
@@ -1227,8 +1233,8 @@ Script editor\gh#
 Ctrl+F¤  Find\C
 Ctrl+G¤  Go to line\C
 Ctrl+I¤  Toggle internal scripting mode\C
-Ctrl+right¤  Jump to script in conditional command\C
-Ctrl+left¤  Jump one step back\C
+Alt+right¤  Jump to script in conditional command\C
+Alt+left¤  Jump one step back\C
 
 Script list\gh#
 
@@ -1572,7 +1578,7 @@ gotoposition¤(x,y,f)\w#h
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
 will have normal gravity by default)
 
 flash¤(x)\w#h
@@ -2372,7 +2378,7 @@ Underlined large text\wh
 Using multiple colors on a line\h#
 
 It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤insert¤ key), and putting the color\nYnw
+the¤ ¤¤ ¤character (which you can type using the ¤Insert¤ key), and putting the color\nYnw
 codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
 is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
 line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
@@ -2392,7 +2398,7 @@ Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
 Coloring a single character\h#
 
 OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤shift+insert¤), after\nYnw
+To do this, put the character¤ § ¤(which you can type using ¤Shift+Insert¤), after\nYnw
 the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
 
 \-

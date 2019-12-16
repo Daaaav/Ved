@@ -36,7 +36,14 @@ love.graphics.getHeightOR = love.graphics.getHeight
 
 love.graphics.getHeight = function()
 	--return love.graphics.getHeightOR()
-	return 480
+	return 480 --+ love.math.random(0,5) -- GUI debug
+end
+
+
+love.graphics.getDimensionsOR = love.graphics.getDimensions
+
+love.graphics.getDimensions = function()
+	return love.graphics.getWidth(), love.graphics.getHeight()
 end
 
 

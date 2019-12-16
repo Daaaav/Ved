@@ -370,3 +370,23 @@ function locatetrinketscrewmates()
 		end
 	end
 end
+
+-- Either use this like 'getminimapzoom(mapwidth, mapheight)'
+-- or 'getminimapzoom(metadata)'!
+function getminimapzoom(...)
+	local mapwidth, mapheight
+	if type(...) == "table" then
+		mapwidth, mapheight = (...).mapwidth, (...).mapheight
+	else
+		mapwidth, mapheight = ...
+	end
+
+	local zoom = 1
+	if mapwidth <= 10 and mapheight <= 10 then
+		zoom = 2
+	end
+	if mapwidth <= 5 and mapheight <= 5 then
+		zoom = 4
+	end
+	return zoom
+end
