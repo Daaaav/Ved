@@ -1621,7 +1621,7 @@ function createmde()
 end
 
 function state6load(levelname)
-	local hastrailingdirsep = levelname:sub(-#dirsep, -#dirsep) == dirsep
+	local hastrailingdirsep = levelname:sub(-#dirsep) == dirsep
 	if hastrailingdirsep then
 		levelname = levelname:sub(1, -#dirsep - 1)
 	end
