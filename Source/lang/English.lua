@@ -323,6 +323,7 @@ AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unexpected script line without script: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Map width is invalid: $1",
 MAPHEIGHTINVALID = "Map height is invalid: $1",
 LEVMUSICEMPTY = "Level music is empty!",
@@ -1577,7 +1578,7 @@ gotoposition¤(x,y,f)\w#h
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
 will have normal gravity by default)
 
 flash¤(x)\w#h

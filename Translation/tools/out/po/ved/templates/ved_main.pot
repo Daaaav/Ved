@@ -1089,6 +1089,10 @@ msgctxt "L.UNEXPECTEDSCRIPTLINE"
 msgid "Unexpected script line without script: $1"
 msgstr ""
 
+msgctxt "L.DUPLICATESCRIPT"
+msgid "Script $1 is duplicate! Only one can be loaded."
+msgstr ""
+
 msgctxt "L.MAPWIDTHINVALID"
 msgid "Map width is invalid: $1"
 msgstr ""

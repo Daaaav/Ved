@@ -5,6 +5,27 @@ love.graphics.clear = function(...)
 	end
 end
 
+love.keyboard.isDownOR = love.keyboard.isDown
+love.keyboard.isDown = function(...)
+	for _,key in pairs({...}) do
+		if table.contains(skipnextkeys, key) then
+		elseif love.keyboard.isDownOR(key) then
+			return true
+		end
+	end
+	return false
+end
+
+love.mouse.isDownOR = love.mouse.isDown
+love.mouse.isDown = function(...)
+	for _,button in pairs({...}) do
+		if table.contains(skipnextmouses, button) then
+		elseif love.mouse.isDownOR(button) then
+			return true
+		end
+	end
+end
+
 function limit_draw_fps()
 	local cur_frame_time = love.timer.getTime()
 	if next_frame_time <= cur_frame_time then
@@ -398,7 +419,6 @@ function loadstate(new, ...)
 		scriptscroll = 0
 		input = scriptlines[editingline]
 		syntaxhlon = true
-		textsize = false
 
 		-- Little bit of caching
 		rememberflagnumber = -1
@@ -948,7 +968,7 @@ function lefttoolscrollbounds()
 end
 
 function hoverdraw(img, x, y, w, h, s)
-	if nodialog and mouseon(x, y, w, h) then
+	if nodialog and mouseon(x, y, w, h) and love.window.hasFocus() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		love.graphics.setColor(255,255,255,128)
@@ -958,7 +978,7 @@ function hoverdraw(img, x, y, w, h, s)
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
-	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) then
+	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and love.window.hasFocus() then
 		love.graphics.setColor(r, g, b, 255)
 		love.graphics.rectangle("fill", x, y, w, h)
 	else
@@ -1606,7 +1626,7 @@ function endeditingroomtext(donotmakethisnil)
 			table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingroomtext, changedentitydata = {{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}}})
 		end
 	else
-		removeentity(editingroomtext)
+		removeentity(editingroomtext, nil, true)
 	end
 	editingroomtext = 0
 end
@@ -1626,6 +1646,11 @@ function createmde()
 end
 
 function state6load(levelname)
+	local hastrailingdirsep = levelname:sub(-#dirsep) == dirsep
+	if hastrailingdirsep then
+		levelname = levelname:sub(1, -#dirsep - 1)
+	end
+
 	if backupscreen then
 		if files[levelname] ~= nil then
 			currentbackupdir = levelname
@@ -1635,10 +1660,14 @@ function state6load(levelname)
 	end
 
 	if files[levelname] ~= nil then
-		input = levelname .. dirsep
-		input_r = ""
-		tabselected = 0
-		return
+		if not hastrailingdirsep then
+			-- Oh, it's just a level that has the same name as a directory. Carry on.
+		else
+			input = levelname .. dirsep
+			input_r = ""
+			tabselected = 0
+			return
+		end
 	end
 
 	stopinput()
@@ -2210,7 +2239,8 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				end
 			elseif direction == "d" then
 				scriptscroll = scriptscroll - distance
-				local upperbound = (((#scriptlines*8+16)*(textsize and 2 or 1)-(textsize and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
+				local textscale = s.scripteditor_largefont and 2 or 1
+				local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
 				if -scriptscroll > upperbound then
 					scriptscroll = math.min(-upperbound, 0)
 				end

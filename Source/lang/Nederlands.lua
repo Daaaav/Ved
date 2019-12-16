@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2019-11-01 01:16:30 (CET)
+--- Last converted: 2019-12-15 16:53:40 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -337,6 +337,7 @@ AMOUNTSPIKES = "Spĳkers:",
 
 
 UNEXPECTEDSCRIPTLINE = "Onverwachte scriptregel zonder script: $1",
+DUPLICATESCRIPT = "Script $1 komt meerdere keren voor! Er kan er maar één geladen worden.",
 MAPWIDTHINVALID = "Levelbreedte is ongeldig: $1",
 MAPHEIGHTINVALID = "Levelhoogte is ongeldig: $1",
 LEVMUSICEMPTY = "Levelmuziek is leeg!",
@@ -1608,7 +1609,7 @@ gotoposition¤(x,y,f)\w#h
 Verander Viridians positie naar x,y in deze kamer, en f is of je zwaartekracht
 omgedraaid is of niet. (1 voor omgedraaid, 0 voor niet omgedraaid)
 
-z - 1 voor zwaartekracht omgedraaid, 0 voor niet omgedraaid (je kunt ook
+f - 1 voor zwaartekracht omgedraaid, 0 voor niet omgedraaid (je kunt ook
 gotoposition(x,y) gebruiken, dan heb je standaard normale zwaartekracht)
 
 flash¤(x)\w#h

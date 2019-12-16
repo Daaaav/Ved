@@ -7,6 +7,8 @@ require("love.filesystem")
 
 -- Workaround for including func
 love.graphics = {}
+love.keyboard = {}
+love.mouse = {}
 function hook() end
 
 -- Workaround for love.system.getOS()

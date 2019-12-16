@@ -159,6 +159,11 @@ configs =
 		default = true,
 		["type"] = "bool",
 		},
+	scripteditor_largefont =
+		{
+		default = false,
+		["type"] = "bool",
+		},
 	visload_seen =
 		{
 		default = false,

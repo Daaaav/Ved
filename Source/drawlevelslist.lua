@@ -70,7 +70,7 @@ function drawlevelslist()
 
 			local removerecent
 			for k,v in pairs(s.recentfiles) do
-				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
+				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8) and love.window.hasFocus()
 				if mouseishovering then
 					hoveringlevel = v
 					hoveringlevel_k = (-#s.recentfiles)+(k-1)
@@ -114,7 +114,7 @@ function drawlevelslist()
 				love.graphics.setColor(255,255,255)
 
 				if tabselected == (-#s.recentfiles)+(k-1) and nodialog then
-					if love.keyboard.isDown("return") and not returnpressed then
+					if love.keyboard.isDown("return", "kpenter") and not returnpressed then
 						state6load(v)
 						return
 					elseif love.keyboard.isDown("delete") then
@@ -160,10 +160,14 @@ function drawlevelslist()
 				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():sub(1, (input .. input_r):len()) == input .. input_r then
 				if backupscreen or v.result_shown then
 					if 16+8*k2+levellistscroll > -64 and 16+8*k2+levellistscroll < love.graphics.getHeight()+64 then
-						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21)
+						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and love.window.hasFocus()
 
 						if mouseishovering then
-							hoveringlevel = prefix .. barename
+							local trailingdirsep = ""
+							if v.isdir then
+								trailingdirsep = dirsep
+							end
+							hoveringlevel = prefix .. barename .. trailingdirsep
 							hoveringlevel_k = k
 							hoveringlevel_k_location = k2
 						end
@@ -228,8 +232,12 @@ function drawlevelslist()
 					if tabselected == k2 then
 						tabselected_k = k
 
-						if love.keyboard.isDown("return") and nodialog and not returnpressed then
-							state6load(prefix .. barename)
+						if love.keyboard.isDown("return", "kpenter") and nodialog and not returnpressed then
+							local trailingdirsep = ""
+							if v.isdir then
+								trailingdirsep = dirsep
+							end
+							state6load(prefix .. barename .. trailingdirsep)
 							return
 						end
 					end
@@ -422,17 +430,22 @@ function drawlevelslist()
 		local unsupportedpluginstext = ""
 
 		if unsupportedplugins > 0 then
-			unsupportedpluginstext = "\n\n" .. langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
+			unsupportedpluginstext = langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
 		end
 
 		if intermediate_version then
 			love.graphics.setColor(255,128,0)
 		end
+
+		if unsupportedpluginstext ~= "" then
+			ved_printf(unsupportedpluginstext, love.graphics.getWidth()-(128-8), 280, 128-16, "left")
+		end
+
 		if not s.pcheckforupdates or opt_disableversioncheck then
-			ved_printf(L.VERSIONDISABLED .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left") -- 40+120+16+3+8+30 = 217
+			ved_printf(L.VERSIONDISABLED, love.graphics.getWidth()-(128-8), 215, 128-16, "left") -- 40+120+16+3+8+30 = 217
 		elseif versionchecked ~= nil then		
 			if versionchecked == "connecterror" or versionchecked == "error" then
-				ved_printf(L.VERSIONERROR .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
+				ved_printf(L.VERSIONERROR, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 			else
 				if updateversion == nil then
 					updateversion = ""
@@ -471,14 +484,14 @@ function drawlevelslist()
 					end
 				end
 				if updateversion == "latest" then
-					ved_printf(L.VERSIONUPTODATE .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
+					ved_printf(L.VERSIONUPTODATE, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 				else
-					ved_printf(langkeys(L.VERSIONOLD, {updateversion}) .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
+					ved_printf(langkeys(L.VERSIONOLD, {updateversion}), love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 					updatebutton = true
 				end
 			end
 		else
-			ved_printf(L.VERSIONCHECKING .. unsupportedpluginstext, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
+			ved_printf(L.VERSIONCHECKING, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 		end
 		if intermediate_version then
 			love.graphics.setColor(255,255,255)

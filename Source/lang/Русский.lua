@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2019-11-01 01:16:28 (CET)
+--- Last converted: 2019-12-15 16:53:38 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -325,6 +325,7 @@ AMOUNTSPIKES = "Шипы:",
 
 
 UNEXPECTEDSCRIPTLINE = "Неизвестная строка скрипта без скрипта: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Ширина карты неверная: $1",
 MAPHEIGHTINVALID = "Высота карты неверная: $1",
 LEVMUSICEMPTY = "В уровне нет музыки!",

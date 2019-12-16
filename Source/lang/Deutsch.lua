@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-11-01 01:16:29 (CET)
+--- Last converted: 2019-12-15 16:53:39 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -337,6 +337,7 @@ AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
+DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
 MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
 MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
 LEVMUSICEMPTY = "Levelmusik ist leer!",
@@ -1591,7 +1592,7 @@ gotoposition¤(x,y,f)\w#h
 Change Viridian's position to x,y in this room, and f is whether you're flipped or
 not. (1 for flipped, 0 for not flipped)
 
-z - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
+f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
 will have normal gravity by default)
 
 flash¤(x)\w#h
