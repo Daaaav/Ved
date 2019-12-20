@@ -375,5 +375,14 @@ function drawscripteditor()
 		if carg1 ~= nil then
 			ved_printf(langkeys(L.ROOMNUM, {carg1}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		end
+	elseif context == "track" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			if carg1 == -1 then
+				ved_printf(L.STOPSMUSIC, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			else
+				ved_printf(langkeys(L.TRACKNUM, {carg1}) .. "\n\n" .. listmusiccommandsids[carg1], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			end
+		end
 	end
 end

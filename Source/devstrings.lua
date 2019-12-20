@@ -7,4 +7,6 @@ L_PLU.FRAMESTOSECONDS = {
 	[1] = "$1 = $2 seconds",
 }
 L.ROOMNUM = "Room $1"
+L.TRACKNUM = "Track $1"
+L.STOPSMUSIC = "Stops music"
 

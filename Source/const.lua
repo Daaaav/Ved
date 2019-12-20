@@ -77,6 +77,31 @@ for k,v in pairs(listmusicnamesids) do
 	table.insert(listmusicids, v[2], v[1])
 end
 
+-- Ok well I guess we actually need Path Complete for music commands
+listmusiccommandsnamesids = table.copy(listmusicnamesids)
+listmusiccommandsnamesids[1] = {"Path Complete", 0}
+
+listmusiccommandsids = {}
+for _, v in pairs(listmusiccommandsnamesids) do
+	table.insert(listmusiccommandsids, v[2], v[1])
+end
+
+-- Mappings from simplified `music` IDs to internal `play` IDs
+musicsimplifiedtointernal = {
+	[0] = -1,
+	[1] = 1,
+	[2] = 2,
+	[3] = 3,
+	[4] = 4,
+	[5] = 6,
+	[6] = 8,
+	[7] = 10,
+	[8] = 11,
+	[9] = 12,
+	[10] = 13,
+	[11] = 14,
+}
+
 listsoundids =
 {
 	[0] = "jump.wav",

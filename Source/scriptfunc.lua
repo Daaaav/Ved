@@ -263,6 +263,31 @@ function scriptcontext(text)
 			return "frames", nil
 		end
 		return "frames", frames, nil, nil
+	elseif table.contains({"music", "play", "stopmusic", "playremix"}, parts[1]) then
+		if parts[1] == "stopmusic" then
+			return "track", -1, nil, nil
+		elseif parts[1] == "playremix" then
+			return "track", 15, nil, nil
+		end
+		if parts[2] == nil or parts[2] == "" then
+			return nil
+		end
+		local track
+		if parts[1] == "music" and tonumber(parts[2]) ~= nil and tonumber(parts[2]) <= 11 then
+			track = tonumber(parts[2])
+			return "track", musicsimplifiedtointernal[track], nil, nil
+		else
+			track = parts[2]:match("^%d+")
+			track = tonumber(track)
+			if track ~= nil then
+				if track < 0 then
+					track = nil
+				else
+					track = track % 16
+				end
+			end
+			return "track", track, nil, nil
+		end
 	else
 		return nil, nil, nil, nil
 	end
