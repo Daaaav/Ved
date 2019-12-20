@@ -3265,9 +3265,16 @@ function exitdisplayoptions()
 	saveconfig()
 
 	if s.smallerscreen ~= s.psmallerscreen or s.scale ~= s.pscale or s.forcescale ~= oldforcescale then
+		local mouseposx, mouseposy
+		if love.mouse.isDown("l") then
+			mouseposx, mouseposy = love.mouse.getPosition()
+		end
 		s.pscale = s.scale
 		s.psmallerscreen = s.smallerscreen
 		dodisplaysettings(true)
+		if mouseposx ~= nil and mouseposy ~= nil then
+			love.mouse.setPosition(mouseposx, mouseposy)
+		end
 	end
 
 	tostate(oldstate, true)
