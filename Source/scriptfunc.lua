@@ -216,7 +216,21 @@ function scriptcontext(text)
 	elseif (parts[1] == "ifcrewlost" or parts[1] == "iflast") and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
 		return "script", string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil, nil
 	elseif parts[1] == "ifexplored" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[4] ~= "custom_" and string.sub(parts[4], 1, string.len("custom_")) == "custom_" then
-		return "roomscript", tonumber(parts[2]), tonumber(parts[3]), string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
+		local x, y = tonumber(parts[2]), tonumber(parts[3])
+		if x == nil or y == nil then
+			return "roomscript", x, y, nil
+		end
+		local script = string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
+		local roomnum = x + y*20
+		if roomnum >= 0 and roomnum < 400 then
+			local x_again, y_again
+			y_again = math.floor(roomnum/20)
+			x_again = roomnum % 20
+			return "roomscript", x_again, y_again, script
+		else
+			return "roomnumscript", roomnum, script
+		end
+		return "roomscript", x, y, script
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
 		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
 	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
@@ -226,6 +240,16 @@ function scriptcontext(text)
 		end
 		if parts[1] == "gotoroom" then
 			x, y = x % metadata.mapwidth, y % metadata.mapheight
+		elseif table.contains({"hidecoordinates", "showcoordinates"}, parts[1]) then
+			local roomnum = x + y*20
+			if roomnum >= 0 and roomnum < 400 then
+				local x_again, y_again
+				y_again = math.floor(roomnum/20)
+				x_again = roomnum % 20
+				return "room", x_again, y_again, nil
+			else
+				return "roomnum", roomnum
+			end
 		end
 		return "room", x, y, nil
 	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then

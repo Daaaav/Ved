@@ -6,4 +6,5 @@ L_PLU.FRAMESTOSECONDS = {
 	[0] = "$1 = $2 second",
 	[1] = "$1 = $2 seconds",
 }
+L.ROOMNUM = "Room $1"
 

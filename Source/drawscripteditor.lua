@@ -370,5 +370,10 @@ function drawscripteditor()
 			seconds = round(seconds, 2)
 			ved_printf(langkeys(L_PLU.FRAMESTOSECONDS, {carg1, seconds}, 2), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		end
+	elseif context == "roomnum" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			ved_printf(langkeys(L.ROOMNUM, {carg1}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		end
 	end
 end
