@@ -228,6 +228,17 @@ function scriptcontext(text)
 			x, y = x % metadata.mapwidth, y % metadata.mapheight
 		end
 		return "room", x, y, nil
+	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then
+		local frames
+		if parts[1] == "walk" then
+			frames = parts[3]
+		else
+			frames = parts[2]
+		end
+		if tonumber(frames) == nil or tonumber(frames) <= 0 then
+			return "frames", nil
+		end
+		return "frames", frames, nil, nil
 	else
 		return nil, nil, nil, nil
 	end

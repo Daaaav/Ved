@@ -363,5 +363,12 @@ function drawscripteditor()
 			end
 			ved_printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+62, 80, "center")
 		end
+	elseif context == "frames" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			local seconds = carg1 * 34 / 1000
+			seconds = round(seconds, 2)
+			ved_printf(langkeys(L_PLU.FRAMESTOSECONDS, {carg1, seconds}, 2), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		end
 	end
 end
