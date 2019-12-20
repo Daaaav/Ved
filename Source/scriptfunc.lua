@@ -793,6 +793,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 		-- Create script (but do not immediately go to it as we can just easily click again)
 		scripts[argscriptname] = {""}
 		table.insert(scriptnames, argscriptname)
+		dirty()
 	else
 		-- Go to script- but save the current script first!
 		leavescript_to_state = function()
