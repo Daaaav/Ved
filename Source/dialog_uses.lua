@@ -662,6 +662,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			local field2intcmds = {"loadscript", "ifskip"}
 			local field4intcmds = {"ifexplored"}
 
+			local oldnamenotgsub = oldname
 			oldname = escapegsub(oldname, true)
 
 			local tmp
@@ -709,7 +710,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 
 			-- Terminals and script boxes
 			for k,v in pairs(entitydata) do
-				if (v.t == 18 or v.t == 19) and v.data == oldname then
+				if (v.t == 18 or v.t == 19) and v.data == oldnamenotgsub then
 					entitydata[k].data = newname
 				end
 			end
