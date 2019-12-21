@@ -127,6 +127,11 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 					love.graphics.setColor(255,0,0)
 					love.graphics.draw(solidimg, x, y)
 					love.graphics.setColor(255,255,255)
+				elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
+					-- Not a spike but solid in invincibility mode
+					love.graphics.setColor(255,255,0)
+					love.graphics.draw(solidimg, x, y)
+					love.graphics.setColor(255,255,255)
 				end
 			end
 
@@ -708,6 +713,11 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 						love.graphics.setColor(255,0,0)
 						love.graphics.draw(solidimg, x, y)
 						love.graphics.setColor(255,255,255)
+					elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
+						-- Not a spike but solid in invincibility mode
+						love.graphics.setColor(255,255,0)
+						love.graphics.draw(solidimg, x, y)
+						love.graphics.setColor(255,255,255)
 					end
 				end
 
@@ -832,11 +842,14 @@ function isoutsidebg(tilenum)
 	return false
 end
 
-function issolid(tilenum, tileset, spikessolid, ignoremultimode)
+function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymode)
 	-- Returns true if a tile is solid, false if not solid.
 	-- Tileset can be 1 or 2 for tiles and tiles2 respectively.
 	if spikessolid == nil then
 		spikessolid = false
+	end
+	if invincibilitymode == nil then
+		invincibilitymode = false
 	end
 
 	if not ignoremultimode and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and not tileincurrenttileset(tilenum) then
@@ -853,12 +866,14 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode)
 		return true
 	elseif tileset == 2 and tilenum == 740 then
 		return true
-	elseif spikessolid then
+	elseif spikessolid or invincibilitymode then
 		if tilenum >= 6 and tilenum <= 9 then
 			return true
 		elseif tilenum == 49 or tilenum == 50 then
 			return true
 		elseif tileset == 2 and tilenum >= 51 and tilenum <= 74 then
+			return true
+		elseif tileset == 2 and invincibilitymode and tilenum >= 75 and tilenum <= 79 then
 			return true
 		end
 	end
