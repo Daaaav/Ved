@@ -221,7 +221,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	if scriptname_editingshown then
 		displayscriptname(entitydata[editingroomtext].t == 19, editingroomtext, entitydata[editingroomtext], offsetx, offsety, myroomx, myroomy)
 	end
-	if scriptname_shown then
+	if scriptname_shown and nodialog then
 		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy)
 	end
 end
