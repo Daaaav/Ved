@@ -1388,7 +1388,7 @@ function drawmaineditor()
 		end
 
 		ved_setFont(font8)
-		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
+		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
 			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
