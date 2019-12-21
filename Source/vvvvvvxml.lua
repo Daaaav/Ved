@@ -76,6 +76,12 @@ function loadlevel(path)
 	cons("Loading all the contents...")
 	--x.alltiles = explode(",", contents:match("<contents>(.*)</contents>"))
 
+	-- Remove all literal '\0's, we'll remove '&#0;'s or '&#x0's later
+	local numliteralnullbytes = 0
+	if contents:match("%z") then
+		contents, numliteralnullbytes = contents:gsub("%z", "")
+	end
+
 	-- Ok, explode() is far too inefficient, what else have we got?
 	x.alltiles = {}
 	local m = contents:match("<contents>(.*)</contents>")
@@ -123,6 +129,8 @@ function loadlevel(path)
 	local allentities = {}
 	local myvedmetadata = false
 
+	local numxmlnullbytes = 0
+
 	cons("Loading entities...")
 	if contents:find("<edEntities />") == nil and contents:find("<edEntities/>") == nil then
 		-- We have entities!
@@ -155,6 +163,11 @@ function loadlevel(path)
 
 			-- Now we only need the data...
 			allentities[entityid].data = unxmlspecialchars(metaparts[2])
+			if allentities[entityid].data:match("%z") then
+				local tmp
+				allentities[entityid].data, tmp = allentities[entityid].data:gsub("%z", "")
+				numxmlnullbytes = numxmlnullbytes + tmp
+			end
 
 			-- Now before we go to the next one, if it's a trinket or crewmate, add it up, because we can only have 20 in a level. Officially. Also, parse the special data entity here if we found it.
 			if allentities[entityid].t == 9 then
@@ -329,6 +342,11 @@ function loadlevel(path)
 
 		-- Now we only need the room name...
 		theselevelmetadata[croom].roomname = unxmlspecialchars(metaparts[2])
+		if theselevelmetadata[croom].roomname:match("%z") then
+			local tmp
+			theselevelmetadata[croom].roomname, tmp = theselevelmetadata[croom].roomname:gsub("%z", "")
+			numxmlnullbytes = numxmlnullbytes + tmp
+		end
 
 		-- And make sure directmode isn't nil for 2.0 levels
 		if theselevelmetadata[croom].directmode == nil then
@@ -405,6 +423,11 @@ function loadlevel(path)
 	end
 	for ln in unxmlspecialchars(m .. "|"):gmatch("([^|]*)|") do
 		--print(num)
+		if ln:match("%z") then
+			local tmp
+			ln, tmp = ln:gsub("%z", "")
+			numxmlnullbytes = numxmlnullbytes + tmp
+		end
 		table.insert(x.allscripts, ln)
 	end
 	cons("There are " .. (#x.allscripts) .. " lines of scripting! Loading all of that...")
@@ -485,6 +508,12 @@ function loadlevel(path)
 					}
 			end
 		end
+	end if numliteralnullbytes > 0 then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}, numliteralnullbytes))
+	end if numxmlnullbytes > 0 then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}, numxmlnullbytes))
 	end
 
 	if mycount.FC ~= 0 then
