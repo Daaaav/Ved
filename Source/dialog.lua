@@ -69,6 +69,8 @@ cDialog =
 	currentfield = 0,
 
 	return_btn = 0,
+
+	showtabrect = false,
 }
 
 function cDialog:new(o)
@@ -144,7 +146,7 @@ function cDialog:draw(topmost)
 		end
 		active_w = active_w*8
 
-		if showtabrect then
+		if self.showtabrect then
 			self:setColor(255,255,127,255,not topmost)
 			love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
 		end
@@ -256,7 +258,7 @@ end
 
 function cDialog:mousepressed(x, y)
 	-- Left mouse button pressed on the dialog
-	showtabrect = false
+	self.showtabrect = false
 	if self.closing then
 		return
 	end
@@ -572,7 +574,7 @@ function cDialog:close(button)
 	-- Button is assumed to exist here, no questions asked.
 	self.return_btn = button
 
-	showtabrect = false
+	self.showtabrect = false
 	self.closing = true
 
 	if not s.dialoganimations then

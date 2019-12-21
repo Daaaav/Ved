@@ -209,8 +209,6 @@ function love.load()
 
 	nodialog = true
 
-	showtabrect = false
-
 	vvvvvv_textboxes = {}
 
 	tilesets = {}
@@ -2847,7 +2845,7 @@ function love.keypressed(key)
 			end
 		end
 		if key == "tab" then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
@@ -2885,7 +2883,7 @@ function love.keypressed(key)
 			end
 		end
 		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
 
@@ -2893,7 +2891,7 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][7](not dialogs[#dialogs].fields[cf][5], dialogs[#dialogs])
 			end
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 
 			local dropdown = 0
@@ -2928,7 +2926,7 @@ function love.keypressed(key)
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
 		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			local files = dialogs[#dialogs].fields[cf][7]
 			local file = 0
