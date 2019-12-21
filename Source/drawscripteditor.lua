@@ -90,6 +90,24 @@ function drawscripteditor()
 			lasttextcolor = textc
 
 			-- Dialog bar
+
+			-- Let's figure out where the dialog ends horizontally
+			local maxwidthtextbox = 0
+
+			local linelengths = {}
+			local l
+			for i = k+1, k+textlinestogo do
+				if i == editingline then
+					l = input .. input_r
+				else
+					l = scriptlines[i]
+				end
+
+				table.insert(linelengths, #anythingbutnil(l))
+			end
+
+			maxwidthtextbox = math.max(unpack(linelengths))
+
 			if k < table.maxn(scriptlines) and syntaxhlon then
 				if alttextcolor then
 					if alttextboxcolors[textc] == nil then
@@ -101,8 +119,10 @@ function drawscripteditor()
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if s.scripteditor_largefont then
 					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+8, 6, textq*16)
+					love.graphics.rectangle("fill", 76+16*(maxwidthtextbox+1), scriptscroll+24+(16*k)+8, 6, textq*16)
 				else
 					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+8, 3, textq*8)
+					love.graphics.rectangle("fill", 42+8*(maxwidthtextbox+1), scriptscroll+24+(8*k)+8, 3, textq*8)
 				end
 			end
 		elseif textlinestogo > 0 then
