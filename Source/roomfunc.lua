@@ -277,26 +277,55 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
-		love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
-		love.graphics.draw(platformimg, platformpart[1], x, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 16, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 32, y, 0, 2)
-		if v.p1 < 7 then
-			-- 4 tiles
-			love.graphics.draw(platformimg, platformpart[3], x + 48, y, 0, 2)
-		else
-			-- 8 tiles
-			love.graphics.draw(platformimg, platformpart[2], x + 48, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 64, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 80, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 96, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[3], x + 112, y, 0, 2)
+		love.graphics.setColor(255,255,255,255)
+		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		if v.p1 <= 4 then
+			-- Moving platform
+			local usethisentcolour
+			if entcolourrow ~= nil then
+				usethisentcolour = entcolourrow*12
+			end
+			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+				usethisentcolour = 1
+			end
+			for eachx = x, x+48, 16 do
+				drawentcolour(usethisentcolour, eachx, y)
+			end
+		elseif v.p1 <= 8 then
+			-- Conveyor
+			local addlength = 0
+			if table.contains({7, 8}, v.p1) then
+				addlength = 64
+			end
+			local leftrightoffset = 0
+			local thiscycle = conveyorleftcycle
+			if table.contains({5, 7}, v.p1) then
+				leftrightoffset = 4
+				thiscycle = 3 - conveyorrightcycle
+			end
+			local usethisentcolour
+			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+				-- This one's the weirdest of all the entcolour sprites for Space Station tilecol -1
+				local tmp
+				if table.contains({5, 7}, v.p1) then
+					tmp = 60
+				elseif table.contains({6, 8}, v.p1) then
+					tmp = 20
+				end
+				usethisentcolour = tmp + thiscycle
+			else
+				usethisentcolour = entcolourrow*12 + 4 + thiscycle + leftrightoffset
+			end
+			for eachx = x, x+48+addlength, 16 do
+				drawentcolour(usethisentcolour, eachx, y)
+			end
 		end
 
 		-- Now indicate what this actually is.
-		love.graphics.setColor(255,255,255,255)
 		if platform_labels[v.p1] ~= nil then
-			ved_print(platform_labels[v.p1], x, y, 2)
+			if v.p1 < 5 or v.p1 > 8 or (lockablemouseon(x, y, 16, 16) and nodialog) then
+				ved_print(platform_labels[v.p1], x, y, 2)
+			end
 		else
 			-- What
 			ved_print("...?", x, y, 2)
@@ -311,13 +340,19 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 3 then
 		-- Disappearing platform
-		love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
-		love.graphics.draw(platformimg, platformpart[1], x, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 16, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 32, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[3], x + 48, y, 0, 2)
-		-- This is a disappearing platform.
 		love.graphics.setColor(255,255,255,255)
+		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		local usethisentcolour
+		if entcolourrow ~= nil then
+			usethisentcolour = entcolourrow*12
+		end
+		if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+			usethisentcolour = 2
+		end
+		for eachx = x, x+48, 16 do
+			drawentcolour(usethisentcolour, eachx, y)
+		end
+		-- This is a disappearing platform.
 		ved_print("////", x, y, 2)
 		if interact then
 			entityrightclick(
@@ -598,6 +633,10 @@ function drawentitysprite(tile, atx, aty, small)
 	else
 		love.graphics.draw(cursorimg[5], atx, aty)
 	end
+end
+
+function drawentcolour(tile, atx, aty, small)
+	love.graphics.draw(tilesets["entcolours.png"]["img"], tilesets["entcolours.png"]["tiles"][tile], atx, aty, 0, small and 1 or 2)
 end
 
 function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)

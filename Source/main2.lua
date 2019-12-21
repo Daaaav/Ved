@@ -180,6 +180,9 @@ function love.load()
 	middlescroll_t, middlescroll_v = 0, 0
 
 	v6_frametimer = 0
+	conveyortimer = 0
+	conveyorleftcycle = 1
+	conveyorrightcycle = 0
 
 	returnpressed = false -- also for some things
 
@@ -1982,6 +1985,12 @@ function love.update(dt)
 		v6_help:updateglow()
 		v6_graphics:updatelinestate()
 		v6_graphics.trinketcolset = false
+
+		conveyortimer = (conveyortimer + 1) % 3
+		if conveyortimer == 0 then
+			conveyorleftcycle = (conveyorleftcycle + 1) % 4
+			conveyorrightcycle = (conveyorrightcycle + 1) % 4
+		end
 
 		v6_frametimer = v6_frametimer - .034
 	end

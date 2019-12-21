@@ -779,6 +779,7 @@ end
 function loadtilesets()
 	loadtileset("tiles.png")
 	loadtileset("tiles2.png")
+	loadtileset("entcolours.png")
 	loadsprites("sprites.png", 32)
 
 	loadwarpbgs()
@@ -802,34 +803,35 @@ function loadtileset(file)
 
 	-- VVVVVV doesn't like translucent pixels in 'tiles' and tiles2
 	-- Display them how the game does
-	asimgdata:mapPixel(function(_, _, r, g, b, a)
-		local lovecolor
-		if love_version_meets(11) then
-			r = r * 255
-			g = g * 255
-			b = b * 255
-			lovecolor = 1
-		else
-			lovecolor = 255
-		end
-		a = a / lovecolor
-		if a <= 0 or a >= lovecolor then
+	if table.contains({"tiles.png", "tiles2.png"}, file) then
+		asimgdata:mapPixel(function(_, _, r, g, b, a)
+			local lovecolor
 			if love_version_meets(11) then
-				return r/255, g/255, b/255, a
+				r = r * 255
+				g = g * 255
+				b = b * 255
+				lovecolor = 1
 			else
-				return r, g, b, a
+				lovecolor = 255
 			end
-		else
-			r = a*r + (1-a)*172
-			g = a*g + (1-a)*189
-			b = a*b + (1-a)*238
-		end
-		if love_version_meets(11) then
-			return r/255, g/255, b/255, lovecolor
-		else
-			return r, g, b, lovecolor
-		end
-	end)
+			a = a / lovecolor
+			if a <= 0 or a >= lovecolor then
+				if love_version_meets(11) then
+					return r/255, g/255, b/255, a
+				else
+				end
+			else
+				r = a*r + (1-a)*172
+				g = a*g + (1-a)*189
+				b = a*b + (1-a)*238
+			end
+			if love_version_meets(11) then
+				return r/255, g/255, b/255, lovecolor
+			else
+				return r, g, b, lovecolor
+			end
+		end)
+	end
 
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()

@@ -406,6 +406,7 @@ tilesetblocks =
 				entcolor = {109,109,109},
 				v6col = 7,
 				warpbg = 7,
+				entcolourrow = nil, -- It's complicated
 				},
 			[0] = -- blue1 =
 				{
@@ -437,6 +438,7 @@ tilesetblocks =
 				entcolor = {131,141,235},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 1,
 				},
 			[1] = -- pink1 =
 				{
@@ -468,6 +470,7 @@ tilesetblocks =
 				entcolor = {227,140,227},
 				v6col = 20,
 				warpbg = 3,
+				entcolourrow = 2,
 				},
 			[2] = -- red1 =
 				{
@@ -499,6 +502,7 @@ tilesetblocks =
 				entcolor = {242,126,151},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 3,
 				},
 			[3] = -- yellow1 =
 				{
@@ -530,6 +534,7 @@ tilesetblocks =
 				entcolor = {229,235,133},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 4,
 				},
 			[4] = -- green1 =
 				{
@@ -561,6 +566,7 @@ tilesetblocks =
 				entcolor = {148,238,130},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 5,
 				},
 			[5] = -- blue2 =
 				{
@@ -592,6 +598,7 @@ tilesetblocks =
 				entcolor = {140,165,227},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 6,
 				},
 			[6] = -- red2 =
 				{
@@ -623,6 +630,7 @@ tilesetblocks =
 				entcolor = {227,140,148},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 7,
 				},
 			[7] = -- eight =
 				{
@@ -654,6 +662,7 @@ tilesetblocks =
 				entcolor = {140,173,228},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 8,
 				},
 			[8] = -- eight =
 				{
@@ -685,6 +694,7 @@ tilesetblocks =
 				entcolor = {142,235,137},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 9,
 				},
 			[9] =
 				{
@@ -716,6 +726,7 @@ tilesetblocks =
 				entcolor = {137,235,206},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 10,
 				},
 			[10] =
 				{
@@ -747,6 +758,7 @@ tilesetblocks =
 				entcolor = {235,139,223},
 				v6col = 20,
 				warpbg = 3,
+				entcolourrow = 11,
 				},
 			[11] =
 				{
@@ -778,6 +790,7 @@ tilesetblocks =
 				entcolor = {238,130,138},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 12,
 				},
 			[12] =
 				{
@@ -809,6 +822,7 @@ tilesetblocks =
 				entcolor = {137,235,178},
 				v6col = 11,
 				warpbg = 6,
+				entcolourrow = 13,
 				},
 			[13] =
 				{
@@ -840,6 +854,7 @@ tilesetblocks =
 				entcolor = {125,205,247},
 				v6col = 12,
 				warpbg = 1,
+				entcolourrow = 14,
 				},
 			[14] =
 				{
@@ -871,6 +886,7 @@ tilesetblocks =
 				entcolor = {190,137,235},
 				v6col = 20,
 				warpbg = 4,
+				entcolourrow = 15,
 				},
 			[15] =
 				{
@@ -902,6 +918,7 @@ tilesetblocks =
 				entcolor = {235,137,206},
 				v6col = 8,
 				warpbg = 3,
+				entcolourrow = 16,
 				},
 			[16] =
 				{
@@ -933,6 +950,7 @@ tilesetblocks =
 				entcolor = {229,247,127},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 17,
 				},
 			[17] =
 				{
@@ -964,6 +982,7 @@ tilesetblocks =
 				entcolor = {127,200,247},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 18,
 				},
 			[18] =
 				{
@@ -995,6 +1014,7 @@ tilesetblocks =
 				entcolor = {197,137,235},
 				v6col = 20,
 				warpbg = 4,
+				entcolourrow = 19,
 				},
 			[19] =
 				{
@@ -1026,6 +1046,7 @@ tilesetblocks =
 				entcolor = {235,131,175},
 				v6col = 8,
 				warpbg = 2,
+				entcolourrow = 20,
 				},
 			[20] =
 				{
@@ -1057,6 +1078,7 @@ tilesetblocks =
 				entcolor = {242,210,123},
 				v6col = 17,
 				warpbg = 5,
+				entcolourrow = 21,
 				},
 			[21] =
 				{
@@ -1088,6 +1110,7 @@ tilesetblocks =
 				entcolor = {131,235,158},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 22,
 				},
 			[22] =
 				{
@@ -1119,6 +1142,7 @@ tilesetblocks =
 				entcolor = {242,126,151},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 23,
 				},
 			[23] =
 				{
@@ -1150,6 +1174,7 @@ tilesetblocks =
 				entcolor = {219,243,123},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 24,
 				},
 			[24] =
 				{
@@ -1181,6 +1206,7 @@ tilesetblocks =
 				entcolor = {131,234,145},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 25,
 				},
 			[25] =
 				{
@@ -1212,6 +1238,7 @@ tilesetblocks =
 				entcolor = {131,199,234},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 26,
 				},
 			[26] =
 				{
@@ -1243,6 +1270,7 @@ tilesetblocks =
 				entcolor = {141,131,234},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 27,
 				},
 			[27] =
 				{
@@ -1274,6 +1302,7 @@ tilesetblocks =
 				entcolor = {226,140,144},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 28,
 				},
 			[28] =
 				{
@@ -1305,6 +1334,7 @@ tilesetblocks =
 				entcolor = {129,236,144},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 29,
 				},
 			[29] =
 				{
@@ -1336,6 +1366,7 @@ tilesetblocks =
 				entcolor = {235,231,131},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 30,
 				},
 			[30] =
 				{
@@ -1367,6 +1398,7 @@ tilesetblocks =
 				entcolor = {153,235,131},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 31,
 				},
 			[31] =
 				{
@@ -1398,6 +1430,7 @@ tilesetblocks =
 				entcolor = {207,131,235},
 				v6col = 20,
 				warpbg = 3,
+				entcolourrow = 32,
 				},
 			}
 		},
@@ -1440,6 +1473,7 @@ tilesetblocks =
 				entcolor = {57,86,140},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 33,
 				},
 			[1] =
 				{
@@ -1472,6 +1506,7 @@ tilesetblocks =
 				entcolor = {156,42,42},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 34,
 				},
 			[2] =
 				{
@@ -1504,6 +1539,7 @@ tilesetblocks =
 				entcolor = {42,156,155},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 35,
 				},
 			[3] =
 				{
@@ -1536,6 +1572,7 @@ tilesetblocks =
 				entcolor = {125,36,162},
 				v6col = 20,
 				warpbg = 3,
+				entcolourrow = 36,
 				},
 			[4] =
 				{
@@ -1568,6 +1605,7 @@ tilesetblocks =
 				entcolor = {191,198,0},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 37,
 				},
 			[5] =
 				{
@@ -1600,6 +1638,7 @@ tilesetblocks =
 				entcolor = {0,198,126},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 38,
 				},
 			[6] =
 				{
@@ -1632,6 +1671,7 @@ tilesetblocks =
 				entcolor = {224,110,177},
 				v6col = 8,
 				warpbg = 3,
+				entcolourrow = 39,
 				},
 			[7] =
 				{
@@ -1664,6 +1704,7 @@ tilesetblocks =
 				entcolor = {255,142,87},
 				v6col = 17,
 				warpbg = 5,
+				entcolourrow = 40,
 				},
 			}
 		},
@@ -1706,6 +1747,7 @@ tilesetblocks =
 				entcolor = {0,165,206},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 41,
 				},
 			[1] =
 				{
@@ -1738,6 +1780,7 @@ tilesetblocks =
 				entcolor = {206,5,0},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 42,
 				},
 			[2] =
 				{
@@ -1770,6 +1813,7 @@ tilesetblocks =
 				entcolor = {222,0,173},
 				v6col = 8,
 				warpbg = 3,
+				entcolourrow = 43,
 				},
 			[3] =
 				{
@@ -1802,6 +1846,7 @@ tilesetblocks =
 				entcolor = {27,67,255},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 44,
 				},
 			[4] =
 				{
@@ -1834,6 +1879,7 @@ tilesetblocks =
 				entcolor = {194,206,0},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 45,
 				},
 			[5] =
 				{
@@ -1866,6 +1912,7 @@ tilesetblocks =
 				entcolor = {0,206,39},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 46,
 				},
 			[6] =
 				{
@@ -1898,6 +1945,7 @@ tilesetblocks =
 				entcolor = {0,165,206},
 				v6col = 11,
 				warpbg = 7, -- actually gray, but I can't be bothered to look up what VVVVVV does with this currently
+				entcolourrow = 47,
 				},
 			}
 		},
@@ -1940,6 +1988,7 @@ tilesetblocks =
 				entcolor = {113,178,197},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 47,
 				},
 			[1] =
 				{
@@ -1972,6 +2021,7 @@ tilesetblocks =
 				entcolor = {197,113,119},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 48,
 				},
 			[2] =
 				{
@@ -2004,6 +2054,7 @@ tilesetblocks =
 				entcolor = {196,113,197},
 				v6col = 20,
 				warpbg = 3,
+				entcolourrow = 49,
 				},
 			[3] =
 				{
@@ -2036,6 +2087,7 @@ tilesetblocks =
 				entcolor = {149,113,197},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 50,
 				},
 			[4] =
 				{
@@ -2068,6 +2120,7 @@ tilesetblocks =
 				entcolor = {197,182,113},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 51,
 				},
 			[5] =
 				{
@@ -2100,6 +2153,7 @@ tilesetblocks =
 				entcolor = {141,197,113},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 52,
 				},
 			[6] =
 				{
@@ -2132,6 +2186,7 @@ tilesetblocks =
 				entcolor = {109,109,109},
 				v6col = 7,
 				warpbg = 7,
+				entcolourrow = 53,
 				},
 			}
 		},
@@ -2174,6 +2229,7 @@ tilesetblocks =
 				entcolor = {0,206,39},
 				v6col = 7,
 				warpbg = 6,
+				entcolourrow = 53,
 				},
 			[1] =
 				{
@@ -2206,6 +2262,7 @@ tilesetblocks =
 				entcolor = {0,165,206},
 				v6col = 11,
 				warpbg = 1,
+				entcolourrow = 54,
 				},
 			[2] =
 				{
@@ -2238,6 +2295,7 @@ tilesetblocks =
 				entcolor = {194,206,0},
 				v6col = 9,
 				warpbg = 5,
+				entcolourrow = 55,
 				},
 			[3] =
 				{
@@ -2270,6 +2328,7 @@ tilesetblocks =
 				entcolor = {206,0,160},
 				v6col = 8,
 				warpbg = 3,
+				entcolourrow = 56,
 				},
 			[4] =
 				{
@@ -2302,6 +2361,7 @@ tilesetblocks =
 				entcolor = {27,67,255},
 				v6col = 12,
 				warpbg = 4,
+				entcolourrow = 57,
 				},
 			[5] =
 				{
@@ -2334,6 +2394,7 @@ tilesetblocks =
 				entcolor = {206,5,0},
 				v6col = 6,
 				warpbg = 2,
+				entcolourrow = 58,
 				},
 			}
 		},
