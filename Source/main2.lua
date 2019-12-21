@@ -78,14 +78,6 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_win")
 		loaded_filefunc = "win"
-		--[[
-		-- Make sure our util works
-		if not love.filesystem.exists("available_utils") then
-			love.filesystem.createDirectory("available_utils")
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
-		end
-		]]
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -532,14 +524,6 @@ function love.draw()
 			vvvvvv_textbox(unpack(v))
 		end
 	elseif state == 10 then
-		--[[
-		j = -1
-		for k,v in pairs(scripts) do
-			j = j + 1
-			hoverrectangle(128,128,128,128, 8, 8+(24*j), 640, 16)
-			ved_printf(k, 8, 8+(24*j)+4, 640, "center")
-		end
-		]]
 		local j = -1
 		local newscroll
 		for rvnum = #scriptnames, 1, -1 do
@@ -573,13 +557,7 @@ function love.draw()
 				if mousepressed or not nodialog then
 				elseif mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24 -36, 16) then
 					if love.mouse.isDown("l") then
-						--##SCRIPT##  DONE
 						scriptineditor(scriptnames[rvnum], rvnum)
-						--scriptname = scriptnames[rvnum]
-						--scriptlines = table.copy(scripts[scriptnames[rvnum]])
-						--processflaglabels()
-						--bumpscript(rvnum)
-						--tostate(3)
 					elseif love.mouse.isDown("r") then
 						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
 					end
@@ -2431,15 +2409,6 @@ function love.update(dt)
 						editingsboxid = tonumber(entdetails[3])
 						selectedsubtool[13] = 3
 						selectedtool = 13
-						--[[
-						box_exists = true
-						boxperi_x, boxperi_y, boxperi_w, boxperi_h = 128, 0, 640, 480
-						box_x, box_y, box_w, box_h = 128+(entitydata[tonumber(entdetails[3])].x-roomx*40)*16, (entitydata[tonumber(entdetails[3])].x-roomy*30)*16, (entitydata[tonumber(entdetails[3])].p1-1)*16, (entitydata[tonumber(entdetails[3])].p2-1)*16
-						box_type = 1
-						box_movable = false -- nu nog wel
-						box_outsideiscancel = true
-						box_meta = tonumber(entdetails[3])
-						]]
 					elseif RCMreturn == toolnames[12] then
 						local ret = namefound(entitydata[tonumber(entdetails[3])])
 						if ret == 1 then
@@ -2512,17 +2481,6 @@ function love.update(dt)
 		elseif RCMid:sub(1, 4) == "lnk_" then
 			if RCMreturn == L.COPYLINK then
 				love.system.setClipboardText(RCMid:sub(5, -1))
-			--[[
-			elseif RCMreturn == L.OPENLINK then
-				love.system.openURL(RCMid:sub(5, -1))
-			elseif RCMreturn == L.OPENARTICLE then
-				for rvnum = 1, #helppages do
-					if RCMid:sub(5, -1) == helppages[rvnum].subj then
-						gotohelparticle(rvnum)
-						break
-					end
-				end
-			]]
 			else
 				unrecognized_rcmreturn()
 			end
@@ -3012,6 +2970,7 @@ function love.keypressed(key)
 
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
+		return
 	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
@@ -3022,8 +2981,6 @@ function love.keypressed(key)
 		sp_t = 0
 		sp_go = true
 	elseif sp_t ~= 0 and state == 1 and not (sp_go and sp_got <= 0) then
-		--if sp_t > 0 and (key == "up" or key == "right" or key == "down" or key == "left") then
-			--s_hoofdd = ({up=0, right=1, down=2, left=3})[key]
 		if sp_t > 0 then
 			if key == "up" and s_hoofdd ~= 2 then
 				s_hoofdd = 0
@@ -3069,10 +3026,8 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
@@ -3089,10 +3044,8 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
@@ -3781,8 +3734,6 @@ function love.keypressed(key)
 		elseif key == "down" then
 			gotohelparticle(cycle(helparticle, #helppages, 2))
 		end
-	elseif allowdebug and (key == "f10") then
-
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown(lctrl) then
 			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
@@ -3819,7 +3770,6 @@ function love.keypressed(key)
 					selectedtool = k
 					updatewindowicon()
 				end
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 				toolscroll()
 			end
 		end
@@ -3827,11 +3777,8 @@ function love.keypressed(key)
 		stopinput()
 		scsuccess, sccontents = readlevelfile(input)
 		if scsuccess then
-			--##SCRIPT##  BIJZONDER
 			scriptname = input
-			scriptlines = explode((state == 22 and "%$" or "\r?\n"), sccontents) --table.copy(scripts[scriptnames[rvnum]])
-			--processflaglabels()
-			--bumpscript(rvnum)
+			scriptlines = explode((state == 22 and "%$" or "\r?\n"), sccontents)
 			tostate(3)
 		else
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
@@ -4056,20 +4003,16 @@ function love.mousepressed(x, y, button)
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()

@@ -29,9 +29,6 @@ unsupportedplugins = 0
 
 fontpng_works = false
 
---checkver = "10241"
---versys = "1"
-
 if love.setDeprecationOutput ~= nil then
 	love.setDeprecationOutput(allowdebug or intermediate_version)
 end

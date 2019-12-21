@@ -224,11 +224,6 @@ function drawlevelslist()
 						love.graphics.setColor(255,255,255)
 					end
 
-					--[[
-					if k2 == 1 and love.keyboard.isDown("tab") then
-						input = v.name:sub(1, -8)
-					end
-					]]
 					if tabselected == k2 then
 						tabselected_k = k
 

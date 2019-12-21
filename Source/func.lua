@@ -232,13 +232,6 @@ function numberString(number)
 	return s
 end
 
---[[
-function chartobinary(char)
-	string.format("%08d",numberString(string.byte(char)))
-	-- Geen wonder dat dit nil geeft!!
-end
-]]
-
 function toBinary(str)
 	if #str > 0 then
 		local result = ""
@@ -334,12 +327,6 @@ end
 function loadstate(new, ...)
 	if new == 1 then
 
-		-- DON'T FORGET editingmap
-		-- ^ has been forgotten, has been realized, has been fixed.
-
-		--roomdata = {}; roomdata[0] = {} -- temporary
-		--roomdata[0][0], entitydata, metadata = loademptyroom()
-		--success, metadata, roomdata, entitydata, levelmetadata, scripts = loadlevel("tilesets2.vvvvvv")
 		tilespicker = false
 		tilespicker_shortcut = false
 		selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1}
@@ -365,7 +352,6 @@ function loadstate(new, ...)
 		editingroomname = false
 		movingentity = 0
 		movingentity_copying = false
-		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil
 		oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
@@ -504,7 +490,6 @@ function loadstate(new, ...)
 	elseif new == 15 then
 		helplistscroll = 0
 		helparticle = 2
-		--helparticlecontent = {} -- Heette vroeger sis, geen idee waarom.
 		helparticlescroll = 0
 		helpeditingline = 0
 		helprefreshable = false
@@ -714,13 +699,6 @@ function to_astate(name, new, dontinitialize)
 end
 
 
-
--------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------- Just as a filler because I need this part often ---------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 function loadlevelsfolder()
 	cons("Loading levels folder...")
 	levels_refresh = levels_refresh + 1
@@ -812,8 +790,6 @@ function loadtileset(file)
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
-		--love.filesystem.write("temp/" .. file, contents)
-		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
@@ -883,8 +859,6 @@ function loadsprites(file, res)
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
-		--love.filesystem.write("temp/" .. file, contents)
-		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
@@ -1440,11 +1414,8 @@ function changeplatformbounds()
 end
 
 function changedmode()
-	--levelmetadata[(roomy)*20 + (roomx+1)].directmode = cycle(levelmetadata[(roomy)*20 + (roomx+1)].directmode, 1, 0)
-
 	local olddirect = levelmetadata[(roomy)*20 + (roomx+1)].directmode
 	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
-	--local oldtilecol = selectedcolor
 
 	if keyboard_eitherIsDown("shift") then
 		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
@@ -1631,10 +1602,13 @@ function createmde()
 	if count ~= nil then
 		count.entities = count.entities + 1
 	end
+	local emptyflaglabel = {}
+	for i = 0, 99 do
+		emptyflaglabel[i] = ""
+	end
 	return {
 		mdeversion = thismdeversion,
-		-- This is of course an ugly way to do it
-		flaglabel = {"","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","", [0] = ""},
+		flaglabel = emptyflaglabel,
 		vars = {},
 		notes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 	}

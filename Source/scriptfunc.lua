@@ -525,7 +525,7 @@ function processflaglabelsreverse()
 		end
 
 		if partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag" then
-			cons("" .. partss[1] .. " found at line " .. k)
+			cons(partss[1] .. " found at line " .. k)
 
 			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
