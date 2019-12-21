@@ -323,9 +323,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Now indicate what this actually is.
 		if platform_labels[v.p1] ~= nil then
-			if v.p1 < 5 or v.p1 > 8 or (lockablemouseon(x, y, 16, 16) and nodialog) then
+			if v.p1 < 5 or v.p1 > 8 or lockablemouseon(x, y, 16, 16) then
 				ved_print(platform_labels[v.p1], x, y, 2)
 			end
+		elseif v.p1 < 0 then
+			-- It stays still
+			ved_print(" []", x, y, 2)
 		else
 			-- What
 			ved_print("...?", x, y, 2)
