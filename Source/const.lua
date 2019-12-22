@@ -178,6 +178,8 @@ knowncommands =
 	squeak = true,
 	speaker = true,
 	playremix = true,
+	warpdir = true,
+	ifwarp = true,
 	}
 
 knowninternalcommands =
@@ -238,6 +240,7 @@ knowninternalcommands =
 	ifcrewlost = true,
 	iftrinkets = true,
 	--iftrinketsless = true,
+	warpdir = true,
 	ifwarp = true,
 	hidecoordinates = true,
 	showcoordinates = true,
