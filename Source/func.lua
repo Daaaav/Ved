@@ -318,6 +318,10 @@ function tostate(new, dontinitialize, ...)
 		special_cursor = false
 	end
 
+	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
+		unset_middlescroll()
+	end
+
 	if oldstate == 1 then
 		editingroomname = false
 	end
