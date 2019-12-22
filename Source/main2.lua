@@ -3057,6 +3057,7 @@ function love.keypressed(key)
 		coordsdialog.active = false
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
+		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
 			tonotepad()
@@ -3067,7 +3068,7 @@ function love.keypressed(key)
 		tostate(15)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and keyboard_eitherIsDown(ctrl) then
 		tostate(11)
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and key == "p" and keyboard_eitherIsDown(ctrl) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and keyboard_eitherIsDown(ctrl) then
 		gotostartpointroom()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "d" and keyboard_eitherIsDown(ctrl) then
 		tostate(6, nil, "secondlevel")
@@ -3157,54 +3158,18 @@ function love.keypressed(key)
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
 		selectedsubtool[14] = 1
 		warpid = nil
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "right" or key == "kp6") and not keyboardmode then
 		-->
-		if editingbounds == 0 then
-			if roomx+1 >= metadata.mapwidth then
-				roomx = 0
-			else
-				roomx = roomx + 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") and (not keyboardmode or state == 12) then
+		gotoroom_r()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "left" or key == "kp4") and not keyboardmode then
 		--<
-		if editingbounds == 0 then
-			if roomx+1 <= 1 then
-				roomx = metadata.mapwidth-1
-			else
-				roomx = roomx - 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") and (not keyboardmode or state == 12) then
+		gotoroom_l()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "down" or key == "kp2") and not keyboardmode then
 		--v
-		if editingbounds == 0 then
-			if roomy+1 >= metadata.mapheight then
-				roomy = 0
-			else
-				roomy = roomy + 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") and (not keyboardmode or state == 12) then
+		gotoroom_d()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "up" or key == "kp8") and not keyboardmode then
 		--^
-		if editingbounds == 0 then
-			if roomy+1 <= 1 then
-				roomy = metadata.mapheight-1
-			else
-				roomy = roomy - 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
+		gotoroom_u()
 	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then
 		saveroomname()
 	elseif state == 1 and editingroomname and key == "escape" then
@@ -3627,34 +3592,6 @@ function love.keypressed(key)
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (table.contains({"return", "kpenter"}, key) or key == "m" or key == "kp5") then
-		tostate(1, true)
-		nodialog = false
-	elseif nodialog and state == 12 and (key == "," or key == ".") then
-		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
-		if key == "," then
-			if not toolanyofthese then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 1
-			end
-		elseif key == "." then
-			if not toolanyofthese then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 1
-			end
-		end
-		updatewindowicon()
-		toolscroll()
 	elseif nodialog and state == 13 and key == "escape" then
 		exitvedoptions()
 	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
@@ -3760,7 +3697,7 @@ function love.keypressed(key)
 		end
 	elseif allowdebug and (key == "f12") then
 		tostate(0, true)
-	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
+	elseif not editingroomname and (editingroomtext == 0) and nodialog and state == 1 then
 		for k,v in pairs(toolshortcuts) do
 			if key == string.lower(v) then
 				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
@@ -4056,31 +3993,6 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
-	elseif state == 12 and (button == "wu" or button == "wd") and nodialog then
-		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
-		if button == flipscrollmore(macscrolling and "wd" or "wu") then
-			if not toolanyofthese then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 1
-			end
-		elseif button == flipscrollmore(macscrolling and "wu" or "wd") then
-			if not toolanyofthese then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 1
-			end
-		end
-		updatewindowicon()
-		toolscroll()
 	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.psmallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.psmallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
 		local screenxoffset = 0
