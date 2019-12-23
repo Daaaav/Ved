@@ -789,7 +789,7 @@ function loadtileset(file)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata, asimgdata_white
 	if readsuccess then
@@ -864,7 +864,7 @@ function loadsprites(file, res)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata
 	if readsuccess then
