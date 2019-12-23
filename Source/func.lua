@@ -791,14 +791,18 @@ function loadtileset(file)
 	-- Try loading custom assets first
 	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
-	local asimgdata
+	local asimgdata, asimgdata_white
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
+		-- Too bad Data:clone() is LÖVE 11+ only
+		asimgdata_white = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
 		asimgdata = love.image.newImageData(file)
+		-- Too bad Data:clone() is LÖVE 11+ only
+		asimgdata_white = love.image.newImageData(file)
 	end
 
 	-- VVVVVV doesn't like translucent pixels in 'tiles' and tiles2
@@ -842,10 +846,10 @@ function loadtileset(file)
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
 	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
-	asimgdata:mapPixel(function(x, y, r, g, b, a)
+	asimgdata_white:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
-	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata)
+	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata_white)
 
 	tilesets[file]["tiles"] = {}
 
