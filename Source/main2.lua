@@ -3684,6 +3684,9 @@ function love.keypressed(key)
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
+				elseif type(v) == "userdata" and v.type ~= nil and type(v.type) == "function" then
+					-- LÖVE object
+					print(k .. "\t\t\t[" .. v:type() .. "]")
 				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
 					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
