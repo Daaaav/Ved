@@ -452,7 +452,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			else
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[15], L.DELETE, L.PROPERTIES}, "ent_50_" .. k,
+					{"#" .. toolnames[15], L.DELETE, (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}, "ent_50_" .. k,
 					sel_w, sel_h, sel_x, sel_y
 				)
 			end

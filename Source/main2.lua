@@ -2426,6 +2426,45 @@ function love.update(dt)
 					else
 						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
+				elseif tonumber(entdetails[2]) == 50 then
+					-- Warp line
+					local old_p1 = entitydata[tonumber(entdetails[3])].p1
+					local old_p2 = entitydata[tonumber(entdetails[3])].p2
+					local old_p3 = entitydata[tonumber(entdetails[3])].p3
+					local old_p4 = entitydata[tonumber(entdetails[3])].p4
+					local new_p4
+					if RCMreturn == L.UNLOCK then
+						new_p4 = 0
+					elseif RCMreturn == L.LOCK then
+						new_p4 = 1
+					end
+					entitydata[tonumber(entdetails[3])].p4 = new_p4
+					autocorrectlines()
+					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
+								{
+									key = "p1",
+									oldvalue = old_p1,
+									newvalue = new_p1
+								},
+								{
+									key = "p2",
+									oldvalue = old_p2,
+									newvalue = entitydata[tonumber(entdetails[3])].p2
+								},
+								{
+									key = "p3",
+									oldvalue = old_p3,
+									newvalue = entitydata[tonumber(entdetails[3])].p3
+								},
+								{
+									key = "p4",
+									oldvalue = old_p4,
+									newvalue = entitydata[tonumber(entdetails[3])].p4
+								}
+							}
+						}
+					)
+					finish_undo("CHANGED ENTITY (WARPLINE)")
 				else
 					dialog.create(langkeys(L.UNKNOWNENTITYTYPE, {anythingbutnil(entdetails[2])}) .. ",\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 				end
