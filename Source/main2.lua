@@ -438,7 +438,7 @@ function love.load()
 end
 
 function love.draw()
-	if s.pausedrawunfocused and not love.window.hasFocus() then
+	if s.pausedrawunfocused and not window_active() then
 		limit_draw_fps()
 		return
 	end
@@ -1927,7 +1927,7 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
-	if love.window.hasFocus() then
+	if window_active() then
 		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
 	else
 		focusregainedtimer = 0
@@ -3921,7 +3921,7 @@ function love.mousepressed(x, y, button)
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
 
-	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+	if s.pausedrawunfocused and not window_active() and table.contains({"wu", "wd"}, button) then
 		-- When drawing is paused it won't look like the scrollbar has moved,
 		-- so just don't move it so the visual will be accurate
 		return
@@ -4165,7 +4165,7 @@ end
 
 function love.quit()
 	if not s.neveraskbeforequit and has_unsaved_changes() then
-		if love.window.requestAttention ~= nil and not love.window.hasFocus() then
+		if love.window.requestAttention ~= nil and not window_active() then
 			love.window.requestAttention(true)
 		end
 

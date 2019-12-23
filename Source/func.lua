@@ -1,6 +1,6 @@
 love.graphics.clearOR = love.graphics.clear
 love.graphics.clear = function(...)
-	if not s.pausedrawunfocused or love.window.hasFocus() then
+	if not s.pausedrawunfocused or window_active() then
 		love.graphics.clearOR(...)
 	end
 end
@@ -948,7 +948,7 @@ function lefttoolscrollbounds()
 end
 
 function hoverdraw(img, x, y, w, h, s)
-	if nodialog and mouseon(x, y, w, h) and love.window.hasFocus() then
+	if nodialog and mouseon(x, y, w, h) and window_active() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		love.graphics.setColor(255,255,255,128)
@@ -958,7 +958,7 @@ function hoverdraw(img, x, y, w, h, s)
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
-	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and love.window.hasFocus() then
+	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active() then
 		love.graphics.setColor(r, g, b, 255)
 		love.graphics.rectangle("fill", x, y, w, h)
 	else
@@ -3417,6 +3417,10 @@ function show_notification(text)
 	notification_text = text
 
 	setgenerictimer(3, 5)
+end
+
+function window_active()
+	return love.window.hasFocus() and love.window.isVisible()
 end
 
 hook("func")

@@ -174,7 +174,7 @@ function cDialog:draw(topmost)
 		local btn_x = self.x+self.width-rapos*btnwidth-(5*(rapos-1))-1
 		local btn_y = self.y+self.windowani+self.height-26
 
-		if topmost and mouseon(btn_x, btn_y, btnwidth, 25) and love.window.hasFocus() then
+		if topmost and mouseon(btn_x, btn_y, btnwidth, 25) and window_active() then
 			-- Hovering over this button
 			self:setColor(124, 124, 124, 128)
 
@@ -381,7 +381,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 	if mode <= 1 then
 		-- Text field or dropdown
-		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and love.window.hasFocus() then
+		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and window_active() then
 			self:setColor(255,255,255,255)
 			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
 
@@ -491,7 +491,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			-- Only display this item if it will be visible
 			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
 				local selected = self:return_fields().name == v.name
-				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and love.window.hasFocus())
+				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and window_active())
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
@@ -542,7 +542,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 end
 
 function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
-	if topmost and mouseon(x, y, w, h) and not RCMactive and love.window.hasFocus() then
+	if topmost and mouseon(x, y, w, h) and not RCMactive and window_active() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)
