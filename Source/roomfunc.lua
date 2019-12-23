@@ -444,15 +444,25 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[0], x, y)
 		if interact then
 			if v.t == 11 then
+				local thisentrcm = {"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
+				if v.p4 == 1 then
+					table.insert(thisentrcm, #thisentrcm, L.COPY)
+					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
+				end
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}, "ent_11_" .. k,
+					thisentrcm, "ent_11_" .. k,
 					sel_w, sel_h, sel_x, sel_y
 				)
 			else
+				local thisentrcm = {"#" .. toolnames[15], L.DELETE, (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
+				if v.p4 == 1 then
+					table.insert(thisentrcm, #thisentrcm, L.COPY)
+					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
+				end
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[15], L.DELETE, (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}, "ent_50_" .. k,
+					thisentrcm, "ent_50_" .. k,
 					sel_w, sel_h, sel_x, sel_y
 				)
 			end
@@ -1738,173 +1748,177 @@ function autocorrectlines()
 end
 
 function undo()
-	if #undobuffer >= 1 then
-		if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
-			gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-			map_resetroom(roomx, roomy)
-		end
-		if undobuffer[#undobuffer].switchtool ~= nil then
-			selectedtool = undobuffer[#undobuffer].switchtool
-			updatewindowicon()
-		end
-
-		if undobuffer[#undobuffer].undotype == "tiles" then
-			if (undobuffer[#undobuffer].toundotiles[1] == nil) then
-				temporaryroomname = L.UNDOFAULTY
-				temporaryroomnametimer = 90
-			else
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
-				autocorrectlines()
-			end
-		elseif undobuffer[#undobuffer].undotype == "addentity" then
-			-- So we need to remove this entity again!
-			removeentity(undobuffer[#undobuffer].entid, nil, true)
-		elseif undobuffer[#undobuffer].undotype == "removeentity" then
-			-- Hmm... Re-add it in this case!
-			entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
-			updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
-		elseif undobuffer[#undobuffer].undotype == "changeentity" then
-			for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
-				entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
-			end
-		elseif undobuffer[#undobuffer].undotype == "metadata" then
-			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-				metadata[v.key] = v.oldvalue
-			end
-			temporaryroomname = L.METADATAUNDONE
-			temporaryroomnametimer = 90
-		elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
-			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
-			end
-			if undobuffer[#undobuffer].changetiles then
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
-				autocorrectlines()
-				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
-			end
-		elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
-			rotateroom180(roomx, roomy, true)
-		elseif undobuffer[#undobuffer].undotype == "paste" then
-			setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
-			temporaryroomnametimer = 0
-		elseif undobuffer[#undobuffer].undotype == "mapswap" then
-			mapswap(
-				undobuffer[#undobuffer].rx,
-				undobuffer[#undobuffer].ry,
-				undobuffer[#undobuffer].rx_src,
-				undobuffer[#undobuffer].ry_src,
-				true
-			)
-		elseif undobuffer[#undobuffer].undotype == "mapcopy" then
-			-- Remove the copied entities again
-			local removedentityids = {}
-			local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
-
-			for k,v in pairs(entitydata) do
-				if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
-					table.insert(removedentityids, k)
-				end
-			end
-
-			for _,v in pairs(removedentityids) do
-				removeentity(v, nil, true)
-			end
-
-			setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
-			temporaryroomnametimer = 0
-			for k,v in pairs(undobuffer[#undobuffer].oldentities) do
-				entitydata[v[1]] = table.copy(v[2])
-				updatecountadd(v[2].t)
-			end
-		else
-			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
-			temporaryroomnametimer = 90
-		end
-
-		table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
-		table.remove(undobuffer, #undobuffer)
-
-		mapmovedroom = true
+	if #undobuffer < 1 then
+		return
 	end
+
+	if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
+		gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+		map_resetroom(roomx, roomy)
+	end
+	if undobuffer[#undobuffer].switchtool ~= nil then
+		selectedtool = undobuffer[#undobuffer].switchtool
+		updatewindowicon()
+	end
+
+	if undobuffer[#undobuffer].undotype == "tiles" then
+		if (undobuffer[#undobuffer].toundotiles[1] == nil) then
+			temporaryroomname = L.UNDOFAULTY
+			temporaryroomnametimer = 90
+		else
+			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			autocorrectlines()
+		end
+	elseif undobuffer[#undobuffer].undotype == "addentity" then
+		-- So we need to remove this entity again!
+		removeentity(undobuffer[#undobuffer].entid, nil, true)
+	elseif undobuffer[#undobuffer].undotype == "removeentity" then
+		-- Hmm... Re-add it in this case!
+		entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
+		updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
+	elseif undobuffer[#undobuffer].undotype == "changeentity" then
+		for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
+			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
+		end
+	elseif undobuffer[#undobuffer].undotype == "metadata" then
+		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+			metadata[v.key] = v.oldvalue
+		end
+		temporaryroomname = L.METADATAUNDONE
+		temporaryroomnametimer = 90
+	elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
+		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
+		end
+		if undobuffer[#undobuffer].changetiles then
+			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			autocorrectlines()
+			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+		end
+	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
+		rotateroom180(roomx, roomy, true)
+	elseif undobuffer[#undobuffer].undotype == "paste" then
+		setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
+		temporaryroomnametimer = 0
+	elseif undobuffer[#undobuffer].undotype == "mapswap" then
+		mapswap(
+			undobuffer[#undobuffer].rx,
+			undobuffer[#undobuffer].ry,
+			undobuffer[#undobuffer].rx_src,
+			undobuffer[#undobuffer].ry_src,
+			true
+		)
+	elseif undobuffer[#undobuffer].undotype == "mapcopy" then
+		-- Remove the copied entities again
+		local removedentityids = {}
+		local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
+
+		for k,v in pairs(entitydata) do
+			if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
+				table.insert(removedentityids, k)
+			end
+		end
+
+		for _,v in pairs(removedentityids) do
+			removeentity(v, nil, true)
+		end
+
+		setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
+		temporaryroomnametimer = 0
+		for k,v in pairs(undobuffer[#undobuffer].oldentities) do
+			entitydata[v[1]] = table.copy(v[2])
+			updatecountadd(v[2].t)
+		end
+	else
+		temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
+		temporaryroomnametimer = 90
+	end
+
+	table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
+	table.remove(undobuffer, #undobuffer)
+
+	mapmovedroom = true
 end
 -- TODO: Merge these two?
 function redo()
-	if #redobuffer >= 1 then
-		if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
-			gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
-			map_resetroom(roomx, roomy)
-		end
-		if redobuffer[#redobuffer].switchtool ~= nil then
-			selectedtool = redobuffer[#redobuffer].switchtool
-			updatewindowicon()
-		end
-
-		if redobuffer[#redobuffer].undotype == "tiles" then
-			if (redobuffer[#redobuffer].toredotiles[1] == nil) then
-				temporaryroomname = L.UNDOFAULTY
-				temporaryroomnametimer = 90
-			else
-				roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
-				autocorrectlines()
-			end
-		elseif redobuffer[#redobuffer].undotype == "addentity" then
-			-- Re-add it again
-			entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
-			updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
-		elseif redobuffer[#redobuffer].undotype == "removeentity" then
-			-- Redo the removing!
-			removeentity(redobuffer[#redobuffer].entid, nil, true)
-		elseif redobuffer[#redobuffer].undotype == "changeentity" then
-			for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
-				entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
-			end
-		elseif redobuffer[#redobuffer].undotype == "metadata" then
-			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-				metadata[v.key] = v.newvalue
-			end
-			temporaryroomname = L.METADATAREDONE
-			temporaryroomnametimer = 90
-		elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
-			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
-			end
-			if redobuffer[#redobuffer].changetiles then
-				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
-				autocorrectroom()
-			end
-		elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
-			rotateroom180(roomx, roomy, true)
-		elseif redobuffer[#redobuffer].undotype == "paste" then
-			setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
-			temporaryroomnametimer = 0
-		elseif redobuffer[#redobuffer].undotype == "mapswap" then
-			mapswap(
-				redobuffer[#redobuffer].rx,
-				redobuffer[#redobuffer].ry,
-				redobuffer[#redobuffer].rx_src,
-				redobuffer[#redobuffer].ry_src,
-				true
-			)
-		elseif redobuffer[#redobuffer].undotype == "mapcopy" then
-			mapcopy(
-				redobuffer[#redobuffer].rx_src,
-				redobuffer[#redobuffer].ry_src,
-				redobuffer[#redobuffer].rx,
-				redobuffer[#redobuffer].ry,
-				true
-			)
-		else
-			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
-			temporaryroomnametimer = 90
-		end
-
-		table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
-		table.remove(redobuffer, #redobuffer)
-
-		mapmovedroom = true
+	if #redobuffer < 1 then
+		return
 	end
+
+	if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
+		gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
+		map_resetroom(roomx, roomy)
+	end
+	if redobuffer[#redobuffer].switchtool ~= nil then
+		selectedtool = redobuffer[#redobuffer].switchtool
+		updatewindowicon()
+	end
+
+	if redobuffer[#redobuffer].undotype == "tiles" then
+		if (redobuffer[#redobuffer].toredotiles[1] == nil) then
+			temporaryroomname = L.UNDOFAULTY
+			temporaryroomnametimer = 90
+		else
+			roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
+			autocorrectlines()
+		end
+	elseif redobuffer[#redobuffer].undotype == "addentity" then
+		-- Re-add it again
+		entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
+		updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
+	elseif redobuffer[#redobuffer].undotype == "removeentity" then
+		-- Redo the removing!
+		removeentity(redobuffer[#redobuffer].entid, nil, true)
+	elseif redobuffer[#redobuffer].undotype == "changeentity" then
+		for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
+			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
+		end
+	elseif redobuffer[#redobuffer].undotype == "metadata" then
+		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+			metadata[v.key] = v.newvalue
+		end
+		temporaryroomname = L.METADATAREDONE
+		temporaryroomnametimer = 90
+	elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
+		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
+		end
+		if redobuffer[#redobuffer].changetiles then
+			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			autocorrectroom()
+		end
+	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
+		rotateroom180(roomx, roomy, true)
+	elseif redobuffer[#redobuffer].undotype == "paste" then
+		setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
+		temporaryroomnametimer = 0
+	elseif redobuffer[#redobuffer].undotype == "mapswap" then
+		mapswap(
+			redobuffer[#redobuffer].rx,
+			redobuffer[#redobuffer].ry,
+			redobuffer[#redobuffer].rx_src,
+			redobuffer[#redobuffer].ry_src,
+			true
+		)
+	elseif redobuffer[#redobuffer].undotype == "mapcopy" then
+		mapcopy(
+			redobuffer[#redobuffer].rx_src,
+			redobuffer[#redobuffer].ry_src,
+			redobuffer[#redobuffer].rx,
+			redobuffer[#redobuffer].ry,
+			true
+		)
+	else
+		temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
+		temporaryroomnametimer = 90
+	end
+
+	table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
+	table.remove(redobuffer, #redobuffer)
+
+	mapmovedroom = true
 end	
 
 function entityplaced(id)
