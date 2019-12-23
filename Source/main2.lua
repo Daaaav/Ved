@@ -3199,6 +3199,17 @@ function love.keypressed(key)
 
 		editingbounds = 0
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
+		if movingentity_copying then
+			movingentity_copying = false
+			count.entities = count.entities - 1
+			if entitydata[movingentity].t == 9 then
+				count.trinkets = count.trinkets - 1
+			elseif entitydata[movingentity].t == 15 then
+				count.crewmates = count.crewmates - 1
+			end
+			count.entity_ai = count.entity_ai - 1
+			table.remove(entitydata, movingentity)
+		end
 		movingentity = 0
 		movingentity_copying = false
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
