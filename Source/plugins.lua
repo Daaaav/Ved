@@ -85,6 +85,17 @@ function loadplugins()
 						pluginpath = "plugins/" .. v
 						pluginname = v
 					end
+					local files = love.filesystem.getDirectoryItems(pluginpath)
+					for k = #files, 1, -1 do
+						local v = files[k]
+						if table.contains({"#", "."}, v:sub(1, 1)) then
+							table.remove(files, k)
+						end
+					end
+					if #files == 1 and love.filesystem.isDirectory(pluginpath .. "/" .. files[1]) then
+						-- Someone must've packaged this plugin incorrectly and nested it one level too deep... doesn't matter, we can deal with that.
+						pluginpath = pluginpath .. "/" .. files[1]
+					end
 
 					cons("  Loading plugin " .. pluginname)
 
