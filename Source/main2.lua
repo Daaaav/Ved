@@ -3470,7 +3470,9 @@ function love.keypressed(key)
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
-		if key == "up" then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" then
 			scriptgotoline(editingline-1)
 		elseif key == "down" then
 			scriptgotoline(editingline+1)
@@ -3680,7 +3682,9 @@ function love.keypressed(key)
 			leavescript_to_state()
 		end
 	elseif nodialog and state == 15 and helpeditingline ~= 0 then
-		if key == "up" and helpeditingline ~= 1 then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" and helpeditingline ~= 1 then
 			helparticlecontent[helpeditingline] = input .. input_r
 			input_r = ""
 			__ = "_"

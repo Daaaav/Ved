@@ -3423,4 +3423,17 @@ function window_active()
 	return love.window.hasFocus() and love.window.isVisible()
 end
 
+function inplacescroll(key)
+	local usethisinput, usethisdistance
+	if table.contains({"up", "pageup"}, key) then
+		usethisinput = "wu"
+	elseif table.contains({"down", "pagedown"}, key) then
+		usethisinput = "wd"
+	end
+	if table.contains({"pageup", "pagedown"}, key) then
+		usethisdistance = 10*46
+	end
+	handle_scrolling(false, usethisinput, usethisdistance)
+end
+
 hook("func")
