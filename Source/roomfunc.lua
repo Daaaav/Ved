@@ -402,7 +402,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Gravity lines and warp lines have a different p1!
 		if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 			-- Horizontal
-			sel_x = offsetx+(v.p2)*16
+			local usethisp2
+			if forcetilex ~= nil then
+				local offset = v.p2 - v.x%40
+				usethisp2 = forcetilex + offset
+			else
+				usethisp2 = v.p2
+			end
+			sel_x = offsetx+(usethisp2)*16
 			sel_y = y
 			sel_w = v.p3/8
 			sel_h = 1
@@ -420,8 +427,15 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			end
 		else
 			-- Vertical
+			local usethisp2
+			if forcetiley ~= nil then
+				local offset = v.p2 - v.y%30
+				usethisp2 = forcetiley + offset
+			else
+				usethisp2 = v.p2
+			end
 			sel_x = x
-			sel_y = offsety+(v.p2)*16
+			sel_y = offsety+(usethisp2)*16
 			sel_w = 1
 			sel_h = v.p3/8
 			if v.t == 11 then

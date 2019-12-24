@@ -191,8 +191,40 @@ function drawmaineditor()
 				end
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
-			if love.mouse.isDown("l") and not mousepressed then
+			if love.mouse.isDown("l") and not mousepressed
+			-- Prevent warp lines' control points from being placed not on borders, in order to prevent confusion
+			-- (you can always manually place their control points away from borders by manually editing the properties.
+			-- It doesn't really do anything, though, their part of the border still warps)
+			and (entitydata[movingentity].t ~= 50
+			or (entitydata[movingentity].p1 == 0 and atx == 0)
+			or (entitydata[movingentity].p1 == 1 and atx == 39)
+			or (entitydata[movingentity].p1 == 2 and aty == 0)
+			or (entitydata[movingentity].p1 == 3 and aty == 29)) then
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
+				local new_p2 = entitydata[movingentity].p2
+				if table.contains({11, 50}, entitydata[movingentity].t) then
+					local use_x, use_y = false, false
+					if entitydata[movingentity].t == 11 then
+						if entitydata[movingentity].p1 <= 0 then
+							use_x = true
+						else
+							use_y = true
+						end
+					elseif entitydata[movingentity].t == 50 then
+						if table.contains({2, 3}, entitydata[movingentity].p1) then
+							use_x = true
+						elseif table.contains({0, 1}, entitydata[movingentity].p1) then
+							use_y = true
+						end
+					end
+					if use_x then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].x%40
+						new_p2 = new_x%40 + offset
+					elseif use_y then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
+						new_p2 = new_y%30 + offset
+					end
+				end
 				if not movingentity_copying then
 					table.insert(
 						undobuffer,
@@ -209,6 +241,11 @@ function drawmaineditor()
 									key = "y",
 									oldvalue = entitydata[movingentity].y,
 									newvalue = new_y
+								},
+								{
+									key = "p2",
+									oldvalue = entitydata[movingentity].p2,
+									newvalue = new_p2
 								}
 							}
 						}
@@ -217,12 +254,15 @@ function drawmaineditor()
 				end
 				entitydata[movingentity].x = new_x
 				entitydata[movingentity].y = new_y
+				entitydata[movingentity].p2 = new_p2
 				if movingentity_copying then
 					entityplaced(movingentity)
 				end
 				movingentity = 0
 				movingentity_copying = false
 				nodialog = false
+			else
+				mousepressed = true
 			end
 		elseif selectedtool <= 3 then
 			if not (eraserlocked and love.mouse.isDown("r")) then
