@@ -2163,7 +2163,7 @@ function cons_fc(text)
 	cons("[CHECK] " .. text)
 end
 
-function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
+function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisend)
 	local direction, distance
 
 	if x == nil or y == nil then
@@ -2187,6 +2187,9 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 	end
 	if customdistance ~= nil then
 		distance = customdistance
+	end
+	if direction == nil then
+		direction = gotothisend
 	end
 
 
@@ -2244,9 +2247,13 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 			end
 		elseif state == 10 then
 			if direction == "u" then
-				scriptlistscroll = scriptlistscroll + distance
-				if scriptlistscroll > 0 then
+				if mkinput == "home" then
 					scriptlistscroll = 0
+				else
+					scriptlistscroll = scriptlistscroll + distance
+					if scriptlistscroll > 0 then
+						scriptlistscroll = 0
+					end
 				end
 			elseif direction == "d" then
 				local ndisplayedscripts = 0
@@ -2257,10 +2264,15 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				elseif scriptdisplay_unused then
 					ndisplayedscripts = #scriptnames - n_usedscripts
 				end
-				scriptlistscroll = scriptlistscroll - distance
-				local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
-				if -scriptlistscroll > upperbound then
+				if mkinput == "end" then
+					local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8))
 					scriptlistscroll = math.min(-upperbound, 0)
+				else
+					scriptlistscroll = scriptlistscroll - distance
+					local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+					if -scriptlistscroll > upperbound then
+						scriptlistscroll = math.min(-upperbound, 0)
+					end
 				end
 			end
 		elseif state == 11 then
@@ -2284,30 +2296,48 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 
 			if usethiscondition then
 				if direction == "u" then
-					helplistscroll = helplistscroll + distance
-					if helplistscroll > 0 then
+					if mkinput == "home" then
 						helplistscroll = 0
+					else
+						helplistscroll = helplistscroll + distance
+						if helplistscroll > 0 then
+							helplistscroll = 0
+						end
 					end
 				elseif direction == "d" then
-					helplistscroll = helplistscroll - distance
-					local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
-					if -helplistscroll > upperbound then
+					if mkinput == "end" then
+						local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8))
 						helplistscroll = math.min(-upperbound, 0)
+					else
+						helplistscroll = helplistscroll - distance
+						local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+						if -helplistscroll > upperbound then
+							helplistscroll = math.min(-upperbound, 0)
+						end
 					end
 				end
 			else
 				if direction == "u" then
-					helparticlescroll = helparticlescroll + distance
-					if helparticlescroll > 0 then
+					if mkinput == "home" then
 						helparticlescroll = 0
+					else
+						helparticlescroll = helparticlescroll + distance
+						if helparticlescroll > 0 then
+							helparticlescroll = 0
+						end
 					end
 				elseif direction == "d" then
-					helparticlescroll = helparticlescroll - distance
-					-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
-					-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
-					local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
-					if -helparticlescroll > upperbound then
+					if mkinput == "end" then
+						local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 						helparticlescroll = math.min(-upperbound, 0)
+					else
+						helparticlescroll = helparticlescroll - distance
+						-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
+						-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
+						local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
+						if -helparticlescroll > upperbound then
+							helparticlescroll = math.min(-upperbound, 0)
+						end
 					end
 				end
 

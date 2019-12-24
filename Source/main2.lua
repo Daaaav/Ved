@@ -3631,6 +3631,8 @@ function love.keypressed(key)
 		end
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
+	elseif state == 10 and table.contains({"home", "end"}, key) then
+		handle_scrolling(true, key, nil, nil, nil, key == "home" and "u" or "d")
 	elseif state == 10 and key == "n" and nodialog then
 		dialog.create(
 			L.NEWSCRIPTNAME, DBS.OKCANCEL,
@@ -3731,6 +3733,8 @@ function love.keypressed(key)
 			gotohelparticle(revcycle(helparticle, #helppages, 2))
 		elseif key == "down" then
 			gotohelparticle(cycle(helparticle, #helppages, 2))
+		elseif table.contains({"home", "end"}, key) then
+			handle_scrolling(true, key, nil, nil, nil, key == "home" and "u" or "d")
 		end
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown(lctrl) then
