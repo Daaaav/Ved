@@ -1967,6 +1967,46 @@ function gotoroom(rx, ry)
 	gotoroom_finish()
 end
 
+function gotoroom_l()
+	--<
+	if roomx+1 <= 1 then
+		roomx = metadata.mapwidth-1
+	else
+		roomx = roomx - 1
+	end
+	gotoroom_finish()
+end
+
+function gotoroom_r()
+	-->
+	if roomx+1 >= metadata.mapwidth then
+		roomx = 0
+	else
+		roomx = roomx + 1
+	end
+	gotoroom_finish()
+end
+
+function gotoroom_u()
+	--^
+	if roomy+1 <= 1 then
+		roomy = metadata.mapheight-1
+	else
+		roomy = roomy - 1
+	end
+	gotoroom_finish()
+end
+
+function gotoroom_d()
+	--v
+	if roomy+1 >= metadata.mapheight then
+		roomy = 0
+	else
+		roomy = roomy + 1
+	end
+	gotoroom_finish()
+end
+
 function gotoroom_finish()
 	selectedtileset = levelmetadata_get(roomx, roomy).tileset
 	selectedcolor = levelmetadata_get(roomx, roomy).tilecol

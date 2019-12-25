@@ -25,14 +25,8 @@ function drawsearch()
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8, 32*k+16+searchscroll, 284, 30) then
 				stopinput()
-				--##SCRIPT##  DONE
 				scriptineditor(v.name)
 				scriptfromsearch = true
-				--scriptname = v.name
-				--scriptlines = table.copy(scripts[v.name])
-				--processflaglabels()
-				--bumpscript(rvnum) do bump later though
-				--tostate(3)
 
 				if v.foundline ~= 0 then
 					scriptgotoline(v.foundline)

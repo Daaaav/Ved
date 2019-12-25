@@ -177,14 +177,6 @@ function loadlevel(path)
 				-- Leave out the quotes and convert it to number
 				local settothis = tonumber(keyvalue[2]:sub(2, -2))
 				allentities[entityid][keyvalue[1]] = settothis
-
-				-- Is this a valid number?
-				--[[
-				if settothis == nil or type(settothis) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid][keyvalue[1] ] = 0
-				end
-				]]
 			end
 
 			-- Now we only need the data...
@@ -220,15 +212,6 @@ function loadlevel(path)
 						myvedmetadata.flaglabel[f] = ""
 					end
 				end
-
-				--[[
-				local explodedscripts = explode("%$", explodedmetadata[3])
-				for k,v in pairs(explodedscripts) do
-					table.insert(myvedmetadata.internalscripts, undespecialchars(v))
-				end
-
-				myvedmetadata.leveloptions = explodedmetadata[4]
-				]]
 
 				if myvedmetadata.mdeversion >= 3 and explodedmetadata[4] ~= "" and explodedmetadata[4] ~= nil then
 					local explodedvars = explode("%$", explodedmetadata[4])
@@ -276,19 +259,6 @@ function loadlevel(path)
 
 			-- It's an entity, that's for sure!
 			mycount.entities = mycount.entities + 1
-
-			-- Do some integrity checks on this entity.
-			--[[
-			mycount.FC = mycount.FC + (allentities[entityid].x == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].y == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].t == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p1 == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p2 == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p3 == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p4 == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p5 == nil and 1 or 0)
-			mycount.FC = mycount.FC + (allentities[entityid].p6 == nil and 1 or 0)
-			]]
 
 			local oldFCcount = mycount.FC
 
@@ -390,23 +360,6 @@ function loadlevel(path)
 		if theselevelmetadata[croom].directmode == nil then
 			theselevelmetadata[croom].directmode = 0
 		end
-
-		-- Do some integrity checks on this room metadata.
-		--[[
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].tileset == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].tilecol == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].platx1 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].platy1 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].platx2 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].platy2 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].platv == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemyx1 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemyy1 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemyx2 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemyy2 == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].enemytype == nil and 1 or 0)
-		mycount.FC = mycount.FC + (theselevelmetadata[croom].warpdir == nil and 1 or 0)
-		]]
 
 		local oldFCcount = mycount.FC
 
@@ -515,23 +468,10 @@ function loadlevel(path)
 		end
 	end
 
-	--[[
-	local myvedmetadata =
-		{
-		flaglabel = {} --{[2] = "testvlag"}
-		}
-	]]
-
 	cons("Done loading!")
 
 
 	-- As many of the integrity checks as possible here
-	--[[
-	mycount.FC = mycount.FC + (type(thismetadata.mapwidth) ~= "number" and 1 or 0)
-	mycount.FC = mycount.FC + (type(thismetadata.mapheight) ~= "number" and 1 or 0)
-	mycount.FC = mycount.FC + (type(thismetadata.levmusic) ~= "number" and 1 or 0)
-	mycount.FC = mycount.FC + (#theselevelmetadata ~= 400 and 1 or 0)
-	]]
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
@@ -617,15 +557,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	cons("Placing metadata...")
 	for k,v in pairs(metadataitems) do
-		--cons("Placing metadata: " .. v .. " which should match " .. "%$" .. string.upper(v) .. "%$ and have a value of " .. xmlspecialchars(thismetadata[v]))
-
-		-- OK WHY DID YOU GIVE ME SUCH A DEBUGGING HEADACHE?
-		--[[ Why is it that
-				savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", xmlspecialchars(thismetadata[v]))
-			is NOT good, but
-				newthis = xmlspecialchars(thismetadata[v])
-				savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", newthis)
-			IS? ]]
 		cons("Doing " .. v)
 		newthis = xmlspecialchars(anythingbutnil(thismetadata[v]))
 		savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", newthis)
@@ -649,10 +580,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			for lroomx = 0, (thismetadata.mapwidth-1) do
 				xv = yv[lroomx]
 				-- .....And each x for each line
-				--for tilex = 0, 39 do
-					-- Maybe there's a notation for taking a specific part of an array to implode? I think it would be a whole lot better than concatenating every single tile like this
-					--thenewcontents = thenewcontents .. theserooms[roomy][roomx][(line*40)+tilex+1] .. ","
-				--end
 				-- Heeey
 				table.insert(thenewcontents, table.concat({unpack(theserooms[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
 				if lroomy == math.min(thismetadata.mapheight, 20)-1 and lroomx == 19 and line == 29 then
@@ -963,12 +890,6 @@ function createblanklevel(lvwidth, lvheight)
 	allscripts = {}
 	myscriptnames = {}
 
-	--[[
-	myvedmetadata =
-		{
-		flaglabel = {}
-		}
-	]]
 	local myvedmetadata = false
 
 	cons("Done loading!")
