@@ -817,6 +817,7 @@ function loadtileset(file)
 			if love_version_meets(11) then
 				return r/255, g/255, b/255, a
 			else
+				return r, g, b, a
 			end
 		else
 			r = a*r + (1-a)*172
