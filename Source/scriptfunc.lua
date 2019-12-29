@@ -525,7 +525,7 @@ function processflaglabelsreverse()
 		end
 
 		if partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag" then
-			cons("" .. partss[1] .. " found at line " .. k)
+			cons(partss[1] .. " found at line " .. k)
 
 			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
@@ -665,7 +665,15 @@ function findscriptreferences(argscriptname)
 
 			partss = explode(",", v2)
 
-			local loadscriptcond = (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
+			local loadscriptcond = (
+				(
+					(partss[1] == "iftrinkets" or partss[1] == "iftrinketsless"
+					or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless"
+					or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
+				)
+				or
+				(partss[1] == "ifwarp" and partss[5] == argscriptname)
+			)
 			local scriptcond = (
 				(partss[2] ~= nil and (partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
 				or
@@ -704,14 +712,21 @@ function findusedscripts()
 
 			partss = explode(",", v2)
 
-			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
-				usedscripts[partss[3]] = true
+			local add = nil
+			if partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag" then
+				add = partss[3]
+			elseif partss[1] == "ifwarp" then
+				add = partss[5]
 			elseif (partss[1] == "loadscript" or partss[1] == "ifskip") and partss[2] ~= nil and string.sub(partss[2], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))] = true
+				add = string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))
 			elseif (partss[1] == "ifcrewlost" or partss[1] == "iflast") and partss[3] ~= nil and string.sub(partss[3], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))] = true
+				add = string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))
 			elseif partss[1] == "ifexplored" and partss[4] ~= nil and string.sub(partss[4], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[4], string.len("custom_")+1, string.len(partss[4]))] = true
+				add = string.sub(partss[4], string.len("custom_")+1, string.len(partss[4]))
+			end
+
+			if add ~= nil and scripts[add] ~= nil then
+				usedscripts[add] = true
 			end
 		end
 	end

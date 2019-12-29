@@ -11,7 +11,7 @@ opt_loadlevel = nil
 opt_newlevel = false
 opt_forcelanguagescreen = false
 
-vergroups = {7,0}
+vergroups = {7,1}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
@@ -28,9 +28,6 @@ thismdeversion = 3
 unsupportedplugins = 0
 
 fontpng_works = false
-
---checkver = "10241"
---versys = "1"
 
 if love.setDeprecationOutput ~= nil then
 	love.setDeprecationOutput(allowdebug or intermediate_version)

@@ -866,8 +866,6 @@ function drawmaineditor()
 				editingsboxid = nil
 				selectedsubtool[13] = 1
 			end
-
-			--mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 14 then
 			-- Warp token
 			cons("Warp token: " .. atx .. " " .. aty)
@@ -1110,15 +1108,6 @@ function drawmaineditor()
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
-	--[[
-	elseif nodialog and love.mouse.isDown("r") and mouseon(64+64, 0, 639, 480) then
-		atx = math.floor((love.mouse.getX()-64-64) / 16)
-		aty = math.floor((love.mouse.getY()) / 16)
-
-		cons("Tile cleared: " .. atx .. " " .. aty)
-
-		roomdata[roomy][roomx][(aty*40)+(atx+1)] = 0
-	]]
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		local atx, aty = getcursor()
 
@@ -1199,12 +1188,6 @@ function drawmaineditor()
 		love.graphics.setColor(255,255,255,255)
 
 
-		--[[
-		cons("Using room " .. (roomy)*20 + (roomx+1))
-		for k,v in pairs(levelmetadata[(roomy)*20 + (roomx+1)]) do
-			cons(k .. "->" .. v)
-		end
-		]]
 		local displaytilenumbers, displaysolid, displayminimapgrid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
@@ -1282,9 +1265,6 @@ function drawmaineditor()
 			for t = 0, 39 do
 				-- Wall
 				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset]) then
-					--love.graphics.line(64+64+(t*16) +1, 0, 64+64+(t*16)+15, 0)
-					--love.graphics.line(64+64+(t*16) +1, 1, 64+64+(t*16)+15, 1)
-
 					if roomupW then
 						love.graphics.setColor(0, 192, 255)
 					end
@@ -1315,9 +1295,6 @@ function drawmaineditor()
 			for t = 1, 30 do
 				-- Wall
 				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset]) then
-					--love.graphics.line(64+64, (t-1)*16 +1, 64+64, (t-1)*16 +15)
-					--love.graphics.line(64+64+1, (t-1)*16 +1, 64+64+1, (t-1)*16 +15)
-
 					if roomleftW then
 						love.graphics.setColor(0, 192, 255)
 					end
@@ -1446,11 +1423,10 @@ function drawmaineditor()
 
 		love.graphics.setScissor()
 
-		--local multispikesmsg = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and selectedtool == 3
 		local editingcustomsize = selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0
 
 		-- Does this room have a name, perhaps?
-		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then --or multispikesmsg
+		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then
 			-- Oh wait, we're displaying a message as room name!
 			if editingbounds < 0 then
 				temporaryroomname = L.BOUNDSTOPLEFT
@@ -1474,8 +1450,6 @@ function drawmaineditor()
 					end
 					temporaryroomname = langkeys(L.SELECTINGB, {dispx, dispy})
 				end
-			--elseif multispikesmsg then
-				--temporaryroomname = "To fix: spikes tool in multi mode"
 			end
 
 			-- Is the text we're displaying going to fit?
@@ -1936,7 +1910,7 @@ function drawmaineditor()
 		rbutton("...", 0, 166, true, 20)
 	end
 
-	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) -- (roomoptpage2 and L.BACKB or L.MOREB)
+	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	rbutton({(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.MANUALMODE or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
@@ -2089,10 +2063,6 @@ function drawmaineditor()
 
 			mousepressed = true
 		end
-
-		-- Gewoon overal??
-		--mousepressed = true
-		-- Nee want dan kun je hieronder geen klikken meer opvangen
 	end
 
 	-- We also have buttons for trinkets, enemy and platform settings, and crewmates!
@@ -2321,27 +2291,6 @@ function drawmaineditor()
 		640+screenoffset+2, love.graphics.getHeight()-16-10, 128, "left"
 	)
 
-
-	-- Dropdown for tileset?
-	--[[
-	if dropdown == 1 then
-		--[ [
-		ved_print([ [-1-
-		 Space St.
-		-2-
-		 Outside
-		 Lab
-		 Warp Zone
-		 Ship] ], love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-12-56)
-		 ] ]
-		if not nodialog then
-			rightclickmenu.create({"#1", "Space St.", "#2", "Outside", "Lab", "Warp Zone", "Ship"}, "tileset")
-		end
-	elseif dropdown == 2 then
-
-	end
-	]]
-
 	if coordsdialog.active then
 		coordsdialog.draw()
 	end
@@ -2448,6 +2397,7 @@ function drawmaineditor()
 	if allowdebug and love.keyboard.isDown("f11") then
 
 	end
+
 	-- Temporary placement of the minimap preview, uncomment if you want to use it
 	-- Please put this in a better place, both in the code and in the UI
 	--[[do

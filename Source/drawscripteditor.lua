@@ -145,9 +145,6 @@ function drawscripteditor()
 	if internalscript or cutscenebarsinternalscript then
 		rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, cutscenebarsinternalscript)
 	end
-	--hoverrectangle(internalscript and 160 or 128, internalscript and 160 or 128, internalscript and 0 or 128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
-	--ved_printf((internalscript and L.INTERNALOFF or L.INTERNALON), love.graphics.getWidth()-(128-8), 8+(24*8)+4, 128-16, "center")
-	--hoverrectangle(128,128,128,128, love.graphics.getWidth()-(128-8), 8+(24*8), 128-16, 16)
 	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
 	rbutton(s.scripteditor_largefont and L.TEXTSIZEL or L.TEXTSIZEN, 11)

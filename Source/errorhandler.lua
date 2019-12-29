@@ -90,7 +90,14 @@ function ved_showerror(msg)
 	local trace = error_printer(msg, 2)
 
 	-- Decide what's going to be in the message
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_major >= 12 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n"
+		.. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "")
+		.. "\n    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision
+		.. (love._version_major >= 12 and ERR_TOONEW or "")
+		.. "\n    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state)
+		.. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS()
+		.. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint)
+		.. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	local hasplugins = false
 	if type(plugins) ~= "table" then
@@ -300,17 +307,7 @@ function ved_showerror(msg)
 			ved_print(text, pos, love.graphics.getHeight()-24)
 		end
 
-		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
-		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		
-		--ved_print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
-
-		--dialog.draw()
-		--love.graphics.setColor(255,255,255,255)
-
 		love.graphics.present()
-	end
-	local function update()
-		--dialog.update()
 	end
 
 	while true do
@@ -356,7 +353,6 @@ function ved_showerror(msg)
 			end
 		end
 
-		--update()
 		draw()
 
 		if love.timer then
@@ -484,9 +480,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 		love.graphics.present()
 	end
-	local function update()
-		--dialog.update()
-	end
 
 	while true do
 		love.event.pump()
@@ -505,7 +498,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 			end
 		end
 
-		--update()
 		draw()
 
 		if love.timer then
