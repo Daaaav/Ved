@@ -573,7 +573,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
+				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
 				2, 3
 			)
 		end
@@ -625,7 +625,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			if interact then
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
+					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
 					v.p1, v.p2
 				)
 			end

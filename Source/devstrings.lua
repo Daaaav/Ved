@@ -17,4 +17,5 @@ L_PLU.XMLNULLS = {
 	[0] = "There is $1 XML null character!",
 	[1] = "There are $1 XML null characters!",
 }
+L.EDITSCRIPTWOBUMPING = "Edit script without bumping"
 

@@ -2389,17 +2389,21 @@ function love.update(dt)
 					end
 				elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 					-- Terminal or script box
-					if RCMreturn == L.EDITSCRIPT then
+					if table.contains({L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING}, RCMreturn) then
 						-- Were we already editing roomtext or a name?
 						if editingroomtext > 0 then
 							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
 							endeditingroomtext(tonumber(entdetails[3]))
 						end
 
+						local rvnum
+						if RCMreturn == L.EDITSCRIPTWOBUMPING then
+							rvnum = -1
+						end
 						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 							dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 						else
-							scriptineditor(entitydata[tonumber(entdetails[3])].data)
+							scriptineditor(entitydata[tonumber(entdetails[3])].data, rvnum)
 						end
 					elseif RCMreturn == L.OTHERSCRIPT then
 						-- Were we already editing roomtext or a name?
