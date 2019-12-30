@@ -233,6 +233,21 @@ function scriptcontext(text)
 		return "roomscript", x, y, script
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
 		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
+	elseif parts[1] == "ifwarp" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[5] ~= nil and parts[5] ~= "" then
+		local x, y = tonumber(parts[2]), tonumber(parts[3])
+		if x == nil or y == nil then
+			return "roomscript", x, y, nil
+		end
+		local script = parts[5]
+		local roomnum = x + y*20
+		if roomnum >= 0 and roomnum < 400 then
+			local x_again, y_again
+			y_again = math.floor(roomnum/20)
+			x_again = roomnum % 20
+			return "roomscript", x_again, y_again, script
+		else
+			return "roomnumscript", roomnum, script
+		end
 	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
 		local x, y = tonumber(parts[2]), tonumber(parts[3])
 		if x == nil or y == nil then
