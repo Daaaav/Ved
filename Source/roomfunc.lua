@@ -2508,3 +2508,12 @@ function displayminimaproom(offsetx, offsety, theroomdata, themetadata, zoomscal
 		end
 	end
 end
+
+function warplinesinroom(theroomx, theroomy)
+	for _, ent in pairs(entitydata) do
+		if ent.t == 50 and math.floor(ent.x/40) == theroomx and math.floor(ent.y/30) == theroomy then
+			return true
+		end
+	end
+	return false
+end

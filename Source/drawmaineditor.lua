@@ -1252,8 +1252,11 @@ function drawmaineditor()
 			local roomupW, roomleftW, roomrightW, roomdownW = false, false, false, false
 			local roomup, roomleft, roomright, roomdown
 
+			-- Make sure there are no warp lines in the room. If there are, then the background doesn't apply
+			local warplines = warplinesinroom(roomx, roomy)
+
 			-- Room up. I now notice the bug in the code for switching rooms but it works 100% which is kind of unique to have
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomup = roomy
 				roomupW = true
@@ -1265,7 +1268,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room left
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomleft = roomx
 				roomleftW = true
@@ -1277,7 +1280,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room right
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomright = roomx
 				roomrightW = true
@@ -1289,7 +1292,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room down
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomdown = roomy
 				roomdownW = true
@@ -1314,7 +1317,7 @@ function drawmaineditor()
 					if roomupW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) and not warplinesinroom(roomx, roomup) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
 				end
 
@@ -1344,7 +1347,7 @@ function drawmaineditor()
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
+				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) and not warplinesinroom(roomleft, roomy) then
 					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 1, 16)
 				end
 
@@ -1376,7 +1379,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
+				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) and not warplinesinroom(roomright, roomy) then
 					love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
 				end
 
@@ -1408,7 +1411,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) and not warplinesinroom(roomx, roomdown) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
 				end
 
