@@ -264,7 +264,7 @@ function playtesting_start()
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))
 	else
 		playtesting_askwherestart = true
-		if allowdebug then
+		if allowdebug and playtesting_attach_gdb == nil then
 			playtesting_attach_gdb = true
 		end
 	end
