@@ -1895,12 +1895,28 @@ function love.draw()
 		ved_printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
 	end
 
-	-- Taking input warning
-	if allowdebug and takinginput then
-		love.graphics.setColor(255,160,0,192)
-		love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
-		love.graphics.setColor(255,255,255,255)
-		ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+	if allowdebug then
+		if takinginput then
+			-- Taking input warning
+			love.graphics.setColor(255,160,0,192)
+			love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255,255,255,255)
+			ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if not nodialog then
+			-- Dialog open warning
+			love.graphics.setColor(160, 255, 0, 192)
+			love.graphics.rectangle("fill", 2*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("DIALOG OPEN", 2*128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if mousepressed then
+			-- Mouse pressed warning
+			love.graphics.setColor(0, 255, 160, 192)
+			love.graphics.rectangle("fill", 3*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("MOUSE PRESSED", 3*128, love.graphics.getHeight()-12, 128, "center")
+		end
 	end
 
 	--[[ some debug stuff for the new map
