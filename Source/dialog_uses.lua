@@ -661,6 +661,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			local field3intcmds = {"ifcrewlost", "iflast"}
 			local field2intcmds = {"loadscript", "ifskip"}
 			local field4intcmds = {"ifexplored"}
+			local field5cmds = {"ifwarp"}
 
 			local oldnamenotgsub = oldname
 			oldname = escapegsub(oldname, true)
@@ -699,6 +700,15 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 					for _, command in pairs(field4intcmds) do
 						if #v > #command then
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
+						end
+					end
+					for _, command in pairs(field5cmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)])" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
 								scripts[scriptnames[rvnum]][k] = tmp
