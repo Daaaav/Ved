@@ -2289,7 +2289,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisen
 				end
 			end
 		elseif state == 15 then
-			local usethiscondition = x <= 25*8
+			local usethiscondition = x <= 25*8 and (x ~= 0 or y ~= 0)
 			if s.psmallerscreen then
 				usethiscondition = onlefthelpbuttons
 			end
