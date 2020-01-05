@@ -2196,7 +2196,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisen
 	if direction ~= nil then
 		if dialog.is_open() then
 			local topdialog = dialogs[#dialogs]
-			local k = topdialog:get_on_scrollable_field(x, y)
+			local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
 			if k ~= nil then
 				local fieldscroll = topdialog.fields[k][10]
 				if direction == "u" then

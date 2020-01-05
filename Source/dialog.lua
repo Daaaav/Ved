@@ -627,15 +627,31 @@ function cDialog:set_field(key, value)
 	end
 end
 
-function cDialog:get_on_scrollable_field(x, y)
-	-- If x,y is on a scrollable field, return that field's key, otherwise return nil.
+function cDialog:get_on_scrollable_field(x, y, viakeyboard)
+	-- If x,y is on a scrollable field,
+	-- or the field is focused and input is made via keyboard,
+	-- or input is made via keyboard and there's only one scrollable field,
+	-- return that field's key, otherwise return nil.
+	local scrollable_types = {DF.FILES}
+	local scrollable_fields = {}
 	for k,v in pairs(self.fields) do
 		local v_x, v_y = self.x+10+v[2]*8, self.y+self.windowani+10+v[3]*8+10
-		if v[6] == DF.FILES
-		and x >= v_x and x < v_x+v[4]*8
-		and y >= v_y and y < v_y+8*v[12] then
-			return k
+		if table.contains(scrollable_types, v[6]) then
+			if (x >= v_x and x < v_x+v[4]*8
+			and y >= v_y and y < v_y+8*v[12])
+			or (viakeyboard and self.fields[self.currentfield] == k) then
+				if viakeyboard then
+					self.showtabrect = true
+				end
+				return k
+			else
+				table.insert(scrollable_fields, k)
+			end
 		end
+	end
+	if viakeyboard and #scrollable_fields == 1 then
+		self.showtabrect = true
+		return scrollable_fields[1]
 	end
 	return nil
 end
