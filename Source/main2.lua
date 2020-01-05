@@ -1691,6 +1691,22 @@ function love.draw()
 			)
 		else
 			ved_print(L.GRAPHICS, 8, 4)
+
+			local infostring = langkeys(L.CLICKONTHING, {L.LOAD})
+			if love_version_meets(10) then
+				infostring = infostring .. "\n" .. L.ORDRAGDROP
+			end
+
+			local _, lines = font8:getWrap(infostring, love.graphics.getWidth()-136)
+
+			-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+			if type(lines) == "table" then
+				lines = #lines
+			end
+
+			local centery = (love.graphics.getHeight() - 8*lines) / 2
+
+			ved_printf(infostring, 0, centery, love.graphics.getWidth()-136, "center")
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -4265,4 +4281,20 @@ end
 function love.threaderror(thread, errorstr)
 	dialog.create(L.THREADERROR .. "\n\n" .. errorstr)
 	cons("Thread error")
+end
+
+-- 0.10.0 and above only
+function love.filedropped(file)
+	if state == 32 then
+		local filepath = file:getFilename()
+		-- A bit annoying that we have to do this manually, but oh well
+		local last_dirsep = filepath:reverse():find(dirsep, 1, true)
+		local filename
+		if last_dirsep == nil then
+			filename = filepath
+		else
+			filename = filepath:sub(-last_dirsep+1, -1)
+		end
+		assets_openimage(filepath, filename)
+	end
 end

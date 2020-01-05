@@ -18,4 +18,6 @@ L_PLU.XMLNULLS = {
 	[1] = "There are $1 XML null characters!",
 }
 L.EDITSCRIPTWOBUMPING = "Edit script without bumping"
+L.CLICKONTHING = "Click on $1"
+L.ORDRAGDROP = "or drag and drop onto here"
 
