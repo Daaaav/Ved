@@ -4111,7 +4111,7 @@ function love.mousepressed(x, y, button)
 		imageviewer_moved_from_x, imageviewer_moved_from_y = imageviewer_x, imageviewer_y
 		imageviewer_moved_from_mx, imageviewer_moved_from_my = x, y
 		mousepressed = true
-	else
+	elseif not table.contains({3, 6, 10, 15}, state) or nodialog then
 		handle_scrolling(false, button)
 	end
 
