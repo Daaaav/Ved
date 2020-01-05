@@ -103,7 +103,7 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 		-- There's no way to escape spaces in LD_PRELOAD, sadly
 		-- TODO: Not sure if DYLD_INSERT_LIBRARIES has the same issue on macOS, but I don't feel bothered to look into it right now
 		local _, numspaces = ldpreload:gsub(" ", "") -- second return value of gsub is number of times substituted
-		dialog.create(langkeys(L_PLU.LDPRELOADCONTAINSSPACES, {numspaces, ldpreloadvar, ldpreload}))
+		dialog.create(langkeys(L_PLU.LDPRELOADCONTAINSSPACES, {ldpreloadvar, numspaces}, 2) .. "\n" .. ldpreloadvar .. "=" .. ldpreload)
 		playtesting_cancelask()
 		return
 	end

@@ -12,7 +12,7 @@ L.NONSTEAMCONTAINSFOLDER = "Please select the folder CONTAINING the folder '$1'.
 L.NONSTEAMCONTAINSFILE = "Please select the folder containing the file '$1'."
 L.CHANGINGPATHAFTERASK = "The VVVVVV folder was changed after pressing play and it is no longer valid!"
 L_PLU.LDPRELOADCONTAINSSPACES = {
-	[0] = "$2 contains a space! Not running the game.\n$2=$3",
-	[1] = "$2 contains spaces! Not running the game.\n$2=$3",
+	[0] = "$1 contains a space! Not running the game.",
+	[1] = "$1 contains spaces! Not running the game.",
 }
 
