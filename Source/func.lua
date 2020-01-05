@@ -2197,18 +2197,29 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisen
 		if dialog.is_open() then
 			local topdialog = dialogs[#dialogs]
 			local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
+			local cf = dialogs[#dialogs].currentfield
+			local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[6] == DF.TEXT
 			if k ~= nil then
 				local fieldscroll = topdialog.fields[k][10]
 				if direction == "u" then
-					fieldscroll = fieldscroll + distance
-					if fieldscroll > 0 then
+					if mkinput == "home" and not cfistext then
 						fieldscroll = 0
+					elseif mkinput == "pageup" then
+						fieldscroll = fieldscroll + distance
+						if fieldscroll > 0 then
+							fieldscroll = 0
+						end
 					end
 				elseif direction == "d" then
-					fieldscroll = fieldscroll - distance
-					local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
-					if -fieldscroll > upperbound then
+					if mkinput == "end" and not cfistext then
+						local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 						fieldscroll = math.min(-upperbound, 0)
+					elseif mkinput == "pagedown" then
+						fieldscroll = fieldscroll - distance
+						local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
+						if -fieldscroll > upperbound then
+							fieldscroll = math.min(-upperbound, 0)
+						end
 					end
 				end
 				dialogs[#dialogs].fields[k][10] = fieldscroll
