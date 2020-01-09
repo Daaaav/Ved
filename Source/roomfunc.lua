@@ -1881,6 +1881,10 @@ function redo()
 		-- Re-add it again
 		entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
 		updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
+		if redobuffer[#redobuffer].addedentitydata.t == 16 then
+			-- Don't forget to set the start point ID!
+			count.startpoint = redobuffer[#redobuffer].entid
+		end
 	elseif redobuffer[#redobuffer].undotype == "removeentity" then
 		-- Redo the removing!
 		removeentity(redobuffer[#redobuffer].entid, nil, true)
