@@ -1763,6 +1763,10 @@ function drawmaineditor()
 			local n_subtools = #subtoolimgs[selectedtool]
 			subtoolheight = (416-n_subtools*32)/(n_subtools-1)+32
 		end
+		if table.contains({1, 2}, selectedtool) then
+			-- Get out of the way of the minimap
+			subtoolheight = subtoolheight - 2
+		end
 
 		for k,v in pairs(subtoolimgs[selectedtool]) do
 			-- Are we hovering over it? Or maybe even clicking it?
@@ -1810,6 +1814,18 @@ function drawmaineditor()
 				thistooltip = tooltip_text
 			end
 		end
+
+		love.graphics.setScissor()
+
+		-- Display the minimap of the current room, just underneath our subtools
+		local atx, aty = getcursor()
+		local zoom = getminimapzoom(metadata)
+		love.graphics.setColor(255, 255, 255, 63)
+		love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
+		love.graphics.setColor(0, 0, 0, 255)
+		love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
+		displayminimaproom(72, love.graphics.getHeight()-37, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
+		love.graphics.setColor(255, 255, 255, 255)
 
 		if thistooltip ~= "" and window_active() then
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
@@ -2314,15 +2330,4 @@ function drawmaineditor()
 	if coordsdialog.active then
 		coordsdialog.draw()
 	end
-
-	-- Temporary placement of the minimap preview, uncomment if you want to use it
-	-- Please put this in a better place, both in the code and in the UI
-	--[[do
-		local atx, aty = getcursor()
-		local zoom = getminimapzoom(metadata)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", 72, 440, 48, 36)
-		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
-		love.graphics.setColor(255, 255, 255, 255)
-	end]]
 end
