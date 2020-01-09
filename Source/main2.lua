@@ -2654,12 +2654,9 @@ function love.textinput(char)
 				scriptlines[editingline] = input
 				-- nodialog as a temp global var is checked here too
 				if nodialog then
-					if char ~= "/" and char ~= "?" then
-						-- But we don't want pressing '/' to not dirty when we're actually typing
-						nodialog = true
-					else
-						dirty()
-					end
+					dirty()
+				elseif table.contains({"/", "?"}, char) then
+					nodialog = true
 				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
