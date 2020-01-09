@@ -142,6 +142,8 @@ function loadlevel(path)
 		-- Get all entities
 		--.
 		entityid = 0
+		local morethanonestartpoint = false
+		local duplicatestartpoints = {}
 		for entity in x.entities:gmatch("<edentity (.-)\r?\n            </edentity>") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
@@ -175,7 +177,18 @@ function loadlevel(path)
 			elseif allentities[entityid].t == 15 then
 				mycount.crewmates = mycount.crewmates + 1
 			elseif allentities[entityid].t == 16 then
-				mycount.startpoint = entityid
+				if mycount.startpoint == nil then
+					mycount.startpoint = entityid
+				else
+					-- Multiple start points in a level is weird
+					-- VVVVVV will pick the first one anyway, and we've already picked the first one, so no need to change it
+					if not morethanonestartpoint then
+						morethanonestartpoint = true
+						mycount.FC = mycount.FC + 1
+						cons_fc(L.MORETHANONESTARTPOINT)
+					end
+					table.insert(duplicatestartpoints, entityid)
+				end
 			elseif allentities[entityid].x == 800 and allentities[entityid].y == 600 and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
 				local explodedmetadata = explode("|", allentities[entityid].data)
@@ -285,6 +298,15 @@ function loadlevel(path)
 				cons_fc(langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
 			end
 		end
+
+		for idx = #duplicatestartpoints, 1, -1 do
+			-- This table.remove() gets inefficient really quickly if we have a lot of start points
+			-- Please no one ever make a level with 1,000 start points
+			table.remove(allentities, duplicatestartpoints[idx])
+			entityid = entityid - 1
+			mycount.entities = mycount.entities - 1
+		end
+
 		-- See this as MySQL's AUTO_INCREMENT
 		mycount.entity_ai = entityid + 1
 	else

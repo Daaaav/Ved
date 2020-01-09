@@ -20,4 +20,5 @@ L_PLU.XMLNULLS = {
 L.EDITSCRIPTWOBUMPING = "Edit script without bumping"
 L.CLICKONTHING = "Click on $1"
 L.ORDRAGDROP = "or drag and drop onto here"
+L.MORETHANONESTARTPOINT = "There is more than one start point in this level!"
 
