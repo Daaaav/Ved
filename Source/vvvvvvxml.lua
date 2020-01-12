@@ -134,7 +134,7 @@ function loadlevel(path)
 		-- Get all entities
 		--.
 		entityid = 0
-		for entity in x.entities:gmatch("<edentity (.-)\r?\n            </edentity>") do
+		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
 
@@ -154,7 +154,7 @@ function loadlevel(path)
 			end
 
 			-- Now we only need the data...
-			allentities[entityid].data = unxmlspecialchars(metaparts[2])
+			allentities[entityid].data = unxmlspecialchars(metaparts[2]:match("^[ \r\n]*(.-)[ \r\n]*$"))
 
 			-- Now before we go to the next one, if it's a trinket or crewmate, add it up, because we can only have 20 in a level. Officially. Also, parse the special data entity here if we found it.
 			if allentities[entityid].t == 9 then
