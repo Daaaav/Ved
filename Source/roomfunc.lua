@@ -319,6 +319,11 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			for eachx = x, x+48+addlength, 16 do
 				drawentcolour(usethisentcolour, eachx, y)
 			end
+			-- Also draw a nice border on top
+			love.graphics.setColor(255, 255, 255, 127)
+			love.graphics.setLineWidth(2)
+			love.graphics.rectangle("line", x+1, y+1, 64+addlength-2, 16-2)
+			love.graphics.setLineWidth(1)
 		end
 
 		-- Now indicate what this actually is.
