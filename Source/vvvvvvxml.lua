@@ -144,7 +144,7 @@ function loadlevel(path)
 		entityid = 0
 		local morethanonestartpoint = false
 		local duplicatestartpoints = {}
-		for entity in x.entities:gmatch("<edentity (.-)\r?\n            </edentity>") do
+		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
 
@@ -164,7 +164,7 @@ function loadlevel(path)
 			end
 
 			-- Now we only need the data...
-			allentities[entityid].data = unxmlspecialchars(metaparts[2])
+			allentities[entityid].data = unxmlspecialchars(metaparts[2]:match("^[ \r\n]*(.-)[ \r\n]*$"))
 			if allentities[entityid].data:match("%z") then
 				local tmp
 				allentities[entityid].data, tmp = allentities[entityid].data:gsub("%z", "")

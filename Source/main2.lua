@@ -94,9 +94,9 @@ function love.load()
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
-			if os.execute("gcc -shared -fPIC -o "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
+			if os.execute("gcc -shared -fPIC -o '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so' '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c'"
 			) == 0 then
 				vedlib_filefunc_available = true
 			end

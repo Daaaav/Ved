@@ -1353,6 +1353,24 @@ speaker¤(color)\h#w
 
 Changes the color and position of the next text boxes created with the "say"
 command. This can be used instead of giving a second argument to "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Changes the warp direction for room x,y, 1-indexed, to the given direction. This
+could be checked with ifwarp, resulting in a relatively powerful extra
+flags/variable system.
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+ifwarp¤(x,y,dir,script)\w#h
+
+If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
 ]]
 },
 
