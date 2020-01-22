@@ -324,6 +324,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			love.graphics.setLineWidth(2)
 			love.graphics.rectangle("line", x+1, y+1, 64+addlength-2, 16-2)
 			love.graphics.setLineWidth(1)
+			love.graphics.setColor(255, 255, 255, 255)
 		end
 
 		-- Now indicate what this actually is.
