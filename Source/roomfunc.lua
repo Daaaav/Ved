@@ -1855,6 +1855,12 @@ function undo()
 		temporaryroomnametimer = 90
 	end
 
+	mapmovedroom = true
+
+	if state == 12 then
+		locatetrinketscrewmates()
+	end
+
 	table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
 	table.remove(undobuffer, #undobuffer)
 
@@ -1943,6 +1949,10 @@ function redo()
 	table.remove(redobuffer, #redobuffer)
 
 	mapmovedroom = true
+
+	if state == 12 then
+		locatetrinketscrewmates()
+	end
 end	
 
 function entityplaced(id)

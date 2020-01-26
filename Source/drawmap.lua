@@ -145,9 +145,11 @@ function drawmap()
 								if selectingrooms == 1 then
 									-- Copying!
 									mapcopy(selected1x, selected1y, selected2x, selected2y)
+									locatetrinketscrewmates()
 								elseif selectingrooms == 2 then
 									-- Swapping!
 									mapswap(selected1x, selected1y, selected2x, selected2y)
+									locatetrinketscrewmates()
 								end
 							end
 
