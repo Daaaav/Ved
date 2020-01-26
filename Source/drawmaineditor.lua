@@ -186,7 +186,6 @@ function drawmaineditor()
 						tilespicker = false
 					end
 				else
-					cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 					selectedtile = (aty*40)+(atx+1)-1
 				end
 			end
@@ -1110,8 +1109,6 @@ function drawmaineditor()
 		end
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
 		local atx, aty = getcursor()
-
-		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
 
 		selectedtile = (aty*40)+(atx+1)-1
 	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
