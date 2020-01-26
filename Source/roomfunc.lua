@@ -1769,6 +1769,10 @@ function undo()
 		table.remove(undobuffer, #undobuffer)
 
 		mapmovedroom = true
+
+		if state == 12 then
+			locatetrinketscrewmates()
+		end
 	end
 end
 -- TODO: Merge these two?
@@ -1847,6 +1851,10 @@ function redo()
 		table.remove(redobuffer, #redobuffer)
 
 		mapmovedroom = true
+
+		if state == 12 then
+			locatetrinketscrewmates()
+		end
 	end
 end	
 
