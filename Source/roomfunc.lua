@@ -1855,16 +1855,14 @@ function undo()
 		temporaryroomnametimer = 90
 	end
 
+	table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
+	table.remove(undobuffer, #undobuffer)
+
 	mapmovedroom = true
 
 	if state == 12 then
 		locatetrinketscrewmates()
 	end
-
-	table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
-	table.remove(undobuffer, #undobuffer)
-
-	mapmovedroom = true
 end
 -- TODO: Merge these two?
 function redo()
