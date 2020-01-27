@@ -1756,13 +1756,9 @@ function drawmaineditor()
 
 		-- Allow for more than 9 subtools without scrolling, up to 13.
 		local subtoolheight = 48
-		if (#subtoolimgs[selectedtool] > 9) then
+		if (#subtoolimgs[selectedtool] > 8) then
 			local n_subtools = #subtoolimgs[selectedtool]
-			subtoolheight = (416-n_subtools*32)/(n_subtools-1)+32
-		end
-		if table.contains({1, 2}, selectedtool) then
-			-- Get out of the way of the minimap
-			subtoolheight = subtoolheight - 2
+			subtoolheight = (400-n_subtools*32)/(n_subtools-1)+32
 		end
 
 		for k,v in pairs(subtoolimgs[selectedtool]) do
