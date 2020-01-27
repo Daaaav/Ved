@@ -4243,6 +4243,19 @@ end
 function love.filedropped(path)
 	-- LÖVE 0.10+
 	hook("love_filedropped", {path})
+
+	if state == 32 then
+		local filepath = file:getFilename()
+		-- A bit annoying that we have to do this manually, but oh well
+		local last_dirsep = filepath:reverse():find(dirsep, 1, true)
+		local filename
+		if last_dirsep == nil then
+			filename = filepath
+		else
+			filename = filepath:sub(-last_dirsep+1, -1)
+		end
+		assets_openimage(filepath, filename)
+	end
 end
 
 function love.focus(f)
@@ -4278,20 +4291,4 @@ end
 function love.threaderror(thread, errorstr)
 	dialog.create(L.THREADERROR .. "\n\n" .. errorstr)
 	cons("Thread error")
-end
-
--- 0.10.0 and above only
-function love.filedropped(file)
-	if state == 32 then
-		local filepath = file:getFilename()
-		-- A bit annoying that we have to do this manually, but oh well
-		local last_dirsep = filepath:reverse():find(dirsep, 1, true)
-		local filename
-		if last_dirsep == nil then
-			filename = filepath
-		else
-			filename = filepath:sub(-last_dirsep+1, -1)
-		end
-		assets_openimage(filepath, filename)
-	end
 end
