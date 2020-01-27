@@ -7,8 +7,8 @@ L.ROOMNUM = "Room $1"
 L.TRACKNUM = "Track $1"
 L.STOPSMUSIC = "Stops music"
 L_PLU.LITERALNULLS = {
-	[0] = "There is $1 literal null byte!",
-	[1] = "There are $1 literal null bytes!",
+	[0] = "There is $1 null byte!",
+	[1] = "There are $1 null bytes!",
 }
 L_PLU.XMLNULLS = {
 	[0] = "There is $1 XML null character!",
