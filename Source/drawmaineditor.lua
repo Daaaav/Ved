@@ -190,8 +190,40 @@ function drawmaineditor()
 				end
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
-			if love.mouse.isDown("l") and not mousepressed then
+			if love.mouse.isDown("l") and not mousepressed
+			-- Prevent warp lines' control points from being placed not on borders, in order to prevent confusion
+			-- (you can always manually place their control points away from borders by manually editing the properties.
+			-- It doesn't really do anything, though, their part of the border still warps)
+			and (entitydata[movingentity].t ~= 50
+			or (entitydata[movingentity].p1 == 0 and atx == 0)
+			or (entitydata[movingentity].p1 == 1 and atx == 39)
+			or (entitydata[movingentity].p1 == 2 and aty == 0)
+			or (entitydata[movingentity].p1 == 3 and aty == 29)) then
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
+				local new_p2 = entitydata[movingentity].p2
+				if table.contains({11, 50}, entitydata[movingentity].t) then
+					local use_x, use_y = false, false
+					if entitydata[movingentity].t == 11 then
+						if entitydata[movingentity].p1 <= 0 then
+							use_x = true
+						else
+							use_y = true
+						end
+					elseif entitydata[movingentity].t == 50 then
+						if table.contains({2, 3}, entitydata[movingentity].p1) then
+							use_x = true
+						elseif table.contains({0, 1}, entitydata[movingentity].p1) then
+							use_y = true
+						end
+					end
+					if use_x then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].x%40
+						new_p2 = new_x%40 + offset
+					elseif use_y then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
+						new_p2 = new_y%30 + offset
+					end
+				end
 				if not movingentity_copying then
 					table.insert(
 						undobuffer,
@@ -208,6 +240,11 @@ function drawmaineditor()
 									key = "y",
 									oldvalue = entitydata[movingentity].y,
 									newvalue = new_y
+								},
+								{
+									key = "p2",
+									oldvalue = entitydata[movingentity].p2,
+									newvalue = new_p2
 								}
 							}
 						}
@@ -216,12 +253,15 @@ function drawmaineditor()
 				end
 				entitydata[movingentity].x = new_x
 				entitydata[movingentity].y = new_y
+				entitydata[movingentity].p2 = new_p2
 				if movingentity_copying then
 					entityplaced(movingentity)
 				end
 				movingentity = 0
 				movingentity_copying = false
 				nodialog = false
+			else
+				mousepressed = true
 			end
 		elseif selectedtool <= 3 then
 			if not (eraserlocked and love.mouse.isDown("r")) then
@@ -1209,8 +1249,11 @@ function drawmaineditor()
 			local roomupW, roomleftW, roomrightW, roomdownW = false, false, false, false
 			local roomup, roomleft, roomright, roomdown
 
+			-- Make sure there are no warp lines in the room. If there are, then the background doesn't apply
+			local warplines = warplinesinroom(roomx, roomy)
+
 			-- Room up. I now notice the bug in the code for switching rooms but it works 100% which is kind of unique to have
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 or (roomx == 19 and roomy == 8)) and not warplines then
 				-- Use this room because it warps.
 				roomup = roomy
 				roomupW = true
@@ -1222,7 +1265,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room left
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 or (roomx == 19 and roomy == 8)) and not warplines then
 				-- Use this room because it warps.
 				roomleft = roomx
 				roomleftW = true
@@ -1234,7 +1277,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room right
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 or (roomx == 19 and roomy == 8)) and not warplines then
 				-- Use this room because it warps.
 				roomright = roomx
 				roomrightW = true
@@ -1246,7 +1289,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room down
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 or (roomx == 19 and roomy == 8)) and not warplines then
 				-- Use this room because it warps.
 				roomdown = roomy
 				roomdownW = true
@@ -1271,7 +1314,7 @@ function drawmaineditor()
 					if roomupW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) or (roomx == 19 and roomup == 8) ) and not warplinesinroom(roomx, roomup) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
 				end
 
@@ -1301,7 +1344,7 @@ function drawmaineditor()
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
+				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) or (roomleft == 19 and roomy == 8) ) and not warplinesinroom(roomleft, roomy) then
 					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 1, 16)
 				end
 
@@ -1333,7 +1376,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
+				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) or (roomright == 19 and roomy == 8) ) and not warplinesinroom(roomright, roomy) then
 					love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
 				end
 
@@ -1365,7 +1408,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) or (roomx == 19 and roomdown == 8) ) and not warplinesinroom(roomx, roomdown) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
 				end
 
@@ -1385,7 +1428,7 @@ function drawmaineditor()
 		end
 
 		ved_setFont(font8)
-		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
+		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
 			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
@@ -1670,7 +1713,7 @@ function drawmaineditor()
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or ((mouseon(16, 0, 32, 16)) or (mouseon(16, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) and selectedtool ~= t then
 				love.graphics.setColor(255,255,255,128)
-			elseif not love.window.hasFocus() then
+			elseif not window_active() then
 				love.graphics.setColor(255,255,255,128)
 			end
 
@@ -1713,9 +1756,9 @@ function drawmaineditor()
 
 		-- Allow for more than 9 subtools without scrolling, up to 13.
 		local subtoolheight = 48
-		if (#subtoolimgs[selectedtool] > 9) then
+		if (#subtoolimgs[selectedtool] > 8) then
 			local n_subtools = #subtoolimgs[selectedtool]
-			subtoolheight = (416-n_subtools*32)/(n_subtools-1)+32
+			subtoolheight = (400-n_subtools*32)/(n_subtools-1)+32
 		end
 
 		for k,v in pairs(subtoolimgs[selectedtool]) do
@@ -1724,7 +1767,7 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			elseif not nodialog or ((mouseon(16+64, 0, 32, 16)) or (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and selectedsubtool[selectedtool] ~= k then
 				love.graphics.setColor(255,255,255,128)
-			elseif not love.window.hasFocus() then
+			elseif not window_active() then
 				love.graphics.setColor(255,255,255,128)
 			end
 
@@ -1756,7 +1799,7 @@ function drawmaineditor()
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
-			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and love.window.hasFocus() then
+			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and window_active() then
 				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
 				if selectedtool <= 2 and k == 8 then
 					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
@@ -1765,7 +1808,19 @@ function drawmaineditor()
 			end
 		end
 
-		if thistooltip ~= "" and love.window.hasFocus() then
+		love.graphics.setScissor()
+
+		-- Display the minimap of the current room, just underneath our subtools
+		local atx, aty = getcursor()
+		local zoom = getminimapzoom(metadata)
+		love.graphics.setColor(255, 255, 255, 63)
+		love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
+		love.graphics.setColor(0, 0, 0, 255)
+		love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
+		displayminimaproom(72, love.graphics.getHeight()-37, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
+		love.graphics.setColor(255, 255, 255, 255)
+
+		if thistooltip ~= "" and window_active() then
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
 			love.graphics.setScissor()
 			love.graphics.setColor(128,128,128,192)
@@ -1817,7 +1872,7 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
-		if not love.window.hasFocus() then
+		if not window_active() then
 			love.graphics.setColor(255,255,255,128)
 		end
 		tinyprint(L.TINY_CTRL, 0, 0)
@@ -2268,15 +2323,4 @@ function drawmaineditor()
 	if coordsdialog.active then
 		coordsdialog.draw()
 	end
-
-	-- Temporary placement of the minimap preview, uncomment if you want to use it
-	-- Please put this in a better place, both in the code and in the UI
-	--[[do
-		local atx, aty = getcursor()
-		local zoom = getminimapzoom(metadata)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", 72, 440, 48, 36)
-		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
-		love.graphics.setColor(255, 255, 255, 255)
-	end]]
 end
