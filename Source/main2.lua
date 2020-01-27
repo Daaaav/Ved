@@ -4245,16 +4245,16 @@ function love.filedropped(path)
 	hook("love_filedropped", {path})
 
 	if state == 32 then
-		local filepath = file:getFilename()
+		local filepath = path:getFilename()
 		-- A bit annoying that we have to do this manually, but oh well
-		local last_dirsep = filepath:reverse():find(dirsep, 1, true)
+		local last_dirsep = path:reverse():find(dirsep, 1, true)
 		local filename
 		if last_dirsep == nil then
-			filename = filepath
+			filename = path
 		else
-			filename = filepath:sub(-last_dirsep+1, -1)
+			filename = path:sub(-last_dirsep+1, -1)
 		end
-		assets_openimage(filepath, filename)
+		assets_openimage(path, filename)
 	end
 end
 
