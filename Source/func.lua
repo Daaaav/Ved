@@ -2219,8 +2219,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				end
 				dialogs[#dialogs].fields[k][10] = fieldscroll
 			end
-		end
-		if state == 3 and not viakeyboard then
+		elseif state == 3 and not viakeyboard then
 			if direction == "u" then
 				scriptscroll = scriptscroll + distance
 				if scriptscroll > 0 then
