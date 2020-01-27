@@ -93,8 +93,6 @@ function drawscripteditor()
 
 			-- Let's figure out where the dialog ends horizontally
 			local maxwidthtextbox = 0
-
-			local maxwidthtextbox = 0
 			local l
 			for i = k+1, k+textlinestogo do
 				if i == editingline then
