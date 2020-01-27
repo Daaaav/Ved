@@ -388,7 +388,7 @@ function drawscripteditor()
 		if carg1 ~= nil then
 			local seconds = carg1 * 34 / 1000
 			seconds = round(seconds, 2)
-			ved_printf(langkeys(L_PLU.FRAMESTOSECONDS, {carg1, seconds}, 2), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			ved_printf(langkeys(L.FRAMESTOSECONDS, {carg1, seconds}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		end
 	elseif context == "roomnum" then
 		carg1 = tonumber(carg1)
