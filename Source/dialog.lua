@@ -310,7 +310,7 @@ function cDialog:keypressed(key)
 	elseif key == "d" and self.buttons_present[DB.DISCARD] then
 		self:press_button(DB.DISCARD)
 	elseif table.contains({"home", "end"}, key) then
-		handle_scrolling(true, key, nil, nil, nil, key == "home" and "u" or "d")
+		handle_scrolling(true, key)
 	end
 end
 

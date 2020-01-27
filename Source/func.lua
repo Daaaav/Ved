@@ -2163,7 +2163,7 @@ function cons_fc(text)
 	cons("[CHECK] " .. text)
 end
 
-function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisend)
+function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 	local direction, distance
 
 	if x == nil or y == nil then
@@ -2172,9 +2172,9 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisen
 
 	if viakeyboard then
 		distance = 10*46
-		if mkinput == "pageup" then
+		if table.contains({"pageup", "home"}, mkinput) then
 			direction = "u"
-		elseif mkinput == "pagedown" then
+		elseif table.contains({"pagedown", "end"}, mkinput) then
 			direction = "d"
 		end
 	else
@@ -2188,10 +2188,6 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y, gotothisen
 	if customdistance ~= nil then
 		distance = customdistance
 	end
-	if direction == nil then
-		direction = gotothisend
-	end
-
 
 	if direction ~= nil then
 		if dialog.is_open() then
