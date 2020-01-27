@@ -532,10 +532,10 @@ function loadlevel(path)
 		end
 	end if numliteralnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}, numliteralnullbytes))
+		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
 	end if numxmlnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}, numxmlnullbytes))
+		cons_fc(langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
 	end
 
 	if mycount.FC ~= 0 then
