@@ -2207,12 +2207,11 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 						end
 					end
 				elseif direction == "d" then
+					local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 					if mkinput == "end" and not cfistext then
-						local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 						fieldscroll = math.min(-upperbound, 0)
 					elseif mkinput == "pagedown" then
 						fieldscroll = fieldscroll - distance
-						local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 						if -fieldscroll > upperbound then
 							fieldscroll = math.min(-upperbound, 0)
 						end
@@ -2271,12 +2270,11 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				elseif scriptdisplay_unused then
 					ndisplayedscripts = #scriptnames - n_usedscripts
 				end
+				local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 				if mkinput == "end" then
-					local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8))
 					scriptlistscroll = math.min(-upperbound, 0)
 				else
 					scriptlistscroll = scriptlistscroll - distance
-					local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 					if -scriptlistscroll > upperbound then
 						scriptlistscroll = math.min(-upperbound, 0)
 					end
@@ -2312,12 +2310,11 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 						end
 					end
 				elseif direction == "d" then
+					local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 					if mkinput == "end" then
-						local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8))
 						helplistscroll = math.min(-upperbound, 0)
 					else
 						helplistscroll = helplistscroll - distance
-						local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 						if -helplistscroll > upperbound then
 							helplistscroll = math.min(-upperbound, 0)
 						end
@@ -2334,14 +2331,13 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 						end
 					end
 				elseif direction == "d" then
+					-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
+					-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
+					local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 					if mkinput == "end" then
-						local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 						helparticlescroll = math.min(-upperbound, 0)
 					else
 						helparticlescroll = helparticlescroll - distance
-						-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
-						-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
-						local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 						if -helparticlescroll > upperbound then
 							helparticlescroll = math.min(-upperbound, 0)
 						end
