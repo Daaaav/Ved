@@ -94,7 +94,7 @@ function drawscripteditor()
 			-- Let's figure out where the dialog ends horizontally
 			local maxwidthtextbox = 0
 
-			local linelengths = {}
+			local maxwidthtextbox = 0
 			local l
 			for i = k+1, k+textlinestogo do
 				if i == editingline then
@@ -103,10 +103,10 @@ function drawscripteditor()
 					l = scriptlines[i]
 				end
 
-				table.insert(linelengths, #anythingbutnil(l))
+				if #anythingbutnil(l) > maxwidthtextbox then
+					maxwidthtextbox = #anythingbutnil(l)
+				end
 			end
-
-			maxwidthtextbox = math.max(unpack(linelengths))
 
 			if k < table.maxn(scriptlines) and syntaxhlon then
 				if alttextcolor then
