@@ -61,11 +61,11 @@ function backspace(text)
 
 	local worktext = text
 	while true do
-		local lastchar = string.sub(worktext, -1, -1) -- als dit niet werkt...
-		if lastchar == "" then return "" end
+		local lastchar = string.sub(worktext, -1, -1):byte()
+		if lastchar == nil then return "" end
 
 		-- Are we about to kill a UTF-8 continuation byte?
-		if string.sub(toBinary(lastchar), 1, 2) == "10" then
+		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
 			worktext = string.sub(worktext, 1, -2)
 		else
@@ -79,11 +79,11 @@ function leftspace(text, righttext)
 	if (text == nil) or (righttext == nil) then return end
 
 	while true do
-		local lastchar = string.sub(text, -1, -1) -- als dit niet werkt...
-		if lastchar == "" then return "", righttext end
+		local lastchar = string.sub(text, -1, -1):byte()
+		if lastchar == nil then return "", righttext end
 
 		-- Are we about to kill a UTF-8 continuation byte?
-		if string.sub(toBinary(lastchar), 1, 2) == "10" then
+		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
 			righttext = string.sub(text, -1, -1) .. righttext
 			text = string.sub(text, 1, -2)
@@ -98,21 +98,19 @@ end
 function rightspace(text, righttext)	
 	if (text == nil) or (righttext == nil) then return end
 
-	local lastchar = string.sub(righttext, 1, 1) -- als dit niet werkt...
-	if lastchar == "" then return text, "" end
+	local lastchar = string.sub(righttext, 1, 1):byte()
+	if lastchar == nil then return text, "" end
 
 	-- Different UTF-8 stuff going on here.
-	local binarychar = toBinary(lastchar)
-
-	if string.sub(binarychar, 1, 3) == "110" then
+	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
 		text = text .. string.sub(righttext, 1, 2)
 		return text, string.sub(righttext, 3, -1)
-	elseif string.sub(binarychar, 1, 4) == "1110" then
+	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
 		text = text .. string.sub(righttext, 1, 3)
 		return text, string.sub(righttext, 4, -1)
-	elseif string.sub(binarychar, 1, 5) == "11110" then
+	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
 		text = text .. string.sub(righttext, 1, 4)
 		return text, string.sub(righttext, 5, -1)
@@ -126,19 +124,17 @@ end
 function firstUTF8(text)
 	if text == nil then return end
 
-	local lastchar = string.sub(text, 1, 1) -- als dit niet werkt...
-	if lastchar == "" then return text end
+	local lastchar = string.sub(text, 1, 1):byte()
+	if lastchar == nil then return text end
 
 	-- Mostly the same as rightspace()
-	local binarychar = toBinary(lastchar)
-
-	if string.sub(binarychar, 1, 3) == "110" then
+	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
 		return string.sub(text, 1, 2)
-	elseif string.sub(binarychar, 1, 4) == "1110" then
+	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
 		return string.sub(text, 1, 3)
-	elseif string.sub(binarychar, 1, 5) == "11110" then
+	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
 		return string.sub(text, 1, 4)
 	else
@@ -150,96 +146,19 @@ end
 function allbutfirstUTF8(text)
 	if text == nil then return end
 
-	local firstchar = text:sub(1, 1)
-	if firstchar == "" then
+	local firstchar = text:sub(1, 1):byte()
+	if firstchar == nil then
 		return text
 	end
 
-	local binarychar = toBinary(firstchar)
-
-	if binarychar:sub(1, 3) == "110" then
+	if firstchar >= 0xC0 and firstchar <= 0xDF then -- 110xxxxx
 		return text:sub(3, text:len())
-	elseif binarychar:sub(1, 4) == "1110" then
+	elseif firstchar >= 0xE0 and firstchar <= 0xEF then -- 1110xxxx
 		return text:sub(4, text:len())
-	elseif binarychar:sub(1, 5) == "11110" then
+	elseif firstchar >= 0xF0 and firstchar <= 0xF7 then -- 11110xxx
 		return text:sub(5, text:len())
 	else
 		return text:sub(2, text:len())
-	end
-end
-
---
-function love.graphics.UTF8debugprint(text, x, y)
-	--print("UTF-8 debug safe print!")
-
-	local displaythis = ""
-	local stringleft = text
-	local assertfalsetext = "\n  ======================================"
-
-	local represent = {}
-
-	for c = 1, string.len(text) do
-		table.insert(represent, string.byte(text, c, c))
-	end
-
-	while string.len(stringleft) > 0 do
-		local binarychar = toBinary(string.sub(stringleft, 1, 1))
-
-		if string.sub(binarychar, 1, 3) == "110" then
-			-- Two bytes at once!
-			assert(stringleft:len() >= 2 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 1" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,2)
-			stringleft = stringleft:sub(3,-1)
-		elseif string.sub(binarychar, 1, 4) == "1110" then
-			-- Three bytes at once!
-			assert(stringleft:len() >= 3 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 2" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 3" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,3)
-			stringleft = stringleft:sub(4,-1)
-		elseif string.sub(binarychar, 1, 5) == "11110" then
-			-- Four!
-			assert(stringleft:len() >= 4 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 4" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 5" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(4, 4)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 6" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,4)
-			stringleft = stringleft:sub(5,-1)
-		elseif string.sub(binarychar, 1, 1) == "1" then
-			-- Wtf, random continuation byte or something else that's invalid UTF-8!
-			assert(false, "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 7" .. assertfalsetext)
-		else
-			-- Just one byte of course.
-			displaythis = displaythis .. stringleft:sub(1,1)
-			stringleft = stringleft:sub(2,-1)
-		end
-	end
-
-	ved_print(displaythis, x, y)
-end
---
-
-
--- numberString toBinary http://pastebin.com/LkFYQPGP
-function numberString(number)
-	local s = ""
-	repeat
-		local remainder = number % 2
-		s = remainder..s
-		number = (number-remainder)/2
-	until number==0
-	return s
-end
-
-function toBinary(str)
-	if #str > 0 then
-		local result = ""
-		for a = 1, #str do
-			result = result..string.format("%08d",numberString(string.byte(string.sub(str,a,a))))
-		end
-		return result
-	else return nil
 	end
 end
 
@@ -257,10 +176,6 @@ function explode(div, str)
 		o[#o+1],str = str:sub(1,pos1-1),str:sub(pos2+1)
 	end
 	return o
-end
-
-function implode(div, tbl)
-	return table.concat(tbl, div)
 end
 
 function startinput()

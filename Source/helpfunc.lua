@@ -22,19 +22,19 @@ function helpgotoline(linenum, colnum, correctcol)
 		local remainingcols = colnum-1
 		local c = 1
 		while remainingcols > 0 and c <= anythingbutnil(helparticlecontent[helpeditingline]):len() do
-			binarychar = toBinary(string.sub(helparticlecontent[helpeditingline], c, c))
+			local char = helparticlecontent[helpeditingline]:sub(c, c):byte()
 
 			remainingcols = remainingcols - 1
 
-			if string.sub(binarychar, 1, 1) == "0" then
+			if char <= 0x7F then -- 0xxxxxxx
 				utf8colnum = utf8colnum + 1
-			elseif string.sub(binarychar, 1, 3) == "110" then
+			elseif char >= 0xC0 and char <= 0xDF then -- 110xxxxx
 				utf8colnum = utf8colnum + 2
 				remainingcols = remainingcols + 1
-			elseif string.sub(binarychar, 1, 4) == "1110" then
+			elseif char >= 0xE0 and char <= 0xEF then -- 1110xxxx
 				utf8colnum = utf8colnum + 3
 				remainingcols = remainingcols + 2
-			elseif string.sub(binarychar, 1, 5) == "11110" then
+			elseif char >= 0xF0 and char <= 0xF7 then -- 11110xxx
 				utf8colnum = utf8colnum + 4
 				remainingcols = remainingcols + 3
 			end

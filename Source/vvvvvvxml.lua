@@ -661,7 +661,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	--for k,v in pairs(allscripts) do
 	for rvnum = 1, #scriptnames do
 		local k, v = scriptnames[rvnum], allscripts[scriptnames[rvnum]]
-		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(implode("|", v)) .. "|")
+		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(table.concat(v, "|")) .. "|")
 	end
 
 	savethis = savethis:gsub("%$SCRIPT%$", ((table.concat(allallscripts, ""):sub(1, -2)):gsub("%%", "%%%%")))
