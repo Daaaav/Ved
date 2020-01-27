@@ -249,7 +249,7 @@ function drawmap()
 			if nodialog and t == 1 and not toolanyofthese then
 				love.graphics.setColor(255,255,255,255)
 			end
-			if not love.window.hasFocus() then
+			if not window_active() then
 				love.graphics.setColor(255,255,255,128)
 			end
 
@@ -270,7 +270,7 @@ function drawmap()
 			if t ~= 1 then
 				local cx, cy = 16+2, (16+2+(48*(t-1)))
 				love.graphics.draw(toolimg[actual_t], cx, cy)
-				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and love.window.hasFocus() then
+				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and window_active() then
 					love.graphics.setColor(128,128,128,192)
 					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font8:getWidth(pluraltoolnames[actual_t]), 8)
 					love.graphics.setColor(255,255,255,255)
@@ -287,7 +287,7 @@ function drawmap()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
-		if not love.window.hasFocus() then
+		if not window_active() then
 			love.graphics.setColor(255,255,255,128)
 		end
 		tinyprint(L.TINY_CTRL, 0, 0)

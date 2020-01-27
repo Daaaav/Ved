@@ -180,6 +180,9 @@ function love.load()
 	middlescroll_t, middlescroll_v = 0, 0
 
 	v6_frametimer = 0
+	conveyortimer = 0
+	conveyorleftcycle = 1
+	conveyorrightcycle = 0
 
 	returnpressed = false -- also for some things
 
@@ -205,8 +208,6 @@ function love.load()
 	sp_got = 0
 
 	nodialog = true
-
-	showtabrect = false
 
 	vvvvvv_textboxes = {}
 
@@ -437,7 +438,7 @@ function love.load()
 end
 
 function love.draw()
-	if s.pausedrawunfocused and not love.window.hasFocus() then
+	if s.pausedrawunfocused and not window_active() then
 		limit_draw_fps()
 		return
 	end
@@ -1690,6 +1691,22 @@ function love.draw()
 			)
 		else
 			ved_print(L.GRAPHICS, 8, 4)
+
+			local infostring = langkeys(L.CLICKONTHING, {L.LOAD})
+			if love_version_meets(10) then
+				infostring = infostring .. "\n" .. L.ORDRAGDROP
+			end
+
+			local _, lines = font8:getWrap(infostring, love.graphics.getWidth()-136)
+
+			-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+			if type(lines) == "table" then
+				lines = #lines
+			end
+
+			local centery = (love.graphics.getHeight() - 8*lines) / 2
+
+			ved_printf(infostring, 0, centery, love.graphics.getWidth()-136, "center")
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -1894,12 +1911,28 @@ function love.draw()
 		ved_printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
 	end
 
-	-- Taking input warning
-	if allowdebug and takinginput then
-		love.graphics.setColor(255,160,0,192)
-		love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
-		love.graphics.setColor(255,255,255,255)
-		ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+	if allowdebug then
+		if takinginput then
+			-- Taking input warning
+			love.graphics.setColor(255,160,0,192)
+			love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255,255,255,255)
+			ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if not nodialog then
+			-- Dialog open warning
+			love.graphics.setColor(160, 255, 0, 192)
+			love.graphics.rectangle("fill", 2*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("DIALOG OPEN", 2*128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if mousepressed then
+			-- Mouse pressed warning
+			love.graphics.setColor(0, 255, 160, 192)
+			love.graphics.rectangle("fill", 3*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("MOUSE PRESSED", 3*128, love.graphics.getHeight()-12, 128, "center")
+		end
 	end
 
 	--[[ some debug stuff for the new map
@@ -1926,7 +1959,7 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
-	if love.window.hasFocus() then
+	if window_active() then
 		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
 	else
 		focusregainedtimer = 0
@@ -1982,6 +2015,12 @@ function love.update(dt)
 		v6_help:updateglow()
 		v6_graphics:updatelinestate()
 		v6_graphics.trinketcolset = false
+
+		conveyortimer = (conveyortimer + 1) % 3
+		if conveyortimer == 0 then
+			conveyorleftcycle = (conveyorleftcycle + 1) % 4
+			conveyorrightcycle = (conveyorrightcycle + 1) % 4
+		end
 
 		v6_frametimer = v6_frametimer - .034
 	end
@@ -2382,17 +2421,21 @@ function love.update(dt)
 					end
 				elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 					-- Terminal or script box
-					if RCMreturn == L.EDITSCRIPT then
+					if table.contains({L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING}, RCMreturn) then
 						-- Were we already editing roomtext or a name?
 						if editingroomtext > 0 then
 							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
 							endeditingroomtext(tonumber(entdetails[3]))
 						end
 
+						local rvnum
+						if RCMreturn == L.EDITSCRIPTWOBUMPING then
+							rvnum = -1
+						end
 						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 							dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 						else
-							scriptineditor(entitydata[tonumber(entdetails[3])].data)
+							scriptineditor(entitydata[tonumber(entdetails[3])].data, rvnum)
 						end
 					elseif RCMreturn == L.OTHERSCRIPT then
 						-- Were we already editing roomtext or a name?
@@ -2419,6 +2462,45 @@ function love.update(dt)
 					else
 						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 					end
+				elseif tonumber(entdetails[2]) == 50 then
+					-- Warp line
+					local old_p1 = entitydata[tonumber(entdetails[3])].p1
+					local old_p2 = entitydata[tonumber(entdetails[3])].p2
+					local old_p3 = entitydata[tonumber(entdetails[3])].p3
+					local old_p4 = entitydata[tonumber(entdetails[3])].p4
+					local new_p4
+					if RCMreturn == L.UNLOCK then
+						new_p4 = 0
+					elseif RCMreturn == L.LOCK then
+						new_p4 = 1
+					end
+					entitydata[tonumber(entdetails[3])].p4 = new_p4
+					autocorrectlines()
+					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
+								{
+									key = "p1",
+									oldvalue = old_p1,
+									newvalue = new_p1
+								},
+								{
+									key = "p2",
+									oldvalue = old_p2,
+									newvalue = entitydata[tonumber(entdetails[3])].p2
+								},
+								{
+									key = "p3",
+									oldvalue = old_p3,
+									newvalue = entitydata[tonumber(entdetails[3])].p3
+								},
+								{
+									key = "p4",
+									oldvalue = old_p4,
+									newvalue = entitydata[tonumber(entdetails[3])].p4
+								}
+							}
+						}
+					)
+					finish_undo("CHANGED ENTITY (WARPLINE)")
 				else
 					dialog.create(langkeys(L.UNKNOWNENTITYTYPE, {anythingbutnil(entdetails[2])}) .. ",\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
 				end
@@ -2572,12 +2654,9 @@ function love.textinput(char)
 				scriptlines[editingline] = input
 				-- nodialog as a temp global var is checked here too
 				if nodialog then
-					if char ~= "/" and char ~= "?" then
-						-- But we don't want pressing '/' to not dirty when we're actually typing
-						nodialog = true
-					else
-						dirty()
-					end
+					dirty()
+				elseif table.contains({"/", "?"}, char) then
+					nodialog = true
 				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
@@ -2838,7 +2917,7 @@ function love.keypressed(key)
 			end
 		end
 		if key == "tab" then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
@@ -2876,7 +2955,7 @@ function love.keypressed(key)
 			end
 		end
 		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
 
@@ -2884,7 +2963,7 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][7](not dialogs[#dialogs].fields[cf][5], dialogs[#dialogs])
 			end
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 
 			local dropdown = 0
@@ -2919,7 +2998,7 @@ function love.keypressed(key)
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
 		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			local files = dialogs[#dialogs].fields[cf][7]
 			local file = 0
@@ -3153,6 +3232,17 @@ function love.keypressed(key)
 
 		editingbounds = 0
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
+		if movingentity_copying then
+			movingentity_copying = false
+			count.entities = count.entities - 1
+			if entitydata[movingentity].t == 9 then
+				count.trinkets = count.trinkets - 1
+			elseif entitydata[movingentity].t == 15 then
+				count.crewmates = count.crewmates - 1
+			end
+			count.entity_ai = count.entity_ai - 1
+			table.remove(entitydata, movingentity)
+		end
 		movingentity = 0
 		movingentity_copying = false
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
@@ -3413,7 +3503,9 @@ function love.keypressed(key)
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
-		if key == "up" then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" then
 			scriptgotoline(editingline-1)
 		elseif key == "down" then
 			scriptgotoline(editingline+1)
@@ -3572,6 +3664,8 @@ function love.keypressed(key)
 		end
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
+	elseif state == 10 and table.contains({"home", "end"}, key) then
+		handle_scrolling(true, key)
 	elseif state == 10 and key == "n" and nodialog then
 		dialog.create(
 			L.NEWSCRIPTNAME, DBS.OKCANCEL,
@@ -3623,7 +3717,9 @@ function love.keypressed(key)
 			leavescript_to_state()
 		end
 	elseif nodialog and state == 15 and helpeditingline ~= 0 then
-		if key == "up" and helpeditingline ~= 1 then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" and helpeditingline ~= 1 then
 			helparticlecontent[helpeditingline] = input .. input_r
 			input_r = ""
 			__ = "_"
@@ -3670,6 +3766,8 @@ function love.keypressed(key)
 			gotohelparticle(revcycle(helparticle, #helppages, 2))
 		elseif key == "down" then
 			gotohelparticle(cycle(helparticle, #helppages, 2))
+		elseif table.contains({"home", "end"}, key) then
+			handle_scrolling(true, key)
 		end
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown(lctrl) then
@@ -3677,6 +3775,9 @@ function love.keypressed(key)
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
+				elseif type(v) == "userdata" and v.type ~= nil and type(v.type) == "function" then
+					-- LÖVE object
+					print(k .. "\t\t\t[" .. v:type() .. "]")
 				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
 					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
@@ -3911,7 +4012,7 @@ function love.mousepressed(x, y, button)
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
 
-	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+	if s.pausedrawunfocused and not window_active() and table.contains({"wu", "wd"}, button) then
 		-- When drawing is paused it won't look like the scrollbar has moved,
 		-- so just don't move it so the visual will be accurate
 		return
@@ -4007,7 +4108,7 @@ function love.mousepressed(x, y, button)
 		imageviewer_moved_from_x, imageviewer_moved_from_y = imageviewer_x, imageviewer_y
 		imageviewer_moved_from_mx, imageviewer_moved_from_my = x, y
 		mousepressed = true
-	else
+	elseif not table.contains({3, 6, 10, 15}, state) or nodialog then
 		handle_scrolling(false, button)
 	end
 
@@ -4142,6 +4243,19 @@ end
 function love.filedropped(path)
 	-- LÖVE 0.10+
 	hook("love_filedropped", {path})
+
+	if state == 32 then
+		local filepath = path:getFilename()
+		-- A bit annoying that we have to do this manually, but oh well
+		local last_dirsep = path:reverse():find(dirsep, 1, true)
+		local filename
+		if last_dirsep == nil then
+			filename = path
+		else
+			filename = path:sub(-last_dirsep+1, -1)
+		end
+		assets_openimage(path, filename)
+	end
 end
 
 function love.focus(f)
@@ -4155,7 +4269,7 @@ end
 
 function love.quit()
 	if not s.neveraskbeforequit and has_unsaved_changes() then
-		if love.window.requestAttention ~= nil and not love.window.hasFocus() then
+		if love.window.requestAttention ~= nil and not window_active() then
 			love.window.requestAttention(true)
 		end
 
