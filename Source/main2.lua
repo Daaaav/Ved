@@ -2273,7 +2273,7 @@ function love.update(dt)
 
 					thisentity = entitydata[tonumber(entdetails[3])]
 					dialog.create(
-						L.RAWENTITYPROPERTIES .. "\n\nx\ny\nt\np1\np2\np3\np4\np5\np6\n" .. L.SMALLENTITYDATA,
+						L.RAWENTITYPROPERTIES,
 						DBS.OKCANCELAPPLY,
 						dialog.callback.rawentityproperties,
 						(allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""),

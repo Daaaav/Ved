@@ -88,12 +88,27 @@ function dialog.form.exportmap_make()
 end
 
 function dialog.form.rawentityproperties_make()
-	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
 	local form = {}
 
+	local row, col = 3, 0
 	for k,v in pairs(entitypropkeys) do
-		table.insert(form, {v, 5, 2+k, 38, thisentity[v], DF.TEXT})
+		if v == "p1" then
+			row = row+1
+		end
+		table.insert(form, {"", 16*col, row, 3, v, DF.LABEL})
+		table.insert(form, {v, 16*col+3, row, 12, thisentity[v], DF.TEXT})
+		col = col+1
+		if col == 3 then
+			row = row+1
+			col = 0
+		end
 	end
+	row = row+1
+
+	local labelwidth = font8:getWidth(L.SMALLENTITYDATA)/8 + 1
+	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
+	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
 	return form
 end
