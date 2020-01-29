@@ -4243,12 +4243,12 @@ function love.directorydropped(path)
 	hook("love_directorydropped", {path})
 end
 
-function love.filedropped(path)
+function love.filedropped(file)
 	-- LÖVE 0.10+
-	hook("love_filedropped", {path})
+	hook("love_filedropped", {file})
 
 	if state == 32 then
-		local filepath = path:getFilename()
+		local path = file:getFilename()
 		-- A bit annoying that we have to do this manually, but oh well
 		local last_dirsep = path:reverse():find(dirsep, 1, true)
 		local filename
