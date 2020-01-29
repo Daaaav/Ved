@@ -15,55 +15,34 @@ msgstr ""
 msgid "Color coding:\\w\nNormal - Should be safe, worst case scenario is VVVVVV crashing because you made a\n         mistake.\nBlue¤   - Some of these don't work in custom levels, others don't make a lot of\\b\n         sense in custom levels, or are only half useful because they were really\n         designed for the main game.\nOrange¤ - These work and nothing will go wrong normally, unless you give some\\o\n         specific arguments to them that will cause your save data to go away.\nRed¤    - Red commands shouldn't be used in custom levels because they will either\\r\n         unlock certain parts of the main game (which you shouldn't want a custom\n         level to do, even if you say everyone has already completed the game), or\n         corrupt the save data altogether."
 msgstr ""
 
-msgid "squeak¤(color)\\w#h"
+msgid "activateteleporter¤()\\w#h"
 msgstr ""
 
-msgid "Makes a squeak sound from a crewmate, or a terminal sound"
+msgid "If there's a teleporter in the room, it will start flashing random colors and\ntouching it won't destroy save data. Only targets the first-spawned teleporter."
 msgstr ""
 
-msgid "color - cyan/player/blue/red/yellow/green/purple/terminal"
+msgid "activeteleporter¤()\\w#h"
 msgstr ""
 
-msgid "text¤(color,x,y,lines)\\w#h"
+msgid "Makes the teleporter in the room white, but touching it will still annihilate your\nsave data. Only targets the first-spawned teleporter."
 msgstr ""
 
-msgid "Store a text box in memory with color, position and number of lines. Usually, the\nposition command is used after the text command (and its lines of text), which\nwill overwrite the coordinates given here, so these are usually left as 0."
+msgid "alarmoff\\w#h"
 msgstr ""
 
-msgid "color - cyan/player/blue/red/yellow/green/purple/gray\nx - The x position of the text box\ny - The y position of the text box\nlines - The number of lines"
+msgid "Turns the alarm off"
 msgstr ""
 
-msgid "position¤(x,y)\\w#h"
+msgid "alarmon\\w#h"
 msgstr ""
 
-msgid "Overrides the x,y of the text command and thus sets the position of the text box."
+msgid "Turns the alarm on"
 msgstr ""
 
-msgid "x - center/centerx/centery, or a color name\ncyan/player/blue/red/yellow/green/purple\ny - Only used if x is a color name. Can be above/below"
+msgid "altstates¤(x)\\b#h"
 msgstr ""
 
-msgid "endtext\\w#h"
-msgstr ""
-
-msgid "Makes a text box disappear (fade out)"
-msgstr ""
-
-msgid "endtextfast\\w#h"
-msgstr ""
-
-msgid "Makes a text box disappear immediately (without fading out)"
-msgstr ""
-
-msgid "speak\\w#h"
-msgstr ""
-
-msgid "Shows a text box, without removing old text boxes. Also pauses the script until\nyou press action (unless there's a backgroundtext command above it)"
-msgstr ""
-
-msgid "speak_active\\w#h"
-msgstr ""
-
-msgid "Shows a text box, and removes any old text box. Also pauses the script until you\npress action (unless there's a backgroundtext command above it)"
+msgid "Changes the layout of some rooms, like the trinket room in the ship before and\nafter the explosion, and the secret lab entrance (custom levels don't support\naltstates at all)"
 msgstr ""
 
 msgid "backgroundtext\\w#h"
@@ -72,19 +51,37 @@ msgstr ""
 msgid "If you put this command on the line above speak or speak_active, the game will not\nwait until you press action after creating the text box. This can be used to\ncreate multiple text boxes at the same time."
 msgstr ""
 
-msgid "changeplayercolour¤(color)\\w#h"
+msgid "befadein¤()\\w#h"
 msgstr ""
 
-msgid "Changes the player's color"
+msgid "Instantly fade in from fadeout()"
 msgstr ""
 
-msgid "color - cyan/player/blue/red/yellow/green/purple/teleporter"
+msgid "blackon¤()\\w#h"
 msgstr ""
 
-msgid "restoreplayercolour¤()\\w#h"
+msgid "Back to normal from blackout()"
 msgstr ""
 
-msgid "Changes the player's color back to cyan"
+msgid "blackout¤()\\w#h"
+msgstr ""
+
+msgid "Make the screen black/freezes the screen"
+msgstr ""
+
+msgid "bluecontrol\\b#h"
+msgstr ""
+
+msgid "Start a conversation with Victoria just like when you meet her in the main game\nand press ENTER. Also creates an activity zone afterwards."
+msgstr ""
+
+msgid "changeai¤(crewmate,ai1,ai2)\\w#h"
+msgstr ""
+
+msgid "Can change the face direction of a crewmate or the walking behaviour"
+msgstr ""
+
+msgid "crewmate - cyan/player/blue/red/yellow/green/purple\nai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/\nfaceplayer/panic/faceleft/faceright/followposition,ai2\nai2 - required if followposition is used for ai1"
 msgstr ""
 
 msgid "changecolour¤(a,b)\\w#h"
@@ -96,61 +93,103 @@ msgstr ""
 msgid "a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple\nb - Color to change to"
 msgstr ""
 
-msgid "alarmon\\w#h"
+msgid "changedir¤(color,direction)\\w#h"
 msgstr ""
 
-msgid "Turns the alarm on"
+msgid "Just like changeai(color,faceleft/faceright), this changes face direction."
 msgstr ""
 
-msgid "alarmoff\\w#h"
+msgid "color - cyan/player/blue/red/yellow/green/purple\ndirection - 0 is left, 1 is right"
 msgstr ""
 
-msgid "Turns the alarm off"
+msgid "changegravity¤(crewmate)\\w#h"
 msgstr ""
 
-msgid "cutscene¤()\\w#h"
+msgid "Increase the sprite number of the given crewmate by 12."
 msgstr ""
 
-msgid "Makes cutscene bars appear"
+msgid "crewmate - Color of crewmate to change cyan/player/blue/red/yellow/green/purple"
 msgstr ""
 
-msgid "endcutscene¤()\\w#h"
+msgid "changemood¤(color,mood)\\w#h"
 msgstr ""
 
-msgid "Makes cutscene bars disappear"
+msgid "Changes the mood of a crewmate (only works for crewmates created with\ncreatecrewman)"
 msgstr ""
 
-msgid "untilbars¤()\\w#h"
+msgid "color - cyan/player/blue/red/yellow/green/purple\nmood - 0 for happy, 1 for sad"
 msgstr ""
 
-msgid "Wait until cutscene()/endcutscene() is completed"
+msgid "changeplayercolour¤(color)\\w#h"
+msgstr ""
+
+msgid "Changes the player's color"
+msgstr ""
+
+msgid "color - cyan/player/blue/red/yellow/green/purple/teleporter"
+msgstr ""
+
+msgid "changetile¤(color,tile)\\w#h"
+msgstr ""
+
+msgid "Changes the tile of a crewmate (you can change it to any sprite in sprites.png,\nand it only works for crewmates created with createcrewman)"
+msgstr ""
+
+msgid "color - cyan/player/blue/red/yellow/green/purple/gray\ntile - Tile number"
+msgstr ""
+
+msgid "clearteleportscript¤()\\b#h"
+msgstr ""
+
+msgid "Clears the teleporter script set with teleportscript(x)"
+msgstr ""
+
+msgid "companion¤(x)\\b#h"
+msgstr ""
+
+msgid "Makes the specified crewmate a companion (as far as I remember, this also depends\non on the location on the map)"
+msgstr ""
+
+msgid "createactivityzone¤(color)\\b#h"
+msgstr ""
+
+msgid "Creates a zone where you are standing which says \"Press ACTION to talk to\n(Crewmate)\""
+msgstr ""
+
+msgid "createcrewman¤(x,y,color,mood,ai1,ai2)\\w#h"
+msgstr ""
+
+msgid "Creates a crewmate (not rescuable)"
+msgstr ""
+
+msgid "mood - 0 for happy, 1 for sad\nai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/\nfaceplayer/panic/faceleft/faceright/followposition,ai2\nai2 - required if followposition is used for ai1"
+msgstr ""
+
+msgid "createentity¤(x,y,n,meta1,meta2)\\o#h"
+msgstr ""
+
+msgid "Creates an entity, check the lists reference for entity numbers"
+msgstr ""
+
+msgid "n - The entity number"
+msgstr ""
+
+msgid "createlastrescued¤(x,y)\\b#h"
+msgstr ""
+
+msgid "Creates the last rescued crewmate at position x,y (?)"
+msgstr ""
+
+msgid "createrescuedcrew¤()\\b#h"
+msgstr ""
+
+msgid "Creates all rescued crewmates"
 msgstr ""
 
 msgid "customifflag¤(n,script)\\w#h"
 msgstr ""
 
 msgid "Same as ifflag(n,script) in simplified scripting"
-msgstr ""
-
-msgid "ifflag¤(n,script)\\b#h"
-msgstr ""
-
-msgid "Same as customifflag, but loads an internal (main game) script"
-msgstr ""
-
-msgid "loadscript¤(script)\\b#h"
-msgstr ""
-
-msgid "Load an internal (main game) script. Commonly used in custom levels as\nloadscript(stop)"
-msgstr ""
-
-msgid "iftrinkets¤(n,script)\\b#h"
-msgstr ""
-
-msgid "Same as simplified scripting, but loads an internal (main game) script"
-msgstr ""
-
-msgid "iftrinketsless¤(n,script)\\b#h"
 msgstr ""
 
 msgid "customiftrinkets¤(n,script)\\w#h"
@@ -165,196 +204,73 @@ msgstr ""
 msgid "Same as iftrinketsless(n,script) in simplfied scripting (but remember it is\nbroken)"
 msgstr ""
 
-msgid "createcrewman¤(x,y,color,mood,ai1,ai2)\\w#h"
+msgid "custommap¤(on/off)\\w#h"
 msgstr ""
 
-msgid "Creates a crewmate (not rescuable)"
+msgid "The internal variant of the map command"
 msgstr ""
 
-msgid "mood - 0 for happy, 1 for sad\nai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/\n      faceplayer/panic/faceleft/faceright/followposition,ai2\nai2 - required if followposition is used for ai1"
+msgid "customposition¤(x,y)\\w#h"
 msgstr ""
 
-msgid "createentity¤(x,y,n,meta1,meta2)\\o#h"
+msgid "Overrides the x,y of the text command and thus sets the position of the text box,\nbut for crewmates, rescuable crewmates are used to position against, instead of\ncreatecrewman crewmates."
 msgstr ""
 
-msgid "Creates an entity, check the lists reference for entity numbers"
+msgid "x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple (rescuable)\ny - Only used if x is a color name. Can be above/below"
 msgstr ""
 
-msgid "n - The entity number"
+msgid "cutscene¤()\\w#h"
 msgstr ""
 
-msgid "vvvvvvman¤()\\w#h"
+msgid "Makes cutscene bars appear"
 msgstr ""
 
-msgid "Makes the player huge"
+msgid "delay¤(x)\\w#h"
 msgstr ""
 
-msgid "undovvvvvvman¤()\\w#h"
+msgid "Same behaviour as simplified command"
 msgstr ""
 
-msgid "Back to normal"
+msgid "destroy¤(x)\\w#h"
 msgstr ""
 
-msgid "hideplayer¤()\\w#h"
+msgid "x - gravitylines/warptokens/platforms"
 msgstr ""
 
-msgid "Makes the player invisible"
+msgid "do¤(n)\\w#h"
 msgstr ""
 
-msgid "showplayer¤()\\w#h"
+msgid "Starts a loop block which will repeat n times. End the block with the loop\ncommand."
 msgstr ""
 
-msgid "Makes the player visible"
+msgid "endcutscene¤()\\w#h"
 msgstr ""
 
-msgid "gamestate¤(x)\\o#h"
+msgid "Makes cutscene bars disappear"
 msgstr ""
 
-msgid "Change the gamestate to the specified state number"
+msgid "endtext\\w#h"
 msgstr ""
 
-msgid "gamemode¤(x)\\b#h"
+msgid "Makes a text box disappear (fade out)"
 msgstr ""
 
-msgid "teleporter to show the map, game to hide it (shows teleporters of the main game)"
+msgid "endtextfast\\w#h"
 msgstr ""
 
-msgid "x - teleporter/game"
+msgid "Makes a text box disappear immediately (without fading out)"
 msgstr ""
 
-msgid "blackout¤()\\w#h"
+msgid "entersecretlab\\r#h"
 msgstr ""
 
-msgid "Make the screen black/freezes the screen"
-msgstr ""
-
-msgid "blackon¤()\\w#h"
-msgstr ""
-
-msgid "Back to normal from blackout()"
-msgstr ""
-
-msgid "fadeout¤()\\w#h"
-msgstr ""
-
-msgid "Fades the screen to black"
-msgstr ""
-
-msgid "fadein¤()\\w#h"
-msgstr ""
-
-msgid "Fades back"
-msgstr ""
-
-msgid "befadein¤()\\w#h"
-msgstr ""
-
-msgid "Instantly fade in from fadeout()"
-msgstr ""
-
-msgid "untilfade¤()\\w#h"
-msgstr ""
-
-msgid "Wait until fadeout()/fadein() is completed"
-msgstr ""
-
-msgid "gotoroom¤(x,y)\\w#h"
-msgstr ""
-
-msgid "Change the current room to x,y, where x and y start at 0."
-msgstr ""
-
-msgid "x - Room x coordinate, starting at 0\ny - Room y coordinate, starting at 0"
-msgstr ""
-
-msgid "gotoposition¤(x,y,f)\\w#h"
-msgstr ""
-
-msgid "Change Viridian's position to x,y in this room, and f is whether you're flipped or\nnot. (1 for flipped, 0 for not flipped)"
-msgstr ""
-
-msgid "f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you\nwill have normal gravity by default)"
-msgstr ""
-
-msgid "flash¤(x)\\w#h"
-msgstr ""
-
-msgid "Makes the screen white, you can change the time how long the screen should stay\nwhite (just flash won't work, you have to use flash(5) in combination with\nplayef(9) and shake(20) if you want a normal flash)"
-msgstr ""
-
-msgid "x - The amount of ticks. 30 ticks is almost one second."
-msgstr ""
-
-msgid "play¤(x)\\w#h"
-msgstr ""
-
-msgid "Start playing a song with internal song number."
-msgstr ""
-
-msgid "x - Internal song number"
-msgstr ""
-
-msgid "jukebox¤(x)\\w#h"
-msgstr ""
-
-msgid "Makes a jukebox terminal white and turns off the color of all the other terminals\n(in custom levels, it just seems to turn off the white color of all activated\nterminals)."
-msgstr ""
-
-msgid "musicfadeout¤()\\w#h"
-msgstr ""
-
-msgid "Fades out the music."
-msgstr ""
-
-msgid "musicfadein¤()\\w#h"
-msgstr ""
-
-msgid "Opposite of musicfadeout() (doesn't seem to work)"
-msgstr ""
-
-msgid "stopmusic¤()\\w#h"
-msgstr ""
-
-msgid "Stops the music immediately. Equivalent to music(0) in simplified scripting."
-msgstr ""
-
-msgid "resumemusic¤()\\w#h"
-msgstr ""
-
-msgid "Opposite of stopmusic() (doesn't seem to work)"
-msgstr ""
-
-msgid "playef¤(x,n)\\w#h"
-msgstr ""
-
-msgid "Play a sound effect."
-msgstr ""
-
-msgid "n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the\noffset in milliseconds at which the sound effect started."
-msgstr ""
-
-msgid "changemood¤(colour,mood)\\w#h"
-msgstr ""
-
-msgid "Changes the mood of a crewmate (only works for crewmates created with\ncreatecrewman)"
-msgstr ""
-
-msgid "colour - cyan/player/blue/red/yellow/green/purple\nmood - 0 for happy, 1 for sad"
+msgid "Actually unlocks the secret lab for the main game, which is probably an unwanted\neffect for a custom level to have. Turns on secret lab mode."
 msgstr ""
 
 msgid "everybodysad¤()\\w#h"
 msgstr ""
 
 msgid "Makes everybody sad (only for crewmates created with createcrewman and the player)"
-msgstr ""
-
-msgid "changetile¤(colour,tile)\\w#h"
-msgstr ""
-
-msgid "Changes the tile of a crewmate (you can change it to any sprite in sprites.png,\nand it only works for crewmates created with createcrewman)"
-msgstr ""
-
-msgid "colour - cyan/player/blue/red/yellow/green/purple/gray\ntile - Tile number"
 msgstr ""
 
 msgid "face¤(a,b)\\w#h"
@@ -366,103 +282,16 @@ msgstr ""
 msgid "a - cyan/player/blue/red/yellow/green/purple/gray\nb - same"
 msgstr ""
 
-msgid "companion¤(x)\\b#h"
+msgid "fadein¤()\\w#h"
 msgstr ""
 
-msgid "Makes the specified crewmate a companion (as far as I remember, this also depends\non on the location on the map)"
+msgid "Fades back"
 msgstr ""
 
-msgid "changeai¤(crewmate,ai1,ai2)\\w#h"
+msgid "fadeout¤()\\w#h"
 msgstr ""
 
-msgid "Can change the face direction of a crewmate or the walking behaviour"
-msgstr ""
-
-msgid "crewmate - cyan/player/blue/red/yellow/green/purple\nai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/\n      faceplayer/panic/faceleft/faceright/followposition,ai2\nai2 - required if followposition is used for ai1"
-msgstr ""
-
-msgid "changedir¤(colour,direction)\\w#h"
-msgstr ""
-
-msgid "Just like changeai(colour,faceleft/faceright), this changes face direction."
-msgstr ""
-
-msgid "colour - cyan/player/blue/red/yellow/green/purple\ndirection - 0 is left, 1 is right"
-msgstr ""
-
-msgid "walk¤(direction,x)\\w#h"
-msgstr ""
-
-msgid "Makes the player walk for the specified number of ticks"
-msgstr ""
-
-msgid "direction - left/right"
-msgstr ""
-
-msgid "flipgravity¤(colour)\\w#h"
-msgstr ""
-
-msgid "Flips the gravity of a certain crewmate (it won't always work on yourself)"
-msgstr ""
-
-msgid "colour - cyan/player/blue/red/yellow/green/purple"
-msgstr ""
-
-msgid "flipme\\w#h"
-msgstr ""
-
-msgid "Correct vertical positioning of multiple text boxes in flip mode"
-msgstr ""
-
-msgid "tofloor\\w#h"
-msgstr ""
-
-msgid "Makes the player flip to the floor if he isn't already on the floor."
-msgstr ""
-
-msgid "flip\\w#h"
-msgstr ""
-
-msgid "Make the player flip"
-msgstr ""
-
-msgid "foundtrinket¤(x)\\w#h"
-msgstr ""
-
-msgid "Makes a trinket found"
-msgstr ""
-
-msgid "x - Number of the trinket"
-msgstr ""
-
-msgid "runtrinketscript\\b#h"
-msgstr ""
-
-msgid "Play Passion For Exploring?"
-msgstr ""
-
-msgid "altstates¤(x)\\b#h"
-msgstr ""
-
-msgid "Changes the layout of some rooms, like the trinket room in the ship before and\nafter the explosion, and the secret lab entrance (custom levels don't support\naltstates at all)"
-msgstr ""
-
-msgid "createlastrescued¤(x,y)\\b#h"
-msgstr ""
-
-msgid "Creates the last rescued crewmate at position x,y (?)"
-msgstr ""
-
-msgid "rescued¤(colour)\\b#h"
-msgstr ""
-
-msgid "Makes someone rescued"
-msgstr ""
-
-msgid "missing¤(colour)\\b#h"
-msgstr ""
-
-msgid "Makes someone missing"
+msgid "Fades the screen to black"
 msgstr ""
 
 msgid "finalmode¤(x,y)\\b#h"
@@ -471,295 +300,37 @@ msgstr ""
 msgid "Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the\nFinal Level"
 msgstr ""
 
-msgid "setcheckpoint¤()\\w#h"
-msgstr ""
-
-msgid "Sets the checkpoint to the current location"
-msgstr ""
-
-msgid "textboxactive\\w#h"
-msgstr ""
-
-msgid "Makes all text boxes on the screen disappear except for the last created one"
-msgstr ""
-
-msgid "ifexplored¤(x,y,script)\\w#h"
-msgstr ""
-
-msgid "If x+1,y+1 is explored, go to (internal) script"
-msgstr ""
-
-msgid "iflast¤(crewmate,script)\\b#h"
-msgstr ""
-
-msgid "If crewmate x was rescued last, go to script"
-msgstr ""
-
-msgid "crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5\nVictoria (I don't know the number for Viridian and Violet)"
-msgstr ""
-
-msgid "ifskip¤(x)\\b#h"
-msgstr ""
-
-msgid "If you skip the cutscenes in No Death Mode, go to script x"
-msgstr ""
-
-msgid "ifcrewlost¤(crewmate,script)\\b#h"
-msgstr ""
-
-msgid "If crewmate is lost, go to script"
-msgstr ""
-
-msgid "showcoordinates¤(x,y)\\w#h"
-msgstr ""
-
-msgid "Show coordinates x,y on the map (This works for the map for custom levels)"
-msgstr ""
-
-msgid "hidecoordinates¤(x,y)\\w#h"
-msgstr ""
-
-msgid "Hide coordinates x,y on the map (This works for the map for custom levels)"
-msgstr ""
-
-msgid "showship\\w#h"
-msgstr ""
-
-msgid "Show the ship on the map"
-msgstr ""
-
-msgid "hideship\\w#h"
-msgstr ""
-
-msgid "Hide the ship on the map"
-msgstr ""
-
-msgid "showsecretlab\\w#h"
-msgstr ""
-
-msgid "Show the secret lab on the map"
-msgstr ""
-
-msgid "hidesecretlab\\w#h"
-msgstr ""
-
-msgid "Hide the secret lab on the map"
-msgstr ""
-
-msgid "showteleporters¤()\\b#h"
-msgstr ""
-
-msgid "Show the teleporters on the map (I guess it only shows the teleporter in Space\nStation 1)"
-msgstr ""
-
-msgid "hideteleporters¤()\\b#h"
-msgstr ""
-
-msgid "Hide the teleporters on the map"
-msgstr ""
-
-msgid "showtargets¤()\\b#h"
-msgstr ""
-
-msgid "Show the targets on the map (unknown teleporters which show up as ?s)"
-msgstr ""
-
-msgid "hidetargets¤()\\b#h"
-msgstr ""
-
-msgid "Hide the targets on the map"
-msgstr ""
-
-msgid "showtrinkets¤()\\b#h"
-msgstr ""
-
-msgid "Show the trinkets on the map"
-msgstr ""
-
-msgid "hidetrinkets¤()\\b#h"
-msgstr ""
-
-msgid "Hide the trinkets on the map"
-msgstr ""
-
-msgid "hascontrol¤()\\w#h"
-msgstr ""
-
-msgid "Makes the player have control, however doesn't work in the middle of scripts"
-msgstr ""
-
-msgid "nocontrol¤()\\w#h"
-msgstr ""
-
-msgid "The opposite of hascontrol()"
-msgstr ""
-
-msgid "specialline¤(x)\\b#h"
-msgstr ""
-
-msgid "Special dialogs that show up in the main game"
-msgstr ""
-
-msgid "destroy¤(x)\\w#h"
-msgstr ""
-
-msgid "Same behaviour as simplified command"
-msgstr ""
-
-msgid "x - gravitylines/warptokens/platforms"
-msgstr ""
-
-msgid "delay¤(x)\\w#h"
-msgstr ""
-
 msgid "flag¤(x,on/off)\\w#h"
 msgstr ""
 
-msgid "telesave¤()\\r#h"
+msgid "flash¤(x)\\w#h"
 msgstr ""
 
-msgid "Saves your game (in the regular teleporter save, so don't use it!)"
+msgid "Makes the screen white, you can change the time how long the screen should stay\nwhite (just flash won't work, you have to use flash(5) in combination with\nplayef(9) and shake(20) if you want a normal flash)"
 msgstr ""
 
-msgid "createactivityzone¤(colour)\\b#h"
+msgid "x - The amount of ticks. 30 ticks is almost one second."
 msgstr ""
 
-msgid "Creates a zone where you are standing which says \"Press ACTION to talk to\n(Crewmate)\""
+msgid "flip\\w#h"
 msgstr ""
 
-msgid "createrescuedcrew¤()\\b#h"
+msgid "Make the player flip"
 msgstr ""
 
-msgid "Creates all rescued crewmates"
+msgid "flipgravity¤(color)\\w#h"
 msgstr ""
 
-msgid "trinketyellowcontrol¤()\\b#h"
+msgid "Flips the gravity of a certain crewmate (it won't always work on yourself)"
 msgstr ""
 
-msgid "Dialog of Vitellary when he gives you a trinket in the real game"
+msgid "color - cyan/player/blue/red/yellow/green/purple"
 msgstr ""
 
-msgid "trinketbluecontrol¤()\\b#h"
+msgid "flipme\\w#h"
 msgstr ""
 
-msgid "Dialog of Victoria when she gives you a trinket in the real game"
-msgstr ""
-
-msgid "rollcredits¤()\\r#h"
-msgstr ""
-
-msgid "Makes the credits roll. It destroys your save after the credits are completed!"
-msgstr ""
-
-msgid "teleportscript¤(script)\\b#h"
-msgstr ""
-
-msgid "Used to set a script which is run when you use a teleporter"
-msgstr ""
-
-msgid "clearteleportscript¤()\\b#h"
-msgstr ""
-
-msgid "Clears the teleporter script set with teleporterscript(x)"
-msgstr ""
-
-msgid "moveplayer¤(x,y)\\w#h"
-msgstr ""
-
-msgid "Moves the player x pixels to the right and y pixels down. Of course you can also\nuse negative numbers to make him move up or to the left"
-msgstr ""
-
-msgid "do¤(n)\\w#h"
-msgstr ""
-
-msgid "Starts a loop block which will repeat n times"
-msgstr ""
-
-msgid "loop\\w#h"
-msgstr ""
-
-msgid "Put this at the end of the loop block"
-msgstr ""
-
-msgid "leavesecretlab¤()\\b#h"
-msgstr ""
-
-msgid "Turn off \"secret lab mode\""
-msgstr ""
-
-msgid "shake¤(n)\\w#h"
-msgstr ""
-
-msgid "Shake the screen for n ticks. This will not create a delay."
-msgstr ""
-
-msgid "activateteleporter¤()\\w#h"
-msgstr ""
-
-msgid "If there's a teleporter in the room, it will glow white and touching it will not\nannihilate your save data. May not work if there are multiple teleporters."
-msgstr ""
-
-msgid "customposition¤(x,y)\\w#h"
-msgstr ""
-
-msgid "Overrides the x,y of the text command and thus sets the position of the text box,\nbut for crewmates, rescuable crewmates are used to position against, instead of\ncreateentity crewmates."
-msgstr ""
-
-msgid "x - center/centerx/centery, or a color name\ncyan/player/blue/red/yellow/green/purple (rescuable)\ny - Only used if x is a color name. Can be above/below"
-msgstr ""
-
-msgid "custommap¤(on/off)\\w#h"
-msgstr ""
-
-msgid "The internal variant of the map command"
-msgstr ""
-
-msgid "trinketscriptmusic\\w#h"
-msgstr ""
-
-msgid "Plays passion for exploring, without taking arguments(?)"
-msgstr ""
-
-msgid "startintermission2\\w#h"
-msgstr ""
-
-msgid "Alternate finalmode(46,54), takes you to the final level without accepting\narguments. Crashes in timeslip."
-msgstr ""
-
-msgid "resetgame\\w#h"
-msgstr ""
-
-msgid "Resets all trinkets, collected crewmates and flags, and teleports the player to\nthe last checkpoint."
-msgstr ""
-
-msgid "redcontrol\\b#h"
-msgstr ""
-
-msgid "Start a conversation with Vermilion just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
-msgstr ""
-
-msgid "greencontrol\\b#h"
-msgstr ""
-
-msgid "Start a conversation with Verdigris just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
-msgstr ""
-
-msgid "bluecontrol\\b#h"
-msgstr ""
-
-msgid "Start a conversation with Victoria just like when you meet her in the main game\nand press ENTER. Also creates an activity zone afterwards."
-msgstr ""
-
-msgid "yellowcontrol\\b#h"
-msgstr ""
-
-msgid "Start a conversation with Vitellary just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
-msgstr ""
-
-msgid "purplecontrol\\b#h"
-msgstr ""
-
-msgid "Start a conversation with Violet just like when you meet her in the main game and\npress ENTER. Also creates an activity zone afterwards."
+msgid "Correct vertical positioning of multiple text boxes in flip mode"
 msgstr ""
 
 msgid "foundlab\\b#h"
@@ -774,8 +345,461 @@ msgstr ""
 msgid "Displays the second text box you see after discovering the secret lab. Also does\nnot endtext, and also does not have any further unwanted effects."
 msgstr ""
 
-msgid "entersecretlab\\r#h"
+msgid "foundtrinket¤(x)\\w#h"
 msgstr ""
 
-msgid "Actually unlocks the secret lab for the main game, which is probably an unwanted\neffect for a custom level to have. Turns on secret lab mode."
+msgid "Makes a trinket found"
+msgstr ""
+
+msgid "x - Number of the trinket"
+msgstr ""
+
+msgid "gamemode¤(x)\\b#h"
+msgstr ""
+
+msgid "teleporter to show the map, game to hide it (shows teleporters of the main game)"
+msgstr ""
+
+msgid "x - teleporter/game"
+msgstr ""
+
+msgid "gamestate¤(x)\\o#h"
+msgstr ""
+
+msgid "Change the gamestate to the specified state number"
+msgstr ""
+
+msgid "gotoposition¤(x,y,f)\\w#h"
+msgstr ""
+
+msgid "Change Viridian's position to x,y in this room, and f is whether you're flipped or\nnot. (1 for flipped, 0 for not flipped)"
+msgstr ""
+
+msgid "f - 1 for flipped, 0 for not flipped. WARNING: Do not leave this unspecified, or\nelse you could softlock the game!"
+msgstr ""
+
+msgid "gotoroom¤(x,y)\\w#h"
+msgstr ""
+
+msgid "Change the current room to x,y, where x and y start at 0."
+msgstr ""
+
+msgid "x - Room x coordinate, starting at 0\ny - Room y coordinate, starting at 0"
+msgstr ""
+
+msgid "greencontrol\\b#h"
+msgstr ""
+
+msgid "Start a conversation with Verdigris just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
+msgstr ""
+
+msgid "hascontrol¤()\\w#h"
+msgstr ""
+
+msgid "Makes the player have control, however doesn't work in the middle of scripts"
+msgstr ""
+
+msgid "hidecoordinates¤(x,y)\\w#h"
+msgstr ""
+
+msgid "Hide coordinates x,y on the map (This works for the map for custom levels)"
+msgstr ""
+
+msgid "hideplayer¤()\\w#h"
+msgstr ""
+
+msgid "Makes the player invisible"
+msgstr ""
+
+msgid "hidesecretlab\\w#h"
+msgstr ""
+
+msgid "Hide the secret lab on the map"
+msgstr ""
+
+msgid "hideship\\w#h"
+msgstr ""
+
+msgid "Hide the ship on the map"
+msgstr ""
+
+msgid "hidetargets¤()\\b#h"
+msgstr ""
+
+msgid "Hide the targets on the map"
+msgstr ""
+
+msgid "hideteleporters¤()\\b#h"
+msgstr ""
+
+msgid "Hide the teleporters on the map"
+msgstr ""
+
+msgid "hidetrinkets¤()\\b#h"
+msgstr ""
+
+msgid "Hide the trinkets on the map"
+msgstr ""
+
+msgid "ifcrewlost¤(crewmate,script)\\b#h"
+msgstr ""
+
+msgid "If crewmate is lost, go to script"
+msgstr ""
+
+msgid "ifexplored¤(x,y,script)\\w#h"
+msgstr ""
+
+msgid "If x+1,y+1 is explored, go to (internal) script"
+msgstr ""
+
+msgid "ifflag¤(n,script)\\b#h"
+msgstr ""
+
+msgid "Same as customifflag, but loads an internal (main game) script"
+msgstr ""
+
+msgid "iflast¤(crewmate,script)\\b#h"
+msgstr ""
+
+msgid "If crewmate x was rescued last, go to script"
+msgstr ""
+
+msgid "crewmate - Numbers are used here: 0: Viridian, 1: Violet, 2: Vitellary, 3:\nVermilion, 4: Verdigris, 5 Victoria"
+msgstr ""
+
+msgid "ifskip¤(x)\\b#h"
+msgstr ""
+
+msgid "If you skip the cutscenes in No Death Mode, go to script x"
+msgstr ""
+
+msgid "iftrinkets¤(n,script)\\b#h"
+msgstr ""
+
+msgid "Same as simplified scripting, but loads an internal (main game) script"
+msgstr ""
+
+msgid "iftrinketsless¤(n,script)\\b#h"
+msgstr ""
+
+msgid "ifwarp¤(x,y,dir,script)\\w#h"
+msgstr ""
+
+msgid "If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script"
+msgstr ""
+
+msgid "x - Room x coordinate, starting at 1\ny - Room y coordinate, starting at 1\ndir - The warp direction. Normally 0-3, but out-of-bounds values are accepted"
+msgstr ""
+
+msgid "jukebox¤(x)\\w#h"
+msgstr ""
+
+msgid "Makes a jukebox terminal white and turns off the color of all the other terminals\n(in custom levels, it just seems to turn off the white color of all activated\nterminals)."
+msgstr ""
+
+msgid "leavesecretlab¤()\\b#h"
+msgstr ""
+
+msgid "Turn off \"secret lab mode\""
+msgstr ""
+
+msgid "loadscript¤(script)\\b#h"
+msgstr ""
+
+msgid "Load an internal (main game) script. Commonly used in custom levels as\nloadscript(stop)"
+msgstr ""
+
+msgid "loop\\w#h"
+msgstr ""
+
+msgid "Put this at the end of a loop block started with the do command."
+msgstr ""
+
+msgid "missing¤(color)\\b#h"
+msgstr ""
+
+msgid "Makes someone missing"
+msgstr ""
+
+msgid "moveplayer¤(x,y)\\w#h"
+msgstr ""
+
+msgid "Moves the player x pixels to the right and y pixels down. Of course you can also\nuse negative numbers to make them move up or to the left"
+msgstr ""
+
+msgid "musicfadein¤()\\w#h"
+msgstr ""
+
+msgid "An unfinished command. This does nothing."
+msgstr ""
+
+msgid "musicfadeout¤()\\w#h"
+msgstr ""
+
+msgid "Fades out the music."
+msgstr ""
+
+msgid "nocontrol¤()\\w#h"
+msgstr ""
+
+msgid "The opposite of hascontrol()"
+msgstr ""
+
+msgid "play¤(x)\\w#h"
+msgstr ""
+
+msgid "Start playing a song with internal song number."
+msgstr ""
+
+msgid "x - Internal song number"
+msgstr ""
+
+msgid "playef¤(x,n)\\w#h"
+msgstr ""
+
+msgid "Play a sound effect."
+msgstr ""
+
+msgid "n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the\noffset in milliseconds at which the sound effect started."
+msgstr ""
+
+msgid "position¤(x,y)\\w#h"
+msgstr ""
+
+msgid "Overrides the x,y of the text command and thus sets the position of the text box."
+msgstr ""
+
+msgid "x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple\ny - Only used if x is a color name. Can be above/below"
+msgstr ""
+
+msgid "purplecontrol\\b#h"
+msgstr ""
+
+msgid "Start a conversation with Violet just like when you meet her in the main game and\npress ENTER. Also creates an activity zone afterwards."
+msgstr ""
+
+msgid "redcontrol\\b#h"
+msgstr ""
+
+msgid "Start a conversation with Vermilion just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
+msgstr ""
+
+msgid "rescued¤(color)\\b#h"
+msgstr ""
+
+msgid "Makes someone rescued"
+msgstr ""
+
+msgid "resetgame\\w#h"
+msgstr ""
+
+msgid "Resets all trinkets, collected crewmates and flags, and teleports the player to\nthe last checkpoint."
+msgstr ""
+
+msgid "restoreplayercolour¤()\\w#h"
+msgstr ""
+
+msgid "Changes the player's color back to cyan"
+msgstr ""
+
+msgid "resumemusic¤()\\w#h"
+msgstr ""
+
+msgid "An unfinished command. Reads from uninitialized memory, which results in a crash\non some machines and just results in playing Path Complete on others."
+msgstr ""
+
+msgid "rollcredits¤()\\r#h"
+msgstr ""
+
+msgid "Makes the credits roll. It destroys your save after the credits are completed!"
+msgstr ""
+
+msgid "setcheckpoint¤()\\w#h"
+msgstr ""
+
+msgid "Sets the checkpoint to the current location"
+msgstr ""
+
+msgid "shake¤(n)\\w#h"
+msgstr ""
+
+msgid "Shake the screen for n ticks. This will not create a delay."
+msgstr ""
+
+msgid "showcoordinates¤(x,y)\\w#h"
+msgstr ""
+
+msgid "Show coordinates x,y on the map (This works for the map for custom levels)"
+msgstr ""
+
+msgid "showplayer¤()\\w#h"
+msgstr ""
+
+msgid "Makes the player visible"
+msgstr ""
+
+msgid "showsecretlab\\w#h"
+msgstr ""
+
+msgid "Show the secret lab on the map"
+msgstr ""
+
+msgid "showship\\w#h"
+msgstr ""
+
+msgid "Show the ship on the map"
+msgstr ""
+
+msgid "showtargets¤()\\b#h"
+msgstr ""
+
+msgid "Show the targets on the map (unknown teleporters which show up as ?s)"
+msgstr ""
+
+msgid "showteleporters¤()\\b#h"
+msgstr ""
+
+msgid "Show the teleporters on the map (I guess it only shows the teleporter in Space\nStation 1)"
+msgstr ""
+
+msgid "showtrinkets¤()\\b#h"
+msgstr ""
+
+msgid "Show the trinkets on the map"
+msgstr ""
+
+msgid "speak\\w#h"
+msgstr ""
+
+msgid "Shows a text box, without removing old text boxes. Also pauses the script until\nyou press action (unless there's a backgroundtext command above it)"
+msgstr ""
+
+msgid "speak_active\\w#h"
+msgstr ""
+
+msgid "Shows a text box, and removes any old text box. Also pauses the script until you\npress action (unless there's a backgroundtext command above it)"
+msgstr ""
+
+msgid "specialline¤(x)\\b#h"
+msgstr ""
+
+msgid "Special dialogs that show up in the main game"
+msgstr ""
+
+msgid "squeak¤(color)\\w#h"
+msgstr ""
+
+msgid "Makes a squeak sound from a crewmate, or a terminal sound"
+msgstr ""
+
+msgid "color - cyan/player/blue/red/yellow/green/purple/terminal"
+msgstr ""
+
+msgid "startintermission2\\w#h"
+msgstr ""
+
+msgid "Alternate finalmode(46,54), takes you to the final level without accepting\narguments. Crashes in timeslip."
+msgstr ""
+
+msgid "stopmusic¤()\\w#h"
+msgstr ""
+
+msgid "Stops the music immediately. Equivalent to music(0) in simplified scripting."
+msgstr ""
+
+msgid "teleportscript¤(script)\\b#h"
+msgstr ""
+
+msgid "Used to set a script which is run when you use a teleporter"
+msgstr ""
+
+msgid "telesave¤()\\r#h"
+msgstr ""
+
+msgid "Saves your game (in the regular teleporter save, so don't use it!)"
+msgstr ""
+
+msgid "text¤(color,x,y,lines)\\w#h"
+msgstr ""
+
+msgid "Store a text box in memory with color, position and number of lines. Usually, the\nposition command is used after the text command (and its lines of text), which\nwill overwrite the coordinates given here, so these are usually left as 0."
+msgstr ""
+
+msgid "color - cyan/player/blue/red/yellow/green/purple/gray\nx - The x position of the text box\ny - The y position of the text box\nlines - The number of lines"
+msgstr ""
+
+msgid "textboxactive\\w#h"
+msgstr ""
+
+msgid "Makes all text boxes on the screen disappear except for the last created one"
+msgstr ""
+
+msgid "tofloor\\w#h"
+msgstr ""
+
+msgid "Makes the player flip to the floor if they aren't already on the floor."
+msgstr ""
+
+msgid "trinketbluecontrol¤()\\b#h"
+msgstr ""
+
+msgid "Dialog of Victoria when she gives you a trinket in the real game"
+msgstr ""
+
+msgid "trinketscriptmusic\\w#h"
+msgstr ""
+
+msgid "Plays Passion for Exploring. Does nothing else."
+msgstr ""
+
+msgid "trinketyellowcontrol¤()\\b#h"
+msgstr ""
+
+msgid "Dialog of Vitellary when he gives you a trinket in the real game"
+msgstr ""
+
+msgid "undovvvvvvman¤()\\w#h"
+msgstr ""
+
+msgid "Back to normal"
+msgstr ""
+
+msgid "untilbars¤()\\w#h"
+msgstr ""
+
+msgid "Wait until cutscene()/endcutscene() is completed"
+msgstr ""
+
+msgid "untilfade¤()\\w#h"
+msgstr ""
+
+msgid "Wait until fadeout()/fadein() is completed"
+msgstr ""
+
+msgid "vvvvvvman¤()\\w#h"
+msgstr ""
+
+msgid "Makes the player huge"
+msgstr ""
+
+msgid "walk¤(direction,x)\\w#h"
+msgstr ""
+
+msgid "Makes the player walk for the specified number of ticks"
+msgstr ""
+
+msgid "direction - left/right"
+msgstr ""
+
+msgid "warpdir¤(x,y,dir)\\w#h"
+msgstr ""
+
+msgid "Changes the warp direction for room x,y, 1-indexed, to the given direction. This\ncould be checked with ifwarp, resulting in a relatively powerful extra\nflags/variable system."
+msgstr ""
+
+msgid "yellowcontrol\\b#h"
+msgstr ""
+
+msgid "Start a conversation with Vitellary just like when you meet him in the main game\nand press ENTER. Also creates an activity zone afterwards."
 msgstr ""
