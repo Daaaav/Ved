@@ -1234,14 +1234,16 @@ function drawmaineditor()
 			if love.keyboard.isDown("j") then
 				displaysolid = true
 			end
-			if love.keyboard.isDown(";") then
+			if love.keyboard.isDown(";") and not keyboard_eitherIsDown("shift") then
 				displayminimapgrid = true
 			end
 		end
 		-- Display the room now including its entities
-		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		local showroom = not (love.keyboard.isDown("k") or (love.keyboard.isDown(";") and keyboard_eitherIsDown("shift"))) or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
 		if showroom then
 			displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid, displayminimapgrid)
+		elseif love.keyboard.isDown("k") then
+			show_notification(L.OLDSHORTCUT_SHOWBG)
 		end
 
 		-- Display indicators for tiles in adjacent rooms

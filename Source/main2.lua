@@ -3130,8 +3130,11 @@ function love.keypressed(key)
 			toolscroll()
 		end
 
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "q" then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "q" or key == "g") then
 		coordsdialog.activate()
+		if key == "q" then
+			show_notification(L.OLDSHORTCUT_GOTOROOM)
+		end
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
