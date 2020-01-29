@@ -1845,6 +1845,47 @@ msgctxt "L.OLDSHORTCUT_OPENLVLDIR"
 msgid "Ctrl+D will stop working soon, use Ctrl+F instead"
 msgstr ""
 
+msgctxt "L.OLDSHORTCUT_GOTOROOM"
+msgid "Q will stop working soon, use G instead"
+msgstr ""
+
+msgctxt "L.OLDSHORTCUT_SHOWBG"
+msgid "K will stop working soon, use Shift+; instead"
+msgstr ""
+
+msgctxt "L.FRAMESTOSECONDS"
+msgid "$1 = $2 sec"
+msgstr ""
+
+msgctxt "L.ROOMNUM"
+msgid "Room $1"
+msgstr ""
+
+msgctxt "L.TRACKNUM"
+msgid "Track $1"
+msgstr ""
+
+msgctxt "L.STOPSMUSIC"
+msgid "Stops music"
+msgstr ""
+
+msgctxt "L.EDITSCRIPTWOBUMPING"
+msgid "Edit script without bumping"
+msgstr ""
+
+msgctxt "L.CLICKONTHING"
+msgid "Click on $1"
+msgstr ""
+
+#. follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+msgctxt "L.ORDRAGDROP"
+msgid "or drag and drop onto here"
+msgstr ""
+
+msgctxt "L.MORETHANONESTARTPOINT"
+msgid "There is more than one start point in this level!"
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."
@@ -1902,6 +1943,18 @@ msgstr[1] ""
 msgctxt "L_PLU.BYTES"
 msgid "$1 byte"
 msgid_plural "$1 bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.LITERALNULLS"
+msgid "There is $1 null byte!"
+msgid_plural "There are $1 null bytes!"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.XMLNULLS"
+msgid "There is $1 XML null character!"
+msgid_plural "There are $1 XML null characters!"
 msgstr[0] ""
 msgstr[1] ""
 

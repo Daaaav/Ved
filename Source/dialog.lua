@@ -69,6 +69,8 @@ cDialog =
 	currentfield = 0,
 
 	return_btn = 0,
+
+	showtabrect = false,
 }
 
 function cDialog:new(o)
@@ -144,7 +146,7 @@ function cDialog:draw(topmost)
 		end
 		active_w = active_w*8
 
-		if showtabrect then
+		if self.showtabrect then
 			self:setColor(255,255,127,255,not topmost)
 			love.graphics.rectangle("line", active_x-1, active_y-4, active_w+2, active_h+2)
 		end
@@ -172,7 +174,7 @@ function cDialog:draw(topmost)
 		local btn_x = self.x+self.width-rapos*btnwidth-(5*(rapos-1))-1
 		local btn_y = self.y+self.windowani+self.height-26
 
-		if topmost and mouseon(btn_x, btn_y, btnwidth, 25) and love.window.hasFocus() then
+		if topmost and mouseon(btn_x, btn_y, btnwidth, 25) and window_active() then
 			-- Hovering over this button
 			self:setColor(124, 124, 124, 128)
 
@@ -256,7 +258,7 @@ end
 
 function cDialog:mousepressed(x, y)
 	-- Left mouse button pressed on the dialog
-	showtabrect = false
+	self.showtabrect = false
 	if self.closing then
 		return
 	end
@@ -307,6 +309,8 @@ function cDialog:keypressed(key)
 		self:press_button(DB.SAVE)
 	elseif key == "d" and self.buttons_present[DB.DISCARD] then
 		self:press_button(DB.DISCARD)
+	elseif table.contains({"home", "end"}, key) then
+		handle_scrolling(true, key)
 	end
 end
 
@@ -379,7 +383,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 	if mode <= 1 then
 		-- Text field or dropdown
-		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and love.window.hasFocus() then
+		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and window_active() then
 			self:setColor(255,255,255,255)
 			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
 
@@ -489,7 +493,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			-- Only display this item if it will be visible
 			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
 				local selected = self:return_fields().name == v.name
-				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and love.window.hasFocus())
+				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and window_active())
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
@@ -540,7 +544,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 end
 
 function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
-	if topmost and mouseon(x, y, w, h) and not RCMactive and love.window.hasFocus() then
+	if topmost and mouseon(x, y, w, h) and not RCMactive and window_active() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)
@@ -572,7 +576,7 @@ function cDialog:close(button)
 	-- Button is assumed to exist here, no questions asked.
 	self.return_btn = button
 
-	showtabrect = false
+	self.showtabrect = false
 	self.closing = true
 
 	if not s.dialoganimations then
@@ -625,15 +629,31 @@ function cDialog:set_field(key, value)
 	end
 end
 
-function cDialog:get_on_scrollable_field(x, y)
-	-- If x,y is on a scrollable field, return that field's key, otherwise return nil.
+function cDialog:get_on_scrollable_field(x, y, viakeyboard)
+	-- If x,y is on a scrollable field,
+	-- or the field is focused and input is made via keyboard,
+	-- or input is made via keyboard and there's only one scrollable field,
+	-- return that field's key, otherwise return nil.
+	local scrollable_types = {DF.FILES}
+	local scrollable_fields = {}
 	for k,v in pairs(self.fields) do
 		local v_x, v_y = self.x+10+v[2]*8, self.y+self.windowani+10+v[3]*8+10
-		if v[6] == DF.FILES
-		and x >= v_x and x < v_x+v[4]*8
-		and y >= v_y and y < v_y+8*v[12] then
-			return k
+		if table.contains(scrollable_types, v[6]) then
+			if (x >= v_x and x < v_x+v[4]*8
+			and y >= v_y and y < v_y+8*v[12])
+			or (viakeyboard and self.fields[self.currentfield] == k) then
+				if viakeyboard then
+					self.showtabrect = true
+				end
+				return k
+			else
+				table.insert(scrollable_fields, k)
+			end
 		end
+	end
+	if viakeyboard and #scrollable_fields == 1 then
+		self.showtabrect = true
+		return scrollable_fields[1]
 	end
 	return nil
 end

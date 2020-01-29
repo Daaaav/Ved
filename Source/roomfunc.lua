@@ -127,6 +127,11 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 					love.graphics.setColor(255,0,0)
 					love.graphics.draw(solidimg, x, y)
 					love.graphics.setColor(255,255,255)
+				elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
+					-- Not a spike but solid in invincibility mode
+					love.graphics.setColor(255,255,0)
+					love.graphics.draw(solidimg, x, y)
+					love.graphics.setColor(255,255,255)
 				end
 			end
 
@@ -221,7 +226,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	if scriptname_editingshown then
 		displayscriptname(entitydata[editingroomtext].t == 19, editingroomtext, entitydata[editingroomtext], offsetx, offsety, myroomx, myroomy)
 	end
-	if scriptname_shown then
+	if scriptname_shown and nodialog then
 		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy)
 	end
 end
@@ -272,26 +277,64 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
-		love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
-		love.graphics.draw(platformimg, platformpart[1], x, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 16, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 32, y, 0, 2)
-		if v.p1 < 7 then
-			-- 4 tiles
-			love.graphics.draw(platformimg, platformpart[3], x + 48, y, 0, 2)
-		else
-			-- 8 tiles
-			love.graphics.draw(platformimg, platformpart[2], x + 48, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 64, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 80, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[2], x + 96, y, 0, 2)
-			love.graphics.draw(platformimg, platformpart[3], x + 112, y, 0, 2)
+		love.graphics.setColor(255,255,255,255)
+		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		if v.p1 <= 4 then
+			-- Moving platform
+			local usethisentcolour
+			if entcolourrow ~= nil then
+				usethisentcolour = entcolourrow*12
+			end
+			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+				usethisentcolour = 1
+			end
+			for eachx = x, x+48, 16 do
+				drawentcolour(usethisentcolour, eachx, y)
+			end
+		elseif v.p1 <= 8 then
+			-- Conveyor
+			local addlength = 0
+			if table.contains({7, 8}, v.p1) then
+				addlength = 64
+			end
+			local leftrightoffset = 0
+			local thiscycle = conveyorleftcycle
+			if table.contains({5, 7}, v.p1) then
+				leftrightoffset = 4
+				thiscycle = 3 - conveyorrightcycle
+			end
+			local usethisentcolour
+			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+				-- This one's the weirdest of all the entcolour sprites for Space Station tilecol -1
+				local tmp
+				if table.contains({5, 7}, v.p1) then
+					tmp = 60
+				elseif table.contains({6, 8}, v.p1) then
+					tmp = 20
+				end
+				usethisentcolour = tmp + thiscycle
+			else
+				usethisentcolour = entcolourrow*12 + 4 + thiscycle + leftrightoffset
+			end
+			for eachx = x, x+48+addlength, 16 do
+				drawentcolour(usethisentcolour, eachx, y)
+			end
+			-- Also draw a nice border on top
+			love.graphics.setColor(255, 255, 255, 127)
+			love.graphics.setLineWidth(2)
+			love.graphics.rectangle("line", x+1, y+1, 64+addlength-2, 16-2)
+			love.graphics.setLineWidth(1)
+			love.graphics.setColor(255, 255, 255, 255)
 		end
 
 		-- Now indicate what this actually is.
-		love.graphics.setColor(255,255,255,255)
 		if platform_labels[v.p1] ~= nil then
-			ved_print(platform_labels[v.p1], x, y, 2)
+			if v.p1 < 5 or v.p1 > 8 or lockablemouseon(x, y, 16, 16) then
+				ved_print(platform_labels[v.p1], x, y, 2)
+			end
+		elseif v.p1 < 0 then
+			-- It stays still
+			ved_print(" []", x, y, 2)
 		else
 			-- What
 			ved_print("...?", x, y, 2)
@@ -306,13 +349,19 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 3 then
 		-- Disappearing platform
-		love.graphics.setColor(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolor)
-		love.graphics.draw(platformimg, platformpart[1], x, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 16, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[2], x + 32, y, 0, 2)
-		love.graphics.draw(platformimg, platformpart[3], x + 48, y, 0, 2)
-		-- This is a disappearing platform.
 		love.graphics.setColor(255,255,255,255)
+		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		local usethisentcolour
+		if entcolourrow ~= nil then
+			usethisentcolour = entcolourrow*12
+		end
+		if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+			usethisentcolour = 2
+		end
+		for eachx = x, x+48, 16 do
+			drawentcolour(usethisentcolour, eachx, y)
+		end
+		-- This is a disappearing platform.
 		ved_print("////", x, y, 2)
 		if interact then
 			entityrightclick(
@@ -359,7 +408,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Gravity lines and warp lines have a different p1!
 		if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 			-- Horizontal
-			sel_x = offsetx+(v.p2)*16
+			local usethisp2
+			if forcetilex ~= nil then
+				local offset = v.p2 - v.x%40
+				usethisp2 = forcetilex + offset
+			else
+				usethisp2 = v.p2
+			end
+			sel_x = offsetx+(usethisp2)*16
 			sel_y = y
 			sel_w = v.p3/8
 			sel_h = 1
@@ -377,8 +433,15 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			end
 		else
 			-- Vertical
+			local usethisp2
+			if forcetiley ~= nil then
+				local offset = v.p2 - v.y%30
+				usethisp2 = forcetiley + offset
+			else
+				usethisp2 = v.p2
+			end
 			sel_x = x
-			sel_y = offsety+(v.p2)*16
+			sel_y = offsety+(usethisp2)*16
 			sel_w = 1
 			sel_h = v.p3/8
 			if v.t == 11 then
@@ -401,15 +464,25 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[0], x, y)
 		if interact then
 			if v.t == 11 then
+				local thisentrcm = {"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
+				if v.p4 == 1 then
+					table.insert(thisentrcm, #thisentrcm, L.COPY)
+					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
+				end
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}, "ent_11_" .. k,
+					thisentrcm, "ent_11_" .. k,
 					sel_w, sel_h, sel_x, sel_y
 				)
 			else
+				local thisentrcm = {"#" .. toolnames[15], L.DELETE, (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
+				if v.p4 == 1 then
+					table.insert(thisentrcm, #thisentrcm, L.COPY)
+					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
+				end
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[15], L.DELETE, L.PROPERTIES}, "ent_50_" .. k,
+					thisentrcm, "ent_50_" .. k,
 					sel_w, sel_h, sel_x, sel_y
 				)
 			end
@@ -506,7 +579,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
+				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
 				2, 3
 			)
 		end
@@ -558,7 +631,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			if interact then
 				entityrightclick(
 					x, y,
-					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
+					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
 					v.p1, v.p2
 				)
 			end
@@ -593,6 +666,10 @@ function drawentitysprite(tile, atx, aty, small)
 	else
 		love.graphics.draw(cursorimg[5], atx, aty)
 	end
+end
+
+function drawentcolour(tile, atx, aty, small)
+	love.graphics.draw(tilesets["entcolours.png"]["img"], tilesets["entcolours.png"]["tiles"][tile], atx, aty, 0, small and 1 or 2)
 end
 
 function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
@@ -706,6 +783,11 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
 						love.graphics.setColor(255,0,0)
+						love.graphics.draw(solidimg, x, y)
+						love.graphics.setColor(255,255,255)
+					elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
+						-- Not a spike but solid in invincibility mode
+						love.graphics.setColor(255,255,0)
 						love.graphics.draw(solidimg, x, y)
 						love.graphics.setColor(255,255,255)
 					end
@@ -832,11 +914,14 @@ function isoutsidebg(tilenum)
 	return false
 end
 
-function issolid(tilenum, tileset, spikessolid, ignoremultimode)
+function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymode)
 	-- Returns true if a tile is solid, false if not solid.
 	-- Tileset can be 1 or 2 for tiles and tiles2 respectively.
 	if spikessolid == nil then
 		spikessolid = false
+	end
+	if invincibilitymode == nil then
+		invincibilitymode = false
 	end
 
 	if not ignoremultimode and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and not tileincurrenttileset(tilenum) then
@@ -853,12 +938,14 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode)
 		return true
 	elseif tileset == 2 and tilenum == 740 then
 		return true
-	elseif spikessolid then
+	elseif spikessolid or invincibilitymode then
 		if tilenum >= 6 and tilenum <= 9 then
 			return true
 		elseif tilenum == 49 or tilenum == 50 then
 			return true
 		elseif tileset == 2 and tilenum >= 51 and tilenum <= 74 then
+			return true
+		elseif tileset == 2 and invincibilitymode and tilenum >= 75 and tilenum <= 79 then
 			return true
 		end
 	end
@@ -1681,172 +1768,188 @@ function autocorrectlines()
 end
 
 function undo()
-	if #undobuffer >= 1 then
-		if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
-			gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-			map_resetroom(roomx, roomy)
-		end
-		if undobuffer[#undobuffer].switchtool ~= nil then
-			selectedtool = undobuffer[#undobuffer].switchtool
-			updatewindowicon()
-		end
+	if #undobuffer < 1 then
+		return
+	end
 
-		if undobuffer[#undobuffer].undotype == "tiles" then
-			if (undobuffer[#undobuffer].toundotiles[1] == nil) then
-				temporaryroomname = L.UNDOFAULTY
-				temporaryroomnametimer = 90
-			else
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
-				autocorrectlines()
-			end
-		elseif undobuffer[#undobuffer].undotype == "addentity" then
-			-- So we need to remove this entity again!
-			removeentity(undobuffer[#undobuffer].entid, nil, true)
-		elseif undobuffer[#undobuffer].undotype == "removeentity" then
-			-- Hmm... Re-add it in this case!
-			entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
-			updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
-		elseif undobuffer[#undobuffer].undotype == "changeentity" then
-			for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
-				entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
-			end
-		elseif undobuffer[#undobuffer].undotype == "metadata" then
-			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-				metadata[v.key] = v.oldvalue
-			end
-			temporaryroomname = L.METADATAUNDONE
+	if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
+		gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+		map_resetroom(roomx, roomy)
+	end
+	if undobuffer[#undobuffer].switchtool ~= nil then
+		selectedtool = undobuffer[#undobuffer].switchtool
+		updatewindowicon()
+	end
+
+	if undobuffer[#undobuffer].undotype == "tiles" then
+		if (undobuffer[#undobuffer].toundotiles[1] == nil) then
+			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
-		elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
-			for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
-			end
-			if undobuffer[#undobuffer].changetiles then
-				roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
-				autocorrectlines()
-				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
-			end
-		elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
-			rotateroom180(roomx, roomy, true)
-		elseif undobuffer[#undobuffer].undotype == "paste" then
-			setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
-			temporaryroomnametimer = 0
-		elseif undobuffer[#undobuffer].undotype == "mapswap" then
-			mapswap(
-				undobuffer[#undobuffer].rx,
-				undobuffer[#undobuffer].ry,
-				undobuffer[#undobuffer].rx_src,
-				undobuffer[#undobuffer].ry_src,
-				true
-			)
-		elseif undobuffer[#undobuffer].undotype == "mapcopy" then
-			-- Remove the copied entities again
-			local removedentityids = {}
-			local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
-
-			for k,v in pairs(entitydata) do
-				if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
-					table.insert(removedentityids, k)
-				end
-			end
-
-			for _,v in pairs(removedentityids) do
-				removeentity(v, nil, true)
-			end
-
-			setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
-			temporaryroomnametimer = 0
-			for k,v in pairs(undobuffer[#undobuffer].oldentities) do
-				entitydata[v[1]] = table.copy(v[2])
-				updatecountadd(v[2].t)
-			end
 		else
-			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
-			temporaryroomnametimer = 90
+			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			autocorrectlines()
+		end
+	elseif undobuffer[#undobuffer].undotype == "addentity" then
+		-- So we need to remove this entity again!
+		removeentity(undobuffer[#undobuffer].entid, nil, true)
+	elseif undobuffer[#undobuffer].undotype == "removeentity" then
+		-- Hmm... Re-add it in this case!
+		entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
+		updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
+	elseif undobuffer[#undobuffer].undotype == "changeentity" then
+		for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
+			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
+		end
+	elseif undobuffer[#undobuffer].undotype == "metadata" then
+		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+			metadata[v.key] = v.oldvalue
+		end
+		temporaryroomname = L.METADATAUNDONE
+		temporaryroomnametimer = 90
+	elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
+		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
+			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
+		end
+		if undobuffer[#undobuffer].changetiles then
+			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			autocorrectlines()
+			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+		end
+	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
+		rotateroom180(roomx, roomy, true)
+	elseif undobuffer[#undobuffer].undotype == "paste" then
+		setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
+		temporaryroomnametimer = 0
+	elseif undobuffer[#undobuffer].undotype == "mapswap" then
+		mapswap(
+			undobuffer[#undobuffer].rx,
+			undobuffer[#undobuffer].ry,
+			undobuffer[#undobuffer].rx_src,
+			undobuffer[#undobuffer].ry_src,
+			true
+		)
+	elseif undobuffer[#undobuffer].undotype == "mapcopy" then
+		-- Remove the copied entities again
+		local removedentityids = {}
+		local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
+
+		for k,v in pairs(entitydata) do
+			if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
+				table.insert(removedentityids, k)
+			end
 		end
 
-		table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
-		table.remove(undobuffer, #undobuffer)
+		for _,v in pairs(removedentityids) do
+			removeentity(v, nil, true)
+		end
 
-		mapmovedroom = true
+		setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
+		temporaryroomnametimer = 0
+		for k,v in pairs(undobuffer[#undobuffer].oldentities) do
+			entitydata[v[1]] = table.copy(v[2])
+			updatecountadd(v[2].t)
+		end
+	else
+		temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {undobuffer[#undobuffer].undotype})
+		temporaryroomnametimer = 90
+	end
+
+	table.insert(redobuffer, table.copy(undobuffer[#undobuffer]))
+	table.remove(undobuffer, #undobuffer)
+
+	mapmovedroom = true
+
+	if state == 12 then
+		locatetrinketscrewmates()
 	end
 end
 -- TODO: Merge these two?
 function redo()
-	if #redobuffer >= 1 then
-		if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
-			gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
-			map_resetroom(roomx, roomy)
-		end
-		if redobuffer[#redobuffer].switchtool ~= nil then
-			selectedtool = redobuffer[#redobuffer].switchtool
-			updatewindowicon()
-		end
+	if #redobuffer < 1 then
+		return
+	end
 
-		if redobuffer[#redobuffer].undotype == "tiles" then
-			if (redobuffer[#redobuffer].toredotiles[1] == nil) then
-				temporaryroomname = L.UNDOFAULTY
-				temporaryroomnametimer = 90
-			else
-				roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
-				autocorrectlines()
-			end
-		elseif redobuffer[#redobuffer].undotype == "addentity" then
-			-- Re-add it again
-			entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
-			updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
-		elseif redobuffer[#redobuffer].undotype == "removeentity" then
-			-- Redo the removing!
-			removeentity(redobuffer[#redobuffer].entid, nil, true)
-		elseif redobuffer[#redobuffer].undotype == "changeentity" then
-			for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
-				entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
-			end
-		elseif redobuffer[#redobuffer].undotype == "metadata" then
-			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-				metadata[v.key] = v.newvalue
-			end
-			temporaryroomname = L.METADATAREDONE
+	if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
+		gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
+		map_resetroom(roomx, roomy)
+	end
+	if redobuffer[#redobuffer].switchtool ~= nil then
+		selectedtool = redobuffer[#redobuffer].switchtool
+		updatewindowicon()
+	end
+
+	if redobuffer[#redobuffer].undotype == "tiles" then
+		if (redobuffer[#redobuffer].toredotiles[1] == nil) then
+			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
-		elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
-			for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-				levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
-			end
-			if redobuffer[#redobuffer].changetiles then
-				selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-				selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
-				autocorrectroom()
-			end
-		elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
-			rotateroom180(roomx, roomy, true)
-		elseif redobuffer[#redobuffer].undotype == "paste" then
-			setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
-			temporaryroomnametimer = 0
-		elseif redobuffer[#redobuffer].undotype == "mapswap" then
-			mapswap(
-				redobuffer[#redobuffer].rx,
-				redobuffer[#redobuffer].ry,
-				redobuffer[#redobuffer].rx_src,
-				redobuffer[#redobuffer].ry_src,
-				true
-			)
-		elseif redobuffer[#redobuffer].undotype == "mapcopy" then
-			mapcopy(
-				redobuffer[#redobuffer].rx_src,
-				redobuffer[#redobuffer].ry_src,
-				redobuffer[#redobuffer].rx,
-				redobuffer[#redobuffer].ry,
-				true
-			)
 		else
-			temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
-			temporaryroomnametimer = 90
+			roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
+			autocorrectlines()
 		end
+	elseif redobuffer[#redobuffer].undotype == "addentity" then
+		-- Re-add it again
+		entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
+		updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
+		if redobuffer[#redobuffer].addedentitydata.t == 16 then
+			-- Don't forget to set the start point ID!
+			count.startpoint = redobuffer[#redobuffer].entid
+		end
+	elseif redobuffer[#redobuffer].undotype == "removeentity" then
+		-- Redo the removing!
+		removeentity(redobuffer[#redobuffer].entid, nil, true)
+	elseif redobuffer[#redobuffer].undotype == "changeentity" then
+		for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
+			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
+		end
+	elseif redobuffer[#redobuffer].undotype == "metadata" then
+		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+			metadata[v.key] = v.newvalue
+		end
+		temporaryroomname = L.METADATAREDONE
+		temporaryroomnametimer = 90
+	elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
+		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
+			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
+		end
+		if redobuffer[#redobuffer].changetiles then
+			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
+			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			autocorrectroom()
+		end
+	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
+		rotateroom180(roomx, roomy, true)
+	elseif redobuffer[#redobuffer].undotype == "paste" then
+		setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
+		temporaryroomnametimer = 0
+	elseif redobuffer[#redobuffer].undotype == "mapswap" then
+		mapswap(
+			redobuffer[#redobuffer].rx,
+			redobuffer[#redobuffer].ry,
+			redobuffer[#redobuffer].rx_src,
+			redobuffer[#redobuffer].ry_src,
+			true
+		)
+	elseif redobuffer[#redobuffer].undotype == "mapcopy" then
+		mapcopy(
+			redobuffer[#redobuffer].rx_src,
+			redobuffer[#redobuffer].ry_src,
+			redobuffer[#redobuffer].rx,
+			redobuffer[#redobuffer].ry,
+			true
+		)
+	else
+		temporaryroomname = langkeys(L.UNKNOWNUNDOTYPE, {redobuffer[#redobuffer].undotype})
+		temporaryroomnametimer = 90
+	end
 
-		table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
-		table.remove(redobuffer, #redobuffer)
+	table.insert(undobuffer, table.copy(redobuffer[#redobuffer]))
+	table.remove(redobuffer, #redobuffer)
 
-		mapmovedroom = true
+	mapmovedroom = true
+
+	if state == 12 then
+		locatetrinketscrewmates()
 	end
 end	
 
@@ -2422,4 +2525,13 @@ function displayminimaproom(offsetx, offsety, theroomdata, themetadata, zoomscal
 			end
 		end
 	end
+end
+
+function warplinesinroom(theroomx, theroomy)
+	for _, ent in pairs(entitydata) do
+		if ent.t == 50 and math.floor(ent.x/40) == theroomx and math.floor(ent.y/30) == theroomy then
+			return true
+		end
+	end
+	return false
 end

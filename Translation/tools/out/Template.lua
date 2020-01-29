@@ -520,7 +520,17 @@ SHIFTROOMS = "<L.SHIFTROOMS>", -- In the map. Move all rooms in the entire level
 OLDSHORTCUT_SCRIPTJUMP = "<L.OLDSHORTCUT_SCRIPTJUMP>", -- CTRL and ALT are capitalized here for extra clarity in this string
 OLDSHORTCUT_ASSETS = "<L.OLDSHORTCUT_ASSETS>",
 OLDSHORTCUT_OPENLVLDIR = "<L.OLDSHORTCUT_OPENLVLDIR>",
+OLDSHORTCUT_GOTOROOM = "<L.OLDSHORTCUT_GOTOROOM>",
+OLDSHORTCUT_SHOWBG = "<L.OLDSHORTCUT_SHOWBG>",
 
+FRAMESTOSECONDS = "<L.FRAMESTOSECONDS>",
+ROOMNUM = "<L.ROOMNUM>",
+TRACKNUM = "<L.TRACKNUM>",
+STOPSMUSIC = "<L.STOPSMUSIC>",
+EDITSCRIPTWOBUMPING = "<L.EDITSCRIPTWOBUMPING>",
+CLICKONTHING = "<L.CLICKONTHING>",
+ORDRAGDROP = "<L.ORDRAGDROP>", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+MORETHANONESTARTPOINT = "<L.MORETHANONESTARTPOINT>",
 
 }
 
@@ -555,6 +565,12 @@ L_PLU = {
 	},
 	BYTES = {
 		[0] = "<L_PLU.BYTES>",
+	},
+	LITERALNULLS = {
+		[0] = "<L_PLU.LITERALNULLS>",
+	},
+	XMLNULLS = {
+		[0] = "<L_PLU.XMLNULLS>",
 	},
 }
 

@@ -88,12 +88,27 @@ function dialog.form.exportmap_make()
 end
 
 function dialog.form.rawentityproperties_make()
-	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
 	local form = {}
 
+	local row, col = 3, 0
 	for k,v in pairs(entitypropkeys) do
-		table.insert(form, {v, 5, 2+k, 38, thisentity[v], DF.TEXT})
+		if v == "p1" then
+			row = row+1
+		end
+		table.insert(form, {"", 16*col, row, 3, v, DF.LABEL})
+		table.insert(form, {v, 16*col+3, row, 12, thisentity[v], DF.TEXT})
+		col = col+1
+		if col == 3 then
+			row = row+1
+			col = 0
+		end
 	end
+	row = row+1
+
+	local labelwidth = font8:getWidth(L.SMALLENTITYDATA)/8 + 1
+	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
+	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
 	return form
 end
@@ -661,6 +676,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			local field3intcmds = {"ifcrewlost", "iflast"}
 			local field2intcmds = {"loadscript", "ifskip"}
 			local field4intcmds = {"ifexplored"}
+			local field5cmds = {"ifwarp"}
 
 			local oldnamenotgsub = oldname
 			oldname = escapegsub(oldname, true)
@@ -699,6 +715,15 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 					for _, command in pairs(field4intcmds) do
 						if #v > #command then
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
+						end
+					end
+					for _, command in pairs(field5cmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)])" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
 								scripts[scriptnames[rvnum]][k] = tmp
@@ -981,53 +1006,7 @@ function dialog.callback.openimage(button, fields)
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
-	local readsuccess, contents = readfile(filepath)
-	if not readsuccess then
-		dialog.create(contents)
-		return
-	end
-
-	local success, filedata = pcall(love.filesystem.newFileData, contents, filename, "file")
-	if not success then
-		dialog.create(filedata)
-		return
-	end
-	local imgdata
-	success, imgdata = pcall(love.image.newImageData, filedata)
-	if not success then
-		dialog.create(imgdata)
-		return
-	end
-	success, imageviewer_image_color = pcall(love.graphics.newImage, imgdata)
-	if not success then
-		dialog.create(imageviewer_image_color)
-		return
-	end
-	imgdata:mapPixel(
-		function(x, y, r, g, b, a)
-			return 255, 255, 255, a
-		end
-	)
-	imageviewer_image_white = love.graphics.newImage(imgdata)
-	imageviewer_filepath, imageviewer_filename = filepath, filename
-
-	imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
-	imageviewer_w, imageviewer_h = imageviewer_image_color:getDimensions()
-	fix_imageviewer_position()
-	imageviewer_moving = false
-	imageviewer_moved_from_x, imageviewer_moved_from_y = 0, 0
-	imageviewer_moved_from_mx, imageviewer_moved_from_my = 0, 0
-	imageviewer_grid, imageviewer_showwhite = 0, false
-
-	-- Guess the grid setting
-	if filename:sub(1,10) == "entcolours"
-	or filename:sub(1,4) == "font"
-	or filename:sub(1,5) == "tiles" then
-		imageviewer_grid = 8
-	elseif filename:sub(1,7) == "sprites"
-	or filename:sub(1,11) == "flipsprites" then
-		imageviewer_grid = 32
-	end
+	assets_openimage(filepath, filename)
 end
 
 function dialog.callback.platv_validate(button, fields)

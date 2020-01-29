@@ -90,6 +90,22 @@ function drawscripteditor()
 			lasttextcolor = textc
 
 			-- Dialog bar
+
+			-- Let's figure out where the dialog ends horizontally
+			local maxwidthtextbox = 0
+			local l
+			for i = k+1, k+textlinestogo do
+				if i == editingline then
+					l = input .. input_r
+				else
+					l = scriptlines[i]
+				end
+
+				if #anythingbutnil(l) > maxwidthtextbox then
+					maxwidthtextbox = #anythingbutnil(l)
+				end
+			end
+
 			if k < table.maxn(scriptlines) and syntaxhlon then
 				if alttextcolor then
 					if alttextboxcolors[textc] == nil then
@@ -101,8 +117,10 @@ function drawscripteditor()
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if s.scripteditor_largefont then
 					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+8, 6, textq*16)
+					love.graphics.rectangle("fill", 76+16*(maxwidthtextbox+1), scriptscroll+24+(16*k)+8, 6, textq*16)
 				else
 					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+8, 3, textq*8)
+					love.graphics.rectangle("fill", 42+8*(maxwidthtextbox+1), scriptscroll+24+(8*k)+8, 3, textq*8)
 				end
 			end
 		elseif textlinestogo > 0 then
@@ -362,6 +380,27 @@ function drawscripteditor()
 				disp_carg2 = carg2+1
 			end
 			ved_printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+62, 80, "center")
+		end
+	elseif context == "frames" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			local seconds = carg1 * 34 / 1000
+			seconds = round(seconds, 2)
+			ved_printf(langkeys(L.FRAMESTOSECONDS, {carg1, seconds}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		end
+	elseif context == "roomnum" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			ved_printf(langkeys(L.ROOMNUM, {carg1}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		end
+	elseif context == "track" then
+		carg1 = tonumber(carg1)
+		if carg1 ~= nil then
+			if carg1 == -1 then
+				ved_printf(L.STOPSMUSIC, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			else
+				ved_printf(langkeys(L.TRACKNUM, {carg1}) .. "\n\n" .. listmusiccommandsids[carg1], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			end
 		end
 	end
 end

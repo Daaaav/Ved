@@ -76,6 +76,12 @@ function loadlevel(path)
 	cons("Loading all the contents...")
 	--x.alltiles = explode(",", contents:match("<contents>(.*)</contents>"))
 
+	-- Remove all literal '\0's, we'll remove '&#0;'s or '&#x0's later
+	local numliteralnullbytes = 0
+	if contents:match("%z") then
+		contents, numliteralnullbytes = contents:gsub("%z", "")
+	end
+
 	-- Ok, explode() is far too inefficient, what else have we got?
 	x.alltiles = {}
 	local m = contents:match("<contents>(.*)</contents>")
@@ -123,6 +129,8 @@ function loadlevel(path)
 	local allentities = {}
 	local myvedmetadata = false
 
+	local numxmlnullbytes = 0
+
 	cons("Loading entities...")
 	if contents:find("<edEntities />") == nil and contents:find("<edEntities/>") == nil then
 		-- We have entities!
@@ -134,7 +142,9 @@ function loadlevel(path)
 		-- Get all entities
 		--.
 		entityid = 0
-		for entity in x.entities:gmatch("<edentity (.-)\r?\n            </edentity>") do
+		local morethanonestartpoint = false
+		local duplicatestartpoints = {}
+		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
 
@@ -154,7 +164,12 @@ function loadlevel(path)
 			end
 
 			-- Now we only need the data...
-			allentities[entityid].data = unxmlspecialchars(metaparts[2])
+			allentities[entityid].data = unxmlspecialchars(metaparts[2]:match("^[ \r\n]*(.-)[ \r\n]*$"))
+			if allentities[entityid].data:match("%z") then
+				local tmp
+				allentities[entityid].data, tmp = allentities[entityid].data:gsub("%z", "")
+				numxmlnullbytes = numxmlnullbytes + tmp
+			end
 
 			-- Now before we go to the next one, if it's a trinket or crewmate, add it up, because we can only have 20 in a level. Officially. Also, parse the special data entity here if we found it.
 			if allentities[entityid].t == 9 then
@@ -162,7 +177,18 @@ function loadlevel(path)
 			elseif allentities[entityid].t == 15 then
 				mycount.crewmates = mycount.crewmates + 1
 			elseif allentities[entityid].t == 16 then
-				mycount.startpoint = entityid
+				if mycount.startpoint == nil then
+					mycount.startpoint = entityid
+				else
+					-- Multiple start points in a level is weird
+					-- VVVVVV will pick the first one anyway, and we've already picked the first one, so no need to change it
+					if not morethanonestartpoint then
+						morethanonestartpoint = true
+						mycount.FC = mycount.FC + 1
+						cons_fc(L.MORETHANONESTARTPOINT)
+					end
+					table.insert(duplicatestartpoints, entityid)
+				end
 			elseif allentities[entityid].x == 800 and allentities[entityid].y == 600 and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
 				local explodedmetadata = explode("|", allentities[entityid].data)
@@ -272,6 +298,15 @@ function loadlevel(path)
 				cons_fc(langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
 			end
 		end
+
+		for idx = #duplicatestartpoints, 1, -1 do
+			-- This table.remove() gets inefficient really quickly if we have a lot of start points
+			-- Please no one ever make a level with 1,000 start points
+			table.remove(allentities, duplicatestartpoints[idx])
+			entityid = entityid - 1
+			mycount.entities = mycount.entities - 1
+		end
+
 		-- See this as MySQL's AUTO_INCREMENT
 		mycount.entity_ai = entityid + 1
 	else
@@ -329,6 +364,11 @@ function loadlevel(path)
 
 		-- Now we only need the room name...
 		theselevelmetadata[croom].roomname = unxmlspecialchars(metaparts[2])
+		if theselevelmetadata[croom].roomname:match("%z") then
+			local tmp
+			theselevelmetadata[croom].roomname, tmp = theselevelmetadata[croom].roomname:gsub("%z", "")
+			numxmlnullbytes = numxmlnullbytes + tmp
+		end
 
 		-- And make sure directmode isn't nil for 2.0 levels
 		if theselevelmetadata[croom].directmode == nil then
@@ -405,6 +445,11 @@ function loadlevel(path)
 	end
 	for ln in unxmlspecialchars(m .. "|"):gmatch("([^|]*)|") do
 		--print(num)
+		if ln:match("%z") then
+			local tmp
+			ln, tmp = ln:gsub("%z", "")
+			numxmlnullbytes = numxmlnullbytes + tmp
+		end
 		table.insert(x.allscripts, ln)
 	end
 	cons("There are " .. (#x.allscripts) .. " lines of scripting! Loading all of that...")
@@ -485,6 +530,12 @@ function loadlevel(path)
 					}
 			end
 		end
+	end if numliteralnullbytes > 0 then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
+	end if numxmlnullbytes > 0 then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
 	end
 
 	if mycount.FC ~= 0 then
@@ -665,7 +716,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	--for k,v in pairs(allscripts) do
 	for rvnum = 1, #scriptnames do
 		local k, v = scriptnames[rvnum], allscripts[scriptnames[rvnum]]
-		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(implode("|", v)) .. "|")
+		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(table.concat(v, "|")) .. "|")
 	end
 
 	savethis = savethis:gsub("%$SCRIPT%$", ((table.concat(allallscripts, ""):sub(1, -2)):gsub("%%", "%%%%")))
