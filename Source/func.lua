@@ -2760,7 +2760,7 @@ function drawlink(link)
 	love.graphics.setColor(255,255,255)
 end
 
-function unrecognized_rcmreturn()
+function unrecognized_rcmreturn(RCMreturn)
 	dialog.create(RCMid .. " " .. RCMreturn .. " unrecognized.")
 end
 
