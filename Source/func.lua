@@ -262,7 +262,7 @@ function loadstate(new, ...)
 		end
 		updatewindowicon()
 
-		if levelmetadata ~= nil and levelmetadata[(roomy)*20 + (roomx+1)] ~= nil then
+		if levelmetadata ~= nil and levelmetadata_get(roomx, roomy) ~= nil then
 			gotoroom_finish()
 		end
 
@@ -1162,15 +1162,15 @@ function switchtileset()
 		selectedtileset = cycle(selectedtileset, 4, 0)
 	end
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
-	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0) then
+	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then
 		selectedcolor = 0
 	end
 
-	local oldtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+	local oldtileset = levelmetadata_get(roomx, roomy).tileset
+	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
 
-	levelmetadata[(roomy)*20 + (roomx+1)].tileset = selectedtileset
-	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+	levelmetadata_set(roomx, roomy, "tileset", selectedtileset)
+	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1185,7 +1185,7 @@ function switchtileset()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILESET")
@@ -1199,7 +1199,7 @@ function switchtilecol()
 	else
 		selectedcolor = cycle(selectedcolor, #tilesetblocks[selectedtileset].colors, selectedtileset == 0 and -1 or 0)
 	end
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		if keyboard_eitherIsDown("shift") then
 			selectedcolor = 5
@@ -1208,9 +1208,9 @@ function switchtilecol()
 		end
 	end
 
-	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
 
-	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1220,7 +1220,7 @@ function switchtilecol()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILECOL")
@@ -1229,18 +1229,18 @@ function switchtilecol()
 end
 
 function switchenemies()
-	local oldtype = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
+	local oldtype = levelmetadata_get(roomx, roomy).enemytype
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
+		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, 9, 0))
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = cycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
+		levelmetadata_set(roomx, roomy, "enemytype", cycle(levelmetadata_get(roomx, roomy).enemytype, 9, 0))
 	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "enemytype",
 					oldvalue = oldtype,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
+					newvalue = levelmetadata_get(roomx, roomy).enemytype
 				}
 			},
 			switchtool = 9
@@ -1272,7 +1272,7 @@ function changeenemybounds()
 				{
 					key = "enemy" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 				}
 			)
 		end
@@ -1286,7 +1286,7 @@ function changeenemybounds()
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -1314,7 +1314,7 @@ function changeplatformbounds()
 				{
 					key = "plat" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 				}
 			)
 		end
@@ -1328,7 +1328,7 @@ function changeplatformbounds()
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -1340,30 +1340,30 @@ function changeplatformbounds()
 end
 
 function changedmode()
-	local olddirect = levelmetadata[(roomy)*20 + (roomx+1)].directmode
-	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
+	local olddirect = levelmetadata_get(roomx, roomy).directmode
+	local oldauto2 = levelmetadata_get(roomx, roomy).auto2mode
 
 	if keyboard_eitherIsDown("shift") then
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+			levelmetadata_set(roomx, roomy, "directmode", 1)
+		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
+			levelmetadata_set(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+			levelmetadata_set(roomx, roomy, "directmode", 0)
+			levelmetadata_set(roomx, roomy, "auto2mode", 1)
 		end
 	else
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+			levelmetadata_set(roomx, roomy, "auto2mode", 1)
+		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
+			levelmetadata_set(roomx, roomy, "directmode", 1)
+			levelmetadata_set(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+			levelmetadata_set(roomx, roomy, "directmode", 0)
 		end
 	end
 
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
 	end
@@ -1372,12 +1372,12 @@ function changedmode()
 				{
 					key = "directmode",
 					oldvalue = olddirect,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].directmode
+					newvalue = levelmetadata_get(roomx, roomy).directmode
 				},
 				{
 					key = "auto2mode",
 					oldvalue = oldauto2,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
+					newvalue = levelmetadata_get(roomx, roomy).auto2mode
 				}
 			}
 		}
@@ -1386,18 +1386,18 @@ function changedmode()
 end
 
 function changewarpdir()
-	local oldwarpdir = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
+	local oldwarpdir = levelmetadata_get(roomx, roomy).warpdir
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+		levelmetadata_set(roomx, roomy, "warpdir", revcycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+		levelmetadata_set(roomx, roomy, "warpdir", cycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
 	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "warpdir",
 					oldvalue = oldwarpdir,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
+					newvalue = levelmetadata_get(roomx, roomy).warpdir
 				}
 			}
 		}
@@ -1412,15 +1412,15 @@ function toggleeditroomname()
 		editingroomname = true
 		tilespicker = false
 		startinputonce()
-		input = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
+		input = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
 	end
 end
 
 function saveroomname()
 	editingroomname = false
 	stopinput()
-	local oldroomname = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
-	levelmetadata[(roomy)*20 + (roomx+1)].roomname = input
+	local oldroomname = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
+	levelmetadata_set(roomx, roomy, "roomname", input)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1647,33 +1647,34 @@ function compareleveldifferences(secondlevelname)
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
-			for k,v in pairs(roomdata2[ry][rx]) do
+			local firstlevelroomdatathisroom = roomdata_get(rx, ry)
+			for k,v in pairs(roomdata2_get(rx, ry)) do
 				if leftblank and v ~= 0 then
 					leftblank = false
 				end
-				if rightblank and roomdata[ry][rx][k] ~= 0 then
+				if rightblank and firstlevelroomdatathisroom[k] ~= 0 then
 					rightblank = false
 				end
-				if not changed and v ~= roomdata[ry][rx][k] then
+				if not changed and v ~= firstlevelroomdatathisroom[k] then
 					changed = true
 				end
 			end
 
-			if changed and levelmetadata2[(ry)*20 + (rx+1)].roomname == levelmetadata[(ry)*20 + (rx+1)].roomname then
+			if changed and levelmetadata2_get(rx, ry).roomname == levelmetadata_get(rx, ry).roomname then
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.changed1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				end
 			elseif changed then -- room names not the same
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.added2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.changed2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				end
 			end
 		end

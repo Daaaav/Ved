@@ -87,7 +87,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				local t = theroomdata[(aty*40)+(atx+1)]
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
 				if t ~= 0 then
-					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][tonumber(t)], x, y, 0, 2*zoomscale2)
+					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
 				end
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
@@ -167,18 +167,39 @@ function addrooms(neww, newh)
 	-- This is because we can have decreased one side and increased another, then increase the other side and still have room data there we don't want to lose in case resizing was an accident
 	cons("Maybe adding rooms: new map size is " .. neww .. " " .. newh)
 
-	for y = 0, (newh-1) do
+	for y = 0, newh-1 do
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
 
-		for x = 0, (neww-1) do
-			if roomdata[y][x] == nil then
+		for x = 0, neww-1 do
+			if x >= ( y < math.min(newh, 20) and neww or 20 ) or y >= 20 then
+				map_resetroom(x, y)
+			elseif roomdata[y][x] == nil then
 				roomdata[y][x] = {}
 				for t = 1, 1200 do
 					roomdata[y][x][t] = 0
 				end
 				map_resetroom(x, y)
+			end
+		end
+	end
+
+	if neww > 20 then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (neww-1) / 20 )
+		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
+		local capped_height = math.min(newh, 20)
+		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
+			roomdata[yk] = roomdata[yk] or {}
+
+			for xk = 0, 19 do
+				roomdata[yk][xk] = roomdata[yk][xk] or {}
+
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < neww%20 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+					for xt = 0, 39 do
+						roomdata[yk][xk][yt*40 + xt+1] = roomdata[yk][xk][yt*40 + xt+1] or 0
+					end
+				end
 			end
 		end
 	end
@@ -261,8 +282,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
-		v6_setcol(tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].v6col)
-		drawentitysprite(enemysprites[levelmetadata[(myroomy)*20 + (myroomx+1)].enemytype], x, y) -- 78
+		v6_setcol(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].v6col)
+		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y) -- 78
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
@@ -278,14 +299,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].entcolourrow
 		if v.p1 <= 4 then
 			-- Moving platform
 			local usethisentcolour
 			if entcolourrow ~= nil then
 				usethisentcolour = entcolourrow*12
 			end
-			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+			if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
 				usethisentcolour = 1
 			end
 			for eachx = x, x+48, 16 do
@@ -304,7 +325,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				thiscycle = 3 - conveyorrightcycle
 			end
 			local usethisentcolour
-			if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+			if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
 				-- This one's the weirdest of all the entcolour sprites for Space Station tilecol -1
 				local tmp
 				if table.contains({5, 7}, v.p1) then
@@ -350,12 +371,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 3 then
 		-- Disappearing platform
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[levelmetadata[(myroomy)*20 + (myroomx+1)].tileset].colors[levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].entcolourrow
 		local usethisentcolour
 		if entcolourrow ~= nil then
 			usethisentcolour = entcolourrow*12
 		end
-		if levelmetadata[(myroomy)*20 + (myroomx+1)].tileset == 0 and levelmetadata[(myroomy)*20 + (myroomx+1)].tilecol == -1 then
+		if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
 			usethisentcolour = 2
 		end
 		for eachx = x, x+48, 16 do
@@ -800,7 +821,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 		end
 	end
 
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then
 			-- We're currently creating a stamp from the tileset
 			local cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
@@ -849,7 +870,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 			end
 
 			-- Are we hovering on this tile? And are we in manual mode?
-			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and nodialog and mouseon(offsetx+(16*lx), offsety+(16*ly), 16, 16) then
+			if levelmetadata_get(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(16*lx), offsety+(16*ly), 16, 16) then
 				love.graphics.draw(cursorimg[0], offsetx+(16*lx), offsety+(16*ly))
 
 				-- Heck, maybe we're even clicking this.
@@ -871,7 +892,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 	end
 
 	-- Were we highlighting a tile?
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
+	if levelmetadata_get(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
 		love.graphics.draw(cursorimg[20], offsetx+(16*selectedx)-2, offsety+(16*selectedy)-2)
 	end
 end
@@ -884,12 +905,14 @@ function toolfinish(what)
 end
 
 function autocorrectroom()
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
-		for thist = 1, 1200 do
-			if levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 or tileincurrenttileset(roomdata[roomy][roomx][thist]) then
-				local correctret = correcttile(roomx, roomy, thist, selectedtileset, selectedcolor)
-				if roomdata[roomy][roomx][thist] ~= correctret then
-					roomdata[roomy][roomx][thist] = correctret
+	if levelmetadata_get(roomx, roomy).directmode == 0 then
+		for thisy = 0, 29 do
+			for thisx = 0, 39 do
+				if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata_get(roomx, roomy, thisx, thisy)) then
+					local correctret = correcttile(roomx, roomy, thisx, thisy, selectedtileset, selectedcolor)
+					if roomdata_get(roomx, roomy, thisx, thisy) ~= correctret then
+						roomdata_set(roomx, roomy, thisx, thisy, correctret)
+					end
 				end
 			end
 		end
@@ -924,7 +947,7 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymo
 		invincibilitymode = false
 	end
 
-	if not ignoremultimode and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and not tileincurrenttileset(tilenum) then
+	if not ignoremultimode and levelmetadata_get(roomx, roomy).auto2mode == 1 and not tileincurrenttileset(tilenum) then
 		return false
 	end
 
@@ -997,7 +1020,7 @@ function issolidforgravline(tilenum, linetype)
 	return false
 end
 
-function correcttile(inroomx, inroomy, t, tileset, tilecol)
+function correcttile(inroomx, inroomy, tx, ty, tileset, tilecol)
 	-- tilesetblocks[tileset].colors[tilecol].blocks[x]
 	ts = tilesetblocks[tileset].tileimg
 
@@ -1021,11 +1044,11 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	-- This is all a complete mess. Basically: wall=8 background=1 spikes=2 nothing=4  outsidebackground = 6
 	--local dowhat = issolid(adjtile(t, 0, 0), ts) and 8 or (issolid(adjtile(t, 0, 0), ts) ~= issolid(adjtile(t, 0, 0), ts, true) and 2 or (isnot0(adjtile(t, 0, 0), ts) and (tileset == 1 and 6 or 1) or 4))
 	local dowhat
-	if issolid(adjtile(t, 0, 0), ts) then
+	if issolid(adjtile(tx, ty, 0, 0), ts) then
 		dowhat = 8  -- WALL
-	elseif (issolid(adjtile(t, 0, 0), ts, false, true) ~= issolid(adjtile(t, 0, 0), ts, true, true)) then
+	elseif (issolid(adjtile(tx, ty, 0, 0), ts, false, true) ~= issolid(adjtile(tx, ty, 0, 0), ts, true, true)) then
 		dowhat = 2  -- SPIKES
-	elseif isnot0(adjtile(t, 0, 0), ts) then
+	elseif isnot0(adjtile(tx, ty, 0, 0), ts) then
 		if tileset == 1 then
 			dowhat = 6  -- OUTSIDEBACKGROUND
 		else
@@ -1040,7 +1063,7 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	if dowhat == 8 then
 		myissolid = issolid
 	elseif dowhat == 2 then
-		if levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
+		if levelmetadata_get(roomx, roomy).auto2mode == 1 then
 			myissolid = issolidmultispikes
 		else
 			myissolid = issolid
@@ -1059,49 +1082,49 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	--if myissolid(adjtile(t, 0, 0), ts) then
 	if dowhat ~= 4 and dowhat ~= 2 and dowhat ~= 6 then
 		-- W A L L S   A N D   B A C K G R O U N D S   ( N O N - O U T S I D E   B G )
-		if not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, -1, 0), ts) and not myissolid(adjtile(t, 1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) then
+		if not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- All 4 sides are empty
 			return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
-		elseif myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- All 4 sides are filled.
-			if not myissolid(adjtile(t, -1, -1), ts) then
+			if not myissolid(adjtile(tx, ty, -1, -1), ts) then
 				-- Top left corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][9] -- BOTTOM RIGHT INNER CORNER
-			elseif not myissolid(adjtile(t, 1, -1), ts) then
+			elseif not myissolid(adjtile(tx, ty, 1, -1), ts) then
 				-- Top right corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][8] -- BOTTOM LEFT INNER CORNER
-			elseif not myissolid(adjtile(t, -1, 1), ts) then
+			elseif not myissolid(adjtile(tx, ty, -1, 1), ts) then
 				-- Bottom left corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][3] -- TOP RIGHT INNER CORNER
-			elseif not myissolid(adjtile(t, 1, 1), ts) then
+			elseif not myissolid(adjtile(tx, ty, 1, 1), ts) then
 				-- Bottom right corner is empty.
 				return tilesetblocks[tileset].colors[tilecol][mytype][2] -- TOP LEFT INNER CORNER
 			else
 				-- Tile is completely surrounded!
 				return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
 			end
-		elseif not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Top side and left side are empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][13] -- TOP LEFT CORNER
-		elseif not myissolid(adjtile(t, 0, -1), ts) and not myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Top side and right side are empty, left side is NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][15] -- TOP RIGHT CORNER
-		elseif not myissolid(adjtile(t, -1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, 0, -1), ts) then
+		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) then
 			-- Left side and bottom side are empty, top side is NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][25] -- BOTTOM LEFT CORNER
-		elseif not myissolid(adjtile(t, 1, 0), ts) and not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
 			-- Right side and bottom side are empty, top and left side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][27] -- BOTTOM RIGHT CORNER
-		elseif not myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
 			-- Top side is of course empty, left and right side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][14] -- TOP
-		elseif not myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- Left side is empty, top and bottom sides are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][19] -- LEFT
-		elseif not myissolid(adjtile(t, 1, 0), ts) and myissolid(adjtile(t, 0, -1), ts) and myissolid(adjtile(t, 0, 1), ts) then
+		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
 			-- Right side is empty, top and bottom sides are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][21] -- RIGHT
-		elseif not myissolid(adjtile(t, 0, 1), ts) and myissolid(adjtile(t, -1, 0), ts) and myissolid(adjtile(t, 1, 0), ts) then
+		elseif not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
 			-- Bottom side is empty, left and right side are NOT empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][26] -- BOTTOM
 		else
@@ -1111,10 +1134,10 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 		end
 	elseif dowhat == 6 then
 		-- O U T S I D E   B A C K G R O U N D S
-		if (myissolid(adjtile(t, 0, -1), ts) or myissolid(adjtile(t, 0, 1), ts)) and (myissolid(adjtile(t, -1, 0), ts) or myissolid(adjtile(t, 1, 0), ts)) then
+		if (myissolid(adjtile(tx, ty, 0, -1), ts) or myissolid(adjtile(tx, ty, 0, 1), ts)) and (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
 			-- Both the left || right side and the top || bottom side are not empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][3] -- SQUARE
-		elseif (myissolid(adjtile(t, -1, 0), ts) or myissolid(adjtile(t, 1, 0), ts)) then
+		elseif (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
 			-- Either the left or right side is not empty.
 			return tilesetblocks[tileset].colors[tilecol][mytype][2] -- HORIZONTAL
 		else
@@ -1124,16 +1147,16 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	elseif dowhat == 2 then
 		-- S P I K E S
 		-- The extra true for adjtile means that spikes get treated differently at the edges of the screen. The true in myissolid means that multi mode should be ignored for spikes.
-		if myissolid(adjtile(t, 0, 1, true), ts, nil, true) then
+		if myissolid(adjtile(tx, ty, 0, 1, true), ts, nil, true) then
 			-- There's a solid block below this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[9] -- UP
-		elseif myissolid(adjtile(t, 0, -1, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, 0, -1, true), ts, nil, true) then
 			-- There's a solid block above this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[21] -- DOWN
-		elseif myissolid(adjtile(t, -1, 0, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, -1, 0, true), ts, nil, true) then
 			-- There's a solid block to the left of this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[16] -- RIGHT
-		elseif myissolid(adjtile(t, 1, 0, true), ts, nil, true) then
+		elseif myissolid(adjtile(tx, ty, 1, 0, true), ts, nil, true) then
 			-- There's a solid block to the left of this spike.
 			return tilesetblocks[tileset].colors[tilecol].spikes[14] -- LEFT
 		else
@@ -1143,17 +1166,13 @@ function correcttile(inroomx, inroomy, t, tileset, tilecol)
 	end
 
 	-- Just return what it already is.
-	return roomdata[inroomy][inroomx][t]
+	return roomdata_get(inroomx, inroomy, tx, ty)
 end
 
-function adjtile(tilenum, xoff, yoff, spike)
+function adjtile(tilx, tily, xoff, yoff, spike)
 	if spike == nil then
 		spike = false
 	end
-
-	-- First look if we're not gonna go offscreen
-	tily = math.floor((tilenum-1)/40)
-	tilx = (tilenum-40*tily)-1
 
 	--[[ debugging crap
 	if lastchecked ~= tilenum then
@@ -1173,11 +1192,11 @@ function adjtile(tilenum, xoff, yoff, spike)
 		return 0 -- Should not be solid now, because then we're gonna prioritize orienting spikes to be attached to that, and that's not what VVVVVV's automatic mode does.
 	elseif (tilx+xoff < 0) or (tilx+xoff > 39) or (tily+yoff < 0) or (tily+yoff > 29) then
 		return 1 -- a solid tile for offscreen
-	elseif roomdata[doorroomy][doorroomx][tilenum + ((yoff)*40) + (xoff)] == nil then
-		cons("THIS SHOULDN'T HAPPEN. Tilenum=" .. tilenum .. " (we're checking " .. (tilenum + ((yoff)*40) + (xoff)) .. ") tilx=" .. tilx .. " tily=" .. tily .. ". Block is nil")
+	elseif roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff) == nil then
+		cons("THIS SHOULDN'T HAPPEN. tilx=" .. tilx .. " xoff=" .. xoff .. " tily=" .. tily .. " yoff=" .. yoff .. ". Block is nil")
 		return 1
 	else
-		return roomdata[doorroomy][doorroomx][tilenum + ((yoff)*40) + (xoff)]
+		return roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff)
 	end
 end
 
@@ -1254,7 +1273,7 @@ function displayshapedcursor(leftblx, upblx, rightblx, downblx)
 end
 
 function displayalphatile(leftblx, upblx, forx, fory, customsize)
-	if (levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and not (customsize and customsizemode ~= 0))
+	if (levelmetadata_get(roomx, roomy).directmode == 1 and not (customsize and customsizemode ~= 0))
 	or (customsize and customsizemode == 0 and customsizetile ~= nil) then
 		love.graphics.setColor(255,255,255,128)
 			for forfory = 0, fory do
@@ -1264,8 +1283,8 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 						displayedtile = customsizetile[forfory+1][forforx+1]
 					end
 					love.graphics.draw(
-						tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"],
-						tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][displayedtile],
+						tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"],
+						tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][displayedtile],
 						screenoffset+(16*(cursorx-leftblx+forforx)),
 						(16*(cursory-upblx+forfory)),
 						0,
@@ -1305,31 +1324,31 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 end
 
 function displayalphatile_hor()
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		love.graphics.setColor(255,255,255,128)
 		for forforx = 0, 39 do
-			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*cursory), 0, 2)
+			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*cursory), 0, 2)
 		end
 		love.graphics.setColor(255,255,255,255)
 	end
 end
 
 function displayalphatile_ver()
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
-			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*cursorx), (16*forfory), 0, 2)
+			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*cursorx), (16*forfory), 0, 2)
 		end
 		love.graphics.setColor(255,255,255,255)
 	end
 end
 
 function displayalphatile_all()
-	if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
 			for forforx = 0, 39 do
-				love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*forfory), 0, 2)
+				love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*forfory), 0, 2)
 			end
 		end
 		love.graphics.setColor(255,255,255,255)
@@ -1338,80 +1357,80 @@ end
 
 function spikes_floor_left(tilex, tiley, ts)
 	for loopx = tilex, 0, -1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_floor_right(tilex, tiley, ts)
 	for loopx = tilex, 39, 1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_ceiling_left(tilex, tiley, ts)
 	for loopx = tilex, 0, -1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, -1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_ceiling_right(tilex, tiley, ts)
 	for loopx = tilex, 39, 1 do
-		if (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((tiley*40)+(loopx+1), 0, -1), ts)) then
+		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(tiley*40)+(loopx+1)] = useselectedtile
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
 
 function spikes_leftwall_up(tilex, tiley, ts)
 	for loopy = tiley, 0, -1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), -1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_leftwall_down(tilex, tiley, ts)
 	for loopy = tiley, 29, 1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), -1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_rightwall_up(tilex, tiley, ts)
 	for loopy = tiley, 0, -1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
 
 function spikes_rightwall_down(tilex, tiley, ts)
 	for loopy = tiley, 29, 1 do
-		if (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 0, 0), ts)) or not (issolidmultispikes(adjtile((loopy*40)+(tilex+1), 1, 0), ts)) then
+		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata[roomy][roomx][(loopy*40)+(tilex+1)] = useselectedtile
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1426,30 +1445,28 @@ end
 function getroomcopydata(rx, ry)
 	cons("Copying room " .. rx .. " " .. ry)
 
-	local roomnumber = ry*20 + (rx+1)
-
 	--local datatable = roomdata[ry][rx] of course this is by reference
 	local datatable = {}
-	for k,v in pairs(roomdata[ry][rx]) do
+	for k,v in pairs(roomdata_get(rx, ry)) do
 		datatable[k] = v
 	end
 
-	table.insert(datatable, 1, levelmetadata[roomnumber].tileset)
-	table.insert(datatable, 2, levelmetadata[roomnumber].tilecol)
-	table.insert(datatable, 3, levelmetadata[roomnumber].platx1)
-	table.insert(datatable, 4, levelmetadata[roomnumber].platy1)
-	table.insert(datatable, 5, levelmetadata[roomnumber].platx2)
-	table.insert(datatable, 6, levelmetadata[roomnumber].platy2)
-	table.insert(datatable, 7, levelmetadata[roomnumber].platv)
-	table.insert(datatable, 8, levelmetadata[roomnumber].enemyx1)
-	table.insert(datatable, 9, levelmetadata[roomnumber].enemyy1)
-	table.insert(datatable, 10, levelmetadata[roomnumber].enemyx2)
-	table.insert(datatable, 11, levelmetadata[roomnumber].enemyy2)
-	table.insert(datatable, 12, levelmetadata[roomnumber].enemytype)
-	table.insert(datatable, 13, levelmetadata[roomnumber].directmode)
-	table.insert(datatable, 14, levelmetadata[roomnumber].warpdir)
+	table.insert(datatable, 1, levelmetadata_get(rx, ry).tileset)
+	table.insert(datatable, 2, levelmetadata_get(rx, ry).tilecol)
+	table.insert(datatable, 3, levelmetadata_get(rx, ry).platx1)
+	table.insert(datatable, 4, levelmetadata_get(rx, ry).platy1)
+	table.insert(datatable, 5, levelmetadata_get(rx, ry).platx2)
+	table.insert(datatable, 6, levelmetadata_get(rx, ry).platy2)
+	table.insert(datatable, 7, levelmetadata_get(rx, ry).platv)
+	table.insert(datatable, 8, levelmetadata_get(rx, ry).enemyx1)
+	table.insert(datatable, 9, levelmetadata_get(rx, ry).enemyy1)
+	table.insert(datatable, 10, levelmetadata_get(rx, ry).enemyx2)
+	table.insert(datatable, 11, levelmetadata_get(rx, ry).enemyy2)
+	table.insert(datatable, 12, levelmetadata_get(rx, ry).enemytype)
+	table.insert(datatable, 13, levelmetadata_get(rx, ry).directmode)
+	table.insert(datatable, 14, levelmetadata_get(rx, ry).warpdir)
 	-- Inserting it directly is causing trouble, even with [1]
-	local aiguroomtext = levelmetadata[roomnumber].roomname:gsub(",", "´")
+	local aiguroomtext = levelmetadata_get(rx, ry).roomname:gsub(",", "´")
 	table.insert(datatable, 15, aiguroomtext)
 
 	return table.concat(datatable, ",")
@@ -1510,29 +1527,29 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 	end
 
 	-- Everything appears to be well and safe to paste!
-	local roomnumber = ry*20 + (rx+1)
-
-	levelmetadata[roomnumber].tileset, selectedtileset = explodeddata[1], explodeddata[1]
-	levelmetadata[roomnumber].tilecol, selectedcolor = explodeddata[2], explodeddata[2]
-	levelmetadata[roomnumber].platx1 = explodeddata[3]
-	levelmetadata[roomnumber].platy1 = explodeddata[4]
-	levelmetadata[roomnumber].platx2 = explodeddata[5]
-	levelmetadata[roomnumber].platy2 = explodeddata[6]
-	levelmetadata[roomnumber].platv = explodeddata[7]
-	levelmetadata[roomnumber].enemyx1 = explodeddata[8]
-	levelmetadata[roomnumber].enemyy1 = explodeddata[9]
-	levelmetadata[roomnumber].enemyx2 = explodeddata[10]
-	levelmetadata[roomnumber].enemyy2 = explodeddata[11]
-	levelmetadata[roomnumber].enemytype = explodeddata[12]
-	levelmetadata[roomnumber].directmode = explodeddata[13]
-	levelmetadata[roomnumber].warpdir = explodeddata[14]
-	levelmetadata[roomnumber].roomname = explodeddata[15]:gsub("´", ",")
+	levelmetadata_set(rx, ry, "tileset", explodeddata[1])
+	selectedtileset = explodeddata[1]
+	levelmetadata_set(rx, ry, "tilecol", explodeddata[2])
+	selectedcolor = explodeddata[2]
+	levelmetadata_set(rx, ry, "platx1", explodeddata[3])
+	levelmetadata_set(rx, ry, "platy1", explodeddata[4])
+	levelmetadata_set(rx, ry, "platx2", explodeddata[5])
+	levelmetadata_set(rx, ry, "platy2", explodeddata[6])
+	levelmetadata_set(rx, ry, "platv", explodeddata[7])
+	levelmetadata_set(rx, ry, "enemyx1", explodeddata[8])
+	levelmetadata_set(rx, ry, "enemyy1", explodeddata[9])
+	levelmetadata_set(rx, ry, "enemyx2", explodeddata[10])
+	levelmetadata_set(rx, ry, "enemyy2", explodeddata[11])
+	levelmetadata_set(rx, ry, "enemytype", explodeddata[12])
+	levelmetadata_set(rx, ry, "directmode", explodeddata[13])
+	levelmetadata_set(rx, ry, "warpdir", explodeddata[14])
+	levelmetadata_set(rx, ry, "roomname", explodeddata[15]:gsub("´", ","))
 
 	for i=1,15 do
 		table.remove(explodeddata, 1)
 	end
 
-	roomdata[ry][rx] = table.copy(explodeddata)
+	roomdata_set(rx, ry, table.copy(explodeddata))
 
 	temporaryroomname = L.ROOMPASTED
 	temporaryroomnametimer = 90
@@ -1561,8 +1578,6 @@ function mapcopy(x1, y1, x2, y2, skip_undo)
 		)
 		finish_undo("MAPCOPY")
 	end
-
-	map_resetroom(x2, y2)
 end
 
 function mapswap(x1, y1, x2, y2, skip_undo)
@@ -1582,9 +1597,6 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	copymoveentities(x2, y2, x1, y1, true)
 	copymoveentities(22, 22, x2, y2, true)
 	cons("Done...")
-
-	map_resetroom(x1, y1)
-	map_resetroom(x2, y2)
 end
 
 function rotateroom180(rx, ry, undoing)
@@ -1593,11 +1605,13 @@ function rotateroom180(rx, ry, undoing)
 		finish_undo("ROTATE ROOM 180")
 	end
 
-	local oldroom = table.copy(roomdata[ry][rx])
+	local oldroom = table.copy(roomdata_get(rx, ry))
 
+	local newroomdata = {}
 	for n = 1, 1200 do
-		roomdata[ry][rx][1201-n] = oldroom[n]
+		newroomdata[1201-n] = oldroom[n]
 	end
+	roomdata_set(rx, ry, newroomdata)
 
 	-- Now for the entities!
 	for k,v in pairs(entitydata) do
@@ -1704,8 +1718,8 @@ function autocorrectlines()
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(bt)], v.t) then
-						startat = bt
+					if issolidforgravline(roomdata_get(roomx, roomy, bt, v.y%30), v.t) then
+						startat = bt+1
 						break
 					end
 				end
@@ -1715,8 +1729,8 @@ function autocorrectlines()
 
 				-- Now to see how long it should be!
 				for ft = startat+1, 40 do
-					if issolidforgravline(roomdata[roomy][roomx][((v.y%30)*40)+(ft)], v.t) then
-						linelength = 8 * (ft-startat) - 8
+					if issolidforgravline(roomdata_get(roomx, roomy, ft, v.y%30), v.t) then
+						linelength = 8 * (ft-startat)
 						break
 					end
 				end
@@ -1736,7 +1750,7 @@ function autocorrectlines()
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
 					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(bt*40)+((v.x%40)+1)], v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, bt), v.t) then
 						startat = bt+1
 						break
 					end
@@ -1748,7 +1762,7 @@ function autocorrectlines()
 				-- Now to see how long it should be!
 				for ft = startat+1, 29 do
 					--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-					if issolidforgravline(roomdata[roomy][roomx][(ft*40)+((v.x%40)+1)], v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, ft), v.t) then
 						linelength = 8 * (ft-startat)
 						break
 					end
@@ -1774,7 +1788,6 @@ function undo()
 
 	if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
 		gotoroom(undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-		map_resetroom(roomx, roomy)
 	end
 	if undobuffer[#undobuffer].switchtool ~= nil then
 		selectedtool = undobuffer[#undobuffer].switchtool
@@ -1786,7 +1799,7 @@ function undo()
 			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
 		else
-			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 			autocorrectlines()
 		end
 	elseif undobuffer[#undobuffer].undotype == "addentity" then
@@ -1808,13 +1821,13 @@ function undo()
 		temporaryroomnametimer = 90
 	elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
 		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.oldvalue
+			levelmetadata_set(roomx, roomy, v.key, v.oldvalue)
 		end
 		if undobuffer[#undobuffer].changetiles then
-			roomdata[roomy][roomx] = table.copy(undobuffer[#undobuffer].toundotiles)
+			roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 			autocorrectlines()
-			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			selectedtileset = levelmetadata_get(roomx, roomy).tileset
+			selectedcolor = levelmetadata_get(roomx, roomy).tilecol
 		end
 	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
 		rotateroom180(roomx, roomy, true)
@@ -1872,7 +1885,6 @@ function redo()
 
 	if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
 		gotoroom(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
-		map_resetroom(roomx, roomy)
 	end
 	if redobuffer[#redobuffer].switchtool ~= nil then
 		selectedtool = redobuffer[#redobuffer].switchtool
@@ -1884,7 +1896,7 @@ function redo()
 			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
 		else
-			roomdata[roomy][roomx] = table.copy(redobuffer[#redobuffer].toredotiles)
+			roomdata_set(roomx, roomy, table.copy(redobuffer[#redobuffer].toredotiles))
 			autocorrectlines()
 		end
 	elseif redobuffer[#redobuffer].undotype == "addentity" then
@@ -1910,11 +1922,11 @@ function redo()
 		temporaryroomnametimer = 90
 	elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
 		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-			levelmetadata[roomy*20 + (roomx+1)][v.key] = v.newvalue
+			levelmetadata_set(roomx, roomy, v.key, v.newvalue)
 		end
 		if redobuffer[#redobuffer].changetiles then
-			selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-			selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			selectedtileset = levelmetadata_get(roomx, roomy).tileset
+			selectedcolor = levelmetadata_get(roomx, roomy).tilecol
 			autocorrectroom()
 		end
 	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
@@ -2017,16 +2029,13 @@ function finish_undo(description)
 		-- We just lost the state at which we saved, so we can't undo/redo back to that!
 		unsavedchanges = true
 	end
-
-	-- Also remove the current room from the map, as it was probably changed. Unless it wasn't, but no biggie.
-	map_resetroom(roomx, roomy)
 end
 
 function cutroom()
 	love.system.setClipboardText(getroomcopydata(roomx, roomy))
 
 	-- That's only a copy, now reset the room except for the tileset/col
-	setroomfromcopy(levelmetadata[roomy*20 + (roomx+1)].tileset .. "," .. levelmetadata[roomy*20 + (roomx+1)].tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
+	setroomfromcopy(levelmetadata_get(roomx, roomy).tileset .. "," .. levelmetadata_get(roomx, roomy).tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
 
 	temporaryroomname = L.ROOMCUT
 	temporaryroomnametimer = 90
@@ -2102,46 +2111,290 @@ function gotoroom_d()
 end
 
 function gotoroom_finish()
-	selectedtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-	selectedcolor = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+	selectedtileset = levelmetadata_get(roomx, roomy).tileset
+	selectedcolor = levelmetadata_get(roomx, roomy).tilecol
+end
+
+function levelmetadata_get(x, y, uselevel2)
+	-- NOTE: Never call this and set uselevel2 manually.
+	-- Instead, use levelmetadata2_get()
+	--
+	-- For the rooms after the first 20 rows, they essentially have default properties that can't be changed
+	-- (Unless you're willing to risk segfaulting upon loading the level by adding more room properties, which can be done, but the more you add the more you will overwrite and segfault)
+	-- But apparently some of them (sometimes?) have tileset 0 instead? Not really sure why
+	-- VVVVVV doesn't have direct mode on for these but manual mode would make it easier for these rooms to be edited in Ved
+	-- Also since plat bounds and enemy bounds are basically null, they fly off if they're not stuck in a tile
+	-- If you go further down enough script names from the script list will appear as roomnames, but I don't quite feel like emulating that in Ved
+	-- And if you keep going further down still the game will segfault
+	local usethislevelmetadata
+	if uselevel2 then
+		usethislevelmetadata = levelmetadata2
+	else
+		usethislevelmetadata = levelmetadata
+	end
+
+	local voided_metadata = {
+		tileset = 1,
+		tilecol = 0,
+		platx1 = 0,
+		platy1 = 0,
+		platx2 = 320,
+		platy2 = 240,
+		platv = 4,
+		enemyx1 = 0,
+		enemyy1 = 0,
+		enemyx2 = 320,
+		enemyy2 = 240,
+		enemytype = 0,
+		directmode = 1,
+		warpdir = 0,
+		roomname = "",
+		auto2mode = 0,
+	}
+
+	if y >= 20 then
+		return voided_metadata, true
+	end
+
+	local distortion = math.floor(x/20)
+	x = x % 20
+	y = y + distortion
+
+	if y < 20 then
+		return usethislevelmetadata[y*20 + x+1]
+	end
+
+	return voided_metadata, true
+end
+
+function levelmetadata_set(x, y, param1, param2)
+	local attribute, value
+	if param2 ~= nil then
+		attribute = param1
+		value = param2
+	else
+		value = param1
+	end
+
+	if y >= 20 then
+		return
+	end
+
+	local distortion = math.floor(x/20)
+	x = x % 20
+	y = y + distortion
+
+	if y >= 20 then
+		return
+	end
+
+	if attribute ~= nil then
+		levelmetadata[y*20 + x+1][attribute] = value
+	else
+		levelmetadata[y*20 + x+1] = value
+	end
+
+	map_correspondreset(x, y, {DIRTY.PROPERTY})
+end
+
+function levelmetadata2_get(x, y)
+	return levelmetadata_get(x, y, true)
+end
+
+function roomdata_get(rx, ry, tx, ty, uselevel2)
+	-- NOTE: Never call this and set uselevel2 manually.
+	-- Instead, use roomdata2_get()
+	local usethisroomdata
+	if uselevel2 then
+		usethisroomdata = roomdata2
+	else
+		usethisroomdata = roomdata
+	end
+
+	local just_one_tile = tx ~= nil
+
+	if just_one_tile then
+		if ry >= 20 then
+			ry = 0
+			ty = 0
+		end
+
+		local distortion = math.floor(rx/20)
+
+		rx = rx % 20
+		ry = ry + math.floor( (ty+distortion) / 30 )
+		ty = (ty+distortion) % 30
+
+		return usethisroomdata[ry][rx][ty*40 + tx+1]
+	end
+
+	local distortion = math.floor(rx/20)
+
+	local repeated_rows = false
+	if ry >= 20 then
+		repeated_rows = true
+		ry = 0
+	end
+
+	rx = rx % 20
+	ry = ry + math.floor(distortion/30)
+
+	distortion = distortion % 30
+
+	if repeated_rows then
+		local repeated_roomdata = {}
+		for ity = 1, 30 do
+			for itx = 1, 40 do
+				table.insert(repeated_roomdata, usethisroomdata[ry][rx][distortion*40 + itx])
+			end
+		end
+		return repeated_roomdata
+	end
+
+	local distorted_roomdata = table.copy(usethisroomdata[ry][rx])
+
+	for ity = 1, distortion do
+		for itx = 1, 40 do
+			table.remove(distorted_roomdata, 1)
+			table.insert(distorted_roomdata, usethisroomdata[ry+1][rx][(ity-1)*40 + itx])
+		end
+	end
+
+	return distorted_roomdata
+end
+
+function roomdata_set(rx, ry, param1, param2, param3)
+	local tx, ty, value
+	if param2 ~= nil then
+		tx = param1
+		ty = param2
+		value = param3
+	else
+		value = param1
+	end
+
+	local just_one_tile = tx ~= nil
+
+	if just_one_tile then
+		if ry >= 20 then
+			ry = 0
+			ty = 0
+		end
+
+		local distortion = math.floor(rx/20)
+
+		rx = rx % 20
+		ry = ry + math.floor( (ty+distortion) / 30 )
+		ty = (ty+distortion) % 30
+
+		roomdata[ry][rx][ty*40 + tx+1] = value
+
+		if ry >= 20 then
+			local absolute_outrow = (ry-20) * 30 + ty
+			map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+		else
+			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
+		end
+		return
+	end
+
+	local distortion = math.floor(rx/20)
+
+	local repeated_rows = false
+	if ry >= 20 then
+		repeated_rows = true
+		ry = 0
+	end
+
+	rx = rx % 20
+
+	distortion = distortion % 30
+
+	if repeated_rows then
+		for itx = 1, 40 do
+			roomdata[ry][rx][distortion*40 + itx] = value[itx]
+		end
+
+		map_correspondreset(rx, ry, {DIRTY.ROW}, {distortion})
+		return
+	end
+
+	local topsectrows = {}
+	local bottomsectrows = {}
+	for ity = 0, 29 do
+		for itx = 0, 39 do
+			if ity < 30-distortion then
+				roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
+				if ry >= 20 then
+					local absolute_outrow = (ry-20) * 30 + ity
+					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				else
+					table.insert(topsectrows, ity+distortion)
+				end
+			else
+				roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
+				if ry+1 >= 20 then
+					local absolute_outrow = (ry-19) * 30 + (ity+distortion) % 30
+					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				else
+					table.insert(bottomsectrows, (ity+distortion) % 30)
+				end
+			end
+		end
+	end
+
+	if ry < 20 then
+		map_correspondreset(rx, ry, {DIRTY.ROW}, topsectrows)
+	end
+	if ry+1 < 20 then
+		map_correspondreset(rx, ry+1, {DIRTY.ROW}, bottomsectrows)
+	end
+end
+
+function roomdata2_get(rx, ry, tx, ty)
+	return roomdata_get(rx, ry, tx, ty, true)
 end
 
 function shiftrooms(direction, updatescripts)
 	dirty()
 
+	local width, height
+	width = math.min(metadata.mapwidth, 20)
+	height = math.min(metadata.mapheight, 20)
+
 	-- Copy the rooms that are on the edge
 	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
 	if direction == SHIFT.LEFT then
-		for y = 0, metadata.mapheight-1 do
-			edgeroomdata[y] = table.copy(roomdata[y][0])
-			edgelevelmetadata[y] = table.copy(levelmetadata[y*20 + 1])
+		for y = 0, height-1 do
+			edgeroomdata[y] = table.copy(roomdata_get(0, y))
+			edgelevelmetadata[y] = table.copy(levelmetadata_get(0, y))
 			edgemapdata[y] = table.copy(rooms_map[y][0])
 			edgetrinketsdata[y] = map_trinkets[y][0]
 			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
 		end
 	elseif direction == SHIFT.RIGHT then
-		for y = 0, metadata.mapheight-1 do
-			edgeroomdata[y] = table.copy(roomdata[y][metadata.mapwidth-1])
-			edgelevelmetadata[y] = table.copy(levelmetadata[y*20 + metadata.mapwidth])
-			edgemapdata[y] = table.copy(rooms_map[y][metadata.mapwidth-1])
+		for y = 0, height-1 do
+			edgeroomdata[y] = table.copy(roomdata_get(width-1, y))
+			edgelevelmetadata[y] = table.copy(levelmetadata_get(width-1, y))
+			edgemapdata[y] = table.copy(rooms_map[y][width-1])
 			edgetrinketsdata[y] = map_trinkets[y][0]
 			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
 		end
 	elseif direction == SHIFT.UP then
-		for x = 0, metadata.mapwidth-1 do
-			edgeroomdata[x] = table.copy(roomdata[0][x])
-			edgelevelmetadata[x] = table.copy(levelmetadata[x+1])
+		for x = 0, width-1 do
+			edgeroomdata[x] = table.copy(roomdata_get(x, 0))
+			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, 0))
 			edgemapdata[x] = table.copy(rooms_map[0][x])
 			edgetrinketsdata[x] = map_trinkets[0][x]
 			edgecrewmatesdata[x] = table.copy(map_crewmates[0][x])
 		end
 	elseif direction == SHIFT.DOWN then
-		for x = 0, metadata.mapwidth-1 do
-			edgeroomdata[x] = table.copy(roomdata[metadata.mapheight-1][x])
-			edgelevelmetadata[x] = table.copy(levelmetadata[(metadata.mapheight-1)*20 + x+1])
-			edgemapdata[x] = table.copy(rooms_map[metadata.mapheight-1][x])
-			edgetrinketsdata[x] = map_trinkets[metadata.mapheight-1][x]
-			edgecrewmatesdata[x] = table.copy(map_crewmates[metadata.mapheight-1][x])
+		for x = 0, width-1 do
+			edgeroomdata[x] = table.copy(roomdata_get(x, height-1))
+			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, height-1))
+			edgemapdata[x] = table.copy(rooms_map[height-1][x])
+			edgetrinketsdata[x] = map_trinkets[height-1][x]
+			edgecrewmatesdata[x] = table.copy(map_crewmates[height-1][x])
 		end
 	end
 
@@ -2149,69 +2402,69 @@ function shiftrooms(direction, updatescripts)
 	-- Reverse the direction of updates as necessary, otherwise we'll trip over ourselves
 	-- and smear the row/column with the exact same room
 	if direction == SHIFT.LEFT then
-		for y = 0, metadata.mapheight-1 do
-			for x = 0, metadata.mapwidth-2 do
-				roomdata[y][x] = table.copy(roomdata[y][x+1])
-				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[y*20 + x+2])
+		for y = 0, height-1 do
+			for x = 0, width-2 do
+				roomdata_set(x, y, table.copy(roomdata_get(x+1, y)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x+1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x+1])
 				map_trinkets[y][x] = map_trinkets[y][x+1]
 				map_crewmates[y][x] = table.copy(map_crewmates[y][x+1])
 			end
 		end
-		for y = 0, metadata.mapheight-1 do
-			roomdata[y][metadata.mapwidth-1] = table.copy(edgeroomdata[y])
-			levelmetadata[y*20 + metadata.mapwidth] = table.copy(edgelevelmetadata[y])
-			rooms_map[y][metadata.mapwidth-1] = table.copy(edgemapdata[y])
-			map_trinkets[y][metadata.mapwidth-1] = edgetrinketsdata[y]
-			map_crewmates[y][metadata.mapwidth-1] = table.copy(edgecrewmatesdata[y])
+		for y = 0, height-1 do
+			roomdata_set(width-1, y, table.copy(edgeroomdata[y]))
+			levelmetadata_set(width-1, y, table.copy(edgelevelmetadata[y]))
+			rooms_map[y][width-1] = table.copy(edgemapdata[y])
+			map_trinkets[y][width-1] = edgetrinketsdata[y]
+			map_crewmates[y][width-1] = table.copy(edgecrewmatesdata[y])
 		end
 	elseif direction == SHIFT.RIGHT then
-		for y = 0, metadata.mapheight-1 do
-			for x = metadata.mapwidth-1, 1, -1 do
-				roomdata[y][x] = table.copy(roomdata[y][x-1])
-				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[y*20 + x])
+		for y = 0, height-1 do
+			for x = width-1, 1, -1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x-1, y)))
+				levelmetadata_get(x, y, table.copy(levelmetadata_get(x-1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
 				map_trinkets[y][x] = map_trinkets[y][x-1]
 				map_crewmates[y][x] = table.copy(map_crewmates[y][x-1])
 			end
 		end
-		for y = 0, metadata.mapheight-1 do
-			roomdata[y][0] = table.copy(edgeroomdata[y])
-			levelmetadata[y*20 + 1] = table.copy(edgelevelmetadata[y])
+		for y = 0, height-1 do
+			roomdata_set(0, y, table.copy(edgeroomdata[y]))
+			levelmetadata_set(0, y, table.copy(edgelevelmetadata[y]))
 			rooms_map[y][0] = table.copy(edgemapdata[y])
 			map_trinkets[y][0] = edgetrinketsdata[y]
 			map_crewmates[y][0] = table.copy(edgecrewmatesdata[y])
 		end
 	elseif direction == SHIFT.UP then
-		for y = 0, metadata.mapheight-2 do
-			for x = 0, metadata.mapwidth-1 do
-				roomdata[y][x] = table.copy(roomdata[y+1][x])
-				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[(y+1)*20 + x+1])
+		for y = 0, height-2 do
+			for x = 0, width-1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x, y+1)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y+1)))
 				rooms_map[y][x] = table.copy(rooms_map[y+1][x])
 				map_trinkets[y][x] = map_trinkets[y+1][x]
 				map_crewmates[y][x] = table.copy(map_crewmates[y+1][x])
 			end
 		end
-		for x = 0, metadata.mapwidth-1 do
-			roomdata[metadata.mapheight-1][x] = table.copy(edgeroomdata[x])
-			levelmetadata[(metadata.mapheight-1)*20 + x+1] = table.copy(edgelevelmetadata[x])
-			rooms_map[metadata.mapheight-1][x] = table.copy(edgemapdata[x])
-			map_trinkets[metadata.mapheight-1][x] = edgetrinketsdata[x]
-			map_crewmates[metadata.mapheight-1][x] = table.copy(edgecrewmatesdata[x])
+		for x = 0, width-1 do
+			roomdata_set(x, height-1, table.copy(edgeroomdata[x]))
+			levelmetadata_set(x, height-1, table.copy(edgelevelmetadata[x]))
+			rooms_map[height-1][x] = table.copy(edgemapdata[x])
+			map_trinkets[height-1][x] = edgetrinketsdata[x]
+			map_crewmates[height-1][x] = table.copy(edgecrewmatesdata[x])
 		end
 	elseif direction == SHIFT.DOWN then
-		for y = metadata.mapheight-1, 1, -1 do
-			for x = 0, metadata.mapwidth-1 do
-				roomdata[y][x] = table.copy(roomdata[y-1][x])
-				levelmetadata[y*20 + x+1] = table.copy(levelmetadata[(y-1)*20 + x+1])
+		for y = height-1, 1, -1 do
+			for x = 0, width-1 do
+				roomdata_set(x, y, table.copy(roomdata_get(x, y-1)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y-1)))
 				rooms_map[y][x] = table.copy(rooms_map[y-1][x])
 				map_trinkets[y][x] = map_trinkets[y-1][x]
 				map_crewmates[y][x] = table.copy(map_crewmates[y-1][x])
 			end
 		end
 		for x = 0, metadata.mapwidth-1 do
-			roomdata[0][x] = table.copy(edgeroomdata[x])
-			levelmetadata[x+1] = table.copy(edgelevelmetadata[x])
+			roomdata_set(x, 0, table.copy(edgeroomdata[x]))
+			levelmetadata_set(x, 0, table.copy(edgelevelmetadata[x]))
 			rooms_map[0][x] = table.copy(edgemapdata[x])
 			map_trinkets[0][x] = edgetrinketsdata[x]
 			map_crewmates[0][x] = table.copy(edgecrewmatesdata[x])
@@ -2221,56 +2474,56 @@ function shiftrooms(direction, updatescripts)
 	-- Entities, making sure to take care of warp token destinations as well
 	local newx, newy, newp1, newp2
 	for idx, ent in pairs(entitydata) do
-		if ent.x < 0 or ent.y < 0 or ent.x >= 40*metadata.mapwidth or ent.y >= 30*metadata.mapheight then
+		if ent.x < 0 or ent.y < 0 or ent.x >= 40*width or ent.y >= 30*height then
 		elseif direction == SHIFT.LEFT then
 			newx = ent.x - 40
 			if newx < 0 then
-				newx = newx + 40*metadata.mapwidth
+				newx = newx + 40*width
 			end
 			entitydata[idx].x = newx
 			if ent.t == 13 then
 				newp1 = ent.p1 - 40
 				if newp1 < 0 then
-					newp1 = newp1 + 40*metadata.mapwidth
+					newp1 = newp1 + 40*width
 				end
 				entitydata[idx].p1 = newp1
 			end
 		elseif direction == SHIFT.RIGHT then
 			newx = ent.x + 40
-			if newx >= 40*metadata.mapwidth then
-				newx = newx - 40*metadata.mapwidth
+			if newx >= 40*width then
+				newx = newx - 40*width
 			end
 			entitydata[idx].x = newx
 			if ent.t == 13 then
 				newp1 = ent.p1 + 40
-				if newp1 >= 40*metadata.mapwidth then
-					newp1 = newp1 - 40*metadata.mapwidth
+				if newp1 >= 40*width then
+					newp1 = newp1 - 40*width
 				end
 				entitydata[idx].p1 = newp1
 			end
 		elseif direction == SHIFT.UP then
 			newy = ent.y - 30
 			if newy < 0 then
-				newy = newy + 30*metadata.mapheight
+				newy = newy + 30*height
 			end
 			entitydata[idx].y = newy
 			if ent.t == 13 then
 				newp2 = ent.p2 - 30
 				if newp2 < 0 then
-					newp2 = newp2 + 30*metadata.mapheight
+					newp2 = newp2 + 30*height
 				end
 				entitydata[idx].p2 = newp2
 			end
 		elseif direction == SHIFT.DOWN then
 			newy = ent.y + 30
-			if newy >= 30*metadata.mapheight then
-				newy = newy - 30*metadata.mapheight
+			if newy >= 30*height then
+				newy = newy - 30*height
 			end
 			entitydata[idx].y = newy
 			if ent.t == 13 then
 				newp2 = ent.p2 + 30
-				if newp2 >= 30*metadata.mapheight then
-					newp2 = newp2 - 30*metadata.mapheight
+				if newp2 >= 30*height then
+					newp2 = newp2 - 30*height
 				end
 				entitydata[idx].p2 = newp2
 			end
@@ -2288,8 +2541,8 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.DOWN then
 		ry = ry + 1
 	end
-	rx = rx % metadata.mapwidth
-	ry = ry % metadata.mapheight
+	rx = rx % width
+	ry = ry % height
 	gotoroom(rx, ry)
 
 	-- Scripts
@@ -2301,10 +2554,14 @@ function shiftrooms(direction, updatescripts)
 	local transform = {}
 	transform[1] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
+		local width, height
+		width = math.min(metadata.mapwidth, 20)
+		height = math.min(metadata.mapheight, 20)
 		if x ~= nil and y ~= nil then
-			local x_outofbounds = x < 0 or x >= metadata.mapwidth
-			local y_outofbounds = y < 0 or y >= metadata.mapwidth
-			if direction == SHIFT.LEFT then
+			local x_outofbounds = x < 0 or x >= width
+			local y_outofbounds = y < 0 or y >= width
+			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			elseif direction == SHIFT.LEFT then
 				x = x - 1
 				if x < 0 and not x_outofbounds and not y_outofbounds then
 					x = x + metadata.mapwidth
@@ -2338,10 +2595,14 @@ function shiftrooms(direction, updatescripts)
 	end)
 	transform[2] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
+		local width, height
+		width = math.min(metadata.mapwidth, 20)
+		height = math.min(metadata.mapheight, 20)
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= metadata.mapwidth
 			local y_outofbounds = y < 0 or y >= metadata.mapheight
-			if not x_outofbounds and not y_outofbounds then
+			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			elseif not x_outofbounds and not y_outofbounds then
 				if direction == SHIFT.LEFT then
 					x = x - 1
 				elseif direction == SHIFT.RIGHT then

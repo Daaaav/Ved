@@ -2459,3 +2459,11 @@ SHIFT = {
 	UP = 3,
 	DOWN = 4,
 }
+
+-- For map_correspondreset()
+DIRTY = {
+	ROW = 1,
+	OUTROW29 = 2,
+	PROPERTY = 3,
+	ENTITY = 4,
+}

@@ -12,10 +12,10 @@ function map_init()
 		collectgarbage("collect")
 	end
 
-	for y = 0, 19 do
+	for y = 0, metadata.mapheight-1 do
 		rooms_map[y] = {}
 
-		for x = 0, 19 do
+		for x = 0, metadata.mapwidth-1 do
 			map_initroom(x, y)
 		end
 	end
@@ -75,8 +75,90 @@ function map_initroom(x, y)
 	}
 end
 
+function map_correspondreset(x, y, dirty_attrs, dirty_rows)
+	local rooms = {}
+	local function dirty(rooms, x, y)
+		local alreadyexists = false
+		for _,r in pairs(rooms) do
+			if x == r[1] and y == r[2] then
+				alreadyexists = true
+				break
+			end
+		end
+		if not alreadyexists then
+			table.insert(rooms, {x, y})
+		end
+	end
+
+	for _,attr in pairs(dirty_attrs) do
+		if attr == DIRTY.ROW then
+			for _,row in pairs(dirty_rows) do
+				local absolute_row = 30*y + row
+				for mrx = x, metadata.mapwidth-1, 20 do
+					local roomywithrow = math.floor(absolute_row/30)
+					dirty(rooms, mrx, roomywithrow)
+
+					absolute_row = absolute_row - 1
+					if absolute_row < 0 then
+						break
+					end
+				end
+
+				if metadata.mapheight > 20 then
+					absolute_row = 30*y + row
+					for mrx = x, metadata.mapwidth-1, 20 do
+						local distortion = math.floor(mrx/20)
+						if absolute_row == distortion then
+							for mry = 20, metadata.mapheight-1 do
+								dirty(rooms, mrx, mry)
+							end
+						end
+					end
+				end
+			end
+		elseif attr == DIRTY.OUTROW29 then
+			local absolute_row = 19*30 + 29 -- tile row 29 on room row 19
+			for mrx = x, metadata.mapwidth-1, 20 do
+				local roomywithrow = math.floor(absolute_row/30)
+				dirty(rooms, mrx, roomywithrow)
+
+				absolute_row = absolute_row - 1
+				if absolute_row < 0 then
+					break
+				end
+			end
+		elseif attr == DIRTY.PROPERTY then
+			local mry = y
+			local cnt = 0
+			for mrx = x, metadata.mapwidth-1, 20 do
+				cnt = cnt + 1
+				dirty(rooms, mrx, mry)
+
+				mry = mry - 1
+				if mry < 0 then
+					break
+				end
+			end
+		elseif attr == DIRTY.ENTITY then
+			dirty(rooms, x, y)
+		end
+	end
+
+	for _,r in pairs(rooms) do
+		map_resetroom(r[1], r[2])
+	end
+end
+
 function map_resetroom(x, y)
 	-- Reset one room on the map, and marks it as dirty.
+	rooms_map[y] = rooms_map[y] or {}
+	rooms_map[y][x] = rooms_map[y][x] or {}
+
+	if rooms_map[y][x].done ~= nil and not rooms_map[y][x].done and rooms_map[y][x].map == nil then
+		-- We've already reset this, so don't do it again
+		return
+	end
+
 	rooms_map[y][x].done = false
 	rooms_map[y][x].map = nil
 	local n_dirty = #rooms_map_dirty_rooms
@@ -104,7 +186,7 @@ function map_doroom(x, y)
 		--love.graphics.setColor(0,0,0,255)
 		--love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
-		displayroom(0, 0, roomdata[y][x], levelmetadata[y*20 + x+1], 0.5)
+		displayroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y), 0.5)
 		love.graphics.setCanvas()
 
 		rooms_map[y][x].map = canvas
