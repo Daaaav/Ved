@@ -533,11 +533,11 @@ function loadstate(new, ...)
 		end
 
 		basic_stats = {
-			{L.AMOUNTSCRIPTS, #scriptnames, 500},
-			{L.AMOUNTUSEDFLAGS, n_usedflags, 100},
-			{L.AMOUNTENTITIES, anythingbutnil0(count.entities), 3000},
-			{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), 20},
-			{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), 20},
+			{L.AMOUNTSCRIPTS, #scriptnames, limit.scripts, 500},
+			{L.AMOUNTUSEDFLAGS, n_usedflags, limit.flags, 100},
+			{L.AMOUNTENTITIES, anythingbutnil0(count.entities), limit.entities, 3000},
+			{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), limit.trinkets, 100},
+			{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), limit.crewmates, 100},
 		}
 
 		basic_stats_max_text_width = 0

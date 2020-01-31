@@ -173,7 +173,7 @@ function addrooms(neww, newh)
 		end
 
 		for x = 0, neww-1 do
-			if x >= ( y < math.min(newh, 20) and neww or 20 ) or y >= 20 then
+			if x >= ( y < math.min(newh, limit.mapheight) and neww or limit.mapwidth ) or y >= limit.mapheight then
 				map_resetroom(x, y)
 			elseif roomdata[y][x] == nil then
 				roomdata[y][x] = {}
@@ -185,17 +185,17 @@ function addrooms(neww, newh)
 		end
 	end
 
-	if neww > 20 then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (neww-1) / 20 )
+	if neww > limit.mapwidth then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (neww-1) / limit.mapwidth )
 		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(newh, 20)
+		local capped_height = math.min(newh, limit.mapheight)
 		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
 			roomdata[yk] = roomdata[yk] or {}
 
-			for xk = 0, 19 do
+			for xk = 0, limit.mapwidth-1 do
 				roomdata[yk][xk] = roomdata[yk][xk] or {}
 
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < neww%20 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < neww%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
 					for xt = 0, 39 do
 						roomdata[yk][xk][yt*40 + xt+1] = roomdata[yk][xk][yt*40 + xt+1] or 0
 					end
@@ -399,7 +399,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (count.trinkets >= 20 and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_9_" .. k,
+				{"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (count.trinkets >= limit.trinkets and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_9_" .. k,
 				2, 2
 			)
 		end
@@ -546,7 +546,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (count.crewmates >= 20 and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_15_" .. k,
+				{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (count.crewmates >= limit.crewmates and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_15_" .. k,
 				2, 3
 			)
 		end
@@ -763,7 +763,7 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 				cons("Checking alt+shift+click to copy entity...")
 				for k2,v2 in pairs(menuitems) do
 					if v2 == L.COPY or v2 == L.COPYENTRANCE then
-						-- The nice thing is, this can't be a trinket/crewmate when 20 already
+						-- The nice thing is, this can't be a trinket/crewmate when 100 already
 						-- exist, since the menu item would be "#Copy" to disable it
 						setcopyingentity(tonumber(entdetails[3]))
 						break
@@ -1239,7 +1239,7 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 				entitydata[k].x = entitydata[k].x + (40*roomxdiff)
 				entitydata[k].y = entitydata[k].y + (30*roomydiff)
 			else
-				if v.t == 16 or (v.t == 9 and count.trinkets >= 20) or (v.t == 15 and count.crewmates >= 20) then
+				if v.t == 16 or (v.t == 9 and count.trinkets >= limit.trinkets) or (v.t == 15 and count.crewmates >= limit.crewmates) then
 					-- Nope. Can't copy this.
 				else
 					if v.t == 9 then
@@ -2152,16 +2152,16 @@ function levelmetadata_get(x, y, uselevel2)
 		auto2mode = 0,
 	}
 
-	if y >= 20 then
+	if y >= limit.mapheight then
 		return voided_metadata, true
 	end
 
-	local distortion = math.floor(x/20)
-	x = x % 20
+	local distortion = math.floor(x/limit.mapwidth)
+	x = x % limit.mapwidth
 	y = y + distortion
 
-	if y < 20 then
-		return usethislevelmetadata[y*20 + x+1]
+	if y < limit.mapheight then
+		return usethislevelmetadata[y*limit.mapwidth + x+1] -- TODO: Change levelmetadata to 2D instead of 1D
 	end
 
 	return voided_metadata, true
@@ -2176,22 +2176,22 @@ function levelmetadata_set(x, y, param1, param2)
 		value = param1
 	end
 
-	if y >= 20 then
+	if y >= limit.mapheight then
 		return
 	end
 
-	local distortion = math.floor(x/20)
-	x = x % 20
+	local distortion = math.floor(x/limit.mapwidth)
+	x = x % limit.mapwidth
 	y = y + distortion
 
-	if y >= 20 then
+	if y >= limit.mapheight then
 		return
 	end
 
 	if attribute ~= nil then
-		levelmetadata[y*20 + x+1][attribute] = value
+		levelmetadata[y*limit.mapwidth + x+1][attribute] = value
 	else
-		levelmetadata[y*20 + x+1] = value
+		levelmetadata[y*limit.mapwidth + x+1] = value
 	end
 
 	map_correspondreset(x, y, {DIRTY.PROPERTY})
@@ -2214,29 +2214,29 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 	local just_one_tile = tx ~= nil
 
 	if just_one_tile then
-		if ry >= 20 then
+		if ry >= limit.mapheight then
 			ry = 0
 			ty = 0
 		end
 
-		local distortion = math.floor(rx/20)
+		local distortion = math.floor(rx/limit.mapwidth)
 
-		rx = rx % 20
+		rx = rx % limit.mapwidth
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
 
 		return usethisroomdata[ry][rx][ty*40 + tx+1]
 	end
 
-	local distortion = math.floor(rx/20)
+	local distortion = math.floor(rx/limit.mapwidth)
 
 	local repeated_rows = false
-	if ry >= 20 then
+	if ry >= limit.mapheight then
 		repeated_rows = true
 		ry = 0
 	end
 
-	rx = rx % 20
+	rx = rx % limit.mapwidth
 	ry = ry + math.floor(distortion/30)
 
 	distortion = distortion % 30
@@ -2276,37 +2276,37 @@ function roomdata_set(rx, ry, param1, param2, param3)
 	local just_one_tile = tx ~= nil
 
 	if just_one_tile then
-		if ry >= 20 then
+		if ry >= limit.mapheight then
 			ry = 0
 			ty = 0
 		end
 
-		local distortion = math.floor(rx/20)
+		local distortion = math.floor(rx/limit.mapwidth)
 
-		rx = rx % 20
+		rx = rx % limit.mapwidth
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
 
 		roomdata[ry][rx][ty*40 + tx+1] = value
 
-		if ry >= 20 then
-			local absolute_outrow = (ry-20) * 30 + ty
-			map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+		if ry >= limit.mapheight then
+			local absolute_outrow = (ry-limit.mapheight) * 30 + ty
+			map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
 		else
 			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
 		end
 		return
 	end
 
-	local distortion = math.floor(rx/20)
+	local distortion = math.floor(rx/limit.mapwidth)
 
 	local repeated_rows = false
-	if ry >= 20 then
+	if ry >= limit.mapheight then
 		repeated_rows = true
 		ry = 0
 	end
 
-	rx = rx % 20
+	rx = rx % limit.mapwidth
 
 	distortion = distortion % 30
 
@@ -2325,17 +2325,17 @@ function roomdata_set(rx, ry, param1, param2, param3)
 		for itx = 0, 39 do
 			if ity < 30-distortion then
 				roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
-				if ry >= 20 then
-					local absolute_outrow = (ry-20) * 30 + ity
-					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				if ry >= limit.mapheight then
+					local absolute_outrow = (ry-limit.mapheight) * 30 + ity
+					map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
 				else
 					table.insert(topsectrows, ity+distortion)
 				end
 			else
 				roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
-				if ry+1 >= 20 then
-					local absolute_outrow = (ry-19) * 30 + (ity+distortion) % 30
-					map_correspondreset(rx + 20 + absolute_outrow*20, 19, {DIRTY.OUTROW29})
+				if ry+1 >= limit.mapheight then
+					local absolute_outrow = (ry-limit.mapheight-1) * 30 + (ity+distortion) % 30
+					map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
 				else
 					table.insert(bottomsectrows, (ity+distortion) % 30)
 				end
@@ -2343,10 +2343,10 @@ function roomdata_set(rx, ry, param1, param2, param3)
 		end
 	end
 
-	if ry < 20 then
+	if ry < limit.mapheight then
 		map_correspondreset(rx, ry, {DIRTY.ROW}, topsectrows)
 	end
-	if ry+1 < 20 then
+	if ry+1 < limit.mapheight then
 		map_correspondreset(rx, ry+1, {DIRTY.ROW}, bottomsectrows)
 	end
 end
@@ -2359,8 +2359,8 @@ function shiftrooms(direction, updatescripts)
 	dirty()
 
 	local width, height
-	width = math.min(metadata.mapwidth, 20)
-	height = math.min(metadata.mapheight, 20)
+	width = math.min(metadata.mapwidth, limit.mapwidth)
+	height = math.min(metadata.mapheight, limit.mapwidth)
 
 	-- Copy the rooms that are on the edge
 	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
@@ -2422,7 +2422,7 @@ function shiftrooms(direction, updatescripts)
 		for y = 0, height-1 do
 			for x = width-1, 1, -1 do
 				roomdata_set(x, y, table.copy(roomdata_get(x-1, y)))
-				levelmetadata_get(x, y, table.copy(levelmetadata_get(x-1, y)))
+				levelmetadata_set(x, y, table.copy(levelmetadata_get(x-1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
 				map_trinkets[y][x] = map_trinkets[y][x-1]
 				map_crewmates[y][x] = table.copy(map_crewmates[y][x-1])
@@ -2462,7 +2462,7 @@ function shiftrooms(direction, updatescripts)
 				map_crewmates[y][x] = table.copy(map_crewmates[y-1][x])
 			end
 		end
-		for x = 0, metadata.mapwidth-1 do
+		for x = 0, width-1 do
 			roomdata_set(x, 0, table.copy(edgeroomdata[x]))
 			levelmetadata_set(x, 0, table.copy(edgelevelmetadata[x]))
 			rooms_map[0][x] = table.copy(edgemapdata[x])
@@ -2555,8 +2555,8 @@ function shiftrooms(direction, updatescripts)
 	transform[1] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
 		local width, height
-		width = math.min(metadata.mapwidth, 20)
-		height = math.min(metadata.mapheight, 20)
+		width = math.min(metadata.mapwidth, limit.mapwidth)
+		height = math.min(metadata.mapheight, limit.mapheight)
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= width
 			local y_outofbounds = y < 0 or y >= width
@@ -2596,8 +2596,8 @@ function shiftrooms(direction, updatescripts)
 	transform[2] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
 		local width, height
-		width = math.min(metadata.mapwidth, 20)
-		height = math.min(metadata.mapheight, 20)
+		width = math.min(metadata.mapwidth, limit.mapwidth)
+		height = math.min(metadata.mapheight, limit.mapheight)
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= metadata.mapwidth
 			local y_outofbounds = y < 0 or y >= metadata.mapheight

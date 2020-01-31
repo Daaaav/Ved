@@ -887,9 +887,10 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if metadata.mapwidth <= 20 and metadata.mapheight <= 20 and (w > 20 or h > 20) then
+		if metadata.mapwidth <= limit.mapwidth and metadata.mapheight <= limit.mapheight
+		and (w > limit.mapwidth or h > limit.mapheight) then
 			local newbuttons
-			if s.allowbiggerthan20x20 then
+			if s.allowbiggerthansizelimit then
 				newbuttons = {L.BTN_OVERRIDE, L.BTN_DONTOVERRIDE}
 			end
 			-- Hack to smuggle the fields through the bigger size confirmation dialog
@@ -903,7 +904,7 @@ function dialog.callback.leveloptions(button, fields)
 			dialog.create(
 				langkeys(
 					L.SIZELIMIT,
-					{math.min(w, 20), math.min(h, 20)}
+					{math.min(w, limit.mapwidth), math.min(h, limit.mapheight)}
 				),
 				newbuttons,
 				dialog.callback.leveloptions_maxlevelsize,
@@ -1063,7 +1064,11 @@ function dialog.callback.leveloptions_maxlevelsize(button, fields)
 		dialog.create(
 			langkeys(
 				L.CONFIRMBIGGERSIZE,
-				{fields.mapwidth, fields.mapheight, math.min(fields.mapwidth, 20), math.min(fields.mapheight, 20)}
+				{
+					fields.mapwidth, fields.mapheight,
+					limit.mapwidth, limit.mapheight,
+					math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight)
+				}
 			),
 			DBS.YESNO,
 			dialog.callback.leveloptions_biggersize,
@@ -1071,8 +1076,8 @@ function dialog.callback.leveloptions_maxlevelsize(button, fields)
 			newfields
 		)
 	elseif button == L.BTN_DONTOVERRIDE then
-		metadata.mapwidth = math.min(fields.mapwidth, 20)
-		metadata.mapheight = math.min(fields.mapheight, 20)
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
 		addrooms(metadata.mapwidth, metadata.mapheight)
 		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 
@@ -1088,8 +1093,8 @@ end
 
 function dialog.callback.leveloptions_biggersize(button, fields)
 	if button == DB.NO then
-		metadata.mapwidth = math.min(fields.mapwidth, 20)
-		metadata.mapheight = math.min(fields.mapheight, 20)
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
 	elseif button == DB.YES then
 		metadata.mapwidth = fields.mapwidth
 		metadata.mapheight = fields.mapheight
@@ -1100,5 +1105,5 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 
 	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
-	finish_undo("CHANGED METADATA (bigger than 20x20 size, also ugly hack)")
+	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
 end

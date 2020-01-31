@@ -1203,7 +1203,7 @@ function love.draw()
 		end
 	elseif state == 28 then
 		-- Stats screen
-		-- basic_stats has elements: {name, value, max}
+		-- basic_stats has elements: {name, value, max, vvvvvvmax}
 		local p100 = love.graphics.getWidth() - 40 - basic_stats_max_text_width
 		for k,v in pairs(basic_stats) do
 			ved_print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k)

@@ -558,7 +558,7 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
-			if count.trinkets >= 20 then
+			if count.trinkets >= limit.trinkets then
 				dialog.create(L.MAXTRINKETS)
 			else
 				cons("Trinket: " .. atx .. " " .. aty)
@@ -1054,7 +1054,7 @@ function drawmaineditor()
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate				
-			if count.crewmates >= 20 then
+			if count.crewmates >= limit.crewmates then
 				dialog.create(L.MAXCREWMATES)
 				mousepressed = true
 			else
@@ -1244,7 +1244,7 @@ function drawmaineditor()
 				displayminimapgrid = true
 			end
 		end
-		if roomx >= 20 or roomy >= 20 then
+		if roomx >= limit.mapwidth or roomy >= limit.mapheight then
 			displayminimapgrid = false
 		end
 		-- Display the room now including its entities
@@ -1821,15 +1821,17 @@ function drawmaineditor()
 
 		love.graphics.setScissor()
 
-		-- Display the minimap of the current room, just underneath our subtools
-		local atx, aty = getcursor()
-		local zoom = getminimapzoom(metadata)
-		love.graphics.setColor(255, 255, 255, 63)
-		love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
-		displayminimaproom(72, love.graphics.getHeight()-37, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
-		love.graphics.setColor(255, 255, 255, 255)
+		if roomx < limit.mapwidth and roomy < limit.mapheight then
+			-- Display the minimap of the current room, just underneath our subtools
+			local atx, aty = getcursor()
+			local zoom = getminimapzoom(metadata)
+			love.graphics.setColor(255, 255, 255, 63)
+			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
+			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
+			displayminimaproom(72, love.graphics.getHeight()-37, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), 4/zoom, atx, aty)
+			love.graphics.setColor(255, 255, 255, 255)
+		end
 
 		if thistooltip ~= "" and window_active() then
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
@@ -2327,8 +2329,8 @@ function drawmaineditor()
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	ved_printf(
-		L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
-		.. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
+		L.ONETRINKETS .. fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
+		.. L.ONECREWMATES .. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
 		.. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""),
 		640+screenoffset+2, love.graphics.getHeight()-16-10, 128, "left"
 	)
