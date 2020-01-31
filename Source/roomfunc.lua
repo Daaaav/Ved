@@ -2116,7 +2116,7 @@ function gotoroom_finish()
 end
 
 function levelmetadata_get(x, y, uselevel2)
-	-- NOTE: Never call this and set uselevel2 manually.
+	-- NOTE: Never set uselevel2 manually.
 	-- Instead, use levelmetadata2_get()
 	--
 	-- For the rooms after the first 20 rows, they essentially have default properties that can't be changed
@@ -2202,7 +2202,7 @@ function levelmetadata2_get(x, y)
 end
 
 function roomdata_get(rx, ry, tx, ty, uselevel2)
-	-- NOTE: Never call this and set uselevel2 manually.
+	-- NOTE: Never set uselevel2 manually.
 	-- Instead, use roomdata2_get()
 	local usethisroomdata
 	if uselevel2 then
@@ -2212,28 +2212,21 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 	end
 
 	local just_one_tile = tx ~= nil
-
-	if just_one_tile then
-		if ry >= limit.mapheight then
-			ry = 0
-			ty = 0
-		end
-
-		local distortion = math.floor(rx/limit.mapwidth)
-
-		rx = rx % limit.mapwidth
-		ry = ry + math.floor( (ty+distortion) / 30 )
-		ty = (ty+distortion) % 30
-
-		return usethisroomdata[ry][rx][ty*40 + tx+1]
-	end
-
 	local distortion = math.floor(rx/limit.mapwidth)
 
 	local repeated_rows = false
 	if ry >= limit.mapheight then
 		repeated_rows = true
 		ry = 0
+		ty = 0
+	end
+
+	if just_one_tile then
+		rx = rx % limit.mapwidth
+		ry = ry + math.floor( (ty+distortion) / 30 )
+		ty = (ty+distortion) % 30
+
+		return usethisroomdata[ry][rx][ty*40 + tx+1]
 	end
 
 	rx = rx % limit.mapwidth
@@ -2274,15 +2267,16 @@ function roomdata_set(rx, ry, param1, param2, param3)
 	end
 
 	local just_one_tile = tx ~= nil
+	local distortion = math.floor(rx/limit.mapwidth)
+
+	local repeated_rows = false
+	if ry >= limit.mapheight then
+		repeated_rows = true
+		ry = 0
+		ty = 0
+	end
 
 	if just_one_tile then
-		if ry >= limit.mapheight then
-			ry = 0
-			ty = 0
-		end
-
-		local distortion = math.floor(rx/limit.mapwidth)
-
 		rx = rx % limit.mapwidth
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
@@ -2296,14 +2290,6 @@ function roomdata_set(rx, ry, param1, param2, param3)
 			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
 		end
 		return
-	end
-
-	local distortion = math.floor(rx/limit.mapwidth)
-
-	local repeated_rows = false
-	if ry >= limit.mapheight then
-		repeated_rows = true
-		ry = 0
 	end
 
 	rx = rx % limit.mapwidth
