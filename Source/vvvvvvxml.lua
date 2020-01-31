@@ -21,6 +21,15 @@ function loadlevelmetadata(path)
 		return false, contents
 	end
 
+	-- What kind of level is this?
+	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"[0-9]+\">")
+	if vce_m ~= nil then
+		thismetadata.target = "VCE"
+		thismetadata.target_ver = tonumber(vce_m)
+	else
+		thismetadata.target = "V"
+	end
+
 	-- First do the metadata.
 	cons("Loading metadata...")
 	local xmetadata = contents:match("<MetaData>(.*)</MetaData>")
