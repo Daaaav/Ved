@@ -2088,7 +2088,9 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 
 	if viakeyboard then
 		distance = 10*46
-		if table.contains({"pageup", "home"}, mkinput) then
+		if takinginput and table.contains({"home", "end"}, mkinput) then
+			return
+		elseif table.contains({"pageup", "home"}, mkinput) then
 			direction = "u"
 		elseif table.contains({"pagedown", "end"}, mkinput) then
 			direction = "d"
@@ -2105,171 +2107,173 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		distance = customdistance
 	end
 
-	if direction ~= nil then
-		if dialog.is_open() then
-			local topdialog = dialogs[#dialogs]
-			local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
-			local cf = dialogs[#dialogs].currentfield
-			local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[6] == DF.TEXT
-			if k ~= nil then
-				local fieldscroll = topdialog.fields[k][10]
-				if direction == "u" then
-					if mkinput == "home" and not cfistext then
+	if direction == nil then
+		return
+	end
+
+	if dialog.is_open() then
+		local topdialog = dialogs[#dialogs]
+		local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
+		local cf = dialogs[#dialogs].currentfield
+		local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[6] == DF.TEXT
+		if k ~= nil then
+			local fieldscroll = topdialog.fields[k][10]
+			if direction == "u" then
+				if mkinput == "home" and not cfistext then
+					fieldscroll = 0
+				elseif mkinput == "pageup" then
+					fieldscroll = fieldscroll + distance
+					if fieldscroll > 0 then
 						fieldscroll = 0
-					elseif mkinput == "pageup" then
-						fieldscroll = fieldscroll + distance
-						if fieldscroll > 0 then
-							fieldscroll = 0
-						end
 					end
-				elseif direction == "d" then
-					local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
-					if mkinput == "end" and not cfistext then
+				end
+			elseif direction == "d" then
+				local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
+				if mkinput == "end" and not cfistext then
+					fieldscroll = math.min(-upperbound, 0)
+				elseif mkinput == "pagedown" then
+					fieldscroll = fieldscroll - distance
+					if -fieldscroll > upperbound then
 						fieldscroll = math.min(-upperbound, 0)
-					elseif mkinput == "pagedown" then
-						fieldscroll = fieldscroll - distance
-						if -fieldscroll > upperbound then
-							fieldscroll = math.min(-upperbound, 0)
-						end
 					end
 				end
-				dialogs[#dialogs].fields[k][10] = fieldscroll
 			end
-		elseif state == 3 and not viakeyboard then
-			if direction == "u" then
-				scriptscroll = scriptscroll + distance
-				if scriptscroll > 0 then
-					scriptscroll = 0
-				end
-			elseif direction == "d" then
-				scriptscroll = scriptscroll - distance
-				local textscale = s.scripteditor_largefont and 2 or 1
-				local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
-				if -scriptscroll > upperbound then
-					scriptscroll = math.min(-upperbound, 0)
+			dialogs[#dialogs].fields[k][10] = fieldscroll
+		end
+	elseif state == 3 and not viakeyboard then
+		if direction == "u" then
+			scriptscroll = scriptscroll + distance
+			if scriptscroll > 0 then
+				scriptscroll = 0
+			end
+		elseif direction == "d" then
+			scriptscroll = scriptscroll - distance
+			local textscale = s.scripteditor_largefont and 2 or 1
+			local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
+			if -scriptscroll > upperbound then
+				scriptscroll = math.min(-upperbound, 0)
+			end
+		end
+	elseif state == 6 then
+		if direction == "u" then
+			levellistscroll = levellistscroll + distance
+			if levellistscroll > 0 then
+				levellistscroll = 0
+			end
+		elseif direction == "d" then
+			levellistscroll = levellistscroll - distance
+			local lessheight = 48
+			if #s.recentfiles > 0 and input == "" and input_r == "" then
+				lessheight = lessheight + 16 + #s.recentfiles*8
+			end
+			local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
+			if -levellistscroll > upperbound then
+				levellistscroll = math.min(-upperbound, 0)
+			end
+		end
+	elseif state == 10 then
+		if direction == "u" then
+			if mkinput == "home" then
+				scriptlistscroll = 0
+			else
+				scriptlistscroll = scriptlistscroll + distance
+				if scriptlistscroll > 0 then
+					scriptlistscroll = 0
 				end
 			end
-		elseif state == 6 then
-			if direction == "u" then
-				levellistscroll = levellistscroll + distance
-				if levellistscroll > 0 then
-					levellistscroll = 0
-				end
-			elseif direction == "d" then
-				levellistscroll = levellistscroll - distance
-				local lessheight = 48
-				if #s.recentfiles > 0 and input == "" and input_r == "" then
-					lessheight = lessheight + 16 + #s.recentfiles*8
-				end
-				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
-				if -levellistscroll > upperbound then
-					levellistscroll = math.min(-upperbound, 0)
+		elseif direction == "d" then
+			local ndisplayedscripts = 0
+			if scriptdisplay_used and scriptdisplay_unused then
+				ndisplayedscripts = #scriptnames
+			elseif scriptdisplay_used then
+				ndisplayedscripts = n_usedscripts
+			elseif scriptdisplay_unused then
+				ndisplayedscripts = #scriptnames - n_usedscripts
+			end
+			local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+			if mkinput == "end" then
+				scriptlistscroll = math.min(-upperbound, 0)
+			else
+				scriptlistscroll = scriptlistscroll - distance
+				if -scriptlistscroll > upperbound then
+					scriptlistscroll = math.min(-upperbound, 0)
 				end
 			end
-		elseif state == 10 then
+		end
+	elseif state == 11 then
+		if direction == "u" then
+			searchscroll = searchscroll + distance
+			if searchscroll > 0 then
+				searchscroll = 0
+			end
+		elseif direction == "d" then
+			searchscroll = searchscroll - distance
+			local upperbound = ((longestsearchlist*32)-2-(love.graphics.getHeight()-56)) -- scrollableHeight - visiblePart
+			if -searchscroll > upperbound then
+				searchscroll = math.min(-upperbound, 0)
+			end
+		end
+	elseif state == 15 then
+		local usethiscondition = x <= 25*8 and (x ~= 0 or y ~= 0)
+		if s.psmallerscreen then
+			usethiscondition = onlefthelpbuttons
+		end
+
+		if usethiscondition then
 			if direction == "u" then
 				if mkinput == "home" then
-					scriptlistscroll = 0
+					helplistscroll = 0
 				else
-					scriptlistscroll = scriptlistscroll + distance
-					if scriptlistscroll > 0 then
-						scriptlistscroll = 0
-					end
-				end
-			elseif direction == "d" then
-				local ndisplayedscripts = 0
-				if scriptdisplay_used and scriptdisplay_unused then
-					ndisplayedscripts = #scriptnames
-				elseif scriptdisplay_used then
-					ndisplayedscripts = n_usedscripts
-				elseif scriptdisplay_unused then
-					ndisplayedscripts = #scriptnames - n_usedscripts
-				end
-				local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
-				if mkinput == "end" then
-					scriptlistscroll = math.min(-upperbound, 0)
-				else
-					scriptlistscroll = scriptlistscroll - distance
-					if -scriptlistscroll > upperbound then
-						scriptlistscroll = math.min(-upperbound, 0)
-					end
-				end
-			end
-		elseif state == 11 then
-			if direction == "u" then
-				searchscroll = searchscroll + distance
-				if searchscroll > 0 then
-					searchscroll = 0
-				end
-			elseif direction == "d" then
-				searchscroll = searchscroll - distance
-				local upperbound = ((longestsearchlist*32)-2-(love.graphics.getHeight()-56)) -- scrollableHeight - visiblePart
-				if -searchscroll > upperbound then
-					searchscroll = math.min(-upperbound, 0)
-				end
-			end
-		elseif state == 15 then
-			local usethiscondition = x <= 25*8 and (x ~= 0 or y ~= 0)
-			if s.psmallerscreen then
-				usethiscondition = onlefthelpbuttons
-			end
-
-			if usethiscondition then
-				if direction == "u" then
-					if mkinput == "home" then
+					helplistscroll = helplistscroll + distance
+					if helplistscroll > 0 then
 						helplistscroll = 0
-					else
-						helplistscroll = helplistscroll + distance
-						if helplistscroll > 0 then
-							helplistscroll = 0
-						end
 					end
-				elseif direction == "d" then
-					local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
-					if mkinput == "end" then
+				end
+			elseif direction == "d" then
+				local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+				if mkinput == "end" then
+					helplistscroll = math.min(-upperbound, 0)
+				else
+					helplistscroll = helplistscroll - distance
+					if -helplistscroll > upperbound then
 						helplistscroll = math.min(-upperbound, 0)
-					else
-						helplistscroll = helplistscroll - distance
-						if -helplistscroll > upperbound then
-							helplistscroll = math.min(-upperbound, 0)
-						end
 					end
 				end
-			else
-				if direction == "u" then
-					if mkinput == "home" then
+			end
+		else
+			if direction == "u" then
+				if mkinput == "home" then
+					helparticlescroll = 0
+				else
+					helparticlescroll = helparticlescroll + distance
+					if helparticlescroll > 0 then
 						helparticlescroll = 0
-					else
-						helparticlescroll = helparticlescroll + distance
-						if helparticlescroll > 0 then
-							helparticlescroll = 0
-						end
 					end
-				elseif direction == "d" then
-					-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
-					-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
-					local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
-					if mkinput == "end" then
+				end
+			elseif direction == "d" then
+				-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
+				-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
+				local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
+				if mkinput == "end" then
+					helparticlescroll = math.min(-upperbound, 0)
+				else
+					helparticlescroll = helparticlescroll - distance
+					if -helparticlescroll > upperbound then
 						helparticlescroll = math.min(-upperbound, 0)
-					else
-						helparticlescroll = helparticlescroll - distance
-						if -helparticlescroll > upperbound then
-							helparticlescroll = math.min(-upperbound, 0)
-						end
 					end
 				end
+			end
 
-				if helpeditingline ~= 0 and viakeyboard then
-					helparticlecontent[helpeditingline] = input .. input_r
-					input_r = ""
-					__ = "_"
-					if direction == "u" then
-						helpeditingline = math.max(1, helpeditingline - 46)
-					else
-						helpeditingline = math.min(#helparticlecontent, helpeditingline + 46)
-					end
-					input = anythingbutnil(helparticlecontent[helpeditingline])
+			if helpeditingline ~= 0 and viakeyboard then
+				helparticlecontent[helpeditingline] = input .. input_r
+				input_r = ""
+				__ = "_"
+				if direction == "u" then
+					helpeditingline = math.max(1, helpeditingline - 46)
+				else
+					helpeditingline = math.min(#helparticlecontent, helpeditingline + 46)
 				end
+				input = anythingbutnil(helparticlecontent[helpeditingline])
 			end
 		end
 	end
