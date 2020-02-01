@@ -171,16 +171,24 @@ function addrooms(neww, newh)
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
+		if levelmetadata[y] == nil then
+			levelmetadata[y] = {}
+		end
 
 		for x = 0, neww-1 do
 			if x >= ( y < math.min(newh, limit.mapheight) and neww or limit.mapwidth ) or y >= limit.mapheight then
 				map_resetroom(x, y)
-			elseif roomdata[y][x] == nil then
-				roomdata[y][x] = {}
-				for t = 1, 1200 do
-					roomdata[y][x][t] = 0
+			else
+				if levelmetadata[y][x] == nil then
+					levelmetadata[y][x] = default_levelmetadata(x, y)
 				end
-				map_resetroom(x, y)
+				if roomdata[y][x] == nil then
+					roomdata[y][x] = {}
+					for t = 1, 1200 do
+						roomdata[y][x][t] = 0
+					end
+					map_resetroom(x, y)
+				end
 			end
 		end
 	end
@@ -2161,7 +2169,7 @@ function levelmetadata_get(x, y, uselevel2)
 	y = y + distortion
 
 	if y < limit.mapheight then
-		return usethislevelmetadata[y*limit.mapwidth + x+1] -- TODO: Change levelmetadata to 2D instead of 1D
+		return usethislevelmetadata[y][x]
 	end
 
 	return voided_metadata, true
@@ -2189,9 +2197,9 @@ function levelmetadata_set(x, y, param1, param2)
 	end
 
 	if attribute ~= nil then
-		levelmetadata[y*limit.mapwidth + x+1][attribute] = value
+		levelmetadata[y][x][attribute] = value
 	else
-		levelmetadata[y*limit.mapwidth + x+1] = value
+		levelmetadata[y][x] = value
 	end
 
 	map_correspondreset(x, y, {DIRTY.PROPERTY})

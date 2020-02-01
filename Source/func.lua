@@ -1685,65 +1685,67 @@ function compareleveldifferences(secondlevelname)
 	-- R O O M   M E T A D A T A
 	pagetext = diffmessages.pages.changedroommetadata .. "\\wh#\n\n"
 
-	for k,v in pairs(levelmetadata2) do
-		local changed = false
+	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
+		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
+			local lmd1, lmd2 = levelmetadata_get(rx, ry), levelmetadata2_get(rx, ry)
+			local changed = false
 
-		-- Is anything different?
-		for k2,v2 in pairs(v) do
-			if v2 ~= levelmetadata[k][k2] then
-				changed = true
-			end
-		end
-
-		local lrmx = (k-1) % 20
-		local lrmy = math.floor(((k-1) - lrmx) / 20)
-
-		if not s.coords0 then
-			lrmx = lrmx + 1
-			lrmy = lrmy + 1
-		end
-
-		if changed and levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
-			-- We're already going to show that the room name has changed
-			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
-		elseif changed then
-			-- We're not, so label this
-			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, levelmetadata2[k].roomname}) .. "\\\n"
-		end
-
-		if changed then
-			-- So what has changed?
-			if levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
-				if levelmetadata2[k].roomname == "" then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameadded, {levelmetadata[k].roomname}) .. "\n"
-				elseif levelmetadata[k].roomname == "" then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameremoved, {levelmetadata2[k].roomname}) .. "\n"
-				else
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomname, {levelmetadata2[k].roomname, levelmetadata[k].roomname}) .. "\n"
+			-- Is anything different?
+			for k,v in pairs(lmd2) do
+				if v ~= lmd1[k] then
+					changed = true
 				end
 			end
-			if levelmetadata2[k].tileset ~= levelmetadata[k].tileset or levelmetadata2[k].tilecol ~= levelmetadata[k].tilecol then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.tileset, {levelmetadata2[k].tileset, levelmetadata2[k].tilecol, levelmetadata[k].tileset, levelmetadata[k].tilecol}) .. "\n"
+
+			local lrmx, lrmy = rx, ry
+
+			if not s.coords0 then
+				lrmx = lrmx + 1
+				lrmy = lrmy + 1
 			end
-			if levelmetadata2[k].platv ~= levelmetadata[k].platv then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platv, {levelmetadata2[k].platv, levelmetadata[k].platv}) .. "\n"
+
+			if changed and lmd2.roomname ~= lmd1.roomname then
+				-- We're already going to show that the room name has changed
+				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
+			elseif changed then
+				-- We're not, so label this
+				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, lmd2.roomname}) .. "\\\n"
 			end
-			if levelmetadata2[k].enemytype ~= levelmetadata[k].enemytype then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemytype, {levelmetadata2[k].enemytype, levelmetadata[k].enemytype}) .. "\n"
-			end
-			if levelmetadata2[k].platx1 ~= levelmetadata[k].platx1 or levelmetadata2[k].platy1 ~= levelmetadata[k].platy1 or levelmetadata2[k].platx2 ~= levelmetadata[k].platx2 or levelmetadata2[k].platy2 ~= levelmetadata[k].platy2 then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platbounds, {levelmetadata2[k].platx1, levelmetadata2[k].platy1, levelmetadata2[k].platx2, levelmetadata2[k].platy2, levelmetadata[k].platx1, levelmetadata[k].platy1, levelmetadata[k].platx2, levelmetadata[k].platy2}) .. "\n"
-			end
-			if levelmetadata2[k].enemyx1 ~= levelmetadata[k].enemyx1 or levelmetadata2[k].enemyy1 ~= levelmetadata[k].enemyy1 or levelmetadata2[k].enemyx2 ~= levelmetadata[k].enemyx2 or levelmetadata2[k].enemyy2 ~= levelmetadata[k].enemyy2 then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemybounds, {levelmetadata2[k].enemyx1, levelmetadata2[k].enemyy1, levelmetadata2[k].enemyx2, levelmetadata2[k].enemyy2, levelmetadata[k].enemyx1, levelmetadata[k].enemyy1, levelmetadata[k].enemyx2, levelmetadata[k].enemyy2}) .. "\n"
-			end
-			if levelmetadata2[k].directmode == 0 and levelmetadata[k].directmode == 1 then
-				pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode01 .. "\n"
-			elseif levelmetadata2[k].directmode == 1 and levelmetadata[k].directmode == 0 then
-				pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode10 .. "\n"
-			end
-			if levelmetadata2[k].warpdir ~= levelmetadata[k].warpdir then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.warpdir, {warpdirs[levelmetadata2[k].warpdir], warpdirs[levelmetadata[k].warpdir]}) .. "\n"
+
+			if changed then
+				-- So what has changed?
+				if lmd2.roomname ~= lmd1.roomname then
+					if lmd2.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameadded, {lmd1.roomname}) .. "\n"
+					elseif lmd1.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameremoved, {lmd2.roomname}) .. "\n"
+					else
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomname, {lmd2.roomname, lmd1.roomname}) .. "\n"
+					end
+				end
+				if lmd2.tileset ~= lmd1.tileset or lmd2.tilecol ~= lmd1.tilecol then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.tileset, {lmd2.tileset, lmd2.tilecol, lmd1.tileset, lmd1.tilecol}) .. "\n"
+				end
+				if lmd2.platv ~= lmd1.platv then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platv, {lmd2.platv, lmd1.platv}) .. "\n"
+				end
+				if lmd2.enemytype ~= lmd1.enemytype then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemytype, {lmd2.enemytype, lmd1.enemytype}) .. "\n"
+				end
+				if lmd2.platx1 ~= lmd1.platx1 or lmd2.platy1 ~= lmd1.platy1 or lmd2.platx2 ~= lmd1.platx2 or lmd2.platy2 ~= lmd1.platy2 then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platbounds, {lmd2.platx1, lmd2.platy1, lmd2.platx2, lmd2.platy2, lmd1.platx1, lmd1.platy1, lmd1.platx2, lmd1.platy2}) .. "\n"
+				end
+				if lmd2.enemyx1 ~= lmd1.enemyx1 or lmd2.enemyy1 ~= lmd1.enemyy1 or lmd2.enemyx2 ~= lmd1.enemyx2 or lmd2.enemyy2 ~= lmd1.enemyy2 then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemybounds, {lmd2.enemyx1, lmd2.enemyy1, lmd2.enemyx2, lmd2.enemyy2, lmd1.enemyx1, lmd1.enemyy1, lmd1.enemyx2, lmd1.enemyy2}) .. "\n"
+				end
+				if lmd2.directmode == 0 and lmd1.directmode == 1 then
+					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode01 .. "\n"
+				elseif lmd2.directmode == 1 and lmd1.directmode == 0 then
+					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode10 .. "\n"
+				end
+				if lmd2.warpdir ~= lmd1.warpdir then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.warpdir, {warpdirs[lmd2.warpdir], warpdirs[lmd1.warpdir]}) .. "\n"
+				end
 			end
 		end
 	end

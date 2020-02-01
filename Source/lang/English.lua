@@ -557,8 +557,8 @@ L_PLU = {
 		[1] = "Entity at [$1 $2] has $3 invalid properties!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata for room #$1 has $2 invalid property!",
-		[1] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[0] = "LevelMetadata for room $1,$2 has $3 invalid property!",
+		[1] = "LevelMetadata for room $1,$2 has $3 invalid properties!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Showing $1",
