@@ -1153,7 +1153,7 @@ function drawmaineditor()
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata(roomx, roomy).directmode == 1 then
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata_get(roomx, roomy).directmode == 1 then
 		local atx, aty = getcursor()
 
 		selectedtile = (aty*40)+(atx+1)-1

@@ -451,6 +451,8 @@ function love.load()
 		tile_batch_tiles[i] = 0
 	end
 
+	limit = limit_v
+
 	if not settings_ok then
 		-- If the settings file is broken, good chance we don't know what the language setting was.
 		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,

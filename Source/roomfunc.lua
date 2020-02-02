@@ -2168,7 +2168,7 @@ function levelmetadata_get(x, y, uselevel2)
 	x = x % limit.mapwidth
 	y = y + distortion
 
-	if y < limit.mapheight then
+	if y < limit.mapheight and usethislevelmetadata[y] ~= nil and usethislevelmetadata[y][x] ~= nil then
 		return usethislevelmetadata[y][x]
 	end
 
@@ -2193,6 +2193,10 @@ function levelmetadata_set(x, y, param1, param2)
 	y = y + distortion
 
 	if y >= limit.mapheight then
+		return
+	end
+
+	if levelmetadata[y] == nil or levelmetadata[y][x] == nil then
 		return
 	end
 

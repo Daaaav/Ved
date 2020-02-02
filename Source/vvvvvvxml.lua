@@ -359,7 +359,10 @@ function loadlevel(path)
 	-- Get every room now.
 	local theselevelmetadata = {}
 	local all_platvs = {}
-	local lmd_width = 20 -- TODO, max(mapwidth, 20) in VCE
+	local lmd_width = 20
+	if thismetadata.target == "VCE" then
+		lmd_width = math.max(thismetadata.mapwidth, 20)
+	end
 	local rx, ry = lmd_width-1, -1
 	local n_levelmetadata = 0
 	local inboundsroom = 0
@@ -402,6 +405,10 @@ function loadlevel(path)
 				-- Leave out the quotes and convert it to number
 				theselevelmetadata[ry][rx][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
 			end
+		end
+
+		if thismetadata.target == "VCE" and theselevelmetadata[ry][rx].enemyv == nil then
+			theselevelmetadata[ry][rx].enemyv = 4
 		end
 
 		-- Now we only need the room name...
@@ -551,7 +558,7 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
-	end if (n_levelmetadata ~= 400) then
+	end if thismetadata.target == "V" and n_levelmetadata ~= 400 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.NOT400ROOMS)
 
@@ -610,6 +617,7 @@ end
 
 -- Load a template that we'll need for saving...
 vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
+vvvvvvxmltemplate_vce = love.filesystem.read("template_vce.vvvvvv")
 
 function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
@@ -627,7 +635,12 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
-	savethis = vvvvvvxmltemplate
+	local savethis
+	if thismetadata.target == "VCE" then
+		savethis = vvvvvvxmltemplate_vce
+	else
+		savethis = vvvvvvxmltemplate
+	end
 
 	cons("Placing metadata...")
 	for k,v in pairs(metadataitems) do
