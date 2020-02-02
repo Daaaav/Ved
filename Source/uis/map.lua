@@ -27,7 +27,7 @@ function ui.load(...)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -40,7 +40,7 @@ function ui.load(...)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end

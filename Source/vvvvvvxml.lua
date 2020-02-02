@@ -21,13 +21,23 @@ function loadlevelmetadata(path)
 		return false, contents
 	end
 
+	local thismetadata = {}
+
+	-- What kind of level is this?
+	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"[0-9]+\">")
+	if vce_m ~= nil then
+		thismetadata.target = "VCE"
+		thismetadata.target_ver = tonumber(vce_m)
+	else
+		thismetadata.target = "V"
+	end
+
 	-- First do the metadata.
 	cons("Loading metadata...")
 	local xmetadata = contents:match("<MetaData>(.*)</MetaData>")
 	if xmetadata == nil then
 		return false, L.MAL .. L.METADATACORRUPT
 	end
-	local thismetadata = {}
 	for _,v in pairs(metadataitems) do
 		local m = xmetadata:match("<" .. v .. ">(.*)</" .. v .. ">")
 		if m == nil then
@@ -51,12 +61,12 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (array)metadata, (array)contents, (array)entities, (array)levelmetadata, (array)scripts, (array)count, (array)scriptnames, (array)vedmetadata
+	-- Returns (bool)success, (table)metadata, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata
 	-- Map size and music is gonna move in with the metadata here.
-	-- Contents is basically the raw array exploded
-	-- Entities bestaat uit arrays (entity contents are array item data)
-	-- Of course levelmetadata is all 400 rooms and also consists of arrays (roomname is array item roomname)
-	-- Scripts are pre-exploded and scripts[scriptname] = (array)contents
+	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
+	-- Entities consists of tables (entity contents are table item data)
+	-- Levelmetadata is a 3D table indexed [roomy][roomx][property] (roomname is table item roomname)
+	-- Scripts are pre-exploded and scripts[scriptname] = (table)contents
 	-- count will return the count of trinkets, crewmates and entities to keep everything within limits. It also contains the ID of the start point so it can be removed in case we place a new one.
 	-- scriptnames is used to keep the names in order of opening scripts
 	-- vedmetadata has flag names (.flaglabel)
@@ -98,10 +108,10 @@ function loadlevel(path)
 	local theserooms = {}
 	local failedtiles = 0
 	local t
-	for yk = 0, thismetadata.mapheight-1 do
+	for yk = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
 		--print("Y: " .. yk)
 		theserooms[yk] = {}
-		for xk = 0, thismetadata.mapwidth-1 do
+		for xk = 0, ( yk < math.min(thismetadata.mapheight, limit.mapheight) and thismetadata.mapwidth or limit.mapwidth ) - 1 do
 			theserooms[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
@@ -115,6 +125,32 @@ function loadlevel(path)
 					end
 
 					theserooms[yk][xk][(40*yt) + xt + 1] = t
+				end
+			end
+		end
+	end
+	-- Partial rooms due to VVVVVV's concatenated rows thing bleeding out past the normal 20xHEIGHT range and shifting rooms upward (within the first 20 room rows)
+	if s.allowbiggerthansizelimit and thismetadata.mapwidth > limit.mapwidth then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / limit.mapwidth )
+		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
+		local capped_height = math.min(thismetadata.mapheight, limit.mapheight)
+		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
+			theserooms[yk] = {}
+			for xk = 0, limit.mapwidth-1 do
+				theserooms[yk][xk] = {}
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%limit.mapwidth == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+					for xt = 0, 39 do
+						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*limit.mapheight + (xk+(limit.mapwidth-1))*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
+						if t == nil or t < 0 or t >= 1200 then
+							t = 0
+							failedtiles = failedtiles + 1
+						elseif math.floor(t) ~= t then
+							t = math.floor(t)
+							failedtiles = failedtiles + 1
+						end
+
+						theserooms[yk][xk][yt*40 + xt+1] = t
+					end
 				end
 			end
 		end
@@ -323,18 +359,26 @@ function loadlevel(path)
 	-- Get every room now.
 	local theselevelmetadata = {}
 	local all_platvs = {}
-	local croom = 0
+	local lmd_width = 20 -- TODO, max(mapwidth, 20) in VCE
+	local rx, ry = lmd_width-1, -1
+	local n_levelmetadata = 0
 	local inboundsroom = 0
 	local inbounds
 	for room in x.levelmetadata:gmatch("<edLevelClass (.-)</edLevelClass>") do
-		if (croom % 20)+1 <= thismetadata.mapwidth and croom+1 <= thismetadata.mapheight*20 then
+		n_levelmetadata = n_levelmetadata + 1
+		rx = rx + 1
+		if rx >= lmd_width then
+			rx = 0
+			ry = ry + 1
+			theselevelmetadata[ry] = {}
+		end
+		if rx < thismetadata.mapwidth and ry < thismetadata.mapheight then
 			inbounds = true
 			inboundsroom = inboundsroom + 1
 		else
 			inbounds = false
 		end
-		croom = croom + 1
-		theselevelmetadata[croom] = {}
+		theselevelmetadata[ry][rx] = {}
 
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
 		metaparts = explode(">", room)
@@ -350,88 +394,87 @@ function loadlevel(path)
 				-- Unfortunately platv is very special.
 				table.insert(all_platvs, tonumber(keyvalue[2]:sub(2, -2)))
 				if inbounds then
-					theselevelmetadata[croom].platv = all_platvs[inboundsroom]
+					theselevelmetadata[ry][rx].platv = all_platvs[inboundsroom]
 				else
-					theselevelmetadata[croom].platv = 4
+					theselevelmetadata[ry][rx].platv = 4
 				end
 			else
 				-- Leave out the quotes and convert it to number
-				theselevelmetadata[croom][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
+				theselevelmetadata[ry][rx][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
 			end
-
-			--cons("Room: " .. croom .. " Key: " .. keyvalue[1] .. " Value: " .. tonumber(keyvalue[2]:sub(2, -2)))
 		end
 
 		-- Now we only need the room name...
-		theselevelmetadata[croom].roomname = unxmlspecialchars(metaparts[2])
-		if theselevelmetadata[croom].roomname:match("%z") then
+		theselevelmetadata[ry][rx].roomname = unxmlspecialchars(metaparts[2])
+		if theselevelmetadata[ry][rx].roomname:match("%z") then
 			local tmp
-			theselevelmetadata[croom].roomname, tmp = theselevelmetadata[croom].roomname:gsub("%z", "")
+			theselevelmetadata[ry][rx].roomname, tmp = theselevelmetadata[ry][rx].roomname:gsub("%z", "")
 			numxmlnullbytes = numxmlnullbytes + tmp
 		end
 
 		-- And make sure directmode isn't nil for 2.0 levels
-		if theselevelmetadata[croom].directmode == nil then
-			theselevelmetadata[croom].directmode = 0
+		if theselevelmetadata[ry][rx].directmode == nil then
+			theselevelmetadata[ry][rx].directmode = 0
 		end
 
 		local oldFCcount = mycount.FC
 
-		if theselevelmetadata[croom].tileset == nil or type(theselevelmetadata[croom].tileset) ~= "number" or (theselevelmetadata[croom].tileset > 4) then
+		if theselevelmetadata[ry][rx].tileset == nil or type(theselevelmetadata[ry][rx].tileset) ~= "number" or (theselevelmetadata[ry][rx].tileset > 4) then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].tileset = 0
-		end if theselevelmetadata[croom].tilecol == nil or type(theselevelmetadata[croom].tilecol) ~= "number" or ((theselevelmetadata[croom].tileset == 0 and theselevelmetadata[croom].tilecol < -1) or (theselevelmetadata[croom].tileset ~= 0 and theselevelmetadata[croom].tilecol < 0))
-		or theselevelmetadata[croom].tileset == 0 and theselevelmetadata[croom].tilecol > 31
-		or theselevelmetadata[croom].tileset == 1 and theselevelmetadata[croom].tilecol > 7
-		or theselevelmetadata[croom].tileset == 2 and theselevelmetadata[croom].tilecol > 6
-		or theselevelmetadata[croom].tileset == 3 and theselevelmetadata[croom].tilecol > 6
-		or theselevelmetadata[croom].tileset == 4 and theselevelmetadata[croom].tilecol > 5 then
+			theselevelmetadata[ry][rx].tileset = 0
+		end if theselevelmetadata[ry][rx].tilecol == nil or type(theselevelmetadata[ry][rx].tilecol) ~= "number" or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1) or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
+		or theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol > 31
+		or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
+		or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
+		or theselevelmetadata[ry][rx].tileset == 3 and theselevelmetadata[ry][rx].tilecol > 6
+		or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5 then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].tilecol = 0
-		end if theselevelmetadata[croom].platx1 == nil or type(theselevelmetadata[croom].platx1) ~= "number" then
+			theselevelmetadata[ry][rx].tilecol = 0
+		end if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].platx1 = 0
-		end if theselevelmetadata[croom].platy1 == nil or type(theselevelmetadata[croom].platy1) ~= "number" then
+			theselevelmetadata[ry][rx].platx1 = 0
+		end if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].platy1 = 0
-		end if theselevelmetadata[croom].platx2 == nil or type(theselevelmetadata[croom].platx2) ~= "number" then
+			theselevelmetadata[ry][rx].platy1 = 0
+		end if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].platx2 = 0
-		end if theselevelmetadata[croom].platy2 == nil or type(theselevelmetadata[croom].platy2) ~= "number" then
+			theselevelmetadata[ry][rx].platx2 = 0
+		end if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].platy2 = 0
-		end if theselevelmetadata[croom].platv == nil or type(theselevelmetadata[croom].platv) ~= "number" then
+			theselevelmetadata[ry][rx].platy2 = 0
+		end if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].platv = 0
-		end if theselevelmetadata[croom].enemyx1 == nil or type(theselevelmetadata[croom].enemyx1) ~= "number" then
+			theselevelmetadata[ry][rx].platv = 0
+		end if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].enemyx1 = 0
-		end if theselevelmetadata[croom].enemyy1 == nil or type(theselevelmetadata[croom].enemyy1) ~= "number" then
+			theselevelmetadata[ry][rx].enemyx1 = 0
+		end if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].enemyy1 = 0
-		end if theselevelmetadata[croom].enemyx2 == nil or type(theselevelmetadata[croom].enemyx2) ~= "number" then
+			theselevelmetadata[ry][rx].enemyy1 = 0
+		end if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].enemyx2 = 0
-		end if theselevelmetadata[croom].enemyy2 == nil or type(theselevelmetadata[croom].enemyy2) ~= "number" then
+			theselevelmetadata[ry][rx].enemyx2 = 0
+		end if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].enemyy2 = 0
-		end if theselevelmetadata[croom].enemytype == nil or type(theselevelmetadata[croom].enemytype) ~= "number" or theselevelmetadata[croom].enemytype < 0 or theselevelmetadata[croom].enemytype > 9 then
+			theselevelmetadata[ry][rx].enemyy2 = 0
+		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].enemytype = 0
-		end if theselevelmetadata[croom].warpdir == nil or type(theselevelmetadata[croom].warpdir) ~= "number" or theselevelmetadata[croom].warpdir < 0 or theselevelmetadata[croom].warpdir > 3 then
+			theselevelmetadata[ry][rx].enemytype = 0
+		end if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
 			mycount.FC = mycount.FC + 1
-			theselevelmetadata[croom].warpdir = 0
+			theselevelmetadata[ry][rx].warpdir = 0
 		end
 
-		theselevelmetadata[croom].auto2mode = 0
+		theselevelmetadata[ry][rx].auto2mode = 0
 
 		if oldFCcount < mycount.FC then
-			cons_fc(langkeys(L_PLU.ROOMINVALIDPROPERTIES , {croom, (mycount.FC-oldFCcount)}, 2))
+			local co = not s.coords0 and 1 or 0
+			cons_fc(langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
 		end
 
 		-- If you select a higher tilecol in space station and then go to another tileset, VVVVVV will still save the out-of-range tilecol.
-		if tilesetblocks[theselevelmetadata[croom].tileset].colors[theselevelmetadata[croom].tilecol] == nil then
-			theselevelmetadata[croom].tilecol = 0
+		if tilesetblocks[theselevelmetadata[ry][rx].tileset].colors[theselevelmetadata[ry][rx].tilecol] == nil then
+			theselevelmetadata[ry][rx].tilecol = 0
 		end
 	end
 
@@ -491,22 +534,28 @@ function loadlevel(path)
 
 
 	-- As many of the integrity checks as possible here
-	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) or (thismetadata.mapwidth > 20) then
+	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
 		thismetadata.mapwidth = 1
-	end if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) or (thismetadata.mapheight > 20) then
+	end if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
+	end if ((thismetadata.mapwidth > limit.mapwidth) or (thismetadata.mapheight > limit.mapheight)) and not s.allowbiggerthansizelimit then
+		mycount.FC = mycount.FC + 1
+		cons_fc(langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), limit.mapwidth, limit.mapheight}))
+		thismetadata.mapwidth = math.min(thismetadata.mapwidth, limit.mapwidth)
+		thismetadata.mapheight = math.min(thismetadata.mapheight, limit.mapheight)
 	end if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
-	end if (#theselevelmetadata ~= 400) then
+	end if (n_levelmetadata ~= 400) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.NOT400ROOMS)
 
+		--[[ TODO: Think about readding this later, after converting it to the 3D table
 		if #theselevelmetadata < 400 then
 			for croom = #theselevelmetadata+1, 400 do
 				theselevelmetadata[croom] =
@@ -530,6 +579,7 @@ function loadlevel(path)
 					}
 			end
 		end
+		]]
 	end if numliteralnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
@@ -593,7 +643,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Assembling contents......")
 	thenewcontents = {}
 	--for roomy, yv in pairs(theserooms) do
-	for lroomy = 0, (thismetadata.mapheight-1) do
+	local nested_break = false
+	for lroomy = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
 		yv = theserooms[lroomy]
 		-- We now have each y.....
 		cons("Y: " .. lroomy)
@@ -605,6 +656,34 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				-- .....And each x for each line
 				-- Heeey
 				table.insert(thenewcontents, table.concat({unpack(theserooms[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
+				if lroomy == math.min(thismetadata.mapheight, limit.mapheight)-1 and lroomx == limit.mapwidth-1 and line == 29 then
+					nested_break = true
+					break
+				end
+			end
+			if nested_break then
+				break
+			end
+		end
+		if nested_break then
+			break
+		end
+	end
+	if thismetadata.mapwidth > limit.mapwidth then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / limit.mapwidth )
+		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
+		local capped_height = math.min(thismetadata.mapheight, limit.mapheight)
+		local potential_line
+		for lroomy = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
+			-- Repeating console output from above...
+			cons("Y: " .. lroomy)
+			for line = 0, 29 do
+				for lroomx = 0, limit.mapwidth-1 do
+					potential_line = {unpack(theserooms[lroomy][lroomx], line*40 + 1, line*40 + 40)}
+					if #potential_line > 0 --[[ just to check that it's not nil ]] then
+						table.insert(thenewcontents, table.concat(potential_line, ","))
+					end
+				end
 			end
 		end
 	end
@@ -694,18 +773,45 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	-- Now all room metadata, aka levelclass
 	local all_platvs = {}
 	for y = 0, thismetadata.mapheight-1 do
+		if y >= limit.mapheight then
+			break
+		end
 		for x = 0, thismetadata.mapwidth-1 do
+			if x >= limit.mapwidth then
+				break
+			end
 			-- platv needs special handling, unfortunately.
-			table.insert(all_platvs, theselevelmetadata[y*20 + x+1].platv)
+			table.insert(all_platvs, theselevelmetadata[y][x].platv)
 		end
 	end
 	local alllevelmetadata = {}
-	for k,v in pairs(theselevelmetadata) do
-		local my_platv = all_platvs[k]
-		if my_platv == nil then
-			my_platv = 4
+	local i = 1
+	for y = 0, limit.mapheight-1 do -- TODO: VCE does it differently, but first VVVVVV support with the 3D levelmetadata table
+		for x = 0, limit.mapwidth-1 do
+			local v = theselevelmetadata[y][x]
+			local my_platv = all_platvs[i]
+			if my_platv == nil then
+				my_platv = 4
+			end
+			table.insert(alllevelmetadata,
+				"            <edLevelClass tileset=\"" .. v.tileset
+				.. "\" tilecol=\"" .. v.tilecol
+				.. "\" platx1=\"" .. v.platx1
+				.. "\" platy1=\"" .. v.platy1
+				.. "\" platx2=\"" .. v.platx2
+				.. "\" platy2=\"" .. v.platy2
+				.. "\" platv=\"" .. my_platv
+				.. "\" enemyx1=\"" .. v.enemyx1
+				.. "\" enemyy1=\"" .. v.enemyy1
+				.. "\" enemyx2=\"" .. v.enemyx2
+				.. "\" enemyy2=\"" .. v.enemyy2
+				.. "\" enemytype=\"" .. v.enemytype
+				.. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1)
+				.. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
+			)
+
+			i = i+1
 		end
-		table.insert(alllevelmetadata, "            <edLevelClass tileset=\"" .. v.tileset .. "\" tilecol=\"" .. v.tilecol .. "\" platx1=\"" .. v.platx1 .. "\" platy1=\"" .. v.platy1 .. "\" platx2=\"" .. v.platx2 .. "\" platy2=\"" .. v.platy2 .. "\" platv=\"" .. my_platv .. "\" enemyx1=\"" .. v.enemyx1 .. "\" enemyy1=\"" .. v.enemyy1 .. "\" enemyx2=\"" .. v.enemyx2 .. "\" enemyy2=\"" .. v.enemyy2 .. "\" enemytype=\"" .. v.enemytype .. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1) .. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n")
 	end
 
 	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (table.concat(alllevelmetadata, ""):gsub("%%", "%%%%")))
@@ -792,16 +898,7 @@ end
 
 
 function createblanklevel(lvwidth, lvheight)
-	-- Returns (bool)success, (array)metadata, (array)contents, (array)entities, (array)levelmetadata, (array)scripts, (array)count, (array)scriptnames, (array)vedmetadata
-	-- Map size and music is gonna move in with the metadata here.
-	-- Contents is basically the raw array exploded
-	-- Entities bestaat uit arrays (entity contents are array item data)
-	-- Of course levelmetadata is all 400 rooms and also consists of arrays (roomname is array item roomname)
-	-- Scripts are pre-exploded and scripts[scriptname] = (array)contents
-	-- count will return the count of trinkets, crewmates and entities to keep everything within limits. It also contains the ID of the start point so it can be removed in case we place a new one.
-	-- scriptnames is used to keep the names in order of opening scripts
-	-- vedmetadata has flag names (.flaglabel)
-	-- If loading isn't successful, metadata will be an error string.
+	-- Returns same variables as loadlevel
 
 	-- There should be a list of tileset options and such
 	-- - Same as in VVVVVV
@@ -854,26 +951,11 @@ function createblanklevel(lvwidth, lvheight)
 	-- Level meta data, get every room now.
 	cons("Loading room metadata...")
 	theselevelmetadata = {}
-	for croom = 1, 400 do
-		theselevelmetadata[croom] =
-			{
-			tileset = 0,
-			tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
-			platx1 = 0,
-			platy1 = 0,
-			platx2 = 320,
-			platy2 = 240,
-			platv = 4,
-			enemyx1 = 0,
-			enemyy1 = 0,
-			enemyx2 = 320,
-			enemyy2 = 240,
-			enemytype = 0,
-			directmode = 0,
-			warpdir = 0,
-			roomname = "",
-			auto2mode = 0,
-			}
+	for ry = 0, 19 do
+		theselevelmetadata[ry] = {}
+		for rx = 0, 19 do
+			theselevelmetadata[ry][rx] = default_levelmetadata(rx, ry)
+		end
 	end
 
 	-- Scripts
@@ -888,4 +970,25 @@ function createblanklevel(lvwidth, lvheight)
 
 	-- No longer x.alltiles
 	return true, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata
+end
+
+function default_levelmetadata(rx, ry)
+	return {
+		tileset = 0,
+		tilecol = (rx + ry) % 32,
+		platx1 = 0,
+		platy1 = 0,
+		platx2 = 320,
+		platy2 = 240,
+		platv = 4,
+		enemyx1 = 0,
+		enemyy1 = 0,
+		enemyx2 = 320,
+		enemyy2 = 240,
+		enemytype = 0,
+		directmode = 0,
+		warpdir = 0,
+		roomname = "",
+		auto2mode = 0,
+	}
 end

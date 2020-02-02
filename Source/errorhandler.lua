@@ -18,6 +18,7 @@ ERR_FILEEDITORS = "Plugins that edit this file:"
 ERR_CURRENTPLUGIN = "Plugin that triggered the error:"
 ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
 ERR_CONTINUE = "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Failed to find this in %s.lua:"
 ERR_REPLACECODEPATTERN = "Failed to find this in %s.lua (as pattern):"
 ERR_LINESTOTAL = "%i lines in total"
@@ -390,7 +391,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	end
 
 
-	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
@@ -444,7 +445,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	table.insert(err, limitedlines .. "\n")
 
-	table.insert(err, "\n\n\n" .. ERR_CONTINUE)
+	table.insert(err, "\n\n\n" .. ERR_CONTINUE .. "\n\n\n" .. ERR_OPENPLUGINSFOLDER)
 
 	local p = table.concat(err, "\n")
 
@@ -493,6 +494,8 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				lg_clear()
 
 				return
+			elseif e == "keypressed" and a == "f" then
+				love.system.openURL("file://" .. love.filesystem.getSaveDirectory() .. "/plugins")
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown(lctrl) or love.keyboard.isDown(rctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
 			end

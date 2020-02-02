@@ -120,7 +120,7 @@ function drawmap()
 
 					hoverx = mrx
 					hovery = mry
-					hovername = levelmetadata[(mry)*20 + (mrx+1)].roomname
+					hovername = levelmetadata_get(mrx, mry).roomname
 
 					-- But maybe we're clicking this room!
 					if love.mouse.isDown("l") then

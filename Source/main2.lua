@@ -1230,7 +1230,7 @@ function love.draw()
 		end
 	elseif state == 28 then
 		-- Stats screen
-		-- basic_stats has elements: {name, value, max}
+		-- basic_stats has elements: {name, value, max, vvvvvvmax}
 		local p100 = love.graphics.getWidth() - 40 - basic_stats_max_text_width
 		for k,v in pairs(basic_stats) do
 			ved_print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k)
@@ -1281,7 +1281,7 @@ function love.draw()
 		-- Plural forms test
 		int_control(20, 20, "val", 0, 9999, nil, plural_test)
 		ved_print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
-		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, plural_test.val}, 2), 20, 100)
+		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, 0, plural_test.val}, 3), 20, 100)
 
 		if nodialog and love.mouse.isDown("l") then
 			-- Shrug
@@ -2145,7 +2145,7 @@ function love.update(dt)
 						{
 							key = "enemy" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 						}
 					)
 				end
@@ -2162,7 +2162,7 @@ function love.update(dt)
 						{
 							key = "plat" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 						}
 					)
 				end
@@ -2173,9 +2173,9 @@ function love.update(dt)
 			editingbounds = 0
 		end
 
-		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
+		if levelmetadata_get(roomx, roomy).warpdir == 3 then
 			warpbganimation = (warpbganimation + 2) % 64
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 then
+		elseif levelmetadata_get(roomx, roomy).warpdir ~= 0 then
 			warpbganimation = (warpbganimation + 3) % 32
 		end
 
@@ -2748,6 +2748,11 @@ function love.keypressed(key)
 
 	handle_scrolling(true, key)
 
+	local _, voided_metadata
+	if state == 1 then
+		_, voided_metadata = levelmetadata_get(roomx, roomy)
+	end
+
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
 		return
@@ -2778,7 +2783,7 @@ function love.keypressed(key)
 			tilespicker_shortcut = true
 		end
 
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+		if levelmetadata_get(roomx, roomy).directmode == 1 then
 			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
 			elseif table.contains({"right", "d"}, key) then
@@ -2871,7 +2876,7 @@ function love.keypressed(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -2884,7 +2889,7 @@ function love.keypressed(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -2896,11 +2901,13 @@ function love.keypressed(key)
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+				oldbounds[k] = levelmetadata_get(roomx, roomy)["enemy" .. v]
 			end
 
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "enemyx1", 0)
+			levelmetadata_set(roomx, roomy, "enemyy1", 0)
+			levelmetadata_set(roomx, roomy, "enemyx2", 320)
+			levelmetadata_set(roomx, roomy, "enemyy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -2908,7 +2915,7 @@ function love.keypressed(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -2916,11 +2923,13 @@ function love.keypressed(key)
 			finish_undo("ENEMY BOUNDS (deleted)")
 		else
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+				oldbounds[k] = levelmetadata_get(roomx, roomy)["plat" .. v]
 			end
 
-			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "platx1", 0)
+			levelmetadata_set(roomx, roomy, "platy1", 0)
+			levelmetadata_set(roomx, roomy, "platx2", 320)
+			levelmetadata_set(roomx, roomy, "platy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -2928,7 +2937,7 @@ function love.keypressed(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -2980,7 +2989,7 @@ function love.keypressed(key)
 		editingroomtext = 0
 		stopinput()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown(lctrl) then
-		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
+		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata_get(roomx, roomy).tileset] .. " ***")
 		cons("First select the wall tiles")
 
 		tilescreator = true
@@ -2993,7 +3002,7 @@ function love.keypressed(key)
 		selectedtileset = "creator"
 		selectedcolor = "creator"
 
-		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]
+		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata_get(roomx, roomy).tileset]
 
 		tilespicker = true
 		selectedtool = 1
@@ -3008,38 +3017,38 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" then
+	elseif nodialog and state == 1 and key == "f1" and not voided_metadata then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" then
+	elseif nodialog and state == 1 and key == "f2" and not voided_metadata then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" then
+	elseif nodialog and state == 1 and key == "f3" and not voided_metadata then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not voided_metadata then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" then
+	elseif nodialog and state == 1 and key == "f10" and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()
-		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
+		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata_get(roomx, roomy).directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") and not voided_metadata then
 		-- Change warp dir
 		changewarpdir()
-		temporaryroomname = warpdirchangedtext[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]
+		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") and not voided_metadata then
 		-- Edit room name
 		toggleeditroomname()
 
@@ -3888,7 +3897,7 @@ function love.mousereleased(x, y, button)
 
 
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
-		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
+		undobuffer[undosaved].toredotiles = table.copy(roomdata_get(roomx, roomy))
 		undosaved = 0
 		cons("[UNRE] SAVED END RESULT FOR UNDO")
 	elseif state == 32 then

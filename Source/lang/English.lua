@@ -557,8 +557,8 @@ L_PLU = {
 		[1] = "Entity at [$1 $2] has $3 invalid properties!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata for room #$1 has $2 invalid property!",
-		[1] = "LevelMetadata for room #$1 has $2 invalid properties!",
+		[0] = "LevelMetadata for room $1,$2 has $3 invalid property!",
+		[1] = "LevelMetadata for room $1,$2 has $3 invalid properties!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Showing $1",
@@ -682,6 +682,7 @@ ERR_FILEEDITORS = "Plugins that edit this file:"
 ERR_CURRENTPLUGIN = "Plugin that triggered the error:"
 ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press Ctrl/Cmd+C to copy to the clipboard)\n\n"
 ERR_CONTINUE = "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Failed to find this in %s.lua:"
 ERR_REPLACECODEPATTERN = "Failed to find this in %s.lua (as pattern):"
 ERR_LINESTOTAL = "%i lines in total"

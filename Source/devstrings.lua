@@ -16,3 +16,7 @@ L_PLU.LDPRELOADCONTAINSSPACES = {
 	[1] = "$1 contains spaces! Not running the game.",
 }
 
+L.CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No."
+L.MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)"
+L.BTN_OVERRIDE = "Override"
+L.BTN_DONTOVERRIDE = "Don't Override"

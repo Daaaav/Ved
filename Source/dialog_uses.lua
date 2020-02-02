@@ -887,16 +887,34 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if w > 20 or h > 20 then
+		if metadata.mapwidth <= limit.mapwidth and metadata.mapheight <= limit.mapheight
+		and (w > limit.mapwidth or h > limit.mapheight) then
+			local newbuttons
+			if s.allowbiggerthansizelimit then
+				newbuttons = {L.BTN_OVERRIDE, L.BTN_DONTOVERRIDE}
+			end
+			-- Hack to smuggle the fields through the bigger size confirmation dialog
+			-- Hopefully Ved doesn't update its dialog system again and break this
+			local newfields =
+				{
+				mapwidth = {"mapwidth", 0, 0, 0, w, -1},
+				mapheight = {"mapheight", 0, 0, 0, h, -1},
+				}
+
 			dialog.create(
-				langkeys(L.SIZELIMIT, {
-					math.min(20, w),
-					math.min(20, h)
-				})
+				langkeys(
+					L.SIZELIMIT,
+					{math.min(w, limit.mapwidth), math.min(h, limit.mapheight)}
+				),
+				newbuttons,
+				dialog.callback.leveloptions_maxlevelsize,
+				"",
+				newfields
 			)
+		else
+			metadata.mapwidth = w
+			metadata.mapheight = h
 		end
-		metadata.mapwidth = math.min(20, w)
-		metadata.mapheight = math.min(20, h)
 		addrooms(metadata.mapwidth, metadata.mapheight)
 		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 	end
@@ -1021,13 +1039,13 @@ function dialog.callback.platv(button, fields, _, notclosed)
 		return
 	end
 
-	local oldplatv = levelmetadata[(roomy)*20 + (roomx+1)].platv
-	levelmetadata[(roomy)*20 + (roomx+1)].platv = tonumber(fields.name)
+	local oldplatv = levelmetadata_get(roomx, roomy).platv
+	levelmetadata_set(roomx, roomy, "platv", tonumber(fields.name))
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "platv",
 					oldvalue = oldplatv,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+					newvalue = levelmetadata_get(roomx, roomy).platv
 				}
 			},
 			switchtool = 8
@@ -1048,4 +1066,58 @@ function dialog.callback.locatevvvvvvnonsteam_validate(button, fields)
 
 		playtesting_start()
 	end
+end
+
+function dialog.callback.leveloptions_maxlevelsize(button, fields)
+	if button == L.BTN_OVERRIDE then
+		local newfields =
+			{
+			mapwidth = {"mapwidth", 0, 0, 0, fields.mapwidth, -1},
+			mapheight = {"mapheight", 0, 0, 0, fields.mapheight, -1},
+			}
+		dialog.create(
+			langkeys(
+				L.CONFIRMBIGGERSIZE,
+				{
+					fields.mapwidth, fields.mapheight,
+					limit.mapwidth, limit.mapheight,
+					math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight)
+				}
+			),
+			DBS.YESNO,
+			dialog.callback.leveloptions_biggersize,
+			"",
+			newfields
+		)
+	elseif button == L.BTN_DONTOVERRIDE then
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
+		addrooms(metadata.mapwidth, metadata.mapheight)
+		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+
+		-- Uh, yeah, this is kind of an ugly hack and kind of relies on the
+		-- assumptions that (1) the user can't undo, redo, or make any other
+		-- changes while a dialog is open, and (2) the order of the changed
+		-- metadata in the undo buffer won't change in the future
+		undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
+		undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
+		finish_undo("CHANGED METADATA (max level size, also ugly hack)")
+	end
+end
+
+function dialog.callback.leveloptions_biggersize(button, fields)
+	if button == DB.NO then
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
+	elseif button == DB.YES then
+		metadata.mapwidth = fields.mapwidth
+		metadata.mapheight = fields.mapheight
+	end
+
+	addrooms(metadata.mapwidth, metadata.mapheight)
+	gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+
+	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
+	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
+	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
 end
