@@ -1,14 +1,3 @@
-limit = { -- temporary, this will be modifiable later. For unlimited, just use math.huge
-	mapwidth = 20,
-	mapheight = 20,
-	scripts = 500,
-	scriptlines = 500,
-	flags = 100,
-	entities = 3000,
-	trinkets = 100,
-	crewmates = 100,
-}
-
 toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P"}
 
 tilesetnames =
@@ -194,6 +183,28 @@ for k,v in pairs(map_resolutions) do
 	map_resolutions_numbertolabel[v[1]] = v[2]
 	map_resolutions_labeltonumber[v[2]] = v[1]
 end
+
+limit_v = {
+	mapwidth = 20,
+	mapheight = 20,
+	scripts = 500,
+	scriptlines = 500,
+	flags = 100,
+	entities = 3000,
+	trinkets = 100,
+	crewmates = 100,
+}
+
+limit_vce = {
+	mapwidth = 100,
+	mapheight = 100,
+	scripts = math.huge,
+	scriptlines = math.huge,
+	flags = 1000,
+	entities = math.huge,
+	trinkets = 100,
+	crewmates = 100,
+}
 
 
 knowncommands =
