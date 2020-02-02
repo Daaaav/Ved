@@ -891,7 +891,7 @@ function dialog.callback.leveloptions(button, fields)
 		and (w > limit.mapwidth or h > limit.mapheight) then
 			local newbuttons
 			if s.allowbiggerthansizelimit then
-				newbuttons = {L.BTN_OVERRIDE, L.BTN_DONTOVERRIDE}
+				newbuttons = {L.BTN_OVERRIDE, DB.OK}
 			end
 			-- Hack to smuggle the fields through the bigger size confirmation dialog
 			-- Hopefully Ved doesn't update its dialog system again and break this
@@ -1075,7 +1075,7 @@ function dialog.callback.leveloptions_maxlevelsize(button, fields)
 			"",
 			newfields
 		)
-	elseif button == L.BTN_DONTOVERRIDE then
+	elseif button == DB.OK then
 		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
 		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
 		addrooms(metadata.mapwidth, metadata.mapheight)
