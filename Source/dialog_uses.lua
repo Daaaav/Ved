@@ -305,7 +305,7 @@ function dialog.callback.save(button, fields)
 			finish_undo("TITLE WHEN SAVING")
 		end
 
-		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 
 		if not savedsuccess then
 			-- Why not :c

@@ -424,8 +424,6 @@ function love.load()
 		tile_batch_tiles[i] = 0
 	end
 
-	limit = limit_v
-
 	if not settings_ok then
 		-- If the settings file is broken, good chance we don't know what the language setting was.
 		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,
@@ -3038,7 +3036,7 @@ function love.keypressed(key)
 			love.graphics.clear(); love.draw(); love.graphics.present()
 
 			-- Save now
-			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 
 			if not savedsuccess then
 				-- Why not :c
@@ -3336,7 +3334,7 @@ function love.keypressed(key)
 		table.remove(files[""])
 	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
-		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 		if savedsuccess then
 			editingmap = input
 		end

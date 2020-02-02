@@ -11,7 +11,7 @@ metadataitems =
 	}
 
 function loadlevelmetadata(path)
-	-- Returns (bool)success, (array)metadata, contents
+	-- Returns (bool)success, (table)metadata, (table)limit, contents
 	-- Map size and music is gonna move in with the metadata here.
 	-- If loading isn't successful, metadata will be an error string.
 
@@ -22,14 +22,17 @@ function loadlevelmetadata(path)
 	end
 
 	local thismetadata = {}
+	local thislimit
 
 	-- What kind of level is this?
-	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"[0-9]+\">")
+	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"([0-9]+)\">")
 	if vce_m ~= nil then
 		thismetadata.target = "VCE"
 		thismetadata.target_ver = tonumber(vce_m)
+		thislimit = limit_vce
 	else
 		thismetadata.target = "V"
+		thislimit = limit_v
 	end
 
 	-- First do the metadata.
@@ -57,11 +60,11 @@ function loadlevelmetadata(path)
 		thismetadata[v] = tonumber(m)
 	end
 
-	return true, thismetadata, contents
+	return true, thismetadata, thislimit, contents
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata
+	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata, (table)extra
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -72,7 +75,7 @@ function loadlevel(path)
 	-- vedmetadata has flag names (.flaglabel)
 	-- If loading isn't successful, metadata will be an error string.
 
-	local success, thismetadata, contents = loadlevelmetadata(path)
+	local success, thismetadata, thislimit, contents = loadlevelmetadata(path)
 
 	if not success then
 		return false, thismetadata
@@ -81,6 +84,8 @@ function loadlevel(path)
 	local x = {}
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
 	FClist = {}
+
+	local thisextra = {}
 
 	-- Now, the contents!
 	cons("Loading all the contents...")
@@ -108,10 +113,10 @@ function loadlevel(path)
 	local theserooms = {}
 	local failedtiles = 0
 	local t
-	for yk = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
+	for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
 		--print("Y: " .. yk)
 		theserooms[yk] = {}
-		for xk = 0, ( yk < math.min(thismetadata.mapheight, limit.mapheight) and thismetadata.mapwidth or limit.mapwidth ) - 1 do
+		for xk = 0, ( yk < math.min(thismetadata.mapheight, thislimit.mapheight) and thismetadata.mapwidth or thislimit.mapwidth ) - 1 do
 			theserooms[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
@@ -130,17 +135,17 @@ function loadlevel(path)
 		end
 	end
 	-- Partial rooms due to VVVVVV's concatenated rows thing bleeding out past the normal 20xHEIGHT range and shifting rooms upward (within the first 20 room rows)
-	if s.allowbiggerthansizelimit and thismetadata.mapwidth > limit.mapwidth then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / limit.mapwidth )
+	if s.allowbiggerthansizelimit and thismetadata.mapwidth > thislimit.mapwidth then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / thislimit.mapwidth )
 		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(thismetadata.mapheight, limit.mapheight)
+		local capped_height = math.min(thismetadata.mapheight, thislimit.mapheight)
 		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
 			theserooms[yk] = {}
-			for xk = 0, limit.mapwidth-1 do
+			for xk = 0, thislimit.mapwidth-1 do
 				theserooms[yk][xk] = {}
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%limit.mapwidth == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%thislimit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%thislimit.mapwidth == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
 					for xt = 0, 39 do
-						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*limit.mapheight + (xk+(limit.mapwidth-1))*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
+						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*thislimit.mapheight + (xk+(thislimit.mapwidth-1))*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
 						if t == nil or t < 0 or t >= 1200 then
 							t = 0
 							failedtiles = failedtiles + 1
@@ -159,6 +164,45 @@ function loadlevel(path)
 	if failedtiles > 0 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
+	end
+
+	-- VCE put its extra things right here.
+	if thismetadata.target == "VCE" then
+		thisextra.altstates = {}
+		if contents:find("<altstates />") == nil then
+			x.altstates = contents:match("<altstates>(.*)</altstates>")
+			if x.altstates ~= nil then
+				mycount.FC = mycount.FC + 1
+				cons_fc(L.TODO_ALTSTATES)
+			end
+		end
+
+		thisextra.towers = {}
+		if contents:find("<towers />") == nil then
+			x.towers = contents:match("<towers>(.*)</towers>")
+			if x.towers ~= nil then
+				mycount.FC = mycount.FC + 1
+				cons_fc(L.TODO_TOWERS)
+			end
+		end
+
+		thisextra.teleporters = {}
+		if contents:find("<teleporters />") == nil then
+			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
+			if x.teleporters ~= nil then
+				mycount.FC = mycount.FC + 1
+				cons_fc(L.TODO_TELEPORTERS)
+			end
+		end
+
+		thisextra.timetrials = {}
+		if contents:find("<timetrials />") == nil then
+			x.timetrials = contents:match("<timetrials>(.*)</timetrials>")
+			if x.timetrials ~= nil then
+				mycount.FC = mycount.FC + 1
+				cons_fc(L.TODO_TIMETRIALS)
+			end
+		end
 	end
 
 	-- Entities.
@@ -549,11 +593,11 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
-	end if ((thismetadata.mapwidth > limit.mapwidth) or (thismetadata.mapheight > limit.mapheight)) and not s.allowbiggerthansizelimit then
+	end if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), limit.mapwidth, limit.mapheight}))
-		thismetadata.mapwidth = math.min(thismetadata.mapwidth, limit.mapwidth)
-		thismetadata.mapheight = math.min(thismetadata.mapheight, limit.mapheight)
+		cons_fc(langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), thislimit.mapwidth, thislimit.mapheight}))
+		thismetadata.mapwidth = math.min(thismetadata.mapwidth, thislimit.mapwidth)
+		thismetadata.mapheight = math.min(thismetadata.mapheight, thislimit.mapheight)
 	end if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.LEVMUSICEMPTY)
@@ -611,7 +655,7 @@ function loadlevel(path)
 	end
 
 	-- No longer x.alltiles
-	return true, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata
+	return true, thismetadata, thislimit, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata, thisextra
 end
 
 
@@ -619,7 +663,7 @@ end
 vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
 vvvvvvxmltemplate_vce = love.filesystem.read("template_vce.vvvvvv")
 
-function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, crashed)
+function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
 	if (path == nil) or (path == "") then
@@ -633,7 +677,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	local savethis
 	if thismetadata.target == "VCE" then
-		savethis = vvvvvvxmltemplate_vce
+		savethis = vvvvvvxmltemplate_vce:gsub("%$VCEVERSION%$", thismetadata.target_ver)
 	else
 		savethis = vvvvvvxmltemplate
 	end
@@ -700,6 +744,35 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	-- Slightly cleaning up
 	thenewcontents = nil
+
+	-- VCE put its extra things right here.
+	if thismetadata.target == "VCE" then
+		-- TODO look per table how it should be structured, and thus how it should be determined that it's empty.
+
+		if #thisextra.altstates ~= 0 then
+			-- TODO
+		else
+			savethis = savethis:gsub("%$ALTSTATES%$", "        <altstates />")
+		end
+
+		if #thisextra.towers ~= 0 then
+			-- TODO
+		else
+			savethis = savethis:gsub("%$TOWERS%$", "        <towers />")
+		end
+
+		if #thisextra.teleporters ~= 0 then
+			-- TODO
+		else
+			savethis = savethis:gsub("%$TELEPORTERS%$", "        <teleporters />")
+		end
+
+		if #thisextra.timetrials ~= 0 then
+			-- TODO
+		else
+			savethis = savethis:gsub("%$TIMETRIALS%$", "        <timetrials />")
+		end
+	end
 
 	-- Now do all entities, if we have any!
 	cons("Saving entities...")
@@ -795,8 +868,16 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	end
 	local alllevelmetadata = {}
 	local i = 1
-	for y = 0, limit.mapheight-1 do -- TODO: VCE does it differently, but first VVVVVV support with the 3D levelmetadata table
-		for x = 0, limit.mapwidth-1 do
+	local lmd_w, lmd_h = 20, 20
+	if thismetadata.target == "VCE" and (thismetadata.mapwidth > 20 or thismetadata.mapheight > 20) then
+		-- Width is always at least 20, but is more if the map is wider.
+		-- If within 20x20, VCE saves 20x20.
+		-- Else, VCE saves WxH where W is at least 20.
+		-- Example: for 1x21 VCE saves 20x21, for 21x1 it saves 21x1.
+		lmd_w, lmd_h = math.max(thismetadata.mapwidth, 20), thismetadata.mapheight
+	end
+	for y = 0, lmd_h-1 do
+		for x = 0, lmd_w-1 do
 			local v = theselevelmetadata[y][x]
 			local my_platv = all_platvs[i]
 			if my_platv == nil then
@@ -969,10 +1050,13 @@ function createblanklevel(lvwidth, lvheight)
 
 	local myvedmetadata = false
 
+	-- Extra. Since we start with a VVVVVV level, this is empty.
+	thisextra = {}
+
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata
+	return true, thismetadata, limit_v, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata, thisextra
 end
 
 function default_levelmetadata(rx, ry)
