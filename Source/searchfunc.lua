@@ -68,9 +68,11 @@ function searchtext(this)
 		end
 
 		-- Room names
-		for k,v in pairs(levelmetadata) do
-			if v.roomname:lower():find(this) ~= nil then
-				table.insert(searchrooms, {x=k-(math.floor((k-1)/20)*20), y=math.floor((k-1)/20)+1, name=v.roomname})
+		for ky,vy in pairs(levelmetadata) do
+			for kx,vx in pairs(vy) do
+				if vx.roomname:lower():find(this) ~= nil then
+					table.insert(searchrooms, {x=kx, y=ky, name=vx.roomname})
+				end
 			end
 		end
 
