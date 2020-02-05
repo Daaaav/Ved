@@ -2794,3 +2794,53 @@ function warplinesinroom(theroomx, theroomy)
 	end
 	return false
 end
+
+function insert_entity(...) -- atx, aty, t, p...
+	insert_entity_full(roomx, roomy, 0, ...)
+end
+
+function insert_entity_full(rx, ry, intower, atx, aty, t, p1, p2, p3, p4, data)
+	if p1 == nil then p1 = 0 end
+	if p2 == nil then p2 = 0 end
+	if p3 == nil then p3 = 0 end
+	if p4 == nil then p4 = 0 end
+	if data == nil then data = "" end
+
+	table.insert(entitydata, count.entity_ai,
+		{
+			x = 40*rx + atx,
+			y = 30*ry + aty,
+			t = t,
+			p1 = p1, p2 = p2, p3 = p3, p4 = p4, p5 = 320, p6 = 240,
+			subx = 0, suby = 0, intower = 0, -- VCE
+			data = data
+		}
+	)
+
+	if t == 11 or t == 50 then
+		autocorrectlines()
+	end
+	if t == 13 then
+		warpid = count.entity_ai
+		selectedsubtool[14] = 2
+	elseif t == 17 or t == 18 then
+		editingroomtext = count.entity_ai
+		newroomtext = true
+		makescriptroomtext = t == 18
+		startinput()
+	elseif t == 19 then
+		editingsboxid = count.entity_ai
+		selectedsubtool[13] = 2
+	else
+		entityplaced()
+	end
+	if t == 9 then
+		count.trinkets = count.trinkets + 1
+	elseif t == 15 then
+		count.crewmates = count.crewmates + 1
+	elseif t == 16 then
+		count.startpoint = count.entity_ai
+	end
+	count.entities = count.entities + 1
+	count.entity_ai = count.entity_ai + 1
+end

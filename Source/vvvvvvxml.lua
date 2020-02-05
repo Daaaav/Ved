@@ -229,18 +229,25 @@ function loadlevel(path)
 			allentities[entityid] = {}
 
 			-- We now got x="x" ... p6="x">Data... Attributes to the left of the >, data to the right of it.
-			metaparts = explode(">", entity)
+			local metaparts = explode(">", entity)
 
 			-- Explode more
-			attributes = explode(" ", metaparts[1])
+			local attributes = explode(" ", metaparts[1])
 
 			for k,v in pairs(attributes) do
 				-- Explode yet even more
-				keyvalue = explode("=", v)
+				local keyvalue = explode("=", v)
 
 				-- Leave out the quotes and convert it to number
 				local settothis = tonumber(keyvalue[2]:sub(2, -2))
 				allentities[entityid][keyvalue[1]] = settothis
+			end
+
+			-- We might want to convert target platform later, and we don't really want to conditionally add properties to entities.
+			if thismetadata.target ~= "VCE" then
+				allentities[entityid].subx = 0
+				allentities[entityid].suby = 0
+				allentities[entityid].intower = 0
 			end
 
 			-- Now we only need the data...
@@ -428,16 +435,16 @@ function loadlevel(path)
 		theselevelmetadata[ry][rx] = {}
 
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
-		metaparts = explode(">", room)
+		local metaparts = explode(">", room)
 
 		-- Explode more
-		attributes = explode(" ", metaparts[1])
+		local attributes = explode(" ", metaparts[1])
 
 		for k,v in pairs(attributes) do
 			-- Explode yet even more
-			keyvalue = explode("=", v)
+			local keyvalue = explode("=", v)
 
-			if keyvalue[1] == "platv" then
+			if thismetadata.target ~= "VCE" and keyvalue[1] == "platv" then
 				-- Unfortunately platv is very special.
 				table.insert(all_platvs, tonumber(keyvalue[2]:sub(2, -2)))
 				if inbounds then
@@ -453,6 +460,10 @@ function loadlevel(path)
 
 		if thismetadata.target == "VCE" and theselevelmetadata[ry][rx].enemyv == nil then
 			theselevelmetadata[ry][rx].enemyv = 4
+		elseif thismetadata.target ~= "VCE" then
+			theselevelmetadata[ry][rx].enemyv = 4
+			theselevelmetadata[ry][rx].tower = 0
+			theselevelmetadata[ry][rx].tower_row = 0
 		end
 
 		-- Now we only need the room name...
@@ -602,7 +613,7 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
-	end if thismetadata.target == "V" and n_levelmetadata ~= 400 then
+	end if thismetadata.target ~= "VCE" and n_levelmetadata ~= 400 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(L.NOT400ROOMS)
 
@@ -618,12 +629,15 @@ function loadlevel(path)
 					platx2 = 320,
 					platy2 = 240,
 					platv = 4,
+					enemyv = 4,
 					enemyx1 = 0,
 					enemyy1 = 0,
 					enemyx2 = 320,
 					enemyy2 = 240,
 					enemytype = 0,
 					directmode = 0,
+					tower = 0,
+					tower_row = 0,
 					warpdir = 0,
 					roomname = "",
 					auto2mode = 0,
@@ -854,16 +868,18 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Saving room metadata...")
 	-- Now all room metadata, aka levelclass
 	local all_platvs = {}
-	for y = 0, thismetadata.mapheight-1 do
-		if y >= limit.mapheight then
-			break
-		end
-		for x = 0, thismetadata.mapwidth-1 do
-			if x >= limit.mapwidth then
+	if thismetadata.target ~= "VCE" then
+		for y = 0, thismetadata.mapheight-1 do
+			if y >= limit.mapheight then
 				break
 			end
-			-- platv needs special handling, unfortunately.
-			table.insert(all_platvs, theselevelmetadata[y][x].platv)
+			for x = 0, thismetadata.mapwidth-1 do
+				if x >= limit.mapwidth then
+					break
+				end
+				-- platv needs special handling, unfortunately.
+				table.insert(all_platvs, theselevelmetadata[y][x].platv)
+			end
 		end
 	end
 	local alllevelmetadata = {}
@@ -879,9 +895,14 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	for y = 0, lmd_h-1 do
 		for x = 0, lmd_w-1 do
 			local v = theselevelmetadata[y][x]
-			local my_platv = all_platvs[i]
-			if my_platv == nil then
-				my_platv = 4
+			local my_platv
+			if thismetadata.target == "VCE" then
+				my_platv = v.platv
+			else
+				my_platv = all_platvs[i]
+				if my_platv == nil then
+					my_platv = 4
+				end
 			end
 			table.insert(alllevelmetadata,
 				"            <edLevelClass tileset=\"" .. v.tileset
@@ -891,13 +912,17 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				.. "\" platx2=\"" .. v.platx2
 				.. "\" platy2=\"" .. v.platy2
 				.. "\" platv=\"" .. my_platv
+				.. (thismetadata.target == "VCE" and "\" enemyv=\"" .. v.enemyv or "")
 				.. "\" enemyx1=\"" .. v.enemyx1
 				.. "\" enemyy1=\"" .. v.enemyy1
 				.. "\" enemyx2=\"" .. v.enemyx2
 				.. "\" enemyy2=\"" .. v.enemyy2
 				.. "\" enemytype=\"" .. v.enemytype
 				.. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1)
-				.. "\" warpdir=\"" .. v.warpdir .. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
+				.. (thismetadata.target == "VCE" and "\" tower=\"" .. v.tower or "")
+				.. (thismetadata.target == "VCE" and "\" tower_row=\"" .. v.tower_row or "")
+				.. "\" warpdir=\"" .. v.warpdir
+				.. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
 			)
 
 			i = i+1
@@ -1068,12 +1093,15 @@ function default_levelmetadata(rx, ry)
 		platx2 = 320,
 		platy2 = 240,
 		platv = 4,
+		enemyv = 4,
 		enemyx1 = 0,
 		enemyy1 = 0,
 		enemyx2 = 320,
 		enemyy2 = 240,
 		enemytype = 0,
 		directmode = 0,
+		tower = 0,
+		tower_row = 0,
 		warpdir = 0,
 		roomname = "",
 		auto2mode = 0,

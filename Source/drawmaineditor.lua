@@ -561,89 +561,26 @@ function drawmaineditor()
 			if count.trinkets >= limit.trinkets then
 				dialog.create(L.MAXTRINKETS)
 			else
-				cons("Trinket: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 9,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.trinkets = count.trinkets + 1
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 9)
 			end
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 5 then
 			-- Checkpoint
-			cons("Checkpoint: " .. atx .. " " .. aty)
-
 			if selectedsubtool[5] == 1 then
 				-- Upright
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 10,
-					p1 = 1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
+				insert_entity(atx, aty, 10, 1)
 			elseif selectedsubtool[5] == 2 then
 				-- Upside down
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 10,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
+				insert_entity(atx, aty, 10, 0)
 			end
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 6 then
 			-- Disappearing platform
-			cons("Disappear: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 3,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 3)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 7 then
 			-- Conveyor
-			cons("Conveyor: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 2,
-				p1 = 4+selectedsubtool[7], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 2, 4+selectedsubtool[7])
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 8 then
 			-- Moving platform
@@ -675,22 +612,8 @@ function drawmaineditor()
 				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("PLATFORM BOUNDS")
 			else
-				cons("Moving: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 2,
-					p1 = -1+selectedsubtool[8], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 2, -1+selectedsubtool[8])
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 9 then
 			-- Enemy
@@ -722,28 +645,12 @@ function drawmaineditor()
 				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("ENEMY BOUNDS")
 			else
-				cons("Enemy: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 1,
-					p1 = -1+selectedsubtool[9], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 1, -1+selectedsubtool[9]) 
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 10 then
 			-- Gravity line
 			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
-				cons("Gravity line: " .. atx .. " " .. aty)
-
 				local p1, p2
 				if selectedsubtool[10] == 1 then
 					-- Horizontal
@@ -753,21 +660,8 @@ function drawmaineditor()
 					p1, p2 = 1, aty
 				end
 
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 11,
-					p1 = p1, p2 = p2, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				autocorrectlines()
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 11, p1, p2, 8)
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 11 then
 			-- Roomtext
@@ -776,25 +670,7 @@ function drawmaineditor()
 				endeditingroomtext()
 			end
 
-			cons("Roomtext: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 17,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			editingroomtext = count.entity_ai
-			newroomtext = true
-			makescriptroomtext = false
-			startinput()
-
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 17)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 12 then
 			-- Terminal
@@ -803,48 +679,14 @@ function drawmaineditor()
 				endeditingroomtext()
 			end
 
-			cons("Terminal: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 18,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			editingroomtext = count.entity_ai
-			newroomtext = true
-			makescriptroomtext = true
-			startinput()
-
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 18)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 13 then
 			-- Script box
-			cons("Script box: " .. atx .. " " .. aty)
-
 			-- Subtool is changed in the background
 			if selectedsubtool[13] == 1 then
-				-- Placing top left corner.
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 19,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				editingsboxid = count.entity_ai
-				selectedsubtool[13] = 2
-
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
-
-				mousepressed = true
+				-- Placing top left corner. Refactoring multi-step entities is definitely on my todo list.
+				insert_entity(atx, aty, 19)
 			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 				-- Placing bottom right corner
 				local new_p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
@@ -890,8 +732,6 @@ function drawmaineditor()
 				selectedsubtool[13] = 1
 
 				sboxdontaskname = nil
-
-				mousepressed = true
 			elseif selectedsubtool[13] == 3 and (entitydata[editingsboxid] ~= nil) then
 				-- We were editing this box
 				oldscriptx, oldscripty = entitydata[editingsboxid].x, entitydata[editingsboxid].y
@@ -903,34 +743,19 @@ function drawmaineditor()
 
 				selectedsubtool[13] = 2
 				sboxdontaskname = true
-
-				mousepressed = true
 			else
 				cons("You tried placing the bottom right of a non-existant script box!")
 
 				editingsboxid = nil
 				selectedsubtool[13] = 1
 			end
+
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 14 then
 			-- Warp token
-			cons("Warp token: " .. atx .. " " .. aty)
-
 			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and entitydata[warpid] == nil) then
 				-- Placing entrance.
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 13,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				warpid = count.entity_ai
-
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
-
-				selectedsubtool[14] = 2
+				insert_entity(atx, aty, 13)
 			elseif selectedsubtool[14] == 2 or selectedsubtool[14] == 4 then
 				-- Placing exit, or moving exit
 				if entitydata[warpid] ~= nil then
@@ -1004,52 +829,20 @@ function drawmaineditor()
 				selectedsubtool[14] = 1
 			else
 				dialog.create(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)")
-				mousepressed = true
 			end
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 15 then
 			-- Warp line
-			cons("Warp line: " .. atx .. " " .. aty)
-
 			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
-				cons("Warp line: " .. atx .. " " .. aty)
-
 				if atx == 0 or atx == 39 then
 					-- Vertical left or right, type 0 or 1
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 50,
-						p1 = (atx == 0 and 0 or 1), p2 = aty, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
-					autocorrectlines()
-					entityplaced()
-					count.entities = count.entities + 1
-					count.entity_ai = count.entity_ai + 1
-
-					mousepressed = true
+					insert_entity(atx, aty, 50, (atx == 0 and 0 or 1), aty, 8)
 				elseif aty == 0 or aty == 29 then
 					-- Horizontal top or bottom, type 2 or 3
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 50,
-						p1 = (aty == 0 and 2 or 3), p2 = atx, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
-					autocorrectlines()
-					entityplaced()
-					count.entities = count.entities + 1
-					count.entity_ai = count.entity_ai + 1
-
-					mousepressed = true
+					insert_entity(atx, aty, 50, (aty == 0 and 2 or 3), atx, 8)
 				end
+				mousepressed = true
 			end
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
@@ -1058,23 +851,8 @@ function drawmaineditor()
 				dialog.create(L.MAXCREWMATES)
 				mousepressed = true
 			else
-				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 15,
-					p1 = ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				entityplaced()
-
-				count.crewmates = count.crewmates + 1
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 15, ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]])
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 17 then
 			-- Start point
@@ -1132,21 +910,8 @@ function drawmaineditor()
 				entitydata[count.startpoint].p1 = p1
 			else
 				cons("Inserting new start point")
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = x,
-					y = y,
-					t = 16,
-					p1 = p1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				entityplaced()
-
-				count.startpoint = count.entity_ai
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 16, p1)
 			end
-
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
