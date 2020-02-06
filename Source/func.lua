@@ -1130,10 +1130,14 @@ function thingk()
 end
 
 function switchtileset()
+	local maxtileset = 4
+	if metadata.target == "VCE" then
+		maxtileset = 5
+	end
 	if keyboard_eitherIsDown("shift") then
-		selectedtileset = revcycle(selectedtileset, 4, 0)
+		selectedtileset = revcycle(selectedtileset, maxtileset, 0)
 	else
-		selectedtileset = cycle(selectedtileset, 4, 0)
+		selectedtileset = cycle(selectedtileset, maxtileset, 0)
 	end
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
 	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then

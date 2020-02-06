@@ -1516,6 +1516,11 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 		return
 	end
 
+	local maxtileset = 4
+	if metadata.target == "VCE" then
+		maxtileset = 5
+	end
+
 	local explodeddata = explode(",", data)
 
 	for k,v in pairs(explodeddata) do
@@ -1526,7 +1531,7 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 			if numw == nil then
 				cons("Paste failed- [" .. k .. "] (tile " .. (k-15) .. ") is not a number!")
 				return
-			elseif k == 1 and (numw < 0 or numw > 4) then
+			elseif k == 1 and (numw < 0 or numw > maxtileset) then
 				cons("Paste failed- tileset is out of range! (" .. numw .. ")")
 				return
 			elseif k == 2 and (numw < 0
@@ -1534,7 +1539,8 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 			or explodeddata[1] == 1 and numw > 7
 			or explodeddata[1] == 2 and numw > 6
 			or explodeddata[1] == 3 and numw > 6
-			or explodeddata[1] == 4 and numw > 5) then
+			or explodeddata[1] == 4 and numw > 5
+			or explodeddata[1] == 5 and numw > 29) then
 				cons("Paste failed- tilecol is out of range! (" .. numw .. ")")
 				return
 			elseif k == 12 and (numw < 0 or numw > 9) then
