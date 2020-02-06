@@ -226,7 +226,12 @@ function loadlevel(path)
 		local duplicatestartpoints = {}
 		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
 			entityid = entityid + 1
-			allentities[entityid] = {}
+			allentities[entityid] = {
+				-- Add non-VVVVVV properties by default
+				subx = 0, suby = 0, -- VCE
+				intower = 0, state = 0, onetime = false, -- VCE
+				activityname = "", activitycolor = "" -- VCE
+			}
 
 			-- We now got x="x" ... p6="x">Data... Attributes to the left of the >, data to the right of it.
 			local metaparts = explode(">", entity)
@@ -241,13 +246,6 @@ function loadlevel(path)
 				-- Leave out the quotes and convert it to number
 				local settothis = tonumber(keyvalue[2]:sub(2, -2))
 				allentities[entityid][keyvalue[1]] = settothis
-			end
-
-			-- We might want to convert target platform later, and we don't really want to conditionally add properties to entities.
-			if thismetadata.target ~= "VCE" then
-				allentities[entityid].subx = 0
-				allentities[entityid].suby = 0
-				allentities[entityid].intower = 0
 			end
 
 			-- Now we only need the data...
@@ -432,7 +430,10 @@ function loadlevel(path)
 		else
 			inbounds = false
 		end
-		theselevelmetadata[ry][rx] = {}
+		theselevelmetadata[ry][rx] = {
+			-- Add non-VVVVVV properties by default
+			enemyv = 4, tower = 0, tower_row = 0, -- VCE
+		}
 
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
 		local metaparts = explode(">", room)
@@ -456,14 +457,6 @@ function loadlevel(path)
 				-- Leave out the quotes and convert it to number
 				theselevelmetadata[ry][rx][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
 			end
-		end
-
-		if thismetadata.target == "VCE" and theselevelmetadata[ry][rx].enemyv == nil then
-			theselevelmetadata[ry][rx].enemyv = 4
-		elseif thismetadata.target ~= "VCE" then
-			theselevelmetadata[ry][rx].enemyv = 4
-			theselevelmetadata[ry][rx].tower = 0
-			theselevelmetadata[ry][rx].tower_row = 0
 		end
 
 		-- Now we only need the room name...
@@ -804,7 +797,32 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					entitydatasaved = entitydatasaved + string.len(data)
 					data = ""
 				end
-				table.insert(thenewentities, "            <edentity x=\"" .. v.x .. "\" y=\"" .. v.y .. "\" t=\"" .. v.t .. "\" p1=\"" .. v.p1 .. "\" p2=\"" .. v.p2 .. "\" p3=\"" .. v.p3 .. "\" p4=\"" .. v.p4 .. "\" p5=\"" .. v.p5 .. "\" p6=\"" .. v.p6 .. "\">" .. xmlspecialchars(data) .. "\n            </edentity>\n")
+				local extra_end_attrs
+				if thismetadata.target == "VCE" then
+					extra_end_attrs =
+						(v.state ~= 0 and " state=\"" .. v.state .. "\"" or "")
+						.. " intower=\"" .. v.intower .. "\""
+						.. (v.activityname ~= "" and " activityname=\"" .. v.activityname .. "\"" or "")
+						.. (v.activitycolor ~= "" and " activitycolor=\"" .. v.activitycolor .. "\"" or "")
+						.. (v.onetime and " onetime=\"1\"" or "")
+				else
+					extra_end_attrs = ""
+				end
+				table.insert(thenewentities,
+					"            <edentity x=\"" .. v.x
+					.. "\" y=\"" .. v.y
+					.. (thismetadata.target == "VCE" and "\" subx=\"" .. v.subx or "")
+					.. (thismetadata.target == "VCE" and "\" suby=\"" .. v.suby or "")
+					.. "\" t=\"" .. v.t
+					.. "\" p1=\"" .. v.p1
+					.. "\" p2=\"" .. v.p2
+					.. "\" p3=\"" .. v.p3
+					.. "\" p4=\"" .. v.p4
+					.. "\" p5=\"" .. v.p5
+					.. "\" p6=\"" .. v.p6
+					.. "\"" .. extra_end_attrs .. ">" .. xmlspecialchars(data)
+					.. (thismetadata.target == "V" and "\n            " or "") .. "</edentity>\n"
+				)
 			end
 		end
 

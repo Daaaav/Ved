@@ -2796,10 +2796,10 @@ function warplinesinroom(theroomx, theroomy)
 end
 
 function insert_entity(...) -- atx, aty, t, p...
-	insert_entity_full(roomx, roomy, 0, ...)
+	insert_entity_full(roomx, roomy, 0, 0, 0, ...)
 end
 
-function insert_entity_full(rx, ry, intower, atx, aty, t, p1, p2, p3, p4, data)
+function insert_entity_full(rx, ry, intower, subx, suby, atx, aty, t, p1, p2, p3, p4, data)
 	if p1 == nil then p1 = 0 end
 	if p2 == nil then p2 = 0 end
 	if p3 == nil then p3 = 0 end
@@ -2812,7 +2812,9 @@ function insert_entity_full(rx, ry, intower, atx, aty, t, p1, p2, p3, p4, data)
 			y = 30*ry + aty,
 			t = t,
 			p1 = p1, p2 = p2, p3 = p3, p4 = p4, p5 = 320, p6 = 240,
-			subx = 0, suby = 0, intower = 0, -- VCE
+			subx = subx, suby = suby, -- VCE
+			intower = intower, state = 0, onetime = false, -- VCE
+			activityname = "", activitycolor = "", -- VCE
 			data = data
 		}
 	)
