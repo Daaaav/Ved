@@ -694,6 +694,7 @@ end
 function loadtilesets()
 	loadtileset("tiles.png")
 	loadtileset("tiles2.png")
+	loadtileset("tiles3.png")
 	loadtileset("entcolours.png")
 	loadsprites("sprites.png", 32)
 
@@ -740,6 +741,11 @@ function loadtileset(file)
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"]) -- 16 16 16 16
 		end
+	end
+
+	-- If this tileset is smaller than 1200 (tiles3) then fill up with tile 0 to prevent crashes
+	for filler = tilesets[file].tileswidth*tilesets[file].tilesheight, 1199 do
+		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, 8, 8, tilesets[file].width, tilesets[file].height)
 	end
 end
 
@@ -932,7 +938,7 @@ function cycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themax then
+	if var >= themax then
 		return themin
 	else
 		return var+1
@@ -944,7 +950,7 @@ function revcycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themin then
+	if var <= themin then
 		return themax
 	else
 		return var-1

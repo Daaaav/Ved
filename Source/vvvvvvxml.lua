@@ -476,7 +476,9 @@ function loadlevel(path)
 
 		local oldFCcount = mycount.FC
 
-		if theselevelmetadata[ry][rx].tileset == nil or type(theselevelmetadata[ry][rx].tileset) ~= "number" or (theselevelmetadata[ry][rx].tileset > 4) then
+		if theselevelmetadata[ry][rx].tileset == nil
+		or type(theselevelmetadata[ry][rx].tileset) ~= "number"
+		or (theselevelmetadata[ry][rx].tileset > (thismetadata.target == "VCE" and 5 or 4)) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].tileset = 0
 		end if theselevelmetadata[ry][rx].tilecol == nil or type(theselevelmetadata[ry][rx].tilecol) ~= "number" or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1) or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
@@ -484,7 +486,8 @@ function loadlevel(path)
 		or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
 		or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
 		or theselevelmetadata[ry][rx].tileset == 3 and theselevelmetadata[ry][rx].tilecol > 6
-		or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5 then
+		or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5
+		or theselevelmetadata[ry][rx].tileset == 5 and theselevelmetadata[ry][rx].tilecol > 29 then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].tilecol = 0
 		end if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then

@@ -790,11 +790,13 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 		local ts = 1
 		if tilesetname == "tiles2.png" then
 			ts = 2
+		elseif tilesetname == "tiles3.png" then
+			ts = 3
 		end
 
-		for aty = 0, 29 do
-			for atx = 0, 39 do
-				local t = (aty*40)+atx
+		for aty = 0, tilesets[tilesetname].tilesheight-1 do
+			for atx = 0, tilesets[tilesetname].tileswidth-1 do
+				local t = (aty*tilesets[tilesetname].tileswidth)+atx
 				local x, y = offsetx+(16*atx), offsety+(16*aty)
 
 				if displaysolid then
@@ -845,8 +847,8 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 			love.graphics.setColor(255,255,255,255)
 		else
 			-- Also draw a box around the currently selected tile!
-			local selectedx = selectedtile % 40
-			local selectedy = (selectedtile-selectedx) / 40
+			local selectedx = selectedtile % tilesets[tilesetname].tileswidth
+			local selectedy = (selectedtile-selectedx) / tilesets[tilesetname].tileswidth
 
 			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
 		end
@@ -890,8 +892,6 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 					elseif selectedtool == 3 then -- spikes
 						youhavechosen = tilesetblocks[chosentileset].colors[chosencolor].spikes[(6*ly)+lx+1]
 					end
-
-					cons("Tile selected: " .. anythingbutnil0(youhavechosen))
 
 					selectedtile = anythingbutnil0(youhavechosen)
 				end
@@ -947,7 +947,7 @@ end
 
 function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymode)
 	-- Returns true if a tile is solid, false if not solid.
-	-- Tileset can be 1 or 2 for tiles and tiles2 respectively.
+	-- Tileset can be 1, 2 or 3 for tiles, tiles2 and tiles3 respectively.
 	if spikessolid == nil then
 		spikessolid = false
 	end
@@ -961,6 +961,13 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymo
 
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile >= 12 and towertile <= 27 then
+			return true
+		elseif (spikessolid or invincibilitymode) and towertile >= 6 and towertile <= 11 then
+			return true
+		end
 	elseif tilenum == 1 then
 		return true
 	elseif tileset == 1 and tilenum == 59 then
@@ -986,6 +993,11 @@ end
 function istophalfspike(tilenum, tileset)
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile == 7 or towertile == 9 then
+			return true
+		end
 	elseif tilenum == 7 or tilenum == 9 then
 		return true
 	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 0 then
@@ -997,6 +1009,11 @@ end
 function isbottomhalfspike(tilenum, tileset)
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile == 6 or towertile == 8 then
+			return true
+		end
 	elseif tilenum == 6 or tilenum == 8 then
 		return true
 	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 1 then

@@ -3,7 +3,8 @@ toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P"
 tilesetnames =
 	{
 	"tiles.png",
-	"tiles2.png"
+	"tiles2.png",
+	"tiles3.png"
 	}
 
 usedtilesets =
@@ -14,6 +15,8 @@ usedtilesets =
 	[2] = 2, -- lab
 	[3] = 2, -- warp zone
 	[4] = 2, -- ship
+				--
+	[5] = 3, -- tower
 	}
 
 enemysprites =
@@ -2418,6 +2421,48 @@ tilesetblocks =
 				v6col = 6,
 				warpbg = 2,
 				entcolourrow = 58,
+				},
+			}
+		},
+	[5] =
+		{
+		tilesetid = 30600,
+		name = langtilesetnames.short5,
+		longname = langtilesetnames.long5,
+		tileimg = 3,
+		colors =
+			{
+			[0] =
+				{
+				colorid = 30601,
+				blocks =
+					{
+					  12,   13,   14,   25,   27,    0,
+					  12,   15,   16,    0,    0,    0,
+					  17,   18,   19,    0,    0,    0,
+					  20,   26,   21,    0,    0,    0,
+					  22,   23,   24,    0,    0,    0,
+					},
+				background =
+					{
+					  28,   28,   28,    1,    0,    0,
+					  28,   28,   28,    2,    3,    0,
+					  28,   28,   28,    4,    5,    0,
+					  28,   28,   28,    0,    0,    0,
+					  28,   28,   28,    0,    0,    0,
+					},
+				spikes =
+					{
+					   0,    0,    0,    0,    0,    0,
+					   0,    0,    8,    0,    6,    0,
+					   0,   11,    0,   10,    0,    0,
+					   0,    0,    9,    0,    7,    0,
+					   0,    0,    0,    0,    0,    0,
+					},
+				entcolor = {242,52,52},
+				v6col = 6, -- 0-4: 6, 5-9: 6, 10-14: 9, 15-19: 7, 20-24: 11, 25-29: 20. And this is probably wrong?? If so, subtract 5, and the last (25-29) is 8. Hopefully.
+				warpbg = 2,
+				entcolourrow = 0,
 				},
 			}
 		},
