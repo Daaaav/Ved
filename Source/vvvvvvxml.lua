@@ -274,7 +274,9 @@ function loadlevel(path)
 					end
 					table.insert(duplicatestartpoints, entityid)
 				end
-			elseif allentities[entityid].x == 800 and allentities[entityid].y == 600 and allentities[entityid].t == 17 then
+			elseif ((thismetadata.target ~= "VCE" and allentities[entityid].x == 800 and allentities[entityid].y == 600)
+			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
+			and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
 				local explodedmetadata = explode("|", allentities[entityid].data)
 
@@ -868,7 +870,15 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 			mdedata = mdedata .. table.concat(notesdata, "$")
 
-			table.insert(thenewentities, "            <edentity x=\"800\" y=\"600\" t=\"17\" p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">" .. xmlspecialchars(mdedata) .. "\n            </edentity>\n")
+			table.insert(thenewentities,
+				"            <edentity"
+				.. " x=\"4000\" y=\"3000\""
+				.. (thismetadata.target == "VCE" and " subx=\"0\" suby=\"0\"" or "")
+				.. " t=\"17\""
+				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\""
+				.. (thismetadata.target == "VCE" and " intower=\"0\"" or "") .. ">" .. xmlspecialchars(mdedata)
+				.. (thismetadata.target == "V" and "\n            " or "") .. "</edentity>\n"
+			)
 		end
 
 		savethis = savethis:gsub("%$EDENTITIES%$", table.concat(thenewentities, ""):gsub("%%", "%%%%") .. "        </edEntities>")
