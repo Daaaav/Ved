@@ -660,6 +660,8 @@ short3 = "Warp Zone",
 long3 = "Warp Zone",
 short4 = "Ship",
 long4 = "Ship",
+short5 = "Tower",
+long5 = "Tower",
 
 }
 
