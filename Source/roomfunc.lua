@@ -790,11 +790,13 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 		local ts = 1
 		if tilesetname == "tiles2.png" then
 			ts = 2
+		elseif tilesetname == "tiles3.png" then
+			ts = 3
 		end
 
-		for aty = 0, 29 do
-			for atx = 0, 39 do
-				local t = (aty*40)+atx
+		for aty = 0, tilesets[tilesetname].tilesheight-1 do
+			for atx = 0, tilesets[tilesetname].tileswidth-1 do
+				local t = (aty*tilesets[tilesetname].tileswidth)+atx
 				local x, y = offsetx+(16*atx), offsety+(16*aty)
 
 				if displaysolid then
@@ -845,8 +847,8 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 			love.graphics.setColor(255,255,255,255)
 		else
 			-- Also draw a box around the currently selected tile!
-			local selectedx = selectedtile % 40
-			local selectedy = (selectedtile-selectedx) / 40
+			local selectedx = selectedtile % tilesets[tilesetname].tileswidth
+			local selectedy = (selectedtile-selectedx) / tilesets[tilesetname].tileswidth
 
 			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
 		end
@@ -890,8 +892,6 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 					elseif selectedtool == 3 then -- spikes
 						youhavechosen = tilesetblocks[chosentileset].colors[chosencolor].spikes[(6*ly)+lx+1]
 					end
-
-					cons("Tile selected: " .. anythingbutnil0(youhavechosen))
 
 					selectedtile = anythingbutnil0(youhavechosen)
 				end
@@ -947,7 +947,7 @@ end
 
 function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymode)
 	-- Returns true if a tile is solid, false if not solid.
-	-- Tileset can be 1 or 2 for tiles and tiles2 respectively.
+	-- Tileset can be 1, 2 or 3 for tiles, tiles2 and tiles3 respectively.
 	if spikessolid == nil then
 		spikessolid = false
 	end
@@ -961,6 +961,13 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymo
 
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile >= 12 and towertile <= 27 then
+			return true
+		elseif (spikessolid or invincibilitymode) and towertile >= 6 and towertile <= 11 then
+			return true
+		end
 	elseif tilenum == 1 then
 		return true
 	elseif tileset == 1 and tilenum == 59 then
@@ -986,6 +993,11 @@ end
 function istophalfspike(tilenum, tileset)
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile == 7 or towertile == 9 then
+			return true
+		end
 	elseif tilenum == 7 or tilenum == 9 then
 		return true
 	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 0 then
@@ -997,6 +1009,11 @@ end
 function isbottomhalfspike(tilenum, tileset)
 	if tilenum == nil then
 		return false
+	elseif tileset == 3 then
+		local towertile = tilenum % 30
+		if towertile == 6 or towertile == 8 then
+			return true
+		end
 	elseif tilenum == 6 or tilenum == 8 then
 		return true
 	elseif tileset == 2 and tilenum >= 63 and tilenum <= 74 and tilenum % 2 == 1 then
@@ -1499,6 +1516,11 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 		return
 	end
 
+	local maxtileset = 4
+	if metadata.target == "VCE" then
+		maxtileset = 5
+	end
+
 	local explodeddata = explode(",", data)
 
 	for k,v in pairs(explodeddata) do
@@ -1509,7 +1531,7 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 			if numw == nil then
 				cons("Paste failed- [" .. k .. "] (tile " .. (k-15) .. ") is not a number!")
 				return
-			elseif k == 1 and (numw < 0 or numw > 4) then
+			elseif k == 1 and (numw < 0 or numw > maxtileset) then
 				cons("Paste failed- tileset is out of range! (" .. numw .. ")")
 				return
 			elseif k == 2 and (numw < 0
@@ -1517,7 +1539,8 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 			or explodeddata[1] == 1 and numw > 7
 			or explodeddata[1] == 2 and numw > 6
 			or explodeddata[1] == 3 and numw > 6
-			or explodeddata[1] == 4 and numw > 5) then
+			or explodeddata[1] == 4 and numw > 5
+			or explodeddata[1] == 5 and numw > 29) then
 				cons("Paste failed- tilecol is out of range! (" .. numw .. ")")
 				return
 			elseif k == 12 and (numw < 0 or numw > 9) then
@@ -2793,4 +2816,56 @@ function warplinesinroom(theroomx, theroomy)
 		end
 	end
 	return false
+end
+
+function insert_entity(...) -- atx, aty, t, p...
+	insert_entity_full(roomx, roomy, 0, 0, 0, ...)
+end
+
+function insert_entity_full(rx, ry, intower, subx, suby, atx, aty, t, p1, p2, p3, p4, data)
+	if p1 == nil then p1 = 0 end
+	if p2 == nil then p2 = 0 end
+	if p3 == nil then p3 = 0 end
+	if p4 == nil then p4 = 0 end
+	if data == nil then data = "" end
+
+	table.insert(entitydata, count.entity_ai,
+		{
+			x = 40*rx + atx,
+			y = 30*ry + aty,
+			t = t,
+			p1 = p1, p2 = p2, p3 = p3, p4 = p4, p5 = 320, p6 = 240,
+			subx = subx, suby = suby, -- VCE
+			intower = intower, state = 0, onetime = false, -- VCE
+			activityname = "", activitycolor = "", -- VCE
+			data = data
+		}
+	)
+
+	if t == 11 or t == 50 then
+		autocorrectlines()
+	end
+	if t == 13 then
+		warpid = count.entity_ai
+		selectedsubtool[14] = 2
+	elseif t == 17 or t == 18 then
+		editingroomtext = count.entity_ai
+		newroomtext = true
+		makescriptroomtext = t == 18
+		startinput()
+	elseif t == 19 then
+		editingsboxid = count.entity_ai
+		selectedsubtool[13] = 2
+	else
+		entityplaced()
+	end
+	if t == 9 then
+		count.trinkets = count.trinkets + 1
+	elseif t == 15 then
+		count.crewmates = count.crewmates + 1
+	elseif t == 16 then
+		count.startpoint = count.entity_ai
+	end
+	count.entities = count.entities + 1
+	count.entity_ai = count.entity_ai + 1
 end

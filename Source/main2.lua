@@ -445,8 +445,6 @@ function love.load()
 		tile_batch_tiles[i] = 0
 	end
 
-	limit = limit_v
-
 	if not settings_ok then
 		-- If the settings file is broken, good chance we don't know what the language setting was.
 		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,
@@ -2779,20 +2777,22 @@ function love.keypressed(key)
 			tilespicker_shortcut = true
 		end
 
+		local tsw = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+		local tsh = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight
 		if levelmetadata_get(roomx, roomy).directmode == 1 then
 			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
 			elseif table.contains({"right", "d"}, key) then
-				selectedtile = (selectedtile + 1) % 1200
+				selectedtile = (selectedtile + 1) % (tsw*tsh)
 			elseif table.contains({"up", "w"}, key) then
-				selectedtile = selectedtile - 40
+				selectedtile = selectedtile - tsw
 			elseif table.contains({"down", "s"}, key) then
-				selectedtile = (selectedtile + 40) % 1200
+				selectedtile = (selectedtile + tsw) % (tsw*tsh)
 			end
 		end
 
 		if selectedtile < 0 then
-			selectedtile = selectedtile + 1200
+			selectedtile = selectedtile + tsw*tsh
 		end
 
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
@@ -2995,6 +2995,7 @@ function love.keypressed(key)
 		creatorstep = 1
 		creatorsubstep = 1
 
+		usedtilesets.creator = usedtilesets[selectedtileset]
 		selectedtileset = "creator"
 		selectedcolor = "creator"
 
@@ -3071,7 +3072,7 @@ function love.keypressed(key)
 			love.graphics.clear(); love.draw(); love.graphics.present()
 
 			-- Save now
-			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 
 			if not savedsuccess then
 				-- Why not :c
@@ -3372,7 +3373,7 @@ function love.keypressed(key)
 		table.remove(files[""])
 	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
-		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 		if savedsuccess then
 			editingmap = input
 		end

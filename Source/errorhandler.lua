@@ -329,7 +329,7 @@ function ved_showerror(msg)
 
 				editingmap = editingmap .. "_" .. os.time()
 
-				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, true)
+				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, true)
 
 				if not savedsuccess then
 					levelsavemsg = string.format(ERR_SAVEERROR, anythingbutnil(savederror))

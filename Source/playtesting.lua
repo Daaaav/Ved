@@ -182,7 +182,7 @@ function playtesting_start()
 	s.enableoverwritebackups = false
 	recentlyopened = function() end
 
-	local thissavedsuccess, thissavederror = savelevel(love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false, false)
+	local thissavedsuccess, thissavederror = savelevel(love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
 
 	unsavedchanges = oldunsavedchanges
 	s.enableoverwritebackups = oldenableoverwritebackups

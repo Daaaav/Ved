@@ -342,7 +342,7 @@ function loadstate(new, ...)
 		end
 		scriptfromsearch = false
 	elseif new == 4 then
-		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
+		--success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
 		lsuccess = directory_exists(vvvvvvfolder, "levels")
@@ -694,6 +694,7 @@ end
 function loadtilesets()
 	loadtileset("tiles.png")
 	loadtileset("tiles2.png")
+	loadtileset("tiles3.png")
 	loadtileset("entcolours.png")
 	loadsprites("sprites.png", 32)
 
@@ -740,6 +741,11 @@ function loadtileset(file)
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"]) -- 16 16 16 16
 		end
+	end
+
+	-- If this tileset is smaller than 1200 (tiles3) then fill up with tile 0 to prevent crashes
+	for filler = tilesets[file].tileswidth*tilesets[file].tilesheight, 1199 do
+		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, 8, 8, tilesets[file].width, tilesets[file].height)
 	end
 end
 
@@ -932,7 +938,7 @@ function cycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themax then
+	if var >= themax then
 		return themin
 	else
 		return var+1
@@ -944,7 +950,7 @@ function revcycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themin then
+	if var <= themin then
 		return themax
 	else
 		return var-1
@@ -1124,10 +1130,14 @@ function thingk()
 end
 
 function switchtileset()
+	local maxtileset = 4
+	if metadata.target == "VCE" then
+		maxtileset = 5
+	end
 	if keyboard_eitherIsDown("shift") then
-		selectedtileset = revcycle(selectedtileset, 4, 0)
+		selectedtileset = revcycle(selectedtileset, maxtileset, 0)
 	else
-		selectedtileset = cycle(selectedtileset, 4, 0)
+		selectedtileset = cycle(selectedtileset, maxtileset, 0)
 	end
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
 	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then
@@ -1545,21 +1555,20 @@ function state6load(levelname)
 	if not secondlevel then
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
-			=  editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldextra
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    extra
 		end
 
-		success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
-			--tostate(6)
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
 
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata =
-				oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    extra =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldextra
 			end
 		else
 			editingmap = levelname
@@ -1568,7 +1577,7 @@ function state6load(levelname)
 			map_init()
 		end
 	else
-		success, metadata2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2, extra2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -2038,7 +2047,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	tostate(1)
