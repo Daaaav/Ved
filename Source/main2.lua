@@ -394,13 +394,7 @@ function love.load()
 	end
 
 	if playtesting_available then
-		local temp_symlinks = playtesting_init_veduser() -- Replace with just 'playtesting_init_veduser()' when Ved can create symlinks on its own
-		if #temp_symlinks > 0 then
-			dialog.create( -- Yes, hardcoded English text
-				"Ved can't make symlinks yet, so please make these symlinks to where they are in the real VVVVVV directory:\n"
-				.. table.concat(temp_symlinks, "\n")
-			)
-		end
+		playtesting_init_veduser()
 	end
 
 	secondlevel = false

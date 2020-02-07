@@ -6,8 +6,6 @@
 -- which will start a thread that just io.popen()s VVVVVV with libvloader.
 
 function playtesting_init_veduser()
-	local temp_symlinks = {} -- To tell the user to create these symlinks. Remove when Ved can actually do it on its own
-
 	if not love.filesystem.exists("veduser") then
 		love.filesystem.createDirectory("veduser")
 	end
@@ -20,58 +18,6 @@ function playtesting_init_veduser()
 	if not love.filesystem.exists("veduser/VVVVVV/levels") then
 		love.filesystem.createDirectory("veduser/VVVVVV/levels")
 	end
-
-	local builtins = {
-		"333333_easy",
-		"4kvvvv",
-		"a_new_dimension",
-		"linewrap",
-		"pyramid",
-		"quantumtunnel12",
-		"roadtrip",
-		"seasons",
-		"soulsearching",
-		"the_dual_challenge",
-		"towerofpower",
-		"variationventure",
-		"varietyshow",
-		"vertexvortex",
-		"vertiginousviridian",
-		"victuals",
-		"vvvvvvgoldenspiral",
-	}
-	for k, v in pairs(builtins) do
-		builtins[k] = v .. ".vvvvvv"
-	end
-
-	-- Remove the builtins by writing 0-byte files with their filenames in the levels directory
-	for k, v in pairs(builtins) do
-		if not love.filesystem.exists("veduser/VVVVVV/levels/" .. v) then
-			love.filesystem.write("veduser/VVVVVV/levels/" .. v, "")
-		end
-	end
-
-	if not love.filesystem.exists("veduser/VVVVVV/graphics") then
-		table.insert(temp_symlinks, "veduser/VVVVVV/graphics")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/sounds") then
-		table.insert(temp_symlinks, "veduser/VVVVVV/sounds")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/vvvvvvmusic.vvv") then
-		table.insert(temp_symlinks, "veduser/VVVVVV/vvvvvvmusic.vvv")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/mmmmmm.vvv") then
-		table.insert(temp_symlinks, "veduser/VVVVVV/mmmmmm.vvv")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/saves/unlock.vvv") then
-		table.insert(temp_symlinks, "veduser/VVVVVV/unlock.vvv")
-	end
-
-	for k, v in pairs(temp_symlinks) do
-		temp_symlinks[k] = love.filesystem.getSaveDirectory() .. "/" .. v
-	end
-
-	return temp_symlinks
 end
 
 function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol, with_gdb)
@@ -90,40 +36,28 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 		music = -1
 	end
 
-	local ldpreloadvar
-	if love.system.getOS() == "Linux" then
-		ldpreloadvar = "LD_PRELOAD"
-	elseif love.system.getOS() == "OS X" then
-		ldpreloadvar = "DYLD_INSERT_LIBRARIES"
-	end
+	local envvars = {}
 
-	local ldpreload = love.filesystem.getSaveDirectory() .. "/available_libs/" .. libvloader
-
-	if ldpreload:find(" ") then
-		-- There's no way to escape spaces in LD_PRELOAD, sadly
-		-- TODO: Not sure if DYLD_INSERT_LIBRARIES has the same issue on macOS, but I don't feel bothered to look into it right now
-		local _, numspaces = ldpreload:gsub(" ", "") -- second return value of gsub is number of times substituted
-		dialog.create(langkeys(L_PLU.LDPRELOADCONTAINSSPACES, {ldpreloadvar, numspaces}, 2) .. "\n" .. ldpreloadvar .. "=" .. ldpreload)
-		playtesting_cancelask()
-		return
-	end
-
-	local envvars = {
-		[ldpreloadvar] = ldpreload,
-		DISABLE_HOOK_GAMEINPUT = 1, -- Disables Leo's gamestate(5000)
-		-- FIXME: macOS does not use XDG_DATA_HOME, change it to the proper one later
-		XDG_DATA_HOME = love.filesystem.getSaveDirectory() .. "/veduser/",
-	}
-
-	local vvvvvv
-	if love.system.getOS() == "Linux" then
-		vvvvvv = "./x86_64/vvvvvv.x86_64"
-	elseif love.system.getOS() == "OS X" then
-		vvvvvv = "./osx/vvvvvv.osx"
-	end
+	local vvvvvv = path .. "/VVVVVV-CE"
 
 	-- Syntax is <vvvvvv> <index of level in levels list> <savex> <savey> <saverx> <savery> <savegc> <music id>
-	local run = {vvvvvv, 0, posx, posy, thisroomx, thisroomy, gravitycontrol, music}
+	local run = {
+            vvvvvv,
+            "-p",
+            love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv",
+            "--playx",
+            posx,
+            "--playy",
+            posy,
+            "--playrx",
+            thisroomx,
+            "--playry",
+            thisroomy,
+            "--playgc",
+            gravitycontrol,
+            "--playmusic",
+            music
+        }
 	run = table.concat(run, " ")
 
 	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
@@ -165,18 +99,13 @@ function playtesting_locate_path()
 	-- without having to, say, move the Steam version's executable somewhere else,
 	-- which they'd have to do with the other order (Steam path exists > non-Steam path in config > Ask for non-Steam path)
 
-	if love.system.getOS() == "Linux" then
-		if anythingbutnil(s.vvvvvvnonsteam) ~= "" and playtesting_validate_path(userprofile .. s.vvvvvvnonsteam) then
-			-- M&P path in config
-			return userprofile .. s.vvvvvvnonsteam
-		elseif playtesting_validate_path(userprofile .. "/.local/share/Steam/steamapps/common/vvvvvv/") then
-			-- Steam path exists
-			return userprofile .. "/.local/share/Steam/steamapps/common/vvvvvv/"
-		else
-			-- Ask for M&P path
-			return
-		end
-	end
+        if anythingbutnil(s.vvvvvvnonsteam) ~= "" and playtesting_validate_path(s.vvvvvvnonsteam) then
+                -- M&P path in config
+                return s.vvvvvvnonsteam
+        else
+                -- Ask for M&P path
+                return
+        end
 end
 
 function playtesting_validate_path(thepath)
@@ -193,11 +122,11 @@ end
 
 function playtesting_get_vvvvvvnonsteam_message()
 	if love.system.getOS() == "Linux" then
-		return langkeys(L.NONSTEAMCONTAINSFOLDER, {"x86_64/"})
+		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE"})
 	elseif love.system.getOS() == "OS X" then
-		return langkeys(L.NONSTEAMCONTAINSFOLDER, {"osx/"})
+		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE"})
 	elseif love.system.getOS() == "Windows" then
-		return langkeys(L.NONSTEAMCONTAISNFILE, {"VVVVVV.exe"})
+		return langkeys(L.NONSTEAMCONTAISNFILE, {"VVVVVV-CE.exe"})
 	end
 end
 
