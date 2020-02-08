@@ -317,7 +317,7 @@ function loadlevel(path)
 				-- This is the metadata entity!
 				local explodedmetadata = explode("|", allentities[entityid].data)
 
-				myvedmetadata = createmde()
+				myvedmetadata = createmde(thislimit)
 
 				myvedmetadata.mdeversion = anythingbutnil0(tonumber(explodedmetadata[1]))
 

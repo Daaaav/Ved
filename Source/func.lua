@@ -1476,13 +1476,16 @@ function endeditingroomtext(donotmakethisnil)
 	editingroomtext = 0
 end
 
-function createmde()
+function createmde(thislimit)
+	if thislimit == nil then
+		thislimit = limit
+	end
 	cons("Creating metadata entity...")
 	if count ~= nil then
 		count.entities = count.entities + 1
 	end
 	local emptyflaglabel = {}
-	for i = 0, limit.flags-1 do
+	for i = 0, thislimit.flags-1 do
 		emptyflaglabel[i] = ""
 	end
 	return {
