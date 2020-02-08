@@ -172,8 +172,18 @@ function loadlevel(path)
 		if contents:find("<altstates />") == nil then
 			x.altstates = contents:match("<altstates>(.*)</altstates>")
 			if x.altstates ~= nil then
-				mycount.FC = mycount.FC + 1
-				cons_fc(L.TODO_ALTSTATES)
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
+				for altstate in x.altstates:gmatch("<altstate (.-)</altstate>") do
+					local thisaltstate = {}
+					local metaparts = explode(">", altstate)
+					local attributes = parsexmlattributes(metaparts[1])
+
+					for k,v in pairs(attributes) do
+						thisaltstate[k] = tonumber(v)
+					end
+					thisaltstate.contents = metaparts[2]
+					table.insert(thisextra.altstates, thisaltstate)
+				end
 			end
 		end
 
@@ -181,8 +191,18 @@ function loadlevel(path)
 		if contents:find("<towers />") == nil then
 			x.towers = contents:match("<towers>(.*)</towers>")
 			if x.towers ~= nil then
-				mycount.FC = mycount.FC + 1
-				cons_fc(L.TODO_TOWERS)
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
+				for tower in x.towers:gmatch("<tower (.-)</tower>") do
+					local thistower = {}
+					local metaparts = explode(">", tower)
+					local attributes = parsexmlattributes(metaparts[1])
+
+					for k,v in pairs(attributes) do
+						thistower[k] = tonumber(v)
+					end
+					thistower.contents = metaparts[2]
+					table.insert(thisextra.towers, thistower)
+				end
 			end
 		end
 
@@ -190,8 +210,16 @@ function loadlevel(path)
 		if contents:find("<teleporters />") == nil then
 			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
 			if x.teleporters ~= nil then
-				mycount.FC = mycount.FC + 1
-				cons_fc(L.TODO_TELEPORTERS)
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
+				for teleporter in x.teleporters:gmatch("<teleporter (.-) />") do
+					local thisteleporter = {}
+					local attributes = parsexmlattributes(teleporter)
+
+					for k,v in pairs(attributes) do
+						thisteleporter[k] = tonumber(v)
+					end
+					table.insert(thisextra.teleporters, thisteleporter)
+				end
 			end
 		end
 
@@ -199,8 +227,18 @@ function loadlevel(path)
 		if contents:find("<timetrials />") == nil then
 			x.timetrials = contents:match("<timetrials>(.*)</timetrials>")
 			if x.timetrials ~= nil then
-				mycount.FC = mycount.FC + 1
-				cons_fc(L.TODO_TIMETRIALS)
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
+				for timetrial in x.timetrials:gmatch("<trial (.-)</trial>") do
+					local thistimetrial = {}
+					local metaparts = explode(">", timetrial)
+					local attributes = parsexmlattributes(metaparts[1])
+
+					for k,v in pairs(attributes) do
+						thistimetrial[k] = tonumber(v)
+					end
+					thistimetrial.name = metaparts[2]
+					table.insert(thisextra.timetrials, thistimetrial)
+				end
 			end
 		end
 	end
@@ -237,15 +275,14 @@ function loadlevel(path)
 			local metaparts = explode(">", entity)
 
 			-- Explode more
-			local attributes = explode(" ", metaparts[1])
+			local attributes = parsexmlattributes(metaparts[1])
 
 			for k,v in pairs(attributes) do
-				-- Explode yet even more
-				local keyvalue = explode("=", v)
-
-				-- Leave out the quotes and convert it to number
-				local settothis = tonumber(keyvalue[2]:sub(2, -2))
-				allentities[entityid][keyvalue[1]] = settothis
+				if k == "activityname" or k == "activitycolor" then
+					allentities[entityid][k] = v
+				else
+					allentities[entityid][k] = tonumber(v)
+				end
 			end
 
 			-- Now we only need the data...
@@ -441,23 +478,19 @@ function loadlevel(path)
 		local metaparts = explode(">", room)
 
 		-- Explode more
-		local attributes = explode(" ", metaparts[1])
+		local attributes = parsexmlattributes(metaparts[1])
 
 		for k,v in pairs(attributes) do
-			-- Explode yet even more
-			local keyvalue = explode("=", v)
-
-			if thismetadata.target ~= "VCE" and keyvalue[1] == "platv" then
+			if k == "platv" and thismetadata.target ~= "VCE" then
 				-- Unfortunately platv is very special.
-				table.insert(all_platvs, tonumber(keyvalue[2]:sub(2, -2)))
+				table.insert(all_platvs, tonumber(v))
 				if inbounds then
 					theselevelmetadata[ry][rx].platv = all_platvs[inboundsroom]
 				else
 					theselevelmetadata[ry][rx].platv = 4
 				end
 			else
-				-- Leave out the quotes and convert it to number
-				theselevelmetadata[ry][rx][keyvalue[1]] = tonumber(keyvalue[2]:sub(2, -2))
+				theselevelmetadata[ry][rx][k] = tonumber(v)
 			end
 		end
 
@@ -762,25 +795,72 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		-- TODO look per table how it should be structured, and thus how it should be determined that it's empty.
 
 		if #thisextra.altstates ~= 0 then
-			-- TODO
+			local altstatestag = {"        <altstates>\n"}
+
+			for k,v in pairs(thisextra.altstates) do
+				table.insert(altstatestag,
+					"            <altstate x=\"" .. v.x
+					.. "\" y=\"" .. v.y
+					.. "\" state=\"" .. v.state
+					.. "\">" .. v.contents .. "</altstate>\n"
+				)
+			end
+
+			savethis = savethis:gsub("%$ALTSTATES%$", table.concat(altstatestag, ""):gsub("%%", "%%%%") .. "        </altstates>")
 		else
 			savethis = savethis:gsub("%$ALTSTATES%$", "        <altstates />")
 		end
 
 		if #thisextra.towers ~= 0 then
-			-- TODO
+			local towerstag = {"        <towers>\n"}
+
+			for k,v in pairs(thisextra.towers) do
+				table.insert(towerstag,
+					"            <tower size=\"" .. v.size
+					.. "\" scroll=\"" .. v.scroll
+					.. "\">" .. v.contents .. "</tower>\n"
+				)
+			end
+
+			savethis = savethis:gsub("%$TOWERS%$", table.concat(towerstag, ""):gsub("%%", "%%%%") .. "        </towers>")
 		else
 			savethis = savethis:gsub("%$TOWERS%$", "        <towers />")
 		end
 
 		if #thisextra.teleporters ~= 0 then
-			-- TODO
+			local teleporterstag = {"        <teleporters>\n"}
+
+			for k,v in pairs(thisextra.teleporters) do
+				table.insert(teleporterstag,
+					"            <teleporter x=\"" .. v.x
+					.. "\" y=\"" .. v.y
+					.. "\" />\n"
+				)
+			end
+
+			savethis = savethis:gsub("%$TELEPORTERS%$", table.concat(teleporterstag, ""):gsub("%%", "%%%%") .. "        </teleporters>")
 		else
 			savethis = savethis:gsub("%$TELEPORTERS%$", "        <teleporters />")
 		end
 
 		if #thisextra.timetrials ~= 0 then
-			-- TODO
+			local timetrialstag = {"        <timetrials>\n"}
+
+			for k,v in pairs(thisextra.timetrials) do
+				table.insert(timetrialstag,
+					"            <trial roomx=\"" .. v.roomx
+					.. "\" roomy=\"" .. v.roomy
+					.. "\" startx=\"" .. v.startx
+					.. "\" starty=\"" .. v.starty
+					.. "\" startf=\"" .. v.startf
+					.. "\" par=\"" .. v.par
+					.. "\" trinkets=\"" .. v.trinkets
+					.. "\" music=\"" .. v.music
+					.. "\">" .. v.name .. "</trial>\n"
+				)
+			end
+
+			savethis = savethis:gsub("%$TIMETRIALS%$", table.concat(timetrialstag, ""):gsub("%%", "%%%%") .. "        </timetrials>")
 		else
 			savethis = savethis:gsub("%$TIMETRIALS%$", "        <timetrials />")
 		end
@@ -1026,6 +1106,26 @@ function unxmlnumericentities(text)
 			return string.char(tonumber(n,16))
 		end
 	)
+end
+
+function parsexmlattributes(text)
+	-- Parses a sequence of XML attributes (x="12" y="34") and returns a table of key-value pairs
+	-- Values are always of type string, so type conversions need to be done manually.
+	local attributes = {}
+	local curpos = 1
+	while true do
+		local key, value
+		local found_start, found_openquote = text:find("[%w_]+=\"", curpos)
+		if found_start == nil then
+			break
+		end
+		key = text:sub(found_start, found_openquote-2)
+		local found_closequote = text:find("\"", found_openquote+1, true)
+		value = text:sub(found_openquote+1, found_closequote-1)
+		attributes[key] = value
+		curpos = found_closequote+1
+	end
+	return attributes
 end
 
 function despecialchars(text)
