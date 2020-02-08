@@ -465,35 +465,10 @@ function loadstate(new, ...)
 			redostacktext = redostacktext .. "\n"
 		end
 	elseif new == 19 then
-		local flagstextleftar = {}
-		local flagstextrightar = {}
+		flags_digits = tostring(limit.flags-1):len()
+		flags_page = 0
 
-		usedflags = {}
-		outofrangeflags = {}
-
-		-- Seee which flags have been used in this level.
-		returnusedflags(usedflags, outofrangeflags)
-
-		for fl = 0, 49 do
-			table.insert(flagstextleftar, (fl < 10 and " " or "") .. fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
-		end
-
-		for fl = 50, 99 do
-			table.insert(flagstextrightar, fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
-		end
-
-		flagstextleft = table.concat(flagstextleftar)
-		flagstextright = table.concat(flagstextrightar)
-
-		outofrangeflagstext = ""
-
-		for k,v in pairs(outofrangeflags) do
-			if outofrangeflagstext == "" then
-				outofrangeflagstext = L.USEDOUTOFRANGEFLAGS .. " " .. k
-			else
-				outofrangeflagstext = outofrangeflagstext .. ", " .. k
-			end
-		end
+		loadflagslist()
 	elseif new == 20 then
 		box_exists = true
 		box_x, box_y, box_w, box_h = 80,80,208,208
@@ -526,7 +501,7 @@ function loadstate(new, ...)
 		returnusedflags(usedflags, {})
 
 		local n_usedflags = 0
-		for fl = 0, 99 do
+		for fl = 0, limit.flags-1 do
 			if usedflags[fl] then
 				n_usedflags = n_usedflags + 1
 			end
@@ -1443,7 +1418,7 @@ function endeditingroomtext(donotmakethisnil)
 						returnusedflags(usedflags, outofrangeflags)
 
 						local useflag = -1
-						for vlag = 0, 99 do
+						for vlag = 0, limit.flags-1 do
 							if not usedflags[vlag] then
 								useflag = vlag
 								usedflags[vlag] = true
@@ -1507,7 +1482,7 @@ function createmde()
 		count.entities = count.entities + 1
 	end
 	local emptyflaglabel = {}
-	for i = 0, 99 do
+	for i = 0, limit.flags-1 do
 		emptyflaglabel[i] = ""
 	end
 	return {
@@ -1912,7 +1887,7 @@ function compareleveldifferences(secondlevelname)
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
 
-			for i = 0, 99 do
+			for i = 0, limit.flags-1 do
 				if vedmetadata.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
 				end
@@ -1921,14 +1896,14 @@ function compareleveldifferences(secondlevelname)
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
 
-			for i = 0, 99 do
+			for i = 0, limit2.flags-1 do
 				if vedmetadata2.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {vedmetadata2.flaglabel[i], i}) .. "\n"
 				end
 			end
 		else
 			-- This one is simple, just cycle through the numbers!
-			for i = 0, 99 do
+			for i = 0, math.min(limit.flags, limit2.flags)-1 do
 				if vedmetadata2.flaglabel[i] == "" and vedmetadata.flaglabel[i] ~= "" then
 					-- Added name
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"

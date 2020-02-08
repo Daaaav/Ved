@@ -1917,8 +1917,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
-msgid "LevelMetadata for room #$1 has $2 invalid property!"
-msgid_plural "LevelMetadata for room #$1 has $2 invalid properties!"
+msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
+msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2246,6 +2246,14 @@ msgctxt "langtilesetnames.long4"
 msgid "Ship"
 msgstr ""
 
+msgctxt "langtilesetnames.short5"
+msgid "Tower"
+msgstr ""
+
+msgctxt "langtilesetnames.long5"
+msgid "Tower"
+msgstr ""
+
 msgctxt "ERR_VEDHASCRASHED"
 msgid "Ved has crashed!"
 msgstr ""
@@ -2317,6 +2325,10 @@ msgstr ""
 
 msgctxt "ERR_CONTINUE"
 msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr ""
+
+msgctxt "ERR_OPENPLUGINSFOLDER"
+msgid "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 msgstr ""
 
 msgctxt "ERR_REPLACECODE"

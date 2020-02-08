@@ -478,8 +478,8 @@ function dialog.callback.changeflagname(button, fields, _, notclosed)
 		-- This is a change!
 		dirty()
 
-		-- Refresh the state so it shows the correct label now
-		loadstate(state)
+		-- Refresh the list so it shows the correct label now
+		loadflagslist()
 	end
 end
 
