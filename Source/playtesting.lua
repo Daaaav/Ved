@@ -36,8 +36,6 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 		music = -1
 	end
 
-	local envvars = {}
-
 	local vvvvvv = path .. "/VVVVVV-CE"
 
 	-- Syntax is <vvvvvv> <index of level in levels list> <savex> <savey> <saverx> <savery> <savegc> <music id>
@@ -66,18 +64,8 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	}
 
 	if with_gdb then
-		local envvars_gdb = {}
-		for varname, var in pairs(envvars) do
-			var = tostring(var)
-
-			var = var:gsub("\\", "\\\\"):gsub('"', '\\"')
-			table.insert(envvars_gdb, '"' .. varname .. "=" .. var .. '"')
-		end
-		table.insert(commands, "/usr/bin/gdb -q -ex 'set exec-wrapper env " .. table.concat(envvars_gdb, " ") .. "' -ex run --args " .. run)
+		table.insert(commands, "/usr/bin/gdb -q -ex run --args " .. run)
 	else
-		for varname, var in pairs(envvars) do
-			table.insert(commands, "export " .. varname .. "=" .. var)
-		end
 		table.insert(commands, run)
 	end
 
