@@ -1,6 +1,6 @@
 love.graphics.clearOR = love.graphics.clear
 love.graphics.clear = function(...)
-	if not s.pausedrawunfocused or love.window.hasFocus() then
+	if not s.pausedrawunfocused or window_active() then
 		love.graphics.clearOR(...)
 	end
 end
@@ -61,11 +61,11 @@ function backspace(text)
 
 	local worktext = text
 	while true do
-		local lastchar = string.sub(worktext, -1, -1) -- als dit niet werkt...
-		if lastchar == "" then return "" end
+		local lastchar = string.sub(worktext, -1, -1):byte()
+		if lastchar == nil then return "" end
 
 		-- Are we about to kill a UTF-8 continuation byte?
-		if string.sub(toBinary(lastchar), 1, 2) == "10" then
+		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
 			worktext = string.sub(worktext, 1, -2)
 		else
@@ -79,11 +79,11 @@ function leftspace(text, righttext)
 	if (text == nil) or (righttext == nil) then return end
 
 	while true do
-		local lastchar = string.sub(text, -1, -1) -- als dit niet werkt...
-		if lastchar == "" then return "", righttext end
+		local lastchar = string.sub(text, -1, -1):byte()
+		if lastchar == nil then return "", righttext end
 
 		-- Are we about to kill a UTF-8 continuation byte?
-		if string.sub(toBinary(lastchar), 1, 2) == "10" then
+		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
 			righttext = string.sub(text, -1, -1) .. righttext
 			text = string.sub(text, 1, -2)
@@ -98,21 +98,19 @@ end
 function rightspace(text, righttext)	
 	if (text == nil) or (righttext == nil) then return end
 
-	local lastchar = string.sub(righttext, 1, 1) -- als dit niet werkt...
-	if lastchar == "" then return text, "" end
+	local lastchar = string.sub(righttext, 1, 1):byte()
+	if lastchar == nil then return text, "" end
 
 	-- Different UTF-8 stuff going on here.
-	local binarychar = toBinary(lastchar)
-
-	if string.sub(binarychar, 1, 3) == "110" then
+	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
 		text = text .. string.sub(righttext, 1, 2)
 		return text, string.sub(righttext, 3, -1)
-	elseif string.sub(binarychar, 1, 4) == "1110" then
+	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
 		text = text .. string.sub(righttext, 1, 3)
 		return text, string.sub(righttext, 4, -1)
-	elseif string.sub(binarychar, 1, 5) == "11110" then
+	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
 		text = text .. string.sub(righttext, 1, 4)
 		return text, string.sub(righttext, 5, -1)
@@ -126,19 +124,17 @@ end
 function firstUTF8(text)
 	if text == nil then return end
 
-	local lastchar = string.sub(text, 1, 1) -- als dit niet werkt...
-	if lastchar == "" then return text end
+	local lastchar = string.sub(text, 1, 1):byte()
+	if lastchar == nil then return text end
 
 	-- Mostly the same as rightspace()
-	local binarychar = toBinary(lastchar)
-
-	if string.sub(binarychar, 1, 3) == "110" then
+	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
 		return string.sub(text, 1, 2)
-	elseif string.sub(binarychar, 1, 4) == "1110" then
+	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
 		return string.sub(text, 1, 3)
-	elseif string.sub(binarychar, 1, 5) == "11110" then
+	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
 		return string.sub(text, 1, 4)
 	else
@@ -150,103 +146,19 @@ end
 function allbutfirstUTF8(text)
 	if text == nil then return end
 
-	local firstchar = text:sub(1, 1)
-	if firstchar == "" then
+	local firstchar = text:sub(1, 1):byte()
+	if firstchar == nil then
 		return text
 	end
 
-	local binarychar = toBinary(firstchar)
-
-	if binarychar:sub(1, 3) == "110" then
+	if firstchar >= 0xC0 and firstchar <= 0xDF then -- 110xxxxx
 		return text:sub(3, text:len())
-	elseif binarychar:sub(1, 4) == "1110" then
+	elseif firstchar >= 0xE0 and firstchar <= 0xEF then -- 1110xxxx
 		return text:sub(4, text:len())
-	elseif binarychar:sub(1, 5) == "11110" then
+	elseif firstchar >= 0xF0 and firstchar <= 0xF7 then -- 11110xxx
 		return text:sub(5, text:len())
 	else
 		return text:sub(2, text:len())
-	end
-end
-
---
-function love.graphics.UTF8debugprint(text, x, y)
-	--print("UTF-8 debug safe print!")
-
-	local displaythis = ""
-	local stringleft = text
-	local assertfalsetext = "\n  ======================================"
-
-	local represent = {}
-
-	for c = 1, string.len(text) do
-		table.insert(represent, string.byte(text, c, c))
-	end
-
-	while string.len(stringleft) > 0 do
-		local binarychar = toBinary(string.sub(stringleft, 1, 1))
-
-		if string.sub(binarychar, 1, 3) == "110" then
-			-- Two bytes at once!
-			assert(stringleft:len() >= 2 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 1" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,2)
-			stringleft = stringleft:sub(3,-1)
-		elseif string.sub(binarychar, 1, 4) == "1110" then
-			-- Three bytes at once!
-			assert(stringleft:len() >= 3 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 2" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 3" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,3)
-			stringleft = stringleft:sub(4,-1)
-		elseif string.sub(binarychar, 1, 5) == "11110" then
-			-- Four!
-			assert(stringleft:len() >= 4 and toBinary(stringleft:sub(2, 2)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 4" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(3, 3)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 5" .. assertfalsetext)
-			assert(toBinary(stringleft:sub(4, 4)):sub(1, 2) == "10" , "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 6" .. assertfalsetext)
-
-			displaythis = displaythis .. stringleft:sub(1,4)
-			stringleft = stringleft:sub(5,-1)
-		elseif string.sub(binarychar, 1, 1) == "1" then
-			-- Wtf, random continuation byte or something else that's invalid UTF-8!
-			assert(false, "\n" .. assertfalsetext .. "\n   F O U N D . T H E . E R R O R:\n   Starts with: " .. displaythis .. "\n   Decimal representation of string: " .. table.concat(represent, ":") .. "\n   Location: 7" .. assertfalsetext)
-		else
-			-- Just one byte of course.
-			displaythis = displaythis .. stringleft:sub(1,1)
-			stringleft = stringleft:sub(2,-1)
-		end
-	end
-
-	ved_print(displaythis, x, y)
-end
---
-
-
--- numberString toBinary http://pastebin.com/LkFYQPGP
-function numberString(number)
-	local s = ""
-	repeat
-		local remainder = number % 2
-		s = remainder..s
-		number = (number-remainder)/2
-	until number==0
-	return s
-end
-
---[[
-function chartobinary(char)
-	string.format("%08d",numberString(string.byte(char)))
-	-- Geen wonder dat dit nil geeft!!
-end
-]]
-
-function toBinary(str)
-	if #str > 0 then
-		local result = ""
-		for a = 1, #str do
-			result = result..string.format("%08d",numberString(string.byte(string.sub(str,a,a))))
-		end
-		return result
-	else return nil
 	end
 end
 
@@ -264,10 +176,6 @@ function explode(div, str)
 		o[#o+1],str = str:sub(1,pos1-1),str:sub(pos2+1)
 	end
 	return o
-end
-
-function implode(div, tbl)
-	return table.concat(tbl, div)
 end
 
 function startinput()
@@ -325,6 +233,10 @@ function tostate(new, dontinitialize, ...)
 		special_cursor = false
 	end
 
+	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
+		unset_middlescroll()
+	end
+
 	if oldstate == 1 then
 		editingroomname = false
 	end
@@ -337,12 +249,6 @@ end
 function loadstate(new, ...)
 	if new == 1 then
 
-		-- DON'T FORGET editingmap
-		-- ^ has been forgotten, has been realized, has been fixed.
-
-		--roomdata = {}; roomdata[0] = {} -- temporary
-		--roomdata[0][0], entitydata, metadata = loademptyroom()
-		--success, metadata, roomdata, entitydata, levelmetadata, scripts = loadlevel("tilesets2.vvvvvv")
 		tilespicker = false
 		tilespicker_shortcut = false
 		selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1}
@@ -359,7 +265,7 @@ function loadstate(new, ...)
 		end
 		updatewindowicon()
 
-		if levelmetadata ~= nil and levelmetadata[(roomy)*20 + (roomx+1)] ~= nil then
+		if levelmetadata ~= nil and levelmetadata_get(roomx, roomy) ~= nil then
 			gotoroom_finish()
 		end
 
@@ -368,7 +274,6 @@ function loadstate(new, ...)
 		editingroomname = false
 		movingentity = 0
 		movingentity_copying = false
-		--roomoptpage2 = false
 		upperoptpage2 = false
 		warpid = nil
 		oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
@@ -440,7 +345,7 @@ function loadstate(new, ...)
 		end
 		scriptfromsearch = false
 	elseif new == 4 then
-		success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
+		--success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
 	elseif new == 5 then
 		lsuccess = directory_exists(vvvvvvfolder, "levels")
@@ -507,7 +412,6 @@ function loadstate(new, ...)
 	elseif new == 15 then
 		helplistscroll = 0
 		helparticle = 2
-		--helparticlecontent = {} -- Heette vroeger sis, geen idee waarom.
 		helparticlescroll = 0
 		helpeditingline = 0
 		helprefreshable = false
@@ -564,35 +468,10 @@ function loadstate(new, ...)
 			redostacktext = redostacktext .. "\n"
 		end
 	elseif new == 19 then
-		local flagstextleftar = {}
-		local flagstextrightar = {}
+		flags_digits = tostring(limit.flags-1):len()
+		flags_page = 0
 
-		usedflags = {}
-		outofrangeflags = {}
-
-		-- Seee which flags have been used in this level.
-		returnusedflags(usedflags, outofrangeflags)
-
-		for fl = 0, 49 do
-			table.insert(flagstextleftar, (fl < 10 and " " or "") .. fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
-		end
-
-		for fl = 50, 99 do
-			table.insert(flagstextrightar, fl .. " - " .. (usedflags[fl] and L.FLAGUSED or L.FLAGNOTUSED) .. (vedmetadata ~= false and (vedmetadata.flaglabel[fl] ~= "" and " - " .. anythingbutnil(vedmetadata.flaglabel[fl]) or " - " .. L.FLAGNONAME) or "") .. "\n")
-		end
-
-		flagstextleft = table.concat(flagstextleftar)
-		flagstextright = table.concat(flagstextrightar)
-
-		outofrangeflagstext = ""
-
-		for k,v in pairs(outofrangeflags) do
-			if outofrangeflagstext == "" then
-				outofrangeflagstext = L.USEDOUTOFRANGEFLAGS .. " " .. k
-			else
-				outofrangeflagstext = outofrangeflagstext .. ", " .. k
-			end
-		end
+		loadflagslist()
 	elseif new == 20 then
 		box_exists = true
 		box_x, box_y, box_w, box_h = 80,80,208,208
@@ -625,18 +504,18 @@ function loadstate(new, ...)
 		returnusedflags(usedflags, {})
 
 		local n_usedflags = 0
-		for fl = 0, 99 do
+		for fl = 0, limit.flags-1 do
 			if usedflags[fl] then
 				n_usedflags = n_usedflags + 1
 			end
 		end
 
 		basic_stats = {
-			{L.AMOUNTSCRIPTS, #scriptnames, 500},
-			{L.AMOUNTUSEDFLAGS, n_usedflags, 100},
-			{L.AMOUNTENTITIES, anythingbutnil0(count.entities), 3000},
-			{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), 20},
-			{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), 20},
+			{L.AMOUNTSCRIPTS, #scriptnames, limit.scripts, 500},
+			{L.AMOUNTUSEDFLAGS, n_usedflags, limit.flags, 100},
+			{L.AMOUNTENTITIES, anythingbutnil0(count.entities), limit.entities, 3000},
+			{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), limit.trinkets, 100},
+			{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), limit.crewmates, 100},
 		}
 
 		basic_stats_max_text_width = 0
@@ -719,13 +598,6 @@ function to_astate(name, new, dontinitialize)
 end
 
 
-
--------------------------------------------------------------------------------------------------------------------------------------------
---------------------------------------------- Just as a filler because I need this part often ---------------------------------------------
--------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 function loadlevelsfolder()
 	cons("Loading levels folder...")
 	levels_refresh = levels_refresh + 1
@@ -802,6 +674,8 @@ end
 function loadtilesets()
 	loadtileset("tiles.png")
 	loadtileset("tiles2.png")
+	loadtileset("tiles3.png")
+	loadtileset("entcolours.png")
 	loadsprites("sprites.png", 32)
 
 	loadwarpbgs()
@@ -811,49 +685,21 @@ function loadtileset(file)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
-	local asimgdata
+	local asimgdata, asimgdata_white
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
-		--love.filesystem.write("temp/" .. file, contents)
-		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
+		-- Too bad Data:clone() is LÖVE 11+ only
+		asimgdata_white = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
 		asimgdata = love.image.newImageData(file)
+		-- Too bad Data:clone() is LÖVE 11+ only
+		asimgdata_white = love.image.newImageData(file)
 	end
-
-	-- VVVVVV doesn't like translucent pixels in 'tiles' and tiles2
-	-- Display them how the game does
-	asimgdata:mapPixel(function(_, _, r, g, b, a)
-		local lovecolor
-		if love_version_meets(11) then
-			r = r * 255
-			g = g * 255
-			b = b * 255
-			lovecolor = 1
-		else
-			lovecolor = 255
-		end
-		a = a / lovecolor
-		if a <= 0 or a >= lovecolor then
-			if love_version_meets(11) then
-				return r/255, g/255, b/255, a
-			else
-			end
-		else
-			r = a*r + (1-a)*172
-			g = a*g + (1-a)*189
-			b = a*b + (1-a)*238
-		end
-		if love_version_meets(11) then
-			return r/255, g/255, b/255, lovecolor
-		else
-			return r, g, b, lovecolor
-		end
-	end)
 
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
@@ -864,10 +710,10 @@ function loadtileset(file)
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
 	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
-	asimgdata:mapPixel(function(x, y, r, g, b, a)
+	asimgdata_white:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
-	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata)
+	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata_white)
 
 	tilesets[file]["tiles"] = {}
 
@@ -876,20 +722,23 @@ function loadtileset(file)
 			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"]) -- 16 16 16 16
 		end
 	end
+
+	-- If this tileset is smaller than 1200 (tiles3) then fill up with tile 0 to prevent crashes
+	for filler = tilesets[file].tileswidth*tilesets[file].tilesheight, 1199 do
+		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, 8, 8, tilesets[file].width, tilesets[file].height)
+	end
 end
 
 function loadsprites(file, res)
 	tilesets[file] = {}
 
 	-- Try loading custom assets first
-	readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
 
 	local asimgdata
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
-		--love.filesystem.write("temp/" .. file, contents)
-		--tilesets[file]["img"] = love.graphics.newImage("temp/" .. file)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
@@ -968,7 +817,7 @@ function lefttoolscrollbounds()
 end
 
 function hoverdraw(img, x, y, w, h, s)
-	if nodialog and mouseon(x, y, w, h) and love.window.hasFocus() then
+	if nodialog and mouseon(x, y, w, h) and window_active() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		love.graphics.setColor(255,255,255,128)
@@ -978,7 +827,7 @@ function hoverdraw(img, x, y, w, h, s)
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
-	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and love.window.hasFocus() then
+	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active() then
 		love.graphics.setColor(r, g, b, 255)
 		love.graphics.rectangle("fill", x, y, w, h)
 	else
@@ -1069,7 +918,7 @@ function cycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themax then
+	if var >= themax then
 		return themin
 	else
 		return var+1
@@ -1081,7 +930,7 @@ function revcycle(var, themax, themin)
 		themin = 1
 	end
 
-	if var == themin then
+	if var <= themin then
 		return themax
 	else
 		return var-1
@@ -1250,7 +1099,7 @@ end
 
 function thingk()
 	keyva = require("keyfunc")(function()
-		if state == 1 and (selectedtool == 1 or selectedtool == 2) and mouseon(16+64, 16+48*8+leftsubtoolscroll, 32, 32) then
+		if state == 1 and (selectedtool == 1 or selectedtool == 2) and mouseon(16+64, 16+46*8+leftsubtoolscroll, 32, 32) then
 			subtoolimgs[1][10] = st("1_10");subtoolimgs[2][10] = st("1_10")
 		elseif state == 15 then
 			helpeditable = true
@@ -1261,21 +1110,25 @@ function thingk()
 end
 
 function switchtileset()
+	local maxtileset = 4
+	if metadata.target == "VCE" then
+		maxtileset = 5
+	end
 	if keyboard_eitherIsDown("shift") then
-		selectedtileset = revcycle(selectedtileset, 4, 0)
+		selectedtileset = revcycle(selectedtileset, maxtileset, 0)
 	else
-		selectedtileset = cycle(selectedtileset, 4, 0)
+		selectedtileset = cycle(selectedtileset, maxtileset, 0)
 	end
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
-	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0) then
+	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then
 		selectedcolor = 0
 	end
 
-	local oldtileset = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+	local oldtileset = levelmetadata_get(roomx, roomy).tileset
+	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
 
-	levelmetadata[(roomy)*20 + (roomx+1)].tileset = selectedtileset
-	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+	levelmetadata_set(roomx, roomy, "tileset", selectedtileset)
+	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1290,7 +1143,7 @@ function switchtileset()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILESET")
@@ -1304,7 +1157,7 @@ function switchtilecol()
 	else
 		selectedcolor = cycle(selectedcolor, #tilesetblocks[selectedtileset].colors, selectedtileset == 0 and -1 or 0)
 	end
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		if keyboard_eitherIsDown("shift") then
 			selectedcolor = 5
@@ -1313,9 +1166,9 @@ function switchtilecol()
 		end
 	end
 
-	local oldtilecol = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
 
-	levelmetadata[(roomy)*20 + (roomx+1)].tilecol = selectedcolor
+	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1325,7 +1178,7 @@ function switchtilecol()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata[roomy][roomx])
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILECOL")
@@ -1334,18 +1187,22 @@ function switchtilecol()
 end
 
 function switchenemies()
-	local oldtype = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
+	local oldtype = levelmetadata_get(roomx, roomy).enemytype
+	local maxenemy = 9
+	if metadata.target == "VCE" then
+		maxenemy = 24
+	end
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
+		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].enemytype = cycle(levelmetadata[(roomy)*20 + (roomx+1)].enemytype, 9, 0)
+		levelmetadata_set(roomx, roomy, "enemytype", cycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
 	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "enemytype",
 					oldvalue = oldtype,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].enemytype
+					newvalue = levelmetadata_get(roomx, roomy).enemytype
 				}
 			},
 			switchtool = 9
@@ -1377,7 +1234,7 @@ function changeenemybounds()
 				{
 					key = "enemy" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 				}
 			)
 		end
@@ -1391,7 +1248,7 @@ function changeenemybounds()
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -1419,7 +1276,7 @@ function changeplatformbounds()
 				{
 					key = "plat" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 				}
 			)
 		end
@@ -1433,7 +1290,7 @@ function changeplatformbounds()
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -1445,33 +1302,30 @@ function changeplatformbounds()
 end
 
 function changedmode()
-	--levelmetadata[(roomy)*20 + (roomx+1)].directmode = cycle(levelmetadata[(roomy)*20 + (roomx+1)].directmode, 1, 0)
-
-	local olddirect = levelmetadata[(roomy)*20 + (roomx+1)].directmode
-	local oldauto2 = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
-	--local oldtilecol = selectedcolor
+	local olddirect = levelmetadata_get(roomx, roomy).directmode
+	local oldauto2 = levelmetadata_get(roomx, roomy).auto2mode
 
 	if keyboard_eitherIsDown("shift") then
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+			levelmetadata_set(roomx, roomy, "directmode", 1)
+		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
+			levelmetadata_set(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
+			levelmetadata_set(roomx, roomy, "directmode", 0)
+			levelmetadata_set(roomx, roomy, "auto2mode", 1)
 		end
 	else
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 1
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 then
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 1
-			levelmetadata[(roomy)*20 + (roomx+1)].auto2mode = 0
+		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+			levelmetadata_set(roomx, roomy, "auto2mode", 1)
+		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
+			levelmetadata_set(roomx, roomy, "directmode", 1)
+			levelmetadata_set(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata[(roomy)*20 + (roomx+1)].directmode = 0
+			levelmetadata_set(roomx, roomy, "directmode", 0)
 		end
 	end
 
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 and levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 0 then
+	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
 	end
@@ -1480,12 +1334,12 @@ function changedmode()
 				{
 					key = "directmode",
 					oldvalue = olddirect,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].directmode
+					newvalue = levelmetadata_get(roomx, roomy).directmode
 				},
 				{
 					key = "auto2mode",
 					oldvalue = oldauto2,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode
+					newvalue = levelmetadata_get(roomx, roomy).auto2mode
 				}
 			}
 		}
@@ -1494,18 +1348,18 @@ function changedmode()
 end
 
 function changewarpdir()
-	local oldwarpdir = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
+	local oldwarpdir = levelmetadata_get(roomx, roomy).warpdir
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = revcycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+		levelmetadata_set(roomx, roomy, "warpdir", revcycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
 	else
-		levelmetadata[(roomy)*20 + (roomx+1)].warpdir = cycle(levelmetadata[(roomy)*20 + (roomx+1)].warpdir, 3, 0)
+		levelmetadata_set(roomx, roomy, "warpdir", cycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
 	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "warpdir",
 					oldvalue = oldwarpdir,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].warpdir
+					newvalue = levelmetadata_get(roomx, roomy).warpdir
 				}
 			}
 		}
@@ -1520,15 +1374,15 @@ function toggleeditroomname()
 		editingroomname = true
 		tilespicker = false
 		startinputonce()
-		input = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
+		input = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
 	end
 end
 
 function saveroomname()
 	editingroomname = false
 	stopinput()
-	local oldroomname = anythingbutnil(levelmetadata[(roomy)*20 + (roomx+1)].roomname)
-	levelmetadata[(roomy)*20 + (roomx+1)].roomname = input
+	local oldroomname = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
+	levelmetadata_set(roomx, roomy, "roomname", input)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
@@ -1573,7 +1427,7 @@ function endeditingroomtext(donotmakethisnil)
 						returnusedflags(usedflags, outofrangeflags)
 
 						local useflag = -1
-						for vlag = 0, 99 do
+						for vlag = 0, limit.flags-1 do
 							if not usedflags[vlag] then
 								useflag = vlag
 								usedflags[vlag] = true
@@ -1631,15 +1485,21 @@ function endeditingroomtext(donotmakethisnil)
 	editingroomtext = 0
 end
 
-function createmde()
+function createmde(thislimit)
+	if thislimit == nil then
+		thislimit = limit
+	end
 	cons("Creating metadata entity...")
 	if count ~= nil then
 		count.entities = count.entities + 1
 	end
+	local emptyflaglabel = {}
+	for i = 0, thislimit.flags-1 do
+		emptyflaglabel[i] = ""
+	end
 	return {
 		mdeversion = thismdeversion,
-		-- This is of course an ugly way to do it
-		flaglabel = {"","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","","", "","","","","","","","","", [0] = ""},
+		flaglabel = emptyflaglabel,
 		vars = {},
 		notes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 	}
@@ -1682,21 +1542,20 @@ function state6load(levelname)
 	if not secondlevel then
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
-			=  editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldextra
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    extra
 		end
 
-		success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
-			--tostate(6)
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
 
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata =
-				oldeditingmap, oldmetadata, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    extra =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldextra
 			end
 		else
 			editingmap = levelname
@@ -1705,7 +1564,7 @@ function state6load(levelname)
 			map_init()
 		end
 	else
-		success, metadata2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2, extra2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1752,33 +1611,34 @@ function compareleveldifferences(secondlevelname)
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
-			for k,v in pairs(roomdata2[ry][rx]) do
+			local firstlevelroomdatathisroom = roomdata_get(rx, ry)
+			for k,v in pairs(roomdata2_get(rx, ry)) do
 				if leftblank and v ~= 0 then
 					leftblank = false
 				end
-				if rightblank and roomdata[ry][rx][k] ~= 0 then
+				if rightblank and firstlevelroomdatathisroom[k] ~= 0 then
 					rightblank = false
 				end
-				if not changed and v ~= roomdata[ry][rx][k] then
+				if not changed and v ~= firstlevelroomdatathisroom[k] then
 					changed = true
 				end
 			end
 
-			if changed and levelmetadata2[(ry)*20 + (rx+1)].roomname == levelmetadata[(ry)*20 + (rx+1)].roomname then
+			if changed and levelmetadata2_get(rx, ry).roomname == levelmetadata_get(rx, ry).roomname then
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed1, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.changed1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
 				end
 			elseif changed then -- room names not the same
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.added2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed2, {rx+co, ry+co, levelmetadata2[(ry)*20 + (rx+1)].roomname, levelmetadata[(ry)*20 + (rx+1)].roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.rooms.changed2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
 				end
 			end
 		end
@@ -1789,65 +1649,67 @@ function compareleveldifferences(secondlevelname)
 	-- R O O M   M E T A D A T A
 	pagetext = diffmessages.pages.changedroommetadata .. "\\wh#\n\n"
 
-	for k,v in pairs(levelmetadata2) do
-		local changed = false
+	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
+		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
+			local lmd1, lmd2 = levelmetadata_get(rx, ry), levelmetadata2_get(rx, ry)
+			local changed = false
 
-		-- Is anything different?
-		for k2,v2 in pairs(v) do
-			if v2 ~= levelmetadata[k][k2] then
-				changed = true
-			end
-		end
-
-		local lrmx = (k-1) % 20
-		local lrmy = math.floor(((k-1) - lrmx) / 20)
-
-		if not s.coords0 then
-			lrmx = lrmx + 1
-			lrmy = lrmy + 1
-		end
-
-		if changed and levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
-			-- We're already going to show that the room name has changed
-			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
-		elseif changed then
-			-- We're not, so label this
-			pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, levelmetadata2[k].roomname}) .. "\\\n"
-		end
-
-		if changed then
-			-- So what has changed?
-			if levelmetadata2[k].roomname ~= levelmetadata[k].roomname then
-				if levelmetadata2[k].roomname == "" then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameadded, {levelmetadata[k].roomname}) .. "\n"
-				elseif levelmetadata[k].roomname == "" then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameremoved, {levelmetadata2[k].roomname}) .. "\n"
-				else
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomname, {levelmetadata2[k].roomname, levelmetadata[k].roomname}) .. "\n"
+			-- Is anything different?
+			for k,v in pairs(lmd2) do
+				if v ~= lmd1[k] then
+					changed = true
 				end
 			end
-			if levelmetadata2[k].tileset ~= levelmetadata[k].tileset or levelmetadata2[k].tilecol ~= levelmetadata[k].tilecol then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.tileset, {levelmetadata2[k].tileset, levelmetadata2[k].tilecol, levelmetadata[k].tileset, levelmetadata[k].tilecol}) .. "\n"
+
+			local lrmx, lrmy = rx, ry
+
+			if not s.coords0 then
+				lrmx = lrmx + 1
+				lrmy = lrmy + 1
 			end
-			if levelmetadata2[k].platv ~= levelmetadata[k].platv then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platv, {levelmetadata2[k].platv, levelmetadata[k].platv}) .. "\n"
+
+			if changed and lmd2.roomname ~= lmd1.roomname then
+				-- We're already going to show that the room name has changed
+				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
+			elseif changed then
+				-- We're not, so label this
+				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, lmd2.roomname}) .. "\\\n"
 			end
-			if levelmetadata2[k].enemytype ~= levelmetadata[k].enemytype then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemytype, {levelmetadata2[k].enemytype, levelmetadata[k].enemytype}) .. "\n"
-			end
-			if levelmetadata2[k].platx1 ~= levelmetadata[k].platx1 or levelmetadata2[k].platy1 ~= levelmetadata[k].platy1 or levelmetadata2[k].platx2 ~= levelmetadata[k].platx2 or levelmetadata2[k].platy2 ~= levelmetadata[k].platy2 then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platbounds, {levelmetadata2[k].platx1, levelmetadata2[k].platy1, levelmetadata2[k].platx2, levelmetadata2[k].platy2, levelmetadata[k].platx1, levelmetadata[k].platy1, levelmetadata[k].platx2, levelmetadata[k].platy2}) .. "\n"
-			end
-			if levelmetadata2[k].enemyx1 ~= levelmetadata[k].enemyx1 or levelmetadata2[k].enemyy1 ~= levelmetadata[k].enemyy1 or levelmetadata2[k].enemyx2 ~= levelmetadata[k].enemyx2 or levelmetadata2[k].enemyy2 ~= levelmetadata[k].enemyy2 then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemybounds, {levelmetadata2[k].enemyx1, levelmetadata2[k].enemyy1, levelmetadata2[k].enemyx2, levelmetadata2[k].enemyy2, levelmetadata[k].enemyx1, levelmetadata[k].enemyy1, levelmetadata[k].enemyx2, levelmetadata[k].enemyy2}) .. "\n"
-			end
-			if levelmetadata2[k].directmode == 0 and levelmetadata[k].directmode == 1 then
-				pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode01 .. "\n"
-			elseif levelmetadata2[k].directmode == 1 and levelmetadata[k].directmode == 0 then
-				pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode10 .. "\n"
-			end
-			if levelmetadata2[k].warpdir ~= levelmetadata[k].warpdir then
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.warpdir, {warpdirs[levelmetadata2[k].warpdir], warpdirs[levelmetadata[k].warpdir]}) .. "\n"
+
+			if changed then
+				-- So what has changed?
+				if lmd2.roomname ~= lmd1.roomname then
+					if lmd2.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameadded, {lmd1.roomname}) .. "\n"
+					elseif lmd1.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameremoved, {lmd2.roomname}) .. "\n"
+					else
+						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomname, {lmd2.roomname, lmd1.roomname}) .. "\n"
+					end
+				end
+				if lmd2.tileset ~= lmd1.tileset or lmd2.tilecol ~= lmd1.tilecol then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.tileset, {lmd2.tileset, lmd2.tilecol, lmd1.tileset, lmd1.tilecol}) .. "\n"
+				end
+				if lmd2.platv ~= lmd1.platv then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platv, {lmd2.platv, lmd1.platv}) .. "\n"
+				end
+				if lmd2.enemytype ~= lmd1.enemytype then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemytype, {lmd2.enemytype, lmd1.enemytype}) .. "\n"
+				end
+				if lmd2.platx1 ~= lmd1.platx1 or lmd2.platy1 ~= lmd1.platy1 or lmd2.platx2 ~= lmd1.platx2 or lmd2.platy2 ~= lmd1.platy2 then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platbounds, {lmd2.platx1, lmd2.platy1, lmd2.platx2, lmd2.platy2, lmd1.platx1, lmd1.platy1, lmd1.platx2, lmd1.platy2}) .. "\n"
+				end
+				if lmd2.enemyx1 ~= lmd1.enemyx1 or lmd2.enemyy1 ~= lmd1.enemyy1 or lmd2.enemyx2 ~= lmd1.enemyx2 or lmd2.enemyy2 ~= lmd1.enemyy2 then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemybounds, {lmd2.enemyx1, lmd2.enemyy1, lmd2.enemyx2, lmd2.enemyy2, lmd1.enemyx1, lmd1.enemyy1, lmd1.enemyx2, lmd1.enemyy2}) .. "\n"
+				end
+				if lmd2.directmode == 0 and lmd1.directmode == 1 then
+					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode01 .. "\n"
+				elseif lmd2.directmode == 1 and lmd1.directmode == 0 then
+					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode10 .. "\n"
+				end
+				if lmd2.warpdir ~= lmd1.warpdir then
+					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.warpdir, {warpdirs[lmd2.warpdir], warpdirs[lmd1.warpdir]}) .. "\n"
+				end
 			end
 		end
 	end
@@ -2037,7 +1899,7 @@ function compareleveldifferences(secondlevelname)
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
 
-			for i = 0, 99 do
+			for i = 0, limit.flags-1 do
 				if vedmetadata.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
 				end
@@ -2046,14 +1908,14 @@ function compareleveldifferences(secondlevelname)
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
 
-			for i = 0, 99 do
+			for i = 0, limit2.flags-1 do
 				if vedmetadata2.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {vedmetadata2.flaglabel[i], i}) .. "\n"
 				end
 			end
 		else
 			-- This one is simple, just cycle through the numbers!
-			for i = 0, 99 do
+			for i = 0, math.min(limit.flags, limit2.flags)-1 do
 				if vedmetadata2.flaglabel[i] == "" and vedmetadata.flaglabel[i] ~= "" then
 					-- Added name
 					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
@@ -2172,7 +2034,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	tostate(1)
@@ -2192,9 +2054,11 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 
 	if viakeyboard then
 		distance = 10*46
-		if mkinput == "pageup" then
+		if takinginput and table.contains({"home", "end"}, mkinput) then
+			return
+		elseif table.contains({"pageup", "home"}, mkinput) then
 			direction = "u"
-		elseif mkinput == "pagedown" then
+		elseif table.contains({"pagedown", "end"}, mkinput) then
 			direction = "d"
 		end
 	else
@@ -2209,139 +2073,173 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		distance = customdistance
 	end
 
+	if direction == nil then
+		return
+	end
 
-	if direction ~= nil then
-		if dialog.is_open() then
-			local topdialog = dialogs[#dialogs]
-			local k = topdialog:get_on_scrollable_field(x, y)
-			if k ~= nil then
-				local fieldscroll = topdialog.fields[k][10]
-				if direction == "u" then
+	if dialog.is_open() then
+		local topdialog = dialogs[#dialogs]
+		local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
+		local cf = dialogs[#dialogs].currentfield
+		local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[6] == DF.TEXT
+		if k ~= nil then
+			local fieldscroll = topdialog.fields[k][10]
+			if direction == "u" then
+				if mkinput == "home" and not cfistext then
+					fieldscroll = 0
+				elseif mkinput == "pageup" then
 					fieldscroll = fieldscroll + distance
 					if fieldscroll > 0 then
 						fieldscroll = 0
 					end
-				elseif direction == "d" then
+				end
+			elseif direction == "d" then
+				local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
+				if mkinput == "end" and not cfistext then
+					fieldscroll = math.min(-upperbound, 0)
+				elseif mkinput == "pagedown" then
 					fieldscroll = fieldscroll - distance
-					local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 					if -fieldscroll > upperbound then
 						fieldscroll = math.min(-upperbound, 0)
 					end
 				end
-				dialogs[#dialogs].fields[k][10] = fieldscroll
+			end
+			dialogs[#dialogs].fields[k][10] = fieldscroll
+		end
+	elseif state == 3 and not viakeyboard then
+		if direction == "u" then
+			scriptscroll = scriptscroll + distance
+			if scriptscroll > 0 then
+				scriptscroll = 0
+			end
+		elseif direction == "d" then
+			scriptscroll = scriptscroll - distance
+			local textscale = s.scripteditor_largefont and 2 or 1
+			local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
+			if -scriptscroll > upperbound then
+				scriptscroll = math.min(-upperbound, 0)
 			end
 		end
-		if state == 3 and not viakeyboard then
-			if direction == "u" then
-				scriptscroll = scriptscroll + distance
-				if scriptscroll > 0 then
-					scriptscroll = 0
-				end
-			elseif direction == "d" then
-				scriptscroll = scriptscroll - distance
-				local textscale = s.scripteditor_largefont and 2 or 1
-				local upperbound = (((#scriptlines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
-				if -scriptscroll > upperbound then
-					scriptscroll = math.min(-upperbound, 0)
-				end
+	elseif state == 6 then
+		if direction == "u" then
+			levellistscroll = levellistscroll + distance
+			if levellistscroll > 0 then
+				levellistscroll = 0
 			end
-		elseif state == 6 then
-			if direction == "u" then
-				levellistscroll = levellistscroll + distance
-				if levellistscroll > 0 then
-					levellistscroll = 0
-				end
-			elseif direction == "d" then
-				levellistscroll = levellistscroll - distance
-				local lessheight = 48
-				if #s.recentfiles > 0 and input == "" and input_r == "" then
-					lessheight = lessheight + 16 + #s.recentfiles*8
-				end
-				local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
-				if -levellistscroll > upperbound then
-					levellistscroll = math.min(-upperbound, 0)
-				end
+		elseif direction == "d" then
+			levellistscroll = levellistscroll - distance
+			local lessheight = 48
+			if #s.recentfiles > 0 and input == "" and input_r == "" then
+				lessheight = lessheight + 16 + #s.recentfiles*8
 			end
-		elseif state == 10 then
-			if direction == "u" then
+			local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
+			if -levellistscroll > upperbound then
+				levellistscroll = math.min(-upperbound, 0)
+			end
+		end
+	elseif state == 10 then
+		if direction == "u" then
+			if mkinput == "home" then
+				scriptlistscroll = 0
+			else
 				scriptlistscroll = scriptlistscroll + distance
 				if scriptlistscroll > 0 then
 					scriptlistscroll = 0
 				end
-			elseif direction == "d" then
-				local ndisplayedscripts = 0
-				if scriptdisplay_used and scriptdisplay_unused then
-					ndisplayedscripts = #scriptnames
-				elseif scriptdisplay_used then
-					ndisplayedscripts = n_usedscripts
-				elseif scriptdisplay_unused then
-					ndisplayedscripts = #scriptnames - n_usedscripts
-				end
+			end
+		elseif direction == "d" then
+			local ndisplayedscripts = 0
+			if scriptdisplay_used and scriptdisplay_unused then
+				ndisplayedscripts = #scriptnames
+			elseif scriptdisplay_used then
+				ndisplayedscripts = n_usedscripts
+			elseif scriptdisplay_unused then
+				ndisplayedscripts = #scriptnames - n_usedscripts
+			end
+			local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+			if mkinput == "end" then
+				scriptlistscroll = math.min(-upperbound, 0)
+			else
 				scriptlistscroll = scriptlistscroll - distance
-				local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 				if -scriptlistscroll > upperbound then
 					scriptlistscroll = math.min(-upperbound, 0)
 				end
 			end
-		elseif state == 11 then
-			if direction == "u" then
-				searchscroll = searchscroll + distance
-				if searchscroll > 0 then
-					searchscroll = 0
-				end
-			elseif direction == "d" then
-				searchscroll = searchscroll - distance
-				local upperbound = ((longestsearchlist*32)-2-(love.graphics.getHeight()-56)) -- scrollableHeight - visiblePart
-				if -searchscroll > upperbound then
-					searchscroll = math.min(-upperbound, 0)
-				end
+		end
+	elseif state == 11 then
+		if direction == "u" then
+			searchscroll = searchscroll + distance
+			if searchscroll > 0 then
+				searchscroll = 0
 			end
-		elseif state == 15 then
-			local usethiscondition = x <= 25*8
-			if s.psmallerscreen then
-				usethiscondition = onlefthelpbuttons
+		elseif direction == "d" then
+			searchscroll = searchscroll - distance
+			local upperbound = ((longestsearchlist*32)-2-(love.graphics.getHeight()-56)) -- scrollableHeight - visiblePart
+			if -searchscroll > upperbound then
+				searchscroll = math.min(-upperbound, 0)
 			end
+		end
+	elseif state == 15 then
+		local usethiscondition = x <= 25*8 and (x ~= 0 or y ~= 0)
+		if s.psmallerscreen then
+			usethiscondition = onlefthelpbuttons
+		end
 
-			if usethiscondition then
-				if direction == "u" then
+		if usethiscondition then
+			if direction == "u" then
+				if mkinput == "home" then
+					helplistscroll = 0
+				else
 					helplistscroll = helplistscroll + distance
 					if helplistscroll > 0 then
 						helplistscroll = 0
 					end
-				elseif direction == "d" then
+				end
+			elseif direction == "d" then
+				local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+				if mkinput == "end" then
+					helplistscroll = math.min(-upperbound, 0)
+				else
 					helplistscroll = helplistscroll - distance
-					local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 					if -helplistscroll > upperbound then
 						helplistscroll = math.min(-upperbound, 0)
 					end
 				end
-			else
-				if direction == "u" then
+			end
+		else
+			if direction == "u" then
+				if mkinput == "home" then
+					helparticlescroll = 0
+				else
 					helparticlescroll = helparticlescroll + distance
 					if helparticlescroll > 0 then
 						helparticlescroll = 0
 					end
-				elseif direction == "d" then
+				end
+			elseif direction == "d" then
+				-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
+				-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
+				local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
+				if mkinput == "end" then
+					helparticlescroll = math.min(-upperbound, 0)
+				else
 					helparticlescroll = helparticlescroll - distance
-					-- #anythingbutnil(helparticlecontent) is very quirky; if the table helparticlecontent == nil, then we get an empty string, and #"" is 0, which is exactly what we want.
-					-- The alternative is defining an extra anythingbutnil* function for returning an empty list, but #{}==#"" and if not nil, it just happily returns the table it got.
-					local upperbound = ((#anythingbutnil(helparticlecontent)*10)-(love.graphics.getHeight()-32))
 					if -helparticlescroll > upperbound then
 						helparticlescroll = math.min(-upperbound, 0)
 					end
 				end
+			end
 
-				if helpeditingline ~= 0 and viakeyboard then
-					helparticlecontent[helpeditingline] = input .. input_r
-					input_r = ""
-					__ = "_"
-					if direction == "u" then
-						helpeditingline = math.max(1, helpeditingline - 46)
-					else
-						helpeditingline = math.min(#helparticlecontent, helpeditingline + 46)
-					end
-					input = anythingbutnil(helparticlecontent[helpeditingline])
+			if helpeditingline ~= 0 and viakeyboard then
+				helparticlecontent[helpeditingline] = input .. input_r
+				input_r = ""
+				__ = "_"
+				if direction == "u" then
+					helpeditingline = math.max(1, helpeditingline - 46)
+				else
+					helpeditingline = math.min(#helparticlecontent, helpeditingline + 46)
 				end
+				input = anythingbutnil(helparticlecontent[helpeditingline])
 			end
 		end
 	end
@@ -2848,7 +2746,7 @@ function drawlink(link)
 	love.graphics.setColor(255,255,255)
 end
 
-function unrecognized_rcmreturn()
+function unrecognized_rcmreturn(RCMreturn)
 	dialog.create(RCMid .. " " .. RCMreturn .. " unrecognized.")
 end
 
@@ -3306,9 +3204,16 @@ function exitdisplayoptions()
 	saveconfig()
 
 	if s.smallerscreen ~= s.psmallerscreen or s.scale ~= s.pscale or s.forcescale ~= oldforcescale then
+		local mouseposx, mouseposy
+		if love.mouse.isDown("l") then
+			mouseposx, mouseposy = love.mouse.getPosition()
+		end
 		s.pscale = s.scale
 		s.psmallerscreen = s.smallerscreen
 		dodisplaysettings(true)
+		if mouseposx ~= nil and mouseposy ~= nil then
+			love.mouse.setPosition(mouseposx, mouseposy)
+		end
 	end
 
 	tostate(oldstate, true)
@@ -3445,6 +3350,73 @@ function show_notification(text)
 	notification_text = text
 
 	setgenerictimer(3, 5)
+end
+
+function window_active()
+	return love.window.hasFocus() and love.window.isVisible()
+end
+
+function inplacescroll(key)
+	local usethisinput, usethisdistance
+	if table.contains({"up", "pageup"}, key) then
+		usethisinput = "wu"
+	elseif table.contains({"down", "pagedown"}, key) then
+		usethisinput = "wd"
+	end
+	if table.contains({"pageup", "pagedown"}, key) then
+		usethisdistance = 10*46
+	end
+	handle_scrolling(false, usethisinput, usethisdistance)
+end
+
+function assets_openimage(filepath, filename)
+	local readsuccess, contents = readfile(filepath)
+	if not readsuccess then
+		dialog.create(contents)
+		return
+	end
+
+	local success, filedata = pcall(love.filesystem.newFileData, contents, filename, "file")
+	if not success then
+		dialog.create(filedata)
+		return
+	end
+	local imgdata
+	success, imgdata = pcall(love.image.newImageData, filedata)
+	if not success then
+		dialog.create(imgdata)
+		return
+	end
+	success, imageviewer_image_color = pcall(love.graphics.newImage, imgdata)
+	if not success then
+		dialog.create(imageviewer_image_color)
+		return
+	end
+	imgdata:mapPixel(
+		function(x, y, r, g, b, a)
+			return 255, 255, 255, a
+		end
+	)
+	imageviewer_image_white = love.graphics.newImage(imgdata)
+	imageviewer_filepath, imageviewer_filename = filepath, filename
+
+	imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
+	imageviewer_w, imageviewer_h = imageviewer_image_color:getDimensions()
+	fix_imageviewer_position()
+	imageviewer_moving = false
+	imageviewer_moved_from_x, imageviewer_moved_from_y = 0, 0
+	imageviewer_moved_from_mx, imageviewer_moved_from_my = 0, 0
+	imageviewer_grid, imageviewer_showwhite = 0, false
+
+	-- Guess the grid setting
+	if filename:sub(1,10) == "entcolours"
+	or filename:sub(1,4) == "font"
+	or filename:sub(1,5) == "tiles" then
+		imageviewer_grid = 8
+	elseif filename:sub(1,7) == "sprites"
+	or filename:sub(1,11) == "flipsprites" then
+		imageviewer_grid = 32
+	end
 end
 
 function isclear(key)

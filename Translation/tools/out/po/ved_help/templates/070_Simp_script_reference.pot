@@ -104,3 +104,18 @@ msgstr ""
 
 msgid "Changes the color and position of the next text boxes created with the \"say\"\ncommand. This can be used instead of giving a second argument to \"say\"."
 msgstr ""
+
+msgid "warpdir¤(x,y,dir)\\w#h"
+msgstr ""
+
+msgid "Changes the warp direction for room x,y, 1-indexed, to the given direction. This\ncould be checked with ifwarp, resulting in a relatively powerful extra\nflags/variable system."
+msgstr ""
+
+msgid "x - Room x coordinate, starting at 1\ny - Room y coordinate, starting at 1\ndir - The warp direction. Normally 0-3, but out-of-bounds values are accepted"
+msgstr ""
+
+msgid "ifwarp¤(x,y,dir,script)\\w#h"
+msgstr ""
+
+msgid "If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script"
+msgstr ""

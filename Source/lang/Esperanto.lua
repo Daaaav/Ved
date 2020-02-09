@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2019-12-15 16:53:39 (CET)
+--- Last converted: 2020-02-09 23:17:16 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -546,7 +546,17 @@ SHIFTROOMS = "Ŝovi ĉambrojn", -- In the map. Move all rooms in the entire leve
 OLDSHORTCUT_SCRIPTJUMP = "REG+(mal)dekstra klavo ĉesos funkcii baldaŭ, anstataŭ tio uzu ALT+(mal)dekstra klavo", -- CTRL and ALT are capitalized here for extra clarity in this string
 OLDSHORTCUT_ASSETS = "REG+A ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+R",
 OLDSHORTCUT_OPENLVLDIR = "REG+D ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+F",
+OLDSHORTCUT_GOTOROOM = "Q ĉesos funkcii baldaŭ, anstataŭ tio uzu G",
+OLDSHORTCUT_SHOWBG = "K ĉesos funkcii baldaŭ, anstataŭ tio uzu SHIFT+;",
 
+FRAMESTOSECONDS = "$1 = $2 sek",
+ROOMNUM = "Ĉambro $1",
+TRACKNUM = "Trako $1",
+STOPSMUSIC = "Haltigas muzikon",
+EDITSCRIPTWOBUMPING = "Redakti skripton sen suprenigi",
+CLICKONTHING = "Alklaku $1",
+ORDRAGDROP = "aŭ ŝovmetu ĉi tien", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+MORETHANONESTARTPOINT = "Estas pli ol unu komencejo en tiu ĉi nivelo!",
 
 }
 
@@ -573,8 +583,8 @@ L_PLU = {
 		[1] = "Ento ĉe [$1 $2] havas $3 malvalidajn atributojn!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata por ĉambro #$1 havas $2 malvalidan atributon!",
-		[1] = "LevelMetadata por ĉambro #$1 havas $2 malvalidajn atributojn!",
+		[0] = "LevelMetadata por ĉambro $1,$2 havas $3 malvalidan atributon!",
+		[1] = "LevelMetadata por ĉambro $1,$2 havas $3 malvalidajn atributojn!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Montranta $1",
@@ -591,6 +601,14 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 bajto",
 		[1] = "$1 bajtoj",
+	},
+	LITERALNULLS = {
+		[0] = "Estas $1 nula bajto!",
+		[1] = "Estas $1 nulaj bajtoj!",
+	},
+	XMLNULLS = {
+		[0] = "Estas $1 nula signo de XML!",
+		[1] = "Estas $1 nulaj signoj de XML!",
 	},
 }
 
@@ -668,6 +686,8 @@ short3 = "Teleportejo",
 long3 = "Teleportejo",
 short4 = "Ŝipo",
 long4 = "Ŝipo",
+short5 = "Tower",
+long5 = "Tower",
 
 }
 
@@ -690,6 +710,7 @@ ERR_FILEEDITORS = "Aldonaĵoj, kiuj redaktas tiun dosieron:"
 ERR_CURRENTPLUGIN = "Aldonaĵo, kiu ekagigis la eraron:"
 ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_CONTINUE = "Vi povas daŭrigi per premi ESC aŭ ENTER, sed notu ke tiu malsukcesinta redakto eble kaŭzos erarojn."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Malsukceso trovi ĉi tiun en %s.lua:"
 ERR_REPLACECODEPATTERN = "Malsukceso trovi ĉi tiun en %s.lua (kiel modelo):"
 ERR_LINESTOTAL = "%i linioj entute"
@@ -1071,7 +1092,7 @@ tiu nomo, enfone. Ankaŭ eblas elekti kiun numeron uzi por ĉiu flagnomo.
 Reĝimo de interna skriptado\h#
 
 Por uzi internan skriptadon en Ved, vi povas ebligi ĝian reĝimon en la
-redaktilo, por teni ĉiujn komandojn en tiu skripto kiel internan skriptadon.
+redaktilo, por trakti ĉiujn komandojn en tiu skripto kiel internan skriptadon.
 Vidu ¤Reĝimo Int.skr¤ por pli da informoj pri la reĝimo de interna skriptado.\nwl
 Por pli da informoj pri interna skriptado, legu la referencojn de interna
 skriptado.
@@ -1098,19 +1119,19 @@ splitid = "050_Int_sc_mode",
 subj = "Reĝimo Int.skr",
 imgs = {},
 cont = [[
-Internal scripting mode\wh#
+Reĝimo de interna skriptado\wh#
 \C=
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. With this
-feature, you do not have to worry much about getting internal scripting to work;
-you do not need to use ¤say¤ commands, count lines, or type ¤text(1,0,0,4)¤ or\nwnw
-text,,,,4¤ or whatever else your preference goes out to - just write internal\w
-scripts like they're meant for the main game. You do not even need to end with a
-final ¤loadscript¤ command.\nw
+Por uzi internan skriptadon en Ved, vi povas ebligi ĝian reĝimon en la
+redaktilo por trakti ĉiujn komandojn en tiu skripto kiel internan skriptadon.
+Per tiu trajto, oni ne devas labori multe por funkciigi internan skriptadon; oni
+ne devas uzi komandojn ¤say¤, kalkuli liniojn aŭ tajpi ¤text(1,0,0,4)¤ aŭ kion\nwnw
+ajn estas via prefero - simple skribu internajn skriptojn kvazaŭ ili estas
+destinitaj por la ĉefa ludo. Oni eĉ ne bezonas fini la skripton per komando
+loadscript¤.\wn
 
-Ved supports different methods of internal scripting. To highlight their technical
-differences, we'll use the following example script:
+Ved subtenas diversajn metodojn de interna skriptado. Por montri ties malsamecojn
+teknikajn, ni uzos la sekvan ekzemplan skripton:
 
   cutscene()\G
   untilbars()\G
@@ -1123,27 +1144,27 @@ differences, we'll use the following example script:
   endcutscene()\G
   untilbars()\G
 
-Lines of this internal script are ¤light green¤, lines that are added automatically\nG
-and are necessary for the scripting exploit to work will be ¤gray¤. Note that this\ng
-is simplified a bit; Ved adds ¤#v¤ at the end of the gray lines in the examples to\nw
-make sure manually written scripts won't be changed, and ¤say¤ blocks that are too\nw
-large have to be broken up into smaller ones.
+Linioj de tiu interna skripto estas ¤helverdaj¤, kaj linioj kiuj estas aldonitaj\nG
+aŭtomate kaj estas necesaj por la skriptad-ekspluato estos ¤grizaj¤. Notu, ke tio\ng
+ĉi estas iome simpligita; Ved aldonas ¤#v¤ ĉe la fino de la grizaj linioj en la\nw
+ekzemploj por certigi ke permane skribitaj skriptoj ne ŝanĝiĝos, kaj blokoj de ¤say¤\nw
+kiuj estas tro grandaj devas esti enpecigitaj en pli malgrandajn.
 
-For more information about internal scripting, check the internal scripting
-reference.
+Por pli da informoj pri interna skriptado, kontrolu la konsultilon de
+interna skriptado.
 
-Loadscript int.sc\h#
+Int.sk de ŝargskripto\h#
 
-The loadscript method is probably the most commonly used method today. It's the
-method that Ved has supported since an alpha version.
+La metodo loadscript estas probable la plej komune uzata metodo hodiaŭ. Ĝi estas
+la metodo, kiun subtenis Ved ekde alfa-versio.
 
-It requires an extra script, the loadscript, to load the internal script. The
-loadscript would, in its most basic form, contain a command like
-iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
-well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
-that your internal script is loaded from another script for it to work.
+Por ĝi necesas plua skripto, la ŝargskripto, por ŝargi la internan skripton.
+La ŝargskripton, en ĝia plej baza formo, enhavus komandon kiel
+iftrinkets(0,viaskripto)¤, sed ankaŭ vi povas havi aliajn simpligitajn komandojn\w
+en ĝi, kaj ankaŭ vi povas uzi ¤ifflag¤ anstataŭ ¤iftrinkets¤. Kio gravas estas\nwnw
+ke via interna skripto estas ŝargita de alia skripto por ke ĝi funkciu.
 
-The internal script would be converted more or less as follows:
+La interna skripto estus konvertita pli-malpli ĉi tiel:
 
   squeak(off)\g
   say(11)\g
@@ -1160,20 +1181,20 @@ The internal script would be converted more or less as follows:
   loadscript(stop)\g
   text(1,0,0,3)\g
 
-text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
-needs to be exactly one blank line after it.
+text(1,0,0,3)¤ devas esti la lasta linio, aŭ en la skriptredaktilo de VVVVVV,\w
+devas esti ekzakte unu blanka linio post ĝi.
 
-It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
-text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
-though.
+Ankaŭ eblas ne uzi ¤squeak(off)¤, kaj uzi ¤text(1,0,0,4)¤ anstataŭ\nwnw
+text(1,0,0,3)¤. Uzi ¤squeak(off)¤, tamen, konservas karajn liniojn en pli longaj\wnw
+skriptoj.
 
-say(-1) int.sc\h#
+Int.sk de say(-1)\h#
 
-The say(-1) method is older, and has a disadvantage to the loadscript method: it
-always makes cutscene bars show. But it also has an advantage that can be
-important in levels with many scripts: it does not require a loadscript. We can
-remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
-added by VVVVVV when using this method.
+La metodo say(-1) estas pli malnova, kaj havas malavantaĝon kompare al la
+metodo de ŝargskripto: ĝi ĉiam aperigas barojn de interscenoj. Sed ankaŭ ĝi
+havas avantaĝon kiu povas esti grava en niveloj kun multaj skriptoj: ĝi ne
+bezonas ŝargskripton. Ni povas forigi ¤cutscene()¤ kaj ¤untilbars()¤ de nia\nwnw
+skripto, pro ke tiuj jam aldoniĝos de VVVVVV kiam tiu ĉi metodo uziĝas.
 
   squeak(off)\g
   say(-1)\g
@@ -1189,7 +1210,7 @@ added by VVVVVV when using this method.
   untilbars()\G
   loadscript(stop)\g
 
-This method has been added as an extra internal scripting mode in Ved 1.6.0.
+Tiu ĉi metodo estas aldonita kiel plua reĝimo de interna skriptado en Ved 1.6.0.
 ]]
 },
 
@@ -1379,6 +1400,25 @@ speaker¤(koloro)\h#w
 
 Ŝanĝas la koloron kaj pozicion de la sekvantaj dialog-skatoloj kreitaj per la
 komando "say". Tio ĉi uzeblas anstataŭ doni duan argumenton al "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Ŝanĝas la varpdirekton por ĉambro x,y, 1-indice, al la donita direkto. Tio povas
+esti kontrolita per ifwarp, rezultante en relative potenca sistemo plua de
+flagoj/variantoj.
+
+x - Ĉambra x-koordinato, ekante de 1
+y - Ĉambra y-koordinato, ekante de 1
+dir - La varpdirekto. Normale 0-3, sed ellimaj valutoj ankaŭ akceptiĝas
+
+ifwarp¤(x,y,dir,skripto)\w#h
+
+Se la warpdir por ĉambro x,y (1-indice) estas agordita al dir, iru al (simpligita)
+skripto
+
+x - Ĉambra x-koordinato, ekante de 1
+y - Ĉambra y-koordinato, ekante de 1
+dir - La varpdirekto. Normale 0-3, sed ellimaj valutoj ankaŭ akceptiĝas
 ]]
 },
 
@@ -1409,11 +1449,538 @@ Ruĝa¤   - Ruĝaj komandoj devus ne uziĝi en propraj niveloj ĉar ili ĉu mal�
          aŭ difektos viajn konservitajn datumojn entute.
 
 
+activateteleporter¤()\w#h
+
+Se estas teleportilo en la ĉambro, ĝi ekbrilos per hazardaj koloroj kaj
+tuŝi ĝin ne koruptigos konservdatumojn. Nur celas la unue aperigitan teleportilon.
+
+activeteleporter¤()\w#h
+
+Blankigas la teleportilon en la ĉambro, sed tuŝi ĝin ankoraŭ detruos viajn
+konservdatumojn. Nur celas la unue aperigitan teleportilon.
+
+alarmoff\w#h
+
+Malŝaltas la sonorilon
+
+alarmon\w#h
+
+Ŝaltas la sonorilon
+
+altstates¤(x)\b#h
+
+Ŝanĝas la aranĝon de iuj ĉambroj, kiel la kolektaĵa ĉambro en la ŝipo antaŭ kaj
+post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj tute
+ne subtenas ĉi tion)
+
+backgroundtext\w#h
+
+Se vi metas tiun ĉi komandon sur la linion super speak aŭ speak_active, la ludo
+ne atendos ĝis kiam vi premas ACTION post krei la dialog-skatolon. Tio ĉi uzeblas
+por krei multajn dialog-skatolojn samtempe.
+
+befadein¤()\w#h
+
+Tuje maldissolvigas la ekranon de fadeout()
+
+blackon¤()\w#h
+
+Malfaras blackout()
+
+blackout¤()\w#h
+
+Nigrigas/frostigas la ekranon
+
+bluecontrol\b#h
+
+Komenci konversacion kun Victoria ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+changeai¤(ŝipano,ai1,ai2)\w#h
+
+Povas ŝanĝi la frontan direkton de ŝipano aŭ la marŝ-agmaniero
+
+ŝipano - cyan/player/blue/red/yellow/green/purple
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - deviga se followposition estas uzata por ai1
+
+changecolour¤(a,b)\w#h
+
+Ŝanĝas la koloron de ŝipano (notu: tio ĉi nur funkcias kun ŝipanoj kreitaj per la
+komando createcrewman)
+
+a - Koloro de ŝanĝota ŝipano (cyan/player/blue/red/yellow/green/purple)
+b - Nova koloro
+
+changedir¤(koloro,direkto)\w#h
+
+Ĝuste kiel changeai(koloro,faceleft/faceright), tio ĉi ŝanĝas frontan direkton.
+
+koloro - cyan/player/blue/red/yellow/green/purple
+direkto - 0 estas maldekstren, 1 estas dekstren
+
+changegravity¤(ŝipano)\w#h
+
+Increase the sprite number of the given crewmate by 12.
+
+ŝipano - Koloro de la ŝipano por ŝanĝi cyan/player/blue/red/yellow/green/purple
+
+changemood¤(koloro,animstato)\w#h
+
+Ŝanĝas la animstaton de ŝipano (nur funkcias por ŝipanoj de createcrewman)
+
+koloro - cyan/player/blue/red/yellow/green/purple
+animstato - 0 por feliĉa, 1 por malfeliĉa
+
+changeplayercolour¤(koloro)\w#h
+
+Ŝanĝas la koloron de la ludanto.
+
+koloro - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changetile¤(koloro,kahelo)\w#h
+
+Ŝanĝas la kahelon de ŝipano (nur por ŝipanoj de createcrewman; vi povas uzi iun
+ajn grafikon en sprites.png)
+
+koloro - cyan/player/blue/red/yellow/green/purple/gray
+kahelo - Kahelnumero
+
+clearteleportscript¤()\b#h
+
+Viŝas la teleportilan skripton agorditan per la supra komando.
+
+companion¤(x)\b#h
+
+Faras la specifitan ŝipanon akompananto (eble dependas de la loko sur la mapo)
+
+createactivityzone¤(koloro)\b#h
+
+Kreas zonon kie vi staras, kiu diras "Press ACTION to talk to (Crewmate)"
+
+createcrewman¤(x,y,koloro,animstato,ai1,ai2)\w#h
+
+Kreas ŝipanon (ne saveblan)
+
+animstato - 0 por feliĉa, 1 por malfeliĉa
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - deviga se followposition estas uzata por ai1
+
+createentity¤(x,y,n,meta1,meta2)\o#h
+
+Kreas enton, kontrolu la listan referencon por ento-numeroj
+
+n - La ento-numero
+
+createlastrescued¤(x,y)\b#h
+
+Kreas la laste savitan ŝipanon ĉe pozicio x,y (?)
+
+createrescuedcrew¤()\b#h
+
+Kreas ĉiujn savitajn ŝipanojn
+
+customifflag¤(n,skripto)\w#h
+
+Same kiel ifflag(n,skripto) en simpligita skriptado
+
+customiftrinkets¤(n,skripto)\w#h
+
+Same kiel iftrinkets(n,skripto) en simpligita skriptado
+
+customiftrinketsless¤(n,skripto)\w#h
+
+Same kiel iftrinketsless(n,skripto) en simpligita skriptado (sed memoru, ke tio
+estas nefunkcia)
+
+custommap¤(on/off)\w#h
+
+Same kiel map() en simpligita skriptado
+
+customposition¤(x,y)\w#h
+
+Superskribas la x,y de la komando text kaj do agordas la pozicion de la dialog-
+skatolo (por saveblaj ŝipanoj anstataŭ ŝipanoj de createcrewman).
+
+x - center/centerx/centery, aŭ kolornomo
+cyan/player/blue/red/yellow/green/purple (savebla)
+y - Nur uzata se x estas kolornomo. Povas esti above/below
+
+cutscene¤()\w#h
+
+Aperigas striojn de rakontsekvenco.
+
+delay¤(x)\w#h
+
+Same kiel simpligita komando
+
+destroy¤(x)\w#h
+
+Same kiel simpligita komando
+
+x- gravitylines/warptokens/platforms
+
+do¤(n)\w#h
+
+Komencas iteracio-blokon, kiu ripetiĝos n fojojn. Finu la blokon per la
+komando loop.
+
+endcutscene¤()\w#h
+
+Malaperigas la striojn de rakontsekvenco.
+
+endtext\w#h
+
+Forigas (fordissolvigas) dialog-skatolon.
+
+endtextfast\w#h
+
+Tuje forigas dialog-skatolon (sen fordissolvo).
+
+entersecretlab\r#h
+
+Fakte malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne nevolata
+efiko por propra nivelo. Ŝaltas sekretlaboratorian reĝimon.
+
+everybodysad¤()\w#h
+
+Malfeliĉigas ĉiujn (nur por ŝipanoj de createcrewman kaj la ludanto)
+
+face¤(a,b)\w#h
+
+Frontigas ŝipanon a kontraŭ ŝipano b (nur por ŝipanoj de createcrewman)
+
+a - cyan/player/blue/red/yellow/green/purple/gray
+b - same
+
+fadein¤()\w#h
+
+Maldissolvigas la ekranon
+
+fadeout¤()\w#h
+
+Dissolvigas la ekranon al nigro
+
+finalmode¤(x,y)\b#h
+
+Teleportigas vin al ekster Dimension VVVVVV, (46,54) estas la inicia ĉambro de la
+Fina Nivelo
+
+flag¤(x,on/off)\w#h
+
+Same kiel simpligita komando
+
+flash¤(x)\w#h
+
+Blankigas la ekranon, vi povas ŝanĝi kiom longe la ekrano restu blanka
+(nur flash ne funkcios, vi devas uzi flash(5) kombine kun playef(9) kaj
+shake(20) se vi volas normalan flash)
+
+x - La kvanto da kadroj. 30 kadroj estas preskaŭ unu sekundo.
+
+flip\w#h
+
+Renversigas la ludanton
+
+flipgravity¤(koloro)\w#h
+
+Renversas la graviton de iu ŝipano (ne ĉiam funkcias kun vi mem)
+
+koloro - cyan/player/blue/red/yellow/green/purple
+
+flipme\w#h
+
+Korektigi vertikalan poziciigadon de multaj dialog-skatoloj en renversita
+reĝimo
+
+foundlab\b#h
+
+Ludas sonon 3, montras dialog-skatolon kun "Congratulations! You have found the
+secret lab!" Ne uzas endtext, ankaŭ ne havas pluajn nevolatajn efikojn.
+
+foundlab2\b#h
+
+Montras la duan dialog-skatolon, kiun vi vidas post malkovri la sekretan
+laboratorion. Ankaŭ ne uzas endtext, kaj ankaŭ ne havas pluajn nevolatajn efikojn.
+
+foundtrinket¤(x)\w#h
+
+Igas kolektaĵon trovita
+
+x - Numero de la kolektaĵo
+
+gamemode¤(x)\b#h
+
+teleporter por montri la mapon, game por kaŝi ĝin (montras teleportilegojn de la
+ĉefa ludo)
+
+x - teleporter/game
+
+gamestate¤(x)\o#h
+
+Ŝanĝi la ludstaton al la specifita stato-numero
+
+gotoposition¤(x,y[,f])\w#h
+
+Ŝanĝi la pozicion de Viridian al x,y en tiu ĉi ĉambro, kaj f estas ĉu vi estas
+renversita aŭ ne. (1 por renverso, 0 por nerenverso)
+
+f - 1 por renversigita, 0 por ne renversigita. AVERTO: ne lasu tion neagordita,
+aŭ alie vi povus molŝlosi la ludon!
+
+gotoroom¤(x,y)\w#h
+
+Ŝanĝi la nuntempan ĉambron al x,y, kie x kaj y ekas je 0
+
+x - Ĉambra x-koordinato, ekante je 0
+y - Ĉambra y-koordinato, ekante je 0
+
+greencontrol\b#h
+
+Komenci konversacion kun Verdigris ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+hascontrol¤()\w#h
+
+Donas regpovon al la ludanto, sed ne funkcias en la mezo de skriptoj
+
+hidecoordinates¤(x,y)\w#h
+
+Kaŝi koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
+
+hideplayer¤()\w#h
+
+Malvidebligas la ludanton
+
+hidesecretlab\w#h
+
+Kaŝi la sekretan laboratorion sur la mapo
+
+hideship\w#h
+
+Kaŝi la ŝipon sur la mapo
+
+hidetargets¤()\b#h
+
+Kaŝi la celojn sur la mapo
+
+hideteleporters¤()\b#h
+
+Kaŝi la teleportilegojn sur la mapo
+
+hidetrinkets¤()\b#h
+
+Kaŝi la kolektaĵojn sur la mapo
+
+ifcrewlost¤(ŝipano,skripto)\b#h
+
+Se ŝipano estas mankanta, saltu al skripto
+
+ifexplored¤(x,y,skripto)\w#h
+
+Se x,y estas esplorita, saltu al (interna) skripto. x kaj y ekas je 0.
+
+ifflag¤(n,skripto)\b#h
+
+Same kiel customifflag, sed ŝargas internan skripton (de la ĉefa ludo)
+
+iflast¤(ŝipano,skripto)\b#h
+
+Se ŝipano x estis savita laste, saltu al skripto
+
+ŝipano - Numeroj uziĝas ĉi tie: 0: Viridian, 1: Violet, 2: Vitellary, 3:
+Vermilion, 4: Verdigris, 5: Victoria
+
+ifskip¤(x)\b#h
+
+Se vi preterpasas la rakontsekvencojn en Nulmorta Reĝimo, saltu al skripto x
+
+iftrinkets¤(n,skripto)\b#h
+
+Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
+
+iftrinketsless¤(n,skripto)\b#h
+
+Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
+
+ifwarp¤(x,y,dir,skripto)\w#h
+
+Se la warpdir por ĉambro x,y (1-indice) estas agordita al dir, iru al (simpligita)
+skripto
+
+x - Ĉambra x-koordinato, ekante de 1
+y - Ĉambra y-koordinato, ekante de 1
+dir - La varpdirekto. Normale 0-3, sed ellimaj valutoj ankaŭ akceptiĝas
+
+jukebox¤(x)\w#h
+
+Blankigas muzikan komputilon kaj malkolorigas ĉiujn aliajn komputilojn
+(En propraj niveloj, tiu komando ŝajnas simple malkolorigi ĉiun komputilon).
+
+leavesecretlab¤()\b#h
+
+Malŝalti "sekretlaboratorian reĝimon"
+
+loadscript¤(skripto)\b#h
+
+Ŝargi internan skripton (de la ĉefa ludo). Komune uzata en propraj niveloj kiel
+loadscript(stop)
+
+loop\w#h
+
+Metu ĉi tion ĉe la fino de iteracio-bloko komencita per 'do'.
+
+missing¤(color)\b#h
+
+Igas iun mankanta
+
+moveplayer¤(x,y)\w#h
+
+Movas la ludanton x bilderojn dekstren kaj y malsupren. Kompreneble vi ankaŭ povas
+uzi minusajn nombrojn por movi tiun maldekstren/supren
+
+musicfadein¤()\w#h
+
+Nefinita komando. Ĝi nenion faras.
+
+musicfadeout¤()\w#h
+
+Dissolvigas la muzikon.
+
+nocontrol¤()\w#h
+
+La malo de hascontrol()
+
+play¤(x)\w#h
+
+Komenci ludi melodion kun interna melodi-numero.
+
+x - Interna melodi-numero
+
+playef¤(x,n)\w#h
+
+Ludi sonon.
+
+n - Fakte neuzata, kaj povas esti forlasita. En VVVVVV 1.x, tio iam regis la
+deŝovon, en milisekundoj, je kio la sono ekis.
+
+position¤(x,y)\w#h
+
+Superskribas la x,y de la komando text kaj do agordas la pozicion de la
+dialog-skatolo.
+
+x - center/centerx/centery, aŭ kolornomo
+cyan/player/blue/red/yellow/green/purple
+y - Nur uzita se x estas kolornomo. Povas esti above/below
+
+purplecontrol\b#h
+
+Komenci konversacion kun Violet ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+redcontrol\b#h
+
+Komenci konversacion kun Vermilion ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+rescued¤(koloro)\b#h
+
+Igas iun savita
+
+resetgame\w#h
+
+Restarigas ĉiujn kolektaĵojn, kolektitajn ŝipanojn kaj flagojn, kaj teleportas
+la ludanton al la lasta konservejo.
+
+restoreplayercolour¤()\w#h
+
+Reŝanĝas la koloron de la ludanto al cejana
+
+resumemusic¤()\w#h
+
+Nefinita komando. Legas el malpravalorizita memoro, kio rezultas en kraŝo
+en iuj maŝinoj kaj simple rezultas en ludi Path Complete en aliaj.
+
+rollcredits¤()\r#h
+
+Montras la kreditojn. Tio ĉi detruas viajn konservitajn datumojn kiam ĝi estas
+finiĝinta!
+
+setcheckpoint¤()\w#h
+
+Agordas la konservan punkton al la nuntempa loko
+
+shake¤(n)\w#h
+
+Skuos la ekranon dum n kadroj. Tio ĉi ne kreas prokraston.
+
+showcoordinates¤(x,y)\w#h
+
+Montri koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
+
+showplayer¤()\w#h
+
+Videbligas la ludanton
+
+showsecretlab\w#h
+
+Montri la sekretan laboratorion sur la mapo
+
+showship\w#h
+
+Montri la ŝipon sur la mapo
+
+showtargets¤()\b#h
+
+Montri la celojn sur la mapo (nekonataj teleportilegoj, montrataj kiel ?-ojn)
+
+showteleporters¤()\b#h
+
+Montri la teleportilegojn sur la mapo (nur ŝajnas montri tiun de Space Station 1)
+
+showtrinkets¤()\b#h
+
+Montri la kolektaĵojn sur la mapo
+
+speak\w#h
+
+Montras dialog-skatolon sen forigi malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas ACTION (krom se estas backgroundtext super ĝi).
+
+speak_active\w#h
+
+Montras dialog-skatolon kaj forigas malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas ACTION (krom se estas backgroundtext super ĝi).
+
+specialline¤(x)\b#h
+
+Specialaj dialogoj, kiuj aperas en la ĉefa ludo
+
 squeak¤(koloro)\w#h
 
 Faras pep-sonon de ŝipano, aŭ sonon de komputilo.
 
 koloro - cyan/player/blue/red/yellow/green/purple/terminal
+
+startintermission2\w#h
+
+Alterna finalmode(46,54), metas vin en la fina nivelo sen akcepti argumentojn.
+Kraŝigas la ludon en Timeslip.
+
+stopmusic¤()\w#h
+
+Haltigas la muzikon tuje. Ekvivalenta al music(0) en simpligita skriptado.
+
+teleportscript¤(skripto)\b#h
+
+Iam agordis skripton, kiu plenumiĝus kiam vi uzus teleportilegon
+
+telesave¤()\r#h
+
+Konservas vian ludon (superskribas viajn konservitajn datumojn de la ĉefa ludo, do
+ne uzu ĝin!)
 
 text¤(koloro,x,y,linioj)\w#h
 
@@ -1427,275 +1994,41 @@ x - La x-pozicio de la dialog-skatolo
 y - La y-pozicio de la dialog-skatolo
 linioj - La kvanto da linioj
 
-position¤(x,y)\w#h
+textboxactive\w#h
 
-Superskribas la x,y de la komando text kaj do agordas la pozicion de la
-dialog-skatolo.
+Forigas ĉiujn dialog-skatolojn sur la ekrano krom la laste kreita
 
-x - center/centerx/centery, aŭ kolornomo
-cyan/player/blue/red/yellow/green/purple
-y - Nur uzita se x estas kolornomo. Povas esti above/below
+tofloor\w#h
 
-endtext\w#h
+Se la ludanto ne jam estas sur la planko, tio ĉi renversigas rin al ĝi.
 
-Forigas (fordissolvigas) dialog-skatolon.
+trinketbluecontrol¤()\b#h
 
-endtextfast\w#h
+Dialogo de Victoria, kiam ŝi donas al vi kolektaĵon en la ĉefa ludo
 
-Tuje forigas dialog-skatolon (sen fordissolvo).
+trinketscriptmusic\w#h
 
-speak\w#h
+Ludas Passion for Exploring. Nenion alian faras.
 
-Montras dialog-skatolon sen forigi malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
-vi premas ACTION (krom se estas backgroundtext super ĝi).
+trinketyellowcontrol¤()\b#h
 
-speak_active\w#h
-
-Montras dialog-skatolon kaj forigas malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
-vi premas ACTION (krom se estas backgroundtext super ĝi).
-
-backgroundtext\w#h
-
-Se vi metas tiun ĉi komandon sur la linion super speak aŭ speak_active, la ludo
-ne atendos ĝis kiam vi premas ACTION post krei la dialog-skatolon. Tio ĉi uzeblas
-por krei multajn dialog-skatolojn samtempe.
-
-changeplayercolour¤(koloro)\w#h
-
-Ŝanĝas la koloron de la ludanto.
-
-koloro - cyan/player/blue/red/yellow/green/purple/teleporter
-
-restoreplayercolour¤()\w#h
-
-Reŝanĝas la koloron de la ludanto al cejana
-
-changecolour¤(a,b)\w#h
-
-Ŝanĝas la koloron de ŝipano (notu: tio ĉi nur funkcias kun ŝipanoj kreitaj per la
-komando createcrewman)
-
-a - Koloro de ŝanĝota ŝipano (cyan/player/blue/red/yellow/green/purple)
-b - Nova koloro
-
-alarmon\w#h
-
-Ŝaltas la sonorilon
-
-alarmoff\w#h
-
-Malŝaltas la sonorilon
-
-cutscene¤()\w#h
-
-Aperigas striojn de rakontsekvenco.
-
-endcutscene¤()\w#h
-
-Malaperigas la striojn de rakontsekvenco.
-
-untilbars¤()\w#h
-
-Atendas, ĝis cutscene/endcutscene estas finiĝinta
-
-customifflag¤(n,skripto)\w#h
-
-Same kiel ifflag(n,skripto) en simpligita skriptado
-
-ifflag¤(n,skripto)\b#h
-
-Same kiel customifflag, sed ŝargas internan skripton (de la ĉefa ludo)
-
-loadscript¤(skripto)\b#h
-
-Ŝargi internan skripton (de la ĉefa ludo). Komune uzata en propraj niveloj kiel
-loadscript(stop)
-
-iftrinkets¤(n,skripto)\b#h
-
-Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
-
-iftrinketsless¤(n,skripto)\b#h
-
-Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
-
-customiftrinkets¤(n,skripto)\w#h
-
-Same kiel iftrinkets(n,skripto) en simpligita skriptado
-
-customiftrinketsless¤(n,skripto)\w#h
-
-Same kiel iftrinketsless(n,skripto) en simpligita skriptado (sed memoru, ke tio
-estas nefunkcia)
-
-createcrewman¤(x,y,koloro,animstato,ai1,ai2)\w#h
-
-Kreas ŝipanon (ne saveblan)
-
-animstato - 0 por feliĉa, 1 por malfeliĉa
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - deviga se followposition estas uzata por ai1
-
-createentity¤(x,y,n,meta1,meta2)\o#h
-
-Kreas enton, kontrolu la listan referencon por ento-numeroj
-
-n - La ento-numero
-
-vvvvvvman¤()\w#h
-
-Grandegigas la ludanton
+Dialogo de Vitellary, kiam li donas al vi kolektaĵon en la ĉefa ludo
 
 undovvvvvvman¤()\w#h
 
 Malfaras vvvvvvman()
 
-hideplayer¤()\w#h
+untilbars¤()\w#h
 
-Malvidebligas la ludanton
-
-showplayer¤()\w#h
-
-Videbligas la ludanton
-
-gamestate¤(x)\o#h
-
-Ŝanĝi la ludstaton al la specifita stato-numero
-
-gamemode¤(x)\b#h
-
-teleporter por montri la mapon, game por kaŝi ĝin (montras teleportilegojn de la
-ĉefa ludo)
-
-x - teleporter/game
-
-blackout¤()\w#h
-
-Nigrigas/frostigas la ekranon
-
-blackon¤()\w#h
-
-Malfaras blackout()
-
-fadeout¤()\w#h
-
-Dissolvigas la ekranon al nigro
-
-fadein¤()\w#h
-
-Maldissolvigas la ekranon
-
-befadein¤()\w#h
-
-Tuje maldissolvigas la ekranon de fadeout()
+Atendas, ĝis cutscene/endcutscene estas finiĝinta
 
 untilfade¤()\w#h
 
 Atendi, ĝis fadeout/fadein estas finiĝinta
 
-gotoroom¤(x,y)\w#h
+vvvvvvman¤()\w#h
 
-Ŝanĝi la nuntempan ĉambron al x,y, kie x kaj y ekas je 0
-
-x - Ĉambra x-koordinato, ekante je 0
-y - Ĉambra y-koordinato, ekante je 0
-
-gotoposition¤(x,y[,f])\w#h
-
-Ŝanĝi la pozicion de Viridian al x,y en tiu ĉi ĉambro, kaj f estas ĉu vi estas
-renversita aŭ ne. (1 por renverso, 0 por nerenverso)
-
-f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
-
-flash¤(x)\w#h
-
-Blankigas la ekranon, vi povas ŝanĝi kiom longe la ekrano restu blanka
-(nur flash ne funkcios, vi devas uzi flash(5) kombine kun playef(9) kaj
-shake(20) se vi volas normalan flash)
-
-x - La kvanto da kadroj. 30 kadroj estas preskaŭ unu sekundo.
-
-play¤(x)\w#h
-
-Komenci ludi melodion kun interna melodi-numero.
-
-x - Interna melodi-numero
-
-jukebox¤(x)\w#h
-
-Blankigas muzikan komputilon kaj malkolorigas ĉiujn aliajn komputilojn
-(En propraj niveloj, tiu komando ŝajnas simple malkolorigi ĉiun komputilon).
-
-musicfadeout¤()\w#h
-
-Dissolvigas la muzikon.
-
-musicfadein¤()\w#h
-
-Malo de musicfadeout() (ne ŝajnas funkcii)
-
-stopmusic¤()\w#h
-
-Haltigas la muzikon tuje. Ekvivalenta al music(0) en simpligita skriptado.
-
-resumemusic¤()\w#h
-
-Malo de stopmusic() (ne ŝajnas funkcii)
-
-playef¤(x,n)\w#h
-
-Ludi sonon.
-
-n - Fakte neuzata, kaj povas esti forlasita. En VVVVVV 1.x, tio iam regis la
-deŝovon, en milisekundoj, je kio la sono ekis.
-
-changemood¤(koloro,animstato)\w#h
-
-Ŝanĝas la animstaton de ŝipano (nur funkcias por ŝipanoj de createcrewman)
-
-koloro - cyan/player/blue/red/yellow/green/purple
-animstato - 0 por feliĉa, 1 por malfeliĉa
-
-everybodysad¤()\w#h
-
-Malfeliĉigas ĉiujn (nur por ŝipanoj de createcrewman kaj la ludanto)
-
-changetile¤(koloro,kahelo)\w#h
-
-Ŝanĝas la kahelon de ŝipano (nur por ŝipanoj de createcrewman; vi povas uzi iun
-ajn grafikon en sprites.png)
-
-koloro - cyan/player/blue/red/yellow/green/purple/gray
-kahelo - Kahelnumero
-
-face¤(a,b)\w#h
-
-Frontigas ŝipanon a kontraŭ ŝipano b (nur por ŝipanoj de createcrewman)
-
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
-
-companion¤(x)\b#h
-
-Faras la specifitan ŝipanon akompananto (eble dependas de la loko sur la mapo)
-
-changeai¤(ŝipano,ai1,ai2)\w#h
-
-Povas ŝanĝi la frontan direkton de ŝipano aŭ la marŝ-agmaniero
-
-ŝipano - cyan/player/blue/red/yellow/green/purple
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - deviga se followposition estas uzata por ai1
-
-changedir¤(koloro,direkto)\w#h
-
-Ĝuste kiel changeai(koloro,faceleft/faceright), tio ĉi ŝanĝas frontan direkton.
-
-koloro - cyan/player/blue/red/yellow/green/purple
-direkto - 0 estas maldekstren, 1 estas dekstren
+Grandegigas la ludanton
 
 walk¤(direkto,x)\w#h
 
@@ -1703,288 +2036,20 @@ Marŝigas la ludanton dum la specifita nombro da kadroj
 
 direkto - left/right
 
-flipgravity¤(koloro)\w#h
-
-Renversas la graviton de iu ŝipano (ne ĉiam funkcias kun vi mem)
-
-koloro - cyan/player/blue/red/yellow/green/purple
-
-flipme\w#h
-
-Korektigi vertikalan poziciigadon de multaj dialog-skatoloj en renversita
-reĝimo
-
-tofloor\w#h
-
-Se la ludanto ne jam estas sur la grundo, tio ĉi renversigas lin al ĝi.
-
-flip\w#h
-
-Renversigas la ludanton
-
-foundtrinket¤(x)\w#h
-
-Igas kolektaĵon trovita
-
-x - Numero de la kolektaĵo
-
-runtrinketscript\b#h
-
-Ludi Passion for Exploring?
-
-altstates¤(x)\b#h
-
-Ŝanĝas la aranĝon de iuj ĉambroj, kiel la kolektaĵa ĉambro en la ŝipo antaŭ kaj
-post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj tute
-ne subtenas ĉi tion)
-
-createlastrescued¤(x,y)\b#h
-
-Kreas la laste savitan ŝipanon ĉe pozicio x,y (?)
-
-rescued¤(koloro)\b#h
-
-Igas iun savita
-
-missing¤(color)\b#h
-
-Igas iun mankanta
-
-finalmode¤(x,y)\b#h
-
-Teleportigas vin al ekster Dimension VVVVVV, (46,54) estas la inicia ĉambro de la
-Fina Nivelo
-
-setcheckpoint¤()\w#h
-
-Agordas la konservan punkton al la nuntempa loko
-
-textboxactive\w#h
-
-Forigas ĉiujn dialog-skatolojn sur la ekrano krom la laste kreita
-
-ifexplored¤(x,y,skripto)\w#h
-
-Se x,y estas esplorita, saltu al (interna) skripto. x kaj y ekas je 0.
-
-iflast¤(ŝipano,skripto)\b#h
-
-Se ŝipano x estis savita laste, saltu al skripto
-
-ŝipano - Numeroj uziĝas ĉi tie:
-         2: Vitellary
-         3: Vermilion
-         4: Verdigris
-         5: Victoria
-
-ifskip¤(x)\b#h
-
-Se vi preterpasas la rakontsekvencojn en Nulmorta Reĝimo, saltu al skripto x
-
-ifcrewlost¤(ŝipano,skripto)\b#h
-
-Se ŝipano estas mankanta, saltu al skripto
-
-showcoordinates¤(x,y)\w#h
-
-Montri koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
-
-hidecoordinates¤(x,y)\w#h
-
-Kaŝi koordinatojn x,y sur la mapo (funkcias por la mapo de propraj niveloj)
-
-showship\w#h
-
-Montri la ŝipon sur la mapo
-
-hideship\w#h
-
-Kaŝi la ŝipon sur la mapo
-
-showsecretlab\w#h
-
-Montri la sekretan laboratorion sur la mapo
-
-hidesecretlab\w#h
-
-Kaŝi la sekretan laboratorion sur la mapo
-
-showteleporters¤()\b#h
-
-Montri la teleportilegojn sur la mapo (nur ŝajnas montri tiun de Space Station 1)
-
-hideteleporters¤()\b#h
-
-Kaŝi la teleportilegojn sur la mapo
-
-showtargets¤()\b#h
-
-Montri la celojn sur la mapo (nekonataj teleportilegoj, montrataj kiel ?-ojn)
-
-hidetargets¤()\b#h
-
-Kaŝi la celojn sur la mapo
-
-showtrinkets¤()\b#h
-
-Montri la kolektaĵojn sur la mapo
-
-hidetrinkets¤()\b#h
-
-Kaŝi la kolektaĵojn sur la mapo
-
-hascontrol¤()\w#h
-
-Donas regpovon al la ludanto, sed ne funkcias en la mezo de skriptoj
-
-nocontrol¤()\w#h
-
-La malo de hascontrol()
-
-specialline¤(x)\b#h
-
-Specialaj dialogoj, kiuj aperas en la ĉefa ludo
-
-destroy¤(x)\w#h
-
-Same kiel simpligita komando
-
-x- gravitylines/warptokens/platforms
-
-delay¤(x)\w#h
-
-Same kiel simpligita komando
-
-flag¤(x,on/off)\w#h
-
-Same kiel simpligita komando
-
-telesave¤()\r#h
-
-Konservas vian ludon (superskribas viajn konservitajn datumojn de la ĉefa ludo, do
-ne uzu ĝin!)
-
-createactivityzone¤(koloro)\b#h
-
-Kreas zonon kie vi staras, kiu diras "Press ACTION to talk to (Crewmate)"
-
-createrescuedcrew¤()\b#h
-
-Kreas ĉiujn savitajn ŝipanojn
-
-trinketyellowcontrol¤()\b#h
-
-Dialogo de Vitellary, kiam li donas al vi kolektaĵon en la ĉefa ludo
-
-trinketbluecontrol¤()\b#h
-
-Dialogo de Victoria, kiam ŝi donas al vi kolektaĵon en la ĉefa ludo
-
-rollcredits¤()\r#h
-
-Montras la kreditojn. Tio ĉi detruas viajn konservitajn datumojn kiam ĝi estas
-finiĝinta!
-
-teleportscript¤(skripto)\b#h
-
-Iam agordis skripton, kiu plenumiĝus kiam vi uzus teleportilegon
-
-clearteleportscript¤()\b#h
-
-Viŝas la teleportilan skripton agorditan per la supra komando.
-
-moveplayer¤(x,y)\w#h
-
-Movas la ludanton x bilderojn dekstren kaj y malsupren. Kompreneble vi ankaŭ povas
-uzi minusajn nombrojn por movi lin maldekstren/supren
-
-do¤(n)\w#h
-
-Komencas iteracio-blokon, kiu ripetiĝos n fojojn
-
-loop\w#h
-
-Metu ĉi tion ĉe la fino de la iteracio-bloko
-
-leavesecretlab¤()\b#h
-
-Malŝalti "sekretlaboratorian reĝimon"
-
-shake¤(n)\w#h
-
-Skuos la ekranon dum n kadroj. Tio ĉi ne kreas prokraston.
-
-activateteleporter¤()\w#h
-
-Se estas teleportilegon en la ĉambro, ĝi brilos blanke kaj tuŝi ĝin ne ekstermos
-viajn konservitajn datumojn. Eble ne funkcios se estas multaj teleportilegoj.
-
-customposition¤(x,y)\w#h
-
-Superskribas la x,y de la komando text kaj do agordas la pozicion de la dialog-
-skatolo (por saveblaj ŝipanoj anstataŭ ŝipanoj de createcrewman).
-
-x - center/centerx/centery, aŭ kolornomo
-cyan/player/blue/red/yellow/green/purple (savebla)
-y - Nur uzata se x estas kolornomo. Povas esti above/below
-
-custommap¤(on/off)\w#h
-
-Same kiel map() en simpligita skriptado
-
-trinketscriptmusic\w#h
-
-Ludas Passion for Exploring, sen preni argumentojn(?)
-
-startintermission2\w#h
-
-Alterna finalmode(46,54), metas vin en la fina nivelo sen akcepti argumentojn.
-Kraŝigas la ludon en Timeslip.
-
-resetgame\w#h
-
-Restarigas ĉiujn kolektaĵojn, kolektitajn ŝipanojn kaj flagojn, kaj teleportas
-la ludanton al la lasta konservejo.
-
-redcontrol\b#h
-
-Komenci konversacion kun Vermilion ĝuste kiel kiam vi renkontas lin en la ĉefa
-ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
-
-greencontrol\b#h
-
-Komenci konversacion kun Verdigris ĝuste kiel kiam vi renkontas lin en la ĉefa
-ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
-
-bluecontrol\b#h
-
-Komenci konversacion kun Victoria ĝuste kiel kiam vi renkontas ŝin en la ĉefa
-ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+warpdir¤(x,y,dir)\w#h
+
+Ŝanĝas la varpdirekton por ĉambro x,y, 1-indice, al la donita direkto. Tio povas
+esti kontrolita per ifwarp, rezultante en relative potenca sistemo plua de
+flagoj/variantoj.
+
+x - Ĉambra x-koordinato, ekante de 1
+y - Ĉambra y-koordinato, ekante de 1
+dir - La varpdirekto. Normale 0-3, sed ellimaj valutoj ankaŭ akceptiĝas
 
 yellowcontrol\b#h
 
 Komenci konversacion kun Vitellary ĝuste kiel kiam vi renkontas lin en la ĉefa
 ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
-
-purplecontrol\b#h
-
-Komenci konversacion kun Violet ĝuste kiel kiam vi renkontas ŝin en la ĉefa
-ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
-
-foundlab\b#h
-
-Ludas sonon 3, montras dialog-skatolon kun "Congratulations! You have found the
-secret lab!" Ne uzas endtext, ankaŭ ne havas pluajn nevolatajn efikojn.
-
-foundlab2\b#h
-
-Montras la duan dialog-skatolon, kiun vi vidas post malkovri la sekretan
-laboratorion. Ankaŭ ne uzas endtext, kaj ankaŭ ne havas pluajn nevolatajn efikojn.
-
-entersecretlab\r#h
-
-Fakte malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne nevolata
-efiko por propra nivelo. Ŝaltas sekretlaboratorian reĝimon.
 ]]
 },
 
@@ -2655,8 +2720,7 @@ Terry Cavanagh pro lia faro de VVVVVV
 
 Permesilo\h#
 \
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Copyright 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2677,6 +2741,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

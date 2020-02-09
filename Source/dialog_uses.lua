@@ -88,12 +88,27 @@ function dialog.form.exportmap_make()
 end
 
 function dialog.form.rawentityproperties_make()
-	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
 	local form = {}
 
+	local row, col = 3, 0
 	for k,v in pairs(entitypropkeys) do
-		table.insert(form, {v, 5, 2+k, 38, thisentity[v], DF.TEXT})
+		if v == "p1" then
+			row = row+1
+		end
+		table.insert(form, {"", 16*col, row, 3, v, DF.LABEL})
+		table.insert(form, {v, 16*col+3, row, 12, thisentity[v], DF.TEXT})
+		col = col+1
+		if col == 3 then
+			row = row+1
+			col = 0
+		end
 	end
+	row = row+1
+
+	local labelwidth = font8:getWidth(L.SMALLENTITYDATA)/8 + 1
+	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
+	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
 	return form
 end
@@ -290,7 +305,7 @@ function dialog.callback.save(button, fields)
 			finish_undo("TITLE WHEN SAVING")
 		end
 
-		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 
 		if not savedsuccess then
 			-- Why not :c
@@ -463,8 +478,8 @@ function dialog.callback.changeflagname(button, fields, _, notclosed)
 		-- This is a change!
 		dirty()
 
-		-- Refresh the state so it shows the correct label now
-		loadstate(state)
+		-- Refresh the list so it shows the correct label now
+		loadflagslist()
 	end
 end
 
@@ -661,7 +676,9 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			local field3intcmds = {"ifcrewlost", "iflast"}
 			local field2intcmds = {"loadscript", "ifskip"}
 			local field4intcmds = {"ifexplored"}
+			local field5cmds = {"ifwarp"}
 
+			local oldnamenotgsub = oldname
 			oldname = escapegsub(oldname, true)
 
 			local tmp
@@ -704,12 +721,21 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 							end
 						end
 					end
+					for _, command in pairs(field5cmds) do
+						if #v > #command then
+							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)])" .. oldname
+							tmp = renamescriptline(v, pattern, newname)
+							if tmp ~= nil then
+								scripts[scriptnames[rvnum]][k] = tmp
+							end
+						end
+					end
 				end
 			end
 
 			-- Terminals and script boxes
 			for k,v in pairs(entitydata) do
-				if (v.t == 18 or v.t == 19) and v.data == oldname then
+				if (v.t == 18 or v.t == 19) and v.data == oldnamenotgsub then
 					entitydata[k].data = newname
 				end
 			end
@@ -861,16 +887,34 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if w > 20 or h > 20 then
+		if metadata.mapwidth <= limit.mapwidth and metadata.mapheight <= limit.mapheight
+		and (w > limit.mapwidth or h > limit.mapheight) then
+			local newbuttons
+			if s.allowbiggerthansizelimit then
+				newbuttons = {L.BTN_OVERRIDE, DB.OK}
+			end
+			-- Hack to smuggle the fields through the bigger size confirmation dialog
+			-- Hopefully Ved doesn't update its dialog system again and break this
+			local newfields =
+				{
+				mapwidth = {"mapwidth", 0, 0, 0, w, -1},
+				mapheight = {"mapheight", 0, 0, 0, h, -1},
+				}
+
 			dialog.create(
-				langkeys(L.SIZELIMIT, {
-					math.min(20, w),
-					math.min(20, h)
-				})
+				langkeys(
+					L.SIZELIMIT,
+					{math.min(w, limit.mapwidth), math.min(h, limit.mapheight)}
+				),
+				newbuttons,
+				dialog.callback.leveloptions_maxlevelsize,
+				"",
+				newfields
 			)
+		else
+			metadata.mapwidth = w
+			metadata.mapheight = h
 		end
-		metadata.mapwidth = math.min(20, w)
-		metadata.mapheight = math.min(20, h)
 		addrooms(metadata.mapwidth, metadata.mapheight)
 		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 	end
@@ -980,53 +1024,7 @@ function dialog.callback.openimage(button, fields)
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
-	local readsuccess, contents = readfile(filepath)
-	if not readsuccess then
-		dialog.create(contents)
-		return
-	end
-
-	local success, filedata = pcall(love.filesystem.newFileData, contents, filename, "file")
-	if not success then
-		dialog.create(filedata)
-		return
-	end
-	local imgdata
-	success, imgdata = pcall(love.image.newImageData, filedata)
-	if not success then
-		dialog.create(imgdata)
-		return
-	end
-	success, imageviewer_image_color = pcall(love.graphics.newImage, imgdata)
-	if not success then
-		dialog.create(imageviewer_image_color)
-		return
-	end
-	imgdata:mapPixel(
-		function(x, y, r, g, b, a)
-			return 255, 255, 255, a
-		end
-	)
-	imageviewer_image_white = love.graphics.newImage(imgdata)
-	imageviewer_filepath, imageviewer_filename = filepath, filename
-
-	imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
-	imageviewer_w, imageviewer_h = imageviewer_image_color:getDimensions()
-	fix_imageviewer_position()
-	imageviewer_moving = false
-	imageviewer_moved_from_x, imageviewer_moved_from_y = 0, 0
-	imageviewer_moved_from_mx, imageviewer_moved_from_my = 0, 0
-	imageviewer_grid, imageviewer_showwhite = 0, false
-
-	-- Guess the grid setting
-	if filename:sub(1,10) == "entcolours"
-	or filename:sub(1,4) == "font"
-	or filename:sub(1,5) == "tiles" then
-		imageviewer_grid = 8
-	elseif filename:sub(1,7) == "sprites"
-	or filename:sub(1,11) == "flipsprites" then
-		imageviewer_grid = 32
-	end
+	assets_openimage(filepath, filename)
 end
 
 function dialog.callback.platv_validate(button, fields)
@@ -1041,17 +1039,71 @@ function dialog.callback.platv(button, fields, _, notclosed)
 		return
 	end
 
-	local oldplatv = levelmetadata[(roomy)*20 + (roomx+1)].platv
-	levelmetadata[(roomy)*20 + (roomx+1)].platv = tonumber(fields.name)
+	local oldplatv = levelmetadata_get(roomx, roomy).platv
+	levelmetadata_set(roomx, roomy, "platv", tonumber(fields.name))
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "platv",
 					oldvalue = oldplatv,
-					newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+					newvalue = levelmetadata_get(roomx, roomy).platv
 				}
 			},
 			switchtool = 8
 		}
 	)
 	finish_undo("PLATV")
+end
+
+function dialog.callback.leveloptions_maxlevelsize(button, fields)
+	if button == L.BTN_OVERRIDE then
+		local newfields =
+			{
+			mapwidth = {"mapwidth", 0, 0, 0, fields.mapwidth, -1},
+			mapheight = {"mapheight", 0, 0, 0, fields.mapheight, -1},
+			}
+		dialog.create(
+			langkeys(
+				L.CONFIRMBIGGERSIZE,
+				{
+					fields.mapwidth, fields.mapheight,
+					limit.mapwidth, limit.mapheight,
+					math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight)
+				}
+			),
+			DBS.YESNO,
+			dialog.callback.leveloptions_biggersize,
+			"",
+			newfields
+		)
+	elseif button == DB.OK then
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
+		addrooms(metadata.mapwidth, metadata.mapheight)
+		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+
+		-- Uh, yeah, this is kind of an ugly hack and kind of relies on the
+		-- assumptions that (1) the user can't undo, redo, or make any other
+		-- changes while a dialog is open, and (2) the order of the changed
+		-- metadata in the undo buffer won't change in the future
+		undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
+		undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
+		finish_undo("CHANGED METADATA (max level size, also ugly hack)")
+	end
+end
+
+function dialog.callback.leveloptions_biggersize(button, fields)
+	if button == DB.NO then
+		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
+		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
+	elseif button == DB.YES then
+		metadata.mapwidth = fields.mapwidth
+		metadata.mapheight = fields.mapheight
+	end
+
+	addrooms(metadata.mapwidth, metadata.mapheight)
+	gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+
+	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
+	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
+	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
 end

@@ -83,14 +83,6 @@ function love.load()
 		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
-		--[[
-		-- Make sure our util works
-		if not love.filesystem.exists("available_utils") then
-			love.filesystem.createDirectory("available_utils")
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_utils/fileunix.exe", love.filesystem.read("utils/win/fileunix.exe"))
-		end
-		]]
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -109,9 +101,9 @@ function love.load()
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
-			if os.execute("gcc -shared -fPIC -o "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so "
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c"
+			if os.execute("gcc -shared -fPIC -o '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so' '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c'"
 			) == 0 then
 				vedlib_filefunc_available = true
 			end
@@ -199,6 +191,9 @@ function love.load()
 	middlescroll_t, middlescroll_v = 0, 0
 
 	v6_frametimer = 0
+	conveyortimer = 0
+	conveyorleftcycle = 1
+	conveyorrightcycle = 0
 
 	returnpressed = false -- also for some things
 
@@ -228,8 +223,6 @@ function love.load()
 	sp_got = 0
 
 	nodialog = true
-
-	showtabrect = false
 
 	vvvvvv_textboxes = {}
 
@@ -461,7 +454,7 @@ function love.load()
 end
 
 function love.draw()
-	if s.pausedrawunfocused and not love.window.hasFocus() then
+	if s.pausedrawunfocused and not window_active() then
 		limit_draw_fps()
 		return
 	end
@@ -534,8 +527,6 @@ function love.draw()
 			end
 		end
 	elseif state == 9 then
-		ved_print("\nRight click menu return: " .. anythingbutnil(RCMreturn), 10, 10)
-
 		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
 		vvvvvv_textbox("red", 0, 50, {"Red"})
 		vvvvvv_textbox("yellow", 0, 75, {"Yellow"})
@@ -548,14 +539,6 @@ function love.draw()
 			vvvvvv_textbox(unpack(v))
 		end
 	elseif state == 10 then
-		--[[
-		j = -1
-		for k,v in pairs(scripts) do
-			j = j + 1
-			hoverrectangle(128,128,128,128, 8, 8+(24*j), 640, 16)
-			ved_printf(k, 8, 8+(24*j)+4, 640, "center")
-		end
-		]]
 		local j = -1
 		local newscroll
 		for rvnum = #scriptnames, 1, -1 do
@@ -589,13 +572,7 @@ function love.draw()
 				if mousepressed or not nodialog then
 				elseif mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24 -36, 16) then
 					if love.mouse.isDown("l") then
-						--##SCRIPT##  DONE
 						scriptineditor(scriptnames[rvnum], rvnum)
-						--scriptname = scriptnames[rvnum]
-						--scriptlines = table.copy(scripts[scriptnames[rvnum]])
-						--processflaglabels()
-						--bumpscript(rvnum)
-						--tostate(3)
 					elseif love.mouse.isDown("r") then
 						rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
 					end
@@ -841,15 +818,15 @@ function love.draw()
 			mousepressed = true
 		end
 	elseif state == 14 then
-		for rrrrr = 0, 1 do
-			for asdfg = 0, 4 do
-				drawentitysprite(enemysprites[5*rrrrr+asdfg], 16+48*asdfg, 16+48*rrrrr)
+		for r = 0, 1 do
+			for c = 0, 4 do
+				drawentitysprite(enemysprites[5*r+c], 16+48*c, 16+48*r)
 			end
 		end
 
-		for rrrrr = 0, 1 do
-			for asdfg = 0, 4 do
-				drawentitysprite(enemysprites[5*rrrrr+asdfg], 600+16*asdfg, 16+16*rrrrr, true)
+		for r = 0, 1 do
+			for c = 0, 4 do
+				drawentitysprite(enemysprites[5*r+c], 600+16*c, 16+16*r, true)
 			end
 		end
 	elseif state == 15 then
@@ -865,13 +842,17 @@ function love.draw()
 		-- Columns 1 and 2
 		for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- dit was misschien niet handig om te doen
 			for flk = 0, 49 do
+				local flag = flk + (flcol == 8 and 0 or 50) + flags_page*100
+				if flag >= limit.flags then
+					break
+				end
 				local ax, ay, w, h = flcol-2, 24+flk*8, love.graphics.getWidth()/2 - 16, 8
 
 				if nodialog and mouseon(ax, ay, w, h) then
 					love.graphics.setColor(128,128,128,255)
 
 					if not mousepressed and nodialog and mousereleased_flag then
-						flgnum = flk + (flcol == 8 and 0 or 50) -- niet local, wordt gebruikt in dialog
+						flgnum = flag -- not local, is used in dialog
 
 						if mousepressed_flag_num ~= -1 and flgnum ~= mousepressed_flag_num then
 							cons("We dropped flag " .. mousepressed_flag_num .. " onto flag " .. flgnum)
@@ -882,7 +863,7 @@ function love.draw()
 							mousepressed_flag_num = -1
 							mousepressed_flag_name = ""
 							-- We have to redraw the flags screen somehow
-							loadstate(19)
+							loadflagslist()
 						else
 							mousepressed_flag_x = -1
 							mousepressed_flag_y = -1
@@ -915,7 +896,7 @@ function love.draw()
 						mousepressed_flag = true
 						mousepressed_flag_x = love.mouse.getX()
 						mousepressed_flag_y = love.mouse.getY()
-						mousepressed_flag_num = flk + (flcol == 8 and 0 or 50)
+						mousepressed_flag_num = flag
 						if vedmetadata then
 							mousepressed_flag_name = vedmetadata.flaglabel[mousepressed_flag_num]
 						end
@@ -923,7 +904,7 @@ function love.draw()
 				else
 					love.graphics.setColor(64,64,64,128)
 
-					local flgnum2 = flk + (flcol == 8 and 0 or 50)
+					local flgnum2 = flag
 					local used = usedflags[flgnum2]
 					if used then
 						love.graphics.setColor(128,128,128,128)
@@ -931,6 +912,17 @@ function love.draw()
 				end
 
 				love.graphics.rectangle("fill", ax, ay, w, h)
+				love.graphics.setColor(255,255,255,255)
+
+				local text = fixdig(flag, flags_digits, " ") .. " - " .. (usedflags[flag] and L.FLAGUSED or L.FLAGNOTUSED)
+				if vedmetadata ~= false then
+					text = text .. " - " .. (
+						vedmetadata.flaglabel[flag] ~= ""
+						and anythingbutnil(vedmetadata.flaglabel[flag])
+						or L.FLAGNONAME
+					)
+				end
+				ved_print(text, ax+2, ay)
 			end
 		end
 
@@ -945,8 +937,8 @@ function love.draw()
 
 		love.graphics.setColor(255,255,255,255)
 
-		ved_print(L.FLAGS .. "\n\n" .. flagstextleft .. "\n\n" .. outofrangeflagstext, 8, 8)
-		ved_print(" \n\n" .. flagstextright, love.graphics.getWidth()/2 + 8, 8)
+		ved_print(L.FLAGS, 8, 8)
+		ved_print(flags_outofrangeflagstext, 8, 432)
 
 		if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
 			local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
@@ -954,6 +946,25 @@ function love.draw()
 			love.graphics.rectangle("fill", love.mouse.getX() + 8, love.mouse.getY(), 8*#t, 8)
 			love.graphics.setColor(255,255,255,255)
 			ved_print(t, love.mouse.getX() + 8, love.mouse.getY())
+		end
+
+		if limit.flags > 100 then
+			for page = 0, (limit.flags-1)/100 do
+				local btn_x, btn_y = 8+72*page, love.graphics.getHeight()-24
+				if flags_page == page then
+					love.graphics.setColor(32,32,32)
+					love.graphics.rectangle("fill", btn_x, btn_y, 64, 16)
+					love.graphics.setColor(64,64,64)
+				else
+					hoverrectangle(128,128,128,128, btn_x, btn_y, 64, 16)
+				end
+				ved_printf(page*100 .. "-" .. page*100+99, btn_x+1, btn_y+4, 64, "center")
+				love.graphics.setColor(255,255,255,255)
+
+				if nodialog and love.mouse.isDown("l") and mouseon(btn_x, btn_y, 64, 16) then
+					flags_page = page
+				end
+			end
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -1242,7 +1253,7 @@ function love.draw()
 		end
 	elseif state == 28 then
 		-- Stats screen
-		-- basic_stats has elements: {name, value, max}
+		-- basic_stats has elements: {name, value, max, vvvvvvmax}
 		local p100 = love.graphics.getWidth() - 40 - basic_stats_max_text_width
 		for k,v in pairs(basic_stats) do
 			ved_print(v[1] .. " " .. v[2] .. "/" .. v[3], 16, 16*k)
@@ -1293,7 +1304,7 @@ function love.draw()
 		-- Plural forms test
 		int_control(20, 20, "val", 0, 9999, nil, plural_test)
 		ved_print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
-		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, plural_test.val}, 2), 20, 100)
+		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, 0, plural_test.val}, 3), 20, 100)
 
 		if nodialog and love.mouse.isDown("l") then
 			-- Shrug
@@ -1728,6 +1739,22 @@ function love.draw()
 			)
 		else
 			ved_print(L.GRAPHICS, 8, 4)
+
+			local infostring = langkeys(L.CLICKONTHING, {L.LOAD})
+			if love_version_meets(10) then
+				infostring = infostring .. "\n" .. L.ORDRAGDROP
+			end
+
+			local _, lines = font8:getWrap(infostring, love.graphics.getWidth()-136)
+
+			-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+			if type(lines) == "table" then
+				lines = #lines
+			end
+
+			local centery = (love.graphics.getHeight() - 8*lines) / 2
+
+			ved_printf(infostring, 0, centery, love.graphics.getWidth()-136, "center")
 		end
 
 		rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -1962,12 +1989,28 @@ function love.draw()
 		ved_printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
 	end
 
-	-- Taking input warning
-	if allowdebug and takinginput then
-		love.graphics.setColor(255,160,0,192)
-		love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
-		love.graphics.setColor(255,255,255,255)
-		ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+	if allowdebug then
+		if takinginput then
+			-- Taking input warning
+			love.graphics.setColor(255,160,0,192)
+			love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255,255,255,255)
+			ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if not nodialog then
+			-- Dialog open warning
+			love.graphics.setColor(160, 255, 0, 192)
+			love.graphics.rectangle("fill", 2*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("DIALOG OPEN", 2*128, love.graphics.getHeight()-12, 128, "center")
+		end
+		if mousepressed then
+			-- Mouse pressed warning
+			love.graphics.setColor(0, 255, 160, 192)
+			love.graphics.rectangle("fill", 3*128, love.graphics.getHeight()-16, 128, 16)
+			love.graphics.setColor(255, 255, 255, 255)
+			ved_printf("MOUSE PRESSED", 3*128, love.graphics.getHeight()-12, 128, "center")
+		end
 	end
 
 	--[[ some debug stuff for the new map
@@ -1994,7 +2037,7 @@ end
 function love.update(dt)
 	hook("love_update_start", {dt})
 
-	if love.window.hasFocus() then
+	if window_active() then
 		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
 	else
 		focusregainedtimer = 0
@@ -2068,6 +2111,12 @@ function love.update(dt)
 		v6_help:updateglow()
 		v6_graphics:updatelinestate()
 		v6_graphics.trinketcolset = false
+
+		conveyortimer = (conveyortimer + 1) % 3
+		if conveyortimer == 0 then
+			conveyorleftcycle = (conveyorleftcycle + 1) % 4
+			conveyorrightcycle = (conveyorrightcycle + 1) % 4
+		end
 
 		v6_frametimer = v6_frametimer - .034
 	end
@@ -2157,7 +2206,7 @@ function love.update(dt)
 						{
 							key = "enemy" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 						}
 					)
 				end
@@ -2174,7 +2223,7 @@ function love.update(dt)
 						{
 							key = "plat" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 						}
 					)
 				end
@@ -2185,9 +2234,9 @@ function love.update(dt)
 			editingbounds = 0
 		end
 
-		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
+		if levelmetadata_get(roomx, roomy).warpdir == 3 then
 			warpbganimation = (warpbganimation + 2) % 64
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir ~= 0 then
+		elseif levelmetadata_get(roomx, roomy).warpdir ~= 0 then
 			warpbganimation = (warpbganimation + 3) % 32
 		end
 
@@ -2299,346 +2348,6 @@ function love.update(dt)
 		nodialog = true
 	end
 
-	-- Right click menu
-	if RCMreturn ~= nil and RCMreturn ~= "" then
-		if RCMid:sub(1, 4) == "ent_" then
-			-- Something to do with an entity.
-			entdetails = explode("_", RCMid)
-			if entitydata[tonumber(entdetails[3])] ~= nil then
-				if RCMreturn == L.DELETE then
-					removeentity(tonumber(entdetails[3]), tonumber(entdetails[2]))
-				elseif RCMreturn == L.MOVEENTITY then
-					movingentity = tonumber(entdetails[3])
-				elseif RCMreturn == L.COPY or RCMreturn == L.COPYENTRANCE then
-					setcopyingentity(tonumber(entdetails[3]))
-				elseif RCMreturn == L.PROPERTIES then
-					-- Edit properties of this entity, whatever it is. But if we were editing room text or a name of something, stop that first.
-					if editingroomtext > 0 then
-						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the properties of
-						endeditingroomtext(tonumber(entdetails[3]))
-					end
-
-					thisentity = entitydata[tonumber(entdetails[3])]
-					dialog.create(
-						L.RAWENTITYPROPERTIES .. "\n\nx\ny\nt\np1\np2\np3\np4\np5\np6\n" .. L.SMALLENTITYDATA,
-						DBS.OKCANCELAPPLY,
-						dialog.callback.rawentityproperties,
-						(allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""),
-						dialog.form.rawentityproperties_make(),
-						dialog.callback.noclose_on.apply
-					)
-				elseif tonumber(entdetails[2]) == 1 then
-					-- Enemy
-					if RCMreturn == L.CHANGEDIRECTION then
-						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
-						rcm_changingentity(entdetails, {p1 = new_p1})
-						entitydata[tonumber(entdetails[3])].p1 = new_p1
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 2 then
-					-- Platform, moving/conveyor
-					if RCMreturn == L.CYCLETYPE then
-						local new_p1
-						if entitydata[tonumber(entdetails[3])].p1 < 4 then
-							-- Moving platform
-							new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
-						else
-							-- Conveyor
-							new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 8, 5)
-						end
-						rcm_changingentity(entdetails, {p1 = new_p1})
-						entitydata[tonumber(entdetails[3])].p1 = new_p1
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 10 then
-					-- Checkpoint
-					if RCMreturn == L.FLIP then
-						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
-						rcm_changingentity(entdetails, {p1 = new_p1})
-						entitydata[tonumber(entdetails[3])].p1 = new_p1
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 11 then
-					-- Gravity line
-					local old_p1 = entitydata[tonumber(entdetails[3])].p1
-					local old_p2 = entitydata[tonumber(entdetails[3])].p2
-					local old_p3 = entitydata[tonumber(entdetails[3])].p3
-					local old_p4 = entitydata[tonumber(entdetails[3])].p4
-					local new_p1, new_p4
-					if RCMreturn == L.CHANGETOHOR then
-						new_p1 = 0
-						new_p4 = old_p4
-					elseif RCMreturn == L.CHANGETOVER then
-						new_p1 = 1
-						new_p4 = old_p4
-					elseif RCMreturn == L.UNLOCK then
-						new_p1 = old_p1
-						new_p4 = 0
-					elseif RCMreturn == L.LOCK then
-						new_p1 = old_p1
-						new_p4 = 1
-					end
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
-					entitydata[tonumber(entdetails[3])].p4 = new_p4
-					autocorrectlines()
-					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
-								{
-									key = "p1",
-									oldvalue = old_p1,
-									newvalue = new_p1
-								},
-								{
-									key = "p2",
-									oldvalue = old_p2,
-									newvalue = entitydata[tonumber(entdetails[3])].p2
-								},
-								{
-									key = "p3",
-									oldvalue = old_p3,
-									newvalue = entitydata[tonumber(entdetails[3])].p3
-								},
-								{
-									key = "p4",
-									oldvalue = old_p4,
-									newvalue = entitydata[tonumber(entdetails[3])].p4
-								}
-							}
-						}
-					)
-					finish_undo("CHANGED ENTITY (GRAVLINE)")
-				elseif tonumber(entdetails[2]) == 13 then
-					-- Warp token
-					if RCMreturn == L.GOTODESTINATION then
-						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
-						cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
-					elseif RCMreturn == L.GOTOENTRANCE then
-						gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-						love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
-						cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
-					elseif RCMreturn == L.CHANGEENTRANCE then
-						selectedtool = 14
-						selectedsubtool[14] = 3
-						warpid = tonumber(entdetails[3])
-					elseif RCMreturn == L.CHANGEEXIT then
-						selectedtool = 14
-						selectedsubtool[14] = 4
-						warpid = tonumber(entdetails[3])
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 15 then
-					-- Rescuable crewmate
-					if RCMreturn == L.CHANGECOLOR then
-						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 5, 0)
-						rcm_changingentity(entdetails, {p1 = new_p1})
-						entitydata[tonumber(entdetails[3])].p1 = new_p1
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 16 then
-					-- Start point
-					if RCMreturn == L.CHANGEDIRECTION then
-						local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
-						rcm_changingentity(entdetails, {p1 = new_p1})
-						entitydata[tonumber(entdetails[3])].p1 = new_p1
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 17 then
-					-- Roomtext
-					if RCMreturn == L.EDITTEXT then
-						-- Were we already editing roomtext or a name?
-						if editingroomtext > 0 then
-							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the text of
-							endeditingroomtext(tonumber(entdetails[3]))
-						end
-
-						startinput()
-						input = entitydata[tonumber(entdetails[3])].data
-						editingroomtext = tonumber(entdetails[3])
-						makescriptroomtext = false
-					elseif RCMreturn == L.COPYTEXT then
-						love.system.setClipboardText(entitydata[tonumber(entdetails[3])].data)
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
-					-- Terminal or script box
-					if RCMreturn == L.EDITSCRIPT then
-						-- Were we already editing roomtext or a name?
-						if editingroomtext > 0 then
-							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
-							endeditingroomtext(tonumber(entdetails[3]))
-						end
-
-						if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
-							dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
-						else
-							scriptineditor(entitydata[tonumber(entdetails[3])].data)
-						end
-					elseif RCMreturn == L.OTHERSCRIPT then
-						-- Were we already editing roomtext or a name?
-						if editingroomtext > 0 then
-							-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the name of
-							endeditingroomtext(tonumber(entdetails[3]))
-						end
-
-						startinput()
-						input = entitydata[tonumber(entdetails[3])].data
-						editingroomtext = tonumber(entdetails[3])
-						makescriptroomtext = true
-					elseif RCMreturn == L.RESIZE then -- only for script boxes obviously
-						editingsboxid = tonumber(entdetails[3])
-						selectedsubtool[13] = 3
-						selectedtool = 13
-						--[[
-						box_exists = true
-						boxperi_x, boxperi_y, boxperi_w, boxperi_h = 128, 0, 640, 480
-						box_x, box_y, box_w, box_h = 128+(entitydata[tonumber(entdetails[3])].x-roomx*40)*16, (entitydata[tonumber(entdetails[3])].x-roomy*30)*16, (entitydata[tonumber(entdetails[3])].p1-1)*16, (entitydata[tonumber(entdetails[3])].p2-1)*16
-						box_type = 1
-						box_movable = false -- nu nog wel
-						box_outsideiscancel = true
-						box_meta = tonumber(entdetails[3])
-						]]
-					elseif RCMreturn == toolnames[12] then
-						local ret = namefound(entitydata[tonumber(entdetails[3])])
-						if ret == 1 then
-							s_nieuw(tonumber(entdetails[3]))
-						elseif ret == -1 then
-							p_nieuw(tonumber(entdetails[3]))
-						end
-					else
-						dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
-					end
-				else
-					dialog.create(langkeys(L.UNKNOWNENTITYTYPE, {anythingbutnil(entdetails[2])}) .. ",\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
-				end
-			else
-				dialog.create(langkeys(L.ENTITY404, {tonumber(entdetails[3])}))
-			end
-		elseif RCMid:sub(1, 4) == "spt_" then
-			local rvnum = tonumber(RCMid:sub(5, -1))
-
-			if RCMreturn == L.EDIT then
-				scriptineditor(scriptnames[rvnum], rvnum)
-			elseif RCMreturn == L.EDITWOBUMPING then
-				scriptineditor(scriptnames[rvnum], -1)
-			elseif RCMreturn == L.COPYNAME then
-				love.system.setClipboardText(scriptnames[rvnum])
-			elseif RCMreturn == L.COPYCONTENTS then
-				love.system.setClipboardText(table.concat(scripts[scriptnames[rvnum]], newline))
-			elseif RCMreturn == L.DUPLICATE then
-				dialog.create(
-					L.NEWSCRIPTNAME, DBS.OKCANCEL,
-					dialog.callback.newscript, L.DUPLICATE, dialog.form.simplename,
-					dialog.callback.newscript_validate, "duplicate_list"
-				)
-				input = rvnum
-			elseif RCMreturn == L.DELETE then
-				input = rvnum
-				if keyboard_eitherIsDown("shift") then
-					dialog.callback.suredeletescript(DB.YES)
-				else
-					dialog.create(
-						langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
-						dialog.callback.suredeletescript
-					)
-				end
-			elseif RCMreturn == L.RENAME then
-				dialog.create(
-					L.NEWNAME, DBS.OKCANCEL,
-					dialog.callback.renamescript, L.RENAMESCRIPT,
-					{
-						{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
-						{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
-						{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
-					},
-					dialog.callback.renamescript_validate
-				)
-				input = rvnum
-			else
-				unrecognized_rcmreturn()
-			end
-		elseif RCMid:sub(1, 4) == "bul_" then
-			if RCMreturn == L.SAVEBACKUP then
-				dialog.create(
-					L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, DBS.OKCANCEL,
-					dialog.callback.savebackup, L.SAVEBACKUP, dialog.form.simplename
-				)
-				input = RCMid:sub(5, -1)
-			else
-				unrecognized_rcmreturn()
-			end
-		elseif RCMid:sub(1, 4) == "lnk_" then
-			if RCMreturn == L.COPYLINK then
-				love.system.setClipboardText(RCMid:sub(5, -1))
-			--[[
-			elseif RCMreturn == L.OPENLINK then
-				love.system.openURL(RCMid:sub(5, -1))
-			elseif RCMreturn == L.OPENARTICLE then
-				for rvnum = 1, #helppages do
-					if RCMid:sub(5, -1) == helppages[rvnum].subj then
-						gotohelparticle(rvnum)
-						break
-					end
-				end
-			]]
-			else
-				unrecognized_rcmreturn()
-			end
-		elseif RCMid:sub(1, 4) == "dia_" then
-			-- New-style dialog dropdown
-			if dialog.is_open() then
-				dialogs[#dialogs]:dropdown_onchange(RCMid:sub(5, -1), RCMreturn)
-			end
-		elseif RCMid == "assets_music_load" then
-			-- Reload button
-			if RCMreturn == L.UNLOAD then
-				unloadvvvvvvmusic(musicplayerfile)
-				collectgarbage("collect")
-			else
-				unrecognized_rcmreturn()
-			end
-		elseif RCMid:sub(1, 5) == "input" and newinputsys ~= nil and --[[ nil check only because we're slowly transitioning to the new system ]] newinputsys.active then
-			local id = newinputsys.input_ids[#newinputsys.nth_input] -- Sidestep putting the id in RCMid, because if we did it'd convert it to a string
-			if RCMreturn == L.UNDO then
-				newinputsys.undo(id)
-			elseif RCMreturn == L.REDO then
-				newinputsys.redo(id)
-			elseif table.contains({L.COPY, L.CUT}, RCMreturn) then
-				newinputsys.atomiccopycut(id, RCMreturn == L.CUT)
-			elseif RCMreturn == L.PASTE then
-				newinputsys.atomicpaste(id)
-			elseif RCMreturn == L.DELETE then
-				newinputsys.atomicdelete(id)
-			elseif RCMreturn == L.MOVELINEUP then
-				newinputsys.atomicmovevertical(id, -1)
-			elseif RCMreturn == L.MOVELINEDOWN then
-				newinputsys.atomicmovevertical(id, 1)
-			elseif RCMreturn == L.DUPLICATELINE then
-				newinputsys.atomicdupeline(id)
-			elseif RCMreturn == L.SELECTWORD then
-				newinputsys.selectword(id, ({newinputsys.getpos(id)})[1])
-			elseif RCMreturn == L.SELECTLINE then
-				newinputsys.sellinetoright(id)
-			elseif RCMreturn == L.SELECTALL then
-				newinputsys.selallright(id)
-			elseif RCMreturn == L.INSERTRAWHEX then
-				newinputsys.starthex(id)
-			else
-				unrecognized_rcmreturn()
-			end
-		else
-			dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
-		end
-
-		RCMreturn = ""
-	end
-
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 and (love.mouse.getY() < middlescroll_y-16 or love.mouse.getY() > middlescroll_y+16) and not middlescroll_falling then
 		handle_scrolling(
 			false,
@@ -2727,12 +2436,9 @@ function love.textinput(char)
 				scriptlines[editingline] = input
 				-- nodialog as a temp global var is checked here too
 				if nodialog then
-					if char ~= "/" and char ~= "?" then
-						-- But we don't want pressing '/' to not dirty when we're actually typing
-						nodialog = true
-					else
-						dirty()
-					end
+					dirty()
+				elseif table.contains({"/", "?"}, char) then
+					nodialog = true
 				end
 			elseif state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
@@ -3138,7 +2844,7 @@ function love.keypressed(key)
 			end
 		end
 		if key == "tab" then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
@@ -3176,7 +2882,7 @@ function love.keypressed(key)
 			end
 		end
 		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
 
@@ -3184,7 +2890,7 @@ function love.keypressed(key)
 				dialogs[#dialogs].fields[cf][7](not dialogs[#dialogs].fields[cf][5], dialogs[#dialogs])
 			end
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 
 			local dropdown = 0
@@ -3219,7 +2925,7 @@ function love.keypressed(key)
 
 			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
 		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
-			showtabrect = true
+			dialogs[#dialogs].showtabrect = true
 
 			local files = dialogs[#dialogs].fields[cf][7]
 			local file = 0
@@ -3268,8 +2974,14 @@ function love.keypressed(key)
 
 	handle_scrolling(true, key)
 
+	local _, voided_metadata
+	if state == 1 then
+		_, voided_metadata = levelmetadata_get(roomx, roomy)
+	end
+
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
+		return
 	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
 		stopinput()
 		tostate(input, true)
@@ -3280,8 +2992,6 @@ function love.keypressed(key)
 		sp_t = 0
 		sp_go = true
 	elseif sp_t ~= 0 and state == 1 and not (sp_go and sp_got <= 0) then
-		--if sp_t > 0 and (key == "up" or key == "right" or key == "down" or key == "left") then
-			--s_hoofdd = ({up=0, right=1, down=2, left=3})[key]
 		if sp_t > 0 then
 			if key == "up" and s_hoofdd ~= 2 then
 				s_hoofdd = 0
@@ -3299,20 +3009,22 @@ function love.keypressed(key)
 			tilespicker_shortcut = true
 		end
 
-		if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+		local tsw = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+		local tsh = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight
+		if levelmetadata_get(roomx, roomy).directmode == 1 then
 			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
 			elseif table.contains({"right", "d"}, key) then
-				selectedtile = (selectedtile + 1) % 1200
+				selectedtile = (selectedtile + 1) % (tsw*tsh)
 			elseif table.contains({"up", "w"}, key) then
-				selectedtile = selectedtile - 40
+				selectedtile = selectedtile - tsw
 			elseif table.contains({"down", "s"}, key) then
-				selectedtile = (selectedtile + 40) % 1200
+				selectedtile = (selectedtile + tsw) % (tsw*tsh)
 			end
 		end
 
 		if selectedtile < 0 then
-			selectedtile = selectedtile + 1200
+			selectedtile = selectedtile + tsw*tsh
 		end
 
 	elseif nodialog and editingroomtext == 0 and not editingroomname and (state == 1) and key == "," then
@@ -3327,10 +3039,8 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
@@ -3347,21 +3057,23 @@ function love.keypressed(key)
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
 		end
 
-	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "q" then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "q" or key == "g") then
 		coordsdialog.activate()
+		if key == "q" then
+			show_notification(L.OLDSHORTCUT_GOTOROOM)
+		end
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
+		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
 			tonotepad()
@@ -3372,7 +3084,7 @@ function love.keypressed(key)
 		tostate(15)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "f" and keyboard_eitherIsDown(ctrl) then
 		tostate(11)
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and key == "p" and keyboard_eitherIsDown(ctrl) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "p" and keyboard_eitherIsDown(ctrl) then
 		gotostartpointroom()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "d" and keyboard_eitherIsDown(ctrl) then
 		tostate(6, nil, "secondlevel")
@@ -3390,7 +3102,7 @@ function love.keypressed(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -3403,7 +3115,7 @@ function love.keypressed(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -3415,11 +3127,13 @@ function love.keypressed(key)
 	elseif nodialog and editingbounds ~= 0 and state == 1 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+				oldbounds[k] = levelmetadata_get(roomx, roomy)["enemy" .. v]
 			end
 
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "enemyx1", 0)
+			levelmetadata_set(roomx, roomy, "enemyy1", 0)
+			levelmetadata_set(roomx, roomy, "enemyx2", 320)
+			levelmetadata_set(roomx, roomy, "enemyy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -3427,7 +3141,7 @@ function love.keypressed(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
@@ -3435,11 +3149,13 @@ function love.keypressed(key)
 			finish_undo("ENEMY BOUNDS (deleted)")
 		else
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+				oldbounds[k] = levelmetadata_get(roomx, roomy)["plat" .. v]
 			end
 
-			levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = 0, 0
-			levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+			levelmetadata_set(roomx, roomy, "platx1", 0)
+			levelmetadata_set(roomx, roomy, "platy1", 0)
+			levelmetadata_set(roomx, roomy, "platx2", 320)
+			levelmetadata_set(roomx, roomy, "platy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -3447,7 +3163,7 @@ function love.keypressed(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
@@ -3457,59 +3173,34 @@ function love.keypressed(key)
 
 		editingbounds = 0
 	elseif nodialog and movingentity ~= 0 and state == 1 and key == "escape" then
+		if movingentity_copying then
+			movingentity_copying = false
+			count.entities = count.entities - 1
+			if entitydata[movingentity].t == 9 then
+				count.trinkets = count.trinkets - 1
+			elseif entitydata[movingentity].t == 15 then
+				count.crewmates = count.crewmates - 1
+			end
+			count.entity_ai = count.entity_ai - 1
+			table.remove(entitydata, movingentity)
+		end
 		movingentity = 0
 		movingentity_copying = false
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
 		selectedsubtool[14] = 1
 		warpid = nil
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "right" or key == "kp6") and (not keyboardmode or state == 12) then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "right" or key == "kp6") and not keyboardmode then
 		-->
-		if editingbounds == 0 then
-			if roomx+1 >= metadata.mapwidth then
-				roomx = 0
-			else
-				roomx = roomx + 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "left" or key == "kp4") and (not keyboardmode or state == 12) then
+		gotoroom_r()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "left" or key == "kp4") and not keyboardmode then
 		--<
-		if editingbounds == 0 then
-			if roomx+1 <= 1 then
-				roomx = metadata.mapwidth-1
-			else
-				roomx = roomx - 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "down" or key == "kp2") and (not keyboardmode or state == 12) then
+		gotoroom_l()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "down" or key == "kp2") and not keyboardmode then
 		--v
-		if editingbounds == 0 then
-			if roomy+1 >= metadata.mapheight then
-				roomy = 0
-			else
-				roomy = roomy + 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
-	elseif nodialog and not editingroomname and editingroomtext == 0 and (state == 1 or state == 12) and (key == "up" or key == "kp8") and (not keyboardmode or state == 12) then
+		gotoroom_d()
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "up" or key == "kp8") and not keyboardmode then
 		--^
-		if editingbounds == 0 then
-			if roomy+1 <= 1 then
-				roomy = metadata.mapheight-1
-			else
-				roomy = roomy - 1
-			end
-
-			gotoroom_finish()
-			mapmovedroom = true
-		end
+		gotoroom_u()
 	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then
 		saveroomname()
 	elseif state == 1 and editingroomname and key == "escape" then
@@ -3524,7 +3215,7 @@ function love.keypressed(key)
 		editingroomtext = 0
 		stopinput()
 	elseif allowdebug and state == 1 and key == "\\" and love.keyboard.isDown(lctrl) then
-		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset] .. " ***")
+		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata_get(roomx, roomy).tileset] .. " ***")
 		cons("First select the wall tiles")
 
 		tilescreator = true
@@ -3534,10 +3225,11 @@ function love.keypressed(key)
 		creatorstep = 1
 		creatorsubstep = 1
 
+		usedtilesets.creator = usedtilesets[selectedtileset]
 		selectedtileset = "creator"
 		selectedcolor = "creator"
 
-		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]
+		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata_get(roomx, roomy).tileset]
 
 		tilespicker = true
 		selectedtool = 1
@@ -3552,38 +3244,38 @@ function love.keypressed(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif nodialog and state == 1 and key == "f1" then
+	elseif nodialog and state == 1 and key == "f1" and not voided_metadata then
 		-- Change tileset
 		switchtileset()
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {(tilesetblocks[selectedtileset].name ~= nil and (tilesetblocks[selectedtileset].longname ~= nil and tilesetblocks[selectedtileset].longname or tilesetblocks[selectedtileset].name) or selectedtileset)})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f2" then
+	elseif nodialog and state == 1 and key == "f2" and not voided_metadata then
 		-- Change tilecol
 		switchtilecol()
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {(tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil and tilesetblocks[selectedtileset].colors[selectedcolor].name or langkeys(L.TSCOLOR, {selectedcolor}))})
 		temporaryroomnametimer = 90
-	elseif nodialog and state == 1 and key == "f3" then
+	elseif nodialog and state == 1 and key == "f3" and not voided_metadata then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f4" and not voided_metadata then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif nodialog and state == 1 and key == "f10" then
+	elseif nodialog and state == 1 and key == "f10" and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()
-		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
+		temporaryroomname = langkeys(L.CHANGEDTOMODE, {(levelmetadata_get(roomx, roomy).directmode == 1 and L.CHANGEDTOMODEMANUAL or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.CHANGEDTOMODEMULTI or L.CHANGEDTOMODEAUTO))})
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "w") and not voided_metadata then
 		-- Change warp dir
 		changewarpdir()
-		temporaryroomname = warpdirchangedtext[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]
+		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
-	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") then
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and (state == 1) and (key == "e") and not voided_metadata then
 		-- Edit room name
 		toggleeditroomname()
 
@@ -3610,7 +3302,7 @@ function love.keypressed(key)
 			love.graphics.clear(); love.draw(); love.graphics.present()
 
 			-- Save now
-			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 
 			if not savedsuccess then
 				-- Why not :c
@@ -3753,7 +3445,9 @@ function love.keypressed(key)
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
 	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
-		if key == "up" then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" then
 			scriptgotoline(editingline-1)
 		elseif key == "down" then
 			scriptgotoline(editingline+1)
@@ -3906,12 +3600,14 @@ function love.keypressed(key)
 		table.remove(files[""])
 	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
 		stopinput()
-		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, false)
+		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
 		if savedsuccess then
 			editingmap = input
 		end
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
+	elseif state == 10 and table.contains({"home", "end"}, key) then
+		handle_scrolling(true, key)
 	elseif state == 10 and key == "n" and nodialog then
 		dialog.create(
 			L.NEWSCRIPTNAME, DBS.OKCANCEL,
@@ -3932,34 +3628,6 @@ function love.keypressed(key)
 		stopinput()
 		tostate(1, true)
 		nodialog = false
-	elseif nodialog and state == 12 and (table.contains({"return", "kpenter"}, key) or key == "m" or key == "kp5") then
-		tostate(1, true)
-		nodialog = false
-	elseif nodialog and state == 12 and (key == "," or key == ".") then
-		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
-		if key == "," then
-			if not toolanyofthese then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 1
-			end
-		elseif key == "." then
-			if not toolanyofthese then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 1
-			end
-		end
-		updatewindowicon()
-		toolscroll()
 	elseif nodialog and state == 13 and key == "escape" then
 		exitvedoptions()
 	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
@@ -3991,7 +3659,9 @@ function love.keypressed(key)
 			leavescript_to_state()
 		end
 	elseif nodialog and state == 15 and helpeditingline ~= 0 then
-		if key == "up" and helpeditingline ~= 1 then
+		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
+			inplacescroll(key)
+		elseif key == "up" and helpeditingline ~= 1 then
 			helparticlecontent[helpeditingline] = input .. input_r
 			input_r = ""
 			__ = "_"
@@ -4038,15 +3708,18 @@ function love.keypressed(key)
 			gotohelparticle(revcycle(helparticle, #helppages, 2))
 		elseif key == "down" then
 			gotohelparticle(cycle(helparticle, #helppages, 2))
+		elseif table.contains({"home", "end"}, key) then
+			handle_scrolling(true, key)
 		end
-	elseif allowdebug and (key == "f10") then
-
 	elseif allowdebug and (key == "f11") then
 		if love.keyboard.isDown(lctrl) then
 			cons("You pressed L" .. ctrl .. "+F11, you get a wall.\n\n***********************************\n* G L O B A L   V A R I A B L E S *\n***********************************\n")
 			for k,v in pairs(_G) do
 				if type(v) == "boolean" then
 					print(k .. " = " .. (v and "true" or "false") .. "\t\t\t[boolean]")
+				elseif type(v) == "userdata" and v.type ~= nil and type(v.type) == "function" then
+					-- LÖVE object
+					print(k .. "\t\t\t[" .. v:type() .. "]")
 				elseif table.contains({"function", "table", "userdata", "cdata"}, type(v)) then
 					print(k .. "\t\t\t[" .. type(v) .. "]")
 				else
@@ -4067,7 +3740,7 @@ function love.keypressed(key)
 		end
 	elseif allowdebug and (key == "f12") then
 		tostate(0, true)
-	elseif not editingroomname and (editingroomtext == 0) and nodialog and (state == 1 or state == 12) then
+	elseif not editingroomname and (editingroomtext == 0) and nodialog and state == 1 then
 		for k,v in pairs(toolshortcuts) do
 			if key == string.lower(v) then
 				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
@@ -4077,7 +3750,6 @@ function love.keypressed(key)
 					selectedtool = k
 					updatewindowicon()
 				end
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 				toolscroll()
 			end
 		end
@@ -4085,11 +3757,8 @@ function love.keypressed(key)
 		stopinput()
 		scsuccess, sccontents = readlevelfile(input)
 		if scsuccess then
-			--##SCRIPT##  BIJZONDER
 			scriptname = input
-			scriptlines = explode((state == 22 and "%$" or "\r?\n"), sccontents) --table.copy(scripts[scriptnames[rvnum]])
-			--processflaglabels()
-			--bumpscript(rvnum)
+			scriptlines = explode((state == 22 and "%$" or "\r?\n"), sccontents)
 			tostate(3)
 		else
 			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
@@ -4289,7 +3958,7 @@ function love.mousepressed(x, y, button)
 		x, y = x*s.pscale^-1, y*s.pscale^-1
 	end
 
-	if s.pausedrawunfocused and not love.window.hasFocus() and table.contains({"wu", "wd"}, button) then
+	if s.pausedrawunfocused and not window_active() and table.contains({"wu", "wd"}, button) then
 		-- When drawing is paused it won't look like the scrollbar has moved,
 		-- so just don't move it so the visual will be accurate
 		return
@@ -4298,6 +3967,9 @@ function love.mousepressed(x, y, button)
 	hook("love_mousepressed_start", {x, y, button})
 
 
+	if rightclickmenu.mousepressed(x, y, button) then
+		return
+	end
 	if dialog.is_open() and button == "l" then
 		dialogs[#dialogs]:mousepressed(x, y)
 	end
@@ -4318,20 +3990,16 @@ function love.mousepressed(x, y, button)
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wd" or "wu") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 17
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 			if selectedtool < 17 then
 				selectedtool = selectedtool + 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			else
 				selectedtool = 1
-				--lefttoolscroll = math.max(16-(48*(selectedtool-1)), -368)
 			end
 			updatewindowicon()
 			toolscroll()
@@ -4375,31 +4043,6 @@ function love.mousepressed(x, y, button)
 	elseif state == 9 and button == "l" and nodialog then
 		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
 		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
-	elseif state == 12 and (button == "wu" or button == "wd") and nodialog then
-		local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
-		if button == flipscrollmore(macscrolling and "wd" or "wu") then
-			if not toolanyofthese then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 1
-			end
-		elseif button == flipscrollmore(macscrolling and "wu" or "wd") then
-			if not toolanyofthese then
-				selectedtool = 4
-			elseif selectedtool == 4 then
-				selectedtool = 16
-			elseif selectedtool == 16 then
-				selectedtool = 17
-			elseif selectedtool == 17 then
-				selectedtool = 1
-			end
-		end
-		updatewindowicon()
-		toolscroll()
 	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.psmallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.psmallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
 		local screenxoffset = 0
@@ -4414,7 +4057,7 @@ function love.mousepressed(x, y, button)
 		imageviewer_moved_from_x, imageviewer_moved_from_y = imageviewer_x, imageviewer_y
 		imageviewer_moved_from_mx, imageviewer_moved_from_my = x, y
 		mousepressed = true
-	else
+	elseif not table.contains({3, 6, 10, 15}, state) or nodialog then
 		handle_scrolling(false, button)
 	end
 
@@ -4482,7 +4125,7 @@ function love.mousereleased(x, y, button)
 
 
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
-		undobuffer[undosaved].toredotiles = table.copy(roomdata[roomy][roomx])
+		undobuffer[undosaved].toredotiles = table.copy(roomdata_get(roomx, roomy))
 		undosaved = 0
 		cons("[UNRE] SAVED END RESULT FOR UNDO")
 	elseif state == 32 then
@@ -4591,9 +4234,22 @@ function love.directorydropped(path)
 	hook("love_directorydropped", {path})
 end
 
-function love.filedropped(path)
+function love.filedropped(file)
 	-- LÖVE 0.10+
-	hook("love_filedropped", {path})
+	hook("love_filedropped", {file})
+
+	if state == 32 then
+		local path = file:getFilename()
+		-- A bit annoying that we have to do this manually, but oh well
+		local last_dirsep = path:reverse():find(dirsep, 1, true)
+		local filename
+		if last_dirsep == nil then
+			filename = path
+		else
+			filename = path:sub(-last_dirsep+1, -1)
+		end
+		assets_openimage(path, filename)
+	end
 end
 
 function love.focus(f)
@@ -4607,7 +4263,7 @@ end
 
 function love.quit()
 	if not s.neveraskbeforequit and has_unsaved_changes() then
-		if love.window.requestAttention ~= nil and not love.window.hasFocus() then
+		if love.window.requestAttention ~= nil and not window_active() then
 			love.window.requestAttention(true)
 		end
 

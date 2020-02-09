@@ -224,11 +224,17 @@ configs =
 		default = {0, 128, 0},
 		["type"] = "numbersarray",
 		},
+	allowbiggerthansizelimit =
+		{
+		default = false,
+		["type"] = "bool",
+		comment = "Enable to let the editor properly load bigger than 20x20 maps (for VVVVVV) and let smaller (20x20 or less) maps be resized to be bigger than 20x20. Does not allow you (easily) make new usable rooms you can place tiles in, or have more room properties. Also VVVVVV will segfault for any reason in the rooms outside 20x20. Read more in the confirmation dialog that pops up when attempting to make a bigger map.",
+		},
 	opaqueroomnamebackground =
 		{
 		default = false,
 		["type"] = "bool",
-		}
+		},
 	}
 
 function saveconfig()

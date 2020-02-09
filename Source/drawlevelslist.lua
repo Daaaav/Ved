@@ -70,7 +70,7 @@ function drawlevelslist()
 
 			local removerecent
 			for k,v in pairs(s.recentfiles) do
-				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8) and love.window.hasFocus()
+				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8) and window_active()
 				if mouseishovering then
 					hoveringlevel = v
 					hoveringlevel_k = (-#s.recentfiles)+(k-1)
@@ -160,7 +160,7 @@ function drawlevelslist()
 				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():sub(1, (input .. input_r):len()) == input .. input_r then
 				if backupscreen or v.result_shown then
 					if 16+8*k2+levellistscroll > -64 and 16+8*k2+levellistscroll < love.graphics.getHeight()+64 then
-						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and love.window.hasFocus()
+						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and window_active()
 
 						if mouseishovering then
 							local trailingdirsep = ""
@@ -224,11 +224,6 @@ function drawlevelslist()
 						love.graphics.setColor(255,255,255)
 					end
 
-					--[[
-					if k2 == 1 and love.keyboard.isDown("tab") then
-						input = v.name:sub(1, -8)
-					end
-					]]
 					if tabselected == k2 then
 						tabselected_k = k
 

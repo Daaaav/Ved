@@ -59,11 +59,11 @@ end
 -- http://stackoverflow.com/a/18975924/3495280
 function table.copy(t)
 	local t2 = {}
-	for kap,vep in pairs(t) do
-		if type(vep) == "table" then
-			t2[kap] = table.copy(vep)
+	for k,v in pairs(t) do
+		if type(v) == "table" then
+			t2[k] = table.copy(v)
 		else
-			t2[kap] = vep
+			t2[k] = v
 		end
 	end
 	return t2
@@ -78,9 +78,9 @@ function table.contains(t, thing)
 	return false
 end
 
-function langkeys(strin, thesekeys, pluralvar)
+function langkeys(str, thesekeys, pluralvar)
 	-- Fills in $1 $2 etc in the strings.
-	if type(strin) == "table" then
+	if type(str) == "table" then
 		if pluralvar == nil then
 			pluralvar = 1
 		end
@@ -91,19 +91,19 @@ function langkeys(strin, thesekeys, pluralvar)
 			pluralform = pluralform and 1 or 0
 		end
 
-		if strin[pluralform] == nil then
+		if str[pluralform] == nil then
 			-- Use English fallback
 			pluralform = (thesekeys[pluralvar] ~= 1) and -2 or -1
 		end
 
-		strin = strin[pluralform]
+		str = str[pluralform]
 	end
 
 	for lk,lv in pairs(thesekeys) do
-		strin = strin:gsub("$" .. lk, (tostring(lv):gsub("%%", "%%%%")))
+		str = str:gsub("$" .. lk, (tostring(lv):gsub("%%", "%%%%")))
 	end
 
-	return strin
+	return str
 end
 
 function ved_ver_human()

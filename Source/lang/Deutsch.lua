@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2019-12-15 16:53:39 (CET)
+--- Last converted: 2020-02-09 23:17:15 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -256,7 +256,7 @@ SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
 INVALIDFILESIZE = "Ungültige Dateigröße.",
 
 EDIT = "Bearbeiten",
-EDITWOBUMPING = "Bearbeiten ohne stoßen",
+EDITWOBUMPING = "Bearbeite ohne Stoß zum Anfang",
 COPYNAME = "Name kopieren",
 COPYCONTENTS = "Inhalt kopieren",
 DUPLICATE = "Duplizieren",
@@ -337,7 +337,7 @@ AMOUNTSPIKES = "Spikes:",
 
 
 UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
-DUPLICATESCRIPT = "Script $1 is duplicate! Only one can be loaded.",
+DUPLICATESCRIPT = "Skript $1 ist ein Duplikat! Nur eins kann geladen werden.",
 MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
 MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
 LEVMUSICEMPTY = "Levelmusik ist leer!",
@@ -532,9 +532,19 @@ SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire le
 
 
 OLDSHORTCUT_SCRIPTJUMP = "STRG+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Strg+A wird bald nicht mehr funktionieren, benutze stattdessen Strg+R",
-OLDSHORTCUT_OPENLVLDIR = "Strg+D wird bald nicht mehr funktionieren, benutze stattdessen Strg+F",
+OLDSHORTCUT_ASSETS = "Strg+A funktioniert bald nicht mehr, benutze stattdessen Strg+R",
+OLDSHORTCUT_OPENLVLDIR = "Strg+D funktioniert bald nicht mehr, benutze stattdessen Strg+F",
+OLDSHORTCUT_GOTOROOM = "Q funktioniert bald nicht mehr, benutze stattdessen G",
+OLDSHORTCUT_SHOWBG = "K funktioniert bald nicht mehr, benutze stattdessen Shift+;",
 
+FRAMESTOSECONDS = "$1 = $2 Sek",
+ROOMNUM = "Raum $1",
+TRACKNUM = "Track $1",
+STOPSMUSIC = "Stoppt Musik",
+EDITSCRIPTWOBUMPING = "Bearbeite Skript ohne Stoß zum Anfang",
+CLICKONTHING = "Klicke auf $1",
+ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
 
 }
 
@@ -561,8 +571,8 @@ L_PLU = {
 		[1] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaften!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaft!",
-		[1] = "LevelMetadata für Raum #$1 hat $2 ungültige Eigenschaften!",
+		[0] = "LevelMetadata für Raum $1,$2 hat $3 ungültige Eigenschaft!",
+		[1] = "LevelMetadata für Raum $1,$2 hat $3 ungültige Eigenschaften!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "$1 wird gezeigt",
@@ -579,6 +589,14 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
+	},
+	LITERALNULLS = {
+		[0] = "Es gibt $1 Nullbyte!",
+		[1] = "Es gibt $1 Nullbytes!",
+	},
+	XMLNULLS = {
+		[0] = "Es gibt $1 XML Nullcharakter!",
+		[1] = "Es gibt $1 XML Nullcharakter!",
 	},
 }
 
@@ -656,6 +674,8 @@ short3 = "Teleprtzone.",
 long3 = "Teleportationszone",
 short4 = "Schf.",
 long4 = "Schiff",
+short5 = "Tower",
+long5 = "Tower",
 
 }
 
@@ -678,6 +698,7 @@ ERR_FILEEDITORS = "Plugins die diese Datei bearbeiten:"
 ERR_CURRENTPLUGIN = "Plugin das diesen Fehler verursacht hat:"
 ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke Strg/Cmd+C um es zur Zwischenable zu kopieren)\n\n"
 ERR_CONTINUE = "Du kannst fortfahren indem du ESC oder Enter drückst, aber beachte dass diese gescheiterte Bearbeitung vielleicht Probleme verursacht."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Konnte dies nicht finden in %s.lua:"
 ERR_REPLACECODEPATTERN = "Konnte dies nicht finden in %s.lua (als Muster):"
 ERR_LINESTOTAL = "%i Zeilen insgesamt"
@@ -1367,6 +1388,24 @@ speaker¤(color)\h#w
 
 Changes the color and position of the next text boxes created with the "say"
 command. This can be used instead of giving a second argument to "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Changes the warp direction for room x,y, 1-indexed, to the given direction. This
+could be checked with ifwarp, resulting in a relatively powerful extra
+flags/variable system.
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+ifwarp¤(x,y,dir,script)\w#h
+
+If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
 ]]
 },
 
@@ -1398,11 +1437,539 @@ Red¤    - Red commands shouldn't be used in custom levels because they will eit
          corrupt the save data altogether.
 
 
+activateteleporter¤()\w#h
+
+If there's a teleporter in the room, it will start flashing random colors and
+touching it won't destroy save data. Only targets the first-spawned teleporter.
+
+activeteleporter¤()\w#h
+
+Makes the teleporter in the room white, but touching it will still annihilate your
+save data. Only targets the first-spawned teleporter.
+
+alarmoff\w#h
+
+Turns the alarm off
+
+alarmon\w#h
+
+Turns the alarm on
+
+altstates¤(x)\b#h
+
+Changes the layout of some rooms, like the trinket room in the ship before and
+after the explosion, and the secret lab entrance (custom levels don't support
+altstates at all)
+
+backgroundtext\w#h
+
+If you put this command on the line above speak or speak_active, the game will not
+wait until you press action after creating the text box. This can be used to
+create multiple text boxes at the same time.
+
+befadein¤()\w#h
+
+Instantly fade in from fadeout()
+
+blackon¤()\w#h
+
+Back to normal from blackout()
+
+blackout¤()\w#h
+
+Make the screen black/freezes the screen
+
+bluecontrol\b#h
+
+Start a conversation with Victoria just like when you meet her in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+changeai¤(crewmate,ai1,ai2)\w#h
+
+Can change the face direction of a crewmate or the walking behaviour
+
+crewmate - cyan/player/blue/red/yellow/green/purple
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - required if followposition is used for ai1
+
+changecolour¤(a,b)\w#h
+
+Changes the color of a crewmate (note: this only works with crewmates who have
+been created using the createcrewman command)
+
+a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
+b - Color to change to
+
+changedir¤(color,direction)\w#h
+
+Just like changeai(color,faceleft/faceright), this changes face direction.
+
+color - cyan/player/blue/red/yellow/green/purple
+direction - 0 is left, 1 is right
+
+changegravity¤(crewmate)\w#h
+
+Increase the sprite number of the given crewmate by 12.
+
+crewmate - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
+
+changemood¤(color,mood)\w#h
+
+Changes the mood of a crewmate (only works for crewmates created with
+createcrewman)
+
+color - cyan/player/blue/red/yellow/green/purple
+mood - 0 for happy, 1 for sad
+
+changeplayercolour¤(color)\w#h
+
+Changes the player's color
+
+color - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changetile¤(color,tile)\w#h
+
+Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
+and it only works for crewmates created with createcrewman)
+
+color - cyan/player/blue/red/yellow/green/purple/gray
+tile - Tile number
+
+clearteleportscript¤()\b#h
+
+Clears the teleporter script set with teleportscript(x)
+
+companion¤(x)\b#h
+
+Makes the specified crewmate a companion (as far as I remember, this also depends
+on on the location on the map)
+
+createactivityzone¤(color)\b#h
+
+Creates a zone where you are standing which says "Press ACTION to talk to
+(Crewmate)"
+
+createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
+
+Creates a crewmate (not rescuable)
+
+mood - 0 for happy, 1 for sad
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - required if followposition is used for ai1
+
+createentity¤(x,y,n,meta1,meta2)\o#h
+
+Creates an entity, check the lists reference for entity numbers
+
+n - The entity number
+
+createlastrescued¤(x,y)\b#h
+
+Creates the last rescued crewmate at position x,y (?)
+
+createrescuedcrew¤()\b#h
+
+Creates all rescued crewmates
+
+customifflag¤(n,script)\w#h
+
+Same as ifflag(n,script) in simplified scripting
+
+customiftrinkets¤(n,script)\w#h
+
+Same as iftrinkets(n,script) in simplfied scripting
+
+customiftrinketsless¤(n,script)\w#h
+
+Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
+broken)
+
+custommap¤(on/off)\w#h
+
+The internal variant of the map command
+
+customposition¤(x,y)\w#h
+
+Overrides the x,y of the text command and thus sets the position of the text box,
+but for crewmates, rescuable crewmates are used to position against, instead of
+createcrewman crewmates.
+
+x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+purple (rescuable)
+y - Only used if x is a color name. Can be above/below
+
+cutscene¤()\w#h
+
+Makes cutscene bars appear
+
+delay¤(x)\w#h
+
+Same behaviour as simplified command
+
+destroy¤(x)\w#h
+
+Same behaviour as simplified command
+
+x - gravitylines/warptokens/platforms
+
+do¤(n)\w#h
+
+Starts a loop block which will repeat n times. End the block with the loop
+command.
+
+endcutscene¤()\w#h
+
+Makes cutscene bars disappear
+
+endtext\w#h
+
+Makes a text box disappear (fade out)
+
+endtextfast\w#h
+
+Makes a text box disappear immediately (without fading out)
+
+entersecretlab\r#h
+
+Actually unlocks the secret lab for the main game, which is probably an unwanted
+effect for a custom level to have. Turns on secret lab mode.
+
+everybodysad¤()\w#h
+
+Makes everybody sad (only for crewmates created with createcrewman and the player)
+
+face¤(a,b)\w#h
+
+Makes the face of crewmate a point to crewmate b (only works with crewmates
+created with createcrewman)
+
+a - cyan/player/blue/red/yellow/green/purple/gray
+b - same
+
+fadein¤()\w#h
+
+Fades back
+
+fadeout¤()\w#h
+
+Fades the screen to black
+
+finalmode¤(x,y)\b#h
+
+Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
+Final Level
+
+flag¤(x,on/off)\w#h
+
+Same behaviour as simplified command
+
+flash¤(x)\w#h
+
+Makes the screen white, you can change the time how long the screen should stay
+white (just flash won't work, you have to use flash(5) in combination with
+playef(9) and shake(20) if you want a normal flash)
+
+x - The amount of ticks. 30 ticks is almost one second.
+
+flip\w#h
+
+Make the player flip
+
+flipgravity¤(color)\w#h
+
+Flips the gravity of a certain crewmate (it won't always work on yourself)
+
+color - cyan/player/blue/red/yellow/green/purple
+
+flipme\w#h
+
+Correct vertical positioning of multiple text boxes in flip mode
+
+foundlab\b#h
+
+Plays sound effect 3, shows text box with "Congratulations! You have found the
+secret lab!" Does not endtext, also has no further unwanted effects.
+
+foundlab2\b#h
+
+Displays the second text box you see after discovering the secret lab. Also does
+not endtext, and also does not have any further unwanted effects.
+
+foundtrinket¤(x)\w#h
+
+Makes a trinket found
+
+x - Number of the trinket
+
+gamemode¤(x)\b#h
+
+teleporter to show the map, game to hide it (shows teleporters of the main game)
+
+x - teleporter/game
+
+gamestate¤(x)\o#h
+
+Change the gamestate to the specified state number
+
+gotoposition¤(x,y,f)\w#h
+
+Change Viridian's position to x,y in this room, and f is whether you're flipped or
+not. (1 for flipped, 0 for not flipped)
+
+f - 1 for flipped, 0 for not flipped. WARNING: Do not leave this unspecified, or
+else you could softlock the game!
+
+gotoroom¤(x,y)\w#h
+
+Change the current room to x,y, where x and y start at 0.
+
+x - Room x coordinate, starting at 0
+y - Room y coordinate, starting at 0
+
+greencontrol\b#h
+
+Start a conversation with Verdigris just like when you meet him in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+hascontrol¤()\w#h
+
+Makes the player have control, however doesn't work in the middle of scripts
+
+hidecoordinates¤(x,y)\w#h
+
+Hide coordinates x,y on the map (This works for the map for custom levels)
+
+hideplayer¤()\w#h
+
+Makes the player invisible
+
+hidesecretlab\w#h
+
+Hide the secret lab on the map
+
+hideship\w#h
+
+Hide the ship on the map
+
+hidetargets¤()\b#h
+
+Hide the targets on the map
+
+hideteleporters¤()\b#h
+
+Hide the teleporters on the map
+
+hidetrinkets¤()\b#h
+
+Hide the trinkets on the map
+
+ifcrewlost¤(crewmate,script)\b#h
+
+If crewmate is lost, go to script
+
+ifexplored¤(x,y,script)\w#h
+
+If x+1,y+1 is explored, go to (internal) script
+
+ifflag¤(n,script)\b#h
+
+Same as customifflag, but loads an internal (main game) script
+
+iflast¤(crewmate,script)\b#h
+
+If crewmate x was rescued last, go to script
+
+crewmate - Numbers are used here: 0: Viridian, 1: Violet, 2: Vitellary, 3:
+Vermilion, 4: Verdigris, 5 Victoria
+
+ifskip¤(x)\b#h
+
+If you skip the cutscenes in No Death Mode, go to script x
+
+iftrinkets¤(n,script)\b#h
+
+Same as simplified scripting, but loads an internal (main game) script
+
+iftrinketsless¤(n,script)\b#h
+
+Same as simplified scripting, but loads an internal (main game) script
+
+ifwarp¤(x,y,dir,script)\w#h
+
+If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+jukebox¤(x)\w#h
+
+Makes a jukebox terminal white and turns off the color of all the other terminals
+(in custom levels, it just seems to turn off the white color of all activated
+terminals).
+
+leavesecretlab¤()\b#h
+
+Turn off "secret lab mode"
+
+loadscript¤(script)\b#h
+
+Load an internal (main game) script. Commonly used in custom levels as
+loadscript(stop)
+
+loop\w#h
+
+Put this at the end of a loop block started with the do command.
+
+missing¤(color)\b#h
+
+Makes someone missing
+
+moveplayer¤(x,y)\w#h
+
+Moves the player x pixels to the right and y pixels down. Of course you can also
+use negative numbers to make them move up or to the left
+
+musicfadein¤()\w#h
+
+An unfinished command. This does nothing.
+
+musicfadeout¤()\w#h
+
+Fades out the music.
+
+nocontrol¤()\w#h
+
+The opposite of hascontrol()
+
+play¤(x)\w#h
+
+Start playing a song with internal song number.
+
+x - Internal song number
+
+playef¤(x,n)\w#h
+
+Play a sound effect.
+
+n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
+offset in milliseconds at which the sound effect started.
+
+position¤(x,y)\w#h
+
+Overrides the x,y of the text command and thus sets the position of the text box.
+
+x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+purple
+y - Only used if x is a color name. Can be above/below
+
+purplecontrol\b#h
+
+Start a conversation with Violet just like when you meet her in the main game and
+press ENTER. Also creates an activity zone afterwards.
+
+redcontrol\b#h
+
+Start a conversation with Vermilion just like when you meet him in the main game
+and press ENTER. Also creates an activity zone afterwards.
+
+rescued¤(color)\b#h
+
+Makes someone rescued
+
+resetgame\w#h
+
+Resets all trinkets, collected crewmates and flags, and teleports the player to
+the last checkpoint.
+
+restoreplayercolour¤()\w#h
+
+Changes the player's color back to cyan
+
+resumemusic¤()\w#h
+
+An unfinished command. Reads from uninitialized memory, which results in a crash
+on some machines and just results in playing Path Complete on others.
+
+rollcredits¤()\r#h
+
+Makes the credits roll. It destroys your save after the credits are completed!
+
+setcheckpoint¤()\w#h
+
+Sets the checkpoint to the current location
+
+shake¤(n)\w#h
+
+Shake the screen for n ticks. This will not create a delay.
+
+showcoordinates¤(x,y)\w#h
+
+Show coordinates x,y on the map (This works for the map for custom levels)
+
+showplayer¤()\w#h
+
+Makes the player visible
+
+showsecretlab\w#h
+
+Show the secret lab on the map
+
+showship\w#h
+
+Show the ship on the map
+
+showtargets¤()\b#h
+
+Show the targets on the map (unknown teleporters which show up as ?s)
+
+showteleporters¤()\b#h
+
+Show the teleporters on the map (I guess it only shows the teleporter in Space
+Station 1)
+
+showtrinkets¤()\b#h
+
+Show the trinkets on the map
+
+speak\w#h
+
+Shows a text box, without removing old text boxes. Also pauses the script until
+you press action (unless there's a backgroundtext command above it)
+
+speak_active\w#h
+
+Shows a text box, and removes any old text box. Also pauses the script until you
+press action (unless there's a backgroundtext command above it)
+
+specialline¤(x)\b#h
+
+Special dialogs that show up in the main game
+
 squeak¤(color)\w#h
 
 Makes a squeak sound from a crewmate, or a terminal sound
 
 color - cyan/player/blue/red/yellow/green/purple/terminal
+
+startintermission2\w#h
+
+Alternate finalmode(46,54), takes you to the final level without accepting
+arguments. Crashes in timeslip.
+
+stopmusic¤()\w#h
+
+Stops the music immediately. Equivalent to music(0) in simplified scripting.
+
+teleportscript¤(script)\b#h
+
+Used to set a script which is run when you use a teleporter
+
+telesave¤()\r#h
+
+Saves your game (in the regular teleporter save, so don't use it!)
 
 text¤(color,x,y,lines)\w#h
 
@@ -1415,277 +1982,41 @@ x - The x position of the text box
 y - The y position of the text box
 lines - The number of lines
 
-position¤(x,y)\w#h
+textboxactive\w#h
 
-Overrides the x,y of the text command and thus sets the position of the text box.
+Makes all text boxes on the screen disappear except for the last created one
 
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple
-y - Only used if x is a color name. Can be above/below
+tofloor\w#h
 
-endtext\w#h
+Makes the player flip to the floor if they aren't already on the floor.
 
-Makes a text box disappear (fade out)
+trinketbluecontrol¤()\b#h
 
-endtextfast\w#h
+Dialog of Victoria when she gives you a trinket in the real game
 
-Makes a text box disappear immediately (without fading out)
+trinketscriptmusic\w#h
 
-speak\w#h
+Plays Passion for Exploring. Does nothing else.
 
-Shows a text box, without removing old text boxes. Also pauses the script until
-you press action (unless there's a backgroundtext command above it)
+trinketyellowcontrol¤()\b#h
 
-speak_active\w#h
-
-Shows a text box, and removes any old text box. Also pauses the script until you
-press action (unless there's a backgroundtext command above it)
-
-backgroundtext\w#h
-
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
-
-changeplayercolour¤(color)\w#h
-
-Changes the player's color
-
-color - cyan/player/blue/red/yellow/green/purple/teleporter
-
-restoreplayercolour¤()\w#h
-
-Changes the player's color back to cyan
-
-changecolour¤(a,b)\w#h
-
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
-
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
-
-alarmon\w#h
-
-Turns the alarm on
-
-alarmoff\w#h
-
-Turns the alarm off
-
-cutscene¤()\w#h
-
-Makes cutscene bars appear
-
-endcutscene¤()\w#h
-
-Makes cutscene bars disappear
-
-untilbars¤()\w#h
-
-Wait until cutscene()/endcutscene() is completed
-
-customifflag¤(n,script)\w#h
-
-Same as ifflag(n,script) in simplified scripting
-
-ifflag¤(n,script)\b#h
-
-Same as customifflag, but loads an internal (main game) script
-
-loadscript¤(script)\b#h
-
-Load an internal (main game) script. Commonly used in custom levels as
-loadscript(stop)
-
-iftrinkets¤(n,script)\b#h
-
-Same as simplified scripting, but loads an internal (main game) script
-
-iftrinketsless¤(n,script)\b#h
-
-Same as simplified scripting, but loads an internal (main game) script
-
-customiftrinkets¤(n,script)\w#h
-
-Same as iftrinkets(n,script) in simplfied scripting
-
-customiftrinketsless¤(n,script)\w#h
-
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
-
-createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
-
-Creates a crewmate (not rescuable)
-
-mood - 0 for happy, 1 for sad
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
-
-createentity¤(x,y,n,meta1,meta2)\o#h
-
-Creates an entity, check the lists reference for entity numbers
-
-n - The entity number
-
-vvvvvvman¤()\w#h
-
-Makes the player huge
+Dialog of Vitellary when he gives you a trinket in the real game
 
 undovvvvvvman¤()\w#h
 
 Back to normal
 
-hideplayer¤()\w#h
+untilbars¤()\w#h
 
-Makes the player invisible
-
-showplayer¤()\w#h
-
-Makes the player visible
-
-gamestate¤(x)\o#h
-
-Change the gamestate to the specified state number
-
-gamemode¤(x)\b#h
-
-teleporter to show the map, game to hide it (shows teleporters of the main game)
-
-x - teleporter/game
-
-blackout¤()\w#h
-
-Make the screen black/freezes the screen
-
-blackon¤()\w#h
-
-Back to normal from blackout()
-
-fadeout¤()\w#h
-
-Fades the screen to black
-
-fadein¤()\w#h
-
-Fades back
-
-befadein¤()\w#h
-
-Instantly fade in from fadeout()
+Wait until cutscene()/endcutscene() is completed
 
 untilfade¤()\w#h
 
 Wait until fadeout()/fadein() is completed
 
-gotoroom¤(x,y)\w#h
+vvvvvvman¤()\w#h
 
-Change the current room to x,y, where x and y start at 0.
-
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
-
-gotoposition¤(x,y,f)\w#h
-
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
-
-f - 1 for flipped, 0 for not flipped (you can also use gotoposition(x,y), then you
-will have normal gravity by default)
-
-flash¤(x)\w#h
-
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
-
-x - The amount of ticks. 30 ticks is almost one second.
-
-play¤(x)\w#h
-
-Start playing a song with internal song number.
-
-x - Internal song number
-
-jukebox¤(x)\w#h
-
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
-
-musicfadeout¤()\w#h
-
-Fades out the music.
-
-musicfadein¤()\w#h
-
-Opposite of musicfadeout() (doesn't seem to work)
-
-stopmusic¤()\w#h
-
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
-
-resumemusic¤()\w#h
-
-Opposite of stopmusic() (doesn't seem to work)
-
-playef¤(x,n)\w#h
-
-Play a sound effect.
-
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
-
-changemood¤(colour,mood)\w#h
-
-Changes the mood of a crewmate (only works for crewmates created with
-createcrewman)
-
-colour - cyan/player/blue/red/yellow/green/purple
-mood - 0 for happy, 1 for sad
-
-everybodysad¤()\w#h
-
-Makes everybody sad (only for crewmates created with createcrewman and the player)
-
-changetile¤(colour,tile)\w#h
-
-Changes the tile of a crewmate (you can change it to any sprite in sprites.png,
-and it only works for crewmates created with createcrewman)
-
-colour - cyan/player/blue/red/yellow/green/purple/gray
-tile - Tile number
-
-face¤(a,b)\w#h
-
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
-
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
-
-companion¤(x)\b#h
-
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
-
-changeai¤(crewmate,ai1,ai2)\w#h
-
-Can change the face direction of a crewmate or the walking behaviour
-
-crewmate - cyan/player/blue/red/yellow/green/purple
-ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-      faceplayer/panic/faceleft/faceright/followposition,ai2
-ai2 - required if followposition is used for ai1
-
-changedir¤(colour,direction)\w#h
-
-Just like changeai(colour,faceleft/faceright), this changes face direction.
-
-colour - cyan/player/blue/red/yellow/green/purple
-direction - 0 is left, 1 is right
+Makes the player huge
 
 walk¤(direction,x)\w#h
 
@@ -1693,285 +2024,20 @@ Makes the player walk for the specified number of ticks
 
 direction - left/right
 
-flipgravity¤(colour)\w#h
-
-Flips the gravity of a certain crewmate (it won't always work on yourself)
-
-colour - cyan/player/blue/red/yellow/green/purple
-
-flipme\w#h
-
-Correct vertical positioning of multiple text boxes in flip mode
-
-tofloor\w#h
-
-Makes the player flip to the floor if he isn't already on the floor.
-
-flip\w#h
-
-Make the player flip
-
-foundtrinket¤(x)\w#h
-
-Makes a trinket found
-
-x - Number of the trinket
-
-runtrinketscript\b#h
-
-Play Passion For Exploring?
-
-altstates¤(x)\b#h
-
-Changes the layout of some rooms, like the trinket room in the ship before and
-after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
-
-createlastrescued¤(x,y)\b#h
-
-Creates the last rescued crewmate at position x,y (?)
-
-rescued¤(colour)\b#h
-
-Makes someone rescued
-
-missing¤(colour)\b#h
-
-Makes someone missing
-
-finalmode¤(x,y)\b#h
-
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
-Final Level
-
-setcheckpoint¤()\w#h
-
-Sets the checkpoint to the current location
-
-textboxactive\w#h
-
-Makes all text boxes on the screen disappear except for the last created one
-
-ifexplored¤(x,y,script)\w#h
-
-If x+1,y+1 is explored, go to (internal) script
-
-iflast¤(crewmate,script)\b#h
-
-If crewmate x was rescued last, go to script
-
-crewmate - Numbers are used here: 2: Vitellary, 3: Vermillion, 4: Verdigris, 5
-Victoria (I don't know the number for Viridian and Violet)
-
-ifskip¤(x)\b#h
-
-If you skip the cutscenes in No Death Mode, go to script x
-
-ifcrewlost¤(crewmate,script)\b#h
-
-If crewmate is lost, go to script
-
-showcoordinates¤(x,y)\w#h
-
-Show coordinates x,y on the map (This works for the map for custom levels)
-
-hidecoordinates¤(x,y)\w#h
-
-Hide coordinates x,y on the map (This works for the map for custom levels)
-
-showship\w#h
-
-Show the ship on the map
-
-hideship\w#h
-
-Hide the ship on the map
-
-showsecretlab\w#h
-
-Show the secret lab on the map
-
-hidesecretlab\w#h
-
-Hide the secret lab on the map
-
-showteleporters¤()\b#h
-
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
-
-hideteleporters¤()\b#h
-
-Hide the teleporters on the map
-
-showtargets¤()\b#h
-
-Show the targets on the map (unknown teleporters which show up as ?s)
-
-hidetargets¤()\b#h
-
-Hide the targets on the map
-
-showtrinkets¤()\b#h
-
-Show the trinkets on the map
-
-hidetrinkets¤()\b#h
-
-Hide the trinkets on the map
-
-hascontrol¤()\w#h
-
-Makes the player have control, however doesn't work in the middle of scripts
-
-nocontrol¤()\w#h
-
-The opposite of hascontrol()
-
-specialline¤(x)\b#h
-
-Special dialogs that show up in the main game
-
-destroy¤(x)\w#h
-
-Same behaviour as simplified command
-
-x - gravitylines/warptokens/platforms
-
-delay¤(x)\w#h
-
-Same behaviour as simplified command
-
-flag¤(x,on/off)\w#h
-
-Same behaviour as simplified command
-
-telesave¤()\r#h
-
-Saves your game (in the regular teleporter save, so don't use it!)
-
-createactivityzone¤(colour)\b#h
-
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
-
-createrescuedcrew¤()\b#h
-
-Creates all rescued crewmates
-
-trinketyellowcontrol¤()\b#h
-
-Dialog of Vitellary when he gives you a trinket in the real game
-
-trinketbluecontrol¤()\b#h
-
-Dialog of Victoria when she gives you a trinket in the real game
-
-rollcredits¤()\r#h
-
-Makes the credits roll. It destroys your save after the credits are completed!
-
-teleportscript¤(script)\b#h
-
-Used to set a script which is run when you use a teleporter
-
-clearteleportscript¤()\b#h
-
-Clears the teleporter script set with teleporterscript(x)
-
-moveplayer¤(x,y)\w#h
-
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make him move up or to the left
-
-do¤(n)\w#h
-
-Starts a loop block which will repeat n times
-
-loop\w#h
-
-Put this at the end of the loop block
-
-leavesecretlab¤()\b#h
-
-Turn off "secret lab mode"
-
-shake¤(n)\w#h
-
-Shake the screen for n ticks. This will not create a delay.
-
-activateteleporter¤()\w#h
-
-If there's a teleporter in the room, it will glow white and touching it will not
-annihilate your save data. May not work if there are multiple teleporters.
-
-customposition¤(x,y)\w#h
-
-Overrides the x,y of the text command and thus sets the position of the text box,
-but for crewmates, rescuable crewmates are used to position against, instead of
-createentity crewmates.
-
-x - center/centerx/centery, or a color name
-cyan/player/blue/red/yellow/green/purple (rescuable)
-y - Only used if x is a color name. Can be above/below
-
-custommap¤(on/off)\w#h
-
-The internal variant of the map command
-
-trinketscriptmusic\w#h
-
-Plays passion for exploring, without taking arguments(?)
-
-startintermission2\w#h
-
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
-
-resetgame\w#h
-
-Resets all trinkets, collected crewmates and flags, and teleports the player to
-the last checkpoint.
-
-redcontrol\b#h
-
-Start a conversation with Vermilion just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
-
-greencontrol\b#h
-
-Start a conversation with Verdigris just like when you meet him in the main game
-and press ENTER. Also creates an activity zone afterwards.
-
-bluecontrol\b#h
-
-Start a conversation with Victoria just like when you meet her in the main game
-and press ENTER. Also creates an activity zone afterwards.
+warpdir¤(x,y,dir)\w#h
+
+Changes the warp direction for room x,y, 1-indexed, to the given direction. This
+could be checked with ifwarp, resulting in a relatively powerful extra
+flags/variable system.
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
 
 yellowcontrol\b#h
 
 Start a conversation with Vitellary just like when you meet him in the main game
 and press ENTER. Also creates an activity zone afterwards.
-
-purplecontrol\b#h
-
-Start a conversation with Violet just like when you meet her in the main game and
-press ENTER. Also creates an activity zone afterwards.
-
-foundlab\b#h
-
-Plays sound effect 3, shows text box with "Congratulations! You have found the
-secret lab!" Does not endtext, also has no further unwanted effects.
-
-foundlab2\b#h
-
-Displays the second text box you see after discovering the secret lab. Also does
-not endtext, and also does not have any further unwanted effects.
-
-entersecretlab\r#h
-
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
 ]]
 },
 
@@ -2633,8 +2699,7 @@ machen!
 
 License\h#
 \
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Copyright 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2655,6 +2720,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

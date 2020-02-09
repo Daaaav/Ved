@@ -6,6 +6,7 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	for rvnum = #scriptnames, 1, -1 do
 		local script_inserted = false
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+			v = scriptlinecasing(v)
 			local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ""))
 
 			if (
@@ -16,7 +17,7 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 				if specificflag == nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
 
-					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) > 99 then
+					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) >= limit.flags then
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
 				elseif specificflag == tonumber(explcommaline[2]) then
@@ -75,26 +76,36 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 		-- Replace characters by one with which we will split.
 		text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
-		partss = explode(",", text2)
-		partss_ignoring_spaces = explode(",", text2:gsub(" ", ""))
+		local partss = explode(",", text2)
+		local partss_parsed = {}
+
+		for k, v in pairs(partss) do
+			v = v:gsub(" ", "")
+			if k < #partss then
+				table.insert(partss_parsed, v:lower())
+			else
+				table.insert(partss_parsed, v)
+			end
+		end
 
 		if docolor then
 			for k,v in pairs(partss) do
-				local v_ignoring_spaces = partss_ignoring_spaces[k]
+				local v_parsed = partss_parsed[k]
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
-					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ") or knowncommands[v_ignoring_spaces] or knowninternalcommands[v_ignoring_spaces] then
+					-- `say` and `reply` are special and still work capitalized even with no argument separators
+					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ") or knowncommands[v_parsed] or knowninternalcommands[v_parsed] or v_parsed:lower() == "say" or v_parsed:lower() == "reply" then
 						setColorArr(s.syntaxcolor_command)
 					else
 						setColorArr(s.syntaxcolor_errortext)
 					end
-				elseif tostring(tonumber(v_ignoring_spaces)) == tostring(v_ignoring_spaces) then -- It's a number!
+				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)
 				--elseif string.sub(v, 1, 1) == "$" then
-				elseif k == 2 and (partss_ignoring_spaces[1] == "flag" or partss_ignoring_spaces[1] == "ifflag" or partss_ignoring_spaces[1] == "customifflag") and tostring(tonumber(v_ignoring_spaces)) ~= tostring(v_ignoring_spaces) then
+				elseif k == 2 and (partss_parsed[1] == "flag" or partss_parsed[1] == "ifflag" or partss_parsed[1] == "customifflag") and tostring(tonumber(v_parsed)) ~= tostring(v_parsed) then
 					-- if flag name is not used yet, newflagname
-					for fl = 0, 99 do
-						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_ignoring_spaces then
+					for fl = 0, limit.flags-1 do
+						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_parsed then
 							setColorArr(s.syntaxcolor_flagname)
 							break
 						end
@@ -128,23 +139,24 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			end
 		end
 
-		if partss_ignoring_spaces[1] == "say" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
-				return 1, normalize_simplified_color(partss_ignoring_spaces[3])
+		-- `say` and `reply` are exceptions - they still work when they're capitalized even with no argument separators
+		if partss_parsed[1]:lower() == "say" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_parsed[2])) <= 1 then
+				return 1, normalize_simplified_color(partss_parsed[3])
 			else
-				return tonumber(partss_ignoring_spaces[2]), normalize_simplified_color(partss_ignoring_spaces[3])
+				return tonumber(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
 			end
-		elseif partss_ignoring_spaces[1] == "reply" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[2])) <= 1 then
+		elseif partss_parsed[1]:lower() == "reply" then
+			if partss[2] == nil or anythingbutnil0(tonumber(partss_parsed[2])) <= 1 then
 				return 1, "player"
 			else
-				return tonumber(partss_ignoring_spaces[2]), "player"
+				return tonumber(partss_parsed[2]), "player"
 			end
-		elseif partss_ignoring_spaces[1] == "text" then
-			if partss[5] == nil or anythingbutnil0(tonumber(partss_ignoring_spaces[5])) <= 0 then
-				return 0, partss_ignoring_spaces[2]
+		elseif partss_parsed[1] == "text" then
+			if partss[5] == nil or anythingbutnil0(tonumber(partss_parsed[5])) <= 0 then
+				return 0, partss_parsed[2]
 			else
-				return tonumber(partss_ignoring_spaces[5]), partss_ignoring_spaces[2]
+				return tonumber(partss_parsed[5]), partss_parsed[2]
 			end
 		end
 	end
@@ -154,6 +166,7 @@ end
 function justtext(text, thisistext)
 	if not thisistext then
 		text = text:gsub(" ", "")
+		text = scriptlinecasing(text)
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
 			text2 = string.gsub(string.gsub(text, "%(", ","), "%)", ",")
 
@@ -188,6 +201,7 @@ end
 
 function scriptcontext(text)
 	local text2 = string.gsub(string.gsub(string.gsub(anythingbutnil(text), "%(", ","), "%)", ","), " ", "")
+	text2 = scriptlinecasing(text2)
 
 	parts = explode(",", text2)
 
@@ -202,9 +216,38 @@ function scriptcontext(text)
 	elseif (parts[1] == "ifcrewlost" or parts[1] == "iflast") and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
 		return "script", string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil, nil
 	elseif parts[1] == "ifexplored" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[4] ~= "custom_" and string.sub(parts[4], 1, string.len("custom_")) == "custom_" then
-		return "roomscript", tonumber(parts[2]), tonumber(parts[3]), string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
+		local x, y = tonumber(parts[2]), tonumber(parts[3])
+		if x == nil or y == nil then
+			return "roomscript", x, y, nil
+		end
+		local script = string.sub(parts[4], string.len("custom_")+1, string.len(parts[4]))
+		local roomnum = x + y*20
+		if roomnum >= 0 and roomnum < 400 then
+			local x_again, y_again
+			y_again = math.floor(roomnum/20)
+			x_again = roomnum % 20
+			return "roomscript", x_again, y_again, script
+		else
+			return "roomnumscript", roomnum, script
+		end
+		return "roomscript", x, y, script
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
 		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
+	elseif parts[1] == "ifwarp" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[5] ~= nil and parts[5] ~= "" then
+		local x, y = tonumber(parts[2]), tonumber(parts[3])
+		if x == nil or y == nil then
+			return "roomscript", x, y, nil
+		end
+		local script = parts[5]
+		local roomnum = x + y*20
+		if roomnum >= 0 and roomnum < 400 then
+			local x_again, y_again
+			y_again = math.floor(roomnum/20)
+			x_again = roomnum % 20
+			return "roomscript", x_again, y_again, script
+		else
+			return "roomnumscript", roomnum, script
+		end
 	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
 		local x, y = tonumber(parts[2]), tonumber(parts[3])
 		if x == nil or y == nil then
@@ -212,8 +255,54 @@ function scriptcontext(text)
 		end
 		if parts[1] == "gotoroom" then
 			x, y = x % metadata.mapwidth, y % metadata.mapheight
+		elseif table.contains({"hidecoordinates", "showcoordinates"}, parts[1]) then
+			local roomnum = x + y*20
+			if roomnum >= 0 and roomnum < 400 then
+				local x_again, y_again
+				y_again = math.floor(roomnum/20)
+				x_again = roomnum % 20
+				return "room", x_again, y_again, nil
+			else
+				return "roomnum", roomnum
+			end
 		end
 		return "room", x, y, nil
+	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then
+		local frames
+		if parts[1] == "walk" then
+			frames = parts[3]
+		else
+			frames = parts[2]
+		end
+		if tonumber(frames) == nil or tonumber(frames) <= 0 then
+			return "frames", nil
+		end
+		return "frames", frames, nil, nil
+	elseif table.contains({"music", "play", "stopmusic", "playremix"}, parts[1]) then
+		if parts[1] == "stopmusic" then
+			return "track", -1, nil, nil
+		elseif parts[1] == "playremix" then
+			return "track", 15, nil, nil
+		end
+		if parts[2] == nil or parts[2] == "" then
+			return nil
+		end
+		local track
+		if parts[1] == "music" and tonumber(parts[2]) ~= nil and tonumber(parts[2]) <= 11 then
+			track = tonumber(parts[2])
+			return "track", musicsimplifiedtointernal[track], nil, nil
+		else
+			track = parts[2]:match("^%d+")
+			track = tonumber(track)
+			if track ~= nil then
+				if track < 0 then
+					track = nil
+				else
+					track = track % 16
+				end
+			end
+			return "track", track, nil, nil
+		end
 	else
 		return nil, nil, nil, nil
 	end
@@ -225,17 +314,18 @@ function processflaglabels()
 	if not keyboard_eitherIsDown("shift") then
 		-- scriptlines assumed non-empty table of lines
 		for k,v in pairs(scriptlines) do
-			-- I could split it into parts and then check everything with that, but this is far easier and better performing.
-			--if v:sub(1,5) == "flag(" or v:sub(1,7) == "ifflag(" or v:sub(1,13) == "customifflag(" then
-			if v:sub(1,4) == "flag" or v:sub(1,6) == "ifflag" or v:sub(1,12) == "customifflag" then
+			-- There needs to be at least one argument separator to be a flag, but don't explode it (yet)
+			v = v:gsub(" ", "")
+			if v:lower():match("^flag[%(,%)]") or v:lower():match("^ifflag[%(,%)]") or v:lower():match("^customifflag[%(,%)]") then
 				-- Ok, how about now?
 				text2 = string.gsub(string.gsub(v, "%(", ","), "%)", ",")
 
 				-- We need to explode it anyways.
-				partss = explode(",", text2)
+				local partss = explode(",", text2)
 
 				if vedmetadata ~= false and vedmetadata.flaglabel[tonumber(partss[2])] ~= nil and vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
 					-- This flag has a name
+					scriptlines[k] = scriptlines[k]:gsub(" ", "")
 					scriptlines[k] = scriptlines[k]:gsub(partss[2], vedmetadata.flaglabel[tonumber(partss[2])], 1)
 				end
 			end
@@ -302,8 +392,8 @@ function processflaglabelsreverse()
 	-- Converts flag labels to numbers, and if an internal script, convert to a format that works in VVVVVV
 	-- scriptlines assumed non-empty table of lines
 
-	usedflags = {}
-	outofrangeflags = {}
+	local usedflags = {}
+	local outofrangeflags = {}
 
 	-- See which flags have been used in this level.
 	returnusedflags(usedflags, outofrangeflags)
@@ -321,9 +411,15 @@ function processflaglabelsreverse()
 
 		-- If we already end with (custom)?iftrinkets(0,... or loadscript(..., then we won't need the default loadscript(stop)
 		local final_loadscript_n = 1
-		if scriptlines[#scriptlines]:match("^iftrinkets[%(,%)]0 ?[%(,%)]")
-		or scriptlines[#scriptlines]:match("^customiftrinkets[%(,%)]0 ?[%(,%)]")
-		or scriptlines[#scriptlines]:match("^loadscript[%(,%)]") then
+		local theline = scriptlines[#scriptlines]
+		theline = theline:gsub(" ", "")
+		theline = scriptlinecasing(theline)
+		if theline:match("^iftrinkets[%(,%)]0+[%(,%)]")
+		or theline:match("^iftrinkets[%(,%)]0+$")
+		or theline:match("^customiftrinkets[%(,%)]0+[%(,%)]")
+		or theline:match("^customiftrinkets[%(,%)]0+$")
+		or theline:match("^loadscript[%(,%)]")
+		or theline:match("^loadscript$") then
 			final_loadscript_n = 0
 		end
 
@@ -353,8 +449,9 @@ function processflaglabelsreverse()
 		local marksafe = true
 		for k = #scriptlines, 1, -1 do
 			local v = scriptlines[k]:gsub(" ", "")
+			v = scriptlinecasing(v)
 
-			if v:sub(1,5) == "speak" then
+			if v:match("^speak$") or v:match("^speak[%(,%)]") or v:match("^speak_active$") or v:match("^speak_active[%(,%)]") then
 				marksafe = false
 			elseif v:match("^text[%(,%)]") then
 				local _, sepcount = v:gsub("[%(,%)]", "")
@@ -464,13 +561,16 @@ function processflaglabelsreverse()
 
 	-- b1 fix for flag names being assigned flag numbers that are also used in that script for the first time. See below
 	for k,v in pairs(scriptlines) do
+		local usev
 		if k == editingline then
 			usev = anythingbutnil(input) .. anythingbutnil(input_r)
 		else
 			usev = v
 		end
+		usev = usev:gsub(" ", "")
+		usev = scriptlinecasing(usev)
 
-		if usev:sub(1,4) == "flag" or usev:sub(1,6) == "ifflag" or usev:sub(1,12) == "customifflag" then
+		if usev:match("^flag[%(,%)]") or usev:match("^ifflag[%(,%)]") or usev:match("^customifflag[%(,%)]") then
 			local text2 = string.gsub(string.gsub(usev, "%(", ","), "%)", ","):gsub(" ", "")
 			local partss = explode(",", text2)
 
@@ -485,6 +585,7 @@ function processflaglabelsreverse()
 	local textlinestogo = 0
 
 	for k,v in pairs(scriptlines) do
+		local usev
 		if k == editingline then
 			usev = anythingbutnil(input) .. anythingbutnil(input_r)
 		else
@@ -499,6 +600,14 @@ function processflaglabelsreverse()
 		else
 			partss = {""}
 		end
+		local partss_scriptcasing = {}
+		for k, v in pairs(partss) do
+			if k < #partss then
+				table.insert(partss_scriptcasing, v:lower())
+			else
+				table.insert(partss_scriptcasing, v)
+			end
+		end
 
 		-- Are we using internal scripting mode? If this line is blank it's not going to be taken well by VVVVVV itself unless we put something here..
 		if (internalscript or cutscenebarsinternalscript) and v == "" and textlinestogo <= 0 then
@@ -510,7 +619,7 @@ function processflaglabelsreverse()
 			textlinestogo = textlinestogo - 1
 		end
 
-		if partss[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
+		if partss_scriptcasing[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
 			textlinestogo = anythingbutnil0(tonumber(partss[5]))
 		end
 
@@ -524,8 +633,8 @@ function processflaglabelsreverse()
 			scriptlines[k] = "# "
 		end
 
-		if partss[1] == "flag" or partss[1] == "ifflag" or partss[1] == "customifflag" then
-			cons("" .. partss[1] .. " found at line " .. k)
+		if partss_scriptcasing[1] == "flag" or partss_scriptcasing[1] == "ifflag" or partss_scriptcasing[1] == "customifflag" then
+			cons(partss[1] .. " found at line " .. k)
 
 			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
@@ -543,7 +652,7 @@ function processflaglabelsreverse()
 					break
 				end
 
-				for vlag = 0, 99 do
+				for vlag = 0, limit.flags-1 do
 					if vedmetadata.flaglabel[vlag] == partss[2] then
 						useflag = vlag
 						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. vlag)
@@ -554,7 +663,7 @@ function processflaglabelsreverse()
 				if useflag == -1 then
 					-- This flag name is new! Find a flag number to assign it to.
 					cons("Flag name " .. partss[2] .. " is new!")
-					for vlag = 0, 99 do
+					for vlag = 0, limit.flags-1 do
 						if not usedflags[vlag] then
 							-- Ah, here we got one!
 							useflag = vlag
@@ -578,6 +687,8 @@ function processflaglabelsreverse()
 					end
 				else					
 					-- When replacing, make sure a flag named "flag" or similar won't replace the command itself. Also don't change the style of brackets/commas by imploding as x(y,z)
+					-- And also, just remove all the spaces from the line if there are any
+					usev = usev:gsub(" ", "")
 					scriptlines[k] = partss[1] .. usev:sub(partss[1]:len()+1, -1):gsub(escapegsub(partss[2], true), useflag, 1)
 					cons("Substituted " .. partss[2] .. " (escaped gsub " .. escapegsub(partss[2]) .. ") by " .. useflag)
 
@@ -661,11 +772,20 @@ function findscriptreferences(argscriptname)
 
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
-			v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+			local v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+			v2 = scriptlinecasing(v2)
 
-			partss = explode(",", v2)
+			local partss = explode(",", v2)
 
-			local loadscriptcond = (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
+			local loadscriptcond = (
+				(
+					(partss[1] == "iftrinkets" or partss[1] == "iftrinketsless"
+					or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless"
+					or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] == argscriptname
+				)
+				or
+				(partss[1] == "ifwarp" and partss[5] == argscriptname)
+			)
 			local scriptcond = (
 				(partss[2] ~= nil and (partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
 				or
@@ -700,18 +820,26 @@ function findusedscripts()
 
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
-			v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+			local v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+			v2 = scriptlinecasing(v2)
 
-			partss = explode(",", v2)
+			local partss = explode(",", v2)
 
-			if (partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag") and partss[3] ~= nil and scripts[partss[3]] ~= nil then
-				usedscripts[partss[3]] = true
+			local add = nil
+			if partss[1] == "iftrinkets" or partss[1] == "iftrinketsless" or partss[1] == "customiftrinkets" or partss[1] == "customiftrinketsless" or partss[1] == "ifflag" or partss[1] == "customifflag" then
+				add = partss[3]
+			elseif partss[1] == "ifwarp" then
+				add = partss[5]
 			elseif (partss[1] == "loadscript" or partss[1] == "ifskip") and partss[2] ~= nil and string.sub(partss[2], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))] = true
+				add = string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))
 			elseif (partss[1] == "ifcrewlost" or partss[1] == "iflast") and partss[3] ~= nil and string.sub(partss[3], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))] = true
+				add = string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))
 			elseif partss[1] == "ifexplored" and partss[4] ~= nil and string.sub(partss[4], 1, string.len("custom_")) == "custom_" then
-				usedscripts[string.sub(partss[4], string.len("custom_")+1, string.len(partss[4]))] = true
+				add = string.sub(partss[4], string.len("custom_")+1, string.len(partss[4]))
+			end
+
+			if add ~= nil and scripts[add] ~= nil then
+				usedscripts[add] = true
 			end
 		end
 	end
@@ -729,6 +857,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 		-- Create script (but do not immediately go to it as we can just easily click again)
 		scripts[argscriptname] = {""}
 		table.insert(scriptnames, argscriptname)
+		dirty()
 	else
 		-- Go to script- but save the current script first!
 		leavescript_to_state = function()
@@ -844,7 +973,7 @@ function flagname_check_problem(name, number)
 		return L.FLAGNAMECHARS
 	elseif vedmetadata ~= false then
 		-- Final check: check if this flag hasn't been used already.
-		for kd = 0, 99 do
+		for kd = 0, limit.flags-1 do
 			if kd ~= number and vedmetadata.flaglabel[kd] == name then
 				-- This flag already exists!
 				return langkeys(L.FLAGNAMEINUSE, {name, kd})
@@ -880,6 +1009,7 @@ function swapflags(flag1, flag2)
 	for rvnum = #scriptnames, 1, -1 do
 		for k,v in pairs(scripts[scriptnames[rvnum]]) do
 			v = v:gsub(" ", "")
+			v = scriptlinecasing(v)
 			for _,command in pairs(commands) do
 				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
@@ -952,6 +1082,43 @@ function updateroomline(line, pattern, transform, direction)
 			return line:gsub(pattern .. endings[1], "%1" .. x .. "%3" .. y)
 		elseif match[2] then
 			return line:gsub(pattern .. endings[2], "%1" .. x .. "%3" .. y .. "%5")
+		end
+	end
+end
+
+function scriptlinecasing(line)
+	if line:find("[%(,%)]") == nil then
+		return line
+	end
+
+	-- Apparently VVVVVV lowercases script lines up until the last argument separator
+	-- So "Flash" => "Flash", which is an invalid script command
+	-- But "Flash(5" => "flash(5", which is a perfectly valid command
+	-- More examples:
+	--  "IftriNKETs(0,thiSScript)" => "iftrinkets(0,thisscript)"
+	--  "iftrinkets(0,thiSScript" => "iftrinkets(0,thisscript"
+
+	local lastargsep = line:reverse():find("[%(,%)]")
+
+	line = line:sub(1, -lastargsep - 1):lower() .. line:sub(-lastargsep)
+
+	return line
+end
+
+function loadflagslist()
+	usedflags = {}
+	outofrangeflags = {}
+
+	-- Seee which flags have been used in this level.
+	returnusedflags(usedflags, outofrangeflags)
+
+	flags_outofrangeflagstext = ""
+
+	for k,v in pairs(outofrangeflags) do
+		if flags_outofrangeflagstext == "" then
+			flags_outofrangeflagstext = L.USEDOUTOFRANGEFLAGS .. " " .. k
+		else
+			flags_outofrangeflagstext = flags_outofrangeflagstext .. ", " .. k
 		end
 	end
 end

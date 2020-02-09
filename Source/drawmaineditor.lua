@@ -49,24 +49,25 @@ function drawmaineditor()
 		if s.psmallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
 			-- Discard anything we're doing with the mouse in the room, we're now on the toolbar
 		elseif tilespicker then
-			if false and tilescreator then
+			if true and tilescreator then
 				-- This is the one where you have to click 30 tiles individually.
+				local tsw = tilesets[tilesetnames[usedtilesets.creator]].tileswidth
 				if not mousepressed then
 					if creatorstep == 1 then
-						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*40)+(atx+1)-1
-						cb[creatorsubstep] = (aty*40)+(atx+1)-1
+						tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*tsw)+atx
+						cb[creatorsubstep] = (aty*tsw)+atx
 					elseif creatorstep == 2 then
-						cons("Background tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Background tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*40)+(atx+1)-1
-						ca[creatorsubstep] = (aty*40)+(atx+1)-1
+						tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*tsw)+atx
+						ca[creatorsubstep] = (aty*tsw)+atx
 					elseif creatorstep == 3 then
-						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*40)+(atx+1)-1
-						cs[creatorsubstep] = (aty*40)+(atx+1)-1
+						tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*tsw)+atx
+						cs[creatorsubstep] = (aty*tsw)+atx
 					end
 
 					if creatorsubstep == 30 then
@@ -89,52 +90,53 @@ function drawmaineditor()
 				end
 			elseif tilescreator then
 				-- Faster one.
+				local tsw = tilesets[tilesetnames[usedtilesets.creator]].tileswidth
 				if not mousepressed then
 					if creatorstep == 1 then
-						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						--tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*40)+(atx+1)-1
+						--tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*tsw)+atx
 
 						for yplus = 0, 4 do
 							for xplus = 0, 2 do
-								if (aty*40)+(atx+1)-1 == 0 then
+								if (aty*tsw)+atx == 0 then
 									cb[creatorsubstep+(6*yplus)+xplus] = 0
 									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
 								else
-									cb[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
+									cb[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
+									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
 								end
 							end
 						end
 					elseif creatorstep == 2 then
-						cons("Background tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Background tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						--tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*40)+(atx+1)-1
+						--tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*tsw)+atx
 
 						for yplus = 0, 4 do
 							for xplus = 0, 2 do
-								if (aty*40)+(atx+1)-1 == 0 then
+								if (aty*tsw)+atx == 0 then
 									ca[creatorsubstep+(6*yplus)+xplus] = 0
 									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
 								else
-									ca[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
+									ca[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
+									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
 								end
 							end
 						end
 					elseif creatorstep == 3 then
-						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*40)+(atx+1)-1)
+						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
 
-						--tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*40)+(atx+1)-1
+						--tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*tsw)+atx
 
 						for yplus = 0, 4 do
 							for xplus = 0, 2 do
-								if (aty*40)+(atx+1)-1 == 0 then
+								if (aty*tsw)+atx == 0 then
 									cs[creatorsubstep+(6*yplus)+xplus] = 0
 									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
 								else
-									cs[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*40)+(atx+1)-1 + (40*yplus) + xplus
+									cs[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
+									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
 								end
 							end
 						end
@@ -159,7 +161,7 @@ function drawmaineditor()
 					mousepressed = true
 				end
 
-			elseif levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+			elseif levelmetadata_get(roomx, roomy).directmode == 1 then
 				if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and not mousepressed and customsizemode ~= 0 then
 					-- You can also make a stamp from the tileset
 					if customsizemode ~= 0 and customsizemode ~= 2 then
@@ -185,14 +187,46 @@ function drawmaineditor()
 						nodialog = false
 						tilespicker = false
 					end
-				else
-					cons("Tile selected: " .. (aty*40)+(atx+1)-1)
-					selectedtile = (aty*40)+(atx+1)-1
+				elseif atx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+				and aty < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
+					selectedtile = (aty*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+(atx+1)-1
 				end
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
-			if love.mouse.isDown("l") and not mousepressed then
+			if love.mouse.isDown("l") and not mousepressed
+			-- Prevent warp lines' control points from being placed not on borders, in order to prevent confusion
+			-- (you can always manually place their control points away from borders by manually editing the properties.
+			-- It doesn't really do anything, though, their part of the border still warps)
+			and (entitydata[movingentity].t ~= 50
+			or (entitydata[movingentity].p1 == 0 and atx == 0)
+			or (entitydata[movingentity].p1 == 1 and atx == 39)
+			or (entitydata[movingentity].p1 == 2 and aty == 0)
+			or (entitydata[movingentity].p1 == 3 and aty == 29)) then
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
+				local new_p2 = entitydata[movingentity].p2
+				if table.contains({11, 50}, entitydata[movingentity].t) then
+					local use_x, use_y = false, false
+					if entitydata[movingentity].t == 11 then
+						if entitydata[movingentity].p1 <= 0 then
+							use_x = true
+						else
+							use_y = true
+						end
+					elseif entitydata[movingentity].t == 50 then
+						if table.contains({2, 3}, entitydata[movingentity].p1) then
+							use_x = true
+						elseif table.contains({0, 1}, entitydata[movingentity].p1) then
+							use_y = true
+						end
+					end
+					if use_x then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].x%40
+						new_p2 = new_x%40 + offset
+					elseif use_y then
+						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
+						new_p2 = new_y%30 + offset
+					end
+				end
 				if not movingentity_copying then
 					table.insert(
 						undobuffer,
@@ -209,6 +243,11 @@ function drawmaineditor()
 									key = "y",
 									oldvalue = entitydata[movingentity].y,
 									newvalue = new_y
+								},
+								{
+									key = "p2",
+									oldvalue = entitydata[movingentity].p2,
+									newvalue = new_p2
 								}
 							}
 						}
@@ -217,17 +256,20 @@ function drawmaineditor()
 				end
 				entitydata[movingentity].x = new_x
 				entitydata[movingentity].y = new_y
+				entitydata[movingentity].p2 = new_p2
 				if movingentity_copying then
 					entityplaced(movingentity)
 				end
 				movingentity = 0
 				movingentity_copying = false
 				nodialog = false
+			else
+				mousepressed = true
 			end
 		elseif selectedtool <= 3 then
 			if not (eraserlocked and love.mouse.isDown("r")) then
 				if undosaved == 0 then
-					table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata[roomy][roomx]), toredotiles = {}})
+					table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata_get(roomx, roomy)), toredotiles = {}})
 					undosaved = #undobuffer
 					finish_undo("SAVED BEGIN RESULT FOR UNDO")
 				end
@@ -238,9 +280,14 @@ function drawmaineditor()
 					if love.mouse.isDown("r") then
 						useselectedtile = 0
 					else
-						if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
+						if levelmetadata_get(roomx, roomy).directmode == 0 then
 							-- Auto mode
 							useselectedtile = selectedtool
+
+							-- Tower doesn't have 1 as a solid tile
+							if levelmetadata_get(roomx, roomy).tileset == 5 and useselectedtile == 1 then
+								useselectedtile = 12
+							end
 						else
 							useselectedtile = selectedtile
 						end
@@ -248,14 +295,14 @@ function drawmaineditor()
 
 					if selectedsubtool[selectedtool] == 1 then
 						-- 1x1
-						roomdata[roomy][roomx][(aty*40)+(atx+1)] = useselectedtile
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 					elseif selectedsubtool[selectedtool] == 2 then
 						-- 3x3
 						for sty = (aty-1), (aty+1) do
 							for stx = (atx-1), (atx+1) do
 								--if roomdata[roomy][roomx][(sty*40)+(stx+1)] ~= nil then
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -264,7 +311,7 @@ function drawmaineditor()
 						for sty = (aty-2), (aty+2) do
 							for stx = (atx-2), (atx+2) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -273,7 +320,7 @@ function drawmaineditor()
 						for sty = (aty-3), (aty+3) do
 							for stx = (atx-3), (atx+3) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -282,7 +329,7 @@ function drawmaineditor()
 						for sty = (aty-4), (aty+4) do
 							for stx = (atx-4), (atx+4) do
 								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -291,14 +338,14 @@ function drawmaineditor()
 						if minsmear == -1 and maxsmear == -1 then
 							minsmear = aty; maxsmear = aty
 							for stx = 0, 39 do
-								roomdata[roomy][roomx][(aty*40)+(stx+1)] = useselectedtile
+								roomdata_set(roomx, roomy, stx, aty, useselectedtile)
 							end
 						end
 
 						if aty < minsmear or aty > maxsmear then
 							for sty = math.min(aty, minsmear), math.max(aty, maxsmear) do
 								for stx = 0, 39 do
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -313,14 +360,14 @@ function drawmaineditor()
 						if minsmear == -1 and maxsmear == -1 then
 							minsmear = atx; maxsmear = atx
 							for sty = 0, 29 do
-								roomdata[roomy][roomx][(sty*40)+(atx+1)] = useselectedtile
+								roomdata_set(roomx, roomy, atx, sty, useselectedtile)
 							end
 						end
 
 						if atx < minsmear or atx > maxsmear then
 							for stx = math.min(atx, minsmear), math.max(atx, maxsmear) do
 								for sty = 0, 29 do
-									roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 								end
 							end
 						end
@@ -340,9 +387,9 @@ function drawmaineditor()
 									if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
 										if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
 											-- Stamp
-											roomdata[roomy][roomx][(sty*40)+(stx+1)] = customsizetile[iy][ix]
+											roomdata_set(roomx, roomy, stx, sty, customsizetile[iy][ix])
 										elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
-											roomdata[roomy][roomx][(sty*40)+(stx+1)] = useselectedtile
+											roomdata_set(roomx, roomy, stx, sty, useselectedtile)
 										end
 									end
 									ix = ix + 1
@@ -371,7 +418,7 @@ function drawmaineditor()
 							for sty = customsizecoory, aty do
 								table.insert(customsizetile, {})
 								for stx = customsizecoorx, atx do
-									local tnum = roomdata[roomy][roomx][(sty*40)+stx+1]
+									local tnum = roomdata_get(roomx, roomy, stx, sty)
 									table.insert(customsizetile[#customsizetile], tnum)
 									if tnum ~= 0 then
 										foundnonzero = true
@@ -389,8 +436,8 @@ function drawmaineditor()
 					elseif selectedsubtool[selectedtool] == 9 then
 						-- Fill bucket
 						-- What "color" is the tile we're clicking on?
-						local oldtile = roomdata[roomy][roomx][aty*40+atx+1]
-						roomdata[roomy][roomx][aty*40+atx+1] = useselectedtile
+						local oldtile = roomdata_get(roomx, roomy, atx, aty)
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 
 						-- It's only useful to fill if we're not filling an area with exactly the same tile.
 						if oldtile ~= useselectedtile then
@@ -402,8 +449,8 @@ function drawmaineditor()
 								for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
 									if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
 									and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
-									and roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] == oldtile then
-										roomdata[roomy][roomx][(f_y+dir[2])*40+f_x+dir[1]+1] = useselectedtile
+									and roomdata_get(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
+										roomdata_set(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
 
 										table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
 									end
@@ -418,10 +465,10 @@ function drawmaineditor()
 
 						for rot = 0, anythingbutnil0(toout)-1 do
 							local tooutnow = toout - rot
-							roomdata[roomy][roomx][((aty-tooutnow)*40)+((atx+rot)+1)] = useselectedtile -- top to right
-							roomdata[roomy][roomx][((aty+rot)*40)+((atx+tooutnow)+1)] = useselectedtile -- right to bottom
-							roomdata[roomy][roomx][((aty+tooutnow)*40)+((atx-rot)+1)] = useselectedtile -- bottom to left
-							roomdata[roomy][roomx][((aty-rot)*40)+((atx-tooutnow)+1)] = useselectedtile -- left to top
+							roomdata_set(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
+							roomdata_set(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
+							roomdata_set(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
+							roomdata_set(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
 						end
 
 						toout = anythingbutnil0(toout) + 1
@@ -432,7 +479,7 @@ function drawmaineditor()
 					if love.mouse.isDown("r") then
 						useselectedtile = 0
 					else
-						if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
+						if levelmetadata_get(roomx, roomy).directmode == 0 then
 							-- Auto mode
 							useselectedtile = tilesetblocks[selectedtileset].colors[selectedcolor].spikes[9]
 						else
@@ -448,22 +495,22 @@ function drawmaineditor()
 
 					if selectedsubtool[3] == 1 then
 						-- 1 spike
-						roomdata[roomy][roomx][(aty*40)+(atx+1)] = useselectedtile
+						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
 					elseif selectedsubtool[3] == 2 then
 						-- <-->
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
 							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
@@ -473,16 +520,16 @@ function drawmaineditor()
 						end
 					elseif selectedsubtool[3] == 3 then
 						-- <--
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
 						else
@@ -491,16 +538,16 @@ function drawmaineditor()
 						end
 					elseif selectedsubtool[3] == 4 then
 						-- -->
-						if issolidmultispikes(adjtile((aty*40)+(atx+1), 0, 1), ts) then
+						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
 							-- There's a solid block below this spike.
 							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 0, -1), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
 							-- There's a solid block above this spike.
 							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), -1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile((aty*40)+(atx+1), 1, 0), ts) then
+						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
 							-- There's a solid block to the left of this spike.
 							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
 						else
@@ -519,105 +566,45 @@ function drawmaineditor()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
-			if count.trinkets >= 20 then
+			if count.trinkets >= limit.trinkets then
 				dialog.create(L.MAXTRINKETS)
 			else
-				cons("Trinket: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 9,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.trinkets = count.trinkets + 1
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 9)
 			end
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 5 then
 			-- Checkpoint
-			cons("Checkpoint: " .. atx .. " " .. aty)
-
 			if selectedsubtool[5] == 1 then
 				-- Upright
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 10,
-					p1 = 1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
+				insert_entity(atx, aty, 10, 1)
 			elseif selectedsubtool[5] == 2 then
 				-- Upside down
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 10,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
+				insert_entity(atx, aty, 10, 0)
 			end
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 6 then
 			-- Disappearing platform
-			cons("Disappear: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 3,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 3)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 7 then
 			-- Conveyor
-			cons("Conveyor: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 2,
-				p1 = 4+selectedsubtool[7], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			entityplaced()
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 2, 4+selectedsubtool[7])
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 8 then
 			-- Moving platform
 			if editingbounds == -2 then
 				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+					oldbounds[k] = levelmetadata_get(roomx, roomy)["plat" .. v]
 				end
 
-				levelmetadata[(roomy)*20 + (roomx+1)].platx1, levelmetadata[(roomy)*20 + (roomx+1)].platy1 = atx*8, aty*8
-				levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = 320, 240
+				levelmetadata_set(roomx, roomy, "platx1", atx*8)
+				levelmetadata_set(roomx, roomy, "platy1", aty*8)
+				levelmetadata_set(roomx, roomy, "platx2", 320)
+				levelmetadata_set(roomx, roomy, "platy2", 240)
 				editingbounds = 2
 			elseif editingbounds == 2 then
-				levelmetadata[(roomy)*20 + (roomx+1)].platx2, levelmetadata[(roomy)*20 + (roomx+1)].platy2 = atx*8+8, aty*8+8
+				levelmetadata_set(roomx, roomy, "platx2", atx*8+8)
+				levelmetadata_set(roomx, roomy, "platy2", aty*8+8)
 				editingbounds = 0
 
 				local changeddata = {}
@@ -626,42 +613,31 @@ function drawmaineditor()
 						{
 							key = "plat" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["plat" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
 						}
 					)
 				end
 				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("PLATFORM BOUNDS")
 			else
-				cons("Moving: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 2,
-					p1 = -1+selectedsubtool[8], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 2, -1+selectedsubtool[8])
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 9 then
 			-- Enemy
 			if editingbounds == -1 then
 				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					oldbounds[k] = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+					oldbounds[k] = levelmetadata_get(roomx, roomy, "enemy" .. v)
 				end
 
-				levelmetadata[(roomy)*20 + (roomx+1)].enemyx1, levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 = atx*8, aty*8
-				levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = 320, 240
+				levelmetadata_set(roomx, roomy, "enemyx1", atx*8)
+				levelmetadata_set(roomx, roomy, "enemyy1", aty*8)
+				levelmetadata_set(roomx, roomy, "enemyx2", 320)
+				levelmetadata_set(roomx, roomy, "enemyy2", 240)
 				editingbounds = 1
 			elseif editingbounds == 1 then
-				levelmetadata[(roomy)*20 + (roomx+1)].enemyx2, levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 = atx*8+8, aty*8+8
+				levelmetadata_set(roomx, roomy, "enemyx2", atx*8+8)
+				levelmetadata_set(roomx, roomy, "enemyy2", aty*8+8)
 				editingbounds = 0
 
 				local changeddata = {}
@@ -670,35 +646,19 @@ function drawmaineditor()
 						{
 							key = "enemy" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)]["enemy" .. v]
+							newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
 						}
 					)
 				end
 				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("ENEMY BOUNDS")
 			else
-				cons("Enemy: " .. atx .. " " .. aty)
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 1,
-					p1 = -1+selectedsubtool[9], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 1, -1+selectedsubtool[9]) 
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 10 then
 			-- Gravity line
-			if not issolid(roomdata[roomy][roomx][(aty*40)+(atx+1)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-				cons("Gravity line: " .. atx .. " " .. aty)
-
+			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
 				local p1, p2
 				if selectedsubtool[10] == 1 then
 					-- Horizontal
@@ -708,21 +668,8 @@ function drawmaineditor()
 					p1, p2 = 1, aty
 				end
 
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 11,
-					p1 = p1, p2 = p2, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-
-				autocorrectlines()
-				entityplaced()
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 11, p1, p2, 8)
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 11 then
 			-- Roomtext
@@ -731,25 +678,7 @@ function drawmaineditor()
 				endeditingroomtext()
 			end
 
-			cons("Roomtext: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 17,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			editingroomtext = count.entity_ai
-			newroomtext = true
-			makescriptroomtext = false
-			startinput()
-
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 17)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 12 then
 			-- Terminal
@@ -758,48 +687,14 @@ function drawmaineditor()
 				endeditingroomtext()
 			end
 
-			cons("Terminal: " .. atx .. " " .. aty)
-
-			table.insert(entitydata, count.entity_ai,
-				{
-				x = 40*roomx + atx,
-				y = 30*roomy + aty,
-				t = 18,
-				p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-				data = ""
-				})
-
-			editingroomtext = count.entity_ai
-			newroomtext = true
-			makescriptroomtext = true
-			startinput()
-
-			count.entities = count.entities + 1
-			count.entity_ai = count.entity_ai + 1
-
+			insert_entity(atx, aty, 18)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 13 then
 			-- Script box
-			cons("Script box: " .. atx .. " " .. aty)
-
 			-- Subtool is changed in the background
 			if selectedsubtool[13] == 1 then
-				-- Placing top left corner.
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 19,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				editingsboxid = count.entity_ai
-				selectedsubtool[13] = 2
-
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
-
-				mousepressed = true
+				-- Placing top left corner. Refactoring multi-step entities is definitely on my todo list.
+				insert_entity(atx, aty, 19)
 			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
 				-- Placing bottom right corner
 				local new_p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
@@ -845,8 +740,6 @@ function drawmaineditor()
 				selectedsubtool[13] = 1
 
 				sboxdontaskname = nil
-
-				mousepressed = true
 			elseif selectedsubtool[13] == 3 and (entitydata[editingsboxid] ~= nil) then
 				-- We were editing this box
 				oldscriptx, oldscripty = entitydata[editingsboxid].x, entitydata[editingsboxid].y
@@ -858,8 +751,6 @@ function drawmaineditor()
 
 				selectedsubtool[13] = 2
 				sboxdontaskname = true
-
-				mousepressed = true
 			else
 				cons("You tried placing the bottom right of a non-existant script box!")
 
@@ -867,27 +758,12 @@ function drawmaineditor()
 				selectedsubtool[13] = 1
 			end
 
-			--mousepressed = true
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 14 then
 			-- Warp token
-			cons("Warp token: " .. atx .. " " .. aty)
-
 			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and entitydata[warpid] == nil) then
 				-- Placing entrance.
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 13,
-					p1 = 0, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				warpid = count.entity_ai
-
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
-
-				selectedsubtool[14] = 2
+				insert_entity(atx, aty, 13)
 			elseif selectedsubtool[14] == 2 or selectedsubtool[14] == 4 then
 				-- Placing exit, or moving exit
 				if entitydata[warpid] ~= nil then
@@ -961,77 +837,30 @@ function drawmaineditor()
 				selectedsubtool[14] = 1
 			else
 				dialog.create(L.WHATDIDYOUDO .. "\n\n(warp token out of range subtool)")
-				mousepressed = true
 			end
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 15 then
 			-- Warp line
-			cons("Warp line: " .. atx .. " " .. aty)
-
-			if not issolid(roomdata[roomy][roomx][(aty*40)+(atx+1)], usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset], true, true) then
-				cons("Warp line: " .. atx .. " " .. aty)
-
+			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
 				if atx == 0 or atx == 39 then
 					-- Vertical left or right, type 0 or 1
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 50,
-						p1 = (atx == 0 and 0 or 1), p2 = aty, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
-					autocorrectlines()
-					entityplaced()
-					count.entities = count.entities + 1
-					count.entity_ai = count.entity_ai + 1
-
-					mousepressed = true
+					insert_entity(atx, aty, 50, (atx == 0 and 0 or 1), aty, 8)
 				elseif aty == 0 or aty == 29 then
 					-- Horizontal top or bottom, type 2 or 3
-
-					table.insert(entitydata, count.entity_ai,
-						{
-						x = 40*roomx + atx,
-						y = 30*roomy + aty,
-						t = 50,
-						p1 = (aty == 0 and 2 or 3), p2 = atx, p3 = 8, p4 = 0, p5 = 320, p6 = 240,
-						data = ""
-						})
-					autocorrectlines()
-					entityplaced()
-					count.entities = count.entities + 1
-					count.entity_ai = count.entity_ai + 1
-
-					mousepressed = true
+					insert_entity(atx, aty, 50, (aty == 0 and 2 or 3), atx, 8)
 				end
+				mousepressed = true
 			end
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate				
-			if count.crewmates >= 20 then
+			if count.crewmates >= limit.crewmates then
 				dialog.create(L.MAXCREWMATES)
 				mousepressed = true
 			else
-				cons("Rescuable crewmate: " .. atx .. " " .. aty .. ", " .. selectedsubtool[selectedtool] .. " " .. anythingbutnil(({1, 2, 3, 4, 5, 0})[selectedsubtool[selectedtool]]))
-
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = 40*roomx + atx,
-					y = 30*roomy + aty,
-					t = 15,
-					p1 = ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]], p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				entityplaced()
-
-				count.crewmates = count.crewmates + 1
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 15, ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]])
 			end
-
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 17 then
 			-- Start point
@@ -1089,47 +918,26 @@ function drawmaineditor()
 				entitydata[count.startpoint].p1 = p1
 			else
 				cons("Inserting new start point")
-				table.insert(entitydata, count.entity_ai,
-					{
-					x = x,
-					y = y,
-					t = 16,
-					p1 = p1, p2 = 0, p3 = 0, p4 = 0, p5 = 320, p6 = 240,
-					data = ""
-					})
-				entityplaced()
-
-				count.startpoint = count.entity_ai
-				count.entities = count.entities + 1
-				count.entity_ai = count.entity_ai + 1
+				insert_entity(atx, aty, 16, p1)
 			end
-
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
-	--[[
-	elseif nodialog and love.mouse.isDown("r") and mouseon(64+64, 0, 639, 480) then
-		atx = math.floor((love.mouse.getX()-64-64) / 16)
-		aty = math.floor((love.mouse.getY()) / 16)
-
-		cons("Tile cleared: " .. atx .. " " .. aty)
-
-		roomdata[roomy][roomx][(aty*40)+(atx+1)] = 0
-	]]
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata_get(roomx, roomy).directmode == 1 then
 		local atx, aty = getcursor()
 
-		cons("Tile selected: " .. (aty*40)+(atx+1)-1)
-
-		selectedtile = (aty*40)+(atx+1)-1
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+		if atx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+		and aty < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
+			selectedtile = (aty*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+atx
+		end
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata_get(roomx, roomy).directmode == 1 then
 		editingroomname = false
 		local atx, aty = getcursor()
 
-		selectedtile = roomdata[roomy][roomx][(aty*40)+(atx+1)]
+		selectedtile = roomdata_get(roomx, roomy, atx, aty)
 	end
 
 	if tilespicker then
@@ -1144,25 +952,25 @@ function drawmaineditor()
 			end
 		end
 
-		local ts_name = tilesetnames[usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]]
+		local ts_name = tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]
 
 		displaytilespicker(screenoffset, 0, ts_name, displaytilenumbers, displaysolid)
 	else
 		-- If we have gravity lines and such, make sure they don't go offscreen
 		love.graphics.setScissor(screenoffset, 0, 640, 480)
 		-- If we have room warping, then display that!
-		if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 or levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 then
+		if levelmetadata_get(roomx, roomy).warpdir == 1 or levelmetadata_get(roomx, roomy).warpdir == 2 then
 			-- Horizontal/vertical warp direction.
 
-			local tils = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-			local tilc = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			local tils = levelmetadata_get(roomx, roomy).tileset
+			local tilc = levelmetadata_get(roomx, roomy).tilecol
 
-			if levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 1 then
+			if levelmetadata_get(roomx, roomy).warpdir == 1 then
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][1],
 					screenoffset + (32-warpbganimation), 0
 				)
-			elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 2 then
+			elseif levelmetadata_get(roomx, roomy).warpdir == 2 then
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][2],
 					screenoffset, 32-warpbganimation
@@ -1170,11 +978,11 @@ function drawmaineditor()
 			end
 
 			love.graphics.setColor(255,255,255,92)
-		elseif levelmetadata[(roomy)*20 + (roomx+1)].warpdir == 3 then
+		elseif levelmetadata_get(roomx, roomy).warpdir == 3 then
 			-- Warping in all directions.
 
-			local tils = levelmetadata[(roomy)*20 + (roomx+1)].tileset
-			local tilc = levelmetadata[(roomy)*20 + (roomx+1)].tilecol
+			local tils = levelmetadata_get(roomx, roomy).tileset
+			local tilc = levelmetadata_get(roomx, roomy).tilecol
 
 			for squarel = 11, 0, -1 do
 				-- Centerx: 128+320 = 448
@@ -1199,12 +1007,6 @@ function drawmaineditor()
 		love.graphics.setColor(255,255,255,255)
 
 
-		--[[
-		cons("Using room " .. (roomy)*20 + (roomx+1))
-		for k,v in pairs(levelmetadata[(roomy)*20 + (roomx+1)]) do
-			cons(k .. "->" .. v)
-		end
-		]]
 		local displaytilenumbers, displaysolid, displayminimapgrid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
@@ -1214,14 +1016,19 @@ function drawmaineditor()
 			if love.keyboard.isDown("j") then
 				displaysolid = true
 			end
-			if love.keyboard.isDown(";") then
+			if love.keyboard.isDown(";") and not keyboard_eitherIsDown("shift") then
 				displayminimapgrid = true
 			end
 		end
+		if roomx >= limit.mapwidth or roomy >= limit.mapheight then
+			displayminimapgrid = false
+		end
 		-- Display the room now including its entities
-		local showroom = not love.keyboard.isDown("k") or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		local showroom = not (love.keyboard.isDown("k") or (love.keyboard.isDown(";") and keyboard_eitherIsDown("shift"))) or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
 		if showroom then
-			displayroom(screenoffset, 0, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], nil, displaytilenumbers, displaysolid, displayminimapgrid)
+			displayroom(screenoffset, 0, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), nil, displaytilenumbers, displaysolid, displayminimapgrid)
+		elseif love.keyboard.isDown("k") then
+			show_notification(L.OLDSHORTCUT_SHOWBG)
 		end
 
 		-- Display indicators for tiles in adjacent rooms
@@ -1229,8 +1036,11 @@ function drawmaineditor()
 			local roomupW, roomleftW, roomrightW, roomdownW = false, false, false, false
 			local roomup, roomleft, roomright, roomdown
 
+			-- Make sure there are no warp lines in the room. If there are, then the background doesn't apply
+			local warplines = warplinesinroom(roomx, roomy)
+
 			-- Room up. I now notice the bug in the code for switching rooms but it works 100% which is kind of unique to have
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata_get(roomx, roomy).warpdir == 2 or levelmetadata_get(roomx, roomy).warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomup = roomy
 				roomupW = true
@@ -1242,7 +1052,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room left
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata_get(roomx, roomy).warpdir == 1 or levelmetadata_get(roomx, roomy).warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomleft = roomx
 				roomleftW = true
@@ -1254,7 +1064,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room right
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 1 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata_get(roomx, roomy).warpdir == 1 or levelmetadata_get(roomx, roomy).warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomright = roomx
 				roomrightW = true
@@ -1266,7 +1076,7 @@ function drawmaineditor()
 				end
 			end
 			-- Room down
-			if levelmetadata[roomy*20 + (roomx+1)].warpdir == 2 or levelmetadata[roomy*20 + (roomx+1)].warpdir == 3 then
+			if (levelmetadata_get(roomx, roomy).warpdir == 2 or levelmetadata_get(roomx, roomy).warpdir == 3) and not warplines then
 				-- Use this room because it warps.
 				roomdown = roomy
 				roomdownW = true
@@ -1281,10 +1091,7 @@ function drawmaineditor()
 			-- Up
 			for t = 0, 39 do
 				-- Wall
-				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset]) then
-					--love.graphics.line(64+64+(t*16) +1, 0, 64+64+(t*16)+15, 0)
-					--love.graphics.line(64+64+(t*16) +1, 1, 64+64+(t*16)+15, 1)
-
+				if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset]) then
 					if roomupW then
 						love.graphics.setColor(0, 192, 255)
 					end
@@ -1294,12 +1101,12 @@ function drawmaineditor()
 					if roomupW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomupW and ( (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomup)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomupW and ( (levelmetadata_get(roomx, roomup).warpdir == 2) or (levelmetadata_get(roomx, roomup).warpdir == 3) ) and not warplinesinroom(roomx, roomup) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset], false) ~= issolid(roomdata[roomup][roomx][t+1161], usedtilesets[levelmetadata[(roomup)*20 + (roomx+1)].tileset], true) then
+				if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], false) ~= issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomupW then
@@ -1312,12 +1119,9 @@ function drawmaineditor()
 				end
 			end
 			-- Left
-			for t = 1, 30 do
+			for t = 0, 29 do
 				-- Wall
-				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset]) then
-					--love.graphics.line(64+64, (t-1)*16 +1, 64+64, (t-1)*16 +15)
-					--love.graphics.line(64+64+1, (t-1)*16 +1, 64+64+1, (t-1)*16 +15)
-
+				if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset]) then
 					if roomleftW then
 						love.graphics.setColor(0, 192, 255)
 					end
@@ -1327,12 +1131,12 @@ function drawmaineditor()
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
-				elseif not roomleftW and ( (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomleft+1)].warpdir == 3) ) then
+				elseif not roomleftW and ( (levelmetadata_get(roomleft, roomy).warpdir == 1) or (levelmetadata_get(roomleft, roomy).warpdir == 3) ) and not warplinesinroom(roomleft, roomy) then
 					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 1, 16)
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset], false) ~= issolid(roomdata[roomy][roomleft][t*40], usedtilesets[levelmetadata[(roomy)*20 + (roomleft+1)].tileset], true) then
+				if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], false) ~= issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomleftW then
@@ -1347,7 +1151,7 @@ function drawmaineditor()
 			-- Right
 			for t = 0, 29 do
 				-- Wall
-				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset]) then
+				if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset]) then
 
 					if roomrightW then
 						love.graphics.setColor(0, 192, 255)
@@ -1359,12 +1163,12 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomrightW and ( (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 1) or (levelmetadata[(roomy)*20 + (roomright+1)].warpdir == 3) ) then
+				elseif not roomrightW and ( (levelmetadata_get(roomright, roomy).warpdir == 1) or (levelmetadata_get(roomright, roomy).warpdir == 3) ) and not warplinesinroom(roomright, roomy) then
 					love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset], false) ~= issolid(roomdata[roomy][roomright][t*40 + 1], usedtilesets[levelmetadata[(roomy)*20 + (roomright+1)].tileset], true) then
+				if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], false) ~= issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomrightW then
@@ -1379,7 +1183,7 @@ function drawmaineditor()
 			-- Down
 			for t = 0, 39 do
 				-- Wall
-				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset]) then
+				if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset]) then
 
 					if roomdownW then
 						love.graphics.setColor(0, 192, 255)
@@ -1391,12 +1195,12 @@ function drawmaineditor()
 						love.graphics.setColor(255, 255, 255)
 					end
 
-				elseif not roomdownW and ( (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 2) or (levelmetadata[(roomdown)*20 + (roomx+1)].warpdir == 3) ) then
+				elseif not roomdownW and ( (levelmetadata_get(roomx, roomdown).warpdir == 2) or (levelmetadata_get(roomx, roomdown).warpdir == 3) ) and not warplinesinroom(roomx, roomdown) then
 					love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
 				end
 
 				-- Spikes
-				if issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset], false) ~= issolid(roomdata[roomdown][roomx][t + 1], usedtilesets[levelmetadata[(roomdown)*20 + (roomx+1)].tileset], true) then
+				if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], false) ~= issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], true) then
 					love.graphics.setColor(255, 0, 0)
 
 					if roomdownW then
@@ -1411,7 +1215,7 @@ function drawmaineditor()
 		end
 
 		ved_setFont(font8)
-		local hasroomname = levelmetadata[(roomy)*20 + (roomx+1)].roomname ~= ""
+		local hasroomname = levelmetadata_get(roomx, roomy).roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
 			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
@@ -1419,24 +1223,24 @@ function drawmaineditor()
 
 		-- Now display bounds! Enemies first...
 		if showepbounds or editingbounds ~= 0 then
-			if not (levelmetadata[(roomy)*20 + (roomx+1)].enemyx1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].enemyx2 == 320 and levelmetadata[(roomy)*20 + (roomx+1)].enemyy2 == 240) then
+			if not (levelmetadata_get(roomx, roomy).enemyx1 == 0 and levelmetadata_get(roomx, roomy).enemyy1 == 0 and levelmetadata_get(roomx, roomy).enemyx2 == 320 and levelmetadata_get(roomx, roomy).enemyy2 == 240) then
 				love.graphics.setColor(255,0,0,255)
 				love.graphics.rectangle("line",
-					screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].enemyx1*2),
-					levelmetadata[(roomy)*20 + (roomx+1)].enemyy1*2,
-					((levelmetadata[(roomy)*20 + (roomx+1)].enemyx2-levelmetadata[(roomy)*20 + (roomx+1)].enemyx1)*2),
-					(levelmetadata[(roomy)*20 + (roomx+1)].enemyy2-levelmetadata[(roomy)*20 + (roomx+1)].enemyy1)*2
+					screenoffset+(levelmetadata_get(roomx, roomy).enemyx1*2),
+					levelmetadata_get(roomx, roomy).enemyy1*2,
+					((levelmetadata_get(roomx, roomy).enemyx2-levelmetadata_get(roomx, roomy).enemyx1)*2),
+					(levelmetadata_get(roomx, roomy).enemyy2-levelmetadata_get(roomx, roomy).enemyy1)*2
 				)
 			end
 
 			-- Then platforms.
-			if not (levelmetadata[(roomy)*20 + (roomx+1)].platx1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].platy1 == 0 and levelmetadata[(roomy)*20 + (roomx+1)].platx2 == 320 and levelmetadata[(roomy)*20 + (roomx+1)].platy2 == 240) then
+			if not (levelmetadata_get(roomx, roomy).platx1 == 0 and levelmetadata_get(roomx, roomy).platy1 == 0 and levelmetadata_get(roomx, roomy).platx2 == 320 and levelmetadata_get(roomx, roomy).platy2 == 240) then
 				love.graphics.setColor(0,0,255,255)
 				love.graphics.rectangle("line",
-					screenoffset+(levelmetadata[(roomy)*20 + (roomx+1)].platx1*2),
-					levelmetadata[(roomy)*20 + (roomx+1)].platy1*2,
-					((levelmetadata[(roomy)*20 + (roomx+1)].platx2-levelmetadata[(roomy)*20 + (roomx+1)].platx1)*2),
-					(levelmetadata[(roomy)*20 + (roomx+1)].platy2-levelmetadata[(roomy)*20 + (roomx+1)].platy1)*2
+					screenoffset+(levelmetadata_get(roomx, roomy).platx1*2),
+					levelmetadata_get(roomx, roomy).platy1*2,
+					((levelmetadata_get(roomx, roomy).platx2-levelmetadata_get(roomx, roomy).platx1)*2),
+					(levelmetadata_get(roomx, roomy).platy2-levelmetadata_get(roomx, roomy).platy1)*2
 				)
 			end
 		end
@@ -1446,11 +1250,10 @@ function drawmaineditor()
 
 		love.graphics.setScissor()
 
-		--local multispikesmsg = levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and selectedtool == 3
 		local editingcustomsize = selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0
 
 		-- Does this room have a name, perhaps?
-		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then --or multispikesmsg
+		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then
 			-- Oh wait, we're displaying a message as room name!
 			if editingbounds < 0 then
 				temporaryroomname = L.BOUNDSTOPLEFT
@@ -1474,8 +1277,6 @@ function drawmaineditor()
 					end
 					temporaryroomname = langkeys(L.SELECTINGB, {dispx, dispy})
 				end
-			--elseif multispikesmsg then
-				--temporaryroomname = "To fix: spikes tool in multi mode"
 			end
 
 			-- Is the text we're displaying going to fit?
@@ -1500,7 +1301,7 @@ function drawmaineditor()
 			ved_printf(text, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
 		elseif hasroomname then
 			-- Display it
-			local text = levelmetadata[(roomy)*20 + (roomx+1)].roomname
+			local text = levelmetadata_get(roomx, roomy).roomname
 			local textx = (screenoffset+320)-font8:getWidth(text) -- We want double font size, /2. So, width of regular font.
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
@@ -1549,7 +1350,9 @@ function drawmaineditor()
 
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then
-			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then else
+			if levelmetadata_get(roomx, roomy).directmode ~= 0
+			and cursorx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+			and cursory < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
 				-- Just one tile, but only in manual/direct mode.
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 			end
@@ -1636,7 +1439,7 @@ function drawmaineditor()
 			end
 
 			-- If direct mode is on, we want to know what tile number we're about to place!
-			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 then
+			if levelmetadata_get(roomx, roomy).directmode == 1 then
 				tinyprint(selectedtile, screenoffset+(16*cursorx), (16*cursory))
 			end
 		elseif selectedtool == 3 then
@@ -1699,7 +1502,7 @@ function drawmaineditor()
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or ((mouseon(16, 0, 32, 16)) or (mouseon(16, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) and selectedtool ~= t then
 				love.graphics.setColor(255,255,255,128)
-			elseif not love.window.hasFocus() then
+			elseif not window_active() then
 				love.graphics.setColor(255,255,255,128)
 			end
 
@@ -1742,9 +1545,9 @@ function drawmaineditor()
 
 		-- Allow for more than 9 subtools without scrolling, up to 13.
 		local subtoolheight = 48
-		if (#subtoolimgs[selectedtool] > 9) then
+		if (#subtoolimgs[selectedtool] > 8) then
 			local n_subtools = #subtoolimgs[selectedtool]
-			subtoolheight = (416-n_subtools*32)/(n_subtools-1)+32
+			subtoolheight = (400-n_subtools*32)/(n_subtools-1)+32
 		end
 
 		for k,v in pairs(subtoolimgs[selectedtool]) do
@@ -1753,7 +1556,7 @@ function drawmaineditor()
 				love.graphics.setColor(255,255,255,128)
 			elseif not nodialog or ((mouseon(16+64, 0, 32, 16)) or (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and selectedsubtool[selectedtool] ~= k then
 				love.graphics.setColor(255,255,255,128)
-			elseif not love.window.hasFocus() then
+			elseif not window_active() then
 				love.graphics.setColor(255,255,255,128)
 			end
 
@@ -1785,7 +1588,7 @@ function drawmaineditor()
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
-			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and love.window.hasFocus() then
+			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and window_active() then
 				local tooltip_text = anythingbutnil(subtoolnames[selectedtool][k])
 				if selectedtool <= 2 and k == 8 then
 					tooltip_text = tooltip_text .. "\n" .. L.RESETCUSTOMBRUSH
@@ -1794,7 +1597,21 @@ function drawmaineditor()
 			end
 		end
 
-		if thistooltip ~= "" and love.window.hasFocus() then
+		love.graphics.setScissor()
+
+		if roomx < limit.mapwidth and roomy < limit.mapheight then
+			-- Display the minimap of the current room, just underneath our subtools
+			local atx, aty = getcursor()
+			local zoom = getminimapzoom(metadata)
+			love.graphics.setColor(255, 255, 255, 63)
+			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
+			love.graphics.setColor(0, 0, 0, 255)
+			love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
+			displayminimaproom(72, love.graphics.getHeight()-37, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), 4/zoom, atx, aty)
+			love.graphics.setColor(255, 255, 255, 255)
+		end
+
+		if thistooltip ~= "" and window_active() then
 			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
 			love.graphics.setScissor()
 			love.graphics.setColor(128,128,128,192)
@@ -1846,7 +1663,7 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 31, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
-		if not love.window.hasFocus() then
+		if not window_active() then
 			love.graphics.setColor(255,255,255,128)
 		end
 		tinyprint(L.TINY_CTRL, 0, 0)
@@ -1924,12 +1741,13 @@ function drawmaineditor()
 		rbutton("...", 0, 166, true, 20)
 	end
 
-	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) -- (roomoptpage2 and L.BACKB or L.MOREB)
-	rbutton({(levelmetadata[(roomy)*20 + (roomx+1)].directmode == 1 and L.MANUALMODE or (levelmetadata[(roomy)*20 + (roomx+1)].auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	local _, voided_metadata = levelmetadata_get(roomx, roomy)
+	_= not voided_metadata and rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton(not editingroomname and {langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata[(roomy)*20 + (roomx+1)].warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
+	_= not voided_metadata and rbutton(not editingroomname and {langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	_= not voided_metadata and rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
@@ -2041,11 +1859,11 @@ function drawmaineditor()
 		elseif onrbutton(0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Rotate
 			rotateroom180(roomx, roomy)
-			if levelmetadata[(roomy)*20 + (roomx+1)].directmode == 0 then
+			if levelmetadata_get(roomx, roomy).directmode == 0 then
 				autocorrectroom()
 			end
 			mousepressed = true
-		elseif onrbutton(1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Direct mode on or off
 			changedmode()
 
@@ -2055,45 +1873,42 @@ function drawmaineditor()
 			showepbounds = not showepbounds
 
 			mousepressed = true
-		elseif onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Warp dir
 			changewarpdir()
 
 			mousepressed = true
-		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) and not voided_metadata then
 			-- Roomname
 			toggleeditroomname()
 
 			mousepressed = true
 		end
-
-		-- Gewoon overal??
-		--mousepressed = true
-		-- Nee want dan kun je hieronder geen klikken meer opvangen
 	end
 
 	-- We also have buttons for trinkets, enemy and platform settings, and crewmates!
 	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 or selectedtool == 16 then
-		local roomsettings = {platv = levelmetadata[(roomy)*20 + (roomx+1)].platv}
-		if selectedtool ~= 4 and selectedtool ~= 16 then
+		local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv}
+		if selectedtool ~= 4 and selectedtool ~= 16 and not voided_metadata then
 			rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
 		end
 		if selectedtool == 4 or selectedtool == 16 then
 			rbutton(selectedtool == 4 and L.LISTALLTRINKETS or L.LISTALLCREWMATES, -2, 164+4, true)
+		elseif voided_metadata then
 		elseif selectedtool == 9 then
-			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata[(roomy)*20 + (roomx+1)].enemytype}), "e"}, -2, 164+4, true)
+			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
 		else
 			ved_print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4)
 			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(roomsettings.platv) + 8, 16)
 			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()+24-160, "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
-			local oldplatv = levelmetadata[roomy*20 + roomx+1].platv
+			local oldplatv = levelmetadata_get(roomx, roomy).platv
 			if roomsettings.platv ~= oldplatv then
-				levelmetadata[roomy*20 + roomx+1].platv = roomsettings.platv
+				levelmetadata_set(roomx, roomy, "platv", roomsettings.platv)
 				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 							{
 								key = "platv",
 								oldvalue = oldplatv,
-								newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+								newvalue = levelmetadata_get(roomx, roomy).platv
 							}
 						},
 						switchtool = 8
@@ -2110,7 +1925,7 @@ function drawmaineditor()
 			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+4, 128-16, "center"
 		) -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4 => -156)+4
 
-		local changedplatv, oldplatv = false, levelmetadata[(roomy)*20 + (roomx+1)].platv
+		local changedplatv, oldplatv = false, levelmetadata_get(roomx, roomy).platv
 
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -2158,7 +1973,7 @@ function drawmaineditor()
 				end
 				editingroomname = false
 				dialog.create(crewmates, nil, nil, L.LISTOFALLCREWMATES)
-			elseif selectedtool == 4 or selectedtool == 16 then
+			elseif selectedtool == 4 or selectedtool == 16 or voided_metadata then
 			elseif onrbutton(-3, 164+4, true) then
 				-- Enemy/platform bounds
 				if selectedtool == 9 then
@@ -2174,7 +1989,7 @@ function drawmaineditor()
 				-- Enemy type
 				switchenemies()
 				mousepressed = true
-			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(levelmetadata[roomy*20 + roomx+1].platv) + 8, 16) and selectedtool == 8 then
+			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata_get(roomx, roomy).platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(levelmetadata_get(roomx, roomy).platv) + 8, 16) and selectedtool == 8 then
 				-- Platform speed
 				dialog.create(
 					L.PLATVCHANGE_MSG,
@@ -2190,9 +2005,9 @@ function drawmaineditor()
 			end
 		end
 
-		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
+		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed and not voided_metadata then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
 			changedplatv = true
-			levelmetadata[(roomy)*20 + (roomx+1)].platv = 4
+			levelmetadata_set(roomx, roomy, "platv", 4)
 			mousepressed = true
 		end
 
@@ -2201,7 +2016,7 @@ function drawmaineditor()
 						{
 							key = "platv",
 							oldvalue = oldplatv,
-							newvalue = levelmetadata[(roomy)*20 + (roomx+1)].platv
+							newvalue = levelmetadata_get(roomx, roomy).platv
 						}
 					},
 					switchtool = 8
@@ -2225,13 +2040,15 @@ function drawmaineditor()
 
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
 	if tilespicker then
-		if (cursorx ~= "--") and (cursory ~= "--") then
+		if cursorx ~= "--" and cursory ~= "--"
+		and cursorx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+		and cursory < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
 			ved_printf(
-				langkeys(L.TILE, {(cursory*40)+(cursorx+1)-1}),
+				langkeys(L.TILE, {(cursory*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+cursorx}),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
 			ved_printf(
-				(issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata[(roomy)*20 + (roomx+1)].tileset]) and L.SOLID or L.NOTSOLID),
+				(issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
@@ -2247,7 +2064,7 @@ function drawmaineditor()
 	end
 
 	-- Also display a smaller tiles picker for semi-undirect mode
-	if selectedtool <= 3 then
+	if selectedtool <= 3 and not voided_metadata then
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-157, (6*16)+2, (5*16)+2) -- -(6*16)-16-24-12-1-8 => -157
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, (6*16), (5*16)) -- -(6*16)-16-24-12-8 => -156
@@ -2256,25 +2073,25 @@ function drawmaineditor()
 		displaysmalltilespicker(love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, selectedtileset, selectedcolor) -- -(6*16)-16-24-12-8 => -156
 	end
 
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
-	ved_printf(
+	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
+	_= not voided_metadata and ved_printf(
 		tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset,
 		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12-8, 6*16, "center"
 	)
 
-	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
-	ved_printf(
+	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
+	_= not voided_metadata and ved_printf(
 		tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil
 		and tilesetblocks[selectedtileset].colors[selectedcolor].name
 		or langkeys(L.TSCOLOR, {selectedcolor}),
 		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-24-8-8, 6*16, "center"
 	)
 
-	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) then -- -16-32-2-12-8 => -70
+	if love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) and not voided_metadata then -- -16-32-2-12-8 => -70
 		-- Switch tileset
 		switchtileset()
 		mousepressed = true
-	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-58, (6*16), 8+4) then -- -16-24-2-8-8 => 58
+	elseif love.mouse.isDown("l") and nodialog and not mousepressed and mouseon(love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-58, (6*16), 8+4) and not voided_metadata then -- -16-24-2-8-8 => 58
 		-- Switch tilecol
 		switchtilecol()
 		mousepressed = true
@@ -2286,55 +2103,19 @@ function drawmaineditor()
 		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-44, 6*16, "center"
 	) -- -16-16-4-8 => -44
 
-	showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
-	showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
+	_= not voided_metadata showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
+	_= not voided_metadata showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
 	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
 	ved_printf(
-		L.ONETRINKETS .. fixdige(anythingbutnil(count.trinkets), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
-		.. L.ONECREWMATES .. fixdige(anythingbutnil(count.crewmates), 2, "", "!") .. (not tilespicker and "/20" or "") .. "\n"
+		L.ONETRINKETS .. fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
+		.. L.ONECREWMATES .. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
 		.. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""),
 		640+screenoffset+2, love.graphics.getHeight()-16-10, 128, "left"
 	)
 
-
-	-- Dropdown for tileset?
-	--[[
-	if dropdown == 1 then
-		--[ [
-		ved_print([ [-1-
-		 Space St.
-		-2-
-		 Outside
-		 Lab
-		 Warp Zone
-		 Ship] ], love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-32-12-56)
-		 ] ]
-		if not nodialog then
-			rightclickmenu.create({"#1", "Space St.", "#2", "Outside", "Lab", "Warp Zone", "Ship"}, "tileset")
-		end
-	elseif dropdown == 2 then
-
-	end
-	]]
-
 	if coordsdialog.active then
 		coordsdialog.draw()
 	end
-
-	-- Do we want to see room metadata?
-	if allowdebug and love.keyboard.isDown("f11") then
-
-	end
-	-- Temporary placement of the minimap preview, uncomment if you want to use it
-	-- Please put this in a better place, both in the code and in the UI
-	--[[do
-		local atx, aty = getcursor()
-		local zoom = getminimapzoom(metadata)
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", 72, 440, 48, 36)
-		displayminimaproom(72, 440, roomdata[roomy][roomx], levelmetadata[(roomy)*20 + (roomx+1)], 4/zoom, atx, aty)
-		love.graphics.setColor(255, 255, 255, 255)
-	end]]
 end

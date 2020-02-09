@@ -18,6 +18,7 @@ ERR_FILEEDITORS = "Plugins that edit this file:"
 ERR_CURRENTPLUGIN = "Plugin that triggered the error:"
 ERR_PLEASETELLAUTHOR = "A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\nIt is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n\nDetails: (press ctrl/cmd+C to copy to the clipboard)\n\n"
 ERR_CONTINUE = "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Failed to find this in %s.lua:"
 ERR_REPLACECODEPATTERN = "Failed to find this in %s.lua (as pattern):"
 ERR_LINESTOTAL = "%i lines in total"
@@ -90,7 +91,14 @@ function ved_showerror(msg)
 	local trace = error_printer(msg, 2)
 
 	-- Decide what's going to be in the message
-	local mainmessage = msg:gsub("\n", ".") .. "\n\n" .. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. (love._version_major >= 12 and ERR_TOONEW or "") .. "\n" .. "    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state) .. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS() .. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = msg:gsub("\n", ".") .. "\n\n"
+		.. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "")
+		.. "\n    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision
+		.. (love._version_major >= 12 and ERR_TOONEW or "")
+		.. "\n    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state)
+		.. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS()
+		.. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint)
+		.. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	local hasplugins = false
 	if type(plugins) ~= "table" then
@@ -300,17 +308,7 @@ function ved_showerror(msg)
 			ved_print(text, pos, love.graphics.getHeight()-24)
 		end
 
-		--path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata
-		--success, metadata, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata		
-		--ved_print("success: " .. (success == nil and "nil" or "not nil") .. "\nmetadata: " .. (metadata == nil and "nil" or "not nil") .. "\nroomdata: " .. (roomdata == nil and "nil" or "not nil") .. "\nentitydata: " .. (entitydata == nil and "nil" or "not nil") .. "\nlevelmetadata: " .. (levelmetadata == nil and "nil" or "not nil") .. "\nscripts: " .. (scripts == nil and "nil" or "not nil") .. "\ncount: " .. (count == nil and "nil" or "not nil") .. "\nscriptnames: " .. (scriptnames == nil and "nil" or "not nil") .. "\n")
-
-		--dialog.draw()
-		--love.graphics.setColor(255,255,255,255)
-
 		love.graphics.present()
-	end
-	local function update()
-		--dialog.update()
 	end
 
 	while true do
@@ -331,7 +329,7 @@ function ved_showerror(msg)
 
 				editingmap = editingmap .. "_" .. os.time()
 
-				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, true)
+				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, true)
 
 				if not savedsuccess then
 					levelsavemsg = string.format(ERR_SAVEERROR, anythingbutnil(savederror))
@@ -356,7 +354,6 @@ function ved_showerror(msg)
 			end
 		end
 
-		--update()
 		draw()
 
 		if love.timer then
@@ -394,7 +391,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	end
 
 
-	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n    " .. anythingbutnil(ERR_FILEEDITORS) .. " " .. anythingbutnil(fileeditors) .. "\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
+	local mainmessage = anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "") .. "\n" .. "    " .. anythingbutnil(ERR_FILE) .. " " .. anythingbutnil(fileerror) .. "\n" .. "    " .. anythingbutnil(ERR_CURRENTPLUGIN) .. " " .. anythingbutnil(currentplugin) .. "\n\n    " .. anythingbutnil(ERR_PLUGINS) .. " "
 
 	if type(plugins) ~= "table" then
 		mainmessage = mainmessage .. anythingbutnil(ERR_PLUGINSNOTLOADED)
@@ -448,7 +445,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	table.insert(err, limitedlines .. "\n")
 
-	table.insert(err, "\n\n\n" .. ERR_CONTINUE)
+	table.insert(err, "\n\n\n" .. ERR_CONTINUE .. "\n\n\n" .. ERR_OPENPLUGINSFOLDER)
 
 	local p = table.concat(err, "\n")
 
@@ -484,9 +481,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 		love.graphics.present()
 	end
-	local function update()
-		--dialog.update()
-	end
 
 	while true do
 		love.event.pump()
@@ -500,12 +494,13 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				lg_clear()
 
 				return
+			elseif e == "keypressed" and a == "f" then
+				love.system.openURL("file://" .. love.filesystem.getSaveDirectory() .. "/plugins")
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown(lctrl) or love.keyboard.isDown(rctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
 			end
 		end
 
-		--update()
 		draw()
 
 		if love.timer then
