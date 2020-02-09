@@ -550,7 +550,7 @@ function loadlevel(path)
 		end if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyy2 = 0
-		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
+		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > (thismetadata.target == "VCE" and 24 or 9) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemytype = 0
 		end if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then

@@ -802,15 +802,15 @@ function love.draw()
 			mousepressed = true
 		end
 	elseif state == 14 then
-		for rrrrr = 0, 1 do
-			for asdfg = 0, 4 do
-				drawentitysprite(enemysprites[5*rrrrr+asdfg], 16+48*asdfg, 16+48*rrrrr)
+		for r = 0, 1 do
+			for c = 0, 4 do
+				drawentitysprite(enemysprites[5*r+c], 16+48*c, 16+48*r)
 			end
 		end
 
-		for rrrrr = 0, 1 do
-			for asdfg = 0, 4 do
-				drawentitysprite(enemysprites[5*rrrrr+asdfg], 600+16*asdfg, 16+16*rrrrr, true)
+		for r = 0, 1 do
+			for c = 0, 4 do
+				drawentitysprite(enemysprites[5*r+c], 600+16*c, 16+16*r, true)
 			end
 		end
 	elseif state == 15 then

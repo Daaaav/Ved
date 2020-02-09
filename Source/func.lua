@@ -1183,10 +1183,14 @@ end
 
 function switchenemies()
 	local oldtype = levelmetadata_get(roomx, roomy).enemytype
+	local maxenemy = 9
+	if metadata.target == "VCE" then
+		maxenemy = 24
+	end
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, 9, 0))
+		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
 	else
-		levelmetadata_set(roomx, roomy, "enemytype", cycle(levelmetadata_get(roomx, roomy).enemytype, 9, 0))
+		levelmetadata_set(roomx, roomy, "enemytype", cycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
 	end
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
