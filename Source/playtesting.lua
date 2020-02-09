@@ -38,7 +38,6 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 
 	local vvvvvv = path .. "/VVVVVV-CE"
 
-	-- Syntax is <vvvvvv> <index of level in levels list> <savex> <savey> <saverx> <savery> <savegc> <music id>
 	local run = {
 		vvvvvv,
 		"-p",
