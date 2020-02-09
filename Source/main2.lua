@@ -393,10 +393,6 @@ function love.load()
 		)
 	end
 
-	if playtesting_available then
-		playtesting_init_veduser()
-	end
-
 	secondlevel = false
 	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
 

@@ -1,24 +1,8 @@
 -- Quick overview:
--- playtesting_init_veduser() is called in love.load() and takes care of making our own XDG_DATA_HOME (or OS equivalent)
 -- When the user presses the play button or presses Enter, it calls playtesting_start()
 -- which then sets playtesting_askwherestart to true, then when they indicate where they want to start,
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute_<os>(),
 -- which will start a thread that just io.popen()s VVVVVV with libvloader.
-
-function playtesting_init_veduser()
-	if not love.filesystem.exists("veduser") then
-		love.filesystem.createDirectory("veduser")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV") then
-		love.filesystem.createDirectory("veduser/VVVVVV")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/saves") then
-		love.filesystem.createDirectory("veduser/VVVVVV/saves")
-	end
-	if not love.filesystem.exists("veduser/VVVVVV/levels") then
-		love.filesystem.createDirectory("veduser/VVVVVV/levels")
-	end
-end
 
 function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol, with_gdb)
 	if with_gdb == nil then
@@ -41,7 +25,7 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	local run = {
 		vvvvvv,
 		"-p",
-		love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv",
+		love.filesystem.getSaveDirectory() .. "/ved_playtesting_temp.vvvvvv",
 		"--playx",
 		posx,
 		"--playy",
@@ -152,7 +136,7 @@ function playtesting_start()
 		return
 	end
 
-	-- We have to save the level in our veduser levels directory. Unfortunately, this will freeze Ved for a bit
+	-- We have to save the level. Unfortunately, this will freeze Ved for a bit
 	-- TODO: Put this in a thread somehow... then in a stroke of sneaky UX genius,
 	-- we'll just save the level WHILE we're asking the player where they want to start!
 	-- Then they won't get the impression that Ved takes a while to start playtesting (because of the level-saving),
@@ -169,7 +153,7 @@ function playtesting_start()
 	s.enableoverwritebackups = false
 	recentlyopened = function() end
 
-	local thissavedsuccess, thissavederror = savelevel(love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
+	local thissavedsuccess, thissavederror = savelevel(love.filesystem.getSaveDirectory() .. "/ved_playtesting_temp.vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
 
 	unsavedchanges = oldunsavedchanges
 	s.enableoverwritebackups = oldenableoverwritebackups
@@ -226,7 +210,7 @@ end
 
 function playtesting_cancelask()
 	playtesting_askwherestart = false
-	love.filesystem.remove("veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv")
+	love.filesystem.remove("ved_playtesting_temp.vvvvvv")
 end
 
 function playtesting_snap_position(posx, posy, flipped)

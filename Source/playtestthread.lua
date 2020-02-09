@@ -17,9 +17,6 @@ local theprocess = io.popen(executethis)
 -- A bit hack-ish, but it works
 for _ in theprocess:lines() do end
 
-love.filesystem.remove("veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv")
-love.filesystem.remove("veduser/VVVVVV/saves/ved_playtesting_temp.vvvvvv.vvv")
-love.filesystem.remove("veduser/VVVVVV/saves/qsave.vvv")
-love.filesystem.remove("veduser/VVVVVV/saves/tsave.vvv")
+love.filesystem.remove("ved_playtesting_temp.vvvvvv")
 
 outchannel:push(PLAYTESTING.DONE)
