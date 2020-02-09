@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2020-01-29 16:16:16 (CET)
+--- Last converted: 2020-02-09 23:17:16 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -573,8 +573,8 @@ L_PLU = {
 		[1] = "L'entité à [$1 $2] a $3 propriétés invalides !",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "Les métadonnées du niveau pour la salle #$1 a $2 propriété invalide !",
-		[1] = "Les métadonnées du niveau pour la salle #$1 a $2 propriétés invalides !",
+		[0] = "Les métadonnées du niveau pour la salle $1,$2 a $3 propriété invalide !",
+		[1] = "Les métadonnées du niveau pour la salle $1,$2 a $3 propriétés invalides !",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Affichage de $1",
@@ -676,6 +676,8 @@ short3 = "Zone de TP",
 long3 = "Zone de Téléportation",
 short4 = "Vaisseau",
 long4 = "Vaisseau",
+short5 = "Tour",
+long5 = "Tour",
 
 }
 
@@ -698,6 +700,7 @@ ERR_FILEEDITORS = "Modules qui modifient ce fichier :"
 ERR_CURRENTPLUGIN = "Module qui a provoqué cette erreur :"
 ERR_PLEASETELLAUTHOR = "Un module était supposé modifier le code de Ved, mais le code à remplacer n'a pas été trouvé.\nIl est possible que ceci soit causé par un conflit entre deux modules, ou qu'une mise à jour de Ved aie cassé ce module.\n\nDétails : (appuyez sur Ctrl/Cmd+C pour copier dans le presse papiers)\n\n"
 ERR_CONTINUE = "Vous pouvez continuer en appuyant sur Échap ou Entrée, mais cette modification erronée peut causer des problèmes."
+ERR_OPENPLUGINSFOLDER = "Vous pouvez ouvrir votre dossier de greffons en appuyant sur F, pour que vous puissiez réparer ou enlever le greffon défectueux. Après cela, relancez Ved."
 ERR_REPLACECODE = "Impossible de trouver ceci dans %s.lua :"
 ERR_REPLACECODEPATTERN = "Impossible de trouver ceci dans %s.lua (en tant que motif) :"
 ERR_LINESTOTAL = "%i lignes au total"
@@ -2826,9 +2829,7 @@ créer ce logiciel!
 
 Licence\h#
 \
-Droit d'auteur 2015-2019  Dav999       (Je n'affirme pas la possession ou le droit
-                                             d'auteur de VVVVVV ou d'aucune de ses
-                                                                      ressources.)
+Droit d'auteur 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2849,6 +2850,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

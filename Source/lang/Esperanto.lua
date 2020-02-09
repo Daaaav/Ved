@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2020-01-29 16:16:16 (CET)
+--- Last converted: 2020-02-09 23:17:16 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -583,8 +583,8 @@ L_PLU = {
 		[1] = "Ento ĉe [$1 $2] havas $3 malvalidajn atributojn!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata por ĉambro #$1 havas $2 malvalidan atributon!",
-		[1] = "LevelMetadata por ĉambro #$1 havas $2 malvalidajn atributojn!",
+		[0] = "LevelMetadata por ĉambro $1,$2 havas $3 malvalidan atributon!",
+		[1] = "LevelMetadata por ĉambro $1,$2 havas $3 malvalidajn atributojn!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Montranta $1",
@@ -686,6 +686,8 @@ short3 = "Teleportejo",
 long3 = "Teleportejo",
 short4 = "Ŝipo",
 long4 = "Ŝipo",
+short5 = "Tower",
+long5 = "Tower",
 
 }
 
@@ -708,6 +710,7 @@ ERR_FILEEDITORS = "Aldonaĵoj, kiuj redaktas tiun dosieron:"
 ERR_CURRENTPLUGIN = "Aldonaĵo, kiu ekagigis la eraron:"
 ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_CONTINUE = "Vi povas daŭrigi per premi ESC aŭ ENTER, sed notu ke tiu malsukcesinta redakto eble kaŭzos erarojn."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Malsukceso trovi ĉi tiun en %s.lua:"
 ERR_REPLACECODEPATTERN = "Malsukceso trovi ĉi tiun en %s.lua (kiel modelo):"
 ERR_LINESTOTAL = "%i linioj entute"
@@ -1089,7 +1092,7 @@ tiu nomo, enfone. Ankaŭ eblas elekti kiun numeron uzi por ĉiu flagnomo.
 Reĝimo de interna skriptado\h#
 
 Por uzi internan skriptadon en Ved, vi povas ebligi ĝian reĝimon en la
-redaktilo, por teni ĉiujn komandojn en tiu skripto kiel internan skriptadon.
+redaktilo, por trakti ĉiujn komandojn en tiu skripto kiel internan skriptadon.
 Vidu ¤Reĝimo Int.skr¤ por pli da informoj pri la reĝimo de interna skriptado.\nwl
 Por pli da informoj pri interna skriptado, legu la referencojn de interna
 skriptado.
@@ -1119,12 +1122,13 @@ cont = [[
 Reĝimo de interna skriptado\wh#
 \C=
 
-Por uzi internan skriptadon en Ved, vi povas ebligi la reĝimon de interna skriptado
-en la redaktilo por trakti ĉiujn komandojn en tiu skripto kiel internan skriptadon.
+Por uzi internan skriptadon en Ved, vi povas ebligi ĝian reĝimon en la
+redaktilo por trakti ĉiujn komandojn en tiu skripto kiel internan skriptadon.
 Per tiu trajto, oni ne devas labori multe por funkciigi internan skriptadon; oni
 ne devas uzi komandojn ¤say¤, kalkuli liniojn aŭ tajpi ¤text(1,0,0,4)¤ aŭ kion\nwnw
-ajn estas via prefero - simple skribu internajn skriptojn kvazaŭ ili estas destinitaj
-por la ĉefa ludo. Oni eĉ ne bezonas fini la skripton per komando ¤loadscript¤.\nw
+ajn estas via prefero - simple skribu internajn skriptojn kvazaŭ ili estas
+destinitaj por la ĉefa ludo. Oni eĉ ne bezonas fini la skripton per komando
+loadscript¤.\wn
 
 Ved subtenas diversajn metodojn de interna skriptado. Por montri ties malsamecojn
 teknikajn, ni uzos la sekvan ekzemplan skripton:
@@ -1140,9 +1144,9 @@ teknikajn, ni uzos la sekvan ekzemplan skripton:
   endcutscene()\G
   untilbars()\G
 
-Linioj de tiu interna skripto estas ¤helverdaj¤, kaj linioj kiuj estas aldonitaj aŭto-\nG
-mate kaj estas necesaj por la skriptad-ekspluato estos ¤grizaj¤. Notu, ke tio ĉi\ng
-estas iome simpligita; Ved aldonas ¤#v¤ ĉe la fino de la grizaj linioj en la\nw
+Linioj de tiu interna skripto estas ¤helverdaj¤, kaj linioj kiuj estas aldonitaj\nG
+aŭtomate kaj estas necesaj por la skriptad-ekspluato estos ¤grizaj¤. Notu, ke tio\ng
+ĉi estas iome simpligita; Ved aldonas ¤#v¤ ĉe la fino de la grizaj linioj en la\nw
 ekzemploj por certigi ke permane skribitaj skriptoj ne ŝanĝiĝos, kaj blokoj de ¤say¤\nw
 kiuj estas tro grandaj devas esti enpecigitaj en pli malgrandajn.
 
@@ -2716,8 +2720,7 @@ Terry Cavanagh pro lia faro de VVVVVV
 
 Permesilo\h#
 \
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Copyright 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2738,6 +2741,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

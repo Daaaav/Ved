@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2020-01-29 16:16:15 (CET)
+--- Last converted: 2020-02-09 23:17:15 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -244,7 +244,7 @@ SAVENOSUCCESS = "Сохранение провалено! Ошибка: ",
 INVALIDFILESIZE = "Неверный размер файла.",
 
 EDIT = "Редактировать",
-EDITWOBUMPING = "Редактировать без бампинга",
+EDITWOBUMPING = "Редактировать без перемещения",
 COPYNAME = "Копировать имя",
 COPYCONTENTS = "Копировать контент",
 DUPLICATE = "Дублировать",
@@ -564,9 +564,9 @@ L_PLU = {
 		[2] = "Объект в комнате [$1 $2] имеет $3 неверных свойств!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "Информация комнаты #$1 имеет $2 неверное свойство!",
-		[1] = "Информация комнаты #$1 имеет $2 неверных свойства!",
-		[2] = "Информация комнаты #$1 имеет $2 неверных свойств!",
+		[0] = "Информация комнаты $1,$2 имеет $3 неверное свойство!",
+		[1] = "Информация комнаты $1,$2 имеет $3 неверных свойства!",
+		[2] = "Информация комнаты $1,$2 имеет $3 неверных свойств!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "Всего показано: $1",
@@ -674,6 +674,8 @@ short3 = "Варп-Зона",
 long3 = "Варп-Зона",
 short4 = "Корабль",
 long4 = "Корабль",
+short5 = "Tower",
+long5 = "Tower",
 
 }
 
@@ -696,6 +698,7 @@ ERR_FILEEDITORS = "Плагины редактирующие этот файл:"
 ERR_CURRENTPLUGIN = "Плагин вызвавший ошибку:"
 ERR_PLEASETELLAUTHOR = "Плагин должен был редактровать код Ved, но код для замены не был найден.\nВозможно это из-за конфликта между двумя плагинами, или новая версия Ved не поддерживает этот плагин.\n\nДетали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n\n"
 ERR_CONTINUE = "Вы можете продолжить нажав Esc или Enter, но эта ошибка может вызвать глюки."
+ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
 ERR_REPLACECODE = "Это не найдено в %s.lua:"
 ERR_REPLACECODEPATTERN = "Это не найдено в %s.lua (как шаблон):"
 ERR_LINESTOTAL = "%i строк в общем."
@@ -2740,8 +2743,7 @@ cont = [[
 
 License\h#
 \
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Copyright 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2762,6 +2764,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

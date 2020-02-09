@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2020-01-29 16:16:16 (CET)
+--- Last converted: 2020-02-09 23:17:17 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -571,8 +571,8 @@ L_PLU = {
 		[1] = "Entiteit op [$1 $2] heeft $3 ongeldige eigenschappen!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschap!",
-		[1] = "LevelMetadata voor kamer #$1 heeft $2 ongeldige eigenschappen!",
+		[0] = "LevelMetadata voor kamer $1,$2 heeft $3 ongeldige eigenschap!",
+		[1] = "LevelMetadata voor kamer $1,$2 heeft $3 ongeldige eigenschappen!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
 		[0] = "$1 wordt getoond",
@@ -674,6 +674,8 @@ short3 = "Warp Zone",
 long3 = "Warp Zone",
 short4 = "Schip",
 long4 = "Schip",
+short5 = "Toren",
+long5 = "Toren",
 
 }
 
@@ -696,6 +698,7 @@ ERR_FILEEDITORS = "Plugins die dit bestand bewerken:"
 ERR_CURRENTPLUGIN = "Plugin die de fout heeft veroorzaakt:"
 ERR_PLEASETELLAUTHOR = "Een plugin moest een wĳziging aanbrengen in code in Ved, maar de te vervangen code werd niet gevonden.\nHet is mogelĳk dat dit wordt veroorzaakt door een conflict tussen twee plugins, of een update van Ved heeft deze plugin onbruikbaar gemaakt.\n\nDetails: (druk Ctrl/Cmd+C om naar het klembord te kopiëren)\n\n"
 ERR_CONTINUE = "Je kunt verdergaan door op ESC of enter te drukken, maar wees bewust dat deze mislukte bewerking voor problemen kan zorgen."
+ERR_OPENPLUGINSFOLDER = "Je kunt je pluginsmap openen door op F te drukken, zodat je de problematische plugin kunt repareren of verwĳderen. Herstart daarna Ved."
 ERR_REPLACECODE = "Kon dit niet vinden in %s.lua:"
 ERR_REPLACECODEPATTERN = "Kon dit niet vinden in %s.lua (als pattern):"
 ERR_LINESTOTAL = "%i regels in totaal"
@@ -2743,8 +2746,7 @@ gemotiveerd om dit te maken!
 
 Licentie\h#
 \
-Copyright 2015-2019  Dav999              (I do not claim ownership of or copyright
-                                                  on VVVVVV or any of its assets.)
+Copyright 2015-2020  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2765,6 +2767,13 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

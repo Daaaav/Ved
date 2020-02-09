@@ -1,5 +1,5 @@
 -- Language file for Ved
---- Language: Deutsch (de)
+--- Language: Español (es_AR)
 --- Last converted: 2020-02-09 23:17:15 (CET)
 
 --[[
@@ -14,633 +14,621 @@
 function lang_plurals(n) return (n ~= 1) end
 
 function fontpng_ascii(c)
-	if c == "ä" then
-		return "|"
-	elseif c == "ö" or c == "Ö" then
-		return "{"
-	elseif c == "ü" then
-		return "ue"
-	elseif c == "Ä" then
-		return "Ae"
-	elseif c == "Ü" then
-		return "Ue"
-	elseif c == "ß" then
-		return "ss"
-	end
+
 end
 
 L = {
 
-TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE-Version von https://love2d.org downloaden.",
-OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
-UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
-FATALERROR = "FATALER FEHLER: ",
-FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
+OUTDATEDLOVE = "Su version de L{ve esta obsoleta. Porfavor use version 0.9.1 o mejor.\nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Suertudamente, L{ve 0.9.1 y mejores seguiran funcionando. \nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
+UNKNOWNSTATE = "Estado desconocudo ($1), saltado desde el estado $2",
+FATALERROR = "ERROR FATAL:",
+FATALEND = "Porfavor cierre el juego y intente de nuevo. Y si eres Dav, porfavor arreglalo.",
 
-OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
-MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde in diesem Level erreicht.",
-MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde in diesem Level erreicht.",
-EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
-STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
-UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
-SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-SURELOADLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
-MAPSAVEDAS = "Kartenbild gespeichert als $1!",
-RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
-UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
-METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flagnamen und andere Dinge.",
-WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
-SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
-NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
-LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
-SIZELIMIT = "Die maximale Größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
-SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
-FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
-FLAGNAMECHARS = "Flagnamen können keine Klammern, Kommas oder Leerzeichen enthalten.",
-FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
-DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
-SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
-SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
-SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
-SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugestartet wird.",
-NAMEFORFLAG = "Name für Flag $1:",
-SCRIPT404 = "Skript \"$1\" existiert nicht!",
-ENTITY404 = "Objekt #$1 existiert nicht mehr!",
-GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber dieses Feature nicht unterstützt!",
-MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder deinem Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
-SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
-SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
-THREADERROR = "Threadfehler!",
-WHATDIDYOUDO = "Was hast du getan?!",
-UNDOFAULTY = "Was tust du?",
-SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
-UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
-MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
-FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
-MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht an savelevel() übergeben!",
-RESTARTVEDLANG = "Nach dem ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
+OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconozido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
+MAXTRINKETS = "La cantidad maxima de trinkets (20) ha sido alcanzada en este nivel.",
+MAXCREWMATES = "La cantidad maxima de compañeros (20) ha sido alcanzada en este nivel.",
+EDITINGROOMTEXTNIL = "Texto de habiacion existente que se estava editando es nulo!",
+STARTPOINTNOLONGERFOUND = "El punto de partida viejo no se puede encontrar!",
+UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta:",
+SURENEWLEVEL = "Estas seguro de que quieres hacer un nuevo nivel? Perderas cualquier contenido no guardado.",
+SURELOADLEVEL = "Estas seguro de que quieres cargar un nivel? Perderas cualquier conenido no guardado.",
+COULDNOTGETCONTENTSLEVELFOLDER = "No se pudo obtener contenidos de la carpeta de niveles. Porfavor fijese si $1 existe y intente de nuevo.",
+MAPSAVEDAS = "Imagen de mapa guardada como $1!",
+RAWENTITYPROPERTIES = "Puedes cambiar las propiedades crudas de esta entidad aqui.",
+UNKNOWNENTITYTYPE = "Tipo de entidad desconocida $1",
+METADATAENTITYCREATENOW = "La entidad de metadatos todavia no existe. Crearla ahora?\n\nLa entidad de metadatos es una entidad oculta que se puede añadir a niveles de VVVVVV para mantener datos extra por Ved, como el bloc de notas de niveles, nombres de flags, y otras cosas.",
+WARPTOKENENT404 = "La entidad de warp token no existe!",
+SPLITFAILED = "Division fallada miserablemente! Tienes muchas lineas en medio de un comando de texto y un speak/speak_active?", -- Command names are best left untranslated
+NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.\n\nSalir del editor?",
+NOFLAGSLEFT_LOADSCRIPT = "No quedan mas flags, asi que un script de carga usando un flag nuevo no se puede crear. En vez de eso, un script de carga que se ha creado que siempre carga el script tarjeta con iftrinkets(0,$1). considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
+LEVELOPENFAIL = "No se puede abrir $1.vvvvvv.",
+SIZELIMIT = "El tamaño maximo de un nivel es de 20 por 20..\n\nEl tamaño del nivel se cambiara a $1 por $2.",
+SCRIPTALREADYEXISTS = "El script \"$1\" ya existe!",
+FLAGNAMENUMBERS = "Los nombres de flags no puede ser solo numeros.",
+FLAGNAMECHARS = "Los nombres de flags no pueden contener parentesis, comas, o espacios.",
+FLAGNAMEINUSE = "El nombre del flag $1 ya esta en uso por el flag $2",
+DIFFSELECT = "Seleccione el nivel al que quieres compararlo. Ese nivel se tratara como una version mas vieja.",
+SUREQUIT = "Estas seguro de que quieres salir? Perderas cualquier contenido no guardado.",
+SUREQUITNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de salir?",
+SURENEWLEVELNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de crear un nuevo nivel?",
+SCALEREBOOT = "Las nuevas configuraciones de escala tomaran efecto despued de reiniciar Ved.",
+NAMEFORFLAG = "Nombre para flag $1:",
+SCRIPT404 = "El script \"$1\" no existe!",
+ENTITY404 = "La entidad #$1 no existe!",
+GRAPHICSCARDCANVAS = "Lo siento, parece que tu carta grafica o driver no soporta esta caracteristica!",
+MAXTEXTURESIZE = "Lo siento, crear una imagen de $1x$2 no parece ser soportada por tu carta grafica o driver.\n\nEl limite de tamaño en este sistema es $3x$3",
+SUREDELETESCRIPT = "Estas seguro de que quieres borrar el script \"$1\"?",
+SUREDELETENOTE = "Estas seguro de que quieres borrar esta nota?",
+THREADERROR = "Error de cadena!",
+WHATDIDYOUDO = "Que hiciste?!",
+UNDOFAULTY = "Que estas haciendo?",
+SOURCEDESTROOMSSAME = "Las habitaciones de entrada y salida son las mismas!",
+UNKNOWNUNDOTYPE = "Tipo de deshacer desconocido \"$1\"!",
+MDEVERSIONWARNING = "Parece que este nivel se ha hecho en una version mas reciente de Ved, y podria contener unos datos que se perderan cuando guardes este nivel.",
+FORGOTPATH = "Te olvidaste de especificar un camino!",
+MDENOTPASSED = "Precaucion: entidad de metadatos no pasada a savelevel()!",
+RESTARTVEDLANG = "Despues de cambiar el idioma, tienes que reiniciar Ved para que el cambio tome efecto.",
 
-SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
-SELECTCOPY2 = "Wähle die Position wo der Raum hinkopiert werden soll",
-SELECTSWAP1 = "Wähle den ersten Raum aus zum tauschen",
-SELECTSWAP2 = "Wähle den zweiten Raum aus zum tauschen",
+SELECTCOPY1 = "Seleccione la habitacion para copiar",
+SELECTCOPY2 = "Seleccione donde copiar la habitacion",
+SELECTSWAP1 = "Seleccion la primera habitacion para intercambiar",
+SELECTSWAP2 = "Seleccione la segunda habitacion para intercambiar",
 
-TILESETCHANGEDTO = "Tileset geändert zu $1",
-TILESETCOLORCHANGEDTO = "Tilesetfarbe geändert zu $1",
-ENEMYTYPECHANGED = "Objekttyp verändert",
+TILESETCHANGEDTO = "Set de tejas cambiado a $1",
+TILESETCOLORCHANGEDTO = "Color del set de tejas cambiado a $1",
+ENEMYTYPECHANGED = "Tipo de enemigos cambiado",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
-CHANGEDTOMODE = "Geändert zu $1 Tileplatzierung",
-CHANGEDTOMODEAUTO = "automatischer",
-CHANGEDTOMODEMANUAL = "manueller",
-CHANGEDTOMODEMULTI = "multi-Tileset",
+CHANGEDTOMODE = "Cambiado a colocación de teja $1",
+CHANGEDTOMODEAUTO = "automatico",
+CHANGEDTOMODEMANUAL = "manual",
+CHANGEDTOMODEMULTI = "multi-set de tejas",
 
-BUSYSAVING = "Speichern...",
-SAVEDLEVELAS = "Level wurde gespeichert als $1.vvvvvv",
+BUSYSAVING = "Guardando...",
+SAVEDLEVELAS = "Nivel guardado como $1.vvvvvv",
 
-ROOMCUT = "Raum augeschnitten und zur Zwischenablage kopiert",
-ROOMCOPIED = "Raum wurde zur Zwischenablage kopiert",
-ROOMPASTED = "Raum eingefügt",
+ROOMCUT = "Habitacion cortada al portapapeles",
+ROOMCOPIED = "Habitacion copiada al portapapeles",
+ROOMPASTED = "Habitacion pegada",
 
-METADATAUNDONE = "Leveloptionen wurden rückgängig gemacht",
-METADATAREDONE = "Leveloptionen wiederholt",
+METADATAUNDONE = "Opcion de niveles deshecha",
+METADATAREDONE = "Opcion de niveles rehecha",
 
-BOUNDSTOPLEFT = "Klicke auf die obere linke Ecke der Begrenzung",
-BOUNDSBOTTOMRIGHT = "Klicke auf die untere rechte Ecke",
+BOUNDSTOPLEFT = "Haz click en la parte superior izquierda de los limites",
+BOUNDSBOTTOMRIGHT = "Haz click en la parte inferior derecha de los limites",
 
-TILE = "Tile $1",
-HIDEALL = "Verstecken",
-SHOWALL = "Zeige alles",
-SCRIPTEDITOR = "Skripteditor",
-FILE = "Datei",
-NEW = "Neu",
-OPEN = "Öffnen",
-SAVE = "Speichern",
-UNDO = "Rückgängig",
-REDO = "Wiederholen",
-COMPARE = "Vergleichen",
-STATS = "Statistiken",
-SCRIPTUSAGES = "Benutzungen",
-EDITTAB = "Bearbeiten",
-COPYSCRIPT = "Skript kopieren",
-SEARCHSCRIPT = "Suchen",
-GOTOLINE = "Gehe zu Zeile",
-GOTOLINE2 = "Gehe zu Zeile:",
-INTERNALON = "Int.sc ist an",
-INTERNALOFF = "Int.sc ist aus",
-INTERNALYESBARS = "say(-1) int.sc",
-INTERNALNOBARS = "Ladeskript int.sc",
-VIEW = "Ansehen",
-SYNTAXHLOFF = "Syntax HL: an",
-SYNTAXHLON = "Syntax HL: aus",
-TEXTSIZEN = "Textgröße: N",
-TEXTSIZEL = "Textgröße: L",
-INSERT = "Einfügen",
-HELP = "Hilfe",
-INTSCRWARNING_NOLOADSCRIPT = "Ladeskript benötigt!",
-INTSCRWARNING_BOXED = "Direkte Skriptbox/\nKonsolen Referenz!\n\n",
-COLUMN = "Spalte: ",
+TILE = "Teja $1",
+HIDEALL = "Ocultar todo",
+SHOWALL = "Mostar todo",
+SCRIPTEDITOR = "Editor de scripts",
+FILE = "Archivo",
+NEW = "Nuevo",
+OPEN = "Abrir",
+SAVE = "Guardar",
+UNDO = "Deshacer",
+REDO = "Rehacer",
+COMPARE = "Comparar",
+STATS = "Estadisticas",
+SCRIPTUSAGES = "Usos",
+EDITTAB = "Editar",
+COPYSCRIPT = "Copiar script",
+SEARCHSCRIPT = "Buscar",
+GOTOLINE = "Ir a linea",
+GOTOLINE2 = "Ir a linea:",
+INTERNALON = "Sc.Interno activado",
+INTERNALOFF = "Sc.Interno desactivado",
+INTERNALYESBARS = "Sc.Interno say(-1) ",
+INTERNALNOBARS = "Sc.Interno Loadscript",
+VIEW = "Ver",
+SYNTAXHLOFF = "Hl de sintaxis: SI",
+SYNTAXHLON = "Hl de sintaxis: NO",
+TEXTSIZEN = "Tamaño de texto: N",
+TEXTSIZEL = "Tamaño de texto: L",
+INSERT = "Insertar",
+HELP = "Ayuda",
+INTSCRWARNING_NOLOADSCRIPT = "Se requiere script de carga!",
+INTSCRWARNING_BOXED = "Referencia de terminal!\n\n",
+COLUMN = "Columna:",
 
 BTN_OK = "OK",
-BTN_CANCEL = "Abbrechen",
-BTN_YES = "Ja",
-BTN_NO = "Nein",
-BTN_APPLY = "Anwenden",
-BTN_QUIT = "Beenden",
-BTN_DISCARD = "Verwerfen",
-BTN_SAVE = "Speichern",
-BTN_CLOSE = "Schließen",
-BTN_LOAD = "Laden",
+BTN_CANCEL = "Cancelar",
+BTN_YES = "Si",
+BTN_NO = "No",
+BTN_APPLY = "Aplicar",
+BTN_QUIT = "Salir",
+BTN_DISCARD = "Descartar",
+BTN_SAVE = "Guardar",
+BTN_CLOSE = "Cerrar",
+BTN_LOAD = "Cargar",
 
-COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
-COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
+COMPARINGTHESE = "Comparando $1.vvvvvv con $2.vvvvvv",
+COMPARINGTHESENEW = "Comparando (nivel sin guardar) con $1.vvvvvv",
 
-RETURN = "Zurückkehren",
-CREATE = "Erstellen",
-GOTO = "Gehe zu",
-DELETE = "Löschen",
-RENAME = "Umbennen",
-CHANGEDIRECTION = "Richtung ändern",
-DIRECTION = "Richtung->",
-UP = "hoch",
-DOWN = "runter",
-LEFT = "links",
-RIGHT = "rechts",
-TESTFROMHERE = "Teste von hier",
-FLIP = "Umdrehen",
-CYCLETYPE = "Typ ändern",
-GOTODESTINATION = "Gehe zum Ziel",
-GOTOENTRANCE = "Gehe zum Eingang",
-CHANGECOLOR = "Farbe ändern",
-EDITTEXT = "Text bearbeiten",
-COPYTEXT = "Text kopieren",
-EDITSCRIPT = "Skript bearbeiten",
-OTHERSCRIPT = "Skript umbennen",
-PROPERTIES = "Eigenschaften",
-CHANGETOHOR = "Ändern zu horizontal",
-CHANGETOVER = "Ändern zu vertikal",
-RESIZE = "Bewegen/Größe ändern",
-CHANGEENTRANCE = "Bewege Eingang",
-CHANGEEXIT = "Bewege Ausgang",
-COPYENTRANCE = "Eingang kopieren",
-LOCK = "Fixieren",
-UNLOCK = "Entsperren",
-BUG = "[Fehler!]",
+RETURN = "Regresar",
+CREATE = "Crear",
+GOTO = "Ir a",
+DELETE = "Borrar",
+RENAME = "Renombrar",
+CHANGEDIRECTION = "Cambiar direccion",
+DIRECTION = "Direccion->",
+UP = "arriba",
+DOWN = "abajo",
+LEFT = "izquierda",
+RIGHT = "derecha",
+TESTFROMHERE = "Probar desde aqui",
+FLIP = "Dar vuelta",
+CYCLETYPE = "Cambiar tipo",
+GOTODESTINATION = "Ir a destino",
+GOTOENTRANCE = "Ir a entrada",
+CHANGECOLOR = "Cambiar color",
+EDITTEXT = "Editar texto",
+COPYTEXT = "Copiar texto",
+EDITSCRIPT = "Editar script",
+OTHERSCRIPT = "Cambiar nombre de script",
+PROPERTIES = "Propiedades",
+CHANGETOHOR = "Cambiar a horizontal",
+CHANGETOVER = "Cambiar a vertical",
+RESIZE = "Mover/Redimensionar",
+CHANGEENTRANCE = "Mover entrada",
+CHANGEEXIT = "Mover salida",
+COPYENTRANCE = "Copiar entrada",
+LOCK = "Bloquear",
+UNLOCK = "Desbloquear",
+BUG = "[Bug!]",
 
-VEDOPTIONS = "Ved-Optionen",
-LEVELOPTIONS = "Leveloptionen",
-MAP = "Karte",
-SCRIPTS = "Skripte",
-SEARCH = "Suchen",
-SENDFEEDBACK = "Feedback senden",
-LEVELNOTEPAD = "Level-\nNotizblock",
+VEDOPTIONS = "Opciones de Ved",
+LEVELOPTIONS = "Opciones de nivel",
+MAP = "Mapa",
+SCRIPTS = "Scripts",
+SEARCH = "Buscar",
+SENDFEEDBACK = "Enviar Feedback",
+LEVELNOTEPAD = "Bloc de notas del nivel",
 PLUGINS = "Plugins",
 
-BACKB = "Zurück <<",
-MOREB = "Mehr >>",
-AUTOMODE = "Modus: automatisch",
-AUTO2MODE = "Modus: multi",
-MANUALMODE = "Modus: manuell",
-PLATFORMSPEED = "Platf. gesch.: $1",
-ENEMYTYPE = "Objekttyp: $1",
-PLATFORMBOUNDS = "Platf. Grenze",
-WARPDIR = "Teleportations\n-richtung: $1",
-ENEMYBOUNDS = "Gegnergrenzen",
-ROOMNAME = "Raumname",
-ROOMOPTIONS = "Raumoptionen",
-ROTATE180 = "Um 180 Grad drehen",
-ROTATE180UNI = "Um 180° drehen",
-HIDEBOUNDS = "Grenzen ausblenden",
-SHOWBOUNDS = "Grenzen einblenden",
+BACKB = "Atras <<",
+MOREB = "Mas >>",
+AUTOMODE = "Modo: auto",
+AUTO2MODE = "Modo: multi",
+MANUALMODE = "Modo: manual",
+PLATFORMSPEED = "Veloc. Plataforma: $1",
+ENEMYTYPE = "Tipo de Enemigo: $1",
+PLATFORMBOUNDS = "Limites de Platf.",
+WARPDIR = "Dir de warp: $1",
+ENEMYBOUNDS = "Limites de enemigo",
+ROOMNAME = "Nombre de habitacion",
+ROOMOPTIONS = "Opciones de habitacion",
+ROTATE180 = "Girar 180grados",
+ROTATE180UNI = "Girar 180°",
+HIDEBOUNDS = "Ocultar limites",
+SHOWBOUNDS = "Mostrar limites",
 
-ROOMPLATFORMS = "Raumplattformen", -- basically, platforms/enemies in/for this room
-ROOMENEMIES = "Raumgegner",
+ROOMPLATFORMS = "Plataformas de habitacion", -- basically, platforms/enemies in/for this room
+ROOMENEMIES = "Enemigos de habitacion",
 
-OPTNAME = "Name",
-OPTBY = "Von",
-OPTWEBSITE = "Webseite",
-OPTDESC = "Beschrei\n-bung", -- If necessary, you can span multiple lines
-OPTSIZE = "Größe",
-OPTMUSIC = "Musik",
-CAPNONE = "KEINE",
-ENTERLONGOPTNAME = "Levelname:",
+OPTNAME = "Nombre",
+OPTBY = "Por",
+OPTWEBSITE = "Sitio",
+OPTDESC = "Desc.", -- If necessary, you can span multiple lines
+OPTSIZE = "Tamaño",
+OPTMUSIC = "Musica",
+CAPNONE = "NINGUNO",
+ENTERLONGOPTNAME = "Nombre del nivel:",
 
 X = "x", -- Used for level size: 20x20
 
-SOLID = "Solid",
-NOTSOLID = "Unsolid",
+SOLID = "Solido",
+NOTSOLID = "No solido",
 
-TSCOLOR = "Farbe $1",
+TSCOLOR = "Color $1",
 
 ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
 
-LEVELSLIST = "Level",
-LOADTHISLEVEL = "Lade dieses Level: ",
-ENTERNAMESAVE = "Speichern als: ",
-SEARCHFOR = "Suche nach: ",
+LEVELSLIST = "Niveles",
+LOADTHISLEVEL = "Cargar este nivel:",
+ENTERNAMESAVE = "Introduce nombre para guardar:",
+SEARCHFOR = "Buscar a:",
 
-VERSIONERROR = "Kann nicht die Version prüfen.",
-VERSIONUPTODATE = "Deine Version von Ved ist auf dem neusten Stand.",
-VERSIONOLD = "Update verfügbar! Neuste Version: $1",
-VERSIONCHECKING = "Suche nach Updates...",
-VERSIONDISABLED = "Updateüberprüfung deaktiviert",
+VERSIONERROR = "No se puede comprobar version.",
+VERSIONUPTODATE = "Su version de Ved esta actualizada.",
+VERSIONOLD = "Actualizacion disponible! Version mas reciente: $1",
+VERSIONCHECKING = "Buscando actualizaciones...",
+VERSIONDISABLED = "Comprobacion de actualizacion desactivada",
 
-SAVESUCCESS = "Erfolgreich gespeichert!",
-SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
-INVALIDFILESIZE = "Ungültige Dateigröße.",
+SAVESUCCESS = "Guardado con exito!",
+SAVENOSUCCESS = "Guardado sin exito! Error:",
+INVALIDFILESIZE = "Tamaño de archivo invalido.",
 
-EDIT = "Bearbeiten",
-EDITWOBUMPING = "Bearbeite ohne Stoß zum Anfang",
-COPYNAME = "Name kopieren",
-COPYCONTENTS = "Inhalt kopieren",
-DUPLICATE = "Duplizieren",
+EDIT = "Editar",
+EDITWOBUMPING = "Editar sin chocar",
+COPYNAME = "Copiar nombre",
+COPYCONTENTS = "Copiar contenidos",
+DUPLICATE = "Duplicar",
 
-NEWSCRIPTNAME = "Name:",
-CREATENEWSCRIPT = "Erstelle neues Skript",
+NEWSCRIPTNAME = "Nombre:",
+CREATENEWSCRIPT = "Crear nuevo script",
 
-NEWNOTENAME = "Name:",
-CREATENEWNOTE = "Erstelle neue Notiz",
+NEWNOTENAME = "Nombre:",
+CREATENEWNOTE = "Crear nueva nota",
 
-ADDNEWBTN = "[Neue hinzufügen]",
-IMAGEERROR = "[BILDFEHLER]",
+ADDNEWBTN = "[Añadir nuevo]",
+IMAGEERROR = "[ERROR DE IMAGEN]",
 
-NEWNAME = "Neuer Name:",
-RENAMENOTE = "Notiz umbennen",
-RENAMESCRIPT = "Skript umbennen:",
+NEWNAME = "Nuevo nombre:",
+RENAMENOTE = "Renombrar nota",
+RENAMESCRIPT = "Renombrar script",
 
-LINE = "Zeile ",
+LINE = "linea",
 
-SAVEMAP = "Karte speichern",
-SAVEFULLSIZEMAP = "Karte in voller Größe speichern",
-COPYROOMS = "Kopiere Raum",
-SWAPROOMS = "Tausche Räume",
+SAVEMAP = "Guardar mapa",
+SAVEFULLSIZEMAP = "Guardar mapa de tamaño completo",
+COPYROOMS = "Copiar habitacion",
+SWAPROOMS = "Intercambiar habitaciones",
 
 FLAGS = "Flags",
-ROOM = "Raum",
-CONTENTFILLER = "Inhalt",
+ROOM = "habitacion",
+CONTENTFILLER = "Contenido",
 
-FLAGUSED = "Benutzt      ", -- preferably same length as L.FLAGNOTUSED
-FLAGNOTUSED = "Nicht benutzt",
-FLAGNONAME = "Kein Name",
-USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
+FLAGUSED = "Usado", -- preferably same length as L.FLAGNOTUSED
+FLAGNOTUSED = "No usado",
+FLAGNONAME = "Sin nombre",
+USEDOUTOFRANGEFLAGS = "Flags usados fuera de rango:",
 
-CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
-CUSTOMVVVVVVDIRECTORYEXPL = "Der normale VVVVVV-Order den Ved erwartet ist:\n$1\n\nDieser Pfad sollte nicht zum \"levels\" Ordner gesetzt werden.",
-CUSTOMVVVVVVDIRECTORY_NOTSET = "Du hast keinen eigenen VVVVVV-Order gesetzt.\n\n",
-CUSTOMVVVVVVDIRECTORY_SET = "Dein VVVVVV-Order ist zu einem benutzerdefiniertem Pfad gesetzt:\n$1\n\n",
-LANGUAGE = "Sprache",
-DIALOGANIMATIONS = "Dialoganimationen",
-FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Unterwerkzeugs",
-ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
-ASKBEFOREQUIT = "Frag vor dem Beenden",
-NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte Änderungen gibt",
-COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
-ALLOWDEBUG = "Aktiviere Debugmodus",
-SHOWFPS = "Zeige FPS-Zähler",
-IIXSCALE = "2x Größe",
-CHECKFORUPDATES = "Nach Updates suchen",
-PAUSEDRAWUNFOCUSED = "Nicht rendern wenn das Fenster unfokusiert ist",
-ENABLEOVERWRITEBACKUPS = "Mache Backups von Level Dateien die überschrieben werden",
-AMOUNTOVERWRITEBACKUPS = "Anzahl an Backups die gemacht werden sollen pro Level",
-SCALE = "Größe",
-LOADALLMETADATA = "Lade Metadaten (sowas wie Titel, Author und Beschreibung) für alle Dateien in der Levelliste",
-COLORED_TEXTBOXES = "Benutze Echtfarben für Textbox",
+CUSTOMVVVVVVDIRECTORY = "Archivo de VVVVVV",
+CUSTOMVVVVVVDIRECTORYEXPL = "El directorio de VVVVVV por defecto que Ved espera es:\n$1\n\nEste camino no deberia ser puesto a el directiorio de \"levels\".",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "No tienes un directorio de VVVVVV personalizado.\n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "Su directorio de VVVVVV es un camino personalizado:\n$1\n\n",
+LANGUAGE = "Idioma",
+DIALOGANIMATIONS = "Animaciones de dialogo",
+FLIPSUBTOOLSCROLL = "Dar vuelta direccion de desplazo de subherramienta",
+ADJACENTROOMLINES = "Indicadores de teja en habitaciones adjuntas",
+ASKBEFOREQUIT = "Preguntar antes de salir",
+NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin guardar",
+COORDS0 = "Mostrar coordenadas comenzando en 0 (como en scripting interno)",
+ALLOWDEBUG = "Habilitar modo debug",
+SHOWFPS = "Mostrar contador de FPS",
+IIXSCALE = "Escala 2x",
+CHECKFORUPDATES = "Buscar actualizaciones",
+PAUSEDRAWUNFOCUSED = "No mostrar cuando la ventana esta desenfocada",
+ENABLEOVERWRITEBACKUPS = "Hacer respaldos de archivos de niveles que estan sobreescribidos",
+AMOUNTOVERWRITEBACKUPS = "Numeros de respaldos para mantener por nivel",
+SCALE = "Escala",
+LOADALLMETADATA = "Cargar metadatos (como el titulo, autor y descripcion) para todos los archivos en la lista de niveles",
+COLORED_TEXTBOXES = "Usar color verdaderos de dialogos",
 
-SCRIPTSPLIT = "Trennen",
-SPLITSCRIPT = "Skripts trennen",
-COUNT = "Anzahl: ",
-SMALLENTITYDATA = "Daten",
+SCRIPTSPLIT = "Dividir",
+SPLITSCRIPT = "Dividir scripts",
+COUNT = "Cuenta:",
+SMALLENTITYDATA = "datos",
 
 -- Stats screen
-AMOUNTSCRIPTS = "Skripts:",
+AMOUNTSCRIPTS = "Scripts:",
 AMOUNTUSEDFLAGS = "Flags:",
-AMOUNTENTITIES = "Objekte:",
+AMOUNTENTITIES = "Entidades:",
 AMOUNTTRINKETS = "Trinkets:",
-AMOUNTCREWMATES = "Crewmitglieder:",
-AMOUNTINTERNALSCRIPTS = "Interne Skripts:",
-TILESETUSSAGE = "Tileset Benutzung",
-TILESETSONLYUSED = "(nur Räume die Tiles haben werden gezählt)",
-AMOUNTROOMSWITHNAMES = "Räume die einen Namen haben:",
-PLACINGMODEUSAGE = "Tileplatzierungsmoduse:",
-AMOUNTLEVELNOTES = "Level-Notizen:",
-AMOUNTFLAGNAMES = "Flagnamen:",
-TILESUSAGE = "Tiles Verwendung",
-AMOUNTTILES = "Tiles:",
-AMOUNTSOLIDTILES = "Solide Tiles:",
-AMOUNTSPIKES = "Spikes:",
+AMOUNTCREWMATES = "Compañeros:",
+AMOUNTINTERNALSCRIPTS = "Scripts internos:",
+TILESETUSSAGE = "Uso de set de teja",
+TILESETSONLYUSED = "(solo las habitaciones con tejas se cuentan)",
+AMOUNTROOMSWITHNAMES = "Habitaciones con nombre:",
+PLACINGMODEUSAGE = "Modos de colocación de teja:",
+AMOUNTLEVELNOTES = "Notas de niveles:",
+AMOUNTFLAGNAMES = "Nombres de flags:",
+TILESUSAGE = "Uso de teja",
+AMOUNTTILES = "Tejas:",
+AMOUNTSOLIDTILES = "Tejas solidas:",
+AMOUNTSPIKES = "Espinas:",
 
 
-UNEXPECTEDSCRIPTLINE = "Unerwartete Skriptzeile ohne Skript: $1",
-DUPLICATESCRIPT = "Skript $1 ist ein Duplikat! Nur eins kann geladen werden.",
-MAPWIDTHINVALID = "Kartenbreite ist ungültig: $1",
-MAPHEIGHTINVALID = "Kartenhöhe ist ungültig: $1",
-LEVMUSICEMPTY = "Levelmusik ist leer!",
-NOT400ROOMS = "Die Anzahl an Metadaten in levelMetaData ist nicht 400!",
-MOREERRORS = "$1 mehr",
+UNEXPECTEDSCRIPTLINE = "Linea de script no esperada sin script: $1",
+DUPLICATESCRIPT = "Script $1 esta duplicado! Solo uno se puede cargar.",
+MAPWIDTHINVALID = "Anchura de mapa invalida: $1",
+MAPHEIGHTINVALID = "Altura de mapa invalida: $1",
+LEVMUSICEMPTY = "La musica de nivel esta vacia!",
+NOT400ROOMS = "El numero de entradas en levelMetaData no es 400!",
+MOREERRORS = "$1 mas",
 
-DEBUGMODEON = "Debugmodus an",
+DEBUGMODEON = "Modo debug activado",
 FPS = "FPS",
-STATE = "Status",
-MOUSE = "Maus",
+STATE = "Estado",
+MOUSE = "Mouse",
 
-BLUE = "Blau",
-RED = "Rot",
-CYAN = "Cyan",
-PURPLE = "Lila",
-YELLOW = "Gelb",
-GREEN = "Grün",
-GRAY = "Grau",
-PINK = "Pink",
-BROWN = "Braun",
-RAINBOWBG = "Regenbogen",
+BLUE = "Azul",
+RED = "Rojo",
+CYAN = "Azul claro",
+PURPLE = "Purpura",
+YELLOW = "Amarillo",
+GREEN = "Verde",
+GRAY = "Gris",
+PINK = "Rosa",
+BROWN = "Marron",
+RAINBOWBG = "Arcoiris",
 
 -- b14
-SYNTAXCOLORS = "Syntaxfarben",
-SYNTAXCOLORSETTINGSTITLE = "Skriptingsyntaxhervorhebungsfarbeneinstellungen",
-SYNTAXCOLOR_COMMAND = "Befehl",
-SYNTAXCOLOR_GENERIC = "Generisch",
-SYNTAXCOLOR_SEPARATOR = "Separator",
-SYNTAXCOLOR_NUMBER = "Nummer",
-SYNTAXCOLOR_TEXTBOX = "Textbox",
-SYNTAXCOLOR_ERRORTEXT = "Unbekannter Befehl",
-SYNTAXCOLOR_CURSOR = "Mauszeiger",
-SYNTAXCOLOR_FLAGNAME = "Flagname",
-SYNTAXCOLOR_NEWFLAGNAME = "Neuer Flagname",
-RESETCOLORS = "Farben zurücksetzen",
-STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
+SYNTAXCOLORS = "Colores de sintaxis",
+SYNTAXCOLORSETTINGSTITLE = "Configuracion de color de desacando de sintaxis de scripting",
+SYNTAXCOLOR_COMMAND = "Comando",
+SYNTAXCOLOR_GENERIC = "Generico",
+SYNTAXCOLOR_SEPARATOR = "Separador",
+SYNTAXCOLOR_NUMBER = "Numero",
+SYNTAXCOLOR_TEXTBOX = "Dialogo",
+SYNTAXCOLOR_ERRORTEXT = "Comando no reconozido",
+SYNTAXCOLOR_CURSOR = "Cursor",
+SYNTAXCOLOR_FLAGNAME = "Nombre de flag",
+SYNTAXCOLOR_NEWFLAGNAME = "Nuevo nombre de flag",
+RESETCOLORS = "Reiniciar colores",
+STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
 
 -- b17 - L.MAL is concatenated with L.[...]CORRUPT
-MAL = "Das Level ist beschädigt: ",
-METADATACORRUPT = "Metadaten fehlen oder sind beschädigt.",
-METADATAITEMCORRUPT = "Metadaten für $1 fehlt oder ist beschädigt.",
-TILESCORRUPT = "Tiles fehlen oder sind beschädigt.",
-ENTITIESCORRUPT = "Objekte fehlen oder sind beschädigt.",
-LEVELMETADATACORRUPT = "Raummetadaten fehlen oder sind beschädigt.",
-SCRIPTCORRUPT = "Skripte fehlen oder sind beschädigt.",
+MAL = "El archivo del nivel esta malformado:",
+METADATACORRUPT = "Faltan metadatos o estan corruptos.",
+METADATAITEMCORRUPT = "Faltan metadatos para $1 o estan corruptos.",
+TILESCORRUPT = "Faltan tejas o estan corruptas.",
+ENTITIESCORRUPT = "Faltan entidades o estan corruptas.",
+LEVELMETADATACORRUPT = "Faltan metadatos de habitacion o estan corruptos.",
+SCRIPTCORRUPT = "Faltan scripts o estan corruptos.",
 
 -- 1.1.0
-LOADSCRIPTMADE = "Ladeskript erstellt",
-COPY = "Kopieren",
-CUSTOMSIZE = "Eigene Pinselgröße: $1x$2",
-SELECTINGA = "Auswählen - klicke oben links",
-SELECTINGB = "Ausgewählt: $1x$2",
-TILESETSRELOADED = "Tilesets und Sprites neugeladen",
+LOADSCRIPTMADE = "Script de carga creado",
+COPY = "Copiar",
+CUSTOMSIZE = "Tamaño de brocha personalizado: $1x$2",
+SELECTINGA = "Seleccionando - haz click en superior izquierda",
+SELECTINGB = "Seleccionando: $1x$2",
+TILESETSRELOADED = "Sets de tejas y sprites recargados",
 
 -- 1.2.0
-BACKUPS = "Backups",
-BACKUPSOFLEVEL = "Backups von Level $1",
-LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
-OVERWRITTENTIME = "Überschrieben", -- List header
-SAVEBACKUP = "Im VVVVVV-Ordner speichern",
-DATEFORMAT = "Datumsformat",
-TIMEFORMAT = "Zeitformat",
-CUSTOMDATEFORMAT = "Eigenes Datumsformat",
-SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird in diesem Fall gemacht!",
+BACKUPS = "Respaldos",
+BACKUPSOFLEVEL = "Respaldos del nivel $1",
+LASTMODIFIEDTIME = "Ultima modificacion original", -- List header
+OVERWRITTENTIME = "Sobreescribido", -- List header
+SAVEBACKUP = "Guardar al archivo VVVVVV",
+DATEFORMAT = "Formato de fecha",
+TIMEFORMAT = "Formato de tiempo",
+CUSTOMDATEFORMAT = "Formato de fecha personalizado",
+SAVEBACKUPNOBACKUP = "Asegurate de elegir un nombre unico para esto si no quieres sobreescribir algo, porque NO se haran respaldos en este caso!",
 
 -- 1.2.4
-AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
-MOREINFO = "Neuste Infos",
-COPYLINK = "Link kopieren",
-SCRIPTDISPLAY = "Anzeigen",
-SCRIPTDISPLAY_USED = "Benutzt",
-SCRIPTDISPLAY_UNUSED = "Unbenutzt",
+AUTOSAVECRASHLOGS = "Guardar logs de crasheo automaticamente",
+MOREINFO = "Ultima informacion",
+COPYLINK = "Copiar link",
+SCRIPTDISPLAY = "Mostrar",
+SCRIPTDISPLAY_USED = "Usado",
+SCRIPTDISPLAY_UNUSED = "No usado",
 
 -- 1.3.0 (more changes)
-RECENTLYOPENED = "Zuletzt geöffnete Level",
-REMOVERECENT = "Willst du es von der Liste der zuletzt geöffneten Level entfernen?",
-RESETCUSTOMBRUSH = "(Rechtsklick um eine neue Größe einzustellen)",
+RECENTLYOPENED = "Niveles abierto recientemente",
+REMOVERECENT = "Quieres borrarlo de la lista de niveles abiertos recientemente?",
+RESETCUSTOMBRUSH = "(Click derecho para nuevo tamaño)",
 
 -- 1.3.2
-DISPLAYSETTINGS = "Anzeige/\nSkalierung",
-DISPLAYSETTINGSTITLE = "Anzeige/Skalierungseinstellungen",
-SMALLERSCREEN = "Kleinere Fensterbreite (800px breit anstatt 896px)",
-FORCESCALE = "Zwinge Skalierungseinstellungen",
-SCALENOFIT = "Die aktuelle Größeneinstellung macht das Fenster zu groß um zu passen.",
-SCALENONUM = "Die aktuellen Größeeinstellungen sind ungültig.",
-MONITORSIZE = "$1x$2 Monitor",
-VEDRES = "Ved Auflösung: $1x$2",
-NONINTSCALE = "Nicht-ganzzahlige Skalierung",
+DISPLAYSETTINGS = "Monitor/Escala",
+DISPLAYSETTINGSTITLE = "Opciones de Monitor/Escala",
+SMALLERSCREEN = "Anchura de ventana mas pequeña (800px en vez de 896px)",
+FORCESCALE = "Forzar opciones de escala",
+SCALENOFIT = "Las opciones de escala hazen la ventana muy larga como para entrar.",
+SCALENONUM = "Las opciones de escala son invalidas.",
+MONITORSIZE = "Monitor $1x$2",
+VEDRES = "Resolucion de Ved: $1x$2",
+NONINTSCALE = "Escala no-entera",
 
 -- 1.3.4
-USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
-REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
-SYNTAXCOLOR_COMMENT = "Kommentar",
-FPSLIMIT = "FPS-Limit",
+USEFONTPNG = "Usar font.png de las graficas de VVVVVV como fuente",
+REQUIRESHIGHERLOVE = " (requiere L{VE $1 o mejor)",
+SYNTAXCOLOR_COMMENT = "Comentario",
+FPSLIMIT = "Limite de FPS",
 
-MAPRESOLUTION = "Auflösung", -- Map export size
-MAPRES_ASSHOWN = "Wie gezeigt (max 640x480)", -- $1x$2 is resolution, max 640x480
-MAPRES_PERCENT = "$1% ($2x$3 pro Raum)", -- Example: 50% (160x120 per room)
-MAPRES_RATIO = "$1:$2 ($3x$4 pro Raum)", -- Example: 1:8 (40x30 per room)
-TOPLEFT = "Oben links",
-WIDTHHEIGHT = "Breite & Höhe",
-BOTTOMRIGHT = "Unten rechts",
-RENDERERINFO = "Rendererinformationen:",
-MAPINCOMPLETE = "Die Karte ist noch nicht fertig (zu dem Zeitpunkt, als du Speichern gedrückt hast), bitte versuche es erneut wenn sie fertig ist.",
-KEEPDIALOGOPEN = "Halte Dialog offen",
-TRANSPARENTMAPBG = "Transparenter Hintergrund",
-MAPEXPORTERROR = "Fehler beim erstellen der Karte.",
-VIEWIMAGE = "Ansehen", -- Verb, view image
-INVALIDLINENUMBER = "Bitte gib eine gültige Zeilennummer an.",
-OPENLEVELSFOLDER = "Öffne Levelordner", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
-MOVEENTITY = "Bewegen",
-GOTOROOM = "Gehe zu Raum",
-ESCTOCANCEL = "[Drücke ESC zum abbrechen]",
+MAPRESOLUTION = "Resolucion", -- Map export size
+MAPRES_ASSHOWN = "Como mostrado (max. 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 por habitacion)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 por habitacion)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "Super. izqrd.",
+WIDTHHEIGHT = "Anch. & altur.",
+BOTTOMRIGHT = "Inferior derecha",
+RENDERERINFO = "Informacion de renderizador:",
+MAPINCOMPLETE = "El mapa todavia no esta listo (en el momento que presionaste Guardar), porfavor intente de nuevo cuando este listo.",
+KEEPDIALOGOPEN = "Mantener dialogo abierto",
+TRANSPARENTMAPBG = "Fondo transparente",
+MAPEXPORTERROR = "Error al crear mapa.",
+VIEWIMAGE = "Ver", -- Verb, view image
+INVALIDLINENUMBER = "Porfavor introduce un numero de linea valido.",
+OPENLEVELSFOLDER = "Abrir direc. nivel", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "Mover",
+GOTOROOM = "Ir a habitacion",
+ESCTOCANCEL = "[Presione ESC para cancelar]",
 
-INVALIDFILENAME_WIN = "Windows erlaubt keines der folgenden Zeichen in Dateinamen:\n\n: * ? \" < > |\n\n(| ist ein senkrechter Strich)",
-INVALIDFILENAME_MAC = "macOS erlaubt kein : Zeichen in Dateinamen.",
+INVALIDFILENAME_WIN = "Windows no permite los caracteres siguientes en los nombres de archivo:\n\n: * ? \" < > |\n\n(| es una linea vertical)",
+INVALIDFILENAME_MAC = "macOS no permite el caracter : en los nombres de archivo.",
 
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
-TINY_CTRL = "STRG",
+TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
 TINY_ALT = "ALT",
 TINY_ESC = "ESC",
 TINY_TAB = "TAB",
-TINY_HOME = "HOME",
-TINY_END = "END",
-TINY_INSERT = "EINFG",
-TINY_DEL = "ENTF",
+TINY_HOME = "INICIO",
+TINY_END = "FIN",
+TINY_INSERT = "INS",
+TINY_DEL = "SUPR",
 
 -- Header for search results
-SEARCHRESULTS_SCRIPTS = "Skripte [$1]",
-SEARCHRESULTS_ROOMS = "Räume [$1]",
-SEARCHRESULTS_NOTES = "Notizen [$1]",
+SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
+SEARCHRESULTS_ROOMS = "Habitaciones [$1]",
+SEARCHRESULTS_NOTES = "Notas [$1]",
 
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "Song kann nicht gespielt werden. Er existiert nicht oder der Typ wird nicht unterstützt.",
-SOUNDPLAYERROR = "Geräusch kann nicht gespielt werden. Es existiert nicht oder der Typ wird nicht unterstützt.",
-MUSICLOADERROR = "$1 kann nicht geladen werden: ",
-MUSICLOADERROR_TOOSMALL = "Die Musikdatei ist zu klein um gültig zu sein.",
-MUSICEXISTSYES = "Existiert",
-MUSICEXISTSNO = "Existiert nicht",
-LOAD = "Laden",
-RELOAD = "Neu laden",
-UNLOAD = "Entfernen",
-MUSICEDITOR = "Musikeditor",
-LOADMUSICNAME = "Lade .vvv",
-INSERTSONG = "Füge Song ein bei Spur $1",
-SUREDELETESONG = "Bist du sicher, dass du Song $1 entfernen willst?",
-SONGOPENFAIL = "$1 kann nicht geöffnet werden, Song wurde nicht ersetzt.",
-SONGREPLACEFAIL = "Irgendwas ist schief gegangen während der Song ersetzt wurde.",
+MUSICPLAYERROR = "No se pudo reproducir la cancion. Quiza no existe o sea de un tipo no soportado.",
+SOUNDPLAYERROR = "No se pudo reproducir este sonido. Quiza no existe o sea de un tipo no soportado.",
+MUSICLOADERROR = "No se puede cargar $1:",
+MUSICLOADERROR_TOOSMALL = "El archivo de musica es muy pequeño para ser valido.",
+MUSICEXISTSYES = "Existe",
+MUSICEXISTSNO = "No existe",
+LOAD = "Cargar",
+RELOAD = "Recargar",
+UNLOAD = "Descargar",
+MUSICEDITOR = "Editor de musica",
+LOADMUSICNAME = "Cargar .vvv",
+INSERTSONG = "Insertar cancion en pista $1",
+SUREDELETESONG = "Estas seguro que quieres remover cancion $1?",
+SONGOPENFAIL = "No se puede abrir $1, cancion no reemplazada.",
+SONGREPLACEFAIL = "Algo salio mar al reemplazar la cancion.",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
-CANNOTUSENEWLINES = "Du kannst das \"$1\" Zeichen nicht in Skriptnamen benutzen!",
-MUSICTITLE = "Titel: ",
-MUSICARTIST = "Künstler: ",
-MUSICFILENAME = "Dateiname: ",
-MUSICNOTES = "Notizen:",
-SONGMETADATA = "Metadaten für Song $1",
-MUSICFILEMETADATA = "Dateimetadaten",
-MUSICEXPORTEDON = "Exportiert: ", -- Followed by date and time
-SAVEMETADATA = "Metadaten speichern",
-SOUNDS = "Geräusche",
-GRAPHICS = "Grafiken",
-FILEOPENERNAME = "Name: ",
-PATHINVALID = "Der Pfad ist ungültig.",
-DRIVES = "Laufwerke", -- like C: or F: on Windows
-DOFILTER = "Nur *$1 zeigen", -- "*.txt" for example
-DOFILTERDIR = "Nur Verzeichnisse zeigen",
-FILEDIALOGLUV = "Entschuldigung, dein Betriebssystem wurde nicht erkannt, also funktioniert der Dateidialog nicht.",
-RESET = "Zurück-\nsetzen",
-CHANGEVERB = "Ändern", -- verb
-LOADIMAGE = "Lade Bild",
-GRID = "Netz",
+CANNOTUSENEWLINES = "No se puede usar el caracter \"$1\" en nombres de scripts!",
+MUSICTITLE = "Titulo:",
+MUSICARTIST = "Artista:",
+MUSICFILENAME = "Nombre de archivo:",
+MUSICNOTES = "Notas:",
+SONGMETADATA = "Metadatos para cancion $1",
+MUSICFILEMETADATA = "Metadatos de archivo",
+MUSICEXPORTEDON = "Exportado:", -- Followed by date and time
+SAVEMETADATA = "Guardar metadatos",
+SOUNDS = "Sonidos",
+GRAPHICS = "Graficos",
+FILEOPENERNAME = "Nombre:",
+PATHINVALID = "El camino es invalido.",
+DRIVES = "Drives", -- like C: or F: on Windows
+DOFILTER = "Solo mostrar *$1", -- "*.txt" for example
+DOFILTERDIR = "Solo mostrar directorios",
+FILEDIALOGLUV = "Lo siento, su sistema operativo no es reconocido, asi que el dialogo de archivo no funciona.",
+RESET = "Reiniciar",
+CHANGEVERB = "Cambiar", -- verb
+LOADIMAGE = "Cargar imagen",
+GRID = "Red",
 NOTALPHAONLY = "RGB",
 
-OPAQUEROOMNAMEBACKGROUND = "Mache die schwarzen Raumnamenhintergründe undurchsichtig",
-PLATVCHANGE_TITLE = "Plattformgeschwindigkeit ändern",
-PLATVCHANGE_MSG = "Geschwindigkeit:",
-PLATVCHANGE_INVALID = "Du musst eine Nummer eingeben.",
-RENAMESCRIPTREFERENCES = "Hinweise umbenennen",
-PLATFORMSPEEDSLIDER = "Tempo",
+OPAQUEROOMNAMEBACKGROUND = "Hacer el fondo del nombre de habitacion negro opaco",
+PLATVCHANGE_TITLE = "Cambiar velocidad de plataforma",
+PLATVCHANGE_MSG = "Velocidad:",
+PLATVCHANGE_INVALID = "Tienes que poner un numero.",
+RENAMESCRIPTREFERENCES = "Renombrar preferencias",
+PLATFORMSPEEDSLIDER = "Vel.:",
 
 TRINKETS = "Trinkets",
-LISTALLTRINKETS = "Trinkets auflisten", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "Liste aller Trinkets",
-NOTRINKETSINLEVEL = "Es gibt keine Trinkets in diesem Level.",
-CREWMATES = "Crewmitglieder",
-LISTALLCREWMATES = "Crewmitglieder auflisten", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "Liste aller rettbaren Crewmitglieder",
-NOCREWMATESINLEVEL = "Es gibt keine rettbaren Crewmitglieder in diesem Level.",
-SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire level in any direction
+LISTALLTRINKETS = "Enlistar todos los trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Lista de todos los trinkets",
+NOTRINKETSINLEVEL = "No hay trinkets en este nivel.",
+CREWMATES = "Compañeros",
+LISTALLCREWMATES = "Enlistar todos los compañeros", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "Lista de compañeros rescatables",
+NOCREWMATESINLEVEL = "No hay compañeros rescatables en este nivel.",
+SHIFTROOMS = "Cambiar habitacion", -- In the map. Move all rooms in the entire level in any direction
 
 
-OLDSHORTCUT_SCRIPTJUMP = "STRG+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Strg+A funktioniert bald nicht mehr, benutze stattdessen Strg+R",
-OLDSHORTCUT_OPENLVLDIR = "Strg+D funktioniert bald nicht mehr, benutze stattdessen Strg+F",
-OLDSHORTCUT_GOTOROOM = "Q funktioniert bald nicht mehr, benutze stattdessen G",
-OLDSHORTCUT_SHOWBG = "K funktioniert bald nicht mehr, benutze stattdessen Shift+;",
+OLDSHORTCUT_SCRIPTJUMP = "CTRL+izquierda/derecha dejara de funcionar pronto, usa ALT+izquierda/derecha", -- CTRL and ALT are capitalized here for extra clarity in this string
+OLDSHORTCUT_ASSETS = "CTRL+A dejara de funcionar pronto, usa CTRL+R",
+OLDSHORTCUT_OPENLVLDIR = "CTRL+D dejara de funcionar pronto, usa CTRL+F",
+OLDSHORTCUT_GOTOROOM = "Q dejara de funcionar pronto, usa G",
+OLDSHORTCUT_SHOWBG = "K dejara de funcionar pronto, usa SHIFT+;",
 
-FRAMESTOSECONDS = "$1 = $2 Sek",
-ROOMNUM = "Raum $1",
-TRACKNUM = "Track $1",
-STOPSMUSIC = "Stoppt Musik",
-EDITSCRIPTWOBUMPING = "Bearbeite Skript ohne Stoß zum Anfang",
-CLICKONTHING = "Klicke auf $1",
-ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
-MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
+FRAMESTOSECONDS = "$1 = $2 seg.",
+ROOMNUM = "Habitacion $1",
+TRACKNUM = "Pista $1",
+STOPSMUSIC = "Para la musica",
+EDITSCRIPTWOBUMPING = "Editar script sin chocar",
+CLICKONTHING = "Haz click en $1",
+ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+MORETHANONESTARTPOINT = "Hay mas de un punto de partida en este nivel!",
 
 }
 
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[0] = "Du hast $1 Plugin das nicht unterstützt ist in dieser Version.",
-		[1] = "Du hast $1 Plugins die nicht untersützt sind in dieser Version.",
+		[0] = "Tienes $1 plugin que no se soporta en esta version.",
+		[1] = "Tienes $1 plugins que no se soportan en esta version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "Dieses Level schlug fehl bei $1 Überprüfung. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
-		[1] = "Dieses Level schlug fehl bei $1 Überprüfungen. Das Problem wurde vielleicht automatisch gelöst, aber es ist immer noch möglich dass Abstürze und Inkonsistenzen auftreten.",
+		[0] = "Este nivel fallo $1 check. El problema se pudo haber arreglado automaticamente, pero es posible que esto resulte en crasheos y inconsistencias.",
+		[1] = "Este nivel fallo $1 checks. El problema se pudo haber arreglado automaticamente, pero es posible que esto resulte en crasheos y inconsistencias.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[0] = "$1 Benutzung in Räume: $2",
-		[1] = "$1 Benutzungen in Räume: $2",
+		[0] = "$1 uso en habitaciones: $2",
+		[1] = "$1 usos en habitaciones: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[0] = "$1 Benutzung in Skripts: $2",
-		[1] = "$1 Benutzungen in Skripts: $2",
+		[0] = "$1 uso en scripts: $2",
+		[1] = "$1 usos en scripts: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[0] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaft!",
-		[1] = "Objekt bei [$1 $2] hat $3 ungültige Eigenschaften!",
+		[0] = "La entidad en [$1 $2] tiene $3 propiedad invalida!",
+		[1] = "La entidad en [$1 $1] tiene $3 propiedades invalidas!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata für Raum $1,$2 hat $3 ungültige Eigenschaft!",
-		[1] = "LevelMetadata für Raum $1,$2 hat $3 ungültige Eigenschaften!",
+		[0] = "LevelMetadata para la habitacion $1,$2 tiene $3 propiedad invalida!",
+		[1] = "LevelMetadata para la habitacion $1,$2 tiene $3 propiedades invalidas!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "$1 wird gezeigt",
-		[1] = "$1 werden gezeigt",
+		[0] = "Mostrando $1",
+		[1] = "Mostrando $1",
 	},
 	FLAGUSAGES = {
-		[0] = "Wurde $1 mal in diesen Skripts benutzt: $2",
-		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
+		[0] = "Usado $1 vez en scripts: $2",
+		[1] = "Usado $1 veces en scripts: $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
-		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
+		[0] = "$1 teja no es un numero entero valido en el rango 0-1199",
+		[1] = "$1 tejas no es un numero entero valido en el rango 0-1199",
 	},
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
 	},
 	LITERALNULLS = {
-		[0] = "Es gibt $1 Nullbyte!",
-		[1] = "Es gibt $1 Nullbytes!",
+		[0] = "Hay $1 byte nulo!",
+		[1] = "Hay $1 bytes nulos!",
 	},
 	XMLNULLS = {
-		[0] = "Es gibt $1 XML Nullcharakter!",
-		[1] = "Es gibt $1 XML Nullcharakter!",
+		[0] = "Hay $1 caracter XML nulo!",
+		[1] = "Hay $1 caracteres XML nulos!",
 	},
 }
 
 toolnames = {
 
-"Mauer",
-"Hintergrund",
-"Spike",
+"Pared",
+"Fondo",
+"Espina",
 "Trinket",
 "Checkpoint",
-"Verschwindende Plattform",
-"Conveyor",
-"Bewegliche Plattform",
-"Gegner",
-"Schwerkraftlinie",
-"Raumtext",
-"Konsole",
-"Skriptbox",
-"Teleporter",
-"Teleportationslinie",
-"Crewmitglied",
-"Startpunkt",
+"Plataforma desapareciendo",
+"Transportador",
+"Plataforma moviendose",
+"Enemigo",
+"Linea de gravedad",
+"Texto de habitacion",
+"Terminal",
+"Caja de scripts",
+"Token de warp",
+"Linea de warp",
+"Compañero",
+"Punto de partida",
 
 }
 
 subtoolnames = {
 
-[1] = {"1x1 Pinsel", "3x3 Pinsel", "5x5 Pinsel", "7x7 Pinsel", "9x9 Pinsel", "Horizontal füllen", "Vertikal füllen", "Eigene Pinselgröße", "Farbeimer", "Kartoffel für das Machen von Dingen die magisch sind"},
+[1] = {"Brocha 1x1", "Brocha 3x3", "Brocha 5x5", "Brocha 7x7", "Brocha 9x9", "Llenar horizontalmente", "Llenar verticalmente", "Tamaño de bocha personalizado", "Cubeta de llenar", "Patata para Hacer Cosas que son Magicas"},
 [2] = {},
-[3] = {"Automatisch 1", "Automatisch erweitern L+R", "Automatisch erweitern L", "Automatisch erweitern R"},
+[3] = {"Auto 1", "Expandir auto. I+D", "Expandir auto. I", "Expandir auto. D"},
 [4] = {},
-[5] = {"Aufrecht", "Umgedreht"},
+[5] = {"Vertical", "Volteado"},
 [6] = {},
-[7] = {"Kleines R", "Kleines L", "Großes R", "Großes L"},
-[8] = {"Runter", "Hoch", "Links", "Rechts"},
+[7] = {"D Pequeño", "I Pequeño", "D Grande", "I Grande"},
+[8] = {"Abajo", "Arriba", "Izquierda", "Derecha"},
 [9] = {},
-[10] = {"Horizontal", "Vertikal"},
+[10] = {"Horizontal", "Vertical"},
 [11] = {},
 [12] = {},
 [13] = {},
-[14] = {"Eingang", "Ausgang"},
+[14] = {"Entrada", "Salida"},
 [15] = {},
-[16] = {"Pink", "Gelb", "Rot", "Grün", "Blau", "Cyan", "Zufällig"},
-[17] = {"Gucke nach rechts", "Gucke nach links"},
+[16] = {"Rosa", "Amarillo", "Rojo", "Verde", "Azul", "Azul claro", "Al azar"},
+[17] = {"Mirar derecha", "Mirar izquierda"},
 
 }
 
@@ -649,140 +637,140 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "A",
+[3] = "T",
 
 }
 
 warpdirchangedtext = {
 
-[0] = "Raumteleportation ist deaktiviert",
-[1] = "Teleportationsrichtung horizontal gesetzt",
-[2] = "Teleportationsrichtung vertikal gesetzt",
-[3] = "Teleportationsrichtung zu allen Richtungen gesetzt",
+[0] = "Warp de habitacion desactivado",
+[1] = "Direccion de warp horizontal",
+[2] = "Direccion de warp vertical",
+[3] = "Direccion de warp son todas las direcciones",
 
 }
 
 langtilesetnames = {
 
-short0 = "Raumstn.",
-long0 = "Raumstation",
-short1 = "Draußen",
-long1 = "Draußen",
-short2 = "Lab.",
-long2 = "Labor",
-short3 = "Teleprtzone.",
-long3 = "Teleportationszone",
-short4 = "Schf.",
-long4 = "Schiff",
-short5 = "Tower",
-long5 = "Tower",
+short0 = "Estc. Espac.",
+long0 = "Estacion Espacial",
+short1 = "Afuera",
+long1 = "Afuera",
+short2 = "Laboratorio",
+long2 = "Laboratorio",
+short3 = "Zona Warp",
+long3 = "Zona Warp",
+short4 = "Nave",
+long4 = "Nave",
+short5 = "Torre",
+long5 = "Torre",
 
 }
 
-ERR_VEDHASCRASHED = "Ved ist abgestürzt!"
-ERR_VEDVERSION = "Ved-Version:"
-ERR_LOVEVERSION = "LÖVE-Version:"
-ERR_STATE = "Status:"
-ERR_OS = "Betriebssystem:"
-ERR_TIMESINCESTART = "Zeit seit dem Start:"
+ERR_VEDHASCRASHED = "Ved ha crasheado!"
+ERR_VEDVERSION = "Version de Ved:"
+ERR_LOVEVERSION = "Version de L{VE:"
+ERR_STATE = "Estado:"
+ERR_OS = "SO:"
+ERR_TIMESINCESTART = "Tiempo desde el inicio:"
 ERR_PLUGINS = "Plugins:"
-ERR_PLUGINSNOTLOADED = "(nicht geladen)"
-ERR_PLUGINSNONE = "(keine)"
-ERR_PLEASETELLDAV = "Bitte erzähl Dav999 über dieses Problem.\n\n\nDetails: (drücke Strg/Cmd+C um es zur Zwischenablage zu kopieren)\n\n"
-ERR_INTERMEDIATE = " (Zwischenversion)" -- pre-release version, so a version in between officially released versions
-ERR_TOONEW = " (zu neu)"
+ERR_PLUGINSNOTLOADED = "(no cargado)"
+ERR_PLUGINSNONE = "(ninguno)"
+ERR_PLEASETELLDAV = "Porfavor dile a Dav999 sobre este problema.\n\n\nDetalles: (presione CTRL/CMD+C para copiarlo al portapapeles)\n\n"
+ERR_INTERMEDIATE = "(version intermedia)" -- pre-release version, so a version in between officially released versions
+ERR_TOONEW = "(muy nueva)"
 
-ERR_PLUGINERROR = "Plugin Fehler!"
-ERR_FILE = "Datei die bearbeitet wird:"
-ERR_FILEEDITORS = "Plugins die diese Datei bearbeiten:"
-ERR_CURRENTPLUGIN = "Plugin das diesen Fehler verursacht hat:"
-ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke Strg/Cmd+C um es zur Zwischenable zu kopieren)\n\n"
-ERR_CONTINUE = "Du kannst fortfahren indem du ESC oder Enter drückst, aber beachte dass diese gescheiterte Bearbeitung vielleicht Probleme verursacht."
-ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
-ERR_REPLACECODE = "Konnte dies nicht finden in %s.lua:"
-ERR_REPLACECODEPATTERN = "Konnte dies nicht finden in %s.lua (als Muster):"
-ERR_LINESTOTAL = "%i Zeilen insgesamt"
+ERR_PLUGINERROR = "Error de plugin!"
+ERR_FILE = "Archivo para editar:"
+ERR_FILEEDITORS = "Plugins que editan el archivo:"
+ERR_CURRENTPLUGIN = "Plugin que causo el error:"
+ERR_PLEASETELLAUTHOR = "Se suponia que un plugin haga una editacion para codificar en Ved, pero el codigo para editar no se encontro.\nEs posible que esto se haya causado por un conflicto entre dos plugins, o una actualizacion de Ved ha roto este plugin.\nDetalles: (presione CTRL/CMD+C para copiar al portapapeles)\n\n"
+ERR_CONTINUE = "Puedes continuar al presionar ESC o enter, pero esta editacion fallida podria causar problemas."
+ERR_OPENPLUGINSFOLDER = "Puedes abrir la carpeta de plugins al presionar F, para arrelar o remover el plugin que ofende. O si no, puedes reiniciar Ved."
+ERR_REPLACECODE = "No se pudo encontrar esto en %s.lua:"
+ERR_REPLACECODEPATTERN = "No se pudo encontrar esto en %s.lua (como patron):"
+ERR_LINESTOTAL = "%i lineas en total"
 
-ERR_SAVELEVEL = "Um eine Kopie deines Levels zu speichern, drücke S"
-ERR_SAVESUCC = "Level erfolgreich gespeichert als %s!"
-ERR_SAVEERROR = "Speicherfehler! %s"
-ERR_LOGSAVED = "Mehr informationen kann in diesem Absturzprotokoll gefunden werden:\n%s"
+ERR_SAVELEVEL = "Para guardar una copia de tu nivel, presione S"
+ERR_SAVESUCC = "Nivel guardado con exito como %s!"
+ERR_SAVEERROR = "Error de guardado! %s"
+ERR_LOGSAVED = "Mas informacion se puede encontrar en el log:\n%s"
 
 
 diffmessages = {
 	pages = {
-		levelproperties = "Leveleigenschaften",
-		changedrooms = "Räume geändert",
-		changedroommetadata = "Raummetadaten geändert",
-		entities = "Objekte",
-		scripts = "Skripte",
-		flagnames = "Flagnamen",
-		levelnotes = "Levelnotizen",
+		levelproperties = "Propiedades del nivel",
+		changedrooms = "Habitaciones cambiadas",
+		changedroommetadata = "Metadatos de la habitacion cambiada",
+		entities = "Entidades",
+		scripts = "Scripts",
+		flagnames = "Nombres de flags",
+		levelnotes = "Notas del nivel",
 	},
 	levelpropertiesdiff = {
-		Title = "Name wurde geändert von \"$1\" zu \"$2\"",
-		Creator = "Author wurde geändert von \"$1\" zu \"$2\"",
-		website = "Webseite wurde gändert von \"$1\" zu \"$2\"",
-		Desc1 = "Beschreibung1 wurde geändert von \"$1\" zu \"$2\"",
-		Desc2 = "Beschreibung2 wurde geändert von \"$1\" zu \"$2\"",
-		Desc3 = "Beschreibung3 wurde geändert von \"$1\" zu \"$2\"",
-		mapsize = "Kartengröße wurde gändert von $1x$2 zu $3x$4",
-		mapsizenote = "BEACHTE: Kartengröße wurde von $1x$2 zu $3x$4 geändert.\\o\nRäume außerhalb von $5x$6 sind nicht gelistet.\\o",
-		levmusic = "Levelmusik wurde gändert von $1 zu $2",
+		Title = "El nombre se cambia de \"$1\" a \"$2",
+		Creator = "El autor se cambio de \"$1\" a \"$2\"",
+		website = "El sitio web se cambio de \"$1\" a \"$2\"",
+		Desc1 = "La desc. 1 se cambio de \"$1\" a \"$2\"",
+		Desc2 = "La desc. 2 se cambio de \"$1\" a \"$2\"",
+		Desc3 = "La desc. 3 se cambio de \"$1\" a \"$2\"",
+		mapsize = "El tamaño del mapa se cambio de $1x$2 a $3x$4",
+		mapsizenote = "NOTA: El tamaño del mapa se cambio de $1x$2 a $3x$4.\\o\nLas habitaciones fuera de $5x$6 no se enlistaran.\\o",
+		levmusic = "La musica del nivel se cambio de $1 a $2",
 	},
 	rooms = {
-		added1 = "($1,$2) ($3) hinzugefügt\\G",
-		added2 = "($1,$2) ($3 -> $4) hinzugefügt\\G",
-		changed1 = "($1,$2) ($3) geändert\\Y",
-		changed2 = "($1,$2) ($3 -> $4) geändert\\Y",
-		cleared1 = "Alle Tiles in ($1,$2) ($3) wurden gelöscht\\R",
-		cleared2 = "Alle Tiles in ($1,$2) ($3 -> $4) wurden gelöscht\\R",
+		added1 = "Se añadio ($1,$2) ($3)\\G",
+		added2 = "Se añadio ($1,$2) ($3 -> $4)\\G",
+		changed1 = "Se cambio ($1,$2) ($3)\\Y",
+		changed2 = "Se cambio ($1,$2) ($3 -> $4)\\Y",
+		cleared1 = "Se borraron todas las tejas en ($1,$2) ($3)\\R",
+		cleared2 = "Se borraron todas las tejas en ($1,$2) ($3 -> $4)\\R",
 	},
 	roommetadata = {
-		changed0 = "Raum $1,$2:",
-		changed1 = "Raum $1,$2 ($3):",
-		roomname = "Raumname wurde geändert von \"$1\" zu \"$2\"\\Y",
-		roomnameremoved = "Raumname \"$1\" entfernt\\R",
-		roomnameadded = "Raum \"$1\" benannt\\G",
-		tileset = "Tileset $1 Tilesetfarbe $2 geändert zu Tileset $3 Tilesetfarbe $4\\Y",
-		platv = "Plattformgeschwindigkeit geändert von $1 zu $2\\Y",
-		enemytype = "Gegnertyp geändert von $1 zu $2\\Y",
-		platbounds = "Plattformgrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-		enemybounds = "Gegnergrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y",
-		directmode01 = "Direkter-Modus aktiviert\\G",
-		directmode10 = "Direkter-Modus deaktiviert\\R",
-		warpdir = "Teleportationsrichtung geändert von $1 zu $2\\Y",
+		changed0 = "Habitacion $1,$2:",
+		changed1 = "Habitacion $1,$2 ($3):",
+		roomname = "El nombre de la habitacion se cambio de \"$1\" a \"$2\"\\Y",
+		roomnameremoved = "El nombre de la habitacion \"$1\" se removio\\R",
+		roomnameadded = "Se llamo la habitacion \"$1\"\\G",
+		tileset = "El set y color de tejas $1 y $2 se cambio a $3 y $4\\Y",
+		platv = "La velocidad de plataforma se cambio de $1 a $2\\Y",
+		enemytype = "El tipo de enemigo se cambio de $1 a $2\\Y",
+		platbounds = "Los limites de plataformas se cambiaron de $1,$2,$3,$4 a $5,$6,$7,$8\\Y",
+		enemybounds = "Los limites de enemigos se cambiaron de $1,$2,$3,$4 a $5,$6,$7,$8\\Y",
+		directmode01 = "Modo directo habilitado\\G",
+		directmode10 = "Modo directo desactivado\\R",
+		warpdir = "Direccion de warp se cambio de $1 a $2\\Y",
 	},
 	entities = {
-		added = "Objekttyp $1 hinzugefügt auf Position $2,$3 in Raum ($4,$5)\\G",
-		removed = "Objekttyp $1 entfernt von Position $2,$3 in Raum ($4,$5)\\R",
-		changed = "Objekttyp $1 geändert auf Position $2,$3 in Raum ($4,$5)\\Y",
-		changedtype = "Objekttyp $1 geändert zu Typ $2 auf Position $3,$4 in Raum ($5,$6)\\Y",
-		multiple1 = "Objekte geändert auf Position $1,$2 in Raum ($3,$4):\\Y",
-		multiple2 = "zu:",
-		addedmultiple = "Objekte hinzugefügt auf Position $1,$2 in Raum ($3,$4):\\G",
-		removedmultiple = "Objekte entfernet auf Position $1,$2 in Raum ($3,$4):\\R",
-		entity = "Typ $1",
-		incomplete = "Nicht alle Objekte wurden behandelt! Bitte melde das Dav.\\r",
+		added = "Se añadio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\G",
+		removed = "Se removio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\R",
+		changed = "Se cambio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\Y",
+		changedtype = "Se cambio el tipo de entidad $1 a tipo $2 en la posicion $3,$4 en la habitacion ($5,$6)\\Y",
+		multiple1 = "Se cambiaron las entidades en la posicion $1,$2 en la habitacion ($3,$4):\\Y",
+		multiple2 = "a:",
+		addedmultiple = "Se añadieron entidades en la posicion $1,$2 en la habitacion ($3,$4):\\G",
+		removedmultiple = "Se removieron entidades en la posicion $1,$2 en la habitacion ($3,$4):\\R",
+		entity = "Tipo $1",
+		incomplete = "No se aguantaron todas las entidades! Porfavor reportale esto a Dav.\\r",
 	},
 	scripts = {
-		added = "Skript \"$1\" hinzugefügt\\G",
-		removed = "Skript \"$1\" entfernt\\R",
-		edited = "Skript \"$1\" bearbeitet\\Y",
+		added = "Se añadio el script \"$1\"\\G",
+		removed = "Se removio el script \"$1\"\\R",
+		edited = "Se edito el script \"$1\"\\Y",
 	},
 	flagnames = {
-		added = "Setze Name für Flag $1 zu \"$2\"\\G",
-		removed = "Entferne Name \"$1\" für Flag $2\\R",
-		edited = "Name für Flag $1 geändert von \"$2\" zu \"$3\"\\Y",
+		added = "Se nombro el flag $1 como \"$2\"\\G",
+		removed = "Se le removio el nombre \"$1\" al flag $2\\R",
+		edited = "Se cambio el nombre al flag $1 de \"$2\" a \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Levelnotiz \"$1\" hinzugefügt\\G",
-		removed = "Levelnotiz \"$1\" entfernt\\R",
-		edited = "Levelnotiz \"$1\" bearbeitet\\Y",
+		added = "Se añadio una nota del nivel \"$1\"\\G",
+		removed = "Se removio una nota del nivel \"$1\"\\R",
+		edited = "Se edito una nota del nivel \"$1\"\\Y",
 	},
 	mde = {
-		added = "Metadatenobjekt wurde hinzugefügt.\\G",
-		removed = "Metadatenobjekt wurde entfernt.\\R",
+		added = "Se añadio una entidad de metadatos.\\G",
+		removed = "Se removio una entidad de metadatos.\\R",
 	},
 }
 
@@ -858,7 +846,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Zurück",
+subj = "Return",
 imgs = {},
 cont = [[
 \)
@@ -2672,25 +2660,25 @@ cont = [[
 Credits\wh#
 \C=
 
-Ved ist gemacht von Dav999
+Ved is made by Dav999
 
-Weitere Code-Beiträge: Info Teddy
+Further code contributors: Info Teddy
 
-Manche der Grafiken und Schriftarten wurden von Hejmstel gemacht
+Some of the graphics and the font were made by Hejmstel
 
-Russische Übersetzung: CreepiX, Cheep
-Esperanto Übersetzung: Hejmstel
-Deutsche Übersetzung: r00ster
-Französische Übersetzung: RhenaudTheLukark
-
-
-Besonderen Dank an:\h#
+Russian translation: CreepiX, Cheep
+Esperanto translation: Hejmstel
+German translation: r00ster
+French translation: RhenaudTheLukark
 
 
-Terry Cavanagh für das machen von VVVVVV
+Special thanks to:\h#
 
-Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
-machen!
+
+Terry Cavanagh for making VVVVVV
+
+Everyone who reported bugs, came up with ideas and motivated me to make this!
+\
 \
 \
 
