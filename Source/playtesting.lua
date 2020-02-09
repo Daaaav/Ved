@@ -99,13 +99,13 @@ function playtesting_locate_path()
 	-- without having to, say, move the Steam version's executable somewhere else,
 	-- which they'd have to do with the other order (Steam path exists > non-Steam path in config > Ask for non-Steam path)
 
-        if anythingbutnil(s.vvvvvvnonsteam) ~= "" and playtesting_validate_path(s.vvvvvvnonsteam) then
-                -- M&P path in config
-                return s.vvvvvvnonsteam
-        else
-                -- Ask for M&P path
-                return
-        end
+	if anythingbutnil(s.vvvvvvnonsteam) ~= "" and playtesting_validate_path(s.vvvvvvnonsteam) then
+		-- M&P path in config
+		return s.vvvvvvnonsteam
+	else
+		-- Ask for M&P path
+		return
+	end
 end
 
 function playtesting_validate_path(thepath)
