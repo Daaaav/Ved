@@ -21,7 +21,7 @@ function drawmap()
 
 	for mry = 0, metadata.mapheight-1 do
 		for mrx = 0, metadata.mapwidth-1 do
-			love.graphics.setScissor(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+			love.graphics.setScissor()
 			if rooms_map[mry][mrx].map ~= nil then
 				-- First draw a black background
 				love.graphics.setColor(0,0,0,255)
@@ -32,6 +32,7 @@ function drawmap()
 			end
 
 			if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
+				love.graphics.setScissor(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 				love.graphics.setColor(0,0,0,128)
 				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 				love.graphics.setColor(255,255,255,255)

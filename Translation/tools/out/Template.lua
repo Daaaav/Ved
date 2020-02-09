@@ -648,6 +648,8 @@ short3 = "<langtilesetnames.short3>",
 long3 = "<langtilesetnames.long3>",
 short4 = "<langtilesetnames.short4>",
 long4 = "<langtilesetnames.long4>",
+short5 = "<langtilesetnames.short5>",
+long5 = "<langtilesetnames.long5>",
 
 }
 
@@ -670,6 +672,7 @@ ERR_FILEEDITORS = "<ERR_FILEEDITORS>"
 ERR_CURRENTPLUGIN = "<ERR_CURRENTPLUGIN>"
 ERR_PLEASETELLAUTHOR = "<ERR_PLEASETELLAUTHOR>"
 ERR_CONTINUE = "<ERR_CONTINUE>"
+ERR_OPENPLUGINSFOLDER = "<ERR_OPENPLUGINSFOLDER>"
 ERR_REPLACECODE = "<ERR_REPLACECODE>"
 ERR_REPLACECODEPATTERN = "<ERR_REPLACECODEPATTERN>"
 ERR_LINESTOTAL = "<ERR_LINESTOTAL>"

@@ -17,7 +17,7 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 				if specificflag == nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
 
-					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) > 99 then
+					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) >= limit.flags then
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
 				elseif specificflag == tonumber(explcommaline[2]) then
@@ -104,7 +104,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				--elseif string.sub(v, 1, 1) == "$" then
 				elseif k == 2 and (partss_parsed[1] == "flag" or partss_parsed[1] == "ifflag" or partss_parsed[1] == "customifflag") and tostring(tonumber(v_parsed)) ~= tostring(v_parsed) then
 					-- if flag name is not used yet, newflagname
-					for fl = 0, 99 do
+					for fl = 0, limit.flags-1 do
 						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_parsed then
 							setColorArr(s.syntaxcolor_flagname)
 							break
@@ -652,7 +652,7 @@ function processflaglabelsreverse()
 					break
 				end
 
-				for vlag = 0, 99 do
+				for vlag = 0, limit.flags-1 do
 					if vedmetadata.flaglabel[vlag] == partss[2] then
 						useflag = vlag
 						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. vlag)
@@ -663,7 +663,7 @@ function processflaglabelsreverse()
 				if useflag == -1 then
 					-- This flag name is new! Find a flag number to assign it to.
 					cons("Flag name " .. partss[2] .. " is new!")
-					for vlag = 0, 99 do
+					for vlag = 0, limit.flags-1 do
 						if not usedflags[vlag] then
 							-- Ah, here we got one!
 							useflag = vlag
@@ -973,7 +973,7 @@ function flagname_check_problem(name, number)
 		return L.FLAGNAMECHARS
 	elseif vedmetadata ~= false then
 		-- Final check: check if this flag hasn't been used already.
-		for kd = 0, 99 do
+		for kd = 0, limit.flags-1 do
 			if kd ~= number and vedmetadata.flaglabel[kd] == name then
 				-- This flag already exists!
 				return langkeys(L.FLAGNAMEINUSE, {name, kd})
@@ -1103,4 +1103,22 @@ function scriptlinecasing(line)
 	line = line:sub(1, -lastargsep - 1):lower() .. line:sub(-lastargsep)
 
 	return line
+end
+
+function loadflagslist()
+	usedflags = {}
+	outofrangeflags = {}
+
+	-- Seee which flags have been used in this level.
+	returnusedflags(usedflags, outofrangeflags)
+
+	flags_outofrangeflagstext = ""
+
+	for k,v in pairs(outofrangeflags) do
+		if flags_outofrangeflagstext == "" then
+			flags_outofrangeflagstext = L.USEDOUTOFRANGEFLAGS .. " " .. k
+		else
+			flags_outofrangeflagstext = flags_outofrangeflagstext .. ", " .. k
+		end
+	end
 end
