@@ -70,7 +70,7 @@ function love.load()
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
 		end
-		playtesting_available = false -- until we get libvloader for macOS
+		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -79,7 +79,7 @@ function love.load()
 		wgetavailable = false
 		hook("love_load_win")
 		loaded_filefunc = "win"
-		playtesting_available = false -- until we get libvloader for Windows
+		playtesting_available = false
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -103,11 +103,6 @@ function love.load()
 				vedlib_filefunc_available = true
 			end
 		end
-		if not love.filesystem.exists("available_libs/libvloader_linA05.so") then
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/libvloader_linA05.so", love.filesystem.read("libs/libvloader_linA05.so"))
-		end
-		libvloader = "libvloader_linA05.so"
 		if vedlib_filefunc_available then
 			loaded_filefunc = "linmac"
 		else

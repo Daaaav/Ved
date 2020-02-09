@@ -2,7 +2,7 @@
 -- When the user presses the play button or presses Enter, it calls playtesting_start()
 -- which then sets playtesting_askwherestart to true, then when they indicate where they want to start,
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute_<os>(),
--- which will start a thread that just io.popen()s VVVVVV with libvloader.
+-- which will start a thread that just io.popen()s VVVVVV with command line args to immediately load the level.
 
 function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol, with_gdb)
 	if with_gdb == nil then
