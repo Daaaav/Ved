@@ -42,22 +42,22 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 
 	-- Syntax is <vvvvvv> <index of level in levels list> <savex> <savey> <saverx> <savery> <savegc> <music id>
 	local run = {
-            vvvvvv,
-            "-p",
-            love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv",
-            "--playx",
-            posx,
-            "--playy",
-            posy,
-            "--playrx",
-            thisroomx,
-            "--playry",
-            thisroomy,
-            "--playgc",
-            gravitycontrol,
-            "--playmusic",
-            music
-        }
+		vvvvvv,
+		"-p",
+		love.filesystem.getSaveDirectory() .. "/veduser/VVVVVV/levels/ved_playtesting_temp.vvvvvv",
+		"--playx",
+		posx,
+		"--playy",
+		posy,
+		"--playrx",
+		thisroomx,
+		"--playry",
+		thisroomy,
+		"--playgc",
+		gravitycontrol,
+		"--playmusic",
+		music
+	}
 	run = table.concat(run, " ")
 
 	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
