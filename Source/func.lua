@@ -558,7 +558,16 @@ function loadstate(new, ...)
 		alllanguages = getalllanguages()
 		widestlang = 0
 		for k,v in pairs(alllanguages) do
-			local w = font8:getWidth(v)
+			local success, w = pcall(function(v)
+				local w = font8:getWidth(v)
+				return w
+			end, v)
+			if not success then
+				-- Temporary, until filenames are changed to be language codes instead of names.
+				-- Turns out filenames can also be suddenly Shift-JIS
+				alllanguages[k] = "?"
+				w = 8
+			end
 			if w > widestlang then
 				widestlang = w
 			end
