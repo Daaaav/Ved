@@ -81,7 +81,9 @@ function dodisplaysettings(reload)
 		tile_batch_texture_needs_update = true
 
 		-- Also do this or we'll have a blank map (no clever rhymes here)
-		map_init()
+		if metadata ~= nil then
+			map_init()
+		end
 	else
 		ved_require("scaling")
 	end
