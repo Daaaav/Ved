@@ -8,7 +8,6 @@ L.LOCATEVVVVVVNONSTEAM = "Select your VVVVVV directory"
 L.ALREADYPLAYTESTING = "You're already playtesting!"
 L.PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1." -- you cannot playtest on <operating system>
 L.VVVVVVNONSTEAMPATHINVALID = "Sorry, but that path is invalid."
-L.NONSTEAMCONTAINSFOLDER = "Please select the folder CONTAINING the folder '$1'."
 L.NONSTEAMCONTAINSFILE = "Please select the folder containing the file '$1'."
 L.CHANGINGPATHAFTERASK = "The VVVVVV folder was changed after pressing play and it is no longer valid!"
 L_PLU.LDPRELOADCONTAINSSPACES = {
