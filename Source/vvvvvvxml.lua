@@ -241,6 +241,23 @@ function loadlevel(path)
 				end
 			end
 		end
+
+		thisextra.dimensions = {}
+		if contents:find("<dimensions />") == nil then
+			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
+			if x.dimensions ~= nil then
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
+				for dimension in x.dimensions:gmatch("<dimension (.-) />") do
+					local thisdimension = {}
+					local attributes = parsexmlattributes(dimension)
+
+					for k,v in pairs(attributes) do
+						thisdimension[k] = tonumber(v)
+					end
+					table.insert(thisextra.dimensions, thisdimension)
+				end
+			end
+		end
 	end
 
 	-- Entities.
@@ -863,6 +880,24 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			savethis = savethis:gsub("%$TIMETRIALS%$", table.concat(timetrialstag, ""):gsub("%%", "%%%%") .. "        </timetrials>")
 		else
 			savethis = savethis:gsub("%$TIMETRIALS%$", "        <timetrials />")
+		end
+
+		if #thisextra.dimensions ~= 0 then
+			local dimensionstag = {"        <dimensions>\n"}
+
+			for k,v in pairs(thisextra.dimensions) do
+				table.insert(dimensionstag,
+					"            <dimension x=\"" .. v.x
+					.. "\" y=\"" .. v.y
+					.. "\" w=\"" .. v.w
+					.. "\" h=\"" .. v.h
+					.. "\" />\n"
+				)
+			end
+
+			savethis = savethis:gsub("%$DIMENSIONS%$", table.concat(dimensionstag, ""):gsub("%%", "%%%%") .. "        </dimensions>")
+		else
+			savethis = savethis:gsub("%$DIMENSIONS%$", "        <dimensions />")
 		end
 	end
 
