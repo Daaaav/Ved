@@ -273,28 +273,22 @@ function ved_showerror(msg)
 		end
 
 		-- Title
-		love.graphics.setColor(0,0,0,255)
-		ved_print(ERR_VEDHASCRASHED, pos+4, pos+4, 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_print(ERR_VEDHASCRASHED, pos, pos, 2)
+		ved_shadowprint(ERR_VEDHASCRASHED, pos, pos, 2)
 
 		-- Draw a box for the important details
 		love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
 		love.graphics.rectangle("fill", pos-2, pos+40+40+1, love.graphics.getWidth()-(2*pos)+4, 80)
 
 		-- Main text
-		love.graphics.setColor(0,0,0,255)
-		ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_printf(p, pos, pos+40, love.graphics.getWidth() - pos)
+		ved_shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos)
 
 		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
-			ved_printf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
+			ved_shadowprintf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
 			love.graphics.setColor(255,255,255,255)
-		--else
-			--ved_print("No level or so", pos, love.graphics.getHeight()-40-20, 30, 20)
 		end
 
 		if logwassaved ~= nil then
@@ -302,10 +296,8 @@ function ved_showerror(msg)
 			if love.system.getOS() == "Windows" then
 				text = text:gsub("/", "\\")
 			end
-			love.graphics.setColor(0,0,0,255)
-			ved_print(text, pos+2, (love.graphics.getHeight()-24)+2)
 			love.graphics.setColor(255,255,255,255)
-			ved_print(text, pos, love.graphics.getHeight()-24)
+			ved_shadowprint(text, pos, love.graphics.getHeight()-24)
 		end
 
 		love.graphics.present()
