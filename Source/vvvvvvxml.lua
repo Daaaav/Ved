@@ -247,13 +247,15 @@ function loadlevel(path)
 			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
 			if x.dimensions ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for dimension in x.dimensions:gmatch("<dimension (.-) />") do
+				for dimension in x.dimensions:gmatch("<dimension (.-)</dimension>") do
 					local thisdimension = {}
-					local attributes = parsexmlattributes(dimension)
+					local metaparts = explode(">", dimension)
+					local attributes = parsexmlattributes(metaparts[1])
 
 					for k,v in pairs(attributes) do
 						thisdimension[k] = tonumber(v)
 					end
+					thisdimension.name = metaparts[2]
 					table.insert(thisextra.dimensions, thisdimension)
 				end
 			end
@@ -896,7 +898,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					.. "\" y=\"" .. v.y
 					.. "\" w=\"" .. v.w
 					.. "\" h=\"" .. v.h
-					.. "\" />\n"
+					.. "\">" .. v.name .. "</dimension>\n"
 				)
 			end
 
