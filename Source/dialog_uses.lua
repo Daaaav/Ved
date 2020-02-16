@@ -110,6 +110,27 @@ function dialog.form.rawentityproperties_make()
 	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
 	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
+	if metadata.target == "VCE" then
+		row = row+2
+		table.insert(form, {"", 0, row, 8, "subx", DF.LABEL})
+		table.insert(form, {"subx", 8, row, 7, thisentity.subx, DF.TEXT})
+		table.insert(form, {"", 16, row, 8, "suby", DF.LABEL})
+		table.insert(form, {"suby", 24, row, 7, thisentity.suby, DF.TEXT})
+		table.insert(form, {"", 32, row, 8, "state", DF.LABEL})
+		table.insert(form, {"state", 40, row, 7, thisentity.state, DF.TEXT})
+		row = row+1
+		table.insert(form, {"", 0, row, 8, "intower", DF.LABEL})
+		table.insert(form, {"intower", 8, row, 7, thisentity.intower, DF.TEXT})
+		row = row+1
+		table.insert(form, {"", 0, row, 13, "activityname", DF.LABEL})
+		table.insert(form, {"activityname", 13, row, 10, thisentity.activityname, DF.TEXT})
+		table.insert(form, {"", 24, row, 14, "activitycolor", DF.LABEL})
+		table.insert(form, {"activitycolor", 38, row, 9, thisentity.activitycolor, DF.TEXT})
+		row = row+1
+		table.insert(form, {"onetime", 0, row, 9, thisentity.onetime, DF.CHECKBOX})
+		table.insert(form, {"", 2, row, 7, "onetime", DF.LABEL})
+	end
+
 	return form
 end
 
