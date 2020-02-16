@@ -334,7 +334,7 @@ function loadlevel(path)
 			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
 			and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
-				local explodedmetadata = explode("|", allentities[entityid].data)
+				local explodedmetadata = explode("|", allentities[entityid].data:gsub("\n", ""))
 
 				myvedmetadata = createmde(thislimit)
 
@@ -710,6 +710,7 @@ function loadlevel(path)
 
 	if mycount.FC ~= 0 then
 		local FClisttext = ""
+
 
 		for k,v in pairs(FClist) do
 			if k > 5 then
