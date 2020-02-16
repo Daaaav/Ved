@@ -178,3 +178,29 @@ function ved_printf(text, x, y, limit, align, sx, sy)
 
 	love.graphics.printf(text, x, y + y_off, limit, align, nil, sx, sy)
 end
+
+function ved_shadowprint(text, x, y, sx, sy)
+	if sx == nil then sx = 1 end
+	if sy == nil then sy = sx end
+	local r, g, b, a = love.graphics.getColor()
+	love.graphics.setColor(0,0,0,255)
+	ved_print(text, x, y-sy, sx, sy)
+	ved_print(text, x-sx, y, sx, sy)
+	ved_print(text, x+sx, y, sx, sy)
+	ved_print(text, x, y+sy, sx, sy)
+	love.graphics.setColor(r, g, b, a)
+	ved_print(text, x, y, sx, sy)
+end
+
+function ved_shadowprintf(text, x, y, limit, align, sx, sy)
+	if sx == nil then sx = 1 end
+	if sy == nil then sy = sx end
+	local r, g, b, a = love.graphics.getColor()
+	love.graphics.setColor(0,0,0,255)
+	ved_printf(text, x, y-sy, limit, align, sx, sy)
+	ved_printf(text, x-sx, y, limit, align, sx, sy)
+	ved_printf(text, x+sx, y, limit, align, sx, sy)
+	ved_printf(text, x, y+sy, limit, align, sx, sy)
+	love.graphics.setColor(r, g, b, a)
+	ved_printf(text, x, y, limit, align, sx, sy)
+end

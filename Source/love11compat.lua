@@ -12,7 +12,7 @@ end
 love.graphics.getColor11 = love.graphics.getColor
 
 love.graphics.getColor = function()
-	local r,g,b,a = love.graphics.getColor11()
+	local r, g, b, a = love.graphics.getColor11()
 	return r*255, g*255, b*255, a*255
 end
 
