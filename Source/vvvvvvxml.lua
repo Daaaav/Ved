@@ -344,12 +344,17 @@ function loadlevel(path)
 
 				if myvedmetadata.mdeversion >= 2 and explodedmetadata[2] ~= nil then
 					local explodedflags = explode("%$", explodedmetadata[2])
+					local f = -1
 					for k,v in pairs(explodedflags) do
 						-- Make sure the numbers start with 0
-						myvedmetadata.flaglabel[k-1] = undespecialchars(v)
+						f = k-1
+						myvedmetadata.flaglabel[f] = undespecialchars(v)
+					end
+					for i = f+1, thislimit.flags-1 do
+						myvedmetadata.flaglabel[i] = ""
 					end
 				else
-					for f = 0, 99 do
+					for f = 0, thislimit.flags-1 do
 						myvedmetadata.flaglabel[f] = ""
 					end
 				end
@@ -948,10 +953,21 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 		if vedmetadata ~= false and vedmetadata ~= nil then
 			-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
-			local mdedata = thismdeversion .. "|" .. despecialchars(vedmetadata.flaglabel[0])
+			local mdedata = thismdeversion .. "|"
 
-			for k = 1, 99 do -- 0 added above
-				mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k]) -- table.concat(vedmetadata.flaglabel, "$")
+			local max_labeled_flag = -1
+			for f = limit.flags-1, 0, -1 do
+				if vedmetadata.flaglabel[f] ~= "" then
+					max_labeled_flag = f
+					break
+				end
+			end
+			if max_labeled_flag ~= -1 then
+				mdedata = mdedata .. despecialchars(vedmetadata.flaglabel[0])
+
+				for k = 1, max_labeled_flag do -- 0 added above
+					mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k])
+				end
 			end
 
 			mdedata = mdedata .. "||"
