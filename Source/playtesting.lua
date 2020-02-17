@@ -26,17 +26,17 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 		vvvvvv,
 		"-p",
 		love.filesystem.getSaveDirectory() .. "/ved_playtesting_temp.vvvvvv",
-		"--playx",
+		"-playx",
 		posx,
-		"--playy",
+		"-playy",
 		posy,
-		"--playrx",
+		"-playrx",
 		thisroomx,
-		"--playry",
+		"-playry",
 		thisroomy,
-		"--playgc",
+		"-playgc",
 		gravitycontrol,
-		"--playmusic",
+		"-playmusic",
 		music
 	}
 	run = table.concat(run, " ")
