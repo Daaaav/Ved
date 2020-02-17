@@ -247,13 +247,15 @@ function loadlevel(path)
 			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
 			if x.dimensions ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for dimension in x.dimensions:gmatch("<dimension (.-) />") do
+				for dimension in x.dimensions:gmatch("<dimension (.-)</dimension>") do
 					local thisdimension = {}
-					local attributes = parsexmlattributes(dimension)
+					local metaparts = explode(">", dimension)
+					local attributes = parsexmlattributes(metaparts[1])
 
 					for k,v in pairs(attributes) do
 						thisdimension[k] = tonumber(v)
 					end
+					thisdimension.name = metaparts[2]
 					table.insert(thisextra.dimensions, thisdimension)
 				end
 			end
@@ -332,7 +334,7 @@ function loadlevel(path)
 			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
 			and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
-				local explodedmetadata = explode("|", allentities[entityid].data)
+				local explodedmetadata = explode("|", allentities[entityid].data:gsub("\n", ""))
 
 				myvedmetadata = createmde(thislimit)
 
@@ -709,6 +711,7 @@ function loadlevel(path)
 	if mycount.FC ~= 0 then
 		local FClisttext = ""
 
+
 		for k,v in pairs(FClist) do
 			if k > 5 then
 				FClisttext = FClisttext .. "... " .. langkeys(L.MOREERRORS, {(#FClist-5)})
@@ -896,7 +899,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					.. "\" y=\"" .. v.y
 					.. "\" w=\"" .. v.w
 					.. "\" h=\"" .. v.h
-					.. "\" />\n"
+					.. "\">" .. v.name .. "</dimension>\n"
 				)
 			end
 
