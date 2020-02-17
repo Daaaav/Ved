@@ -840,18 +840,31 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 		correctlines = true
 	end
 
-	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
+	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
+	if metadata.target == "VCE" then
+		table.insert(entitypropkeys, "subx")
+		table.insert(entitypropkeys, "suby")
+		table.insert(entitypropkeys, "state")
+		table.insert(entitypropkeys, "intower")
+		table.insert(entitypropkeys, "activityname")
+		table.insert(entitypropkeys, "activitycolor")
+		table.insert(entitypropkeys, "onetime")
+	end
 	local changeddata = {}
-	for i = 1, 9 do
+	for k,v in pairs(entitypropkeys) do
+		local newvalue = fields[v]
+		if not table.contains({"data", "activityname", "activitycolor", "onetime"}, v) then
+			-- Needs to be a number
+			newvalue = anythingbutnil0(tonumber(newvalue))
+		end
 		table.insert(changeddata, {
-				key = entitypropkeys[i],
-				oldvalue = thisentity[entitypropkeys[i]],
-				newvalue = anythingbutnil0(tonumber(fields[entitypropkeys[i]]))
+				key = v,
+				oldvalue = thisentity[v],
+				newvalue = newvalue
 			}
 		)
-		thisentity[entitypropkeys[i]] = anythingbutnil0(tonumber(fields[entitypropkeys[i]]))
+		thisentity[v] = newvalue
 	end
-	thisentity.data = fields.data
 
 	if correctlines then
 		autocorrectlines()
