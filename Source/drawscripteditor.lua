@@ -7,9 +7,9 @@ function drawscripteditor()
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
 	if s.scripteditor_largefont then
-		love.graphics.line(42*16-9, 24, 42*16-12, love.graphics.getHeight())
+		love.graphics.line(43*16-9, 24, 43*16-12, love.graphics.getHeight())
 	else
-		love.graphics.line(42*8, 24, 42*8, love.graphics.getHeight())
+		love.graphics.line(43*8, 24, 43*8, love.graphics.getHeight())
 	end
 
 	-- The comment below is a bad way of doing it.
@@ -59,22 +59,22 @@ function drawscripteditor()
 		-- Save the whales, only display this line if we can see it!
 		local fontsize = s.scripteditor_largefont and 16 or 8
 		if (scriptscroll+24+(fontsize*k) >= 16) and (scriptscroll+24+(fontsize*k) <= love.graphics.getHeight()) then
-			if k >= 500 and editingline == k then
+			if k >= limit.scriptlines and editingline == k then
 				love.graphics.setColor(255,128,128,255) -- 255 64 64?
 			elseif editingline == k then
 				love.graphics.setColor(255,255,255,255)
-			elseif k >= 500 then
+			elseif k >= limit.scriptlines then
 				love.graphics.setColor(255,0,0,255)
 			else
 				love.graphics.setColor(128,128,128,255)
 			end
 
 			if s.scripteditor_largefont then
-				ved_print(fixdig(k, 3), 8, scriptscroll+24+(16*k)-8, 2)
-				textq, textc = syntaxhl(v, 48+40, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
+				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(16*k)-8, 2)
+				textq, textc = syntaxhl(v, 104, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			else
-				ved_print(fixdig(k, 3), 8, scriptscroll+24+(8*k))
-				textq, textc = syntaxhl(v, 48, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
+				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(8*k))
+				textq, textc = syntaxhl(v, 56, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
@@ -116,11 +116,11 @@ function drawscripteditor()
 				end
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if s.scripteditor_largefont then
-					love.graphics.rectangle("fill", 76, scriptscroll+24+(16*k)+8, 6, textq*16)
-					love.graphics.rectangle("fill", 76+16*(maxwidthtextbox+1), scriptscroll+24+(16*k)+8, 6, textq*16)
+					love.graphics.rectangle("fill", 92, scriptscroll+24+(16*k)+8, 6, textq*16)
+					love.graphics.rectangle("fill", 92+16*(maxwidthtextbox+1), scriptscroll+24+(16*k)+8, 6, textq*16)
 				else
-					love.graphics.rectangle("fill", 42, scriptscroll+24+(8*k)+8, 3, textq*8)
-					love.graphics.rectangle("fill", 42+8*(maxwidthtextbox+1), scriptscroll+24+(8*k)+8, 3, textq*8)
+					love.graphics.rectangle("fill", 50, scriptscroll+24+(8*k)+8, 3, textq*8)
+					love.graphics.rectangle("fill", 50+8*(maxwidthtextbox+1), scriptscroll+24+(8*k)+8, 3, textq*8)
 				end
 			end
 		elseif textlinestogo > 0 then
