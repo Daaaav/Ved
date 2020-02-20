@@ -648,7 +648,7 @@ function love.draw()
 
 		-- Script count
 		ved_printf(
-			L.COUNT .. #scriptnames .. "/500",
+			L.COUNT .. #scriptnames .. "/" .. (limit.scripts == math.huge and "-" or limit.scripts),
 			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left"
 		)
 
@@ -3810,13 +3810,13 @@ function love.mousepressed(x, y, button)
 				selectedsubtool[selectedtool] = 1
 			end
 		end
-	elseif state == 3 and button == "l" and nodialog and mouseon(48, 24, love.graphics.getWidth()-192, love.graphics.getHeight()-24) then
+	elseif state == 3 and button == "l" and nodialog and mouseon(56, 24, love.graphics.getWidth()-200, love.graphics.getHeight()-24) then
 		local chr, line
 		if s.scripteditor_largefont then
-			chr = math.floor((x-88)/16) + 1
+			chr = math.floor((x-104)/16) + 1
 			line = math.floor(((y-24)-scriptscroll-4)/16) + 1
 		else
-			chr = math.floor((x-48)/8) + 1
+			chr = math.floor((x-56)/8) + 1
 			line = math.floor(((y-24)-scriptscroll-6)/8) + 1
 		end
 		if chr < 1 then
