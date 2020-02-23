@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Français (fr)
---- Last converted: 2020-02-09 23:17:16 (CET)
+--- Last converted: 2020-02-24 00:18:43 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -42,8 +42,8 @@ FATALERROR = "ERREUR FATALE : ",
 FATALEND = "Veuillez fermer le jeu et réessayer. Et si vous êtes Dav, veuillez le réparer.",
 
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
-MAXTRINKETS = "Le nombre maximum de médailles (20) a été atteint dans ce niveau.",
-MAXCREWMATES = "Le nombre maximum d'équipiers (20) a été atteint dans ce niveau.",
+MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",
+MAXCREWMATES = "Le nombre maximum d'équipiers ($1) a été atteint dans ce niveau.",
 EDITINGROOMTEXTNIL = "Le texte de la salle existante que vous éditiez est nil !",
 STARTPOINTNOLONGERFOUND = "L'ancien point de départ ne peut plus être trouvé !",
 UNSUPPORTEDTOOL = "Outil non supporté! Outil : ",
@@ -59,7 +59,7 @@ SPLITFAILED = "La séparation a misérablement échoué ! Avez-vous trop de lign
 NOFLAGSLEFT = "Il n'y a plus de drapeaux disponibles, donc au moins un nouveau nom de drapeau ne peut pas être associé à un numéro de drapeau. L'utilisation de ce script dans VVVVVV a des chances de le casser. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.\n\nQuitter l'éditeur ?",
 NOFLAGSLEFT_LOADSCRIPT = "Il n'y a plus de drapeaux disponibles, donc un script de chargement utilisant un nouveau drapeau n'a pas pu être créé. A la place, un script de chargement qui charge le script cible avec iftrinkets(0,$1) a été créé. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.",
 LEVELOPENFAIL = "Impossible d'ouvrir le fichier $1.vvvvvv.",
-SIZELIMIT = "La taille maximum d'un niveau est de 20 par 20.\n\nA la place, la taille du niveau va être changée en $1 par $2.",
+SIZELIMIT = "La taille maximum d'un niveau est de $1 par $2.\n\nA la place, la taille du niveau va être changée en $3 par $4.",
 SCRIPTALREADYEXISTS = "Le script \"$1\" existe déjà !",
 FLAGNAMENUMBERS = "Les noms de drapeaux ne peuvent pas être composés que de nombres.",
 FLAGNAMECHARS = "Les noms de drapeaux ne peuvent pas contenir de virgules, de parenthèses ou d'espaces.",
@@ -547,6 +547,34 @@ EDITSCRIPTWOBUMPING = "Modifier le script sans réordonner la liste",
 CLICKONTHING = "Clique sur $1",
 ORDRAGDROP = "ou glisse et pose ici", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
+
+CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire. VVVVVV peut aussi planter pour n'importe quelle raison dans n'importe laquelle de ces salles.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
+MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4! (Le support d'une taille plus grande que $3 par $4 n'est pas activé)",
+BTNOVERRIDE = "Mettre à Jour",
+TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Tower mode",
+DISABLETOWER = "Disable tower",
+TIMETRIALS = "Time trials",
+DIMENSIONS = "Dimensions",
+TOWERDIRECTIONUP = "Direction: ↑",
+TOWERDIRECTIONDOWN = "Direction: ↓",
+TOWERENTRYEXIT = "Set entry/exit",
+SWITCHEDTOALTSTATEMAIN = "Switched to main state",
+SWITCHEDTOALTSTATE = "Switched to alt state $1",
+ADDEDALTSTATE = "Added new alt state $1",
+REMOVEDALTSTATE = "Removed alt state $1",
+ENABLEDTOWER = "Tower mode enabled",
+DISABLEDTOWER = "Tower mode disabled",
+TOWERASCENDING = "Tower now ascending",
+TOWERDESCENDING = "Tower now descending",
+TOWERENTRYSET = "Tower entry/exit set to current position",
+TIMETRIALTRINKETS = "Trinket count",
+TIMETRIALTIME = "Par time",
+SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
 }
 
@@ -1236,6 +1264,8 @@ cont = [[
 Raccourcis clavier de l'éditeur\wh#
 \C=
 
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
 La majorité des raccourcis clavier utilisable dans VVVVVV peuvent être
 utilisés dans Ved.
 
@@ -1265,28 +1295,29 @@ Ved introduit aussi quelques raccourcis clavier.
 
 Éditeur principal\gh#
 
-Ctrl+P¤  Aller à la salle contenant le point de départ\C
-Ctrl+S¤  Sauvegarde rapide\C
-Ctrl+X¤  Couper la salle dans le presse-papier\C
-Ctrl+C¤  Copier la salle dans le presse-papier\C
-Ctrl+V¤  Coller la salle depuis le presse-papier (si elle est valide)\C
-Ctrl+D¤  Comparer ce niveau avec un autre niveau\C
-Ctrl+Z¤  Défaire\C
-Ctrl+Y¤  Refaire\C
-Ctrl+F¤  Recherche\C
-Ctrl+/¤  Bloc-notes du niveau\C
-Ctrl+F1¤  Aide\C
-(NOTE: Sur Mac, replacer Ctrl par Cmd)
-N¤  Afficher tous les nombres de tuiles\C
-J¤  Afficher la solidité des tuiles\C
-M¤  Afficher la carte\C
-Q¤  Aller à la salle (entrer les coordonnées avec 4 chiffres)\C
+Ctrl+P¤  Jump to the room containing the startpoint\C
+Ctrl+S¤  Quicksave\C
+Ctrl+X¤  Cut room to the clipboard\C
+Ctrl+C¤  Copy room to the clipboard\C
+Ctrl+V¤  Paste room from clipboard (if valid)\C
+Ctrl+D¤  Compare this level to another level\C
+Ctrl+Z¤  Undo\C
+Ctrl+Y¤  Redo\C
+Ctrl+F¤  Search\C
+Ctrl+/¤  Level notepad\C
+Ctrl+F1¤  Help\C
+(NOTE: On Mac, replace Ctrl by Cmd)
+N¤  display all tile numbers\C
+J¤  display tile solidity\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
-[¤  Bloquer la position Y de la souris tant qu'elle est appuyée\C
-   (pour dessiner des lignes horizontales facilement)
-]¤  Bloquer la position X de la souris tant qu'elle est appuyée\C
-   (pour dessiner des lignes verticales facilement)
-F11¤  Recharger les jeux de tuiles et images\C
+[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
+]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+F11¤  reload tilesets and sprites\C
+Tab¤  enable/disable eraser\C
 
 Entités\gh#
 
@@ -2480,6 +2511,7 @@ Les états 120-128 marchent un peu comme 102-112, comme une suite, mais avec moi
        1003
 1003 - Remet le jeu à la normale
 1010 - "You found a crewmate!" de la même façon que pour les médailles
+1013 - End level with stars
 2000 - Sauvegarde le jeu
 2500-2509 - Téléporte le joueur vers des coordonnées bizarres non-existantes,
             supposément The Laboratory, continue vers l'état 2510
@@ -2808,10 +2840,11 @@ Autres contributeurs de code: Info Teddy
 
 Quelques graphismes et la police ont été créés par Hejmstel
 
-Traduction en russe: CreepiX, Cheep
-Traduction en esperanto: Hejmstel
-Traduction en allemand: r00ster
-Traduction en français: RhenaudTheLukark
+Russian translation: CreepiX, Cheep
+Esperanto translation: Hejmstel
+German translation: r00ster
+French translation: RhenaudTheLukark
+Spanish translation: Valso22/naether
 
 
 Remerciements spéciaux à :\h#
@@ -2823,7 +2856,6 @@ Tous ceux qui ont signalé des bogues, qui ont eu des idées et qui m'ont motiv�
 créer ce logiciel!
 \
 \
-
 
 
 
@@ -2851,7 +2883,7 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-VVVVVV assets\h#
+Ressources de VVVVVV\h#
 
 Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
 of Terry Cavanagh. For more information about the license that applies to VVVVVV
