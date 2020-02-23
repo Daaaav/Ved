@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Русский (ru)
---- Last converted: 2020-02-09 23:17:15 (CET)
+--- Last converted: 2020-02-24 00:18:42 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -28,8 +28,8 @@ FATALERROR = "ФАТАЛЬНАЯ ОШИБКА: ",
 FATALEND = "Пожалуйста, закройте игру и попробуйте ещё раз.",
 
 OSNOTRECOGNIZED = "Ваша ОС ($1) не опознана! Идёт возврат к первичным настройкам файловой системы; ваши уровни находятся в:\n\n$2",
-MAXTRINKETS = "Было достигнуто максимальное количество тринкетов (20).",
-MAXCREWMATES = "Было достигнуто максимальное количество членов экипажа (20).",
+MAXTRINKETS = "Было достигнуто максимальное количество тринкетов ($1).",
+MAXCREWMATES = "Было достигнуто максимальное количество членов экипажа ($1).",
 EDITINGROOMTEXTNIL = "Редактируемый текст не найден!",
 STARTPOINTNOLONGERFOUND = "Старая точка старта не найдена!",
 UNSUPPORTEDTOOL = "Неподдерживаемый инструмент! Инструмент: ",
@@ -45,7 +45,7 @@ SPLITFAILED = "Разделение провалено! Может, у вас с
 NOFLAGSLEFT = "Все флаги использованы, новые имена флагов в этом скрипте не будут ассоциироваться с номерами флагов. Попытка запустить этот скрипт в VVVVVV может привести к ошибке. Уберите все ссылки к флагам которые вам не нужны и попробуйте ещё раз.\n\nПокинуть редактор?",
 NOFLAGSLEFT_LOADSCRIPT = "Больше нет свободных флагов, поэтому скрипт загрузки использующий новый флаг не может быть создан. Вместо этого был создан скрипт загрузки, загружающий целевой скрипт при помощи iftrinkets(0,$1). Попробуйте убрать все использования ненужных флагов и повторите попытку.",
 LEVELOPENFAIL = "Невозможно открыть $1.vvvvvv.",
-SIZELIMIT = "Максимальный размер уровня 20x20.\n\nРазмер уровня будет изменён на $1x$2.",
+SIZELIMIT = "Максимальный размер уровня $1x$2.\n\nРазмер уровня будет изменён на $3x$4.",
 SCRIPTALREADYEXISTS = "Скрипт \"$1\" уже существует!",
 FLAGNAMENUMBERS = "Имя флага не может состоять только из цифр.",
 FLAGNAMECHARS = "Имя флага не может содержать скобки, запятые или пробелы.",
@@ -533,6 +533,34 @@ EDITSCRIPTWOBUMPING = "Редактировать без перемещения"
 CLICKONTHING = "Нажмите на $1",
 ORDRAGDROP = "или перетащите файл сюда", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "В данном уровне больше одной точки старта!",
+
+CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
+MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
+BTNOVERRIDE = "Override",
+TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Tower mode",
+DISABLETOWER = "Disable tower",
+TIMETRIALS = "Time trials",
+DIMENSIONS = "Dimensions",
+TOWERDIRECTIONUP = "Direction: ↑",
+TOWERDIRECTIONDOWN = "Direction: ↓",
+TOWERENTRYEXIT = "Set entry/exit",
+SWITCHEDTOALTSTATEMAIN = "Switched to main state",
+SWITCHEDTOALTSTATE = "Switched to alt state $1",
+ADDEDALTSTATE = "Added new alt state $1",
+REMOVEDALTSTATE = "Removed alt state $1",
+ENABLEDTOWER = "Tower mode enabled",
+DISABLEDTOWER = "Tower mode disabled",
+TOWERASCENDING = "Tower now ascending",
+TOWERDESCENDING = "Tower now descending",
+TOWERENTRYSET = "Tower entry/exit set to current position",
+TIMETRIALTRINKETS = "Trinket count",
+TIMETRIALTIME = "Par time",
+SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
 }
 
@@ -1210,6 +1238,8 @@ cont = [[
 Горячие клавиши в редакторе\wh#
 \C=
 
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
 Большинство горячих клавиш из VVVVVV могут быть так же применены и в Ved.
 
 F1¤  Изменить набор\C
@@ -1238,26 +1268,29 @@ Ved предоставляет несколько новых горячих кл
 
 Основной редактор\gh#
 
-Ctrl+P¤  Перейти к комнате с точкой старта\C
-Ctrl+S¤  Быстрое сохранение\C
-Ctrl+X¤  Вырезать комнату\C
-Ctrl+C¤  Скопировать комнату\C
-Ctrl+V¤  Вставить комнату (если есть)\C
-Ctrl+D¤  Сравнить данный уровень с другим\C
-Ctrl+Z¤  Отменить\C
-Ctrl+Y¤  Восстановить\C
-Ctrl+F¤  Поиск\C
-Ctrl+/¤  Записки уровня\C
-Ctrl+F1¤  Помощь\C
-(ВНИМАНИЕ: на версии Mac используйте Cmd вместо Ctrl)
-N¤  Покозать номера плиток в комнате\C
-J¤  Показать твёрдость\C
-M¤  Открыть карту\C
-Q¤  Перейти к комнате (Ввести координаты комнаты четырьмя цифрами)\C
-/¤  Скрипты\C
-[¤  Закрепить положение Y курсора(для просого построения горизональных линий)\C
-]¤  Закрепить положение X курсора(для просого построения вертикальных линий)\C
-F11¤  Перезагрузка спрайтов и плиток\C
+Ctrl+P¤  Jump to the room containing the startpoint\C
+Ctrl+S¤  Quicksave\C
+Ctrl+X¤  Cut room to the clipboard\C
+Ctrl+C¤  Copy room to the clipboard\C
+Ctrl+V¤  Paste room from clipboard (if valid)\C
+Ctrl+D¤  Compare this level to another level\C
+Ctrl+Z¤  Undo\C
+Ctrl+Y¤  Redo\C
+Ctrl+F¤  Search\C
+Ctrl+/¤  Level notepad\C
+Ctrl+F1¤  Help\C
+(NOTE: On Mac, replace Ctrl by Cmd)
+N¤  display all tile numbers\C
+J¤  display tile solidity\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
+/¤  Scripts\C
+[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
+]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+F11¤  reload tilesets and sprites\C
+Tab¤  enable/disable eraser\C
 
 Entities\gh#
 
@@ -2412,6 +2445,7 @@ cont = [[
        состоянию 1003
 1003 - Вернуть игру в нормальный режим
 1010 - "You found a crewmate!" в том же духе, как и с тринкетами
+1013 - End level with stars
 2000 - Сохранить игру
 2500-2509 - Телепортироваться в какую-то странную несуществующую локацию, скорее
             всего имелась ввиду Лаборатория, перейти к состоянию 2510
@@ -2722,10 +2756,11 @@ cont = [[
 
 Некоторая графика и шрифт: Hejmstel
 
-Перевод на русский: CreepiX, Чип
-Перевод на эсперанто: Hejmstel
-Перевод на немецкий: r00ster
-Перевод на французский: RhenaudTheLukark
+Russian translation: CreepiX, Cheep
+Esperanto translation: Hejmstel
+German translation: r00ster
+French translation: RhenaudTheLukark
+Spanish translation: Valso22/naether
 
 
 Отдельная благодарность:\h#
@@ -2736,7 +2771,6 @@ cont = [[
 Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
 \
 \
-
 
 
 

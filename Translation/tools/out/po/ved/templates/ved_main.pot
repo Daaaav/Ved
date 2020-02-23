@@ -29,11 +29,11 @@ msgid "Your operating system ($1) is not recognized! Falling back to default fil
 msgstr ""
 
 msgctxt "L.MAXTRINKETS"
-msgid "The maximum amount of trinkets (20) has been reached in this level."
+msgid "The maximum amount of trinkets ($1) has been reached in this level."
 msgstr ""
 
 msgctxt "L.MAXCREWMATES"
-msgid "The maximum amount of crewmates (20) has been reached in this level."
+msgid "The maximum amount of crewmates ($1) has been reached in this level."
 msgstr ""
 
 msgctxt "L.EDITINGROOMTEXTNIL"
@@ -98,7 +98,7 @@ msgid "Unable to open $1.vvvvvv."
 msgstr ""
 
 msgctxt "L.SIZELIMIT"
-msgid "The maximum size of a level is 20 by 20.\n\nThe level size will be changed to $1 by $2 instead."
+msgid "The maximum size of a level is $1 by $2.\n\nThe level size will be changed to $3 by $4 instead."
 msgstr ""
 
 msgctxt "L.SCRIPTALREADYEXISTS"
@@ -1884,6 +1884,115 @@ msgstr ""
 
 msgctxt "L.MORETHANONESTARTPOINT"
 msgid "There is more than one start point in this level!"
+msgstr ""
+
+msgctxt "L.CONFIRMBIGGERSIZE"
+msgid "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No."
+msgstr ""
+
+msgctxt "L.MAPBIGGERTHANSIZELIMIT"
+msgid "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)"
+msgstr ""
+
+msgctxt "L.BTNOVERRIDE"
+msgid "Override"
+msgstr ""
+
+#. What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+msgctxt "L.TARGETPLATFORM"
+msgid "Target platform"
+msgstr ""
+
+msgctxt "L.PLATFORM_V"
+msgid "VVVVVV"
+msgstr ""
+
+msgctxt "L.PLATFORM_VCE"
+msgid "VVVVVV-CE"
+msgstr ""
+
+msgctxt "L.ENABLETOWER"
+msgid "Tower mode"
+msgstr ""
+
+msgctxt "L.DISABLETOWER"
+msgid "Disable tower"
+msgstr ""
+
+msgctxt "L.TIMETRIALS"
+msgid "Time trials"
+msgstr ""
+
+msgctxt "L.DIMENSIONS"
+msgid "Dimensions"
+msgstr ""
+
+msgctxt "L.TOWERDIRECTIONUP"
+msgid "Direction: ↑"
+msgstr ""
+
+msgctxt "L.TOWERDIRECTIONDOWN"
+msgid "Direction: ↓"
+msgstr ""
+
+msgctxt "L.TOWERENTRYEXIT"
+msgid "Set entry/exit"
+msgstr ""
+
+msgctxt "L.SWITCHEDTOALTSTATEMAIN"
+msgid "Switched to main state"
+msgstr ""
+
+msgctxt "L.SWITCHEDTOALTSTATE"
+msgid "Switched to alt state $1"
+msgstr ""
+
+msgctxt "L.ADDEDALTSTATE"
+msgid "Added new alt state $1"
+msgstr ""
+
+msgctxt "L.REMOVEDALTSTATE"
+msgid "Removed alt state $1"
+msgstr ""
+
+msgctxt "L.ENABLEDTOWER"
+msgid "Tower mode enabled"
+msgstr ""
+
+msgctxt "L.DISABLEDTOWER"
+msgid "Tower mode disabled"
+msgstr ""
+
+msgctxt "L.TOWERASCENDING"
+msgid "Tower now ascending"
+msgstr ""
+
+msgctxt "L.TOWERDESCENDING"
+msgid "Tower now descending"
+msgstr ""
+
+msgctxt "L.TOWERENTRYSET"
+msgid "Tower entry/exit set to current position"
+msgstr ""
+
+msgctxt "L.TIMETRIALTRINKETS"
+msgid "Trinket count"
+msgstr ""
+
+msgctxt "L.TIMETRIALTIME"
+msgid "Par time"
+msgstr ""
+
+msgctxt "L.SUREDELETETRIAL"
+msgid "Are you sure you want to delete the time trial \"$1\"?"
+msgstr ""
+
+msgctxt "L.SUREDELETEDIMENSIONNAME"
+msgid "Are you sure you want to delete the dimension \"$1\"?"
+msgstr ""
+
+msgctxt "L.SUREDELETEDIMENSIONNONAME"
+msgid "Are you sure you want to delete this dimension?"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"

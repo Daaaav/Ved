@@ -26,8 +26,8 @@ FATALERROR = "FATAL ERROR: ",
 FATALEND = "Please close the game and try again. And if you're Dav, please fix it.",
 
 OSNOTRECOGNIZED = "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2",
-MAXTRINKETS = "The maximum amount of trinkets (20) has been reached in this level.",
-MAXCREWMATES = "The maximum amount of crewmates (20) has been reached in this level.",
+MAXTRINKETS = "The maximum amount of trinkets ($1) has been reached in this level.",
+MAXCREWMATES = "The maximum amount of crewmates ($1) has been reached in this level.",
 EDITINGROOMTEXTNIL = "Existing room text we were editing is nil!",
 STARTPOINTNOLONGERFOUND = "The old start point can no longer be found!",
 UNSUPPORTEDTOOL = "Unsupported tool! Tool: ",
@@ -43,7 +43,7 @@ SPLITFAILED = "Split failed miserably! Do you have too many lines between a text
 NOFLAGSLEFT = "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again.\n\nLeave the editor?",
 NOFLAGSLEFT_LOADSCRIPT = "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again.",
 LEVELOPENFAIL = "Unable to open $1.vvvvvv.",
-SIZELIMIT = "The maximum size of a level is 20 by 20.\n\nThe level size will be changed to $1 by $2 instead.",
+SIZELIMIT = "The maximum size of a level is $1 by $2.\n\nThe level size will be changed to $3 by $4 instead.",
 SCRIPTALREADYEXISTS = "Script \"$1\" already exists!",
 FLAGNAMENUMBERS = "Flag names cannot be only numbers.",
 FLAGNAMECHARS = "Flag names cannot contain parentheses, commas or spaces.",
@@ -531,6 +531,34 @@ EDITSCRIPTWOBUMPING = "Edit script without bumping",
 CLICKONTHING = "Click on $1",
 ORDRAGDROP = "or drag and drop onto here", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "There is more than one start point in this level!",
+
+CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
+MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
+BTNOVERRIDE = "Override",
+TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Tower mode",
+DISABLETOWER = "Disable tower",
+TIMETRIALS = "Time trials",
+DIMENSIONS = "Dimensions",
+TOWERDIRECTIONUP = "Direction: ↑",
+TOWERDIRECTIONDOWN = "Direction: ↓",
+TOWERENTRYEXIT = "Set entry/exit",
+SWITCHEDTOALTSTATEMAIN = "Switched to main state",
+SWITCHEDTOALTSTATE = "Switched to alt state $1",
+ADDEDALTSTATE = "Added new alt state $1",
+REMOVEDALTSTATE = "Removed alt state $1",
+ENABLEDTOWER = "Tower mode enabled",
+DISABLEDTOWER = "Tower mode disabled",
+TOWERASCENDING = "Tower now ascending",
+TOWERDESCENDING = "Tower now descending",
+TOWERENTRYSET = "Tower entry/exit set to current position",
+TIMETRIALTRINKETS = "Trinket count",
+TIMETRIALTIME = "Par time",
+SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
 }
 
@@ -1194,6 +1222,8 @@ cont = [[
 Editor shortcuts\wh#
 \C=
 
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
 Most shortcuts that can be used in VVVVVV can also be used in Ved.
 
 F1¤  Change tileset\C
@@ -1236,12 +1266,15 @@ Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace Ctrl by Cmd)
 N¤  display all tile numbers\C
 J¤  display tile solidity\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+Tab¤  enable/disable eraser\C
 
 Entities\gh#
 
@@ -2360,6 +2393,7 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
        just called each time you get one), continue to state 1003
 1003 - Revert game to normal
 1010 - You found a crewmate! in the same manner as for trinkets
+1013 - End level with stars
 2000 - Save the game
 2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
             The Laboratory I guess, continue to state 2510
@@ -2668,6 +2702,7 @@ Russian translation: CreepiX, Cheep
 Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
+Spanish translation: Valso22/naether
 
 
 Special thanks to:\h#
@@ -2679,7 +2714,6 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 \
 \
 \
-
 
 
 
