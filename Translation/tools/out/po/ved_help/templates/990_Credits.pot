@@ -18,7 +18,7 @@ msgstr ""
 msgid "Some of the graphics and the font were made by Hejmstel"
 msgstr ""
 
-msgid "Russian translation: CreepiX, Cheep\nEsperanto translation: Hejmstel\nGerman translation: r00ster\nFrench translation: RhenaudTheLukark"
+msgid "Russian translation: CreepiX, Cheep\nEsperanto translation: Hejmstel\nGerman translation: r00ster\nFrench translation: RhenaudTheLukark\nSpanish translation: Valso22/naether"
 msgstr ""
 
 msgid "Special thanks to:\\h#"

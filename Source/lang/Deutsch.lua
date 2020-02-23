@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Deutsch (de)
---- Last converted: 2020-02-09 23:17:15 (CET)
+--- Last converted: 2020-02-24 00:18:42 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -40,12 +40,12 @@ FATALERROR = "FATALER FEHLER: ",
 FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
-MAXTRINKETS = "Die maximale Anzahl an Trinkets (20) wurde in diesem Level erreicht.",
-MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder (20) wurde in diesem Level erreicht.",
+MAXTRINKETS = "Die maximale Anzahl an Trinkets ($1) wurde in diesem Level erreicht.",
+MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder ($1) wurde in diesem Level erreicht.",
 EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
 STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
 UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
-SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
+SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst alle ungespeicherte Inhalte verlieren.",
 SURELOADLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
 MAPSAVEDAS = "Kartenbild gespeichert als $1!",
@@ -54,11 +54,11 @@ UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
 METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flagnamen und andere Dinge.",
 WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
 SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nWillst du den Editor verlassen?",
-NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, ein Ladeskript wurde erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
+NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nEditor verlassen?",
+NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, wurde ein Ladeskript erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in Betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
-SIZELIMIT = "Die maximale Größe eines levels ist 20 bis 20.\n\nDie Levelgröße wird geändert zu $1 bis $2.",
-SCRIPTALREADYEXISTS = "Skript \"$1\" existiert bereits!",
+SIZELIMIT = "Die maximale Größe eines Levels ist $1 bis $2.\n\nDie Levelgröße wird geändert zu $3 bis $4.",
+SCRIPTALREADYEXISTS = "Skript \"$1\" existiert schon!",
 FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
 FLAGNAMECHARS = "Flagnamen können keine Klammern, Kommas oder Leerzeichen enthalten.",
 FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
@@ -70,19 +70,19 @@ SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugest
 NAMEFORFLAG = "Name für Flag $1:",
 SCRIPT404 = "Skript \"$1\" existiert nicht!",
 ENTITY404 = "Objekt #$1 existiert nicht mehr!",
-GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber dieses Feature nicht unterstützt!",
-MAXTEXTURESIZE = "Entschuldigung, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder deinem Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
+GRAPHICSCARDCANVAS = "Tut mir leid, es sieht so aus als ob deine Grafikkarte oder Treiber diese Funktion nicht unterstützt!",
+MAXTEXTURESIZE = "Tut mir leid, ein Bild mit der Größe $1x$2 zu erstellen scheint nicht von deiner Grafikkarte oder deinem Treiber unterstützt zu sein.\n\nDas Größenlimit auf diesem System ist $3x$3.",
 SUREDELETESCRIPT = "Bist du sicher du willst das Skript \"$1\" löschen?",
-SUREDELETENOTE = "Bist du dir sicher dass du diese Notiz löschen möchtest?",
+SUREDELETENOTE = "Bist du sicher dass du diese Notiz löschen möchtest?",
 THREADERROR = "Threadfehler!",
 WHATDIDYOUDO = "Was hast du getan?!",
 UNDOFAULTY = "Was tust du?",
 SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
 UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
-MDEVERSIONWARNING = "Dieses Level scheint in einer etwas älteren Version von Ved gemacht zu sein, und enthält vielleicht Daten die verloren gehen wenn du dieses Level speicherst.",
+MDEVERSIONWARNING = "Dieses Level scheint in einer neueren Version von Ved gemacht zu sein, und kann Daten enthalten die verloren gehen wenn du dieses Level speicherst.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
 MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht an savelevel() übergeben!",
-RESTARTVEDLANG = "Nach dem ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
+RESTARTVEDLANG = "Nach dem Ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
 
 SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
 SELECTCOPY2 = "Wähle die Position wo der Raum hinkopiert werden soll",
@@ -546,6 +546,34 @@ CLICKONTHING = "Klicke auf $1",
 ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
 
+CONFIRMBIGGERSIZE = "Du hast $1 mal $2 ausgewählt, was eine Größere Karte als $3 mal $4 ist. Außerhalb der normalen $3 mal $4 Karte, Räume und Raumeigenschaften passen sich an, sind aber verzerrt. Du kriegst nicht komplett neue Räume, und auch nicht mehrRaumeigenschaften. VVVVVV kann auch aus vielen Gründen in diesen Räumen Abstürzen.\n\nDrücke Ja wenn du weißt was du tust und willst diese Größere Karte. Drücke Nein um die Kartengröße zu $5 mal $6 zu setzen.\n\nWenn unsicher, drücke Nein.",
+MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4! (Größer-als-$3-mal-$4-Unterstützung nicht aktiviert)",
+BTNOVERRIDE = "Überschreiben",
+TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Turmmodus",
+DISABLETOWER = "Deaktiviere Turm",
+TIMETRIALS = "Zeitprüfung",
+DIMENSIONS = "Dimensionen",
+TOWERDIRECTIONUP = "Richtung: ↑",
+TOWERDIRECTIONDOWN = "Richtung: ↓",
+TOWERENTRYEXIT = "Setze Eingang/Ausgang",
+SWITCHEDTOALTSTATEMAIN = "Zu Hauptzustand gewechselt",
+SWITCHEDTOALTSTATE = "Zu Alternativzustand $1 gewechselt",
+ADDEDALTSTATE = "Neuen Alternativzustand $1 hinzugefügt",
+REMOVEDALTSTATE = "Alternativzustand $1 entfernt",
+ENABLEDTOWER = "Turmmodus aktiviert",
+DISABLEDTOWER = "Turmmodus deaktiviert",
+TOWERASCENDING = "Turm steigt jetzt",
+TOWERDESCENDING = "Turm steigt jetzt ab",
+TOWERENTRYSET = "Turm-Eingang/Ausgang zu aktueller Position gesetzt",
+TIMETRIALTRINKETS = "Trinketanzahl",
+TIMETRIALTIME = "Zeitprüfungszeit",
+SUREDELETETRIAL = "Bist du sicher du willst die Zeitprüfung \"$1\" löschen?",
+SUREDELETEDIMENSIONNAME = "Bist du sicher du willst die Dimension \"$1\" löschen?",
+SUREDELETEDIMENSIONNONAME = "Bist du dir sicher dass du diese Dimension löschen möchtest?",
+
 }
 
 -- Please check the reference for plural forms
@@ -674,8 +702,8 @@ short3 = "Teleprtzone.",
 long3 = "Teleportationszone",
 short4 = "Schf.",
 long4 = "Schiff",
-short5 = "Tower",
-long5 = "Tower",
+short5 = "Turm",
+long5 = "Turm",
 
 }
 
@@ -698,7 +726,7 @@ ERR_FILEEDITORS = "Plugins die diese Datei bearbeiten:"
 ERR_CURRENTPLUGIN = "Plugin das diesen Fehler verursacht hat:"
 ERR_PLEASETELLAUTHOR = "Ein Plugin sollte eine Bearbeitung an Code in Ved machen, aber der Code der ersetzt werden soll wurde nicht gefunden.\nEs ist möglich dass das verursacht wurde durch einen Konflikt zwischen Zwei Plugins, oder ein Ved-Update hat das Plugin kaputt gemacht.\n\nDetails: (Drücke Strg/Cmd+C um es zur Zwischenable zu kopieren)\n\n"
 ERR_CONTINUE = "Du kannst fortfahren indem du ESC oder Enter drückst, aber beachte dass diese gescheiterte Bearbeitung vielleicht Probleme verursacht."
-ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+ERR_OPENPLUGINSFOLDER = "Du kannst deinen Pluginordner öffnen indem du F drückst, damit du das störende Plugin beheben oder entfernen kannst. Starte Ved danach neu."
 ERR_REPLACECODE = "Konnte dies nicht finden in %s.lua:"
 ERR_REPLACECODEPATTERN = "Konnte dies nicht finden in %s.lua (als Muster):"
 ERR_LINESTOTAL = "%i Zeilen insgesamt"
@@ -1208,6 +1236,8 @@ cont = [[
 Editor shortcuts\wh#
 \C=
 
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
 Most shortcuts that can be used in VVVVVV can also be used in Ved.
 
 F1¤  Change tileset\C
@@ -1250,12 +1280,15 @@ Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace Ctrl by Cmd)
 N¤  display all tile numbers\C
 J¤  display tile solidity\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+Tab¤  enable/disable eraser\C
 
 Entities\gh#
 
@@ -2374,6 +2407,7 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
        just called each time you get one), continue to state 1003
 1003 - Revert game to normal
 1010 - You found a crewmate! in the same manner as for trinkets
+1013 - End level with stars
 2000 - Save the game
 2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
             The Laboratory I guess, continue to state 2510
@@ -2682,6 +2716,7 @@ Russische Übersetzung: CreepiX, Cheep
 Esperanto Übersetzung: Hejmstel
 Deutsche Übersetzung: r00ster
 Französische Übersetzung: RhenaudTheLukark
+Spanische Übersetzung: Valso22/naether
 
 
 Besonderen Dank an:\h#
@@ -2693,7 +2728,6 @@ Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
 machen!
 \
 \
-
 
 
 

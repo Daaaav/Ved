@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Esperanto (eo)
---- Last converted: 2020-02-09 23:17:16 (CET)
+--- Last converted: 2020-02-24 00:18:43 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -52,8 +52,8 @@ FATALERROR = "NERIPAREBLA ERARO: ",
 FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu ripari ĝin.",
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
-MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj (20) estas atingita en ĉi tiu nivelo.",
-MAXCREWMATES = "La maksimuma kvanto da ŝipanoj (20) estas atingita en ĉi tiu nivelo.",
+MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
+MAXCREWMATES = "La maksimuma kvanto da ŝipanoj ($1) estas atingita en ĉi tiu nivelo.",
 EDITINGROOMTEXTNIL = "Ekzistinta ĉambroteksto, kiun ni estis redaktinta, estas nula!",
 STARTPOINTNOLONGERFOUND = "La malnova komenciĝejo ne plu troveblas!",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
@@ -69,7 +69,7 @@ SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstko
 NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.\n\nĈu eliri la redaktilon?",
 NOFLAGSLEFT_LOADSCRIPT = "Ne plu restas flagoj, do ŝarg-skripto uzanta novan flagon ne povis kreiĝi. Anstataŭe, ŝarg-skripto estis kreita, kiu ĉiam ŝargas la celatan skripton per iftrinkets(0,$1). Konsideru forigi ĉiujn aludojn al flagoj ne plu bezonataj kaj reprovu.",
 LEVELOPENFAIL = "Ne povis malfermi $1.vvvvvv.",
-SIZELIMIT = "La maksimuma grando de nivelo estas 20 oble 20.\n\nLa grando anstataŭe ŝanĝiĝos al $1 oble $2.",
+SIZELIMIT = "La maksimuma grando de nivelo estas $1 oble $2.\n\nLa grando anstataŭe ŝanĝiĝos al $3 oble $4.",
 SCRIPTALREADYEXISTS = "Skripto \"$1\" jam ekzistas!",
 FLAGNAMENUMBERS = "Flagnomoj ne povas esti nur ciferoj.",
 FLAGNAMECHARS = "Flagnomoj ne povas enhavi parentezojn, komojn aŭ spacetojn.",
@@ -558,6 +558,34 @@ CLICKONTHING = "Alklaku $1",
 ORDRAGDROP = "aŭ ŝovmetu ĉi tien", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Estas pli ol unu komencejo en tiu ĉi nivelo!",
 
+CONFIRMBIGGERSIZE = "Vi elektas $1 oble $2. Tio estas pli granda mapgrando ol $3 oble $4. Ekster la normala mapo $3 oble $4, ĉambroj kaj ĉambrotrajtoj ĉirkaŭfluas, sed estas distorditaj. Vi ne havos tute novajn ĉambrojn, nek pli da ĉambrotrajtoj. VVVVVV ankaŭ eble kraŝos ial ajn en tiuj ĉambroj.\n\nPremu Jes se vi scias, kion vi faras, kaj volas tiun ĉi pli grandan mapograndon. Premu Ne por agordi la grandon al $5 oble $6.\n\nSe vi ne certas, premu Ne.",
+MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4! (Subteno por pli ol $3 oble $4 ne ebligita)",
+BTNOVERRIDE = "Transpasi",
+TARGETPLATFORM = "Celata platformo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Turoreĝimo",
+DISABLETOWER = "Malebligi turon",
+TIMETRIALS = "Tempelprovoj",
+DIMENSIONS = "Dimensioj",
+TOWERDIRECTIONUP = "Direkto: ↑",
+TOWERDIRECTIONDOWN = "Direkto: ↓",
+TOWERENTRYEXIT = "Agordi en/elirejon",
+SWITCHEDTOALTSTATEMAIN = "Interŝanĝis al ĉefa stato",
+SWITCHEDTOALTSTATE = "Interŝanĝis al alterna stato $1",
+ADDEDALTSTATE = "Aldonis novan alternan staton $1",
+REMOVEDALTSTATE = "Forigis alternan staton $1",
+ENABLEDTOWER = "Turoreĝimo ebligita",
+DISABLEDTOWER = "Turoreĝimo malebligita",
+TOWERASCENDING = "Turo nun supreniras",
+TOWERDESCENDING = "Turo nun malsupreniras",
+TOWERENTRYSET = "Tura en/elirejo agordita al aktuala pozicio",
+TIMETRIALTRINKETS = "Nombro da kolektaĵoj",
+TIMETRIALTIME = "Alpara tempo",
+SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempelprovon \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Ĉu vi certas, ke vi volas forigi la dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Ĉu vi certas, ke vi volas forigi ĉi tiun dimension?",
+
 }
 
 -- Please check the reference for plural forms
@@ -686,8 +714,8 @@ short3 = "Teleportejo",
 long3 = "Teleportejo",
 short4 = "Ŝipo",
 long4 = "Ŝipo",
-short5 = "Tower",
-long5 = "Tower",
+short5 = "Turo",
+long5 = "Turo",
 
 }
 
@@ -710,7 +738,7 @@ ERR_FILEEDITORS = "Aldonaĵoj, kiuj redaktas tiun dosieron:"
 ERR_CURRENTPLUGIN = "Aldonaĵo, kiu ekagigis la eraron:"
 ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_CONTINUE = "Vi povas daŭrigi per premi ESC aŭ ENTER, sed notu ke tiu malsukcesinta redakto eble kaŭzos erarojn."
-ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+ERR_OPENPLUGINSFOLDER = "Vi povas malfermi vian aldonaĵ-dosierujon per premi F, por ripari aŭ forigi la probleman aldonaĵon. Poste, relanĉu Ved."
 ERR_REPLACECODE = "Malsukceso trovi ĉi tiun en %s.lua:"
 ERR_REPLACECODEPATTERN = "Malsukceso trovi ĉi tiun en %s.lua (kiel modelo):"
 ERR_LINESTOTAL = "%i linioj entute"
@@ -1222,6 +1250,8 @@ cont = [[
 Klavkombinoj de la redaktilo\wh#
 \C=
 
+Konsilo: vi povas premadi ¤F9¤ ie ajn ene de Ved por vidi multajn el la fulmoklavoj.\nC
+
 La plimulto da klavkombinoj uzeblaj en VVVVVV ankaŭ uzeblas en Ved.
 
 F1¤  Ŝanĝi kahelaron\C
@@ -1261,15 +1291,18 @@ Ctrl+Y¤  Refari\C
 Ctrl+F¤  Serĉi\C
 Ctrl+/¤  Nivela notbloko\C
 Ctrl+F1¤  Helpo\C
-(RIMARKU: En Macintosh, anstataŭigi Ctrl per Cmd)\C
+(RIMARKU: En macOS, anstataŭigu Ctrl per Cmd)\C
 N¤  montri ĉiujn kahelnumerojn\C
 J¤  montri solidecon de kaheloj\C
-M¤  Montri mapon\C
-Q¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ aŭ ¤Klavareto 5¤  Montri mapon\CnC
+G¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
 /¤  Skriptoj\C
 [¤  ŝlosi Y de muso dum premadata (por fari horizontalajn strekojn pli facile)\C
 ]¤  ŝlosi X de muso dum premadata (por fari vertikalajn strekojn pli facile)\C
 F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
+Tabklavo¤  (mal)ebligi viŝilon\C
 
 Entoj\gh#
 
@@ -1522,7 +1555,7 @@ direkto - 0 estas maldekstren, 1 estas dekstren
 
 changegravity¤(ŝipano)\w#h
 
-Increase the sprite number of the given crewmate by 12.
+Pliigi la grafikan numeron de la donita ŝipano per 12.
 
 ŝipano - Koloro de la ŝipano por ŝanĝi cyan/player/blue/red/yellow/green/purple
 
@@ -2388,6 +2421,7 @@ Statoj 120-128 funkcias iome kiel 102-112, t.e. en serio, sed kun malpli da
        vokiĝas ĉiun fojon, kiam vi akiras unu), daŭri al stato 1003
 1003 - Malhaltigi ludon
 1010 - "You found a crewmate!" samamaniere kiel por kolektaĵoj
+1013 - End level with stars
 2000 - Konservi la ludon
 2500-2509 - Teleportiĝi al iu stranga neekzistana loko, supozeble al la
             laboratorio, mi supozas, daŭri al stato 2510
@@ -2700,9 +2734,10 @@ Pluaj kod-kontribuantoj: Info Teddy
 Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel
 
 Ruslingva traduko: CreepiX, Cheep
-Esperanta traduko: Hejmstel
+Esperanta traduko: Stelpjo
 Germanlingva traduko: r00ster
 Franclingva traduko: RhenaudTheLukark
+Hispanlingva traduko: Valso22/naether
 
 
 Special-dank' al:\h#
@@ -2713,7 +2748,6 @@ Terry Cavanagh pro lia faro de VVVVVV
 Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion!
 \
 \
-
 
 
 
@@ -2742,7 +2776,7 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-VVVVVV assets\h#
+Havaĵoj de VVVVVV\h#
 
 Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
 of Terry Cavanagh. For more information about the license that applies to VVVVVV

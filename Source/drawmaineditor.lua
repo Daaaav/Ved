@@ -567,7 +567,7 @@ function drawmaineditor()
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
 			if count.trinkets >= limit.trinkets then
-				dialog.create(L.MAXTRINKETS)
+				dialog.create(langkeys(L.MAXTRINKETS, {limit.trinkets}))
 			else
 				insert_entity(atx, aty, 9)
 			end
@@ -856,7 +856,7 @@ function drawmaineditor()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate				
 			if count.crewmates >= limit.crewmates then
-				dialog.create(L.MAXCREWMATES)
+				dialog.create(langkeys(L.MAXCREWMATES, {limit.crewmates}))
 				mousepressed = true
 			else
 				insert_entity(atx, aty, 15, ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]])

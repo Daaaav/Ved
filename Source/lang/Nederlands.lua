@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Nederlands (nl)
---- Last converted: 2020-02-09 23:17:17 (CET)
+--- Last converted: 2020-02-24 00:18:44 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -40,8 +40,8 @@ FATALERROR = "FATALE FOUT: ",
 FATALEND = "Sluit het spel en probeer het opnieuw. En als je Dav bent, los het alsjeblieft op.",
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
-MAXTRINKETS = "Het maximum aantal trinkets (20) is bereikt in dit level.",
-MAXCREWMATES = "Het maximum aantal bemanningsleden (20) is bereikt in dit level.",
+MAXTRINKETS = "Het maximum aantal trinkets ($1) is bereikt in dit level.",
+MAXCREWMATES = "Het maximum aantal bemanningsleden ($1) is bereikt in dit level.",
 EDITINGROOMTEXTNIL = "Bestaande tekst die bewerkt werd is nil!",
 STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
@@ -57,7 +57,7 @@ SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een 
 NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.\n\nDe editor verlaten?",
 NOFLAGSLEFT_LOADSCRIPT = "Er zĳn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden. In plaats daarvan is er een laadscript gemaakt dat het doelscript altĳd laadt met iftrinkets(0,$1). Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 LEVELOPENFAIL = "Kon $1.vvvvvv niet openen.",
-SIZELIMIT = "De maximale grootte van een level is 20 bĳ 20.\n\nDe levelgrootte zal worden aangepast naar $1 bĳ $2.",
+SIZELIMIT = "De maximale grootte van een level is $1 bĳ $2.\n\nDe levelgrootte zal worden aangepast naar $3 bĳ $4.",
 SCRIPTALREADYEXISTS = "Script \"$1\" bestaat al!",
 FLAGNAMENUMBERS = "Namen van vlaggen kunnen niet alleen uit nummers bestaan.",
 FLAGNAMECHARS = "Namen van vlaggen kunnen geen haakjes, komma's of spaties bevatten.",
@@ -545,6 +545,34 @@ EDITSCRIPTWOBUMPING = "Script wĳzigen, niet naar boven",
 CLICKONTHING = "Klik op $1",
 ORDRAGDROP = "of sleep bestand hierheen", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Er is meer dan één startpunt in dit level!",
+
+CONFIRMBIGGERSIZE = "Je hebt $1 bĳ $2 gekozen, wat groter is dan $3 bĳ $4. Buiten de normale kaart van $3 bĳ $4 zullen kamers en eigenschappen daarvan zich om de kaart wikkelen, maar verstoord. Je krĳgt geen nieuwe kamers en ook geen nieuwe kamereigenschappen. VVVVVV kan ook om wat voor reden dan ook in die kamers crashen.\n\nDruk op Ja als je weet wat je doet en deze grotere grootte wil. Druk op Nee om de kaartgrootte in te stellen op $5 bĳ $6.\n\nAls je het niet zeker weet, druk op Nee.",
+MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bĳ $2 is groter dan $3 bĳ $4! (Ondersteuning voor groter dan $3 bĳ $4 niet ingeschakeld)",
+BTNOVERRIDE = "Omzeilen",
+TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Torenmodus",
+DISABLETOWER = "Toren uitschakelen",
+TIMETRIALS = "Time trials",
+DIMENSIONS = "Dimensies",
+TOWERDIRECTIONUP = "Richting: ↑",
+TOWERDIRECTIONDOWN = "Richting: ↓",
+TOWERENTRYEXIT = "In-/uitgang instellen",
+SWITCHEDTOALTSTATEMAIN = "Geschakeld naar hoofdstaat",
+SWITCHEDTOALTSTATE = "Geschakeld naar altstaat $1",
+ADDEDALTSTATE = "Nieuwe altstaat $1 toegevoegd",
+REMOVEDALTSTATE = "Altstaat $1 verwĳderd",
+ENABLEDTOWER = "Torenmodus ingeschakeld",
+DISABLEDTOWER = "Torenmodus uitgeschakeld",
+TOWERASCENDING = "Toren stĳgt nu",
+TOWERDESCENDING = "Toren daalt nu",
+TOWERENTRYSET = "Torenin-/uitgang op huidige positie ingesteld",
+TIMETRIALTRINKETS = "Aantal trinkets",
+TIMETRIALTIME = "Partĳd",
+SUREDELETETRIAL = "Weet je zeker dat je de time trial \"$1\" wilt verwĳderen?",
+SUREDELETEDIMENSIONNAME = "Weet je zeker dat je de dimensie \"$1\" wilt verwĳderen?",
+SUREDELETEDIMENSIONNONAME = "Weet je zeker dat je deze dimensie wilt verwĳderen?",
 
 }
 
@@ -1215,6 +1243,9 @@ cont = [[
 Snelkoppelingen\wh#
 \C=
 
+Tip: je kunt overal in Ved ¤F9¤ ingedrukt houden om veel van de snelkoppelingen te\nC
+zien.
+
 De meeste snelkoppelingen die in VVVVVV gebruikt kunnen worden kunnen ook worden
 gebruikt in Ved.
 
@@ -1258,12 +1289,15 @@ Ctrl+F1¤  Help\C
 (LET OP: Gebruik op Mac Cmd in plaats van Ctrl)
 N¤  Nummers van alle blokken tonen\C
 J¤  Soliditeit van blokken tonen\C
-M¤  Kaart tonen\C
-Q¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
+;¤  Minikaart-tegels tonen\C
+Shift+;¤  Achtergrond tonen\C
+M¤ of ¤Toetsenblok 5¤  Kaart tonen\CnC
+G¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 /¤  Scripts\C
 [¤  Y van muis vastzetten (om makkelĳker horizontale lĳnen te tekenen)\C
 ]¤  X van muis vastzetten (om makkelĳker verticale lĳnen te tekenen)\C
 F11¤  tilesets en sprites opnieuw laden\C
+Tab¤  gum in-/uitschakelen\C
 
 Entiteiten\gh#
 
@@ -2412,6 +2446,7 @@ State 120-128 werken een beetje zoals 102-112, d.w.z in serie, maar met minder
        state 1003
 1003 - Herstel spel naar normale situatie
 1010 - You found a crewmate! op dezelfde manier als voor trinkets
+1013 - Beëindig level met sterren
 2000 - Sla het spel op
 2500-2509 - Teleporteer naar een of andere vreemde niet-bestaande locatie,
             vermoedelĳk naar The Laboratory denk ik, ga door naar state 2510
@@ -2729,6 +2764,7 @@ Russische vertaling: CreepiX, Cheep
 Esperanto vertaling: Hejmstel
 Duitse vertaling: r00ster
 Franse vertaling: RhenaudTheLukark
+Spaanse vertaling: Valso22/naether
 
 
 Met dank aan:\h#
@@ -2739,7 +2775,6 @@ Terry Cavanagh voor het maken van VVVVVV
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
 \
-
 
 
 
@@ -2768,7 +2803,7 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-VVVVVV assets\h#
+VVVVVV-assets\h#
 
 Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
 of Terry Cavanagh. For more information about the license that applies to VVVVVV

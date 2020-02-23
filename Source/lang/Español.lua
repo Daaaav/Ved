@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: Español (es_AR)
---- Last converted: 2020-02-09 23:17:15 (CET)
+--- Last converted: 2020-02-24 00:18:43 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -22,17 +22,17 @@ L = {
 TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Su version de L{ve esta obsoleta. Porfavor use version 0.9.1 o mejor.\nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Suertudamente, L{ve 0.9.1 y mejores seguiran funcionando. \nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Suertudamente, L{ve 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
 UNKNOWNSTATE = "Estado desconocudo ($1), saltado desde el estado $2",
-FATALERROR = "ERROR FATAL:",
+FATALERROR = "ERROR FATAL: ",
 FATALEND = "Porfavor cierre el juego y intente de nuevo. Y si eres Dav, porfavor arreglalo.",
 
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconozido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
-MAXTRINKETS = "La cantidad maxima de trinkets (20) ha sido alcanzada en este nivel.",
-MAXCREWMATES = "La cantidad maxima de compañeros (20) ha sido alcanzada en este nivel.",
+MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
+MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
 EDITINGROOMTEXTNIL = "Texto de habiacion existente que se estava editando es nulo!",
 STARTPOINTNOLONGERFOUND = "El punto de partida viejo no se puede encontrar!",
-UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta:",
+UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta: ",
 SURENEWLEVEL = "Estas seguro de que quieres hacer un nuevo nivel? Perderas cualquier contenido no guardado.",
 SURELOADLEVEL = "Estas seguro de que quieres cargar un nivel? Perderas cualquier conenido no guardado.",
 COULDNOTGETCONTENTSLEVELFOLDER = "No se pudo obtener contenidos de la carpeta de niveles. Porfavor fijese si $1 existe y intente de nuevo.",
@@ -45,7 +45,7 @@ SPLITFAILED = "Division fallada miserablemente! Tienes muchas lineas en medio de
 NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.\n\nSalir del editor?",
 NOFLAGSLEFT_LOADSCRIPT = "No quedan mas flags, asi que un script de carga usando un flag nuevo no se puede crear. En vez de eso, un script de carga que se ha creado que siempre carga el script tarjeta con iftrinkets(0,$1). considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
 LEVELOPENFAIL = "No se puede abrir $1.vvvvvv.",
-SIZELIMIT = "El tamaño maximo de un nivel es de 20 por 20..\n\nEl tamaño del nivel se cambiara a $1 por $2.",
+SIZELIMIT = "El tamaño maximo de un nivel es de $1 por $2.\n\nEl tamaño del nivel se cambiara a $3 por $4.",
 SCRIPTALREADYEXISTS = "El script \"$1\" ya existe!",
 FLAGNAMENUMBERS = "Los nombres de flags no puede ser solo numeros.",
 FLAGNAMECHARS = "Los nombres de flags no pueden contener parentesis, comas, o espacios.",
@@ -120,7 +120,7 @@ GOTOLINE = "Ir a linea",
 GOTOLINE2 = "Ir a linea:",
 INTERNALON = "Sc.Interno activado",
 INTERNALOFF = "Sc.Interno desactivado",
-INTERNALYESBARS = "Sc.Interno say(-1) ",
+INTERNALYESBARS = "Sc.Interno say(-1)",
 INTERNALNOBARS = "Sc.Interno Loadscript",
 VIEW = "Ver",
 SYNTAXHLOFF = "Hl de sintaxis: SI",
@@ -131,7 +131,7 @@ INSERT = "Insertar",
 HELP = "Ayuda",
 INTSCRWARNING_NOLOADSCRIPT = "Se requiere script de carga!",
 INTSCRWARNING_BOXED = "Referencia de terminal!\n\n",
-COLUMN = "Columna:",
+COLUMN = "Columna: ",
 
 BTN_OK = "OK",
 BTN_CANCEL = "Cancelar",
@@ -229,9 +229,9 @@ ONECREWMATES = "C:",
 ONEENTITIES = "E:",
 
 LEVELSLIST = "Niveles",
-LOADTHISLEVEL = "Cargar este nivel:",
-ENTERNAMESAVE = "Introduce nombre para guardar:",
-SEARCHFOR = "Buscar a:",
+LOADTHISLEVEL = "Cargar este nivel: ",
+ENTERNAMESAVE = "Introduce nombre para guardar: ",
+SEARCHFOR = "Buscar a: ",
 
 VERSIONERROR = "No se puede comprobar version.",
 VERSIONUPTODATE = "Su version de Ved esta actualizada.",
@@ -240,7 +240,7 @@ VERSIONCHECKING = "Buscando actualizaciones...",
 VERSIONDISABLED = "Comprobacion de actualizacion desactivada",
 
 SAVESUCCESS = "Guardado con exito!",
-SAVENOSUCCESS = "Guardado sin exito! Error:",
+SAVENOSUCCESS = "Guardado sin exito! Error: ",
 INVALIDFILESIZE = "Tamaño de archivo invalido.",
 
 EDIT = "Editar",
@@ -262,7 +262,7 @@ NEWNAME = "Nuevo nombre:",
 RENAMENOTE = "Renombrar nota",
 RENAMESCRIPT = "Renombrar script",
 
-LINE = "linea",
+LINE = "linea ",
 
 SAVEMAP = "Guardar mapa",
 SAVEFULLSIZEMAP = "Guardar mapa de tamaño completo",
@@ -302,7 +302,7 @@ COLORED_TEXTBOXES = "Usar color verdaderos de dialogos",
 
 SCRIPTSPLIT = "Dividir",
 SPLITSCRIPT = "Dividir scripts",
-COUNT = "Cuenta:",
+COUNT = "Cuenta: ",
 SMALLENTITYDATA = "datos",
 
 -- Stats screen
@@ -364,7 +364,7 @@ RESETCOLORS = "Reiniciar colores",
 STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
 
 -- b17 - L.MAL is concatenated with L.[...]CORRUPT
-MAL = "El archivo del nivel esta malformado:",
+MAL = "El archivo del nivel esta malformado: ",
 METADATACORRUPT = "Faltan metadatos o estan corruptos.",
 METADATAITEMCORRUPT = "Faltan metadatos para $1 o estan corruptos.",
 TILESCORRUPT = "Faltan tejas o estan corruptas.",
@@ -462,7 +462,7 @@ SEARCHRESULTS_NOTES = "Notas [$1]",
 ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "No se pudo reproducir la cancion. Quiza no existe o sea de un tipo no soportado.",
 SOUNDPLAYERROR = "No se pudo reproducir este sonido. Quiza no existe o sea de un tipo no soportado.",
-MUSICLOADERROR = "No se puede cargar $1:",
+MUSICLOADERROR = "No se puede cargar $1: ",
 MUSICLOADERROR_TOOSMALL = "El archivo de musica es muy pequeño para ser valido.",
 MUSICEXISTSYES = "Existe",
 MUSICEXISTSNO = "No existe",
@@ -479,17 +479,17 @@ KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
 CANNOTUSENEWLINES = "No se puede usar el caracter \"$1\" en nombres de scripts!",
-MUSICTITLE = "Titulo:",
-MUSICARTIST = "Artista:",
-MUSICFILENAME = "Nombre de archivo:",
+MUSICTITLE = "Titulo: ",
+MUSICARTIST = "Artista: ",
+MUSICFILENAME = "Nombre de archivo: ",
 MUSICNOTES = "Notas:",
 SONGMETADATA = "Metadatos para cancion $1",
 MUSICFILEMETADATA = "Metadatos de archivo",
-MUSICEXPORTEDON = "Exportado:", -- Followed by date and time
+MUSICEXPORTEDON = "Exportado: ", -- Followed by date and time
 SAVEMETADATA = "Guardar metadatos",
 SOUNDS = "Sonidos",
 GRAPHICS = "Graficos",
-FILEOPENERNAME = "Nombre:",
+FILEOPENERNAME = "Nombre: ",
 PATHINVALID = "El camino es invalido.",
 DRIVES = "Drives", -- like C: or F: on Windows
 DOFILTER = "Solo mostrar *$1", -- "*.txt" for example
@@ -533,6 +533,34 @@ EDITSCRIPTWOBUMPING = "Editar script sin chocar",
 CLICKONTHING = "Haz click en $1",
 ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Hay mas de un punto de partida en este nivel!",
+
+CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
+MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
+BTNOVERRIDE = "Override",
+TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+PLATFORM_V = "VVVVVV",
+PLATFORM_VCE = "VVVVVV-CE",
+ENABLETOWER = "Tower mode",
+DISABLETOWER = "Disable tower",
+TIMETRIALS = "Time trials",
+DIMENSIONS = "Dimensions",
+TOWERDIRECTIONUP = "Direction: ↑",
+TOWERDIRECTIONDOWN = "Direction: ↓",
+TOWERENTRYEXIT = "Set entry/exit",
+SWITCHEDTOALTSTATEMAIN = "Switched to main state",
+SWITCHEDTOALTSTATE = "Switched to alt state $1",
+ADDEDALTSTATE = "Added new alt state $1",
+REMOVEDALTSTATE = "Removed alt state $1",
+ENABLEDTOWER = "Tower mode enabled",
+DISABLEDTOWER = "Tower mode disabled",
+TOWERASCENDING = "Tower now ascending",
+TOWERDESCENDING = "Tower now descending",
+TOWERENTRYSET = "Tower entry/exit set to current position",
+TIMETRIALTRINKETS = "Trinket count",
+TIMETRIALTIME = "Par time",
+SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
 }
 
@@ -677,8 +705,8 @@ ERR_PLUGINS = "Plugins:"
 ERR_PLUGINSNOTLOADED = "(no cargado)"
 ERR_PLUGINSNONE = "(ninguno)"
 ERR_PLEASETELLDAV = "Porfavor dile a Dav999 sobre este problema.\n\n\nDetalles: (presione CTRL/CMD+C para copiarlo al portapapeles)\n\n"
-ERR_INTERMEDIATE = "(version intermedia)" -- pre-release version, so a version in between officially released versions
-ERR_TOONEW = "(muy nueva)"
+ERR_INTERMEDIATE = " (version intermedia)" -- pre-release version, so a version in between officially released versions
+ERR_TOONEW = " (muy nueva)"
 
 ERR_PLUGINERROR = "Error de plugin!"
 ERR_FILE = "Archivo para editar:"
@@ -1196,6 +1224,8 @@ cont = [[
 Editor shortcuts\wh#
 \C=
 
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
 Most shortcuts that can be used in VVVVVV can also be used in Ved.
 
 F1¤  Change tileset\C
@@ -1238,12 +1268,15 @@ Ctrl+F1¤  Help\C
 (NOTE: On Mac, replace Ctrl by Cmd)
 N¤  display all tile numbers\C
 J¤  display tile solidity\C
-M¤  Show map\C
-Q¤  Go to room (type in coordinates as four digits)\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
 /¤  Scripts\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
+Tab¤  enable/disable eraser\C
 
 Entities\gh#
 
@@ -2362,6 +2395,7 @@ State 120-128 work a bit like 102-112, i.e. in a series, but with less broken
        just called each time you get one), continue to state 1003
 1003 - Revert game to normal
 1010 - You found a crewmate! in the same manner as for trinkets
+1013 - End level with stars
 2000 - Save the game
 2500-2509 - Perform a teleport to some weird non-existent location, supposedly to
             The Laboratory I guess, continue to state 2510
@@ -2670,6 +2704,7 @@ Russian translation: CreepiX, Cheep
 Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
+Spanish translation: Valso22/naether
 
 
 Special thanks to:\h#
@@ -2681,7 +2716,6 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 \
 \
 \
-
 
 
 
