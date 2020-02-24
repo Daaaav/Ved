@@ -13,6 +13,11 @@ function love_version_meets(major, minor)
 		lovemajor, loveminor = love._version_major, love._version_minor
 	end
 
+	if lovemajor == nil or loveminor == nil then
+		-- I see, LÖVE 0.7
+		return false
+	end
+
 	-- Yes, this could be done in one line, but this is much clearer.
 	if lovemajor > major then
 		return true
