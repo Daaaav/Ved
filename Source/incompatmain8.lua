@@ -19,6 +19,12 @@ function love.load()
 			message = message .. L.OUTDATEDLOVE .. "\n\n\n"
 		end
 	end
+
+	if love._version_major == nil then
+		love_version = "0.7.x or lower"
+	else
+		love_version = love._version_major .. "." .. love._version_minor .. "." .. love._version_revision
+	end
 end
 
 function love.draw()
@@ -26,7 +32,7 @@ function love.draw()
 
 	love.graphics.print(
 		"Ved version: " .. ved_ver_human() .. "\n"
-		.. "LÖVE version: " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+		.. "LÖVE version: " .. love_version,
 		8, love.graphics.getHeight()-21
 	)
 end
