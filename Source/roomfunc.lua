@@ -230,6 +230,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	local scriptname_args = {}
 	local scriptname_editingshown = false -- is the script name that's being edited in this room? We have its key
 
+	local nthscriptbox = 0
 	for k,v in pairs(entitydata) do
 		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
 			-- First of all, we can remove an entity by shift-right clicking
@@ -237,12 +238,16 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 				removeentity(k, entitydata[k].t)
 			else
 				showtooltip, scriptname_shown, scriptname_editingshown = displayentity(
-					offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext
+					offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext, nthscriptbox
 				)
 
 				if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
 					showtooltipof = v
 				end
+			end
+
+			if v.t == 19 then
+				nthscriptbox = nthscriptbox + 1
 			end
 		end
 	end
@@ -256,7 +261,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 		displayscriptname(entitydata[editingroomtext].t == 19, editingroomtext, entitydata[editingroomtext], offsetx, offsety, myroomx, myroomy)
 	end
 	if scriptname_shown and nodialog then
-		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy)
+		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy, scriptname_args[4])
 	end
 end
 
@@ -272,7 +277,7 @@ function displaybottom2rowstexts(offsetx, offsety, myroomx, myroomy)
 	end
 end
 
-function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, forcetiley, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, interact, bottom2rowstext)
+function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, forcetiley, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, interact, bottom2rowstext, nthscriptbox)
 	local x, y
 	if forcetilex ~= nil then
 		x = offsetx+forcetilex*16
@@ -670,7 +675,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			scriptname_editingshown = true
 		elseif hovering_over_name(true, k, v, offsetx, offsety, myroomx, myroomy) and interact then
 			scriptname_shown = true
-			scriptname_args[1], scriptname_args[2], scriptname_args[3] = true, k, v
+			scriptname_args[1], scriptname_args[2], scriptname_args[3], scriptname_args[4] = true, k, v, nthscriptbox
 		end
 	-- 50 (warp line) handled above with gravity line (11)
 	else
@@ -706,7 +711,7 @@ function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroom
 	or (editingsboxid == k and (selectedsubtool[13] == 3 or sboxdontaskname))
 end
 
-function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
+function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy, n)
 	local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
 		local dispx = math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
@@ -716,6 +721,22 @@ function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy
 		local dispx = math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16)
 		textshadow(v.data, dispx, dispy, true)
 		ved_print(v.data, dispx, dispy, 2)
+		if n ~= nil then
+			local nscriptdispx = dispx - #tostring(n)*8
+			if nscriptdispx < offsetx then
+				local nscriptdispy = dispy - 8
+				if nscriptdispy < offsety then
+					textshadow(n, dispx, dispy+16)
+					ved_print(n, dispx, dispy+16)
+				else
+					textshadow(n, dispx, nscriptdispy)
+					ved_print(n, dispx, nscriptdispy)
+				end
+			else
+				textshadow(n, nscriptdispx, dispy)
+				ved_print(n, nscriptdispx, dispy)
+			end
+		end
 	end
 end
 
