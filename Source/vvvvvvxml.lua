@@ -603,7 +603,10 @@ function loadlevel(path)
 	if m == nil then
 		return false, L.MAL .. L.SCRIPTCORRUPT
 	end
-	for ln in unxmlspecialchars(m .. "|"):gmatch("([^|]*)|") do
+	if m:sub(-1,-1) ~= "|" then
+		m = m .. "|"
+	end
+	for ln in unxmlspecialchars(m):gmatch("([^|]*)|") do
 		--print(num)
 		if ln:match("%z") then
 			local tmp
@@ -1109,7 +1112,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(table.concat(v, "|")) .. "|")
 	end
 
-	savethis = savethis:gsub("%$SCRIPT%$", ((table.concat(allallscripts, ""):sub(1, -2)):gsub("%%", "%%%%")))
+	savethis = savethis:gsub("%$SCRIPT%$", (table.concat(allallscripts, ""):gsub("%%", "%%%%")))
 
 	-- Alright, let's save!
 	cons("Saving file...")
