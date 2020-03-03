@@ -627,7 +627,7 @@ function drawmaineditor()
 			-- Enemy
 			if editingbounds == -1 then
 				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					oldbounds[k] = levelmetadata_get(roomx, roomy, "enemy" .. v)
+					oldbounds[k] = levelmetadata_get(roomx, roomy)["enemy" .. v]
 				end
 
 				levelmetadata_set(roomx, roomy, "enemyx1", atx*8)
