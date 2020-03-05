@@ -18,8 +18,8 @@ function searchtext(this)
 			{
 			[1] =
 				{
-				x = 1,
-				y = 1,
+				x = 0,
+				y = 0,
 				name = "Room name if present"
 				-- Maybe in a later stage add a preview of the room for a thumbnail?
 				}

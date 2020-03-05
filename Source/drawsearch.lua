@@ -43,15 +43,15 @@ function drawsearch()
 			love.graphics.setScissor(8+284+4, math.max(48, 32*k+16+searchscroll), 284, 30)
 			hoverrectangle(128,128,128,128, 8+284+4, 32*k+16+searchscroll, 284, 30)
 			if s.coords0 then
-				ved_print("(" .. (v.x-1) .. "," .. (v.y-1) .. ")", 12+284+4, 32*k+16+searchscroll+5)
-			else
 				ved_print("(" .. v.x .. "," .. v.y .. ")", 12+284+4, 32*k+16+searchscroll+5)
+			else
+				ved_print("(" .. (v.x+1) .. "," .. (v.y+1) .. ")", 12+284+4, 32*k+16+searchscroll+5)
 			end
 			highlightresult(v.name, searchedfor, 12+284+4, 32*k+16+searchscroll+8+5)
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8+284+4, 32*k+16+searchscroll, 284, 30) then
 				stopinput()
-				gotoroom(v.x - 1, v.y - 1)
+				gotoroom(v.x, v.y)
 
 				tostate(1, true)
 
