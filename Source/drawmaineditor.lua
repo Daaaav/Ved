@@ -1643,12 +1643,21 @@ function drawmaineditor()
 		-- For certain features, it would be nice to indicate that there are shortcuts you can use
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 then
 			-- Custom cursor size
-			tinyprint(L.TINY_SHIFT, 128-tinynumbers:getWidth(L.TINY_SHIFT), love.graphics.getHeight()-7)
+			local tinywidth = tinynumbers:getWidth(L.TINY_SHIFT)
+			love.graphics.setColor(0, 0, 0, 224)
+			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-8, tinywidth+2, 9)
+			love.graphics.setColor(255,255,0,255)
+			tinyprint(L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-7)
+			love.graphics.setColor(255,255,255,255)
 		elseif editingroomtext > 0 and entitydata[editingroomtext] ~= nil and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
 			-- Name for script box
 			local tinywidth = math.max(tinynumbers:getWidth("{" .. L.TINY_SHIFT), tinynumbers:getWidth("}" .. L.TINY_CTRL))
+			love.graphics.setColor(0, 0, 0, 224)
+			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-15, tinywidth+2, 16)
+			love.graphics.setColor(255,255,0,255)
 			tinyprint("{" .. L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-14)
 			tinyprint("}" .. L.TINY_CTRL, 128-tinywidth, love.graphics.getHeight()-7)
+			love.graphics.setColor(255,255,255,255)
 		end
 
 		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)
