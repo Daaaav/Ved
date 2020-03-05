@@ -722,20 +722,9 @@ function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy
 		textshadow(v.data, dispx, dispy, true)
 		ved_print(v.data, dispx, dispy, 2)
 		if n ~= nil then
-			local nscriptdispx = dispx - #tostring(n)*8
-			if nscriptdispx < offsetx then
-				local nscriptdispy = dispy - 8
-				if nscriptdispy < offsety then
-					textshadow(n, dispx, dispy+16)
-					ved_print(n, dispx, dispy+16)
-				else
-					textshadow(n, dispx, nscriptdispy)
-					ved_print(n, dispx, nscriptdispy)
-				end
-			else
-				textshadow(n, nscriptdispx, dispy)
-				ved_print(n, nscriptdispx, dispy)
-			end
+			local nscriptdispy = v.y*16 + 2
+			textshadow(n, dispx+2, nscriptdispy)
+			ved_print(n, dispx+2, nscriptdispy)
 		end
 	end
 end
