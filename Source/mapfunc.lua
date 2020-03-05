@@ -1,5 +1,9 @@
 function map_init()
 	-- Initialize/reset the map
+	if metadata == nil then
+		return
+	end
+
 	local collect = rooms_map ~= nil
 
 	rooms_map = {}
