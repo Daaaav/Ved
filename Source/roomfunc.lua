@@ -722,9 +722,10 @@ function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy
 		textshadow(v.data, dispx, dispy, true)
 		ved_print(v.data, dispx, dispy, 2)
 		if n ~= nil then
-			local nscriptdispy = v.y*16 + 2
-			textshadow(n, dispx+2, nscriptdispy)
-			ved_print(n, dispx+2, nscriptdispy)
+			local nscriptdispx = offsetx + (v.x - myroomx*40) * 16 + v.p1*16 - 2 - #tostring(n)*8
+			local nscriptdispy = offsety + (v.y - myroomy*30) * 16 + 2
+			textshadow(n, nscriptdispx, nscriptdispy)
+			ved_print(n, nscriptdispx, nscriptdispy)
 		end
 	end
 end
