@@ -123,6 +123,7 @@ function love.load()
 	ved_require("imagefont")
 
 	loadfonts()
+	loadlanginfo()
 	loadlanguage()
 	loadtinynumbersfont()
 
@@ -1761,9 +1762,15 @@ function love.draw()
 		ved_print(L.LANGUAGE, language_x, 32+4)
 
 		for k,v in pairs(alllanguages) do
-			radio(s.lang == v, language_x, 32+(24*k), v, v,
+			local langname
+			if langinfo[v] ~= nil then
+				langname = langinfo[v].name
+			else
+				langname = v
+			end
+			radio(s.lang == v, language_x, 32+(24*k), v, langname,
 				function(key)
-					changelanguage(v)
+					changelanguage(key)
 				end
 			)
 		end
@@ -1798,7 +1805,7 @@ function love.draw()
 		end
 
 		local bottomleft_text = L.TRANSLATIONCREDIT
-		if s.lang == "English" then
+		if s.lang == "en" then
 			-- Yeah, hardcoded text!
 			bottomleft_text = "Want to help translate Ved? Please contact Dav999!"
 		end
@@ -3609,7 +3616,7 @@ function love.keypressed(key)
 				end
 			end
 			if curlang == nil then
-				changelanguage("English")
+				changelanguage("en")
 			else
 				local newlang
 				if key == "up" then

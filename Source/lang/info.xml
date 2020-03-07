@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- If you would like to help translate Ved, please get in touch with Dav999! -->
+<langinfo>
+	<languages>
+		<language code="de" name="Deutsch" />
+		<language code="en" name="English" />
+		<language code="eo" name="Esperanto" />
+		<language code="es_AR" name="Español" />
+		<language code="fr" name="Français" />
+		<language code="nl" name="Nederlands" />
+		<language code="ru" name="Русский" />
+	</languages>
+</langinfo>
