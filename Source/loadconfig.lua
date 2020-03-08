@@ -10,7 +10,7 @@ configs =
 		},
 	lang =
 		{
-		default = "English",
+		default = "en",
 		["type"] = "string",
 		},
 	langchosen =

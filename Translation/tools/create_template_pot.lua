@@ -2,7 +2,7 @@
 
 --[[
 	This creates both a lua template and a pot file.
-	lang/English.lua is the center of attention here when reading.
+	lang/en.lua is the center of attention here when reading.
 	This code is a little complicated because the language files are just
 	manually-written lua files, with just about enough structure to be able
 	to automatically process them

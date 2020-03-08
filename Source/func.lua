@@ -558,16 +558,13 @@ function loadstate(new, ...)
 		alllanguages = getalllanguages()
 		widestlang = 0
 		for k,v in pairs(alllanguages) do
-			local success, w = pcall(function(v)
-				local w = font8:getWidth(v)
-				return w
-			end, v)
-			if not success then
-				-- Temporary, until filenames are changed to be language codes instead of names.
-				-- Turns out filenames can also be suddenly Shift-JIS
-				alllanguages[k] = "?"
-				w = 8
+			local langname
+			if langinfo[v] ~= nil then
+				langname = langinfo[v].name
+			else
+				langname = v
 			end
+			local w = font8:getWidth(langname)
 			if w > widestlang then
 				widestlang = w
 			end
@@ -1416,7 +1413,7 @@ function endeditingroomtext(donotmakethisnil)
 	-- We were typing a text!
 	stopinput()
 	if entitydata[editingroomtext] == nil then
-		dialog.create(L.EDITINGROOMTEXTNIL .. "\n\n(Location x)")
+		dialog.create(L.EDITINGROOMTEXTNIL)
 	elseif input ~= "" or editingroomtext == donotmakethisnil then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
@@ -2268,6 +2265,7 @@ function is_scrollable(x, y)
 end
 
 function getalllanguages()
+	loadlanginfo()
 	local languagesarray = love.filesystem.getDirectoryItems("lang")
 	local returnarray = {}
 

@@ -43,6 +43,24 @@ function loadfonts()
 	ved_setFont(font8)
 end
 
+function loadlanginfo()
+	-- Load the language properties for all languages.
+	-- Language properties include the name, and in the future could have stuff like fonts, RTL, etc
+	langinfo = {}
+	local contents = love.filesystem.read("lang/info.xml")
+	if contents == nil then
+		return
+	end
+	local xlanguages = contents:match("<languages>(.*)</languages>")
+	if xlanguages == nil then
+		return
+	end
+	for language in xlanguages:gmatch("<language (.-) />") do
+		local attributes = parsexmlattributes(language)
+		langinfo[attributes.code] = table.copy(attributes)
+	end
+end
+
 function unloadlanguage()
 	-- Prepare for language change
 	package.loaded["lang/" .. s.lang] = false
@@ -56,7 +74,19 @@ function loadlanguage()
 	if love.filesystem.exists("lang/" .. s.lang .. ".lua") then
 		ved_require("lang/" .. s.lang)
 	else
-		ved_require("lang/English")
+		-- Interpret old-style language setting
+		local found = false
+		for k,v in pairs(langinfo) do
+			if s.lang == v.name and love.filesystem.exists("lang/" .. v.code .. ".lua") then
+				ved_require("lang/" .. v.code)
+				s.lang = v.code
+				found = true
+				break
+			end
+		end
+		if not found then
+			ved_require("lang/en")
+		end
 	end
 
 	if fontpng_works then
@@ -134,9 +164,9 @@ function loadtinynumbersfont()
 		if love.system.getOS() == "OS X" then
 			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_mac.png", "c", 1))
 		end
-		if s.lang == "Deutsch" --[[ German, not Dutch ]] then
+		if s.lang == "de" then
 			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_de.png", "c", 1))
-		elseif s.lang == "Français" then
+		elseif s.lang == "fr" then
 			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_fr.png", "b", 1))
 		end
 		table.insert(fallbacks, tinynumbers_all)
