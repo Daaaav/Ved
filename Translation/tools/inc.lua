@@ -1,11 +1,11 @@
 languages = {
-	templates = "English",
-	nl = "Nederlands",
-	eo = "Esperanto",
-	ru = "Русский",
-	de = "Deutsch",
-	fr = "Français",
-	es_AR = "Español",
+	templates = "en",
+	nl = "nl",
+	eo = "eo",
+	ru = "ru",
+	de = "de",
+	fr = "fr",
+	es_AR = "es_AR",
 }
 
 langdir_path = "../../Source/lang" -- must not include a trailing /

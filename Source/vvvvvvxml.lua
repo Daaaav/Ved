@@ -1140,60 +1140,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	return success, iferrmsg
 end
 
-function xmlspecialchars(text)
-	-- Replace real special entities like < > & by XML entities like &lt; &gt; &amp;
-	return xmlnumericentities(text:gsub("&", "&amp;"):gsub("\"", "&quot;"):gsub("'", "&apos;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub("^ ", "&#32;"):gsub(" $", "&#32;"):gsub("  ", " &#32;"))
-end
-
-function unxmlspecialchars(text)
-	-- Decode XML entities like &lt; &gt; &amp; to < > &
-	return unxmlnumericentities(text):gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&apos;", "'"):gsub("&quot;", "\""):gsub("&amp;", "&")
-end
-
-function xmlnumericentities(text)
-	-- Replace real control characters (<0x20) by numeric XML entities like &#31;
-	return text:gsub(
-		"%c",
-		function(c)
-			return "&#" .. string.byte(c) .. ";"
-		end
-	)
-end
-
-function unxmlnumericentities(text)
-	-- Replace numeric XML entities (like &#32;) to real characters
-	return text:gsub(
-		"&#(%d+);",
-		function(n)
-			return string.char(n)
-		end
-	):gsub(
-		"&#x(%x+);",
-		function(n)
-			return string.char(tonumber(n,16))
-		end
-	)
-end
-
-function parsexmlattributes(text)
-	-- Parses a sequence of XML attributes (x="12" y="34") and returns a table of key-value pairs
-	-- Values are always of type string, so type conversions need to be done manually.
-	local attributes = {}
-	local curpos = 1
-	while true do
-		local key, value
-		local found_start, found_openquote = text:find("[%w_]+=\"", curpos)
-		if found_start == nil then
-			break
-		end
-		key = text:sub(found_start, found_openquote-2)
-		local found_closequote = text:find("\"", found_openquote+1, true)
-		value = text:sub(found_openquote+1, found_closequote-1)
-		attributes[key] = value
-		curpos = found_closequote+1
-	end
-	return attributes
-end
 
 function despecialchars(text)
 	return text:gsub("`", "`g"):gsub("\r?\n", "`n"):gsub("|", "`p"):gsub("%$", "`d"):gsub("@", "`a"):gsub("  ", "`_")
