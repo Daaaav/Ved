@@ -24,7 +24,7 @@ just do `input.drawcas()` on the top-left corner with the same arguments.
 `[scale_y]` defaults to `[scale_x]`.
 `[line_height]` defaults to the height of the current font.
 
-By default, the clicking area (the area will clicks, double-clicks, and
+By default, the clicking area (the area where clicks, double-clicks, and
 clicking-and-dragging will apply to the input) is set to be the current scissor
 (from `love.graphics.getScissor()`), and if there is none, will just be the
 smallest rectangle that surrounds the input (with 4px padding). You can
