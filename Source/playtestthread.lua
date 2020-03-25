@@ -5,7 +5,7 @@ require("corefunc")
 
 -- Workaround for including const
 -- Just don't actually use L keys, I guess
-require("lang/English")
+require("lang/en")
 
 require("const")
 
