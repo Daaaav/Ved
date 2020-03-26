@@ -324,7 +324,7 @@ function love.load()
 
 	toolimg = {}
 	toolimgicon = {}
-	for t = 1, 17 do
+	for t = 1, 20 do
 		toolimg[t] = love.graphics.newImage("tools/" .. t .. ".png")
 		toolimgicon[t] = love.image.newImageData("tools2/on/" .. t .. ".png")
 	end
@@ -348,7 +348,9 @@ function love.load()
 	subtoolimgs[15] = {}
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
-
+	subtoolimgs[18] = {}
+	subtoolimgs[19] = {}
+	subtoolimgs[20] = {}
 
 	scrollup = love.graphics.newImage("images/scrollup.png")
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
@@ -2818,7 +2820,7 @@ function love.keypressed(key)
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 			else
-				selectedtool = 17
+				selectedtool = 20
 			end
 			updatewindowicon()
 			toolscroll()
@@ -2833,7 +2835,7 @@ function love.keypressed(key)
 				end
 			end
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-			if selectedtool < 17 then
+			if selectedtool < 20 then
 				selectedtool = selectedtool + 1
 			else
 				selectedtool = 1
@@ -3520,12 +3522,21 @@ function love.keypressed(key)
 		tostate(0, true)
 	elseif not editingroomname and (editingroomtext == 0) and nodialog and state == 1 then
 		for k,v in pairs(toolshortcuts) do
+			local shiftdown = false
+			if metadata.target == "VCE" then
+				shiftdown = love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")
+			end
 			if key == string.lower(v) then
-				if selectedtool == k and k ~= 13 and k ~= 14 and state == 1 then
+				if (selectedtool == k and k ~= 13 and k ~= 14 and state == 1) and (shiftdown and (k ~= 1 and k ~= 2 and k ~= 3)) then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
 				elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-					selectedtool = k
+					-- Weird hack to make shift + number tools possible
+					if shiftdown and (selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 18 or selectedtool == 19 or selectedtool == 20) then
+						selectedtool = k + 17
+					else
+						selectedtool = k
+					end
 					updatewindowicon()
 				end
 				toolscroll()
@@ -3765,12 +3776,12 @@ function love.mousepressed(x, y, button)
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 			else
-				selectedtool = 17
+				selectedtool = 20
 			end
 			updatewindowicon()
 			toolscroll()
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-			if selectedtool < 17 then
+			if selectedtool < 20 then
 				selectedtool = selectedtool + 1
 			else
 				selectedtool = 1

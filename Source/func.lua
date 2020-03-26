@@ -248,7 +248,7 @@ function loadstate(new, ...)
 
 		tilespicker = false
 		tilespicker_shortcut = false
-		selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1}
+		selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1, 1,1,1}
 		selectedtile = 1
 		selectedtileset = 0 --"spacestation" --"outside"
 		selectedcolor = 0 --"c9" --"red"
@@ -810,8 +810,8 @@ function lockablemouseon(x, y, w, h)
 end
 
 function lefttoolscrollbounds()
-	if (lefttoolscroll < -368) then
-		lefttoolscroll = -368
+	if (lefttoolscroll < -512) then
+		lefttoolscroll = -512
 	elseif (lefttoolscroll > 16) then
 		lefttoolscroll = 16
 	end
