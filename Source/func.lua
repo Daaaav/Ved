@@ -810,8 +810,12 @@ function lockablemouseon(x, y, w, h)
 end
 
 function lefttoolscrollbounds()
-	if (lefttoolscroll < -512) then
-		lefttoolscroll = -512
+	local max_scroll = 368
+	if metadata.target == "VCE" then
+		max_scroll = 512
+	end
+	if (lefttoolscroll < -max_scroll) then
+		lefttoolscroll = -max_scroll
 	elseif (lefttoolscroll > 16) then
 		lefttoolscroll = 16
 	end

@@ -2820,7 +2820,10 @@ function love.keypressed(key)
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 			else
-				selectedtool = 20
+				selectedtool = 17
+				if metadata.target == "VCE" then
+					selectedtool = 20
+				end
 			end
 			updatewindowicon()
 			toolscroll()
@@ -2835,7 +2838,11 @@ function love.keypressed(key)
 				end
 			end
 		elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-			if selectedtool < 20 then
+			local tool_count = 17
+			if metadata.target == "VCE" then
+				tool_count = 20
+			end
+			if selectedtool < tool_count then
 				selectedtool = selectedtool + 1
 			else
 				selectedtool = 1
@@ -3776,12 +3783,19 @@ function love.mousepressed(x, y, button)
 			if selectedtool > 1 then
 				selectedtool = selectedtool - 1
 			else
-				selectedtool = 20
+				selectedtool = 17
+				if metadata.target == "VCE" then
+					selectedtool = 20
+				end
 			end
 			updatewindowicon()
 			toolscroll()
 		elseif nodialog and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-			if selectedtool < 20 then
+			local tool_count = 17
+			if metadata.target == "VCE" then
+				tool_count = 20
+			end
+			if selectedtool < tool_count then
 				selectedtool = selectedtool + 1
 			else
 				selectedtool = 1
