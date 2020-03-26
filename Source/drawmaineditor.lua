@@ -1525,7 +1525,7 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 127, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
+		love.graphics.setScissor(16, 16, 32 + 4 + 10, love.graphics.getHeight()-32)
 
 		local thistooltip = ""
 

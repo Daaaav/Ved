@@ -3532,7 +3532,7 @@ function love.keypressed(key)
 					selectedsubtool[k] = 1
 				elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 					-- Weird hack to make shift + number tools possible
-					if shiftdown and (selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 18 or selectedtool == 19 or selectedtool == 20) then
+					if shiftdown and (k == 1 or k == 2 or k == 3) then
 						selectedtool = k + 17
 					else
 						selectedtool = k
