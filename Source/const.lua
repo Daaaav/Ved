@@ -168,7 +168,7 @@ listsoundids =
 }
 
 --entityidtotool = {9, }
-entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
+entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16, 5, 8, 14}
 
 state_hotkeys = {
 	--[1] = {
