@@ -11,3 +11,10 @@ L.INSERTRAWHEX = "Insert raw hex"
 L.MOVELINEUP = "Move line upwards"
 L.MOVELINEDOWN = "Move line downwards"
 L.DUPLICATELINE = "Duplicate line"
+
+table.insert(toolnames, "Flip token")
+table.insert(toolnames, "Coin")
+table.insert(toolnames, "Teleporter")
+table.insert(subtoolnames, {})
+table.insert(subtoolnames, {})
+table.insert(subtoolnames, {})

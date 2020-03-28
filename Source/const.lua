@@ -1,4 +1,4 @@
-toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P"}
+toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P", "s1", "s2", "s3"}
 
 tilesetnames =
 	{
@@ -168,7 +168,7 @@ listsoundids =
 }
 
 --entityidtotool = {9, }
-entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
+entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16, 5, 8, 14}
 
 state_hotkeys = {
 	--[1] = {

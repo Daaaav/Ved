@@ -922,6 +922,27 @@ function drawmaineditor()
 			end
 
 			mousepressed = true
+        elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 18 and metadata.target == "VCE" then
+			-- Flip tokens
+			insert_entity(atx, aty, 5, 181)
+			mousepressed = true
+        elseif love.mouse.isDown("l") and selectedtool == 19 and metadata.target == "VCE" then
+			-- Coins
+			local found = false
+			for ke,ve in pairs(entitydata) do
+				if ve.x == (atx + 40 * roomx) and ve.y == (aty + 30 * roomy) then
+					-- We found one, whoops
+					found = true
+					break
+				end
+			end
+			if not found then
+				insert_entity(atx, aty, 8)
+			end
+        elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 20 and metadata.target == "VCE" then
+			-- Teleporters
+			insert_entity(atx, aty, 14)
+			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
@@ -1480,6 +1501,15 @@ function drawmaineditor()
 		elseif selectedtool == 17 then
 			-- Start point
 			displayshapedcursor(0, 0, 1, 2)
+		elseif selectedtool == 18 then
+			-- Flip token
+			displayshapedcursor(0, 0, 1, 1)
+		elseif selectedtool == 19 then
+			-- Coin
+			displayshapedcursor(0, 0, 0, 0)
+		elseif selectedtool == 20 then
+			-- Teleporter
+			displayshapedcursor(0, 0, 11, 11)
 		elseif not (selectedtool == 13 and selectedsubtool[13] == 2) then
 			love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 		end
@@ -1493,11 +1523,11 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 127, love.graphics.getHeight())
 		love.graphics.setColor(255,255,255,255)
-		love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
+		love.graphics.setScissor(16, 16, 32 + 4 + 10, love.graphics.getHeight()-32)
 
 		local thistooltip = ""
 
-		for t = 1, 17 do
+		for t = 1, 20 do
 			-- love.graphics.rectangle("fill", 16, (16+(48*(t-1)))+lefttoolscroll, 32, 32)
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or ((mouseon(16, 0, 32, 16)) or (mouseon(16, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) and selectedtool ~= t then
