@@ -930,12 +930,10 @@ function drawmaineditor()
 			-- Coins
 			local found = false
 			for ke,ve in pairs(entitydata) do
-				if ve.x == atx then
-					if ve.y == aty then
-						-- We found one, whoops
-						found = true
-						break
-					end
+				if ve.x == (atx + 40 * roomx) and ve.y == (aty + 30 * roomy) then
+					-- We found one, whoops
+					found = true
+					break
 				end
 			end
 			if not found then
