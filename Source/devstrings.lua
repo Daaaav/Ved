@@ -11,3 +11,9 @@ L.VVVVVVNONSTEAMPATHINVALID = "Sorry, but that path is invalid."
 L.NONSTEAMCONTAINSFILE = "Please select the folder containing the file '$1'."
 L.CHANGINGPATHAFTERASK = "The VVVVVV folder was changed after pressing play and it is no longer valid!"
 
+table.insert(toolnames, "Flip token")
+table.insert(toolnames, "Coin")
+table.insert(toolnames, "Teleporter")
+table.insert(subtoolnames, {})
+table.insert(subtoolnames, {})
+table.insert(subtoolnames, {})

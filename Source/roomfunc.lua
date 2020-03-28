@@ -404,6 +404,18 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				4, 1
 			)
 		end
+	elseif v.t == 8 then
+		-- Coin
+		love.graphics.setColor( 255, 255, 0)
+		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][48], x, y, 0, 2)
+		love.graphics.setColor( 255, 255, 255)
+		if interact then
+			entityrightclick(
+				x, y,
+				{"#" .. toolnames[19], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_8_" .. k,
+				1, 1
+			)
+		end
 	elseif v.t == 9 then
 		-- Trinket
 		v6_setcol(3)
@@ -617,9 +629,18 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				2, 3
 			)
 		end
-	elseif v.t == 19 then
-		-- Script box, draw it as an actual box.
+	elseif v.t == 19 or v.t == 20 then
+		-- Script box/activity zone, draw it as an actual box.
 		--love.graphics.draw(cursorimg[1], x, y)
+		if v.t == 19 then
+			if v.onetime then
+				love.graphics.setColor(127,255,255)
+			else
+				love.graphics.setColor(0,0,255)
+			end
+		else
+			love.graphics.setColor(0,255,0)
+		end
 		love.graphics.draw(scriptboximg[1], x, y)
 		if editingsboxid == k and selectedsubtool[13] ~= 3 then
 			-- Currently placing
@@ -661,6 +682,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				love.graphics.draw(scriptboximg[4], x, prt)
 				love.graphics.draw(scriptboximg[6], x + (v.p1-1)*16, prt)
 			end
+			love.graphics.setColor(255,255,255)
 
 			if interact then
 				entityrightclick(
