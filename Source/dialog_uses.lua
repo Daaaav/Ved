@@ -840,6 +840,14 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 		correctlines = true
 	end
 
+	local telecheck, oldrx, oldry = false
+	if thisentity.t == 14 or anythingbutnil0(tonumber(fields.t)) == 14 then
+		telecheck = true
+		oldrx, oldry = math.floor(thisentity.x/40), math.floor(thisentity.y/30)
+		newrx = math.floor(anythingbutnil0(tonumber(fields.x))/40)
+		newry = math.floor(anythingbutnil0(tonumber(fields.y))/30)
+	end
+
 	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
 	if metadata.target == "VCE" then
 		table.insert(entitypropkeys, "subx")
@@ -886,6 +894,10 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	-- entdetails[3] is still the ID of this entity
 	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
 	finish_undo("CHANGED ENTITY (PROPERTIES)")
+
+	if telecheck then
+		update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
+	end
 end
 
 function dialog.callback.leveloptions(button, fields)

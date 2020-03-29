@@ -1296,6 +1296,11 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 			if moving then
 				entitydata[k].x = entitydata[k].x + (40*roomxdiff)
 				entitydata[k].y = entitydata[k].y + (30*roomydiff)
+				if v.t == 14 then
+					-- Moving a <teleporter/> - just simulate removing the teleporter and replacing it
+					update_vce_teleporters_remove(myroomx, myroomy)
+					update_vce_teleporters_insert(newroomx, newroomy)
+				end
 			else
 				if v.t == 16 or (v.t == 9 and count.trinkets >= limit.trinkets) or (v.t == 15 and count.crewmates >= limit.crewmates) then
 					-- Nope. Can't copy this.
@@ -1304,6 +1309,8 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 						count.trinkets = count.trinkets + 1
 					elseif v.t == 15 then
 						count.crewmates = count.crewmates + 1
+					elseif v.t == 14 then
+						update_vce_teleporters_insert(newroomx, newroomy)
 					end
 
 					-- I could have been busy debugging this for a long time.
@@ -1682,8 +1689,8 @@ function rotateroom180(rx, ry, undoing)
 		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
 			--cons(rx .. " " .. ry .. "  en " .. ((rx*40)+39 - v.x - 1)+(rx*40))
 
-			if v.t == 9 or v.t == 13 then
-				-- Trinket or warp token entrance, 2x2 block
+			if v.t == 9 or v.t == 13 or v.t == 5 then
+				-- Trinket, warp token entrance or flip token, 2x2 block
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
 			elseif v.t == 1 then
@@ -1738,8 +1745,8 @@ function rotateroom180(rx, ry, undoing)
 				-- Roomtext, the new placement of x depends on the length of the string!
 				entitydata[k].x = ((rx*40)+39 - v.x - (v.data:len()-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-			elseif v.t == 19 then
-				-- Script box.
+			elseif v.t == 19 or v.t == 20 then
+				-- Script box or activity zone.
 				entitydata[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
 			elseif v.t == 11 or v.t == 50 then
@@ -1755,6 +1762,14 @@ function rotateroom180(rx, ry, undoing)
 						entitydata[k].p1 = v.p1-1
 					end
 				end
+			elseif v.t == 8 then
+				-- Coin! That's a simple one
+				entitydata[k].x = ((rx*40)+39 - v.x)+(rx*40)
+				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
+			elseif v.t == 14 then
+				-- Teleporters are huge! 12x12
+				entitydata[k].x = ((rx*40)+39 - v.x - 11)+(rx*40)
+				entitydata[k].y = ((ry*30)+29 - v.y - 11)+(ry*30)
 			else
 				cons("Entity type " .. v.t .. " not handled when rotating the room!")
 			end
@@ -1873,9 +1888,25 @@ function undo()
 		-- Hmm... Re-add it in this case!
 		entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
 		updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
+		if undobuffer[#undobuffer].removedentitydata.t == 14 then
+			-- We might need to re-add the <teleporter/>
+			update_vce_teleporters_insert(unndobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
+		end
 	elseif undobuffer[#undobuffer].undotype == "changeentity" then
+		local telecheck, oldrx, oldry = false
+		if entitydata[undobuffer[#undobuffer].entid].t == 14
+		or undobuffer[#undobuffer].changedentitydata.t == 14 then
+			telecheck = true
+			oldrx = math.floor(entitydata[undobuffer[#undobuffer].entid].x/40)
+			oldry = math.floor(entitydata[undobuffer[#undobuffer].entid].y/30)
+		end
 		for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
 			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
+		end
+		if telecheck then
+			local newrx = math.floor(entitydata[undobuffer[#undobuffer].entid].x/40)
+			local newry = math.floor(entitydata[undobuffer[#undobuffer].entid].y/30)
+			update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
 		end
 	elseif undobuffer[#undobuffer].undotype == "metadata" then
 		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
@@ -1970,13 +2001,28 @@ function redo()
 		if redobuffer[#redobuffer].addedentitydata.t == 16 then
 			-- Don't forget to set the start point ID!
 			count.startpoint = redobuffer[#redobuffer].entid
+		elseif redobuffer[#redobuffer].addedentitydata.t == 14 then
+			-- We might need to re-add the <teleporter/>
+			update_vce_teleporters_insert(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
 		end
 	elseif redobuffer[#redobuffer].undotype == "removeentity" then
 		-- Redo the removing!
 		removeentity(redobuffer[#redobuffer].entid, nil, true)
 	elseif redobuffer[#redobuffer].undotype == "changeentity" then
+		local telecheck, oldrx, oldry = false
+		if entitydata[redobuffer[#redobuffer].entid].t == 14
+		or redobuffer[#redobuffer].changedentitydata.t == 14 then
+			telecheck = true
+			oldrx = math.floor(entitydata[redobuffer[#redobuffer].entid].x/40)
+			oldry = math.floor(entitydata[redobuffer[#redobuffer].entid].y/30)
+		end
 		for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
 			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
+		end
+		if telecheck then
+			local newrx = math.floor(entitydata[redobuffer[#redobuffer].entid].x/40)
+			local newry = math.floor(entitydata[redobuffer[#redobuffer].entid].y/30)
+			update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
 		end
 	elseif redobuffer[#redobuffer].undotype == "metadata" then
 		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
@@ -2898,7 +2944,76 @@ function insert_entity_full(rx, ry, intower, subx, suby, atx, aty, t, p1, p2, p3
 		count.crewmates = count.crewmates + 1
 	elseif t == 16 then
 		count.startpoint = count.entity_ai
+	elseif t == 14 then
+		update_vce_teleporters_insert(rx, ry)
 	end
 	count.entities = count.entities + 1
 	count.entity_ai = count.entity_ai + 1
+end
+
+function update_vce_teleporters_insert(rx, ry)
+	-- After insering a teleporter entity, make sure there's a <teleporter/> for this room
+	if extra.teleporters == nil then
+		return
+	end
+
+	for k,v in pairs(extra.teleporters) do
+		if v.x == rx and v.y == ry then
+			return
+		end
+	end
+
+	table.insert(extra.teleporters, {x = rx, y = ry})
+end
+
+function update_vce_teleporters_remove(rx, ry, deleting_id)
+	-- After removing a teleporter entity, make sure if there's no teleporter entity left, the <teleporter/> for this room is removed
+	-- This function can also be called before removing the entity, by supplying the ID of the entity to be removed to ignore that entity.
+	if extra.teleporters == nil then
+		-- Aah, a teleporter in a non-VCE level, huh?
+		return
+	end
+
+	for k,v in pairs(entitydata) do
+		if v.t == 14 and k ~= deleting_id and v.x >= rx*40 and v.x <= rx*40+39 and v.y >= ry*30 and v.y <= ry*30+29 then
+			-- Still a teleporter, don't remove the <teleporter/>
+			return
+		end
+	end
+
+	for k,v in pairs(extra.teleporters) do
+		if v.x == rx and v.y == ry then
+			table.remove(extra.teleporters, k)
+			return
+		end
+	end
+end
+
+function update_vce_teleporters_checkroom(rx, ry)
+	-- Checks one room for teleporters and inserts/removes a <teleporter/> to keep <teleporters> in sync.
+	if extra.teleporters == nil then
+		return
+	end
+
+	local tele_exists = false
+
+	for k,v in pairs(entitydata) do
+		if v.t == 14 and v.x >= rx*40 and v.x <= rx*40+39 and v.y >= ry*30 and v.y <= ry*30+29 then
+			tele_exists = true
+		end
+	end
+
+	if tele_exists then
+		update_vce_teleporters_insert(rx, ry)
+	else
+		update_vce_teleporters_remove(rx, ry)
+	end
+end
+
+function update_vce_teleporters_checkrooms(rx1, ry1, rx2, ry2)
+	-- Can be run after any arbitrary change may have happened to an entity's type including changing to or from a VCE teleporter.
+	-- For example, saving in the raw entity properties dialog or undoing/redoing arbitrary/unknown entity property changes.
+	-- Just checks the two rooms (before/after room for entity position) for teleporters and inserts/removes a <teleporter/> to keep <teleporters> in sync.
+	update_vce_teleporters_checkroom(rx1, ry1)
+	update_vce_teleporters_checkroom(rx2, ry2)
 end
