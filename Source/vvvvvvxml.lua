@@ -738,7 +738,7 @@ vvvvvvxmltemplate_vce = love.filesystem.read("template_vce.vvvvvv")
 function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
-	if (path == nil) or (path == "") then
+	if (path == "") then
 		return false, L.FORGOTPATH
 	end
 
@@ -1115,20 +1115,27 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	-- Alright, let's save!
 	cons("Saving file...")
-	local usethispath
-	if invvvvvvfolder then
-		usethispath = levelsfolder .. dirsep .. path
+	if path ~= nil then
+		local usethispath
+		if invvvvvvfolder then
+			usethispath = levelsfolder .. dirsep .. path
+		else
+			usethispath = path
+		end
+		success, iferrmsg = writelevelfile(usethispath, savethis)
 	else
-		usethispath = path
+		success = true
+		iferrmsg = savethis
 	end
-	success, iferrmsg = writelevelfile(usethispath, savethis)
 
 	if vedmetadata == nil then
 		dialog.create(L.MDENOTPASSED)
 	end
 
 	if success then
-		recentlyopened(path:sub(1, -8))
+		if path ~= nil then
+			recentlyopened(path:sub(1, -8))
+		end
 
 		if undobuffer ~= nil then
 			saved_at_undo = #undobuffer
