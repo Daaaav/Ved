@@ -25,7 +25,7 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	local run = {
 		vvvvvv,
 		"-p",
-		love.filesystem.getSaveDirectory() .. "/ved_playtesting_temp.vvvvvv",
+		"special/stdin",
 		"-playx",
 		posx,
 		"-playy",
@@ -57,7 +57,10 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	if playtestthread == nil then
 		playtestthread = love.thread.newThread("playtestthread.lua")
 	end
-	playtestthread:start(table.concat(commands, "\n"))
+	playtestthread:start(table.concat(commands, "\n"), playtesting_levelcontents)
+	-- Don't leave this laying around
+	playtesting_levelcontents = ""
+
 	playtesting_active = true
 end
 
@@ -153,7 +156,8 @@ function playtesting_start()
 	s.enableoverwritebackups = false
 	recentlyopened = function() end
 
-	local thissavedsuccess, thissavederror = savelevel(love.filesystem.getSaveDirectory() .. "/ved_playtesting_temp.vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
+	-- Note: thissavederror will contain level contents if not an error
+	local thissavedsuccess, thissavederror = savelevel(nil, metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
 
 	unsavedchanges = oldunsavedchanges
 	s.enableoverwritebackups = oldenableoverwritebackups
@@ -167,6 +171,9 @@ function playtesting_start()
 		if allowdebug and playtesting_attach_gdb == nil then
 			playtesting_attach_gdb = true
 		end
+
+		-- Ah crud a global
+		playtesting_levelcontents = thissavederror
 	end
 end
 
@@ -210,7 +217,6 @@ end
 
 function playtesting_cancelask()
 	playtesting_askwherestart = false
-	love.filesystem.remove("ved_playtesting_temp.vvvvvv")
 end
 
 function playtesting_snap_position(posx, posy, flipped)
