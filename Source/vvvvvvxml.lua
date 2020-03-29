@@ -210,7 +210,6 @@ function loadlevel(path)
 		if contents:find("<teleporters />") == nil then
 			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
 			if x.teleporters ~= nil then
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
 				for teleporter in x.teleporters:gmatch("<teleporter (.-) />") do
 					local thisteleporter = {}
 					local attributes = parsexmlattributes(teleporter)

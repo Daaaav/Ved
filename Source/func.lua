@@ -1048,6 +1048,12 @@ function updatecountdelete(thet, id, undoing)
 		count.crewmates = count.crewmates - 1
 	elseif thet == 16 then
 		count.startpoint = nil
+	elseif thet == 14 then
+		update_vce_teleporters_remove(
+			math.floor(entitydata[id].x/40),
+			math.floor(entitydata[id].y/40),
+			id
+		)
 	end
 
 	-- Is this a roomtext/terminal/script box entity and were we editing it?
