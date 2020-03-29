@@ -678,6 +678,7 @@ function loadtilesets()
 	loadtileset("tiles3.png")
 	loadtileset("entcolours.png")
 	loadsprites("sprites.png", 32)
+	loadsprites("teleporter.png", 96)
 
 	loadwarpbgs()
 end
