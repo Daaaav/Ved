@@ -82,10 +82,10 @@ end
 function playtesting_validate_path(thepath)
 	-- TODO: This is all useless until Ved has better directory-checking and file-checking filefuncs
 	if love.system.getOS() == "Linux" then
-		-- Check that x86_64/vvvvvv.x86_64 exists
+		-- Check that VVVVVV exists
 		return true -- TEMP DEBUG
 	elseif love.system.getOS() == "OS X" then
-		-- Check that osx/vvvvvv.osx exists
+		-- Check that VVVVVV exists
 	elseif love.system.getOS() == "Windows" then
 		-- Check that VVVVVV.exe exists
 	end
