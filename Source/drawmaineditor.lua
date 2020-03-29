@@ -202,6 +202,8 @@ function drawmaineditor()
 			or (entitydata[movingentity].p1 == 1 and atx == 39)
 			or (entitydata[movingentity].p1 == 2 and aty == 0)
 			or (entitydata[movingentity].p1 == 3 and aty == 29)) then
+				local old_roomx = math.floor(entitydata[movingentity].x/40)
+				local old_roomy = math.floor(entitydata[movingentity].y/30)
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
 				local new_p2 = entitydata[movingentity].p2
 				if table.contains({11, 50}, entitydata[movingentity].t) then
@@ -226,6 +228,11 @@ function drawmaineditor()
 						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
 						new_p2 = new_y%30 + offset
 					end
+				elseif entitydata[movingentity].t == 14 then
+					if not movingentity_copying then
+						update_vce_teleporters_remove(old_roomx, old_roomy)
+					end
+					update_vce_teleporters_insert(roomx, roomy)
 				end
 				if not movingentity_copying then
 					table.insert(
