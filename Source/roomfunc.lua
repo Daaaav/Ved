@@ -562,6 +562,16 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				)
 			end
 		end
+	elseif v.t == 14 then
+		-- Teleporter
+		drawtele(x, y)
+		if v.t ~= nil and interact then
+			entityrightclick(
+				x, y,
+				{"#" .. toolnames[20], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_14_" .. k,
+				12, 12
+			)
+		end
 	elseif v.t == 15 then
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
@@ -726,6 +736,14 @@ end
 
 function drawentcolour(tile, atx, aty, small)
 	love.graphics.draw(tilesets["entcolours.png"]["img"], tilesets["entcolours.png"]["tiles"][tile], atx, aty, 0, small and 1 or 2)
+end
+
+function drawtele(atx, aty, small)
+	love.graphics.setColor(16,16,16)
+	love.graphics.draw(tilesets["teleporter.png"]["img"], tilesets["teleporter.png"]["tiles"][0], atx, aty, 0, small and 1 or 2)
+	v6_setcol(100)
+	love.graphics.draw(tilesets["teleporter.png"]["img"], tilesets["teleporter.png"]["tiles"][1], atx, aty, 0, small and 1 or 2)
+	love.graphics.setColor(255,255,255)
 end
 
 function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy)
