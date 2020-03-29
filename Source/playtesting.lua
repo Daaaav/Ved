@@ -97,7 +97,7 @@ function playtesting_get_vvvvvvnonsteam_message()
 	elseif love.system.getOS() == "OS X" then
 		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE"})
 	elseif love.system.getOS() == "Windows" then
-		return langkeys(L.NONSTEAMCONTAISNFILE, {"VVVVVV-CE.exe"})
+		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE.exe"})
 	end
 end
 
