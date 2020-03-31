@@ -1154,13 +1154,13 @@ function drawmaineditor()
 						love.graphics.setColor(0, 192, 255)
 					end
 
-					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 2, 16)
+					love.graphics.rectangle("fill", screenoffset, t*16, 2, 16)
 
 					if roomleftW then
 						love.graphics.setColor(255, 255, 255)
 					end
 				elseif not roomleftW and ( (levelmetadata_get(roomleft, roomy).warpdir == 1) or (levelmetadata_get(roomleft, roomy).warpdir == 3) ) and not warplinesinroom(roomleft, roomy) then
-					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 1, 16)
+					love.graphics.rectangle("fill", screenoffset, t*16, 1, 16)
 				end
 
 				-- Spikes
@@ -1171,7 +1171,7 @@ function drawmaineditor()
 						love.graphics.setColor(255, 192, 0)
 					end
 
-					love.graphics.rectangle("fill", screenoffset, (t-1)*16, 2, 16)
+					love.graphics.rectangle("fill", screenoffset, t*16, 2, 16)
 
 					love.graphics.setColor(255, 255, 255)
 				end
