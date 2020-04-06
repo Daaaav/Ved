@@ -161,6 +161,7 @@ function love.load()
 	ved_require("vvvvvvfunc")
 
 	utf8 = require("utf8lib_wrapper")
+	ved_require("input")
 
 	dodisplaysettings()
 

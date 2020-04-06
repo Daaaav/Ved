@@ -569,8 +569,6 @@ function loadstate(new, ...)
 				widestlang = w
 			end
 		end
-	elseif new == 34 then
-		require("input")
 	end
 
 	if uis[new] ~= nil and uis[new].load ~= nil then
