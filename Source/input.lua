@@ -34,10 +34,10 @@ clicking by doing `input.setmousearea(<id>, nil)`.
 
 By default, the newline characters are set to `[\r\n]` (Lua pattern) to match
 the conventional newline characters '\r' and '\n'. If you don't want this for
-your input, you will need to call `input.newlinechars(<id>, <pattern>)` to set
-the Lua pattern for newline characters. For example, VVVVVV input fields don't
-use '\r' or '\n' as newline characters and allow these literal chars to be
-embedded on a line. And especially more important, script lines use `|` as
+your input, you will need to call `input.setnewlinechars(<id>, <pattern>)` to
+set the Lua pattern for newline characters. For example, VVVVVV input fields
+don't use '\r' or '\n' as newline characters and allow these literal chars to
+be embedded on a line. And especially more important, script lines use `|` as
 their newline char (`$` on 3DS).
 
 By default, the word separator is a space. You can set it to be any character
