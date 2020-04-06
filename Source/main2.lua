@@ -38,6 +38,7 @@ States:
 31	Assets - music/sounds
 32	Assets - graphics
 33	Language screen
+34	New-input-system-that-is-not-2-or-3-vars-concated-together test
 
 Debug keys:
 F12: change state
@@ -58,9 +59,11 @@ function love.load()
 	if love.system.getOS() == "OS X" then
 		-- Cmd
 		ctrl = "gui"
+		modifier = "alt"
 		dirsep = "/"
 		macscrolling = true
 		wgetavailable = false
+		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
 		if not love.filesystem.exists("available_libs") then
@@ -73,17 +76,21 @@ function love.load()
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "\\"
 		macscrolling = false
 		wgetavailable = false
+		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = true
+		newline = "\n"
 		hook("love_load_lin")
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
@@ -109,9 +116,11 @@ function love.load()
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
+		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
 		wgetavailable = false
+		newline = "\n"
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
 	end
@@ -150,6 +159,9 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 	ved_require("vvvvvvfunc")
+
+	utf8 = require("utf8lib_wrapper")
+	ved_require("input")
 
 	dodisplaysettings()
 
@@ -192,6 +204,10 @@ function love.load()
 	generictimer_mode = 0 -- 0 for nothing, 1 for feedback in copy script/note button, 2 for map flashing, 3 for notification
 
 	notification_text = ""
+
+	inputcopiedtimer = 0
+	inputdoubleclicktimer = 0
+	inputnumclicks = 0
 
 	focusregainedtimer = 0
 	skipnextkeys = {}
@@ -240,6 +256,7 @@ function love.load()
 
 		hand_cursor = love.mouse.getSystemCursor("hand")
 		forbidden_cursor = love.mouse.getSystemCursor("no")
+		text_cursor = love.mouse.getSystemCursor("ibeam")
 	end
 	special_cursor = false
 
@@ -1826,6 +1843,36 @@ function love.draw()
 
 			mousepressed = true
 		end
+	elseif state == 34 then
+		newinputsys.create(INPUT.ONELINE, "inputtest", "This is the §¤ caret test", 5)
+		newinputsys.create(INPUT.MULTILINE, "inputtest2", {"This is line 1", "The second § ¤ line, this is", "Third line"}, 2, 2)
+		newinputsys.create(INPUT.MULTILINE, "inputtest3", {"I'm double-scaled!!!", "Wowzers"})
+		newinputsys.create(INPUT.MULTILINE, "inputtest4", {"I'mm streetttcheeeddd", "ooouuuuttttt"})
+		newinputsys.create(INPUT.ONELINE, "inputtest5", "This is a VVVVVV script line")
+		newinputsys.setnewlinechars("inputtest5", "|") -- Don't care about PleaseDo3DSHandlingThanks in a test state
+		newinputsys.create(INPUT.MULTILINE, "inputtest6", {"These are VVVVVV script lines", "The one after this one is numbers-only"})
+		newinputsys.setnewlinechars("inputtest6", "|")
+		newinputsys.create(INPUT.ONELINE, "inputtest7", "0123456789")
+		newinputsys.whitelist("inputtest7", "%d")
+		newinputsys.create(INPUT.MULTILINE, "inputtest8", {"I'm testing blacklisting Unicode", "even though really you should whitelist ASCII", "because it's simpler"})
+		newinputsys.blacklist("inputtest8", "[^\x01-\x7F]")
+		newinputsys.create(INPUT.MULTILINE, "inputtest9", {"This input has a line height of 10 pixels", "Instead of 8 pixels like normal", "so things are spaced out more"})
+
+		newinputsys.print("inputtest", 100, 0)
+		newinputsys.print("inputtest2", 100, 50)
+		newinputsys.print("inputtest3", 100, 100, 2)
+		newinputsys.print("inputtest4", 100, 150, 1, 2)
+		newinputsys.print("inputtest5", 100, 200)
+		newinputsys.print("inputtest6", 100, 250)
+		newinputsys.print("inputtest7", 100, 300)
+		newinputsys.print("inputtest8", 100, 350)
+		newinputsys.print("inputtest9", 100, 400, nil, nil, 10)
+
+		local youhaveselected = "You have selected: "
+		local tmp = newinputsys.getseltext(newinputsys.input_ids[#newinputsys.nth_input])
+		if tmp ~= nil then
+			ved_print(youhaveselected .. tmp, 580, 112)
+		end
 	else
 		statecaught = false
 
@@ -2006,6 +2053,14 @@ function love.update(dt)
 		focusregainedtimer = 0
 	end
 
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		if RCMactive then
+			cursorflashtime = 0
+		else
+			cursorflashtime = (cursorflashtime+dt) % 1
+		end
+	end
+
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
 		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
@@ -2049,6 +2104,16 @@ function love.update(dt)
 	-- The generic timer will be precise, though!
 	if generictimer > 0 then
 		generictimer = generictimer - dt
+	end
+
+	if inputcopiedtimer > 0 then
+		inputcopiedtimer = inputcopiedtimer - dt
+	end
+
+	if inputdoubleclicktimer > 0 then
+		inputdoubleclicktimer = inputdoubleclicktimer - dt
+	elseif not love.mouse.isDown("l") then
+		inputnumclicks = 0
 	end
 
 	v6_frametimer = v6_frametimer + dt
@@ -2337,6 +2402,26 @@ function love.textinput(char)
 		return
 	end
 
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		local id = newinputsys.getfocused()
+		if newinputsys.hex[id] ~= nil then
+			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know
+				local oldstate = {newinputsys.getstate(id)}
+				newinputsys.finishhex(id)
+				newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
+			else
+				newinputsys.inserthexchars(id, char)
+			end
+		else
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.selpos[id] ~= nil then
+				newinputsys.delseltext(id)
+			end
+			newinputsys.insertchars(id, char)
+			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
+		end
+	end
+
 	-- Ved should really only accept printable ASCII only when typing...
 	if s.acceptutf8 or (state == 13 or state == 15 or char:byte(2, 2) == nil) then
 		-- Textual input isn't needed with a dialog on the screen, we have multiinput
@@ -2432,6 +2517,151 @@ function love.keypressed(key)
 
 	if key == "escape" then
 		RCMactive = false
+	end
+
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		local id = newinputsys.getfocused()
+		local multiline = type(inputs[id]) == "table"
+
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) or isclear(key) then
+			newinputsys.stophex(id)
+		end
+
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) or isclear(key) then
+			if #newinputsys.undostack[id] > 0 then
+				newinputsys.undostack[id][#newinputsys.undostack[id]].group = nil
+			end
+		end
+
+		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown"}, key) then
+			if keyboard_eitherIsDown("shift") and not keyboard_eitherIsDown("alt") then
+				if newinputsys.selpos[id] == nil then
+					newinputsys.setselpos(id)
+				end
+			else
+				newinputsys.clearselpos(id)
+			end
+		end
+
+		if key == "left" then
+			if keyboard_eitherIsDown(modifier) then
+				newinputsys.movexwords(id, -1)
+			else
+				newinputsys.movex(id, -1)
+			end
+		elseif key == "right" then
+			if keyboard_eitherIsDown(modifier) then
+				newinputsys.movexwords(id, 1)
+			else
+				newinputsys.movex(id, 1)
+			end
+		elseif key == "up" and not keyboard_eitherIsDown("alt") then
+			newinputsys.movey(id, -1)
+		elseif key == "down" and not keyboard_eitherIsDown("alt") then
+			newinputsys.movey(id, 1)
+		elseif key == "home" then
+			newinputsys.leftmost(id)
+		elseif key == "end" then
+			newinputsys.rightmost(id)
+		elseif key == "pageup" then
+			-- Hardcoded (and pagedown is too)
+			-- unless there's big multiline inputs other than the script and article editors
+			-- and they aren't 57 lines tall
+			newinputsys.movey(id, -57)
+		elseif key == "pagedown" then
+			newinputsys.movey(id, 57)
+		elseif (table.contains({"backspace", "delete"}, key) or isclear(key)) and newinputsys.selpos[id] ~= nil then
+			newinputsys.atomicdelete(id)
+		elseif key == "backspace" then
+			if newinputsys.hex[id] ~= nil then
+				newinputsys.deletehexchars(id, 1)
+			else
+				local oldstate = {newinputsys.getstate(id)}
+				if keyboard_eitherIsDown(modifier) then
+					newinputsys.deletewords(id, -1)
+				else
+					newinputsys.deletechars(id, -1)
+				end
+				newinputsys.unre(id, UNRE.DELETE, unpack(oldstate))
+			end
+		elseif key == "delete" then
+			local oldstate = {newinputsys.getstate(id)}
+			if keyboard_eitherIsDown(modifier) then
+				newinputsys.deletewords(id, 1)
+			else
+				newinputsys.deletechars(id, 1)
+			end
+			newinputsys.unre(id, UNRE.DELETE, unpack(oldstate))
+		elseif table.contains({"return", "kpenter"}, key) then
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.hex[id] ~= nil then
+				newinputsys.finishhex(id)
+			else
+				if newinputsys.selpos[id] ~= nil then
+					newinputsys.delseltext(id)
+				end
+				newinputsys.newline(id)
+			end
+			newinputsys.unre(id, UNRE.INSERT, unpack(oldstate))
+		elseif table.contains({"x", "c"}, key) and keyboard_eitherIsDown(ctrl) and newinputsys.selpos[id] ~= nil and not love.mouse.isDown("l") then
+			newinputsys.atomiccopycut(id, key == "x")
+		elseif key == "v" and keyboard_eitherIsDown(ctrl) then
+			newinputsys.atomicpaste(id)
+		elseif key == "a" and keyboard_eitherIsDown(ctrl) then
+			if keyboard_eitherIsDown("shift") then
+				newinputsys.selallleft(id)
+			else
+				newinputsys.selallright(id)
+			end
+		elseif table.contains({"u", "k"}, key) and keyboard_eitherIsDown(ctrl) then
+			if key == "u" and keyboard_eitherIsDown("shift") then
+				newinputsys.starthex(id)
+			else
+				local oldstate = {newinputsys.getstate(id)}
+				if newinputsys.selpos[id] ~= nil then
+					newinputsys.delseltext(id)
+				else
+					if key == "u" then
+						newinputsys.deltoleftmost(id)
+					elseif key == "k" then
+						newinputsys.deltorightmost(id)
+					end
+				end
+				newinputsys.unre(id, nil, unpack(oldstate))
+			end
+		elseif key == "d" and keyboard_eitherIsDown(ctrl) then
+			local oldstate = {newinputsys.getstate(id)}
+			if newinputsys.selpos[id] ~= nil then
+				newinputsys.delseltext(id)
+			else
+				if keyboard_eitherIsDown("shift") then
+					newinputsys.removelines(id, -1)
+				else
+					newinputsys.removelines(id, 1)
+				end
+			end
+			newinputsys.unre(id, nil, unpack(oldstate))
+		elseif key == "l" and keyboard_eitherIsDown(ctrl) then
+			if keyboard_eitherIsDown("shift") then
+				newinputsys.sellinetoleft(id)
+			else
+				newinputsys.sellinetoright(id)
+			end
+		elseif key == "z" and keyboard_eitherIsDown(ctrl) then
+			newinputsys.undo(id)
+		elseif key == "y" and keyboard_eitherIsDown(ctrl) then
+			newinputsys.redo(id)
+		elseif table.contains({"up", "down"}, key) and keyboard_eitherIsDown("alt") and multiline then
+			if keyboard_eitherIsDown("shift") then
+				newinputsys.atomicdupeline(id, key == "down")
+			else
+				if key == "up" then
+					newinputsys.atomicmovevertical(id, -1)
+				elseif key == "down" then
+					newinputsys.atomicmovevertical(id, 1)
+				end
+			end
+		end
 	end
 
 	if coordsdialog.active and key == "backspace" then
@@ -3651,6 +3881,10 @@ function love.keypressed(key)
 				changelanguage(alllanguages[newlang])
 			end
 		end
+	elseif state == 34 then
+		if key == "tab" then
+			newinputsys.bump(newinputsys.input_ids[#newinputsys.nth_input - 8])
+		end
 	end
 
 	if coordsdialog.active or RCMactive or dialog.is_open() then
@@ -3939,6 +4173,51 @@ function love.mousereleased(x, y, button)
 	end
 	minsmear = -1; maxsmear = -1
 	toout = 0
+
+	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+		newinputsys.ignoremousepressed = false
+
+		local id = newinputsys.getfocused()
+		local multiline = type(inputs[id]) == "table"
+
+		if newinputsys.selpos[id] ~= nil then
+			local whichfirst
+			if multiline then
+				local curx, cury = unpack(newinputsys.pos[id])
+				local selx, sely = unpack(newinputsys.selpos[id])
+				local lines = inputs[id]
+				if newinputsys.rightmosts[id] then
+					curx = utf8.len(lines[cury])
+				end
+
+				if cury < sely then
+					whichfirst = 1
+				elseif sely < cury then
+					whichfirst = 2
+				elseif curx < selx then
+					whichfirst = 1
+				elseif selx < curx then
+					whichfirst = 2
+				end
+			else
+				local curx = newinputsys.pos[id]
+				local selx = newinputsys.selpos[id]
+				if newinputsys.rightmosts[id] then
+					curx = utf8.len(inputs[id])
+				end
+
+				if curx < selx then
+					whichfirst = 1
+				elseif selx < curx then
+					whichfirst = 2
+				end
+			end
+
+			if whichfirst == nil then
+				newinputsys.clearselpos(id)
+			end
+		end
+	end
 
 	for k,v in pairs(dialogs) do
 		v:mousereleased(x, y)

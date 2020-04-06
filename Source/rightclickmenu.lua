@@ -39,6 +39,12 @@ function rightclickmenu.draw()
 			ved_print(v, RCMx+1, (k-1)*16+RCMy+4)
 		end
 	end
+
+	if not mousepressed and love.mouse.isDown("l") then
+		RCMactive = false
+		mousepressed = true
+		newinputsys.ignoremousepressed = true
+	end
 end
 
 function rightclickmenu.mousepressed(x, y, button)
@@ -389,6 +395,35 @@ function rightclickmenu.handler(RCMreturn)
 			collectgarbage("collect")
 		else
 			unrecognized_rcmreturn(RCMreturn)
+		end
+	elseif RCMid:sub(1, 5) == "input" and newinputsys ~= nil and --[[ nil check only because we're slowly transitioning to the new system ]] newinputsys.active then
+		local id = newinputsys.input_ids[#newinputsys.nth_input] -- Sidestep putting the id in RCMid, because if we did it'd convert it to a string
+		if RCMreturn == L.UNDO then
+			newinputsys.undo(id)
+		elseif RCMreturn == L.REDO then
+			newinputsys.redo(id)
+		elseif table.contains({L.COPY, L.CUT}, RCMreturn) then
+			newinputsys.atomiccopycut(id, RCMreturn == L.CUT)
+		elseif RCMreturn == L.PASTE then
+			newinputsys.atomicpaste(id)
+		elseif RCMreturn == L.DELETE then
+			newinputsys.atomicdelete(id)
+		elseif RCMreturn == L.MOVELINEUP then
+			newinputsys.atomicmovevertical(id, -1)
+		elseif RCMreturn == L.MOVELINEDOWN then
+			newinputsys.atomicmovevertical(id, 1)
+		elseif RCMreturn == L.DUPLICATELINE then
+			newinputsys.atomicdupeline(id)
+		elseif RCMreturn == L.SELECTWORD then
+			newinputsys.selectword(id, ({newinputsys.getpos(id)})[1])
+		elseif RCMreturn == L.SELECTLINE then
+			newinputsys.sellinetoright(id)
+		elseif RCMreturn == L.SELECTALL then
+			newinputsys.selallright(id)
+		elseif RCMreturn == L.INSERTRAWHEX then
+			newinputsys.starthex(id)
+		else
+			unrecognized_rcmreturn()
 		end
 	else
 		dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
