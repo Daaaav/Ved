@@ -4,11 +4,7 @@
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute_<os>(),
 -- which will start a thread that just io.popen()s VVVVVV with command line args to immediately load the level.
 
-function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol, with_gdb)
-	if with_gdb == nil then
-		with_gdb = false
-	end
-
+function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol)
 	thisroomx = thisroomx + 100
 	thisroomy = thisroomy + 100
 
@@ -45,12 +41,6 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	local commands = {
 		"cd " .. path,
 	}
-
-	if with_gdb then
-		table.insert(commands, "/usr/bin/gdb -q -ex run --args " .. run)
-	else
-		table.insert(commands, run)
-	end
 
 	cons("RUNNING VVVVVV WITH THESE COMMANDS:\n" .. table.concat(commands, "\n"))
 
@@ -168,9 +158,6 @@ function playtesting_start()
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))
 	else
 		playtesting_askwherestart = true
-		if allowdebug and playtesting_attach_gdb == nil then
-			playtesting_attach_gdb = true
-		end
 
 		-- Ah crud a global
 		playtesting_levelcontents = thissavederror
@@ -212,7 +199,7 @@ function playtesting_endaskwherestart()
 	if table.contains({"Linux", "OS X"}, love.system.getOS()) then
 		usethisfunc = playtesting_execute_linmac
 	end
-	usethisfunc(path, roomx, roomy, atx, aty, gravitycontrol, playtesting_attach_gdb)
+	usethisfunc(path, roomx, roomy, atx, aty, gravitycontrol)
 end
 
 function playtesting_cancelask()

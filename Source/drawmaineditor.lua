@@ -2246,14 +2246,6 @@ function drawmaineditor()
 			mousepressed = true
 			playtesting_endaskwherestart()
 		end
-
-		if allowdebug then
-			playoverride(checkbox, playtesting_attach_gdb, love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156+(4*16), nil, "Attach GDB",
-				function(_, newvalue)
-					playtesting_attach_gdb = newvalue
-				end
-			)
-		end
 	end
 
 	if bottomwidemsg ~= nil then
