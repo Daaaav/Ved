@@ -494,7 +494,7 @@ function loadlevel(path)
 		end
 		theselevelmetadata[ry][rx] = {
 			-- Add non-VVVVVV properties by default
-			enemyv = 4, tower = 0, tower_row = 0, -- VCE
+			enemyv = 4, tower = 0, tower_row = 0, customtileset = 0, -- VCE
 		}
 
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
@@ -681,6 +681,7 @@ function loadlevel(path)
 					{
 					tileset = 0,
 					tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
+					customtileset = 0,
 					platx1 = 0,
 					platy1 = 0,
 					platx2 = 320,
@@ -1074,6 +1075,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			table.insert(alllevelmetadata,
 				"            <edLevelClass tileset=\"" .. v.tileset
 				.. "\" tilecol=\"" .. v.tilecol
+				.. (thismetadata.target == "VCE" and "\" customtileset=\"" .. v.customtileset or "")
 				.. "\" platx1=\"" .. v.platx1
 				.. "\" platy1=\"" .. v.platy1
 				.. "\" platx2=\"" .. v.platx2
@@ -1221,6 +1223,7 @@ function default_levelmetadata(rx, ry)
 	return {
 		tileset = 0,
 		tilecol = (rx + ry) % 32,
+		customtileset = 0,
 		platx1 = 0,
 		platy1 = 0,
 		platx2 = 320,
