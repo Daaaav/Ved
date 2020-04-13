@@ -683,7 +683,26 @@ function loadtilesets()
 	loadsprites("sprites.png", 32)
 	loadsprites("teleporter.png", 96)
 
+	loadvcecustomtilesets()
+
 	loadwarpbgs()
+end
+
+function loadvcecustomtilesets()
+	vcecustomtilesets = {} -- num -> tiles{num}.png, for any tiles{num}.png that exists
+
+	local success, files = listfiles_generic(graphicsfolder, ".png", false)
+	if not success then
+		return
+	end
+
+	for k,v in pairs(files) do
+		local num = v.name:match("^tiles(%d+).png$")
+		if not v.isdir and num ~= nil and tonumber(num) >= 4 then
+			loadtileset(v.name)
+			vcecustomtilesets[tonumber(num)] = v.name
+		end
+	end
 end
 
 function loadtileset(file)

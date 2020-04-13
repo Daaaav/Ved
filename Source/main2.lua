@@ -438,6 +438,7 @@ function love.load()
 	tile_batch_needs_update = false
 	tile_batch_texture_needs_update = false
 	tile_batch_tileset = 1
+	tile_batch_vcecustomtileset = 0
 	tile_batch_zoomscale2 = 1
 	tile_batch_tiles = {}
 	for i = 1, 1200 do
