@@ -31,26 +31,6 @@ tilesets =
 	}
 ]]
 
-function loademptyroom() -- unused
-	-- Generate an entirely empty room with no entities nor metadata.
-	cons("Generating empty room")
-
-	myroomdata = {}
-
-	for k = 1, 1200 do
-		myroomdata[k] = 0 -- Just to test.
-	end
-
-	myentitydata = {}
-
-	mymetadata = {}
-
-	mymetadata.roomname = "Untitled room"
-	mymetadata.tileset = 1
-
-	return myroomdata, myentitydata, mymetadata
-end
-
 function loadrohiom(x, y)
 	-- Loads blocks of a room from level data and prepares it for display. Also loads entities and metadata.
 
