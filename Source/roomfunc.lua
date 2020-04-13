@@ -31,30 +31,24 @@ tilesets =
 	}
 ]]
 
-function loademptyroom() -- unused
-	-- Generate an entirely empty room with no entities nor metadata.
-	cons("Generating empty room")
-
-	myroomdata = {}
-
-	for k = 1, 1200 do
-		myroomdata[k] = 0 -- Just to test.
-	end
-
-	myentitydata = {}
-
-	mymetadata = {}
-
-	mymetadata.roomname = "Untitled room"
-	mymetadata.tileset = 1
-
-	return myroomdata, myentitydata, mymetadata
-end
-
 function loadrohiom(x, y)
 	-- Loads blocks of a room from level data and prepares it for display. Also loads entities and metadata.
 
 	return myroomdata, myentitydata, mymetadata
+end
+
+function tileset_image(themetadata, chosentileset, customtileset)
+	if chosentileset == nil then
+		chosentileset = themetadata.tileset
+	end
+	if customtileset == nil then
+		customtileset = themetadata.customtileset
+	end
+
+	if customtileset >= 4 and vcecustomtilesets[customtileset] ~= nil then
+		return vcecustomtilesets[customtileset]
+	end
+	return tilesetnames[usedtilesets[chosentileset]]
 end
 
 function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid, displayminimapgrid)
@@ -62,11 +56,17 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
 	local ts = usedtilesets[themetadata.tileset]
 
+	-- Are we sure about what tileset image to use?
+	local tsimage = tileset_image(themetadata)
+
 	-- Is our SpriteBatch still up-to-date?
-	if tile_batch_tileset ~= ts or tile_batch_texture_needs_update then
+	if tile_batch_tileset ~= ts
+	or tile_batch_vcecustomtileset ~= themetadata.customtileset
+	or tile_batch_texture_needs_update then
 		tile_batch_needs_update = true
-		tile_batch:setTexture(tilesets[tilesetnames[ts]]["img"])
+		tile_batch:setTexture(tilesets[tsimage]["img"])
 		tile_batch_tileset = ts
+		tile_batch_vcecustomtileset = themetadata.customtileset
 		tile_batch_texture_needs_update = false
 	end
 	if not tile_batch_needs_update then
@@ -87,7 +87,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				local t = theroomdata[(aty*40)+(atx+1)]
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
 				if t ~= 0 then
-					tile_batch:add(tilesets[tilesetnames[ts]]["tiles"][anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
+					tile_batch:add(tilesets[tsimage]["tiles"][anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
 				end
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
@@ -906,7 +906,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 	end
 end
 
-function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
+function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, customtileset)
 	local selectedx = -1
 	local selectedy = -1
 
@@ -920,10 +920,12 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor)
 		toolarray = tilesetblocks[chosentileset].colors[chosencolor].spikes
 	end
 
+	local tsimage = tileset_image(nil, chosentileset, customtileset)
+
 	for ly = 0, 4 do
 		for lx = 0, 5 do
 			-- The number is (6ly)+lx+1. The below line was a monster. Display this.
-			love.graphics.draw(tilesets[tilesetnames[tilesetblocks[chosentileset].tileimg]]["img"], tilesets[tilesetnames[tilesetblocks[chosentileset].tileimg]]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(16*lx), offsety+(16*ly), 0, 2)
+			love.graphics.draw(tilesets[tsimage]["img"], tilesets[tsimage]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(16*lx), offsety+(16*ly), 0, 2)
 
 			-- Is this tile the selected one?
 			if toolarray[(6*ly)+lx+1] == selectedtile then
@@ -1358,23 +1360,25 @@ end
 function displayalphatile(leftblx, upblx, forx, fory, customsize)
 	if (levelmetadata_get(roomx, roomy).directmode == 1 and not (customsize and customsizemode ~= 0))
 	or (customsize and customsizemode == 0 and customsizetile ~= nil) then
+		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		love.graphics.setColor(255,255,255,128)
-			for forfory = 0, fory do
-				for forforx = 0, forx do
-					local displayedtile = selectedtile
-					if customsize and customsizetile ~= nil then
-						displayedtile = customsizetile[forfory+1][forforx+1]
-					end
-					love.graphics.draw(
-						tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"],
-						tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][displayedtile],
-						screenoffset+(16*(cursorx-leftblx+forforx)),
-						(16*(cursory-upblx+forfory)),
-						0,
-						2
-					)
+
+		for forfory = 0, fory do
+			for forforx = 0, forx do
+				local displayedtile = selectedtile
+				if customsize and customsizetile ~= nil then
+					displayedtile = customsizetile[forfory+1][forforx+1]
 				end
+				love.graphics.draw(
+					tilesets[tsimage]["img"],
+					tilesets[tsimage]["tiles"][displayedtile],
+					screenoffset+(16*(cursorx-leftblx+forforx)),
+					(16*(cursory-upblx+forfory)),
+					0,
+					2
+				)
 			end
+		end
 		love.graphics.setColor(255,255,255,255)
 	end
 
@@ -1408,9 +1412,17 @@ end
 
 function displayalphatile_hor()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
+		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		love.graphics.setColor(255,255,255,128)
 		for forforx = 0, 39 do
-			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*cursory), 0, 2)
+			love.graphics.draw(
+				tilesets[tsimage]["img"],
+				tilesets[tsimage]["tiles"][selectedtile],
+				screenoffset+(16*forforx),
+				(16*cursory),
+				0,
+				2
+			)
 		end
 		love.graphics.setColor(255,255,255,255)
 	end
@@ -1418,9 +1430,17 @@ end
 
 function displayalphatile_ver()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
+		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
-			love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*cursorx), (16*forfory), 0, 2)
+			love.graphics.draw(
+				tilesets[tsimage]["img"],
+				tilesets[tsimage]["tiles"][selectedtile],
+				screenoffset+(16*cursorx),
+				(16*forfory),
+				0,
+				2
+			)
 		end
 		love.graphics.setColor(255,255,255,255)
 	end
@@ -1428,10 +1448,18 @@ end
 
 function displayalphatile_all()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
+		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
 			for forforx = 0, 39 do
-				love.graphics.draw(tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["img"], tilesets[tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]]["tiles"][selectedtile], screenoffset+(16*forforx), (16*forfory), 0, 2)
+				love.graphics.draw(
+					tilesets[tsimage]["img"],
+					tilesets[tsimage]["tiles"][selectedtile],
+					screenoffset+(16*forforx),
+					(16*forfory),
+					0,
+					2
+				)
 			end
 		end
 		love.graphics.setColor(255,255,255,255)
