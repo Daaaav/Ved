@@ -1394,7 +1394,12 @@ function drawmaineditor()
 			if selectedsubtool[14] == 4 then
 				love.graphics.setColor(255, 255, 255, 64)
 			end
-			drawentitysprite(18, screenoffset + 16*cursorx, 16*cursory)
+			drawentitysprite(
+				18,
+				screenoffset + 16*cursorx,
+				16*cursory,
+				levelmetadata_get(roomx, roomy).customspritesheet
+			)
 			love.graphics.setColor(255, 255, 255, 255)
 		elseif selectedtool <= 2 then
 			-- Wall and background have different kinds of possible cursor shapes

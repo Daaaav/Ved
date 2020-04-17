@@ -825,13 +825,13 @@ function love.draw()
 	elseif state == 14 then
 		for r = 0, 1 do
 			for c = 0, 4 do
-				drawentitysprite(enemysprites[5*r+c], 16+48*c, 16+48*r)
+				drawentitysprite(enemysprites[5*r+c], 16+48*c, 16+48*r, 0)
 			end
 		end
 
 		for r = 0, 1 do
 			for c = 0, 4 do
-				drawentitysprite(enemysprites[5*r+c], 600+16*c, 16+16*r, true)
+				drawentitysprite(enemysprites[5*r+c], 600+16*c, 16+16*r, 0, true)
 			end
 		end
 	elseif state == 15 then
@@ -1954,7 +1954,7 @@ function love.draw()
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
 		v6_setcol(3)
-		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
+		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, 0, false)
 	end
 
 	if middlescroll_rolling ~= 0 then
@@ -1973,7 +1973,7 @@ function love.draw()
 			love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
 			--love.graphics.rectangle("fill", v.x, v.y, 4, 4)
 			love.graphics.setScissor(v.x, v.y, 4, 4)
-			drawentitysprite(22, v.x-v.ox, v.y-v.oy, false)
+			drawentitysprite(22, v.x-v.ox, v.y-v.oy, 0, false)
 		end
 		love.graphics.setScissor()
 	end
