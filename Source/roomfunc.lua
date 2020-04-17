@@ -290,13 +290,15 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		y = offsety+(v.y-myroomy*30)*16
 	end
 
+	local cs = levelmetadata_get(myroomx, myroomy).customspritesheet
+
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
 		v6_setcol(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].v6col)
-		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y) -- 78
+		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y, cs) -- 78
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
@@ -419,7 +421,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 9 then
 		-- Trinket
 		v6_setcol(3)
-		drawentitysprite(22, x, y)
+		drawentitysprite(22, x, y, cs)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -431,7 +433,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 10 then
 		-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
 		v6_setcol(4)
-		drawentitysprite(20+v.p1, x, y)
+		drawentitysprite(20+v.p1, x, y, cs)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -538,7 +540,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
 			-- Entrance
 			v6_setcol(10)
-			drawentitysprite(18, x, y)
+			drawentitysprite(18, x, y, cs)
 			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
@@ -552,7 +554,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if (warpid ~= k or selectedsubtool[14] >= 3) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
 			-- Destination
 			love.graphics.setColor(255,255,255,64)
-			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16)
+			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16, cs)
 			love.graphics.setColor(255,255,255,255)
 			if interact then
 				entityrightclick(
@@ -576,7 +578,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
 		local sprite = getrescuablesprite(v.p1)
-		drawentitysprite(sprite, x - 8, y + 2)
+		drawentitysprite(sprite, x - 8, y + 2, cs)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -588,7 +590,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 16 then
 		-- Start point
 		v6_setcol(0)
-		drawentitysprite(3*v.p1, x - 8, y + 2)
+		drawentitysprite(3*v.p1, x - 8, y + 2, cs)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -623,7 +625,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sp_teken(v, offsetx, offsety, myroomx, myroomy)
 		end
 		v6_setcol(4)
-		drawentitysprite(17, x, y + 16)
+		drawentitysprite(17, x, y + 16, cs)
 		love.graphics.setColor(255, 255, 255)
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
@@ -726,9 +728,16 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	return showtooltip, scriptname_shown, scriptname_editingshown
 end
 
-function drawentitysprite(tile, atx, aty, small)
-	if tilesets["sprites.png"]["tiles"][tile] ~= nil then
-		love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][tile], atx, aty, 0, small and 1 or 2)
+function drawentitysprite(tile, atx, aty, customspritesheet, small)
+	local image
+	if customspritesheet >= 2 and vcecustomspritesheets[customspritesheet] ~= nil then
+		image = vcecustomspritesheets[customspritesheet]
+	else
+		image = "sprites.png"
+	end
+
+	if tilesets[image]["tiles"][tile] ~= nil then
+		love.graphics.draw(tilesets[image]["img"], tilesets[image]["tiles"][tile], atx, aty, 0, small and 1 or 2)
 	else
 		love.graphics.draw(cursorimg[5], atx, aty)
 	end
