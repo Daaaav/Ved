@@ -3283,6 +3283,11 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
+	elseif nodialog and state == 1 and metadata.target == "VCE" and key == "f9" and keyboard_eitherIsDown(ctrl) and not voided_metadata then
+		-- TEMPORARY customtileset/customspritesheet dialog
+		dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
+			dialog.form.vcecustomgraphics_make(levelmetadata_get(roomx, roomy))
+		)
 	elseif nodialog and state == 1 and key == "f10" and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()

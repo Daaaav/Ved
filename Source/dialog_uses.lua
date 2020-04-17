@@ -263,6 +263,34 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	return form
 end
 
+function dialog.form.vcecustomgraphics_make(lmd)
+	local customtileset_tuples = {
+		{0, langkeys(L.CUSTOMTILESET_DEFAULT, {tilesetnames[usedtilesets[lmd.tileset]]})}
+	}
+	local customspritesheet_tuples = {
+		{0,L.CUSTOMSPRITESHEET_DEFAULT}
+	}
+	for k,v in pairs(vcecustomtilesets) do
+		table.insert(customtileset_tuples, {k,v})
+	end
+	for k,v in pairs(vcecustomspritesheets) do
+		table.insert(customspritesheet_tuples, {k,v})
+	end
+
+	return {
+		{"", 0, 0, 40, L.CUSTOMTILESET, DF.LABEL},
+		{
+			"customtileset", 0, 2, 30, lmd.customtileset, DF.DROPDOWN,
+			generate_dropdown_tables(customtileset_tuples)
+		},
+		{"", 0, 5, 40, L.CUSTOMSPRITESHEET, DF.LABEL},
+		{
+			"customspritesheet", 0, 7, 30, lmd.customspritesheet, DF.DROPDOWN,
+			generate_dropdown_tables(customspritesheet_tuples)
+		}
+	}
+end
+
 --function dialog.form.
 
 -- 
@@ -1152,4 +1180,33 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
 	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
+end
+
+function dialog.callback.vcecustomgraphics(button, fields)
+	if button ~= DB.OK then
+		return
+	end
+
+	local oldtileset = levelmetadata_get(roomx, roomy).customtileset
+	local oldspritesheet = levelmetadata_get(roomx, roomy).customspritesheet
+
+	levelmetadata_set(roomx, roomy, "customtileset", fields.customtileset)
+	levelmetadata_set(roomx, roomy, "customspritesheet", fields.customspritesheet)
+
+	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				{
+					key = "customtileset",
+					oldvalue = oldtileset,
+					newvalue = fields.customtileset
+				},
+				{
+					key = "customspritesheet",
+					oldvalue = oldspritesheet,
+					newvalue = fields.customspritesheet
+				}
+			},
+			changetiles = false
+		}
+	)
+	finish_undo("CUSTOM TILESET/SPRITESHEET")
 end
