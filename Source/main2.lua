@@ -366,7 +366,7 @@ function love.load()
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
 	subtoolimgs[18] = {}
-	subtoolimgs[19] = {}
+	subtoolimgs[19] = {st("19_1"), st("19_2"), st("19_3"), st("19_4"), st("19_5")}
 	subtoolimgs[20] = {}
 
 	scrollup = love.graphics.newImage("images/scrollup.png")
@@ -3382,7 +3382,7 @@ function love.keypressed(key)
 			pasteroom()
 		elseif key == "z" then
 			-- 3x3 brush
-			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 5 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 or selectedtool == 10 then
+			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 5 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 or selectedtool == 10 or selectedtool == 19 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
 
@@ -3392,7 +3392,7 @@ function love.keypressed(key)
 			end
 		elseif key == "x" then
 			-- 5x5 brush
-			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 then
+			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 or selectedtool == 19 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 3
 
@@ -3402,7 +3402,7 @@ function love.keypressed(key)
 			end
 		elseif key == "c" then
 			-- Alright, 7x7 brush
-			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 then
+			if selectedtool == 1 or selectedtool == 2 or selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9 or selectedtool == 19 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 4
 
@@ -3412,7 +3412,7 @@ function love.keypressed(key)
 			end
 		elseif key == "v" then
 			-- And 9x9 brush
-			if selectedtool == 1 or selectedtool == 2 then
+			if selectedtool == 1 or selectedtool == 2 or selectedtool == 19 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 5
 
@@ -3926,7 +3926,10 @@ function love.keyreleased(key)
 	hook("love_keyreleased_start", {key})
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
-		if selectedtool == 1 or selectedtool == 2 or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4) or ((selectedtool == 5 or selectedtool == 10) and oldzxsubtool <= 2) then
+		if selectedtool == 1 or selectedtool == 2
+		or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4)
+		or ((selectedtool == 5 or selectedtool == 10) and oldzxsubtool <= 2)
+		or (selectedtool == 19 and oldzxsubtool <= 5) then -- this entire system will be improved later
 			selectedsubtool[selectedtool] = oldzxsubtool
 		end
 		holdingzvx = false
