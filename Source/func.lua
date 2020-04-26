@@ -213,6 +213,10 @@ function tostate(new, dontinitialize, ...)
 		dontinitialize = false
 	end
 
+	if newinputsys ~= nil then -- nil check only because we're in a temporary transitional period
+		newinputsys.pause()
+	end
+
 	oldstate = state
 	state = anythingbutnil0(tonumber(new)) -- please
 	if not dontinitialize then
@@ -233,10 +237,6 @@ function tostate(new, dontinitialize, ...)
 
 	if oldstate == 1 then
 		editingroomname = false
-	end
-
-	if newinputsys ~= nil then -- nil check only because we're in a temporary transitional period
-		newinputsys.pause()
 	end
 end
 
