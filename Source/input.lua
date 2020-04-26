@@ -187,8 +187,8 @@ function input.close(id, updatemappings)
 	input.rightmosts[id] = nil
 	input.selpos[id] = nil
 
-	input.undostack = nil
-	input.redostack = nil
+	input.undostack[id] = nil
+	input.redostack[id] = nil
 
 	input.whitelists[id] = nil
 	input.blacklists[id] = nil
