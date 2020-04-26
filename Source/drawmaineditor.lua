@@ -944,7 +944,7 @@ function drawmaineditor()
 				end
 			end
 			if not found then
-				insert_entity(atx, aty, 8)
+				insert_entity(atx, aty, 8, selectedsubtool[19]-1)
 			end
         elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 20 and metadata.target == "VCE" then
 			-- Teleporters
@@ -1518,7 +1518,15 @@ function drawmaineditor()
 			displayshapedcursor(0, 0, 1, 1)
 		elseif selectedtool == 19 then
 			-- Coin
-			displayshapedcursor(0, 0, 0, 0)
+			local coincursize
+			if selectedsubtool[19] == 1 then
+				coincursize = 0
+			elseif selectedsubtool[19] <= 3 then
+				coincursize = 1
+			else
+				coincursize = 2
+			end
+			displayshapedcursor(0, 0, coincursize, coincursize)
 		elseif selectedtool == 20 then
 			-- Teleporter
 			displayshapedcursor(0, 0, 11, 11)
@@ -1626,7 +1634,7 @@ function drawmaineditor()
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
-			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10)) and k >= 2 and k <= 9 then
+			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 19) and k >= 2 and k <= 9 then
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 

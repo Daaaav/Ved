@@ -22,7 +22,7 @@ table.insert(toolnames, "Flip token")
 table.insert(toolnames, "Coin")
 table.insert(toolnames, "Teleporter")
 table.insert(subtoolnames, {})
-table.insert(subtoolnames, {})
+table.insert(subtoolnames, {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"})
 table.insert(subtoolnames, {})
 
 L.WHEREPLACEPLAYER = "Where do you want to start?"

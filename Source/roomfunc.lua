@@ -408,14 +408,29 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 8 then
 		-- Coin
+		local coinsize, coinvalue
+		if v.p1 == 0 then
+			coinsize = 1
+			coinvalue = 1
+		elseif v.p1 <= 2 then
+			coinsize = 2
+			coinvalue = v.p1 == 1 and 10 or 20
+		else
+			coinsize = 3
+			coinvalue = v.p1 == 3 and 50 or 100
+		end
 		love.graphics.setColor( 255, 255, 0)
 		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][48], x, y, 0, 2)
+		-- Temp
+		if coinvalue > 1 then
+			ved_print(coinvalue, x, y+16, 2)
+		end
 		love.graphics.setColor( 255, 255, 255)
 		if interact then
 			entityrightclick(
 				x, y,
 				{"#" .. toolnames[19], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_8_" .. k,
-				1, 1
+				coinsize, coinsize
 			)
 		end
 	elseif v.t == 9 then
