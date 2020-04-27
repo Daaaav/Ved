@@ -147,7 +147,7 @@ function playtesting_start()
 	recentlyopened = function() end
 
 	-- Note: thissavederror will contain level contents if not an error
-	local thissavedsuccess, thissavederror = savelevel(nil, metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, nil, false, false)
+	local thissavedsuccess, thissavederror = savelevel(nil, metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false, false)
 
 	unsavedchanges = oldunsavedchanges
 	s.enableoverwritebackups = oldenableoverwritebackups
