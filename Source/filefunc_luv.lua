@@ -49,9 +49,9 @@ function get_parent_path(directory)
 	-- "" counts as the root directory - imagine a slash after the return value.
 	local last_dirsep = directory:reverse():find("/", 1, true)
 	if last_dirsep == nil then
-		return ""
+		return "", directory
 	end
-	return directory:sub(1, -last_dirsep-1)
+	return directory:sub(1, -last_dirsep-1), directory:sub(-last_dirsep, -1):sub(2, -1)
 end
 
 function get_child_path(directory, child)
