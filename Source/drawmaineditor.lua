@@ -2124,12 +2124,22 @@ function drawmaineditor()
 
 	-- Also display a smaller tiles picker for semi-undirect mode
 	if selectedtool <= 3 and not voided_metadata then
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-157, (6*16)+2, (5*16)+2) -- -(6*16)-16-24-12-1-8 => -157
+		local picker_x, picker_y = love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156 -- -(6*16)-16-24-12-8 => -156
+		local picker_scale
+		if metadata.target == "VCE" then
+			picker_y = picker_y + 40
+			picker_scale = 1
+		else
+			picker_scale = 2
+		end
+		local picker_w, picker_h = 6*picker_scale*8, 5*picker_scale*8
+
+		love.graphics.setColor(128,128,128,255)
+		love.graphics.rectangle("fill", picker_x-1, picker_y-1, picker_w+2, picker_h+2)
 		love.graphics.setColor(0,0,0,255)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, (6*16), (5*16)) -- -(6*16)-16-24-12-8 => -156
+		love.graphics.rectangle("fill", picker_x, picker_y, picker_w, picker_h)
 		love.graphics.setColor(255,255,255,255)
-		--if selectedtool <= 3 then
-		displaysmalltilespicker(love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156, selectedtileset, selectedcolor, levelmetadata_get(roomx, roomy).customtileset) -- -(6*16)-16-24-12-8 => -156
+		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, levelmetadata_get(roomx, roomy).customtileset, picker_scale)
 	end
 
 	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70

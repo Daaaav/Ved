@@ -942,7 +942,15 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 	end
 end
 
-function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, customtileset)
+function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, customtileset, scale)
+	local cur_cur, cur_sel
+	if scale == 1 then
+		-- need 8x8 cursors
+		cur_cur, cur_sel = 8, 21
+	else
+		cur_cur, cur_sel = 0, 20
+	end
+
 	local selectedx = -1
 	local selectedy = -1
 
@@ -961,7 +969,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, c
 	for ly = 0, 4 do
 		for lx = 0, 5 do
 			-- The number is (6ly)+lx+1. The below line was a monster. Display this.
-			love.graphics.draw(tilesets[tsimage]["img"], tilesets[tsimage]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(16*lx), offsety+(16*ly), 0, 2)
+			love.graphics.draw(tilesets[tsimage]["img"], tilesets[tsimage]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(scale*8*lx), offsety+(scale*8*ly), 0, scale)
 
 			-- Is this tile the selected one?
 			if toolarray[(6*ly)+lx+1] == selectedtile then
@@ -969,8 +977,8 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, c
 			end
 
 			-- Are we hovering on this tile? And are we in manual mode?
-			if levelmetadata_get(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(16*lx), offsety+(16*ly), 16, 16) then
-				love.graphics.draw(cursorimg[0], offsetx+(16*lx), offsety+(16*ly))
+			if levelmetadata_get(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(scale*8*lx), offsety+(scale*8*ly), scale*8, scale*8) then
+				love.graphics.draw(cursorimg[cur_cur], offsetx+(scale*8*lx), offsety+(scale*8*ly))
 
 				-- Heck, maybe we're even clicking this.
 				if love.mouse.isDown("l") or love.mouse.isDown("m") then
@@ -990,7 +998,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, c
 
 	-- Were we highlighting a tile?
 	if levelmetadata_get(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
-		love.graphics.draw(cursorimg[20], offsetx+(16*selectedx)-2, offsety+(16*selectedy)-2)
+		love.graphics.draw(cursorimg[cur_sel], offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
 	end
 end
 

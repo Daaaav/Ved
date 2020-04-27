@@ -239,12 +239,14 @@ function love.load()
 	cursorimg[4] = love.graphics.newImage("cursor/cursor4.png")
 	cursorimg[5] = love.graphics.newImage("cursor/entity.png")
 	cursorimg[6] = love.graphics.newImage("cursor/specialentity.png")
+	cursorimg[8] = love.graphics.newImage("cursor/cursor8.png")
 
 	local curcol = (love.system.getOS() == "OS X" and "b" or "w")
 	cursorimg[11] = love.graphics.newImage("cursor/resizev_" .. curcol .. ".png")
 	cursorimg[12] = love.graphics.newImage("cursor/resizeh_" .. curcol .. ".png")
 
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
+	cursorimg[21] = love.graphics.newImage("cursor/selectedtile8.png")
 
 	cursorobjs = {}
 	if not love_version_meets(10) or love.mouse.hasCursor() then
