@@ -2267,7 +2267,12 @@ function drawmaineditor()
 			if flipped then
 				usethissprite = usethissprite + 6
 			end
-			drawentitysprite(usethissprite, atx - 12, aty - 4)
+			drawentitysprite(
+				usethissprite,
+				atx - 12,
+				aty - 4,
+				levelmetadata_get(roomx, roomy).customspritesheet
+			)
 
 			love.graphics.setScissor()
 			love.graphics.setColor(255, 255, 255, 255)
