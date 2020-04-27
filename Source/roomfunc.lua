@@ -406,6 +406,18 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				4, 1
 			)
 		end
+	elseif v.t == 5 then
+		-- Flip token, temp
+		love.graphics.setColor(128,128,255,255)
+		ved_print("FL\nIP", x, y, 2)
+
+		if interact then
+			entityrightclick(
+				x, y,
+				{"#" .. toolnames[18], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_5_" .. k,
+				2, 2
+			)
+		end
 	elseif v.t == 8 then
 		-- Coin
 		local coinsize, coinvalue
