@@ -40,6 +40,7 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
 	local commands = {
 		"cd " .. path,
+		run,
 	}
 
 	cons("RUNNING VVVVVV WITH THESE COMMANDS:\n" .. table.concat(commands, "\n"))
