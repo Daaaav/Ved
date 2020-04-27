@@ -239,7 +239,7 @@ configs =
 		{
 		default = "",
 		["type"] = "string",
-		comment = "Do not put a trailing (back)slash. On Windows, point this to the folder containing 'VVVVVV.exe'. On Linux and macOS, point this to the folder containing 'VVVVVV'.",
+		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV.exe'. On Linux and macOS, point this to the file 'VVVVVV'.",
 		},
 	}
 

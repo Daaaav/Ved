@@ -39,7 +39,6 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 
 	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
 	local commands = {
-		"cd " .. path,
 		run,
 	}
 
@@ -56,42 +55,20 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 end
 
 function playtesting_locate_path()
-	-- We first try getting the Steam version, because it's always in the same place.
-	-- But if that doesn't exist, we ask them where they put the non-Steam version.
-	-- However, if the user already has non-Steam set in settings.lua, we'll use that.
-	-- Because this priority order... (non-Steam path in config > Steam path exists > Ask for non-Steam path)
-	-- ...is better than the other one, because people can easily force the Steam or non-Steam version if they want to
-	-- without having to, say, move the Steam version's executable somewhere else,
-	-- which they'd have to do with the other order (Steam path exists > non-Steam path in config > Ask for non-Steam path)
-
-	if anythingbutnil(s.vvvvvv23) ~= "" and playtesting_validate_path(s.vvvvvv23) then
-		-- M&P path in config
-		return s.vvvvvv23
-	else
-		-- Ask for M&P path
-		return
-	end
+	return s.vvvvvv23
 end
 
 function playtesting_validate_path(thepath)
-	-- TODO: This is all useless until Ved has better directory-checking and file-checking filefuncs
-	if love.system.getOS() == "Linux" then
-		-- Check that VVVVVV exists
-		return true -- TEMP DEBUG
-	elseif love.system.getOS() == "OS X" then
-		-- Check that VVVVVV exists
-	elseif love.system.getOS() == "Windows" then
-		-- Check that VVVVVV.exe exists
-	end
+	return file_exists(thepath)
 end
 
 function playtesting_get_vvvvvv23_message()
 	if love.system.getOS() == "Linux" then
-		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE"})
+		return langkeys(L.VVVVVV23FILE, {"VVVVVV"})
 	elseif love.system.getOS() == "OS X" then
-		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE"})
+		return langkeys(L.VVVVVV23FILE, {"VVVVVV"})
 	elseif love.system.getOS() == "Windows" then
-		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE.exe"})
+		return langkeys(L.VVVVVV23FILE, {"VVVVVV.exe"})
 	end
 end
 
@@ -116,9 +93,8 @@ function playtesting_start()
 
 	local path = playtesting_locate_path()
 
-	if path == nil then
-		local files = dialog.form.files_make(userprofile, "", dirsep, true, 10)
-		files[1][3] = files[1][3] + 2 -- Move the y-position of the files list down, to make way for the message
+	if path == nil or path == "" then
+		local files = dialog.form.files_make(userprofile, "", "", true, 9, 2)
 		dialog.create(
 			playtesting_get_vvvvvv23_message(),
 			DBS.OKCANCEL,

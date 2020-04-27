@@ -1130,12 +1130,13 @@ end
 
 function dialog.callback.locatevvvvvv23_validate(button, fields)
 	if button == DB.OK then
-		if not playtesting_validate_path(fields.folder) then
+		local path = fields.folder .. dirsep .. fields.name
+		if not playtesting_validate_path(path) then
 			dialog.create(L.VVVVVV23PATHINVALID .. " " .. playtesting_get_vvvvvv23_message())
 			return true
 		end
 
-		s.vvvvvv23 = fields.folder
+		s.vvvvvv23 = path
 		saveconfig()
 
 		playtesting_start()
