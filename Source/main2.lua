@@ -3286,7 +3286,7 @@ function love.keypressed(key)
 		-- Platform bounds
 		changeplatformbounds()
 	elseif nodialog and state == 1 and metadata.target == "VCE" and key == "f9" and keyboard_eitherIsDown(ctrl) and not voided_metadata then
-		-- TEMPORARY customtileset/customspritesheet dialog
+		-- customtileset/customspritesheet dialog
 		dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
 			dialog.form.vcecustomgraphics_make(levelmetadata_get(roomx, roomy))
 		)
