@@ -18,6 +18,11 @@ L.CUSTOMSPRITESHEET = "Sprites image:" -- What variant of sprites*.png is used
 L.CUSTOMTILESET_DEFAULT = "Default ($1)" -- Placeholder can be tiles.png, tiles2.png or tiles3.png
 L.CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)"
 
+L.ONECUSTOMTILESET = "CT $1"
+L.ONECUSTOMSPRITESHEET = "CS $1"
+L.ONEALTSTATE = "A $1/$2"
+L.ONETOWER = "T$1 $2\n $3" -- $1 is ↑ or ↓, $2 is tower number, $3 is current position
+
 table.insert(toolnames, "Flip token")
 table.insert(toolnames, "Coin")
 table.insert(toolnames, "Teleporter")

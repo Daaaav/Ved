@@ -2140,6 +2140,17 @@ function drawmaineditor()
 		love.graphics.rectangle("fill", picker_x, picker_y, picker_w, picker_h)
 		love.graphics.setColor(255,255,255,255)
 		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, levelmetadata_get(roomx, roomy).customtileset, picker_scale)
+
+		if metadata.target == "VCE" then
+			local ct = levelmetadata_get(roomx, roomy).customtileset
+			local cs = levelmetadata_get(roomx, roomy).customspritesheet
+
+			local ind_x, ind_y = love.graphics.getWidth()-7*8, love.graphics.getHeight()-116
+			ved_print(langkeys(L.ONECUSTOMTILESET, {ct == 0 and "-" or ct}), ind_x, ind_y)
+			ved_print(langkeys(L.ONECUSTOMSPRITESHEET, {cs == 0 and "-" or cs}), ind_x, ind_y+8)
+			--ved_print(langkeys(L.ONEALTSTATE, {0, 0}), ind_x, ind_y+24)
+			--ved_print(langkeys(L.ONETOWER, {"↑", 1, 400}), ind_x, ind_y+24)
+		end
 	end
 
 	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
