@@ -1803,13 +1803,13 @@ function drawmaineditor()
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
 	-- When adding an extra button for layers mode or something like that, and the buttons needs to be squished, just set this to true and then hardcode it. Not for plugins though
-	local additionalbutton = false
+	local additionalbutton = metadata.target == "VCE"
 	local additionalbutton_np = additionalbutton and 1 or 0
 	local additionalbutton_yoffset = additionalbutton and 166 or 164
 	local additionalbutton_spacing = additionalbutton and 20 or 24
 
 	if additionalbutton then
-		rbutton("...", 0, 166, true, 20)
+		rbutton({L.CUSTOMGRAPHICS, "co"}, 0, 166, true, 20)
 	end
 
 	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
@@ -1937,6 +1937,9 @@ function drawmaineditor()
 		-- Room options now
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
 			-- ...
+			dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
+				dialog.form.vcecustomgraphics_make(levelmetadata_get(roomx, roomy))
+			)
 
 		elseif onrbutton(0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Rotate
