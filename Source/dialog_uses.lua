@@ -209,23 +209,23 @@ function dialog.form.savevvvvvvmusic_make(default)
 	}
 end
 
-function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height)
+function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
 	local len_namelabel = font8:getWidth(L.FILEOPENERNAME)/8
 	local success, files, everr = listfiles_generic(startfolder, filter, true)
 	if success then
 		everr = ""
 	end
 	form = {
-		--{"folder", 0, 0, 47, startfolder, DF.TEXT},
-		{"folder", 0, 0, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
+		--{"folder", 0, yoff, 47, startfolder, DF.TEXT},
+		{"folder", 0, yoff, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
 	}
 
 	if filter ~= dirsep then
 		table.insert(form,
-			{"", 0, 2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
+			{"", 0, yoff+2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
 		)
 		table.insert(form,
-			{"name", len_namelabel, 2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
+			{"name", len_namelabel, yoff+2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
 		)
 	end
 	if filter ~= "" then
@@ -235,7 +235,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		else
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
-		table.insert(form, {"dofilter", 0, 15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
+		table.insert(form, {"dofilter", 0, yoff+15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
 						if v[1] == "folder" then
@@ -257,7 +257,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 				end
 			}
 		)
-		table.insert(form, {"", 2, 15, 40, filtertext, DF.LABEL})
+		table.insert(form, {"", 2, yoff+15, 40, filtertext, DF.LABEL})
 	end
 
 	return form
