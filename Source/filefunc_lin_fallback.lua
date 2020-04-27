@@ -158,6 +158,10 @@ function directory_exists(where, what)
 	return false
 end
 
+function file_exists(path)
+	return directory_exists(get_parent_path(path))
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 

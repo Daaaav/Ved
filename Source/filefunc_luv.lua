@@ -101,6 +101,10 @@ function directory_exists(where, what)
 	return love.filesystem.isDirectory(where .. "/" .. what)
 end
 
+function file_exists(path)
+	return love.filesystem.isFile(path)
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 

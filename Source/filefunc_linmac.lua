@@ -176,6 +176,10 @@ function directory_exists(where, what)
 	return libC.ved_directory_exists(where .. "/" .. what)
 end
 
+function file_exists(path)
+	return libC.ved_file_exists(path)
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 

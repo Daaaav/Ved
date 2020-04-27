@@ -441,6 +441,12 @@ function directory_exists(where, what)
 	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and file_attributes_directory(dwAttributes)
 end
 
+function file_exists(path)
+	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(path))
+
+	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and not file_attributes_directory(dwAttributes)
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 
