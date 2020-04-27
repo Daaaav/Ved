@@ -1128,14 +1128,14 @@ function dialog.callback.platv(button, fields, _, notclosed)
 	finish_undo("PLATV")
 end
 
-function dialog.callback.locatevvvvvvnonsteam_validate(button, fields)
+function dialog.callback.locatevvvvvv23_validate(button, fields)
 	if button == DB.OK then
 		if not playtesting_validate_path(fields.folder) then
-			dialog.create(L.VVVVVVNONSTEAMPATHINVALID .. " " .. playtesting_get_vvvvvvnonsteam_message())
+			dialog.create(L.VVVVVV23PATHINVALID .. " " .. playtesting_get_vvvvvv23_message())
 			return true
 		end
 
-		s.vvvvvvnonsteam = fields.folder
+		s.vvvvvv23 = fields.folder
 		saveconfig()
 
 		playtesting_start()

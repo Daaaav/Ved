@@ -235,7 +235,7 @@ configs =
 		default = false,
 		["type"] = "bool",
 		},
-	vvvvvvnonsteam =
+	vvvvvv23 =
 		{
 		default = "",
 		["type"] = "string",

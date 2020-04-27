@@ -16,7 +16,7 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 		music = -1
 	end
 
-	local vvvvvv = path .. "/VVVVVV-CE"
+	local vvvvvv = path
 
 	local run = {
 		vvvvvv,
@@ -64,9 +64,9 @@ function playtesting_locate_path()
 	-- without having to, say, move the Steam version's executable somewhere else,
 	-- which they'd have to do with the other order (Steam path exists > non-Steam path in config > Ask for non-Steam path)
 
-	if anythingbutnil(s.vvvvvvnonsteam) ~= "" and playtesting_validate_path(s.vvvvvvnonsteam) then
+	if anythingbutnil(s.vvvvvv23) ~= "" and playtesting_validate_path(s.vvvvvv23) then
 		-- M&P path in config
-		return s.vvvvvvnonsteam
+		return s.vvvvvv23
 	else
 		-- Ask for M&P path
 		return
@@ -85,13 +85,13 @@ function playtesting_validate_path(thepath)
 	end
 end
 
-function playtesting_get_vvvvvvnonsteam_message()
+function playtesting_get_vvvvvv23_message()
 	if love.system.getOS() == "Linux" then
-		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE"})
+		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE"})
 	elseif love.system.getOS() == "OS X" then
-		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE"})
+		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE"})
 	elseif love.system.getOS() == "Windows" then
-		return langkeys(L.NONSTEAMCONTAINSFILE, {"VVVVVV-CE.exe"})
+		return langkeys(L.VVVVVV23CONTAINSFILE, {"VVVVVV-CE.exe"})
 	end
 end
 
@@ -120,12 +120,12 @@ function playtesting_start()
 		local files = dialog.form.files_make(userprofile, "", dirsep, true, 10)
 		files[1][3] = files[1][3] + 2 -- Move the y-position of the files list down, to make way for the message
 		dialog.create(
-			playtesting_get_vvvvvvnonsteam_message(),
+			playtesting_get_vvvvvv23_message(),
 			DBS.OKCANCEL,
 			nil,
-			L.LOCATEVVVVVVNONSTEAM,
+			L.LOCATEVVVVVV23,
 			files,
-			dialog.callback.locatevvvvvvnonsteam_validate
+			dialog.callback.locatevvvvvv23_validate
 		)
 		return
 	end
