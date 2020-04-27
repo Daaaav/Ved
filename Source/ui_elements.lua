@@ -538,17 +538,17 @@ end
 function EditorIconBar()
 	return HorizontalListContainer(
 		{
-			ImageButton(undobtn, 1, function() if not playtesting_askwherestart then undo() end end, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
-				function() return true, #undobuffer >= 1 end
+			ImageButton(undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
+				function() return true, #undobuffer >= 1 and not playtesting_askwherestart end
 			),
-			ImageButton(redobtn, 1, function() if not playtesting_askwherestart then redo() end end, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
-				function() return true, #redobuffer >= 1 end
+			ImageButton(redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
+				function() return true, #redobuffer >= 1 and not playtesting_askwherestart end
 			),
 		},
 		{
-			ImageButton(cutbtn, 1, function() if not playtesting_askwherestart then cutroom() end end, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl")),
-			ImageButton(copybtn, 1, function() if not playtesting_askwherestart then copyroom() end end, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl")),
-			ImageButton(pastebtn, 1, function() if not playtesting_askwherestart then pasteroom() end end, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl")),
+			ImageButton(cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl"), function() return not playtesting_askwherestart end),
+			ImageButton(copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl"), function() return not playtesting_askwherestart end),
+			ImageButton(pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl"), function() return not playtesting_askwherestart end),
 		},
 		16*7, 16
 	)
