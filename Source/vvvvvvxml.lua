@@ -749,7 +749,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	end
 
 	-- First make a backup of the file we'll overwrite - if it exists and we haven't crashed.
-	if not crashed and s.enableoverwritebackups then
+	if not crashed and s.enableoverwritebackups and path ~= nil then
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
@@ -1136,10 +1136,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		dialog.create(L.MDENOTPASSED)
 	end
 
-	if success then
-		if path ~= nil then
-			recentlyopened(path:sub(1, -8))
-		end
+	if success and path ~= nil then
+		recentlyopened(path:sub(1, -8))
 
 		if undobuffer ~= nil then
 			saved_at_undo = #undobuffer

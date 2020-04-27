@@ -138,21 +138,8 @@ function playtesting_start()
 	--
 	-- Only problem is: savelevel() has TONS of dependencies, so do this later
 
-	-- savelevel() does too much, dangnabbit
-	local oldunsavedchanges = unsavedchanges
-	local oldenableoverwritebackups = s.enableoverwritebackups
-	local oldrecentlyopened = recentlyopened
-	local old_saved_at_undo = saved_at_undo
-	s.enableoverwritebackups = false
-	recentlyopened = function() end
-
 	-- Note: thissavederror will contain level contents if not an error
 	local thissavedsuccess, thissavederror = savelevel(nil, metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false, false)
-
-	unsavedchanges = oldunsavedchanges
-	s.enableoverwritebackups = oldenableoverwritebackups
-	recentlyopened = oldrecentlyopened
-	saved_at_undo = old_saved_at_undo
 
 	if not thissavedsuccess then
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))
