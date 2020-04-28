@@ -2,7 +2,7 @@
 -- When the user presses the play button or presses Enter, it calls playtesting_start()
 -- which then sets playtesting_askwherestart to true, then when they indicate where they want to start,
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute_<os>(),
--- which will start a thread that just io.popen()s VVVVVV with command line args to immediately load the level.
+-- which will start a thread that just io.popen()s VVVVVV (or VVVVVV-CE) with command line args to immediately load the level.
 
 function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol)
 	thisroomx = thisroomx + 100
@@ -55,20 +55,30 @@ function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, grav
 end
 
 function playtesting_locate_path()
-	return s.vvvvvv23
+	if metadata.target == "V" then
+		return s.vvvvvv23
+	elseif metadata.target == "VCE" then
+		return s.vvvvvvce
+	end
 end
 
 function playtesting_validate_path(thepath)
 	return file_exists(thepath)
 end
 
-function playtesting_get_vvvvvv23_message()
-	if love.system.getOS() == "Linux" then
-		return langkeys(L.VVVVVV23FILE, {"VVVVVV"})
-	elseif love.system.getOS() == "OS X" then
-		return langkeys(L.VVVVVV23FILE, {"VVVVVV"})
-	elseif love.system.getOS() == "Windows" then
-		return langkeys(L.VVVVVV23FILE, {"VVVVVV.exe"})
+function playtesting_get_vvvvvv_message()
+	if metadata.target == "V" then
+		if table.contains({"Linux", "OS X"}, love.system.getOS()) then
+			return langkeys(L.VVVVVVFILE, {"VVVVVV"})
+		elseif love.system.getOS() == "Windows" then
+			return langkeys(L.VVVVVVFILE, {"VVVVVV.exe"})
+		end
+	elseif metadata.target == "VCE" then
+		if table.contains({"Linux", "OS X"}, love.system.getOS()) then
+			return langkeys(L.VVVVVVFILE, {"VVVVVV-CE"})
+		elseif love.system.getOS() == "Windows" then
+			return langkeys(L.VVVVVVFILE, {"VVVVVV-CE.exe"})
+		end
 	end
 end
 
@@ -96,12 +106,12 @@ function playtesting_start()
 	if path == nil or path == "" then
 		local files = dialog.form.files_make(userprofile, "", "", true, 9, 2)
 		dialog.create(
-			playtesting_get_vvvvvv23_message(),
+			playtesting_get_vvvvvv_message(),
 			DBS.OKCANCEL,
 			nil,
-			L.LOCATEVVVVVV23,
+			langkeys(L.LOCATEVVVVVV, {metadata.target == "VCE" and "VVVVVV-CE" or "VVVVVV 2.3"}),
 			files,
-			dialog.callback.locatevvvvvv23_validate
+			dialog.callback.locatevvvvvv_validate
 		)
 		return
 	end
