@@ -2271,9 +2271,19 @@ function drawmaineditor()
 			love.graphics.setColor(255, 255, 255, 255)
 		end
 
+		local flipindicator = "gvj"
+		local unlockindicator = ";"
+
 		local tinywidth = math.max(tinynumbers:getWidth(L.TINY_SHIFT), tinynumbers:getWidth(L.TINY_ALT))
-		tinyprint("gvj" .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth("gvj"), love.graphics.getHeight()-15)
-		tinyprint(";" .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(";"), love.graphics.getHeight()-7)
+		local tinyiconwidth = math.max(tinynumbers:getWidth(flipindicator), tinynumbers:getWidth(unlockindicator))
+		local totalwidth = tinywidth + tinyiconwidth
+
+		love.graphics.setColor(0, 0, 0, 224)
+		love.graphics.rectangle("fill", 128-totalwidth-1, love.graphics.getHeight()-15, totalwidth+2, 16)
+		love.graphics.setColor(255, 255, 0, 255)
+		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth(flipindicator), love.graphics.getHeight()-15)
+		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(unlockindicator), love.graphics.getHeight()-7)
+		love.graphics.setColor(255, 255, 255, 255)
 
 		if love.mouse.isDown("l") and not mousepressed then
 			mousepressed = true
