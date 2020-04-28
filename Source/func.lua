@@ -3396,18 +3396,6 @@ function show_notification(text)
 	setgenerictimer(3, 5)
 end
 
-function playoverride(thisfunc, ...)
-	if playtesting_askwherestart and not coordsdialog.active then
-		local oldnodialog = nodialog
-		nodialog = true
-		local result = thisfunc(...)
-		nodialog = oldnodialog
-		return result
-	else
-		return thisfunc(...)
-	end
-end
-
 function window_active()
 	return love.window.hasFocus() and love.window.isVisible()
 end

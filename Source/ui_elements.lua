@@ -539,16 +539,16 @@ function EditorIconBar()
 	return HorizontalListContainer(
 		{
 			ImageButton(undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
-				function() return true, #undobuffer >= 1 and not playtesting_askwherestart end
+				function() return true, #undobuffer >= 1 end
 			),
 			ImageButton(redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
-				function() return true, #redobuffer >= 1 and not playtesting_askwherestart end
+				function() return true, #redobuffer >= 1 end
 			),
 		},
 		{
-			ImageButton(cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl"), function() return not playtesting_askwherestart end),
-			ImageButton(copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl"), function() return not playtesting_askwherestart end),
-			ImageButton(pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl"), function() return not playtesting_askwherestart end),
+			ImageButton(cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl")),
+			ImageButton(copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl")),
+			ImageButton(pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl")),
 		},
 		16*7, 16
 	)

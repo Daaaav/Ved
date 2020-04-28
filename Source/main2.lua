@@ -3106,14 +3106,14 @@ function love.keypressed(key)
 			toolscroll()
 		end
 
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and state == 1 and (key == "q" or key == "g") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "q" or key == "g") then
 		coordsdialog.activate()
 		if key == "q" then
 			show_notification(L.OLDSHORTCUT_GOTOROOM)
 		end
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
 		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
 	elseif playtesting_askwherestart and not editingroomname and editingroomtext == 0 and state == 1 and key == "escape" then
@@ -3233,16 +3233,16 @@ function love.keypressed(key)
 	elseif nodialog and state == 1 and table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
 		selectedsubtool[14] = 1
 		warpid = nil
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "right" or key == "kp6") and not keyboardmode then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "right" or key == "kp6") and not keyboardmode then
 		-->
 		gotoroom_r()
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "left" or key == "kp4") and not keyboardmode then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "left" or key == "kp4") and not keyboardmode then
 		--<
 		gotoroom_l()
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "down" or key == "kp2") and not keyboardmode then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "down" or key == "kp2") and not keyboardmode then
 		--v
 		gotoroom_d()
-	elseif (nodialog or playtesting_askwherestart) and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "up" or key == "kp8") and not keyboardmode then
+	elseif nodialog and not editingroomname and editingroomtext == 0 and editingbounds == 0 and state == 1 and (key == "up" or key == "kp8") and not keyboardmode then
 		--^
 		gotoroom_u()
 	elseif state == 1 and editingroomname and table.contains({"return", "kpenter"}, key) then

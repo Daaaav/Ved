@@ -1752,7 +1752,7 @@ function drawmaineditor()
 	else
 		usethisbtn = playgraybtn
 	end
-	playoverride(hoverdraw, usethisbtn, love.graphics.getWidth()-128, 0, 32, 32, 2)
+	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32, 2)
 	_= not editingroomname and editingbounds == 0 and showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is after the side panels are darkened
 	hoverdraw(helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
 	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
@@ -1823,7 +1823,7 @@ function drawmaineditor()
 	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
 	-- Well make them actually do something!
-	if not mousepressed and (nodialog or (playtesting_askwherestart and not coordsdialog.active)) and love.mouse.isDown("l") then
+	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if mouseon(love.graphics.getWidth()-128, 0, 32, 32) then
 			-- Play
 			if playtesting_askwherestart then
@@ -1897,7 +1897,7 @@ function drawmaineditor()
 				tostate(13)
 			end
 			mousepressed = true
-		elseif playoverride(onrbutton, 2, 40, false, 20) then
+		elseif onrbutton(2, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Map
 				tostate(12)
@@ -1925,7 +1925,7 @@ function drawmaineditor()
 				-- Level notepad
 				tonotepad()
 			end
-		elseif (nodialog or upperoptpage2) and playoverride(onrbutton, 6, 40, false, 20) then
+		elseif (nodialog or upperoptpage2) and onrbutton(6, 40, false, 20) then
 			-- Pages
 			upperoptpage2 = not upperoptpage2
 
@@ -2149,7 +2149,7 @@ function drawmaineditor()
 	end
 
 	-- Also display a smaller tiles picker for semi-undirect mode
-	if selectedtool <= 3 and not voided_metadata and not playtesting_askwherestart then
+	if selectedtool <= 3 and not voided_metadata then
 		local picker_x, picker_y = love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156 -- -(6*16)-16-24-12-8 => -156
 		local picker_scale
 		if metadata.target == "VCE" then
@@ -2233,16 +2233,9 @@ function drawmaineditor()
 	end
 
 	if playtesting_askwherestart then
-		-- Darken both side panels
-		love.graphics.setColor(0, 0, 0, 127)
-		love.graphics.rectangle("fill", 0, 0, screenoffset, love.graphics.getHeight())
-		love.graphics.rectangle("fill", love.graphics.getWidth()-96, 0, love.graphics.getWidth()-96, 32)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-128, 32, love.graphics.getWidth()-128, love.graphics.getHeight()-32)
-		love.graphics.setColor(255, 255, 255, 255)
-
 		local mouseoncanvas = mouseon(screenoffset, 0, 640, love.graphics.getHeight())
 
-		if mouseoncanvas and not coordsdialog.active then
+		if mouseoncanvas then
 			local atx, aty = love.mouse.getPosition()
 			local flipped = false
 			atx = atx - screenoffset
@@ -2278,15 +2271,17 @@ function drawmaineditor()
 			love.graphics.setColor(255, 255, 255, 255)
 		end
 
-		if not coordsdialog.active then
-			local tinywidth = math.max(tinynumbers:getWidth(L.TINY_SHIFT), tinynumbers:getWidth(L.TINY_ALT))
-			tinyprint("gvj" .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth("gvj"), love.graphics.getHeight()-15)
-			tinyprint(";" .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(";"), love.graphics.getHeight()-7)
-		end
+		local tinywidth = math.max(tinynumbers:getWidth(L.TINY_SHIFT), tinynumbers:getWidth(L.TINY_ALT))
+		tinyprint("gvj" .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth("gvj"), love.graphics.getHeight()-15)
+		tinyprint(";" .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(";"), love.graphics.getHeight()-7)
 
-		if love.mouse.isDown("l") and not mousepressed and mouseoncanvas and not coordsdialog.active then
+		if love.mouse.isDown("l") and not mousepressed then
 			mousepressed = true
-			playtesting_endaskwherestart()
+			if mouseoncanvas then
+				playtesting_endaskwherestart()
+			else
+				playtesting_askwherestart = false
+			end
 		end
 	end
 
@@ -2312,12 +2307,12 @@ function drawmaineditor()
 		love.graphics.setColor(0, 0, 0, 255)
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(128-8), 40+(20*6), 128-16, 16)
 		love.graphics.setColor(255, 255, 255, 255)
-		playoverride(rbutton, L.BACKB, 6, 40, false, 20)
+		rbutton(L.BACKB, 6, 40, false, 20)
 	else
 		love.graphics.setColor(0, 0, 0, 255)
 		love.graphics.rectangle("fill", love.graphics.getWidth()-(128-8), 40+(20*2), 128-16, 16)
 		love.graphics.setColor(255, 255, 255, 255)
-		playoverride(rbutton, {L.MAP, "M"}, 2, 40, false, 20)
+		rbutton({L.MAP, "M"}, 2, 40, false, 20)
 	end
 
 	-- Do we want to see room metadata?
