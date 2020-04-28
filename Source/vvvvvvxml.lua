@@ -1169,7 +1169,8 @@ function createblanklevel(lvwidth, lvheight)
 		website = "",
 		mapwidth = lvwidth,
 		mapheight = lvheight,
-		levmusic = 0
+		levmusic = 0,
+		target = "V"
 		}
 
 	-- Now, the contents!
