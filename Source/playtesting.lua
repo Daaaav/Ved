@@ -1,10 +1,10 @@
 -- Quick overview:
 -- When the user presses the play button or presses Enter, it calls playtesting_start()
 -- which then sets playtesting_askwherestart to true, then when they indicate where they want to start,
--- playtesting_endaskwherestart() will set it to false, then call playtesting_execute_<os>(),
+-- playtesting_endaskwherestart() will set it to false, then call playtesting_execute(),
 -- which will start a thread that just io.popen()s VVVVVV (or VVVVVV-CE) with command line args to immediately load the level.
 
-function playtesting_execute_linmac(path, thisroomx, thisroomy, posx, posy, gravitycontrol)
+function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycontrol)
 	thisroomx = thisroomx + 100
 	thisroomy = thisroomy + 100
 
@@ -84,15 +84,7 @@ end
 
 function playtesting_start()
 	if not playtesting_available then
-		local usethistext
-		if table.contains({"Windows", "OS X", "Linux"}, love.system.getOS()) then
-			-- Yes, hardcoded English text
-			-- Eventually (hopefully) this string will go unused
-			usethistext = "Sorry, you currently cannot playtest on $1. But Ved will support it soon!"
-		else
-			usethistext = L.PLAYTESTUNAVAILABLE
-		end
-		dialog.create(langkeys(usethistext, {love.system.getOS()}))
+		dialog.create(langkeys(L.PLAYTESTUNAVAILABLE, {love.system.getOS()}))
 		return
 	end
 
@@ -169,11 +161,7 @@ function playtesting_endaskwherestart()
 		gravitycontrol = 1
 	end
 
-	local usethisfunc
-	if table.contains({"Linux", "OS X"}, love.system.getOS()) then
-		usethisfunc = playtesting_execute_linmac
-	end
-	usethisfunc(path, roomx, roomy, atx, aty, gravitycontrol)
+	playtesting_execute(path, roomx, roomy, atx, aty, gravitycontrol)
 end
 
 function playtesting_cancelask()

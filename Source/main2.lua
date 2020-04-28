@@ -84,7 +84,7 @@ function love.load()
 		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
-		playtesting_available = false
+		playtesting_available = true
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
