@@ -600,6 +600,10 @@ L_PLU = {
 		[0] = "$1 tile is not a valid whole number in the range 0-1199",
 		[1] = "$1 tiles are not a valid whole number in the range 0-1199"
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[0] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[1] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
+	},
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",

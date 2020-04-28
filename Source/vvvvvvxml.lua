@@ -56,6 +56,7 @@ function loadlevelmetadata(path)
 		local m = contents:match("<" .. v .. ">(.*)</" .. v .. ">")
 		if m == nil then
 			return false, L.MAL .. langkeys(L.METADATAITEMCORRUPT, {v})
+				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
 		end
 		thismetadata[v] = tonumber(m)
 	end
@@ -169,20 +170,51 @@ function loadlevel(path)
 	-- VCE put its extra things right here.
 	if thismetadata.target == "VCE" then
 		thisextra.altstates = {}
+		for ay = 0, thismetadata.mapheight-1 do
+			if thisextra.altstates[ay] == nil then
+				thisextra.altstates[ay] = {}
+			end
+			for ax = 0, thismetadata.mapwidth-1 do
+				thisextra.altstates[ay][ax] = {}
+			end
+		end
 		if contents:find("<altstates />") == nil then
 			x.altstates = contents:match("<altstates>(.*)</altstates>")
 			if x.altstates ~= nil then
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for altstate in x.altstates:gmatch("<altstate (.-)</altstate>") do
-					local thisaltstate = {}
-					local metaparts = explode(">", altstate)
+				-- todo sanity checks: altstates aren't duplicated, altstates must be sequential from 1, attributes are valid
+				for altstatetag in x.altstates:gmatch("<altstate (.-)</altstate>") do
+					local metaparts = explode(">", altstatetag)
 					local attributes = parsexmlattributes(metaparts[1])
 
-					for k,v in pairs(attributes) do
-						thisaltstate[k] = tonumber(v)
+					local ax, ay = anythingbutnil0(tonumber(attributes.x)), anythingbutnil0(tonumber(attributes.y))
+					local st = anythingbutnil0(tonumber(attributes.state))
+
+					-- Normally these should not be nil, but altstates could be defined out of bounds... In which case, whatever
+					if thisextra.altstates[ay] == nil then
+						thisextra.altstates[ay] = {}
 					end
-					thisaltstate.contents = metaparts[2]
-					table.insert(thisextra.altstates, thisaltstate)
+					if thisextra.altstates[ay][ax] == nil then
+						thisextra.altstates[ay][ax] = {}
+					end
+					thisextra.altstates[ay][ax][st] = {}
+					local failedtiles = 0
+
+					for num in metaparts[2]:gmatch("([^,]*),") do
+						local t = tonumber(num)
+						if t == nil or t < 0 or t >= 1200 then
+							t = 0
+							failedtiles = failedtiles + 1
+						elseif math.floor(t) ~= t then
+							t = math.floor(t)
+							failedtiles = failedtiles + 1
+						end
+						table.insert(thisextra.altstates[ay][ax][st], t)
+					end
+
+					if failedtiles > 0 then
+						mycount.FC = mycount.FC + 1
+						cons_fc(langkeys(L_PLU.NOTALLTILESVALID_ALTSTATE, {failedtiles, st, ax, ay}))
+					end
 				end
 			end
 		end
@@ -192,9 +224,9 @@ function loadlevel(path)
 			x.towers = contents:match("<towers>(.*)</towers>")
 			if x.towers ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for tower in x.towers:gmatch("<tower (.-)</tower>") do
+				for towertag in x.towers:gmatch("<tower (.-)</tower>") do
 					local thistower = {}
-					local metaparts = explode(">", tower)
+					local metaparts = explode(">", towertag)
 					local attributes = parsexmlattributes(metaparts[1])
 
 					for k,v in pairs(attributes) do
@@ -210,9 +242,9 @@ function loadlevel(path)
 		if contents:find("<teleporters />") == nil then
 			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
 			if x.teleporters ~= nil then
-				for teleporter in x.teleporters:gmatch("<teleporter (.-) />") do
+				for teleportertag in x.teleporters:gmatch("<teleporter (.-) />") do
 					local thisteleporter = {}
-					local attributes = parsexmlattributes(teleporter)
+					local attributes = parsexmlattributes(teleportertag)
 
 					for k,v in pairs(attributes) do
 						thisteleporter[k] = tonumber(v)
@@ -227,9 +259,9 @@ function loadlevel(path)
 			x.timetrials = contents:match("<timetrials>(.*)</timetrials>")
 			if x.timetrials ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for timetrial in x.timetrials:gmatch("<trial (.-)</trial>") do
+				for timetrialtag in x.timetrials:gmatch("<trial (.-)</trial>") do
 					local thistimetrial = {}
-					local metaparts = explode(">", timetrial)
+					local metaparts = explode(">", timetrialtag)
 					local attributes = parsexmlattributes(metaparts[1])
 
 					for k,v in pairs(attributes) do
@@ -246,9 +278,9 @@ function loadlevel(path)
 			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
 			if x.dimensions ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for dimension in x.dimensions:gmatch("<dimension (.-)</dimension>") do
+				for dimensiontag in x.dimensions:gmatch("<dimension (.-)</dimension>") do
 					local thisdimension = {}
-					local metaparts = explode(">", dimension)
+					local metaparts = explode(">", dimensiontag)
 					local attributes = parsexmlattributes(metaparts[1])
 
 					for k,v in pairs(attributes) do
@@ -827,16 +859,32 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	if thismetadata.target == "VCE" then
 		-- TODO look per table how it should be structured, and thus how it should be determined that it's empty.
 
-		if #thisextra.altstates ~= 0 then
+		local any_altstates = false
+		for ay,vy in pairs(thisextra.altstates) do
+			for ax,vx in pairs(vy) do
+				if #vx ~= 0 then
+					any_altstates = true
+					break
+				end
+			end
+			if any_altstates then
+				break
+			end
+		end
+		if any_altstates then
 			local altstatestag = {"        <altstates>\n"}
 
-			for k,v in pairs(thisextra.altstates) do
-				table.insert(altstatestag,
-					"            <altstate x=\"" .. v.x
-					.. "\" y=\"" .. v.y
-					.. "\" state=\"" .. v.state
-					.. "\">" .. v.contents .. "</altstate>\n"
-				)
+			for ay,vy in pairs(thisextra.altstates) do
+				for ax,vx in pairs(vy) do
+					for as,vs in pairs(vx) do
+						table.insert(altstatestag,
+							"            <altstate x=\"" .. ax
+							.. "\" y=\"" .. ay
+							.. "\" state=\"" .. as
+							.. "\">" .. table.concat(vs, ",") .. ",</altstate>\n"
+						)
+					end
+				end
 			end
 
 			savethis = savethis:gsub("%$ALTSTATES%$", table.concat(altstatestag, ""):gsub("%%", "%%%%") .. "        </altstates>")

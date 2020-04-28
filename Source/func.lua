@@ -262,6 +262,7 @@ function loadstate(new, ...)
 		if ... ~= true then
 			roomx = 0
 			roomy = 0
+			altstate = 0
 		end
 		updatewindowicon()
 
