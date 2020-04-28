@@ -2439,6 +2439,11 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 		return usethisroomdata[ry][rx][ty*40 + tx+1]
 	end
 
+	if rx < limit.mapwidth and ry < limit.mapheight then
+		-- Fast path - don't create new tables for this if we don't need to
+		return usethisroomdata[ry][rx]
+	end
+
 	rx = rx % limit.mapwidth
 	ry = ry + math.floor(distortion/30)
 
