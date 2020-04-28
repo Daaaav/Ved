@@ -174,6 +174,9 @@ function addrooms(neww, newh)
 		if levelmetadata[y] == nil then
 			levelmetadata[y] = {}
 		end
+		if extra.altstates ~= nil and extra.altstates[y] == nil then
+			extra.altstates[y] = {}
+		end
 
 		for x = 0, neww-1 do
 			if x >= ( y < math.min(newh, limit.mapheight) and neww or limit.mapwidth ) or y >= limit.mapheight then
@@ -188,6 +191,9 @@ function addrooms(neww, newh)
 						roomdata[y][x][t] = 0
 					end
 					map_resetroom(x, y)
+				end
+				if extra.altstates ~= nil and extra.altstates[y][x] == nil then
+					extra.altstates[y][x] = {}
 				end
 			end
 		end
