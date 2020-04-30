@@ -1,6 +1,6 @@
 -- Language file for Ved
---- Language: Русский (ru)
---- Last converted: 2020-02-24 00:18:42 (CET)
+--- Language: ru (ru)
+--- Last converted: 2020-04-30 18:29:27 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -227,6 +227,11 @@ TSCOLOR = "Цвет $1",
 ONETRINKETS = "Т:",
 ONECREWMATES = "ЧЭ:",
 ONEENTITIES = "О:",
+
+ONECUSTOMTILESET = "CT $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Уровни",
 LOADTHISLEVEL = "Загрузить: ",
@@ -562,6 +567,22 @@ SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
 SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
 SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
+CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+
+CUT = "Cut",
+PASTE = "Paste",
+SELECTWORD = "Select word",
+SELECTLINE = "Select line",
+SELECTALL = "Select all",
+INSERTRAWHEX = "Insert Unicode character",
+MOVELINEUP = "Move line upwards",
+MOVELINEDOWN = "Move line downwards",
+DUPLICATELINE = "Duplicate line",
+
 }
 
 -- Please check the reference for plural forms
@@ -611,6 +632,10 @@ L_PLU = {
 		[1] = "$1 стены имеют недопустимые значения в пределах 0-1199",
 		[2] = "$1 стен имеют недопустимые значения в пределах 0-1199",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[-1] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[-2] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+	},
 	BYTES = {
 		[0] = "$1 байт",
 		[1] = "$1 байта",
@@ -647,6 +672,9 @@ toolnames = {
 "Линия варпа",
 "Член экипажа",
 "Точка старта",
+"Flip token",
+"Coin",
+"Teleporter",
 
 }
 
@@ -669,6 +697,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Розовый", "Жёлтый", "Красный", "Зелёный", "Синий", "Голубой", "Случайный"},
 [17] = {"Вправо", "Влево"},
+[18] = {},
+[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[20] = {},
 
 }
 

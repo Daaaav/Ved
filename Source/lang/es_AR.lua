@@ -1,6 +1,6 @@
 -- Language file for Ved
---- Language: Español (es_AR)
---- Last converted: 2020-02-24 00:18:43 (CET)
+--- Language: es_AR (es_AR)
+--- Last converted: 2020-04-30 18:29:27 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -21,13 +21,13 @@ L = {
 
 TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Su version de L{ve esta obsoleta. Porfavor use version 0.9.1 o mejor.\nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Suertudamente, L{ve 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la version mas reciente de L{ve desde https://love2d.org/.",
-UNKNOWNSTATE = "Estado desconocudo ($1), saltado desde el estado $2",
+OUTDATEDLOVE = "Su versión de L{ve esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
+UNKNOWNSTATE = "Estado desconocido ($1), saltado desde el estado $2",
 FATALERROR = "ERROR FATAL: ",
 FATALEND = "Porfavor cierre el juego y intente de nuevo. Y si eres Dav, porfavor arreglalo.",
 
-OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconozido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
+OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
 MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
 EDITINGROOMTEXTNIL = "Texto de habiacion existente que se estava editando es nulo!",
@@ -77,15 +77,15 @@ SELECTCOPY2 = "Seleccione donde copiar la habitacion",
 SELECTSWAP1 = "Seleccion la primera habitacion para intercambiar",
 SELECTSWAP2 = "Seleccione la segunda habitacion para intercambiar",
 
-TILESETCHANGEDTO = "Set de tejas cambiado a $1",
-TILESETCOLORCHANGEDTO = "Color del set de tejas cambiado a $1",
+TILESETCHANGEDTO = "Set cambiado a $1",
+TILESETCOLORCHANGEDTO = "Color del set cambiado a $1",
 ENEMYTYPECHANGED = "Tipo de enemigos cambiado",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
 CHANGEDTOMODE = "Cambiado a colocación de teja $1",
 CHANGEDTOMODEAUTO = "automatico",
 CHANGEDTOMODEMANUAL = "manual",
-CHANGEDTOMODEMULTI = "multi-set de tejas",
+CHANGEDTOMODEMULTI = "multi-set",
 
 BUSYSAVING = "Guardando...",
 SAVEDLEVELAS = "Nivel guardado como $1.vvvvvv",
@@ -227,6 +227,11 @@ TSCOLOR = "Color $1",
 ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
+
+ONECUSTOMTILESET = "CT $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Niveles",
 LOADTHISLEVEL = "Cargar este nivel: ",
@@ -378,7 +383,7 @@ COPY = "Copiar",
 CUSTOMSIZE = "Tamaño de brocha personalizado: $1x$2",
 SELECTINGA = "Seleccionando - haz click en superior izquierda",
 SELECTINGB = "Seleccionando: $1x$2",
-TILESETSRELOADED = "Sets de tejas y sprites recargados",
+TILESETSRELOADED = "Sets y sprites recargados",
 
 -- 1.2.0
 BACKUPS = "Respaldos",
@@ -534,33 +539,49 @@ CLICKONTHING = "Haz click en $1",
 ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Hay mas de un punto de partida en este nivel!",
 
-CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
-MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
-BTNOVERRIDE = "Override",
-TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+CONFIRMBIGGERSIZE = "Estas seleccionando $1 por $2, lo cual es un tamaño de mapa mas grande que $3 por $4. Afuera del $3 por $4 normal, las habitaciones y sus propiedades se envuelven, pero están distorsionadas. Usted no tiene habitaciones completas del todo, tampoco las propiedades. VVVVVV tambien puede dejar de funcionar por cualquier razón en esas habitaciones.\n\nPresiona Si si sabes lo que estas haciendo y quieres este tamaño de mapa mas grande. Presiona No para poner el tamaño del mapa a $5 por $6.\n\nSi no estas seguro, presiona No.",
+MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4! (No se habilito el soporte de mapas mas grandes que $3 por $4)",
+BTNOVERRIDE = "Anular",
+TARGETPLATFORM = "Plataforma objetivo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Tower mode",
-DISABLETOWER = "Disable tower",
-TIMETRIALS = "Time trials",
-DIMENSIONS = "Dimensions",
-TOWERDIRECTIONUP = "Direction: ↑",
-TOWERDIRECTIONDOWN = "Direction: ↓",
-TOWERENTRYEXIT = "Set entry/exit",
-SWITCHEDTOALTSTATEMAIN = "Switched to main state",
-SWITCHEDTOALTSTATE = "Switched to alt state $1",
-ADDEDALTSTATE = "Added new alt state $1",
-REMOVEDALTSTATE = "Removed alt state $1",
-ENABLEDTOWER = "Tower mode enabled",
-DISABLEDTOWER = "Tower mode disabled",
-TOWERASCENDING = "Tower now ascending",
-TOWERDESCENDING = "Tower now descending",
-TOWERENTRYSET = "Tower entry/exit set to current position",
-TIMETRIALTRINKETS = "Trinket count",
-TIMETRIALTIME = "Par time",
-SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
+PLATFORM_VCE = "VVVVVV-EC",
+ENABLETOWER = "Modo torre",
+DISABLETOWER = "Desactivar torre",
+TIMETRIALS = "Contrarelojes",
+DIMENSIONS = "Dimensiones",
+TOWERDIRECTIONUP = "Dirección: ↑",
+TOWERDIRECTIONDOWN = "Dirección: ↑",
+TOWERENTRYEXIT = "Fijar entrada/salida",
+SWITCHEDTOALTSTATEMAIN = "Cambiado a estado principal",
+SWITCHEDTOALTSTATE = "Cambiado al estado $1",
+ADDEDALTSTATE = "Añadido nuevo estado $1",
+REMOVEDALTSTATE = "Removido estado $1",
+ENABLEDTOWER = "Modo torre activado",
+DISABLEDTOWER = "Modo torre desactivado",
+TOWERASCENDING = "Torre ahora ascendiente",
+TOWERDESCENDING = "Torre ahora descendiente",
+TOWERENTRYSET = "Salida/entrada de torre fijada a posición actual",
+TIMETRIALTRINKETS = "Numero de trinkets",
+TIMETRIALTIME = "Tiempo",
+SUREDELETETRIAL = "Estas seguro de que quieres borrar el contrareloj \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Estas seguro de que quieres borrar la dimension \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Estas seguro de que quieres borrar esta dimensión?",
+
+CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+
+CUT = "Cut",
+PASTE = "Paste",
+SELECTWORD = "Select word",
+SELECTLINE = "Select line",
+SELECTALL = "Select all",
+INSERTRAWHEX = "Insert Unicode character",
+MOVELINEUP = "Move line upwards",
+MOVELINEDOWN = "Move line downwards",
+DUPLICATELINE = "Duplicate line",
 
 }
 
@@ -602,6 +623,10 @@ L_PLU = {
 		[0] = "$1 teja no es un numero entero valido en el rango 0-1199",
 		[1] = "$1 tejas no es un numero entero valido en el rango 0-1199",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[-1] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[-2] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+	},
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
@@ -635,6 +660,9 @@ toolnames = {
 "Linea de warp",
 "Compañero",
 "Punto de partida",
+"Flip token",
+"Coin",
+"Teleporter",
 
 }
 
@@ -657,6 +685,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Rosa", "Amarillo", "Rojo", "Verde", "Azul", "Azul claro", "Al azar"},
 [17] = {"Mirar derecha", "Mirar izquierda"},
+[18] = {},
+[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[20] = {},
 
 }
 
@@ -874,7 +905,7 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 ]]
 
 {
-subj = "Return",
+subj = "Regresar",
 imgs = {},
 cont = [[
 \)
@@ -883,195 +914,198 @@ cont = [[
 
 {
 splitid = "010_Getting_started",
-subj = "Getting started",
+subj = "Comenzando",
 imgs = {},
 cont = [[
-Getting started\wh#
+Comenzando\wh#
 \C=
 
-This article will help you get started with using Ved. To get started with using
-the editor, you need to load a level, or create a new one.
+Este articulo te ayudara a comenzar a usar Ved. Para comenzar con usar el
+editor, deberás cargar un nivel, o crear uno nuevo.
 
 
-The editor\h#
+El editor\h#
 
-On the left side, you will find the tools selection. Most tools have subtools that
-will be listed to the right of it. To switch between tools, use their respective
-shortcut or scroll with Shift or Ctrl held down. To switch between subtools, you
-can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
-help page.
-Entities can be right clicked for a menu of actions for that entity. To delete
-entities without having to use the context menu, Shift-right click on them.
-On the right side of the screen, you will find many buttons and options. The upper
-buttons are related to the entire level, the lower buttons (under Room options)
-are specific to the current room. For more information about those buttons, refer
-to the respective help pages, where available.
+En el lado izquierdo, encontraras la selección de herramientas. La mayoría de las
+herramientas tienen sub-herramientas que se listaran a su derecha. Para cambiar la
+herramienta, use su atajo respectivo o desplace con Shift o Ctrl presionado. Para
+cambiar a sub-herramienta, puede desplazar adonde sea. Para mas información
+sobre las herramientas, referir a la pagina de ayuda ¤Tools\nwl.
+Las entidades se pueden clickear con el boton derecho para un menu de acciones
+para esa entidad. Para borrar las entidades sin usar el menú de contexto, presione
+el boton derecho al presionar Shift en ellas.
+En el lado derecho de la pantalla, encontraras muchos botones y opciones. Los
+botones superiores se relacionan a el nivel entero, los botones inferiores (debajo
+de opciones de habitación) son específicos a la habitación actual. Para mas
+información sobre esos botones, referir a las paginas de ayuda respectivas, donde
+están disponibles.
 
-Levels folder\h#
+Carpeta de niveles\h#
 
-Ved will normally use the same folder for storing levels as VVVVVV does, so it is
-easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
-detect your VVVVVV folder correctly, you can enter a custom path in the Ved
-options.
+Ved normalmente usara la misma carpeta para almacenar niveles que usa
+VVVVVV, así que es fácil cambiar el editor de niveles de VVVVVV al de Ved
+y viceversa. Si Ved no detecta su carpeta de VVVVVV correctamente, puede
+entrar un camino personalizado en las opciones de Ved.
 ]]
 },
 
 {
 splitid = "020_Tile_placement_modes",
-subj = "Tile placement modes",
+subj = "Modos de poner tejas",
 imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
 cont = [[
-Tile placement modes\wh#
+Modos de poner tejas\wh#
 \C=
 
-Ved supports three different modes to draw tiles.
+Ved soporta tres modos diferentes para poner tejas.
 
-     Automatic mode\h#0
+     Modo automático\h#0
 
-          This is the mode that is easiest to use. In this mode, you can draw
-          walls and backgrounds and the edges will automatically get placed
-          correctly. However, while editing in this mode, all walls and
-          backgrounds in the room must use the same tileset and color.
+          Este modo es al mas fácil de usar. En este modo, puedes dibujar
+          paredes y fondos y los bordes se ajustaran automáticamente
+          correctamente. Pero al editar en este modo, todas las paredes y
+          fondos en la habitación deben usar el mismo set y color de tejas.
 
-     Multi-tileset mode\h#1
+     Modo de multi-set\h#1
 
-          This is similar to automatic mode, except that you can have multiple
-          different tilesets in the same room. That is, changing the tileset will
-          not affect already-placed walls and backgrounds, and you can draw in
-          multiple different types of tiles in the same room.
+          Este es muy similar al modo automático. excepto que puedes tener
+          múltiples sets en la misma habitación. Eso es, cambiar el set no
+          afectara paredes y fondos ya puestos, y puedes dibujar en multiples
+          diferentes tipos de tejas en la misma habitaciones.
 
-     Manual mode\h#2
+     Modo manual\h#2
 
-          Also called Direct Mode, in this mode you can place down any tile
-          manually, so you are not bound to the pre-defined tileset combinations
-          and edges will not automatically get added to walls, giving you complete
-          control over how the room will look. However, this editing mode is often
-          slower to use.
+          También llamado Modo Directo, en este modo puedes poner cualquier
+          teja manualmente, asi que no estas encadenado a las combinaciones de
+          sets predefinidos y bordes no se ajustaran solas, dándote control completo
+          de como se vera la habitación. Pero este modo es muy lento de usar.
 ]]
 },
 
 {
 splitid = "030_Tools",
-subj = "Tools",
+subj = "Herramientas",
 imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
 cont = [[
-Tools\wh#
+Herramientas\wh#
 \C=
 
-You can use the following tools to fill rooms in your level:
+Puedes usar estas herramientas para llenar habitaciónes en tu nivel:
 
 \0
-   Wall\h#
+   Pared\h#
 
 
-The wall tool can be used to place walls.
+La herramienta de pared se usa para poner paredes.
 
 \1
-   Background\h#
+   Fondo\h#
 
 
-The background tool can be used to place backgrounds.
+La herramienta de fondo se usa para poner fondos.
 
 \2
-   Spike\h#
+   Espina\h#
 
 
-The spike tool can be used to place spikes. You can use the expand subtool to
-place spikes on a surface with one click (or slide).
+La herramienta de espina se usa para poner espinas. Puedes usar la subherramienta
+de expander para poner espinas en una superficie en un click (o tambien deslizar).
 
 \3
    Trinket\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+La herramienta de trinket se usa para poner trinkets. Porfavor note que hay un
+limite de veinte trinkets en un nivel.
 
 \4
    Checkpoint\h#
 
 
-The checkpoint tool can be used to place checkpoints.
+La herramienta de checkpoint se usa para poner checkpoints.
 
 \5
-   Disappearing platform\h#
+   Plataforma desapareciendo\h#
 
 
-The disappearing platform tool can be used to place disappearing platforms.
+La herramienta de plataforma desapareciendo se usa para poner plataformas que
+desaparecen.
 
 \6
-   Conveyor\h#
+   Transportador\h#
 
 
-The conveyor tool can be used to place conveyors.
+La herramienta de transportador se usa para poner transportadores.
 
 \7
-   Moving platform\h#
+   Plataforma moviendose\h#
 
 
-The moving platform tool can be used to place moving platforms.
+La herramienda de plataforma moviendose se usa para poner plataformas que se mueven.
 
 \8
-   Enemy\h#
+   Enemigo\h#
 
 
-The enemy tool can be used to place enemies. The shape and color of the enemy are
-determined by the enemy type setting and the tileset (color) respectively.
+La herramienta de enemigos se usa para poner enemigos. El color y forma del enemigo
+es determinado por el tipo de enemigo y el color del set respectivamente.
 
 \9
-   Gravity line\h#
+   Linea de gravedad\h#
 
 
-The gravity line tool can be used to place gravity lines.
+La herramienta de linea de gravedad se usa para poner lineas de gravedad.
 
 \^0
-   Roomtext\h#
+   Texto de habitacion\h#
 
 
-The roomtext tool can be used to place text.
+La herramienta de texto de habitación se usa para poner texto.
 
 \^1
    Terminal\h#
 
 
-The terminal tool can be used to place terminals. First place the terminal, then
-type a name for the script. For more information about scripting, please refer to
-the scripting references.
+La herramienta de terminal se usa para poner terminales. Primero pon la
+terminal, luego pon un nombre para el script. Para mas información sobre scripts,
+porfavor referir a las referencias de scripts.
 
 \^2
-   Script box\h#
+   Caja de script\h#
 
 
-The script box tool can be used to place script boxes. First click on the top left
-corner, then on the bottom right corner, then type a name for the script. For more
-information about scripting, please refer to the scripting references.
+La herramienta de caja de scripts se usa para poner cajas de scripts. Primero
+haz click en el borde superior izquierdo, luego en el borde inferior derecho, luego
+escribe un nombre para el script. Para mas información sobre scripts, porfavor
+referir a las referancias de scripts.
 
 \^3
-   Warp token\h#
+   Token de warp\h#
 
 
-The warp token tool can be used to place warp tokens. First click where the
-entrance should be, then where the exit should be.
+La herramienta del token de warp se usa para poner tokens de warp. Primero
+haz click donde la entrada deberia estar, luego donde la salida deberia estar.
 
 \^4
-   Warp line\h#
+   Linea de warp\h#
 
 
-The warp line tool can be used to place warp lines. Please note that warp lines
-can only be placed on the edges of a room.
+La herramienta de linea de warp se usa para poner lineas de warp. Porfavor note
+que las lineas de warp solo se pueden poner en los bordes de una habitación.
 
 \^5
-   Crewmate\h#
+   Compañero\h#
 
 
-The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+La herramienta de compañeros se usa para poner compañeros desaparecidos que
+pueden ser rescatados. Si todos los compañeros son rescatados, el nivel terminara.
+Porfavor note que hay un limite de veinte compañeros desaparecidos en un nivel.
 
 \^6
-   Start point\h#
+   Punto de comienzo\h#
 
 
-The start point tool can be used to place the start point.
+La herramienta de punto de comienzo se usa para poner el punto de comienzo.
 ]]
 },
 {

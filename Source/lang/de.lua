@@ -1,6 +1,6 @@
 -- Language file for Ved
---- Language: Deutsch (de)
---- Last converted: 2020-02-24 00:18:42 (CET)
+--- Language: de (de)
+--- Last converted: 2020-04-30 18:29:27 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -239,6 +239,11 @@ TSCOLOR = "Farbe $1",
 ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
+
+ONECUSTOMTILESET = "BT $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "BS $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Level",
 LOADTHISLEVEL = "Lade dieses Level: ",
@@ -574,6 +579,22 @@ SUREDELETETRIAL = "Bist du sicher du willst die Zeitprüfung \"$1\" löschen?",
 SUREDELETEDIMENSIONNAME = "Bist du sicher du willst die Dimension \"$1\" löschen?",
 SUREDELETEDIMENSIONNONAME = "Bist du dir sicher dass du diese Dimension löschen möchtest?",
 
+CUSTOMGRAPHICS = "Alternative Grafiken", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Tilesetbild:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Bild der Sprites:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Standard ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Standard (sprites.png)",
+
+CUT = "Schneiden",
+PASTE = "Einfügen",
+SELECTWORD = "Wort auswählen",
+SELECTLINE = "Linie auswählen",
+SELECTALL = "Alles auswählen",
+INSERTRAWHEX = "Unicodezeichen einfügen",
+MOVELINEUP = "Linie nach oben bewegen",
+MOVELINEDOWN = "Linie nach unten bewegen",
+DUPLICATELINE = "Linie duplizieren",
+
 }
 
 -- Please check the reference for plural forms
@@ -614,6 +635,10 @@ L_PLU = {
 		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
 		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[0] = "$1 Tile ist keine gültige ganze Nummer im Bereich 0-1199 im Alternativzustand $2 für Raum $3,$4",
+		[1] = "$1 Tiles sind keine gültige ganze Nummer im Bereich 0-1199 im Alternativzustand $2 für Raum $3,$4",
+	},
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
@@ -647,6 +672,9 @@ toolnames = {
 "Teleportationslinie",
 "Crewmitglied",
 "Startpunkt",
+"Drehtoken",
+"Münze",
+"Teleporter",
 
 }
 
@@ -669,6 +697,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Pink", "Gelb", "Rot", "Grün", "Blau", "Cyan", "Zufällig"},
 [17] = {"Gucke nach rechts", "Gucke nach links"},
+[18] = {},
+[19] = {"Einzelne Münze", "10 Münze", "20 Münze", "50 Münze", "100 Münze"},
+[20] = {},
 
 }
 
