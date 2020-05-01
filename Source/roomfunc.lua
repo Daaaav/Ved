@@ -249,6 +249,9 @@ function displayentities(offsetx, offsety, myroomx, myroomy, altst, bottom2rowst
 		if metadata.target == "VCE" and v.state ~= altst then
 			shown = false
 		end
+		if metadata.target == "VCE" and v.intower ~= 0 then
+			shown = false
+		end
 
 		if shown then
 			-- First of all, we can remove an entity by shift-right clicking
