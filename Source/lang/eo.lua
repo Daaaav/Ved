@@ -1,6 +1,6 @@
 -- Language file for Ved
---- Language: Esperanto (eo)
---- Last converted: 2020-02-24 00:18:43 (CET)
+--- Language: eo (eo)
+--- Last converted: 2020-04-30 18:29:28 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -251,6 +251,11 @@ TSCOLOR = "Koloro $1",
 ONETRINKETS = "K:",
 ONECREWMATES = "Ŝ:",
 ONEENTITIES = "E:",
+
+ONECUSTOMTILESET = "TK $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "TG $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Niveloj",
 LOADTHISLEVEL = "Ŝargi nivelon: ",
@@ -586,6 +591,22 @@ SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempelprovon \"$1\"?",
 SUREDELETEDIMENSIONNAME = "Ĉu vi certas, ke vi volas forigi la dimension \"$1\"?",
 SUREDELETEDIMENSIONNONAME = "Ĉu vi certas, ke vi volas forigi ĉi tiun dimension?",
 
+CUSTOMGRAPHICS = "Alternaj grafikoj", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Kahelara bildo:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Grafika bildo:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Defaŭlta ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Defaŭlta (sprites.png)",
+
+CUT = "Eltondi",
+PASTE = "Alglui",
+SELECTWORD = "Elekti vorton",
+SELECTLINE = "Elekti linion",
+SELECTALL = "Elekti ĉion",
+INSERTRAWHEX = "Enmeti Unicode-signon",
+MOVELINEUP = "Movi linion supren",
+MOVELINEDOWN = "Movi linion malsupren",
+DUPLICATELINE = "Duobligi linion",
+
 }
 
 -- Please check the reference for plural forms
@@ -626,6 +647,10 @@ L_PLU = {
 		[0] = "$1 kahelo ne estas valida entjero en la intervalo 0-1199",
 		[1] = "$1 kaheloj ne estas validaj entjeroj en la intervalo 0-1199",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[0] = "$1 kahelo ne estas valida entjero en la zono 0-1199 en alternstato $2 por ĉambro $3,$4",
+		[1] = "$1 kaheloj ne estas validaj entjeroj en la zono 0-1199 en alternstato $2 por ĉambro $3,$4",
+	},
 	BYTES = {
 		[0] = "$1 bajto",
 		[1] = "$1 bajtoj",
@@ -659,6 +684,9 @@ toolnames = {
 "Teleportlinio",
 "Ŝipano",
 "Komencejo",
+"Renversiga ĵetono",
+"Monero",
+"Teleportilo",
 
 }
 
@@ -681,6 +709,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Rozkolora", "Flava", "Ruĝa", "Verda", "Blua", "Bluverda", "Hazarda koloro"},
 [17] = {"Rigardi dekstren", "Rigardi maldekstren"},
+[18] = {},
+[19] = {"Unuopa monero", "Dek-monero", "Dudek-monero", "Kvindek-monero", "Cent-monero"},
+[20] = {},
 
 }
 

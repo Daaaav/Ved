@@ -226,6 +226,11 @@ ONETRINKETS = "<L.ONETRINKETS>",
 ONECREWMATES = "<L.ONECREWMATES>",
 ONEENTITIES = "<L.ONEENTITIES>",
 
+ONECUSTOMTILESET = "<L.ONECUSTOMTILESET>", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "<L.ONECUSTOMSPRITESHEET>", -- Custom Sprites
+ONEALTSTATE = "<L.ONEALTSTATE>", -- Alt state
+ONETOWER = "<L.ONETOWER>", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
+
 LEVELSLIST = "<L.LEVELSLIST>",
 LOADTHISLEVEL = "<L.LOADTHISLEVEL>",
 ENTERNAMESAVE = "<L.ENTERNAMESAVE>",
@@ -560,6 +565,22 @@ SUREDELETETRIAL = "<L.SUREDELETETRIAL>",
 SUREDELETEDIMENSIONNAME = "<L.SUREDELETEDIMENSIONNAME>",
 SUREDELETEDIMENSIONNONAME = "<L.SUREDELETEDIMENSIONNONAME>",
 
+CUSTOMGRAPHICS = "<L.CUSTOMGRAPHICS>", -- Alternative tileset or sprites images
+CUSTOMTILESET = "<L.CUSTOMTILESET>", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "<L.CUSTOMSPRITESHEET>", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "<L.CUSTOMTILESET_DEFAULT>", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "<L.CUSTOMSPRITESHEET_DEFAULT>",
+
+CUT = "<L.CUT>",
+PASTE = "<L.PASTE>",
+SELECTWORD = "<L.SELECTWORD>",
+SELECTLINE = "<L.SELECTLINE>",
+SELECTALL = "<L.SELECTALL>",
+INSERTRAWHEX = "<L.INSERTRAWHEX>",
+MOVELINEUP = "<L.MOVELINEUP>",
+MOVELINEDOWN = "<L.MOVELINEDOWN>",
+DUPLICATELINE = "<L.DUPLICATELINE>",
+
 }
 
 -- Please check the reference for plural forms
@@ -591,6 +612,9 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "<L_PLU.NOTALLTILESVALID>",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[0] = "<L_PLU.NOTALLTILESVALID_ALTSTATE>",
+	},
 	BYTES = {
 		[0] = "<L_PLU.BYTES>",
 	},
@@ -621,6 +645,9 @@ toolnames = {
 "<toolnames.15>",
 "<toolnames.16>",
 "<toolnames.17>",
+"<toolnames.18>",
+"<toolnames.19>",
+"<toolnames.20>",
 
 }
 
@@ -643,6 +670,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"<subtoolnames.16.1>", "<subtoolnames.16.2>", "<subtoolnames.16.3>", "<subtoolnames.16.4>", "<subtoolnames.16.5>", "<subtoolnames.16.6>", "<subtoolnames.16.7>"},
 [17] = {"<subtoolnames.17.1>", "<subtoolnames.17.2>"},
+[18] = {},
+[19] = {"<subtoolnames.19.1>", "<subtoolnames.19.2>", "<subtoolnames.19.3>", "<subtoolnames.19.4>", "<subtoolnames.19.5>"},
+[20] = {},
 
 }
 

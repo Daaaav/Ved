@@ -752,6 +752,26 @@ msgctxt "L.ONEENTITIES"
 msgid "E:"
 msgstr ""
 
+#. Custom Tileset
+msgctxt "L.ONECUSTOMTILESET"
+msgid "CT $1"
+msgstr ""
+
+#. Custom Sprites
+msgctxt "L.ONECUSTOMSPRITESHEET"
+msgid "CS $1"
+msgstr ""
+
+#. Alt state
+msgctxt "L.ONEALTSTATE"
+msgid "A $1/$2"
+msgstr ""
+
+#. Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
+msgctxt "L.ONETOWER"
+msgid "T$1 $2\n $3"
+msgstr ""
+
 msgctxt "L.LEVELSLIST"
 msgid "Levels"
 msgstr ""
@@ -1995,6 +2015,66 @@ msgctxt "L.SUREDELETEDIMENSIONNONAME"
 msgid "Are you sure you want to delete this dimension?"
 msgstr ""
 
+#. Alternative tileset or sprites images
+msgctxt "L.CUSTOMGRAPHICS"
+msgid "Alternative graphics"
+msgstr ""
+
+#. What variant of tiles*.png is used
+msgctxt "L.CUSTOMTILESET"
+msgid "Tileset image:"
+msgstr ""
+
+#. What variant of sprites*.png is used
+msgctxt "L.CUSTOMSPRITESHEET"
+msgid "Sprites image:"
+msgstr ""
+
+#. Placeholder can be tiles.png, tiles2.png or tiles3.png
+msgctxt "L.CUSTOMTILESET_DEFAULT"
+msgid "Default ($1)"
+msgstr ""
+
+msgctxt "L.CUSTOMSPRITESHEET_DEFAULT"
+msgid "Default (sprites.png)"
+msgstr ""
+
+msgctxt "L.CUT"
+msgid "Cut"
+msgstr ""
+
+msgctxt "L.PASTE"
+msgid "Paste"
+msgstr ""
+
+msgctxt "L.SELECTWORD"
+msgid "Select word"
+msgstr ""
+
+msgctxt "L.SELECTLINE"
+msgid "Select line"
+msgstr ""
+
+msgctxt "L.SELECTALL"
+msgid "Select all"
+msgstr ""
+
+msgctxt "L.INSERTRAWHEX"
+msgid "Insert Unicode character"
+msgstr ""
+
+msgctxt "L.MOVELINEUP"
+msgid "Move line upwards"
+msgstr ""
+
+msgctxt "L.MOVELINEDOWN"
+msgid "Move line downwards"
+msgstr ""
+
+msgctxt "L.DUPLICATELINE"
+msgid "Duplicate line"
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."
@@ -2046,6 +2126,12 @@ msgstr[1] ""
 msgctxt "L_PLU.NOTALLTILESVALID"
 msgid "$1 tile is not a valid whole number in the range 0-1199"
 msgid_plural "$1 tiles are not a valid whole number in the range 0-1199"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.NOTALLTILESVALID_ALTSTATE"
+msgid "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
+msgid_plural "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2133,6 +2219,18 @@ msgstr ""
 
 msgctxt "toolnames.17"
 msgid "Start point"
+msgstr ""
+
+msgctxt "toolnames.18"
+msgid "Flip token"
+msgstr ""
+
+msgctxt "toolnames.19"
+msgid "Coin"
+msgstr ""
+
+msgctxt "toolnames.20"
+msgid "Teleporter"
 msgstr ""
 
 msgctxt "subtoolnames.1.1"
@@ -2281,6 +2379,26 @@ msgstr ""
 
 msgctxt "subtoolnames.17.2"
 msgid "Face left"
+msgstr ""
+
+msgctxt "subtoolnames.19.1"
+msgid "Single coin"
+msgstr ""
+
+msgctxt "subtoolnames.19.2"
+msgid "10 coin"
+msgstr ""
+
+msgctxt "subtoolnames.19.3"
+msgid "20 coin"
+msgstr ""
+
+msgctxt "subtoolnames.19.4"
+msgid "50 coin"
+msgstr ""
+
+msgctxt "subtoolnames.19.5"
+msgid "100 coin"
 msgstr ""
 
 msgctxt "warpdirs.0"

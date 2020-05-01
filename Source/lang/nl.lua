@@ -1,6 +1,6 @@
 -- Language file for Ved
---- Language: Nederlands (nl)
---- Last converted: 2020-02-24 00:18:44 (CET)
+--- Language: nl (nl)
+--- Last converted: 2020-04-30 18:29:28 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -239,6 +239,11 @@ TSCOLOR = "Kleur $1",
 ONETRINKETS = "T:",
 ONECREWMATES = "B:",
 ONEENTITIES = "E:",
+
+ONECUSTOMTILESET = "AT $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "AS $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Levels",
 LOADTHISLEVEL = "Laad dit level: ",
@@ -559,10 +564,10 @@ DIMENSIONS = "Dimensies",
 TOWERDIRECTIONUP = "Richting: ↑",
 TOWERDIRECTIONDOWN = "Richting: ↓",
 TOWERENTRYEXIT = "In-/uitgang instellen",
-SWITCHEDTOALTSTATEMAIN = "Geschakeld naar hoofdstaat",
-SWITCHEDTOALTSTATE = "Geschakeld naar altstaat $1",
-ADDEDALTSTATE = "Nieuwe altstaat $1 toegevoegd",
-REMOVEDALTSTATE = "Altstaat $1 verwĳderd",
+SWITCHEDTOALTSTATEMAIN = "Geschakeld naar hoofdtoestand",
+SWITCHEDTOALTSTATE = "Geschakeld naar alternatieve toestand $1",
+ADDEDALTSTATE = "Nieuwe alternatieve toestand $1 toegevoegd",
+REMOVEDALTSTATE = "Alternatieve toestand $1 verwĳderd",
 ENABLEDTOWER = "Torenmodus ingeschakeld",
 DISABLEDTOWER = "Torenmodus uitgeschakeld",
 TOWERASCENDING = "Toren stĳgt nu",
@@ -573,6 +578,22 @@ TIMETRIALTIME = "Partĳd",
 SUREDELETETRIAL = "Weet je zeker dat je de time trial \"$1\" wilt verwĳderen?",
 SUREDELETEDIMENSIONNAME = "Weet je zeker dat je de dimensie \"$1\" wilt verwĳderen?",
 SUREDELETEDIMENSIONNONAME = "Weet je zeker dat je deze dimensie wilt verwĳderen?",
+
+CUSTOMGRAPHICS = "Alternatieve afbeeldingen", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Tileset-afbeelding:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Sprites-afbeelding:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Standaard ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Standaard (sprites.png)",
+
+CUT = "Knippen",
+PASTE = "Plakken",
+SELECTWORD = "Woord selecteren",
+SELECTLINE = "Regel selecteren",
+SELECTALL = "Alles selecteren",
+INSERTRAWHEX = "Unicode-teken invoegen",
+MOVELINEUP = "Regel naar boven verplaatsen",
+MOVELINEDOWN = "Regel naar onder verplaatsen",
+DUPLICATELINE = "Regel dupliceren",
 
 }
 
@@ -614,6 +635,10 @@ L_PLU = {
 		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
 		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199",
 	},
+	NOTALLTILESVALID_ALTSTATE = {
+		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199 in alteratieve toestand $2 voor kamer $3,$4",
+		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199 in alternatieve toestand $2 voor kamer $3,$4",
+	},
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
@@ -647,6 +672,9 @@ toolnames = {
 "Warplĳn",
 "Bemanningslid",
 "Startpunt",
+"Fliptoken",
+"Munt",
+"Teleporter",
 
 }
 
@@ -669,6 +697,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Roze", "Geel", "Rood", "Groen", "Blauw", "Cyaan", "Willekeurig"},
 [17] = {"Gezicht naar rechts", "Gezicht naar links"},
+[18] = {},
+[19] = {"Enkele munt", "10-munt", "20-munt", "50-munt", "100-munt"},
+[20] = {},
 
 }
 

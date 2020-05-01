@@ -226,6 +226,11 @@ ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
 
+ONECUSTOMTILESET = "CT $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
+ONEALTSTATE = "A $1/$2", -- Alt state
+ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
+
 LEVELSLIST = "Levels",
 LOADTHISLEVEL = "Load this level: ",
 ENTERNAMESAVE = "Enter name to save as: ",
@@ -560,6 +565,22 @@ SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
 SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
 SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
+CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+
+CUT = "Cut",
+PASTE = "Paste",
+SELECTWORD = "Select word",
+SELECTLINE = "Select line",
+SELECTALL = "Select all",
+INSERTRAWHEX = "Insert Unicode character",
+MOVELINEUP = "Move line upwards",
+MOVELINEDOWN = "Move line downwards",
+DUPLICATELINE = "Duplicate line",
+
 }
 
 -- Please check the reference for plural forms
@@ -636,7 +657,10 @@ toolnames = {
 "Warp token",
 "Warp line",
 "Crewmate",
-"Start point"
+"Start point",
+"Flip token",
+"Coin",
+"Teleporter"
 
 }
 
@@ -659,6 +683,9 @@ subtoolnames = {
 [15] = {},
 [16] = {"Pink", "Yellow", "Red", "Green", "Blue", "Cyan", "Random"},
 [17] = {"Face right", "Face left"},
+[18] = {},
+[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[20] = {},
 
 }
 
