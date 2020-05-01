@@ -3089,6 +3089,14 @@ function love.keypressed(key)
 		if key == "q" then
 			show_notification(L.OLDSHORTCUT_GOTOROOM)
 		end
+	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and metadata.target == "VCE" and key == "a" then
+		next_altstate()
+		if altstate == 0 then
+			temporaryroomname = L.SWITCHEDTOALTSTATEMAIN
+		else
+			temporaryroomname = langkeys(L.SWITCHEDTOALTSTATE, {altstate})
+		end
+		temporaryroomnametimer = 90
 	elseif coordsdialog.active and key == "escape" then
 		coordsdialog.active = false
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
@@ -3285,6 +3293,12 @@ function love.keypressed(key)
 	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
+	elseif nodialog and editingroomtext == 0 and editingroomname == false and state == 1 and metadata.target == "VCE" and levelmetadata_get(roomx, roomy).tower == 0 and key == "f6" then
+		-- Add altstate
+		local new_altstate = add_altstate(roomx, roomy)
+		altstate = new_altstate
+		temporaryroomname = langkeys(L.ADDEDALTSTATE, {new_altstate})
+		temporaryroomnametimer = 90
 	elseif nodialog and state == 1 and metadata.target == "VCE" and key == "f9" and keyboard_eitherIsDown(ctrl) and not voided_metadata then
 		-- customtileset/customspritesheet dialog
 		dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
@@ -4169,7 +4183,7 @@ function love.mousereleased(x, y, button)
 
 
 	if state == 1 and undosaved ~= 0 and undobuffer[undosaved] ~= nil then
-		undobuffer[undosaved].toredotiles = table.copy(roomdata_get(roomx, roomy))
+		undobuffer[undosaved].toredotiles = table.copy(roomdata_get(roomx, roomy, altstate))
 		undosaved = 0
 		cons("[UNRE] SAVED END RESULT FOR UNDO")
 	elseif state == 32 then
