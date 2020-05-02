@@ -16,6 +16,7 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		music = -1
 	end
 
+	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
 	local vvvvvv = path
 
 	local run = {
@@ -37,7 +38,6 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 	}
 	run = table.concat(run, " ")
 
-	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
 	local commands = {
 		run,
 	}
