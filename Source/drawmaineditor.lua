@@ -2315,18 +2315,6 @@ function drawmaineditor()
 		showhotkey("b", love.graphics.getWidth()-128, 32-8, nil, true)
 	end
 
-	if upperoptpage2 then
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(128-8), 40+(20*6), 128-16, 16)
-		love.graphics.setColor(255, 255, 255, 255)
-		rbutton(L.BACKB, 6, 40, false, 20)
-	else
-		love.graphics.setColor(0, 0, 0, 255)
-		love.graphics.rectangle("fill", love.graphics.getWidth()-(128-8), 40+(20*2), 128-16, 16)
-		love.graphics.setColor(255, 255, 255, 255)
-		rbutton({L.MAP, "M"}, 2, 40, false, 20)
-	end
-
 	-- Do we want to see room metadata?
 	if allowdebug and love.keyboard.isDown("f11") then
 
