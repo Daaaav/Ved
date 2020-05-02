@@ -1128,22 +1128,32 @@ function dialog.callback.platv(button, fields, _, notclosed)
 	finish_undo("PLATV")
 end
 
+function dialog.callback.locatevvvvvv(button, fields, _, notclosed)
+	if notclosed or button ~= DB.OK then
+		return
+	end
+
+	local path = fields.folder .. dirsep .. fields.name
+
+	if metadata.target == "V" then
+		s.vvvvvv23 = path
+	elseif metadata.target == "VCE" then
+		s.vvvvvvce = path
+	end
+	saveconfig()
+
+	playtesting_start()
+end
+
 function dialog.callback.locatevvvvvv_validate(button, fields)
-	if button == DB.OK then
-		local path = fields.folder .. dirsep .. fields.name
-		if not playtesting_validate_path(path) then
-			dialog.create(L.VVVVVVPATHINVALID .. " " .. playtesting_get_vvvvvv_message())
-			return true
-		end
+	if button ~= DB.OK then
+		return
+	end
 
-		if metadata.target == "V" then
-			s.vvvvvv23 = path
-		elseif metadata.target == "VCE" then
-			s.vvvvvvce = path
-		end
-		saveconfig()
-
-		playtesting_start()
+	local path = fields.folder .. dirsep .. fields.name
+	if not playtesting_validate_path(path) then
+		dialog.create(L.VVVVVVPATHINVALID .. " " .. playtesting_get_vvvvvv_message())
+		return true
 	end
 end
 

@@ -100,7 +100,7 @@ function playtesting_start()
 		dialog.create(
 			playtesting_get_vvvvvv_message(),
 			DBS.OKCANCEL,
-			nil,
+			dialog.callback.locatevvvvvv,
 			langkeys(L.LOCATEVVVVVV, {metadata.target == "VCE" and "VVVVVV-CE" or "VVVVVV 2.3"}),
 			files,
 			dialog.callback.locatevvvvvv_validate
