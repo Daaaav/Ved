@@ -257,7 +257,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 				end
 			}
 		)
-		table.insert(form, {"", 2, yoff+15, 40, filtertext, DF.LABEL})
+		table.insert(form, {"", 2, 15, 40, filtertext, DF.LABEL})
 	end
 
 	return form
