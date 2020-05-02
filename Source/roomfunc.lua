@@ -219,7 +219,7 @@ function addrooms(neww, newh)
 	end
 end
 
-function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
+function displayentities(offsetx, offsety, myroomx, myroomy, altst, bottom2rowstext)
 	-- This assumes the entities for this room are already loaded in entitydata. It just displays all entities.
 	if bottom2rowstext == nil then
 		bottom2rowstext = true
@@ -238,7 +238,22 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 
 	local nthscriptbox = 0
 	for k,v in pairs(entitydata) do
-		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
+		local shown = false
+
+		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+			shown = true
+		end
+		if (v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
+			shown = true
+		end
+		if metadata.target == "VCE" and v.state ~= altst then
+			shown = false
+		end
+		if metadata.target == "VCE" and v.intower ~= 0 then
+			shown = false
+		end
+
+		if shown then
 			-- First of all, we can remove an entity by shift-right clicking
 			if keyboard_eitherIsDown("shift") and love.mouse.isDown("r") and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
 				removeentity(k, entitydata[k].t)
@@ -3060,10 +3075,10 @@ function warplinesinroom(theroomx, theroomy)
 end
 
 function insert_entity(...) -- atx, aty, t, p...
-	insert_entity_full(roomx, roomy, 0, 0, 0, ...)
+	insert_entity_full(roomx, roomy, altstate, 0, 0, 0, ...)
 end
 
-function insert_entity_full(rx, ry, intower, subx, suby, atx, aty, t, p1, p2, p3, p4, data)
+function insert_entity_full(rx, ry, astate, intower, subx, suby, atx, aty, t, p1, p2, p3, p4, data)
 	if p1 == nil then p1 = 0 end
 	if p2 == nil then p2 = 0 end
 	if p3 == nil then p3 = 0 end
@@ -3077,7 +3092,7 @@ function insert_entity_full(rx, ry, intower, subx, suby, atx, aty, t, p1, p2, p3
 			t = t,
 			p1 = p1, p2 = p2, p3 = p3, p4 = p4, p5 = 320, p6 = 240,
 			subx = subx, suby = suby, -- VCE
-			intower = intower, state = 0, onetime = false, -- VCE
+			intower = intower, state = astate, onetime = false, -- VCE
 			activityname = "", activitycolor = "", -- VCE
 			data = data
 		}

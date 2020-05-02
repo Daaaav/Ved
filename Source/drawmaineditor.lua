@@ -1246,7 +1246,7 @@ function drawmaineditor()
 		local hasroomname = levelmetadata_get(roomx, roomy).roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
-			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
+			displayentities(screenoffset, 0, roomx, roomy, altstate, overwritename or not hasroomname)
 		end
 
 		-- Now display bounds! Enemies first...
