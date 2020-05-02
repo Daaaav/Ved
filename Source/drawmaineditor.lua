@@ -2311,7 +2311,7 @@ function drawmaineditor()
 		ved_printf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
 	end
 
-	if playtesting_askwherestart and not coordsdialog.active then
+	if playtesting_askwherestart then
 		showhotkey("b", love.graphics.getWidth()-128, 32-8, nil, true)
 	end
 
