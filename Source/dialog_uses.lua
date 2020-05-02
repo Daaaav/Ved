@@ -235,7 +235,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		else
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
-		table.insert(form, {"dofilter", 0, yoff+15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
+		table.insert(form, {"dofilter", 0, 15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
 						if v[1] == "folder" then
