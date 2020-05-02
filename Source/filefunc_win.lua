@@ -381,9 +381,9 @@ function get_parent_path(directory)
 	-- "" counts as the list of drives.
 	local last_dirsep = directory:reverse():find("\\", 1, true)
 	if last_dirsep == nil then
-		return ""
+		return "", directory
 	end
-	return directory:sub(1, -last_dirsep-1)
+	return directory:sub(1, -last_dirsep-1), directory:sub(-last_dirsep, -1):sub(2, -1)
 end
 
 function get_child_path(directory, child)
@@ -439,6 +439,12 @@ function directory_exists(where, what)
 	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(where .. "\\" .. what))
 
 	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and file_attributes_directory(dwAttributes)
+end
+
+function file_exists(path)
+	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(path))
+
+	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and not file_attributes_directory(dwAttributes)
 end
 
 function readlevelfile(path)

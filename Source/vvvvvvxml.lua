@@ -769,15 +769,19 @@ end
 vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
 vvvvvvxmltemplate_vce = love.filesystem.read("template_vce.vvvvvv")
 
-function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed)
+function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
-	if (path == nil) or (path == "") then
+	if (path == "") then
 		return false, L.FORGOTPATH
 	end
 
+	if invvvvvvfolder == nil then
+		invvvvvvfolder = true
+	end
+
 	-- First make a backup of the file we'll overwrite - if it exists and we haven't crashed.
-	if not crashed and s.enableoverwritebackups then
+	if not crashed and s.enableoverwritebackups and path ~= nil then
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
@@ -1163,13 +1167,24 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	-- Alright, let's save!
 	cons("Saving file...")
-	success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. path, savethis)
+	if path ~= nil then
+		local usethispath
+		if invvvvvvfolder then
+			usethispath = levelsfolder .. dirsep .. path
+		else
+			usethispath = path
+		end
+		success, iferrmsg = writelevelfile(usethispath, savethis)
+	else
+		success = true
+		iferrmsg = savethis
+	end
 
 	if vedmetadata == nil then
 		dialog.create(L.MDENOTPASSED)
 	end
 
-	if success then
+	if success and path ~= nil then
 		recentlyopened(path:sub(1, -8))
 
 		if undobuffer ~= nil then

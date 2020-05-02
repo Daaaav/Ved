@@ -1742,8 +1742,20 @@ function drawmaineditor()
 	love.graphics.setColor(0, 0, 0, 192)
 	love.graphics.rectangle("fill", love.graphics.getWidth()-127, 0, 128, love.graphics.getHeight())
 	love.graphics.setColor(255,255,255,255)
-	hoverdraw(helpbtn, love.graphics.getWidth()-120, 8, 16, 16, 1) -- -128+8 => -120
-	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+6, 16-12, ALIGN.CENTER)
+	local usethisbtn
+	if playtesting_available then
+		if playtesting_askwherestart then
+			usethisbtn = stopbtn
+		else
+			usethisbtn = playbtn
+		end
+	else
+		usethisbtn = playgraybtn
+	end
+	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32, 2)
+	_= not editingroomname and editingbounds == 0 and showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is after the side panels are darkened
+	hoverdraw(helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
+	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
 	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
 	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
@@ -1770,13 +1782,13 @@ function drawmaineditor()
 	end
 
 	_= not editingroomname and showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
-	_= not editingroomname and showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
 
 	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
-	_= not editingroomname and showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4, ALIGN.CENTER)
+	_= not editingroomname and showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
 	_= not editingroomname and showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
 	_= not editingroomname and showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
@@ -1812,7 +1824,15 @@ function drawmaineditor()
 
 	-- Well make them actually do something!
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
-		if mouseon(love.graphics.getWidth()-120, 8, 16, 16) then
+		if mouseon(love.graphics.getWidth()-128, 0, 32, 32) then
+			-- Play
+			if playtesting_askwherestart then
+				playtesting_cancelask()
+			else
+				playtesting_start()
+			end
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+40, 40, 16, 16) then
 			-- Help
 			tostate(15)
 			mousepressed = true
@@ -1829,12 +1849,12 @@ function drawmaineditor()
 				triggernewlevel()
 			end
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
 			editingroomname = false
 			tostate(6)
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
 			editingroomname = false
@@ -1843,25 +1863,25 @@ function drawmaineditor()
 				dialog.callback.save, nil, dialog.form.save_make()
 			)
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
 			undo()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-120+16, 40, 16, 16) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-120+16, 40, 16, 16) then
 			redo()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-120+64, 40, 16, 16) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-120+64, 40, 16, 16) then
 			-- Cut
 			cutroom()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-120+80, 40, 16, 16) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-120+80, 40, 16, 16) then
 			-- Copy
 			copyroom()
 			mousepressed = true
-		elseif mouseon(love.graphics.getWidth()-120+98, 40, 16, 16) then
+		elseif nodialog and mouseon(love.graphics.getWidth()-120+98, 40, 16, 16) then
 			-- Paste
 			pasteroom()
 			mousepressed = true
-		elseif onrbutton(1, 40, false, 20) then
+		elseif nodialog and onrbutton(1, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level options
 				dialog.create(
@@ -1881,11 +1901,11 @@ function drawmaineditor()
 			if not upperoptpage2 then
 				-- Map
 				tostate(12)
-			else
+			elseif nodialog then
 				-- Compare
 				tostate(6, nil, "secondlevel")
 			end
-		elseif onrbutton(3, 40, false, 20) then
+		elseif nodialog and onrbutton(3, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Scripts
 				tostate(10)
@@ -1895,21 +1915,24 @@ function drawmaineditor()
 				tostate(28)
 				mousepressed = true
 			end
-		elseif onrbutton(4, 40, false, 20) then
+		elseif nodialog and onrbutton(4, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Search
 				tostate(11)
 			end
-		elseif onrbutton(5, 40, false, 20) then
+		elseif nodialog and onrbutton(5, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level notepad
 				tonotepad()
 			end
-		elseif onrbutton(6, 40, false, 20) then
+		elseif (nodialog or upperoptpage2) and onrbutton(6, 40, false, 20) then
 			-- Pages
 			upperoptpage2 = not upperoptpage2
 
 			mousepressed = true
+
+		elseif not nodialog then
+		-- Cancel the ugly hack for the rest of these buttons
 
 		-- Room options now
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
@@ -2202,5 +2225,98 @@ function drawmaineditor()
 
 	if coordsdialog.active then
 		coordsdialog.draw()
+	end
+
+	local bottomwidemsg
+	if playtesting_askwherestart then
+		bottomwidemsg = L.WHEREPLACEPLAYER
+	elseif playtesting_active then
+		bottomwidemsg = L.YOUAREPLAYTESTING
+	end
+
+	if playtesting_askwherestart then
+		local mouseoncanvas = mouseon(screenoffset, 0, 640, love.graphics.getHeight())
+
+		if mouseoncanvas then
+			local atx, aty = love.mouse.getPosition()
+			local flipped = false
+			atx = atx - screenoffset
+			atx = math.floor(atx / 2)
+			aty = math.floor(aty / 2)
+
+			if not keyboard_eitherIsDown("alt") then
+				atx, aty, flipped = playtesting_snap_position(atx, aty, flipped)
+			end
+
+			atx = atx * 2
+			aty = aty * 2
+			atx = atx + screenoffset
+			v6_setcol(0)
+			love.graphics.setScissor(screenoffset, 0, 640, love.graphics.getHeight())
+
+			if keyboard_eitherIsDown("shift") then
+				flipped = not flipped
+			end
+
+			local usethissprite = 0
+			if flipped then
+				usethissprite = usethissprite + 6
+			end
+			drawentitysprite(
+				usethissprite,
+				atx - 12,
+				aty - 4,
+				levelmetadata_get(roomx, roomy).customspritesheet
+			)
+
+			love.graphics.setScissor()
+			love.graphics.setColor(255, 255, 255, 255)
+		end
+
+		local flipindicator = "gvj"
+		local unlockindicator = ";"
+
+		local tinywidth = math.max(tinynumbers:getWidth(L.TINY_SHIFT), tinynumbers:getWidth(L.TINY_ALT))
+		local tinyiconwidth = math.max(tinynumbers:getWidth(flipindicator), tinynumbers:getWidth(unlockindicator))
+		local totalwidth = tinywidth + tinyiconwidth
+
+		love.graphics.setColor(0, 0, 0, 224)
+		love.graphics.rectangle("fill", 128-totalwidth-1, love.graphics.getHeight()-15, totalwidth+2, 16)
+		love.graphics.setColor(255, 255, 0, 255)
+		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth(flipindicator), love.graphics.getHeight()-15)
+		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(unlockindicator), love.graphics.getHeight()-7)
+		love.graphics.setColor(255, 255, 255, 255)
+
+		if love.mouse.isDown("l") and not mousepressed then
+			mousepressed = true
+			if mouseoncanvas then
+				playtesting_endaskwherestart()
+			else
+				playtesting_askwherestart = false
+			end
+		end
+	end
+
+	if bottomwidemsg ~= nil then
+		local _, lines = font8:getWrap(bottomwidemsg, love.graphics.getWidth())
+		-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+		if type(lines) == "table" then
+			lines = #lines
+		end
+		local yoff = 16 * (lines-1)
+
+		love.graphics.setColor(255, 255, 127, 63)
+		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), 16+yoff)
+		love.graphics.setColor(255, 255, 255, 255)
+		ved_printf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
+	end
+
+	if playtesting_askwherestart then
+		showhotkey("b", love.graphics.getWidth()-128, 32-8, nil, true)
+	end
+
+	-- Do we want to see room metadata?
+	if allowdebug and love.keyboard.isDown("f11") then
+
 	end
 end

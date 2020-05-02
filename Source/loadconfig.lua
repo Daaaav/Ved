@@ -235,6 +235,18 @@ configs =
 		default = false,
 		["type"] = "bool",
 		},
+	vvvvvv23 =
+		{
+		default = "",
+		["type"] = "string",
+		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV.exe'. On Linux and macOS, point this to the file 'VVVVVV'.",
+		},
+	vvvvvvce =
+		{
+		default = "",
+		["type"] = "string",
+		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV-CE.exe'. On Linux and macOS, point this to the file 'VVVVVV-CE'.",
+		},
 	}
 
 function saveconfig()

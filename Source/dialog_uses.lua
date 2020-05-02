@@ -209,23 +209,23 @@ function dialog.form.savevvvvvvmusic_make(default)
 	}
 end
 
-function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height)
+function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
 	local len_namelabel = font8:getWidth(L.FILEOPENERNAME)/8
 	local success, files, everr = listfiles_generic(startfolder, filter, true)
 	if success then
 		everr = ""
 	end
 	form = {
-		--{"folder", 0, 0, 47, startfolder, DF.TEXT},
-		{"folder", 0, 0, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
+		--{"folder", 0, yoff, 47, startfolder, DF.TEXT},
+		{"folder", 0, yoff, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
 	}
 
 	if filter ~= dirsep then
 		table.insert(form,
-			{"", 0, 2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
+			{"", 0, yoff+2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
 		)
 		table.insert(form,
-			{"name", len_namelabel, 2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
+			{"name", len_namelabel, yoff+2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
 		)
 	end
 	if filter ~= "" then
@@ -1126,6 +1126,35 @@ function dialog.callback.platv(button, fields, _, notclosed)
 		}
 	)
 	finish_undo("PLATV")
+end
+
+function dialog.callback.locatevvvvvv(button, fields, _, notclosed)
+	if notclosed or button ~= DB.OK then
+		return
+	end
+
+	local path = fields.folder .. dirsep .. fields.name
+
+	if metadata.target == "V" then
+		s.vvvvvv23 = path
+	elseif metadata.target == "VCE" then
+		s.vvvvvvce = path
+	end
+	saveconfig()
+
+	playtesting_start()
+end
+
+function dialog.callback.locatevvvvvv_validate(button, fields)
+	if button ~= DB.OK then
+		return
+	end
+
+	local path = fields.folder .. dirsep .. fields.name
+	if not playtesting_validate_path(path) then
+		dialog.create(L.VVVVVVPATHINVALID .. " " .. playtesting_get_vvvvvv_message())
+		return true
+	end
 end
 
 function dialog.callback.leveloptions_maxlevelsize(button, fields)

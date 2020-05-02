@@ -73,6 +73,7 @@ function love.load()
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
 		end
+		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -83,6 +84,7 @@ function love.load()
 		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
+		playtesting_available = true
 	elseif love.system.getOS() == "Linux" then
 		-- Ctrl
 		ctrl = "ctrl"
@@ -113,6 +115,7 @@ function love.load()
 		else
 			loaded_filefunc = "lin_fallback"
 		end
+		playtesting_available = true
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
@@ -123,6 +126,7 @@ function love.load()
 		newline = "\n"
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
+		playtesting_available = false
 	end
 	lctrl = "l" .. ctrl
 	rctrl = "r" .. ctrl
@@ -159,6 +163,7 @@ function love.load()
 	ved_require("mapfunc")
 	ved_require("music")
 	ved_require("vvvvvvfunc")
+	ved_require("playtesting")
 
 	utf8 = require("utf8lib_wrapper")
 	ved_require("input")
@@ -290,6 +295,10 @@ function love.load()
 	copybtn = love.graphics.newImage("images/copy.png")
 	pastebtn = love.graphics.newImage("images/paste.png")
 	refreshbtn = love.graphics.newImage("images/refresh.png")
+
+	playbtn = love.graphics.newImage("images/play.png")
+	playgraybtn = love.graphics.newImage("images/playgray.png")
+	stopbtn = love.graphics.newImage("images/stop.png")
 
 	eraseron = love.graphics.newImage("images/eraseron.png")
 	eraseroff = love.graphics.newImage("images/eraseroff.png")
@@ -431,6 +440,9 @@ function love.load()
 
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
+
+	playtestthread_inchannel = love.thread.getChannel("playtestthread_in")
+	playtestthread_outchannel = love.thread.getChannel("playtestthread_out")
 
 	next_frame_time = love.timer.getTime()
 
@@ -2056,6 +2068,16 @@ function love.update(dt)
 		focusregainedtimer = 0
 	end
 
+	if playtesting_active then
+		local chanmessage = playtestthread_outchannel:pop()
+
+		if chanmessage ~= nil then
+			if chanmessage == PLAYTESTING.DONE then
+				playtesting_active = false
+			end
+		end
+	end
+
 	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
 		if RCMactive then
 			cursorflashtime = 0
@@ -2355,7 +2377,7 @@ function love.update(dt)
 		map_work(0.005)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
 		nodialog = false
 	elseif not love.mouse.isDown("l") then
 		nodialog = true
@@ -2476,7 +2498,7 @@ function love.textinput(char)
 		coordsdialog.type(char)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
 		return
 	end
 
@@ -3102,6 +3124,8 @@ function love.keypressed(key)
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and (key == "m" or key == "kp5") then
 		tostate(12)
 		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
+	elseif playtesting_askwherestart and not editingroomname and editingroomtext == 0 and state == 1 and key == "escape" then
+		playtesting_cancelask()
 	elseif nodialog and not editingroomname and editingroomtext == 0 and state == 1 and key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
 			tonotepad()
@@ -3362,6 +3386,9 @@ function love.keypressed(key)
 		-- We have to do this in love.draw() or else the
 		-- editorscreenshot will be of the wrong state
 		gotostateonnextdraw = 6
+	elseif nodialog and editingroomtext == 0 and not editingroomname and editingbounds == 0 and state == 1 and table.contains({"return", "kpenter"}, key) then
+		-- Play
+		playtesting_start()
 	elseif nodialog and (state == 1 or state == 6) and key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if state == 6 and not state6old1 then

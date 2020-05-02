@@ -3485,6 +3485,11 @@ SHIFT = {
 	DOWN = 4,
 }
 
+-- For playtesting
+PLAYTESTING = {
+	DONE = 1,
+}
+
 -- For map_correspondreset()
 DIRTY = {
 	ROW = 1,
