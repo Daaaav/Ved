@@ -1832,11 +1832,11 @@ function drawmaineditor()
 				playtesting_start()
 			end
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120+40, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+40, 40, 16, 16) then
 			-- Help
 			tostate(15)
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
+		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
 			editingroomname = false
 			if has_unsaved_changes() then
