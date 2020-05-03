@@ -190,6 +190,8 @@ function addrooms(neww, newh)
 					for t = 1, 1200 do
 						roomdata[y][x][t] = 0
 					end
+				end
+				if rooms_map[y] == nil or rooms_map[y][x] == nil then
 					map_resetroom(x, y)
 				end
 				if extra.altstates ~= nil and extra.altstates[y][x] == nil then
@@ -427,7 +429,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				4, 1
 			)
 		end
-	elseif v.t == 5 then
+	elseif v.t == 5 and metadata.target == "VCE" then
 		-- Flip token, temp
 		love.graphics.setColor(128,128,255,255)
 		ved_print("FL\nIP", x, y, 2)
@@ -439,7 +441,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				2, 2
 			)
 		end
-	elseif v.t == 8 then
+	elseif v.t == 8 and metadata.target == "VCE" then
 		-- Coin
 		local coinsize, coinvalue
 		if v.p1 == 0 then
@@ -612,7 +614,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				)
 			end
 		end
-	elseif v.t == 14 then
+	elseif v.t == 14 and metadata.target == "VCE" then
 		-- Teleporter
 		drawtele(x, y)
 		if v.t ~= nil and interact then
@@ -689,7 +691,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				2, 3
 			)
 		end
-	elseif v.t == 19 or v.t == 20 then
+	elseif v.t == 19 or (v.t == 20 and metadata.target == "VCE") then
 		-- Script box/activity zone, draw it as an actual box.
 		--love.graphics.draw(cursorimg[1], x, y)
 		if v.t == 19 then

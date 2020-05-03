@@ -56,7 +56,6 @@ function loadlevelmetadata(path)
 		local m = contents:match("<" .. v .. ">(.*)</" .. v .. ">")
 		if m == nil then
 			return false, L.MAL .. langkeys(L.METADATAITEMCORRUPT, {v})
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
 		end
 		thismetadata[v] = tonumber(m)
 	end
@@ -1309,4 +1308,111 @@ function default_levelmetadata(rx, ry)
 		roomname = "",
 		auto2mode = 0,
 	}
+end
+
+function convert_target(oldtarget, newtarget)
+	local result = false
+	if oldtarget == "V" and newtarget == "VCE" then
+		result = convert_target_v_to_vce()
+	elseif oldtarget == "VCE" and newtarget == "V" then
+		result = convert_target_vce_to_v()
+	end
+
+	if result then
+		-- Conversion cannot be undone
+		undobuffer = {}
+		redobuffer = {}
+		unsavedchanges = true
+
+		map_init()
+	end
+
+	return result
+end
+
+function convert_target_v_to_vce()
+	metadata.target = "VCE"
+	metadata.target_ver = 1
+	limit = limit_vce
+
+	extra.altstates = {}
+	for ay = 0, metadata.mapheight-1 do
+		if extra.altstates[ay] == nil then
+			extra.altstates[ay] = {}
+		end
+		for ax = 0, metadata.mapwidth-1 do
+			extra.altstates[ay][ax] = {}
+		end
+	end
+
+	extra.towers = {}
+	extra.teleporters = {}
+	extra.timetrials = {}
+	extra.dimensions = {}
+
+	if vedmetadata ~= false then
+		for i = limit_v.flags, limit_vce.flags-1 do
+			vedmetadata.flaglabel[i] = ""
+		end
+	end
+
+	return true
+end
+
+function convert_target_vce_to_v()
+	metadata.target = "V"
+	limit = limit_v
+
+	extra.altstates = nil
+	extra.towers = nil
+	extra.teleporters = nil
+	extra.timetrials = nil
+	extra.dimensions = nil
+
+	metadata.mapwidth = math.min(metadata.mapwidth, limit_v.mapwidth)
+	metadata.mapheight = math.min(metadata.mapheight, limit_v.mapheight)
+
+	for k,v in pairs(entitydata) do
+		if table.contains({5, 8, 14}, v.t) -- Flip tokens, coins and teleporters don't exist in VVVVVV
+		or v.intower ~= 0
+		or v.state ~= 0 then
+			entitydata[k] = nil
+			count.entities = count.entities - 1
+		else
+			if v.t == 20 then
+				-- Convert activity zones into normal script boxes instead of deleting them
+				entitydata[k].t = 19
+			end
+
+			v.subx, v.suby = 0, 0
+			v.onetime = false
+			v.activityname = ""
+			v.activitycolor = ""
+		end
+	end
+
+	for ay,vy in pairs(levelmetadata) do
+		for ax,vx in pairs(vy) do
+			if vx.tileset == 5 then
+				vx.tileset = 0
+			end
+			if vx.enemytype > 9 then
+				vx.enemytype = 0
+			end
+			vx.customtileset = 0
+			vx.customspritesheet = 0
+			vx.enemyv = 4
+			vx.tower = 0
+			vx.tower_row = 0
+		end
+	end
+
+
+	if vedmetadata ~= false then
+		for i = limit_v.flags, limit_vce.flags-1 do
+			vedmetadata.flaglabel[i] = nil
+		end
+	end
+
+	return true
 end

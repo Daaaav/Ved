@@ -160,6 +160,10 @@ function dialog.form.leveloptions_make()
 				end
 			end
 		},
+		{"", 0, 13, 40, L.TARGETPLATFORM, DF.LABEL},
+		{"target", 0, 14, 0, metadata.target, DF.RADIOS,
+			generate_dropdown_tables({{"V", L.PLATFORM_V}, {"VCE", L.PLATFORM_VCE}})
+		},
 	}
 end
 
@@ -936,14 +940,22 @@ function dialog.callback.leveloptions(button, fields)
 		return
 	end
 
+	local converted
+	if fields.target ~= metadata.target then
+		-- Convert first, if we also want to resize the level or so, we'll need all our ducks in order.
+		converted = convert_target(metadata.target, fields.target)
+	end
+
 	-- What are the old properties?
 	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
 	local undo_properties = {}
-	for k,v in pairs(undo_propertynames) do
-		undo_properties[k] = {
-			key = v,
-			oldvalue = metadata[v]
-		}
+	if not converted then
+		for k,v in pairs(undo_propertynames) do
+			undo_properties[k] = {
+				key = v,
+				oldvalue = metadata[v]
+			}
+		end
 	end
 
 	-- Level properties
@@ -996,14 +1008,16 @@ function dialog.callback.leveloptions(button, fields)
 		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 	end
 
-	--What are the new properties again?
-	for k,v in pairs(undo_propertynames) do
-		undo_properties[k].newvalue = metadata[v]
-	end
+	if not converted then
+		--What are the new properties again?
+		for k,v in pairs(undo_propertynames) do
+			undo_properties[k].newvalue = metadata[v]
+		end
 
-	-- Make sure we can undo and redo it
-	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
-	finish_undo("CHANGED METADATA")
+		-- Make sure we can undo and redo it
+		table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
+		finish_undo("CHANGED METADATA")
+	end
 end
 
 function dialog.callback.loadvvvvvvmusic(button, fields)
@@ -1191,6 +1205,9 @@ function dialog.callback.leveloptions_maxlevelsize(button, fields)
 		-- assumptions that (1) the user can't undo, redo, or make any other
 		-- changes while a dialog is open, and (2) the order of the changed
 		-- metadata in the undo buffer won't change in the future
+		if #undobuffer == 0 then
+			return
+		end
 		undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 		undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
 		finish_undo("CHANGED METADATA (max level size, also ugly hack)")
@@ -1209,6 +1226,9 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 	addrooms(metadata.mapwidth, metadata.mapheight)
 	gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 
+	if #undobuffer == 0 then
+		return
+	end
 	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
 	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
