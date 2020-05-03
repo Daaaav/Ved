@@ -210,6 +210,9 @@ function dialog.form.savevvvvvvmusic_make(default)
 end
 
 function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
+	if yoff == nil then
+		yoff = 0
+	end
 	local len_namelabel = font8:getWidth(L.FILEOPENERNAME)/8
 	local success, files, everr = listfiles_generic(startfolder, filter, true)
 	if success then
