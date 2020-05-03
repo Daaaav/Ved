@@ -2130,7 +2130,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 			if direction == "u" then
 				if mkinput == "home" and not cfistext then
 					fieldscroll = 0
-				elseif mkinput == "pageup" then
+				else
 					fieldscroll = fieldscroll + distance
 					if fieldscroll > 0 then
 						fieldscroll = 0
@@ -2140,7 +2140,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
 				if mkinput == "end" and not cfistext then
 					fieldscroll = math.min(-upperbound, 0)
-				elseif mkinput == "pagedown" then
+				else
 					fieldscroll = fieldscroll - distance
 					if -fieldscroll > upperbound then
 						fieldscroll = math.min(-upperbound, 0)
