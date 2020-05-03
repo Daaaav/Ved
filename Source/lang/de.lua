@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2020-04-30 18:29:27 (CEST)
+--- Last converted: 2020-05-03 02:17:17 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -594,6 +594,14 @@ INSERTRAWHEX = "Unicodezeichen einfügen",
 MOVELINEUP = "Linie nach oben bewegen",
 MOVELINEDOWN = "Linie nach unten bewegen",
 DUPLICATELINE = "Linie duplizieren",
+
+WHEREPLACEPLAYER = "Wo willst du starten?",
+YOUAREPLAYTESTING = "Du Spieltestest momentan",
+LOCATEVVVVVV = "Wähle dein $1 Program aus", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Du Spieltestest schon!",
+PLAYTESTUNAVAILABLE = "Tut mir leid, du kannst nicht Spieltesten auf $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Bitte wähle die Datei namens '$1' aus.",
+CHANGINGPATHAFTERASK = "Der VVVVVV-Pfad wurde geändert nachdem Spielen gedrückt wurde und ist nicht mehr gültig!",
 
 }
 

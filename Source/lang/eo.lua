@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2020-04-30 18:29:28 (CEST)
+--- Last converted: 2020-05-03 02:17:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -606,6 +606,14 @@ INSERTRAWHEX = "Enmeti Unicode-signon",
 MOVELINEUP = "Movi linion supren",
 MOVELINEDOWN = "Movi linion malsupren",
 DUPLICATELINE = "Duobligi linion",
+
+WHEREPLACEPLAYER = "Where do you want to start?",
+YOUAREPLAYTESTING = "You are currently playtesting",
+LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "You're already playtesting!",
+PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Please select the file named '$1'.",
+CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
 
 }
 

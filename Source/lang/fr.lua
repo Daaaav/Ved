@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2020-04-30 18:29:28 (CEST)
+--- Last converted: 2020-05-03 02:17:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -242,8 +242,8 @@ ONETRINKETS = "M :",
 ONECREWMATES = "Eq :",
 ONEENTITIES = "En :",
 
-ONECUSTOMTILESET = "CT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
+ONECUSTOMTILESET = "JTC $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "JIC $1", -- Custom Sprites
 ONEALTSTATE = "A $1/$2", -- Alt state
 ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
@@ -555,47 +555,55 @@ MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
 
 CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire. VVVVVV peut aussi planter pour n'importe quelle raison dans n'importe laquelle de ces salles.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
 MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4! (Le support d'une taille plus grande que $3 par $4 n'est pas activé)",
-BTNOVERRIDE = "Mettre à Jour",
+BTNOVERRIDE = "Mettre à jour",
 TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Tower mode",
-DISABLETOWER = "Disable tower",
-TIMETRIALS = "Time trials",
+ENABLETOWER = "Mode Tour",
+DISABLETOWER = "Désactiver la tour",
+TIMETRIALS = "Contre la montre",
 DIMENSIONS = "Dimensions",
-TOWERDIRECTIONUP = "Direction: ↑",
-TOWERDIRECTIONDOWN = "Direction: ↓",
-TOWERENTRYEXIT = "Set entry/exit",
-SWITCHEDTOALTSTATEMAIN = "Switched to main state",
-SWITCHEDTOALTSTATE = "Switched to alt state $1",
-ADDEDALTSTATE = "Added new alt state $1",
-REMOVEDALTSTATE = "Removed alt state $1",
-ENABLEDTOWER = "Tower mode enabled",
-DISABLEDTOWER = "Tower mode disabled",
-TOWERASCENDING = "Tower now ascending",
-TOWERDESCENDING = "Tower now descending",
-TOWERENTRYSET = "Tower entry/exit set to current position",
-TIMETRIALTRINKETS = "Trinket count",
-TIMETRIALTIME = "Par time",
-SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
+TOWERDIRECTIONUP = "Direction : ↑",
+TOWERDIRECTIONDOWN = "Direction : ↓",
+TOWERENTRYEXIT = "Changer entrée/sortie",
+SWITCHEDTOALTSTATEMAIN = "État principal sélectionné",
+SWITCHEDTOALTSTATE = "État alternatif $1 sélectionné",
+ADDEDALTSTATE = "Nouvel état alternatif $1 ajouté",
+REMOVEDALTSTATE = "État alternatif $1 supprimé",
+ENABLEDTOWER = "Mode Tour activé",
+DISABLEDTOWER = "Mode Tour désactivé",
+TOWERASCENDING = "La tour monte",
+TOWERDESCENDING = "La tour descend",
+TOWERENTRYSET = "L'entrée/sortie de la tour est maintenant la position courante",
+TIMETRIALTRINKETS = "Compte de médailles",
+TIMETRIALTIME = "Temps visé",
+SUREDELETETRIAL = "Êtes-vous sûr de vouloir supprimer le contre la montre \"$1\" ?",
+SUREDELETEDIMENSIONNAME = "Êtes-vous sûr de vouloir supprimer la dimension \"$1\" ?",
+SUREDELETEDIMENSIONNONAME = "Êtes-vous sûr de vouloir supprimer cette dimension ?",
 
-CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+CUSTOMGRAPHICS = "Graphismes alternatifs", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Image du jeu de tuiles :", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Jeu d'images :", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Défaut ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Défaut (sprites.png)",
 
-CUT = "Cut",
-PASTE = "Paste",
-SELECTWORD = "Select word",
-SELECTLINE = "Select line",
-SELECTALL = "Select all",
-INSERTRAWHEX = "Insert Unicode character",
-MOVELINEUP = "Move line upwards",
-MOVELINEDOWN = "Move line downwards",
-DUPLICATELINE = "Duplicate line",
+CUT = "Couper",
+PASTE = "Coller",
+SELECTWORD = "Sélectionner un mot",
+SELECTLINE = "Sélectionner une ligne",
+SELECTALL = "Tout sélectionner",
+INSERTRAWHEX = "Insérer un caractère Unicode",
+MOVELINEUP = "Déplacer la ligne vers le haut",
+MOVELINEDOWN = "Déplacer la ligne vers le bas",
+DUPLICATELINE = "Dupliquer la ligne",
+
+WHEREPLACEPLAYER = "Où voulez-vous commencer ?",
+YOUAREPLAYTESTING = "Vous êtes dans un test de jeu",
+LOCATEVVVVVV = "Selectionnez votre exécutable de $1", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Vous êtes déjà dans un test de jeu !",
+PLAYTESTUNAVAILABLE = "Désolé, vous ne pouvez pas être dans un test de jeu sur un $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Veuillez sélectionner le fichier nommé '$1'.",
+CHANGINGPATHAFTERASK = "Le chemin de VVVVVV a été changé après avoir lancé le jeu et n'est plus valide !",
 
 }
 
@@ -638,8 +646,8 @@ L_PLU = {
 		[1] = "Les tuiles $1 ne sont pas des nombres entiers valides dans l'intervalle 0-1199",
 	},
 	NOTALLTILESVALID_ALTSTATE = {
-		[-1] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
-		[-2] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[0] = "La tuile $1 n'est pas un nombre entier valide entre 0 et 1199 dans l'état alternatif $2 de la salle $3,$4",
+		[1] = "Les tuiles $1 ne sont pas des nombres entier valide entre 0 et 1199 dans l'état alternatif $2 de la salle $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 octet",
@@ -674,9 +682,9 @@ toolnames = {
 "Ligne de téléportation",
 "Équipiers",
 "Point de départ",
-"Flip token",
-"Coin",
-"Teleporter",
+"Pièce de renversement",
+"Pièce",
+"Téléporteur",
 
 }
 
@@ -700,7 +708,7 @@ subtoolnames = {
 [16] = {"Rose", "Jaune", "Rouge", "Vert", "Bleu", "Cyan", "Aléatoire"},
 [17] = {"Tourner vers la droite", "Tourner vers la gauche"},
 [18] = {},
-[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[19] = {"Pièce simple", "Pièce 10", "Pièce 20", "Pièce 50", "Pièce 100"},
 [20] = {},
 
 }
@@ -1295,7 +1303,8 @@ cont = [[
 Raccourcis clavier de l'éditeur\wh#
 \C=
 
-Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+Aide : vous pouvez laisser la touche ¤F9¤ enfoncée partout dans Ved pour voir\nC
+beaucoup de ces raccourcis.
 
 La majorité des raccourcis clavier utilisable dans VVVVVV peuvent être
 utilisés dans Ved.
@@ -1326,29 +1335,31 @@ Ved introduit aussi quelques raccourcis clavier.
 
 Éditeur principal\gh#
 
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
-Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace Ctrl by Cmd)
-N¤  display all tile numbers\C
-J¤  display tile solidity\C
-;¤  display minimap tiles\C
-Shift+;¤  display background\C
-M¤ or ¤Keypad 5¤  Show map\CnC
-G¤  Go to room (type in coordinates as four digits)\C
+Ctrl+P¤  Aller à la salle contenant le point de départ\C
+Ctrl+S¤  Sauvegarde rapide\C
+Ctrl+X¤  Couper la salle dans le presse-papier\C
+Ctrl+C¤  Copier la salle dans le presse-papier\C
+Ctrl+V¤  Coller la salle depuis le presse-papier (si elle est valide)\C
+Ctrl+D¤  Comparer ce niveau avec un autre niveau\C
+Ctrl+Z¤  Défaire\C
+Ctrl+Y¤  Refaire\C
+Ctrl+F¤  Recherche\C
+Ctrl+/¤  Bloc-notes du niveau\C
+Ctrl+F1¤  Aide\C
+(NOTE: Sur Mac, replacer Ctrl par Cmd)
+N¤  Afficher tous les nombres de tuiles\C
+J¤  Afficher la solidité des tuiles\C
+;¤  Afficher les tuiles de la minimap\C
+Maj+;¤  Afficher le fond\C
+M¤ ou ¤Numpad 5¤  Afficher la carte\CnC
+G¤  Aller à la salle (entrer les coordonnées avec 4 chiffres)\C
 /¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
-F11¤  reload tilesets and sprites\C
-Tab¤  enable/disable eraser\C
+[¤  Bloquer la position Y de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes horizontales facilement)
+]¤  Bloquer la position X de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes verticales facilement)
+F11¤  Recharger les jeux de tuiles et images\C
+Tab¤  Activer/Désactiver la gomme\C
 
 Entités\gh#
 
@@ -2871,11 +2882,11 @@ Autres contributeurs de code: Info Teddy
 
 Quelques graphismes et la police ont été créés par Hejmstel
 
-Russian translation: CreepiX, Cheep
-Esperanto translation: Hejmstel
-German translation: r00ster
-French translation: RhenaudTheLukark
-Spanish translation: Valso22/naether
+Traduction russe : CreepiX, Cheep
+Traduction esperanto : Hejmstel
+Traduction allemande : r00ster
+Traduction française : RhenaudTheLukark
+Traduction espagnole : Valso22/naether
 
 
 Remerciements spéciaux à :\h#

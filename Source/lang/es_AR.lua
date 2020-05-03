@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-04-30 18:29:27 (CEST)
+--- Last converted: 2020-05-03 02:17:17 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -550,7 +550,7 @@ DISABLETOWER = "Desactivar torre",
 TIMETRIALS = "Contrarelojes",
 DIMENSIONS = "Dimensiones",
 TOWERDIRECTIONUP = "Dirección: ↑",
-TOWERDIRECTIONDOWN = "Dirección: ↑",
+TOWERDIRECTIONDOWN = "Dirección: ↓",
 TOWERENTRYEXIT = "Fijar entrada/salida",
 SWITCHEDTOALTSTATEMAIN = "Cambiado a estado principal",
 SWITCHEDTOALTSTATE = "Cambiado al estado $1",
@@ -582,6 +582,14 @@ INSERTRAWHEX = "Insert Unicode character",
 MOVELINEUP = "Move line upwards",
 MOVELINEDOWN = "Move line downwards",
 DUPLICATELINE = "Duplicate line",
+
+WHEREPLACEPLAYER = "Where do you want to start?",
+YOUAREPLAYTESTING = "You are currently playtesting",
+LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "You're already playtesting!",
+PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Please select the file named '$1'.",
+CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
 
 }
 
@@ -977,8 +985,9 @@ Ved soporta tres modos diferentes para poner tejas.
 
           También llamado Modo Directo, en este modo puedes poner cualquier
           teja manualmente, asi que no estas encadenado a las combinaciones de
-          sets predefinidos y bordes no se ajustaran solas, dándote control completo
-          de como se vera la habitación. Pero este modo es muy lento de usar.
+          sets predefinidos y bordes no se ajustaran solas, dándote control
+          completo de como se vera la habitación. Pero este modo es muy lento de
+          usar.
 ]]
 },
 
@@ -1041,14 +1050,15 @@ La herramienta de transportador se usa para poner transportadores.
    Plataforma moviendose\h#
 
 
-La herramienda de plataforma moviendose se usa para poner plataformas que se mueven.
+La herramienda de plataforma moviendose se usa para poner plataformas que se
+mueven.
 
 \8
    Enemigo\h#
 
 
-La herramienta de enemigos se usa para poner enemigos. El color y forma del enemigo
-es determinado por el tipo de enemigo y el color del set respectivamente.
+La herramienta de enemigos se usa para poner enemigos. El color y forma del
+enemigo es determinado por el tipo de enemigo y el color del set respectivamente.
 
 \9
    Linea de gravedad\h#
@@ -1075,9 +1085,9 @@ porfavor referir a las referencias de scripts.
 
 
 La herramienta de caja de scripts se usa para poner cajas de scripts. Primero
-haz click en el borde superior izquierdo, luego en el borde inferior derecho, luego
-escribe un nombre para el script. Para mas información sobre scripts, porfavor
-referir a las referancias de scripts.
+haz click en el borde superior izquierdo, luego en el borde inferior derecho,
+luego escribe un nombre para el script. Para mas información sobre scripts,
+porfavor referir a las referancias de scripts.
 
 \^3
    Token de warp\h#

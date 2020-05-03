@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2020-04-30 18:29:27 (CEST)
+--- Last converted: 2020-05-03 02:17:16 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -582,6 +582,14 @@ INSERTRAWHEX = "Insert Unicode character",
 MOVELINEUP = "Move line upwards",
 MOVELINEDOWN = "Move line downwards",
 DUPLICATELINE = "Duplicate line",
+
+WHEREPLACEPLAYER = "Where do you want to start?",
+YOUAREPLAYTESTING = "You are currently playtesting",
+LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "You're already playtesting!",
+PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Please select the file named '$1'.",
+CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
 
 }
 

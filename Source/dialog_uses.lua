@@ -1152,7 +1152,7 @@ function dialog.callback.locatevvvvvv_validate(button, fields)
 
 	local path = fields.folder .. dirsep .. fields.name
 	if not playtesting_validate_path(path) then
-		dialog.create(L.VVVVVVPATHINVALID .. " " .. playtesting_get_vvvvvv_message())
+		dialog.create(L.PATHINVALID .. " " .. playtesting_get_vvvvvv_message())
 		return true
 	end
 end

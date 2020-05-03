@@ -581,6 +581,14 @@ MOVELINEUP = "Move line upwards",
 MOVELINEDOWN = "Move line downwards",
 DUPLICATELINE = "Duplicate line",
 
+WHEREPLACEPLAYER = "Where do you want to start?",
+YOUAREPLAYTESTING = "You are currently playtesting",
+LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "You're already playtesting!",
+PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Please select the file named '$1'.",
+CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
+
 }
 
 -- Please check the reference for plural forms

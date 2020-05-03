@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2020-04-30 18:29:28 (CEST)
+--- Last converted: 2020-05-03 02:17:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -594,6 +594,14 @@ INSERTRAWHEX = "Unicode-teken invoegen",
 MOVELINEUP = "Regel naar boven verplaatsen",
 MOVELINEDOWN = "Regel naar onder verplaatsen",
 DUPLICATELINE = "Regel dupliceren",
+
+WHEREPLACEPLAYER = "Waar wil je beginnen?",
+YOUAREPLAYTESTING = "Je bent momenteel aan het testen",
+LOCATEVVVVVV = "Selecteer je $1-applicatie", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Je bent al aan het testen!",
+PLAYTESTUNAVAILABLE = "Sorry, je kunt niet testen op $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Selecteer het bestand genaamd '$1'.",
+CHANGINGPATHAFTERASK = "Het pad naar VVVVVV is gewĳzigd nadat je op spelen hebt gedrukt en is niet meer geldig!",
 
 }
 
