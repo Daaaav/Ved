@@ -124,6 +124,7 @@ function playtesting_start()
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))
 	else
 		playtesting_askwherestart = true
+		altstate = 0
 
 		-- Ah crud a global
 		playtesting_levelcontents = thissavederror
@@ -180,6 +181,7 @@ function playtesting_snap_position(posx, posy, flipped)
 	for _, ent in pairs(entitydata) do
 		if ent.x >= 40 * roomx and ent.x < 40 * (roomx+1)
 		and ent.y >= 30 * roomy and ent.y < 30 * (roomy+1)
+		and ent.state == altstate
 		and table.contains({10, 16}, ent.t) then
 			table.insert(entities, ent)
 		end
