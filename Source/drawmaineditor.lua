@@ -1925,7 +1925,7 @@ function drawmaineditor()
 				-- Level notepad
 				tonotepad()
 			end
-		elseif upperoptpage2 and onrbutton(6, 40, false, 20) then
+		elseif onrbutton(6, 40, false, 20) then
 			-- Pages
 			upperoptpage2 = not upperoptpage2
 
