@@ -869,7 +869,7 @@ function drawmaineditor()
 				insert_entity(atx, aty, 15, ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]])
 			end
 			mousepressed = true
-		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 17 then
+		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 17 and altstate == 0 then
 			-- Start point
 			cons("Start point: " .. atx .. " " .. aty)
 
