@@ -1849,12 +1849,12 @@ function drawmaineditor()
 				triggernewlevel()
 			end
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
+		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
 			editingroomname = false
 			tostate(6)
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
+		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
 			editingroomname = false
@@ -1863,25 +1863,25 @@ function drawmaineditor()
 				dialog.callback.save, nil, dialog.form.save_make()
 			)
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then
 			undo()
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120+16, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+16, 40, 16, 16) then
 			redo()
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120+64, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+64, 40, 16, 16) then
 			-- Cut
 			cutroom()
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120+80, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+80, 40, 16, 16) then
 			-- Copy
 			copyroom()
 			mousepressed = true
-		elseif nodialog and mouseon(love.graphics.getWidth()-120+98, 40, 16, 16) then
+		elseif mouseon(love.graphics.getWidth()-120+98, 40, 16, 16) then
 			-- Paste
 			pasteroom()
 			mousepressed = true
-		elseif nodialog and onrbutton(1, 40, false, 20) then
+		elseif onrbutton(1, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level options
 				dialog.create(
@@ -1901,11 +1901,11 @@ function drawmaineditor()
 			if not upperoptpage2 then
 				-- Map
 				tostate(12)
-			elseif nodialog then
+			else
 				-- Compare
 				tostate(6, nil, "secondlevel")
 			end
-		elseif nodialog and onrbutton(3, 40, false, 20) then
+		elseif onrbutton(3, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Scripts
 				tostate(10)
@@ -1915,24 +1915,21 @@ function drawmaineditor()
 				tostate(28)
 				mousepressed = true
 			end
-		elseif nodialog and onrbutton(4, 40, false, 20) then
+		elseif onrbutton(4, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Search
 				tostate(11)
 			end
-		elseif nodialog and onrbutton(5, 40, false, 20) then
+		elseif onrbutton(5, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level notepad
 				tonotepad()
 			end
-		elseif (nodialog or upperoptpage2) and onrbutton(6, 40, false, 20) then
+		elseif upperoptpage2 and onrbutton(6, 40, false, 20) then
 			-- Pages
 			upperoptpage2 = not upperoptpage2
 
 			mousepressed = true
-
-		elseif not nodialog then
-		-- Cancel the ugly hack for the rest of these buttons
 
 		-- Room options now
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
