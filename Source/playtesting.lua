@@ -86,7 +86,10 @@ function playtesting_start()
 		return
 	end
 
-	local path = playtesting_locate_path()
+	local path
+	if not keyboard_eitherIsDown("shift") then
+		path = playtesting_locate_path()
+	end
 
 	if path == nil or path == "" then
 		local ext = ""
