@@ -89,7 +89,11 @@ function playtesting_start()
 	local path = playtesting_locate_path()
 
 	if path == nil or path == "" then
-		local files = dialog.form.files_make(userprofile, "", "", true, 9, 2)
+		local ext = ""
+		if love.system.getOS() == "Windows" then
+			ext = ".exe"
+		end
+		local files = dialog.form.files_make(userprofile, "", ext, true, 9, 2)
 		dialog.create(
 			playtesting_get_vvvvvv_message(),
 			DBS.OKCANCEL,
