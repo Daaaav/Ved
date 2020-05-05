@@ -17,17 +17,22 @@ INVALID_FILE_SIZE = 0xFFFFFFFF
 INVALID_HANDLE_VALUE = -1
 MAX_PATH = 260
 OPEN_EXISTING = 3; CREATE_ALWAYS = 2
+HANDLE_FLAG_INHERIT = 1
+STARTF_USESTDHANDLES = 0x00000100
+CREATE_NO_WINDOW = 0x08000000
+INFINITE = -1
 
 
 local ffi = require("ffi")
 ffi.cdef([[
 	typedef unsigned short WORD, *PWORD, *LPWORD;
 	typedef unsigned long DWORD, *PDWORD, *LPDWORD;
+	typedef unsigned char BYTE, *PBYTE, *LPBYTE;
 	typedef bool BOOL, *PBOOL, *LPBOOL;
 	typedef unsigned int UINT;
-	typedef void* HANDLE;
 	typedef void VOID, *PVOID, *LPVOID;
 	typedef const void* LPCVOID;
+	typedef PVOID HANDLE, *PHANDLE, *LPHANDLE;
 	typedef char CHAR, *PCHAR;
 	typedef char* PSTR, *LPSTR;
 	typedef const char* LPCSTR;
@@ -59,6 +64,55 @@ ffi.cdef([[
 	  WORD     wFinderFlags;
 	} WIN32_FIND_DATAW, *PWIN32_FIND_DATAW, *LPWIN32_FIND_DATAW;
 
+	typedef struct _SYSTEMTIME {
+	  WORD wYear;
+	  WORD wMonth;
+	  WORD wDayOfWeek;
+	  WORD wDay;
+	  WORD wHour;
+	  WORD wMinute;
+	  WORD wSecond;
+	  WORD wMilliseconds;
+	} SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
+
+	typedef void TIME_ZONE_INFORMATION;
+
+	typedef struct _SECURITY_ATTRIBUTES {
+	  DWORD  nLength;
+	  LPVOID lpSecurityDescriptor;
+	  BOOL   bInheritHandle;
+	} SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
+
+	typedef void* LPOVERLAPPED;
+
+	typedef struct _STARTUPINFOW {
+	  DWORD  cb;
+	  LPWSTR lpReserved;
+	  LPWSTR lpDesktop;
+	  LPWSTR lpTitle;
+	  DWORD  dwX;
+	  DWORD  dwY;
+	  DWORD  dwXSize;
+	  DWORD  dwYSize;
+	  DWORD  dwXCountChars;
+	  DWORD  dwYCountChars;
+	  DWORD  dwFillAttribute;
+	  DWORD  dwFlags;
+	  WORD   wShowWindow;
+	  WORD   cbReserved2;
+	  LPBYTE lpReserved2;
+	  HANDLE hStdInput;
+	  HANDLE hStdOutput;
+	  HANDLE hStdError;
+	} STARTUPINFOW, *LPSTARTUPINFOW;
+
+	typedef struct _PROCESS_INFORMATION {
+	  HANDLE hProcess;
+	  HANDLE hThread;
+	  DWORD  dwProcessId;
+	  DWORD  dwThreadId;
+	} PROCESS_INFORMATION, *PPROCESS_INFORMATION, *LPPROCESS_INFORMATION;
+
 	HANDLE FindFirstFileW(
 	  LPCWSTR            lpFileName,
 	  LPWIN32_FIND_DATAW lpFindFileData
@@ -73,23 +127,10 @@ ffi.cdef([[
 	  HANDLE hFindFile
 	);
 
-	typedef struct _SYSTEMTIME {
-	  WORD wYear;
-	  WORD wMonth;
-	  WORD wDayOfWeek;
-	  WORD wDay;
-	  WORD wHour;
-	  WORD wMinute;
-	  WORD wSecond;
-	  WORD wMilliseconds;
-	} SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
-
 	BOOL FileTimeToSystemTime(
 	  const FILETIME *lpFileTime,
 	  LPSYSTEMTIME   lpSystemTime
 	);
-
-	typedef void TIME_ZONE_INFORMATION;
 
 	BOOL SystemTimeToTzSpecificLocalTime(
 	  const TIME_ZONE_INFORMATION *lpTimeZoneInformation,
@@ -100,8 +141,6 @@ ffi.cdef([[
 	DWORD GetFileAttributesW(
 	  LPCWSTR lpFileName
 	);
-
-	typedef void* LPSECURITY_ATTRIBUTES;
 
 	HANDLE CreateFileW(
 	  LPCWSTR               lpFileName,
@@ -128,8 +167,6 @@ ffi.cdef([[
 	  LPFILETIME lpLastAccessTime,
 	  LPFILETIME lpLastWriteTime
 	);
-
-	typedef void* LPOVERLAPPED;
 
 	BOOL ReadFile(
 	  HANDLE       hFile,
@@ -165,8 +202,37 @@ ffi.cdef([[
 	  DWORD   nSize
 	);
 
-	DWORD GetLogicalDrives(
+	DWORD GetLogicalDrives();
 
+	BOOL CreatePipe(
+	  PHANDLE               hReadPipe,
+	  PHANDLE               hWritePipe,
+	  LPSECURITY_ATTRIBUTES lpPipeAttributes,
+	  DWORD                 nSize
+	);
+
+	BOOL SetHandleInformation(
+	  HANDLE hObject,
+	  DWORD  dwMask,
+	  DWORD  dwFlags
+	);
+
+	BOOL CreateProcessW(
+	  LPCWSTR               lpApplicationName,
+	  LPWSTR                lpCommandLine,
+	  LPSECURITY_ATTRIBUTES lpProcessAttributes,
+	  LPSECURITY_ATTRIBUTES lpThreadAttributes,
+	  BOOL                  bInheritHandles,
+	  DWORD                 dwCreationFlags,
+	  LPVOID                lpEnvironment,
+	  LPCWSTR               lpCurrentDirectory,
+	  LPSTARTUPINFOW        lpStartupInfo,
+	  LPPROCESS_INFORMATION lpProcessInformation
+	);
+
+	DWORD WaitForSingleObject(
+	  HANDLE hHandle,
+	  DWORD  dwMilliseconds
 	);
 
 	/* UTF-8 -> UTF-16 */
@@ -601,4 +667,82 @@ end
 
 function multiwritefile_close(os_fh)
 	ffi.C.CloseHandle(os_fh)
+end
+
+function run_pipe_process(app_path, args, stdin)
+	-- The pipe needs to be inherited
+	local sattr = ffi.new("SECURITY_ATTRIBUTES")
+	sattr.nLength = ffi.sizeof("SECURITY_ATTRIBUTES")
+	sattr.bInheritHandle = true
+	sattr.lpSecurityDescriptor = nil
+
+	-- Set up the pipe - it has a send end and a receive end
+	local pipe_send = ffi.new("HANDLE[1]")
+	local pipe_recv = ffi.new("HANDLE[1]")
+	if not ffi.C.CreatePipe(pipe_recv, pipe_send, sattr, stdin:len()+1) then
+		return false, format_last_win_error()
+	end
+	-- VVVVVV should not inherit the send end
+	if not ffi.C.SetHandleInformation(pipe_send[0], HANDLE_FLAG_INHERIT, 0) then
+		ffi.C.CloseHandle(pipe_recv[0])
+		ffi.C.CloseHandle(pipe_send[0])
+		return false, format_last_win_error()
+	end
+
+	local startupinfo = ffi.new("STARTUPINFOW")
+	startupinfo.cb = ffi.sizeof("STARTUPINFOW")
+	startupinfo.hStdInput = pipe_recv[0]
+	startupinfo.dwFlags = STARTF_USESTDHANDLES
+	local processinfo = ffi.new("PROCESS_INFORMATION")
+
+	-- Arguments?
+	local cmdline = "\"" .. app_path .. "\" " .. args
+	local len_cmdline = cmdline:len()+1
+	local buffer_cmdline_utf16 = ffi.new("WCHAR[?]", len_cmdline)
+	ffi.C.MultiByteToWideChar(CP_UTF8, 0, cmdline, -1, buffer_cmdline_utf16, len_cmdline)
+
+	-- VVVVVV-CE 1.0-pre1 expects data.zip in the working directory, can't hurt to start the process there
+	local buffer_workingdir_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
+	ffi.copy(buffer_workingdir_utf16, path_utf8_to_utf16(get_parent_path(app_path)), MAX_PATH)
+
+	-- Start VVVVVV
+	local success = ffi.C.CreateProcessW(
+		path_utf8_to_utf16(app_path),
+		buffer_cmdline_utf16,
+		nil,
+		nil,
+		true,
+		CREATE_NO_WINDOW,
+		nil,
+		buffer_workingdir_utf16,
+		startupinfo,
+		processinfo
+	)
+	if not success then
+		ffi.C.CloseHandle(pipe_recv[0])
+		ffi.C.CloseHandle(pipe_send[0])
+		return false, format_last_win_error()
+	end
+
+	-- Write to stdin pipe
+	local lpNumberOfBytesWritten = ffi.new("DWORD[1]")
+	success = ffi.C.WriteFile(pipe_send[0], stdin, stdin:len(), lpNumberOfBytesWritten, nil)
+
+	ffi.C.CloseHandle(pipe_send[0])
+	ffi.C.CloseHandle(pipe_recv[0])
+
+	if not success then
+		ffi.C.CloseHandle(processinfo.hProcess)
+		ffi.C.CloseHandle(processinfo.hThread)
+
+		return false, format_last_win_error()
+	end
+
+	-- Wait until completion
+	ffi.C.WaitForSingleObject(processinfo.hProcess, INFINITE)
+
+	ffi.C.CloseHandle(processinfo.hProcess)
+	ffi.C.CloseHandle(processinfo.hThread)
+
+	return true
 end

@@ -2074,6 +2074,10 @@ function love.update(dt)
 		if chanmessage ~= nil then
 			if chanmessage == PLAYTESTING.DONE then
 				playtesting_active = false
+			elseif chanmessage == PLAYTESTING.ERROR then
+				playtesting_active = false
+				local err = playtestthread_outchannel:pop()
+				dialog.create(err)
 			end
 		end
 	end

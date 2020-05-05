@@ -3587,6 +3587,7 @@ SHIFT = {
 -- For playtesting
 PLAYTESTING = {
 	DONE = 1,
+	ERROR = 2,
 }
 
 -- For map_correspondreset()

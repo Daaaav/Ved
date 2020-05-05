@@ -16,38 +16,31 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		music = -1
 	end
 
-	path = path:gsub("\\", "\\\\"):gsub(" ", "\\ ")
-	local vvvvvv = path
+	local args = table.concat({
+			"-p",
+			"special/stdin",
+			"-playx",
+			posx,
+			"-playy",
+			posy,
+			"-playrx",
+			thisroomx,
+			"-playry",
+			thisroomy,
+			"-playgc",
+			gravitycontrol,
+			"-playmusic",
+			music
+		},
+		" "
+	)
 
-	local run = {
-		vvvvvv,
-		"-p",
-		"special/stdin",
-		"-playx",
-		posx,
-		"-playy",
-		posy,
-		"-playrx",
-		thisroomx,
-		"-playry",
-		thisroomy,
-		"-playgc",
-		gravitycontrol,
-		"-playmusic",
-		music
-	}
-	run = table.concat(run, " ")
-
-	local commands = {
-		run,
-	}
-
-	cons("RUNNING VVVVVV WITH THESE COMMANDS:\n" .. table.concat(commands, "\n"))
+	cons("RUNNING VVVVVV AT THIS PATH:\n" .. path .. "\nWITH THESE ARGUMENTS:\n" .. args)
 
 	if playtestthread == nil then
 		playtestthread = love.thread.newThread("playtestthread.lua")
 	end
-	playtestthread:start(table.concat(commands, "\n"), playtesting_levelcontents)
+	playtestthread:start(love.system.getOS(), path, args, playtesting_levelcontents)
 	-- Don't leave this laying around
 	playtesting_levelcontents = ""
 
