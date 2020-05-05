@@ -2473,6 +2473,10 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 	ox = offx+(v.x-myroomx*40)*16 + 6
 	oy = offy+(v.y-myroomy*30)*16 + 24
 
+	if v.p1 == 1 and metadata.target == "VCE" then
+		oy = oy - 14
+	end
+
 	love.graphics.setColor(0,0,0)
 	love.graphics.rectangle("fill", ox, oy, 20, 14)
 	love.graphics.setColor(0,255,0)
