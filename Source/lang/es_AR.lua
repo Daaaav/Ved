@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-05-03 02:17:17 (CEST)
+--- Last converted: 2020-05-07 01:32:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -583,13 +583,13 @@ MOVELINEUP = "Move line upwards",
 MOVELINEDOWN = "Move line downwards",
 DUPLICATELINE = "Duplicate line",
 
-WHEREPLACEPLAYER = "Where do you want to start?",
-YOUAREPLAYTESTING = "You are currently playtesting",
-LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
-ALREADYPLAYTESTING = "You're already playtesting!",
-PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
-VVVVVVFILE = "Please select the file named '$1'.",
-CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
+WHEREPLACEPLAYER = "Donde desea comenzar?",
+YOUAREPLAYTESTING = "Estas probando justo ahora.",
+LOCATEVVVVVV = "Seleccione su ejecutable de $1", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Ya estas probando!",
+PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
+CHANGINGPATHAFTERASK = "El camino de VVVVVV se cambio al presionar play y ahora no es valido!",
 
 }
 
