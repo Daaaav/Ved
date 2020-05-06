@@ -2473,8 +2473,12 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 	ox = offx+(v.x-myroomx*40)*16 + 6
 	oy = offy+(v.y-myroomy*30)*16 + 24
 
-	if v.p1 == 1 and metadata.target == "VCE" then
-		oy = oy - 14
+	if metadata.target == "VCE" then
+		if v.p1 < 0 or v.p1 > 1 then
+			return
+		elseif v.p1 == 1 then
+			oy = oy - 14
+		end
 	end
 
 	love.graphics.setColor(0,0,0)

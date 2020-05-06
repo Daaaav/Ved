@@ -675,11 +675,17 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			sp_teken(v, offsetx, offsety, myroomx, myroomy)
 		end
 		v6_setcol(4)
-		if v.p1 == 1 and metadata.target == "VCE" then
-			drawentitysprite(16, x, y, cs)
-		else
-			drawentitysprite(17, x, y + 16, cs)
+		local spriteoffset = 1
+		local yoffset = 16
+		if metadata.target == "VCE" then
+			if v.p1 == 1 then
+				spriteoffset = 0
+				yoffset = 0
+			elseif v.p1 ~= 0 then
+				spriteoffset = v.p1
+			end
 		end
+		drawentitysprite(16 + spriteoffset, x, y + yoffset, cs)
 		love.graphics.setColor(255, 255, 255)
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
