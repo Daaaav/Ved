@@ -7,7 +7,7 @@ function drawscripteditor()
 
 	-- Display a line for the maximum line size that will fit in VVVVVV!
 	if s.scripteditor_largefont then
-		love.graphics.line(43*16-9, 24, 43*16-12, love.graphics.getHeight())
+		love.graphics.line(43*16-9, 24, 43*16-9, love.graphics.getHeight())
 	else
 		love.graphics.line(43*8, 24, 43*8, love.graphics.getHeight())
 	end
