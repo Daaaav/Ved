@@ -172,8 +172,6 @@ end
 function playtesting_snap_position(posx, posy, flipped)
 	-- Snap onto a checkpoint/start position.
 	-- If there's multiple in the same place, prioritize based on which top-left corner the cursor is on.
-	-- Otherwise, attempt to snap onto a floor or ceiling.
-	-- Otherwise, attempt to snap onto a wall.
 	-- Otherwise, give up and just let the player float there.
 
 	local entities = {}
