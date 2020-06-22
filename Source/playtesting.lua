@@ -172,8 +172,6 @@ end
 function playtesting_snap_position(posx, posy, flipped)
 	-- Snap onto a checkpoint/start position.
 	-- If there's multiple in the same place, prioritize based on which top-left corner the cursor is on.
-	-- Otherwise, attempt to snap onto a floor or ceiling.
-	-- Otherwise, attempt to snap onto a wall.
 	-- Otherwise, give up and just let the player float there.
 
 	local entities = {}
@@ -223,7 +221,7 @@ function playtesting_snap_position(posx, posy, flipped)
 		for tiley = 29, 0, -1 do
 			for tilex = 39, 0, -1 do
 				for _, ent in pairs(matchingentities) do
-					if ent.x == tilex and ent.y == tiley then
+					if ent.x % 40 == tilex and ent.y % 30 == tiley then
 						usethisentity = ent
 						nested_break = true
 						break
