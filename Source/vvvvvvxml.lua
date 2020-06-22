@@ -177,7 +177,7 @@ function loadlevel(path)
 				thisextra.altstates[ay][ax] = {}
 			end
 		end
-		if contents:find("<altstates />") == nil then
+		if contents:find("<altstates ?/>") == nil then
 			x.altstates = contents:match("<altstates>(.*)</altstates>")
 			if x.altstates ~= nil then
 				-- todo sanity checks: altstates aren't duplicated, altstates must be sequential from 1, attributes are valid
@@ -219,7 +219,7 @@ function loadlevel(path)
 		end
 
 		thisextra.towers = {}
-		if contents:find("<towers />") == nil then
+		if contents:find("<towers ?/>") == nil then
 			x.towers = contents:match("<towers>(.*)</towers>")
 			if x.towers ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
@@ -238,10 +238,10 @@ function loadlevel(path)
 		end
 
 		thisextra.teleporters = {}
-		if contents:find("<teleporters />") == nil then
+		if contents:find("<teleporters ?/>") == nil then
 			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
 			if x.teleporters ~= nil then
-				for teleportertag in x.teleporters:gmatch("<teleporter (.-) />") do
+				for teleportertag in x.teleporters:gmatch("<teleporter (.-) ?/>") do
 					local thisteleporter = {}
 					local attributes = parsexmlattributes(teleportertag)
 
@@ -254,7 +254,7 @@ function loadlevel(path)
 		end
 
 		thisextra.timetrials = {}
-		if contents:find("<timetrials />") == nil then
+		if contents:find("<timetrials ?/>") == nil then
 			x.timetrials = contents:match("<timetrials>(.*)</timetrials>")
 			if x.timetrials ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
@@ -273,7 +273,7 @@ function loadlevel(path)
 		end
 
 		thisextra.dimensions = {}
-		if contents:find("<dimensions />") == nil then
+		if contents:find("<dimensions ?/>") == nil then
 			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
 			if x.dimensions ~= nil then
 				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
@@ -299,7 +299,7 @@ function loadlevel(path)
 	local numxmlnullbytes = 0
 
 	cons("Loading entities...")
-	if contents:find("<edEntities />") == nil and contents:find("<edEntities/>") == nil then
+	if contents:find("<edEntities ?/>") == nil then
 		-- We have entities!
 		x.entities = contents:match("<edEntities>(.*)</edEntities>")
 		if x.entities == nil then
