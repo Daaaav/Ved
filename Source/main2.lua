@@ -2424,6 +2424,11 @@ function love.update(dt)
 
 	dialog.update(dt)
 	boxupdate()
+
+	if s.pausedrawunfocused and not window_active() then
+		-- Save some more CPU time
+		love.timer.sleep(.1)
+	end
 end
 
 function love.textinput(char)
