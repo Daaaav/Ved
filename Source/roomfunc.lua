@@ -2666,8 +2666,8 @@ function shiftrooms(direction, updatescripts)
 			edgeroomdata[y] = table.copy(roomdata_get(width-1, y))
 			edgelevelmetadata[y] = table.copy(levelmetadata_get(width-1, y))
 			edgemapdata[y] = table.copy(rooms_map[y][width-1])
-			edgetrinketsdata[y] = map_trinkets[y][0]
-			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
+			edgetrinketsdata[y] = map_trinkets[y][width-1]
+			edgecrewmatesdata[y] = table.copy(map_crewmates[y][width-1])
 		end
 	elseif direction == SHIFT.UP then
 		for x = 0, width-1 do
