@@ -676,24 +676,63 @@ function loadlevelsfolder()
 	end
 end
 
-function loadtilesets()
-	loadtileset("tiles.png")
-	loadtileset("tiles2.png")
-	loadtileset("tiles3.png")
-	loadtileset("entcolours.png")
-	loadsprites("sprites.png", 32)
-	loadsprites("teleporter.png", 96)
+function getlevelassetsfolder()
+	-- Priority: lev.data.zip, everything in .zip, lev/ folder
+	-- Currently lev/ folder is supported
+	if directory_exists(levelsfolder, editingmap) then
+		return levelsfolder .. dirsep .. editingmap
+	end
 
-	loadvcecustomgraphics()
+	-- Not found
+	return nil
+end
 
+function loadtilesets(levelassetsfolder)
+	-- Normally called without argument. This function may call itself once more with it filled.
+	-- levelassetsfolder may be a path to a level-specific assets folder, which overrides any existing assets
+
+	loadtileset("tiles.png", levelassetsfolder)
+	loadtileset("tiles2.png", levelassetsfolder)
+	loadtileset("tiles3.png", levelassetsfolder)
+	loadtileset("entcolours.png", levelassetsfolder)
+	loadsprites("sprites.png", 32, levelassetsfolder)
+	loadsprites("teleporter.png", 96, levelassetsfolder)
+
+	loadvcecustomgraphics(levelassetsfolder)
+
+
+	if levelassetsfolder ~= nil then
+		-- We're done loading level-specific assets
+		level_assets_loaded = true
+		return
+	else
+		-- Don't reload stock tiles and sprites if both old and new levels have no assets.
+		level_assets_loaded = false
+	end
+
+	-- Now maybe we have a level to load level-specific assets for?
+	if editingmap ~= nil then
+		local levelassets = getlevelassetsfolder()
+		if levelassets ~= nil then
+			cons("Loading level-specific assets from " .. levelassets)
+			loadtilesets(levelassets)
+		end
+	end
+
+	-- Doesn't rely on loading files from somewhere specific
 	loadwarpbgs()
 end
 
-function loadvcecustomgraphics()
-	vcecustomtilesets = {} -- num -> tiles{num}.png, for any tiles{num}.png that exists
-	vcecustomspritesheets = {} -- same for any sprites{num}.png that exists
+function loadvcecustomgraphics(levelassetsfolder)
+	local success, files
+	if levelassetsfolder == nil then
+		vcecustomtilesets = {} -- num -> tiles{num}.png, for any tiles{num}.png that exists
+		vcecustomspritesheets = {} -- same for any sprites{num}.png that exists
 
-	local success, files = listfiles_generic(graphicsfolder, ".png", false)
+		success, files = listfiles_generic(graphicsfolder, ".png", false)
+	else
+		success, files = listfiles_generic(levelassetsfolder .. dirsep .. "graphics", ".png", false)
+	end
 	if not success then
 		return
 	end
@@ -704,21 +743,36 @@ function loadvcecustomgraphics()
 			local num_sprites = v.name:match("^sprites(%d+).png$")
 
 			if num_tiles ~= nil and tonumber(num_tiles) >= 4 then
-				loadtileset(v.name)
+				loadtileset(v.name, levelassetsfolder)
 				vcecustomtilesets[tonumber(num_tiles)] = v.name
 			elseif num_sprites ~= nil and tonumber(num_sprites) >= 2 then
-				loadsprites(v.name, 32)
+				loadsprites(v.name, 32, levelassetsfolder)
 				vcecustomspritesheets[tonumber(num_sprites)] = v.name
 			end
 		end
 	end
 end
 
-function loadtileset(file)
-	tilesets[file] = {}
+function loadtileset(file, levelassetsfolder)
+	local readsuccess, contents
+	if levelassetsfolder == nil then
+		-- Just loading global assets, either custom or built-in
+		tilesets[file] = {}
 
-	-- Try loading custom assets first
-	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+		-- Try loading custom assets first
+		readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	else
+		-- Level-specific file
+		readsuccess, contents = readfile(levelassetsfolder .. dirsep .. "graphics" .. dirsep .. file)
+
+		-- Not interested in another copy of the assets we already had
+		if not readsuccess then
+			return
+		end
+
+		-- This level-specific file definitely exists
+		tilesets[file] = {}
+	end
 
 	local asimgdata, asimgdata_white
 	if readsuccess then
@@ -762,11 +816,26 @@ function loadtileset(file)
 	end
 end
 
-function loadsprites(file, res)
-	tilesets[file] = {}
+function loadsprites(file, res, levelassetsfolder)
+	local readsuccess, contents
+	if levelassetsfolder == nil then
+		-- Just loading global assets, either custom or built-in
+		tilesets[file] = {}
 
-	-- Try loading custom assets first
-	local readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+		-- Try loading custom assets first
+		readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
+	else
+		-- Level-specific file
+		readsuccess, contents = readfile(levelassetsfolder .. dirsep .. "graphics" .. dirsep .. file)
+
+		-- Not interested in another copy of the assets we already had
+		if not readsuccess then
+			return
+		end
+
+		-- This level-specific file definitely exists
+		tilesets[file] = {}
+	end
 
 	local asimgdata
 	if readsuccess then
@@ -1603,8 +1672,13 @@ function state6load(levelname)
 		else
 			editingmap = levelname
 			recentlyopened(editingmap)
-			tostate(1)
 			map_init()
+			if level_assets_loaded or getlevelassetsfolder() ~= nil then
+				-- Either previous or new level has level-specific assets, so reload.
+				loadtilesets()
+				tile_batch_texture_needs_update = true
+			end
+			tostate(1)
 		end
 	else
 		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2, extra2 = loadlevel(levelname .. ".vvvvvv")
@@ -2080,6 +2154,10 @@ function triggernewlevel(width, height)
 	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
+	if level_assets_loaded then
+		loadtilesets()
+		tile_batch_texture_needs_update = true
+	end
 	tostate(1)
 end
 
