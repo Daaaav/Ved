@@ -16,6 +16,17 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		music = -1
 	end
 
+	local playassets = ""
+	if editingmap ~= "untitled\n" then
+		-- Level names can contain spaces, so quote and escape correctly
+		local opsys = love.system.getOS()
+		if opsys == "Windows" then
+			playassets = "-playassets \"" .. editingmap .. "\""
+		else
+			playassets = "-playassets '" .. escapename(editingmap) .. "'"
+		end
+	end
+
 	local args = table.concat({
 			"-p",
 			"special/stdin",
@@ -30,7 +41,8 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 			"-playgc",
 			gravitycontrol,
 			"-playmusic",
-			music
+			music,
+			playassets
 		},
 		" "
 	)
