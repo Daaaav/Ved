@@ -2122,15 +2122,17 @@ function drawmaineditor()
 
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
 	if tilespicker then
+		local tileswidth = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
+		local tilesheight = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight
 		if cursorx ~= "--" and cursory ~= "--"
-		and cursorx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-		and cursory < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
+		and cursorx < tileswidth
+		and cursory < tilesheight then
 			ved_printf(
-				langkeys(L.TILE, {(cursory*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+cursorx}),
+				langkeys(L.TILE, {(cursory*tileswidth)+cursorx}),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
 			ved_printf(
-				(issolid((cursory*40)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
+				(issolid((cursory*tileswidth)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
