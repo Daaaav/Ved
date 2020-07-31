@@ -9,14 +9,6 @@ local clargs = {
 		end
 	},
 
-	["e"] = "default-errhand",
-	["default-errhand"] = {
-		help = "Use default Love2d error handler instead of Ved's custom one",
-		func = function()
-			defaulterrhand = true
-		end
-	},
-
 	["l"] = "language-screen",
 	["language-screen"] = {
 		help = "Force showing the language screen on startup",

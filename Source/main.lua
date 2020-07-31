@@ -11,12 +11,12 @@ opt_loadlevel = nil
 opt_newlevel = false
 opt_forcelanguagescreen = false
 
-vergroups = {8,1}
+vergroups = {8,2}
 
 ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
 checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
 
-intermediate_version = false -- If true, this is a WIP version
+intermediate_version = true -- If true, this is a WIP version
 
 if intermediate_version then
 	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber
@@ -131,11 +131,10 @@ else
 			require("love11compat")
 		end
 	end
+	require("errorhandler")
 
 	require("plugins")
 	loadplugins()
-
-	defaulterrhand = false
 
 	-- Let's do some command line argument parsing!
 	if #arg > 0 then
@@ -166,9 +165,6 @@ else
 
 	if not love.filesystem.exists("crash_logs") then
 		love.filesystem.createDirectory("crash_logs")
-	end
-	if not love.keyboard.isDown("lctrl") and not defaulterrhand then
-		require("errorhandler")
 	end
 	--love.errhand("Error handler triggered manually...")
 	ved_require("main2")
