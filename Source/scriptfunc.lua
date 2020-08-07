@@ -315,75 +315,76 @@ end
 function processflaglabels()
 	-- Run when OPENING the script for display and editing
 
-	if not keyboard_eitherIsDown("shift") then
-		-- scriptlines assumed non-empty table of lines
+	if keyboard_eitherIsDown("shift") then
+		internalscript = false
+		cutscenebarsinternalscript = false
+		return
+	end
+
+	-- scriptlines assumed non-empty table of lines
+	for k,v in pairs(scriptlines) do
+		-- There needs to be at least one argument separator to be a flag, but don't explode it (yet)
+		v = v:gsub(" ", "")
+		if v:lower():match("^flag[%(,%)]") or v:lower():match("^ifflag[%(,%)]") or v:lower():match("^customifflag[%(,%)]") then
+			-- Ok, how about now?
+			text2 = string.gsub(string.gsub(v, "%(", ","), "%)", ",")
+
+			-- We need to explode it anyways.
+			local partss = explode(",", text2)
+
+			if vedmetadata ~= false and vedmetadata.flaglabel[tonumber(partss[2])] ~= nil and vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
+				-- This flag has a name
+				scriptlines[k] = scriptlines[k]:gsub(" ", "")
+				scriptlines[k] = scriptlines[k]:gsub(partss[2], vedmetadata.flaglabel[tonumber(partss[2])], 1)
+			end
+		end
+	end
+
+	-- Is this an internal script?
+	if (scriptlines[1] ~= nil and ((scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v") or (scriptlines[1] == "squeak(off) #v" and scriptlines[2]:sub(1,4) == "say(" and scriptlines[2]:sub(-4,-1) == ") #v")) and (scriptlines[#scriptlines] == "text(1,0,0,4) #v" or scriptlines[#scriptlines] == "text(1,0,0,3) #v"))
+	or (scriptlines[1] == "squeak(off) #v" and scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" and scriptlines[4] ~= nil and scriptlines[4]:sub(1,4) == "say(" and scriptlines[4]:sub(-4,-1) == ") #v") then
+		-- Quite so!
+		if scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" then
+			internalscript = false
+			cutscenebarsinternalscript = true
+		else
+			internalscript = true
+			cutscenebarsinternalscript = false
+		end
+
+		if internalscript then
+			if scriptlines[#scriptlines-1] == "loadscript(stop) #v" then
+				table.remove(scriptlines, #scriptlines)
+			end
+			table.remove(scriptlines, #scriptlines)
+			if scriptlines[1] == "squeak(off) #v" then
+				table.remove(scriptlines, 1)
+			end
+			table.remove(scriptlines, 1)
+		elseif cutscenebarsinternalscript then
+			if scriptlines[#scriptlines] == "loadscript(stop) #v" then
+				table.remove(scriptlines, #scriptlines)
+			end
+			table.remove(scriptlines, 1) -- squeak(off) #v
+			table.remove(scriptlines, 1) -- say(-1) #v
+			table.remove(scriptlines, 1) -- text(1,0,0,3) #v
+			table.remove(scriptlines, 1) -- say(n) #v
+		end
+
+		local removetheselines = {}
+
 		for k,v in pairs(scriptlines) do
-			-- There needs to be at least one argument separator to be a flag, but don't explode it (yet)
-			v = v:gsub(" ", "")
-			if v:lower():match("^flag[%(,%)]") or v:lower():match("^ifflag[%(,%)]") or v:lower():match("^customifflag[%(,%)]") then
-				-- Ok, how about now?
-				text2 = string.gsub(string.gsub(v, "%(", ","), "%)", ",")
-
-				-- We need to explode it anyways.
-				local partss = explode(",", text2)
-
-				if vedmetadata ~= false and vedmetadata.flaglabel[tonumber(partss[2])] ~= nil and vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
-					-- This flag has a name
-					scriptlines[k] = scriptlines[k]:gsub(" ", "")
-					scriptlines[k] = scriptlines[k]:gsub(partss[2], vedmetadata.flaglabel[tonumber(partss[2])], 1)
-				end
+			-- Remove any hashes we may have placed last time when replacing completely blank lines
+			if v == "#" then
+				scriptlines[k] = ""
+			elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
+				table.insert(removetheselines, k)
 			end
 		end
 
-		-- Is this an internal script?
-		if (scriptlines[1] ~= nil and ((scriptlines[1]:sub(1,4) == "say(" and scriptlines[1]:sub(-4,-1) == ") #v") or (scriptlines[1] == "squeak(off) #v" and scriptlines[2]:sub(1,4) == "say(" and scriptlines[2]:sub(-4,-1) == ") #v")) and (scriptlines[#scriptlines] == "text(1,0,0,4) #v" or scriptlines[#scriptlines] == "text(1,0,0,3) #v"))
-		or (scriptlines[1] == "squeak(off) #v" and scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" and scriptlines[4] ~= nil and scriptlines[4]:sub(1,4) == "say(" and scriptlines[4]:sub(-4,-1) == ") #v") then
-			-- Quite so!
-			if scriptlines[2] == "say(-1) #v" and scriptlines[3] == "text(1,0,0,3) #v" then
-				internalscript = false
-				cutscenebarsinternalscript = true
-			else
-				internalscript = true
-				cutscenebarsinternalscript = false
-			end
-
-			if internalscript then
-				if scriptlines[#scriptlines-1] == "loadscript(stop) #v" then
-					table.remove(scriptlines, #scriptlines)
-				end
-				table.remove(scriptlines, #scriptlines)
-				if scriptlines[1] == "squeak(off) #v" then
-					table.remove(scriptlines, 1)
-				end
-				table.remove(scriptlines, 1)
-			elseif cutscenebarsinternalscript then
-				if scriptlines[#scriptlines] == "loadscript(stop) #v" then
-					table.remove(scriptlines, #scriptlines)
-				end
-				table.remove(scriptlines, 1) -- squeak(off) #v
-				table.remove(scriptlines, 1) -- say(-1) #v
-				table.remove(scriptlines, 1) -- text(1,0,0,3) #v
-				table.remove(scriptlines, 1) -- say(n) #v
-			end
-
-			local removetheselines = {}
-
-			for k,v in pairs(scriptlines) do
-				-- Remove any hashes we may have placed last time when replacing completely blank lines
-				if v == "#" then
-					scriptlines[k] = ""
-				elseif (v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v") or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
-					table.insert(removetheselines, k)
-				end
-			end
-
-			-- Remove the lines we have to remove in reverse order, so the keys will remain the same for the items we're removing.
-			for l = #removetheselines, 1, -1 do
-				table.remove(scriptlines, removetheselines[l])
-			end
-		else
-			internalscript = false
-			cutscenebarsinternalscript = false
+		-- Remove the lines we have to remove in reverse order, so the keys will remain the same for the items we're removing.
+		for l = #removetheselines, 1, -1 do
+			table.remove(scriptlines, removetheselines[l])
 		end
 	else
 		internalscript = false
