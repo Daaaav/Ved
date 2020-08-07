@@ -490,8 +490,6 @@ function love.draw()
 	elseif state == -1 then
 		ved_printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
 	elseif state == 0 then
-		ved_print("Placeholder main menu. Enter state: " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\nShift+ENTER: Go without loadstate() (tostate(x, true))", 10, 10)
-		startinputonce()
 	elseif state == 1 then
 		drawmaineditor()
 
@@ -3026,12 +3024,6 @@ function love.keypressed(key)
 	if dialog.is_open() then
 		dialogs[#dialogs]:keypressed(key)
 		return
-	elseif state == 0 and table.contains({"return", "kpenter"}, key) and keyboard_eitherIsDown("shift") then
-		stopinput()
-		tostate(input, true)
-	elseif state == 0 and table.contains({"return", "kpenter"}, key) then
-		stopinput()
-		tostate(input)
 	elseif sp_t ~= 0 and key == "escape" then
 		sp_t = 0
 		sp_go = true

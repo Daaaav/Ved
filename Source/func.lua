@@ -3473,6 +3473,7 @@ end
 function loaduis()
 	uis = {}
 
+	uis[0] = ved_require("uis/state0")
 	uis[12] = ved_require("uis/map")
 end
 
