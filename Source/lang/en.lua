@@ -239,7 +239,6 @@ VERSIONOLD = "Update available! Latest version: $1",
 VERSIONCHECKING = "Checking for updates...",
 VERSIONDISABLED = "Update check disabled",
 
-SAVESUCCESS = "Saved successfully!",
 SAVENOSUCCESS = "Saving not successful! Error: ",
 INVALIDFILESIZE = "Invalid file size.",
 

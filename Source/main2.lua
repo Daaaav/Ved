@@ -12,7 +12,7 @@ States:
 5	Filesystem info
 6	Simple listing of all files in the levels folder, and load a level from here
 7	Display all sprites from sprites.png where you can get the number of the sprite you're hovering over
-8	Just save by going to this state and typing in a name
+8	(removed) Just save by going to this state and typing in a name
 9	Dialog test, and right click menu test
 10	List of scripts, and enter one to load
 11	Search
@@ -503,15 +503,6 @@ function love.draw()
 	elseif state == 6 then
 	elseif state == 7 then
 	elseif state == 8 then
-		ved_print(L.ENTERNAMESAVE .. input .. __, 10, 10)
-		startinputonce()
-		if savedsuccess ~= nil then
-			if savedsuccess == true then
-				ved_print(L.SAVESUCCESS, 10, 50)
-			else
-				ved_print(L.SAVENOSUCCESS .. anythingbutnil(savederror), 10, 50)
-			end
-		end
 	elseif state == 9 then
 		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
 		vvvvvv_textbox("red", 0, 50, {"Red"})
@@ -3428,12 +3419,6 @@ function love.keypressed(key)
 		end
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
-	elseif (state == 8) and (table.contains({"return", "kpenter"}, key)) then
-		stopinput()
-		savedsuccess, savederror = savelevel(input .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
-		if savedsuccess then
-			editingmap = input
-		end
 	elseif state == 10 and (key == "up" or key == "down") then
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
 	elseif state == 10 and table.contains({"home", "end"}, key) then
