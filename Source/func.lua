@@ -305,40 +305,6 @@ function loadstate(new, ...)
 		eraserlocked = false
 		keyboardmode = false
 	elseif new == 3 then
-		-- scriptname == ""
-		-- scriptlines = {}
-
-		-- Scripts can be fully contentless- without even one line.
-		if #scriptlines == 0 then
-			table.insert(scriptlines, "")
-		end
-
-		editingline = 1 --#scriptlines
-		textlinestogo = 0
-		startinput()
-		scriptscroll = 0
-		input = scriptlines[editingline]
-		syntaxhlon = true
-
-		-- Little bit of caching
-		rememberflagnumber = -1
-
-		-- Are we loading a $-separated 3DS script?
-		if oldstate == 22 then
-			PleaseDo3DSHandlingThanks = true
-		else
-			PleaseDo3DSHandlingThanks = false
-		end
-
-		-- Make sure we don't keep checking for a load script when we can do it once.
-		intscrwarncache_script = nil
-		intscrwarncache_warn_noloadscript = nil
-		intscrwarncache_warn_boxed = nil
-
-		if oldstate ~= 3 then
-			scripthistorystack = {}
-		end
-		scriptfromsearch = false
 	elseif new == 4 then
 		--success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
 		test = test .. test
@@ -3468,6 +3434,7 @@ function loaduis()
 	uis = {}
 
 	uis[0] = ved_require("uis/state0")
+	uis[3] = ved_require("uis/scripteditor")
 	uis[12] = ved_require("uis/map")
 end
 

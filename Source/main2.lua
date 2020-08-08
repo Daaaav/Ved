@@ -498,7 +498,6 @@ function love.draw()
 		end
 	elseif state == 2 then
 	elseif state == 3 then
-		drawscripteditor()
 	elseif state == 4 then
 		ved_print(metadata.Creator, 10, 10)
 		ved_print("That should say Unknown.", 10, 20)
@@ -3500,120 +3499,9 @@ function love.keypressed(key)
 		end
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
-	elseif state == 3 and (key == "up" or key == "down" or key == "pageup" or key == "pagedown") then
-		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
-			inplacescroll(key)
-		elseif key == "up" then
-			scriptgotoline(editingline-1)
-		elseif key == "down" then
-			scriptgotoline(editingline+1)
-		elseif key == "pageup" then
-			scriptgotoline(editingline-57)
-		elseif key == "pagedown" then
-			scriptgotoline(editingline+57)
-		end
-	elseif state == 3 and table.contains({"return", "kpenter"}, key) then
-		-- We can split lines because the current line is in input and input_r.
-		-- So input_r is simply transferred to the newly inserted line along with the cursor.
-		table.insert(scriptlines, editingline+1, "")
-		editingline = editingline + 1
-		input = anythingbutnil(scriptlines[editingline])
-		dirty()
-		-- We also want to scroll the screen if necessary
-		scriptlineonscreen()
-	elseif (state == 3 or state == 6) and key == "f1" then
-		if state == 6 then
-			stopinput()
-		end
+	elseif state == 6 and key == "f1" then
+		stopinput()
 		tostate(15)
-	elseif state == 3 and key == "f3" then
-		inscriptsearch(scriptsearchterm)
-	elseif state == 3 and (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("alt")) then
-		local temp_jumped_lr = false
-		if key == "left" and #scripthistorystack > 0 then
-			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
-			temp_jumped_lr = true
-		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" and not scriptinstack(carg2) then
-			editorjumpscript(carg2)
-			temp_jumped_lr = true
-		elseif key == "right" and context == "script" and not scriptinstack(carg1) then
-			editorjumpscript(carg1)
-			temp_jumped_lr = true
-		elseif key == "right" and context == "roomscript" and not scriptinstack(carg3) then
-			editorjumpscript(carg3)
-			temp_jumped_lr = true
-		elseif not keyboard_eitherIsDown(ctrl) then
-			-- Temporary catch while both ctrl/alt+left/right are possible, from here on only ctrl
-		elseif key == "c" then
-			copyscriptline()
-		elseif key == "a" then
-			copyscript()
-		elseif key == "f" then
-			startinscriptsearch()
-		elseif key == "g" then
-			startscriptgotoline()
-		elseif key == "i" then
-			if keyboard_eitherIsDown("shift") then
-				if internalscript then
-					internalscript = false
-				elseif cutscenebarsinternalscript then
-					internalscript = true
-					cutscenebarsinternalscript = false
-				else
-					cutscenebarsinternalscript = true
-				end
-			else
-				if internalscript then
-					internalscript = false
-					cutscenebarsinternalscript = true
-				elseif cutscenebarsinternalscript then
-					internalscript = false
-					cutscenebarsinternalscript = false
-				else
-					internalscript = true
-				end
-			end
-			dirty()
-		elseif key == "d" then
-			if #scriptlines > 1 then
-				table.remove(scriptlines, editingline)
-			else
-				scriptlines[editingline] = ""
-			end
-			if keyboard_eitherIsDown("shift") then
-				editingline = math.max(editingline - 1, 1)
-			else
-				if editingline > #scriptlines and editingline > 1 then
-					editingline = editingline - 1
-				end
-			end
-			input = anythingbutnil(scriptlines[editingline])
-			input_r = ""
-			dirty()
-		end
-
-		if temp_jumped_lr and not keyboard_eitherIsDown("alt") then
-			show_notification(L.OLDSHORTCUT_SCRIPTJUMP)
-		end
-	elseif state == 3 and key == "tab" then
-		matching = {}
-
-		for k,v in pairs(knowncommands) do
-			if k:sub(1, input:len()) == input then
-				table.insert(matching, k)
-			end
-		end
-		for k,v in pairs(knowninternalcommands) do
-			if k:sub(1, input:len()) == input and not table.contains(matching, k) then
-				table.insert(matching, k)
-			end
-		end
-
-		if #matching == 1 then
-			input = matching[1]
-			scriptlines[editingline] = input
-			dirty()
-		end
 	elseif (state == 6) and table.contains({"return", "kpenter"}, key) and tabselected == 0 then
 		state6load(input .. input_r)
 	elseif (state == 6) and ((keyboard_eitherIsDown("shift") and key == "tab") or key == "up") then
@@ -3696,24 +3584,6 @@ function love.keypressed(key)
 			oldstate = olderstate
 		end
 		nodialog = false
-	elseif nodialog and state == 3 and key == "escape" then
-		leavescript_to_state = function()
-			stopinput()
-			scriptlines[editingline] = input
-			scripts[scriptname] = table.copy(scriptlines)
-			if scriptfromsearch then
-				tostate(11, true)
-				startinput()
-				input = searchedfor
-			else
-				tostate(10)
-			end
-			nodialog = false
-		end
-
-		if not processflaglabelsreverse() then
-			leavescript_to_state()
-		end
 	elseif nodialog and state == 15 and helpeditingline ~= 0 then
 		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
 			inplacescroll(key)
@@ -4091,19 +3961,6 @@ function love.mousepressed(x, y, button)
 				selectedsubtool[selectedtool] = 1
 			end
 		end
-	elseif state == 3 and button == "l" and nodialog and mouseon(56, 24, love.graphics.getWidth()-200, love.graphics.getHeight()-24) then
-		local chr, line
-		if s.scripteditor_largefont then
-			chr = math.floor((x-104)/16) + 1
-			line = math.floor(((y-24)-scriptscroll-4)/16) + 1
-		else
-			chr = math.floor((x-56)/8) + 1
-			line = math.floor(((y-24)-scriptscroll-6)/8) + 1
-		end
-		if chr < 1 then
-			chr = 1
-		end
-		scriptgotoline(line, chr)
 	elseif state == 6 and hoveringlevel ~= nil and button == "l" then
 		-- Just like when going to a room by clicking on the map, we don't want to click the first tile we press.
 		nodialog = false
