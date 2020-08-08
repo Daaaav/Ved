@@ -310,12 +310,6 @@ function loadstate(new, ...)
 	elseif new == 6 then
 	elseif new == 10 then
 	elseif new == 11 then
-		startinput()
-		searchscripts = {}; searchrooms = {}; searchnotes = {}
-		searchedfor = "moot"
-		showresults = math.huge
-		searchscroll = 0
-		longestsearchlist = 0
 	elseif new == 12 then
 	elseif new == 13 then
 		firstvvvvvvfolder = s.customvvvvvvdir
@@ -3399,6 +3393,7 @@ function loaduis()
 	uis[7] = ved_require("uis/spriteview")
 	uis[9] = ved_require("uis/dialogtest")
 	uis[10] = ved_require("uis/scriptlist")
+	uis[11] = ved_require("uis/search")
 	uis[12] = ved_require("uis/map")
 end
 

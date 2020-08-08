@@ -506,7 +506,6 @@ function love.draw()
 	elseif state == 9 then
 	elseif state == 10 then
 	elseif state == 11 then
-		drawsearch()
 	elseif state == 12 then
 	elseif state == 13 then
 		-- Options screen
@@ -3262,13 +3261,6 @@ function love.keypressed(key)
 		end
 	elseif state == 1 and nodialog and editingbounds == 0 and editingroomtext == 0 and not editingroomname and not tilespicker_shortcut and key == "escape" then
 		tilespicker = false
-	elseif state == 11 and table.contains({"return", "kpenter"}, key) then
-		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
-		searchedfor = input .. input_r
-	elseif nodialog and state == 11 and key == "escape" then
-		stopinput()
-		tostate(1, true)
-		nodialog = false
 	elseif nodialog and state == 13 and key == "escape" then
 		exitvedoptions()
 	elseif nodialog and (state == 15 or state == 19 or state == 28 or state == 30 or state == 31 or state == 32) and key == "escape" then
