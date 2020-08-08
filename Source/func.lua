@@ -39,12 +39,6 @@ function limit_draw_fps()
 	end
 end
 
-function fatalerror(msg)
-	errormsg = msg
-	cons("FATAL ERROR: " .. msg)
-	state = -1
-end
-
 function backspace(text)
 	--[[ UTF-8 library is 0.9.2+
 	-- get the byte offset to the last UTF-8 character in the string.

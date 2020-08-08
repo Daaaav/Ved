@@ -21,9 +21,6 @@ TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this
 
 OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of L{ve from https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working.\nYou can download the latest version of L{ve from https://love2d.org/.",
-UNKNOWNSTATE = "Unknown state ($1), jumped to from state $2",
-FATALERROR = "FATAL ERROR: ",
-FATALEND = "Please close the game and try again. And if you're Dav, please fix it.",
 
 OSNOTRECOGNIZED = "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2",
 MAXTRINKETS = "The maximum amount of trinkets ($1) has been reached in this level.",

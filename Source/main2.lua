@@ -488,7 +488,6 @@ function love.draw()
 	elseif state == -2 then
 		-- Init state - see love.update()
 	elseif state == -1 then
-		ved_printf(L.FATALERROR .. anythingbutnil(errormsg) .. "\n\n" .. L.FATALEND, 10, 10, love.graphics.getWidth()-20, "left")
 	elseif state == 0 then
 	elseif state == 1 then
 		drawmaineditor()
@@ -1887,13 +1886,7 @@ function love.draw()
 			ved_print(youhaveselected .. tmp, 580, 112)
 		end
 	else
-		statecaught = false
-
 		hook("love_draw_state")
-
-		if not statecaught then
-			fatalerror(langkeys(L.UNKNOWNSTATE, {state, oldstate}))
-		end
 	end
 
 	if uis[state] ~= nil and uis[state].draw ~= nil then
