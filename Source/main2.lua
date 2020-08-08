@@ -504,17 +504,6 @@ function love.draw()
 	elseif state == 7 then
 	elseif state == 8 then
 	elseif state == 9 then
-		vvvvvv_textbox("cyan", 0, 25, {"Cyan"})
-		vvvvvv_textbox("red", 0, 50, {"Red"})
-		vvvvvv_textbox("yellow", 0, 75, {"Yellow"})
-		vvvvvv_textbox("green", 0, 100, {"Green"})
-		vvvvvv_textbox("blue", 0, 125, {"Blue"})
-		vvvvvv_textbox("purple", 0, 150, {"Purple"})
-		vvvvvv_textbox("gray", 0, 175, {"Gray"})
-
-		for k,v in pairs(vvvvvv_textboxes) do
-			vvvvvv_textbox(unpack(v))
-		end
 	elseif state == 10 then
 		local j = -1
 		local newscroll
@@ -3832,11 +3821,6 @@ function love.mousepressed(x, y, button)
 				selectedsubtool[selectedtool] = 1
 			end
 		end
-	elseif state == 9 and button == "r" then -- TEST STATE
-		rightclickmenu.create({"Delete", "Edit script", "Rename"}, "1")
-	elseif state == 9 and button == "l" and nodialog then
-		tbx, tby = math.floor((x-screenoffset)/2), math.floor(y/2)
-		table.insert(vvvvvv_textboxes, {({"cyan", "red", "yellow", "green", "blue", "purple", "gray"})[math.random(1,7)], tbx, tby, {"Text!", tbx .. "," .. tby}})
 	elseif state == 15 and helpeditingline ~= 0 and button == "l" and nodialog and mouseon(214+(s.psmallerscreen and -96 or 0), 8, love.graphics.getWidth()-238-(s.psmallerscreen and -96 or 0), love.graphics.getHeight()-16) then
 		local chr, line
 		local screenxoffset = 0
