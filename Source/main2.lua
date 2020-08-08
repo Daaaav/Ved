@@ -9,7 +9,7 @@ States:
 2	(removed) Syntax highlighting test
 3	Scripting editor
 4	(removed) Some XML testing
-5	Filesystem testing
+5	Filesystem info
 6	Simple listing of all files in the levels folder, and load a level from here
 7	Display all sprites from sprites.png where you can get the number of the sprite you're hovering over
 8	Just save by going to this state and typing in a name
@@ -500,16 +500,6 @@ function love.draw()
 	elseif state == 3 then
 	elseif state == 4 then
 	elseif state == 5 then
-		ved_print("Userprofile: " .. userprofile, 8, 8)
-		for k,v in pairs(files) do
-			ved_print(v, 8, 16+8*k)
-
-			lastk = k
-		end
-
-		ved_print("Levels folder error: " .. lerror .. " (0 means no error)", 8, 16+8*lastk+16)
-		ved_print("Levels folder: " .. anythingbutnil(levelsfolder), 8, 16+8*lastk+24)
-		ved_print("Identity: " .. love.filesystem.getIdentity() .. "\nSaveDirectory: " .. love.filesystem.getSaveDirectory(), 8, 16+8*lastk+24+16)
 	elseif state == 6 then
 		drawlevelslist()
 	elseif state == 7 then

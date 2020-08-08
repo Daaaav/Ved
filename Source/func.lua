@@ -307,13 +307,6 @@ function loadstate(new, ...)
 	elseif new == 3 then
 	elseif new == 4 then
 	elseif new == 5 then
-		lsuccess = directory_exists(vvvvvvfolder, "levels")
-		if lsuccess then
-			lerror = 0
-		else
-			lerror = 4
-		end
-		files = {} --listdirs(userprofile)
 	elseif new == 6 then
 		if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
 			-- We'll be able to go back. Show this by making a screenshot
@@ -3433,6 +3426,7 @@ function loaduis()
 
 	uis[0] = ved_require("uis/state0")
 	uis[3] = ved_require("uis/scripteditor")
+	uis[5] = ved_require("uis/fsinfo")
 	uis[12] = ved_require("uis/map")
 end
 
