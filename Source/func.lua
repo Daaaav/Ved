@@ -309,12 +309,6 @@ function loadstate(new, ...)
 	elseif new == 5 then
 	elseif new == 6 then
 	elseif new == 10 then
-		if oldstate ~= 3 or scriptlistscroll == nil then
-			scriptlistscroll = 0
-			scriptdisplay_used = true
-			scriptdisplay_unused = true
-		end
-		usedscripts, n_usedscripts = findusedscripts()
 	elseif new == 11 then
 		startinput()
 		searchscripts = {}; searchrooms = {}; searchnotes = {}
@@ -3404,6 +3398,7 @@ function loaduis()
 	uis[6] = ved_require("uis/levelslist")
 	uis[7] = ved_require("uis/spriteview")
 	uis[9] = ved_require("uis/dialogtest")
+	uis[10] = ved_require("uis/scriptlist")
 	uis[12] = ved_require("uis/map")
 end
 
