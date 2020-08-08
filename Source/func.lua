@@ -308,42 +308,6 @@ function loadstate(new, ...)
 	elseif new == 4 then
 	elseif new == 5 then
 	elseif new == 6 then
-		if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
-			-- We'll be able to go back. Show this by making a screenshot
-			if love_version_meets(11) then
-				love.graphics.captureScreenshot(
-					function(imgdata)
-						editorscreenshot = love.graphics.newImage(imgdata)
-					end
-				)
-			else
-				editorscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
-			end
-			state6old1 = true
-		else
-			--state6old1 = false
-		end
-
-		if ... == "secondlevel" then
-			-- This is the second level we're loading!
-			secondlevel = true
-		else
-			secondlevel = false
-		end
-
-		-- Input should've been stopped, but it isn't always stopped apparently.
-		stopinput()
-		input = ""
-		input_r = ""
-
-		--loadlevelsfolder()
-
-		oldinput = ""
-		tabselected = 0
-		backupscreen = false
-		currentbackupdir = ""
-		levellistscroll = 0
-		max_levellistscroll = 0
 	elseif new == 10 then
 		if oldstate ~= 3 or scriptlistscroll == nil then
 			scriptlistscroll = 0
@@ -844,6 +808,16 @@ function loadwarpbgs()
 			end
 		end
 	end
+end
+
+function user_reload_tilesets()
+	-- User pressed F11 to reload tilesets
+	loadtilesets()
+	loadfonts()
+	tile_batch_texture_needs_update = true
+	map_init()
+	temporaryroomname = L.TILESETSRELOADED
+	temporaryroomnametimer = 90
 end
 
 function mousein(x1, y1, x2, y2)
@@ -3427,6 +3401,7 @@ function loaduis()
 	uis[0] = ved_require("uis/state0")
 	uis[3] = ved_require("uis/scripteditor")
 	uis[5] = ved_require("uis/fsinfo")
+	uis[6] = ved_require("uis/levelslist")
 	uis[12] = ved_require("uis/map")
 end
 
