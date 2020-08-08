@@ -497,10 +497,6 @@ function love.draw()
 			tostate(6)
 		end
 	elseif state == 2 then
-		ved_print("Syntax highlighting" .. input .. __, 10, 10)
-
-		syntaxhl(input, 10, 30, false, true)
-		startinputonce()
 	elseif state == 3 then
 		drawscripteditor()
 	elseif state == 4 then
