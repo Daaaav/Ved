@@ -306,8 +306,6 @@ function loadstate(new, ...)
 		keyboardmode = false
 	elseif new == 3 then
 	elseif new == 4 then
-		--success, metadata, contents, entities, levelmetadata, scripts = loadlevel("testlevel.vvvvvv")
-		test = test .. test
 	elseif new == 5 then
 		lsuccess = directory_exists(vvvvvvfolder, "levels")
 		if lsuccess then

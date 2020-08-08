@@ -3,12 +3,12 @@
 States:
 -3	Just blackness
 -2	tostate 6
--1	Display error (expected: errormsg)
+-1	(removed) Display error (expected: errormsg)
 0	Temp main menu (enter state)
 1	The editor (will expect things to have been loaded!)
-2	Syntax highlighting test
+2	(removed) Syntax highlighting test
 3	Scripting editor
-4	Some XML testing
+4	(removed) Some XML testing
 5	Filesystem testing
 6	Simple listing of all files in the levels folder, and load a level from here
 7	Display all sprites from sprites.png where you can get the number of the sprite you're hovering over
@@ -499,8 +499,6 @@ function love.draw()
 	elseif state == 2 then
 	elseif state == 3 then
 	elseif state == 4 then
-		ved_print(metadata.Creator, 10, 10)
-		ved_print("That should say Unknown.", 10, 20)
 	elseif state == 5 then
 		ved_print("Userprofile: " .. userprofile, 8, 8)
 		for k,v in pairs(files) do
