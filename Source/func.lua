@@ -3402,6 +3402,7 @@ function loaduis()
 	uis[3] = ved_require("uis/scripteditor")
 	uis[5] = ved_require("uis/fsinfo")
 	uis[6] = ved_require("uis/levelslist")
+	uis[7] = ved_require("uis/spriteview")
 	uis[12] = ved_require("uis/map")
 end
 
