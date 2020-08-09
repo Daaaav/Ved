@@ -312,7 +312,6 @@ function loadstate(new, ...)
 	elseif new == 11 then
 	elseif new == 12 then
 	elseif new == 13 then
-		firstvvvvvvfolder = s.customvvvvvvdir
 	elseif new == 15 then
 		helplistscroll = 0
 		helparticle = 2
@@ -3395,6 +3394,7 @@ function loaduis()
 	uis[10] = ved_require("uis/scriptlist")
 	uis[11] = ved_require("uis/search")
 	uis[12] = ved_require("uis/map")
+	uis[13] = ved_require("uis/options")
 end
 
 function show_notification(text)
