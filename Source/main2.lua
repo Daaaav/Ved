@@ -509,17 +509,6 @@ function love.draw()
 	elseif state == 12 then
 	elseif state == 13 then
 	elseif state == 14 then
-		for r = 0, 1 do
-			for c = 0, 4 do
-				drawentitysprite(enemysprites[5*r+c], 16+48*c, 16+48*r, 0)
-			end
-		end
-
-		for r = 0, 1 do
-			for c = 0, 4 do
-				drawentitysprite(enemysprites[5*r+c], 600+16*c, 16+16*r, 0, true)
-			end
-		end
 	elseif state == 15 then
 		drawhelp()
 	elseif state == 16 then

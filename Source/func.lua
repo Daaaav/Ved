@@ -3395,6 +3395,7 @@ function loaduis()
 	uis[11] = ved_require("uis/search")
 	uis[12] = ved_require("uis/map")
 	uis[13] = ved_require("uis/options")
+	uis[14] = ved_require("uis/enemypickertest")
 end
 
 function show_notification(text)
