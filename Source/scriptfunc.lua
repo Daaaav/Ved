@@ -55,7 +55,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
 		ved_print(docolor and text or text:sub(1, string.len(text)-string.len(text_r)), x, y, textscale)
-		offsetchars = string.len(text) - string.len(text_r) + 1
+		offsetchars = utf8.len(text) - utf8.len(text_r) + 1
 
 		if addcursor then
 			setColorArr(s.syntaxcolor_cursor)
@@ -105,7 +105,6 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 					end
 				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)
-				--elseif string.sub(v, 1, 1) == "$" then
 				elseif k == 2 and (partss_parsed[1] == "flag" or partss_parsed[1] == "ifflag" or partss_parsed[1] == "customifflag") and tostring(tonumber(v_parsed)) ~= tostring(v_parsed) then
 					-- if flag name is not used yet, newflagname
 					for fl = 0, limit.flags-1 do
@@ -122,13 +121,11 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				ved_print(v, x+(offsetchars*fontsize), y, textscale)
 
 				setColorArr(s.syntaxcolor_separator)
-				ved_print(string.sub(text, 1+offsetchars+string.len(v), 1+offsetchars+string.len(v)), x+(offsetchars*fontsize)+(string.len(v)*fontsize), y, textscale)
+				ved_print(utf8.sub(text, 1+offsetchars+utf8.len(v), 1+offsetchars+utf8.len(v)), x+(offsetchars*fontsize)+(utf8.len(v)*fontsize), y, textscale)
 
-				offsetchars = offsetchars + (string.len(v)+1)
+				offsetchars = offsetchars + (utf8.len(v)+1)
 			end
-		end
-
-		if not docolor then
+		else -- not docolor
 			ved_print(text:sub(1, string.len(text)-string.len(text_r)), x, y, textscale)
 		end
 
@@ -136,10 +133,10 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 			setColorArr(s.syntaxcolor_cursor)
 			if docolor then
 				if cursorflashtime <= .5 then
-					ved_print(firstUTF8(__), x+((string.len(text)-string.len(text_r))*fontsize), y, textscale)
+					ved_print(firstUTF8(__), x+((utf8.len(text)-utf8.len(text_r))*fontsize), y, textscale)
 				end
 			else
-				ved_print(__, x+((string.len(text)-string.len(text_r))*fontsize), y, textscale)
+				ved_print(__, x+((utf8.len(text)-utf8.len(text_r))*fontsize), y, textscale)
 			end
 		end
 
@@ -168,6 +165,9 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 end
 
 function justtext(text, thisistext)
+	-- Only checks for starts of textboxes above the screen. Does not draw any text!
+	-- This is not "the function used when syntax highlighting is turned off",
+	-- nor "the function used for textbox content"
 	if not thisistext then
 		text = text:gsub(" ", "")
 		text = scriptlinecasing(text)

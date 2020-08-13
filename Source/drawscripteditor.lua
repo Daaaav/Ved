@@ -105,8 +105,8 @@ function drawscripteditor()
 					break
 				end
 
-				if #l > maxwidthtextbox then
-					maxwidthtextbox = #l
+				if utf8.len(l) > maxwidthtextbox then
+					maxwidthtextbox = utf8.len(l)
 				end
 			end
 
