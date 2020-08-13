@@ -74,8 +74,7 @@ configs =
 		{
 		default = false,
 		["type"] = "bool",
-		--comment = "in case you want to be able to type any non-ASCII characters outside of the level notes. Please note this is pretty much useless as it will not show up correctly in VVVVVV, and will crash older versions of VVVVVV."
-		comment = "Pretty much useless. (In case you want to be able to type any non-ASCII characters outside of the level notes. These will not show up correctly in VVVVVV, and will crash older versions of VVVVVV.)"
+		comment = "Obsolete, cpntrolled whether non-ASCII characters were typable in custom levels. Now always true."
 		},
 	smallerscreen =
 		{

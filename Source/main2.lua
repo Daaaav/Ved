@@ -2077,51 +2077,48 @@ function love.textinput(char)
 		end
 	end
 
-	-- Ved should really only accept printable ASCII only when typing...
-	if s.acceptutf8 or (state == 13 or state == 15 or char:byte(2, 2) == nil) then
-		-- Textual input isn't needed with a dialog on the screen, we have multiinput
-		if takinginput and not dialog.is_open() then
-			-- Ugly, but at least won't need another global variable that appears here and there
-			if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
-			elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
-			-- Pipes are newlines on PC and dollar signs are newlines on 3DS
-			elseif (state == 3) and
-			((not PleaseDo3DSHandlingThanks and char == "|") or
-			(PleaseDo3DSHandlingThanks and char == "$")) then
-				table.insert(scriptlines, editingline+1, "")
-				editingline = editingline + 1
-				input = anythingbutnil(scriptlines[editingline])
-			else
-				input = input .. char
-			end
-
-			cursorflashtime = 0
-
-			if state == 3 then
-				scriptlines[editingline] = input
-				-- nodialog as a temp global var is checked here too
-				if nodialog then
-					dirty()
-				elseif table.contains({"/", "?"}, char) then
-					nodialog = true
-				end
-			elseif state == 15 and helpeditingline ~= 0 then
-				helparticlecontent[helpeditingline] = input
-			elseif state == 6 then
-				tabselected = 0
-			end
-		elseif dialog.is_open() and not dialogs[#dialogs].closing then
-			local cf, cftype = dialogs[#dialogs].currentfield
-			if dialogs[#dialogs].fields[cf] ~= nil then
-				-- Input boxes can also have their type set to nil and default to 0
-				cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
-			end
-			if cf ~= 0 and cftype == 0 then
-				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
-			end
-
-			cursorflashtime = 0
+	-- Textual input isn't needed with a dialog on the screen, we have multiinput
+	if takinginput and not dialog.is_open() then
+		-- Ugly, but at least won't need another global variable that appears here and there
+		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
+		elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
+		-- Pipes are newlines on PC and dollar signs are newlines on 3DS
+		elseif (state == 3) and
+		((not PleaseDo3DSHandlingThanks and char == "|") or
+		(PleaseDo3DSHandlingThanks and char == "$")) then
+			table.insert(scriptlines, editingline+1, "")
+			editingline = editingline + 1
+			input = anythingbutnil(scriptlines[editingline])
+		else
+			input = input .. char
 		end
+
+		cursorflashtime = 0
+
+		if state == 3 then
+			scriptlines[editingline] = input
+			-- nodialog as a temp global var is checked here too
+			if nodialog then
+				dirty()
+			elseif table.contains({"/", "?"}, char) then
+				nodialog = true
+			end
+		elseif state == 15 and helpeditingline ~= 0 then
+			helparticlecontent[helpeditingline] = input
+		elseif state == 6 then
+			tabselected = 0
+		end
+	elseif dialog.is_open() and not dialogs[#dialogs].closing then
+		local cf, cftype = dialogs[#dialogs].currentfield
+		if dialogs[#dialogs].fields[cf] ~= nil then
+			-- Input boxes can also have their type set to nil and default to 0
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+		end
+		if cf ~= 0 and cftype == 0 then
+			dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
+		end
+
+		cursorflashtime = 0
 	end
 
 	if coordsdialog.active then
