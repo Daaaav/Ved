@@ -1627,6 +1627,9 @@ function gotostartpointroom()
 	if count.startpoint ~= nil then
 		cons("Start point is at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " so in room " .. math.floor(entitydata[count.startpoint].x / 40) .. "," .. math.floor(entitydata[count.startpoint].y / 30))
 		gotoroom(math.floor(entitydata[count.startpoint].x / 40), math.floor(entitydata[count.startpoint].y / 30))
+	else
+		temporaryroomname = L.STARTPOINTNOTFOUND
+		temporaryroomnametimer = 90
 	end
 end
 

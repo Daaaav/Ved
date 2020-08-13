@@ -3,3 +3,4 @@
 
 --L. = ""
 
+L.STARTPOINTNOTFOUND = "There is no start point!"
