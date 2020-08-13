@@ -101,8 +101,12 @@ function drawscripteditor()
 					l = scriptlines[i]
 				end
 
-				if #anythingbutnil(l) > maxwidthtextbox then
-					maxwidthtextbox = #anythingbutnil(l)
+				if l == nil then
+					break
+				end
+
+				if #l > maxwidthtextbox then
+					maxwidthtextbox = #l
 				end
 			end
 
