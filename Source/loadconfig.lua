@@ -74,7 +74,7 @@ configs =
 		{
 		default = false,
 		["type"] = "bool",
-		comment = "Obsolete, cpntrolled whether non-ASCII characters were typable in custom levels. Now always true."
+		comment = "Obsolete, controlled whether non-ASCII characters were typable in custom levels. Now always true."
 		},
 	smallerscreen =
 		{
