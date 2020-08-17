@@ -313,40 +313,6 @@ function loadstate(new, ...)
 	elseif new == 12 then
 	elseif new == 13 then
 	elseif new == 15 then
-		helplistscroll = 0
-		helparticle = 2
-		helparticlescroll = 0
-		helpeditingline = 0
-		helprefreshable = false
-		onlefthelpbuttons = false
-		part1parts_cache = {}
-		cachedlink = nil
-		matching_url = nil
-		matching_article = nil
-		matching_anchor = nil
-		matching_article_num = nil
-		matching_anchor_line = nil
-
-		-- Are we gonna use this for Ved help or for level notes?
-		if ... == nil then
-			-- Just the Ved help
-			helppages = LH
-			helpeditable = false
-			helparticlecontent = explode("\n", helppages[helparticle].cont)
-		elseif ... == "plugins" then
-			--helppages = {}
-			loadpluginpages()
-			helpeditable = false
-			helparticlecontent = explode("\n", helppages[helparticle].cont)
-		else
-			-- Level notes (or something custom because extradata is an array here!
-			helppages = (...)[1]
-			helpeditable = (...)[2]
-			helprefreshable = (...)[3]
-			if helppages[2] ~= nil then
-				helparticlecontent = explode("\n", helppages[helparticle].cont)
-			end
-		end
 	elseif new == 18 then
 		undostacktext = ""
 		redostacktext = ""
@@ -3396,6 +3362,7 @@ function loaduis()
 	uis[12] = ved_require("uis/map")
 	uis[13] = ved_require("uis/options")
 	uis[14] = ved_require("uis/enemypickertest")
+	uis[15] = ved_require("uis/help")
 end
 
 function show_notification(text)
