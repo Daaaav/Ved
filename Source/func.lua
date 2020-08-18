@@ -317,12 +317,6 @@ function loadstate(new, ...)
 	elseif new == 19 then
 	elseif new == 20 then
 	elseif new == 21 then
-		overlappingentities = {}
-		listoverlappingentities(overlappingentities)
-		text21 = ""
-		for k,v in pairs(overlappingentities) do
-			text21 = text21 .. "Entity #" .. k .. " type " .. v.t .. " in room " .. (v.x/40) .. "," .. (v.y/30) .. "\n"
-		end
 	elseif new == 24 then
 		pluginstext = textlistplugins()
 	elseif new == 25 then
@@ -1987,7 +1981,7 @@ end
 function listoverlappingentities(tabel)
 	for k,v in pairs(entitydata) do
 		for k2,v2 in pairs(entitydata) do
-			if k ~= k2 and v.x == v.x2 and v.y == v.y2 then
+			if k ~= k2 and v.x == v2.x and v2.y == v.y then
 				table.insert(tabel, v)
 				cons("--\nOverlap: Entity #" .. k .. " type " .. v.t .. " in room " .. (v.x/40) .. "," .. (v.y/30) .. "\n   with: Entity #" .. k2 .. " type " .. v2.t .. " in room " .. (v2.x/40) .. "," .. (v2.y/30) .. "\n")
 			end
@@ -3336,6 +3330,7 @@ function loaduis()
 	uis[18] = ved_require("uis/unreinfo")
 	uis[19] = ved_require("uis/scriptflags")
 	uis[20] = ved_require("uis/resizableboxtest")
+	uis[21] = ved_require("uis/overlapentinfo")
 end
 
 function show_notification(text)

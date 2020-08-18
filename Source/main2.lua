@@ -521,7 +521,6 @@ function love.draw()
 	elseif state == 19 then
 	elseif state == 20 then
 	elseif state == 21 then
-		ved_print(text21, 8, 8)
 	elseif state == 22 then -- These are not translate-worthy I'm guessing
 		ved_printf("Filename to a script file (IN the 3DS format) (lines separated by dollars): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
 		startinputonce()
