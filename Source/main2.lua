@@ -20,9 +20,9 @@ States:
 13	Options screen
 14	Sort of entity picker proto
 15	Help
-16	Scroll bar test
-17	folderopendialog utility
-18	Show undo/redo stacks
+16	(never used, removed) Scroll bar test
+17	(never used, removed) folderopendialog utility
+18	Show main editor undo/redo stacks
 19	Flags list
 20	Resizable box test
 21	Display overlapping entities (may be a visible function later) (maybe doesn't work properly)
@@ -518,8 +518,6 @@ function love.draw()
 	elseif state == 17 then
 
 	elseif state == 18 then
-		ved_print("Undo stack:\n" .. undostacktext, 8, 8) -- Dev/testing/debug state, not translated
-		ved_print("Redo stack:\n" .. redostacktext, love.graphics.getWidth()/2 + 8, 8)
 	elseif state == 19 then
 		-- Columns 1 and 2
 		for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- dit was misschien niet handig om te doen

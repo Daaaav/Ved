@@ -314,28 +314,6 @@ function loadstate(new, ...)
 	elseif new == 13 then
 	elseif new == 15 then
 	elseif new == 18 then
-		undostacktext = ""
-		redostacktext = ""
-
-		for k,v in pairs(undobuffer) do
-			undostacktext = undostacktext .. v.undotype
-
-			if v.undotype == "tiles" then
-				undostacktext = undostacktext .. " (" .. L.ROOM .. " " .. v.rx .. "," .. v.ry .. ")"
-			end
-
-			undostacktext = undostacktext .. "\n"
-		end
-
-		for k,v in pairs(redobuffer) do
-			redostacktext = redostacktext .. v.undotype
-
-			if v.undotype == "tiles" then
-				redostacktext = redostacktext .. " (" .. L.ROOM .. " " .. v.rx .. "," .. v.ry .. ")"
-			end
-
-			redostacktext = redostacktext .. "\n"
-		end
 	elseif new == 19 then
 		flags_digits = tostring(limit.flags-1):len()
 		flags_page = 0
@@ -3363,6 +3341,7 @@ function loaduis()
 	uis[13] = ved_require("uis/options")
 	uis[14] = ved_require("uis/enemypickertest")
 	uis[15] = ved_require("uis/help")
+	uis[18] = ved_require("uis/unreinfo")
 end
 
 function show_notification(text)
