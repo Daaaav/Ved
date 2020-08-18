@@ -26,7 +26,7 @@ function ui.keypressed(key)
 	if table.contains({"return", "kpenter"}, key) then
 		searchscripts, searchrooms, searchnotes = searchtext(input .. input_r)
 		searchedfor = input .. input_r
-	elseif nodialog and key == "escape" then
+	elseif key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false

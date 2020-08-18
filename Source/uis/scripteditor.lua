@@ -159,7 +159,7 @@ function ui.keypressed(key)
 			scriptlines[editingline] = input
 			dirty()
 		end
-	elseif nodialog and key == "escape" then
+	elseif key == "escape" then
 		leavescript_to_state = function()
 			stopinput()
 			scriptlines[editingline] = input
@@ -187,7 +187,7 @@ function ui.textinput(char)
 end
 
 function ui.mousepressed(x, y, button)
-	if button == "l" and nodialog and mouseon(56, 24, love.graphics.getWidth()-200, love.graphics.getHeight()-24) then
+	if button == "l" and mouseon(56, 24, love.graphics.getWidth()-200, love.graphics.getHeight()-24) then
 		local chr, line
 		if s.scripteditor_largefont then
 			chr = math.floor((x-104)/16) + 1

@@ -169,20 +169,20 @@ function ui.keypressed(key)
 		handle_scrolling(false, key == "up" and "wu" or "wd") -- 16px
 	elseif table.contains({"home", "end"}, key) then
 		handle_scrolling(true, key)
-	elseif key == "n" and nodialog then
+	elseif key == "n" then
 		dialog.create(
 			L.NEWSCRIPTNAME, DBS.OKCANCEL,
 			dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
 			dialog.callback.newscript_validate, "newscript_list"
 		)
-	elseif key == "f" and nodialog then
+	elseif key == "f" then
 		tostate(19,false)
-	elseif key == "/" and nodialog and not TEMP_slashfrommain then
+	elseif key == "/" and not TEMP_slashfrommain then
 		if #scriptnames >= 1 then
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)
 			nodialog = false -- Terrible
 		end
-	elseif nodialog and key == "escape" then
+	elseif key == "escape" then
 		stopinput()
 		tostate(1, true)
 		nodialog = false

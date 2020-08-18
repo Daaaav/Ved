@@ -82,7 +82,7 @@ function ui.update(dt)
 end
 
 function ui.keypressed(key)
-	if nodialog and key == "n" and keyboard_eitherIsDown(ctrl) then
+	if key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if not state6old1 then
 			stopinput()
@@ -99,7 +99,7 @@ function ui.keypressed(key)
 		else
 			triggernewlevel()
 		end
-	elseif nodialog and key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
+	elseif key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
 		user_reload_tilesets()
 	elseif key == "f1" then
 		stopinput()
@@ -127,15 +127,15 @@ function ui.keypressed(key)
 		end
 	elseif key == "f5" then
 		loadlevelsfolder()
-	elseif backupscreen and currentbackupdir ~= "" and key == "backspace" and nodialog then
+	elseif backupscreen and currentbackupdir ~= "" and key == "backspace" then
 		currentbackupdir = ""
-	elseif not secondlevel and nodialog and not backupscreen and (key == "a" or key == "r") and keyboard_eitherIsDown(ctrl) then
+	elseif not secondlevel and not backupscreen and (key == "a" or key == "r") and keyboard_eitherIsDown(ctrl) then
 		stopinput()
 		tostate(30)
 		if key == "a" then
 			show_notification(L.OLDSHORTCUT_ASSETS)
 		end
-	elseif not secondlevel and nodialog and not backupscreen and (key == "d" or key == "f") and keyboard_eitherIsDown(ctrl) then
+	elseif not secondlevel and not backupscreen and (key == "d" or key == "f") and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
 		if key == "d" then
 			show_notification(L.OLDSHORTCUT_OPENLVLDIR)
@@ -167,7 +167,7 @@ function ui.mousepressed(x, y, button)
 end
 
 function ui.mousereleased(x, y, button)
-	if not secondlevel and nodialog and not backupscreen and button == "l" and onrbutton(1, nil, true) then
+	if not secondlevel and not backupscreen and button == "l" and onrbutton(1, nil, true) then
 		-- This has to be in mousereleased, since opening a window with a mouse press prevents a mouse
 		-- release event to occur, which either causes the next click to be missed, or causes a new
 		-- window to be opened on focus when you try to fix that!
