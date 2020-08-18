@@ -316,10 +316,6 @@ function loadstate(new, ...)
 	elseif new == 18 then
 	elseif new == 19 then
 	elseif new == 20 then
-		box_exists = true
-		box_x, box_y, box_w, box_h = 80,80,208,208
-		boxperi_x, boxperi_y, boxperi_w, boxperi_h = 0,0,love.graphics.getWidth(),love.graphics.getHeight()
-		box_type = 0
 	elseif new == 21 then
 		overlappingentities = {}
 		listoverlappingentities(overlappingentities)
@@ -3339,6 +3335,7 @@ function loaduis()
 	uis[15] = ved_require("uis/help")
 	uis[18] = ved_require("uis/unreinfo")
 	uis[19] = ved_require("uis/scriptflags")
+	uis[20] = ved_require("uis/resizableboxtest")
 end
 
 function show_notification(text)
