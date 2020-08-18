@@ -315,10 +315,6 @@ function loadstate(new, ...)
 	elseif new == 15 then
 	elseif new == 18 then
 	elseif new == 19 then
-		flags_digits = tostring(limit.flags-1):len()
-		flags_page = 0
-
-		loadflagslist()
 	elseif new == 20 then
 		box_exists = true
 		box_x, box_y, box_w, box_h = 80,80,208,208
@@ -3342,6 +3338,7 @@ function loaduis()
 	uis[14] = ved_require("uis/enemypickertest")
 	uis[15] = ved_require("uis/help")
 	uis[18] = ved_require("uis/unreinfo")
+	uis[19] = ved_require("uis/scriptflags")
 end
 
 function show_notification(text)
