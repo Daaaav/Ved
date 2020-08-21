@@ -150,17 +150,11 @@ function drawscripteditor()
 	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
 	ved_printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4, 128-16, "center")
-	if not PleaseDo3DSHandlingThanks then
-		--rbutton(L.NEW, 1)
-		rbutton(L.SCRIPTUSAGES, 1)
-	else
-		rbutton(L.OPEN, 1)
-	end
+	--rbutton(L.NEW, 1)
+	rbutton(L.SCRIPTUSAGES, 1)
 	ved_printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4, 128-16, "center")
 	rbutton({L.COPYSCRIPT, "cA"}, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
-	if not PleaseDo3DSHandlingThanks then
-		rbutton(L.SCRIPTSPLIT, 4)
-	end
+	rbutton(L.SCRIPTSPLIT, 4)
 	rbutton({L.SEARCHSCRIPT, "cF"}, 5)
 	rbutton({L.GOTOLINE, "cG"}, 6)
 	rbutton({(internalscript or cutscenebarsinternalscript) and L.INTERNALON or L.INTERNALOFF, "cI"}, 7, nil, nil, nil, internalscript or cutscenebarsinternalscript)
@@ -192,11 +186,7 @@ function drawscripteditor()
 	-- Column
 	ved_printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")
 
-	if not PleaseDo3DSHandlingThanks then
-		rbutton({L.RETURN, "b"}, 0, nil, true)
-	else
-		rbutton("Copy with $s", 0, nil, true) -- not translating I suppose
-	end
+	rbutton({L.RETURN, "b"}, 0, nil, true)
 
 	-- First make these buttons do things
 	if nodialog and love.mouse.isDown("l") then
@@ -204,7 +194,7 @@ function drawscripteditor()
 			-- Help
 			tostate(15)
 		--[[
-		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
+		elseif onrbutton(1) then
 			-- New
 			stopinput()
 			scriptlines[editingline] = input
@@ -214,10 +204,7 @@ function drawscripteditor()
 				dialog.callback.newscript_validate, "newscript_editor"
 			)
 		]]
-		elseif PleaseDo3DSHandlingThanks and onrbutton(1) then
-			-- Open ($script)
-			tostate(22)
-		elseif not PleaseDo3DSHandlingThanks and onrbutton(1) then
+		elseif onrbutton(1) then
 			-- Usages
 			local uentityuses, uloadscriptuses, uscriptuses = findscriptreferences(scriptname)
 
@@ -236,7 +223,7 @@ function drawscripteditor()
 		elseif onrbutton(3) then
 			-- Copy script
 			copyscript()
-		elseif not PleaseDo3DSHandlingThanks and onrbutton(4) then
+		elseif onrbutton(4) then
 			-- Split scripts
 			stopinput()
 			scriptlines[editingline] = input
@@ -291,7 +278,7 @@ function drawscripteditor()
 			end
 
 			mousepressed = true
-		elseif not mousepressed and not PleaseDo3DSHandlingThanks and onrbutton(0, nil, true) then
+		elseif not mousepressed and onrbutton(0, nil, true) then
 			-- Return
 			leavescript_to_state = function()
 				stopinput()
@@ -311,9 +298,6 @@ function drawscripteditor()
 			end
 
 			mousepressed = true
-		elseif PleaseDo3DSHandlingThanks and onrbutton(0, nil, true) then
-			-- Copy script with dollars
-			love.system.setClipboardText(table.concat(scriptlines, "$"))
 		end
 	end
 

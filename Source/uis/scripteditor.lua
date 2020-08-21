@@ -16,13 +16,6 @@ function ui.load(...) -- any args you want/need
 	-- Little bit of caching
 	rememberflagnumber = -1
 
-	-- Are we loading a $-separated 3DS script?
-	if oldstate == 22 then
-		PleaseDo3DSHandlingThanks = true
-	else
-		PleaseDo3DSHandlingThanks = false
-	end
-
 	-- Make sure we don't keep checking for a load script when we can do it once.
 	intscrwarncache_script = nil
 	intscrwarncache_warn_noloadscript = nil

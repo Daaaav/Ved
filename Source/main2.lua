@@ -521,12 +521,8 @@ function love.draw()
 	elseif state == 19 then
 	elseif state == 20 then
 	elseif state == 21 then
-	elseif state == 22 then -- These are not translate-worthy I'm guessing
-		ved_printf("Filename to a script file (IN the 3DS format) (lines separated by dollars): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
-		startinputonce()
+	elseif state == 22 then
 	elseif state == 23 then
-		ved_printf("Filename to a script file (NOT in the 3DS format) (lines separated by \\r\\n or \\n): " .. input .. __ .. "\n\n\n\n\n\n\n\nENTER: Go\n\n\n\n\n\n\n\nIf you clicked Open by accident, F12 to 3 with shift", 10, 10, love.graphics.getWidth()-20, "left")
-		startinputonce()
 	elseif state == 24 then
 		ved_printf("Plugins\n\n\n" .. pluginstext, 8, 8, love.graphics.getWidth()-16, "left")
 	elseif state == 25 then
@@ -1905,9 +1901,7 @@ function love.textinput(char)
 		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
 		elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
 		-- Pipes are newlines on PC and dollar signs are newlines on 3DS
-		elseif (state == 3) and
-		((not PleaseDo3DSHandlingThanks and char == "|") or
-		(PleaseDo3DSHandlingThanks and char == "$")) then
+		elseif (state == 3) and char == "|" then
 			table.insert(scriptlines, editingline+1, "")
 			editingline = editingline + 1
 			input = anythingbutnil(scriptlines[editingline])
@@ -2170,11 +2164,9 @@ function love.keypressed(key)
 			input = input .. love.system.getClipboardText()
 
 			if state == 3 then
-				-- Let's process people trying to sneak past pipes and dollar signs first before processing newlines
-				if not PleaseDo3DSHandlingThanks and input:find("|") then
+				-- Let's process people trying to sneak past pipes first before processing newlines
+				if input:find("|") then
 					input = input:gsub("|", "\n")
-				elseif PleaseDo3DSHandlingThanks and input:find("%$") then
-					input = input:gsub("%$", "\n")
 				end
 
 				if input:find("\n") then
@@ -3003,17 +2995,6 @@ function love.keypressed(key)
 				end
 				toolscroll()
 			end
-		end
-	elseif (state == 22 or state == 23) and table.contains({"return", "kpenter"}, key) then
-		stopinput()
-		scsuccess, sccontents = readlevelfile(input)
-		if scsuccess then
-			scriptname = input
-			scriptlines = explode((state == 22 and "%$" or "\r?\n"), sccontents)
-			tostate(3)
-		else
-			dialog.create("Cannot open " .. input .. "\n\n" .. sccontents)
-			startinput()
 		end
 	elseif state == 25 and key == "escape" then
 		exitsyntaxcoloroptions()

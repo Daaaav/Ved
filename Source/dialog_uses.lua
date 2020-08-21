@@ -397,10 +397,9 @@ function dialog.callback.newscript_validate(button, fields, identifier)
 			return true
 		end
 
-		if (not PleaseDo3DSHandlingThanks and fields.name:match("|")) or
-		(PleaseDo3DSHandlingThanks and fields.name:match("%$")) then
-			-- Script name has | or $
-			dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+		if fields.name:match("|") then
+			-- Script name has |
+			dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 			return true
 		end
 	end
@@ -694,10 +693,9 @@ function dialog.callback.renamescript_validate(button, fields)
 			return true
 		end
 
-		if (not PleaseDo3DSHandlingThanks and fields.name:match("|")) or
-		(PleaseDo3DSHandlingThanks and fields.name:match("%$")) then
-			-- Script name has | or $
-			dialog.create(langkeys(L.CANNOTUSENEWLINES, {PleaseDo3DSHandlingThanks and "$" or "|"}))
+		if fields.name:match("|") then
+			-- Script name has |
+			dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 			return true
 		end
 	end
