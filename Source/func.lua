@@ -320,7 +320,6 @@ function loadstate(new, ...)
 	elseif new == 24 then
 	elseif new == 25 then
 	elseif new == 26 then
-		startinput()
 	elseif new == 27 then
 		oldforcescale = s.forcescale
 		nonintscale = s.scale ~= math.floor(anythingbutnil0(tonumber(s.scale)))
@@ -3328,6 +3327,7 @@ function loaduis()
 	uis[20] = ved_require("uis/resizableboxtest")
 	uis[21] = ved_require("uis/overlapentinfo")
 	uis[25] = ved_require("uis/syntaxoptions")
+	uis[26] = ved_require("uis/fonttest")
 end
 
 function show_notification(text)
