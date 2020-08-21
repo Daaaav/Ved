@@ -324,10 +324,6 @@ function loadstate(new, ...)
 	elseif new == 28 then
 	elseif new == 29 then
 	elseif new == 30 then
-		olderstate = oldstate
-		if not music_loaded then
-			loadvvvvvvmusics()
-		end
 	elseif new == 31 then
 		musiceditor = false
 		soundviewer = false
@@ -3291,6 +3287,7 @@ function loaduis()
 	uis[27] = ved_require("uis/displayoptions")
 	uis[28] = ved_require("uis/levelstats")
 	uis[29] = ved_require("uis/pluralformstest")
+	uis[30] = ved_require("uis/assetsmenu")
 end
 
 function show_notification(text)
