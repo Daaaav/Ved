@@ -3327,6 +3327,7 @@ function loaduis()
 	uis[19] = ved_require("uis/scriptflags")
 	uis[20] = ved_require("uis/resizableboxtest")
 	uis[21] = ved_require("uis/overlapentinfo")
+	uis[25] = ved_require("uis/syntaxoptions")
 end
 
 function show_notification(text)
