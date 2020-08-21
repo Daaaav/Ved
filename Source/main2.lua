@@ -1303,11 +1303,12 @@ function love.draw()
 		hook("love_draw_state")
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].draw ~= nil then
 		-- A UI can have its own dedicated drawing function and not use elements, sure.
 		uis[state].draw(dt)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		-- Draw every element in this state's master element "container".
 		-- This master container doesn't define positions,
 		-- and just gives the window width and height as information.
@@ -1763,10 +1764,11 @@ function love.update(dt)
 		middleclick_roll_update(dt)
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].update ~= nil then
 		uis[state].update(dt)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, dt)
 			if e.update ~= nil then
 				e:update(dt)
@@ -1866,10 +1868,11 @@ function love.textinput(char)
 		return
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].textinput ~= nil then
 		uis[state].textinput(char)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, char)
 			if e.textinput ~= nil then
 				e:textinput(char)
@@ -3016,10 +3019,11 @@ function love.keypressed(key)
 		return
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].keypressed ~= nil then
 		uis[state].keypressed(key)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, key)
 			if e.keypressed ~= nil then
 				e:keypressed(key)
@@ -3075,10 +3079,11 @@ function love.keyreleased(key)
 		return
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].keyreleased ~= nil then
 		uis[state].keyreleased(key)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, key)
 			if e.keyreleased ~= nil then
 				e:keyreleased(key)
@@ -3206,10 +3211,11 @@ function love.mousepressed(x, y, button)
 		return
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].mousepressed ~= nil then
 		uis[state].mousepressed(x, y, button)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, x, y, button)
 			if e.mousepressed ~= nil
 			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
@@ -3329,10 +3335,11 @@ function love.mousereleased(x, y, button)
 		return
 	end
 
+	local callback_state = state
 	if uis[state] ~= nil and uis[state].mousereleased ~= nil then
 		uis[state].mousereleased(x, y, button)
 	end
-	if uis[state] ~= nil and uis[state].elements ~= nil then
+	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
 		local function caller(e, x, y, button)
 			if e.mousereleased ~= nil
 			and e.px <= x and (e.pw == nil or e.px+e.pw > x)
