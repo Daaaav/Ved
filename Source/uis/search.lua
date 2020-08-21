@@ -1,4 +1,4 @@
-local ui = {name = "TEMPLATE"}
+local ui = {name = "search"}
 
 function ui.load()
 	startinput()
