@@ -321,12 +321,6 @@ function loadstate(new, ...)
 	elseif new == 25 then
 	elseif new == 26 then
 	elseif new == 27 then
-		oldforcescale = s.forcescale
-		nonintscale = s.scale ~= math.floor(anythingbutnil0(tonumber(s.scale)))
-		if nonintscale then
-			startinput()
-			input = tostring(s.scale)
-		end
 	elseif new == 28 then
 		local usedflags = {}
 
@@ -3328,6 +3322,7 @@ function loaduis()
 	uis[21] = ved_require("uis/overlapentinfo")
 	uis[25] = ved_require("uis/syntaxoptions")
 	uis[26] = ved_require("uis/fonttest")
+	uis[27] = ved_require("uis/displayoptions")
 end
 
 function show_notification(text)
