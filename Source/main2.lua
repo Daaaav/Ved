@@ -26,9 +26,9 @@ States:
 19	Flags list
 20	Resizable box test
 21	Display overlapping entities (may be a visible function later) (maybe doesn't work properly)
-22	Load a script file in the 3DS format (lines separated by dollars)
-23	Load a script file NOT in the 3DS format (lines separated by \r\n or \n)
-24	Simple plugins list (already not used)
+22	(removed) Load a script file in the 3DS format (lines separated by dollars)
+23	(removed) Load a script file NOT in the 3DS format (lines separated by \r\n or \n)
+24	(removed) Simple plugins list (already not used)
 25	Syntax highlighting color settings
 26	Font test
 27	Display/Scale settings
@@ -524,7 +524,6 @@ function love.draw()
 	elseif state == 22 then
 	elseif state == 23 then
 	elseif state == 24 then
-		ved_printf("Plugins\n\n\n" .. pluginstext, 8, 8, love.graphics.getWidth()-16, "left")
 	elseif state == 25 then
 		-- Syntax highlighting color settings
 		ved_print(L.SYNTAXCOLORSETTINGSTITLE, 8, 8+4)

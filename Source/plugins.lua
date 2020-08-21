@@ -232,17 +232,6 @@ function hook(hookname, vars)
 	end
 end
 
-function textlistplugins()
-	-- Output info of all plugins as text
-	local output = ""
-
-	for k,v in pairs(plugins) do
-		output = output .. v.info.longname .. "  version " .. v.info.version .. "  by " .. v.info.author .. "  (" .. k .. ")\n" .. v.info.description .. "\n\n"
-	end
-
-	return output
-end
-
 function loadpluginpages()
 	helppages = {}
 

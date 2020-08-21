@@ -318,7 +318,6 @@ function loadstate(new, ...)
 	elseif new == 20 then
 	elseif new == 21 then
 	elseif new == 24 then
-		pluginstext = textlistplugins()
 	elseif new == 25 then
 		editingcolor = nil
 	elseif new == 26 then
