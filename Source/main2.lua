@@ -1899,7 +1899,7 @@ function love.textinput(char)
 		-- Ugly, but at least won't need another global variable that appears here and there
 		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
 		elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
-		-- Pipes are newlines on PC and dollar signs are newlines on 3DS
+		-- Pipes are newlines in scripts (on PC at least)
 		elseif (state == 3) and char == "|" then
 			table.insert(scriptlines, editingline+1, "")
 			editingline = editingline + 1
