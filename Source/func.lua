@@ -323,7 +323,6 @@ function loadstate(new, ...)
 	elseif new == 27 then
 	elseif new == 28 then
 	elseif new == 29 then
-		plural_test = {val = 1}
 	elseif new == 30 then
 		olderstate = oldstate
 		if not music_loaded then
@@ -3291,6 +3290,7 @@ function loaduis()
 	uis[26] = ved_require("uis/fonttest")
 	uis[27] = ved_require("uis/displayoptions")
 	uis[28] = ved_require("uis/levelstats")
+	uis[29] = ved_require("uis/pluralformstest")
 end
 
 function show_notification(text)

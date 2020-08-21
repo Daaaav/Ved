@@ -529,15 +529,6 @@ function love.draw()
 	elseif state == 27 then
 	elseif state == 28 then
 	elseif state == 29 then
-		-- Plural forms test
-		int_control(20, 20, "val", 0, 9999, nil, plural_test)
-		ved_print(langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {plural_test.val}), 20, 70)
-		ved_print(langkeys(L_PLU.ROOMINVALIDPROPERTIES, {0, 0, plural_test.val}, 3), 20, 100)
-
-		if nodialog and love.mouse.isDown("l") then
-			-- Shrug
-			mousepressed = true
-		end
 	elseif state == 30 then
 		-- Assets
 		local selecting
