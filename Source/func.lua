@@ -319,7 +319,6 @@ function loadstate(new, ...)
 	elseif new == 21 then
 	elseif new == 24 then
 	elseif new == 25 then
-		editingcolor = nil
 	elseif new == 26 then
 		startinput()
 	elseif new == 27 then
