@@ -802,8 +802,8 @@ end
 function checkbox(selected, x, y, key, label, onclickfunc)
 	local clickable_w = 8+32+font8:getWidth(label)
 	hoverdraw(
-		selected and checkon or checkoff,
-		x, y, clickable_w, 16, 2
+		selected and checkon_hq or checkoff_hq,
+		x, y, clickable_w, 16
 	)
 	ved_print(label, x+16+8, y+4)
 

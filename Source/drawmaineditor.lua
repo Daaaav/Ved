@@ -1745,22 +1745,22 @@ function drawmaineditor()
 	local usethisbtn
 	if playtesting_available then
 		if playtesting_askwherestart then
-			usethisbtn = stopbtn
+			usethisbtn = playstopbtn_hq
 		else
-			usethisbtn = playbtn
+			usethisbtn = playbtn_hq
 		end
 	else
-		usethisbtn = playgraybtn
+		usethisbtn = playgraybtn_hq
 	end
-	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32, 2)
+	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32)
 	_= not editingroomname and editingbounds == 0 and showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is after the side panels are darkened
 	hoverdraw(helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
 	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
-	hoverdraw(newbtn, love.graphics.getWidth()-96, 0, 32, 32, 2)
+	hoverdraw(newbtn_hq, love.graphics.getWidth()-96, 0, 32, 32)
 	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
-	hoverdraw(loadbtn, love.graphics.getWidth()-64, 0, 32, 32, 2)
+	hoverdraw(loadbtn_hq, love.graphics.getWidth()-64, 0, 32, 32)
 	_= not editingroomname and showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
-	hoverdraw(savebtn, love.graphics.getWidth()-32, 0, 32, 32, 2)
+	hoverdraw(savebtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
 	_= not editingroomname and showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
