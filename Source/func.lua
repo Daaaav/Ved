@@ -3274,6 +3274,7 @@ function loaduis()
 	uis[29] = ved_require("uis/pluralformstest")
 	uis[30] = ved_require("uis/assetsmenu")
 	uis[31] = ved_require("uis/audioplayer")
+	uis[32] = ved_require("uis/graphicsviewer")
 end
 
 function show_notification(text)
