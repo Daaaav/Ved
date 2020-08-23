@@ -325,21 +325,6 @@ function loadstate(new, ...)
 	elseif new == 29 then
 	elseif new == 30 then
 	elseif new == 31 then
-		musiceditor = false
-		soundviewer = false
-		if ... == "musiceditor" then
-			musiceditor = true
-			if musiceditorfile_forcevvvvvvfolder then
-				musicplayerfile = musiceditorfile
-			else
-				musicplayerfile = "musiceditor"
-			end
-		elseif ... == "sounds" then
-			soundviewer = true
-			musicplayerfile = "sounds"
-		else
-			musicplayerfile = ...
-		end
 	elseif new == 33 then
 		alllanguages = getalllanguages()
 		widestlang = 0
@@ -3288,6 +3273,7 @@ function loaduis()
 	uis[28] = ved_require("uis/levelstats")
 	uis[29] = ved_require("uis/pluralformstest")
 	uis[30] = ved_require("uis/assetsmenu")
+	uis[31] = ved_require("uis/audioplayer")
 end
 
 function show_notification(text)
