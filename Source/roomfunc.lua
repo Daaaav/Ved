@@ -1594,8 +1594,8 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 				return
 			elseif k == 14 and (numw < 0 or numw > 3) then
 				cons("Paste failed- warpdir is " .. numw)
-			elseif k > 15 and (numw < 0 or numw > 1199) then
-				cons("Paste failed- [" .. k .. "] (tile " .. (k-15) .. ") is out of range 0-1199)!")
+			elseif k > 15 and numw < 0 then
+				cons("Paste failed- [" .. k .. "] (tile " .. (k-15) .. " is less than 0)!")
 			end
 		end
 	end

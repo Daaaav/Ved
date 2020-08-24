@@ -124,7 +124,7 @@ function loadlevel(path)
 			for yt = 0, 29 do
 				for xt = 0, 39 do
 					t = tonumber(x.alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
-					if t == nil or t < 0 or t >= 1200 then
+					if t == nil or t < 0 then
 						t = 0
 						failedtiles = failedtiles + 1
 					elseif math.floor(t) ~= t then
@@ -149,7 +149,7 @@ function loadlevel(path)
 				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%thislimit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%thislimit.mapwidth == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
 					for xt = 0, 39 do
 						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*thislimit.mapheight + (xk+(thislimit.mapwidth-1))*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
-						if t == nil or t < 0 or t >= 1200 then
+						if t == nil or t < 0 then
 							t = 0
 							failedtiles = failedtiles + 1
 						elseif math.floor(t) ~= t then
