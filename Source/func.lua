@@ -326,20 +326,6 @@ function loadstate(new, ...)
 	elseif new == 30 then
 	elseif new == 31 then
 	elseif new == 33 then
-		alllanguages = getalllanguages()
-		widestlang = 0
-		for k,v in pairs(alllanguages) do
-			local langname
-			if langinfo[v] ~= nil then
-				langname = langinfo[v].name
-			else
-				langname = v
-			end
-			local w = font8:getWidth(langname)
-			if w > widestlang then
-				widestlang = w
-			end
-		end
 	end
 
 	if uis[new] ~= nil and uis[new].load ~= nil then
@@ -3275,6 +3261,7 @@ function loaduis()
 	uis[30] = ved_require("uis/assetsmenu")
 	uis[31] = ved_require("uis/audioplayer")
 	uis[32] = ved_require("uis/graphicsviewer")
+	uis[33] = ved_require("uis/language")
 end
 
 function show_notification(text)
