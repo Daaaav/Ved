@@ -14,9 +14,9 @@ return function()
 	end
 
 	basic_stats = {
-		{L.AMOUNTSCRIPTS, #scriptnames, limit.scripts, 500},
+		{L.AMOUNTSCRIPTS, #scriptnames, limit.scripts, math.huge},
 		{L.AMOUNTUSEDFLAGS, n_usedflags, limit.flags, 100},
-		{L.AMOUNTENTITIES, anythingbutnil0(count.entities), limit.entities, 3000},
+		{L.AMOUNTENTITIES, anythingbutnil0(count.entities), limit.entities, math.huge},
 		{L.AMOUNTTRINKETS, anythingbutnil0(count.trinkets), limit.trinkets, 100},
 		{L.AMOUNTCREWMATES, anythingbutnil0(count.crewmates), limit.crewmates, 100},
 	}

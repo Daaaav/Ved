@@ -50,12 +50,8 @@ return function()
 		-- Save the whales, only display this line if we can see it!
 		local fontsize = s.scripteditor_largefont and 16 or 8
 		if (scriptscroll+24+(fontsize*k) >= 16) and (scriptscroll+24+(fontsize*k) <= love.graphics.getHeight()) then
-			if k >= limit.scriptlines and editing_line == k then
-				love.graphics.setColor(255,128,128,255) -- 255 64 64?
-			elseif editing_line == k then
+			if editing_line == k then
 				love.graphics.setColor(255,255,255,255)
-			elseif k >= limit.scriptlines then
-				love.graphics.setColor(255,0,0,255)
 			else
 				love.graphics.setColor(128,128,128,255)
 			end

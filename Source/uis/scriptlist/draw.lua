@@ -114,7 +114,7 @@ return function()
 
 	-- Script count
 	ved_printf(
-		L.COUNT .. #scriptnames .. "/" .. (limit.scripts == math.huge and "-" or limit.scripts),
+		L.COUNT .. #scriptnames,
 		love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left"
 	)
 

@@ -188,10 +188,10 @@ lowprio_maploading_states = {
 limit_v = {
 	mapwidth = 20,
 	mapheight = 20,
-	scripts = 500,
-	scriptlines = 500,
+	scripts = math.huge,
+	scriptlines = math.huge,
 	flags = 100,
-	entities = 3000,
+	entities = math.huge,
 	trinkets = 100,
 	crewmates = 100,
 }
