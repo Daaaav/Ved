@@ -361,7 +361,9 @@ textboxcolors = {
 	green = {144, 255, 144},
 	blue = {95, 95, 255},
 	purple = {255, 134, 255},
-	gray = {174, 174, 174}
+	white = {244, 244, 244},
+	gray = {174, 174, 174},
+	orange = {255, 130, 20}
 }
 
 alttextboxcolors = {
@@ -372,7 +374,9 @@ alttextboxcolors = {
 	green = {19, 255, 144},
 	blue = {19, 95, 255},
 	purple = {19, 134, 255},
-	gray = {19, 174, 174}
+	white = {19, 244, 244},
+	gray = {19, 174, 174},
+	orange = {19, 130, 20}
 }
 
 -- For showhotkey()
