@@ -818,22 +818,20 @@ function love.update(dt)
 		sp_got = sp_got - dt
 	end
 
-	if state ~= -1 then
-		local title_editingmap = ""
-		if editingmap ~= nil then
-			title_editingmap = (has_unsaved_changes() and "*" or "") .. editingmap:gsub("\n", "") .. " - "
-		end
+	local title_editingmap = ""
+	if editingmap ~= nil then
+		title_editingmap = (has_unsaved_changes() and "*" or "") .. editingmap:gsub("\n", "") .. " - "
+	end
 
-		if allowdebug then
-			love.window.setTitle(title_editingmap .. "Ved v" .. ved_ver_human() .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v" .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. " ]")
-		elseif s.showfps then
-			love.window.setTitle(title_editingmap .. "Ved v" .. ved_ver_human() .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
-		else
-			local newtitle = title_editingmap .. "Ved v" .. ved_ver_human()
-			if newtitle ~= savedwindowtitle then
-				love.window.setTitle(newtitle)
-				savedwindowtitle = newtitle
-			end
+	if allowdebug then
+		love.window.setTitle(title_editingmap .. "Ved v" .. ved_ver_human() .. "  [" .. L.DEBUGMODEON .. "]  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "] - " .. L.STATE .. ": " .. state .. " - " .. love.graphics.getWidth() .. "x" .. love.graphics.getHeight() .. " " .. L.MOUSE .. ": " .. love.mouse.getX() .. " " .. love.mouse.getY() .. "  [ LÖVE v" .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision .. " ]")
+	elseif s.showfps then
+		love.window.setTitle(title_editingmap .. "Ved v" .. ved_ver_human() .. "  [" .. L.FPS .. ": " .. love.timer.getFPS() .. "]")
+	else
+		local newtitle = title_editingmap .. "Ved v" .. ved_ver_human()
+		if newtitle ~= savedwindowtitle then
+			love.window.setTitle(newtitle)
+			savedwindowtitle = newtitle
 		end
 	end
 
