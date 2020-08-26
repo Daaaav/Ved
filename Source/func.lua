@@ -3262,6 +3262,7 @@ function loaduis()
 	uis[31] = ved_require("uis/audioplayer")
 	uis[32] = ved_require("uis/graphicsviewer")
 	uis[33] = ved_require("uis/language")
+	uis[34] = ved_require("uis/inputtest")
 end
 
 function show_notification(text)
