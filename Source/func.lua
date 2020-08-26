@@ -3237,6 +3237,7 @@ end
 function loaduis()
 	uis = {}
 
+	uis[-2] = ved_require("uis/init")
 	uis[0] = ved_require("uis/state0")
 	uis[3] = ved_require("uis/scripteditor")
 	uis[5] = ved_require("uis/fsinfo")
