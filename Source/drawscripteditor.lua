@@ -134,8 +134,6 @@ function drawscripteditor()
 		end
 	end
 
-	newinputsys.drawcas("scriptlines", 56, scriptscroll+24+8)
-
 	love.graphics.setScissor()
 
 	love.graphics.setColor(255,255,255,255)
