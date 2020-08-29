@@ -2305,9 +2305,9 @@ function drawmaineditor()
 		local yoff = 16 * (lines-1)
 
 		love.graphics.setColor(255, 255, 127, 63)
-		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), 16+yoff)
+		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-40-yoff-2, love.graphics.getWidth(), 16+yoff+4)
 		love.graphics.setColor(255, 255, 255, 255)
-		ved_printf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
+		ved_shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
 	end
 
 	if playtesting_askwherestart then
