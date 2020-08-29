@@ -184,6 +184,10 @@ ffi.cdef([[
 	  LPOVERLAPPED lpOverlapped
 	);
 
+	BOOL FlushFileBuffers(
+	  HANDLE hFile
+	);
+
 	DWORD GetLastError(void);
 
 	DWORD FormatMessageW(
@@ -584,6 +588,7 @@ function writelevelfile(path, contents)
 		return false, format_last_win_error()
 	end
 
+	ffi.C.FlushFileBuffers(file_handle)
 	ffi.C.CloseHandle(file_handle)
 
 	return true, nil
@@ -666,6 +671,7 @@ function multiwritefile_write(os_fh, data)
 end
 
 function multiwritefile_close(os_fh)
+	ffi.C.FlushFileBuffers(os_fh)
 	ffi.C.CloseHandle(os_fh)
 end
 
