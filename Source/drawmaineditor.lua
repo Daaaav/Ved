@@ -1313,7 +1313,7 @@ function drawmaineditor()
 			love.graphics.setColor(160,160,0,128)
 			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, 16 + extralines*16 + 4)
 			love.graphics.setColor(255,255,255,255)
-			ved_printf(temporaryroomname, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
+			ved_shadowprintf(temporaryroomname, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
 		elseif editingroomname then
 			-- We're editing this room name! If it doesn't fit, then just make it higher, we're editing it anyway
 			local text = input .. (__:sub(1,1) == "_" and __ or " " .. __:sub(2,-1))
@@ -1326,7 +1326,7 @@ function drawmaineditor()
 				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, extralines*16 + 1)
 			end
 			love.graphics.setColor(255,255,255,255)
-			ved_printf(text, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
+			ved_shadowprintf(text, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
 		elseif hasroomname then
 			-- Display it
 			local text = levelmetadata_get(roomx, roomy).roomname
@@ -1334,9 +1334,9 @@ function drawmaineditor()
 
 			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
 			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
-			love.graphics.setScissor(screenoffset, 29*16-2, 40*16, 16)
+			love.graphics.setScissor(screenoffset, 29*16-4, 40*16, 16+4)
 			v6_setroomprintcol()
-			ved_print(text, textx, 29*16 -2, 2)
+			ved_shadowprint(text, textx, 29*16 -2, 2)
 			love.graphics.setColor(255,255,255,255)
 			love.graphics.setScissor()
 		end
