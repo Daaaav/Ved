@@ -309,6 +309,7 @@ function ved_require(reqfile)
 			if not editv.luapattern then
 				editv.findoriginal = editv.find
 				editv.find = escapegsub_plugin(editv.find)
+				editv.replace = editv.replace:gsub("%%", "%%%%")
 			end
 
 			if readlua:find(editv.find) == nil then
