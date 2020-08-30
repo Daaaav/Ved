@@ -529,14 +529,14 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		love.graphics.setScissor()
 
 		-- Scrollbar
-		local newperonetage = scrollbar(
+		local newfraction = scrollbar(
 			real_x+real_w-16, real_y+9, 8*list_height, #menuitems*8,
 			(-listscroll)/((#menuitems*8)-(8*list_height)),
 			self
 		)
 
-		if newperonetage ~= nil then
-			self.fields[n][10] = -(newperonetage*((#menuitems*8)-(8*list_height)))
+		if newfraction ~= nil then
+			self.fields[n][10] = -(newfraction*((#menuitems*8)-(8*list_height)))
 		end
 	end
 

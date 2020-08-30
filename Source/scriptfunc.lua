@@ -211,13 +211,27 @@ function scriptcontext(text)
 
 	if parts[1] == "flag" and parts[2] ~= nil then
 		return "flag", tonumber(parts[2]), nil, nil
-	elseif (parts[1] == "iftrinkets" or parts[1] == "iftrinketsless" or parts[1] == "customiftrinkets" or parts[1] == "customiftrinketsless") and parts[3] ~= nil and parts[3] ~= "" then
+	elseif (
+		parts[1] == "iftrinkets"
+		or parts[1] == "iftrinketsless"
+		or parts[1] == "customiftrinkets"
+		or parts[1] == "customiftrinketsless"
+	) and parts[3] ~= nil and parts[3] ~= "" then
 		return "script", parts[3], nil, nil
-	elseif (parts[1] == "loadscript" or parts[1] == "ifskip") and parts[2] ~= nil and parts[2] ~= "custom_" and string.sub(parts[2], 1, string.len("custom_")) == "custom_" then
+	elseif (
+		parts[1] == "loadscript"
+		or parts[1] == "ifskip"
+	) and parts[2] ~= nil and parts[2] ~= "custom_" and string.sub(parts[2], 1, string.len("custom_")) == "custom_" then
 		return "script", string.sub(parts[2], string.len("custom_")+1, string.len(parts[2])), nil
-	elseif (parts[1] == "ifflag" or parts[1] == "customifflag") and parts[2] ~= nil then
+	elseif (
+		parts[1] == "ifflag"
+		or parts[1] == "customifflag"
+	) and parts[2] ~= nil then
 		return "flagscript", parts[2], parts[3], nil
-	elseif (parts[1] == "ifcrewlost" or parts[1] == "iflast") and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
+	elseif (
+		parts[1] == "ifcrewlost"
+		or parts[1] == "iflast"
+	) and parts[2] ~= nil and parts[3] ~= nil and parts[3] ~= "custom_" and string.sub(parts[3], 1, string.len("custom_")) == "custom_" then
 		return "script", string.sub(parts[3], string.len("custom_")+1, string.len(parts[3])), nil, nil
 	elseif parts[1] == "ifexplored" and parts[2] ~= nil and parts[3] ~= nil and parts[4] ~= nil and parts[4] ~= "custom_" and string.sub(parts[4], 1, string.len("custom_")) == "custom_" then
 		local x, y = tonumber(parts[2]), tonumber(parts[3])
@@ -252,7 +266,11 @@ function scriptcontext(text)
 		else
 			return "roomnumscript", roomnum, script
 		end
-	elseif (parts[1] == "gotoroom" or parts[1] == "hidecoordinates" or parts[1] == "showcoordinates") and parts[2] ~= nil and parts[3] ~= nil then
+	elseif (
+		parts[1] == "gotoroom"
+		or parts[1] == "hidecoordinates"
+		or parts[1] == "showcoordinates"
+	) and parts[2] ~= nil and parts[3] ~= nil then
 		local x, y = tonumber(parts[2]), tonumber(parts[3])
 		if x == nil or y == nil then
 			return "room", x, y, nil
@@ -428,7 +446,7 @@ function processflaglabelsreverse()
 			final_loadscript_n = 0
 		end
 
-		-- Alright, figured out what the sorcery was... DIT IS NU HELAAS NIET MEER ZO SIMPEL!
+		-- Alright, figured out what the sorcery was... This is unfortunately not this simple anymore!
 		--editingline = editingline + 1
 
 		-- First actually set the line, then we'll talk.
@@ -446,9 +464,6 @@ function processflaglabelsreverse()
 			-- Make sure it's not changed back to an empty line by a leavescript_to_state.
 			input = "#"
 		end
-
-		-- INSERT loadscript(stop) #v HIER ----- NIET DUS
-		--table.insert(scriptlines, "loadscript(stop) #v")
 
 		local splitpoints = {}
 		local marksafe = true
@@ -476,7 +491,6 @@ function processflaglabelsreverse()
 			local finalblockline = 0
 
 			for currentblockline = (lineshad+1)+48, lineshad+1, -1 do
-				--cons("CHECKING LINE " .. currentblockline)
 				if splitpoints[currentblockline] then
 					-- We can split here!
 					splitsuccessfully = true
@@ -537,13 +551,13 @@ function processflaglabelsreverse()
 
 					if k == #blocks then
 						-- This is the last one so this also behaves slightly differently because it's observed to do so.
-						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1+final_loadscript_n) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop). +2 want het is nodig ofzo!
+						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1+final_loadscript_n) .. ") #v") -- +1 because: add up either text(1,0,0,4) or the final loadscript(stop).
 						table.insert(scriptlines, blockstartsat, "text(1,0,0,3) #v")
 					elseif k ~= 1 then
-						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 want: reken ofwel text(1,0,0,4) erbij of de uiteindelijke loadscript(stop).
+						table.insert(scriptlines, blockstartsat, "say(" .. (blocks[k]+1) .. ") #v") -- +1 because: add up either text(1,0,0,4) or the final loadscript(stop).
 						table.insert(scriptlines, blockstartsat, "text(1,0,0,3) #v")
 					else
-						table.insert(scriptlines, 1, "say(" .. (blocks[k]) .. ") #v") -- Niet de +1 want: dit is de eerste regel dus dit is anders.
+						table.insert(scriptlines, 1, "say(" .. (blocks[k]) .. ") #v") -- Not the +1 because: this is the first line so this is different.
 						if cutscenebarsinternalscript then
 							table.insert(scriptlines, 1, "text(1,0,0,3) #v")
 							table.insert(scriptlines, 1, "say(-1) #v")
@@ -739,7 +753,7 @@ end
 
 function scriptineditor(scriptnamearg, rvnum)
 	if rvnum == nil then
-		-- Zoek hier uit wat rvnum is
+		-- Find out which script it is
 		for k,v in pairs(scriptnames) do
 			if v == scriptnamearg then
 				bumpscript(k)

@@ -140,10 +140,10 @@ function drawscripteditor()
 
 	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
 	local textscale = s.scripteditor_largefont and 2 or 1
-	local newperonetage = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*textscale, ((-scriptscroll))/(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
+	local newfraction = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*textscale, ((-scriptscroll))/(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
 
-	if newperonetage ~= nil then
-		scriptscroll = -(newperonetage*(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
+	if newfraction ~= nil then
+		scriptscroll = -(newfraction*(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
 	end
 
 	-- Now put some buttons on the right!

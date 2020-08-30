@@ -13,7 +13,7 @@ ui.elements = {
 
 function ui.draw()
 	-- Columns 1 and 2
-	for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- dit was misschien niet handig om te doen
+	for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- this was maybe not practical
 		for flk = 0, 49 do
 			local flag = flk + (flcol == 8 and 0 or 50) + flags_page*100
 			if flag >= limit.flags then

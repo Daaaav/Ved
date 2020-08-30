@@ -326,10 +326,10 @@ function drawlevelslist()
 			levellistscroll = 0
 			max_levellistscroll = (k2-1)*8
 		end
-		local newperonetage = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-lessheight, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
+		local newfraction = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-lessheight, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 
-		if newperonetage ~= nil then
-			levellistscroll = -(newperonetage*(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
+		if newfraction ~= nil then
+			levellistscroll = -(newfraction*(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 		end
 
 		if ((love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) and nodialog) then

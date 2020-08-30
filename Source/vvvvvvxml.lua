@@ -50,7 +50,7 @@ function loadlevelmetadata(path)
 		thismetadata[v] = unxmlspecialchars(m)
 	end
 
-	-- But we'll have room size and music also move in with the metadata. Maybe change the regex so it'll match numbers only (not for music though because starting with an internal song number is possible), for now that's not necessary.
+	-- But we'll have room size and music also move in with the metadata.
 	cons("Loading room size and music...")
 	for _,v in pairs({"mapwidth", "mapheight", "levmusic"}) do
 		local m = contents:match("<" .. v .. ">(.*)</" .. v .. ">")
@@ -487,8 +487,6 @@ function loadlevel(path)
 
 		-- See this as MySQL's AUTO_INCREMENT
 		mycount.entity_ai = entityid + 1
-	else
-		--.
 	end
 
 	-- Level meta data
@@ -627,7 +625,6 @@ function loadlevel(path)
 
 	-- Scripts
 	cons("Loading scripts...")
-	--x.allscripts = explode("|", unxmlspecialchars(contents:match("<script>(.*)</script>")))
 	x.allscripts = {}
 	local m = contents:match("<script>(.*)</script>")
 	if m == nil then
@@ -804,7 +801,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")
 	thenewcontents = {}
-	--for roomy, yv in pairs(theserooms) do
 	local nested_break = false
 	for lroomy = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
 		yv = theserooms[lroomy]
@@ -816,7 +812,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			for lroomx = 0, (thismetadata.mapwidth-1) do
 				xv = yv[lroomx]
 				-- .....And each x for each line
-				-- Heeey
 				table.insert(thenewcontents, table.concat({unpack(theserooms[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
 				if lroomy == math.min(thismetadata.mapheight, limit.mapheight)-1 and lroomx == limit.mapwidth-1 and line == 29 then
 					nested_break = true
@@ -970,7 +965,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		-- We do!
 		local entitydatasaved = 0
 		local thenewentities = {"        <edEntities>\n"}
-		--for k,v in pairs(allentities) do
+		-- No pairs(allentities) here, that might end iterating at a nil
 		for k = 1, count.entity_ai-1 do
 			if allentities[k] ~= nil then
 				local v = allentities[k]
@@ -1214,7 +1209,6 @@ function createblanklevel(lvwidth, lvheight)
 	-- - Random from tileset: X
 	-- - All: X X
 
-	-- Dit blijft zo
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil}
 
 	-- First do the metadata.

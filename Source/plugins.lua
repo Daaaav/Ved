@@ -365,6 +365,18 @@ function in_astate(name, s)
 	return state == state_allocations[name][1] + s
 end
 
-function escapegsub_plugin(invoer) -- Almost the same as the one in func.lua, but different. (no :lower() and no ])
-	return invoer:gsub("%%", "%%%%"):gsub("%(", "%%%("):gsub("%)", "%%%)"):gsub("%.", "%%%."):gsub("%+", "%%%+"):gsub("%-", "%%%-"):gsub("%*", "%%%*"):gsub("%?", "%%%?"):gsub("%[", "%%%["):gsub("%]", "%%%]"):gsub("%^", "%%%^"):gsub("%$", "%%%$")
+function escapegsub_plugin(text) -- Almost the same as the one in func.lua, but different. (no :lower() and no ])
+	return text
+		:gsub("%%", "%%%%")
+		:gsub("%(", "%%%(")
+		:gsub("%)", "%%%)")
+		:gsub("%.", "%%%.")
+		:gsub("%+", "%%%+")
+		:gsub("%-", "%%%-")
+		:gsub("%*", "%%%*")
+		:gsub("%?", "%%%?")
+		:gsub("%[", "%%%[")
+		:gsub("%]", "%%%]")
+		:gsub("%^", "%%%^")
+		:gsub("%$", "%%%$")
 end

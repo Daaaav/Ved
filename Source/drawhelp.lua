@@ -258,10 +258,10 @@ function drawhelp()
 		love.graphics.setScissor()
 
 		-- Scroll bar for the article itself
-		local newperonetage = scrollbar(love.graphics.getWidth()-24, 8, love.graphics.getHeight()-16, (#helparticlecontent*10), ((-helparticlescroll))/((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
+		local newfraction = scrollbar(love.graphics.getWidth()-24, 8, love.graphics.getHeight()-16, (#helparticlecontent*10), ((-helparticlescroll))/((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
 
-		if newperonetage ~= nil then
-			helparticlescroll = -(newperonetage*((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
+		if newfraction ~= nil then
+			helparticlescroll = -(newfraction*((#helparticlecontent*10)-(love.graphics.getHeight()-32)))
 		end
 
 		-- Is this note editable?

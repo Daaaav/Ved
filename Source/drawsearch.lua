@@ -82,13 +82,13 @@ function drawsearch()
 
 	love.graphics.setScissor()
 
-	local newperonetage = scrollbar(
+	local newfraction = scrollbar(
 		love.graphics.getWidth()-24, 48, love.graphics.getHeight()-56,
 		(longestsearchlist*32)-2,
 		(-searchscroll)/((longestsearchlist*32)-2-(love.graphics.getHeight()-56))
 	)
 
-	if newperonetage ~= nil then
-		searchscroll = -(newperonetage*((longestsearchlist*32)-2-(love.graphics.getHeight()-56)))
+	if newfraction ~= nil then
+		searchscroll = -(newfraction*((longestsearchlist*32)-2-(love.graphics.getHeight()-56)))
 	end
 end

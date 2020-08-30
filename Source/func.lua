@@ -952,11 +952,22 @@ function namefound(obj)
 	return 0
 end
 
-function escapegsub(invoer, keepcaps)
+function escapegsub(text, keepcaps)
 	if not keepcaps then
-		invoer = invoer:lower()
+		text = text:lower()
 	end
-	return invoer:gsub("%%", "%%%%"):gsub("%(", "%%%("):gsub("%)", "%%%)"):gsub("%.", "%%%."):gsub("%+", "%%%+"):gsub("%-", "%%%-"):gsub("%*", "%%%*"):gsub("%?", "%%%?"):gsub("%[", "%%%["):gsub("%^", "%%%^"):gsub("%$", "%%%$")
+	return text
+		:gsub("%%", "%%%%")
+		:gsub("%(", "%%%(")
+		:gsub("%)", "%%%)")
+		:gsub("%.", "%%%.")
+		:gsub("%+", "%%%+")
+		:gsub("%-", "%%%-")
+		:gsub("%*", "%%%*")
+		:gsub("%?", "%%%?")
+		:gsub("%[", "%%%[")
+		:gsub("%^", "%%%^")
+		:gsub("%$", "%%%$")
 end
 
 function flipscrollmore(wheel)

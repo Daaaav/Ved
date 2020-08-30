@@ -1,8 +1,8 @@
 -- Scroll bars!
-function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
+function scrollbar(x, y, height, scrollableheight, fraction, indialog)
 	-- Returns nil if untouched, returns scroll value if moved
-	-- New peronetage maybe?
-	local newperonetage
+	-- New fraction maybe?
+	local newfraction
 
 	local setColor
 	if indialog == nil then
@@ -19,7 +19,7 @@ function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
 	if scrollableheight > height then
 		-- Display an actual scrollable thing
 		-- BUTTONheight: (height/scrollableheight)*height
-		-- BUTTONy: (height-BUTTONheight)*peronetage
+		-- BUTTONy: (height-BUTTONheight)*fraction
 		local buttonheight = (height/scrollableheight)*height
 
 		local scrollclickoffset = 0
@@ -27,7 +27,7 @@ function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
 			scrollclickoffset = love.mouse.getY()-scrollclickstart
 		end
 
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and window_active() then
+		if mouseon(x, y+(height-buttonheight)*fraction+scrollclickoffset, 16, buttonheight) and window_active() then
 			setColor(224,224,224,255)
 		else
 			setColor(192,192,192,255)
@@ -47,34 +47,34 @@ function scrollbar(x, y, height, scrollableheight, peronetage, indialog)
 			]]
 		end
 
-		if mouseon(x, y+(height-buttonheight)*peronetage+scrollclickoffset, 16, buttonheight) and not mousepressed and (nodialog or indialog) and love.mouse.isDown("l") then
+		if mouseon(x, y+(height-buttonheight)*fraction+scrollclickoffset, 16, buttonheight) and not mousepressed and (nodialog or indialog) and love.mouse.isDown("l") then
 			if scrollclickstart == nil then
 				scrollclickstart = love.mouse.getY()
-				savedperonetage = peronetage
+				savedfraction = fraction
 			end
 
 			mousepressed = true
 		elseif not love.mouse.isDown("l") and scrollclickstart ~= nil then
 			scrollclickstart = nil
-			savedperonetage = nil
+			savedfraction = nil
 		end
 
 		if scrollclickstart ~= nil then
-			newperonetage = savedperonetage + (scrollclickoffset/(height-buttonheight))
+			newfraction = savedfraction + (scrollclickoffset/(height-buttonheight))
 		end
 
-		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedperonetage == nil and peronetage or savedperonetage)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
+		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedfraction == nil and fraction or savedfraction)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
 	end
 
 	setColor(255,255,255,255)
 
 	--[[
-	if newperonetage ~= nil then
-		cons("Returning " .. newperonetage)
+	if newfraction ~= nil then
+		cons("Returning " .. newfraction)
 	end
 	]]
 
-	if newperonetage ~= nil then
-		return math.min(math.max(newperonetage,0),1)
+	if newfraction ~= nil then
+		return math.min(math.max(newfraction,0),1)
 	end
 end
