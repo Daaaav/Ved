@@ -65,12 +65,6 @@ ui.elements = {
 
 function ui.draw()
 	drawmaineditor()
-
-	-- TODO just call love.draw instead
-	if gotostateonnextdraw == 6 then
-		gotostateonnextdraw = nil
-		tostate(6)
-	end
 end
 
 function ui.update(dt)
@@ -554,10 +548,7 @@ function ui.keypressed(key)
 		end
 	elseif key == "l" then
 		-- Load
-		--
-		-- We have to do this in love.draw() or else the
-		-- editorscreenshot will be of the wrong state
-		gotostateonnextdraw = 6
+		tostate(6)
 	elseif editingbounds == 0 and table.contains({"return", "kpenter"}, key) then
 		-- Play
 		playtesting_start()

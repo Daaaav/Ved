@@ -9,6 +9,8 @@ function ui.load(...)
 					editorscreenshot = love.graphics.newImage(imgdata)
 				end
 			)
+			-- Make sure the screenshot is of the correct state!
+			love.graphics.present()
 		else
 			editorscreenshot = love.graphics.newImage(love.graphics.newScreenshot())
 		end
