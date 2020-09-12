@@ -55,9 +55,6 @@ function love.load()
 
 	ved_require("loadconfig")
 
-	-- TODO TEMPORARY BEFORE 1.8.2 IS RELEASED
-	TEMP_slashfrommain = false
-
 	local loaded_filefunc
 	if love.system.getOS() == "OS X" then
 		-- Cmd
@@ -1481,10 +1478,6 @@ function love.keyreleased(key)
 	end
 
 	hook("love_keyreleased_start", {key})
-
-	if key == "/" then
-		TEMP_slashfrommain = false
-	end
 
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
 		if selectedtool == 1 or selectedtool == 2

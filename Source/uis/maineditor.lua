@@ -287,8 +287,6 @@ function ui.keypressed(key)
 			tonotepad()
 		else
 			tostate(10)
-			-- TODO TEMPORARY BEFORE 1.8.2 IS RELEASED
-			TEMP_slashfrommain = true
 		end
 	elseif key == "f1" and keyboard_eitherIsDown(ctrl) then
 		tostate(15)

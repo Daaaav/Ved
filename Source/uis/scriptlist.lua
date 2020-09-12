@@ -177,7 +177,7 @@ function ui.keypressed(key)
 		)
 	elseif key == "f" then
 		tostate(19,false)
-	elseif key == "/" and not TEMP_slashfrommain then
+	elseif key == "/" then
 		if #scriptnames >= 1 then
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)
 			nodialog = false -- Terrible
