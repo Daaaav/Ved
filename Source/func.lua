@@ -241,93 +241,6 @@ function tostate(new, dontinitialize, ...)
 end
 
 function loadstate(new, ...)
-	if new == 1 then
-
-		tilespicker = false
-		tilespicker_shortcut = false
-		selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1, 1,1,1}
-		selectedtile = 1
-		selectedtileset = 0 --"spacestation" --"outside"
-		selectedcolor = 0 --"c9" --"red"
-		lefttoolscroll = 16 -- offset
-		leftsubtoolscroll = 16
-		zoomscale = 1 -- Or 1/2 or 1/4 or w/e
-		dropdown = 0
-		if ... ~= true then
-			roomx = 0
-			roomy = 0
-			altstate = 0
-		end
-		updatewindowicon()
-
-		if levelmetadata ~= nil and levelmetadata_get(roomx, roomy) ~= nil then
-			gotoroom_finish()
-		end
-
-		editingroomtext = 0
-		newroomtext = false
-		editingroomname = false
-		movingentity = 0
-		movingentity_copying = false
-		upperoptpage2 = false
-		warpid = nil
-		oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
-		oldbounds = {0, 0, 0, 0}
-
-		minsmear = -1; maxsmear = -1
-
-		-- old if not success
-
-		holdingzvx = false
-		oldzxsubtool = 1
-
-		undobuffer = {}
-		redobuffer = {}
-		undosaved = 0
-		unsavedchanges = false
-		saved_at_undo = 0
-
-		editingbounds = 0
-		showepbounds = true
-
-		mouselockx = -1
-		mouselocky = -1
-
-		warpbganimation = 0
-
-		customsizemode = 1 -- 0: using, 1: changing size (or needing to click first tile in tiles picker, 2: needing to click second tile in tiles picker), 3: needing to click top left in a room because I misunderstood the request all along, 4: needing to click bottom right of that.
-		customsizex = 0 -- tiles to the left AND right of the cursor (can be a half)
-		customsizey = 0 -- tiles to the top AND bottom of the cursor
-		customsizetile = nil -- what group of tiles to draw with this special cursor (2D table)
-		customsizecoorx = nil -- coordinates of tile selected in mode 3
-		customsizecoory = nil
-
-		eraserlocked = false
-		keyboardmode = false
-	elseif new == 3 then
-	elseif new == 4 then
-	elseif new == 5 then
-	elseif new == 6 then
-	elseif new == 10 then
-	elseif new == 11 then
-	elseif new == 12 then
-	elseif new == 13 then
-	elseif new == 15 then
-	elseif new == 18 then
-	elseif new == 19 then
-	elseif new == 20 then
-	elseif new == 21 then
-	elseif new == 24 then
-	elseif new == 25 then
-	elseif new == 26 then
-	elseif new == 27 then
-	elseif new == 28 then
-	elseif new == 29 then
-	elseif new == 30 then
-	elseif new == 31 then
-	elseif new == 33 then
-	end
-
 	if uis[new] ~= nil and uis[new].load ~= nil then
 		uis[new].load(...)
 	end
@@ -3099,6 +3012,9 @@ function exitvedoptions()
 	else
 		tostate(oldstate, true)
 	end
+
+	-- TODO: Remove this when the buttons of states 1 and 6 have become Elements
+	mousepressed = true
 end
 
 function exitdisplayoptions()
@@ -3250,6 +3166,7 @@ function loaduis()
 
 	uis[-2] = ved_require("uis/init")
 	uis[0] = ved_require("uis/state0")
+	uis[1] = ved_require("uis/maineditor")
 	uis[3] = ved_require("uis/scripteditor")
 	uis[5] = ved_require("uis/fsinfo")
 	uis[6] = ved_require("uis/levelslist")
