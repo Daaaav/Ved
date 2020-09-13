@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2020-05-07 01:32:18 (CEST)
+--- Last converted: 2020-09-13 02:37:47 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -35,9 +35,6 @@ TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation,
 
 OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE-Version von https://love2d.org downloaden.",
 OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
-UNKNOWNSTATE = "Unbekannter Status ($1), zu Status $2 gesprungen",
-FATALERROR = "FATALER FEHLER: ",
-FATALEND = "Bitte schließe das Spiel und versuche es erneut. Und wenn du Dav bist, bitte behebe das.",
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
 MAXTRINKETS = "Die maximale Anzahl an Trinkets ($1) wurde in diesem Level erreicht.",
@@ -256,7 +253,6 @@ VERSIONOLD = "Update verfügbar! Neuste Version: $1",
 VERSIONCHECKING = "Suche nach Updates...",
 VERSIONDISABLED = "Updateüberprüfung deaktiviert",
 
-SAVESUCCESS = "Erfolgreich gespeichert!",
 SAVENOSUCCESS = "Speichern nicht erfolgreich! Fehler: ",
 INVALIDFILESIZE = "Ungültige Dateigröße.",
 
@@ -550,6 +546,7 @@ EDITSCRIPTWOBUMPING = "Bearbeite Skript ohne Stoß zum Anfang",
 CLICKONTHING = "Klicke auf $1",
 ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
+STARTPOINTNOTFOUND = "Es gibt keinen Startpunkt!",
 
 CONFIRMBIGGERSIZE = "Du hast $1 mal $2 ausgewählt, was eine Größere Karte als $3 mal $4 ist. Außerhalb der normalen $3 mal $4 Karte, Räume und Raumeigenschaften passen sich an, sind aber verzerrt. Du kriegst nicht komplett neue Räume, und auch nicht mehrRaumeigenschaften. VVVVVV kann auch aus vielen Gründen in diesen Räumen Abstürzen.\n\nDrücke Ja wenn du weißt was du tust und willst diese Größere Karte. Drücke Nein um die Kartengröße zu $5 mal $6 zu setzen.\n\nWenn unsicher, drücke Nein.",
 MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4! (Größer-als-$3-mal-$4-Unterstützung nicht aktiviert)",

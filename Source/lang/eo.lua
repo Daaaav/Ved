@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2020-05-07 01:32:19 (CEST)
+--- Last converted: 2020-09-13 02:37:48 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -47,9 +47,6 @@ TRANSLATIONCREDIT = "Esperantigo de Hejmstel", -- If you're making a translation
 
 OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
-UNKNOWNSTATE = "Saltis al nekonata stato ($1) de stato $2",
-FATALERROR = "NERIPAREBLA ERARO: ",
-FATALEND = "Bonvolu fermi la ludon kaj reprovu. Kaj se vi estas Dav, bonvolu ripari ĝin.",
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
@@ -268,7 +265,6 @@ VERSIONOLD = "Ĝisdatigo disponebla! Plej freŝa versio: $1",
 VERSIONCHECKING = "Kontrolado de ĝisdatigoj...",
 VERSIONDISABLED = "Kontrolado de ĝisdatigoj malŝaltita",
 
-SAVESUCCESS = "Konservita sukcese!",
 SAVENOSUCCESS = "Konservado ne sukcesa! Eraro: ",
 INVALIDFILESIZE = "Nevalida dosiergrando.",
 
@@ -562,6 +558,7 @@ EDITSCRIPTWOBUMPING = "Redakti skripton sen suprenigi",
 CLICKONTHING = "Alklaku $1",
 ORDRAGDROP = "aŭ ŝovmetu ĉi tien", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Estas pli ol unu komencejo en tiu ĉi nivelo!",
+STARTPOINTNOTFOUND = "Ne estas komencejo!",
 
 CONFIRMBIGGERSIZE = "Vi elektas $1 oble $2. Tio estas pli granda mapgrando ol $3 oble $4. Ekster la normala mapo $3 oble $4, ĉambroj kaj ĉambrotrajtoj ĉirkaŭfluas, sed estas distorditaj. Vi ne havos tute novajn ĉambrojn, nek pli da ĉambrotrajtoj. VVVVVV ankaŭ eble kraŝos ial ajn en tiuj ĉambroj.\n\nPremu Jes se vi scias, kion vi faras, kaj volas tiun ĉi pli grandan mapograndon. Premu Ne por agordi la grandon al $5 oble $6.\n\nSe vi ne certas, premu Ne.",
 MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4! (Subteno por pli ol $3 oble $4 ne ebligita)",

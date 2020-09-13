@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2020-05-07 01:32:19 (CEST)
+--- Last converted: 2020-09-13 02:37:48 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -37,9 +37,6 @@ TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this
 
 OUTDATEDLOVE = "Votre version de L{ve est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure.\nVous pouvez télécharger la dernière version de L{ve sur le site https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ne supporte plus L{ve 0.9.0. Cependant, L{ve 0.9.1 et toute version ultérieure seront supportées.\nVous pouvez télécharger la dernière version de L{ve sur https://love2d.org/.",
-UNKNOWNSTATE = "État inconnu ($1), entré depuis l'état $2",
-FATALERROR = "ERREUR FATALE : ",
-FATALEND = "Veuillez fermer le jeu et réessayer. Et si vous êtes Dav, veuillez le réparer.",
 
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
 MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",
@@ -258,7 +255,6 @@ VERSIONOLD = "Mise à jour disponible! Dernière version : $1",
 VERSIONCHECKING = "Recherche de mise à jour...",
 VERSIONDISABLED = "Recherche de mise à jour désactivée",
 
-SAVESUCCESS = "Sauvegarde effectuée !",
 SAVENOSUCCESS = "La sauvegarde a échouée! Erreur : ",
 INVALIDFILESIZE = "Taille de fichier invalide.",
 
@@ -552,6 +548,7 @@ EDITSCRIPTWOBUMPING = "Modifier le script sans réordonner la liste",
 CLICKONTHING = "Clique sur $1",
 ORDRAGDROP = "ou glisse et pose ici", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
+STARTPOINTNOTFOUND = "Il n'y a pas de point de départ!",
 
 CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire. VVVVVV peut aussi planter pour n'importe quelle raison dans n'importe laquelle de ces salles.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
 MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4! (Le support d'une taille plus grande que $3 par $4 n'est pas activé)",

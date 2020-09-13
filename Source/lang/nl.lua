@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2020-05-07 01:32:20 (CEST)
+--- Last converted: 2020-09-13 02:37:49 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -35,13 +35,10 @@ TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this
 
 OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.1.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blĳft L{ve 0.9.1 en hoger werken.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
-UNKNOWNSTATE = "Onbekende staat ($1), naar veranderd vanaf $2",
-FATALERROR = "FATALE FOUT: ",
-FATALEND = "Sluit het spel en probeer het opnieuw. En als je Dav bent, los het alsjeblieft op.",
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
-MAXTRINKETS = "Het maximum aantal trinkets ($1) is bereikt in dit level.",
-MAXCREWMATES = "Het maximum aantal bemanningsleden ($1) is bereikt in dit level.",
+MAXTRINKETS = "Het maximumaantal trinkets ($1) is bereikt in dit level.",
+MAXCREWMATES = "Het maximumaantal bemanningsleden ($1) is bereikt in dit level.",
 EDITINGROOMTEXTNIL = "Bestaande tekst die bewerkt werd is nil!",
 STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
@@ -256,7 +253,6 @@ VERSIONOLD = "Update beschikbaar! Laatste versie: $1",
 VERSIONCHECKING = "Controleren op updates...",
 VERSIONDISABLED = "Update-\ncontrole uitgeschakeld",
 
-SAVESUCCESS = "Succesvol opgeslagen!",
 SAVENOSUCCESS = "Opslaan niet succesvol! Fout: ",
 INVALIDFILESIZE = "Ongeldige bestandsgrootte.",
 
@@ -351,7 +347,7 @@ MOREERRORS = "$1 meer",
 
 DEBUGMODEON = "Debugmodus aan",
 FPS = "FPS",
-STATE = "Staat",
+STATE = "Toestand",
 MOUSE = "Muis",
 
 BLUE = "Blauw",
@@ -550,6 +546,7 @@ EDITSCRIPTWOBUMPING = "Script wĳzigen, niet naar boven",
 CLICKONTHING = "Klik op $1",
 ORDRAGDROP = "of sleep bestand hierheen", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Er is meer dan één startpunt in dit level!",
+STARTPOINTNOTFOUND = "Er is geen startpunt!",
 
 CONFIRMBIGGERSIZE = "Je hebt $1 bĳ $2 gekozen, wat groter is dan $3 bĳ $4. Buiten de normale kaart van $3 bĳ $4 zullen kamers en eigenschappen daarvan zich om de kaart wikkelen, maar verstoord. Je krĳgt geen nieuwe kamers en ook geen nieuwe kamereigenschappen. VVVVVV kan ook om wat voor reden dan ook in die kamers crashen.\n\nDruk op Ja als je weet wat je doet en deze grotere grootte wil. Druk op Nee om de kaartgrootte in te stellen op $5 bĳ $6.\n\nAls je het niet zeker weet, druk op Nee.",
 MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bĳ $2 is groter dan $3 bĳ $4! (Ondersteuning voor groter dan $3 bĳ $4 niet ingeschakeld)",
@@ -559,7 +556,7 @@ PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
 ENABLETOWER = "Torenmodus",
 DISABLETOWER = "Toren uitschakelen",
-TIMETRIALS = "Time trials",
+TIMETRIALS = "Races tegen de klok",
 DIMENSIONS = "Dimensies",
 TOWERDIRECTIONUP = "Richting: ↑",
 TOWERDIRECTIONDOWN = "Richting: ↓",
@@ -575,7 +572,7 @@ TOWERDESCENDING = "Toren daalt nu",
 TOWERENTRYSET = "Torenin-/uitgang op huidige positie ingesteld",
 TIMETRIALTRINKETS = "Aantal trinkets",
 TIMETRIALTIME = "Partĳd",
-SUREDELETETRIAL = "Weet je zeker dat je de time trial \"$1\" wilt verwĳderen?",
+SUREDELETETRIAL = "Weet je zeker dat je de race tegen de klok \"$1\" wilt verwĳderen?",
 SUREDELETEDIMENSIONNAME = "Weet je zeker dat je de dimensie \"$1\" wilt verwĳderen?",
 SUREDELETEDIMENSIONNONAME = "Weet je zeker dat je deze dimensie wilt verwĳderen?",
 
@@ -670,7 +667,7 @@ toolnames = {
 "Checkpoint",
 "Brekend platform",
 "Lopende band",
-"Verplaatsend platform",
+"Bewegend platform",
 "Vĳand",
 "Zwaartekrachtlĳn",
 "Tekst",
@@ -749,7 +746,7 @@ long5 = "Toren",
 ERR_VEDHASCRASHED = "Ved is gecrasht!"
 ERR_VEDVERSION = "Ved-versie:"
 ERR_LOVEVERSION = "L{VE-versie:"
-ERR_STATE = "Staat:"
+ERR_STATE = "Toestand:"
 ERR_OS = "Besturingssysteem:"
 ERR_TIMESINCESTART = "Tĳd sinds opstarten:"
 ERR_PLUGINS = "Plugins:"
@@ -1058,7 +1055,7 @@ Hiermee kun je brekende platforms plaatsen.
 Hiermee kun je lopende banden plaatsen.
 
 \7
-   Verplaatsend platform\h#
+   Bewegend platform\h#
 
 
 Hiermee kun je verplaatsende platforms plaatsen.

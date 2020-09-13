@@ -12,18 +12,6 @@ msgctxt "L.OUTDATEDLOVE090"
 msgid "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working.\nYou can download the latest version of L{ve from https://love2d.org/."
 msgstr ""
 
-msgctxt "L.UNKNOWNSTATE"
-msgid "Unknown state ($1), jumped to from state $2"
-msgstr ""
-
-msgctxt "L.FATALERROR"
-msgid "FATAL ERROR: "
-msgstr ""
-
-msgctxt "L.FATALEND"
-msgid "Please close the game and try again. And if you're Dav, please fix it."
-msgstr ""
-
 msgctxt "L.OSNOTRECOGNIZED"
 msgid "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2"
 msgstr ""
@@ -806,10 +794,6 @@ msgstr ""
 
 msgctxt "L.VERSIONDISABLED"
 msgid "Update check disabled"
-msgstr ""
-
-msgctxt "L.SAVESUCCESS"
-msgid "Saved successfully!"
 msgstr ""
 
 msgctxt "L.SAVENOSUCCESS"
@@ -1904,6 +1888,10 @@ msgstr ""
 
 msgctxt "L.MORETHANONESTARTPOINT"
 msgid "There is more than one start point in this level!"
+msgstr ""
+
+msgctxt "L.STARTPOINTNOTFOUND"
+msgid "There is no start point!"
 msgstr ""
 
 msgctxt "L.CONFIRMBIGGERSIZE"

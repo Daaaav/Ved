@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2020-05-07 01:32:18 (CEST)
+--- Last converted: 2020-09-13 02:37:47 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -23,9 +23,6 @@ TRANSLATIONCREDIT = "Сделано CreepiX'ом и Чиприком", -- If you
 
 OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.1 или выше.\nЗагрузите L{VE на https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved больше не поддерживает L{ve 0.9.0. К счастью, L{ve 0.9.1 и выше будут работать.\nВы можете скачать последнюю версию L{ve с https://love2d.org/.",
-UNKNOWNSTATE = "Неизвестный режим ($1), перешедший из $2",
-FATALERROR = "ФАТАЛЬНАЯ ОШИБКА: ",
-FATALEND = "Пожалуйста, закройте игру и попробуйте ещё раз.",
 
 OSNOTRECOGNIZED = "Ваша ОС ($1) не опознана! Идёт возврат к первичным настройкам файловой системы; ваши уровни находятся в:\n\n$2",
 MAXTRINKETS = "Было достигнуто максимальное количество тринкетов ($1).",
@@ -228,10 +225,10 @@ ONETRINKETS = "Т:",
 ONECREWMATES = "ЧЭ:",
 ONEENTITIES = "О:",
 
-ONECUSTOMTILESET = "CT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
+ONECUSTOMTILESET = "ПСС $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "ПСП $1", -- Custom Sprites
+ONEALTSTATE = "А $1/$2", -- Alt state
+ONETOWER = "Б$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Уровни",
 LOADTHISLEVEL = "Загрузить: ",
@@ -244,7 +241,6 @@ VERSIONOLD = "Доступно обновление! Последняя верс
 VERSIONCHECKING = "Проверка обновлений...",
 VERSIONDISABLED = "Проверка обновлений отключена",
 
-SAVESUCCESS = "Сохранение успешно!",
 SAVENOSUCCESS = "Сохранение провалено! Ошибка: ",
 INVALIDFILESIZE = "Неверный размер файла.",
 
@@ -538,58 +534,59 @@ EDITSCRIPTWOBUMPING = "Редактировать без перемещения"
 CLICKONTHING = "Нажмите на $1",
 ORDRAGDROP = "или перетащите файл сюда", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "В данном уровне больше одной точки старта!",
+STARTPOINTNOTFOUND = "Нет точки старта!",
 
-CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
-MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
-BTNOVERRIDE = "Override",
-TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+CONFIRMBIGGERSIZE = "Вы выбрали размер $1 на $2, что больше, чем размер карты $3 на $4. Снаружи обычной карты $3 на $4 комнаты и их свойства переносятся на обратную сторону, но они искажаются. Из-за этого не получаются ни новые комнаты, ни больше их свойств. Также в этих комнатах VVVVVV может без причины вылетать.\n\nНажмите \"Да\", если знаете, что делаете, и хотите карту с размером побольше. Нажмите \"Нет\", чтобы выставить размер карты $5 на $6.\n\nЕсли Вы неуверены, нажмите \"Нет\".",
+MAPBIGGERTHANSIZELIMIT = "Размер карты $1 на $2 больше $3 на $4! (Размеры больше $3 на $4 не поддерживаются)",
+BTNOVERRIDE = "Заменить",
+TARGETPLATFORM = "Для издания", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Tower mode",
-DISABLETOWER = "Disable tower",
-TIMETRIALS = "Time trials",
-DIMENSIONS = "Dimensions",
-TOWERDIRECTIONUP = "Direction: ↑",
-TOWERDIRECTIONDOWN = "Direction: ↓",
-TOWERENTRYEXIT = "Set entry/exit",
-SWITCHEDTOALTSTATEMAIN = "Switched to main state",
-SWITCHEDTOALTSTATE = "Switched to alt state $1",
-ADDEDALTSTATE = "Added new alt state $1",
-REMOVEDALTSTATE = "Removed alt state $1",
-ENABLEDTOWER = "Tower mode enabled",
-DISABLEDTOWER = "Tower mode disabled",
-TOWERASCENDING = "Tower now ascending",
-TOWERDESCENDING = "Tower now descending",
-TOWERENTRYSET = "Tower entry/exit set to current position",
-TIMETRIALTRINKETS = "Trinket count",
-TIMETRIALTIME = "Par time",
-SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
+PLATFORM_VCE = "VVVVVV-CE (издательство сообщества)",
+ENABLETOWER = "Режим башни",
+DISABLETOWER = "Отключить башню",
+TIMETRIALS = "Испытания временем",
+DIMENSIONS = "Измерения",
+TOWERDIRECTIONUP = "Направление: ↑",
+TOWERDIRECTIONDOWN = "Направление: ↓",
+TOWERENTRYEXIT = "Установить вход/выход",
+SWITCHEDTOALTSTATEMAIN = "Переход в основной режим",
+SWITCHEDTOALTSTATE = "Переход в альтернативный режим $1",
+ADDEDALTSTATE = "Добавлен новый альтернативный режим $1",
+REMOVEDALTSTATE = "Альтернативный режим $1 удалён",
+ENABLEDTOWER = "Режим башни включён",
+DISABLEDTOWER = "Режим башни выключен",
+TOWERASCENDING = "Башня поднимается",
+TOWERDESCENDING = "Башня опускается",
+TOWERENTRYSET = "Вход/выход башни установлен в данной позиции",
+TIMETRIALTRINKETS = "Количество тринкетов",
+TIMETRIALTIME = "Минимум",
+SUREDELETETRIAL = "Вы уверены, что хотите удалить испытание временем \"$1\"?",
+SUREDELETEDIMENSIONNAME = "Вы уверены, что хотите удалить измерение \"$1\"?",
+SUREDELETEDIMENSIONNONAME = "Вы уверены, что хотите удалить это измерение?",
 
-CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+CUSTOMGRAPHICS = "Альтернативная графика", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Изображение стиля стен:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Изображение спрайтов:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "По умолчанию ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "По умолчанию (sprites.png)",
 
-CUT = "Cut",
-PASTE = "Paste",
-SELECTWORD = "Select word",
-SELECTLINE = "Select line",
-SELECTALL = "Select all",
-INSERTRAWHEX = "Insert Unicode character",
-MOVELINEUP = "Move line upwards",
-MOVELINEDOWN = "Move line downwards",
-DUPLICATELINE = "Duplicate line",
+CUT = "Вырезать",
+PASTE = "Вставить",
+SELECTWORD = "Выделить слово",
+SELECTLINE = "Выделить строку",
+SELECTALL = "Выделить все",
+INSERTRAWHEX = "Вставить символ Unicode",
+MOVELINEUP = "Поднять строку",
+MOVELINEDOWN = "Опустить строку",
+DUPLICATELINE = "Дублировать строку",
 
-WHEREPLACEPLAYER = "Where do you want to start?",
-YOUAREPLAYTESTING = "You are currently playtesting",
-LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
-ALREADYPLAYTESTING = "You're already playtesting!",
-PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
-VVVVVVFILE = "Please select the file named '$1'.",
-CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
+WHEREPLACEPLAYER = "Где Вы хотите начать?",
+YOUAREPLAYTESTING = "Вы играете в тестовом режиме",
+LOCATEVVVVVV = "Выберете исполняемый файл $1", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Вы уже в тестовом режиме!",
+PLAYTESTUNAVAILABLE = "К сожалению, невозможно тестировать на $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Пожалуйста, выберете файл \"$1\".",
+CHANGINGPATHAFTERASK = "Путь к VVVVVV некорректен, так как он был изменён после запуска!",
 
 }
 
@@ -641,8 +638,9 @@ L_PLU = {
 		[2] = "$1 стен имеют недопустимые значения в пределах 0-1199",
 	},
 	NOTALLTILESVALID_ALTSTATE = {
-		[-1] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
-		[-2] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[0] = "$1 номер стены не является целым числом в пределах 0-1199 в альтернативном режиме $2 в комнате $3,$4",
+		[1] = "$1 номера стен не являются целыми числами в пределах 0-1199 в альтернативном режиме $2 в комнате $3,$4",
+		[2] = "$1 номеров стен не являются целыми числами в пределах 0-1199 в альтернативном режиме $2 в комнате $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 байт",
@@ -680,9 +678,9 @@ toolnames = {
 "Линия варпа",
 "Член экипажа",
 "Точка старта",
-"Flip token",
-"Coin",
-"Teleporter",
+"Жетон переворота",
+"Монета",
+"Телепортатор",
 
 }
 
@@ -706,7 +704,7 @@ subtoolnames = {
 [16] = {"Розовый", "Жёлтый", "Красный", "Зелёный", "Синий", "Голубой", "Случайный"},
 [17] = {"Вправо", "Влево"},
 [18] = {},
-[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[19] = {"Одна монета", "Монета 10", "Монета 20", "Монета 50", "Монета 100"},
 [20] = {},
 
 }
@@ -741,8 +739,8 @@ short3 = "Варп-Зона",
 long3 = "Варп-Зона",
 short4 = "Корабль",
 long4 = "Корабль",
-short5 = "Tower",
-long5 = "Tower",
+short5 = "Башня",
+long5 = "Башня",
 
 }
 
@@ -765,7 +763,7 @@ ERR_FILEEDITORS = "Плагины редактирующие этот файл:"
 ERR_CURRENTPLUGIN = "Плагин вызвавший ошибку:"
 ERR_PLEASETELLAUTHOR = "Плагин должен был редактровать код Ved, но код для замены не был найден.\nВозможно это из-за конфликта между двумя плагинами, или новая версия Ved не поддерживает этот плагин.\n\nДетали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n\n"
 ERR_CONTINUE = "Вы можете продолжить нажав Esc или Enter, но эта ошибка может вызвать глюки."
-ERR_OPENPLUGINSFOLDER = "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+ERR_OPENPLUGINSFOLDER = "Клавишей F можно открыть папку с плагинами, чтобы исправить или удалить плагин, вызывающий проблему. После этого перезапустите Ved."
 ERR_REPLACECODE = "Это не найдено в %s.lua:"
 ERR_REPLACECODEPATTERN = "Это не найдено в %s.lua (как шаблон):"
 ERR_LINESTOTAL = "%i строк в общем."
@@ -811,7 +809,7 @@ diffmessages = {
 		roomname = "Название изменено с \"$1\" на \"$2\"\\Y",
 		roomnameremoved = "Название \"$1\" убрано\\R",
 		roomnameadded = "Комната названа \"$1\"\\G",
-		tileset = "Набор стен $1 с цветом $2 изменён на набор стен $3 с цветом $4\\Y",
+		tileset = "Стиль стен $1 с цветом $2 изменён на стиль стен $3 с цветом $4\\Y",
 		platv = "Скорость платформ изменена с $1 на $2\\Y",
 		enemytype = "Тип врагов изменён с $1 на $2\\Y",
 		platbounds = "Рамка платформ изменена с $1,$2,$3,$4 на $5,$6,$7,$8\\Y",

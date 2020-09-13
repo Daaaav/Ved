@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-05-07 01:32:18 (CEST)
+--- Last converted: 2020-09-13 02:37:47 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -23,9 +23,6 @@ TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If 
 
 OUTDATEDLOVE = "Su versión de L{ve esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
-UNKNOWNSTATE = "Estado desconocido ($1), saltado desde el estado $2",
-FATALERROR = "ERROR FATAL: ",
-FATALEND = "Porfavor cierre el juego y intente de nuevo. Y si eres Dav, porfavor arreglalo.",
 
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
@@ -244,7 +241,6 @@ VERSIONOLD = "Actualizacion disponible! Version mas reciente: $1",
 VERSIONCHECKING = "Buscando actualizaciones...",
 VERSIONDISABLED = "Comprobacion de actualizacion desactivada",
 
-SAVESUCCESS = "Guardado con exito!",
 SAVENOSUCCESS = "Guardado sin exito! Error: ",
 INVALIDFILESIZE = "Tamaño de archivo invalido.",
 
@@ -538,6 +534,7 @@ EDITSCRIPTWOBUMPING = "Editar script sin chocar",
 CLICKONTHING = "Haz click en $1",
 ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Hay mas de un punto de partida en este nivel!",
+STARTPOINTNOTFOUND = "There is no start point!",
 
 CONFIRMBIGGERSIZE = "Estas seleccionando $1 por $2, lo cual es un tamaño de mapa mas grande que $3 por $4. Afuera del $3 por $4 normal, las habitaciones y sus propiedades se envuelven, pero están distorsionadas. Usted no tiene habitaciones completas del todo, tampoco las propiedades. VVVVVV tambien puede dejar de funcionar por cualquier razón en esas habitaciones.\n\nPresiona Si si sabes lo que estas haciendo y quieres este tamaño de mapa mas grande. Presiona No para poner el tamaño del mapa a $5 por $6.\n\nSi no estas seguro, presiona No.",
 MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4! (No se habilito el soporte de mapas mas grandes que $3 por $4)",
