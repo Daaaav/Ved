@@ -98,6 +98,13 @@ function playtesting_start()
 		return
 	end
 
+	if playtesting_askwherestart then
+		-- Apparently we pressed Enter twice.
+		atx, aty, flipped = playtesting_find_first_checkpoint()
+		playtesting_endaskwherestart(atx, aty, flipped, true)
+		return
+	end
+
 	local path
 	if not keyboard_eitherIsDown("shift") then
 		path = playtesting_locate_path()
@@ -143,7 +150,7 @@ function playtesting_start()
 	end
 end
 
-function playtesting_endaskwherestart()
+function playtesting_endaskwherestart(atx, aty, flipped, nosnap)
 	playtesting_askwherestart = false
 
 	local path = playtesting_locate_path()
@@ -154,14 +161,11 @@ function playtesting_endaskwherestart()
 		return
 	end
 
-	local atx, aty = love.mouse.getPosition()
-	local flipped = false
-	atx = atx - screenoffset
+	if flipped == nil then
+		flipped = false
+	end
 
-	atx = math.floor(atx / 2)
-	aty = math.floor(aty / 2)
-
-	if not keyboard_eitherIsDown("alt") then
+	if not nosnap and not keyboard_eitherIsDown("alt") then
 		atx, aty, flipped = playtesting_snap_position(atx, aty, flipped)
 	end
 
@@ -179,6 +183,18 @@ end
 
 function playtesting_cancelask()
 	playtesting_askwherestart = false
+end
+
+function playtesting_correctentitypos(ent, flipped)
+	if ent.t == 10 then
+		if ent.p1 == 0 then
+			return 8*(ent.x%40) + 2, 8*(ent.y%30), true
+		else
+			return 8*(ent.x%40) + 2, 8*(ent.y%30) - 5, false
+		end
+	elseif ent.t == 16 then
+		return 8*(ent.x%40) + 2, 8*(ent.y%30) + 3, flipped
+	end
 end
 
 function playtesting_snap_position(posx, posy, flipped)
@@ -212,20 +228,8 @@ function playtesting_snap_position(posx, posy, flipped)
 		end
 	end
 
-	local function correctentitypos(ent)
-		if ent.t == 10 then
-			if ent.p1 == 0 then
-				return 8*(ent.x%40) + 2, 8*(ent.y%30), true
-			else
-				return 8*(ent.x%40) + 2, 8*(ent.y%30) - 5, false
-			end
-		elseif ent.t == 16 then
-			return 8*(ent.x%40) + 2, 8*(ent.y%30) + 3, flipped
-		end
-	end
-
 	if #matchingentities == 1 then
-		return correctentitypos(matchingentities[1])
+		return playtesting_correctentitypos(matchingentities[1], flipped)
 	elseif #matchingentities > 1 then
 		local usethisentity
 
@@ -249,8 +253,40 @@ function playtesting_snap_position(posx, posy, flipped)
 			end
 		end
 
-		return correctentitypos(usethisentity)
+		return playtesting_correctentitypos(usethisentity, flipped)
 	end
 
 	return posx, posy, flipped
+end
+
+function playtesting_find_first_checkpoint()
+	-- Replicate VVVVVV's playtesting behavior:
+	-- Start at the startpoint if it's in the room, otherwise the first checkpoint.
+	-- If all fails, just spawn in the center, why not.
+	-- Returns x/y position to place the player at.
+
+	local first_checkpoint = nil
+
+	for k,v in pairs(entitydata) do
+		if (v.t == 16 or v.t == 10)
+		and v.x >= roomx*40 and v.x <= roomx*40+39
+		and v.y >= roomy*30 and v.y <= roomy*30+29
+		and v.state == altstate then
+			if v.t == 16 then
+				-- Start point, we done
+				return playtesting_correctentitypos(v, false)
+			end
+			if v.t == 10 and first_checkpoint == nil then
+				-- It's the first checkpoint, but we might still find the start point...
+				first_checkpoint = v
+			end
+		end
+	end
+
+	if first_checkpoint ~= nil then
+		return playtesting_correctentitypos(first_checkpoint, false)
+	end
+
+	-- Just spawn where VVVVVV would spawn you for a level without a start point
+	return 160, 120, false
 end

@@ -2289,7 +2289,11 @@ function drawmaineditor()
 		if love.mouse.isDown("l") and not mousepressed then
 			mousepressed = true
 			if mouseoncanvas then
-				playtesting_endaskwherestart()
+				local atx, aty = love.mouse.getPosition()
+				atx = atx - screenoffset
+				atx = math.floor(atx / 2)
+				aty = math.floor(aty / 2)
+				playtesting_endaskwherestart(atx, aty)
 			else
 				playtesting_askwherestart = false
 			end
