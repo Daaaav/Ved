@@ -110,7 +110,7 @@ function rightclickmenu.handler(RCMreturn)
 				-- Platform, moving/conveyor
 				if RCMreturn == L.CYCLETYPE then
 					local new_p1
-					if entitydata[tonumber(entdetails[3])].p1 < 4 then
+					if entitydata[tonumber(entdetails[3])].p1 <= 4 then
 						-- Moving platform
 						new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
 					else

@@ -402,7 +402,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. (v.p1 < 4 and toolnames[8] or toolnames[7]), L.DELETE, L.CYCLETYPE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_2_" .. k,
+				{"#" .. getentityname(2, v.p1), L.DELETE, L.CYCLETYPE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_2_" .. k,
 				v.p1 < 7 and 4 or 8, 1
 			)
 		end
