@@ -547,8 +547,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				if showhitbox then
 					-- Accurate hitbox
 					love.graphics.setColor(255,0,0,255)
-					love.graphics.rectangle("line", sel_x + 8.5, sel_y - .5, sel_w, 16*sel_h + 1)
-					love.graphics.rectangle("line", sel_x + 10.5, sel_y - .5, sel_w, 16*sel_h + 1)
+					love.graphics.rectangle("line", sel_x + .5, sel_y - .5, sel_w, 16*sel_h + 1)
+					love.graphics.rectangle("line", sel_x + 2.5, sel_y - .5, sel_w, 16*sel_h + 1)
 				else
 					love.graphics.rectangle("line", sel_x + 6.5, sel_y + .5, sel_w, 16*sel_h - 1)
 				end
