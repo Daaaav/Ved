@@ -294,22 +294,13 @@ Your plugins folder is:
 	--end
 end
 
-local function require_with_args(reqfile, ...)
-	if not package.loaded[reqfile] then
-		local module = assert(loadfile(reqfile .. ".lua"))
-		-- We're still here, so it loaded successfully
-		package.loaded[reqfile] = true
-		return module(...)
-	end
-end
-
-function ved_require(reqfile, ...)
+function ved_require(reqfile)
 	if pluginincludes[reqfile] ~= nil then
 		-- A plugin specifically included this version of this file!
-		return require_with_args(pluginincludes[reqfile], ...)
+		return require(pluginincludes[reqfile])
 	elseif pluginfileedits[reqfile] == nil then
 		-- No plugins want to edit this file!
-		return require_with_args(reqfile, ...)
+		return require(reqfile)
 	elseif not package.loaded[reqfile] then
 		local readlua = love.filesystem.read(reqfile .. ".lua")
 
@@ -343,7 +334,7 @@ function ved_require(reqfile, ...)
 		local module = assert(loadstring(readlua))
 		-- We're here, so it loaded fine
 		package.loaded[reqfile] = true
-		return module(...)
+		return module()
 	end
 end
 
