@@ -301,7 +301,7 @@ function ved_require(reqfile)
 	elseif pluginfileedits[reqfile] == nil then
 		-- No plugins want to edit this file!
 		return require(reqfile)
-	else
+	elseif not package.loaded[reqfile] then
 		local readlua = love.filesystem.read(reqfile .. ".lua")
 
 		for editk,editv in pairs(pluginfileedits[reqfile]) do
@@ -331,7 +331,10 @@ function ved_require(reqfile)
 		succ, errormsg = loadstring(readlua)
 		assert(succ, errormsg)
 		]]
-		return assert(loadstring(readlua))()
+		local module = assert(loadstring(readlua))
+		-- We're here, so it loaded fine
+		package.loaded[reqfile] = true
+		return module()
 	end
 end
 
