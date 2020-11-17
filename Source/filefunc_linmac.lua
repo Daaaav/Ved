@@ -247,3 +247,190 @@ end
 function multiwritefile_close(os_fh)
 	os_fh:close()
 end
+
+-- Project Format stuff
+
+function isproject(path)
+	return file_exists(path .. "/" .. PROJECT_FILE)
+end
+
+function readfile(path)
+	local fh, everr = io.open(path)
+
+	if fh == nil then
+		return false, everr
+	end
+
+	local ficontents = fh:read("*a")
+
+	fh:close()
+
+	return true, ficontents
+end
+
+function readprojectversion(path)
+	if not isproject(path) then
+		return false, L.PROJECT_UNRECOGNIZED
+	end
+
+	return readfile(path .. "/" .. METADATA_FILE)
+end
+
+-- Mutates: rettable, errortable
+local function readfileinsert(rettable, errortable, base_path, ...)
+	local path = {...}
+	local current_rettable = rettable
+	local current_error_table = errortable
+	for depth, file in pairs(path) do
+		if depth < #path then
+			if current_rettable[file] ~= nil then
+				current_rettable[file] = {}
+				current_rettable = current_rettable[file]
+			end
+			if current_error_table[file] ~= nil then
+				current_error_table[file] = {}
+				current_error_table = current_error_table[file]
+			end
+		end
+	end
+
+	local success, ret2 = readfile(base_path .. "/" .. table.concat(path, "/"))
+	if not success then
+		local errormsg = ret2
+		current_error_table[file] = errormsg
+		return
+	end
+
+	local contents = ret2
+	current_rettable[file] = contents
+end
+
+function readprojectmetadata(path)
+	if not isproject(path) then
+		return false, L.PROJECT_UNRECOGNIZED
+	end
+
+	return readfile(path .. "/" .. METADATA_FILE)
+end
+
+function readprojectfolder(path)
+	if not isproject(path) then
+		return false, L.PROJECT_UNRECOGNIZED
+	end
+
+	local retval = {}
+	local errorval = {}
+
+	-- Base metadata and project version
+	readfileinsert(retval, errorval, path, METADATA_FILE)
+	readfileinsert(retval, errorval, path, PROJECT_FILE)
+
+	-- Ved metadata
+	readfileinsert(retval, errorval, path, VEDMETADATA_DIR, FLAGNAMES_FILE)
+	local buffer_diriter = new_diriter()
+	if libC.ved_opendir(buffer_diriter, path .. "/" .. VEDMETADATA_DIR .. "/" .. LEVELNOTES_DIR, nil, false, nil) then
+		local buffer_filedata = new_filedata()
+		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
+			if not buffer_filedata.isdir then
+				local name = ffi.string(buffer_filedata.name)
+				readfileinsert(retval, errorval, path, VEDMETADATA_DIR, LEVELNOTES_DIR, name)
+			end
+		end
+	end
+	libC.ved_closedir(buffer_diriter)
+
+	-- Rooms
+	local function isvalidnumber(number)
+		-- Returns true if it is an integer, and that it's not negative,
+		-- and that it doesn't have any leading zeroes.
+		-- We check this by converting it a bunch and back to a string
+
+		local converted = tonumber(number)
+		converted = anythingbutnil0(number)
+		converted = math.floor(number)
+		converted = math.abs(number)
+		converted = tostring(number)
+
+		return converted == number
+	end
+
+	local function isvalidname(name, startletter)
+		-- Valid here means that it starts with x/y, and that it's
+		-- followed by a valid number.
+
+		assert(startletter)
+		local startswithletter = name:sub(1, 1) == startletter
+		local validnumber = isvalidnumber(name:sub(2))
+
+		return startswithletter and validnumber
+	end
+
+	local function isvaliddir(thisentry, startletter)
+		-- Valid here means that the entry is a directory, and that it
+		-- has a valid name. (So it requires passing startletter)
+
+		return thisentry.isdir and isvalidname(ffi.string(thisentry.name), startletter)
+	end
+
+	local function readroom(...)
+		-- Unfortunately, `func(..., extraargs)` doesn't work
+		-- (you can't pass extra args after passing `...`)
+		-- so we have to do this
+		local args = {...}
+
+		table.insert(args, ROOMPROPERTIES_FILE)
+		readfileinsert(retval, errorval, unpack(args))
+
+		args[#args] = ROOMCONTENTS_FILE
+		readfileinsert(retval, errorval, unpack(args))
+
+		args[#args] = EDENTITIES_FILE
+		readfileinsert(retval, errorval, unpack(args))
+	end
+
+	local buffer_diriter = new_diriter()
+	if libC.ved_opendir(buffer_diriter, path .. "/" .. ROOMS_DIR, nil, false, nil) then
+
+		-- Get ready for crazy indentation. Lua doesn't have a `continue` statement
+		local x_entry = new_filedata()
+		while libC.ved_nextfile(buffer_diriter, x_entry) do
+			if isvaliddir(x_entry, "x") then
+				local y_diriter = new_diriter()
+				if libC.ved_opendir(y_diriter, path .. "/" .. ROOMS_DIR .. "/" .. x_entry.name, nil, false, nil) then
+					local y_entry = new_filedata()
+					while libC.ved_nextfile(y_diriter, y_entry) do
+						if isvaliddir(y_entry, "y") then
+							readroom(path, ROOMS_DIR, x_entry.name, y_entry.name)
+						end -- entry in rooms/xNN/ is valid
+					end -- iterating over rooms/xNN/
+				end -- ved_opendir() on rooms/xNN/
+				libC.ved_closedir(y_diriter)
+			end -- entry in rooms/ is valid
+		end -- iterating over rooms/
+
+	end -- ved_opendir() on rooms/
+	libC.ved_closedir(buffer_diriter)
+
+	-- Scripts
+	local function recurse_read(...)
+		local args = {...}
+
+		local diriter = new_diriter()
+		if libC.ved_opendir(diriter, table.concat(args, "/"), nil, false, nil) then
+			local entry = new_filedata()
+			while libC.ved_nextfile(diriter, entry) do
+				if entry.isdir then
+					table.insert(args, ffi.string(entry.name))
+					recurse_read(unpack(args))
+				else
+					readfileinsert(retval, errorval, unpack(args))
+				end
+			end
+		end
+		libC.ved_closedir(diriter)
+	end
+
+	recurse_read(path, SCRIPTS_DIR)
+
+	return true, retval, errorval
+end
