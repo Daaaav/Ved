@@ -66,13 +66,12 @@ function love.load()
 		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
-		filefunc_ver = "02"
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
 		end
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac" .. filefunc_ver .. ".so") then
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac02.so") then
 			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_mac" .. filefunc_ver .. ".so", love.filesystem.read("libs/vedlib_filefunc_mac" .. filefunc_ver .. ".so"))
+			love.filesystem.write("available_libs/vedlib_filefunc_mac02.so", love.filesystem.read("libs/vedlib_filefunc_mac02.so"))
 		end
 		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
@@ -94,19 +93,18 @@ function love.load()
 		macscrolling = false
 		wgetavailable = true
 		newline = "\n"
-		filefunc_ver = "02"
 		hook("love_load_lin")
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
 		end
 		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin" .. filefunc_ver .. ".so") then
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin02.so") then
 			vedlib_filefunc_available = true
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
 			if os.execute("gcc -shared -fPIC -o '"
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin" .. filefunc_ver .. ".so' '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so' '"
 				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c'"
 			) == 0 then
 				vedlib_filefunc_available = true
@@ -116,7 +114,6 @@ function love.load()
 			loaded_filefunc = "linmac"
 		else
 			loaded_filefunc = "lin_fallback"
-			filefunc_ver = nil
 		end
 		playtesting_available = true
 	else
@@ -133,7 +130,7 @@ function love.load()
 	end
 	lctrl = "l" .. ctrl
 	rctrl = "r" .. ctrl
-	ved_require("filefunc_" .. loaded_filefunc, filefunc_ver)
+	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
 	ved_require("imagefont")
