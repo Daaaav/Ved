@@ -24,13 +24,26 @@ ffi.cdef([[
 		long long filesize;
 	} ved_filedata;
 
+	/* We can't #include <dirent.h>, but we only need this for a pointer */
+	typedef struct _DIR DIR;
+
+	typedef struct _ved_directoryiter
+	{
+		DIR *dir;
+		char path[256];
+		size_t len_prefix;
+		bool filter_active;
+		char filter[8];
+		bool show_hidden;
+	} ved_directoryiter;
+
 	void init_lang(const char *(*l)(char *key));
 
-	bool ved_opendir(const char *path, const char *filter, bool show_hidden, const char **errmsg);
+	bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filter, bool show_hidden, const char **errmsg);
 
-	bool ved_nextfile(ved_filedata *filedata);
+	bool ved_nextfile(ved_directoryiter *diriter, ved_filedata *filedata);
 
-	void ved_closedir(void);
+	void ved_closedir(ved_directoryiter *diriter);
 
 	bool ved_directory_exists(const char *path);
 
@@ -47,6 +60,7 @@ libC.init_lang(
 
 
 buffer_filedata = ffi.new("ved_filedata")
+buffer_diriter = ffi.new("ved_directoryiter")
 
 
 
@@ -64,9 +78,9 @@ function listlevelfiles(directory)
 		else
 			prefix = dirs[currentdir_i] .. "/"
 		end
-		if libC.ved_opendir(directory .. "/".. prefix, ".vvvvvv", false, nil) then
+		if libC.ved_opendir(buffer_diriter, directory .. "/".. prefix, ".vvvvvv", false, nil) then
 			t[dirs[currentdir_i]] = {}
-			while libC.ved_nextfile(buffer_filedata) do
+			while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 				current_name = ffi.string(buffer_filedata.name)
 				if buffer_filedata.isdir then
 					table.insert(dirs, prefix .. current_name)
@@ -82,7 +96,7 @@ function listlevelfiles(directory)
 					}
 				)
 			end
-			libC.ved_closedir()
+			libC.ved_closedir(buffer_diriter)
 		elseif prefix == "" then
 			-- The root levels dir is invalid?
 			return t
@@ -102,8 +116,8 @@ function listfiles_generic(directory, filter, show_hidden)
 	local files = {}
 
 	local errmsg = ffi.new("const char*[1]")
-	if libC.ved_opendir(directory .. "/", filter, show_hidden, errmsg) then
-		while libC.ved_nextfile(buffer_filedata) do
+	if libC.ved_opendir(buffer_diriter, directory .. "/", filter, show_hidden, errmsg) then
+		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 			table.insert(files,
 				{
 					name = ffi.string(buffer_filedata.name),
@@ -112,7 +126,7 @@ function listfiles_generic(directory, filter, show_hidden)
 				}
 			)
 		end
-		libC.ved_closedir()
+		libC.ved_closedir(buffer_diriter)
 	else
 		-- The dir is invalid?
 		return false, {}, ffi.string(errmsg[0])
