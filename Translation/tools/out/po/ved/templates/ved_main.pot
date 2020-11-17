@@ -393,8 +393,24 @@ msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
 msgid "Load script required!"
 msgstr ""
 
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT_EXPL"
+msgid "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script."
+msgstr ""
+
 msgctxt "L.INTSCRWARNING_BOXED"
-msgid "Direct script box/terminal reference!\n\n"
+msgid "Direct script box/terminal reference!"
+msgstr ""
+
+msgctxt "L.INTSCRWARNING_BOXED_EXPL"
+msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
+msgstr ""
+
+msgctxt "L.INTSCRWARNING_NAME"
+msgid "Unsuitable script name!"
+msgstr ""
+
+msgctxt "L.INTSCRWARNING_NAME_EXPL"
+msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
 msgstr ""
 
 msgctxt "L.COLUMN"

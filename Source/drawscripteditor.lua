@@ -136,6 +136,14 @@ function drawscripteditor()
 
 	love.graphics.setScissor()
 
+	-- Any warnings?
+	if internalscript and intscrwarncache_script ~= scriptname then -- is nil if not checked yet
+		checkintscrloadscript(scriptname)
+	end
+	draw_script_warn_light("loadscript_required", love.graphics.getWidth()-168, 4, internalscript and intscrwarncache_warn_noloadscript)
+	draw_script_warn_light("direct_reference", love.graphics.getWidth()-168-28, 4, internalscript and intscrwarncache_warn_boxed)
+	--draw_script_warn_light("name", love.graphics.getWidth()-168-(28*2), 4, false)
+
 	love.graphics.setColor(255,255,255,255)
 
 	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
@@ -164,24 +172,6 @@ function drawscripteditor()
 	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
 	rbutton(s.scripteditor_largefont and L.TEXTSIZEL or L.TEXTSIZEN, 11)
-
-	-- Internal scripting load script warning
-	if internalscript then
-		if intscrwarncache_script ~= scriptname then -- is nil if not checked yet
-			checkintscrloadscript(scriptname)
-		elseif intscrwarncache_warn_noloadscript or intscrwarncache_warn_boxed then
-			love.graphics.setColor(255,128,0)
-			local warnmessage = ""
-			if intscrwarncache_warn_boxed then
-				warnmessage = warnmessage .. L.INTSCRWARNING_BOXED
-			end
-			if intscrwarncache_warn_noloadscript then
-				warnmessage = warnmessage .. L.INTSCRWARNING_NOLOADSCRIPT
-			end
-			ved_printf(warnmessage, love.graphics.getWidth()-(128-8), ((love.graphics.getHeight()-(24*2))+4)-24-40, 128-16, "left")
-			love.graphics.setColor(255,255,255)
-		end
-	end
 
 	-- Column
 	ved_printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")

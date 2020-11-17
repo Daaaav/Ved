@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-09-13 02:37:47 (CEST)
+--- Last converted: 2020-11-17 01:21:26 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -27,8 +27,8 @@ OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mej
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
 MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
-EDITINGROOMTEXTNIL = "Texto de habiacion existente que se estava editando es nulo!",
-STARTPOINTNOLONGERFOUND = "El punto de partida viejo no se puede encontrar!",
+EDITINGROOMTEXTNIL = "Texto de habitacion existente que se editava es nulo!",
+STARTPOINTNOLONGERFOUND = "El punto de inicio viejo no se puede encontrar!",
 UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta: ",
 SURENEWLEVEL = "Estas seguro de que quieres hacer un nuevo nivel? Perderas cualquier contenido no guardado.",
 SURELOADLEVEL = "Estas seguro de que quieres cargar un nivel? Perderas cualquier conenido no guardado.",
@@ -127,7 +127,11 @@ TEXTSIZEL = "Tamaño de texto: L",
 INSERT = "Insertar",
 HELP = "Ayuda",
 INTSCRWARNING_NOLOADSCRIPT = "Se requiere script de carga!",
-INTSCRWARNING_BOXED = "Referencia de terminal!\n\n",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_BOXED = "Referencia de terminal!",
+INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
+INTSCRWARNING_NAME = "Unsuitable script name!",
+INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
 COLUMN = "Columna: ",
 
 BTN_OK = "OK",
@@ -156,7 +160,7 @@ DOWN = "abajo",
 LEFT = "izquierda",
 RIGHT = "derecha",
 TESTFROMHERE = "Probar desde aqui",
-FLIP = "Dar vuelta",
+FLIP = "Voltear",
 CYCLETYPE = "Cambiar tipo",
 GOTODESTINATION = "Ir a destino",
 GOTOENTRANCE = "Ir a entrada",
@@ -225,9 +229,9 @@ ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
 
-ONECUSTOMTILESET = "CT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
+ONECUSTOMTILESET = "Set P. $1", -- Custom Tileset
+ONECUSTOMSPRITESHEET = "Spr. P. $1", -- Custom Sprites
+ONEALTSTATE = "E $1/$2", -- Alt state
 ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
 
 LEVELSLIST = "Niveles",
@@ -285,7 +289,7 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "No tienes un directorio de VVVVVV personalizado.
 CUSTOMVVVVVVDIRECTORY_SET = "Su directorio de VVVVVV es un camino personalizado:\n$1\n\n",
 LANGUAGE = "Idioma",
 DIALOGANIMATIONS = "Animaciones de dialogo",
-FLIPSUBTOOLSCROLL = "Dar vuelta direccion de desplazo de subherramienta",
+FLIPSUBTOOLSCROLL = "Voltear direccion de desplazo de subherramienta",
 ADJACENTROOMLINES = "Indicadores de teja en habitaciones adjuntas",
 ASKBEFOREQUIT = "Preguntar antes de salir",
 NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin guardar",
@@ -533,8 +537,8 @@ STOPSMUSIC = "Para la musica",
 EDITSCRIPTWOBUMPING = "Editar script sin chocar",
 CLICKONTHING = "Haz click en $1",
 ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
-MORETHANONESTARTPOINT = "Hay mas de un punto de partida en este nivel!",
-STARTPOINTNOTFOUND = "There is no start point!",
+MORETHANONESTARTPOINT = "Hay mas de un punto de inicio en este nivel!",
+STARTPOINTNOTFOUND = "No hay punto de inicio!",
 
 CONFIRMBIGGERSIZE = "Estas seleccionando $1 por $2, lo cual es un tamaño de mapa mas grande que $3 por $4. Afuera del $3 por $4 normal, las habitaciones y sus propiedades se envuelven, pero están distorsionadas. Usted no tiene habitaciones completas del todo, tampoco las propiedades. VVVVVV tambien puede dejar de funcionar por cualquier razón en esas habitaciones.\n\nPresiona Si si sabes lo que estas haciendo y quieres este tamaño de mapa mas grande. Presiona No para poner el tamaño del mapa a $5 por $6.\n\nSi no estas seguro, presiona No.",
 MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4! (No se habilito el soporte de mapas mas grandes que $3 por $4)",
@@ -564,21 +568,21 @@ SUREDELETETRIAL = "Estas seguro de que quieres borrar el contrareloj \"$1\"?",
 SUREDELETEDIMENSIONNAME = "Estas seguro de que quieres borrar la dimension \"$1\"?",
 SUREDELETEDIMENSIONNONAME = "Estas seguro de que quieres borrar esta dimensión?",
 
-CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
+CUSTOMGRAPHICS = "Gráficos alternos", -- Alternative tileset or sprites images
+CUSTOMTILESET = "Imagen del set:", -- What variant of tiles*.png is used
+CUSTOMSPRITESHEET = "Imagen del sprite:", -- What variant of sprites*.png is used
+CUSTOMTILESET_DEFAULT = "Por defecto ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
+CUSTOMSPRITESHEET_DEFAULT = "Por defecto (sprites.png)",
 
-CUT = "Cut",
-PASTE = "Paste",
-SELECTWORD = "Select word",
-SELECTLINE = "Select line",
-SELECTALL = "Select all",
-INSERTRAWHEX = "Insert Unicode character",
-MOVELINEUP = "Move line upwards",
-MOVELINEDOWN = "Move line downwards",
-DUPLICATELINE = "Duplicate line",
+CUT = "Cortar",
+PASTE = "Pegar",
+SELECTWORD = "Seleccionar palabra",
+SELECTLINE = "Seleccionar linea",
+SELECTALL = "Seleccionar todo",
+INSERTRAWHEX = "Insertar carácter Unicode",
+MOVELINEUP = "Mover línea hacia arriba",
+MOVELINEDOWN = "Mover línea hacia abajo",
+DUPLICATELINE = "Duplicar linea",
 
 WHEREPLACEPLAYER = "Donde desea comenzar?",
 YOUAREPLAYTESTING = "Estas probando justo ahora.",
@@ -629,8 +633,8 @@ L_PLU = {
 		[1] = "$1 tejas no es un numero entero valido en el rango 0-1199",
 	},
 	NOTALLTILESVALID_ALTSTATE = {
-		[-1] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
-		[-2] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
+		[0] = "Teja $1 no es un número entero valido en el rango 0-1199 en el estado $2 para la habitación $3,$4",
+		[1] = "Tejas $1 no son un número entero valido en el rango 0-1199 en el estado $2 para la habitación $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -664,10 +668,10 @@ toolnames = {
 "Token de warp",
 "Linea de warp",
 "Compañero",
-"Punto de partida",
-"Flip token",
-"Coin",
-"Teleporter",
+"Punto de inicio",
+"Token de volteo",
+"Moneda",
+"Teleportador",
 
 }
 
@@ -691,7 +695,7 @@ subtoolnames = {
 [16] = {"Rosa", "Amarillo", "Rojo", "Verde", "Azul", "Azul claro", "Al azar"},
 [17] = {"Mirar derecha", "Mirar izquierda"},
 [18] = {},
-[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
+[19] = {"Moneda sola", "Moneda de 10", "Moneda de 20", "Moneda de 50", "Moneda de 100"},
 [20] = {},
 
 }
@@ -942,8 +946,8 @@ el boton derecho al presionar Shift en ellas.
 En el lado derecho de la pantalla, encontraras muchos botones y opciones. Los
 botones superiores se relacionan a el nivel entero, los botones inferiores (debajo
 de opciones de habitación) son específicos a la habitación actual. Para mas
-información sobre esos botones, referir a las paginas de ayuda respectivas, donde
-están disponibles.
+información sobre esos botones, referir a las paginas de ayuda respectivas, si
+disponibles.
 
 Carpeta de niveles\h#
 
@@ -962,7 +966,7 @@ cont = [[
 Modos de poner tejas\wh#
 \C=
 
-Ved soporta tres modos diferentes para poner tejas.
+Ved soporta tres modos diferentes para dibujar tejas.
 
      Modo automático\h#0
 
@@ -1031,11 +1035,11 @@ limite de veinte trinkets en un nivel.
 La herramienta de checkpoint se usa para poner checkpoints.
 
 \5
-   Plataforma desapareciendo\h#
+   Plataforma desvaneciente\h#
 
 
-La herramienta de plataforma desapareciendo se usa para poner plataformas que
-desaparecen.
+La herramienta de plataforma desvaneciente se usa para poner plataformas
+que desaparecen.
 
 \6
    Transportador\h#
@@ -1117,38 +1121,39 @@ La herramienta de punto de comienzo se usa para poner el punto de comienzo.
 },
 {
 splitid = "040_Script_editor",
-subj = "Script editor",
+subj = "Editor de scripts",
 imgs = {},
 cont = [[
-Script editor\wh#
+Editor de scripts\wh#
 \C=
 
-With the script editor, you can manage and edit scripts in your level.
+Con el editor de scripts, puedes gestionar y editar scripts en tu nivel.
 
 
-Flag names\h#
+Nombres de flags\h#
 
-For convenience and script readability, it is possible to use flag names instead
-of numbers. When you use a name instead of a number, a number will automatically
-be associated with that name, in the background. It is also possible to choose
-which number to use for which flag name.
+Por conveniencia y legibilidad de los scripts, es posible usar nombres de flags
+en vez de números. Cuando use un nombre en vez de un número, un número se
+asociara automaticamente con ese nombre, en el fondo. Tambien es posible elegir
+que número usar para cual nombre de flag.
 
-Internal scripting mode\h#
+Modo de script interno\h#
 
-To use internal scripting in Ved, you can enable internal scripting mode in the
-editor, to handle all commands in that script as internal scripting. See
-Int.sc mode¤ for more information about internal scripting mode. For more\wl
-information about internal scripting, check the internal scripting reference.
+Para usar scripts internos en Ved, puedes habilitar el modo de scripting interno
+en el editor, para encargarse de todos los comandos en ese script como
+internos. Mire Int.sc mode¤ para mas informació sobre el modo de scripting\w|
+interno. Para mas información sobre scripting interno, mire la referencia de
+scripting interno.
 
-Splitting scripts\h#
+Dividiendo scripts\h#
 
-It is possible to split a script in two scripts with the script editor. After
-putting the text cursor on the first line you want to be in the new script, click
-the Split button and enter the name of the new script. The lines before the cursor
-will remain in the original script, the lines from the cursor onward will be moved
-to the new script.
+Es posible dividir un script en dos con el editor. Despues de poner el cursor
+de texto en la primera linea que quieres que este en el nuevo script, clickee
+el boton de Dividir y entre el nombre del nuevo script. Las lineas antes del cursor
+permaneceran en el script original, las lineas despues del cursor seran movidas
+al nuevo script.
 
-Jumping to scripts\h#
+Saltar a scripts\h#
 
 On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
 is possible to jump to the given script by clicking the "Go to" button when the

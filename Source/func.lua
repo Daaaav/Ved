@@ -3284,4 +3284,47 @@ function next_key(t, c)
 	return lowscore
 end
 
+function draw_script_warn_light(id, x, y, active)
+	if active then
+		love.graphics.setColor(255,224,0,255)
+	else
+		love.graphics.setColor(12,12,12,255)
+	end
+
+	local light = script_warn_lights[id]
+
+	love.graphics.draw(light.img, x, y)
+
+	if active and mouseon(x, y, light.img:getDimensions()) then
+		local box_w = math.max(
+			256,
+			font8:getWidth(L[light.lang_title]) + 16
+		)
+		local expl_w = box_w - 24 - light.img_hq:getWidth()
+		local _, lines = font8:getWrap(L[light.lang_expl], expl_w)
+		if type(lines) == "table" then
+			lines = #lines
+		end
+		local box_h = 32+math.max(
+			light.img_hq:getHeight(),
+			lines*font8:getHeight()
+		)
+		local box_x, box_y = x+light.img:getWidth()-box_w, y+light.img:getHeight()+1
+
+		love.graphics.setColor(64,64,64,128)
+		love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
+		love.graphics.setColor(255,224,0,255)
+		love.graphics.print(L[light.lang_title], box_x+8, box_y+8)
+		love.graphics.draw(light.img_hq, box_x+8, box_y+24)
+		love.graphics.setColor(255,255,255,255)
+		love.graphics.printf(
+			L[light.lang_expl],
+			box_x + light.img_hq:getWidth() + 16,
+			box_y + 24,
+			expl_w,
+			"left"
+		)
+	end
+end
+
 hook("func")

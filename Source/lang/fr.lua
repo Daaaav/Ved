@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2020-09-13 02:37:48 (CEST)
+--- Last converted: 2020-11-17 01:21:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -141,7 +141,11 @@ TEXTSIZEL = "Taille du texte: Grand",
 INSERT = "Insérer",
 HELP = "Aide",
 INTSCRWARNING_NOLOADSCRIPT = "Script de chargement requis !",
-INTSCRWARNING_BOXED = "Réf. directe à l'invite de commande du script !\n\n",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_BOXED = "Réf. directe à l'invite de commande du script !",
+INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
+INTSCRWARNING_NAME = "Unsuitable script name!",
+INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
 COLUMN = "Colonne : ",
 
 BTN_OK = "OK",

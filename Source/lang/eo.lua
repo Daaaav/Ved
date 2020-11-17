@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2020-09-13 02:37:48 (CEST)
+--- Last converted: 2020-11-17 01:21:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -151,7 +151,11 @@ TEXTSIZEL = "Tekstgrando: L",
 INSERT = "Enmeti",
 HELP = "Helpo",
 INTSCRWARNING_NOLOADSCRIPT = "Ŝargskripto bezonata!",
-INTSCRWARNING_BOXED = "Refrencita rekte de skriptkvadrato/komputilo!\n\n",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_BOXED = "Refrencita rekte de skriptkvadrato/komputilo!",
+INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
+INTSCRWARNING_NAME = "Unsuitable script name!",
+INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
 COLUMN = "Kolumno: ",
 
 BTN_OK = "Bone",
@@ -604,13 +608,13 @@ MOVELINEUP = "Movi linion supren",
 MOVELINEDOWN = "Movi linion malsupren",
 DUPLICATELINE = "Duobligi linion",
 
-WHEREPLACEPLAYER = "Where do you want to start?",
-YOUAREPLAYTESTING = "You are currently playtesting",
-LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
-ALREADYPLAYTESTING = "You're already playtesting!",
-PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
-VVVVVVFILE = "Please select the file named '$1'.",
-CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
+WHEREPLACEPLAYER = "Kie vi volas komenci?",
+YOUAREPLAYTESTING = "Vi nuntempe ludtestas",
+LOCATEVVVVVV = "Elektu vian plenumeblan dosieron de $1", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "Vi jam ludtestas!",
+PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti en $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "Bonvolu elekti la dosieron nomitan '$1'.",
+CHANGINGPATHAFTERASK = "La dosierindiko de VVVVVV ŝanĝiĝis post premi 'ludi' kaj ne plu validas!",
 
 }
 

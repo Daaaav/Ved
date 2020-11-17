@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2020-09-13 02:37:49 (CEST)
+--- Last converted: 2020-11-17 01:21:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -139,7 +139,11 @@ TEXTSIZEL = "Grootte: groot",
 INSERT = "Invoegen",
 HELP = "Help",
 INTSCRWARNING_NOLOADSCRIPT = "Laad-script nodig!",
-INTSCRWARNING_BOXED = "Rechtstreekse scriptvak-/ terminal- verwĳzing!\n\n",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_BOXED = "Rechtstreekse scriptvak-/terminalverwĳzing!",
+INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
+INTSCRWARNING_NAME = "Unsuitable script name!",
+INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
 COLUMN = "Kolom: ",
 
 BTN_OK = "OK",

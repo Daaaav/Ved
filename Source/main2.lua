@@ -322,6 +322,27 @@ function love.load()
 	smalllevel = love.graphics.newImage("images/smalllevel.png")
 	smallunknown = love.graphics.newImage("images/smallunknown.png")
 
+	script_warn_lights = {
+		loadscript_required = {
+			img = love.graphics.newImage("images/warn_loadscript_required.png"),
+			img_hq = love.graphics.newImage("images/warn_loadscript_required_hq.png"),
+			lang_title = "INTSCRWARNING_NOLOADSCRIPT",
+			lang_expl = "INTSCRWARNING_NOLOADSCRIPT_EXPL",
+		},
+		direct_reference = {
+			img = love.graphics.newImage("images/warn_direct_reference.png"),
+			img_hq = love.graphics.newImage("images/warn_direct_reference_hq.png"),
+			lang_title = "INTSCRWARNING_BOXED",
+			lang_expl = "INTSCRWARNING_BOXED_EXPL",
+		},
+		name = {
+			img = love.graphics.newImage("images/warn_name.png"),
+			img_hq = love.graphics.newImage("images/warn_name_hq.png"),
+			lang_title = "INTSCRWARNING_NAME",
+			lang_expl = "INTSCRWARNING_NAME_EXPL",
+		},
+	}
+
 	asset_pppppp = love.graphics.newImage("images/asset_pppppp.png")
 	asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png")
 	asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png")
