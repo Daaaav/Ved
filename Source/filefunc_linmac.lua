@@ -1,6 +1,9 @@
 userprofile = os.getenv("HOME")
 
 local ffi = require("ffi")
+
+local filefunc_ver = ...
+
 local libC
 
 local standardvvvvvvfolder
@@ -8,11 +11,11 @@ local standardvvvvvvfolder
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin02.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin" .. filefunc_ver .. ".so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac02.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac" .. filefunc_ver .. ".so")
 end
 
 ffi.cdef([[
