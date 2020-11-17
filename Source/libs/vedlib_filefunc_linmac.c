@@ -3,14 +3,15 @@ Version 02
 
 Typical usage (in C):
 
-if (!ved_opendir(".", ".vvvvvv", false, NULL))
+ved_directoryiter diriter;
+if (!ved_opendir(&diriter, ".", ".vvvvvv", false, NULL))
 	return; // or error
 ved_filedata filedata;
-while (ved_nextfile(&filedata))
+while (ved_nextfile(&diriter, &filedata))
 	printf("File %s, isdir %d, edited %lld\n",
 		filedata.name, filedata.isdir, filedata.lastmodified
 	);
-ved_closedir();
+ved_closedir(&diriter);
 */
 
 #include <dirent.h>
@@ -28,13 +29,16 @@ typedef struct _ved_filedata
 	long long filesize;
 } ved_filedata;
 
+typedef struct _ved_directoryiter
+{
+	DIR *dir;
+	char path[256];
+	size_t len_prefix;
+	bool filter_active;
+	char filter[8];
+	bool show_hidden;
+} ved_directoryiter;
 
-DIR *g_dir;
-char g_path[256];
-size_t g_len_prefix;
-bool g_filter_active;
-char g_filter[8];
-bool g_show_hidden;
 
 const char *(*ved_L)(char *key);
 
@@ -51,31 +55,31 @@ void init_lang(const char *(*l)(char *key))
 /*
  * Returns true if filename ends in the filter text (like ".vvvvvv" or ".png")
  */
-bool is_filtered_file(struct dirent *dirent)
+bool is_filtered_file(ved_directoryiter *diriter, struct dirent *dirent)
 {
-	if (strcmp(g_filter, "/") == 0)
+	if (strcmp(diriter->filter, "/") == 0)
 		/* If this were a directory, we wouldn't be calling this function. */
 		return false;
-	size_t len_filter = strlen(g_filter);
+	size_t len_filter = strlen(diriter->filter);
 	size_t len_name = strlen(dirent->d_name);
 	return len_name >= len_filter
-		&& strcmp(dirent->d_name + len_name - len_filter, g_filter) == 0;
+		&& strcmp(dirent->d_name + len_name - len_filter, diriter->filter) == 0;
 }
 
 /*
  * Returns true if we should list this file - it's a directory, or is filtered
  */
-bool is_listable(struct dirent *dirent, bool isdir)
+bool is_listable(ved_directoryiter *diriter, struct dirent *dirent, bool isdir)
 {
-	if (!g_show_hidden && dirent->d_name[0] == '.')
+	if (!diriter->show_hidden && dirent->d_name[0] == '.')
 		return false;
-	if (g_show_hidden && (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0))
+	if (diriter->show_hidden && (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0))
 		return false;
 #if defined(__APPLE__)
-	if (g_show_hidden && strcmp(dirent->d_name, ".DS_Store") == 0)
+	if (diriter->show_hidden && strcmp(dirent->d_name, ".DS_Store") == 0)
 		return false;
 #endif
-	return isdir || !g_filter_active || is_filtered_file(dirent);
+	return isdir || !diriter->filter_active || is_filtered_file(diriter, dirent);
 }
 
 /*
@@ -87,23 +91,23 @@ bool is_listable(struct dirent *dirent, bool isdir)
  * Returns true if successful. If unsuccessful, and errmsg is not NULL, errmsg
  * will point to an error string.
  */
-bool ved_opendir(const char *path, const char *filter, bool show_hidden, const char **errmsg)
+bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filter, bool show_hidden, const char **errmsg)
 {
-	g_filter_active = filter != NULL && filter[0] != '\0';
-	strncpy(g_filter, filter, 7);
-	g_filter[7] = '\0';
-	g_show_hidden = show_hidden;
-	g_len_prefix = strlen(path);
-	if (g_len_prefix > 247 || path[g_len_prefix-1] != '/')
+	diriter->filter_active = filter != NULL && filter[0] != '\0';
+	strncpy(diriter->filter, filter, 7);
+	diriter->filter[7] = '\0';
+	diriter->show_hidden = show_hidden;
+	diriter->len_prefix = strlen(path);
+	if (diriter->len_prefix > 247 || path[diriter->len_prefix-1] != '/')
 	{
 		if (errmsg != NULL)
 			*errmsg = ved_L("PATHINVALID");
 		return false;
 	}
-	strcpy(g_path, path);
-	g_path[255] = '\0';
-	g_dir = opendir(path);
-	if (!(bool)g_dir)
+	strcpy(diriter->path, path);
+	diriter->path[255] = '\0';
+	diriter->dir = opendir(path);
+	if (!(bool)diriter->dir)
 	{
 		if (errmsg != NULL)
 			*errmsg = strerror(errno);
@@ -116,18 +120,18 @@ bool ved_opendir(const char *path, const char *filter, bool show_hidden, const c
  * Stores data about the next file in filedata.
  * Returns false if there is no file anymore.
  */
-bool ved_nextfile(ved_filedata *filedata)
+bool ved_nextfile(ved_directoryiter *diriter, ved_filedata *filedata)
 {
 	struct dirent *dirent;
 	struct stat dstat;
 	bool isdir;
 	do /* normally once */
 	{
-		dirent = readdir(g_dir);
+		dirent = readdir(diriter->dir);
 		if (dirent == NULL)
 			return false;
-		strncpy(g_path+g_len_prefix, dirent->d_name, 255-g_len_prefix);
-		if (stat(g_path, &dstat) == -1)
+		strncpy(diriter->path+diriter->len_prefix, dirent->d_name, 255-diriter->len_prefix);
+		if (stat(diriter->path, &dstat) == -1)
 		{
 			/* stat failed */
 			isdir = false;
@@ -138,7 +142,7 @@ bool ved_nextfile(ved_filedata *filedata)
 		{
 			isdir = S_ISDIR(dstat.st_mode);
 		}
-	} while (!is_listable(dirent, isdir));
+	} while (!is_listable(diriter, dirent, isdir));
 
 	strncpy(filedata->name, dirent->d_name, 255);
 	filedata->name[255] = '\0';
@@ -152,9 +156,9 @@ bool ved_nextfile(ved_filedata *filedata)
 /*
  * Simply closes the DIR we had open
  */
-void ved_closedir(void)
+void ved_closedir(ved_directoryiter *diriter)
 {
-	closedir(g_dir);
+	closedir(diriter->dir);
 }
 
 /*
