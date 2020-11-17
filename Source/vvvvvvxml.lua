@@ -83,7 +83,7 @@ function loadlevel(path)
 
 	local x = {}
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
-	FClist = {}
+	local FClist = {}
 
 	local thisextra = {}
 
@@ -163,7 +163,7 @@ function loadlevel(path)
 
 	if failedtiles > 0 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
+		cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 	end
 
 	-- VCE put its extra things right here.
@@ -212,7 +212,7 @@ function loadlevel(path)
 
 					if failedtiles > 0 then
 						mycount.FC = mycount.FC + 1
-						cons_fc(langkeys(L_PLU.NOTALLTILESVALID_ALTSTATE, {failedtiles, st, ax, ay}))
+						cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID_ALTSTATE, {failedtiles, st, ax, ay}))
 					end
 				end
 			end
@@ -356,7 +356,7 @@ function loadlevel(path)
 					if not morethanonestartpoint then
 						morethanonestartpoint = true
 						mycount.FC = mycount.FC + 1
-						cons_fc(L.MORETHANONESTARTPOINT)
+						cons_fc(FClist, L.MORETHANONESTARTPOINT)
 					end
 					table.insert(duplicatestartpoints, entityid)
 				end
@@ -473,7 +473,7 @@ function loadlevel(path)
 			end
 
 			if oldFCcount < mycount.FC then
-				cons_fc(langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
+				cons_fc(FClist, langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
 			end
 		end
 
@@ -614,7 +614,7 @@ function loadlevel(path)
 
 		if oldFCcount < mycount.FC then
 			local co = not s.coords0 and 1 or 0
-			cons_fc(langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
+			cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
 		end
 
 		-- If you select a higher tilecol in space station and then go to another tileset, VVVVVV will still save the out-of-range tilecol.
@@ -660,7 +660,7 @@ function loadlevel(path)
 				else
 					-- We've seen this script before, that's not good
 					mycount.FC = mycount.FC + 1
-					cons_fc(langkeys(L.DUPLICATESCRIPT, {currentscript}))
+					cons_fc(FClist, langkeys(L.DUPLICATESCRIPT, {currentscript}))
 				end
 				allscripts[currentscript] = {}
 				sline = 1
@@ -671,7 +671,7 @@ function loadlevel(path)
 					sline = sline + 1
 				else
 					mycount.FC = mycount.FC + 1
-					cons_fc(langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
+					cons_fc(FClist, langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
 				end
 			end
 		end
@@ -683,24 +683,24 @@ function loadlevel(path)
 	-- As many of the integrity checks as possible here
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
+		cons_fc(FClist, langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
 		thismetadata.mapwidth = 1
 	end if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
+		cons_fc(FClist, langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
 	end if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), thislimit.mapwidth, thislimit.mapheight}))
+		cons_fc(FClist, langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), thislimit.mapwidth, thislimit.mapheight}))
 		thismetadata.mapwidth = math.min(thismetadata.mapwidth, thislimit.mapwidth)
 		thismetadata.mapheight = math.min(thismetadata.mapheight, thislimit.mapheight)
 	end if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
 		mycount.FC = mycount.FC + 1
-		cons_fc(L.LEVMUSICEMPTY)
+		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
 	end if thismetadata.target ~= "VCE" and n_levelmetadata ~= 400 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(L.NOT400ROOMS)
+		cons_fc(FClist, L.NOT400ROOMS)
 
 		--[[ TODO: Think about readding this later, after converting it to the 3D table
 		if #theselevelmetadata < 400 then
@@ -734,10 +734,10 @@ function loadlevel(path)
 		]]
 	end if numliteralnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
+		cons_fc(FClist, langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
 	end if numxmlnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
-		cons_fc(langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
+		cons_fc(FClist, langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
 	end
 
 	if mycount.FC ~= 0 then
