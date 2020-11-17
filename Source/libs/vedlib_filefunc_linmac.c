@@ -89,7 +89,7 @@ bool is_listable(struct dirent *dirent, bool isdir)
  */
 bool ved_opendir(const char *path, const char *filter, bool show_hidden, const char **errmsg)
 {
-	g_filter_active = strlen(filter) > 0;
+	g_filter_active = filter != NULL && filter[0] != '\0';
 	strncpy(g_filter, filter, 7);
 	g_filter[7] = '\0';
 	g_show_hidden = show_hidden;
