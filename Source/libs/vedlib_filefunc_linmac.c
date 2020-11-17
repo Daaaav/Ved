@@ -45,7 +45,7 @@ void init_lang(const char *(*l)(char *key))
 {
 	ved_L = l;
 
-	setlocale(LC_ALL, "");
+	setlocale(LC_MESSAGES, "");
 }
 
 /*
