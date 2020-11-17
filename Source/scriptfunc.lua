@@ -769,13 +769,17 @@ function scriptineditor(scriptnamearg, rvnum)
 	tostate(3)
 end
 
-function checkintscrloadscript(scriptname)
+function check_script_warnings(scriptname)
+	if scrwarncache_script == scriptname then -- cached script name is nil if not checked yet
+		return
+	end
 	entityuses, loadscriptuses, scriptuses = findscriptreferences(scriptname)
 
 	-- Warn in case no script is referring to this one.
-	intscrwarncache_warn_noloadscript = #loadscriptuses == 0
-	intscrwarncache_warn_boxed = #entityuses > 0
-	intscrwarncache_script = scriptname
+	scrwarncache_warn_noloadscript = #loadscriptuses == 0 -- only applies to internal scripts
+	scrwarncache_warn_boxed = #entityuses > 0 -- only applies to internal scripts
+	scrwarncache_warn_name = scriptname:match(".*[A-Z %(%),].*") ~= nil and #entityuses == 0
+	scrwarncache_script = scriptname
 end
 
 function findscriptreferences(argscriptname)

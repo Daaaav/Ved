@@ -16,10 +16,11 @@ function ui.load(...) -- any args you want/need
 	-- Little bit of caching
 	rememberflagnumber = -1
 
-	-- Make sure we don't keep checking for a load script when we can do it once.
-	intscrwarncache_script = nil
-	intscrwarncache_warn_noloadscript = nil
-	intscrwarncache_warn_boxed = nil
+	-- Make sure we don't keep checking for script warnings when we can do it once.
+	scrwarncache_script = nil
+	scrwarncache_warn_noloadscript = false
+	scrwarncache_warn_boxed = false
+	scrwarncache_warn_name = false
 
 	if oldstate ~= 3 then
 		scripthistorystack = {}

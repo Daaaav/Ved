@@ -137,12 +137,10 @@ function drawscripteditor()
 	love.graphics.setScissor()
 
 	-- Any warnings?
-	if internalscript and intscrwarncache_script ~= scriptname then -- is nil if not checked yet
-		checkintscrloadscript(scriptname)
-	end
-	draw_script_warn_light("loadscript_required", love.graphics.getWidth()-168, 4, internalscript and intscrwarncache_warn_noloadscript)
-	draw_script_warn_light("direct_reference", love.graphics.getWidth()-168-28, 4, internalscript and intscrwarncache_warn_boxed)
-	--draw_script_warn_light("name", love.graphics.getWidth()-168-(28*2), 4, false)
+	check_script_warnings(scriptname)
+	draw_script_warn_light("loadscript_required", love.graphics.getWidth()-168, 4, internalscript and scrwarncache_warn_noloadscript)
+	draw_script_warn_light("direct_reference", love.graphics.getWidth()-168-28, 4, internalscript and scrwarncache_warn_boxed)
+	draw_script_warn_light("name", love.graphics.getWidth()-168-(28*2), 4, scrwarncache_warn_name)
 
 	love.graphics.setColor(255,255,255,255)
 
