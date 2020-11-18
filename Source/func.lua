@@ -1849,8 +1849,8 @@ function triggernewlevel(width, height)
 	tostate(1)
 end
 
-function cons_fc(text)
-	table.insert(FClist, text)
+function cons_fc(list, text)
+	table.insert(list, text)
 	cons("[CHECK] " .. text)
 end
 
