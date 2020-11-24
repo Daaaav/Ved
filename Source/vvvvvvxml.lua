@@ -999,7 +999,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					.. "\" p5=\"" .. v.p5
 					.. "\" p6=\"" .. v.p6
 					.. "\"" .. extra_end_attrs .. ">" .. xmlspecialchars(data)
-					.. (thismetadata.target == "V" and "\n            " or "") .. "</edentity>\n"
+					.. "</edentity>\n"
 				)
 			end
 		end
@@ -1064,7 +1064,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				.. " t=\"17\""
 				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\""
 				.. (thismetadata.target == "VCE" and " intower=\"0\"" or "") .. ">" .. xmlspecialchars(mdedata)
-				.. (thismetadata.target == "V" and "\n            " or "") .. "</edentity>\n"
+				.. "</edentity>\n"
 			)
 		end
 
