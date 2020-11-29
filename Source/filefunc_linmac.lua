@@ -59,8 +59,13 @@ libC.init_lang(
 )
 
 
-buffer_filedata = ffi.new("ved_filedata")
-buffer_diriter = ffi.new("ved_directoryiter")
+local function new_filedata()
+	return ffi.new("ved_filedata")
+end
+
+local function new_diriter()
+	return ffi.new("ved_directoryiter")
+end
 
 
 
@@ -78,8 +83,10 @@ function listlevelfiles(directory)
 		else
 			prefix = dirs[currentdir_i] .. "/"
 		end
+		local buffer_diriter = new_diriter()
 		if libC.ved_opendir(buffer_diriter, directory .. "/".. prefix, ".vvvvvv", false, nil) then
 			t[dirs[currentdir_i]] = {}
+			local buffer_filedata = new_filedata()
 			while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 				current_name = ffi.string(buffer_filedata.name)
 				if buffer_filedata.isdir then
@@ -116,7 +123,9 @@ function listfiles_generic(directory, filter, show_hidden)
 	local files = {}
 
 	local errmsg = ffi.new("const char*[1]")
+	local buffer_diriter = new_diriter()
 	if libC.ved_opendir(buffer_diriter, directory .. "/", filter, show_hidden, errmsg) then
+		local buffer_filedata = new_filedata()
 		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 			table.insert(files,
 				{
