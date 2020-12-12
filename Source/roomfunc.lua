@@ -1921,27 +1921,36 @@ function autocorrectlines()
 			if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 				-- Horizontal
 				local startat, linelength
+				local insolid = true
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
 					if issolidforgravline(roomdata_get(roomx, roomy, altstate, bt, v.y%30), v.t) then
 						startat = bt+1
 						break
+					else
+						-- The control point tile is unsolid at least!
+						insolid = false
 					end
 				end
 				if startat == nil then
 					startat = -1
 				end
 
-				-- Now to see how long it should be!
-				for ft = startat+1, 40 do
-					if issolidforgravline(roomdata_get(roomx, roomy, altstate, ft, v.y%30), v.t) then
-						linelength = 8 * (ft-startat)
-						break
+				if insolid then
+					-- Lines inside walls are length -8
+					linelength = -8
+				else
+					-- Now to see how long it should be!
+					for ft = math.max(startat, 0), 40 do
+						if issolidforgravline(roomdata_get(roomx, roomy, altstate, ft, v.y%30), v.t) then
+							linelength = 8 * (ft-startat)
+							break
+						end
 					end
-				end
-				if linelength == nil then
-					linelength = 8 * (42-startat) - 8
+					if linelength == nil then
+						linelength = 8 * (42-startat) - 8
+					end
 				end
 
 				if entitydata[k].p2 ~= startat then
@@ -1952,6 +1961,7 @@ function autocorrectlines()
 			else
 				-- Vertical
 				local startat, linelength
+				local insolid = true
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
@@ -1959,22 +1969,30 @@ function autocorrectlines()
 					if issolidforgravline(roomdata_get(roomx, roomy, altstate, v.x%40, bt), v.t) then
 						startat = bt+1
 						break
+					else
+						-- The control point tile is unsolid at least!
+						insolid = false
 					end
 				end
 				if startat == nil then
 					startat = -1
 				end
 
-				-- Now to see how long it should be!
-				for ft = startat+1, 29 do
-					--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-					if issolidforgravline(roomdata_get(roomx, roomy, altstate, v.x%40, ft), v.t) then
-						linelength = 8 * (ft-startat)
-						break
+				if insolid then
+					-- Lines inside walls are length -8
+					linelength = -8
+				else
+					-- Now to see how long it should be!
+					for ft = math.max(startat, 0), 29 do
+						--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
+						if issolidforgravline(roomdata_get(roomx, roomy, altstate, v.x%40, ft), v.t) then
+							linelength = 8 * (ft-startat)
+							break
+						end
 					end
-				end
-				if linelength == nil then
-					linelength = 8 * (32-startat) - 8
+					if linelength == nil then
+						linelength = 8 * (32-startat) - 8
+					end
 				end
 
 				if entitydata[k].p2 ~= startat then
