@@ -677,13 +677,11 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		v6_setcol(4)
 		local spriteoffset = 1
 		local yoffset = 16
-		if metadata.target == "VCE" then
-			if v.p1 == 1 then
-				spriteoffset = 0
-				yoffset = 0
-			elseif v.p1 ~= 0 then
-				spriteoffset = v.p1
-			end
+		if v.p1 == 1 then
+			spriteoffset = 0
+			yoffset = 0
+		elseif v.p1 ~= 0 then
+			spriteoffset = v.p1
 		end
 		drawentitysprite(16 + spriteoffset, x, y + yoffset, cs)
 		love.graphics.setColor(255, 255, 255)

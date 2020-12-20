@@ -730,18 +730,6 @@ function t(cond, thens, elses)
 	end
 end
 
-function return_value()
-	local dm = os.date("%d%m")
-	if tonumber(dm:sub(1,1)) == 0 and tonumber(dm:sub(2,-1)) == 104 then
-		for value = 1, 2 do
-			subtoolimgs[12][value] = st("12_" .. value) --toolimg[12];
-		end
-		subtoolnames[12] = table.copy(subtoolnames[5])
-	end
-
-	return #subtoolnames
-end
-
 function spitoutarrays()
 	love.system.setClipboardText([[				blocks =
 					{
@@ -907,8 +895,6 @@ function thingk()
 			helpeditable = true
 		end
 	end)
-
-	return return_value()
 end
 
 function switchtileset()

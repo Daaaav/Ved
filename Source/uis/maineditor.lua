@@ -582,7 +582,7 @@ function ui.keypressed(key)
 			pasteroom()
 		elseif key == "z" then
 			-- 3x3 brush
-			if table.contains({1,2,3,5,7,8,9,10,19}, selectedtool) then
+			if table.contains({1,2,3,5,7,8,9,10,12,19}, selectedtool) then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
 

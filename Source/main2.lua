@@ -394,7 +394,7 @@ function love.load()
 	subtoolimgs[9] = {st("9_2"), st("9_1"), st("9_3"), st("9_4")}
 	subtoolimgs[10] = {st("10_1"), st("10_2")}
 	subtoolimgs[11] = {}
-	subtoolimgs[12] = {}
+	subtoolimgs[12] = {st("12_1"), st("12_2")}
 	subtoolimgs[13] = {}
 	subtoolimgs[14] = {st("14_1"), st("14_2")}
 	subtoolimgs[15] = {}
@@ -449,6 +449,7 @@ function love.load()
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]
 	subtoolnames[9] = subtoolnames[8]
+	subtoolnames[12] = table.copy(subtoolnames[5])
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
@@ -880,6 +881,9 @@ function love.textinput(char)
 	if takinginput and not dialog.is_open() then
 		-- Ugly, but at least won't need another global variable that appears here and there
 		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
+		elseif (state == 1) and holdingzvx then
+			-- TODO Remove at least this branch when tool overhaul, needed for upside down terminal
+			-- Just for grepping if holdingzvx doesn't do: selectedtool selectedsubtool
 		elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
 		-- Pipes are newlines in scripts (on PC at least)
 		elseif (state == 3) and char == "|" then
@@ -1503,7 +1507,7 @@ function love.keyreleased(key)
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
 		if selectedtool == 1 or selectedtool == 2
 		or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4)
-		or ((selectedtool == 5 or selectedtool == 10) and oldzxsubtool <= 2)
+		or ((selectedtool == 5 or selectedtool == 10 or selectedtool == 12) and oldzxsubtool <= 2)
 		or (selectedtool == 19 and oldzxsubtool <= 5) then -- this entire system will be improved later
 			selectedsubtool[selectedtool] = oldzxsubtool
 		end

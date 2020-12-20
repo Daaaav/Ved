@@ -694,7 +694,12 @@ function drawmaineditor()
 				endeditingroomtext()
 			end
 
-			insert_entity(atx, aty, 18)
+			if selectedsubtool[12] == 2 then
+				-- Upside down
+				insert_entity(atx, aty, 18, 1)
+			else
+				insert_entity(atx, aty, 18)
+			end
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 13 then
 			-- Script box
@@ -1634,7 +1639,7 @@ function drawmaineditor()
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
-			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 19) and k >= 2 and k <= 9 then
+			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 12 or selectedtool == 19) and k >= 2 and k <= 9 then
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
