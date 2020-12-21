@@ -1,4 +1,4 @@
-toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P", "s1", "s2", "s3"}
+toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P", "", "", ""}
 
 tilesetnames =
 	{

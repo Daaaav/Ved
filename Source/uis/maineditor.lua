@@ -663,21 +663,12 @@ function ui.keypressed(key)
 		tilespicker = false
 	else
 		for k,v in pairs(toolshortcuts) do
-			local shiftdown = false
-			if metadata.target == "VCE" then
-				shiftdown = love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift")
-			end
 			if key == string.lower(v) then
-				if (selectedtool == k and k ~= 13 and k ~= 14) and (shiftdown and (k ~= 1 and k ~= 2 and k ~= 3)) then
+				if selectedtool == k and k ~= 13 and k ~= 14 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1
 				elseif not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-					-- Weird hack to make shift + number tools possible
-					if shiftdown and (k == 1 or k == 2 or k == 3) then
-						selectedtool = k + 17
-					else
-						selectedtool = k
-					end
+					selectedtool = k
 					updatewindowicon()
 				end
 				toolscroll()
