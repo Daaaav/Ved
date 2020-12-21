@@ -194,6 +194,14 @@ function ui.draw()
 		hoverdraw(sound_stop, 32, cura_y, 16, 16)
 		hoverdraw(sound_rewind, 48, cura_y, 16, 16)
 		local elapsed = current_audio:tell()
+		local duration
+		if love_version_meets(10) then
+			duration = current_audio:getDuration()
+		end
+		if duration ~= nil and duration ~= 0 then
+			-- LÖVE can sometimes fail to reset the time to 0 when looping if we started playing close to the end
+			elapsed = elapsed % duration
+		end
 		ved_print("[" .. fixdig(currentmusic, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(16, cura_y, 16, 16) then
@@ -213,10 +221,6 @@ function ui.draw()
 				current_audio:seek(0)
 				mousepressed = true
 			end
-		end
-		local duration
-		if love_version_meets(10) then
-			duration = current_audio:getDuration()
 		end
 		love.graphics.setColor(128,128,128)
 		love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
