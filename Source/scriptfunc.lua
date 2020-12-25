@@ -671,10 +671,10 @@ function processflaglabelsreverse()
 					break
 				end
 
-				for vlag = 0, limit.flags-1 do
-					if vedmetadata.flaglabel[vlag] == partss[2] then
-						useflag = vlag
-						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. vlag)
+				for flag = 0, limit.flags-1 do
+					if vedmetadata.flaglabel[flag] == partss[2] then
+						useflag = flag
+						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. flag)
 						break
 					end
 				end
@@ -682,13 +682,13 @@ function processflaglabelsreverse()
 				if useflag == -1 then
 					-- This flag name is new! Find a flag number to assign it to.
 					cons("Flag name " .. partss[2] .. " is new!")
-					for vlag = 0, limit.flags-1 do
-						if not usedflags[vlag] then
+					for flag = 0, limit.flags-1 do
+						if not usedflags[flag] then
 							-- Ah, here we got one!
-							useflag = vlag
-							usedflags[vlag] = true
-							vedmetadata.flaglabel[vlag] = partss[2]
-							cons("Associated flag #" .. vlag .. " with this")
+							useflag = flag
+							usedflags[flag] = true
+							vedmetadata.flaglabel[flag] = partss[2]
+							cons("Associated flag #" .. flag .. " with this")
 							break
 						end
 					end

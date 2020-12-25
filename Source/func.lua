@@ -722,14 +722,6 @@ function revcycle(var, themax, themin)
 	end
 end
 
-function t(cond, thens, elses)
-	if cond then
-		return thens
-	else
-		return elses
-	end
-end
-
 function spitoutarrays()
 	love.system.setClipboardText([[				blocks =
 					{
@@ -762,18 +754,6 @@ function fixdig(number, dig, filler)
 
 	if string.len(tostring(number)) > dig then
 		return string.rep("9", dig)
-	elseif string.len(tostring(number)) == dig then
-		return tostring(number)
-	else
-		return string.rep(filler, dig-string.len(tostring(number))) .. tostring(number)
-	end
-end
-
-function fixdige(number, dig, filler, highfiller)
-	if filler == nil then filler = "0" end
-
-	if string.len(tostring(number)) > dig then
-		return string.rep(highfiller, dig)
 	elseif string.len(tostring(number)) == dig then
 		return tostring(number)
 	else
@@ -1184,7 +1164,10 @@ function saveroomname()
 	finish_undo("ROOMNAME")
 end
 
-function endeditingroomtext(donotmakethisnil)
+function endeditingroomtext(currently_targetting)
+	-- currently_targetting may be specified if input is being ended BECAUSE we're going to
+	-- modify an entity, to bypass the entity getting deleted now for having an empty data.
+	-- Alternatively we could gray out the options, it's only used in entity right click menus.
 	if entitydata[editingroomtext].t ~= 17 and input:find("|") then
 		dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 		return
@@ -1194,7 +1177,7 @@ function endeditingroomtext(donotmakethisnil)
 	stopinput()
 	if entitydata[editingroomtext] == nil then
 		dialog.create(L.EDITINGROOMTEXTNIL)
-	elseif input ~= "" or editingroomtext == donotmakethisnil then
+	elseif input ~= "" or editingroomtext == currently_targetting then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
 		if makescriptroomtext and scripts[input] == nil then
@@ -1213,11 +1196,11 @@ function endeditingroomtext(donotmakethisnil)
 						returnusedflags(usedflags, outofrangeflags)
 
 						local useflag = -1
-						for vlag = 0, limit.flags-1 do
-							if not usedflags[vlag] then
-								useflag = vlag
-								usedflags[vlag] = true
-								--vedmetadata.flaglabel[vlag] = partss[2]
+						for flag = 0, limit.flags-1 do
+							if not usedflags[flag] then
+								useflag = flag
+								usedflags[flag] = true
+								--vedmetadata.flaglabel[flag] = partss[2]
 								break
 							end
 						end
@@ -1263,7 +1246,16 @@ function endeditingroomtext(donotmakethisnil)
 			entityplaced(editingroomtext)
 			newroomtext = false
 		else
-			table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingroomtext, changedentitydata = {{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}}})
+			table.insert(undobuffer,
+				{
+					undotype = "changeentity",
+					rx = roomx, ry = roomy,
+					entid = editingroomtext,
+					changedentitydata = {
+						{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}
+					}
+				}
+			)
 		end
 	else
 		removeentity(editingroomtext, nil, true)
@@ -2093,12 +2085,10 @@ function colorsetting(label, pos, mycolor)
 end
 
 function tonotepad()
-	if vedmetadata ~= false then
-		tostate(15, nil, {vedmetadata.notes, true})
-	else
+	if vedmetadata == false then
 		vedmetadata = createmde()
-		tostate(15, nil, {vedmetadata.notes, true})
 	end
+	tostate(15, nil, {vedmetadata.notes, true})
 end
 
 function s_nieuw(t)
