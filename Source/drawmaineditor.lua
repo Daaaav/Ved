@@ -49,119 +49,7 @@ function drawmaineditor()
 		if s.psmallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
 			-- Discard anything we're doing with the mouse in the room, we're now on the toolbar
 		elseif tilespicker then
-			if true and tilescreator then
-				-- This is the one where you have to click 30 tiles individually.
-				local tsw = tilesets[tilesetnames[usedtilesets.creator]].tileswidth
-				if not mousepressed then
-					if creatorstep == 1 then
-						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*tsw)+atx
-						cb[creatorsubstep] = (aty*tsw)+atx
-					elseif creatorstep == 2 then
-						cons("Background tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*tsw)+atx
-						ca[creatorsubstep] = (aty*tsw)+atx
-					elseif creatorstep == 3 then
-						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*tsw)+atx
-						cs[creatorsubstep] = (aty*tsw)+atx
-					end
-
-					if creatorsubstep == 30 then
-						creatorstep = creatorstep + 1
-						cons("Next: step " .. creatorstep)
-						selectedtool = creatorstep
-
-						creatorsubstep = 1
-					else
-						creatorsubstep = creatorsubstep + 1
-					end
-
-					if creatorstep == 4 then
-						spitoutarrays()
-						cons("*** ARRAYS COPIED TO CLIPBOARD ***")
-						tilescreator = false
-					end
-
-					mousepressed = true
-				end
-			elseif tilescreator then
-				-- Faster one.
-				local tsw = tilesets[tilesetnames[usedtilesets.creator]].tileswidth
-				if not mousepressed then
-					if creatorstep == 1 then
-						cons("Wall tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						--tilesetblocks.creator.colors.creator.blocks[creatorsubstep] = (aty*tsw)+atx
-
-						for yplus = 0, 4 do
-							for xplus = 0, 2 do
-								if (aty*tsw)+atx == 0 then
-									cb[creatorsubstep+(6*yplus)+xplus] = 0
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
-								else
-									cb[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-								end
-							end
-						end
-					elseif creatorstep == 2 then
-						cons("Background tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						--tilesetblocks.creator.colors.creator.background[creatorsubstep] = (aty*tsw)+atx
-
-						for yplus = 0, 4 do
-							for xplus = 0, 2 do
-								if (aty*tsw)+atx == 0 then
-									ca[creatorsubstep+(6*yplus)+xplus] = 0
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
-								else
-									ca[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-								end
-							end
-						end
-					elseif creatorstep == 3 then
-						cons("Spike tile " .. creatorsubstep .. ": " .. (aty*tsw)+atx)
-
-						--tilesetblocks.creator.colors.creator.spikes[creatorsubstep] = (aty*tsw)+atx
-
-						for yplus = 0, 4 do
-							for xplus = 0, 2 do
-								if (aty*tsw)+atx == 0 then
-									cs[creatorsubstep+(6*yplus)+xplus] = 0
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = 0
-								else
-									cs[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-									tilesetblocks.creator.colors.creator.blocks[creatorsubstep+(6*yplus)+xplus] = (aty*tsw)+atx + (tsw*yplus) + xplus
-								end
-							end
-						end
-					end
-
-					if creatorsubstep == 4 then
-						creatorstep = creatorstep + 1
-						cons("Next: step " .. creatorstep)
-						selectedtool = creatorstep
-
-						creatorsubstep = 1
-					else
-						creatorsubstep = creatorsubstep + 3
-					end
-
-					if creatorstep == 4 then
-						spitoutarrays()
-						cons("*** ARRAYS COPIED TO CLIPBOARD ***")
-						tilescreator = false
-					end
-
-					mousepressed = true
-				end
-
-			elseif levelmetadata_get(roomx, roomy).directmode == 1 then
+			if levelmetadata_get(roomx, roomy).directmode == 1 then
 				if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and not mousepressed and customsizemode ~= 0 then
 					-- You can also make a stamp from the tileset
 					if customsizemode ~= 0 and customsizemode ~= 2 then
@@ -959,7 +847,7 @@ function drawmaineditor()
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and not tilescreator and levelmetadata_get(roomx, roomy).directmode == 1 then
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
 		local atx, aty = getcursor()
 
 		if atx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth

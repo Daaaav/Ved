@@ -722,33 +722,6 @@ function revcycle(var, themax, themin)
 	end
 end
 
-function spitoutarrays()
-	love.system.setClipboardText([[				blocks =
-					{
-					]] .. fixdig(cb[1], 4, " ") .. [[, ]] .. fixdig(cb[2], 4, " ") .. [[, ]] .. fixdig(cb[3], 4, " ") .. [[, ]] .. fixdig(cb[4], 4, " ") .. [[, ]] .. fixdig(cb[5], 4, " ") .. [[, ]] .. fixdig(cb[6], 4, " ") .. [[,
-					]] .. fixdig(cb[7], 4, " ") .. [[, ]] .. fixdig(cb[8], 4, " ") .. [[, ]] .. fixdig(cb[9], 4, " ") .. [[, ]] .. fixdig(cb[10], 4, " ") .. [[, ]] .. fixdig(cb[11], 4, " ") .. [[, ]] .. fixdig(cb[12], 4, " ") .. [[,
-					]] .. fixdig(cb[13], 4, " ") .. [[, ]] .. fixdig(cb[14], 4, " ") .. [[, ]] .. fixdig(cb[15], 4, " ") .. [[, ]] .. fixdig(cb[16], 4, " ") .. [[, ]] .. fixdig(cb[17], 4, " ") .. [[, ]] .. fixdig(cb[18], 4, " ") .. [[,
-					]] .. fixdig(cb[19], 4, " ") .. [[, ]] .. fixdig(cb[20], 4, " ") .. [[, ]] .. fixdig(cb[21], 4, " ") .. [[, ]] .. fixdig(cb[22], 4, " ") .. [[, ]] .. fixdig(cb[23], 4, " ") .. [[, ]] .. fixdig(cb[24], 4, " ") .. [[,
-					]] .. fixdig(cb[25], 4, " ") .. [[, ]] .. fixdig(cb[26], 4, " ") .. [[, ]] .. fixdig(cb[27], 4, " ") .. [[, ]] .. fixdig(cb[28], 4, " ") .. [[, ]] .. fixdig(cb[29], 4, " ") .. [[, ]] .. fixdig(cb[30], 4, " ") .. [[,
-					},
-				background =
-					{
-					]] .. fixdig(ca[1], 4, " ") .. [[, ]] .. fixdig(ca[2], 4, " ") .. [[, ]] .. fixdig(ca[3], 4, " ") .. [[, ]] .. fixdig(ca[4], 4, " ") .. [[, ]] .. fixdig(ca[5], 4, " ") .. [[, ]] .. fixdig(ca[6], 4, " ") .. [[,
-					]] .. fixdig(ca[7], 4, " ") .. [[, ]] .. fixdig(ca[8], 4, " ") .. [[, ]] .. fixdig(ca[9], 4, " ") .. [[, ]] .. fixdig(ca[10], 4, " ") .. [[, ]] .. fixdig(ca[11], 4, " ") .. [[, ]] .. fixdig(ca[12], 4, " ") .. [[,
-					]] .. fixdig(ca[13], 4, " ") .. [[, ]] .. fixdig(ca[14], 4, " ") .. [[, ]] .. fixdig(ca[15], 4, " ") .. [[, ]] .. fixdig(ca[16], 4, " ") .. [[, ]] .. fixdig(ca[17], 4, " ") .. [[, ]] .. fixdig(ca[18], 4, " ") .. [[,
-					]] .. fixdig(ca[19], 4, " ") .. [[, ]] .. fixdig(ca[20], 4, " ") .. [[, ]] .. fixdig(ca[21], 4, " ") .. [[, ]] .. fixdig(ca[22], 4, " ") .. [[, ]] .. fixdig(ca[23], 4, " ") .. [[, ]] .. fixdig(ca[24], 4, " ") .. [[,
-					]] .. fixdig(ca[25], 4, " ") .. [[, ]] .. fixdig(ca[26], 4, " ") .. [[, ]] .. fixdig(ca[27], 4, " ") .. [[, ]] .. fixdig(ca[28], 4, " ") .. [[, ]] .. fixdig(ca[29], 4, " ") .. [[, ]] .. fixdig(ca[30], 4, " ") .. [[,
-					},
-				spikes =
-					{
-					]] .. fixdig(cs[1], 4, " ") .. [[, ]] .. fixdig(cs[2], 4, " ") .. [[, ]] .. fixdig(cs[3], 4, " ") .. [[, ]] .. fixdig(cs[4], 4, " ") .. [[, ]] .. fixdig(cs[5], 4, " ") .. [[, ]] .. fixdig(cs[6], 4, " ") .. [[,
-					]] .. fixdig(cs[7], 4, " ") .. [[, ]] .. fixdig(cs[8], 4, " ") .. [[, ]] .. fixdig(cs[9], 4, " ") .. [[, ]] .. fixdig(cs[10], 4, " ") .. [[, ]] .. fixdig(cs[11], 4, " ") .. [[, ]] .. fixdig(cs[12], 4, " ") .. [[,
-					]] .. fixdig(cs[13], 4, " ") .. [[, ]] .. fixdig(cs[14], 4, " ") .. [[, ]] .. fixdig(cs[15], 4, " ") .. [[, ]] .. fixdig(cs[16], 4, " ") .. [[, ]] .. fixdig(cs[17], 4, " ") .. [[, ]] .. fixdig(cs[18], 4, " ") .. [[,
-					]] .. fixdig(cs[19], 4, " ") .. [[, ]] .. fixdig(cs[20], 4, " ") .. [[, ]] .. fixdig(cs[21], 4, " ") .. [[, ]] .. fixdig(cs[22], 4, " ") .. [[, ]] .. fixdig(cs[23], 4, " ") .. [[, ]] .. fixdig(cs[24], 4, " ") .. [[,
-					]] .. fixdig(cs[25], 4, " ") .. [[, ]] .. fixdig(cs[26], 4, " ") .. [[, ]] .. fixdig(cs[27], 4, " ") .. [[, ]] .. fixdig(cs[28], 4, " ") .. [[, ]] .. fixdig(cs[29], 4, " ") .. [[, ]] .. fixdig(cs[30], 4, " ") .. [[,
-					}]])
-end
-
 function fixdig(number, dig, filler)
 	if filler == nil then filler = "0" end
 

@@ -418,27 +418,6 @@ function ui.keypressed(key)
 	elseif editingbounds == 0 and (key == "up" or key == "kp8") and not keyboardmode then
 		--^
 		gotoroom_u()
-	elseif allowdebug and key == "\\" and love.keyboard.isDown(lctrl) then
-		cons("*** TILESET COLOR CREATOR STARTED FOR TILESET " .. usedtilesets[levelmetadata_get(roomx, roomy).tileset] .. " ***")
-		cons("First select the wall tiles")
-
-		tilescreator = true
-		cb = {}
-		ca = {}
-		cs = {}
-		creatorstep = 1
-		creatorsubstep = 1
-
-		usedtilesets.creator = usedtilesets[selectedtileset]
-		selectedtileset = "creator"
-		selectedcolor = "creator"
-
-		tilesetblocks.creator.tileimg = usedtilesets[levelmetadata_get(roomx, roomy).tileset]
-
-		tilespicker = true
-		selectedtool = 1
-
-		mousepressed = false
 	elseif allowdebug and key == "'" and love.keyboard.isDown(lctrl) then
 		-- Just display all tilesets and colors in the console.
 		for k,v in pairs(tilesetblocks) do
