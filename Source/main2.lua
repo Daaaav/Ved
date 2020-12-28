@@ -62,7 +62,6 @@ function love.load()
 		modifier = "alt"
 		dirsep = "/"
 		macscrolling = true
-		wgetavailable = false
 		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
@@ -80,7 +79,6 @@ function love.load()
 		modifier = "ctrl"
 		dirsep = "\\"
 		macscrolling = false
-		wgetavailable = false
 		newline = "\r\n"
 		hook("love_load_win")
 		loaded_filefunc = "win"
@@ -91,7 +89,6 @@ function love.load()
 		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
-		wgetavailable = true
 		newline = "\n"
 		hook("love_load_lin")
 		if not love.filesystem.exists("available_libs") then
@@ -122,7 +119,6 @@ function love.load()
 		modifier = "ctrl"
 		dirsep = "/"
 		macscrolling = false
-		wgetavailable = false
 		newline = "\n"
 		hook("love_load_luv")
 		loaded_filefunc = "luv"

@@ -15,6 +15,8 @@ typedef wchar_t WCHAR, *PWCHAR;
 typedef wchar_t* LPWSTR, *PWSTR;
 typedef const wchar_t* LPCWSTR;
 
+typedef void* DWORD_PTR;
+
 typedef LPCSTR LPCCH;
 typedef LPCWSTR LPCWCH;
 
