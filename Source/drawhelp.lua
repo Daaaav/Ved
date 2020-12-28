@@ -137,11 +137,12 @@ function drawhelp()
 						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
 						singlecharmode = true
 					elseif part2:sub(fl,fl) == ")" and helparticle == 1 then
-						tostate(oldstate, true)
-						if state == 11 then
+						if oldstate == 11 then
 							-- Back to search results
-							startinput()
-							input = searchedfor
+							resume_search = true
+							tostate(11)
+						else
+							tostate(oldstate, true)
 						end
 						nodialog = false
 					end

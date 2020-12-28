@@ -107,7 +107,7 @@ function highlightresult(text, result, x, y)
 	result = escapegsub(result)
 
 	-- Well then, this changed into some awkward code
-	if text:lower():find(result, 1) == nil then
+	if result == "" or text:lower():find(result, 1) == nil then
 		ved_print(text, x+(offsetchars-1)*8, y)
 	else
 		repeat

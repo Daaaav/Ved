@@ -433,6 +433,9 @@ function love.load()
 	secondlevel = false
 	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
 
+	previous_search = ""
+	resume_search = false
+
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
 	loadtilesets()

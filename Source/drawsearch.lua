@@ -1,13 +1,6 @@
 function drawsearch()
-	ved_print(L.SEARCHFOR .. input .. __, 12, 10) -- Temporary location and temporary untextbox
-
-	rbutton({L.RETURN, "b"}, 0)
-
-	if nodialog and not mousepressed and love.mouse.isDown("l") and onrbutton(0) then
-		stopinput()
-		tostate(1, true)
-		mousepressed = true
-	end
+	ved_print(L.SEARCHFOR, 12, 10)
+	newinputsys.print("search", font8:getWidth(L.SEARCHFOR)+20, 10)
 
 	ved_printf(langkeys(L.SEARCHRESULTS_SCRIPTS, {#searchscripts}), 8, 32+4, 284, "center")
 	ved_printf(langkeys(L.SEARCHRESULTS_ROOMS, {#searchrooms}), 8+284+4, 32+4, 284, "center")
@@ -17,14 +10,14 @@ function drawsearch()
 		if k <= showresults and 32*k+16+searchscroll+30 >= 48 and 32*k+16+searchscroll <= love.graphics.getHeight() then
 			love.graphics.setScissor(8, math.max(48, 32*k+16+searchscroll), 284, 30)
 			hoverrectangle(128,128,128,128, 8, 32*k+16+searchscroll, 284, 30)
-			highlightresult(v.name, searchedfor, 12, 32*k+16+searchscroll+5)
+			highlightresult(v.name, previous_search, 12, 32*k+16+searchscroll+5)
 			if v.foundline ~= 0 then
 				ved_print(", " .. L.LINE .. v.foundline, 12+v.name:len()*8, 32*k+16+searchscroll+5)
-				highlightresult(v.foundlinecontent, searchedfor, 12, 32*k+16+searchscroll+8+5)
+				highlightresult(v.foundlinecontent, previous_search, 12, 32*k+16+searchscroll+8+5)
 			end
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8, 32*k+16+searchscroll, 284, 30) then
-				stopinput()
+				newinputsys.close("search")
 				scriptineditor(v.name)
 				scriptfromsearch = true
 
@@ -47,10 +40,10 @@ function drawsearch()
 			else
 				ved_print("(" .. (v.x+1) .. "," .. (v.y+1) .. ")", 12+284+4, 32*k+16+searchscroll+5)
 			end
-			highlightresult(v.name, searchedfor, 12+284+4, 32*k+16+searchscroll+8+5)
+			highlightresult(v.name, previous_search, 12+284+4, 32*k+16+searchscroll+8+5)
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8+284+4, 32*k+16+searchscroll, 284, 30) then
-				stopinput()
+				newinputsys.close("search")
 				gotoroom(v.x, v.y)
 
 				tostate(1, true)
@@ -66,14 +59,14 @@ function drawsearch()
 			if k <= showresults and 32*k+16+searchscroll+30 >= 48 and 32*k+16+searchscroll <= love.graphics.getHeight() then
 				love.graphics.setScissor(8+284+4+284+4, math.max(48, 32*k+16+searchscroll), 284, 30)
 				hoverrectangle(128,128,128,128, 8+284+4+284+4, 32*k+16+searchscroll, 284, 30)
-				highlightresult(v.name, searchedfor, 12+284+4+284+8, 32*k+16+searchscroll+5)
+				highlightresult(v.name, previous_search, 12+284+4+284+8, 32*k+16+searchscroll+5)
 				if v.foundline ~= 0 then
 					ved_print(", " .. L.LINE .. v.foundline, 12+284+4+284+4+v.name:len()*8, 32*k+16+searchscroll+5)
-					highlightresult(v.foundlinecontent, searchedfor, 12+284+4+284+4, 32*k+16+searchscroll+8+5)
+					highlightresult(v.foundlinecontent, previous_search, 12+284+4+284+4, 32*k+16+searchscroll+8+5)
 				end
 
 				if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8+284+4+284+4, 32*k+16+searchscroll, 284, 30) then
-					stopinput()
+					newinputsys.close("search")
 					tostate(15, nil, {vedmetadata.notes, true})
 				end
 			end

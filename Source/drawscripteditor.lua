@@ -273,9 +273,8 @@ function drawscripteditor()
 				scriptlines[editingline] = input
 				scripts[scriptname] = table.copy(scriptlines)
 				if scriptfromsearch then
-					tostate(11, true)
-					startinput()
-					input = searchedfor
+					resume_search = true
+					tostate(11)
 				else
 					tostate(10)
 				end

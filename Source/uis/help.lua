@@ -61,11 +61,12 @@ end
 
 function ui.keypressed(key)
 	if key == "escape" then
-		tostate(oldstate, true)
-		if state == 11 then
+		if oldstate == 11 then
 			-- Back to search results
-			startinput()
-			input = searchedfor
+			resume_search = true
+			tostate(11)
+		else
+			tostate(oldstate, true)
 		end
 		nodialog = false
 	elseif helpeditingline ~= 0 then
