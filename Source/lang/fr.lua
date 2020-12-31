@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2020-11-17 01:21:27 (CET)
+--- Last converted: 2020-12-31 03:25:19 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2883,7 +2883,7 @@ Autres contributeurs de code: Info Teddy
 
 Quelques graphismes et la police ont été créés par Hejmstel
 
-Traduction russe : CreepiX, Cheep
+Traduction russe : CreepiX, Cheep, Omegaplex
 Traduction esperanto : Hejmstel
 Traduction allemande : r00ster
 Traduction française : RhenaudTheLukark

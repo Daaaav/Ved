@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2020-11-17 01:21:27 (CET)
+--- Last converted: 2020-12-31 03:25:19 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -151,11 +151,11 @@ TEXTSIZEL = "Tekstgrando: L",
 INSERT = "Enmeti",
 HELP = "Helpo",
 INTSCRWARNING_NOLOADSCRIPT = "Ŝargskripto bezonata!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Skripto, kiu ŝargas tiun ĉi skripton ne detektiĝis. Tia ĉi interna skripto probable ne funkcios tiel, kiel vi atendas se ĝi ne estas ŝargata per alia skripto.",
 INTSCRWARNING_BOXED = "Refrencita rekte de skriptkvadrato/komputilo!",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_BOXED_EXPL = "Estas komputilo aŭ skriptkvadrato, kiu rekte ŝargas tiun ĉi skripton. Aktivigi tiun komputilon aŭ skriptkvadraton probable ne funkcios tiel, kiel vi atendas; tia ĉi interna skripto devas ŝargiĝi per ŝargskripto.",
+INTSCRWARNING_NAME = "Netaŭga skriptnomo!",
+INTSCRWARNING_NAME_EXPL = "La nomo de tiu ĉi skripto havas majusklan literon, spaceton, krampon aŭ komon. Tia ĉi skripto nur povas rekte ŝargiĝi per komputilo aŭ skriptkvadrato.",
 COLUMN = "Kolumno: ",
 
 BTN_OK = "Bone",
@@ -2773,7 +2773,7 @@ Pluaj kod-kontribuantoj: Info Teddy
 
 Kelkaj grafikoj kaj la tiparo estas faritaj de Hejmstel
 
-Ruslingva traduko: CreepiX, Cheep
+Ruslingva traduko: CreepiX, Cheep, Omegaplex
 Esperanta traduko: Stelpjo
 Germanlingva traduko: r00ster
 Franclingva traduko: RhenaudTheLukark

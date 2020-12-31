@@ -2738,7 +2738,7 @@ Further code contributors: Info Teddy
 
 Some of the graphics and the font were made by Hejmstel
 
-Russian translation: CreepiX, Cheep
+Russian translation: CreepiX, Cheep, Omegaplex
 Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark

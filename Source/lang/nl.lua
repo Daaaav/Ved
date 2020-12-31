@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2020-11-17 01:21:27 (CET)
+--- Last converted: 2020-12-31 03:25:20 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -44,11 +44,11 @@ STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
 SURENEWLEVEL = "Weet je zeker dat je een nieuw level wilt maken? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 SURELOADLEVEL = "Weet je zeker dat je een level wilt laden? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
-COULDNOTGETCONTENTSLEVELFOLDER = "Kon niet de inhoud van de levels-map verkrĳgen. Controleer of $1 bestaat en probeer het opnieuw.",
+COULDNOTGETCONTENTSLEVELFOLDER = "Kon de inhoud van de levelsmap niet verkrĳgen. Controleer of $1 bestaat en probeer het opnieuw.",
 MAPSAVEDAS = "Kaart opgeslagen als $1!",
 RAWENTITYPROPERTIES = "Je kunt de eigenschappen van deze entiteit hier wĳzigen.",
 UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
-METADATAENTITYCREATENOW = "De metadata-entiteit bestaat nog niet. Nu aanmaken?\n\nDe metadata-entiteit is een verborgen entiteit die kan worden toegevoegd aan VVVVVV-levels om extra data op te slaan die door Ved gebruikt wordt, zoals het level-kladblok, namen van vlaggen, en andere dingen.",
+METADATAENTITYCREATENOW = "De metadata-entiteit bestaat nog niet. Nu aanmaken?\n\nDe metadata-entiteit is een verborgen entiteit die kan worden toegevoegd aan VVVVVV-levels om extra data op te slaan die door Ved gebruikt wordt, zoals het levelkladblok, namen van vlaggen, en andere dingen.",
 WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.\n\nDe editor verlaten?",
@@ -63,7 +63,7 @@ DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest z
 SUREQUIT = "Weet je zeker dat je wilt afsluiten? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 SUREQUITNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het afsluiten?",
 SURENEWLEVELNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het maken van een nieuw level?",
-SCALEREBOOT = "De nieuwe schaal-instellingen zullen van toepassing worden na het herstarten van Ved.",
+SCALEREBOOT = "De nieuwe schaalinstellingen zullen van toepassing worden na het herstarten van Ved.",
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
 ENTITY404 = "Entiteit #$1 bestaat niet meer!",
@@ -71,7 +71,7 @@ GRAPHICSCARDCANVAS = "Sorry, het lĳkt dat je grafische kaart of het stuurprogra
 MAXTEXTURESIZE = "Sorry, het maken van een afbeelding van $1x$2 lĳkt niet te worden ondersteund door je grafische kaart of het stuurprogramma.\n\nDe maximale grootte op dit systeem is $3x$3.",
 SUREDELETESCRIPT = "Weet je zeker dat je het script \"$1\" wilt verwĳderen?",
 SUREDELETENOTE = "Weet je zeker dat je deze notitie wilt verwĳderen?",
-THREADERROR = "Thread-fout!",
+THREADERROR = "Threadfout!",
 WHATDIDYOUDO = "Wat heb je gedaan?!",
 UNDOFAULTY = "Waar ben je mee bezig?",
 SOURCEDESTROOMSSAME = "Beide kamers zĳn hetzelfde!",
@@ -87,8 +87,8 @@ SELECTSWAP1 = "Selecteer de eerste kamer om om te wisselen",
 SELECTSWAP2 = "Selecteer de tweede kamer om om te wisselen",
 
 TILESETCHANGEDTO = "Tileset veranderd naar $1",
-TILESETCOLORCHANGEDTO = "Tileset-kleur veranderd naar $1",
-ENEMYTYPECHANGED = "Vĳand-type veranderd",
+TILESETCOLORCHANGEDTO = "Tilesetkleur veranderd naar $1",
+ENEMYTYPECHANGED = "Vĳandtype veranderd",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
 CHANGEDTOMODE = "Veranderd naar $1plaatsing",
@@ -103,8 +103,8 @@ ROOMCUT = "Kamer geknipt naar klembord",
 ROOMCOPIED = "Kamer gekopieerd naar klembord",
 ROOMPASTED = "Kamer geplakt",
 
-METADATAUNDONE = "Level-opties ongedaan gemaakt",
-METADATAREDONE = "Level-opties opnieuw gewĳzigd",
+METADATAUNDONE = "Levelopties ongedaan gemaakt",
+METADATAREDONE = "Levelopties opnieuw gewĳzigd",
 
 BOUNDSTOPLEFT = "Klik op de linkerbovenhoek van de begrenzing",
 BOUNDSBOTTOMRIGHT = "Klik op de rechteronderhoek",
@@ -138,12 +138,12 @@ TEXTSIZEN = "Grootte: norm.",
 TEXTSIZEL = "Grootte: groot",
 INSERT = "Invoegen",
 HELP = "Help",
-INTSCRWARNING_NOLOADSCRIPT = "Laad-script nodig!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_NOLOADSCRIPT = "Laadscript nodig!",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Er is geen script gevonden dat dit script laadt. Dit type interne script zal waarschĳnlĳk niet werken zoals je verwacht als het niet wordt geladen via een ander script.",
 INTSCRWARNING_BOXED = "Rechtstreekse scriptvak-/terminalverwĳzing!",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_BOXED_EXPL = "Er is een terminal of scriptvak dat dit script rechtstreeks laadt. Die terminal of dat scriptvak activeren zal waarschĳnlĳk niet werken zoals je verwacht; dit type interne script moet worden geladen via een laadscript.",
+INTSCRWARNING_NAME = "Ongeschikte scriptnaam!",
+INTSCRWARNING_NAME_EXPL = "De naam van dit script heeft een hoofdletter, een spatie, een haakje of een komma. Dit script kan alleen rechtstreeks vanaf een terminal of scriptvak worden geladen.",
 COLUMN = "Kolom: ",
 
 BTN_OK = "OK",
@@ -193,12 +193,12 @@ UNLOCK = "Ontgrendelen",
 BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved-opties",
-LEVELOPTIONS = "Level-opties",
+LEVELOPTIONS = "Levelopties",
 MAP = "Kaart",
 SCRIPTS = "Scripts",
 SEARCH = "Zoeken",
 SENDFEEDBACK = "Stuur feedback",
-LEVELNOTEPAD = "Level-kladblok",
+LEVELNOTEPAD = "Levelkladblok",
 PLUGINS = "Plugins",
 
 BACKB = "Terug <<",
@@ -212,14 +212,14 @@ PLATFORMBOUNDS = "Begrenzing",
 WARPDIR = "Warprichting:$1",
 ENEMYBOUNDS = "Begrenzing",
 ROOMNAME = "Kamernaam",
-ROOMOPTIONS = "Kamer-opties",
+ROOMOPTIONS = "Kameropties",
 ROTATE180 = "180grd draaien",
 ROTATE180UNI = "180° draaien",
 HIDEBOUNDS = "Grenzen verb.",
 SHOWBOUNDS = "Grenzen tonen",
 
 ROOMPLATFORMS = "Platformen", -- basically, platforms/enemies in/for this room
-ROOMENEMIES = "Kamer-vĳanden",
+ROOMENEMIES = "Kamervĳanden",
 
 OPTNAME = "Naam",
 OPTBY = "Door",
@@ -329,7 +329,7 @@ AMOUNTENTITIES = "Entiteiten:",
 AMOUNTTRINKETS = "Trinkets:",
 AMOUNTCREWMATES = "Bemanningsleden:",
 AMOUNTINTERNALSCRIPTS = "Interne scripts:",
-TILESETUSSAGE = "Tileset-gebruik",
+TILESETUSSAGE = "Tilesetgebruik",
 TILESETSONLYUSED = "(alleen kamers met blokken worden geteld)",
 AMOUNTROOMSWITHNAMES = "Kamers met een naam:",
 PLACINGMODEUSAGE = "Plaatsingsmodi:",
@@ -386,11 +386,11 @@ METADATACORRUPT = "Metadata ontbreekt of is corrupt.",
 METADATAITEMCORRUPT = "Metadata voor $1 ontbreekt of is corrupt.",
 TILESCORRUPT = "Data voor blokken ontbreekt of is corrupt.",
 ENTITIESCORRUPT = "Data voor entiteiten ontbreekt of is corrupt.",
-LEVELMETADATACORRUPT = "Kamer-metadata ontbreekt of is corrupt.",
+LEVELMETADATACORRUPT = "Kamermetadata ontbreekt of is corrupt.",
 SCRIPTCORRUPT = "Scripts ontbreken of zĳn corrupt.",
 
 -- 1.1.0
-LOADSCRIPTMADE = "Laad-script gemaakt",
+LOADSCRIPTMADE = "Laadscript gemaakt",
 COPY = "Kopiëren",
 CUSTOMSIZE = "Aangepaste kwastgrootte: $1x$2",
 SELECTINGA = "Selecteren - klik op linkerbovenhoek",
@@ -779,9 +779,9 @@ ERR_LOGSAVED = "Meer informatie is te vinden in het crashlogboek:\n%s"
 
 diffmessages = {
 	pages = {
-		levelproperties = "Level-eigenschappen",
+		levelproperties = "Leveleigenschappen",
 		changedrooms = "Gewĳzigde kamers",
-		changedroommetadata = "Kamer-metadata",
+		changedroommetadata = "Kamermetadata",
 		entities = "Entiteiten",
 		scripts = "Scripts",
 		flagnames = "Vlagnamen",
@@ -814,7 +814,7 @@ diffmessages = {
 		roomnameadded = "Naam aan kamer gegeven: \"$1\"\\G",
 		tileset = "Tileset $1 tilecol $2 veranderd naar tileset $3 tilecol $4\\Y",
 		platv = "Platformsnelheid veranderd van $1 naar $2\\Y",
-		enemytype = "Vĳand-type veranderd van $1 naar $2\\Y",
+		enemytype = "Vĳandtype veranderd van $1 naar $2\\Y",
 		platbounds = "Platformbegrenzing veranderd van $1,$2,$3,$4 naar $5,$6,$7,$8\\Y",
 		enemybounds = "Vĳandbegrenzing veranderd van $1,$2,$3,$4 naar $5,$6,$7,$8\\Y",
 		directmode01 = "Direct mode aangezet\\G",
@@ -2800,7 +2800,7 @@ Andere code-bĳdragers: Info Teddy
 
 Sommige afbeeldingen en het lettertype zĳn gemaakt door Hejmstel
 
-Russische vertaling: CreepiX, Cheep
+Russische vertaling: CreepiX, Cheep, Omegaplex
 Esperanto vertaling: Hejmstel
 Duitse vertaling: r00ster
 Franse vertaling: RhenaudTheLukark

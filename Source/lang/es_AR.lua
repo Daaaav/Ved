@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-11-17 01:21:26 (CET)
+--- Last converted: 2020-12-31 03:25:19 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -127,11 +127,11 @@ TEXTSIZEL = "Tamaño de texto: L",
 INSERT = "Insertar",
 HELP = "Ayuda",
 INTSCRWARNING_NOLOADSCRIPT = "Se requiere script de carga!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Un script que carga este script no fue detectado. Este tipo de script interno probablemente no funcionara como lo esperes si no es cargado via otro script.",
 INTSCRWARNING_BOXED = "Referencia de terminal!",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_BOXED_EXPL = "Hay una terminal o caja de script que carga este script directamente. Activar esa terminal o caja de script probablemente no funcionara como esperado; este tipo de script interno tiene que ser cargado via un script de carga.",
+INTSCRWARNING_NAME = "Nombre de script inadecuado!",
+INTSCRWARNING_NAME_EXPL = "El nombre de este script tiene una letra mayuscula, un espacio, un paréntesis o una coma. Este script solo puede ser cargado directamente desde una terminal o caja de script.",
 COLUMN = "Columna: ",
 
 BTN_OK = "OK",
@@ -2746,7 +2746,7 @@ Further code contributors: Info Teddy
 
 Some of the graphics and the font were made by Hejmstel
 
-Russian translation: CreepiX, Cheep
+Russian translation: CreepiX, Cheep, Omegaplex
 Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark

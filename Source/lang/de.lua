@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2020-11-17 01:21:26 (CET)
+--- Last converted: 2020-12-31 03:25:19 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -139,11 +139,11 @@ TEXTSIZEL = "Textgröße: L",
 INSERT = "Einfügen",
 HELP = "Hilfe",
 INTSCRWARNING_NOLOADSCRIPT = "Ladeskript benötigt!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Ein Skript, das dieses Skript lädt, wurde nicht erkannt. Diese Art von internem Skript funktioniert wahrscheinlich nicht so, wie du es erwartest, wenn es nicht über ein anderes Skript geladen wird.",
 INTSCRWARNING_BOXED = "Direkte Skriptbox/Konsolen Referenz!",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_BOXED_EXPL = "Es gibt eine Konsole oder ein Skriptfeld, das dieses Skript direkt lädt. Das Aktivieren dieser Konsole oder dieses Skriptfelds wird wahrscheinlich nicht wie erwartet funktionieren; diese Art von internem Skript muss über ein Ladeskript geladen werden.",
+INTSCRWARNING_NAME = "Ungeeigneter Skriptname!",
+INTSCRWARNING_NAME_EXPL = "Der Name dieses Skripts hat einen Großbuchstaben, ein Leerzeichen, eine Klammer oder ein Komma. Dieses Skript kann nur direkt von einer Konsole oder Skriptbox geladen werden.",
 COLUMN = "Spalte: ",
 
 BTN_OK = "OK",
@@ -2752,7 +2752,7 @@ Weitere Code-Beiträge: Info Teddy
 
 Manche der Grafiken und Schriftarten wurden von Hejmstel gemacht
 
-Russische Übersetzung: CreepiX, Cheep
+Russische Übersetzung: CreepiX, Cheep, Omegaplex
 Esperanto Übersetzung: Hejmstel
 Deutsche Übersetzung: r00ster
 Französische Übersetzung: RhenaudTheLukark

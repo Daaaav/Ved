@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2020-11-17 01:21:26 (CET)
+--- Last converted: 2020-12-31 03:25:19 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -19,7 +19,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Сделано CreepiX'ом и Чиприком", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Перевод сделан CreepiX'ом, Чиприком и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.1 или выше.\nЗагрузите L{VE на https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved больше не поддерживает L{ve 0.9.0. К счастью, L{ve 0.9.1 и выше будут работать.\nВы можете скачать последнюю версию L{ve с https://love2d.org/.",
@@ -36,8 +36,8 @@ COULDNOTGETCONTENTSLEVELFOLDER = "Папка с уровнями не найде
 MAPSAVEDAS = "Снимок карты $1 сохранён!",
 RAWENTITYPROPERTIES = "Вы можете изменять значения свойств этого объекта.",
 UNKNOWNENTITYTYPE = "Неизвестный тип объекта $1",
-METADATAENTITYCREATENOW = "Объект данных не существует. Создать его сейчас?\n\nОбъект данных - это скрытый объект, который может быть добавлен в уровень для хранения дополнительной информации используемой Ved, например записки уровня, названия флагов и т.д.",
-WARPTOKENENT404 = "Объект жетона телепортации больше не существует!",
+METADATAENTITYCREATENOW = "Объект данных не существует. Создать его сейчас?\n\nОбъект данных - это скрытый объект, который может быть добавлен в уровень для хранения дополнительной информации используемой Ved, например заметки уровня, названия флагов и т.д.",
+WARPTOKENENT404 = "Объект варп-токена больше не существует!",
 SPLITFAILED = "Разделение провалено! Может, у вас слишком много строк между командами text и speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Все флаги использованы, новые имена флагов в этом скрипте не будут ассоциироваться с номерами флагов. Попытка запустить этот скрипт в VVVVVV может привести к ошибке. Уберите все ссылки к флагам которые вам не нужны и попробуйте ещё раз.\n\nПокинуть редактор?",
 NOFLAGSLEFT_LOADSCRIPT = "Больше нет свободных флагов, поэтому скрипт загрузки использующий новый флаг не может быть создан. Вместо этого был создан скрипт загрузки, загружающий целевой скрипт при помощи iftrinkets(0,$1). Попробуйте убрать все использования ненужных флагов и повторите попытку.",
@@ -127,11 +127,11 @@ TEXTSIZEL = "Большой текст",
 INSERT = "Вставить",
 HELP = "Помощь",
 INTSCRWARNING_NOLOADSCRIPT = "Требуется загрузочный скрипт!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
-INTSCRWARNING_BOXED = "Прямая ссылка на скрипт/терминал!",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Скрипт, загружающий данный скрипт, не найден. Такой тип внутреннего скрипта вряд ли заработает так, как ожидается, если он не загружен с помощью другого скрипта.",
+INTSCRWARNING_BOXED = "Прямая ссылка на рамку скрипта/терминал!",
+INTSCRWARNING_BOXED_EXPL = "Обнаружены терминал или рамка скрипта, загружающие данный скрипт напрямую. Активация этих терминала или рамки скрипта вряд ли сработет так, как ожидается, такой тип внутреннего скрипта должен быть загружен с помощью другого скрипта.",
+INTSCRWARNING_NAME = "Неподходящее название скрипта!",
+INTSCRWARNING_NAME_EXPL = "Название данного скрипта содержит заглавную букву, пробел, скобку или запятую. Такой скрипт может быть загружен только с помощью терминала или рамки скрипта.",
 COLUMN = "Столбец: ",
 
 BTN_OK = "OK",
@@ -197,7 +197,7 @@ MANUALMODE = "Ручной",
 PLATFORMSPEED = "Скорость: $1",
 ENEMYTYPE = "Тип: $1",
 PLATFORMBOUNDS = "Границы платформ",
-WARPDIR = "Тип телепорта: $1",
+WARPDIR = "Напр. варпа: $1",
 ENEMYBOUNDS = "Границы врагов",
 ROOMNAME = "Название комнаты",
 ROOMOPTIONS = "Настройки комнаты",
@@ -674,12 +674,12 @@ toolnames = {
 "Конвеер",
 "Двигающаяся платформа",
 "Враг",
-"Грави-линия",
+"Грав. линия",
 "Текст",
-"Компьютер",
-"Скрипт",
-"Телепорт",
-"Линия варпа",
+"Терминал",
+"Рамка скрипта",
+"Варп-токен",
+"Варп-линия",
 "Член экипажа",
 "Точка старта",
 "Жетон переворота",
@@ -724,10 +724,10 @@ warpdirs = {
 
 warpdirchangedtext = {
 
-[0] = "Без варпа",
+[0] = "Варп комнаты выключен",
 [1] = "Горизонтальный варп",
 [2] = "Вертикальный варп",
-[3] = "Полный варп",
+[3] = "Варп во всех направлениях",
 
 }
 
@@ -765,7 +765,7 @@ ERR_PLUGINERROR = "Ошибка плагина!"
 ERR_FILE = "Файл для редактирования:"
 ERR_FILEEDITORS = "Плагины редактирующие этот файл:"
 ERR_CURRENTPLUGIN = "Плагин вызвавший ошибку:"
-ERR_PLEASETELLAUTHOR = "Плагин должен был редактровать код Ved, но код для замены не был найден.\nВозможно это из-за конфликта между двумя плагинами, или новая версия Ved не поддерживает этот плагин.\n\nДетали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n\n"
+ERR_PLEASETELLAUTHOR = "Плагин должен был редактровать код Ved, но код для замены не был найден.\nВозможно это из-за конфликта между двумя плагинами или новая версия Ved не поддерживает этот плагин.\n\nДетали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n\n"
 ERR_CONTINUE = "Вы можете продолжить нажав Esc или Enter, но эта ошибка может вызвать глюки."
 ERR_OPENPLUGINSFOLDER = "Клавишей F можно открыть папку с плагинами, чтобы исправить или удалить плагин, вызывающий проблему. После этого перезапустите Ved."
 ERR_REPLACECODE = "Это не найдено в %s.lua:"
@@ -820,7 +820,7 @@ diffmessages = {
 		enemybounds = "Рамка врагов изменена с $1,$2,$3,$4 на $5,$6,$7,$8\\Y",
 		directmode01 = "Ручной режим включен\\G",
 		directmode10 = "Ручной режим выключен\\R",
-		warpdir = "Тип варпа изменён с $1 на $2\\Y",
+		warpdir = "Направление варпа изменено с $1 на $2\\Y",
 	},
 	entities = {
 		added = "Добавлен объект типа $1 на позиции $2,$3 в комнате ($4,$5)\\G",
@@ -845,9 +845,9 @@ diffmessages = {
 		edited = "Изменено имя флага $1 с \"$2\" на \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Добавлена записка \"$1\"\\G",
-		removed = "Удалена записка \"$1\"\\R",
-		edited = "Изменена записка \"$1\"\\Y",
+		added = "Добавлена заметка \"$1\"\\G",
+		removed = "Удалена заметка \"$1\"\\R",
+		edited = "Изменена заметка \"$1\"\\Y",
 	},
 	mde = {
 		added = "Объект данных добавлен.\\G",
@@ -2797,7 +2797,7 @@ cont = [[
 
 Некоторая графика и шрифт: Hejmstel
 
-Russian translation: CreepiX, Cheep
+Russian translation: CreepiX, Cheep, Omegaplex
 Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
