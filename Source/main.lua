@@ -166,6 +166,18 @@ else
 	if not love.filesystem.exists("crash_logs") then
 		love.filesystem.createDirectory("crash_logs")
 	end
-	--love.errhand("Error handler triggered manually...")
-	ved_require("main2")
+
+	ved_require("callback_load")
+	ved_require("callback_draw")
+	ved_require("callback_update")
+	ved_require("callback_textinput")
+	ved_require("callback_keypressed")
+	ved_require("callback_keyreleased")
+	ved_require("callback_mousepressed")
+	ved_require("callback_mousereleased")
+	ved_require("callback_directorydropped")
+	ved_require("callback_filedropped")
+	ved_require("callback_focus")
+	ved_require("callback_quit")
+	ved_require("callback_threaderror")
 end

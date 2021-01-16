@@ -1,0 +1,39 @@
+States:
+-3	Just blackness
+-2	tostate 6
+-1	(removed) Display error (expected: errormsg)
+0	Temp main menu (enter state)
+1	The editor (will expect things to have been loaded!)
+2	(removed) Syntax highlighting test
+3	Scripting editor
+4	(removed) Some XML testing
+5	Filesystem info
+6	Simple listing of all files in the levels folder, and load a level from here
+7	Display all sprites from sprites.png where you can get the number of the sprite you're hovering over
+8	(removed) Just save by going to this state and typing in a name
+9	Dialog test, and right click menu test
+10	List of scripts, and enter one to load
+11	Search
+12	Map
+13	Options screen
+14	Sort of entity picker proto
+15	Help
+16	(never used, removed) Scroll bar test
+17	(never used, removed) folderopendialog utility
+18	Show main editor undo/redo stacks
+19	Flags list
+20	Resizable box test
+21	Display overlapping entities (may be a visible function later) (maybe doesn't work properly)
+22	(removed) Load a script file in the 3DS format (lines separated by dollars)
+23	(removed) Load a script file NOT in the 3DS format (lines separated by \r\n or \n)
+24	(removed) Simple plugins list (already not used)
+25	Syntax highlighting color settings
+26	Font test
+27	Display/Scale settings
+28	Level stats
+29	Plural forms test
+30	Assets
+31	Assets - music/sounds
+32	Assets - graphics
+33	Language screen
+34	New-input-system-that-is-not-2-or-3-vars-concated-together test
