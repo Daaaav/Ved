@@ -1,11 +1,11 @@
 local cache_modtimes = {} -- filepath => unix_timestamp
 
 
-require("windows_constants")
+require("libs/windows_constants")
 
 local ffi = require("ffi")
-ffi.cdef((love.filesystem.read("windows_types.h")))
-ffi.cdef((love.filesystem.read("windows_main.h")))
+ffi.cdef((love.filesystem.read("libs/windows_types.h")))
+ffi.cdef((love.filesystem.read("libs/windows_main.h")))
 
 
 buffer_filedata = ffi.new("WIN32_FIND_DATAW")

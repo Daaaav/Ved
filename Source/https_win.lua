@@ -1,10 +1,10 @@
-require("windows_constants")
+require("libs/windows_constants")
 
 local ffi = require("ffi")
 local wininet = ffi.load("wininet")
-ffi.cdef((love.filesystem.read("windows_types.h")))
-ffi.cdef((love.filesystem.read("windows_main.h")))
-ffi.cdef((love.filesystem.read("windows_wininet.h")))
+ffi.cdef((love.filesystem.read("libs/windows_types.h")))
+ffi.cdef((love.filesystem.read("libs/windows_main.h")))
+ffi.cdef((love.filesystem.read("libs/windows_wininet.h")))
 
 local function utf16(text_utf8)
 	local text_utf16_len = ffi.C.MultiByteToWideChar(CP_UTF8, 0, text_utf8, -1, nil, 0)
