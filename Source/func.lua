@@ -3098,7 +3098,7 @@ function hotkey(checkkey, checkmod)
 	end
 end
 
-function unloaduis()
+function unload_uis()
 	-- Unload the UI files, just so we can reload them.
 	if uis == nil then
 		-- What are you doing here?
@@ -3106,41 +3106,75 @@ function unloaduis()
 	end
 
 	for k,v in pairs(uis) do
-		package.loaded["uis/" .. v.name] = false
+		for k2,v2 in pairs(v) do
+			local name = "uis/" .. v.name .. "/" .. k2
+			if package.loaded[name] then
+				package.loaded[name] = false
+			end
+		end
 	end
 end
 
-function loaduis()
+function load_ui(ui_name)
+	local ui = {name = ui_name}
+	local ui_path = "uis/" .. ui_name .. "/"
+
+	local function load_ui_part(part_name)
+		if love.filesystem.exists(ui_path .. part_name .. ".lua") then
+			ui[part_name] = ved_require(ui_path .. part_name)
+			if ui[part_name] == nil or type(ui[part_name]) == "boolean" then
+				dialog.create("Part \"" .. part_name .. "\" of UI \"" .. ui_name .. "\" returned nothing, and therefore won't function.")
+
+				-- We can't call/iterate over a boolean (what require returns if the code doesn't), and checks for nil are in place...
+				ui[part_name] = nil
+			end
+		end
+	end
+
+	load_ui_part("load")
+	load_ui_part("elements")
+	load_ui_part("draw")
+	load_ui_part("update")
+	load_ui_part("keypressed")
+	load_ui_part("keyreleased")
+	load_ui_part("textinput")
+	load_ui_part("mousepressed")
+	load_ui_part("mousereleased")
+
+	return ui
+end
+
+function load_uis()
 	uis = {}
 
-	uis[-2] = ved_require("uis/init")
-	uis[0] = ved_require("uis/state0")
-	uis[1] = ved_require("uis/maineditor")
-	uis[3] = ved_require("uis/scripteditor")
-	uis[5] = ved_require("uis/fsinfo")
-	uis[6] = ved_require("uis/levelslist")
-	uis[7] = ved_require("uis/spriteview")
-	uis[9] = ved_require("uis/dialogtest")
-	uis[10] = ved_require("uis/scriptlist")
-	uis[11] = ved_require("uis/search")
-	uis[12] = ved_require("uis/map")
-	uis[13] = ved_require("uis/options")
-	uis[14] = ved_require("uis/enemypickertest")
-	uis[15] = ved_require("uis/help")
-	uis[18] = ved_require("uis/unreinfo")
-	uis[19] = ved_require("uis/scriptflags")
-	uis[20] = ved_require("uis/resizableboxtest")
-	uis[21] = ved_require("uis/overlapentinfo")
-	uis[25] = ved_require("uis/syntaxoptions")
-	uis[26] = ved_require("uis/fonttest")
-	uis[27] = ved_require("uis/displayoptions")
-	uis[28] = ved_require("uis/levelstats")
-	uis[29] = ved_require("uis/pluralformstest")
-	uis[30] = ved_require("uis/assetsmenu")
-	uis[31] = ved_require("uis/audioplayer")
-	uis[32] = ved_require("uis/graphicsviewer")
-	uis[33] = ved_require("uis/language")
-	uis[34] = ved_require("uis/inputtest")
+	uis[-2] = load_ui("init")
+	uis[0] = load_ui("state0")
+	uis[1] = load_ui("maineditor")
+	uis[3] = load_ui("scripteditor")
+	uis[5] = load_ui("fsinfo")
+	uis[6] = load_ui("levelslist")
+	uis[7] = load_ui("spriteview")
+	uis[9] = load_ui("dialogtest")
+	uis[10] = load_ui("scriptlist")
+	uis[11] = load_ui("search")
+	uis[12] = load_ui("map")
+	uis[13] = load_ui("options")
+	uis[14] = load_ui("enemypickertest")
+	uis[15] = load_ui("help")
+	uis[18] = load_ui("unreinfo")
+	uis[19] = load_ui("scriptflags")
+	uis[20] = load_ui("resizableboxtest")
+	uis[21] = load_ui("overlapentinfo")
+	uis[25] = load_ui("syntaxoptions")
+	uis[26] = load_ui("fonttest")
+	uis[27] = load_ui("displayoptions")
+	uis[28] = load_ui("levelstats")
+	uis[29] = load_ui("pluralformstest")
+	uis[30] = load_ui("assetsmenu")
+	uis[31] = load_ui("audioplayer")
+	uis[32] = load_ui("graphicsviewer")
+	uis[33] = load_ui("language")
+	uis[34] = load_ui("inputtest")
 end
 
 function show_notification(text)

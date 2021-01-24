@@ -364,7 +364,7 @@ function love.load()
 
 	savedwindowtitle = ""
 
-	loaduis()
+	load_uis()
 
 	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)

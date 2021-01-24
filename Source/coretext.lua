@@ -142,8 +142,8 @@ function loadlanguage()
 	end
 	if uis ~= nil then
 		-- Need to reload this for all the buttons that are in there
-		unloaduis()
-		loaduis()
+		unload_uis()
+		load_uis()
 	end
 end
 
