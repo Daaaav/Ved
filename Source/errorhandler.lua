@@ -124,7 +124,7 @@ function ved_showerror(msg)
 	-- Save the error to a crash log, if enabled. Do we even know if it's enabled?
 	local logwassaved = nil
 	if (s == nil or s.autosavecrashlogs) and love.filesystem.exists("crash_logs") then
-		-- Make a file with a name of, for example, 1500000000_1.2.3_drawmaineditor_436.txt
+		-- Make a file with a name of, for example, 1500000000_1.2.3_vvvvvvxml_436.txt
 		local errorfile, errorline = msg:match("([^ ]+)%.lua:([0-9]+): .*")
 		local logfilename = "crash_logs/" .. os.time() .. "_" .. ved_ver_human() .. "_" .. anythingbutnil(errorfile):gsub("/", "__") .. "_" .. anythingbutnil(errorline) .. ".txt"
 		local pluginreport = ""
