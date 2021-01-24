@@ -1,5 +1,8 @@
 local opsys, path, args, levelcontents = ...
 
+-- Needed in LÖVE 0.9.x
+require("love.filesystem")
+
 -- Workaround for including lang/English, which is a workaround for including const
 require("corefunc")
 

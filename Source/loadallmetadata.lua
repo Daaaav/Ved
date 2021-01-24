@@ -3,6 +3,7 @@ dirsep, levelsfolder, loaded_filefunc, getOS, L = ...
 local inchannel = love.thread.getChannel("allmetadata_in")
 local outchannel = love.thread.getChannel("allmetadata_out")
 
+-- Needed in LÖVE 0.9.x
 require("love.filesystem")
 
 -- Workaround for including func

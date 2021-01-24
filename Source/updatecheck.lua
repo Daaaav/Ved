@@ -13,6 +13,9 @@ local response_text
 
 require("love.system")
 
+-- Needed in LÖVE 0.9.x
+require("love.filesystem")
+
 if love.system.getOS() == "Windows" then
 	require("https_win")
 
