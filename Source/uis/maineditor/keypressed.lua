@@ -100,14 +100,6 @@ return function(key)
 		if key == "q" then
 			show_notification(L.OLDSHORTCUT_GOTOROOM)
 		end
-	elseif metadata.target == "VCE" and key == "a" then
-		next_altstate()
-		if altstate == 0 then
-			temporaryroomname = L.SWITCHEDTOALTSTATEMAIN
-		else
-			temporaryroomname = langkeys(L.SWITCHEDTOALTSTATE, {altstate})
-		end
-		temporaryroomnametimer = 90
 	elseif key == "m" or key == "kp5" then
 		tostate(12)
 		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
@@ -299,17 +291,6 @@ return function(key)
 	elseif key == "f5" and not voided_metadata then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif metadata.target == "VCE" and levelmetadata_get(roomx, roomy).tower == 0 and key == "f6" then
-		-- Add altstate
-		local new_altstate = add_altstate(roomx, roomy)
-		altstate = new_altstate
-		temporaryroomname = langkeys(L.ADDEDALTSTATE, {new_altstate})
-		temporaryroomnametimer = 90
-	elseif metadata.target == "VCE" and key == "f9" and keyboard_eitherIsDown(ctrl) and not voided_metadata then
-		-- customtileset/customspritesheet dialog
-		dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
-			dialog.form.vcecustomgraphics_make(levelmetadata_get(roomx, roomy))
-		)
 	elseif key == "f10" and not voided_metadata then
 		-- Auto/manual mode
 		changedmode()

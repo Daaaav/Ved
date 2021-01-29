@@ -209,12 +209,6 @@ function displayentities(offsetx, offsety, myroomx, myroomy, altst, bottom2rowst
 		if (v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
 			shown = true
 		end
-		if metadata.target == "VCE" and v.state ~= altst then
-			shown = false
-		end
-		if metadata.target == "VCE" and v.intower ~= 0 then
-			shown = false
-		end
 
 		if shown then
 			-- First of all, we can remove an entity by shift-right clicking
@@ -390,45 +384,6 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				4, 1
 			)
 		end
-	elseif v.t == 5 and metadata.target == "VCE" then
-		-- Flip token, temp
-		love.graphics.setColor(128,128,255,255)
-		ved_print("FL\nIP", x, y, 2)
-
-		if interact then
-			entityrightclick(
-				x, y,
-				{"#Flip token", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_5_" .. k,
-				2, 2
-			)
-		end
-	elseif v.t == 8 and metadata.target == "VCE" then
-		-- Coin
-		local coinsize, coinvalue
-		if v.p1 == 0 then
-			coinsize = 1
-			coinvalue = 1
-		elseif v.p1 <= 2 then
-			coinsize = 2
-			coinvalue = v.p1 == 1 and 10 or 20
-		else
-			coinsize = 3
-			coinvalue = v.p1 == 3 and 50 or 100
-		end
-		love.graphics.setColor( 255, 255, 0)
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][48], x, y, 0, 2)
-		-- Temp
-		if coinvalue > 1 then
-			ved_print(coinvalue, x, y+16, 2)
-		end
-		love.graphics.setColor( 255, 255, 255)
-		if interact then
-			entityrightclick(
-				x, y,
-				{"#Coin", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_8_" .. k,
-				coinsize, coinsize
-			)
-		end
 	elseif v.t == 9 then
 		-- Trinket
 		v6_setcol(3)
@@ -575,16 +530,6 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				)
 			end
 		end
-	elseif v.t == 14 and metadata.target == "VCE" then
-		-- Teleporter
-		drawtele(x, y)
-		if v.t ~= nil and interact then
-			entityrightclick(
-				x, y,
-				{"#Teleporter", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_14_" .. k,
-				12, 12
-			)
-		end
 	elseif v.t == 15 then
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
@@ -660,7 +605,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				2, 3
 			)
 		end
-	elseif v.t == 19 or (v.t == 20 and metadata.target == "VCE") then
+	elseif v.t == 19 then
 		-- Script box/activity zone, draw it as an actual box.
 		--love.graphics.draw(cursorimg[1], x, y)
 		if v.t == 19 then
@@ -1645,9 +1590,6 @@ function setroomfromcopy(data, rx, ry, altst, skip_undo)
 	end
 
 	local maxtileset = 4
-	if metadata.target == "VCE" then
-		maxtileset = 5
-	end
 
 	local explodeddata = explode(",", data)
 
@@ -3085,9 +3027,6 @@ function insert_entity_full(rx, ry, astate, intower, subx, suby, atx, aty, t, p1
 			y = 30*ry + aty,
 			t = t,
 			p1 = p1, p2 = p2, p3 = p3, p4 = p4, p5 = 320, p6 = 240,
-			subx = subx, suby = suby, -- VCE
-			intower = intower, state = astate, onetime = false, -- VCE
-			activityname = "", activitycolor = "", -- VCE
 			data = data
 		}
 	)
@@ -3120,71 +3059,4 @@ function insert_entity_full(rx, ry, astate, intower, subx, suby, atx, aty, t, p1
 	end
 	count.entities = count.entities + 1
 	count.entity_ai = count.entity_ai + 1
-end
-
-function update_vce_teleporters_insert(rx, ry)
-	-- After insering a teleporter entity, make sure there's a <teleporter/> for this room
-	if extra.teleporters == nil then
-		return
-	end
-
-	for k,v in pairs(extra.teleporters) do
-		if v.x == rx and v.y == ry then
-			return
-		end
-	end
-
-	table.insert(extra.teleporters, {x = rx, y = ry})
-end
-
-function update_vce_teleporters_remove(rx, ry, deleting_id)
-	-- After removing a teleporter entity, make sure if there's no teleporter entity left, the <teleporter/> for this room is removed
-	-- This function can also be called before removing the entity, by supplying the ID of the entity to be removed to ignore that entity.
-	if extra.teleporters == nil then
-		-- Aah, a teleporter in a non-VCE level, huh?
-		return
-	end
-
-	for k,v in pairs(entitydata) do
-		if v.t == 14 and k ~= deleting_id and v.x >= rx*40 and v.x <= rx*40+39 and v.y >= ry*30 and v.y <= ry*30+29 then
-			-- Still a teleporter, don't remove the <teleporter/>
-			return
-		end
-	end
-
-	for k,v in pairs(extra.teleporters) do
-		if v.x == rx and v.y == ry then
-			table.remove(extra.teleporters, k)
-			return
-		end
-	end
-end
-
-function update_vce_teleporters_checkroom(rx, ry)
-	-- Checks one room for teleporters and inserts/removes a <teleporter/> to keep <teleporters> in sync.
-	if extra.teleporters == nil then
-		return
-	end
-
-	local tele_exists = false
-
-	for k,v in pairs(entitydata) do
-		if v.t == 14 and v.x >= rx*40 and v.x <= rx*40+39 and v.y >= ry*30 and v.y <= ry*30+29 then
-			tele_exists = true
-		end
-	end
-
-	if tele_exists then
-		update_vce_teleporters_insert(rx, ry)
-	else
-		update_vce_teleporters_remove(rx, ry)
-	end
-end
-
-function update_vce_teleporters_checkrooms(rx1, ry1, rx2, ry2)
-	-- Can be run after any arbitrary change may have happened to an entity's type including changing to or from a VCE teleporter.
-	-- For example, saving in the raw entity properties dialog or undoing/redoing arbitrary/unknown entity property changes.
-	-- Just checks the two rooms (before/after room for entity position) for teleporters and inserts/removes a <teleporter/> to keep <teleporters> in sync.
-	update_vce_teleporters_checkroom(rx1, ry1)
-	update_vce_teleporters_checkroom(rx2, ry2)
 end

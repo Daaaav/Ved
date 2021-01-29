@@ -110,27 +110,6 @@ function dialog.form.rawentityproperties_make()
 	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
 	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
-	if metadata.target == "VCE" then
-		row = row+2
-		table.insert(form, {"", 0, row, 8, "subx", DF.LABEL})
-		table.insert(form, {"subx", 8, row, 7, thisentity.subx, DF.TEXT})
-		table.insert(form, {"", 16, row, 8, "suby", DF.LABEL})
-		table.insert(form, {"suby", 24, row, 7, thisentity.suby, DF.TEXT})
-		table.insert(form, {"", 32, row, 8, "state", DF.LABEL})
-		table.insert(form, {"state", 40, row, 7, thisentity.state, DF.TEXT})
-		row = row+1
-		table.insert(form, {"", 0, row, 8, "intower", DF.LABEL})
-		table.insert(form, {"intower", 8, row, 7, thisentity.intower, DF.TEXT})
-		row = row+1
-		table.insert(form, {"", 0, row, 13, "activityname", DF.LABEL})
-		table.insert(form, {"activityname", 13, row, 10, thisentity.activityname, DF.TEXT})
-		table.insert(form, {"", 24, row, 14, "activitycolor", DF.LABEL})
-		table.insert(form, {"activitycolor", 38, row, 9, thisentity.activitycolor, DF.TEXT})
-		row = row+1
-		table.insert(form, {"onetime", 0, row, 9, thisentity.onetime, DF.CHECKBOX})
-		table.insert(form, {"", 2, row, 7, "onetime", DF.LABEL})
-	end
-
 	return form
 end
 
@@ -161,9 +140,6 @@ function dialog.form.leveloptions_make()
 			end
 		},
 		{"", 0, 13, 40, L.TARGETPLATFORM, DF.LABEL},
-		{"target", 0, 14, 0, metadata.target, DF.RADIOS,
-			generate_dropdown_tables({{"V", L.PLATFORM_V}, {"VCE", L.PLATFORM_VCE}})
-		},
 	}
 end
 
@@ -870,15 +846,6 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	end
 
 	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
-	if metadata.target == "VCE" then
-		table.insert(entitypropkeys, "subx")
-		table.insert(entitypropkeys, "suby")
-		table.insert(entitypropkeys, "state")
-		table.insert(entitypropkeys, "intower")
-		table.insert(entitypropkeys, "activityname")
-		table.insert(entitypropkeys, "activitycolor")
-		table.insert(entitypropkeys, "onetime")
-	end
 	local changeddata = {}
 	for k,v in pairs(entitypropkeys) do
 		local newvalue = fields[v]
@@ -1137,8 +1104,6 @@ function dialog.callback.locatevvvvvv(button, fields, _, notclosed)
 
 	if fields.target == "V" then
 		s.vvvvvv23 = path
-	elseif fields.target == "VCE" then
-		s.vvvvvvce = path
 	end
 	saveconfig()
 

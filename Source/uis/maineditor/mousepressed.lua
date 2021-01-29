@@ -18,17 +18,11 @@ return function(x, y, button)
 			selectedtool = selectedtool - 1
 		else
 			selectedtool = 17
-			if metadata.target == "VCE" then
-				selectedtool = 20
-			end
 		end
 		updatewindowicon()
 		toolscroll()
 	elseif (keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift")) and button == flipscrollmore(macscrolling and "wu" or "wd") and not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
 		local tool_count = 17
-		if metadata.target == "VCE" then
-			tool_count = 20
-		end
 		if selectedtool < tool_count then
 			selectedtool = selectedtool + 1
 		else

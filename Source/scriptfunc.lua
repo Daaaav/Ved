@@ -94,7 +94,7 @@ function syntaxhl(text, x, y, thisistext, addcursor, docolor, lasttextcolor, tex
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
 					-- `say` and `reply` are special and still work capitalized even with no argument separators
-					local commandlevel = metadata.target == "VCE" and 2 or 1
+					local commandlevel = 1
 					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ")
 					or knowncommands[v_parsed]
 					or (knowninternalcommands[v_parsed] ~= nil and knowninternalcommands[v_parsed]<= commandlevel)

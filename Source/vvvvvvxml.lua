@@ -23,16 +23,8 @@ function loadlevelmetadata(path)
 	local thismetadata = {}
 	local thislimit
 
-	-- What kind of level is this?
-	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"([0-9]+)\">")
-	if vce_m ~= nil then
-		thismetadata.target = "VCE"
-		thismetadata.target_ver = tonumber(vce_m)
-		thislimit = limit_vce
-	else
-		thismetadata.target = "V"
-		thislimit = limit_v
-	end
+	thismetadata.target = "V"
+	thislimit = limit_v
 
 	-- First do the metadata.
 	cons("Loading metadata...")
@@ -170,132 +162,6 @@ function loadlevel(path)
 		cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 	end
 
-	-- VCE put its extra things right here.
-	if thismetadata.target == "VCE" then
-		thisextra.altstates = {}
-		for ay = 0, thismetadata.mapheight-1 do
-			if thisextra.altstates[ay] == nil then
-				thisextra.altstates[ay] = {}
-			end
-			for ax = 0, thismetadata.mapwidth-1 do
-				thisextra.altstates[ay][ax] = {}
-			end
-		end
-		if contents:find("<altstates ?/>") == nil then
-			x.altstates = contents:match("<altstates>(.*)</altstates>")
-			if x.altstates ~= nil then
-				-- todo sanity checks: altstates aren't duplicated, altstates must be sequential from 1, attributes are valid
-				for altstatetag in x.altstates:gmatch("<altstate (.-)</altstate>") do
-					local metaparts = explode(">", altstatetag)
-					local attributes = parsexmlattributes(metaparts[1])
-
-					local ax, ay = anythingbutnil0(tonumber(attributes.x)), anythingbutnil0(tonumber(attributes.y))
-					local st = anythingbutnil0(tonumber(attributes.state))
-
-					-- Normally these should not be nil, but altstates could be defined out of bounds... In which case, whatever
-					if thisextra.altstates[ay] == nil then
-						thisextra.altstates[ay] = {}
-					end
-					if thisextra.altstates[ay][ax] == nil then
-						thisextra.altstates[ay][ax] = {}
-					end
-					thisextra.altstates[ay][ax][st] = {}
-					local failedtiles = 0
-
-					for num in metaparts[2]:gmatch("([^,]*),") do
-						local t = tonumber(num)
-						if t == nil or t < 0 or t >= 1200 then
-							t = 0
-							failedtiles = failedtiles + 1
-						elseif math.floor(t) ~= t then
-							t = math.floor(t)
-							failedtiles = failedtiles + 1
-						end
-						table.insert(thisextra.altstates[ay][ax][st], t)
-					end
-
-					if failedtiles > 0 then
-						mycount.FC = mycount.FC + 1
-						cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID_ALTSTATE, {failedtiles, st, ax, ay}))
-					end
-				end
-			end
-		end
-
-		thisextra.towers = {}
-		if contents:find("<towers ?/>") == nil then
-			x.towers = contents:match("<towers>(.*)</towers>")
-			if x.towers ~= nil then
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for towertag in x.towers:gmatch("<tower (.-)</tower>") do
-					local thistower = {}
-					local metaparts = explode(">", towertag)
-					local attributes = parsexmlattributes(metaparts[1])
-
-					for k,v in pairs(attributes) do
-						thistower[k] = tonumber(v)
-					end
-					thistower.contents = metaparts[2]
-					table.insert(thisextra.towers, thistower)
-				end
-			end
-		end
-
-		thisextra.teleporters = {}
-		if contents:find("<teleporters ?/>") == nil then
-			x.teleporters = contents:match("<teleporters>(.*)</teleporters>")
-			if x.teleporters ~= nil then
-				for teleportertag in x.teleporters:gmatch("<teleporter (.-) ?/>") do
-					local thisteleporter = {}
-					local attributes = parsexmlattributes(teleportertag)
-
-					for k,v in pairs(attributes) do
-						thisteleporter[k] = tonumber(v)
-					end
-					table.insert(thisextra.teleporters, thisteleporter)
-				end
-			end
-		end
-
-		thisextra.timetrials = {}
-		if contents:find("<timetrials ?/>") == nil then
-			x.timetrials = contents:match("<timetrials>(.*)</timetrials>")
-			if x.timetrials ~= nil then
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for timetrialtag in x.timetrials:gmatch("<trial (.-)</trial>") do
-					local thistimetrial = {}
-					local metaparts = explode(">", timetrialtag)
-					local attributes = parsexmlattributes(metaparts[1])
-
-					for k,v in pairs(attributes) do
-						thistimetrial[k] = tonumber(v)
-					end
-					thistimetrial.name = metaparts[2]
-					table.insert(thisextra.timetrials, thistimetrial)
-				end
-			end
-		end
-
-		thisextra.dimensions = {}
-		if contents:find("<dimensions ?/>") == nil then
-			x.dimensions = contents:match("<dimensions>(.*)</dimensions>")
-			if x.dimensions ~= nil then
-				-- TODO temporary data structure. Only use for loading or saving, until you're sure it's a sane structure
-				for dimensiontag in x.dimensions:gmatch("<dimension (.-)</dimension>") do
-					local thisdimension = {}
-					local metaparts = explode(">", dimensiontag)
-					local attributes = parsexmlattributes(metaparts[1])
-
-					for k,v in pairs(attributes) do
-						thisdimension[k] = tonumber(v)
-					end
-					thisdimension.name = metaparts[2]
-					table.insert(thisextra.dimensions, thisdimension)
-				end
-			end
-		end
-	end
-
 	-- Entities.
 	local allentities = {}
 	local myvedmetadata = false
@@ -317,12 +183,7 @@ function loadlevel(path)
 		local duplicatestartpoints = {}
 		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
 			entityid = entityid + 1
-			allentities[entityid] = {
-				-- Add non-VVVVVV properties by default
-				subx = 0, suby = 0, -- VCE
-				intower = 0, state = 0, onetime = false, -- VCE
-				activityname = "", activitycolor = "" -- VCE
-			}
+			allentities[entityid] = {}
 
 			-- We now got x="x" ... p6="x">Data... Attributes to the left of the >, data to the right of it.
 			local metaparts = explode(">", entity)
@@ -364,7 +225,7 @@ function loadlevel(path)
 					end
 					table.insert(duplicatestartpoints, entityid)
 				end
-			elseif ((thismetadata.target ~= "VCE" and allentities[entityid].x == 800 and allentities[entityid].y == 600)
+			elseif ((allentities[entityid].x == 800 and allentities[entityid].y == 600)
 			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
 			and allentities[entityid].t == 17 then
 				-- This is the metadata entity!
@@ -504,9 +365,6 @@ function loadlevel(path)
 	local theselevelmetadata = {}
 	local all_platvs = {}
 	local lmd_width = 20
-	if thismetadata.target == "VCE" then
-		lmd_width = math.max(thismetadata.mapwidth, 20)
-	end
 	local rx, ry = lmd_width-1, -1
 	local n_levelmetadata = 0
 	local inboundsroom = 0
@@ -525,10 +383,7 @@ function loadlevel(path)
 		else
 			inbounds = false
 		end
-		theselevelmetadata[ry][rx] = {
-			-- Add non-VVVVVV properties by default
-			enemyv = 4, tower = 0, tower_row = 0, customtileset = 0, customspritesheet = 0, -- VCE
-		}
+		theselevelmetadata[ry][rx] = {}
 
 		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
 		local metaparts = explode(">", room)
@@ -537,7 +392,7 @@ function loadlevel(path)
 		local attributes = parsexmlattributes(metaparts[1])
 
 		for k,v in pairs(attributes) do
-			if k == "platv" and thismetadata.target ~= "VCE" then
+			if k == "platv" then
 				-- Unfortunately platv is very special.
 				table.insert(all_platvs, tonumber(v))
 				if inbounds then
@@ -567,7 +422,7 @@ function loadlevel(path)
 
 		if theselevelmetadata[ry][rx].tileset == nil
 		or type(theselevelmetadata[ry][rx].tileset) ~= "number"
-		or (theselevelmetadata[ry][rx].tileset > (thismetadata.target == "VCE" and 5 or 4)) then
+		or (theselevelmetadata[ry][rx].tileset > 4) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].tileset = 0
 		end if theselevelmetadata[ry][rx].tilecol == nil or type(theselevelmetadata[ry][rx].tilecol) ~= "number" or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1) or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
@@ -606,7 +461,7 @@ function loadlevel(path)
 		end if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyy2 = 0
-		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > (thismetadata.target == "VCE" and 24 or 9) then
+		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemytype = 0
 		end if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
@@ -706,7 +561,7 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
-	end if thismetadata.target ~= "VCE" and n_levelmetadata ~= 400 then
+	end if n_levelmetadata ~= 400 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, L.NOT400ROOMS)
 
@@ -788,12 +643,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
-	local savethis
-	if thismetadata.target == "VCE" then
-		savethis = vvvvvvxmltemplate_vce:gsub("%$VCEVERSION%$", thismetadata.target_ver)
-	else
-		savethis = vvvvvvxmltemplate
-	end
+	local savethis = vvvvvvxmltemplate
 
 	cons("Placing metadata...")
 	for k,v in pairs(metadataitems) do
@@ -856,116 +706,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	-- Slightly cleaning up
 	thenewcontents = nil
 
-	-- VCE put its extra things right here.
-	if thismetadata.target == "VCE" then
-		-- TODO look per table how it should be structured, and thus how it should be determined that it's empty.
-
-		local any_altstates = false
-		for ay,vy in pairs(thisextra.altstates) do
-			for ax,vx in pairs(vy) do
-				if #vx ~= 0 then
-					any_altstates = true
-					break
-				end
-			end
-			if any_altstates then
-				break
-			end
-		end
-		if any_altstates then
-			local altstatestag = {"        <altstates>\n"}
-
-			for ay,vy in pairs(thisextra.altstates) do
-				for ax,vx in pairs(vy) do
-					for as,vs in pairs(vx) do
-						table.insert(altstatestag,
-							"            <altstate x=\"" .. ax
-							.. "\" y=\"" .. ay
-							.. "\" state=\"" .. as
-							.. "\">" .. table.concat(vs, ",") .. ",</altstate>\n"
-						)
-					end
-				end
-			end
-
-			savethis = savethis:gsub("%$ALTSTATES%$", table.concat(altstatestag, ""):gsub("%%", "%%%%") .. "        </altstates>")
-		else
-			savethis = savethis:gsub("%$ALTSTATES%$", "        <altstates />")
-		end
-
-		if #thisextra.towers ~= 0 then
-			local towerstag = {"        <towers>\n"}
-
-			for k,v in pairs(thisextra.towers) do
-				table.insert(towerstag,
-					"            <tower size=\"" .. v.size
-					.. "\" scroll=\"" .. v.scroll
-					.. "\">" .. v.contents .. "</tower>\n"
-				)
-			end
-
-			savethis = savethis:gsub("%$TOWERS%$", table.concat(towerstag, ""):gsub("%%", "%%%%") .. "        </towers>")
-		else
-			savethis = savethis:gsub("%$TOWERS%$", "        <towers />")
-		end
-
-		if #thisextra.teleporters ~= 0 then
-			local teleporterstag = {"        <teleporters>\n"}
-
-			for k,v in pairs(thisextra.teleporters) do
-				table.insert(teleporterstag,
-					"            <teleporter x=\"" .. v.x
-					.. "\" y=\"" .. v.y
-					.. "\" />\n"
-				)
-			end
-
-			savethis = savethis:gsub("%$TELEPORTERS%$", table.concat(teleporterstag, ""):gsub("%%", "%%%%") .. "        </teleporters>")
-		else
-			savethis = savethis:gsub("%$TELEPORTERS%$", "        <teleporters />")
-		end
-
-		if #thisextra.timetrials ~= 0 then
-			local timetrialstag = {"        <timetrials>\n"}
-
-			for k,v in pairs(thisextra.timetrials) do
-				table.insert(timetrialstag,
-					"            <trial roomx=\"" .. v.roomx
-					.. "\" roomy=\"" .. v.roomy
-					.. "\" startx=\"" .. v.startx
-					.. "\" starty=\"" .. v.starty
-					.. "\" startf=\"" .. v.startf
-					.. "\" par=\"" .. v.par
-					.. "\" trinkets=\"" .. v.trinkets
-					.. "\" music=\"" .. v.music
-					.. "\">" .. v.name .. "</trial>\n"
-				)
-			end
-
-			savethis = savethis:gsub("%$TIMETRIALS%$", table.concat(timetrialstag, ""):gsub("%%", "%%%%") .. "        </timetrials>")
-		else
-			savethis = savethis:gsub("%$TIMETRIALS%$", "        <timetrials />")
-		end
-
-		if #thisextra.dimensions ~= 0 then
-			local dimensionstag = {"        <dimensions>\n"}
-
-			for k,v in pairs(thisextra.dimensions) do
-				table.insert(dimensionstag,
-					"            <dimension x=\"" .. v.x
-					.. "\" y=\"" .. v.y
-					.. "\" w=\"" .. v.w
-					.. "\" h=\"" .. v.h
-					.. "\">" .. v.name .. "</dimension>\n"
-				)
-			end
-
-			savethis = savethis:gsub("%$DIMENSIONS%$", table.concat(dimensionstag, ""):gsub("%%", "%%%%") .. "        </dimensions>")
-		else
-			savethis = savethis:gsub("%$DIMENSIONS%$", "        <dimensions />")
-		end
-	end
-
 	-- Now do all entities, if we have any!
 	cons("Saving entities...")
 	if (count.entities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
@@ -982,22 +722,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					entitydatasaved = entitydatasaved + string.len(data)
 					data = ""
 				end
-				local extra_end_attrs
-				if thismetadata.target == "VCE" then
-					extra_end_attrs =
-						(v.state ~= 0 and " state=\"" .. v.state .. "\"" or "")
-						.. " intower=\"" .. v.intower .. "\""
-						.. (v.activityname ~= "" and " activityname=\"" .. v.activityname .. "\"" or "")
-						.. (v.activitycolor ~= "" and " activitycolor=\"" .. v.activitycolor .. "\"" or "")
-						.. (v.onetime and " onetime=\"1\"" or "")
-				else
-					extra_end_attrs = ""
-				end
+				local extra_end_attrs = ""
 				table.insert(thenewentities,
 					"            <edentity x=\"" .. v.x
 					.. "\" y=\"" .. v.y
-					.. (thismetadata.target == "VCE" and "\" subx=\"" .. v.subx or "")
-					.. (thismetadata.target == "VCE" and "\" suby=\"" .. v.suby or "")
 					.. "\" t=\"" .. v.t
 					.. "\" p1=\"" .. v.p1
 					.. "\" p2=\"" .. v.p2
@@ -1064,10 +792,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			table.insert(thenewentities,
 				"            <edentity"
 				.. " x=\"4000\" y=\"3000\""
-				.. (thismetadata.target == "VCE" and " subx=\"0\" suby=\"0\"" or "")
 				.. " t=\"17\""
 				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\""
-				.. (thismetadata.target == "VCE" and " intower=\"0\"" or "") .. ">" .. xmlspecialchars(mdedata)
 				.. "</edentity>\n"
 			)
 		end
@@ -1087,61 +813,43 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Saving room metadata...")
 	-- Now all room metadata, aka levelclass
 	local all_platvs = {}
-	if thismetadata.target ~= "VCE" then
-		for y = 0, thismetadata.mapheight-1 do
-			if y >= limit.mapheight then
+	for y = 0, thismetadata.mapheight-1 do
+		if y >= limit.mapheight then
+			break
+		end
+		for x = 0, thismetadata.mapwidth-1 do
+			if x >= limit.mapwidth then
 				break
 			end
-			for x = 0, thismetadata.mapwidth-1 do
-				if x >= limit.mapwidth then
-					break
-				end
-				-- platv needs special handling, unfortunately.
-				table.insert(all_platvs, theselevelmetadata[y][x].platv)
-			end
+			-- platv needs special handling, unfortunately.
+			table.insert(all_platvs, theselevelmetadata[y][x].platv)
 		end
 	end
 	local alllevelmetadata = {}
 	local i = 1
 	local lmd_w, lmd_h = 20, 20
-	if thismetadata.target == "VCE" and (thismetadata.mapwidth > 20 or thismetadata.mapheight > 20) then
-		-- Width is always at least 20, but is more if the map is wider.
-		-- If within 20x20, VCE saves 20x20.
-		-- Else, VCE saves WxH where W is at least 20.
-		-- Example: for 1x21 VCE saves 20x21, for 21x1 it saves 21x1.
-		lmd_w, lmd_h = math.max(thismetadata.mapwidth, 20), thismetadata.mapheight
-	end
 	for y = 0, lmd_h-1 do
 		for x = 0, lmd_w-1 do
 			local v = theselevelmetadata[y][x]
 			local my_platv
-			if thismetadata.target == "VCE" then
-				my_platv = v.platv
-			else
-				my_platv = all_platvs[i]
-				if my_platv == nil then
-					my_platv = 4
-				end
+			my_platv = all_platvs[i]
+			if my_platv == nil then
+				my_platv = 4
 			end
 			table.insert(alllevelmetadata,
 				"            <edLevelClass tileset=\"" .. v.tileset
 				.. "\" tilecol=\"" .. v.tilecol
-				.. (thismetadata.target == "VCE" and "\" customtileset=\"" .. v.customtileset or "")
-				.. (thismetadata.target == "VCE" and "\" customspritesheet=\"" .. v.customspritesheet or "")
 				.. "\" platx1=\"" .. v.platx1
 				.. "\" platy1=\"" .. v.platy1
 				.. "\" platx2=\"" .. v.platx2
 				.. "\" platy2=\"" .. v.platy2
 				.. "\" platv=\"" .. my_platv
-				.. (thismetadata.target == "VCE" and "\" enemyv=\"" .. v.enemyv or "")
 				.. "\" enemyx1=\"" .. v.enemyx1
 				.. "\" enemyy1=\"" .. v.enemyy1
 				.. "\" enemyx2=\"" .. v.enemyx2
 				.. "\" enemyy2=\"" .. v.enemyy2
 				.. "\" enemytype=\"" .. v.enemytype
 				.. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1)
-				.. (thismetadata.target == "VCE" and "\" tower=\"" .. v.tower or "")
-				.. (thismetadata.target == "VCE" and "\" tower_row=\"" .. v.tower_row or "")
 				.. "\" warpdir=\"" .. v.warpdir
 				.. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
 			)
@@ -1306,113 +1014,4 @@ function default_levelmetadata(rx, ry)
 		roomname = "",
 		auto2mode = 0,
 	}
-end
-
-function convert_target(oldtarget, newtarget)
-	local result = false
-	if oldtarget == "V" and newtarget == "VCE" then
-		result = convert_target_v_to_vce()
-	elseif oldtarget == "VCE" and newtarget == "V" then
-		result = convert_target_vce_to_v()
-	end
-
-	if result then
-		-- Conversion cannot be undone
-		undobuffer = {}
-		redobuffer = {}
-		unsavedchanges = true
-
-		map_init()
-	end
-
-	return result
-end
-
-function convert_target_v_to_vce()
-	vce_deprecation_dialog()
-
-	metadata.target = "VCE"
-	metadata.target_ver = 1
-	limit = limit_vce
-
-	extra.altstates = {}
-	for ay = 0, metadata.mapheight-1 do
-		if extra.altstates[ay] == nil then
-			extra.altstates[ay] = {}
-		end
-		for ax = 0, metadata.mapwidth-1 do
-			extra.altstates[ay][ax] = {}
-		end
-	end
-
-	extra.towers = {}
-	extra.teleporters = {}
-	extra.timetrials = {}
-	extra.dimensions = {}
-
-	if vedmetadata ~= false then
-		for i = limit_v.flags, limit_vce.flags-1 do
-			vedmetadata.flaglabel[i] = ""
-		end
-	end
-
-	return true
-end
-
-function convert_target_vce_to_v()
-	metadata.target = "V"
-	limit = limit_v
-
-	extra.altstates = nil
-	extra.towers = nil
-	extra.teleporters = nil
-	extra.timetrials = nil
-	extra.dimensions = nil
-
-	metadata.mapwidth = math.min(metadata.mapwidth, limit_v.mapwidth)
-	metadata.mapheight = math.min(metadata.mapheight, limit_v.mapheight)
-
-	for k,v in pairs(entitydata) do
-		if table.contains({5, 8, 14}, v.t) -- Flip tokens, coins and teleporters don't exist in VVVVVV
-		or v.intower ~= 0
-		or v.state ~= 0 then
-			entitydata[k] = nil
-			count.entities = count.entities - 1
-		else
-			if v.t == 20 then
-				-- Convert activity zones into normal script boxes instead of deleting them
-				entitydata[k].t = 19
-			end
-
-			v.subx, v.suby = 0, 0
-			v.onetime = false
-			v.activityname = ""
-			v.activitycolor = ""
-		end
-	end
-
-	for ay,vy in pairs(levelmetadata) do
-		for ax,vx in pairs(vy) do
-			if vx.tileset == 5 then
-				vx.tileset = 0
-			end
-			if vx.enemytype > 9 then
-				vx.enemytype = 0
-			end
-			vx.customtileset = 0
-			vx.customspritesheet = 0
-			vx.enemyv = 4
-			vx.tower = 0
-			vx.tower_row = 0
-		end
-	end
-
-
-	if vedmetadata ~= false then
-		for i = limit_v.flags, limit_vce.flags-1 do
-			vedmetadata.flaglabel[i] = nil
-		end
-	end
-
-	return true
 end

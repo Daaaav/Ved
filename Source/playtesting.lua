@@ -62,8 +62,6 @@ end
 function playtesting_locate_path()
 	if metadata.target == "V" then
 		return s.vvvvvv23
-	elseif metadata.target == "VCE" then
-		return s.vvvvvvce
 	end
 end
 
@@ -77,7 +75,7 @@ function playtesting_ask_path(target, continue_playtesting)
 		playtesting_get_vvvvvv_message(target),
 		DBS.OKCANCEL,
 		dialog.callback.locatevvvvvv,
-		langkeys(L.LOCATEVVVVVV, {target == "VCE" and "VVVVVV-CE" or "VVVVVV 2.3"}),
+		langkeys(L.LOCATEVVVVVV, {"VVVVVV 2.3"}),
 		dialog.form.hidden_make({target=target, start=continue_playtesting}, files),
 		dialog.callback.locatevvvvvv_validate
 	)
@@ -93,12 +91,6 @@ function playtesting_get_vvvvvv_message(target)
 			return langkeys(L.VVVVVVFILE, {"VVVVVV"})
 		elseif love.system.getOS() == "Windows" then
 			return langkeys(L.VVVVVVFILE, {"VVVVVV.exe"})
-		end
-	elseif target == "VCE" then
-		if table.contains({"Linux", "OS X"}, love.system.getOS()) then
-			return langkeys(L.VVVVVVFILE, {"VVVVVV-CE"})
-		elseif love.system.getOS() == "Windows" then
-			return langkeys(L.VVVVVVFILE, {"VVVVVV-CE.exe"})
 		end
 	end
 end

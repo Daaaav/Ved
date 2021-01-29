@@ -849,9 +849,6 @@ end
 
 function switchtileset()
 	local maxtileset = 4
-	if metadata.target == "VCE" then
-		maxtileset = 5
-	end
 	if keyboard_eitherIsDown("shift") then
 		selectedtileset = revcycle(selectedtileset, maxtileset, 0)
 	else
@@ -927,9 +924,6 @@ end
 function switchenemies()
 	local oldtype = levelmetadata_get(roomx, roomy).enemytype
 	local maxenemy = 9
-	if metadata.target == "VCE" then
-		maxenemy = 24
-	end
 	if keyboard_eitherIsDown("shift") then
 		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
 	else
@@ -2172,12 +2166,6 @@ end
 function sp_teken(v, offx, offy, myroomx, myroomy)
 	ox = offx+(v.x-myroomx*40)*16 + 6
 	oy = offy+(v.y-myroomy*30)*16 + 24
-
-	if v.p1 < 0 or v.p1 > 1 then
-		return
-	elseif v.p1 == 1 then
-		oy = oy - 14
-	end
 
 	love.graphics.setColor(0,0,0)
 	love.graphics.rectangle("fill", ox, oy, 20, 14)

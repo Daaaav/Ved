@@ -3,3 +3,4 @@
 
 --L. = ""
 
+L.PLATFORM_VCE = nil

@@ -1677,7 +1677,7 @@ return function()
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
 	-- When adding an extra button for layers mode or something like that, and the buttons needs to be squished, just set this to true and then hardcode it. Not for plugins though
-	local additionalbutton = metadata.target == "VCE"
+	local additionalbutton = false
 	local additionalbutton_np = additionalbutton and 1 or 0
 	local additionalbutton_yoffset = additionalbutton and 166 or 164
 	local additionalbutton_spacing = additionalbutton and 20 or 24
@@ -2027,13 +2027,7 @@ return function()
 	-- Also display a smaller tiles picker for semi-undirect mode
 	if selectedtool <= 3 and not voided_metadata then
 		local picker_x, picker_y = love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156 -- -(6*16)-16-24-12-8 => -156
-		local picker_scale
-		if metadata.target == "VCE" then
-			picker_y = picker_y + 40
-			picker_scale = 1
-		else
-			picker_scale = 2
-		end
+		local picker_scale = 2
 		local picker_w, picker_h = 6*picker_scale*8, 5*picker_scale*8
 
 		love.graphics.setColor(128,128,128,255)
@@ -2042,19 +2036,6 @@ return function()
 		love.graphics.rectangle("fill", picker_x, picker_y, picker_w, picker_h)
 		love.graphics.setColor(255,255,255,255)
 		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, levelmetadata_get(roomx, roomy).customtileset, picker_scale)
-
-		if metadata.target == "VCE" then
-			local ct = levelmetadata_get(roomx, roomy).customtileset
-			local cs = levelmetadata_get(roomx, roomy).customspritesheet
-
-			local ind_x, ind_y = love.graphics.getWidth()-7*8, love.graphics.getHeight()-116
-			ved_print(langkeys(L.ONECUSTOMTILESET, {ct == 0 and "-" or ct}), ind_x, ind_y)
-			ved_print(langkeys(L.ONECUSTOMSPRITESHEET, {cs == 0 and "-" or cs}), ind_x, ind_y+8)
-			if #extra.altstates[roomy][roomx] > 0 then
-				ved_print(langkeys(L.ONEALTSTATE, {altstate, #extra.altstates[roomy][roomx]}), ind_x, ind_y+24)
-			end
-			--ved_print(langkeys(L.ONETOWER, {"↑", 1, 400}), ind_x, ind_y+24)
-		end
 	end
 
 	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
