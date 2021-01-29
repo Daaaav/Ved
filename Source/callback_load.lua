@@ -16,9 +16,12 @@ function love.load()
 		if not love.filesystem.exists("available_libs") then
 			love.filesystem.createDirectory("available_libs")
 		end
+		-- Too bad there's no love.filesystem.copy()
 		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac03.so") then
-			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_mac03.so", love.filesystem.read("libs/vedlib_filefunc_mac03.so"))
+		end
+		if not love.filesystem.exists("available_libs/vedlib_https_mac00.so") then
+			love.filesystem.write("available_libs/vedlib_https_mac00.so", love.filesystem.read("libs/vedlib_https_mac00.so"))
 		end
 		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
