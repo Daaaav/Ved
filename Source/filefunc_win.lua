@@ -168,7 +168,7 @@ function listfiles_generic(directory, filter, show_hidden)
 		current_name = path_utf16_to_utf8(buffer_filedata.cFileName)
 		if current_name ~= "." and current_name ~= ".."
 		and (isdir or filter == "" or current_name:sub(-filter:len(), -1) == filter)
-		and not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_REPARSE_POINT)
+		and not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_SYSTEM)
 		and (show_hidden or not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_HIDDEN)) then
 			ffi.C.FileTimeToSystemTime(buffer_filedata.ftLastWriteTime, buffer_st_utc)
 			ffi.C.SystemTimeToTzSpecificLocalTime(nil, buffer_st_utc, buffer_st_loc)
