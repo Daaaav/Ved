@@ -841,7 +841,7 @@ function flipscrollmore(wheel)
 end
 
 function thingk()
-	keyva = require("keyfunc")(function()
+	keyva = require("konami")(function()
 		if state == 1 and (selectedtool == 1 or selectedtool == 2) and mouseon(16+64, 16+46*8+leftsubtoolscroll, 32, 32) then
 			subtoolimgs[1][10] = st("1_10");subtoolimgs[2][10] = st("1_10")
 		elseif state == 15 then
