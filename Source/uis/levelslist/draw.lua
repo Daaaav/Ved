@@ -54,7 +54,7 @@ return function()
 			width = width-12
 		end
 		if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
-			lessheight = lessheight + 16 + #s.recentfiles*8
+			lessheight = lessheight + 16 + #s.recentfiles*12
 			love.graphics.setColor(64,64,64)
 			--love.graphics.rectangle("line", 7.5, love.graphics.getHeight()-lessheight+34.5, hoverarea+1, lessheight-59)
 			--love.graphics.setColor(255,0,0)
@@ -72,19 +72,19 @@ return function()
 
 			local removerecent
 			for k,v in pairs(s.recentfiles) do
-				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8) and window_active()
+				local mouseishovering = nodialog and not mousepressed and mouseon(8, love.graphics.getHeight()-(lessheight-23)+4+12*k, hoverarea, 12) and window_active()
 				if mouseishovering then
 					hoveringlevel = v
 					hoveringlevel_k = (-#s.recentfiles)+(k-1)
 				end
 				if mouseishovering or tabselected == (-#s.recentfiles)+(k-1) then
 					love.graphics.setColor(255,255,255,64)
-					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+8+8*k, hoverarea, 8)
+					love.graphics.rectangle("fill", 8, love.graphics.getHeight()-(lessheight-23)+4+12*k, hoverarea, 12)
 					love.graphics.setColor(255,255,0)
 				end
 				display_levels_list_string(
 					displayable_filename(v) .. ".vvvvvv",
-					18, love.graphics.getHeight()-(lessheight-23)+8+8*k,
+					18, love.graphics.getHeight()-(lessheight-23)+4+12*k+2,
 					(-#s.recentfiles)+(k-1), width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
 				)
 
@@ -92,14 +92,14 @@ return function()
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
 					local md = files[currentdir][actualfile].metadata
 					if not md.success then
-						love.graphics.draw(smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+8+8*k)
+						love.graphics.draw(smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
 					else
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
 						display_levels_list_string(
 							md.Title,
-							metadatax, love.graphics.getHeight()-(lessheight-23)+8+8*k,
+							metadatax, love.graphics.getHeight()-(lessheight-23)+4+12*k+2,
 							(-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
 						)
 					end
@@ -110,7 +110,7 @@ return function()
 					if not (mouseishovering or tabselected == k2) then
 						love.graphics.setColor(128,128,128)
 					end
-					ved_print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-23)+8+8*k)
+					ved_print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-23)+4+12*k+2)
 				end
 
 				love.graphics.setColor(255,255,255)
@@ -161,8 +161,8 @@ return function()
 				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
 				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():sub(1, (input .. input_r):len()) == input .. input_r then
 				if backupscreen or v.result_shown then
-					if 16+8*k2+levellistscroll > -64 and 16+8*k2+levellistscroll < love.graphics.getHeight()+64 then
-						local mouseishovering = nodialog and not mousepressed and mouseon(8, 14+8*k2+levellistscroll, hoverarea, 8) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and window_active()
+					if 16+12*k2+levellistscroll > -64 and 16+12*k2+levellistscroll < love.graphics.getHeight()+64 then
+						local mouseishovering = nodialog and not mousepressed and mouseon(8, 10+12*k2+levellistscroll, hoverarea, 12) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and window_active()
 
 						if mouseishovering then
 							local trailingdirsep = ""
@@ -176,41 +176,41 @@ return function()
 
 						if mouseishovering or tabselected == k2 then
 							love.graphics.setColor(255,255,255,64)
-							love.graphics.rectangle("fill", 8, 14+8*k2+levellistscroll, hoverarea, 8)
+							love.graphics.rectangle("fill", 8, 10+12*k2+levellistscroll, hoverarea, 12)
 							love.graphics.setColor(255,255,0)
 						end
 
 						if v.isdir then
-							love.graphics.draw(smallfolder, 8, 14+8*k2+levellistscroll)
+							love.graphics.draw(smallfolder, 8, 10+12*k2+levellistscroll+2)
 						end
 						if backupscreen and not v.isdir then
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
-								love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
-								ved_print(displayable_filename(v.name), 18, 14+8*k2+levellistscroll)
+								love.graphics.draw(smallunknown, 8, 10+12*k2+levellistscroll+2)
+								ved_print(displayable_filename(v.name), 18, 10+12*k2+levellistscroll+2)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
-								ved_print("[" .. k .. "]", 18, 14+8*k2+levellistscroll)
-								ved_print(format_date(v.bu_lastmodified), 66, 14+8*k2+levellistscroll)
-								ved_print(format_date(v.bu_overwritten), 408, 14+8*k2+levellistscroll)
+								ved_print("[" .. k .. "]", 18, 10+12*k2+levellistscroll+2)
+								ved_print(format_date(v.bu_lastmodified), 66, 10+12*k2+levellistscroll+2)
+								ved_print(format_date(v.bu_overwritten), 408, 10+12*k2+levellistscroll+2)
 							end
 						else
 							display_levels_list_string(
 								displayable_filename(v.name),
-								18, 14+8*k2+levellistscroll,
+								18, 10+12*k2+levellistscroll+2,
 								k, width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
 							)
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
-									love.graphics.draw(smallunknown, 8, 14+8*k2+levellistscroll)
+									love.graphics.draw(smallunknown, 8, 10+12*k2+levellistscroll+2)
 								else
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
 									display_levels_list_string(
 										v.metadata.Title,
-										metadatax, 14+8*k2+levellistscroll,
+										metadatax, 10+12*k2+levellistscroll+2,
 										k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
 									)
 								end
@@ -219,7 +219,7 @@ return function()
 							if not (mouseishovering or tabselected == k2) then
 								love.graphics.setColor(128,128,128)
 							end
-							ved_print(format_date(v.lastmodified), lastmodifiedx, 14+8*k2+levellistscroll)
+							ved_print(format_date(v.lastmodified), lastmodifiedx, 10+12*k2+levellistscroll+2)
 						end
 
 
@@ -267,12 +267,12 @@ return function()
 							-- Wasn't found, apparently
 						elseif files[currentdir][recentmetadata_files[recentname]] ~= nil and files[currentdir][recentmetadata_files[recentname]].metadata ~= nil then
 							md = files[currentdir][recentmetadata_files[recentname]].metadata
-							topy = love.graphics.getHeight()-(lessheight-23)+16+8*(#s.recentfiles+preferred_k+1)
+							topy = love.graphics.getHeight()-(lessheight-23)+16+12*(#s.recentfiles+preferred_k+1)
 						end
 					end
 				elseif files[currentdir][preferred_k] ~= nil and files[currentdir][preferred_k].metadata ~= nil then
 					md = files[currentdir][preferred_k].metadata
-					topy = 22+8*preferred_k_location+levellistscroll
+					topy = 22+12*preferred_k_location+levellistscroll
 				end
 				if preferred_k < 0 then
 					filename = anythingbutnil(s.recentfiles[#s.recentfiles+preferred_k+1]) .. ".vvvvvv"
@@ -324,9 +324,9 @@ return function()
 		end
 
 		-- Scrollbar
-		if max_levellistscroll ~= (k2-1)*8 then
+		if max_levellistscroll ~= (k2-1)*12 then
 			levellistscroll = 0
-			max_levellistscroll = (k2-1)*8
+			max_levellistscroll = (k2-1)*12
 		end
 		local newfraction = scrollbar(16+hoverarea, 22, love.graphics.getHeight()-lessheight, max_levellistscroll, (-levellistscroll)/(max_levellistscroll-(love.graphics.getHeight()-lessheight)))
 

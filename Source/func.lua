@@ -1881,6 +1881,10 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 			end
 		end
 	elseif state == 6 then
+		if distance % 8 == 0 then
+			-- The levels list now has items that are 12 high... Which makes 16 scroll distance jarring
+			distance = distance * 1.5
+		end
 		if direction == "u" then
 			levellistscroll = levellistscroll + distance
 			if levellistscroll > 0 then
@@ -1890,7 +1894,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 			levellistscroll = levellistscroll - distance
 			local lessheight = 48
 			if #s.recentfiles > 0 and input == "" and input_r == "" then
-				lessheight = lessheight + 16 + #s.recentfiles*8
+				lessheight = lessheight + 16 + #s.recentfiles*12
 			end
 			local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
 			if -levellistscroll > upperbound then
