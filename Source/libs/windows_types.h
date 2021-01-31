@@ -24,3 +24,6 @@ typedef void TIME_ZONE_INFORMATION;
 
 typedef void* LPOVERLAPPED;
 
+typedef long LONG;
+typedef LONG HRESULT;
+typedef HANDLE HWND;

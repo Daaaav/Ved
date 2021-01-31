@@ -159,6 +159,14 @@ DWORD GetEnvironmentVariableW(
   DWORD   nSize
 );
 
+HRESULT SHGetFolderPathW(
+  HWND   hwnd,
+  int    csidl,
+  HANDLE hToken,
+  DWORD  dwFlags,
+  LPWSTR pszPath
+);
+
 DWORD GetLogicalDrives();
 
 BOOL CreatePipe(

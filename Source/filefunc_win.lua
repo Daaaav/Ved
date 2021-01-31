@@ -4,6 +4,7 @@ local cache_modtimes = {} -- filepath => unix_timestamp
 require("libs/windows_constants")
 
 local ffi = require("ffi")
+local shell32 = ffi.load("Shell32") -- SHGetFolderPathW
 ffi.cdef((love.filesystem.read("libs/windows_types.h")))
 ffi.cdef((love.filesystem.read("libs/windows_main.h")))
 
@@ -231,12 +232,8 @@ function setvvvvvvpaths()
 	-- Sets the path variables to what they _should_ be, even if they don't exist.
 	-- That way we can say "check {levelsfolder} exists and try again"
 
-	if not directory_exists(userprofile, "\\Documents") and directory_exists(userprofile, "\\My Documents") then
-		-- Windows XP still?
-		vvvvvvfolder_expected = userprofile .. "\\My Documents\\VVVVVV"
-	else
-		vvvvvvfolder_expected = userprofile .. "\\Documents\\VVVVVV"
-	end
+	shell32.SHGetFolderPathW(nil, CSIDL_PERSONAL, nil, SHGFP_TYPE_CURRENT, buffer_path_utf16);
+	vvvvvvfolder_expected = path_utf16_to_utf8(buffer_path_utf16) .. "\\VVVVVV"
 
 	if s.customvvvvvvdir == "" then
 		vvvvvvfolder = vvvvvvfolder_expected
