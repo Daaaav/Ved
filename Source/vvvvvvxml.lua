@@ -1,6 +1,5 @@
 -- First some things that could as well have gone in const.lua but are here for easy reference.
-metadataitems =
-	{
+metadataitems = {
 	"Creator", -- name
 	"Title",
 	"Created", -- 2?
@@ -8,7 +7,7 @@ metadataitems =
 	"Modifiers", -- 2?
 	"Desc1", "Desc2", "Desc3",
 	"website"
-	}
+}
 
 function loadlevelmetadata(path)
 	-- Returns (bool)success, (table)metadata, (table)limit, contents
@@ -705,8 +704,7 @@ function loadlevel(path)
 		--[[ TODO: Think about readding this later, after converting it to the 3D table
 		if #theselevelmetadata < 400 then
 			for croom = #theselevelmetadata+1, 400 do
-				theselevelmetadata[croom] =
-					{
+				theselevelmetadata[croom] = {
 					tileset = 0,
 					tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
 					customtileset = 0,
@@ -728,7 +726,7 @@ function loadlevel(path)
 					warpdir = 0,
 					roomname = "",
 					auto2mode = 0,
-					}
+				}
 			end
 		end
 		]]
@@ -1214,8 +1212,7 @@ function createblanklevel(lvwidth, lvheight)
 	-- First do the metadata.
 	cons("Loading metadata...")
 
-	thismetadata =
-		{
+	thismetadata = {
 		Creator = "Unknown",
 		Title = "Untitled Level",
 		Created = "2",
@@ -1227,7 +1224,7 @@ function createblanklevel(lvwidth, lvheight)
 		mapheight = lvheight,
 		levmusic = 0,
 		target = "V"
-		}
+	}
 
 	-- Now, the contents!
 	cons("Loading all the contents...")

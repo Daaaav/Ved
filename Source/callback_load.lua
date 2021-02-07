@@ -350,12 +350,11 @@ function love.load()
 	scrolldn = love.graphics.newImage("images/scrolldn.png")
 
 	platformimg = love.graphics.newImage("images/platform.png")
-	platformpart =
-		{
+	platformpart = {
 		love.graphics.newQuad(0, 0, 8, 8, 24, 8),
 		love.graphics.newQuad(8, 0, 8, 8, 24, 8),
 		love.graphics.newQuad(16, 0, 8, 8, 24, 8)
-		}
+	}
 
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}

@@ -1,252 +1,204 @@
 -- This will load the config when loading Ved, or create it if it doesn't exist yet.
 
-configs =
-	{
-	customvvvvvvdir =
-		{
+configs = {
+	customvvvvvvdir = {
 		default = "",
 		["type"] = "string",
 		comment = "do not include the directory called \"levels\" here, nor a trailing (back)slash"
-		},
-	lang =
-		{
+	},
+	lang = {
 		default = "en",
 		["type"] = "string",
-		},
-	langchosen =
-		{
+	},
+	langchosen = {
 		default = false,
 		["type"] = "bool",
-		},
-	dateformat =
-		{
+	},
+	dateformat = {
 		default = "%Y-%m-%d %H:%M:%S",
 		["type"] = "string",
 		comment = "Obsolete, no longer used for technical reasons."
-		},
-	new_dateformat =
-		{
+	},
+	new_dateformat = {
 		default = "YMD",
 		["type"] = "string",
-		},
-	new_timeformat =
-		{
+	},
+	new_timeformat = {
 		default = 24,
 		["type"] = "number",
-		},
-	dialoganimations =
-		{
+	},
+	dialoganimations = {
 		default = true,
 		["type"] = "bool",
-		},
-	flipsubtoolscroll =
-		{
+	},
+	flipsubtoolscroll = {
 		default = false,
 		["type"] = "bool",
-		},
-	adjacentroomlines =
-		{
+	},
+	adjacentroomlines = {
 		default = true,
 		["type"] = "bool",
-		},
-	askbeforequit =
-		{
+	},
+	askbeforequit = {
 		default = true,
 		["type"] = "bool",
 		comment = "Obsolete, remains in order to not automatically make old versions of Ved annoying after running 1.3+"
-		},
-	neveraskbeforequit =
-		{
+	},
+	neveraskbeforequit = {
 		default = false,
 		["type"] = "bool",
-		},
-	scale =
-		{
+	},
+	scale = {
 		default = 1,
 		["type"] = "number",
-		},
-	coords0 =
-		{
+	},
+	coords0 = {
 		default = false,
 		["type"] = "bool",
-		},
-	acceptutf8 =
-		{
+	},
+	acceptutf8 = {
 		default = false,
 		["type"] = "bool",
 		comment = "Obsolete, controlled whether non-ASCII characters were typable in custom levels. Now always true."
-		},
-	smallerscreen =
-		{
+	},
+	smallerscreen = {
 		default = false,
 		["type"] = "bool",
 		comment = "Make the resolution smaller by collapsing the tools menu on the left and adjusting other things"
-		},
-	dontpreventscriptsplits =
-		{
+	},
+	dontpreventscriptsplits = {
 		default = false,
 		["type"] = "bool",
 		comment = "Enable to not let the editor add a space if a colon is the last character on a line in a script"
-		},
-	loadscriptname =
-		{
+	},
+	loadscriptname = {
 		default = "$1_load",
 		["type"] = "string",
-		},
-	showfps =
-		{
+	},
+	showfps = {
 		default = false,
 		["type"] = "bool",
-		},
-	lowfpswarning =
-		{
+	},
+	lowfpswarning = {
 		default = -1,
 		["type"] = "number",
-		},
-	fpslimit_ix =
-		{
+	},
+	fpslimit_ix = {
 		default = 4,
 		["type"] = "number",
-		},
-	pausedrawunfocused =
-		{
+	},
+	pausedrawunfocused = {
 		default = true,
 		["type"] = "bool",
-		},
-	autosavecrashlogs =
-		{
+	},
+	autosavecrashlogs = {
 		default = true,
 		["type"] = "bool",
-		},
-	checkforupdates =
-		{
+	},
+	checkforupdates = {
 		default = true,
 		["type"] = "bool",
-		},
-	loadallmetadata =
-		{
+	},
+	loadallmetadata = {
 		default = true,
 		["type"] = "bool",
-		},
-	enableoverwritebackups =
-		{
+	},
+	enableoverwritebackups = {
 		default = true,
 		["type"] = "bool",
-		},
-	amountoverwritebackups =
-		{
+	},
+	amountoverwritebackups = {
 		default = 10,
 		["type"] = "number",
-		},
-	forcescale =
-		{
+	},
+	forcescale = {
 		default = false,
 		["type"] = "bool",
-		},
-	recentfiles =
-		{
+	},
+	recentfiles = {
 		default = {},
 		["type"] = "stringsarray",
-		},
-	usefontpng =
-		{
+	},
+	usefontpng = {
 		default = false,
 		["type"] = "bool",
-		},
-	colored_textboxes =
-		{
+	},
+	colored_textboxes = {
 		default = true,
 		["type"] = "bool",
-		},
-	scripteditor_largefont =
-		{
+	},
+	scripteditor_largefont = {
 		default = false,
 		["type"] = "bool",
-		},
-	visload_seen =
-		{
+	},
+	visload_seen = {
 		default = false,
 		["type"] = "bool",
-		},
-	vis_firstseen =
-		{
+	},
+	vis_firstseen = {
 		default = false,
 		["type"] = "bool",
-		},
-	syntaxcolor_command =
-		{
+	},
+	syntaxcolor_command = {
 		default = {124, 112, 218},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_generic =
-		{
+	},
+	syntaxcolor_generic = {
 		default = {156, 158, 159},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_separator =
-		{
+	},
+	syntaxcolor_separator = {
 		default = {124, 43, 124},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_number =
-		{
+	},
+	syntaxcolor_number = {
 		default = {250, 250, 88},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_textbox =
-		{
+	},
+	syntaxcolor_textbox = {
 		default = {156, 158, 159},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_errortext =
-		{
+	},
+	syntaxcolor_errortext = {
 		default = {255, 0, 0},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_cursor =
-		{
+	},
+	syntaxcolor_cursor = {
 		default = {255, 255, 255},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_flagname =
-		{
+	},
+	syntaxcolor_flagname = {
 		default = {255, 128, 0},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_newflagname =
-		{
+	},
+	syntaxcolor_newflagname = {
 		default = {255, 192, 64},
 		["type"] = "numbersarray",
-		},
-	syntaxcolor_comment =
-		{
+	},
+	syntaxcolor_comment = {
 		default = {0, 128, 0},
 		["type"] = "numbersarray",
-		},
-	allowbiggerthansizelimit =
-		{
+	},
+	allowbiggerthansizelimit = {
 		default = false,
 		["type"] = "bool",
 		comment = "Enable to let the editor properly load bigger than 20x20 maps (for VVVVVV) and let smaller (20x20 or less) maps be resized to be bigger than 20x20. Does not allow you (easily) make new usable rooms you can place tiles in, or have more room properties. Also VVVVVV will segfault for any reason in the rooms outside 20x20. Read more in the confirmation dialog that pops up when attempting to make a bigger map.",
-		},
-	opaqueroomnamebackground =
-		{
+	},
+	opaqueroomnamebackground = {
 		default = false,
 		["type"] = "bool",
-		},
-	vvvvvv23 =
-		{
+	},
+	vvvvvv23 = {
 		default = "",
 		["type"] = "string",
 		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV.exe'. On Linux and macOS, point this to the file 'VVVVVV'.",
-		},
-	vvvvvvce =
-		{
+	},
+	vvvvvvce = {
 		default = "",
 		["type"] = "string",
 		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV-CE.exe'. On Linux and macOS, point this to the file 'VVVVVV-CE'.",
-		},
-	}
+	},
+}
 
 function saveconfig()
 	local writagearr = {}
