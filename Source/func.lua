@@ -1841,9 +1841,9 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		local topdialog = dialogs[#dialogs]
 		local k = topdialog:get_on_scrollable_field(x, y, viakeyboard)
 		local cf = dialogs[#dialogs].currentfield
-		local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[6] == DF.TEXT
+		local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[DFP.T] == DF.TEXT
 		if k ~= nil then
-			local fieldscroll = topdialog.fields[k][10]
+			local fieldscroll = topdialog.fields[k][DFP.FILES_LISTSCROLL]
 			if direction == "u" then
 				if mkinput == "home" and not cfistext then
 					fieldscroll = 0
@@ -1854,7 +1854,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 					end
 				end
 			elseif direction == "d" then
-				local upperbound = (#topdialog.fields[k][7])*8-8*topdialog.fields[k][12]
+				local upperbound = (#topdialog.fields[k][DFP.FILES_MENUITEMS])*8-8*topdialog.fields[k][DFP.FILES_LIST_HEIGHT]
 				if mkinput == "end" and not cfistext then
 					fieldscroll = math.min(-upperbound, 0)
 				else
@@ -1864,7 +1864,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 					end
 				end
 			end
-			dialogs[#dialogs].fields[k][10] = fieldscroll
+			dialogs[#dialogs].fields[k][DFP.FILES_LISTSCROLL] = fieldscroll
 		end
 	elseif state == 3 and not viakeyboard then
 		if direction == "u" then

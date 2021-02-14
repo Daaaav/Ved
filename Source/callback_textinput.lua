@@ -59,10 +59,10 @@ function love.textinput(char)
 		local cf, cftype = dialogs[#dialogs].currentfield
 		if dialogs[#dialogs].fields[cf] ~= nil then
 			-- Input boxes can also have their type set to nil and default to 0
-			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
 		end
-		if cf ~= 0 and cftype == 0 then
-			dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. char
+		if cf ~= 0 and cftype == DF.TEXT then
+			dialogs[#dialogs].fields[cf][DFP.VALUE] = dialogs[#dialogs].fields[cf][DFP.VALUE] .. char
 		end
 
 		cursorflashtime = 0

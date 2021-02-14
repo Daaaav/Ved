@@ -41,6 +41,28 @@ DF = {
 	FILES = 5,
 }
 
+-- Field property constants
+DFP = {
+	KEY = 1,
+	X = 2,
+	Y = 3,
+	W = 4,
+	VALUE = 5,
+	T = 6,
+	TEXT_CONTENT_R = 7,
+	DROPDOWN_MENUITEMS = 7,
+	DROPDOWN_MENUITEMSLABEL = 8,
+	DROPDOWN_ONCHANGE = 9,
+	CHECKBOX_ONCHANGE = 7,
+	FILES_MENUITEMS = 7,
+	FILES_FOLDER_FILTER = 8,
+	FILES_FOLDER_SHOW_HIDDEN = 9,
+	FILES_LISTSCROLL = 10,
+	FILES_FOLDER_ERROR = 11,
+	FILES_LIST_HEIGHT = 12,
+	FILES_FILTER_ON = 13,
+}
+
 -- Dialog class
 cDialog =
 {
@@ -120,12 +142,13 @@ function cDialog:draw(topmost)
 		self:drawfield(topmost, k, unpack(v))
 		if self.currentfield == k then
 			fieldactive = true
-			active_x = v[2]
-			active_y = v[3]
-			active_w = v[4]
-			active_type = v[6]
-			active_dropdowns = v[7]
-			active_listheight = v[12]
+			active_x = v[DFP.X]
+			active_y = v[DFP.Y]
+			active_w = v[DFP.W]
+			active_type = v[DFP.T]
+			-- FIXME now it gets weird. Why not active_field or something?
+			active_dropdowns = v[DFP.DROPDOWN_MENUITEMS]
+			active_listheight = v[DFP.FILES_LIST_HEIGHT]
 		end
 	end
 
@@ -320,16 +343,16 @@ function cDialog:dropdown_onchange(key, picked)
 	end
 
 	for k,v in pairs(self.fields) do
-		if v[1] == key then
+		if v[DFP.KEY] == key then
 			local new_value = nil
-			if v[9] ~= nil then
-				new_value = v[9](picked, v[7], v[8])
+			if v[DFP.DROPDOWN_ONCHANGE] ~= nil then
+				new_value = v[DFP.DROPDOWN_ONCHANGE](picked, v[DFP.DROPDOWN_MENUITEMS], v[DFP.DROPDOWN_MENUITEMSLABEL])
 			end
 			if new_value == nil then
 				new_value = picked
 			end
 
-			v[5] = new_value
+			v[DFP.VALUE] = new_value
 
 			break
 		end
@@ -382,9 +405,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 			if (active and love.keyboard.isDown("tab"))
 			or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
-				if self.fields[self.currentfield] ~= nil and self.fields[self.currentfield][6] == 0 then
-					self.fields[self.currentfield][5] = anythingbutnil(self.fields[self.currentfield][5]) .. anythingbutnil(self.fields[self.currentfield][7])
-					self.fields[self.currentfield][7] = ""
+				if self.fields[self.currentfield] ~= nil and self.fields[self.currentfield][DFP.T] == DF.TEXT then
+					self.fields[self.currentfield][DFP.VALUE] = anythingbutnil(self.fields[self.currentfield][DFP.VALUE]) .. anythingbutnil(self.fields[self.currentfield][DFP.TEXT_CONTENT_R])
+					self.fields[self.currentfield][DFP.TEXT_CONTENT_R] = ""
 				end
 				self.currentfield = n
 
@@ -430,7 +453,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		if (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
 			self.currentfield = n
 
-			self.fields[n][5] = not content
+			self.fields[n][DFP.VALUE] = not content
 			mousepressed = true
 
 			if onchange ~= nil then
@@ -499,7 +522,6 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 							mousepressed = true
 						else
-							--self.fields[n][5] = v.name
 							self:set_field("name", v.name)
 						end
 					end
@@ -529,7 +551,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		)
 
 		if newfraction ~= nil then
-			self.fields[n][10] = -(newfraction*((#menuitems*8)-(8*list_height)))
+			self.fields[n][DFP.FILES_LISTSCROLL] = -(newfraction*((#menuitems*8)-(8*list_height)))
 		end
 	end
 
@@ -589,10 +611,10 @@ function cDialog:return_fields()
 	local f = {}
 
 	for k,v in pairs(self.fields) do
-		if anythingbutnil0(v[6]) == DF.TEXT then
-			f[v[1]] = v[5] .. anythingbutnil(v[7])
+		if anythingbutnil0(v[DFP.T]) == DF.TEXT then
+			f[v[DFP.KEY]] = v[DFP.VALUE] .. anythingbutnil(v[DFP.TEXT_CONTENT_R])
 		else
-			f[v[1]] = v[5]
+			f[v[DFP.KEY]] = v[DFP.VALUE]
 		end
 	end
 
@@ -615,8 +637,8 @@ end
 
 function cDialog:set_field(key, value)
 	for k,v in pairs(self.fields) do
-		if v[1] == key then
-			v[5] = value
+		if v[DFP.KEY] == key then
+			v[DFP.VALUE] = value
 			break
 		end
 	end
@@ -630,10 +652,10 @@ function cDialog:get_on_scrollable_field(x, y, viakeyboard)
 	local scrollable_types = {DF.FILES}
 	local scrollable_fields = {}
 	for k,v in pairs(self.fields) do
-		local v_x, v_y = self.x+10+v[2]*8, self.y+self.windowani+10+v[3]*8+10
-		if table.contains(scrollable_types, v[6]) then
-			if (x >= v_x and x < v_x+v[4]*8
-			and y >= v_y and y < v_y+8*v[12])
+		local v_x, v_y = self.x+10+v[DFP.X]*8, self.y+self.windowani+10+v[DFP.Y]*8+10
+		if table.contains(scrollable_types, v[DFP.T]) then
+			if (x >= v_x and x < v_x+v[DFP.W]*8
+			and y >= v_y and y < v_y+8*v[DFP.FILES_LIST_HEIGHT])
 			or (viakeyboard and self.fields[self.currentfield] == k) then
 				if viakeyboard then
 					self.showtabrect = true
@@ -646,7 +668,7 @@ function cDialog:get_on_scrollable_field(x, y, viakeyboard)
 	end
 	if viakeyboard and #scrollable_fields == 1 then
 		self.showtabrect = true
-		return scrollable_fields[1]
+		return scrollable_fields[DFP.KEY]
 	end
 	return nil
 end
@@ -664,9 +686,9 @@ function cDialog:cd(dir, cf, currentdir, ...)
 	else
 		newfolder = get_child_path(currentdir, dir)
 	end
-	self.fields[cf][5] = newfolder
+	self.fields[cf][DFP.VALUE] = newfolder
 	local success, everr
-	success, self.fields[cf][7], everr = listfiles_generic(
+	success, self.fields[cf][DFP.FILES_MENUITEMS], everr = listfiles_generic(
 		newfolder,
 		filter_on and folder_filter or "",
 		folder_show_hidden
@@ -674,8 +696,8 @@ function cDialog:cd(dir, cf, currentdir, ...)
 	if success then
 		everr = ""
 	end
-	self.fields[cf][10] = 0
-	self.fields[cf][11] = everr
+	self.fields[cf][DFP.FILES_LISTSCROLL] = 0
+	self.fields[cf][DFP.FILES_FOLDER_ERROR] = everr
 end
 
 

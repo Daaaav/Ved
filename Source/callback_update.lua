@@ -41,11 +41,11 @@ function love.update(dt)
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
 		local cf, cftype = dialogs[#dialogs].currentfield
 		if dialogs[#dialogs].fields[cf] ~= nil then
-			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
 		end
-		if cf ~= 0 and cftype == 0 then
+		if cf ~= 0 and cftype == DF.TEXT then
 			cursorflashtime = (cursorflashtime + dt) % 1
-			firstchar = firstUTF8(anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+			firstchar = firstUTF8(anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R]))
 			if cursorflashtime <= .5 then
 				__ = "_"
 			else

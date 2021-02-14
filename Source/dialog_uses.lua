@@ -245,19 +245,19 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		table.insert(form, {"dofilter", 0, 15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
-						if v[1] == "folder" then
+						if v[DFP.KEY] == "folder" then
 							local success, everr
-							success, dialog.fields[k][7], everr = listfiles_generic(
-								dialog.fields[k][5],
-								value and dialog.fields[k][8] or "",
-								dialog.fields[k][9]
+							success, dialog.fields[k][DFP.FILES_MENUITEMS], everr = listfiles_generic(
+								dialog.fields[k][DFP.VALUE],
+								value and dialog.fields[k][DFP.FILES_FOLDER_FILTER] or "",
+								dialog.fields[k][DFP.FILES_FOLDER_SHOW_HIDDEN]
 							)
 							if success then
 								everr = ""
 							end
-							dialog.fields[k][10] = 0
-							dialog.fields[k][11] = everr
-							dialog.fields[k][13] = value
+							dialog.fields[k][DFP.FILES_LISTSCROLL] = 0
+							dialog.fields[k][DFP.FILES_FOLDER_ERROR] = everr
+							dialog.fields[k][DFP.FILES_FILTER_ON] = value
 							break
 						end
 					end

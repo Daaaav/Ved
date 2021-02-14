@@ -325,32 +325,32 @@ function love.keypressed(key)
 		local cf, cftype = dialogs[#dialogs].currentfield
 		if dialogs[#dialogs].fields[cf] ~= nil then
 			-- Input boxes can also have their type set to nil and default to 0
-			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][6])
+			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
 		end
-		if cf ~= 0 and cftype == 0 then
+		if cf ~= 0 and cftype == DF.TEXT then
 			if key == "backspace" then
-				dialogs[#dialogs].fields[cf][5] = backspace(dialogs[#dialogs].fields[cf][5])
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = backspace(dialogs[#dialogs].fields[cf][DFP.VALUE])
 			elseif key == "delete" then
-				_, dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7])
+				_, dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = rightspace(dialogs[#dialogs].fields[cf][DFP.VALUE], dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R])
 			elseif keyboard_eitherIsDown(ctrl) and key == "v" then
-				dialogs[#dialogs].fields[cf][5] = dialogs[#dialogs].fields[cf][5] .. love.system.getClipboardText():gsub("[\r\n]", "")
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = dialogs[#dialogs].fields[cf][DFP.VALUE] .. love.system.getClipboardText():gsub("[\r\n]", "")
 			elseif keyboard_eitherIsDown(ctrl) and key == "u" then
-				dialogs[#dialogs].fields[cf][5] = ""
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = ""
 			elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
-				dialogs[#dialogs].fields[cf][7] = ""
+				dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = ""
 			elseif key == "left" then
-				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = leftspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+				dialogs[#dialogs].fields[cf][DFP.VALUE], dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = leftspace(dialogs[#dialogs].fields[cf][DFP.VALUE], anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R]))
 				cursorflashtime = 0
 			elseif key == "right" then
-				dialogs[#dialogs].fields[cf][5], dialogs[#dialogs].fields[cf][7] = rightspace(dialogs[#dialogs].fields[cf][5], anythingbutnil(dialogs[#dialogs].fields[cf][7]))
+				dialogs[#dialogs].fields[cf][DFP.VALUE], dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = rightspace(dialogs[#dialogs].fields[cf][DFP.VALUE], anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R]))
 				cursorflashtime = 0
 			elseif key == "home" then
-				dialogs[#dialogs].fields[cf][7] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
-				dialogs[#dialogs].fields[cf][5] = ""
+				dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = anythingbutnil(dialogs[#dialogs].fields[cf][DFP.VALUE]) .. anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R])
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = ""
 				cursorflashtime = 0
 			elseif key == "end" then
-				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
-				dialogs[#dialogs].fields[cf][7] = ""
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = anythingbutnil(dialogs[#dialogs].fields[cf][DFP.VALUE]) .. anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R])
+				dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = ""
 				cursorflashtime = 0
 			end
 		end
@@ -359,9 +359,9 @@ function love.keypressed(key)
 			RCMactive = false
 			local done = false
 			local original = math.max(cf, 1)
-			if cftype == 0 then
-				dialogs[#dialogs].fields[cf][5] = anythingbutnil(dialogs[#dialogs].fields[cf][5]) .. anythingbutnil(dialogs[#dialogs].fields[cf][7])
-				dialogs[#dialogs].fields[cf][7] = ""
+			if cftype == DF.TEXT then
+				dialogs[#dialogs].fields[cf][DFP.VALUE] = anythingbutnil(dialogs[#dialogs].fields[cf][DFP.VALUE]) .. anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R])
+				dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = ""
 			end
 
 			while not done do
@@ -380,11 +380,11 @@ function love.keypressed(key)
 				end
 
 				cf = dialogs[#dialogs].currentfield
-				if cf == original and anythingbutnil(dialogs[#dialogs].fields[cf])[6] ~= 2 then
+				if cf == original and anythingbutnil(dialogs[#dialogs].fields[cf])[DFP.T] ~= DF.LABEL then
 					-- Don't keep looping around forever
 					done = true
 				end
-				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][6] == nil or dialogs[#dialogs].fields[cf][6] ~= 2 then
+				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][DF.T] == nil or dialogs[#dialogs].fields[cf][DF.T] ~= DF.LABEL then
 					-- Only text labels are skipped
 					done = true
 				end
@@ -395,19 +395,20 @@ function love.keypressed(key)
 		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
 			dialogs[#dialogs].showtabrect = true
 
-			dialogs[#dialogs].fields[cf][5] = not dialogs[#dialogs].fields[cf][5]
+			local new_value = not dialogs[#dialogs].fields[cf][DFP.VALUE]
+			dialogs[#dialogs].fields[cf][DFP.VALUE] = new_value
 
-			if dialogs[#dialogs].fields[cf][7] ~= nil then
-				dialogs[#dialogs].fields[cf][7](not dialogs[#dialogs].fields[cf][5], dialogs[#dialogs])
+			if dialogs[#dialogs].fields[cf][DF.CHECKBOX_ONCHANGE] ~= nil then
+				dialogs[#dialogs].fields[cf][DF.CHECKBOX_ONCHANGE](new_value, dialogs[#dialogs])
 			end
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
 			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
 
 			local dropdown = 0
-			local cfinput = dialogs[#dialogs].fields[cf][5]
-			local dropdowns = dialogs[#dialogs].fields[cf][7]
-			local mapping = dialogs[#dialogs].fields[cf][8]
+			local cfinput = dialogs[#dialogs].fields[cf][DFP.VALUE]
+			local dropdowns = dialogs[#dialogs].fields[cf][DFP.DROPDOWN_MENUITEMS]
+			local mapping = dialogs[#dialogs].fields[cf][DFP.DROPDOWN_MENUITEMSLABEL]
 			local usethisvalue
 			if mapping ~= nil then
 				usethisvalue = mapping[cfinput]
@@ -434,11 +435,11 @@ function love.keypressed(key)
 				end
 			end
 
-			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][1], dropdowns[dropdown])
+			dialogs[#dialogs]:dropdown_onchange(dialogs[#dialogs].fields[cf][DFP.KEY], dropdowns[dropdown])
 		elseif cftype == DF.FILES and (key == "backspace" or key == "up" or key == "kp8" or key == "down" or key == "kp2" or key == " " or key == "space") then
 			dialogs[#dialogs].showtabrect = true
 
-			local files = dialogs[#dialogs].fields[cf][7]
+			local files = dialogs[#dialogs].fields[cf][DFP.FILES_MENUITEMS]
 			local file = 0
 			for k,v in pairs(files) do
 				if v.name == dialogs[#dialogs]:return_fields().name then
@@ -448,13 +449,13 @@ function love.keypressed(key)
 			end
 
 			if key == "backspace" then
-				dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:cd_to_parent(cf, dialogs[#dialogs].fields[cf][DFP.VALUE], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
 				dialogs[#dialogs]:set_field("name", "")
 			elseif key == "up" or key == "kp8" or key == "down" or key == "kp2" then
 				local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf])
-				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][2]*8
-				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][3]*8 + 1
-				local real_w = dialogs[#dialogs].fields[cf][4]*8
+				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][DFP.X]*8
+				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][DFP.Y]*8 + 1
+				local real_w = dialogs[#dialogs].fields[cf][DFP.W]*8
 
 				if key == "up" or key == "kp8" then
 					file = file - 1
@@ -472,12 +473,12 @@ function love.keypressed(key)
 				dialogs[#dialogs]:set_field("name", anythingbutnil(files[file]).name)
 
 				if 8*file - 8 < math.abs(listscroll) then
-					dialogs[#dialogs].fields[cf][10] = -8*file + 8
+					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -8*file + 8
 				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
-					dialogs[#dialogs].fields[cf][10] = -8*file + 8*list_height
+					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -8*file + 8*list_height
 				end
 			elseif (key == " " or key == "space") and files[file] ~= nil and files[file].isdir then
-				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][5], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
+				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][DFP.VALUE], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
 				dialogs[#dialogs]:set_field("name", "")
 			end
 		end
