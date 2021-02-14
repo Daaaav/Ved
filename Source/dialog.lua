@@ -337,27 +337,20 @@ function cDialog:dropdown_onchange(key, picked)
 end
 
 function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
-	-- Modes:
-	-- 0: textbox
-	-- 1: dropdown
-	-- 2: text label (can also be function returning string)
-	-- 3: checkbox
-	-- 4: radio buttons dropdown
-	-- 5: files list
 	if mode == nil then
-		mode = 0
+		mode = DF.TEXT
 	end
 
 	local content_r
 	local menuitems, menuitemslabel, onchange
 	local folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on
-	if mode == 0 then
+	if mode == DF.TEXT then
 		content_r = ...
-	elseif mode == 1 or mode == 4 then
+	elseif mode == DF.DROPDOWN or mode == DF.RADIOS then
 		menuitems, menuitemslabel = ...
-	elseif mode == 3 then
+	elseif mode == DF.CHECKBOX then
 		onchange = ...
-	elseif mode == 5 then
+	elseif mode == DF.FILES then
 		menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = ...
 	end
 
@@ -365,7 +358,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 	local real_y = self.y+self.windowani+10+y*8 + 1
 	local real_w = w*8
 
-	if mode == 2 then
+	if mode == DF.LABEL then
 		-- This is only a label, don't do anything special.
 		self:setColor(0,0,0,255)
 		local textcontent
@@ -381,7 +374,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 	local active = self.currentfield == n
 
-	if mode <= 1 then
+	if mode == DF.TEXT or mode == DF.DROPDOWN then
 		-- Text field or dropdown
 		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and window_active() then
 			self:setColor(255,255,255,255)
@@ -395,7 +388,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				self.currentfield = n
 
-				if mode == 1 and not RCMactive then
+				if mode == DF.DROPDOWN and not RCMactive then
 					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
 
 					if love.mouse.isDown("l") then
@@ -410,7 +403,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 		self:setColor(0,0,0,255)
 
-		if mode == 0 then
+		if mode == DF.TEXT then
 			love.graphics.setScissor(real_x, real_y-3, real_w, 8)
 			if active then
 				ved_print(
@@ -422,15 +415,15 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				ved_print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3)
 			end
 			love.graphics.setScissor()
-		elseif mode == 1 then
+		elseif mode == DF.DROPDOWN then
 			if not menuitemslabel then
 				ved_print(anythingbutnil(content), real_x, real_y-3)
 			else
 				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3)
 			end
-			love.graphics.draw(menupijltje, real_x+real_w-8, (real_y-3)+2) -- Die 8 is 7+1
+			love.graphics.draw(dropdownarrow, real_x+real_w-8, (real_y-3)+2)
 		end
-	elseif mode == 3 then
+	elseif mode == DF.CHECKBOX then
 		-- Checkbox
 		self:hoverdraw(topmost, content and checkon or checkoff, real_x, real_y-3, real_w, 8)
 
@@ -444,7 +437,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				onchange(not content, self)
 			end
 		end
-	elseif mode == 4 then
+	elseif mode == DF.RADIOS then
 		for k,v in pairs(menuitems) do
 			local selected
 			if not menuitemslabel then
@@ -465,7 +458,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				mousepressed = true
 			end
 		end
-	elseif mode == 5 then
+	elseif mode == DF.FILES then
 		self:setColor(255,255,255,255)
 		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
 		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then

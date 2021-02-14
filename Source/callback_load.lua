@@ -257,7 +257,7 @@ function love.load()
 	radioon_hq = love.graphics.newImage("images/radioon_hq.png")
 	radiooff_hq = love.graphics.newImage("images/radiooff_hq.png")
 
-	menupijltje = love.graphics.newImage("images/menupijltje.png")
+	dropdownarrow = love.graphics.newImage("images/dropdownarrow.png")
 	colorsel = love.graphics.newImage("images/colorsel.png")
 
 	smallfolder = love.graphics.newImage("images/smallfolder.png")
