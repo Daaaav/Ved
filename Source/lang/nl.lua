@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-02-15 14:00:52 (CET)
+--- Last converted: 2021-02-15 16:14:28 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2700,9 +2700,10 @@ Als je hierboven op "Tools" klikt ga je naar het artikel genaamd "Tools". Ik heb
 hier de kleurcode¤ b ¤gebruikt om de link blauw te maken, en zoals je kunt zien is\nb
 de¤ l ¤van toepassing op datzelfde gekleurde gedeelte.\nY
 
-Je kunt een koppeling maken naar een ankers door een¤ # ¤te gebruiken gevolgd door
-alle tekst op die regel. (Gevallen van¤ ¤¤ ¤worden daar volledig genegeerd.) Je\nY
-kunt naar de bovenkant van een artikel linken met alleen een hekje (¤#§¤).\nY(
+Je kunt een koppeling maken naar een anker in hetzelfde artikel door een¤ # ¤te\nY
+gebruiken gevolgd door alle tekst op die regel. (Gevallen van¤ ¤¤ ¤worden daar\nY
+volledig genegeerd.) Je kunt naar de bovenkant van een artikel linken met alleen
+een hekje (¤#§¤).\nY(
 
 \-
 #Meerdere kleuren op een regel gebruiken\bl\
@@ -2815,7 +2816,7 @@ gemotiveerd om dit te maken!
 
 Licentie\h#
 \
-Copyright 2015-2020  Dav999
+Copyright 2015-2021  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

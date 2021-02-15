@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-02-15 14:00:51 (CET)
+--- Last converted: 2021-02-15 16:14:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2761,7 +2761,7 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 
 License\h#
 \
-Copyright 2015-2020  Dav999
+Copyright 2015-2021  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

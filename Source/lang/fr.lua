@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-02-15 14:00:52 (CET)
+--- Last converted: 2021-02-15 16:14:28 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2898,7 +2898,7 @@ créer ce logiciel!
 
 Licence\h#
 \
-Droit d'auteur 2015-2020  Dav999
+Droit d'auteur 2015-2021  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

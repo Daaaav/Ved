@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2021-02-15 14:00:51 (CET)
+--- Last converted: 2021-02-15 16:14:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1031,7 +1031,7 @@ cont = [[
    Тринкет\h#
 
 
-Используеся для установки тринкетов. Учтите, что в одном уровне может быть
+Используется для установки тринкетов. Учтите, что в одном уровне может быть
 максимум двадцать тринкетов.
 
 \4
@@ -1066,7 +1066,7 @@ cont = [[
 типа врага и цветом набора соответственно.
 
 \9
-   Грави-линия\h#
+   Грав. линия\h#
 
 
 Используется для установки грави-линий.
@@ -1078,10 +1078,10 @@ cont = [[
 Используется для установки текста в комнате.
 
 \^1
-   Компьютер\h#
+   Терминал\h#
 
 
-Используется для установки компьютеров. Сначала установите компьютер, затем
+Используется для установки терминалов. Сначала установите терминал, затем
 введите название скрипта. Для дополнительной информации смотрите
 справки о скриптах.
 
@@ -1094,18 +1094,18 @@ cont = [[
 информации смотрите справки о скриптах.
 
 \^3
-   Телепорт\h#
+   Варп-токен\h#
 
 
-Используется для установки телепорта. Сначала кликните там, где должен быть вход,
-затем там, где выход.
+Используется для установки варп-токенов. Сначала нажмите там, где должен быть
+вход, затем там, где выход.
 
 \^4
-   Линия варпа\h#
+   Варп-линия\h#
 
 
-Используется для установки линий варпа. Учтите, что линии варпа могут быть
-расположены ролько на краях комнаты.
+Используется для установки варп-линий. Учтите, что варп-линии могут быть
+расположены только по краям комнаты.
 
 \^5
    Член экипажа\h#
@@ -1209,13 +1209,13 @@ Ved поддерживает разные способы внутреннего 
 Метод loadscript, пожалуй, самый распространённый на сегодняшний день. Ved
 поддерживал его ещё с версии alpha.
 
-It requires an extra script, the loadscript, to load the internal script. The
-loadscript would, in its most basic form, contain a command like
-iftrinkets(0,yourscript)¤, but you can have other simplified commands in it as\w
-well, and you can also use ¤ifflag¤ instead of ¤iftrinkets¤. What's important is\nwnw
-that your internal script is loaded from another script for it to work.
+Для него требуется загрузочный скрипт (loadscript), который загрузит внутренний
+скрипт. Loadscript, в самом распространённом случае, содержит обычную команду,
+такую как ¤iftrinkets(0,ваш скрипт)¤, но Вы можете использовать любую другую\nw
+простую команду, например ¤ifflag¤ вместо ¤iftrinkets¤. Самое важное это то, чтобы\nwnw
+ваш внутренний скрипт загружался другим скриптом.
 
-The internal script would be converted more or less as follows:
+Внутренний скрипт желательно конвертировать подобным образом:
 
   squeak(off)\g
   say(11)\g
@@ -1232,20 +1232,21 @@ The internal script would be converted more or less as follows:
   loadscript(stop)\g
   text(1,0,0,3)\g
 
-text(1,0,0,3)¤ needs to be the last line, or in VVVVVV's script editor, there\w
-needs to be exactly one blank line after it.
+text(1,0,0,3)¤ должна быть последней строкой, так как в редакторе скриптов VVVVVV\w
+должна быть хотя бы одна пустая строка после скрипта.
 
-It's also possible to not use ¤squeak(off)¤, and use ¤text(1,0,0,4)¤ instead of\nwnw
-text(1,0,0,3)¤. Using ¤squeak(off)¤ saves some precious lines in longer scripts,\wnw
-though.
+Также можно не использовать команду ¤squeak(off)¤ и использовать ¤text(1,0,0,4)\nwnw
+вместо неё. Однако, использование ¤squeak(off)¤ может сэкономить драгоценные строки\nw
+в длинных скриптах.
 
-say(-1) int.sc\h#
+вн. скриптинг через say(-1)\h#
 
-The say(-1) method is older, and has a disadvantage to the loadscript method: it
-always makes cutscene bars show. But it also has an advantage that can be
-important in levels with many scripts: it does not require a loadscript. We can
-remove ¤cutscene()¤ and ¤untilbars()¤ from our script, since those will already be\nwnw
-added by VVVVVV when using this method.
+Метод say(-1) является устаревшим и имеет недостатки по сравнению с методом
+loadscript: он всегда показывает чёрные полосы катсцены сверху и снизу экрана. Но
+этот метод имеет преимущество, которое может быть важно в уровнях с большим
+количеством скриптов: метод say(-1) не требует загрузочного скрипта. Мы можем
+убрать ¤cutscene()¤ и ¤untilbars()¤ из нашего скрипта, так как они добавляются\nwnw
+VVVVVV по умолчанию при использовании этого метода.
 
   squeak(off)\g
   say(-1)\g
@@ -1261,7 +1262,8 @@ added by VVVVVV when using this method.
   untilbars()\G
   loadscript(stop)\g
 
-This method has been added as an extra internal scripting mode in Ved 1.6.0.
+Этот метод был добавлен в качестве дополнительного режима внутреннего скриптинга
+в Ved 1.6.0.
 ]]
 },
 
@@ -1273,7 +1275,7 @@ cont = [[
 Горячие клавиши в редакторе\wh#
 \C=
 
-Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+Подсказка: Вы можете удерживать ¤F9¤ в Ved для просмотра большинства горячих клавиш.\nC
 
 Большинство горячих клавиш из VVVVVV могут быть так же применены и в Ved.
 
@@ -1303,35 +1305,37 @@ Ved предоставляет несколько новых горячих кл
 
 Основной редактор\gh#
 
-Ctrl+P¤  Jump to the room containing the startpoint\C
-Ctrl+S¤  Quicksave\C
-Ctrl+X¤  Cut room to the clipboard\C
-Ctrl+C¤  Copy room to the clipboard\C
-Ctrl+V¤  Paste room from clipboard (if valid)\C
-Ctrl+D¤  Compare this level to another level\C
-Ctrl+Z¤  Undo\C
-Ctrl+Y¤  Redo\C
-Ctrl+F¤  Search\C
-Ctrl+/¤  Level notepad\C
-Ctrl+F1¤  Help\C
-(NOTE: On Mac, replace Ctrl by Cmd)
-N¤  display all tile numbers\C
-J¤  display tile solidity\C
-;¤  display minimap tiles\C
-Shift+;¤  display background\C
-M¤ or ¤Keypad 5¤  Show map\CnC
-G¤  Go to room (type in coordinates as four digits)\C
-/¤  Scripts\C
-[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
-]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
-F11¤  reload tilesets and sprites\C
-Tab¤  enable/disable eraser\C
+Ctrl+P¤  Перейти к комнате с точкой старта\C
+Ctrl+S¤  Быстрое сохранение\C
+Ctrl+X¤  Вырезать комнату\C
+Ctrl+C¤  Скопировать комнату\C
+Ctrl+V¤  Вставить комнату (если есть)\C
+Ctrl+D¤  Сравнить данный уровень с другим\C
+Ctrl+Z¤  Отменить\C
+Ctrl+Y¤  Повторить\C
+Ctrl+F¤  Поиск\C
+Ctrl+/¤  Заметки к уровню\C
+Ctrl+F1¤  Помощь\C
+(ВНИМАНИЕ: на версии Mac используйте Cmd вместо Ctrl)
+N¤  Показать номера плиток в комнате\C
+J¤  Показать твёрдость\C
+;¤  Показать плитки миникарты\C
+Shift+;¤  Показать фон\C
+M¤ или ¤Keypad 5¤  Открыть карту\CnC
+G¤  Перейти к комнате (ввести координаты комнаты четырьмя цифрами)\C
+/¤  Скрипты\C
+[¤  Закрепить положение курсора по оси Y (для простого построения горизонтальных\C
+   линий)
+]¤  Закрепить положение курсора по оси X (для простого построения вертикальных\C
+   линий)
+F11¤  Перезагрузка спрайтов и плиток\C
+Tab¤  Включить/выключить ластик\C
 
-Entities\gh#
+Объекты\gh#
 
-Shift+right click¤  Delete entity\C
-Alt+click¤          Move entity\C
-Alt+Shift+click¤    Copy entity\C
+Shift+ПКМ¤  Удалить объект\C
+Alt+ЛКМ¤          Переместить объект\C
+Alt+Shift+ЛКМ¤    Копировать объект\C
 
 Редактор скриптов\gh#
 
@@ -1354,7 +1358,7 @@ splitid = "070_Simp_script_reference",
 subj = "Простые скрипты",
 imgs = {},
 cont = [[
-Простейшие скрипты\wh#
+Простые скрипты\wh#
 \C=
 
 Простейший язык скриптинга VVVVVV - это основа создания скриптов для создания
@@ -1377,7 +1381,7 @@ reply¤([кол-во строк])\h#w
 
 delay¤(N)\h#w
 
-Задерживает сделующую команду на N тиков. 30 тиков примерно равны одной секунде.
+Задерживает действия на n тиков. 30 тиков примерно равны одной секунде.
 
 happy¤([член экипажа])\h#w
 
@@ -1409,25 +1413,26 @@ ifflag(20,cutscene) - Если флаг под номером 20 ВКЛЮЧЁН,
 
 iftrinkets¤(кол-во,название скрипта)\h#w
 
-Если количество собранных тринкетов >= "кол-во", прыгнуть к скрипту.
-Если количество собранных тринкетов < "кол-во", продожить выполнение скрипта.
+Если количество собранных тринкетов >= "кол-во", перейти к скрипту.
+Если количество собранных тринкетов < "кол-во", продолжить выполнение скрипта.
 Пример:
-iftrinkets(3,enoughtrinkets) - Если собрано 3 или более тринкетов, прыгнуть к
-                               скрипту "enoughtrinkets", иначе продожить
+iftrinkets(3,enoughtrinkets) - Если собрано 3 или более тринкета, перейти к
+                               скрипту "enoughtrinkets", иначе продолжить
                                выполнение скрипта.
 Использование нуля, как минимального количества тринкетов - обычная практика.
 Таким способом можно загрузить скрипт при любых обстоятельствах.
 
 iftrinketsless¤(кол-во,название скрипта)\h#w
 
-Если количество собранных тринкетов < "кол-во", прыгнуть к скрипту.
-Если количество собранных тринкетов >= "кол-во", продожить выполнение скрипта.
+Если количество собранных тринкетов < "кол-во", перейти к скрипту.
+Если количество собранных тринкетов >= "кол-во", продолжить выполнение скрипта.
 
 destroy¤(нечто)\h#w
 
 Рабочими аргументами являются:
-warptokens - Убрать все телепорты из комнаты до последующего захода в неё.
-gravitylines - Убрать все грави-линии из комнаты до последующего захода в неё.
+warptokens - Убрать все варп-токены из комнаты до последующего захода в неё.
+gravitylines - Убрать все гравитационные линии из комнаты до последующего захода
+в неё.
 Также есть аргумент "platforms" (платформы), но он не работает должным образом.
 
 music¤(номер)\h#w
@@ -1460,23 +1465,23 @@ speaker¤(цвет)\h#w
 Может использоваться как второй аргумент в команде "say".
 
 
-warpdir¤(x,y,dir)\w#h
+warpdir¤(x,y,направление)\w#h
 
 Changes the warp direction for room x,y, 1-indexed, to the given direction. This
 could be checked with ifwarp, resulting in a relatively powerful extra
 flags/variable system.
 
-x - Room x coordinate, starting at 1
-y - Room y coordinate, starting at 1
-dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+x - X координата комнаты, начинающаяся с 1
+y - Y координата комнаты, начинающаяся с 1
+dir - Направление варпа. Обычно 0-3, но допустимы и другие значения.
 
-ifwarp¤(x,y,dir,script)\w#h
+ifwarp¤(x,y,направление,скрипт)\w#h
 
 If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
 
-x - Room x coordinate, starting at 1
-y - Room y coordinate, starting at 1
-dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+x - X координата комнаты, начинающаяся с 1
+y - Y координата комнаты, начинающаяся с 1
+dir - Направление варпа. Обычно 0-3, но допустимы и другие значения.
 ]]
 },
 
@@ -1500,7 +1505,7 @@ cont = [[
           допущенной ошибке.
 Синяя¤   - Некоторые из этих команд не работают или не были созданы для\b
           пользовательских уровней, т. к. были сделаны для основной игры.
-Рыжая¤   - Эти команды работают без ошибок, если им не присвоен определённый\o
+Оранжевая¤   - Эти команды работают без ошибок, если им не присвоен определённый\o
           аргумент, при работе с которым команда удаляет сохранение игры.
 Красная¤ - Красные команды не следует использовать в пользовательских уровнях\r
           т. к. они могут привести к разблокированию определённых частей
@@ -1510,13 +1515,15 @@ cont = [[
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will start flashing random colors and
-touching it won't destroy save data. Only targets the first-spawned teleporter.
+Если в комнате есть телепортатор, он начнёт светиться разными цветами и
+прикосновение к нему не уничтожит сохранённые данные. Нацеливается на
+телепортатор, помещённый в комнату первым.
 
 activeteleporter¤()\w#h
 
-Makes the teleporter in the room white, but touching it will still annihilate your
-save data. Only targets the first-spawned teleporter.
+Делает телепортатор в комнате белым, но прикосновение к нему всё равно уничтожит
+сохранённые данные. Нацеливается только на телепортатор, установленный в комнату
+первым.
 
 alarmoff\w#h
 
@@ -1530,7 +1537,7 @@ altstates¤(x)\b#h
 
 Меняет расстановку некоторых комнат, как в случае с комнатой с тринкетами на
 корабле до и после взрыва, или вход в секретную лабораторию (пользовательские
-уровни никак не поддерживают данную команду)
+уровни не поддерживают данную команду)
 
 backgroundtext\w#h
 
@@ -1588,11 +1595,12 @@ changedir¤(цвет,направление)\w#h
       (голубой/игрок /синий/красный/жёлтый/зелёный/фиолетовый)
 направление - 0 - налево, 1 - направо
 
-changegravity¤(crewmate)\w#h
+changegravity¤(член экипажа)\w#h
 
-Increase the sprite number of the given crewmate by 12.
+Увеличить количество спрайтов данного члена экипажа на 12
 
-crewmate - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
+член экипажа - Цвет члена экипажа для смены
+              cyan/player/blue/red/yellow/green/purple
 
 changemood¤(цвет,настроение)\w#h
 
@@ -1705,12 +1713,11 @@ destroy¤(x)\w#h
 То же, что и в соответствующей простейшей команде
 
 x - gravitylines/warptokens/platforms
-   (грави-линии /телепорты /платформы)
+   (грав. линии /варп-токены /платформы)
 
 do¤(n)\w#h
 
-Starts a loop block which will repeat n times. End the block with the loop
-command.
+Начинает цикл, который повторится n раз. Этой же командой можно его остановить.
 
 endcutscene¤()\w#h
 
@@ -1796,14 +1803,14 @@ foundlab2\b#h
 
 foundtrinket¤(x)\w#h
 
-Находит тринкеты
+Находит тринкет
 
-x - Количество тринкетов
+x - Номер тринкета
 
 gamemode¤(x)\b#h
 
-Аргумент teleporter для открытия каты и указания телепортов основной игры,
-аргумент game для скрытия карты
+Аргумент teleporter для открытия карты и указания телепортаторов основной игры,
+аргумент game для их скрытия
 
 x - teleporter/game
 
@@ -1814,11 +1821,11 @@ gamestate¤(x)\o#h
 
 gotoposition¤(x,y,f)\w#h
 
-Сделать координатную позицию Виридиана x,y в данной комнате, f определяет
+Поменять координатную позицию Виридиана x,y в данной комнате, f определяет
 состояние (1 - перевёрнутый, 0 - нормальный)
 
-f - 1 for flipped, 0 for not flipped. WARNING: Do not leave this unspecified, or
-else you could softlock the game!
+f - 1 - перевёрнутый, 0 - нормальный. ВНИМАНИЕ: Не оставляйте это поле пустым,
+иначе это может спровоцировать вылет игры!
 
 gotoroom¤(x,y)\w#h
 
@@ -1857,7 +1864,7 @@ hidetargets¤()\b#h
 
 hideteleporters¤()\b#h
 
-Скрывает телепорты на карте
+Скрывает телепортаторы на карте
 
 hidetrinkets¤()\b#h
 
@@ -1894,13 +1901,13 @@ iftrinketsless¤(кол-во,скрипт)\b#h
 
 То же, что и в простейшем скриптинге, но включающий скрипт основной игры
 
-ifwarp¤(x,y,dir,script)\w#h
+ifwarp¤(x,y,направление,скрипт)\w#h
 
 If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
 
-x - Room x coordinate, starting at 1
-y - Room y coordinate, starting at 1
-dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+x - X координата комнаты, начинающаяся с 1
+y - Y координата комнаты, начинающаяся с 1
+dir - Направление варпа. Обычно это 0-3, но другие значения тоже допустимы
 
 jukebox¤(x)\w#h
 
@@ -1919,7 +1926,7 @@ loadscript¤(скрипт)\b#h
 
 loop\w#h
 
-Put this at the end of a loop block started with the do command.
+Поместите эту команду в конец цикла, начатого командой do.
 
 missing¤(цвет)\b#h
 
@@ -1927,12 +1934,12 @@ missing¤(цвет)\b#h
 
 moveplayer¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make them move up or to the left
+Передвигает игрока на X пикселей вправо и Y пикселей вниз. Конечно, вы можете
+использовать отрицательные числа, чтобы двигать игрока вверх или влево.
 
 musicfadein¤()\w#h
 
-An unfinished command. This does nothing.
+Незаконченная команда. Она не делает ничего.
 
 musicfadeout¤()\w#h
 
@@ -1982,8 +1989,8 @@ rescued¤(цвет)\b#h
 
 resetgame\w#h
 
-Возвращает в начальное состояние все тринкеты, членов экипажа и флаги,
-телепортирует игрока к последнему чекпоинту
+Возвращает в начальное состояние все тринкеты, найденных членов экипажа и флаги,
+телепортирует игрока к последнему чекпоинту.
 
 restoreplayercolour¤()\w#h
 
@@ -1991,8 +1998,8 @@ restoreplayercolour¤()\w#h
 
 resumemusic¤()\w#h
 
-An unfinished command. Reads from uninitialized memory, which results in a crash
-on some machines and just results in playing Path Complete on others.
+Незаконченная команда. Читает из неинициализированной памяти, что приводит к сбою
+на некоторых компьютерах и просто к воспроизведению Path Complete на других.
 
 rollcredits¤()\r#h
 
@@ -2024,11 +2031,11 @@ showship\w#h
 
 showtargets¤()\b#h
 
-Показывает цели на карте (неизвестные телепорты, обозначаемые знаками вопроса)
+Показывает цели на карте (неизвестные телепортаторы, обозначаемые знаками вопроса)
 
 showteleporters¤()\b#h
 
-Показывает телепорты на карте (по-моему, показывает только телепорт на
+Показывает телепортаторы на карте (по-моему, показывает только телепортатор на
 Космической Станции 1)
 
 showtrinkets¤()\b#h
@@ -2068,11 +2075,11 @@ stopmusic¤()\w#h
 
 teleportscript¤(скрипт)\b#h
 
-Раньше использовался для создания скрипта при телепортировании
+Раньше использовался для создания скрипта при использовании телепортатора
 
 telesave¤()\r#h
 
-Сохраняет игру (только при обычном сохранении у телепорта; не использовать!)
+Сохраняет игру (только при обычном сохранении у телепортатора; не использовать!)
 
 text¤(цвет,x,y,строки)\w#h
 
@@ -2092,19 +2099,19 @@ textboxactive\w#h
 
 tofloor\w#h
 
-Makes the player flip to the floor if they aren't already on the floor.
+Переворачивает игрока вниз, если он находится не внизу.
 
 trinketbluecontrol¤()\b#h
 
-Диалог с Викторией когда она даёт тебе тринкет из основной игры
+Диалог с Викторией, когда она даёт игроку тринкет из основной игры
 
 trinketscriptmusic\w#h
 
-Plays Passion for Exploring. Does nothing else.
+Играет Passion for Exploring. Больше ничего не делает
 
 trinketyellowcontrol¤()\b#h
 
-Диалог с Вителлари когда он даёт тебе тринкет из основной игры
+Диалог с Вителлари, когда он даёт тебе тринкет из основной игры
 
 undovvvvvvman¤()\w#h
 
@@ -2129,15 +2136,15 @@ walk¤(направление,тики)\w#h
 направление - left /right
              (влево/вправо)
 
-warpdir¤(x,y,dir)\w#h
+warpdir¤(x,y,направление)\w#h
 
 Changes the warp direction for room x,y, 1-indexed, to the given direction. This
 could be checked with ifwarp, resulting in a relatively powerful extra
 flags/variable system.
 
-x - Room x coordinate, starting at 1
-y - Room y coordinate, starting at 1
-dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+x - X координата комнаты, начинающаяся с 1
+y - Y координата комнаты, начинающаяся с 1
+dir - Направление варпа. Обычно это 0-3, но другие значения тоже допустимы
 
 yellowcontrol\b#h
 
@@ -2163,7 +2170,7 @@ cont = [[
 #Номера музыки (внутренний скриптинг)\C&Z+l
 #Номера звуковых эффектов\C&Z+l
 #Объекты\C&Z+l
-#Список цветов для createentity() crewmates\C&Z+l
+#Список цветов для createentity()¤Список цветов для createentity() crewmates\LC&Z+l
 #Типы движения врагов\C&Z+l
 #Состояния игры\C&Z+l
 
@@ -2210,9 +2217,9 @@ cont = [[
 3 - Тринкет
 4 - Монета
 5 - Чекпоинт
-6 - Быстрый зыбучий песок
-7 - Обычный зыбучий песок
-8 - Грави-линия
+6 - Касание быстрого зыбучего песка
+7 - Касание обычного зыбучего песка
+8 - Касание гравитационной линии
 9 - Вспышка
 10 - Варп
 11 - Голос Виридиана
@@ -2222,13 +2229,14 @@ cont = [[
 15 - Голос Виолетты
 16 - Голос Вермилиона
 17 - Касание терминала
-18 - Телепорт
+18 - Касание телепортатора
 19 - Сигнал тревоги
 20 - Звук терминала
-21 - Обратный отсчёт испытания временем
+21 - Обратный отсчёт испытания временем ("3", "2", "1")
 22 - "Go!" испытания временем
 23 - Разрушение стены человеком VVVVVV
-24 - Члены экипажа сливаются в форму человека VVVVVV (восстанавливаются из неё)
+24 - Члены экипажа сливаются в форму человека VVVVVV (или восстанавливаются из
+     неё)
 25 - Новый рекорд в Супер Гравитроне
 26 - Новый трофей в Супер Гравитроне
 27 - Спасение члена экипажа (в пользовательских уровнях)
@@ -2238,7 +2246,7 @@ cont = [[
 0 - Игрок
 1 - Враг
     Данные: тип движения, скорость движения
-    Из-за отсутствия необходимых данных, Вы получите лишь фиолетовую
+    Из-за отсутствия необходимых данных Вы получите лишь фиолетовую
     коробку-врага, за исключением использования этой команды в полярном измерении
     VVVVVV.
 2 - Движущаяся платформа
@@ -2260,9 +2268,9 @@ cont = [[
      (проверяет, активен ли чекпоинт)
 11 - Горизонтальная грави-линия
      Данные: длина в пикселях
-12 - Вертикальная грави-линия
+12 - Вертикальная гравитационная линия
      Данные: длина в пикселях
-13 - Жетон телепортации
+13 -Варп-токен
      Данные: Пункт назначения в тайлах по оси X, пункт назначения в тайлах по
      оси Y
 14 - Круглый телепорт
@@ -2283,32 +2291,34 @@ cont = [[
      Данные: Спрайт, ID скрипта(?)
 22 - Собранный тринкет
      Данные: ID тринкета
-23 - Квадрат из Грвитрона
+23 - Квадрат из Гравитрона
      Данные: направление
      При вводе отрицательной координаты X (или слишком большой) появляется
      только стрелка, как в настоящем Гравитроне
-24 - Член экипажа сбоя 1
+24 - Член экипажа Интермиссии 1
      Данные: Цвет из списка цветов
-     По всей видимости, не страдает от припядствий, чего не следует происходить
+     По всей видимости, не страдает от препятствий, хотя должен
 25 - Трофей
      Данные: Идентификатор задания, спрайт
      Если задание выполнено, начальное ID спрайта (при sprite=0) изменится.
      Используйте 0 или 1 для предсказуемых результатов (0-нормальный,
      1 - перевёрнутый)
-26 - Варп в Секретную Лабораторию
+26 - Варп-токен в Секретную Лабораторию
      Учтите, что это только красивый спрайт. Вам придётся создавать отдельный
      скрипт для его функционирования.
-55 - Спасаемый член экипжа
+55 - Спасаемый член экипажа
      Данные: Цвет члена экипажа. Номера больше 6 дают в результате *счастливого*
      Виридиана.
 56 - Враг пользовательского уровня
      Данные: тип движения, скорость движения
-     Учтите, что если в комнате врагов нет, то данные врага будут обновленны
+     Учтите, что если в комнате врагов нет, то данные врага будут обновлены
      некорректно и в результате это покажет врага, которого вы видели в последний
      раз, или квадратного врага.
 Неуказанные объекты (27-50, 57 и далее) дают в результате неисправных Виридианов.
 
-Список цветов для createentity() crewmates\h#
+Список цветов для createentity()\h#
+
+crewmates\h
 
 0: Голубой
 1: Мерцающий красный (используется при смерти)
@@ -2442,7 +2452,7 @@ cont = [[
      пользовательских уровнях от этих состояний - варпы и изменения музыки.
 90 - Космическая Станция 1
 91 - Лаборатория
-92 - Зона Варпа
+92 - Варп-Зона
 93 - Башня
 94 - Космическая Станция 2
 95 - Финальный Уровень
@@ -2491,7 +2501,7 @@ cont = [[
 3000-3005 - "Level Complete! You've rescued the crewmate" применяемый к
             companion(), по умолчанию - Виридиан. 6 - Вердигрис, 7 -Вителлари,
             8 - Виктория, 9- Вермилион, 10 - Виридиан (зуб даю), 11 - Виолетта
-            (Состаяния игры: 3006-3011 - Вердигрис, 3020-3026 - Вителлари,
+            (Состояния игры: 3006-3011 - Вердигрис, 3020-3026 - Вителлари,
             3040-3046 - Виктория, 3060-3066 - Вермилион, 3080-3086 - Виридиан,
             3050-3056 - Виолетта)
 3070-3072 - Делает вещи, выполняемые после спасения, обычно возвращает на корабль
@@ -2499,14 +2509,14 @@ cont = [[
 4010 - Вспышка + варп
 4070 - The Final Level, but the game will crash when you reach Timeslip (Because
        of how the game gets entity information, which is broken in custom levels)
-       The Final Level, но игра крашается при достижении Timeslip (из-за
+       The Final Level, но игра вылетает при достижении Timeslip (из-за
        получения игрой данных объекта, неисправных в пользовательских уровнях)
 4080 - Captain teleported back to the ship: "Hello!" [C[C[C[C[Captain!] cutscene +
        credits.
        Капитан телепортируется обратно на корабль, катсцена
        "Hello!" [C[C[C[C[Captain!] + титры.
        Это испортит Ваши данные сохранения, так что не рискуйте, если не
-       сделали бекап!
+       сделали бэкап!
 4090 - Катсцена после Космической Станции 1
 ]]
 },
@@ -2519,118 +2529,120 @@ cont = [[
 Оформление\wh#
 \C=
 
-In notes you can use formatting codes to make your text larger, color it, and some
-other things. To add formatting to a line, add a backslash (\) at the end of it.\
-After the \, you can add any amount of the following characters, in any order:\
+В заметках Вы можете использовать код оформления, чтобы увеличивать текст,
+раскрашивать его и так далее. Чтобы оформить строку, добавьте обратный слэш (\) в\
+её конец. После "\" вы можете добавлять неограниченное количество приведённых\
+символов в любом порядке:
 
-h - Double font size\h
+h - Крупный размер шрифта\h
 
-# - Anchor. You can jump to anchors quickly with ¤#Links¤links¤.\nLCl
-- - Horizontal line:
+# - Заголовок. Вы можете быстро перемещаться к заголовкам с помощью ¤#Ссылки¤ссылок¤.\nLCl
+- - Горизонтальная линия:
 \-
-= - Horizontal line underneath large text
+= - Горизонтальная линия под крупным текстом
 
-Text colors:\h#
+Цвета текста:\h#
 
-n - Normal\n
-r - Red\r
-g - Gray\g
-w - White\w
-b - Blue\b
-o - Orange\o
-v - Green\v
-c - Cyan\c
-y - Yellow\y
-p - Purple\p
-V - Dark green\V
-z - Black¤ (background color is not included)\z&Z
-Z - Dark gray\Z
-C - Cyan (Viridian)\C
-P - Pink (Violet)\P
-Y - Yellow (Vitellary)\Y
-R - Red (Vermilion)\R
-G - Green (Verdigris)\G
-B - Blue (Victoria)\B
+n - Нормальный\n
+r - Красный\r
+g - Серый\g
+w - Белый\w
+b - Синий\b
+o - Оранжевый\o
+v - Зелёный\v
+c - Циан\c
+y - Жёлтый\y
+p - Фиолетовый\p
+V - Тёмно-зелёный\V
+z - Чёрный¤ (не включая цвет фона)\z&Z
+Z - Тёмно-серый\Z
+C - Циан (Виридиан)\C
+P - Розовый (Виолетта)\P
+Y - Жёлтый (Вителлари)\Y
+R - Красный (Вермилион)\R
+G - Зелёный (Вердигрис)\G
+B - Синий (Виктория)\B
 
 
-Example:\h#
+Пример:\h#
 
 \-
-Large orange text ("oh" has same result)\ho\
+Крупный оранжевый текст\ho\
 \
-Large orange text ("oh" has same result)\ho
+Крупный оранжевый текст\ho
 
 \-
-Underlined large text\wh\
+Подчёркнутый крупный текст\wh\
 \r=\
 \
-Underlined large text\wh
+Подчёркнутый крупный текст\wh
 \r=
 \-
 
-Using multiple colors on a line\h#
+Использование нескольких цветов на строке\h#
 
-It is possible to use multiple colors on a line by separating colored parts with
-the¤ ¤¤ ¤character (which you can type using the ¤Insert¤ key), and putting the color\nYnw
-codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
-is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
-line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
-color a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\nY(
-space or another character.
+Можно использовать несколько цветов в строке, разделяя цветные части символом¤ ¤¤\nY
+(который можно ввести с помощью клавиши ¤Insert¤) и расставляя цветовые коды по\nw
+порядку после¤ \¤. Если последний цвет на строке является цветом по умолчанию (n),\nC
+то указывать его в конце не обязательно. Если вы хотите использовать символ¤ ¤¤ ¤на\nY
+a строке, в которой используется¤ \¤, напишите¤ ¤¤¤¤§¤. По техническим причинам\nCnY(
+н¤е§¤возможно окрасить один символ, заключив его в два¤ ¤¤§¤, если вы не добавите\nRnY(
+пробел или другой символ.
 
 \-
-You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
+Вот так Вы можете ¤¤выделять¤¤ важные ¤¤слова¤¤!\nrnv\
 \
-You can ¤color¤ specific ¤words¤ with this!\nrnv
+Вот так Вы можете ¤выделять¤ важные ¤слова¤¤!\nrnv
 \-
-Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
+Немного ¤¤текст¤¤овых¤¤ цв¤¤ет¤¤ов\RYGCBP\
 \
-Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
+Немного ¤текст¤овых¤ цв¤ет¤ов\RYGCBP
 \-
 
-Coloring a single character\h#
+Раскраска одного символа\h#
 
-OK, I lied, it is possible to color a single character without including a space.
-To do this, put the character¤ § ¤(which you can type using ¤Shift+Insert¤), after\nYnw
-the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
+Ладно, я соврал. Вы можете раскрашивать по одному символу, не включая пробел.
+Чтобы это сделать - используйте символ¤ § ¤(который вы можете набрать, используя\nY
+Shift+Insert¤) после символа, цвет которого вы хотите изменить, а также включив\w
+его кодом оформления¤ ( ¤после¤ \¤:\nCnC
 
 \-
-You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
+Вы можете раск¤¤р§¤¤асить ¤¤один¤¤ символ вот так!\nrny(\
 \
-You can c¤o§¤lor a ¤single¤ character like this!\nrny(
+Вы можете раск¤р§¤асить ¤один¤ символ вот так!\nrny(
 \-
 
-This is not necessary if the single character is the first or last on a line.
+Это не обязательно, если этот символ на строке является первым или последним
 
-Background colors\h#
+Фоновые цвета\h#
 
-Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
-colors. To do this, you can put¤ & ¤after the regular text color code, and then a\nY
-color code for the background color. This can be done in combination with the ¤
-system described above, note that regular text colors start the next "block",
-but background colors do not. The following examples use spaces to make everything
-more readable, but this is completely optional. You can use the code¤ + ¤to expand\nY
-the (last) background color to the end of the line.
+Текст можно не только раскрашивать, он также может быть ¤выделен¤ любым цветом.\nZ&y
+Для этого вы можете поставить¤ & ¤после обычного цветового кода для текста, а затем\nY
+a цветовой код для фонового текста. Это можно сделать в сочетании с системой,
+описанной выше. Обратите внимание, что обычные цвета текста начинают следующий
+"блок", а цвета фона - нет. В приведённых ниже примерах используются пробелы,
+чтобы сделать текст более читаемым, но делать это вовсе необязательно. Вы можете
+использовать код¤ +§¤, чтобы расширить (продлить) фоновый цвет до конца строки.\nY(
 
 \-
-Black text on white background!\z&w\
+Чёрный текст на белом фоне!\z&w\
 \
-Black text on white background!\z&w
+Чёрный текст на белом фоне!\z&w
 \-
-Black text on expanded white background!\z&w+\
+Чёрный текст на развёрнутом белом фоне!\z&w+\
 \
-Black text on expanded white background!\z&w+
+Чёрный текст на развёрнутом белом фоне!\z&w+
 \-
-Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
+Красный на жёлтом¤¤, ¤¤Чёрный на белом¤¤ (пробелы улучшают читабельность)\r&y n z&w\
 \
-Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
+Красный на жёлтом¤, ¤Чёрный на белом¤ (пробелы улучшают читабельность)\r&y n z&w
 \-
-This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
+Ещё это ¤¤работает¤¤ при раскраске од¤¤н§¤¤ого символа\n P n n&r (\
 \
-This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
+Ещё это ¤работает¤ при раскраске од¤н§¤ого символа\n P n n&r (
 \-
 
-If you like, you can also make graphics using background colors:
+Вы также можете создавать графику, используя фоновые цвета, если Вам хочется:
 
 \-
  ¤¤        \n n&C\
@@ -2678,45 +2690,46 @@ If you like, you can also make graphics using background colors:
           \&o
 \-
 
-Links\h#
+Ссылки\h#
 
-Links can be used for two things: linking to somewhere else in the articles/notes,
-or linking to websites. Links use the semi-color code¤ l¤. This code does not switch\nY
-to the next "colored block", it only applies to the current one, as opposed to
-regular (non-background) color codes. It also does not change color, so you can
-change the style of the link to anything you want.
+Ссылки можно использовать для двух целей: для ссылки на заметки или для
+ссылки на веб-сайты. Ссылки используют полуцветный код¤ l¤. Этот код не\nY
+переключается на следующий "цветной блок", он применяется только к текущему, в
+отличие от обычных (не фоновых) цветовых кодов. Он также не меняет цвет, поэтому
+вы можете изменить стиль ссылки на всё, что захотите.
 
-You can link to articles by simply using the name of the article:
+Вы можете ссылаться на заметки, просто используя имя заметки:
 
 \-
-Tools\bl\
+Инструменты\bl\
 \
-Tools\bl
+Инструменты\bl
 \-
 
-Clicking the "Tools" above will bring you to the Tools help article. I used the
-color code¤ b ¤here to make the link blue, and as you can see, the¤ l ¤applies to\nbnY
-that same colored part.
+Нажав на "Инструменты", Вас перенаправит в заметку с названием Инструменты. Я
+использовал здесь цветовой код¤ b§¤, чтобы сделать ссылку синей, и, как вы можете\nb(
+видеть,¤ l ¤применяется к той же цветной части.\nY
 
-You can link to anchors in the same article by linking to a¤ # ¤followed by all text\nY
-on that line. (Instances of¤ ¤¤ ¤are completely ignored there.) You can link to the\nY
-top of the article with just a hash character (¤#§¤).\nY(
+Вы можете создавать ссылки на заголовки в той же статье, вставив в ссылку¤ #§¤, за\nY(
+которым следует весь текст на этой строке. (Примеры¤ ¤¤ ¤здесь полностью\nY
+игнорируются.) Вы можете создать ссылку на начало статьи, используя только символ
+решетки. (¤#§¤).\nY(
 
 \-
-#Using multiple colors on a line\bl\
+#Использование нескольких цветов на строке\bl\
 \
-#Using multiple colors on a line\bl
+#Использование нескольких цветов на строке\bl
 \-
 
-You can link to an anchor in a different article in a similar way:
+Вы можете создать ссылку на заголовок в другой заметке аналогичным образом:
 
 \-
-Lists reference#Gamestates\bl\
+Списки номеров#Состояния игры\bl\
 \
-Lists reference#Gamestates\bl
+Списки номеров#Состояния игры\bl
 \-
 
-Linking to websites is straightforward too:
+Ссылки на вебсайты тоже достаточно просты:
 
 \-
 https://example.com/\bl\
@@ -2724,40 +2737,43 @@ https://example.com/\bl\
 https://example.com/\bl
 \-
 
-You can use a color block with color code¤ L ¤that contains the actual destination\nY
-before the link text, and make the link show a different text that way:
+Вы можете использовать цветной блок с цветовым кодом¤ L§¤, который содержит\nY(
+фактическое место назначения перед текстом ссылки, и сделать так, чтобы в ссылке
+отображался другой текст:
 
 \-
-Tools¤¤Go to another article\Lbl\
+Инструменты¤¤Перейти к другой заметке\Lbl\
 \
-Tools¤Go to another article\Lbl
+Инструменты¤Перейти к другой заметке\Lbl
 \-
-Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
+Нажмите ¤¤Инструменты¤¤здесь¤¤ для перехода к другой заметке\nLbl\
 \
-Click ¤Tools¤here¤ to go to another article\nLbl
+Нажмите ¤Инструменты¤здесь¤ для перехода к другой заметке\nLbl
 \-
-[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+[¤¤#Ссылки¤¤Нравится¤¤] [¤¤#Пример:¤¤Не нравится¤¤]\n L vl n L rl\
 \
-[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+[¤#Ссылки¤Нравится¤] [¤#Пример:¤Не нравится¤]\n L vl n L rl
 \-
-#Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
+#Ссылки¤¤ Кнопка А ¤¤ §¤¤#Ссылки¤¤ Кнопка Б \L w&Zl n L w&Z l(\
 \
-#Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
+#Ссылки¤ Кнопка А ¤ §¤#Ссылки¤ Кнопка Б \L w&Zl n L w&Z l(
 \-
 
-Images (only available in plugin\h#
+Изображения (доступны только в описаниях\h#
 \
-descriptions):\h
+плагинов):\h
 
-0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
-       and remember to keep lines blank to accommodate for the image height)
-^ - Put this before the image number, shift image number by 10. So ^4 makes image
-    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
-_ - Put this before the image number to decrease the image number by 10.
-> - Put this before the image number to shift further images to the right by 8
-    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
-    image 1 at x=32.
-< - Same, but shift to the left.
+0..9 - отобразить изображение 0..9 на этой строке (индекс массива в массиве
+       изображений начинается с 0, и не забудьте оставить строки пустыми, чтобы
+       учесть высоту изображения)
+^ - Поместите это перед номером изображения и сместите его на 10. Итак, ^ 4
+    создаёт изображение 14, ^^ 4 создаёт изображение 24. А 3 ^ 1 ^ 56 создаёт
+    изображения 3, 11, 25 и 26.
+_ - Поместите этот символ перед номером изображения, чтобы уменьшить его на 10.
+> - Поместите это перед номером изображения, чтобы сместить следующие изображения
+    вправо на 8 пикселей. Это можно повторить, поэтому 0>>>>1 помещает изображение
+    0 в x=0 и изображение 1 в x=32.
+< - То же самое, но смещение влево.
 ]]
 },
 
@@ -2791,11 +2807,11 @@ cont = [[
 
 Некоторая графика и шрифт: Hejmstel
 
-Russian translation: CreepiX, Cheep, Omegaplex
-Esperanto translation: Hejmstel
-German translation: r00ster
-French translation: RhenaudTheLukark
-Spanish translation: Valso22/naether
+Перевод на русский: CreepiX, Чип, Omegaplex
+Перевод на эсперанто: Hejmstel
+Перевод на немецкий: r00ster
+Перевод на французский: RhenaudTheLukark
+Перевод на испанский: Valso22/naether
 
 
 Отдельная благодарность:\h#
@@ -2812,7 +2828,7 @@ Spanish translation: Valso22/naether
 
 License\h#
 \
-Copyright 2015-2020  Dav999
+Copyright 2015-2021  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -2834,12 +2850,12 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-VVVVVV assets\h#
+Ресурсы VVVVVV\h#
 
-Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
-of Terry Cavanagh. For more information about the license that applies to VVVVVV
-and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
-https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
+Ved включает в себя некоторые графические ресурсы из VVVVVV. VVVVVV и её ресурсы
+защищены авторским правом. Для получения дополнительной информации о лицензии,
+которая распространяется на VVVVVV и её активы см. ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ и ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License\nLClnLCl
+https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤exceptions.md¤ в ¤https://github.com/TerryCavanagh/VVVVVV¤GitHub репозитории VVVVVV¤.\LClnLCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 
