@@ -2255,18 +2255,6 @@ msgctxt "toolnames.17"
 msgid "Start point"
 msgstr ""
 
-msgctxt "toolnames.18"
-msgid "Flip token"
-msgstr ""
-
-msgctxt "toolnames.19"
-msgid "Coin"
-msgstr ""
-
-msgctxt "toolnames.20"
-msgid "Teleporter"
-msgstr ""
-
 msgctxt "subtoolnames.1.1"
 msgid "1x1 brush"
 msgstr ""
@@ -2413,26 +2401,6 @@ msgstr ""
 
 msgctxt "subtoolnames.17.2"
 msgid "Face left"
-msgstr ""
-
-msgctxt "subtoolnames.19.1"
-msgid "Single coin"
-msgstr ""
-
-msgctxt "subtoolnames.19.2"
-msgid "10 coin"
-msgstr ""
-
-msgctxt "subtoolnames.19.3"
-msgid "20 coin"
-msgstr ""
-
-msgctxt "subtoolnames.19.4"
-msgid "50 coin"
-msgstr ""
-
-msgctxt "subtoolnames.19.5"
-msgid "100 coin"
 msgstr ""
 
 msgctxt "warpdirs.0"

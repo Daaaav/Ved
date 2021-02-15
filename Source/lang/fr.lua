@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2020-12-31 03:25:19 (CET)
+--- Last converted: 2021-02-15 14:00:52 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -683,9 +683,6 @@ toolnames = {
 "Ligne de téléportation",
 "Équipiers",
 "Point de départ",
-"Pièce de renversement",
-"Pièce",
-"Téléporteur",
 
 }
 
@@ -708,9 +705,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Rose", "Jaune", "Rouge", "Vert", "Bleu", "Cyan", "Aléatoire"},
 [17] = {"Tourner vers la droite", "Tourner vers la gauche"},
-[18] = {},
-[19] = {"Pièce simple", "Pièce 10", "Pièce 20", "Pièce 50", "Pièce 100"},
-[20] = {},
 
 }
 

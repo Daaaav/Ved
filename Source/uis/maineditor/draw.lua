@@ -824,27 +824,6 @@ return function()
 			end
 
 			mousepressed = true
-        elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 18 and metadata.target == "VCE" then
-			-- Flip tokens
-			insert_entity(atx, aty, 5, 181)
-			mousepressed = true
-        elseif love.mouse.isDown("l") and selectedtool == 19 and metadata.target == "VCE" then
-			-- Coins
-			local found = false
-			for ke,ve in pairs(entitydata) do
-				if ve.x == (atx + 40 * roomx) and ve.y == (aty + 30 * roomy) then
-					-- We found one, whoops
-					found = true
-					break
-				end
-			end
-			if not found then
-				insert_entity(atx, aty, 8, selectedsubtool[19]-1)
-			end
-        elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 20 and metadata.target == "VCE" then
-			-- Teleporters
-			insert_entity(atx, aty, 14)
-			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed then
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
@@ -1442,7 +1421,7 @@ return function()
 
 		local thistooltip = ""
 
-		for t = 1, 20 do
+		for t = 1, 17 do
 			-- love.graphics.rectangle("fill", 16, (16+(48*(t-1)))+lefttoolscroll, 32, 32)
 			-- Are we hovering over it? Or maybe even clicking it?
 			if not nodialog or ((mouseon(16, 0, 32, 16)) or (mouseon(16, love.graphics.getHeight()-16, 32, 16)) or (not mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) and selectedtool ~= t then

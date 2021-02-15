@@ -437,7 +437,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[18], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_5_" .. k,
+				{"#Flip token", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_5_" .. k,
 				2, 2
 			)
 		end
@@ -464,7 +464,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[19], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_8_" .. k,
+				{"#Coin", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_8_" .. k,
 				coinsize, coinsize
 			)
 		end
@@ -620,7 +620,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if v.t ~= nil and interact then
 			entityrightclick(
 				x, y,
-				{"#" .. toolnames[20], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_14_" .. k,
+				{"#Teleporter", L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_14_" .. k,
 				12, 12
 			)
 		end

@@ -591,9 +591,6 @@ end
 
 function lefttoolscrollbounds()
 	local max_scroll = 368
-	if metadata.target == "VCE" then
-		max_scroll = 512
-	end
 	if (lefttoolscroll < -max_scroll) then
 		lefttoolscroll = -max_scroll
 	elseif (lefttoolscroll > 16) then
@@ -2192,12 +2189,10 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 	ox = offx+(v.x-myroomx*40)*16 + 6
 	oy = offy+(v.y-myroomy*30)*16 + 24
 
-	if metadata.target == "VCE" then
-		if v.p1 < 0 or v.p1 > 1 then
-			return
-		elseif v.p1 == 1 then
-			oy = oy - 14
-		end
+	if v.p1 < 0 or v.p1 > 1 then
+		return
+	elseif v.p1 == 1 then
+		oy = oy - 14
 	end
 
 	love.graphics.setColor(0,0,0)

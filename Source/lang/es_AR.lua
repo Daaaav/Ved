@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2020-12-31 03:25:19 (CET)
+--- Last converted: 2021-02-15 14:00:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -669,9 +669,6 @@ toolnames = {
 "Linea de warp",
 "Compañero",
 "Punto de inicio",
-"Token de volteo",
-"Moneda",
-"Teleportador",
 
 }
 
@@ -694,9 +691,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Rosa", "Amarillo", "Rojo", "Verde", "Azul", "Azul claro", "Al azar"},
 [17] = {"Mirar derecha", "Mirar izquierda"},
-[18] = {},
-[19] = {"Moneda sola", "Moneda de 10", "Moneda de 20", "Moneda de 50", "Moneda de 100"},
-[20] = {},
 
 }
 

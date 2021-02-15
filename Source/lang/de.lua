@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2020-12-31 03:25:19 (CET)
+--- Last converted: 2021-02-15 14:00:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -681,9 +681,6 @@ toolnames = {
 "Teleportationslinie",
 "Crewmitglied",
 "Startpunkt",
-"Drehtoken",
-"Münze",
-"Teleporter",
 
 }
 
@@ -706,9 +703,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Pink", "Gelb", "Rot", "Grün", "Blau", "Cyan", "Zufällig"},
 [17] = {"Gucke nach rechts", "Gucke nach links"},
-[18] = {},
-[19] = {"Einzelne Münze", "10 Münze", "20 Münze", "50 Münze", "100 Münze"},
-[20] = {},
 
 }
 

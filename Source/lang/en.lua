@@ -667,9 +667,6 @@ toolnames = {
 "Warp line",
 "Crewmate",
 "Start point",
-"Flip token",
-"Coin",
-"Teleporter"
 
 }
 
@@ -692,9 +689,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Pink", "Yellow", "Red", "Green", "Blue", "Cyan", "Random"},
 [17] = {"Face right", "Face left"},
-[18] = {},
-[19] = {"Single coin", "10 coin", "20 coin", "50 coin", "100 coin"},
-[20] = {},
 
 }
 

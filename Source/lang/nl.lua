@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2020-12-31 03:25:20 (CET)
+--- Last converted: 2021-02-15 14:00:52 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -681,9 +681,6 @@ toolnames = {
 "Warplĳn",
 "Bemanningslid",
 "Startpunt",
-"Fliptoken",
-"Munt",
-"Teleporter",
 
 }
 
@@ -706,9 +703,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Roze", "Geel", "Rood", "Groen", "Blauw", "Cyaan", "Willekeurig"},
 [17] = {"Gezicht naar rechts", "Gezicht naar links"},
-[18] = {},
-[19] = {"Enkele munt", "10-munt", "20-munt", "50-munt", "100-munt"},
-[20] = {},
 
 }
 

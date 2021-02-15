@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2020-12-31 03:25:19 (CET)
+--- Last converted: 2021-02-15 14:00:51 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -693,9 +693,6 @@ toolnames = {
 "Teleportlinio",
 "Ŝipano",
 "Komencejo",
-"Renversiga ĵetono",
-"Monero",
-"Teleportilo",
 
 }
 
@@ -718,9 +715,6 @@ subtoolnames = {
 [15] = {},
 [16] = {"Rozkolora", "Flava", "Ruĝa", "Verda", "Blua", "Bluverda", "Hazarda koloro"},
 [17] = {"Rigardi dekstren", "Rigardi maldekstren"},
-[18] = {},
-[19] = {"Unuopa monero", "Dek-monero", "Dudek-monero", "Kvindek-monero", "Cent-monero"},
-[20] = {},
 
 }
 
