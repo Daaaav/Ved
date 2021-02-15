@@ -3309,4 +3309,8 @@ function draw_script_warn_light(id, x, y, active)
 	end
 end
 
+function vce_deprecation_dialog()
+	dialog.create(L.VCE_DEPRECATED)
+end
+
 hook("func")

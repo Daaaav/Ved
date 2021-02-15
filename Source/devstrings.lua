@@ -3,3 +3,4 @@
 
 --L. = ""
 
+L.VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/"

@@ -679,6 +679,10 @@ function loadlevel(path)
 	cons("Done loading!")
 
 
+	if thismetadata.target == "VCE" then
+		vce_deprecation_dialog()
+	end
+
 	-- As many of the integrity checks as possible here
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
 		mycount.FC = mycount.FC + 1
@@ -1322,6 +1326,8 @@ function convert_target(oldtarget, newtarget)
 end
 
 function convert_target_v_to_vce()
+	vce_deprecation_dialog()
+
 	metadata.target = "VCE"
 	metadata.target_ver = 1
 	limit = limit_vce
