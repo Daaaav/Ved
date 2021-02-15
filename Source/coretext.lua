@@ -140,6 +140,10 @@ function loadlanguage()
 		package.loaded.const = false
 		ved_require("const")
 	end
+	if package.loaded.tileset_data then
+		package.loaded.tileset_data = false
+		ved_require("tileset_data")
+	end
 	if uis ~= nil then
 		-- Need to reload this for all the buttons that are in there
 		unload_uis()

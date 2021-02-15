@@ -88,6 +88,7 @@ function love.load()
 	loadtinynumbersfont()
 
 	ved_require("const")
+	ved_require("tileset_data")
 	ved_require("func")
 	ved_require("roomfunc")
 	ved_require("scriptfunc")
