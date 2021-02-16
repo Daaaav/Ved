@@ -384,7 +384,7 @@ function love.keypressed(key)
 					-- Don't keep looping around forever
 					done = true
 				end
-				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][DF.T] == nil or dialogs[#dialogs].fields[cf][DF.T] ~= DF.LABEL then
+				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][DFP.T] == nil or dialogs[#dialogs].fields[cf][DFP.T] ~= DF.LABEL then
 					-- Only text labels are skipped
 					done = true
 				end
@@ -398,8 +398,8 @@ function love.keypressed(key)
 			local new_value = not dialogs[#dialogs].fields[cf][DFP.VALUE]
 			dialogs[#dialogs].fields[cf][DFP.VALUE] = new_value
 
-			if dialogs[#dialogs].fields[cf][DF.CHECKBOX_ONCHANGE] ~= nil then
-				dialogs[#dialogs].fields[cf][DF.CHECKBOX_ONCHANGE](new_value, dialogs[#dialogs])
+			if dialogs[#dialogs].fields[cf][DFP.CHECKBOX_ONCHANGE] ~= nil then
+				dialogs[#dialogs].fields[cf][DFP.CHECKBOX_ONCHANGE](new_value, dialogs[#dialogs])
 			end
 		elseif (cftype == DF.DROPDOWN or cftype == DF.RADIOS) and (key == "up" or key == "down" or key == "kp8" or key == "kp2") then
 			dialogs[#dialogs].showtabrect = true
