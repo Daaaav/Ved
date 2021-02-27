@@ -517,7 +517,7 @@ return function()
 
 	-- If we're in "latest info", then we can refresh!
 	if helprefreshable and not updatecheckthread:isRunning() then
-		hoverdraw(refreshbtn, 25*8-16, 8, 16, 16)
+		hoverdraw(image.refreshbtn, 25*8-16, 8, 16, 16)
 
 		if nodialog and love.mouse.isDown("l") and mouseon(25*8-16, 8, 16, 16) then
 			load_updatecheck(true)

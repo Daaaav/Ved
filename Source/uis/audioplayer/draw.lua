@@ -38,36 +38,36 @@ return function()
 			local audio = getmusicaudio(musicplayerfile, m)
 			if audio == nil then
 				love.graphics.setColor(64,64,64)
-				love.graphics.draw(sound_play, musicx, 32+24*my)
+				love.graphics.draw(image.sound_play, musicx, 32+24*my)
 				love.graphics.setColor(255,255,255)
 			elseif currentmusic_file == musicplayerfile and currentmusic == m then
-				hoverdraw(sound_play_current, musicx, 32+24*my, 16, 16)
+				hoverdraw(image.sound_play_current, musicx, 32+24*my, 16, 16)
 			else
-				hoverdraw(sound_play, musicx, 32+24*my, 16, 16)
+				hoverdraw(image.sound_play, musicx, 32+24*my, 16, 16)
 			end
 			local song_metadata, song_metadata_anyset
 			if musiceditor or file_metadata ~= nil then
 				song_metadata, song_metadata_anyset = getmusicmeta_song(musicplayerfile, m)
 				if not musiceditor and not song_metadata_anyset then
 					love.graphics.setColor(64,64,64)
-					love.graphics.draw(infograybtn, musicx+16, 32+24*my)
+					love.graphics.draw(image.infograybtn, musicx+16, 32+24*my)
 					love.graphics.setColor(255,255,255)
 				else
 					local notes_set = song_metadata_anyset and song_metadata.notes ~= ""
-					hoverdraw(notes_set and infobtn or infograybtn, musicx+16, 32+24*my, 16, 16)
+					hoverdraw(notes_set and image.infobtn or image.infograybtn, musicx+16, 32+24*my, 16, 16)
 				end
 			end
 			local can_remove = false
 			local filedata = getmusicfiledata(musicplayerfile, m)
 			if musiceditor then
 				can_remove = filedata ~= nil
-				hoverdraw(loadbtn, musicx+32, 32+24*my, 16, 16)
+				hoverdraw(image.loadbtn, musicx+32, 32+24*my, 16, 16)
 				if not can_remove then
 					love.graphics.setColor(64,64,64)
-					love.graphics.draw(eraser, musicx+48, 32+24*my)
+					love.graphics.draw(image.eraser, musicx+48, 32+24*my)
 					love.graphics.setColor(255,255,255)
 				else
-					hoverdraw(eraser, musicx+48, 32+24*my, 16, 16)
+					hoverdraw(image.eraser, musicx+48, 32+24*my, 16, 16)
 				end
 			end
 			if love.mouse.isDown("l") and not mousepressed and nodialog then
@@ -161,17 +161,17 @@ return function()
 	end
 	if current_audio == nil then
 		love.graphics.setColor(64,64,64)
-		love.graphics.draw(sound_play, 16, cura_y)
-		love.graphics.draw(sound_stop, 32, cura_y)
-		love.graphics.draw(sound_rewind, 48, cura_y)
+		love.graphics.draw(image.sound_play, 16, cura_y)
+		love.graphics.draw(image.sound_stop, 32, cura_y)
+		love.graphics.draw(image.sound_rewind, 48, cura_y)
 		ved_print("[--] -:--", 72, cura_y+4)
 		love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
 		ved_print("-:--", width+160, cura_y+4)
 		love.graphics.setColor(255,255,255)
 	else
-		hoverdraw(currentmusic_paused and sound_play or sound_pause, 16, cura_y, 16, 16)
-		hoverdraw(sound_stop, 32, cura_y, 16, 16)
-		hoverdraw(sound_rewind, 48, cura_y, 16, 16)
+		hoverdraw(currentmusic_paused and image.sound_play or image.sound_pause, 16, cura_y, 16, 16)
+		hoverdraw(image.sound_stop, 32, cura_y, 16, 16)
+		hoverdraw(image.sound_rewind, 48, cura_y, 16, 16)
 		local elapsed = current_audio:tell()
 		local duration
 		if love_version_meets(10) then

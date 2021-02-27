@@ -444,11 +444,11 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			else
 				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3)
 			end
-			love.graphics.draw(dropdownarrow, real_x+real_w-8, (real_y-3)+2)
+			love.graphics.draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+2)
 		end
 	elseif mode == DF.CHECKBOX then
 		-- Checkbox
-		self:hoverdraw(topmost, content and checkon or checkoff, real_x, real_y-3, real_w, 8)
+		self:hoverdraw(topmost, content and image.checkon or image.checkoff, real_x, real_y-3, real_w, 8)
 
 		if (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
 			self.currentfield = n
@@ -469,7 +469,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				selected = v == menuitemslabel[content]
 			end
 			real_w = 16+font8:getWidth(v)
-			self:hoverdraw(topmost, selected and radioon or radiooff, real_x, real_y-11+k*8, real_w, 8)
+			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-11+k*8, real_w, 8)
 			self:setColor(0,0,0,255)
 			ved_print(v, real_x+16, real_y-10+k*8)
 			self:setColor(255,255,255,255)
@@ -483,7 +483,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		end
 	elseif mode == DF.FILES then
 		self:setColor(255,255,255,255)
-		self:hoverdraw(topmost, folder_parent, real_x, real_y-3, 12, 12)
+		self:hoverdraw(topmost, image.folder_parent, real_x, real_y-3, 12, 12)
 		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
 			self.currentfield = n
 
@@ -528,7 +528,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				if v.isdir then
 					self:setColor(255,255,255,255)
-					love.graphics.draw(smallfolder, real_x, real_y+1+k*8+listscroll)
+					love.graphics.draw(image.smallfolder, real_x, real_y+1+k*8+listscroll)
 					if active and selected then
 						showhotkey(" ", real_x+real_w-20, real_y+k*8+listscroll, ALIGN.RIGHT, topmost, self)
 					end

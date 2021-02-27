@@ -155,7 +155,7 @@ return function()
 	end
 
 	-- Now put some buttons on the right!
-	hoverdraw(helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
+	hoverdraw(image.helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
 	ved_printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4, 128-16, "center")
 	--rbutton(L.NEW, 1)
@@ -345,7 +345,7 @@ return function()
 					love.graphics.draw(rooms_map[carg2][carg1].map, love.mouse.getX()-380, love.mouse.getY()-120)
 				end
 			else
-				love.graphics.draw(covered_80x60, map_x, map_y)
+				love.graphics.draw(image.covered_80x60, map_x, map_y)
 			end
 
 			local disp_carg1, disp_carg2

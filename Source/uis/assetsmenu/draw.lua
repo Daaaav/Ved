@@ -17,22 +17,22 @@ return function()
 
 		love.graphics.setColor(255,255,255)
 		if a == 0 then
-			love.graphics.draw(asset_pppppp, 21, 21)
+			love.graphics.draw(image.asset_pppppp, 21, 21)
 			ved_print("vvvvvvmusic.vvv", 33, 21)
 			ved_print(musicfileexists("vvvvvvmusic.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37)
 		elseif a == 1 then
-			love.graphics.draw(asset_mmmmmm, 21, 21+44)
+			love.graphics.draw(image.asset_mmmmmm, 21, 21+44)
 			ved_print("mmmmmm.vvv", 33, 21+44)
 			ved_print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37+44)
 		elseif a == 2 then
-			love.graphics.draw(asset_musiceditor, 21, 21+88)
+			love.graphics.draw(image.asset_musiceditor, 21, 21+88)
 			ved_print(L.MUSICEDITOR, 33, 21+88)
 			--ved_print(musicfileexists("mmmmmm.vvv") and L.MUSICEXISTSYES or L.MUSICEXISTSNO, 33, 37+88)
 		elseif a == 3 then
-			love.graphics.draw(asset_sounds, 21, 21+132)
+			love.graphics.draw(image.asset_sounds, 21, 21+132)
 			ved_print(L.SOUNDS, 33, 21+132)
 		elseif a == 4 then
-			love.graphics.draw(asset_graphics, 21, 21+176)
+			love.graphics.draw(image.asset_graphics, 21, 21+176)
 			ved_print(L.GRAPHICS, 33, 21+176)
 		end
 

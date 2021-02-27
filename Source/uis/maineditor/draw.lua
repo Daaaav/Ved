@@ -904,7 +904,7 @@ return function()
 			love.graphics.setColor(255,255,255,92)
 		end
 
-		love.graphics.draw(bggrid, screenoffset, 0)
+		love.graphics.draw(image.bggrid, screenoffset, 0)
 
 		love.graphics.setColor(255,255,255,255)
 
@@ -1443,9 +1443,9 @@ return function()
 			end
 
 			if selectedtool == t then
-				love.graphics.draw(selectedtoolborder,  16, (16+(48*(t-1)))+lefttoolscroll)
+				love.graphics.draw(image.selectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			else
-				love.graphics.draw(unselectedtoolborder,  16, (16+(48*(t-1)))+lefttoolscroll)
+				love.graphics.draw(image.unselectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			end
 
 			coorx = 16+2
@@ -1495,9 +1495,9 @@ return function()
 			end
 
 			if selectedsubtool[selectedtool] == k then
-				love.graphics.draw(selectedtoolborder,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				love.graphics.draw(image.selectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			else
-				love.graphics.draw(unselectedtoolborder,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				love.graphics.draw(image.unselectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			end
 
 			coorx = 16+64+2
@@ -1552,8 +1552,8 @@ return function()
 		love.graphics.setScissor()
 
 		-- But we still want to be able to scroll!
-		hoverdraw(scrollup, 16, 0, 32, 16)
-		hoverdraw(scrolldn, 16, love.graphics.getHeight()-16, 32, 16)
+		hoverdraw(image.scrollup, 16, 0, 32, 16)
+		hoverdraw(image.scrolldn, 16, love.graphics.getHeight()-16, 32, 16)
 
 		-- Are we clicking them?
 		if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, 0, 32, 16) then
@@ -1584,7 +1584,7 @@ return function()
 			love.graphics.setColor(255,255,255,255)
 		end
 
-		hoverdraw((eraserlocked and eraseroff or eraseron), 88, 0, 16, 16)
+		hoverdraw((eraserlocked and image.eraseroff or image.eraseron), 88, 0, 16, 16)
 		_= not editingroomname and showhotkey("f", 88-1, 16-8)
 
 		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(88, 0, 16, 16) then
@@ -1602,7 +1602,7 @@ return function()
 		tinyprint(L.TINY_CTRL, 0, 0)
 
 		-- Also display the current (sub)tool!
-		love.graphics.draw(selectedtoolborder, 0, love.graphics.getHeight()-32)
+		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if subtoolimgs[selectedtool][selectedsubtool[selectedtool]] ~= nil then
 			-- We have a subtool to display!
 			love.graphics.draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
@@ -1619,48 +1619,48 @@ return function()
 	local usethisbtn
 	if playtesting_available then
 		if playtesting_askwherestart then
-			usethisbtn = playstopbtn_hq
+			usethisbtn = image.playstopbtn_hq
 		else
-			usethisbtn = playbtn_hq
+			usethisbtn = image.playbtn_hq
 		end
 	else
-		usethisbtn = playgraybtn_hq
+		usethisbtn = image.playgraybtn_hq
 	end
 	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32)
 	_= not editingroomname and editingbounds == 0 and showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is after the side panels are darkened
-	hoverdraw(helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
+	hoverdraw(image.helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
 	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
-	hoverdraw(newbtn_hq, love.graphics.getWidth()-96, 0, 32, 32)
+	hoverdraw(image.newbtn_hq, love.graphics.getWidth()-96, 0, 32, 32)
 	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
-	hoverdraw(loadbtn_hq, love.graphics.getWidth()-64, 0, 32, 32)
+	hoverdraw(image.loadbtn_hq, love.graphics.getWidth()-64, 0, 32, 32)
 	_= not editingroomname and showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
-	hoverdraw(savebtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
+	hoverdraw(image.savebtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
 	_= not editingroomname and showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
 
 	if #undobuffer >= 1 then
-		hoverdraw(undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
+		hoverdraw(image.undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
 	else
 		love.graphics.setColor(64,64,64)
-		love.graphics.draw(undobtn, love.graphics.getWidth()-120, 40)
+		love.graphics.draw(image.undobtn, love.graphics.getWidth()-120, 40)
 		love.graphics.setColor(255,255,255)
 	end
 	if #redobuffer >= 1 then
-		hoverdraw(redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
+		hoverdraw(image.redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
 	else
 		love.graphics.setColor(64,64,64)
-		love.graphics.draw(redobtn, love.graphics.getWidth()-120+16, 40)
+		love.graphics.draw(image.redobtn, love.graphics.getWidth()-120+16, 40)
 		love.graphics.setColor(255,255,255)
 	end
 
 	_= not editingroomname and showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
 	_= not editingroomname and showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
 
-	hoverdraw(cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
-	hoverdraw(copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
-	hoverdraw(pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
+	hoverdraw(image.cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
+	hoverdraw(image.copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
+	hoverdraw(image.pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
 	_= not editingroomname and showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
 	_= not editingroomname and showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)

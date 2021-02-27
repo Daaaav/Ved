@@ -538,17 +538,17 @@ end
 function EditorIconBar()
 	return HorizontalListContainer(
 		{
-			ImageButton(undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
+			ImageButton(image.undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
 				function() return true, #undobuffer >= 1 end
 			),
-			ImageButton(redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
+			ImageButton(image.redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
 				function() return true, #redobuffer >= 1 end
 			),
 		},
 		{
-			ImageButton(cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl")),
-			ImageButton(copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl")),
-			ImageButton(pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl")),
+			ImageButton(image.cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl")),
+			ImageButton(image.copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl")),
+			ImageButton(image.pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl")),
 		},
 		16*7, 16
 	)

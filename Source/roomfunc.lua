@@ -113,24 +113,24 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			if displaysolid then
 				if issolid(t, ts, false, true) then
 					-- Wall
-					love.graphics.draw(solidimg, x, y)
+					love.graphics.draw(image.solid, x, y)
 				-- Spikes
 				elseif istophalfspike(t, ts) then
 					love.graphics.setColor(255,0,0)
-					love.graphics.draw(solidhalfimg, x, y)
+					love.graphics.draw(image.solidhalf, x, y)
 					love.graphics.setColor(255,255,255)
 				elseif isbottomhalfspike(t, ts) then
 					love.graphics.setColor(255,0,0)
-					love.graphics.draw(solidhalfimg, x, y+8)
+					love.graphics.draw(image.solidhalf, x, y+8)
 					love.graphics.setColor(255,255,255)
 				elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
 					love.graphics.setColor(255,0,0)
-					love.graphics.draw(solidimg, x, y)
+					love.graphics.draw(image.solid, x, y)
 					love.graphics.setColor(255,255,255)
 				elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
 					-- Not a spike but solid in invincibility mode
 					love.graphics.setColor(255,255,0)
-					love.graphics.draw(solidimg, x, y)
+					love.graphics.draw(image.solid, x, y)
 					love.graphics.setColor(255,255,255)
 				end
 			end
@@ -142,7 +142,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			if displayminimapgrid then
 				love.graphics.setColor(96, 96, 96)
 				local function draw()
-					love.graphics.draw(solidimg, x, y)
+					love.graphics.draw(image.solid, x, y)
 				end
 				if zoom == 1 then
 					if atx >= 3 and atx <= 36 and atx % 3 == 0 and aty <= 24 and aty % 3 == 0 then
@@ -922,24 +922,24 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 				if displaysolid then
 					if issolid(t, ts, false, true) then
 						-- Wall
-						love.graphics.draw(solidimg, x, y)
+						love.graphics.draw(image.solid, x, y)
 					-- Spikes
 					elseif istophalfspike(t, ts) then
 						love.graphics.setColor(255,0,0)
-						love.graphics.draw(solidhalfimg, x, y)
+						love.graphics.draw(image.solidhalf, x, y)
 						love.graphics.setColor(255,255,255)
 					elseif isbottomhalfspike(t, ts) then
 						love.graphics.setColor(255,0,0)
-						love.graphics.draw(solidhalfimg, x, y+8)
+						love.graphics.draw(image.solidhalf, x, y+8)
 						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
 						love.graphics.setColor(255,0,0)
-						love.graphics.draw(solidimg, x, y)
+						love.graphics.draw(image.solid, x, y)
 						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
 						-- Not a spike but solid in invincibility mode
 						love.graphics.setColor(255,255,0)
-						love.graphics.draw(solidimg, x, y)
+						love.graphics.draw(image.solid, x, y)
 						love.graphics.setColor(255,255,255)
 					end
 				end

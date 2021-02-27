@@ -5,7 +5,7 @@ return function()
 	love.graphics.rectangle("line", mapxoffset+screenoffset-0.5, mapyoffset-0.5, 640*mapscale*metadata.mapwidth+1, 480*mapscale*metadata.mapheight+1)
 	love.graphics.setColor(255,255,255,255)
 	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
-	love.graphics.draw(covered_full, mapxoffset+screenoffset, mapyoffset)
+	love.graphics.draw(image.covered_full, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
 
 	local startx, starty
@@ -267,9 +267,9 @@ return function()
 			end
 
 			if (t ~= 1 and selectedtool == actual_t) or (t == 1 and not toolanyofthese) then
-				love.graphics.draw(selectedtoolborder,  16, (16+(48*(t-1))))
+				love.graphics.draw(image.selectedtool,  16, (16+(48*(t-1))))
 			else
-				love.graphics.draw(unselectedtoolborder,  16, (16+(48*(t-1))))
+				love.graphics.draw(image.unselectedtool,  16, (16+(48*(t-1))))
 			end
 			if t ~= 1 then
 				local cx, cy = 16+2, (16+2+(48*(t-1)))
@@ -296,7 +296,7 @@ return function()
 		end
 		tinyprint(L.TINY_CTRL, 0, 0)
 
-		love.graphics.draw(selectedtoolborder, 0, love.graphics.getHeight()-32)
+		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if toolanyofthese then
 			love.graphics.draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
 		end

@@ -63,9 +63,9 @@ return function()
 		ved_printf(editingcolor[3], love.graphics.getWidth()-50, love.graphics.getHeight()-265, 50, "center")
 
 		-- The arrows
-		love.graphics.draw(colorsel, love.graphics.getWidth()-164, love.graphics.getHeight()-editingcolor[1]-4)
-		love.graphics.draw(colorsel, love.graphics.getWidth()-109, love.graphics.getHeight()-editingcolor[2]-4)
-		love.graphics.draw(colorsel, love.graphics.getWidth()-54, love.graphics.getHeight()-editingcolor[3]-4)
+		love.graphics.draw(image.colorsel, love.graphics.getWidth()-164, love.graphics.getHeight()-editingcolor[1]-4)
+		love.graphics.draw(image.colorsel, love.graphics.getWidth()-109, love.graphics.getHeight()-editingcolor[2]-4)
+		love.graphics.draw(image.colorsel, love.graphics.getWidth()-54, love.graphics.getHeight()-editingcolor[3]-4)
 
 		-- Are we clicking?
 		if love.mouse.isDown("l") then

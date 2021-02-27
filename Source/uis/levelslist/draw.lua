@@ -92,7 +92,7 @@ return function()
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
 					local md = files[currentdir][actualfile].metadata
 					if not md.success then
-						love.graphics.draw(smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
+						love.graphics.draw(image.smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
 					else
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
@@ -181,12 +181,12 @@ return function()
 						end
 
 						if v.isdir then
-							love.graphics.draw(smallfolder, 8, 10+12*k2+levellistscroll+2)
+							love.graphics.draw(image.smallfolder, 8, 10+12*k2+levellistscroll+2)
 						end
 						if backupscreen and not v.isdir then
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
-								love.graphics.draw(smallunknown, 8, 10+12*k2+levellistscroll+2)
+								love.graphics.draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
 								ved_print(displayable_filename(v.name), 18, 10+12*k2+levellistscroll+2)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
@@ -203,7 +203,7 @@ return function()
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
-									love.graphics.draw(smallunknown, 8, 10+12*k2+levellistscroll+2)
+									love.graphics.draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
 								else
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
@@ -358,17 +358,17 @@ return function()
 	end
 
 	if not secondlevel then
-		hoverdraw(helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
-		hoverdraw(refreshbtn, love.graphics.getWidth()-128+8+16, 8, 16, 16, 1)
+		hoverdraw(image.helpbtn, love.graphics.getWidth()-128+8, 8, 16, 16, 1)
+		hoverdraw(image.refreshbtn, love.graphics.getWidth()-128+8+16, 8, 16, 16, 1)
 
 		showhotkey("q", love.graphics.getWidth()-128+8+8-2, 16)
 		showhotkey("t", love.graphics.getWidth()-128+8+16+8-2, 16)
 	end
 	if not state6old1 then
-		hoverdraw(newbtn_hq, love.graphics.getWidth()-32, 0, 32, 32) -- -96
+		hoverdraw(image.newbtn_hq, love.graphics.getWidth()-32, 0, 32, 32) -- -96
 		showhotkey("cN", love.graphics.getWidth()-32-2, 32-8)
 	else
-		hoverdraw(retbtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
+		hoverdraw(image.retbtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
 		showhotkey("b", love.graphics.getWidth()-32-2, 32-8)
 	end
 

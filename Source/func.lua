@@ -665,7 +665,7 @@ end
 function radio(selected, x, y, key, label, onclickfunc)
 	local clickable_w = 8+32+font8:getWidth(label)
 	hoverdraw(
-		selected and radioon_hq or radiooff_hq,
+		selected and image.radioon_hq or image.radiooff_hq,
 		x, y, clickable_w, 16
 	)
 	if selected then
@@ -683,7 +683,7 @@ end
 function checkbox(selected, x, y, key, label, onclickfunc)
 	local clickable_w = 8+32+font8:getWidth(label)
 	hoverdraw(
-		selected and checkon_hq or checkoff_hq,
+		selected and image.checkon_hq or image.checkoff_hq,
 		x, y, clickable_w, 16
 	)
 	ved_print(label, x+16+8, y+4)
@@ -2023,7 +2023,6 @@ function getalllanguages()
 end
 
 function colorsetting(label, pos, mycolor)
-	--hoverdraw(checkoff, 8, 8+(24*pos), 16, 16, 2)
 	love.graphics.setColor(255,255,255)
 	love.graphics.rectangle("fill", 8, 8+(24*pos), 32, 16)
 	love.graphics.setColor(mycolor)

@@ -211,50 +211,76 @@ function love.load()
 	scriptboximg[8] = love.graphics.newImage("cursor/script8.png")
 	scriptboximg[9] = love.graphics.newImage("cursor/script9.png")
 
+	image = {
+		selectedtool = love.graphics.newImage("images/selectedtool.png"),
+		unselectedtool = love.graphics.newImage("images/unselectedtool.png"),
 
-	selectedtoolborder = love.graphics.newImage("images/selectedtool.png")
-	unselectedtoolborder = love.graphics.newImage("images/unselectedtool.png")
+		savebtn_hq = love.graphics.newImage("images/save_hq.png"),
+		loadbtn = love.graphics.newImage("images/load.png"),
+		loadbtn_hq = love.graphics.newImage("images/load_hq.png"),
+		newbtn_hq = love.graphics.newImage("images/new_hq.png"),
+		helpbtn = love.graphics.newImage("images/help.png"),
+		retbtn_hq = love.graphics.newImage("images/ret_hq.png"),
+		infobtn = love.graphics.newImage("images/info.png"),
+		infograybtn = love.graphics.newImage("images/infogray.png"),
 
-	savebtn_hq = love.graphics.newImage("images/save_hq.png")
-	loadbtn = love.graphics.newImage("images/load.png")
-	loadbtn_hq = love.graphics.newImage("images/load_hq.png")
-	newbtn_hq = love.graphics.newImage("images/new_hq.png")
-	helpbtn = love.graphics.newImage("images/help.png")
-	retbtn_hq = love.graphics.newImage("images/ret_hq.png")
-	infobtn = love.graphics.newImage("images/info.png")
-	infograybtn = love.graphics.newImage("images/infogray.png")
+		undobtn = love.graphics.newImage("images/undo.png"),
+		redobtn = love.graphics.newImage("images/redo.png"),
+		cutbtn = love.graphics.newImage("images/cut.png"),
+		copybtn = love.graphics.newImage("images/copy.png"),
+		pastebtn = love.graphics.newImage("images/paste.png"),
+		refreshbtn = love.graphics.newImage("images/refresh.png"),
 
-	undobtn = love.graphics.newImage("images/undo.png")
-	redobtn = love.graphics.newImage("images/redo.png")
-	cutbtn = love.graphics.newImage("images/cut.png")
-	copybtn = love.graphics.newImage("images/copy.png")
-	pastebtn = love.graphics.newImage("images/paste.png")
-	refreshbtn = love.graphics.newImage("images/refresh.png")
+		playbtn_hq = love.graphics.newImage("images/play_hq.png"),
+		playgraybtn_hq = love.graphics.newImage("images/playgray_hq.png"),
+		playstopbtn_hq = love.graphics.newImage("images/playstop_hq.png"),
 
-	playbtn_hq = love.graphics.newImage("images/play_hq.png")
-	playgraybtn_hq = love.graphics.newImage("images/playgray_hq.png")
-	playstopbtn_hq = love.graphics.newImage("images/playstop_hq.png")
+		eraseron = love.graphics.newImage("images/eraseron.png"),
+		eraseroff = love.graphics.newImage("images/eraseroff.png"),
+		eraser = love.graphics.newImage("images/eraser.png"),
 
-	eraseron = love.graphics.newImage("images/eraseron.png")
-	eraseroff = love.graphics.newImage("images/eraseroff.png")
-	eraser = love.graphics.newImage("images/eraser.png")
+		checkon = love.graphics.newImage("images/checkon.png"),
+		checkoff = love.graphics.newImage("images/checkoff.png"),
+		checkon_hq = love.graphics.newImage("images/checkon_hq.png"),
+		checkoff_hq = love.graphics.newImage("images/checkoff_hq.png"),
 
-	checkon = love.graphics.newImage("images/checkon.png")
-	checkoff = love.graphics.newImage("images/checkoff.png")
-	checkon_hq = love.graphics.newImage("images/checkon_hq.png")
-	checkoff_hq = love.graphics.newImage("images/checkoff_hq.png")
+		radioon = love.graphics.newImage("images/radioon.png"),
+		radiooff = love.graphics.newImage("images/radiooff.png"),
+		radioon_hq = love.graphics.newImage("images/radioon_hq.png"),
+		radiooff_hq = love.graphics.newImage("images/radiooff_hq.png"),
 
-	radioon = love.graphics.newImage("images/radioon.png")
-	radiooff = love.graphics.newImage("images/radiooff.png")
-	radioon_hq = love.graphics.newImage("images/radioon_hq.png")
-	radiooff_hq = love.graphics.newImage("images/radiooff_hq.png")
+		dropdownarrow = love.graphics.newImage("images/dropdownarrow.png"),
+		colorsel = love.graphics.newImage("images/colorsel.png"),
 
-	dropdownarrow = love.graphics.newImage("images/dropdownarrow.png")
-	colorsel = love.graphics.newImage("images/colorsel.png")
+		smallfolder = love.graphics.newImage("images/smallfolder.png"),
+		smalllevel = love.graphics.newImage("images/smalllevel.png"),
+		smallunknown = love.graphics.newImage("images/smallunknown.png"),
 
-	smallfolder = love.graphics.newImage("images/smallfolder.png")
-	smalllevel = love.graphics.newImage("images/smalllevel.png")
-	smallunknown = love.graphics.newImage("images/smallunknown.png")
+		asset_pppppp = love.graphics.newImage("images/asset_pppppp.png"),
+		asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png"),
+		asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png"),
+		asset_sounds = love.graphics.newImage("images/asset_sounds.png"),
+		asset_graphics = love.graphics.newImage("images/asset_graphics.png"),
+
+		sound_play = love.graphics.newImage("images/sound_play.png"),
+		sound_play_current = love.graphics.newImage("images/sound_play_current.png"),
+		sound_pause = love.graphics.newImage("images/sound_pause.png"),
+		sound_stop = love.graphics.newImage("images/sound_stop.png"),
+		sound_rewind = love.graphics.newImage("images/sound_rewind.png"),
+
+		folder_parent = love.graphics.newImage("images/folder_parent.png"),
+
+		bggrid = love.graphics.newImage("images/bggrid.png"),
+
+		solid = love.graphics.newImage("images/solid.png"),
+		solidhalf = love.graphics.newImage("images/solidhalf.png"),
+		covered_full = love.graphics.newImage("images/covered_full.png"),
+		covered_80x60 = love.graphics.newImage("images/covered_80x60.png"),
+
+		scrollup = love.graphics.newImage("images/scrollup.png"),
+		scrolldn = love.graphics.newImage("images/scrolldn.png"),
+
+	}
 
 	script_warn_lights = {
 		loadscript_required = {
@@ -276,27 +302,6 @@ function love.load()
 			lang_expl = "INTSCRWARNING_NAME_EXPL",
 		},
 	}
-
-	asset_pppppp = love.graphics.newImage("images/asset_pppppp.png")
-	asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png")
-	asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png")
-	asset_sounds = love.graphics.newImage("images/asset_sounds.png")
-	asset_graphics = love.graphics.newImage("images/asset_graphics.png")
-
-	sound_play = love.graphics.newImage("images/sound_play.png")
-	sound_play_current = love.graphics.newImage("images/sound_play_current.png")
-	sound_pause = love.graphics.newImage("images/sound_pause.png")
-	sound_stop = love.graphics.newImage("images/sound_stop.png")
-	sound_rewind = love.graphics.newImage("images/sound_rewind.png")
-
-	folder_parent = love.graphics.newImage("images/folder_parent.png")
-
-	bggrid = love.graphics.newImage("images/bggrid.png")
-
-	solidimg = love.graphics.newImage("images/solid.png")
-	solidhalfimg = love.graphics.newImage("images/solidhalf.png")
-	covered_full = love.graphics.newImage("images/covered_full.png")
-	covered_80x60 = love.graphics.newImage("images/covered_80x60.png")
 
 	snd_break = love.audio.newSource("sounds/break.ogg", "static")
 	snd_roll = love.audio.newSource("sounds/roll.ogg", "static")
@@ -334,16 +339,6 @@ function love.load()
 	subtoolimgs[15] = {}
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
-
-	scrollup = love.graphics.newImage("images/scrollup.png")
-	scrolldn = love.graphics.newImage("images/scrolldn.png")
-
-	platformimg = love.graphics.newImage("images/platform.png")
-	platformpart = {
-		love.graphics.newQuad(0, 0, 8, 8, 24, 8),
-		love.graphics.newQuad(8, 0, 8, 8, 24, 8),
-		love.graphics.newQuad(16, 0, 8, 8, 24, 8)
-	}
 
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
