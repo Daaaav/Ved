@@ -837,8 +837,8 @@ function flipscrollmore(wheel)
 	end
 end
 
-function thingk()
-	keyva = require("konami")(function()
+function load_konami()
+	konami = require("konami")(function()
 		if state == 1 and (selectedtool == 1 or selectedtool == 2) and mouseon(16+64, 16+46*8+leftsubtoolscroll, 32, 32) then
 			subtoolimgs[1][10] = st("1_10");subtoolimgs[2][10] = st("1_10")
 		elseif state == 15 then
@@ -1329,7 +1329,7 @@ function state6load(levelname)
 end
 
 function compareleveldifferences(secondlevelname)
-	-- Assuming we have both metadata till vedmetadata and metadata till vedmetadata
+	-- Assuming we have both metadata till vedmetadata and metadata2 till vedmetadata2
 	-- Where xx2 is the older version, xx is the newer version. Also, secondlevelname is the older version
 
 	differencesn = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
@@ -1770,17 +1770,6 @@ end
 function toolscroll()
 	lefttoolscroll = math.max(16-(48*(selectedtool-1)), lefttoolscroll)--, lefttoolscroll+(love.graphics.getHeight()-32))--, -368)
 	lefttoolscroll = math.min(16-(48*(selectedtool-1))+(love.graphics.getHeight()-32)-64, lefttoolscroll)
-end
-
-function listoverlappingentities(tabel)
-	for k,v in pairs(entitydata) do
-		for k2,v2 in pairs(entitydata) do
-			if k ~= k2 and v.x == v2.x and v2.y == v.y then
-				table.insert(tabel, v)
-				cons("--\nOverlap: Entity #" .. k .. " type " .. v.t .. " in room " .. (v.x/40) .. "," .. (v.y/30) .. "\n   with: Entity #" .. k2 .. " type " .. v2.t .. " in room " .. (v2.x/40) .. "," .. (v2.y/30) .. "\n")
-			end
-		end
-	end
 end
 
 function triggernewlevel(width, height)
@@ -2512,10 +2501,6 @@ function drawlink(link)
 	love.graphics.setColor(255,255,255)
 end
 
-function unrecognized_rcmreturn(RCMreturn)
-	dialog.create(RCMid .. " " .. RCMreturn .. " unrecognized.")
-end
-
 function set_middlescroll(x, y)
 	if middlescroll_falling then return end
 
@@ -2951,20 +2936,6 @@ function changelanguage(newlanguage)
 	loadtinynumbersfont()
 end
 
-function exitvedoptions()
-	saveconfig()
-	if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
-		-- Immediately apply the new custom VVVVVV directory.
-		loadlevelsfolder()
-		tostate(6)
-	else
-		tostate(oldstate, true)
-	end
-
-	-- TODO: Remove this when the buttons of states 1 and 6 have become Elements
-	mousepressed = true
-end
-
 function exitdisplayoptions()
 	if nonintscale then
 		stopinput()
@@ -3163,7 +3134,6 @@ function load_uis()
 	uis[18] = load_ui("unreinfo")
 	uis[19] = load_ui("scriptflags")
 	uis[20] = load_ui("resizableboxtest")
-	uis[21] = load_ui("overlapentinfo")
 	uis[25] = load_ui("syntaxoptions")
 	uis[26] = load_ui("fonttest")
 	uis[27] = load_ui("displayoptions")

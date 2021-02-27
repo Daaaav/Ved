@@ -14,4 +14,10 @@ return function()
 		"\nSaveDirectory: " .. love.filesystem.getSaveDirectory(),
 		8, 72
 	)
+	ved_print(
+		"Source path: " .. love.filesystem.getSource() ..
+		"\nSource base directory: " .. love.filesystem.getSourceBaseDirectory() ..
+		"\nFused? " .. tostring(love.filesystem.isFused()),
+		8, 104
+	)
 end

@@ -5,8 +5,7 @@ function love.load()
 
 	local loaded_filefunc
 	if love.system.getOS() == "OS X" then
-		-- Cmd
-		ctrl = "gui"
+		ctrl = "gui" -- cmd
 		modifier = "alt"
 		dirsep = "/"
 		macscrolling = true
@@ -25,7 +24,6 @@ function love.load()
 		end
 		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
-		-- Ctrl
 		ctrl = "ctrl"
 		modifier = "ctrl"
 		dirsep = "\\"
@@ -35,7 +33,6 @@ function love.load()
 		loaded_filefunc = "win"
 		playtesting_available = true
 	elseif love.system.getOS() == "Linux" then
-		-- Ctrl
 		ctrl = "ctrl"
 		modifier = "ctrl"
 		dirsep = "/"
@@ -113,18 +110,16 @@ function love.load()
 
 	dodisplaysettings()
 
-	cons("love.load() reached")
-
 	math.randomseed(os.time())
 
-	state = -2; oldstate = "none"
+	state = -2; oldstate = -2
 	input = ""; takinginput = false
 	__ = "_"
 	input_r = ""
 	cursorflashtime = 0
 	no_more_quit_dialog = false
 
-	mousepressed = false -- for some things
+	mousepressed = false
 	mousepressed_custombrush = false
 	mousepressed_flag = false
 	mousepressed_flag_x = -1
@@ -145,7 +140,7 @@ function love.load()
 	conveyorleftcycle = 1
 	conveyorrightcycle = 0
 
-	returnpressed = false -- also for some things
+	returnpressed = false
 
 	temporaryroomnametimer = 0
 	generictimer = 0
@@ -188,10 +183,6 @@ function love.load()
 	cursorimg[5] = love.graphics.newImage("cursor/entity.png")
 	cursorimg[6] = love.graphics.newImage("cursor/specialentity.png")
 	cursorimg[8] = love.graphics.newImage("cursor/cursor8.png")
-
-	local curcol = (love.system.getOS() == "OS X" and "b" or "w")
-	cursorimg[11] = love.graphics.newImage("cursor/resizev_" .. curcol .. ".png")
-	cursorimg[12] = love.graphics.newImage("cursor/resizeh_" .. curcol .. ".png")
 
 	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
 	cursorimg[21] = love.graphics.newImage("cursor/selectedtile8.png")
@@ -361,9 +352,8 @@ function love.load()
 
 	load_uis()
 
-	-- eeeeeeeeee
 	love.keyboard.setKeyRepeat(true)
-	thingk()
+	load_konami()
 
 	if loaded_filefunc == "luv" then
 		dialog.create(

@@ -3,7 +3,24 @@
 return {
 	RightBar(
 		{
-			LabelButton(L.BTN_OK, exitvedoptions, "b", hotkey("escape")),
+			LabelButton(L.BTN_OK,
+				function()
+					saveconfig()
+					if oldstate == 6 and s.customvvvvvvdir ~= firstvvvvvvfolder then
+						-- Immediately apply the new custom VVVVVV directory.
+						loadlevelsfolder()
+						tostate(6)
+					else
+						tostate(oldstate, true)
+					end
+
+					-- TODO: Remove this when the buttons of states 1 and 6 have become Elements
+					if not love.keyboard.isDown("escape") then
+						mousepressed = true
+					end
+				end,
+				"b", hotkey("escape")
+			),
 			LabelButtonSpacer(),
 			LabelButton(L.CUSTOMVVVVVVDIRECTORY,
 				function()

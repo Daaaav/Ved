@@ -23,7 +23,7 @@ States:
 18	Show main editor undo/redo stacks
 19	Flags list
 20	Resizable box test
-21	Display overlapping entities (may be a visible function later) (maybe doesn't work properly)
+21	(removed) Display overlapping entities (may be a visible function later) (maybe doesn't work properly)
 22	(removed) Load a script file in the 3DS format (lines separated by dollars)
 23	(removed) Load a script file NOT in the 3DS format (lines separated by \r\n or \n)
 24	(removed) Simple plugins list (already not used)

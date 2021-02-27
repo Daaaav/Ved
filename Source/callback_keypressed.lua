@@ -8,8 +8,8 @@ function love.keypressed(key)
 
 	hook("love_keypressed_start", {key})
 
-	-- Your privacy is respected.
-	keyva.keypressed(key)
+	-- It's not really a secret that you can use the konami code in the help pages to make them editable in-place, that's useful for translators.
+	konami.keypressed(key)
 
 	-- DEBUG FOR FPS CAP
 	if allowdebug and key == "pagedown" and love.keyboard.isDown(rctrl) then

@@ -24,5 +24,3 @@ elseif response_text:sub(1,3) ~= "!>>" then
 else
 	verchannel:push(response_text)
 end
-
--- Other arguments returned by http(s).request: code, headers, status

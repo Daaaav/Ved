@@ -1,3 +1,5 @@
+-- It's not really a secret that you can use the konami code in the help pages to make them editable in-place, that's useful for translators.
+
 local mt = {
 	__index = function(table, key)
 		local value = getfenv(0)[key]

@@ -103,8 +103,6 @@ function rightclickmenu.handler(RCMreturn)
 					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 2 then
 				-- Platform, moving/conveyor
@@ -119,8 +117,6 @@ function rightclickmenu.handler(RCMreturn)
 					end
 					rcm_changingentity(entdetails, {p1 = new_p1})
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 10 then
 				-- Checkpoint
@@ -128,8 +124,6 @@ function rightclickmenu.handler(RCMreturn)
 					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 11 then
 				-- Gravity line
@@ -197,8 +191,6 @@ function rightclickmenu.handler(RCMreturn)
 					selectedtool = 14
 					selectedsubtool[14] = 4
 					warpid = tonumber(entdetails[3])
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 15 then
 				-- Rescuable crewmate
@@ -206,8 +198,6 @@ function rightclickmenu.handler(RCMreturn)
 					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 5, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 16 then
 				-- Start point
@@ -215,8 +205,6 @@ function rightclickmenu.handler(RCMreturn)
 					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
 					entitydata[tonumber(entdetails[3])].p1 = new_p1
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 17 then
 				-- Roomtext
@@ -233,8 +221,6 @@ function rightclickmenu.handler(RCMreturn)
 					makescriptroomtext = false
 				elseif RCMreturn == L.COPYTEXT then
 					love.system.setClipboardText(entitydata[tonumber(entdetails[3])].data)
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 				-- Terminal or script box
@@ -276,8 +262,6 @@ function rightclickmenu.handler(RCMreturn)
 					elseif ret == -1 then
 						p_nieuw(tonumber(entdetails[3]))
 					end
-				else
-					dialog.create(RCMid .. " " .. RCMreturn .. " not supported yet.")
 				end
 			elseif tonumber(entdetails[2]) == 50 then
 				-- Warp line
@@ -364,8 +348,6 @@ function rightclickmenu.handler(RCMreturn)
 				dialog.callback.renamescript_validate
 			)
 			input = rvnum
-		else
-			unrecognized_rcmreturn(RCMreturn)
 		end
 	elseif RCMid:sub(1, 4) == "bul_" then
 		if RCMreturn == L.SAVEBACKUP then
@@ -374,14 +356,10 @@ function rightclickmenu.handler(RCMreturn)
 				dialog.callback.savebackup, L.SAVEBACKUP, dialog.form.simplename
 			)
 			input = RCMid:sub(5, -1)
-		else
-			unrecognized_rcmreturn(RCMreturn)
 		end
 	elseif RCMid:sub(1, 4) == "lnk_" then
 		if RCMreturn == L.COPYLINK then
 			love.system.setClipboardText(RCMid:sub(5, -1))
-		else
-			unrecognized_rcmreturn(RCMreturn)
 		end
 	elseif RCMid:sub(1, 4) == "dia_" then
 		-- New-style dialog dropdown
@@ -393,8 +371,6 @@ function rightclickmenu.handler(RCMreturn)
 		if RCMreturn == L.UNLOAD then
 			unloadvvvvvvmusic(musicplayerfile)
 			collectgarbage("collect")
-		else
-			unrecognized_rcmreturn(RCMreturn)
 		end
 	elseif RCMid:sub(1, 5) == "input" and newinputsys ~= nil and --[[ nil check only because we're slowly transitioning to the new system ]] newinputsys.active then
 		local id = newinputsys.input_ids[#newinputsys.nth_input] -- Sidestep putting the id in RCMid, because if we did it'd convert it to a string
@@ -422,8 +398,6 @@ function rightclickmenu.handler(RCMreturn)
 			newinputsys.selallright(id)
 		elseif RCMreturn == L.INSERTRAWHEX then
 			newinputsys.starthex(id)
-		else
-			unrecognized_rcmreturn()
 		end
 	else
 		dialog.create("Unhandled right click menu!\n\nID: " .. RCMid .. "\nReturn value: " .. RCMreturn)
