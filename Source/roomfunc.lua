@@ -762,6 +762,8 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				)
 			end
 		end
+		love.graphics.setColor(255,255,255)
+
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
 			scriptname_editingshown = true
