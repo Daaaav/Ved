@@ -1,6 +1,6 @@
-local checkver, commitversion = ...
+local checkver, commitversion, dist_method = ...
 
-local request_query = "?sys=3&ver=" .. checkver
+local request_query = "?sys=3&ver=" .. checkver .. "&dist_method=" .. dist_method
 
 if commitversion ~= nil then
 	request_query = request_query .. "&pre=" ..  commitversion

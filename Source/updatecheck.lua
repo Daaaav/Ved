@@ -22,7 +22,23 @@ function updatecheck.start_check()
 	updatecheck.scrolling_text = nil
 	updatecheck.scrolling_text_pos = 0
 
-	updatecheck.check_thread:start(checkver, commitversion)
+	-- Determine the distribution method
+	if love.filesystem.isFused() then
+		local opsys = love.system.getOS()
+		if opsys == "Windows" then
+			updatecheck.dist_method = "fused_win"
+		elseif opsys == "OS X" then
+			updatecheck.dist_method = "fused_mac"
+		else
+			updatecheck.dist_method = "fused_other"
+		end
+	elseif love.filesystem.getSource():sub(-5,-1) == ".love" then
+		updatecheck.dist_method = "love"
+	else
+		updatecheck.dist_method = "rawfiles"
+	end
+
+	updatecheck.check_thread:start(checkver, commitversion, updatecheck.dist_method)
 end
 
 function updatecheck.await_response()
