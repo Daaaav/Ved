@@ -406,6 +406,8 @@ return function()
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
 		if updatecheck.notes_available then
 			rbutton(L.MOREINFO, 11, 40, false, 20)
+		elseif not s.pcheckforupdates then
+			rbutton(L.UPDATES_CHECKNOW, 11, 40, false, 20)
 		end
 		if updatecheck.scrolling_text ~= nil then
 			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
@@ -459,10 +461,16 @@ return function()
 				love.system.openURL("https://tolp.nl/ved/feedback")
 
 				mousepressed = true
-			elseif updatecheck.notes_available and not mousepressed and onrbutton(11, 40, false, 20) then
+			elseif not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
-				stopinput()
-				tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
+				if updatecheck.notes_available then
+					stopinput()
+					tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
+				elseif not s.pcheckforupdates then
+					s.pcheckforupdates = true
+					updatecheck.start_check()
+				end
+				mousepressed = true
 			elseif not mousepressed and onrbutton(0, nil, true) then
 				-- Backups/return
 				if backupscreen and currentbackupdir ~= "" then
