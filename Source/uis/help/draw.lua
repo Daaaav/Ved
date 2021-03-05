@@ -520,7 +520,7 @@ return function()
 		hoverdraw(image.refreshbtn, 25*8-16, 8, 16, 16)
 
 		if nodialog and love.mouse.isDown("l") and mouseon(25*8-16, 8, 16, 16) then
-			load_updatecheck(true)
+			load_updatecheck()
 			tostate(6)
 		end
 	end

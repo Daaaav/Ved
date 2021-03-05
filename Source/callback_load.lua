@@ -385,7 +385,9 @@ function love.load()
 		love.filesystem.createDirectory("overwrite_backups")
 	end
 
-	load_updatecheck(false)
+	if s.pcheckforupdates then
+		load_updatecheck()
+	end
 
 	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
 	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, love.system.getOS(), L)

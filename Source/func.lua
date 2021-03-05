@@ -2743,25 +2743,26 @@ function explore_lvl_dir()
 	love.system.openURL("file://" .. levelsfolder)
 end
 
-function load_updatecheck(refresh)
-	if s.pcheckforupdates and not opt_disableversioncheck then
-		if refresh then
-			if updatecheckthread:isRunning() then return end
-		else
-			updatecheckthread = love.thread.newThread("updatecheck.lua")
-
-			verchannel = love.thread.getChannel("version")
+function load_updatecheck()
+	if updatecheckthread ~= nil then
+		if updatecheckthread:isRunning() then
+			-- Be patient, it'll terminate by itself!
+			return
 		end
+	else
+		updatecheckthread = love.thread.newThread("updatecheckthread.lua")
 
-		updatecheckthread:start(checkver, commitversion)
-
-		updateversion = nil
-		updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
-		updatenotesavailable = false
-		updatenotesrefreshable = false
-		updatescrollingtext = nil
-		updatescrollingtext_pos = 0
+		verchannel = love.thread.getChannel("version")
 	end
+
+	updatecheckthread:start(checkver, commitversion)
+
+	updateversion = nil
+	updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
+	updatenotesavailable = false
+	updatenotesrefreshable = false
+	updatescrollingtext = nil
+	updatescrollingtext_pos = 0
 end
 
 function search_levels_list(currentdir, prefix)

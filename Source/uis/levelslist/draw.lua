@@ -420,7 +420,7 @@ return function()
 			rbutton({L.ASSETS, "cR"}, 2, nil, true)
 		end
 
-		if s.pcheckforupdates and not opt_disableversioncheck then
+		if s.pcheckforupdates then
 			versionchecked = verchannel:peek()
 		end
 
@@ -438,7 +438,7 @@ return function()
 			ved_printf(unsupportedpluginstext, love.graphics.getWidth()-(128-8), 280, 128-16, "left")
 		end
 
-		if not s.pcheckforupdates or opt_disableversioncheck then
+		if not s.pcheckforupdates then
 			ved_printf(L.VERSIONDISABLED, love.graphics.getWidth()-(128-8), 215, 128-16, "left") -- 40+120+16+3+8+30 = 217
 		elseif versionchecked ~= nil then		
 			if versionchecked == "connecterror" or versionchecked == "error" then

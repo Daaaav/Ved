@@ -343,4 +343,4 @@ function constraindisplaysettings(reload)
 end
 constraindisplaysettings()
 
-s.pcheckforupdates = s.checkforupdates
+s.pcheckforupdates = s.checkforupdates and not opt_disableversioncheck
