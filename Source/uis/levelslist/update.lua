@@ -1,10 +1,10 @@
 -- levelslist/update
 
 return function(dt)
-	if updatescrollingtext ~= nil then
-		updatescrollingtext_pos = updatescrollingtext_pos + 55*dt
-		if updatescrollingtext_pos > font8:getWidth(updatescrollingtext) + 112 then
-			updatescrollingtext_pos = 0
+	if updatecheck.scrolling_text ~= nil then
+		updatecheck.scrolling_text_pos = updatecheck.scrolling_text_pos + 55*dt
+		if updatecheck.scrolling_text_pos > font8:getWidth(updatecheck.scrolling_text) + 112 then
+			updatecheck.scrolling_text_pos = 0
 		end
 	end
 	if current_scrolling_leveltitle_k ~= nil then

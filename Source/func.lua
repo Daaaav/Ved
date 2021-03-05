@@ -2743,28 +2743,6 @@ function explore_lvl_dir()
 	love.system.openURL("file://" .. levelsfolder)
 end
 
-function load_updatecheck()
-	if updatecheckthread ~= nil then
-		if updatecheckthread:isRunning() then
-			-- Be patient, it'll terminate by itself!
-			return
-		end
-	else
-		updatecheckthread = love.thread.newThread("updatecheckthread.lua")
-
-		verchannel = love.thread.getChannel("version")
-	end
-
-	updatecheckthread:start(checkver, commitversion)
-
-	updateversion = nil
-	updatenotes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
-	updatenotesavailable = false
-	updatenotesrefreshable = false
-	updatescrollingtext = nil
-	updatescrollingtext_pos = 0
-end
-
 function search_levels_list(currentdir, prefix)
 	-- Marks matching levels in the levels list as shown and vice versa
 	if input .. input_r == oldinput then

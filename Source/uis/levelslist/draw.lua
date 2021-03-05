@@ -404,12 +404,12 @@ return function()
 		rbutton(L.PLUGINS, 1, 40)
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
-		if updatenotesavailable then
+		if updatecheck.notes_available then
 			rbutton(L.MOREINFO, 11, 40, false, 20)
 		end
-		if updatescrollingtext ~= nil then
+		if updatecheck.scrolling_text ~= nil then
 			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
-			ved_print(updatescrollingtext, love.graphics.getWidth()-8-math.floor(updatescrollingtext_pos), 288+4)
+			ved_print(updatecheck.scrolling_text, love.graphics.getWidth()-8-math.floor(updatecheck.scrolling_text_pos), 288+4)
 			love.graphics.setScissor()
 		end
 		if backupscreen then
@@ -418,10 +418,6 @@ return function()
 			rbutton(L.BACKUPS, 0, nil, true)
 			rbutton({L.OPENLEVELSFOLDER, "cF"}, 1, nil, true)
 			rbutton({L.ASSETS, "cR"}, 2, nil, true)
-		end
-
-		if s.pcheckforupdates then
-			versionchecked = verchannel:peek()
 		end
 
 		local unsupportedpluginstext = ""
@@ -438,58 +434,7 @@ return function()
 			ved_printf(unsupportedpluginstext, love.graphics.getWidth()-(128-8), 280, 128-16, "left")
 		end
 
-		if not s.pcheckforupdates then
-			ved_printf(L.VERSIONDISABLED, love.graphics.getWidth()-(128-8), 215, 128-16, "left") -- 40+120+16+3+8+30 = 217
-		elseif versionchecked ~= nil then		
-			if versionchecked == "connecterror" or versionchecked == "error" then
-				ved_printf(L.VERSIONERROR, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
-			else
-				if updateversion == nil then
-					updateversion = ""
-					local currentarticle = 1
-					local currentarticlename = nil
-					local currentarticlecontents
-					local articlelines = explode("\n", versionchecked)
-					for k, v in pairs(articlelines) do
-						if v:sub(1,3) == "!>>" then
-							currentarticlename = v:sub(4,-1)
-							if (currentarticlename:sub(1,1) ~= "_" or allowdebug) then
-								if currentarticle == 1 then
-									updatenotesavailable = true
-								else
-									updatenotes[currentarticle].cont = table.concat(currentarticlecontents, "\n")
-								end
-								currentarticlecontents = {}
-								currentarticle = currentarticle + 1
-								updatenotes[currentarticle] = {subj = currentarticlename, imgs = {}, cont = nil}
-							end
-						else
-							if currentarticlename == "_VERSION" then
-								updateversion = updateversion .. v
-							elseif currentarticlename == "_SHOWREFRESH" and v == "1" then
-								updatenotesrefreshable = true
-							elseif currentarticlename == "_SCROLLINGTEXT" then
-								updatescrollingtext = unxmlspecialchars(v)
-							end
-							if currentarticle ~= nil and (currentarticlename:sub(1,1) ~= "_" or allowdebug) then
-								table.insert(currentarticlecontents, v)
-							end
-						end
-					end
-					if currentarticle ~= 1 then
-						updatenotes[currentarticle].cont = table.concat(currentarticlecontents, "\n")
-					end
-				end
-				if updateversion == "latest" then
-					ved_printf(L.VERSIONUPTODATE, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
-				else
-					ved_printf(langkeys(L.VERSIONOLD, {updateversion}), love.graphics.getWidth()-(128-8), 215, 128-16, "left")
-					updatebutton = true
-				end
-			end
-		else
-			ved_printf(L.VERSIONCHECKING, love.graphics.getWidth()-(128-8), 215, 128-16, "left")
-		end
+		ved_printf(updatecheck.get_status(), love.graphics.getWidth()-(128-8), 215, 128-16, "left")
 		if intermediate_version then
 			love.graphics.setColor(255,255,255)
 		end
@@ -514,10 +459,10 @@ return function()
 				love.system.openURL("https://tolp.nl/ved/feedback")
 
 				mousepressed = true
-			elseif updatenotesavailable and not mousepressed and onrbutton(11, 40, false, 20) then
+			elseif updatecheck.notes_available and not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
 				stopinput()
-				tostate(15, nil, {updatenotes, false, updatenotesrefreshable})
+				tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
 			elseif not mousepressed and onrbutton(0, nil, true) then
 				-- Backups/return
 				if backupscreen and currentbackupdir ~= "" then

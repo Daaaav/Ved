@@ -149,6 +149,8 @@ function love.update(dt)
 		middleclick_roll_update(dt)
 	end
 
+	updatecheck.await_response()
+
 	local callback_state = state
 	if uis[state] ~= nil and uis[state].update ~= nil then
 		uis[state].update(dt)

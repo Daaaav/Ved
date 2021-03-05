@@ -104,6 +104,7 @@ function love.load()
 	ved_require("music")
 	ved_require("vvvvvvfunc")
 	ved_require("playtesting")
+	ved_require("updatecheck")
 
 	utf8 = require("utf8lib_wrapper")
 	ved_require("input")
@@ -386,7 +387,7 @@ function love.load()
 	end
 
 	if s.pcheckforupdates then
-		load_updatecheck()
+		updatecheck.start_check()
 	end
 
 	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
