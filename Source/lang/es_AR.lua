@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-02-15 16:14:27 (CET)
+--- Last converted: 2021-03-18 21:45:39 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -244,6 +244,7 @@ VERSIONUPTODATE = "Su version de Ved esta actualizada.",
 VERSIONOLD = "Actualizacion disponible! Version mas reciente: $1",
 VERSIONCHECKING = "Buscando actualizaciones...",
 VERSIONDISABLED = "Comprobacion de actualizacion desactivada",
+VERSIONCHECKNOW = "Check now", -- Check for updates now
 
 SAVENOSUCCESS = "Guardado sin exito! Error: ",
 INVALIDFILESIZE = "Tamaño de archivo invalido.",
@@ -591,6 +592,8 @@ ALREADYPLAYTESTING = "Ya estas probando!",
 PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
 CHANGINGPATHAFTERASK = "El camino de VVVVVV se cambio al presionar play y ahora no es valido!",
+
+VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
 
 }
 

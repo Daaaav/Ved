@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-02-15 16:14:28 (CET)
+--- Last converted: 2021-03-18 21:45:39 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -141,11 +141,11 @@ TEXTSIZEL = "Taille du texte: Grand",
 INSERT = "Insérer",
 HELP = "Aide",
 INTSCRWARNING_NOLOADSCRIPT = "Script de chargement requis !",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script.",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "Un script qui charge ce script n'a pas été détecté. Ce type de script interne ne fonctionnera probablement pas comme vous l'espérez s'il n'est pas chargé dans un autre script.",
 INTSCRWARNING_BOXED = "Réf. directe à l'invite de commande du script !",
-INTSCRWARNING_BOXED_EXPL = "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script.",
-INTSCRWARNING_NAME = "Unsuitable script name!",
-INTSCRWARNING_NAME_EXPL = "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box.",
+INTSCRWARNING_BOXED_EXPL = "Il y a un terminal ou une boîte de script qui charge ce script directement. L'activation de ce terminal ou de cette boîte de script ne fonctionnera probablement pas comme vous l'espérez; ce type de script interne doit être chargé à travers un script de chargement.",
+INTSCRWARNING_NAME = "Nom de script incompatible !",
+INTSCRWARNING_NAME_EXPL = "Le nom de script a une lettre capitale, un espace, une parenthèse ou une virgule. Ce script ne peut être chargé directement que par un terminal ou une boîte de script.",
 COLUMN = "Colonne : ",
 
 BTN_OK = "OK",
@@ -258,6 +258,7 @@ VERSIONUPTODATE = "Votre version de Ved est à jour.",
 VERSIONOLD = "Mise à jour disponible! Dernière version : $1",
 VERSIONCHECKING = "Recherche de mise à jour...",
 VERSIONDISABLED = "Recherche de mise à jour désactivée",
+VERSIONCHECKNOW = "Vérifier maintenant", -- Check for updates now
 
 SAVENOSUCCESS = "La sauvegarde a échouée! Erreur : ",
 INVALIDFILESIZE = "Taille de fichier invalide.",
@@ -605,6 +606,8 @@ ALREADYPLAYTESTING = "Vous êtes déjà dans un test de jeu !",
 PLAYTESTUNAVAILABLE = "Désolé, vous ne pouvez pas être dans un test de jeu sur un $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Veuillez sélectionner le fichier nommé '$1'.",
 CHANGINGPATHAFTERASK = "Le chemin de VVVVVV a été changé après avoir lancé le jeu et n'est plus valide !",
+
+VCE_DEPRECATED = "VVVVVV: Community Edition n'est plus maintenu. L'utiliser n'est pas recommandé, et le support pour les niveaux de VVVVVV-CE sera enlevé de Ved dans une version future.\n\nPour plus d'informations, allez sur https://vsix.dev/vce/status/",
 
 }
 
@@ -2922,10 +2925,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 Ressources de VVVVVV\h#
 
-Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
-of Terry Cavanagh. For more information about the license that applies to VVVVVV
-and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
-https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl
+Ved inclut des ressources graphiques de VVVVVV. VVVVVV et ses ressources sont un
+copyright de Terry Cavanagh. Pour plus d'nformations à propos de la licence qui
+s'applique à VVVVVV et à ses ressources, voir ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ et ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md\nLCInLCI
+dans ¤https://github.com/TerryCavanagh/VVVVVV¤le GitHub de VVVVVV\nLCl
+https://github.com/TerryCavanagh/VVVVVV¤répertoire¤.\LCl
 ]] -- NOTE: Do not translate the license!  Congratulations for reaching the end!
 },
 

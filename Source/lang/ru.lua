@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2021-02-15 16:14:27 (CET)
+--- Last converted: 2021-03-18 21:45:38 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -244,6 +244,7 @@ VERSIONUPTODATE = "Ваша версия Ved последняя.",
 VERSIONOLD = "Доступно обновление! Последняя версия: $1",
 VERSIONCHECKING = "Проверка обновлений...",
 VERSIONDISABLED = "Проверка обновлений отключена",
+VERSIONCHECKNOW = "Проверить сейчас", -- Check for updates now
 
 SAVENOSUCCESS = "Сохранение провалено! Ошибка: ",
 INVALIDFILESIZE = "Неверный размер файла.",
@@ -591,6 +592,8 @@ ALREADYPLAYTESTING = "Вы уже в тестовом режиме!",
 PLAYTESTUNAVAILABLE = "К сожалению, невозможно тестировать на $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Пожалуйста, выберете файл \"$1\".",
 CHANGINGPATHAFTERASK = "Путь к VVVVVV некорректен, так как он был изменён после запуска!",
+
+VCE_DEPRECATED = "VVVVVV: Community Edition больше не поддерживается. Его использование не рекомендовано и поддержка уровней VVVVVV-CE прекратится в будущей версии Ved.\n\nБольше информации на https://vsix.dev/vce/status/",
 
 }
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-02-15 16:14:27 (CET)
+--- Last converted: 2021-03-18 21:45:39 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -268,6 +268,7 @@ VERSIONUPTODATE = "Via versio de Ved estas aktuala.",
 VERSIONOLD = "Ĝisdatigo disponebla! Plej freŝa versio: $1",
 VERSIONCHECKING = "Kontrolado de ĝisdatigoj...",
 VERSIONDISABLED = "Kontrolado de ĝisdatigoj malŝaltita",
+VERSIONCHECKNOW = "Kontrolu nun", -- Check for updates now
 
 SAVENOSUCCESS = "Konservado ne sukcesa! Eraro: ",
 INVALIDFILESIZE = "Nevalida dosiergrando.",
@@ -615,6 +616,8 @@ ALREADYPLAYTESTING = "Vi jam ludtestas!",
 PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bonvolu elekti la dosieron nomitan '$1'.",
 CHANGINGPATHAFTERASK = "La dosierindiko de VVVVVV ŝanĝiĝis post premi 'ludi' kaj ne plu validas!",
+
+VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu\nhttps://vsix.dev/vce/status/",
 
 }
 

@@ -812,6 +812,11 @@ msgctxt "L.VERSIONDISABLED"
 msgid "Update check disabled"
 msgstr ""
 
+#. Check for updates now
+msgctxt "L.VERSIONCHECKNOW"
+msgid "Check now"
+msgstr ""
+
 msgctxt "L.SAVENOSUCCESS"
 msgid "Saving not successful! Error: "
 msgstr ""
@@ -2107,6 +2112,10 @@ msgstr ""
 
 msgctxt "L.CHANGINGPATHAFTERASK"
 msgid "The VVVVVV path was changed after pressing play and it is no longer valid!"
+msgstr ""
+
+msgctxt "L.VCE_DEPRECATED"
+msgid "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"

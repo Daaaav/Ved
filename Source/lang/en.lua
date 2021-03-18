@@ -242,6 +242,7 @@ VERSIONUPTODATE = "Your version of Ved is up-to-date.",
 VERSIONOLD = "Update available! Latest version: $1",
 VERSIONCHECKING = "Checking for updates...",
 VERSIONDISABLED = "Update check disabled",
+VERSIONCHECKNOW = "Check now", -- Check for updates now
 
 SAVENOSUCCESS = "Saving not successful! Error: ",
 INVALIDFILESIZE = "Invalid file size.",
@@ -589,6 +590,8 @@ ALREADYPLAYTESTING = "You're already playtesting!",
 PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Please select the file named '$1'.",
 CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
+
+VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
 
 }
 

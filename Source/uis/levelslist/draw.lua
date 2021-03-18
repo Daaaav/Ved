@@ -407,7 +407,7 @@ return function()
 		if updatecheck.notes_available then
 			rbutton(L.MOREINFO, 11, 40, false, 20)
 		elseif not s.pcheckforupdates then
-			rbutton(L.UPDATES_CHECKNOW, 11, 40, false, 20)
+			rbutton(L.VERSIONCHECKNOW, 11, 40, false, 20)
 		end
 		if updatecheck.scrolling_text ~= nil then
 			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
