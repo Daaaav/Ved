@@ -923,11 +923,17 @@ function scriptgotoline(linenum, colnum)
 	scriptlines[editingline] = input .. input_r
 	__ = "_"
 	editingline = linenum
+	local line_contents = anythingbutnil(scriptlines[editingline])
 	if colnum == nil then
-		input, input_r = anythingbutnil(scriptlines[editingline]), ""
+		input, input_r = line_contents, ""
 	else
-		input, input_r = anythingbutnil(scriptlines[editingline]):sub(1,colnum-1), anythingbutnil(scriptlines[editingline]):sub(colnum,-1)
-		scriptlines[editingline] = input
+		local col_offset = utf8.offset(line_contents, colnum)
+		if col_offset == nil then
+			input, input_r = line_contents, ""
+		else
+			input, input_r = line_contents:sub(1,col_offset-1), line_contents:sub(col_offset,-1)
+			scriptlines[editingline] = input
+		end
 	end
 
 	-- Now make sure the line is actually on screen!
