@@ -1323,20 +1323,20 @@ function state6load(levelname)
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
 		else
 			-- Compare differences now!
-			compareleveldifferences(levelname)
+			compare_level_differences(levelname)
 		end
 	end
 end
 
-function compareleveldifferences(secondlevelname)
+function compare_level_differences(second_level_name)
 	-- Assuming we have both metadata till vedmetadata and metadata2 till vedmetadata2
-	-- Where xx2 is the older version, xx is the newer version. Also, secondlevelname is the older version
+	-- Where xx2 is the older version, xx is the newer version. Also, second_level_name is the older version
 
 	differencesn = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
 	local pagetext
 
 	-- L E V E L   P R O P E R T I E S
-	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {secondlevelname}) or langkeys(L.COMPARINGTHESE, {editingmap, secondlevelname})) .. "\\\n\n"
+	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {second_level_name}) or langkeys(L.COMPARINGTHESE, {editingmap, second_level_name})) .. "\\\n\n"
 	for _,v in pairs(metadataitems) do
 		if metadata2[v] ~= metadata[v] then
 			pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff[v], {metadata2[v], metadata[v]}) .. "\\\n"
@@ -1787,11 +1787,6 @@ function triggernewlevel(width, height)
 	tostate(1)
 end
 
-function cons_fc(list, text)
-	table.insert(list, text)
-	cons("[CHECK] " .. text)
-end
-
 function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 	local direction, distance
 
@@ -2009,21 +2004,21 @@ function is_scrollable(x, y)
 	return false
 end
 
-function getalllanguages()
+function get_all_languages()
 	loadlanginfo()
-	local languagesarray = love.filesystem.getDirectoryItems("lang")
-	local returnarray = {}
+	local lang_filenames = love.filesystem.getDirectoryItems("lang")
+	local lang_codes = {}
 
-	for k,v in pairs(languagesarray) do
+	for k,v in pairs(lang_filenames) do
 		if v:sub(-4,-1) == ".lua" then
-			table.insert(returnarray, v:sub(1,-5))
+			table.insert(lang_codes, v:sub(1,-5))
 		end
 	end
 
-	return returnarray
+	return lang_codes
 end
 
-function colorsetting(label, pos, mycolor)
+function color_setting(label, pos, mycolor)
 	love.graphics.setColor(255,255,255)
 	love.graphics.rectangle("fill", 8, 8+(24*pos), 32, 16)
 	love.graphics.setColor(mycolor)
@@ -2047,7 +2042,7 @@ function colorsetting(label, pos, mycolor)
 	love.graphics.setColor(255,255,255,255)
 end
 
-function tonotepad()
+function to_notepad()
 	if vedmetadata == false then
 		vedmetadata = createmde()
 	end
@@ -2232,7 +2227,7 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 	love.graphics.setColor(255,255,255)
 end
 
-function uniquenotename(newname, oldname)
+function unique_note_name(newname, oldname)
 	if newname == oldname then
 		return newname
 	end

@@ -80,6 +80,11 @@ function loadlevel(path)
 		return false, thismetadata
 	end
 
+	local function cons_fc(list, text)
+		table.insert(list, text)
+		cons("[CHECK] " .. text)
+	end
+
 	local x = {}
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
 	local FClist = {}
@@ -1163,6 +1168,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	-- Alright, let's save!
 	cons("Saving file...")
+	local success, iferrmsg
 	if path ~= nil then
 		local usethispath
 		if invvvvvvfolder then

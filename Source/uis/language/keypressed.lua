@@ -5,7 +5,7 @@ return function(key)
 		exitlanguageoptions()
 	elseif key == "up" or key == "down" then
 		local curlang
-		for k,v in pairs(alllanguages) do
+		for k,v in pairs(all_languages) do
 			if v == s.lang then
 				curlang = k
 				break
@@ -18,15 +18,15 @@ return function(key)
 			if key == "up" then
 				newlang = curlang - 1
 				if newlang < 1 then
-					newlang = #alllanguages
+					newlang = #all_languages
 				end
 			elseif key == "down" then
 				newlang = curlang + 1
-				if newlang > #alllanguages then
+				if newlang > #all_languages then
 					newlang = 1
 				end
 			end
-			changelanguage(alllanguages[newlang])
+			changelanguage(all_languages[newlang])
 		end
 	end
 end

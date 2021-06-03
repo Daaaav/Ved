@@ -4,7 +4,7 @@ return function()
 	local language_x = love.graphics.getWidth()/2-64-widestlang
 	ved_print(L.LANGUAGE, language_x, 32+4)
 
-	for k,v in pairs(alllanguages) do
+	for k,v in pairs(all_languages) do
 		local langname
 		if langinfo[v] ~= nil then
 			langname = langinfo[v].name

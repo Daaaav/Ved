@@ -115,7 +115,7 @@ return function(key)
 		playtesting_cancelask()
 	elseif key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
-			tonotepad()
+			to_notepad()
 		else
 			tostate(10)
 		end

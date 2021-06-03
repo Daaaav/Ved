@@ -644,7 +644,7 @@ end
 
 function dialog.callback.renamenote(button, fields)
 	if button == DB.OK then
-		local newname = uniquenotename(fields.name, helppages[helparticle].subj)
+		local newname = unique_note_name(fields.name, helppages[helparticle].subj)
 
 		helppages[helparticle].subj = newname
 
@@ -669,7 +669,7 @@ end
 function dialog.callback.newnote(button, fields)
 	if button == DB.OK then
 		-- Add a note with this name.
-		local newname = uniquenotename(fields.name)
+		local newname = unique_note_name(fields.name)
 
 						-- v by reference anyways
 		table.insert(helppages, {subj = newname, imgs = {}, cont = [[

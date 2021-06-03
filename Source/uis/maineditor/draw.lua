@@ -1797,7 +1797,7 @@ return function()
 		elseif onrbutton(5, 40, false, 20) then
 			if not upperoptpage2 then
 				-- Level notepad
-				tonotepad()
+				to_notepad()
 			end
 		elseif onrbutton(6, 40, false, 20) then
 			-- Pages
