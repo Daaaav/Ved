@@ -1581,7 +1581,8 @@ function compareleveldifferences(secondlevelname)
 			-- Maybe changed?
 			local thisisanexactmatch = true
 			for kattr,vattr in pairs(v[1]) do
-				if vattr ~= locentities2[k][1][kattr] then
+				if (kattr ~= "data" or table.contains({17, 18, 19}, v[1].t))
+				and vattr ~= locentities2[k][1][kattr] then
 					thisisanexactmatch = false
 					break
 				end
