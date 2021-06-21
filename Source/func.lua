@@ -460,8 +460,8 @@ function loadtileset(file, levelassetsfolder)
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
-	tilesets[file]["tileswidth"] = tilesets[file]["width"]/8  -- 16
-	tilesets[file]["tilesheight"] = tilesets[file]["height"]/8  -- 16
+	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/8)
+	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/8)
 
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
@@ -475,7 +475,7 @@ function loadtileset(file, levelassetsfolder)
 
 	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
-			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"]) -- 16 16 16 16
+			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"])
 		end
 	end
 
@@ -518,8 +518,8 @@ function loadsprites(file, res, levelassetsfolder)
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
-	tilesets[file]["tileswidth"] = tilesets[file]["width"]/res -- 32
-	tilesets[file]["tilesheight"] = tilesets[file]["height"]/res -- 32
+	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/res)
+	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/res)
 
 	cons("Loading spriteset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
