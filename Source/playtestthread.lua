@@ -23,10 +23,10 @@ if opsys == "Windows" then
 else
 	-- Linux and Mac
 	local theprocess = io.popen("'" .. path:gsub("'", "'\\''") .. "' " .. args, "w")
-	theprocess:write(levelcontents)
-	theprocess:close()
 
-	success = true -- TODO
+	-- Technically this only returns whether sending data was successful, but it looks like it's all we can really do
+	success, err = theprocess:write(levelcontents)
+	theprocess:close()
 end
 
 if not success then
