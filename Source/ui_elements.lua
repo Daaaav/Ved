@@ -217,6 +217,7 @@ elListContainer =
 	pw = 0, ph = 0,
 	cw = nil, ch = nil, -- container w/h. nil for maximum/fill parent
 	horizontal = false,
+	align = ALIGN.CENTER,
 	start = 0,
 	spacing = 0,
 	start_bot = 0,
@@ -233,8 +234,9 @@ function elListContainer:new(o)
 	return o
 end
 
-function ListContainer(els_top, els_bot, cw, ch, starty, spacing, starty_bot, spacing_bot)
+function ListContainer(els_top, els_bot, cw, ch, align, starty, spacing, starty_bot, spacing_bot)
 	if els_bot == nil then els_bot = {} end
+	if align == nil then align = ALIGN.CENTER end
 	if starty == nil then starty = 0 end
 	if spacing == nil then spacing = 0 end
 	if starty_bot == nil then starty_bot = starty end
@@ -242,6 +244,7 @@ function ListContainer(els_top, els_bot, cw, ch, starty, spacing, starty_bot, sp
 
 	return elListContainer:new{
 		cw = cw, ch = ch,
+		align = align,
 		start = starty,
 		spacing = spacing,
 		start_bot = starty_bot,
@@ -251,8 +254,9 @@ function ListContainer(els_top, els_bot, cw, ch, starty, spacing, starty_bot, sp
 	}
 end
 
-function HorizontalListContainer(els_left, els_right, cw, ch, startx, spacing, startx_right, spacing_right)
+function HorizontalListContainer(els_left, els_right, cw, ch, align, startx, spacing, startx_right, spacing_right)
 	if els_right == nil then els_right = {} end
+	if align == nil then align = VALIGN.CENTER end
 	if startx == nil then startx = 0 end
 	if spacing == nil then spacing = 0 end
 	if startx_right == nil then startx_right = startx end
@@ -261,6 +265,7 @@ function HorizontalListContainer(els_left, els_right, cw, ch, startx, spacing, s
 	return elListContainer:new{
 		cw = cw, ch = ch,
 		horizontal = true,
+		align = align,
 		start = startx,
 		spacing = spacing,
 		start_bot = startx_right,
@@ -302,10 +307,26 @@ function elListContainer:draw(x, y, maxw, maxh)
 	for k,v in pairs(self.els_top) do
 		local el_pw, el_ph = anythingbutnil0(v.pw), anythingbutnil0(v.ph)
 		if self.horizontal then
-			local el_w, el_h = v:draw(x + cur_x, y + (ch-el_ph)/2, cw-cur_x, ch)
+			local el_y
+			if self.align == VALIGN.TOP then
+				el_y = y
+			elseif self.align == VALIGN.BOTTOM then
+				el_y = y + (ch-el_ph)
+			else
+				el_y = y + (ch-el_ph)/2
+			end
+			local el_w, el_h = v:draw(x + cur_x, el_y, cw-cur_x, ch)
 			cur_x = cur_x + el_w + self.spacing
 		else
-			local el_w, el_h = v:draw(x + (cw-el_pw)/2, y + cur_y, cw, ch-cur_y)
+			local el_x
+			if self.align == ALIGN.LEFT then
+				el_x = x
+			elseif self.align == ALIGN.RIGHT then
+				el_x = x + (cw-el_pw)
+			else
+				el_x = x + (cw-el_pw)/2
+			end
+			local el_w, el_h = v:draw(el_x, y + cur_y, cw, ch-cur_y)
 			cur_y = cur_y + el_h + self.spacing
 		end
 	end
