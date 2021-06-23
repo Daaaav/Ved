@@ -814,26 +814,7 @@ function dialog.callback.suredeletescript(button)
 	end
 end
 
-function dialog.callback.customvvvvvvdir1(button)
-	if button == L.CHANGEVERB then
-		local start = s.customvvvvvvdir
-		if start == "" then
-			start = userprofile
-		end
-		dialog.create(
-			"",
-			DBS.OKCANCEL,
-			dialog.callback.customvvvvvvdir2,
-			L.CUSTOMVVVVVVDIRECTORY,
-			dialog.form.files_make(start, "", dirsep, true, 12)
-		)
-	elseif button == L.RESET then
-		-- Reset the custom VVVVVV directory
-		s.customvvvvvvdir = ""
-	end
-end
-
-function dialog.callback.customvvvvvvdir2(button, fields)
+function dialog.callback.customvvvvvvdir(button, fields)
 	if button == DB.CANCEL then
 		return
 	end

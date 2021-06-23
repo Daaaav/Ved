@@ -3118,6 +3118,7 @@ function load_uis()
 	uis[32] = load_ui("graphicsviewer")
 	uis[33] = load_ui("language")
 	uis[34] = load_ui("inputtest")
+	uis[35] = load_ui("vvvvvvsetupoptions")
 end
 
 function show_notification(text)

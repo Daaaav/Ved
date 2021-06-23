@@ -382,6 +382,9 @@ function elSpacer:new(o)
 end
 
 function Spacer(w, h)
+	if w == nil then w = 0 end
+	if h == nil then h = 0 end
+
 	return elSpacer:new{pw = w, ph = h}
 end
 

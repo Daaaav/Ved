@@ -1,4 +1,4 @@
--- options/load
+-- vvvvvvsetupoptions/load
 
 return function()
 	firstvvvvvvfolder = s.customvvvvvvdir
