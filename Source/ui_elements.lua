@@ -553,3 +553,98 @@ function EditorIconBar()
 		16*7, 16
 	)
 end
+
+
+-- Plain text (via ved_print) or wrapped text (via ved_printf)
+-- text can be a string (for static text), or a function that returns a string (for dynamic text)
+-- Shadowed text (via ved_shadowprint and ved_shadowprintf) not yet supported
+elText =
+{
+	px = 0, py = 0,
+	pw = 0, ph = 0,
+	text = nil,
+	wrapped = true,
+	maxwidth = nil, -- nil to fill remaining parent width
+	align = "left",
+	sx = nil, sy = nil,
+	color_func = nil
+}
+
+function elText:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function Text(text, color_func, sx, sy)
+	return elText:new{
+		text = text,
+		wrapped = false,
+		sx = sx, sy = sy,
+		color_func = color_func
+	}
+end
+
+function WrappedText(text, maxwidth, align, color_func, sx, sy)
+	if align == nil then align = "left" end
+
+	return elText:new{
+		text = text,
+		wrapped = true,
+		maxwidth = maxwidth,
+		align = align,
+		sx = sx, sy = sy,
+		color_func = color_func
+	}
+end
+
+function elText:draw(x, y, maxw, maxh)
+	self.px, self.py = x, y
+
+	if self.maxwidth ~= nil then
+		maxw = self.maxwidth
+	end
+
+	local text
+	if type(self.text) == "function" then
+		text = self.text()
+	else
+		text = self.text
+	end
+
+	local color_set = false
+
+	local r, g, b, a
+	if self.color_func ~= nil then
+		r, g, b, a = self.color_func()
+	end
+
+	if r ~= nil and g ~= nil and b ~= nil then
+		love.graphics.setColor(r, g, b, a)
+		color_set = true
+	end
+
+	if self.wrapped then
+		ved_printf(text, x, y, maxw, self.align, self.sx, self.sy)
+
+		local width, lines = font8:getWrap(text, maxw/(self.sx or 1))
+		if type(lines) == "table" then
+			lines = #lines
+		end
+		self.pw, self.ph = width*(self.sx or 1), lines*font8:getHeight()*(self.sy or 1)
+	else
+		ved_print(text, x, y, self.sx, self.sy)
+
+		self.pw = font8:getWidth(text)*(self.sx or 1)
+		local _, newlines = text:gsub("\n", "")
+		self.ph = (newlines+1)*font8:getHeight()*(self.sy or 1)
+	end
+
+	if color_set then
+		love.graphics.setColor(255,255,255,255)
+	end
+
+	return self.pw, self.ph
+end
