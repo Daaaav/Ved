@@ -322,7 +322,8 @@ function love.keypressed(key)
 			end
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
-		local cf, cftype = dialogs[#dialogs].currentfield
+		local cf = dialogs[#dialogs].currentfield
+		local cftype
 		if dialogs[#dialogs].fields[cf] ~= nil then
 			-- Input boxes can also have their type set to nil and default to 0
 			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
@@ -357,40 +358,44 @@ function love.keypressed(key)
 		if key == "tab" then
 			dialogs[#dialogs].showtabrect = true
 			RCMactive = false
-			local done = false
-			local original = math.max(cf, 1)
+			cursorflashtime = 0
 			if cftype == DF.TEXT then
 				dialogs[#dialogs].fields[cf][DFP.VALUE] = anythingbutnil(dialogs[#dialogs].fields[cf][DFP.VALUE]) .. anythingbutnil(dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R])
 				dialogs[#dialogs].fields[cf][DFP.TEXT_CONTENT_R] = ""
 			end
 
-			while not done do
-				if keyboard_eitherIsDown("shift") then
-					if cf <= 1 then
-						dialogs[#dialogs].currentfield = #dialogs[#dialogs].fields
+			local reverse = keyboard_eitherIsDown("shift")
+			local new_field, looped = cf, 0
+			while true do
+				if reverse then
+					if new_field <= 1 then
+						new_field = #dialogs[#dialogs].fields
+						looped = looped + 1
 					else
-						dialogs[#dialogs].currentfield = cf - 1
+						new_field = new_field - 1
 					end
 				else
-					if cf >= #dialogs[#dialogs].fields then
-						dialogs[#dialogs].currentfield = 1
+					if new_field >= #dialogs[#dialogs].fields then
+						new_field = 1
+						looped = looped + 1
 					else
-						dialogs[#dialogs].currentfield = cf + 1
+						new_field = new_field + 1
 					end
 				end
 
-				cf = dialogs[#dialogs].currentfield
-				if cf == original and anythingbutnil(dialogs[#dialogs].fields[cf])[DFP.T] ~= DF.LABEL then
+				if looped >= 2 then
 					-- Don't keep looping around forever
-					done = true
-				end
-				if dialogs[#dialogs].fields[cf] == nil or dialogs[#dialogs].fields[cf][DFP.T] == nil or dialogs[#dialogs].fields[cf][DFP.T] ~= DF.LABEL then
-					-- Only text labels are skipped
-					done = true
+					new_field = cf
+					break
 				end
 
-				cursorflashtime = 0
+				if dialogs[#dialogs].fields[new_field] ~= nil and
+				dialogs[#dialogs].fields[new_field][DFP.T] ~= DF.LABEL then
+					-- Only text labels are skipped
+					break
+				end
 			end
+			dialogs[#dialogs].currentfield = new_field
 		end
 		if cftype == DF.CHECKBOX and (key == " " or key == "space") then
 			dialogs[#dialogs].showtabrect = true
