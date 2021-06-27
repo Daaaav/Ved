@@ -322,18 +322,16 @@ function rightclickmenu.handler(RCMreturn)
 		elseif RCMreturn == L.DUPLICATE then
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
-				dialog.callback.newscript, L.DUPLICATE, dialog.form.simplename,
+				dialog.callback.newscript, L.DUPLICATE, dialog.form.hidden_make({script_i=rvnum}, dialog.form.simplename),
 				dialog.callback.newscript_validate, "duplicate_list"
 			)
-			input = rvnum
 		elseif RCMreturn == L.DELETE then
-			input = rvnum
 			if keyboard_eitherIsDown("shift") then
-				dialog.callback.suredeletescript(DB.YES)
+				delete_script(rvnum)
 			else
 				dialog.create(
 					langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
-					dialog.callback.suredeletescript
+					dialog.callback.suredeletescript, nil, dialog.form.hidden_make({script_i=rvnum})
 				)
 			end
 		elseif RCMreturn == L.RENAME then
@@ -344,18 +342,17 @@ function rightclickmenu.handler(RCMreturn)
 					{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
 					{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
 					{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
+					{"script_i", 0, 0, 0, rvnum, DF.HIDDEN},
 				},
 				dialog.callback.renamescript_validate
 			)
-			input = rvnum
 		end
 	elseif RCMid:sub(1, 4) == "bul_" then
 		if RCMreturn == L.SAVEBACKUP then
 			dialog.create(
 				L.ENTERNAMESAVE .. "\n\n\n" .. L.SAVEBACKUPNOBACKUP, DBS.OKCANCEL,
-				dialog.callback.savebackup, L.SAVEBACKUP, dialog.form.simplename
+				dialog.callback.savebackup, L.SAVEBACKUP, dialog.form.hidden_make({filename=RCMid:sub(5, -1)}, dialog.form.simplename)
 			)
-			input = RCMid:sub(5, -1)
 		end
 	elseif RCMid:sub(1, 4) == "lnk_" then
 		if RCMreturn == L.COPYLINK then

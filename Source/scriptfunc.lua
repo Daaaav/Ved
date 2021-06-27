@@ -1151,3 +1151,12 @@ function loadflagslist()
 		end
 	end
 end
+
+function delete_script(script_i)
+	scripts[scriptnames[script_i]] = nil
+	table.remove(scriptnames, script_i)
+	dirty()
+
+	-- We might have removed a script reference, so update usages
+	usedscripts, n_usedscripts = findusedscripts()
+end

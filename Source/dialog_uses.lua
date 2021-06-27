@@ -167,7 +167,7 @@ function dialog.form.leveloptions_make()
 	}
 end
 
-function dialog.form.songmetadata_make(song_metadata)
+function dialog.form.songmetadata_make(song_metadata, song)
 	local name, filename, notes = "", "", ""
 	if song_metadata ~= nil then
 		name = song_metadata.name
@@ -182,6 +182,7 @@ function dialog.form.songmetadata_make(song_metadata)
 		{"filename", 0, 4, 32, filename, DF.TEXT},
 		{"", 0, 6, 40, L.MUSICNOTES, DF.LABEL},
 		{"notes", 0, 7, 47, notes, DF.TEXT},
+		{"song", 0, 0, 0, song, DF.HIDDEN},
 	}
 end
 
@@ -270,8 +271,13 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	return form
 end
 
-function dialog.form.hidden_make(values)
-	local form = {}
+function dialog.form.hidden_make(values, existing_form)
+	local form
+	if existing_form == nil then
+		form = {}
+	else
+		form = table.copy(existing_form)
+	end
 
 	for k,v in pairs(values) do
 		if v ~= nil then
@@ -430,7 +436,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 
 	if button ~= DB.OK then
 		-- Not pressing OK
-		if identifier == "newscript_editor" or identifier == "split_editor" then
+		if identifier == "split_editor" then
 			-- We were already editing a script so re-enable input for that!
 			takinginput = true
 		end
@@ -441,11 +447,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 	-- an unused flag name and all flags are occupied, make this all a function.
 
 	leavescript_to_state = function()
-		if identifier == "newscript_editor" then -- making new script from editor, not in script list
-			-- We're currently already editing a script so save that before jumping to a new one!
-			scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
-			scripts[scriptname] = table.copy(scriptlines)
-		elseif identifier == "split_editor" then
+		if identifier == "split_editor" then
 			-- Splitting a script, but we already saved the input earlier
 			scripts[scriptname] = table.copy(scriptlines)
 		end
@@ -478,8 +480,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 					keepcutscenebarsinternal = cutscenebarsinternalscript
 				else
 					-- Duplicating, meaning in menu
-					input = tonumber(input)
-					scripts[fields.name] = table.copy(scripts[scriptnames[input]])
+					scripts[fields.name] = table.copy(scripts[scriptnames[fields.script_i]])
 				end
 
 				scriptlines = table.copy(scripts[fields.name])
@@ -511,7 +512,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 		end
 	end
 
-	if (identifier ~= "newscript_editor" and identifier ~= "split_editor") or (not processflaglabelsreverse()) then
+	if identifier ~= "split_editor" or (not processflaglabelsreverse()) then
 		leavescript_to_state()
 	end
 
@@ -699,7 +700,7 @@ end
 
 function dialog.callback.renamescript_validate(button, fields)
 	if button == DB.OK then
-		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[input] then
+		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[fields.script_i] then
 			-- Script already exists
 			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
 			return true
@@ -718,19 +719,18 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 		return
 	end
 
-	input = tonumber(input)
 	-- Rename this script... As long as the names aren't the same,
 	-- because then we'd end up *removing* the script (just read the code)
 	-- And of course, as long as a script with that name doesn't already exist.
-	-- input is the 'number' of the script
-	if fields.name ~= scriptnames[input] then
-		local oldname = scriptnames[input]
+	-- fields.script_i is the 'number' of the script
+	if fields.name ~= scriptnames[fields.script_i] then
+		local oldname = scriptnames[fields.script_i]
 		local newname = fields.name
 
-		scripts[fields.name] = scripts[scriptnames[input]] -- Copy script from old to new name
-		scripts[scriptnames[input]] = nil -- Remove old name
+		scripts[fields.name] = scripts[scriptnames[fields.script_i]] -- Copy script from old to new name
+		scripts[scriptnames[fields.script_i]] = nil -- Remove old name
 
-		scriptnames[input] = fields.name -- Administrative rename
+		scriptnames[fields.script_i] = fields.name -- Administrative rename
 
 		dirty()
 
@@ -812,17 +812,11 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 	end
 end
 
-function dialog.callback.suredeletescript(button)
+function dialog.callback.suredeletescript(button, fields)
 	if button == DB.YES then
 		-- Delete this script!
-		-- input is the 'number' of the script
-
-		scripts[scriptnames[input]] = nil
-		table.remove(scriptnames, input)
-		dirty()
-
-		-- We might have removed a script reference, so update usages
-		usedscripts, n_usedscripts = findusedscripts()
+		-- fields.script_i is the 'number' of the script
+		delete_script(fields.script_i)
 	end
 end
 
@@ -837,12 +831,13 @@ end
 function dialog.callback.savebackup(button, fields)
 	-- Save copy of backup in levels folder
 	if button == DB.OK then
+		local filename = fields.filename
 		if dirsep ~= "/" then
-			input = input:gsub(dirsep, "/")
+			filename = filename:gsub(dirsep, "/")
 		end
-		local ficontents = love.filesystem.read("overwrite_backups/" .. input .. ".vvvvvv")
+		local ficontents = love.filesystem.read("overwrite_backups/" .. filename .. ".vvvvvv")
 		if ficontents == nil then
-			dialog.create(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. input}))
+			dialog.create(langkeys(L.LEVELOPENFAIL, {"overwrite_backups/" .. filename}))
 		else
 			local success, iferrmsg = writelevelfile(levelsfolder .. dirsep .. fields.name .. ".vvvvvv", ficontents)
 			if not success then
@@ -1053,10 +1048,9 @@ function dialog.callback.savevvvvvvmusic(button, fields)
 	end
 end
 
-function dialog.callback.suredeletesong(button)
+function dialog.callback.suredeletesong(button, fields)
 	if button == DB.YES then
-		-- input is the number of the song
-		musicedit_deletesong(musicplayerfile, input)
+		musicedit_deletesong(musicplayerfile, fields.song)
 	end
 end
 
@@ -1073,12 +1067,11 @@ function dialog.callback.replacesong(button, fields)
 		return
 	end
 
-	-- input is the number of the song
-	local success, err = musicedit_replacesong(musicplayerfile, input, ficontents)
+	local success, err = musicedit_replacesong(musicplayerfile, fields.song, ficontents)
 	if not success then
 		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
 	else
-		setmusicmeta_song(musicplayerfile, input, nil, filename, nil)
+		setmusicmeta_song(musicplayerfile, fields.song, nil, filename, nil)
 	end
 end
 
@@ -1087,8 +1080,7 @@ function dialog.callback.songmetadata(button, fields)
 		return
 	end
 
-	-- input is the number of the song
-	setmusicmeta_song(musicplayerfile, input, fields.name, fields.filename, fields.notes)
+	setmusicmeta_song(musicplayerfile, fields.song, fields.name, fields.filename, fields.notes)
 end
 
 function dialog.callback.musicfilemetadata(button, fields)

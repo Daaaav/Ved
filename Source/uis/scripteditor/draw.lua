@@ -183,17 +183,6 @@ return function()
 		if mouseon(love.graphics.getWidth()-24, 8, 16, 16) then
 			-- Help
 			tostate(15)
-		--[[
-		elseif onrbutton(1) then
-			-- New
-			stopinput()
-			scriptlines[editingline] = input
-			dialog.create(
-				L.NEWSCRIPTNAME, DBS.OKCANCEL,
-				dialog.callback.newscript, L.CREATENEWSCRIPT, dialog.form.simplename,
-				dialog.callback.newscript_validate, "newscript_editor"
-			)
-		]]
 		elseif onrbutton(1) then
 			-- Usages
 			local uentityuses, uloadscriptuses, uscriptuses = findscriptreferences(scriptname)

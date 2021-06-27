@@ -81,13 +81,12 @@ return function()
 					end
 				elseif musiceditor and mouseon(musicx+16, 32+24*my, 16, 16) then
 					-- Song metadata (editor)
-					input = m
 					dialog.create(
 						"",
 						DBS.OKCANCEL,
 						dialog.callback.songmetadata,
 						langkeys(L.SONGMETADATA, {m}),
-						dialog.form.songmetadata_make(song_metadata)
+						dialog.form.songmetadata_make(song_metadata, m)
 					)
 				elseif song_metadata_anyset and mouseon(musicx+16, 32+24*my, 16, 16) then
 					-- Song metadata (player)
@@ -98,18 +97,23 @@ return function()
 					)
 				elseif musiceditor and mouseon(musicx+32, 32+24*my, 16, 16) then
 					-- Replace
-					input = m
 					dialog.create(
 						"",
 						DBS.LOADCANCEL,
 						dialog.callback.replacesong,
 						langkeys(L.INSERTSONG, {m}),
-						dialog.form.files_make(userprofile, "", ".ogg", true, 11)
+						dialog.form.hidden_make(
+							{song=m},
+							dialog.form.files_make(userprofile, "", ".ogg", true, 11)
+						)
 					)
 				elseif can_remove and mouseon(musicx+48, 32+24*my, 16, 16) then
 					-- Remove
-					input = m
-					dialog.create(langkeys(L.SUREDELETESONG, {m}), DBS.YESNO, dialog.callback.suredeletesong)
+					dialog.create(
+						langkeys(L.SUREDELETESONG, {m}),
+						DBS.YESNO, dialog.callback.suredeletesong,
+						nil, dialog.form.hidden_make({song=m})
+					)
 				end
 			end
 			if getmusicedited(musicplayerfile, m) then
