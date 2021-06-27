@@ -222,7 +222,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	if success then
 		everr = ""
 	end
-	form = {
+	local form = {
 		--{"folder", 0, yoff, 47, startfolder, DF.TEXT},
 		{"folder", 0, yoff, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
 	}
@@ -265,6 +265,18 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 			}
 		)
 		table.insert(form, {"", 2, 15, 40, filtertext, DF.LABEL})
+	end
+
+	return form
+end
+
+function dialog.form.hidden_make(values)
+	local form = {}
+
+	for k,v in pairs(values) do
+		if v ~= nil then
+			table.insert(form, {k, 0, 0, 0, v, DF.HIDDEN})
+		end
 	end
 
 	return form

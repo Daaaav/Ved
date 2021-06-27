@@ -390,8 +390,9 @@ function love.keypressed(key)
 				end
 
 				if dialogs[#dialogs].fields[new_field] ~= nil and
-				dialogs[#dialogs].fields[new_field][DFP.T] ~= DF.LABEL then
-					-- Only text labels are skipped
+				dialogs[#dialogs].fields[new_field][DFP.T] ~= DF.LABEL and
+				dialogs[#dialogs].fields[new_field][DFP.T] ~= DF.HIDDEN then
+					-- Only text labels and hidden fields are skipped
 					break
 				end
 			end

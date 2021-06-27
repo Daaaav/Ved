@@ -39,6 +39,7 @@ DF = {
 	CHECKBOX = 3,
 	RADIOS = 4,
 	FILES = 5,
+	HIDDEN = 6,
 }
 
 -- Field property constants
@@ -364,6 +365,11 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		mode = DF.TEXT
 	end
 
+	if mode == DF.HIDDEN then
+		-- Hidden fields are really hidden
+		return
+	end
+
 	local content_r
 	local menuitems, menuitemslabel, onchange
 	local folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on
@@ -611,10 +617,12 @@ function cDialog:return_fields()
 	local f = {}
 
 	for k,v in pairs(self.fields) do
-		if anythingbutnil0(v[DFP.T]) == DF.TEXT then
-			f[v[DFP.KEY]] = v[DFP.VALUE] .. anythingbutnil(v[DFP.TEXT_CONTENT_R])
-		else
-			f[v[DFP.KEY]] = v[DFP.VALUE]
+		if v[DFP.KEY] ~= "" then
+			if anythingbutnil0(v[DFP.T]) == DF.TEXT then
+				f[v[DFP.KEY]] = v[DFP.VALUE] .. anythingbutnil(v[DFP.TEXT_CONTENT_R])
+			else
+				f[v[DFP.KEY]] = v[DFP.VALUE]
+			end
 		end
 	end
 

@@ -23,7 +23,7 @@ function love.textinput(char)
 		end
 	end
 
-	-- Textual input isn't needed with a dialog on the screen, we have multiinput
+	-- Textual input isn't needed with a dialog on the screen, we have dialog fields
 	if takinginput and not dialog.is_open() then
 		-- Ugly, but at least won't need another global variable that appears here and there
 		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
