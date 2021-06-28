@@ -1135,14 +1135,16 @@ function dialog.callback.locatevvvvvv(button, fields, _, notclosed)
 
 	local path = fields.folder .. dirsep .. fields.name
 
-	if metadata.target == "V" then
+	if fields.target == "V" then
 		s.vvvvvv23 = path
-	elseif metadata.target == "VCE" then
+	elseif fields.target == "VCE" then
 		s.vvvvvvce = path
 	end
 	saveconfig()
 
-	playtesting_start()
+	if fields.start then
+		playtesting_start()
+	end
 end
 
 function dialog.callback.locatevvvvvv_validate(button, fields)
@@ -1152,7 +1154,7 @@ function dialog.callback.locatevvvvvv_validate(button, fields)
 
 	local path = fields.folder .. dirsep .. fields.name
 	if not playtesting_validate_path(path) then
-		dialog.create(L.PATHINVALID .. " " .. playtesting_get_vvvvvv_message())
+		dialog.create(L.PATHINVALID .. " " .. playtesting_get_vvvvvv_message(fields.target))
 		return true
 	end
 end

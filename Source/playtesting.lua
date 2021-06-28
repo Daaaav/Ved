@@ -67,18 +67,34 @@ function playtesting_locate_path()
 	end
 end
 
+function playtesting_ask_path(target, continue_playtesting)
+	local ext = ""
+	if love.system.getOS() == "Windows" then
+		ext = ".exe"
+	end
+	local files = dialog.form.files_make(userprofile, "", ext, true, 9, 2)
+	dialog.create(
+		playtesting_get_vvvvvv_message(target),
+		DBS.OKCANCEL,
+		dialog.callback.locatevvvvvv,
+		langkeys(L.LOCATEVVVVVV, {target == "VCE" and "VVVVVV-CE" or "VVVVVV 2.3"}),
+		dialog.form.hidden_make({target=target, start=continue_playtesting}, files),
+		dialog.callback.locatevvvvvv_validate
+	)
+end
+
 function playtesting_validate_path(thepath)
 	return file_exists(thepath)
 end
 
-function playtesting_get_vvvvvv_message()
-	if metadata.target == "V" then
+function playtesting_get_vvvvvv_message(target)
+	if target == "V" then
 		if table.contains({"Linux", "OS X"}, love.system.getOS()) then
 			return langkeys(L.VVVVVVFILE, {"VVVVVV"})
 		elseif love.system.getOS() == "Windows" then
 			return langkeys(L.VVVVVVFILE, {"VVVVVV.exe"})
 		end
-	elseif metadata.target == "VCE" then
+	elseif target == "VCE" then
 		if table.contains({"Linux", "OS X"}, love.system.getOS()) then
 			return langkeys(L.VVVVVVFILE, {"VVVVVV-CE"})
 		elseif love.system.getOS() == "Windows" then
@@ -111,19 +127,7 @@ function playtesting_start()
 	end
 
 	if path == nil or path == "" then
-		local ext = ""
-		if love.system.getOS() == "Windows" then
-			ext = ".exe"
-		end
-		local files = dialog.form.files_make(userprofile, "", ext, true, 9, 2)
-		dialog.create(
-			playtesting_get_vvvvvv_message(),
-			DBS.OKCANCEL,
-			dialog.callback.locatevvvvvv,
-			langkeys(L.LOCATEVVVVVV, {metadata.target == "VCE" and "VVVVVV-CE" or "VVVVVV 2.3"}),
-			files,
-			dialog.callback.locatevvvvvv_validate
-		)
+		playtesting_ask_path(metadata.target, true)
 		return
 	end
 
