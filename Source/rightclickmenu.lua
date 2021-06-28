@@ -231,14 +231,14 @@ function rightclickmenu.handler(RCMreturn)
 						endeditingroomtext(tonumber(entdetails[3]))
 					end
 
-					local rvnum
+					local script_i
 					if RCMreturn == L.EDITSCRIPTWOBUMPING then
-						rvnum = -1
+						script_i = -1
 					end
 					if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 						dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 					else
-						scriptineditor(entitydata[tonumber(entdetails[3])].data, rvnum)
+						scriptineditor(entitydata[tonumber(entdetails[3])].data, script_i)
 					end
 				elseif RCMreturn == L.OTHERSCRIPT then
 					-- Were we already editing roomtext or a name?
@@ -309,29 +309,29 @@ function rightclickmenu.handler(RCMreturn)
 			dialog.create(langkeys(L.ENTITY404, {tonumber(entdetails[3])}))
 		end
 	elseif RCMid:sub(1, 4) == "spt_" then
-		local rvnum = tonumber(RCMid:sub(5, -1))
+		local script_i = tonumber(RCMid:sub(5, -1))
 
 		if RCMreturn == L.EDIT then
-			scriptineditor(scriptnames[rvnum], rvnum)
+			scriptineditor(scriptnames[script_i], script_i)
 		elseif RCMreturn == L.EDITWOBUMPING then
-			scriptineditor(scriptnames[rvnum], -1)
+			scriptineditor(scriptnames[script_i], -1)
 		elseif RCMreturn == L.COPYNAME then
-			love.system.setClipboardText(scriptnames[rvnum])
+			love.system.setClipboardText(scriptnames[script_i])
 		elseif RCMreturn == L.COPYCONTENTS then
-			love.system.setClipboardText(table.concat(scripts[scriptnames[rvnum]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+			love.system.setClipboardText(table.concat(scripts[scriptnames[script_i]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 		elseif RCMreturn == L.DUPLICATE then
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
-				dialog.callback.newscript, L.DUPLICATE, dialog.form.hidden_make({script_i=rvnum}, dialog.form.simplename),
+				dialog.callback.newscript, L.DUPLICATE, dialog.form.hidden_make({script_i=script_i}, dialog.form.simplename),
 				dialog.callback.newscript_validate, "duplicate_list"
 			)
 		elseif RCMreturn == L.DELETE then
 			if keyboard_eitherIsDown("shift") then
-				delete_script(rvnum)
+				delete_script(script_i)
 			else
 				dialog.create(
-					langkeys(L.SUREDELETESCRIPT, {scriptnames[rvnum]}), DBS.YESNO,
-					dialog.callback.suredeletescript, nil, dialog.form.hidden_make({script_i=rvnum})
+					langkeys(L.SUREDELETESCRIPT, {scriptnames[script_i]}), DBS.YESNO,
+					dialog.callback.suredeletescript, nil, dialog.form.hidden_make({script_i=script_i})
 				)
 			end
 		elseif RCMreturn == L.RENAME then
@@ -339,10 +339,10 @@ function rightclickmenu.handler(RCMreturn)
 				L.NEWNAME, DBS.OKCANCEL,
 				dialog.callback.renamescript, L.RENAMESCRIPT,
 				{
-					{"name", 0, 1, 40, scriptnames[rvnum], DF.TEXT},
+					{"name", 0, 1, 40, scriptnames[script_i], DF.TEXT},
 					{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
 					{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
-					{"script_i", 0, 0, 0, rvnum, DF.HIDDEN},
+					{"script_i", 0, 0, 0, script_i, DF.HIDDEN},
 				},
 				dialog.callback.renamescript_validate
 			)

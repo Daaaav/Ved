@@ -378,9 +378,9 @@ return function()
 						if part1 == "" then
 							matching_article_num = helparticle -- current article
 						else
-							for rvnum = 1, #helppages do
-								if part1 == helppages[rvnum].subj then
-									matching_article_num = rvnum
+							for article_i = 1, #helppages do
+								if part1 == helppages[article_i].subj then
+									matching_article_num = article_i
 									break
 								end
 							end
@@ -398,10 +398,10 @@ return function()
 							end
 						end
 					else
-						for rvnum = 1, #helppages do
-							if hoveringlink == helppages[rvnum].subj then
+						for article_i = 1, #helppages do
+							if hoveringlink == helppages[article_i].subj then
 								matching_article = true
-								matching_article_num = rvnum
+								matching_article_num = article_i
 								break
 							end
 						end
@@ -460,10 +460,10 @@ return function()
 	end
 
 	j = -1
-	for rvnum = 1, #helppages+(helpeditable and 1 or 0) do
+	for article_i = 1, #helppages+(helpeditable and 1 or 0) do
 		j = j + 1
 		local buttoncolor = {128,128,128}
-		if helparticle == rvnum then
+		if helparticle == article_i then
 			buttoncolor = {192,192,192}
 		end
 		if helpeditingline ~= 0 then
@@ -482,24 +482,24 @@ return function()
 			end
 		end
 		local buttonlabel
-		if helppages[rvnum] == nil then
+		if helppages[article_i] == nil then
 			buttonlabel = L.ADDNEWBTN
 		else
-			buttonlabel = helppages[rvnum].subj
+			buttonlabel = helppages[article_i].subj
 		end
 		local textyoffset = 4
 		if font8:getWidth(buttonlabel) > 25*8-28 or buttonlabel:find("\n") ~= nil then
 			textyoffset = 0
 		end
 		ved_printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
-		if rvnum == 1 then -- Return button
+		if article_i == 1 then -- Return button
 			showhotkey("b", 8+25*8-28, helplistscroll+8+(24*j)-2, ALIGN.RIGHT)
 		end
 
 		-- Are we clicking on this?
 		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and (not s.psmallerscreen or onlefthelpbuttons) then
 			if love.mouse.isDown("l") then
-				if helppages[rvnum] == nil then
+				if helppages[article_i] == nil then
 					-- This is just the "add new" button.
 					dialog.create(
 						L.NEWNOTENAME,
@@ -509,7 +509,7 @@ return function()
 						dialog.form.simplename
 					)
 				else
-					gotohelparticle(rvnum)
+					gotohelparticle(article_i)
 				end
 			end
 		end

@@ -2929,15 +2929,15 @@ function shiftrooms(direction, updatescripts)
 		return x, y
 	end)
 	local tmp
-	for rvnum = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+	for script_i = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[script_i]]) do
 			v = v:gsub(" ", "")
 			for _,command in pairs(field2_3cmdswrap) do
 				if #v > #command then
 					local pattern = "^(" .. command .. "[%(,%)]0*)([0-9]+)([%(,%)]0*)([0-9]+)"
 					tmp = updateroomline(v, pattern, transform[1], direction)
 					if tmp ~= nil then
-						scripts[scriptnames[rvnum]][k] = tmp
+						scripts[scriptnames[script_i]][k] = tmp
 					end
 				end
 			end
@@ -2946,7 +2946,7 @@ function shiftrooms(direction, updatescripts)
 					local pattern = "^(" .. command .. "[%(,%)]0*)([0-9]+)([%(,%)]0*)([0-9]+)"
 					tmp = updateroomline(v, pattern, transform[2], direction)
 					if tmp ~= nil then
-						scripts[scriptnames[rvnum]][k] = tmp
+						scripts[scriptnames[script_i]][k] = tmp
 					end
 				end
 			end

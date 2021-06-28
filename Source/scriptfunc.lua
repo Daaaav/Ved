@@ -3,9 +3,9 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 	-- else, a list of script names is put in specificflag_usages, which is all usages of that flag,
 	-- and the number of usages is returned (including multiple usages in the same script).
 	local specificflag_n_real_usages = 0
-	for rvnum = #scriptnames, 1, -1 do
+	for script_i = #scriptnames, 1, -1 do
 		local script_inserted = false
-		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+		for k,v in pairs(scripts[scriptnames[script_i]]) do
 			v = scriptlinecasing(v)
 			local explcommaline = explode(",", string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", ""))
 
@@ -24,7 +24,7 @@ function returnusedflags(usedflagsA, outofrangeflagsA, specificflag, specificfla
 					specificflag_n_real_usages = specificflag_n_real_usages + 1
 
 					if not script_inserted then
-						table.insert(specificflag_usages, scriptnames[rvnum])
+						table.insert(specificflag_usages, scriptnames[script_i])
 						script_inserted = true
 					end
 				end
@@ -751,16 +751,16 @@ function movescriptdown(scriptid)
 	table.insert(scriptnames, scriptid+1, temp)
 end
 
-function scriptineditor(scriptnamearg, rvnum)
-	if rvnum == nil then
+function scriptineditor(scriptnamearg, script_i)
+	if script_i == nil then
 		-- Find out which script it is
 		for k,v in pairs(scriptnames) do
 			if v == scriptnamearg then
 				bumpscript(k)
 			end
 		end
-	elseif rvnum ~= -1 then
-		bumpscript(rvnum)
+	elseif script_i ~= -1 then
+		bumpscript(script_i)
 	end
 
 	scriptname = scriptnamearg
@@ -793,8 +793,8 @@ function findscriptreferences(argscriptname)
 		end
 	end
 
-	for rvnum = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+	for script_i = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[script_i]]) do
 			local v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -820,9 +820,9 @@ function findscriptreferences(argscriptname)
 			if loadscriptcond or scriptcond then
 				-- argscriptname is referred to in this script
 				if loadscriptcond then
-					table.insert(loadscriptuses, {scriptnames[rvnum], k})
+					table.insert(loadscriptuses, {scriptnames[script_i], k})
 				end
-				table.insert(scriptuses, {scriptnames[rvnum], k})
+				table.insert(scriptuses, {scriptnames[script_i], k})
 				break
 			end
 		end
@@ -841,8 +841,8 @@ function findusedscripts()
 		end
 	end
 
-	for rvnum = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+	for script_i = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[script_i]]) do
 			local v2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -1035,21 +1035,21 @@ function swapflags(flag1, flag2)
 	end
 
 	local commands = {"flag", "ifflag", "customifflag"}
-	for rvnum = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[rvnum]]) do
+	for script_i = #scriptnames, 1, -1 do
+		for k,v in pairs(scripts[scriptnames[script_i]]) do
 			v = v:gsub(" ", "")
 			v = scriptlinecasing(v)
 			for _,command in pairs(commands) do
 				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
 					if v:match(pattern .. flag1 .. "([%(,%)].*)$") then
-						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag1 .. "$") then
-						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag2 .. "([%(,%)].*)$") then
-						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					elseif v:match(pattern .. flag2 .. "$") then
-						scripts[scriptnames[rvnum]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					end
 				end
 			end

@@ -3,28 +3,28 @@
 return function()
 	local j = -1
 	local newscroll
-	for rvnum = #scriptnames, 1, -1 do
+	for script_i = #scriptnames, 1, -1 do
 		if scriptdisplay_used and scriptdisplay_unused
-		or scriptdisplay_used and usedscripts[scriptnames[rvnum]]
-		or scriptdisplay_unused and not usedscripts[scriptnames[rvnum]]
+		or scriptdisplay_used and usedscripts[scriptnames[script_i]]
+		or scriptdisplay_unused and not usedscripts[scriptnames[script_i]]
 		then
 			j = j + 1
 			local y = scriptlistscroll+8+(24*j)
 			if skipnextscripthoverrect then
 				skipnextscripthoverrect = nil
 			elseif y >= -16 and y <= love.graphics.getHeight() then
-				local used = usedscripts[scriptnames[rvnum]]
+				local used = usedscripts[scriptnames[script_i]]
 				hoverrectangle(128,128,128, used and 128 or 64, 8, y, screenoffset+640-8-24 -36, 16)
-				ved_printf(scriptnames[rvnum], 8, y+4, screenoffset+640-8-36, "center")
-				if rvnum == #scriptnames then
+				ved_printf(scriptnames[script_i], 8, y+4, screenoffset+640-8-36, "center")
+				if script_i == #scriptnames then
 					showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
 				end
 
-				if rvnum ~= #scriptnames then
+				if script_i ~= #scriptnames then
 					hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4, y, 16, 16)
 					ved_printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4, 16, "center")
 				end
-				if rvnum ~= 1 then
+				if script_i ~= 1 then
 					hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4 +16 +4, y, 16, 16)
 					ved_printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4, 16, "center")
 				end
@@ -34,14 +34,14 @@ return function()
 			if mousepressed or not nodialog then
 			elseif mouseon(8, scriptlistscroll+8+(24*j), screenoffset+640-8-24 -36, 16) then
 				if love.mouse.isDown("l") then
-					scriptineditor(scriptnames[rvnum], rvnum)
+					scriptineditor(scriptnames[script_i], script_i)
 				elseif love.mouse.isDown("r") then
-					rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. rvnum)
+					rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. script_i)
 				end
-			elseif rvnum ~= #scriptnames and mouseon(8+screenoffset+640-8-24 -36 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
-				movescriptdown(rvnum)
+			elseif script_i ~= #scriptnames and mouseon(8+screenoffset+640-8-24 -36 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
+				movescriptdown(script_i)
 				mousepressed = true
-				local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[rvnum]]) or (scriptdisplay_unused and not usedscripts[scriptnames[rvnum]])
+				local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[script_i]]) or (scriptdisplay_unused and not usedscripts[scriptnames[script_i]])
 				if not nextscriptvisible then
 				elseif scriptlistscroll+8+24*(j-1) < 0 then
 					newscroll = scriptlistscroll + 24
@@ -52,10 +52,10 @@ return function()
 				else
 					love.mouse.setPosition(love.mouse.getX(), love.mouse.getY()-24)
 				end
-			elseif rvnum ~= 1 and mouseon(8+screenoffset+640-8-24 -36 +4 +16 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
-				movescriptup(rvnum)
+			elseif script_i ~= 1 and mouseon(8+screenoffset+640-8-24 -36 +4 +16 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
+				movescriptup(script_i)
 				mousepressed = true
-				local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[rvnum]]) or (scriptdisplay_unused and not usedscripts[scriptnames[rvnum]])
+				local nextscriptvisible = (scriptdisplay_used and scriptdisplay_unused) or (scriptdisplay_used and usedscripts[scriptnames[script_i]]) or (scriptdisplay_unused and not usedscripts[scriptnames[script_i]])
 				if not nextscriptvisible then
 					j = j - 1 -- prevents flickering
 					skipnextscripthoverrect = true

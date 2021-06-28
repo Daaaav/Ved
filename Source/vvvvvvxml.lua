@@ -1159,8 +1159,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Assembling scripts...")
 	local allallscripts = {}
 	--for k,v in pairs(allscripts) do
-	for rvnum = 1, #scriptnames do
-		local k, v = scriptnames[rvnum], allscripts[scriptnames[rvnum]]
+	for script_i = 1, #scriptnames do
+		local k, v = scriptnames[script_i], allscripts[scriptnames[script_i]]
 		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(table.concat(v, "|")) .. "|")
 	end
 
