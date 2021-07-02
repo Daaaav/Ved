@@ -1143,7 +1143,7 @@ function dialog.callback.locatevvvvvv(button, fields, _, notclosed)
 	saveconfig()
 
 	if fields.start then
-		playtesting_start()
+		playtesting_start(false)
 	end
 end
 

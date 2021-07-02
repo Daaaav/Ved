@@ -367,7 +367,7 @@ return function(key)
 		tostate(6)
 	elseif editingbounds == 0 and table.contains({"return", "kpenter"}, key) then
 		-- Play
-		playtesting_start()
+		playtesting_start(keyboard_eitherIsDown("shift"))
 	elseif key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if has_unsaved_changes() then

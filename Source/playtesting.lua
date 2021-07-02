@@ -1,5 +1,5 @@
 -- Quick overview:
--- When the user presses the play button or presses Enter, it calls playtesting_start()
+-- When the user presses the play button or presses Enter, it calls playtesting_start(force_ask_path)
 -- which then sets playtesting_askwherestart to true, then when they indicate where they want to start,
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute(),
 -- which will start a thread that just io.popen()s VVVVVV (or VVVVVV-CE) with command line args to immediately load the level.
@@ -103,7 +103,7 @@ function playtesting_get_vvvvvv_message(target)
 	end
 end
 
-function playtesting_start()
+function playtesting_start(force_ask_path)
 	if not playtesting_available then
 		dialog.create(langkeys(L.PLAYTESTUNAVAILABLE, {love.system.getOS()}))
 		return
@@ -122,7 +122,7 @@ function playtesting_start()
 	end
 
 	local path
-	if not keyboard_eitherIsDown("shift") then
+	if not force_ask_path then
 		path = playtesting_locate_path()
 	end
 

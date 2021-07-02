@@ -1703,7 +1703,7 @@ return function()
 			if playtesting_askwherestart then
 				playtesting_cancelask()
 			else
-				playtesting_start()
+				playtesting_start(keyboard_eitherIsDown("shift"))
 			end
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-120+40, 40, 16, 16) then
@@ -1840,6 +1840,9 @@ return function()
 
 			mousepressed = true
 		end
+	elseif nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-128, 0, 32, 32) then
+		-- Right clicking on the play button
+		playtesting_start(true)
 	end
 
 	-- We also have buttons for trinkets, enemy and platform settings, and crewmates!
