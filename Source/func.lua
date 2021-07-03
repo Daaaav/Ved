@@ -3119,6 +3119,7 @@ function load_uis()
 	uis[33] = load_ui("language")
 	uis[34] = load_ui("inputtest")
 	uis[35] = load_ui("vvvvvvsetupoptions")
+	-- Don't forget states.txt
 end
 
 function show_notification(text)
