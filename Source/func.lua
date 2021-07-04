@@ -1249,7 +1249,7 @@ function createmde(thislimit)
 		mdeversion = thismdeversion,
 		flaglabel = emptyflaglabel,
 		vars = {},
-		notes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
+		notes = {}
 	}
 end
 
@@ -1332,7 +1332,7 @@ function compare_level_differences(second_level_name)
 	-- Assuming we have both metadata till vedmetadata and metadata2 till vedmetadata2
 	-- Where xx2 is the older version, xx is the newer version. Also, second_level_name is the older version
 
-	differencesn = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
+	differencesn = {}
 	local pagetext
 
 	-- L E V E L   P R O P E R T I E S
@@ -1942,7 +1942,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 					end
 				end
 			elseif direction == "d" then
-				local upperbound = (((#helppages+(helpeditable and 1 or 0))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
+				local upperbound = (((#helppages+(helpeditable and 2 or 1))*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 				if mkinput == "end" then
 					helplistscroll = math.min(-upperbound, 0)
 				else

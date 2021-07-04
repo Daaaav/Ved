@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-03-18 21:45:39 (CET)
+--- Last converted: 2021-07-04 19:10:15 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -911,7 +911,6 @@ l - Link color (not yet supported)
 - - Horizontal line
 + - expand background color to end of line
 = - underline header (on next line)
-) - Return to previous state
 
 Flags can be combined, like \rh or \hr for a red header
 Invalid flags will be ignored
@@ -921,14 +920,6 @@ Invalid flags will be ignored
 Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
 ----------------------------------------------------------------------------------[]-
 ]]
-
-{
-subj = "Zurück",
-imgs = {},
-cont = [[
-\)
-]] -- This should be left the same!
-},
 
 {
 splitid = "010_Getting_started",

@@ -1,9 +1,1 @@
 
-msgctxt "LH.1.subj"
-msgid "Return"
-msgstr ""
-
-#. This should be left the same!
-msgctxt "LH.1.cont"
-msgid "\\)\n"
-msgstr ""

@@ -56,9 +56,9 @@ return function(key)
 			input_r = ""
 		end
 	elseif key == "up" then
-		gotohelparticle(revcycle(helparticle, #helppages, 2))
+		gotohelparticle(revcycle(helparticle, #helppages, 1))
 	elseif key == "down" then
-		gotohelparticle(cycle(helparticle, #helppages, 2))
+		gotohelparticle(cycle(helparticle, #helppages, 1))
 	elseif table.contains({"home", "end"}, key) then
 		handle_scrolling(true, key)
 	end

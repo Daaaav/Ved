@@ -135,18 +135,8 @@ return function()
 					elseif part2:sub(fl,fl) == "X" then
 						part1 = unxmlspecialchars(part1)
 					elseif part2:sub(fl,fl) == "(" then
-						-- Leaving this thing undocumented except in the code.
-						-- It basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
+						-- This basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
 						singlecharmode = true
-					elseif part2:sub(fl,fl) == ")" and helparticle == 1 then
-						if oldstate == 11 then
-							-- Back to search results
-							resume_search = true
-							tostate(11)
-						else
-							tostate(oldstate, true)
-						end
-						nodialog = false
 					end
 				end
 
@@ -289,7 +279,7 @@ return function()
 				if nodialog and love.mouse.isDown("l") then
 					if not mousepressed and mouseon(love.graphics.getWidth()-140-116-116-20-20, love.graphics.getHeight()-24, 16, 16) then
 						-- Move up
-						if helparticle > 2 then
+						if helparticle > 1 then
 							local this_art = table.copy(helppages[helparticle])
 							helppages[helparticle] = table.copy(helppages[helparticle-1])
 							helppages[helparticle-1] = table.copy(this_art)
@@ -460,7 +450,7 @@ return function()
 	end
 
 	j = -1
-	for article_i = 1, #helppages+(helpeditable and 1 or 0) do
+	for article_i = 0, #helppages+(helpeditable and 1 or 0) do
 		j = j + 1
 		local buttoncolor = {128,128,128}
 		if helparticle == article_i then
@@ -482,7 +472,9 @@ return function()
 			end
 		end
 		local buttonlabel
-		if helppages[article_i] == nil then
+		if article_i == 0 then
+			buttonlabel = L.RETURN
+		elseif article_i == #helppages+1 then
 			buttonlabel = L.ADDNEWBTN
 		else
 			buttonlabel = helppages[article_i].subj
@@ -492,15 +484,25 @@ return function()
 			textyoffset = 0
 		end
 		ved_printf(buttonlabel, 8, helplistscroll+8+(24*j)+textyoffset, 25*8-28, "center")
-		if article_i == 1 then -- Return button
+		if article_i == 0 then -- Return button
 			showhotkey("b", 8+25*8-28, helplistscroll+8+(24*j)-2, ALIGN.RIGHT)
 		end
 
 		-- Are we clicking on this?
 		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and (not s.psmallerscreen or onlefthelpbuttons) then
 			if love.mouse.isDown("l") then
-				if helppages[article_i] == nil then
-					-- This is just the "add new" button.
+				if article_i == 0 then
+					-- Return
+					if oldstate == 11 then
+						-- Back to search results
+						resume_search = true
+						tostate(11)
+					else
+						tostate(oldstate, true)
+					end
+					nodialog = false
+				elseif article_i == #helppages+1 then
+					-- Add new
 					dialog.create(
 						L.NEWNOTENAME,
 						DBS.OKCANCEL,

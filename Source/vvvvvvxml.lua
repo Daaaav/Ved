@@ -1056,10 +1056,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			local notesdata = {}
 
 			for k,v in pairs(vedmetadata.notes) do
-				-- Don't save the "Return" article
-				if k ~= 1 then
-					table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
-				end
+				table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
 			end
 
 			mdedata = mdedata .. table.concat(notesdata, "$")

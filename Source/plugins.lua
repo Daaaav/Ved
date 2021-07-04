@@ -235,14 +235,6 @@ end
 function loadpluginpages()
 	helppages = {}
 
-	table.insert(helppages, {
-		subj = "Return",
-		imgs = {},
-		cont = [[
-\)
-]]
-	})
-
 	local i = false
 
 	for k,v in pairs(plugins) do
@@ -273,7 +265,7 @@ by ]] .. v.info.author .. [[, version ]] .. v.info.version .. [[
 	end
 
 	--if not i then
-		table.insert(helppages, 2, {
+		table.insert(helppages, 1, {
 			subj = "PLUGINS INFO",
 			imgs = {},
 			cont = (i and [[

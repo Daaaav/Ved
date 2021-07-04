@@ -2,7 +2,7 @@
 
 return function(mode)
 	helplistscroll = 0
-	helparticle = 2
+	helparticle = 1
 	helparticlescroll = 0
 	helpeditingline = 0
 	helprefreshable = false
@@ -31,7 +31,7 @@ return function(mode)
 		helppages = mode[1]
 		helpeditable = mode[2]
 		helprefreshable = mode[3]
-		if helppages[2] ~= nil then
+		if helppages[1] ~= nil then
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
 		end
 	end

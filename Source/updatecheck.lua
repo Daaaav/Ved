@@ -16,7 +16,7 @@ function updatecheck.start_check()
 	updatecheck.check_running = true
 	updatecheck.check_error = false
 	updatecheck.latest_version = ""
-	updatecheck.notes = {{subj = L.RETURN, imgs = {}, cont = [[\)]]}}
+	updatecheck.notes = {}
 	updatecheck.notes_available = false
 	updatecheck.notes_refreshable = false
 	updatecheck.scrolling_text = nil
@@ -60,7 +60,7 @@ function updatecheck.await_response()
 		return
 	end
 
-	local current_article = 1
+	local current_article = 0
 	local current_article_name
 	local current_article_contents
 	local article_lines = explode("\n", response_text)
@@ -68,7 +68,7 @@ function updatecheck.await_response()
 		if v:sub(1,3) == "!>>" then
 			current_article_name = v:sub(4,-1)
 			if (current_article_name:sub(1,1) ~= "_" or allowdebug) then
-				if current_article == 1 then
+				if current_article == 0 then
 					updatecheck.notes_available = true
 				else
 					-- Save the previous article
@@ -91,7 +91,7 @@ function updatecheck.await_response()
 			end
 		end
 	end
-	if current_article ~= 1 then
+	if current_article ~= 0 then
 		-- Save the last article
 		updatecheck.notes[current_article].cont = table.concat(current_article_contents, "\n")
 	end
