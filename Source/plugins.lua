@@ -235,24 +235,19 @@ end
 function loadpluginpages()
 	helppages = {}
 
-	local i = false
+	local any_plugins = false
+
+	local short_list = {}
 
 	for k,v in pairs(plugins) do
 		table.insert(helppages, {
 			subj = v.info.shortname,
 			imgs = {},
-			cont = (v.info.supported and "" or [[
-[This plugin is not supported because it requires Ved ]] .. v.info.minimumved .. [[ or higher!]\r
-
-]]) .. (v.info.overrideinfo and v.info.description or [[
-]] .. v.info.longname .. [[\wh#
-
-by ]] .. v.info.author .. [[, version ]] .. v.info.version .. [[
-
-\-
-
-]] .. v.info.description .. [[
-]])
+			cont = (v.info.supported and "" or langkeys(L.PLUGIN_NOT_SUPPORTED, {v.info.minimumved}) .. "\n\n")
+				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\wh#\n\n"
+				.. langkeys(L.PLUGIN_AUTHOR_VERSION, {v.info.author, v.info.version}) .. "\n\\-\n\n"
+				.. v.info.description
+				)
 		})
 
 		helppages[#helppages].imgs = table.copy(v.info.descriptionimgs)
@@ -261,29 +256,26 @@ by ]] .. v.info.author .. [[, version ]] .. v.info.version .. [[
 			helppages[#helppages].imgs[k2] = v.info.internal_pluginpath .. "/" .. v2
 		end
 
-		i = true
+		table.insert(short_list,
+			"- ¤" .. v.info.shortname .. "¤" .. v.info.longname .. "¤ " .. langkeys(L.PLUGIN_AUTHOR_VERSION, {v.info.author, v.info.version}) .. "\\yLwl"
+		)
+
+		any_plugins = true
 	end
 
-	--if not i then
-		table.insert(helppages, 1, {
-			subj = "PLUGINS INFO",
-			imgs = {},
-			cont = (i and [[
-Plugins\wh#
+	if not any_plugins then
+		table.insert(short_list, L.ALL_PLUGINS_NOPLUGINS)
+	end
 
-Please go to ¤https://tolp.nl/ved/plugins.php\nCl
-for more information about plugins and hooks.
-]] or [[
-No plugins\wh#
-
-You do not have any plugins yet. Please go to ¤https://tolp.nl/ved/plugins.php\nCl
-for more information about plugins and hooks.
-]]) .. [[
-
-Your plugins folder is:
-]] .. love.filesystem.getSaveDirectory() .. "/plugins\\Y"
-		})
-	--end
+	table.insert(helppages, 1, {
+		subj = L.ALL_PLUGINS,
+		imgs = {},
+		cont = L.ALL_PLUGINS .. "\\wh#\n\\C=\n\n\n"
+			.. table.concat(short_list, "\n") .. "\n\n\\-\n\n"
+			.. L.ALL_PLUGINS_MOREINFO .. "\n\n"
+			.. L.ALL_PLUGINS_FOLDER .. "\n"
+			.. love.filesystem.getSaveDirectory() .. "/plugins\\Y"
+	})
 end
 
 function ved_require(reqfile)
