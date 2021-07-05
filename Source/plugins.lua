@@ -271,7 +271,9 @@ function loadpluginpages()
 		subj = L.ALL_PLUGINS,
 		imgs = {},
 		cont = L.ALL_PLUGINS .. "\\wh#\n\\C=\n\n\n"
-			.. table.concat(short_list, "\n") .. "\n\n\\-\n\n"
+			.. table.concat(short_list, "\n") .. "\n\n"
+			.. (unsupportedplugins > 0 and langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins}) .. "\\r\n\n" or "")
+			.. "\\-\n\n"
 			.. L.ALL_PLUGINS_MOREINFO .. "\n\n"
 			.. L.ALL_PLUGINS_FOLDER .. "\n"
 			.. love.filesystem.getSaveDirectory() .. "/plugins\\Y"

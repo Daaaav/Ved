@@ -401,7 +401,7 @@ return function()
 
 	if not secondlevel then
 		rbutton(L.VEDOPTIONS, 0, 40)
-		rbutton(L.PLUGINS, 1, 40)
+		rbutton(L.PLUGINS, 1, 40, nil, nil, unsupportedplugins > 0)
 		rbutton(L.LANGUAGE, 2, 40)
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
 		if updatecheck.notes_available then
@@ -422,18 +422,8 @@ return function()
 			rbutton({L.ASSETS, "cR"}, 2, nil, true)
 		end
 
-		local unsupportedpluginstext = ""
-
-		if unsupportedplugins > 0 then
-			unsupportedpluginstext = langkeys(L_PLU.NUMUNSUPPORTEDPLUGINS, {unsupportedplugins})
-		end
-
 		if intermediate_version then
 			love.graphics.setColor(255,128,0)
-		end
-
-		if unsupportedpluginstext ~= "" then
-			ved_printf(unsupportedpluginstext, love.graphics.getWidth()-(128-8), 280, 128-16, "left")
 		end
 
 		ved_printf(updatecheck.get_status(), love.graphics.getWidth()-(128-8), 215, 128-16, "left")
