@@ -282,6 +282,7 @@ FLAGNOTUSED = "Not used",
 FLAGNONAME = "No name",
 USEDOUTOFRANGEFLAGS = "Used out of range flags:",
 
+VVVVVVSETUP = "VVVVVV setup", -- Settings to adapt Ved to how VVVVVV is installed/setup on this computer, like the location of the levels folder and selection of the executable for playtesting. Maybe "VVVVVV installation" or "VVVVVV configuration"
 CUSTOMVVVVVVDIRECTORY = "VVVVVV folder",
 CUSTOMVVVVVVDIRECTORYEXPL = "The default VVVVVV directory Ved expects is:\n$1\n\nThis path should not be set to the \"levels\" directory.",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n\n",
@@ -545,27 +546,14 @@ BTNOVERRIDE = "Override",
 TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Tower mode",
-DISABLETOWER = "Disable tower",
 TIMETRIALS = "Time trials",
-DIMENSIONS = "Dimensions",
-TOWERDIRECTIONUP = "Direction: ↑",
-TOWERDIRECTIONDOWN = "Direction: ↓",
-TOWERENTRYEXIT = "Set entry/exit",
 SWITCHEDTOALTSTATEMAIN = "Switched to main state",
 SWITCHEDTOALTSTATE = "Switched to alt state $1",
 ADDEDALTSTATE = "Added new alt state $1",
 REMOVEDALTSTATE = "Removed alt state $1",
-ENABLEDTOWER = "Tower mode enabled",
-DISABLEDTOWER = "Tower mode disabled",
-TOWERASCENDING = "Tower now ascending",
-TOWERDESCENDING = "Tower now descending",
-TOWERENTRYSET = "Tower entry/exit set to current position",
 TIMETRIALTRINKETS = "Trinket count",
 TIMETRIALTIME = "Par time",
 SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Are you sure you want to delete the dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Are you sure you want to delete this dimension?",
 
 CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
@@ -587,11 +575,24 @@ WHEREPLACEPLAYER = "Where do you want to start?",
 YOUAREPLAYTESTING = "You are currently playtesting",
 LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "You're already playtesting!",
+PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
 PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Please select the file named '$1'.",
 CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
 
+PLAYTESTINGOPTIONS = "Playtesting",
+PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "All plugins",
+ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",
+ALL_PLUGINS_FOLDER = "Your plugins folder is:",
+ALL_PLUGINS_NOPLUGINS = "You do not have any plugins yet.",
+
+PLUGIN_NOT_SUPPORTED = "[This plugin is not supported because it requires Ved $1 or higher!]\\r",
+PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
 
 }
 

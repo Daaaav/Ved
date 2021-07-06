@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-07-04 19:10:16 (CEST)
+--- Last converted: 2021-07-06 20:43:56 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -121,7 +121,7 @@ UNDO = "Ongedaan maken",
 REDO = "Herhalen",
 COMPARE = "Vergelĳken",
 STATS = "Statistieken",
-SCRIPTUSAGES = "Gebruik",
+SCRIPTUSAGES = "Verwĳzingen",
 EDITTAB = "Bewerken",
 COPYSCRIPT = "Alles kopiëren",
 SEARCHSCRIPT = "Zoeken",
@@ -296,6 +296,7 @@ FLAGNOTUSED = "Niet gebruikt",
 FLAGNONAME = "Geen naam",
 USEDOUTOFRANGEFLAGS = "Gebruikte vlaggen buiten bereik:",
 
+VVVVVVSETUP = "VVVVVV-\nconfiguratie",
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-map",
 CUSTOMVVVVVVDIRECTORYEXPL = "De standaard VVVVVV-map die Ved verwacht is:\n$1\n\nDit pad moet niet worden ingesteld op de \"levels\"-map.",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "Je hebt geen aangepaste VVVVVV-map ingesteld.\n\n",
@@ -559,27 +560,14 @@ BTNOVERRIDE = "Omzeilen",
 TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Torenmodus",
-DISABLETOWER = "Toren uitschakelen",
 TIMETRIALS = "Races tegen de klok",
-DIMENSIONS = "Dimensies",
-TOWERDIRECTIONUP = "Richting: ↑",
-TOWERDIRECTIONDOWN = "Richting: ↓",
-TOWERENTRYEXIT = "In-/uitgang instellen",
 SWITCHEDTOALTSTATEMAIN = "Geschakeld naar hoofdtoestand",
 SWITCHEDTOALTSTATE = "Geschakeld naar alternatieve toestand $1",
 ADDEDALTSTATE = "Nieuwe alternatieve toestand $1 toegevoegd",
 REMOVEDALTSTATE = "Alternatieve toestand $1 verwĳderd",
-ENABLEDTOWER = "Torenmodus ingeschakeld",
-DISABLEDTOWER = "Torenmodus uitgeschakeld",
-TOWERASCENDING = "Toren stĳgt nu",
-TOWERDESCENDING = "Toren daalt nu",
-TOWERENTRYSET = "Torenin-/uitgang op huidige positie ingesteld",
 TIMETRIALTRINKETS = "Aantal trinkets",
 TIMETRIALTIME = "Partĳd",
 SUREDELETETRIAL = "Weet je zeker dat je de race tegen de klok \"$1\" wilt verwĳderen?",
-SUREDELETEDIMENSIONNAME = "Weet je zeker dat je de dimensie \"$1\" wilt verwĳderen?",
-SUREDELETEDIMENSIONNONAME = "Weet je zeker dat je deze dimensie wilt verwĳderen?",
 
 CUSTOMGRAPHICS = "Alternatieve afbeeldingen", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Tileset-afbeelding:", -- What variant of tiles*.png is used
@@ -601,11 +589,24 @@ WHEREPLACEPLAYER = "Waar wil je beginnen?",
 YOUAREPLAYTESTING = "Je bent momenteel aan het testen",
 LOCATEVVVVVV = "Selecteer je $1-applicatie", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Je bent al aan het testen!",
+PLAYTESTINGFAILED = "Er ging iets mis bĳ het openen van VVVVVV:\n$1\n\nAls je de VVVVVV-applicatie die gebruikt wordt voor het testen moet wĳzigen, houd dan Shift ingedrukt terwĳl je op de testknop drukt.",
 PLAYTESTUNAVAILABLE = "Sorry, je kunt niet testen op $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Selecteer het bestand genaamd '$1'.",
 CHANGINGPATHAFTERASK = "Het pad naar VVVVVV is gewĳzigd nadat je op spelen hebt gedrukt en is niet meer geldig!",
 
+PLAYTESTINGOPTIONS = "Testen",
+PLAYTESTING_EXECUTABLE_NOTSET = "Je hebt nog geen $1-applicatie ingesteld die gebruikt wordt om levels te testen.\nVed zal hier de eerste keer dat je een $2-level test om vragen.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "De $1-applicatie die gebruikt wordt om levels te testen is ingesteld op:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition wordt niet meer onderhouden. Het wordt niet aanbevolen om het te gebruiken, en ondersteuning voor VVVVVV-CE-levels zal worden verwĳderd in een toekomstige versie van Ved.\n\nKijk voor meer informatie op https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "Alle plugins",
+ALL_PLUGINS_MOREINFO = "Ga naar ¤https://tolp.nl/ved/plugins.php¤deze pagina¤ voor meer informatie over plugins.\\nLCl",
+ALL_PLUGINS_FOLDER = "Je pluginsmap is:",
+ALL_PLUGINS_NOPLUGINS = "Je hebt nog geen plugins.",
+
+PLUGIN_NOT_SUPPORTED = "[Deze plugin wordt niet ondersteund omdat deze Ved $1 of hoger vereist!]\\r",
+PLUGIN_AUTHOR_VERSION = "door $1, versie $2", -- by Person, version 1.0.0
 
 }
 

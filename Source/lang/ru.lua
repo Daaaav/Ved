@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2021-07-04 19:10:14 (CEST)
+--- Last converted: 2021-07-06 20:43:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -19,7 +19,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Перевод сделан CreepiX'ом, Чиприком и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Перевод сделан CreepiX'ом, cheep the peanut'ом и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Ваша версия L{VE устарела. Пожалуйста, используйте версию 0.9.1 или выше.\nЗагрузите L{VE на https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved больше не поддерживает L{ve 0.9.0. К счастью, L{ve 0.9.1 и выше будут работать.\nВы можете скачать последнюю версию L{ve с https://love2d.org/.",
@@ -284,6 +284,7 @@ FLAGNOTUSED = "Не использован",
 FLAGNONAME = "Нет имени",
 USEDOUTOFRANGEFLAGS = "Использовано лишних флагов:",
 
+VVVVVVSETUP = "Конфигурация VVVVVV",
 CUSTOMVVVVVVDIRECTORY = "Папка VVVVVV",
 CUSTOMVVVVVVDIRECTORYEXPL = "Расположение VVVVVV, которое ожидает Ved:\n$1\n\nЭтот путь не должен вести к папке \"levels\".",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "Не установлено пользовательское расположение VVVVVV.\n\n",
@@ -547,27 +548,14 @@ BTNOVERRIDE = "Заменить",
 TARGETPLATFORM = "Для издания", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE (издательство сообщества)",
-ENABLETOWER = "Режим башни",
-DISABLETOWER = "Отключить башню",
 TIMETRIALS = "Испытания временем",
-DIMENSIONS = "Измерения",
-TOWERDIRECTIONUP = "Направление: ↑",
-TOWERDIRECTIONDOWN = "Направление: ↓",
-TOWERENTRYEXIT = "Установить вход/выход",
 SWITCHEDTOALTSTATEMAIN = "Переход в основной режим",
 SWITCHEDTOALTSTATE = "Переход в альтернативный режим $1",
 ADDEDALTSTATE = "Добавлен новый альтернативный режим $1",
 REMOVEDALTSTATE = "Альтернативный режим $1 удалён",
-ENABLEDTOWER = "Режим башни включён",
-DISABLEDTOWER = "Режим башни выключен",
-TOWERASCENDING = "Башня поднимается",
-TOWERDESCENDING = "Башня опускается",
-TOWERENTRYSET = "Вход/выход башни установлен в данной позиции",
 TIMETRIALTRINKETS = "Количество тринкетов",
 TIMETRIALTIME = "Минимум",
 SUREDELETETRIAL = "Вы уверены, что хотите удалить испытание временем \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Вы уверены, что хотите удалить измерение \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Вы уверены, что хотите удалить это измерение?",
 
 CUSTOMGRAPHICS = "Альтернативная графика", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Изображение стиля стен:", -- What variant of tiles*.png is used
@@ -589,11 +577,24 @@ WHEREPLACEPLAYER = "Где Вы хотите начать?",
 YOUAREPLAYTESTING = "Вы играете в тестовом режиме",
 LOCATEVVVVVV = "Выберете исполняемый файл $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Вы уже в тестовом режиме!",
+PLAYTESTINGFAILED = "Произошёл сбой при запуске VVVVVV:\n$1\n\nЕсли необходимо поменять исполняемый файл VVVVVV, используемый для тестового режима, зажмите Shift при запуске тестового режима.",
 PLAYTESTUNAVAILABLE = "К сожалению, невозможно тестировать на $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Пожалуйста, выберете файл \"$1\".",
 CHANGINGPATHAFTERASK = "Путь к VVVVVV некорректен, так как он был изменён после запуска!",
 
+PLAYTESTINGOPTIONS = "Тестовый режим",
+PLAYTESTING_EXECUTABLE_NOTSET = "Вы ещё не указали исполняемый файл $1 для тестового режима.\nVed попросит указать его при первом запуске уровня $2 в тестовом режиме.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "Исполняемый файл $1 для тестового режима указан как:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition больше не поддерживается. Его использование не рекомендовано и поддержка уровней VVVVVV-CE прекратится в будущей версии Ved.\n\nБольше информации на https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "Все плагины",
+ALL_PLUGINS_MOREINFO = "Перейдите на ¤https://tolp.nl/ved/plugins.php¤эту страницу¤ для большей информации о плагинах.\\nLCl",
+ALL_PLUGINS_FOLDER = "Ваша папка плагинов:",
+ALL_PLUGINS_NOPLUGINS = "У Вас пока нет никаких плагинов.",
+
+PLUGIN_NOT_SUPPORTED = "[Этот плагин не поддерживается, так как ему необходима версия Ved $1 и выше!]\\r",
+PLUGIN_AUTHOR_VERSION = "Автор: $1, версия $2", -- by Person, version 1.0.0
 
 }
 

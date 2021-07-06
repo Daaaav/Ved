@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-07-04 19:10:15 (CEST)
+--- Last converted: 2021-07-06 20:43:56 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -308,7 +308,8 @@ FLAGNOTUSED = "Ne uzata",
 FLAGNONAME = "Sennoma",
 USEDOUTOFRANGEFLAGS = "Uzataj ekstervariejaj flagoj:",
 
-CUSTOMVVVVVVDIRECTORY = "VVVVVV -dosierujo",
+VVVVVVSETUP = "Agordado pri VVVVVV",
+CUSTOMVVVVVVDIRECTORY = "VVVVVV-dosierujo",
 CUSTOMVVVVVVDIRECTORYEXPL = "La defaŭlta dosierujo de VVVVVV, kiun atendas Ved estas:\n$1\n\nTiu dosieruj-indiko ne estu agordita al la dosierujo \"levels\".",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "Vi ne havas propran dosierujon de VVVVVV agordita.\n\n",
 CUSTOMVVVVVVDIRECTORY_SET = "Via dosierujo de VVVVVV estas agordita al propra indiko:\n$1\n\n",
@@ -571,27 +572,14 @@ BTNOVERRIDE = "Transpasi",
 TARGETPLATFORM = "Celata platformo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Turoreĝimo",
-DISABLETOWER = "Malebligi turon",
 TIMETRIALS = "Tempelprovoj",
-DIMENSIONS = "Dimensioj",
-TOWERDIRECTIONUP = "Direkto: ↑",
-TOWERDIRECTIONDOWN = "Direkto: ↓",
-TOWERENTRYEXIT = "Agordi en/elirejon",
 SWITCHEDTOALTSTATEMAIN = "Interŝanĝis al ĉefa stato",
 SWITCHEDTOALTSTATE = "Interŝanĝis al alterna stato $1",
 ADDEDALTSTATE = "Aldonis novan alternan staton $1",
 REMOVEDALTSTATE = "Forigis alternan staton $1",
-ENABLEDTOWER = "Turoreĝimo ebligita",
-DISABLEDTOWER = "Turoreĝimo malebligita",
-TOWERASCENDING = "Turo nun supreniras",
-TOWERDESCENDING = "Turo nun malsupreniras",
-TOWERENTRYSET = "Tura en/elirejo agordita al aktuala pozicio",
 TIMETRIALTRINKETS = "Nombro da kolektaĵoj",
 TIMETRIALTIME = "Alpara tempo",
 SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempelprovon \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Ĉu vi certas, ke vi volas forigi la dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Ĉu vi certas, ke vi volas forigi ĉi tiun dimension?",
 
 CUSTOMGRAPHICS = "Alternaj grafikoj", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Kahelara bildo:", -- What variant of tiles*.png is used
@@ -613,11 +601,24 @@ WHEREPLACEPLAYER = "Kie vi volas komenci?",
 YOUAREPLAYTESTING = "Vi nuntempe ludtestas",
 LOCATEVVVVVV = "Elektu vian plenumeblan dosieron de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Vi jam ludtestas!",
+PLAYTESTINGFAILED = "Io fuŝiĝis dum malfermi VVVVVV:\n$1\n\nSe vi devas ŝangi la ruleblan dosieron de VVVVVV, kiu estas uzata por ludtestado, premtenu la ŝov-klavon dum premi la ludtestad-butonon.",
 PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bonvolu elekti la dosieron nomitan '$1'.",
 CHANGINGPATHAFTERASK = "La dosierindiko de VVVVVV ŝanĝiĝis post premi 'ludi' kaj ne plu validas!",
 
+PLAYTESTINGOPTIONS = "Ludtestado",
+PLAYTESTING_EXECUTABLE_NOTSET = "Vi ne jam agordis ruleblan dosieron de $1 por uzi dum ludtestado.\nVed petos tion dum ludi nivelon de $2 unuafoje.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "La rulebla dosiero de $1 por uzi dum ludtestado estas agordita al:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu\nhttps://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "Ĉiuj aldonaĵoj",
+ALL_PLUGINS_MOREINFO = "Bonvolu iri al ¤https://tolp.nl/ved/plugins.php¤tiu ĉi paĝo¤ por pli da informoj pri aldonaĵoj.\\nLCl",
+ALL_PLUGINS_FOLDER = "Via dosierujo de aldonaĵoj estas:",
+ALL_PLUGINS_NOPLUGINS = "Vi ne jam havas aldonaĵojn.",
+
+PLUGIN_NOT_SUPPORTED = "[Tiu ĉi aldonaĵo ne estas subtenata, ĉar necesas Ved $1 aŭ pli nove!]\\r",
+PLUGIN_AUTHOR_VERSION = "de $1, versio $2", -- by Person, version 1.0.0
 
 }
 

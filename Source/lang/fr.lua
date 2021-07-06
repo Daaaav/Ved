@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-07-04 19:10:15 (CEST)
+--- Last converted: 2021-07-06 20:43:56 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -14,8 +14,10 @@
 function lang_plurals(n) return (n > 1) end
 
 function fontpng_ascii(c)
-	if c == "à" then
+	if c == "à" or c == "â" then
 		return "a"
+	elseif c == "À" then
+		return "A"
 	elseif c == "é" or c == "è" or c == "ê" then
 		return "e"
 	elseif c == "É" or c == "Ê" then
@@ -298,6 +300,7 @@ FLAGNOTUSED = "Non utilisé",
 FLAGNONAME = "Aucun nom",
 USEDOUTOFRANGEFLAGS = "Drapeaux hors limites utilisés :",
 
+VVVVVVSETUP = "Installation de VVVVVV",
 CUSTOMVVVVVVDIRECTORY = "Dossier de VVVVVV",
 CUSTOMVVVVVVDIRECTORYEXPL = "Le répertoire par défaut de VVVVVV que Ved attend est:\n$1\n\nCe chemin ne doit pas mener au dossier \"levels\".",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "Vous n'avez pas donné de dossier VVVVVV personnalisé.\n\n",
@@ -515,7 +518,7 @@ DRIVES = "Lecteurs", -- like C: or F: on Windows
 DOFILTER = "Seulement montrer *$1", -- "*.txt" for example
 DOFILTERDIR = "Seulement montrer les dossiers",
 FILEDIALOGLUV = "Désolé, votre système d'exploitation n'est pas reconnu, donc le dialogue de fichier ne fonctionne pas.",
-RESET = "Réinit.",
+RESET = "Réinitialiser",
 CHANGEVERB = "Changer", -- verb
 LOADIMAGE = "Charger image",
 GRID = "Grille",
@@ -561,27 +564,14 @@ BTNOVERRIDE = "Mettre à jour",
 TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Mode Tour",
-DISABLETOWER = "Désactiver la tour",
 TIMETRIALS = "Contre la montre",
-DIMENSIONS = "Dimensions",
-TOWERDIRECTIONUP = "Direction : ↑",
-TOWERDIRECTIONDOWN = "Direction : ↓",
-TOWERENTRYEXIT = "Changer entrée/sortie",
 SWITCHEDTOALTSTATEMAIN = "État principal sélectionné",
 SWITCHEDTOALTSTATE = "État alternatif $1 sélectionné",
 ADDEDALTSTATE = "Nouvel état alternatif $1 ajouté",
 REMOVEDALTSTATE = "État alternatif $1 supprimé",
-ENABLEDTOWER = "Mode Tour activé",
-DISABLEDTOWER = "Mode Tour désactivé",
-TOWERASCENDING = "La tour monte",
-TOWERDESCENDING = "La tour descend",
-TOWERENTRYSET = "L'entrée/sortie de la tour est maintenant la position courante",
 TIMETRIALTRINKETS = "Compte de médailles",
 TIMETRIALTIME = "Temps visé",
 SUREDELETETRIAL = "Êtes-vous sûr de vouloir supprimer le contre la montre \"$1\" ?",
-SUREDELETEDIMENSIONNAME = "Êtes-vous sûr de vouloir supprimer la dimension \"$1\" ?",
-SUREDELETEDIMENSIONNONAME = "Êtes-vous sûr de vouloir supprimer cette dimension ?",
 
 CUSTOMGRAPHICS = "Graphismes alternatifs", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Image du jeu de tuiles :", -- What variant of tiles*.png is used
@@ -603,11 +593,24 @@ WHEREPLACEPLAYER = "Où voulez-vous commencer ?",
 YOUAREPLAYTESTING = "Vous êtes dans un test de jeu",
 LOCATEVVVVVV = "Selectionnez votre exécutable de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Vous êtes déjà dans un test de jeu !",
+PLAYTESTINGFAILED = "Une erreur inattendue est apparue lors du lancement de VVVVVV :\n$1\n\nSi vous devez changer l'exécutable de VVVVVV qui est utilisé lors du test de jeu, maintenez Maj en appuyant sur le bouton de test de jeu.",
 PLAYTESTUNAVAILABLE = "Désolé, vous ne pouvez pas être dans un test de jeu sur un $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Veuillez sélectionner le fichier nommé '$1'.",
 CHANGINGPATHAFTERASK = "Le chemin de VVVVVV a été changé après avoir lancé le jeu et n'est plus valide !",
 
+PLAYTESTINGOPTIONS = "Test de jeu",
+PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de $1 à utiliser pour le test de jeu.\nVed vous le demandera lors du premier test d'un niveau de $2.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "L'exécutable de $1 à utiliser pour les tests de jeu est :\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition n'est plus maintenu. L'utiliser n'est pas recommandé, et le support pour les niveaux de VVVVVV-CE sera enlevé de Ved dans une version future.\n\nPour plus d'informations, allez sur https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "Tous les modules externes",
+ALL_PLUGINS_MOREINFO = "Veuillez visiter ¤https://tolp.nl/ved/plugins.php¤cette page¤ pour plus d'informations sur les modules externes.\\nLCl",
+ALL_PLUGINS_FOLDER = "Votre dossier de modules externes est :",
+ALL_PLUGINS_NOPLUGINS = "Vous n'avez pas encore de module externe.",
+
+PLUGIN_NOT_SUPPORTED = "[Ce module externe n'est pas supporté car il requiert Ved $1 ou une version ultérieure!]\\r",
+PLUGIN_AUTHOR_VERSION = "par $1, version $2", -- by Person, version 1.0.0
 
 }
 

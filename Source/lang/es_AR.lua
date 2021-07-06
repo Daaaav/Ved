@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-07-04 19:10:15 (CEST)
+--- Last converted: 2021-07-06 20:43:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -14,7 +14,19 @@
 function lang_plurals(n) return (n ~= 1) end
 
 function fontpng_ascii(c)
-
+	if c == "ñ" then
+		return "n"
+	elseif c == "á" then
+		return "a"
+	elseif c == "é" then
+		return "e"
+	elseif c == "í" then
+		return "i"
+	elseif c == "ó" then
+		return "o"
+	elseif c == "ú" then
+		return "u"
+	end
 end
 
 L = {
@@ -284,6 +296,7 @@ FLAGNOTUSED = "No usado",
 FLAGNONAME = "Sin nombre",
 USEDOUTOFRANGEFLAGS = "Flags usados fuera de rango:",
 
+VVVVVVSETUP = "VVVVVV setup",
 CUSTOMVVVVVVDIRECTORY = "Archivo de VVVVVV",
 CUSTOMVVVVVVDIRECTORYEXPL = "El directorio de VVVVVV por defecto que Ved espera es:\n$1\n\nEste camino no deberia ser puesto a el directiorio de \"levels\".",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "No tienes un directorio de VVVVVV personalizado.\n\n",
@@ -547,27 +560,14 @@ BTNOVERRIDE = "Anular",
 TARGETPLATFORM = "Plataforma objetivo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-EC",
-ENABLETOWER = "Modo torre",
-DISABLETOWER = "Desactivar torre",
 TIMETRIALS = "Contrarelojes",
-DIMENSIONS = "Dimensiones",
-TOWERDIRECTIONUP = "Dirección: ↑",
-TOWERDIRECTIONDOWN = "Dirección: ↓",
-TOWERENTRYEXIT = "Fijar entrada/salida",
 SWITCHEDTOALTSTATEMAIN = "Cambiado a estado principal",
 SWITCHEDTOALTSTATE = "Cambiado al estado $1",
 ADDEDALTSTATE = "Añadido nuevo estado $1",
 REMOVEDALTSTATE = "Removido estado $1",
-ENABLEDTOWER = "Modo torre activado",
-DISABLEDTOWER = "Modo torre desactivado",
-TOWERASCENDING = "Torre ahora ascendiente",
-TOWERDESCENDING = "Torre ahora descendiente",
-TOWERENTRYSET = "Salida/entrada de torre fijada a posición actual",
 TIMETRIALTRINKETS = "Numero de trinkets",
 TIMETRIALTIME = "Tiempo",
 SUREDELETETRIAL = "Estas seguro de que quieres borrar el contrareloj \"$1\"?",
-SUREDELETEDIMENSIONNAME = "Estas seguro de que quieres borrar la dimension \"$1\"?",
-SUREDELETEDIMENSIONNONAME = "Estas seguro de que quieres borrar esta dimensión?",
 
 CUSTOMGRAPHICS = "Gráficos alternos", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Imagen del set:", -- What variant of tiles*.png is used
@@ -589,11 +589,24 @@ WHEREPLACEPLAYER = "Donde desea comenzar?",
 YOUAREPLAYTESTING = "Estas probando justo ahora.",
 LOCATEVVVVVV = "Seleccione su ejecutable de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Ya estas probando!",
+PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
 PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
 CHANGINGPATHAFTERASK = "El camino de VVVVVV se cambio al presionar play y ahora no es valido!",
 
+PLAYTESTINGOPTIONS = "Playtesting",
+PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "All plugins",
+ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",
+ALL_PLUGINS_FOLDER = "Your plugins folder is:",
+ALL_PLUGINS_NOPLUGINS = "You do not have any plugins yet.",
+
+PLUGIN_NOT_SUPPORTED = "[This plugin is not supported because it requires Ved $1 or higher!]\\r",
+PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
 
 }
 

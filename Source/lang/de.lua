@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-07-04 19:10:15 (CEST)
+--- Last converted: 2021-07-06 20:43:55 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -296,6 +296,7 @@ FLAGNOTUSED = "Nicht benutzt",
 FLAGNONAME = "Kein Name",
 USEDOUTOFRANGEFLAGS = "Flags die außer Reichweite sind wurden benutzt:",
 
+VVVVVVSETUP = "VVVVVV-\nEinrichtung",
 CUSTOMVVVVVVDIRECTORY = "VVVVVV-Ordner",
 CUSTOMVVVVVVDIRECTORYEXPL = "Der normale VVVVVV-Order den Ved erwartet ist:\n$1\n\nDieser Pfad sollte nicht zum \"levels\" Ordner gesetzt werden.",
 CUSTOMVVVVVVDIRECTORY_NOTSET = "Du hast keinen eigenen VVVVVV-Order gesetzt.\n\n",
@@ -513,7 +514,7 @@ DRIVES = "Laufwerke", -- like C: or F: on Windows
 DOFILTER = "Nur *$1 zeigen", -- "*.txt" for example
 DOFILTERDIR = "Nur Verzeichnisse zeigen",
 FILEDIALOGLUV = "Entschuldigung, dein Betriebssystem wurde nicht erkannt, also funktioniert der Dateidialog nicht.",
-RESET = "Zurück-\nsetzen",
+RESET = "Zurücksetzen",
 CHANGEVERB = "Ändern", -- verb
 LOADIMAGE = "Lade Bild",
 GRID = "Netz",
@@ -559,27 +560,14 @@ BTNOVERRIDE = "Überschreiben",
 TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 PLATFORM_VCE = "VVVVVV-CE",
-ENABLETOWER = "Turmmodus",
-DISABLETOWER = "Deaktiviere Turm",
 TIMETRIALS = "Zeitprüfung",
-DIMENSIONS = "Dimensionen",
-TOWERDIRECTIONUP = "Richtung: ↑",
-TOWERDIRECTIONDOWN = "Richtung: ↓",
-TOWERENTRYEXIT = "Setze Eingang/Ausgang",
 SWITCHEDTOALTSTATEMAIN = "Zu Hauptzustand gewechselt",
 SWITCHEDTOALTSTATE = "Zu Alternativzustand $1 gewechselt",
 ADDEDALTSTATE = "Neuen Alternativzustand $1 hinzugefügt",
 REMOVEDALTSTATE = "Alternativzustand $1 entfernt",
-ENABLEDTOWER = "Turmmodus aktiviert",
-DISABLEDTOWER = "Turmmodus deaktiviert",
-TOWERASCENDING = "Turm steigt jetzt",
-TOWERDESCENDING = "Turm steigt jetzt ab",
-TOWERENTRYSET = "Turm-Eingang/Ausgang zu aktueller Position gesetzt",
 TIMETRIALTRINKETS = "Trinketanzahl",
 TIMETRIALTIME = "Zeitprüfungszeit",
 SUREDELETETRIAL = "Bist du sicher du willst die Zeitprüfung \"$1\" löschen?",
-SUREDELETEDIMENSIONNAME = "Bist du sicher du willst die Dimension \"$1\" löschen?",
-SUREDELETEDIMENSIONNONAME = "Bist du dir sicher dass du diese Dimension löschen möchtest?",
 
 CUSTOMGRAPHICS = "Alternative Grafiken", -- Alternative tileset or sprites images
 CUSTOMTILESET = "Tilesetbild:", -- What variant of tiles*.png is used
@@ -601,11 +589,24 @@ WHEREPLACEPLAYER = "Wo willst du starten?",
 YOUAREPLAYTESTING = "Du Spieltestest momentan",
 LOCATEVVVVVV = "Wähle dein $1 Program aus", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Du Spieltestest schon!",
+PLAYTESTINGFAILED = "Etwas ist schief gelaufen beim Öffnen von VVVVVV:\n$1\n\nWenn du die ausführbare Datei die zum Spieltest für VVVVVV genutzt wird ändern musst, halte Shift während du den Spieltest-Knopf drückst.",
 PLAYTESTUNAVAILABLE = "Tut mir leid, du kannst nicht Spieltesten auf $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bitte wähle die Datei namens '$1' aus.",
 CHANGINGPATHAFTERASK = "Der VVVVVV-Pfad wurde geändert nachdem Spielen gedrückt wurde und ist nicht mehr gültig!",
 
+PLAYTESTINGOPTIONS = "Spieltest",
+PLAYTESTING_EXECUTABLE_NOTSET = "Sie haben noch keine ausführbare Datei für $1 zum Spieltesten festgelegt.\nVed wird danach fragen, wenn du zum ersten Mal ein $2-Level testest.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "Die ausführbare Datei $1, die für den Spieltest verwendet werden soll, ist:\n$2", -- $1: VVVVVV 2.3
+
 VCE_DEPRECATED = "VVVVVV: Community Edition wird nicht mehr gewartet. Es zu verwenden wird nicht empfohlen, und die Unterstützung für VVVVVV-CE-Level wird in einer zukünftigen Version aus Ved entfernt.\n\nFür mehr Informationen, siehe https://vsix.dev/vce/status/",
+
+ALL_PLUGINS = "Alle Plugins",
+ALL_PLUGINS_MOREINFO = "Bitte besuche ¤https://tolp.nl/ved/plugins.php¤diese Seite¤ für mehr Informationen bezüglich Plugins.\\nLCl",
+ALL_PLUGINS_FOLDER = "Dein Plugins-Ordner ist:",
+ALL_PLUGINS_NOPLUGINS = "Du hast noch keine Plugins.",
+
+PLUGIN_NOT_SUPPORTED = "[Dieses Plugin ist nicht unterstützt, da Ved $1 oder höher benötigt wird!]\\r",
+PLUGIN_AUTHOR_VERSION = "von $1, Version $2", -- by Person, version 1.0.0
 
 }
 

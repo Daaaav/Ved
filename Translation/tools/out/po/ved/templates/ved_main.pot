@@ -930,6 +930,10 @@ msgctxt "L.USEDOUTOFRANGEFLAGS"
 msgid "Used out of range flags:"
 msgstr ""
 
+msgctxt "L.VVVVVVSETUP"
+msgid "VVVVVV setup"
+msgstr ""
+
 msgctxt "L.CUSTOMVVVVVVDIRECTORY"
 msgid "VVVVVV folder"
 msgstr ""
@@ -1940,32 +1944,8 @@ msgctxt "L.PLATFORM_VCE"
 msgid "VVVVVV-CE"
 msgstr ""
 
-msgctxt "L.ENABLETOWER"
-msgid "Tower mode"
-msgstr ""
-
-msgctxt "L.DISABLETOWER"
-msgid "Disable tower"
-msgstr ""
-
 msgctxt "L.TIMETRIALS"
 msgid "Time trials"
-msgstr ""
-
-msgctxt "L.DIMENSIONS"
-msgid "Dimensions"
-msgstr ""
-
-msgctxt "L.TOWERDIRECTIONUP"
-msgid "Direction: ↑"
-msgstr ""
-
-msgctxt "L.TOWERDIRECTIONDOWN"
-msgid "Direction: ↓"
-msgstr ""
-
-msgctxt "L.TOWERENTRYEXIT"
-msgid "Set entry/exit"
 msgstr ""
 
 msgctxt "L.SWITCHEDTOALTSTATEMAIN"
@@ -1984,26 +1964,6 @@ msgctxt "L.REMOVEDALTSTATE"
 msgid "Removed alt state $1"
 msgstr ""
 
-msgctxt "L.ENABLEDTOWER"
-msgid "Tower mode enabled"
-msgstr ""
-
-msgctxt "L.DISABLEDTOWER"
-msgid "Tower mode disabled"
-msgstr ""
-
-msgctxt "L.TOWERASCENDING"
-msgid "Tower now ascending"
-msgstr ""
-
-msgctxt "L.TOWERDESCENDING"
-msgid "Tower now descending"
-msgstr ""
-
-msgctxt "L.TOWERENTRYSET"
-msgid "Tower entry/exit set to current position"
-msgstr ""
-
 msgctxt "L.TIMETRIALTRINKETS"
 msgid "Trinket count"
 msgstr ""
@@ -2014,14 +1974,6 @@ msgstr ""
 
 msgctxt "L.SUREDELETETRIAL"
 msgid "Are you sure you want to delete the time trial \"$1\"?"
-msgstr ""
-
-msgctxt "L.SUREDELETEDIMENSIONNAME"
-msgid "Are you sure you want to delete the dimension \"$1\"?"
-msgstr ""
-
-msgctxt "L.SUREDELETEDIMENSIONNONAME"
-msgid "Are you sure you want to delete this dimension?"
 msgstr ""
 
 #. Alternative tileset or sprites images
@@ -2101,6 +2053,10 @@ msgctxt "L.ALREADYPLAYTESTING"
 msgid "You're already playtesting!"
 msgstr ""
 
+msgctxt "L.PLAYTESTINGFAILED"
+msgid "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
+msgstr ""
+
 #. you cannot playtest on <operating system>
 msgctxt "L.PLAYTESTUNAVAILABLE"
 msgid "Sorry, you cannot playtest on $1."
@@ -2114,8 +2070,47 @@ msgctxt "L.CHANGINGPATHAFTERASK"
 msgid "The VVVVVV path was changed after pressing play and it is no longer valid!"
 msgstr ""
 
+msgctxt "L.PLAYTESTINGOPTIONS"
+msgid "Playtesting"
+msgstr ""
+
+#. $1: VVVVVV 2.3, $2: VVVVVV
+msgctxt "L.PLAYTESTING_EXECUTABLE_NOTSET"
+msgid "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time."
+msgstr ""
+
+#. $1: VVVVVV 2.3
+msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
+msgid "The $1 executable to use for playtesting is set to:\n$2"
+msgstr ""
+
 msgctxt "L.VCE_DEPRECATED"
 msgid "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/"
+msgstr ""
+
+msgctxt "L.ALL_PLUGINS"
+msgid "All plugins"
+msgstr ""
+
+msgctxt "L.ALL_PLUGINS_MOREINFO"
+msgid "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl"
+msgstr ""
+
+msgctxt "L.ALL_PLUGINS_FOLDER"
+msgid "Your plugins folder is:"
+msgstr ""
+
+msgctxt "L.ALL_PLUGINS_NOPLUGINS"
+msgid "You do not have any plugins yet."
+msgstr ""
+
+msgctxt "L.PLUGIN_NOT_SUPPORTED"
+msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
+msgstr ""
+
+#. by Person, version 1.0.0
+msgctxt "L.PLUGIN_AUTHOR_VERSION"
+msgid "by $1, version $2"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
