@@ -139,7 +139,6 @@ function dialog.form.leveloptions_make()
 				end
 			end
 		},
-		{"", 0, 13, 40, L.TARGETPLATFORM, DF.LABEL},
 	}
 end
 

@@ -3,4 +3,4 @@
 
 --L. = ""
 
-L.PLATFORM_VCE = nil
+L.VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"

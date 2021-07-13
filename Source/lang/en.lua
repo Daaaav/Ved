@@ -227,11 +227,6 @@ ONETRINKETS = "T:",
 ONECREWMATES = "C:",
 ONEENTITIES = "E:",
 
-ONECUSTOMTILESET = "CT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "CS $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Levels",
 LOADTHISLEVEL = "Load this level: ",
 ENTERNAMESAVE = "Enter name to save as: ",
@@ -545,12 +540,7 @@ MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger tha
 BTNOVERRIDE = "Override",
 TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
 TIMETRIALS = "Time trials",
-SWITCHEDTOALTSTATEMAIN = "Switched to main state",
-SWITCHEDTOALTSTATE = "Switched to alt state $1",
-ADDEDALTSTATE = "Added new alt state $1",
-REMOVEDALTSTATE = "Removed alt state $1",
 TIMETRIALTRINKETS = "Trinket count",
 TIMETRIALTIME = "Par time",
 SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
@@ -633,10 +623,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 tile is not a valid whole number in the range 0-1199",
 		[1] = "$1 tiles are not a valid whole number in the range 0-1199"
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4",
-		[1] = "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
 	},
 	BYTES = {
 		[0] = "$1 byte",

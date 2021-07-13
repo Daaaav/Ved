@@ -83,6 +83,13 @@ function loadlevel(path)
 
 	local thisextra = {}
 
+	-- This isn't a VCE level, right?
+	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"([0-9]+)\">")
+	if vce_m ~= nil then
+		mycount.FC = mycount.FC + 1
+		cons_fc(FClist, L.VCE_REMOVED)
+	end
+
 	-- Now, the contents!
 	cons("Loading all the contents...")
 	--x.alltiles = explode(",", contents:match("<contents>(.*)</contents>"))

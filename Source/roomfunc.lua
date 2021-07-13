@@ -1,14 +1,8 @@
-function tileset_image(themetadata, chosentileset, customtileset)
+function tileset_image(themetadata, chosentileset)
 	if chosentileset == nil then
 		chosentileset = themetadata.tileset
 	end
-	if customtileset == nil then
-		customtileset = themetadata.customtileset
-	end
 
-	if customtileset >= 4 and vcecustomtilesets[customtileset] ~= nil then
-		return vcecustomtilesets[customtileset]
-	end
 	return tilesetnames[usedtilesets[chosentileset]]
 end
 
@@ -695,12 +689,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 end
 
 function drawentitysprite(tile, atx, aty, customspritesheet, small)
-	local image
-	if customspritesheet >= 2 and vcecustomspritesheets[customspritesheet] ~= nil then
-		image = vcecustomspritesheets[customspritesheet]
-	else
-		image = "sprites.png"
-	end
+	local image = "sprites.png"
 
 	if tilesets[image]["tiles"][tile] ~= nil then
 		love.graphics.draw(tilesets[image]["img"], tilesets[image]["tiles"][tile], atx, aty, 0, small and 1 or 2)
@@ -903,7 +892,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, c
 		toolarray = tilesetblocks[chosentileset].colors[chosencolor].spikes
 	end
 
-	local tsimage = tileset_image(nil, chosentileset, customtileset)
+	local tsimage = tileset_image(nil, chosentileset)
 
 	for ly = 0, 4 do
 		for lx = 0, 5 do
