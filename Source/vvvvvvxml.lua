@@ -578,22 +578,17 @@ function loadlevel(path)
 				theselevelmetadata[croom] = {
 					tileset = 0,
 					tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
-					customtileset = 0,
-					customspritesheet = 0,
 					platx1 = 0,
 					platy1 = 0,
 					platx2 = 320,
 					platy2 = 240,
 					platv = 4,
-					enemyv = 4,
 					enemyx1 = 0,
 					enemyy1 = 0,
 					enemyx2 = 320,
 					enemyy2 = 240,
 					enemytype = 0,
 					directmode = 0,
-					tower = 0,
-					tower_row = 0,
 					warpdir = 0,
 					roomname = "",
 					auto2mode = 0,
@@ -800,7 +795,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				"            <edentity"
 				.. " x=\"4000\" y=\"3000\""
 				.. " t=\"17\""
-				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\""
+				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">"
+				.. xmlspecialchars(mdedata)
 				.. "</edentity>\n"
 			)
 		end

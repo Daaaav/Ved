@@ -892,12 +892,6 @@ function dialog.callback.leveloptions(button, fields)
 		return
 	end
 
-	local converted
-	if fields.target ~= metadata.target then
-		-- Convert first, if we also want to resize the level or so, we'll need all our ducks in order.
-		converted = convert_target(metadata.target, fields.target)
-	end
-
 	-- What are the old properties?
 	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
 	local undo_properties = {}
