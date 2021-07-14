@@ -367,8 +367,6 @@ function loadtilesets(levelassetsfolder)
 	loadsprites("sprites.png", 32, levelassetsfolder)
 	loadsprites("teleporter.png", 96, levelassetsfolder)
 
-	loadvcecustomgraphics(levelassetsfolder)
-
 
 	if levelassetsfolder ~= nil then
 		-- We're done loading level-specific assets
@@ -390,36 +388,6 @@ function loadtilesets(levelassetsfolder)
 
 	-- Doesn't rely on loading files from somewhere specific
 	loadwarpbgs()
-end
-
-function loadvcecustomgraphics(levelassetsfolder)
-	local success, files
-	if levelassetsfolder == nil then
-		vcecustomtilesets = {} -- num -> tiles{num}.png, for any tiles{num}.png that exists
-		vcecustomspritesheets = {} -- same for any sprites{num}.png that exists
-
-		success, files = listfiles_generic(graphicsfolder, ".png", false)
-	else
-		success, files = listfiles_generic(levelassetsfolder .. dirsep .. "graphics", ".png", false)
-	end
-	if not success then
-		return
-	end
-
-	for k,v in pairs(files) do
-		if not v.isdir then
-			local num_tiles = v.name:match("^tiles(%d+).png$")
-			local num_sprites = v.name:match("^sprites(%d+).png$")
-
-			if num_tiles ~= nil and tonumber(num_tiles) >= 4 then
-				loadtileset(v.name, levelassetsfolder)
-				vcecustomtilesets[tonumber(num_tiles)] = v.name
-			elseif num_sprites ~= nil and tonumber(num_sprites) >= 2 then
-				loadsprites(v.name, 32, levelassetsfolder)
-				vcecustomspritesheets[tonumber(num_sprites)] = v.name
-			end
-		end
-	end
 end
 
 function loadtileset(file, levelassetsfolder)
@@ -761,12 +729,6 @@ function updatecountdelete(thet, id, undoing)
 		count.crewmates = count.crewmates - 1
 	elseif thet == 16 then
 		count.startpoint = nil
-	elseif thet == 14 then
-		update_vce_teleporters_remove(
-			math.floor(entitydata[id].x/40),
-			math.floor(entitydata[id].y/40),
-			id
-		)
 	end
 
 	-- Is this a roomtext/terminal/script box entity and were we editing it?
@@ -3241,10 +3203,6 @@ function draw_script_warn_light(id, x, y, active)
 			"left"
 		)
 	end
-end
-
-function vce_deprecation_dialog()
-	dialog.create(L.VCE_DEPRECATED)
 end
 
 hook("func")

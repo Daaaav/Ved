@@ -101,51 +101,6 @@ return {
 						{},
 						nil, 16, VALIGN.TOP, 0, 8
 					),
-					Spacer(),
-					WrappedText(
-						function()
-							if not playtesting_available then
-								return langkeys(L.PLAYTESTUNAVAILABLE, {love.system.getOS()})
-							end
-
-							if s.vvvvvvce == nil or s.vvvvvvce == "" then
-								return langkeys(L.PLAYTESTING_EXECUTABLE_NOTSET, {"VVVVVV-CE", "VVVVVV-CE"})
-							end
-
-							return langkeys(L.PLAYTESTING_EXECUTABLE_SET, {"VVVVVV-CE", s.vvvvvvce})
-						end
-					),
-					Spacer(),
-					HorizontalListContainer(
-						{
-							LabelButton(L.CHANGEVERB,
-								function()
-									dialog.create(L.VCE_DEPRECATED, DBS.OKCANCEL,
-										function(button)
-											if button == DB.OK then
-												playtesting_ask_path("VCE", false)
-											end
-										end
-									)
-								end,
-								nil, nil,
-								function()
-									return true, playtesting_available
-								end
-							),
-							LabelButton(L.RESET,
-								function()
-									s.vvvvvvce = ""
-								end,
-								nil, nil,
-								function()
-									return true, s.vvvvvvce ~= ""
-								end
-							),
-						},
-						{},
-						nil, 16, VALIGN.TOP, 0, 8
-					),
 				},
 				{},
 				love.graphics.getWidth()-128, -- maybe make a container like RightBar for the left part

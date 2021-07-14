@@ -263,34 +263,6 @@ function dialog.form.hidden_make(values, existing_form)
 	return form
 end
 
-function dialog.form.vcecustomgraphics_make(lmd)
-	local customtileset_tuples = {
-		{0, langkeys(L.CUSTOMTILESET_DEFAULT, {tilesetnames[usedtilesets[lmd.tileset]]})}
-	}
-	local customspritesheet_tuples = {
-		{0,L.CUSTOMSPRITESHEET_DEFAULT}
-	}
-	for k,v in pairs(vcecustomtilesets) do
-		table.insert(customtileset_tuples, {k,v})
-	end
-	for k,v in pairs(vcecustomspritesheets) do
-		table.insert(customspritesheet_tuples, {k,v})
-	end
-
-	return {
-		{"", 0, 0, 40, L.CUSTOMTILESET, DF.LABEL},
-		{
-			"customtileset", 0, 2, 30, lmd.customtileset, DF.DROPDOWN,
-			generate_dropdown_tables(customtileset_tuples)
-		},
-		{"", 0, 5, 40, L.CUSTOMSPRITESHEET, DF.LABEL},
-		{
-			"customspritesheet", 0, 7, 30, lmd.customspritesheet, DF.DROPDOWN,
-			generate_dropdown_tables(customspritesheet_tuples)
-		}
-	}
-end
-
 --function dialog.form.
 
 -- 
@@ -836,19 +808,11 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 		correctlines = true
 	end
 
-	local telecheck, oldrx, oldry = false
-	if thisentity.t == 14 or anythingbutnil0(tonumber(fields.t)) == 14 then
-		telecheck = true
-		oldrx, oldry = math.floor(thisentity.x/40), math.floor(thisentity.y/30)
-		newrx = math.floor(anythingbutnil0(tonumber(fields.x))/40)
-		newry = math.floor(anythingbutnil0(tonumber(fields.y))/30)
-	end
-
 	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}
 	local changeddata = {}
 	for k,v in pairs(entitypropkeys) do
 		local newvalue = fields[v]
-		if not table.contains({"data", "activityname", "activitycolor", "onetime"}, v) then
+		if v ~= "data" then
 			-- Needs to be a number
 			newvalue = anythingbutnil0(tonumber(newvalue))
 		end
@@ -881,10 +845,6 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	-- entdetails[3] is still the ID of this entity
 	table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = changeddata})
 	finish_undo("CHANGED ENTITY (PROPERTIES)")
-
-	if telecheck then
-		update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
-	end
 end
 
 function dialog.callback.leveloptions(button, fields)
@@ -1175,33 +1135,4 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
 	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
-end
-
-function dialog.callback.vcecustomgraphics(button, fields)
-	if button ~= DB.OK then
-		return
-	end
-
-	local oldtileset = levelmetadata_get(roomx, roomy).customtileset
-	local oldspritesheet = levelmetadata_get(roomx, roomy).customspritesheet
-
-	levelmetadata_set(roomx, roomy, "customtileset", fields.customtileset)
-	levelmetadata_set(roomx, roomy, "customspritesheet", fields.customspritesheet)
-
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
-				{
-					key = "customtileset",
-					oldvalue = oldtileset,
-					newvalue = fields.customtileset
-				},
-				{
-					key = "customspritesheet",
-					oldvalue = oldspritesheet,
-					newvalue = fields.customspritesheet
-				}
-			},
-			changetiles = false
-		}
-	)
-	finish_undo("CUSTOM TILESET/SPRITESHEET")
 end

@@ -379,7 +379,7 @@ return function(key)
 			pasteroom()
 		elseif key == "z" then
 			-- 3x3 brush
-			if table.contains({1,2,3,5,7,8,9,10,12,19}, selectedtool) then
+			if table.contains({1,2,3,5,7,8,9,10,12}, selectedtool) then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 2
 
@@ -389,7 +389,7 @@ return function(key)
 			end
 		elseif key == "x" then
 			-- 5x5 brush
-			if table.contains({1,2,3,7,8,9,19}, selectedtool) then
+			if table.contains({1,2,3,7,8,9}, selectedtool) then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 3
 
@@ -399,7 +399,7 @@ return function(key)
 			end
 		elseif key == "c" then
 			-- Alright, 7x7 brush
-			if table.contains({1,2,3,7,8,9,19}, selectedtool) then
+			if table.contains({1,2,3,7,8,9}, selectedtool) then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 4
 
@@ -409,7 +409,7 @@ return function(key)
 			end
 		elseif key == "v" then
 			-- And 9x9 brush
-			if selectedtool == 1 or selectedtool == 2 or selectedtool == 19 then
+			if selectedtool == 1 or selectedtool == 2 then
 				oldzxsubtool = selectedsubtool[selectedtool]
 				selectedsubtool[selectedtool] = 5
 

@@ -11,8 +11,7 @@ function love.keyreleased(key)
 	if holdingzvx and (key == "z" or key == "x" or key == "c" or key == "v" or key == "h" or key == "b" or key == "f") then
 		if selectedtool == 1 or selectedtool == 2
 		or ((selectedtool == 3 or selectedtool == 7 or selectedtool == 8 or selectedtool == 9) and oldzxsubtool <= 4)
-		or ((selectedtool == 5 or selectedtool == 10 or selectedtool == 12) and oldzxsubtool <= 2)
-		or (selectedtool == 19 and oldzxsubtool <= 5) then -- this entire system will be improved later
+		or ((selectedtool == 5 or selectedtool == 10 or selectedtool == 12) and oldzxsubtool <= 2) then
 			selectedsubtool[selectedtool] = oldzxsubtool
 		end
 		holdingzvx = false

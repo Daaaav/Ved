@@ -16,12 +16,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 
 	-- Is our SpriteBatch still up-to-date?
 	if tile_batch_tileset ~= ts
-	or tile_batch_vcecustomtileset ~= themetadata.customtileset
 	or tile_batch_texture_needs_update then
 		tile_batch_needs_update = true
 		tile_batch:setTexture(tilesets[tsimage]["img"])
 		tile_batch_tileset = ts
-		tile_batch_vcecustomtileset = themetadata.customtileset
 		tile_batch_texture_needs_update = false
 	end
 	if not tile_batch_needs_update then
@@ -262,15 +260,13 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		y = offsety+(v.y-myroomy*30)*16
 	end
 
-	local cs = levelmetadata_get(myroomx, myroomy).customspritesheet
-
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
 		v6_setcol(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].v6col)
-		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y, cs) -- 78
+		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y) -- 78
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
@@ -381,7 +377,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 9 then
 		-- Trinket
 		v6_setcol(3)
-		drawentitysprite(22, x, y, cs)
+		drawentitysprite(22, x, y)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -393,7 +389,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 10 then
 		-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
 		v6_setcol(4)
-		drawentitysprite(20+v.p1, x, y, cs)
+		drawentitysprite(20+v.p1, x, y)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -500,7 +496,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
 			-- Entrance
 			v6_setcol(10)
-			drawentitysprite(18, x, y, cs)
+			drawentitysprite(18, x, y)
 			love.graphics.setColor(255, 255, 255)
 			if interact then
 				entityrightclick(
@@ -514,7 +510,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if (warpid ~= k or selectedsubtool[14] >= 3) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
 			-- Destination
 			love.graphics.setColor(255,255,255,64)
-			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16, cs)
+			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16)
 			love.graphics.setColor(255,255,255,255)
 			if interact then
 				entityrightclick(
@@ -528,7 +524,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Rescuable crewmate
 		setrescuablecolor(v.p1)
 		local sprite = getrescuablesprite(v.p1)
-		drawentitysprite(sprite, x - 8, y + 2, cs)
+		drawentitysprite(sprite, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -540,7 +536,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 16 then
 		-- Start point
 		v6_setcol(0)
-		drawentitysprite(3*v.p1, x - 8, y + 2, cs)
+		drawentitysprite(3*v.p1, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
 			entityrightclick(
@@ -583,7 +579,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		elseif v.p1 ~= 0 then
 			spriteoffset = v.p1
 		end
-		drawentitysprite(16 + spriteoffset, x, y + yoffset, cs)
+		drawentitysprite(16 + spriteoffset, x, y + yoffset)
 		love.graphics.setColor(255, 255, 255)
 		-- Maybe we should also display the script name!
 		if editingroomtext == k then
@@ -600,17 +596,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			)
 		end
 	elseif v.t == 19 then
-		-- Script box/activity zone, draw it as an actual box.
+		-- Script box, draw it as an actual box.
 		--love.graphics.draw(cursorimg[1], x, y)
-		if v.t == 19 then
-			if v.onetime then
-				love.graphics.setColor(127,255,255)
-			else
-				love.graphics.setColor(0,0,255)
-			end
-		else
-			love.graphics.setColor(0,255,0)
-		end
+		love.graphics.setColor(0,0,255)
 		love.graphics.draw(scriptboximg[1], x, y)
 		if editingsboxid == k and selectedsubtool[13] ~= 3 then
 			-- Currently placing
@@ -688,7 +676,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	return showtooltip, scriptname_shown, scriptname_editingshown
 end
 
-function drawentitysprite(tile, atx, aty, customspritesheet, small)
+function drawentitysprite(tile, atx, aty, small)
 	local image = "sprites.png"
 
 	if tilesets[image]["tiles"][tile] ~= nil then
@@ -870,7 +858,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 	end
 end
 
-function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, customtileset, scale)
+function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, scale)
 	local cur_cur, cur_sel
 	if scale == 1 then
 		-- need 8x8 cursors
@@ -1288,11 +1276,6 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 			if moving then
 				entitydata[k].x = entitydata[k].x + (40*roomxdiff)
 				entitydata[k].y = entitydata[k].y + (30*roomydiff)
-				if v.t == 14 then
-					-- Moving a <teleporter/> - just simulate removing the teleporter and replacing it
-					update_vce_teleporters_remove(myroomx, myroomy)
-					update_vce_teleporters_insert(newroomx, newroomy)
-				end
 			else
 				if v.t == 16 or (v.t == 9 and count.trinkets >= limit.trinkets) or (v.t == 15 and count.crewmates >= limit.crewmates) then
 					-- Nope. Can't copy this.
@@ -1301,8 +1284,6 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 						count.trinkets = count.trinkets + 1
 					elseif v.t == 15 then
 						count.crewmates = count.crewmates + 1
-					elseif v.t == 14 then
-						update_vce_teleporters_insert(newroomx, newroomy)
 					end
 
 					-- I could have been busy debugging this for a long time.
@@ -1708,8 +1689,8 @@ function rotateroom180(rx, ry, altst, undoing)
 		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
 			--cons(rx .. " " .. ry .. "  en " .. ((rx*40)+39 - v.x - 1)+(rx*40))
 
-			if v.t == 9 or v.t == 13 or v.t == 5 then
-				-- Trinket, warp token entrance or flip token, 2x2 block
+			if v.t == 9 or v.t == 13 then
+				-- Trinket or warp token entrance, 2x2 block
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
 			elseif v.t == 1 then
@@ -1764,8 +1745,8 @@ function rotateroom180(rx, ry, altst, undoing)
 				-- Roomtext, the new placement of x depends on the length of the string!
 				entitydata[k].x = ((rx*40)+39 - v.x - (v.data:len()-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-			elseif v.t == 19 or v.t == 20 then
-				-- Script box or activity zone.
+			elseif v.t == 19 then
+				-- Script box.
 				entitydata[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
 			elseif v.t == 11 or v.t == 50 then
@@ -1781,14 +1762,6 @@ function rotateroom180(rx, ry, altst, undoing)
 						entitydata[k].p1 = v.p1-1
 					end
 				end
-			elseif v.t == 8 then
-				-- Coin! That's a simple one
-				entitydata[k].x = ((rx*40)+39 - v.x)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
-			elseif v.t == 14 then
-				-- Teleporters are huge! 12x12
-				entitydata[k].x = ((rx*40)+39 - v.x - 11)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - 11)+(ry*30)
 			else
 				cons("Entity type " .. v.t .. " not handled when rotating the room!")
 			end
@@ -1929,25 +1902,9 @@ function undo()
 		-- Hmm... Re-add it in this case!
 		entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
 		updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
-		if undobuffer[#undobuffer].removedentitydata.t == 14 then
-			-- We might need to re-add the <teleporter/>
-			update_vce_teleporters_insert(unndobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry)
-		end
 	elseif undobuffer[#undobuffer].undotype == "changeentity" then
-		local telecheck, oldrx, oldry = false
-		if entitydata[undobuffer[#undobuffer].entid].t == 14
-		or undobuffer[#undobuffer].changedentitydata.t == 14 then
-			telecheck = true
-			oldrx = math.floor(entitydata[undobuffer[#undobuffer].entid].x/40)
-			oldry = math.floor(entitydata[undobuffer[#undobuffer].entid].y/30)
-		end
 		for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
 			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
-		end
-		if telecheck then
-			local newrx = math.floor(entitydata[undobuffer[#undobuffer].entid].x/40)
-			local newry = math.floor(entitydata[undobuffer[#undobuffer].entid].y/30)
-			update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
 		end
 	elseif undobuffer[#undobuffer].undotype == "metadata" then
 		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
@@ -2046,28 +2003,13 @@ function redo()
 		if redobuffer[#redobuffer].addedentitydata.t == 16 then
 			-- Don't forget to set the start point ID!
 			count.startpoint = redobuffer[#redobuffer].entid
-		elseif redobuffer[#redobuffer].addedentitydata.t == 14 then
-			-- We might need to re-add the <teleporter/>
-			update_vce_teleporters_insert(redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry)
 		end
 	elseif redobuffer[#redobuffer].undotype == "removeentity" then
 		-- Redo the removing!
 		removeentity(redobuffer[#redobuffer].entid, nil, true)
 	elseif redobuffer[#redobuffer].undotype == "changeentity" then
-		local telecheck, oldrx, oldry = false
-		if entitydata[redobuffer[#redobuffer].entid].t == 14
-		or redobuffer[#redobuffer].changedentitydata.t == 14 then
-			telecheck = true
-			oldrx = math.floor(entitydata[redobuffer[#redobuffer].entid].x/40)
-			oldry = math.floor(entitydata[redobuffer[#redobuffer].entid].y/30)
-		end
 		for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
 			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
-		end
-		if telecheck then
-			local newrx = math.floor(entitydata[redobuffer[#redobuffer].entid].x/40)
-			local newry = math.floor(entitydata[redobuffer[#redobuffer].entid].y/30)
-			update_vce_teleporters_checkrooms(oldrx, oldry, newrx, newry)
 		end
 	elseif redobuffer[#redobuffer].undotype == "metadata" then
 		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
@@ -3000,10 +2942,10 @@ function warplinesinroom(theroomx, theroomy)
 end
 
 function insert_entity(...) -- atx, aty, t, p...
-	insert_entity_full(roomx, roomy, altstate, 0, 0, 0, ...)
+	insert_entity_full(roomx, roomy, ...)
 end
 
-function insert_entity_full(rx, ry, astate, intower, subx, suby, atx, aty, t, p1, p2, p3, p4, data)
+function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 	if p1 == nil then p1 = 0 end
 	if p2 == nil then p2 = 0 end
 	if p3 == nil then p3 = 0 end
@@ -3043,8 +2985,6 @@ function insert_entity_full(rx, ry, astate, intower, subx, suby, atx, aty, t, p1
 		count.crewmates = count.crewmates + 1
 	elseif t == 16 then
 		count.startpoint = count.entity_ai
-	elseif t == 14 then
-		update_vce_teleporters_insert(rx, ry)
 	end
 	count.entities = count.entities + 1
 	count.entity_ai = count.entity_ai + 1

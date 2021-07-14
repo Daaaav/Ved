@@ -118,11 +118,6 @@ return function()
 						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
 						new_p2 = new_y%30 + offset
 					end
-				elseif entitydata[movingentity].t == 14 then
-					if not movingentity_copying then
-						update_vce_teleporters_remove(old_roomx, old_roomy)
-					end
-					update_vce_teleporters_insert(roomx, roomy)
 				end
 				if not movingentity_copying then
 					table.insert(
@@ -1271,8 +1266,7 @@ return function()
 			drawentitysprite(
 				18,
 				screenoffset + 16*cursorx,
-				16*cursory,
-				levelmetadata_get(roomx, roomy).customspritesheet
+				16*cursory
 			)
 			love.graphics.setColor(255, 255, 255, 255)
 		elseif selectedtool <= 2 then
@@ -1387,23 +1381,6 @@ return function()
 		elseif selectedtool == 17 then
 			-- Start point
 			displayshapedcursor(0, 0, 1, 2)
-		elseif selectedtool == 18 then
-			-- Flip token
-			displayshapedcursor(0, 0, 1, 1)
-		elseif selectedtool == 19 then
-			-- Coin
-			local coincursize
-			if selectedsubtool[19] == 1 then
-				coincursize = 0
-			elseif selectedsubtool[19] <= 3 then
-				coincursize = 1
-			else
-				coincursize = 2
-			end
-			displayshapedcursor(0, 0, coincursize, coincursize)
-		elseif selectedtool == 20 then
-			-- Teleporter
-			displayshapedcursor(0, 0, 11, 11)
 		elseif not (selectedtool == 13 and selectedsubtool[13] == 2) then
 			love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 		end
@@ -1508,7 +1485,7 @@ return function()
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
-			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 12 or selectedtool == 19) and k >= 2 and k <= 9 then
+			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 12) and k >= 2 and k <= 9 then
 				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
@@ -1683,7 +1660,7 @@ return function()
 	local additionalbutton_spacing = additionalbutton and 20 or 24
 
 	if additionalbutton then
-		rbutton({L.CUSTOMGRAPHICS, "co"}, 0, 166, true, 20)
+		rbutton("...", 0, 166, true, 20)
 	end
 
 	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
@@ -1808,9 +1785,6 @@ return function()
 		-- Room options now
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
 			-- ...
-			dialog.create("", DBS.OKCANCEL, dialog.callback.vcecustomgraphics, L.CUSTOMGRAPHICS,
-				dialog.form.vcecustomgraphics_make(levelmetadata_get(roomx, roomy))
-			)
 
 		elseif onrbutton(0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Rotate
@@ -2035,7 +2009,7 @@ return function()
 		love.graphics.setColor(0,0,0,255)
 		love.graphics.rectangle("fill", picker_x, picker_y, picker_w, picker_h)
 		love.graphics.setColor(255,255,255,255)
-		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, levelmetadata_get(roomx, roomy).customtileset, picker_scale)
+		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, picker_scale)
 	end
 
 	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
@@ -2122,8 +2096,7 @@ return function()
 			drawentitysprite(
 				usethissprite,
 				atx - 12,
-				aty - 4,
-				levelmetadata_get(roomx, roomy).customspritesheet
+				aty - 4
 			)
 
 			love.graphics.setScissor()

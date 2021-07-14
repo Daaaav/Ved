@@ -85,7 +85,6 @@ return function()
 							sprite,
 							mapxoffset + screenoffset + mrx*mapscale*640 + i * (mapscale*640 - amount*widthb) / (amount+1) + (i-1)*widthb - (16-width),
 							mapyoffset + mry*mapscale*480 + (mapscale*480 - scalesubtract)/2 + extray,
-							levelmetadata_get(mrx, mry).customspritesheet,
 							true
 						)
 					end

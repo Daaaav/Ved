@@ -545,12 +545,6 @@ TIMETRIALTRINKETS = "Trinket count",
 TIMETRIALTIME = "Par time",
 SUREDELETETRIAL = "Are you sure you want to delete the time trial \"$1\"?",
 
-CUSTOMGRAPHICS = "Alternative graphics", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tileset image:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Sprites image:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Default ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Default (sprites.png)",
-
 CUT = "Cut",
 PASTE = "Paste",
 SELECTWORD = "Select word",

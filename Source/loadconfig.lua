@@ -196,7 +196,7 @@ configs = {
 	vvvvvvce = {
 		default = "",
 		["type"] = "string",
-		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV-CE.exe'. On Linux and macOS, point this to the file 'VVVVVV-CE'.",
+		comment = "VVVVVV-CE equivalent of vvvvvv23 option, now obsolete.",
 	},
 }
 

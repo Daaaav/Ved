@@ -82,7 +82,7 @@ function love.draw()
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
 		v6_setcol(3)
-		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, 0, false)
+		drawentitysprite(22, middlescroll_x-16, middlescroll_y-16, false)
 	end
 
 	if middlescroll_rolling ~= 0 then
@@ -101,7 +101,7 @@ function love.draw()
 			love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
 			--love.graphics.rectangle("fill", v.x, v.y, 4, 4)
 			love.graphics.setScissor(v.x, v.y, 4, 4)
-			drawentitysprite(22, v.x-v.ox, v.y-v.oy, 0, false)
+			drawentitysprite(22, v.x-v.ox, v.y-v.oy, false)
 		end
 		love.graphics.setScissor()
 	end

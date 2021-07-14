@@ -199,11 +199,7 @@ function loadlevel(path)
 			local attributes = parsexmlattributes(metaparts[1])
 
 			for k,v in pairs(attributes) do
-				if k == "activityname" or k == "activitycolor" then
-					allentities[entityid][k] = v
-				else
-					allentities[entityid][k] = tonumber(v)
-				end
+				allentities[entityid][k] = tonumber(v)
 			end
 
 			-- Now we only need the data...
@@ -545,11 +541,6 @@ function loadlevel(path)
 
 	cons("Done loading!")
 
-
-	if thismetadata.target == "VCE" then
-		vce_deprecation_dialog()
-	end
-
 	-- As many of the integrity checks as possible here
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
 		mycount.FC = mycount.FC + 1
@@ -627,7 +618,6 @@ end
 
 -- Load a template that we'll need for saving...
 vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
-vvvvvvxmltemplate_vce = love.filesystem.read("template_vce.vvvvvv")
 
 function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
@@ -724,7 +714,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					entitydatasaved = entitydatasaved + string.len(data)
 					data = ""
 				end
-				local extra_end_attrs = ""
 				table.insert(thenewentities,
 					"            <edentity x=\"" .. v.x
 					.. "\" y=\"" .. v.y
@@ -734,8 +723,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 					.. "\" p3=\"" .. v.p3
 					.. "\" p4=\"" .. v.p4
 					.. "\" p5=\"" .. v.p5
-					.. "\" p6=\"" .. v.p6
-					.. "\"" .. extra_end_attrs .. ">" .. xmlspecialchars(data)
+					.. "\" p6=\"" .. v.p6 .. "\">"
+					.. xmlspecialchars(data)
 					.. "</edentity>\n"
 				)
 			end
@@ -997,22 +986,17 @@ function default_levelmetadata(rx, ry)
 	return {
 		tileset = 0,
 		tilecol = (rx + ry) % 32,
-		customtileset = 0,
-		customspritesheet = 0,
 		platx1 = 0,
 		platy1 = 0,
 		platx2 = 320,
 		platy2 = 240,
 		platv = 4,
-		enemyv = 4,
 		enemyx1 = 0,
 		enemyy1 = 0,
 		enemyx2 = 320,
 		enemyy2 = 240,
 		enemytype = 0,
 		directmode = 0,
-		tower = 0,
-		tower_row = 0,
 		warpdir = 0,
 		roomname = "",
 		auto2mode = 0,
