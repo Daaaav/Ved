@@ -318,7 +318,7 @@ function love.load()
 	toolimgicon = {}
 	for t = 1, 17 do
 		toolimg[t] = love.graphics.newImage("tools/" .. t .. ".png")
-		toolimgicon[t] = love.image.newImageData("tools2/on/" .. t .. ".png")
+		toolimgicon[t] = love.image.newImageData("tools/prepared/" .. t .. ".png")
 	end
 
 	-- But we also have subtools!

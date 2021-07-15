@@ -2,7 +2,7 @@ function love.conf(t)
 	t.window.title = "Ved"
 	t.window.width = 64+640+192
 	t.window.height = 480
-	t.window.icon = "tools2/on/1.png"
+	t.window.icon = "tools/prepared/1.png"
 	t.identity = "ved"
 	--t.version = "0.9.0"
 	t.window.resizable = false
