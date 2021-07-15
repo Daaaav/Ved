@@ -13,7 +13,6 @@ return function()
 	dropdown = 0
 	roomx = 0
 	roomy = 0
-	altstate = 0
 	updatewindowicon()
 
 	if levelmetadata ~= nil and levelmetadata_get(roomx, roomy) ~= nil then

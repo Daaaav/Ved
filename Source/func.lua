@@ -840,7 +840,7 @@ function switchtileset()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata_get(roomx, roomy, altstate)) -- ALTSTATES: yes, we're screwed for the moment
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILESET")
@@ -875,7 +875,7 @@ function switchtilecol()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata_get(roomx, roomy, altstate)) -- ALTSTATES: see above
+			toundotiles = table.copy(roomdata_get(roomx, roomy))
 		}
 	)
 	finish_undo("TILECOL")
@@ -3148,18 +3148,6 @@ end
 function isclear(key)
 	-- On macOS, Numlock turns into the Clear key and behaves differently
 	return key == "numlock" and love.system.getOS() == "OS X"
-end
-
-function next_key(t, c)
-	-- Return the lowest key in table t that is higher than c.
-	-- If not found, return nil.
-	local lowscore
-	for k,v in pairs(t) do
-		if k > c and (lowscore == nil or lowscore > k) then
-			lowscore = k
-		end
-	end
-	return lowscore
 end
 
 function draw_script_warn_light(id, x, y, active)

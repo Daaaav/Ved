@@ -139,7 +139,6 @@ function playtesting_start(force_ask_path)
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))
 	else
 		playtesting_askwherestart = true
-		altstate = 0
 
 		-- Ah crud a global
 		playtesting_levelcontents = thissavederror
@@ -203,7 +202,6 @@ function playtesting_snap_position(posx, posy, flipped)
 	for _, ent in pairs(entitydata) do
 		if ent.x >= 40 * roomx and ent.x < 40 * (roomx+1)
 		and ent.y >= 30 * roomy and ent.y < 30 * (roomy+1)
-		and ent.state == altstate
 		and table.contains({10, 16}, ent.t) then
 			table.insert(entities, ent)
 		end
@@ -266,8 +264,7 @@ function playtesting_find_first_checkpoint()
 	for k,v in pairs(entitydata) do
 		if (v.t == 16 or v.t == 10)
 		and v.x >= roomx*40 and v.x <= roomx*40+39
-		and v.y >= roomy*30 and v.y <= roomy*30+29
-		and v.state == altstate then
+		and v.y >= roomy*30 and v.y <= roomy*30+29 then
 			if v.t == 16 then
 				-- Start point, we done
 				return playtesting_correctentitypos(v, false)

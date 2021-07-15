@@ -127,9 +127,6 @@ function addrooms(neww, newh)
 		if levelmetadata[y] == nil then
 			levelmetadata[y] = {}
 		end
-		if extra.altstates ~= nil and extra.altstates[y] == nil then
-			extra.altstates[y] = {}
-		end
 
 		for x = 0, neww-1 do
 			if x >= ( y < math.min(newh, limit.mapheight) and neww or limit.mapwidth ) or y >= limit.mapheight then
@@ -146,9 +143,6 @@ function addrooms(neww, newh)
 				end
 				if rooms_map[y] == nil or rooms_map[y][x] == nil then
 					map_resetroom(x, y)
-				end
-				if extra.altstates ~= nil and extra.altstates[y][x] == nil then
-					extra.altstates[y][x] = {}
 				end
 			end
 		end
@@ -174,7 +168,7 @@ function addrooms(neww, newh)
 	end
 end
 
-function displayentities(offsetx, offsety, myroomx, myroomy, altst, bottom2rowstext)
+function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	-- This assumes the entities for this room are already loaded in entitydata. It just displays all entities.
 	if bottom2rowstext == nil then
 		bottom2rowstext = true
@@ -929,10 +923,10 @@ function autocorrectroom()
 	if levelmetadata_get(roomx, roomy).directmode == 0 then
 		for thisy = 0, 29 do
 			for thisx = 0, 39 do
-				if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata_get(roomx, roomy, altstate, thisx, thisy)) then
+				if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata_get(roomx, roomy, thisx, thisy)) then
 					local correctret = correcttile(roomx, roomy, thisx, thisy, selectedtileset, selectedcolor)
-					if roomdata_get(roomx, roomy, altstate, thisx, thisy) ~= correctret then
-						roomdata_set(roomx, roomy, altstate, thisx, thisy, correctret)
+					if roomdata_get(roomx, roomy, thisx, thisy) ~= correctret then
+						roomdata_set(roomx, roomy, thisx, thisy, correctret)
 					end
 				end
 			end
@@ -1204,7 +1198,7 @@ function correcttile(inroomx, inroomy, tx, ty, tileset, tilecol)
 	end
 
 	-- Just return what it already is.
-	return roomdata_get(inroomx, inroomy, altstate, tx, ty)
+	return roomdata_get(inroomx, inroomy, tx, ty)
 end
 
 function adjtile(tilx, tily, xoff, yoff, spike)
@@ -1230,11 +1224,11 @@ function adjtile(tilx, tily, xoff, yoff, spike)
 		return 0 -- Should not be solid now, because then we're gonna prioritize orienting spikes to be attached to that, and that's not what VVVVVV's automatic mode does.
 	elseif (tilx+xoff < 0) or (tilx+xoff > 39) or (tily+yoff < 0) or (tily+yoff > 29) then
 		return 1 -- a solid tile for offscreen
-	elseif roomdata_get(doorroomx, doorroomy, altstate, tilx + xoff, tily + yoff) == nil then
+	elseif roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff) == nil then
 		cons("THIS SHOULDN'T HAPPEN. tilx=" .. tilx .. " xoff=" .. xoff .. " tily=" .. tily .. " yoff=" .. yoff .. ". Block is nil")
 		return 1
 	else
-		return roomdata_get(doorroomx, doorroomy, altstate, tilx + xoff, tily + yoff)
+		return roomdata_get(doorroomx, doorroomy, tilx + xoff, tily + yoff)
 	end
 end
 
@@ -1424,7 +1418,7 @@ function spikes_floor_left(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, loopx, tiley, useselectedtile)
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
@@ -1434,7 +1428,7 @@ function spikes_floor_right(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, 1), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, loopx, tiley, useselectedtile)
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
@@ -1444,7 +1438,7 @@ function spikes_ceiling_left(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, loopx, tiley, useselectedtile)
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
@@ -1454,7 +1448,7 @@ function spikes_ceiling_right(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(loopx, tiley, 0, 0), ts)) or not (issolidmultispikes(adjtile(loopx, tiley, 0, -1), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, loopx, tiley, useselectedtile)
+			roomdata_set(roomx, roomy, loopx, tiley, useselectedtile)
 		end
 	end
 end
@@ -1464,7 +1458,7 @@ function spikes_leftwall_up(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, tilex, loopy, useselectedtile)
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1474,7 +1468,7 @@ function spikes_leftwall_down(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, -1, 0), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, tilex, loopy, useselectedtile)
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1484,7 +1478,7 @@ function spikes_rightwall_up(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, tilex, loopy, useselectedtile)
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1494,7 +1488,7 @@ function spikes_rightwall_down(tilex, tiley, ts)
 		if (issolidmultispikes(adjtile(tilex, loopy, 0, 0), ts)) or not (issolidmultispikes(adjtile(tilex, loopy, 1, 0), ts)) then
 			break
 		else
-			roomdata_set(roomx, roomy, altstate, tilex, loopy, useselectedtile)
+			roomdata_set(roomx, roomy, tilex, loopy, useselectedtile)
 		end
 	end
 end
@@ -1509,12 +1503,12 @@ function gotostartpointroom()
 	end
 end
 
-function getroomcopydata(rx, ry, altst)
+function getroomcopydata(rx, ry)
 	cons("Copying room " .. rx .. " " .. ry)
 
 	--local datatable = roomdata[ry][rx] of course this is by reference
 	local datatable = {}
-	for k,v in pairs(roomdata_get(rx, ry, altst)) do
+	for k,v in pairs(roomdata_get(rx, ry)) do
 		datatable[k] = v
 	end
 
@@ -1539,14 +1533,13 @@ function getroomcopydata(rx, ry, altst)
 	return table.concat(datatable, ",")
 end
 
-function setroomfromcopy(data, rx, ry, altst, skip_undo)
+function setroomfromcopy(data, rx, ry, skip_undo)
 	cons("Setting room " .. rx .. " " .. ry)
 
 	if not skip_undo then
 		table.insert(undobuffer, {undotype = "paste", rx = rx, ry = ry,
-				olddata = getroomcopydata(rx, ry, altst),
-				newdata = data,
-				altstate = altst
+				olddata = getroomcopydata(rx, ry),
+				newdata = data
 			}
 		)
 		finish_undo("PASTING")
@@ -1620,7 +1613,7 @@ function setroomfromcopy(data, rx, ry, altst, skip_undo)
 		table.remove(explodeddata, 1)
 	end
 
-	roomdata_set(rx, ry, altst, table.copy(explodeddata))
+	roomdata_set(rx, ry, table.copy(explodeddata))
 
 	temporaryroomname = L.ROOMPASTED
 	temporaryroomnametimer = 90
@@ -1629,13 +1622,13 @@ end
 function mapcopy(x1, y1, x2, y2, skip_undo)
 	local oldroomdata
 	if not skip_undo then
-		oldroomdata = getroomcopydata(x2, y2, 0)
+		oldroomdata = getroomcopydata(x2, y2)
 	end
 
 	cons("Copying room data...")
 	--roomdata[selected2y][selected2x] = roomdata[selected1y][selected1x]
-	local copieddata = getroomcopydata(x1, y1, 0)
-	setroomfromcopy(copieddata, x2, y2, 0, true)
+	local copieddata = getroomcopydata(x1, y1)
+	setroomfromcopy(copieddata, x2, y2, true)
 	temporaryroomnametimer = 0
 	cons("Copying entities...")
 	local removedentities = copymoveentities(x1, y1, x2, y2, false)
@@ -1658,10 +1651,10 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	end
 
 	cons("Swapping room data...")
-	local room1data = getroomcopydata(x1, y1, 0)
-	local room2data = getroomcopydata(x2, y2, 0)
-	setroomfromcopy(room1data, x2, y2, 0, true)
-	setroomfromcopy(room2data, x1, y1, 0, true)
+	local room1data = getroomcopydata(x1, y1)
+	local room2data = getroomcopydata(x2, y2)
+	setroomfromcopy(room1data, x2, y2, true)
+	setroomfromcopy(room2data, x1, y1, true)
 	temporaryroomnametimer = 0
 	cons("Swapping entities...")
 	copymoveentities(x1, y1, 22, 22, true)
@@ -1670,19 +1663,19 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	cons("Done...")
 end
 
-function rotateroom180(rx, ry, altst, undoing)
+function rotateroom180(rx, ry, undoing)
 	if not undoing then
-		table.insert(undobuffer, {undotype = "rotateroom180", rx = rx, ry = ry, altstate=altst})
+		table.insert(undobuffer, {undotype = "rotateroom180", rx = rx, ry = ry})
 		finish_undo("ROTATE ROOM 180")
 	end
 
-	local oldroom = table.copy(roomdata_get(rx, ry, altst))
+	local oldroom = table.copy(roomdata_get(rx, ry))
 
 	local newroomdata = {}
 	for n = 1, 1200 do
 		newroomdata[1201-n] = oldroom[n]
 	end
-	roomdata_set(rx, ry, altst, newroomdata)
+	roomdata_set(rx, ry, newroomdata)
 
 	-- Now for the entities!
 	for k,v in pairs(entitydata) do
@@ -1790,7 +1783,7 @@ function autocorrectlines()
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.x%40), 0, -1 do
-					if issolidforgravline(roomdata_get(roomx, roomy, altstate, bt, v.y%30), v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, bt, v.y%30), v.t) then
 						startat = bt+1
 						break
 					else
@@ -1808,7 +1801,7 @@ function autocorrectlines()
 				else
 					-- Now to see how long it should be!
 					for ft = math.max(startat, 0), 40 do
-						if issolidforgravline(roomdata_get(roomx, roomy, altstate, ft, v.y%30), v.t) then
+						if issolidforgravline(roomdata_get(roomx, roomy, ft, v.y%30), v.t) then
 							linelength = 8 * (ft-startat)
 							break
 						end
@@ -1831,7 +1824,7 @@ function autocorrectlines()
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
 					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
-					if issolidforgravline(roomdata_get(roomx, roomy, altstate, v.x%40, bt), v.t) then
+					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, bt), v.t) then
 						startat = bt+1
 						break
 					else
@@ -1850,7 +1843,7 @@ function autocorrectlines()
 					-- Now to see how long it should be!
 					for ft = math.max(startat, 0), 29 do
 						--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
-						if issolidforgravline(roomdata_get(roomx, roomy, altstate, v.x%40, ft), v.t) then
+						if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, ft), v.t) then
 							linelength = 8 * (ft-startat)
 							break
 						end
@@ -1878,8 +1871,7 @@ function undo()
 	if undobuffer[#undobuffer].rx ~= nil and undobuffer[#undobuffer].ry ~= nil then
 		gotoroom(
 			undobuffer[#undobuffer].rx,
-			undobuffer[#undobuffer].ry,
-			undobuffer[#undobuffer].altstate
+			undobuffer[#undobuffer].ry
 		)
 	end
 	if undobuffer[#undobuffer].switchtool ~= nil then
@@ -1892,7 +1884,7 @@ function undo()
 			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
 		else
-			roomdata_set(roomx, roomy, undobuffer[#undobuffer].altstate, table.copy(undobuffer[#undobuffer].toundotiles))
+			roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 			autocorrectlines()
 		end
 	elseif undobuffer[#undobuffer].undotype == "addentity" then
@@ -1917,15 +1909,15 @@ function undo()
 			levelmetadata_set(roomx, roomy, v.key, v.oldvalue)
 		end
 		if undobuffer[#undobuffer].changetiles then
-			roomdata_set(roomx, roomy, undobuffer[#undobuffer].altstate, table.copy(undobuffer[#undobuffer].toundotiles))
+			roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 			autocorrectlines()
 			selectedtileset = levelmetadata_get(roomx, roomy).tileset
 			selectedcolor = levelmetadata_get(roomx, roomy).tilecol
 		end
 	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
-		rotateroom180(roomx, roomy, undobuffer[#undobuffer].altstate, true)
+		rotateroom180(roomx, roomy, true)
 	elseif undobuffer[#undobuffer].undotype == "paste" then
-		setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, undobuffer[#undobuffer].altstate, true)
+		setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
 		temporaryroomnametimer = 0
 	elseif undobuffer[#undobuffer].undotype == "mapswap" then
 		mapswap(
@@ -1950,7 +1942,7 @@ function undo()
 			removeentity(v, nil, true)
 		end
 
-		setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, 0, true)
+		setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
 		temporaryroomnametimer = 0
 		for k,v in pairs(undobuffer[#undobuffer].oldentities) do
 			entitydata[v[1]] = table.copy(v[2])
@@ -1979,8 +1971,7 @@ function redo()
 	if redobuffer[#redobuffer].rx ~= nil and redobuffer[#redobuffer].ry ~= nil then
 		gotoroom(
 			redobuffer[#redobuffer].rx,
-			redobuffer[#redobuffer].ry,
-			redobuffer[#redobuffer].altstate
+			redobuffer[#redobuffer].ry
 		)
 	end
 	if redobuffer[#redobuffer].switchtool ~= nil then
@@ -1993,7 +1984,7 @@ function redo()
 			temporaryroomname = L.UNDOFAULTY
 			temporaryroomnametimer = 90
 		else
-			roomdata_set(roomx, roomy, redobuffer[#redobuffer].altstate, table.copy(redobuffer[#redobuffer].toredotiles))
+			roomdata_set(roomx, roomy, table.copy(redobuffer[#redobuffer].toredotiles))
 			autocorrectlines()
 		end
 	elseif redobuffer[#redobuffer].undotype == "addentity" then
@@ -2027,9 +2018,9 @@ function redo()
 			autocorrectroom()
 		end
 	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
-		rotateroom180(roomx, roomy, redobuffer[#redobuffer].altstate, true)
+		rotateroom180(roomx, roomy, true)
 	elseif redobuffer[#redobuffer].undotype == "paste" then
-		setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, redobuffer[#redobuffer].altstate, true)
+		setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
 		temporaryroomnametimer = 0
 	elseif redobuffer[#redobuffer].undotype == "mapswap" then
 		mapswap(
@@ -2129,10 +2120,10 @@ function finish_undo(description)
 end
 
 function cutroom()
-	love.system.setClipboardText(getroomcopydata(roomx, roomy, altstate))
+	love.system.setClipboardText(getroomcopydata(roomx, roomy))
 
 	-- That's only a copy, now reset the room except for the tileset/col
-	setroomfromcopy(levelmetadata_get(roomx, roomy).tileset .. "," .. levelmetadata_get(roomx, roomy).tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy, altstate)
+	setroomfromcopy(levelmetadata_get(roomx, roomy).tileset .. "," .. levelmetadata_get(roomx, roomy).tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
 
 	temporaryroomname = L.ROOMCUT
 	temporaryroomnametimer = 90
@@ -2141,7 +2132,7 @@ function cutroom()
 end
 
 function copyroom()
-	love.system.setClipboardText(getroomcopydata(roomx, roomy, altstate))
+	love.system.setClipboardText(getroomcopydata(roomx, roomy))
 
 	temporaryroomname = L.ROOMCOPIED
 	temporaryroomnametimer = 90
@@ -2150,7 +2141,7 @@ function copyroom()
 end
 
 function pasteroom()
-	setroomfromcopy(love.system.getClipboardText(), roomx, roomy, altstate)
+	setroomfromcopy(love.system.getClipboardText(), roomx, roomy)
 
 	mapmovedroom = true
 
@@ -2161,16 +2152,10 @@ function pasteroom()
 	end
 end
 
-function gotoroom(rx, ry, altst)
+function gotoroom(rx, ry)
 	roomx = rx
 	roomy = ry
 	gotoroom_finish()
-
-	if altst ~= nil
-	and extra.altstates ~= nil
-	and extra.altstates[ry][rx][altst] ~= nil then
-		altstate = altst
-	end
 end
 
 function gotoroom_l()
@@ -2216,30 +2201,6 @@ end
 function gotoroom_finish()
 	selectedtileset = levelmetadata_get(roomx, roomy).tileset
 	selectedcolor = levelmetadata_get(roomx, roomy).tilecol
-	altstate = 0
-end
-
-function next_altstate()
-	local next_a
-	if extra.altstates ~= nil then
-		next_a = next_key(extra.altstates[roomy][roomx], altstate)
-	end
-	if next_a == nil then
-		altstate = 0
-	else
-		altstate = next_a
-	end
-end
-
-function add_altstate(rx, ry)
-	-- Add altstate for rx,ry, and return the number of the new altstate.
-	if extra.altstates == nil then
-		return
-	end
-
-	table.insert(extra.altstates[ry][rx], table.copy(roomdata_get(rx, ry, 0)))
-
-	return #extra.altstates[ry][rx]
 end
 
 function levelmetadata_get(x, y, uselevel2)
@@ -2332,7 +2293,7 @@ function levelmetadata2_get(x, y)
 	return levelmetadata_get(x, y, true)
 end
 
-function roomdata_get(rx, ry, altst, tx, ty, uselevel2)
+function roomdata_get(rx, ry, tx, ty, uselevel2)
 	-- NOTE: Never set uselevel2 manually.
 	-- Instead, use roomdata2_get()
 	local usethisroomdata
@@ -2343,15 +2304,6 @@ function roomdata_get(rx, ry, altst, tx, ty, uselevel2)
 	end
 
 	local just_one_tile = tx ~= nil
-
-	if altst ~= nil and altst ~= 0
-	and extra.altstates ~= nil
-	and extra.altstates[ry][rx][altst] ~= nil then
-		if just_one_tile then
-			return extra.altstates[ry][rx][altst][ty*40 + tx+1]
-		end
-		return extra.altstates[ry][rx][altst]
-	end
 
 	local distortion = math.floor(rx/limit.mapwidth)
 
@@ -2402,7 +2354,7 @@ function roomdata_get(rx, ry, altst, tx, ty, uselevel2)
 	return distorted_roomdata
 end
 
-function roomdata_set(rx, ry, altst, param1, param2, param3)
+function roomdata_set(rx, ry, param1, param2, param3)
 	local tx, ty, value
 	if param2 ~= nil then
 		tx = param1
@@ -2413,17 +2365,6 @@ function roomdata_set(rx, ry, altst, param1, param2, param3)
 	end
 
 	local just_one_tile = tx ~= nil
-
-	if altst ~= nil and altst ~= 0
-	and extra.altstates ~= nil
-	and extra.altstates[ry][rx][altst] ~= nil then
-		if just_one_tile then
-			extra.altstates[ry][rx][altst][ty*40 + tx+1] = value
-		else
-			extra.altstates[ry][rx][altst] = table.copy(value)
-		end
-		return
-	end
 
 	local distortion = math.floor(rx/limit.mapwidth)
 
@@ -2496,7 +2437,7 @@ function roomdata_set(rx, ry, altst, param1, param2, param3)
 end
 
 function roomdata2_get(rx, ry, tx, ty)
-	return roomdata_get(rx, ry, 0, tx, ty, true)
+	return roomdata_get(rx, ry, tx, ty, true)
 end
 
 function shiftrooms(direction, updatescripts)
@@ -2548,7 +2489,7 @@ function shiftrooms(direction, updatescripts)
 	if direction == SHIFT.LEFT then
 		for y = 0, height-1 do
 			for x = 0, width-2 do
-				roomdata_set(x, y, 0, table.copy(roomdata_get(x+1, y)))
+				roomdata_set(x, y, table.copy(roomdata_get(x+1, y)))
 				levelmetadata_set(x, y, table.copy(levelmetadata_get(x+1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x+1])
 				map_trinkets[y][x] = map_trinkets[y][x+1]
@@ -2556,7 +2497,7 @@ function shiftrooms(direction, updatescripts)
 			end
 		end
 		for y = 0, height-1 do
-			roomdata_set(width-1, y, 0, table.copy(edgeroomdata[y]))
+			roomdata_set(width-1, y, table.copy(edgeroomdata[y]))
 			levelmetadata_set(width-1, y, table.copy(edgelevelmetadata[y]))
 			rooms_map[y][width-1] = table.copy(edgemapdata[y])
 			map_trinkets[y][width-1] = edgetrinketsdata[y]
@@ -2565,7 +2506,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.RIGHT then
 		for y = 0, height-1 do
 			for x = width-1, 1, -1 do
-				roomdata_set(x, y, 0, table.copy(roomdata_get(x-1, y)))
+				roomdata_set(x, y, table.copy(roomdata_get(x-1, y)))
 				levelmetadata_set(x, y, table.copy(levelmetadata_get(x-1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
 				map_trinkets[y][x] = map_trinkets[y][x-1]
@@ -2573,7 +2514,7 @@ function shiftrooms(direction, updatescripts)
 			end
 		end
 		for y = 0, height-1 do
-			roomdata_set(0, y, 0, table.copy(edgeroomdata[y]))
+			roomdata_set(0, y, table.copy(edgeroomdata[y]))
 			levelmetadata_set(0, y, table.copy(edgelevelmetadata[y]))
 			rooms_map[y][0] = table.copy(edgemapdata[y])
 			map_trinkets[y][0] = edgetrinketsdata[y]
@@ -2582,7 +2523,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.UP then
 		for y = 0, height-2 do
 			for x = 0, width-1 do
-				roomdata_set(x, y, 0, table.copy(roomdata_get(x, y+1)))
+				roomdata_set(x, y, table.copy(roomdata_get(x, y+1)))
 				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y+1)))
 				rooms_map[y][x] = table.copy(rooms_map[y+1][x])
 				map_trinkets[y][x] = map_trinkets[y+1][x]
@@ -2590,7 +2531,7 @@ function shiftrooms(direction, updatescripts)
 			end
 		end
 		for x = 0, width-1 do
-			roomdata_set(x, height-1, 0, table.copy(edgeroomdata[x]))
+			roomdata_set(x, height-1, table.copy(edgeroomdata[x]))
 			levelmetadata_set(x, height-1, table.copy(edgelevelmetadata[x]))
 			rooms_map[height-1][x] = table.copy(edgemapdata[x])
 			map_trinkets[height-1][x] = edgetrinketsdata[x]
@@ -2599,7 +2540,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.DOWN then
 		for y = height-1, 1, -1 do
 			for x = 0, width-1 do
-				roomdata_set(x, y, 0, table.copy(roomdata_get(x, y-1)))
+				roomdata_set(x, y, table.copy(roomdata_get(x, y-1)))
 				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y-1)))
 				rooms_map[y][x] = table.copy(rooms_map[y-1][x])
 				map_trinkets[y][x] = map_trinkets[y-1][x]
@@ -2607,7 +2548,7 @@ function shiftrooms(direction, updatescripts)
 			end
 		end
 		for x = 0, width-1 do
-			roomdata_set(x, 0, 0, table.copy(edgeroomdata[x]))
+			roomdata_set(x, 0, table.copy(edgeroomdata[x]))
 			levelmetadata_set(x, 0, table.copy(edgelevelmetadata[x]))
 			rooms_map[0][x] = table.copy(edgemapdata[x])
 			map_trinkets[0][x] = edgetrinketsdata[x]
