@@ -223,10 +223,6 @@ NOTSOLID = "Not solid",
 
 TSCOLOR = "Color $1",
 
-ONETRINKETS = "T:",
-ONECREWMATES = "C:",
-ONEENTITIES = "E:",
-
 LEVELSLIST = "Levels",
 LOADTHISLEVEL = "Load this level: ",
 ENTERNAMESAVE = "Enter name to save as: ",

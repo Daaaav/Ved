@@ -281,6 +281,9 @@ function love.load()
 		scrollup = love.graphics.newImage("images/scrollup.png"),
 		scrolldn = love.graphics.newImage("images/scrolldn.png"),
 
+		stat_trinkets = love.graphics.newImage("images/stat_trinkets.png"),
+		stat_crewmates = love.graphics.newImage("images/stat_crewmates.png"),
+		stat_entities = love.graphics.newImage("images/stat_entities.png"),
 	}
 
 	script_warn_lights = {

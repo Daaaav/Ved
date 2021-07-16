@@ -2047,11 +2047,14 @@ return function()
 	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
+	love.graphics.draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
+	love.graphics.draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
+	love.graphics.draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
 	ved_printf(
-		L.ONETRINKETS .. fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
-		.. L.ONECREWMATES .. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
-		.. L.ONEENTITIES .. fixdig(anythingbutnil(count.entities), 5, ""),
-		640+screenoffset+2, love.graphics.getHeight()-16-10, 128, "left"
+		fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
+		.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
+		.. fixdig(anythingbutnil(count.entities), 5, ""),
+		640+screenoffset+11, love.graphics.getHeight()-16-10, 128, "left"
 	)
 
 	if coordsdialog.active then
