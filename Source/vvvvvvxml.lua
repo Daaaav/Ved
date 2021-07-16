@@ -313,28 +313,36 @@ function loadlevel(path)
 				if allentities[entityid].x == nil or type(allentities[entityid].x) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].x = 0
-				end if allentities[entityid].y == nil or type(allentities[entityid].y) ~= "number" then
+				end
+				if allentities[entityid].y == nil or type(allentities[entityid].y) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].y = 0
-				end if allentities[entityid].t == nil or type(allentities[entityid].t) ~= "number" then
+				end
+				if allentities[entityid].t == nil or type(allentities[entityid].t) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].t = 0
-				end if allentities[entityid].p1 == nil or type(allentities[entityid].p1) ~= "number" then
+				end
+				if allentities[entityid].p1 == nil or type(allentities[entityid].p1) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p1 = 0
-				end if allentities[entityid].p2 == nil or type(allentities[entityid].p2) ~= "number" then
+				end
+				if allentities[entityid].p2 == nil or type(allentities[entityid].p2) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p2 = 0
-				end if allentities[entityid].p3 == nil or type(allentities[entityid].p3) ~= "number" then
+				end
+				if allentities[entityid].p3 == nil or type(allentities[entityid].p3) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p3 = 0
-				end if allentities[entityid].p4 == nil or type(allentities[entityid].p4) ~= "number" then
+				end
+				if allentities[entityid].p4 == nil or type(allentities[entityid].p4) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p4 = 0
-				end if allentities[entityid].p5 == nil or type(allentities[entityid].p5) ~= "number" then
+				end
+				if allentities[entityid].p5 == nil or type(allentities[entityid].p5) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p5 = 0
-				end if allentities[entityid].p6 == nil or type(allentities[entityid].p6) ~= "number" then
+				end
+				if allentities[entityid].p6 == nil or type(allentities[entityid].p6) ~= "number" then
 					mycount.FC = mycount.FC + 1
 					allentities[entityid].p6 = 0
 				end
@@ -428,7 +436,8 @@ function loadlevel(path)
 		or (theselevelmetadata[ry][rx].tileset > 4) then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].tileset = 0
-		end if theselevelmetadata[ry][rx].tilecol == nil or type(theselevelmetadata[ry][rx].tilecol) ~= "number" or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1) or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
+		end
+		if theselevelmetadata[ry][rx].tilecol == nil or type(theselevelmetadata[ry][rx].tilecol) ~= "number" or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1) or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
 		or theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol > 31
 		or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
 		or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
@@ -437,37 +446,48 @@ function loadlevel(path)
 		or theselevelmetadata[ry][rx].tileset == 5 and theselevelmetadata[ry][rx].tilecol > 29 then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].tilecol = 0
-		end if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].platx1 = 0
-		end if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].platy1 = 0
-		end if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].platx2 = 0
-		end if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].platy2 = 0
-		end if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].platv = 0
-		end if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyx1 = 0
-		end if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyy1 = 0
-		end if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyx2 = 0
-		end if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
+		end
+		if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemyy2 = 0
-		end if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
+		end
+		if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].enemytype = 0
-		end if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
+		end
+		if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
 			mycount.FC = mycount.FC + 1
 			theselevelmetadata[ry][rx].warpdir = 0
 		end
@@ -546,20 +566,24 @@ function loadlevel(path)
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
 		thismetadata.mapwidth = 1
-	end if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
+	end
+	if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
-	end if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
+	end
+	if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), thislimit.mapwidth, thislimit.mapheight}))
 		thismetadata.mapwidth = math.min(thismetadata.mapwidth, thislimit.mapwidth)
 		thismetadata.mapheight = math.min(thismetadata.mapheight, thislimit.mapheight)
-	end if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
+	end
+	if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
-	end if n_levelmetadata ~= 400 then
+	end
+	if n_levelmetadata ~= 400 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, L.NOT400ROOMS)
 
@@ -587,10 +611,12 @@ function loadlevel(path)
 			end
 		end
 		]]
-	end if numliteralnullbytes > 0 then
+	end
+	if numliteralnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
-	end if numxmlnullbytes > 0 then
+	end
+	if numxmlnullbytes > 0 then
 		mycount.FC = mycount.FC + 1
 		cons_fc(FClist, langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
 	end

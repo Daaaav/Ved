@@ -2,7 +2,8 @@ rightclickmenu = {}
 function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 	if menuposx == nil then
 		menuposx = love.mouse.getX()
-	end if menuposy == nil then
+	end
+	if menuposy == nil then
 		menuposy = love.mouse.getY()
 	end
 

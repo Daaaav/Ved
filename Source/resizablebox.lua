@@ -71,7 +71,8 @@ function boxupdate()
 			--else
 				box_w = 16
 			--end
-		end if box_h < 16 then
+		end
+		if box_h < 16 then
 			--if box_moving_h == 1 then
 				--box_y = box_y - (16 - box_h)
 			--else

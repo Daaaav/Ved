@@ -1813,7 +1813,8 @@ function autocorrectlines()
 
 				if entitydata[k].p2 ~= startat then
 					entitydata[k].p2 = startat
-				end if entitydata[k].p3 ~= linelength then
+				end
+				if entitydata[k].p3 ~= linelength then
 					entitydata[k].p3 = linelength
 				end
 			else
@@ -1855,7 +1856,8 @@ function autocorrectlines()
 
 				if entitydata[k].p2 ~= startat then
 					entitydata[k].p2 = startat
-				end if entitydata[k].p3 ~= linelength then
+				end
+				if entitydata[k].p3 ~= linelength then
 					entitydata[k].p3 = linelength
 				end
 			end
