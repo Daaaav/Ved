@@ -420,9 +420,9 @@ function loadtileset(file, levelassetsfolder)
 		asimgdata_white = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
-		asimgdata = love.image.newImageData(file)
+		asimgdata = love.image.newImageData("vgraphics/" .. file)
 		-- Too bad Data:clone() is LÖVE 11+ only
-		asimgdata_white = love.image.newImageData(file)
+		asimgdata_white = love.image.newImageData("vgraphics/" .. file)
 	end
 
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
@@ -481,7 +481,7 @@ function loadsprites(file, res, levelassetsfolder)
 		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
-		asimgdata = love.image.newImageData(file)
+		asimgdata = love.image.newImageData("vgraphics/" .. file)
 	end
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()

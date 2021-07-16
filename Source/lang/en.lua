@@ -922,7 +922,7 @@ options.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Tile placement modes",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Tile placement modes\wh#
 \C=
@@ -2676,7 +2676,7 @@ _ - Put this before the image number to decrease the image number by 10.
 {
 splitid = "990_Credits",
 subj = "Credits",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 
