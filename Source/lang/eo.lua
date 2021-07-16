@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-07-06 20:43:56 (CEST)
+--- Last converted: 2021-07-17 01:45:52 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -51,16 +51,12 @@ OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli alt
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
 MAXCREWMATES = "La maksimuma kvanto da ŝipanoj ($1) estas atingita en ĉi tiu nivelo.",
-EDITINGROOMTEXTNIL = "Ekzistinta ĉambroteksto, kiun ni estis redaktinta, estas nula!",
 STARTPOINTNOLONGERFOUND = "La malnova komenciĝejo ne plu troveblas!",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
-SURENEWLEVEL = "Ĉu vi certas, ke vi volas fari novan nivelon? Vi perdos ĉion nekonservitan.",
-SURELOADLEVEL = "Ĉu vi certas, ke vi volas ŝargi nivelon? Vi perdos ĉion nekonservitan.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Ne povis akiri la enhavon de la nivelodosierujo. Bonvolu kontroli ĉu $1 ekzistas, kaj reprovu.",
 MAPSAVEDAS = "Map-bildo konservita kiel $1!",
 RAWENTITYPROPERTIES = "Vi povas ŝanĝi la krudajn atributvalorojn de ĉi tiu ento ĉi tie.",
 UNKNOWNENTITYTYPE = "Nekonata entotipo $1",
-METADATAENTITYCREATENOW = "La metadatuma ento ne jam ekzistas. Ĉu krei ĝin nun?\n\nLa metadatuma ento estas kaŝita ento, kiu povas esti aldonita al VVVVVV-niveloj por teni ekstrajn datumojn, kiujn uzas Ved, ekzemple la nivelo-notblokon, flagnomojn, kaj aliajn aferojn.",
 WARPTOKENENT404 = "Teleportila ento ne plu ekzistas!",
 SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.\n\nĈu eliri la redaktilon?",
@@ -72,7 +68,6 @@ FLAGNAMENUMBERS = "Flagnomoj ne povas esti nur ciferoj.",
 FLAGNAMECHARS = "Flagnomoj ne povas enhavi parentezojn, komojn aŭ spacetojn.",
 FLAGNAMEINUSE = "La flagnomo $1 jam estas uzata de flago $2",
 DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos konsiderata kiel pli malnova versio.",
-SUREQUIT = "Ĉu vi certas, ke vi volas eliri? Vi perdos ĉion nekonservitan.",
 SUREQUITNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol eliri?",
 SURENEWLEVELNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol krei novan nivelon?",
 SCALEREBOOT = "La novaj skalagordoj efikos post relanĉi Ved-on.",
@@ -90,8 +85,6 @@ SOURCEDESTROOMSSAME = "Originala kaj nova ĉambroj estas samaj!",
 UNKNOWNUNDOTYPE = "Nekonata malfaro-tipo \"$1\"!",
 MDEVERSIONWARNING = "Ĉi tiu nivelo ŝajnas esti farita en pli nova versio de Ved, kaj eble enhavas iujn datumojn, kiuj perdiĝos kiam vi konservas la nivelon.",
 FORGOTPATH = "Vi forgesis specifi dosierindikon!",
-MDENOTPASSED = "Averto: metadatuma ento ne transdonita al savelevel()!",
-RESTARTVEDLANG = "Post ŝanĝi la lingvon, vi devas relanĉi Ved-on antaŭ ol la ŝanĝo efikos.",
 
 SELECTCOPY1 = "Elektu la ĉambron kopii",
 SELECTCOPY2 = "Elektu la lokon kopii ĉi tiun ĉambron al",
@@ -178,11 +171,6 @@ GOTO = "Alsalti",
 DELETE = "Forigi",
 RENAME = "Renomi",
 CHANGEDIRECTION = "Ŝanĝi direkton",
-DIRECTION = "Direkto->",
-UP = "supren",
-DOWN = "malsupren",
-LEFT = "maldekstren",
-RIGHT = "dekstren",
 TESTFROMHERE = "Testi de ĉi tie",
 FLIP = "Renversi",
 CYCLETYPE = "Ŝanĝi tipon",
@@ -249,15 +237,6 @@ NOTSOLID = "Ne masiva",
 
 TSCOLOR = "Koloro $1",
 
-ONETRINKETS = "K:",
-ONECREWMATES = "Ŝ:",
-ONEENTITIES = "E:",
-
-ONECUSTOMTILESET = "TK $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "TG $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Niveloj",
 LOADTHISLEVEL = "Ŝargi nivelon: ",
 ENTERNAMESAVE = "Enmetu nomon por konservi: ",
@@ -295,7 +274,6 @@ RENAMESCRIPT = "Renomi skripton",
 LINE = "linio ",
 
 SAVEMAP = "Konservi mapon",
-SAVEFULLSIZEMAP = "Konservi plengrandan mapon",
 COPYROOMS = "Kopii ĉambron",
 SWAPROOMS = "Permuti ĉambrojn",
 
@@ -322,7 +300,6 @@ NEVERASKBEFOREQUIT = "Neniam demandi antaŭ ol eliri, eĉ se estas nekonservitaj
 COORDS0 = "Montri koordinatojn komence je nulo (kiel en interna skriptado)",
 ALLOWDEBUG = "Ebligi sencimigan reĝimon",
 SHOWFPS = "Montri kadrojn sekunde",
-IIXSCALE = "Duobla skalo",
 CHECKFORUPDATES = "Kontroli ĝisdatigojn",
 PAUSEDRAWUNFOCUSED = "Ne bildigi kiam la fenestro estas elfokusa",
 ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas",
@@ -391,6 +368,7 @@ SYNTAXCOLOR_ERRORTEXT = "Nekonata komando",
 SYNTAXCOLOR_CURSOR = "Kursoro",
 SYNTAXCOLOR_FLAGNAME = "Flagnomo",
 SYNTAXCOLOR_NEWFLAGNAME = "Nova flagnomo",
+SYNTAXCOLOR_COMMENT = "Komento",
 RESETCOLORS = "Defaŭltigi kolorojn",
 STRINGNOTFOUND = "\"$1\" ne estis trovita",
 
@@ -449,7 +427,6 @@ NONINTSCALE = "Neentjera skalado",
 -- 1.3.4
 USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
 REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
-SYNTAXCOLOR_COMMENT = "Komento",
 FPSLIMIT = "KS-limo",
 
 MAPRESOLUTION = "Distingivo", -- Map export size
@@ -571,21 +548,10 @@ MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4! 
 BTNOVERRIDE = "Transpasi",
 TARGETPLATFORM = "Celata platformo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
 TIMETRIALS = "Tempelprovoj",
-SWITCHEDTOALTSTATEMAIN = "Interŝanĝis al ĉefa stato",
-SWITCHEDTOALTSTATE = "Interŝanĝis al alterna stato $1",
-ADDEDALTSTATE = "Aldonis novan alternan staton $1",
-REMOVEDALTSTATE = "Forigis alternan staton $1",
 TIMETRIALTRINKETS = "Nombro da kolektaĵoj",
 TIMETRIALTIME = "Alpara tempo",
 SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempelprovon \"$1\"?",
-
-CUSTOMGRAPHICS = "Alternaj grafikoj", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Kahelara bildo:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Grafika bildo:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Defaŭlta ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Defaŭlta (sprites.png)",
 
 CUT = "Eltondi",
 PASTE = "Alglui",
@@ -659,10 +625,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 kahelo ne estas valida entjero en la intervalo 0-1199",
 		[1] = "$1 kaheloj ne estas validaj entjeroj en la intervalo 0-1199",
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "$1 kahelo ne estas valida entjero en la zono 0-1199 en alternstato $2 por ĉambro $3,$4",
-		[1] = "$1 kaheloj ne estas validaj entjeroj en la zono 0-1199 en alternstato $2 por ĉambro $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 bajto",
@@ -971,7 +933,7 @@ en la agordoj de Ved.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Reĝimoj de kahel-metado",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Reĝimoj de kahel-metado\wh#
 \C=
@@ -1005,7 +967,7 @@ Ved subtenas tri diversajn reĝimojn por meti kahelojn.
 {
 splitid = "030_Tools",
 subj = "Iloj",
-imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
+imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
 Iloj\wh#
 \C=
@@ -2735,7 +2697,7 @@ _ - Metu ĉi tion antaŭ la bildnumero por malpliigi la bildnumeron je 10.
 {
 splitid = "990_Credits",
 subj = "Kreditoj",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 

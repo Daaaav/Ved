@@ -24,24 +24,12 @@ msgctxt "L.MAXCREWMATES"
 msgid "The maximum amount of crewmates ($1) has been reached in this level."
 msgstr ""
 
-msgctxt "L.EDITINGROOMTEXTNIL"
-msgid "Existing room text we were editing is nil!"
-msgstr ""
-
 msgctxt "L.STARTPOINTNOLONGERFOUND"
 msgid "The old start point can no longer be found!"
 msgstr ""
 
 msgctxt "L.UNSUPPORTEDTOOL"
 msgid "Unsupported tool! Tool: "
-msgstr ""
-
-msgctxt "L.SURENEWLEVEL"
-msgid "Are you sure you want to make a new level? You will lose any unsaved content."
-msgstr ""
-
-msgctxt "L.SURELOADLEVEL"
-msgid "Are you sure you want to load a level? You will lose any unsaved content."
 msgstr ""
 
 msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
@@ -58,10 +46,6 @@ msgstr ""
 
 msgctxt "L.UNKNOWNENTITYTYPE"
 msgid "Unknown entity type $1"
-msgstr ""
-
-msgctxt "L.METADATAENTITYCREATENOW"
-msgid "The metadata entity does not exist yet. Create it now?\n\nThe metadata entity is a hidden entity that can be added to VVVVVV levels to hold extra data used by Ved, like the level notepad, flag names, and other things."
 msgstr ""
 
 msgctxt "L.WARPTOKENENT404"
@@ -107,10 +91,6 @@ msgstr ""
 
 msgctxt "L.DIFFSELECT"
 msgid "Select the level to compare to. The level you select now will be treated as being an older version."
-msgstr ""
-
-msgctxt "L.SUREQUIT"
-msgid "Are you sure you want to quit? You will lose any unsaved content."
 msgstr ""
 
 msgctxt "L.SUREQUITNEW"
@@ -179,14 +159,6 @@ msgstr ""
 
 msgctxt "L.FORGOTPATH"
 msgid "You forgot to specify a path!"
-msgstr ""
-
-msgctxt "L.MDENOTPASSED"
-msgid "Caution: metadata entity not passed to savelevel()!"
-msgstr ""
-
-msgctxt "L.RESTARTVEDLANG"
-msgid "After changing the language, you need to restart Ved before the change will take effect."
 msgstr ""
 
 msgctxt "L.SELECTCOPY1"
@@ -489,26 +461,6 @@ msgctxt "L.CHANGEDIRECTION"
 msgid "Change direction"
 msgstr ""
 
-msgctxt "L.DIRECTION"
-msgid "Direction->"
-msgstr ""
-
-msgctxt "L.UP"
-msgid "up"
-msgstr ""
-
-msgctxt "L.DOWN"
-msgid "down"
-msgstr ""
-
-msgctxt "L.LEFT"
-msgid "left"
-msgstr ""
-
-msgctxt "L.RIGHT"
-msgid "right"
-msgstr ""
-
 msgctxt "L.TESTFROMHERE"
 msgid "Test from here"
 msgstr ""
@@ -744,38 +696,6 @@ msgctxt "L.TSCOLOR"
 msgid "Color $1"
 msgstr ""
 
-msgctxt "L.ONETRINKETS"
-msgid "T:"
-msgstr ""
-
-msgctxt "L.ONECREWMATES"
-msgid "C:"
-msgstr ""
-
-msgctxt "L.ONEENTITIES"
-msgid "E:"
-msgstr ""
-
-#. Custom Tileset
-msgctxt "L.ONECUSTOMTILESET"
-msgid "CT $1"
-msgstr ""
-
-#. Custom Sprites
-msgctxt "L.ONECUSTOMSPRITESHEET"
-msgid "CS $1"
-msgstr ""
-
-#. Alt state
-msgctxt "L.ONEALTSTATE"
-msgid "A $1/$2"
-msgstr ""
-
-#. Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-msgctxt "L.ONETOWER"
-msgid "T$1 $2\n $3"
-msgstr ""
-
 msgctxt "L.LEVELSLIST"
 msgid "Levels"
 msgstr ""
@@ -889,10 +809,6 @@ msgctxt "L.SAVEMAP"
 msgid "Save map"
 msgstr ""
 
-msgctxt "L.SAVEFULLSIZEMAP"
-msgid "Save fullsize map"
-msgstr ""
-
 msgctxt "L.COPYROOMS"
 msgid "Copy room"
 msgstr ""
@@ -984,10 +900,6 @@ msgstr ""
 
 msgctxt "L.SHOWFPS"
 msgid "Show FPS counter"
-msgstr ""
-
-msgctxt "L.IIXSCALE"
-msgid "2x scale"
 msgstr ""
 
 msgctxt "L.CHECKFORUPDATES"
@@ -1254,6 +1166,11 @@ msgid "New flag name"
 msgstr ""
 
 #. b14
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr ""
+
+#. b14
 msgctxt "L.RESETCOLORS"
 msgid "Reset colors"
 msgstr ""
@@ -1471,11 +1388,6 @@ msgstr ""
 #. 1.3.4
 msgctxt "L.REQUIRESHIGHERLOVE"
 msgid " (requires L{VE $1 or higher)"
-msgstr ""
-
-#. 1.3.4
-msgctxt "L.SYNTAXCOLOR_COMMENT"
-msgid "Comment"
 msgstr ""
 
 #. 1.3.4
@@ -1940,28 +1852,8 @@ msgctxt "L.PLATFORM_V"
 msgid "VVVVVV"
 msgstr ""
 
-msgctxt "L.PLATFORM_VCE"
-msgid "VVVVVV-CE"
-msgstr ""
-
 msgctxt "L.TIMETRIALS"
 msgid "Time trials"
-msgstr ""
-
-msgctxt "L.SWITCHEDTOALTSTATEMAIN"
-msgid "Switched to main state"
-msgstr ""
-
-msgctxt "L.SWITCHEDTOALTSTATE"
-msgid "Switched to alt state $1"
-msgstr ""
-
-msgctxt "L.ADDEDALTSTATE"
-msgid "Added new alt state $1"
-msgstr ""
-
-msgctxt "L.REMOVEDALTSTATE"
-msgid "Removed alt state $1"
 msgstr ""
 
 msgctxt "L.TIMETRIALTRINKETS"
@@ -1974,30 +1866,6 @@ msgstr ""
 
 msgctxt "L.SUREDELETETRIAL"
 msgid "Are you sure you want to delete the time trial \"$1\"?"
-msgstr ""
-
-#. Alternative tileset or sprites images
-msgctxt "L.CUSTOMGRAPHICS"
-msgid "Alternative graphics"
-msgstr ""
-
-#. What variant of tiles*.png is used
-msgctxt "L.CUSTOMTILESET"
-msgid "Tileset image:"
-msgstr ""
-
-#. What variant of sprites*.png is used
-msgctxt "L.CUSTOMSPRITESHEET"
-msgid "Sprites image:"
-msgstr ""
-
-#. Placeholder can be tiles.png, tiles2.png or tiles3.png
-msgctxt "L.CUSTOMTILESET_DEFAULT"
-msgid "Default ($1)"
-msgstr ""
-
-msgctxt "L.CUSTOMSPRITESHEET_DEFAULT"
-msgid "Default (sprites.png)"
 msgstr ""
 
 msgctxt "L.CUT"
@@ -2164,12 +2032,6 @@ msgstr[1] ""
 msgctxt "L_PLU.NOTALLTILESVALID"
 msgid "$1 tile is not a valid whole number in the range 0-1199"
 msgid_plural "$1 tiles are not a valid whole number in the range 0-1199"
-msgstr[0] ""
-msgstr[1] ""
-
-msgctxt "L_PLU.NOTALLTILESVALID_ALTSTATE"
-msgid "$1 tile is not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
-msgid_plural "$1 tiles are not a valid whole number in the range 0-1199 in alt state $2 for room $3,$4"
 msgstr[0] ""
 msgstr[1] ""
 

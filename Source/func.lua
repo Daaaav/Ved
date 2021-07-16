@@ -1102,7 +1102,7 @@ function endeditingroomtext(currently_targetting)
 	-- We were typing a text!
 	stopinput()
 	if entitydata[editingroomtext] == nil then
-		dialog.create(L.EDITINGROOMTEXTNIL)
+		cons("Existing room text we were editing is nil!")
 	elseif input ~= "" or editingroomtext == currently_targetting then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input

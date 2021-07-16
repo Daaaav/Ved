@@ -631,7 +631,7 @@ function loadlevel(path)
 				break
 			end
 
-			FClisttext = FClisttext .. v .. "\n"
+			FClisttext = FClisttext .. arrow_right .. " " .. v .. "\n"
 		end
 
 		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
@@ -906,7 +906,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	end
 
 	if vedmetadata == nil then
-		dialog.create(L.MDENOTPASSED)
+		cons("Caution: metadata entity not passed to savelevel()!")
 	end
 
 	if success and path ~= nil then

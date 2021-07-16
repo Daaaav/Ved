@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-07-06 20:43:55 (CEST)
+--- Last converted: 2021-07-17 01:45:51 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,16 +39,12 @@ OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glückliche
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
 MAXTRINKETS = "Die maximale Anzahl an Trinkets ($1) wurde in diesem Level erreicht.",
 MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder ($1) wurde in diesem Level erreicht.",
-EDITINGROOMTEXTNIL = "Den Raumtext den wir bearbeiten ist nil!",
 STARTPOINTNOLONGERFOUND = "Der alte Startpunkt kann nicht mehr gefunden werden!",
 UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
-SURENEWLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst alle ungespeicherte Inhalte verlieren.",
-SURELOADLEVEL = "Bist du sicher dass du ein neues Level machen willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
 MAPSAVEDAS = "Kartenbild gespeichert als $1!",
 RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
 UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
-METADATAENTITYCREATENOW = "Das Metadatenobjekt existiert noch nicht. Jetzt erstellen?\n\nDas Metadatenobjekt ist ein verstecktes Objekt, das zu VVVVVV-Leveln hinzugefügt werden kann, um zusätzliche Daten aufzunehmen, die von Ved verwendet werden, wie z.B. der Notitzblock, Flagnamen und andere Dinge.",
 WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
 SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nEditor verlassen?",
@@ -60,7 +56,6 @@ FLAGNAMENUMBERS = "Flagnamen können nicht nur Nummern enthalten.",
 FLAGNAMECHARS = "Flagnamen können keine Klammern, Kommas oder Leerzeichen enthalten.",
 FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
 DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
-SUREQUIT = "Bist du sicher dass du beenden willst? Du wirst jeden ungespeicherten Inhalt verlieren.",
 SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
 SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
 SCALEREBOOT = "Die neuen Größeeinstellungen werden wirksam nachdem Ved neugestartet wird.",
@@ -78,8 +73,6 @@ SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
 UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
 MDEVERSIONWARNING = "Dieses Level scheint in einer neueren Version von Ved gemacht zu sein, und kann Daten enthalten die verloren gehen wenn du dieses Level speicherst.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
-MDENOTPASSED = "Vorsicht: Metadatenobjekt nicht an savelevel() übergeben!",
-RESTARTVEDLANG = "Nach dem Ändern der Sprache, musst du Ved neustarten bevor die Änderung wirksam wird.",
 
 SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
 SELECTCOPY2 = "Wähle die Position wo der Raum hinkopiert werden soll",
@@ -166,11 +159,6 @@ GOTO = "Gehe zu",
 DELETE = "Löschen",
 RENAME = "Umbennen",
 CHANGEDIRECTION = "Richtung ändern",
-DIRECTION = "Richtung->",
-UP = "hoch",
-DOWN = "runter",
-LEFT = "links",
-RIGHT = "rechts",
 TESTFROMHERE = "Teste von hier",
 FLIP = "Umdrehen",
 CYCLETYPE = "Typ ändern",
@@ -237,15 +225,6 @@ NOTSOLID = "Unsolid",
 
 TSCOLOR = "Farbe $1",
 
-ONETRINKETS = "T:",
-ONECREWMATES = "C:",
-ONEENTITIES = "E:",
-
-ONECUSTOMTILESET = "BT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "BS $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Level",
 LOADTHISLEVEL = "Lade dieses Level: ",
 ENTERNAMESAVE = "Speichern als: ",
@@ -283,7 +262,6 @@ RENAMESCRIPT = "Skript umbennen:",
 LINE = "Zeile ",
 
 SAVEMAP = "Karte speichern",
-SAVEFULLSIZEMAP = "Karte in voller Größe speichern",
 COPYROOMS = "Kopiere Raum",
 SWAPROOMS = "Tausche Räume",
 
@@ -310,7 +288,6 @@ NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte
 COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
 ALLOWDEBUG = "Aktiviere Debugmodus",
 SHOWFPS = "Zeige FPS-Zähler",
-IIXSCALE = "2x Größe",
 CHECKFORUPDATES = "Nach Updates suchen",
 PAUSEDRAWUNFOCUSED = "Nicht rendern wenn das Fenster unfokusiert ist",
 ENABLEOVERWRITEBACKUPS = "Mache Backups von Level Dateien die überschrieben werden",
@@ -379,6 +356,7 @@ SYNTAXCOLOR_ERRORTEXT = "Unbekannter Befehl",
 SYNTAXCOLOR_CURSOR = "Mauszeiger",
 SYNTAXCOLOR_FLAGNAME = "Flagname",
 SYNTAXCOLOR_NEWFLAGNAME = "Neuer Flagname",
+SYNTAXCOLOR_COMMENT = "Kommentar",
 RESETCOLORS = "Farben zurücksetzen",
 STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
 
@@ -437,7 +415,6 @@ NONINTSCALE = "Nicht-ganzzahlige Skalierung",
 -- 1.3.4
 USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
 REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
-SYNTAXCOLOR_COMMENT = "Kommentar",
 FPSLIMIT = "FPS-Limit",
 
 MAPRESOLUTION = "Auflösung", -- Map export size
@@ -559,21 +536,10 @@ MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4! (G
 BTNOVERRIDE = "Überschreiben",
 TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
 TIMETRIALS = "Zeitprüfung",
-SWITCHEDTOALTSTATEMAIN = "Zu Hauptzustand gewechselt",
-SWITCHEDTOALTSTATE = "Zu Alternativzustand $1 gewechselt",
-ADDEDALTSTATE = "Neuen Alternativzustand $1 hinzugefügt",
-REMOVEDALTSTATE = "Alternativzustand $1 entfernt",
 TIMETRIALTRINKETS = "Trinketanzahl",
 TIMETRIALTIME = "Zeitprüfungszeit",
 SUREDELETETRIAL = "Bist du sicher du willst die Zeitprüfung \"$1\" löschen?",
-
-CUSTOMGRAPHICS = "Alternative Grafiken", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tilesetbild:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Bild der Sprites:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Standard ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Standard (sprites.png)",
 
 CUT = "Schneiden",
 PASTE = "Einfügen",
@@ -647,10 +613,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
 		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "$1 Tile ist keine gültige ganze Nummer im Bereich 0-1199 im Alternativzustand $2 für Raum $3,$4",
-		[1] = "$1 Tiles sind keine gültige ganze Nummer im Bereich 0-1199 im Alternativzustand $2 für Raum $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -960,7 +922,7 @@ options.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Tile placement modes",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Tile placement modes\wh#
 \C=
@@ -994,7 +956,7 @@ Ved supports three different modes to draw tiles.
 {
 splitid = "030_Tools",
 subj = "Tools",
-imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
+imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
 Tools\wh#
 \C=
@@ -2714,7 +2676,7 @@ _ - Put this before the image number to decrease the image number by 10.
 {
 splitid = "990_Credits",
 subj = "Credits",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 

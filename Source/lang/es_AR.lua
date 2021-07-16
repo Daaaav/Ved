@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-07-06 20:43:55 (CEST)
+--- Last converted: 2021-07-17 01:45:52 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,16 +39,12 @@ OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mej
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
 MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
-EDITINGROOMTEXTNIL = "Texto de habitacion existente que se editava es nulo!",
 STARTPOINTNOLONGERFOUND = "El punto de inicio viejo no se puede encontrar!",
 UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta: ",
-SURENEWLEVEL = "Estas seguro de que quieres hacer un nuevo nivel? Perderas cualquier contenido no guardado.",
-SURELOADLEVEL = "Estas seguro de que quieres cargar un nivel? Perderas cualquier conenido no guardado.",
 COULDNOTGETCONTENTSLEVELFOLDER = "No se pudo obtener contenidos de la carpeta de niveles. Porfavor fijese si $1 existe y intente de nuevo.",
 MAPSAVEDAS = "Imagen de mapa guardada como $1!",
 RAWENTITYPROPERTIES = "Puedes cambiar las propiedades crudas de esta entidad aqui.",
 UNKNOWNENTITYTYPE = "Tipo de entidad desconocida $1",
-METADATAENTITYCREATENOW = "La entidad de metadatos todavia no existe. Crearla ahora?\n\nLa entidad de metadatos es una entidad oculta que se puede añadir a niveles de VVVVVV para mantener datos extra por Ved, como el bloc de notas de niveles, nombres de flags, y otras cosas.",
 WARPTOKENENT404 = "La entidad de warp token no existe!",
 SPLITFAILED = "Division fallada miserablemente! Tienes muchas lineas en medio de un comando de texto y un speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.\n\nSalir del editor?",
@@ -60,7 +56,6 @@ FLAGNAMENUMBERS = "Los nombres de flags no puede ser solo numeros.",
 FLAGNAMECHARS = "Los nombres de flags no pueden contener parentesis, comas, o espacios.",
 FLAGNAMEINUSE = "El nombre del flag $1 ya esta en uso por el flag $2",
 DIFFSELECT = "Seleccione el nivel al que quieres compararlo. Ese nivel se tratara como una version mas vieja.",
-SUREQUIT = "Estas seguro de que quieres salir? Perderas cualquier contenido no guardado.",
 SUREQUITNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de salir?",
 SURENEWLEVELNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de crear un nuevo nivel?",
 SCALEREBOOT = "Las nuevas configuraciones de escala tomaran efecto despued de reiniciar Ved.",
@@ -78,8 +73,6 @@ SOURCEDESTROOMSSAME = "Las habitaciones de entrada y salida son las mismas!",
 UNKNOWNUNDOTYPE = "Tipo de deshacer desconocido \"$1\"!",
 MDEVERSIONWARNING = "Parece que este nivel se ha hecho en una version mas reciente de Ved, y podria contener unos datos que se perderan cuando guardes este nivel.",
 FORGOTPATH = "Te olvidaste de especificar un camino!",
-MDENOTPASSED = "Precaucion: entidad de metadatos no pasada a savelevel()!",
-RESTARTVEDLANG = "Despues de cambiar el idioma, tienes que reiniciar Ved para que el cambio tome efecto.",
 
 SELECTCOPY1 = "Seleccione la habitacion para copiar",
 SELECTCOPY2 = "Seleccione donde copiar la habitacion",
@@ -166,11 +159,6 @@ GOTO = "Ir a",
 DELETE = "Borrar",
 RENAME = "Renombrar",
 CHANGEDIRECTION = "Cambiar direccion",
-DIRECTION = "Direccion->",
-UP = "arriba",
-DOWN = "abajo",
-LEFT = "izquierda",
-RIGHT = "derecha",
 TESTFROMHERE = "Probar desde aqui",
 FLIP = "Voltear",
 CYCLETYPE = "Cambiar tipo",
@@ -237,15 +225,6 @@ NOTSOLID = "No solido",
 
 TSCOLOR = "Color $1",
 
-ONETRINKETS = "T:",
-ONECREWMATES = "C:",
-ONEENTITIES = "E:",
-
-ONECUSTOMTILESET = "Set P. $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "Spr. P. $1", -- Custom Sprites
-ONEALTSTATE = "E $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Niveles",
 LOADTHISLEVEL = "Cargar este nivel: ",
 ENTERNAMESAVE = "Introduce nombre para guardar: ",
@@ -283,7 +262,6 @@ RENAMESCRIPT = "Renombrar script",
 LINE = "linea ",
 
 SAVEMAP = "Guardar mapa",
-SAVEFULLSIZEMAP = "Guardar mapa de tamaño completo",
 COPYROOMS = "Copiar habitacion",
 SWAPROOMS = "Intercambiar habitaciones",
 
@@ -310,7 +288,6 @@ NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin g
 COORDS0 = "Mostrar coordenadas comenzando en 0 (como en scripting interno)",
 ALLOWDEBUG = "Habilitar modo debug",
 SHOWFPS = "Mostrar contador de FPS",
-IIXSCALE = "Escala 2x",
 CHECKFORUPDATES = "Buscar actualizaciones",
 PAUSEDRAWUNFOCUSED = "No mostrar cuando la ventana esta desenfocada",
 ENABLEOVERWRITEBACKUPS = "Hacer respaldos de archivos de niveles que estan sobreescribidos",
@@ -379,6 +356,7 @@ SYNTAXCOLOR_ERRORTEXT = "Comando no reconozido",
 SYNTAXCOLOR_CURSOR = "Cursor",
 SYNTAXCOLOR_FLAGNAME = "Nombre de flag",
 SYNTAXCOLOR_NEWFLAGNAME = "Nuevo nombre de flag",
+SYNTAXCOLOR_COMMENT = "Comentario",
 RESETCOLORS = "Reiniciar colores",
 STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
 
@@ -437,7 +415,6 @@ NONINTSCALE = "Escala no-entera",
 -- 1.3.4
 USEFONTPNG = "Usar font.png de las graficas de VVVVVV como fuente",
 REQUIRESHIGHERLOVE = " (requiere L{VE $1 o mejor)",
-SYNTAXCOLOR_COMMENT = "Comentario",
 FPSLIMIT = "Limite de FPS",
 
 MAPRESOLUTION = "Resolucion", -- Map export size
@@ -559,21 +536,10 @@ MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por
 BTNOVERRIDE = "Anular",
 TARGETPLATFORM = "Plataforma objetivo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-EC",
 TIMETRIALS = "Contrarelojes",
-SWITCHEDTOALTSTATEMAIN = "Cambiado a estado principal",
-SWITCHEDTOALTSTATE = "Cambiado al estado $1",
-ADDEDALTSTATE = "Añadido nuevo estado $1",
-REMOVEDALTSTATE = "Removido estado $1",
 TIMETRIALTRINKETS = "Numero de trinkets",
 TIMETRIALTIME = "Tiempo",
 SUREDELETETRIAL = "Estas seguro de que quieres borrar el contrareloj \"$1\"?",
-
-CUSTOMGRAPHICS = "Gráficos alternos", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Imagen del set:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Imagen del sprite:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Por defecto ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Por defecto (sprites.png)",
 
 CUT = "Cortar",
 PASTE = "Pegar",
@@ -647,10 +613,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 teja no es un numero entero valido en el rango 0-1199",
 		[1] = "$1 tejas no es un numero entero valido en el rango 0-1199",
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "Teja $1 no es un número entero valido en el rango 0-1199 en el estado $2 para la habitación $3,$4",
-		[1] = "Tejas $1 no son un número entero valido en el rango 0-1199 en el estado $2 para la habitación $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -962,7 +924,7 @@ entrar un camino personalizado en las opciones de Ved.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Modos de poner tejas",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Modos de poner tejas\wh#
 \C=
@@ -996,7 +958,7 @@ Ved soporta tres modos diferentes para dibujar tejas.
 {
 splitid = "030_Tools",
 subj = "Herramientas",
-imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
+imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
 Herramientas\wh#
 \C=
@@ -2720,7 +2682,7 @@ _ - Put this before the image number to decrease the image number by 10.
 {
 splitid = "990_Credits",
 subj = "Credits",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 

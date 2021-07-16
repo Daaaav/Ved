@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-07-06 20:43:56 (CEST)
+--- Last converted: 2021-07-17 01:45:52 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -43,16 +43,12 @@ OUTDATEDLOVE090 = "Ved ne supporte plus L{ve 0.9.0. Cependant, L{ve 0.9.1 et tou
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
 MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",
 MAXCREWMATES = "Le nombre maximum d'équipiers ($1) a été atteint dans ce niveau.",
-EDITINGROOMTEXTNIL = "Le texte de la salle existante que vous éditiez est nil !",
 STARTPOINTNOLONGERFOUND = "L'ancien point de départ ne peut plus être trouvé !",
 UNSUPPORTEDTOOL = "Outil non supporté! Outil : ",
-SURENEWLEVEL = "Êtes-vous sûr de vouloir créer un nouveau niveau? Vous perdrez tout contenu non sauvegardé.",
-SURELOADLEVEL = "Êtes-vous sûr de vouloir charger un niveau? Vous perdrez tout contenu non sauvegardé.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Le contenu du dossier de niveaux n'a pas pu être récupéré. Veuillez vérifier si $1 existe et réessayez.",
 MAPSAVEDAS = "L'image de la carte a été sauvegardée en tant que $1 !",
 RAWENTITYPROPERTIES = "Vous pouvez changer les valeurs brutes des propriétés de cette entité ici.",
 UNKNOWNENTITYTYPE = "Type d'entité $1 inconnu",
-METADATAENTITYCREATENOW = "L'entité de métadonnées n'existe pas. Voulez vous la créer maintenant?\n\nL'entité de métadonnées est une entité cachée qui peut être ajoutée à des niveaux de VVVVVV pour stocker des données supplémentaires utilisées par Ved, comme par exemple des notes sur le niveau, des noms de drapeaux et bien d'autres choses.",
 WARPTOKENENT404 = "Le jeton de téléportation n'existe plus !",
 SPLITFAILED = "La séparation a misérablement échoué ! Avez-vous trop de lignes entre une commande texte et une commande speak ou speak_active ?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Il n'y a plus de drapeaux disponibles, donc au moins un nouveau nom de drapeau ne peut pas être associé à un numéro de drapeau. L'utilisation de ce script dans VVVVVV a des chances de le casser. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.\n\nQuitter l'éditeur ?",
@@ -64,7 +60,6 @@ FLAGNAMENUMBERS = "Les noms de drapeaux ne peuvent pas être composés que de no
 FLAGNAMECHARS = "Les noms de drapeaux ne peuvent pas contenir de virgules, de parenthèses ou d'espaces.",
 FLAGNAMEINUSE = "Le nom de drapeau $1 est déjà utilisé par le drapeau $2",
 DIFFSELECT = "Choisissez le niveau à comparer. Le niveau que vous sélectionnez sera considéré comme l'ancienne version.",
-SUREQUIT = "Êtes-vous sûr de vouloir quitter? Vous allez perdre tout contenu non sauvegardé.",
 SUREQUITNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de quitter ?",
 SURENEWLEVELNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de créer un nouveau niveau ?",
 SCALEREBOOT = "La nouvelle configuration d'échelle seront prises en compte après avoir redémarré Ved.",
@@ -82,8 +77,6 @@ SOURCEDESTROOMSSAME = "La salle de départ et de destination sont les mêmes !",
 UNKNOWNUNDOTYPE = "Type de retour en arrière \"$1\" inconnu !",
 MDEVERSIONWARNING = "Ce niveau semble avoir été créé dans une version ultérieure de Ved, et peut contenir des données pouvant être perdues lorsque vous sauverez ce niveau.",
 FORGOTPATH = "Vous avez oublié de spécifier un chemin !",
-MDENOTPASSED = "Attention: aucune entité de métadonnées n'a été passée à savelevel() !",
-RESTARTVEDLANG = "Après avoir changé la langue, vous devez relancer Ved pour que les changements prennent effet.",
 
 SELECTCOPY1 = "Sélectionnez la salle à copier",
 SELECTCOPY2 = "Sélectionnez l'emplacement où copier cette salle",
@@ -170,11 +163,6 @@ GOTO = "Aller à",
 DELETE = "Supprimer",
 RENAME = "Renommer",
 CHANGEDIRECTION = "Changer la direction",
-DIRECTION = "Direction->",
-UP = "haut",
-DOWN = "bas",
-LEFT = "gauche",
-RIGHT = "droit",
 TESTFROMHERE = "Tester depuis ici",
 FLIP = "Renverser",
 CYCLETYPE = "Changer le type",
@@ -241,15 +229,6 @@ NOTSOLID = "Non solide",
 
 TSCOLOR = "Couleur : $1",
 
-ONETRINKETS = "M :",
-ONECREWMATES = "Eq :",
-ONEENTITIES = "En :",
-
-ONECUSTOMTILESET = "JTC $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "JIC $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Niveaux",
 LOADTHISLEVEL = "Charger ce niveau : ",
 ENTERNAMESAVE = "Entrer le nom utilisé pour la sauvegarde : ",
@@ -287,7 +266,6 @@ RENAMESCRIPT = "Renommer le script",
 LINE = "ligne ",
 
 SAVEMAP = "Sauver la carte",
-SAVEFULLSIZEMAP = "Sauver la carte globale",
 COPYROOMS = "Copier la salle",
 SWAPROOMS = "Échanger les salles",
 
@@ -314,7 +292,6 @@ NEVERASKBEFOREQUIT = "Ne jamais demander avant de quitter, même s'il y a des mo
 COORDS0 = "Afficher les coordonnées en commençant à 0 (comme dans les scripts internes)",
 ALLOWDEBUG = "Activer le mode de débogage",
 SHOWFPS = "Afficher le compteur de FPS",
-IIXSCALE = "Échelle 2x",
 CHECKFORUPDATES = "Chercher une mise à jour",
 PAUSEDRAWUNFOCUSED = "Ne pas effectuer de rendu lorsque la fenêtre n'est pas en premier plan",
 ENABLEOVERWRITEBACKUPS = "Faire des sauvegardes des fichiers de niveaux qui sont remplacés",
@@ -383,6 +360,7 @@ SYNTAXCOLOR_ERRORTEXT = "Commande non reconnue",
 SYNTAXCOLOR_CURSOR = "Curseur",
 SYNTAXCOLOR_FLAGNAME = "Nom de drapeau",
 SYNTAXCOLOR_NEWFLAGNAME = "Nouveau nom de drapeau",
+SYNTAXCOLOR_COMMENT = "Commentaire",
 RESETCOLORS = "Remise à zéro des couleurs",
 STRINGNOTFOUND = "\"$1\" n'a pas été trouvé",
 
@@ -441,7 +419,6 @@ NONINTSCALE = "Échelonnage non entière",
 -- 1.3.4
 USEFONTPNG = "Utiliser font.png du dossier d'images de VVVVVV comme police",
 REQUIRESHIGHERLOVE = " (requiert L{VE $1 ou version ultérieure)",
-SYNTAXCOLOR_COMMENT = "Commentaire",
 FPSLIMIT = "Limite de FPS",
 
 MAPRESOLUTION = "Résolution", -- Map export size
@@ -563,21 +540,10 @@ MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3
 BTNOVERRIDE = "Mettre à jour",
 TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
 TIMETRIALS = "Contre la montre",
-SWITCHEDTOALTSTATEMAIN = "État principal sélectionné",
-SWITCHEDTOALTSTATE = "État alternatif $1 sélectionné",
-ADDEDALTSTATE = "Nouvel état alternatif $1 ajouté",
-REMOVEDALTSTATE = "État alternatif $1 supprimé",
 TIMETRIALTRINKETS = "Compte de médailles",
 TIMETRIALTIME = "Temps visé",
 SUREDELETETRIAL = "Êtes-vous sûr de vouloir supprimer le contre la montre \"$1\" ?",
-
-CUSTOMGRAPHICS = "Graphismes alternatifs", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Image du jeu de tuiles :", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Jeu d'images :", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Défaut ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Défaut (sprites.png)",
 
 CUT = "Couper",
 PASTE = "Coller",
@@ -651,10 +617,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "La tuile $1 n'est pas un nombre entier valide dans l'intervalle 0-1199",
 		[1] = "Les tuiles $1 ne sont pas des nombres entiers valides dans l'intervalle 0-1199",
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "La tuile $1 n'est pas un nombre entier valide entre 0 et 1199 dans l'état alternatif $2 de la salle $3,$4",
-		[1] = "Les tuiles $1 ne sont pas des nombres entier valide entre 0 et 1199 dans l'état alternatif $2 de la salle $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 octet",
@@ -967,7 +929,7 @@ pouvez entrer un chemin personnalisé dans les options de Ved.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Modes de placement de tuiles",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Modes de placement de tuiles\wh#
 \C=
@@ -1003,7 +965,7 @@ Ved supporte trois modes différents pour placer des tuiles.
 {
 splitid = "030_Tools",
 subj = "Outils",
-imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
+imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
 Outils\wh#
 \C=
@@ -2847,7 +2809,7 @@ _ - Mettez ceci avant le nombre de l'image pour réduire le nombre de l'image
 {
 splitid = "990_Credits",
 subj = "Remerciements",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-07-06 20:43:56 (CEST)
+--- Last converted: 2021-07-17 01:45:52 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,16 +39,12 @@ OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blĳft L{ve 0.
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
 MAXTRINKETS = "Het maximumaantal trinkets ($1) is bereikt in dit level.",
 MAXCREWMATES = "Het maximumaantal bemanningsleden ($1) is bereikt in dit level.",
-EDITINGROOMTEXTNIL = "Bestaande tekst die bewerkt werd is nil!",
 STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
-SURENEWLEVEL = "Weet je zeker dat je een nieuw level wilt maken? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
-SURELOADLEVEL = "Weet je zeker dat je een level wilt laden? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 COULDNOTGETCONTENTSLEVELFOLDER = "Kon de inhoud van de levelsmap niet verkrĳgen. Controleer of $1 bestaat en probeer het opnieuw.",
 MAPSAVEDAS = "Kaart opgeslagen als $1!",
 RAWENTITYPROPERTIES = "Je kunt de eigenschappen van deze entiteit hier wĳzigen.",
 UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
-METADATAENTITYCREATENOW = "De metadata-entiteit bestaat nog niet. Nu aanmaken?\n\nDe metadata-entiteit is een verborgen entiteit die kan worden toegevoegd aan VVVVVV-levels om extra data op te slaan die door Ved gebruikt wordt, zoals het levelkladblok, namen van vlaggen, en andere dingen.",
 WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.\n\nDe editor verlaten?",
@@ -60,7 +56,6 @@ FLAGNAMENUMBERS = "Namen van vlaggen kunnen niet alleen uit nummers bestaan.",
 FLAGNAMECHARS = "Namen van vlaggen kunnen geen haakjes, komma's of spaties bevatten.",
 FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
-SUREQUIT = "Weet je zeker dat je wilt afsluiten? Niet-opgeslagen wĳzigingen zullen verloren gaan.",
 SUREQUITNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het afsluiten?",
 SURENEWLEVELNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het maken van een nieuw level?",
 SCALEREBOOT = "De nieuwe schaalinstellingen zullen van toepassing worden na het herstarten van Ved.",
@@ -78,8 +73,6 @@ SOURCEDESTROOMSSAME = "Beide kamers zĳn hetzelfde!",
 UNKNOWNUNDOTYPE = "Onbekend ongedaan-maak-type \"$1\"!",
 MDEVERSIONWARNING = "Dit level lĳkt in een nieuwere versie van Ved te zĳn gemaakt, en kan data bevatten die verloren zal gaan als je dit level opslaat.",
 FORGOTPATH = "Je bent vergeten een pad op te geven!",
-MDENOTPASSED = "Let op: metadata-entiteit niet meegegeven aan savelevel()!",
-RESTARTVEDLANG = "Na het veranderen van de taal moet Ved opnieuw opgestart worden voordat de wĳziging van toepassing wordt.",
 
 SELECTCOPY1 = "Selecteer de kamer om te kopiëren",
 SELECTCOPY2 = "Selecteer de plek om deze kamer naartoe te kopiëren",
@@ -166,11 +159,6 @@ GOTO = "Naartoe gaan",
 DELETE = "Verwĳderen",
 RENAME = "Hernoemen",
 CHANGEDIRECTION = "Richting wĳzigen",
-DIRECTION = "Richting->",
-UP = "omhoog",
-DOWN = "omlaag",
-LEFT = "links",
-RIGHT = "rechts",
 TESTFROMHERE = "Testen vanaf hier",
 FLIP = "Omdraaien",
 CYCLETYPE = "Type wĳzigen",
@@ -237,15 +225,6 @@ NOTSOLID = "Niet vast",
 
 TSCOLOR = "Kleur $1",
 
-ONETRINKETS = "T:",
-ONECREWMATES = "B:",
-ONEENTITIES = "E:",
-
-ONECUSTOMTILESET = "AT $1", -- Custom Tileset
-ONECUSTOMSPRITESHEET = "AS $1", -- Custom Sprites
-ONEALTSTATE = "A $1/$2", -- Alt state
-ONETOWER = "T$1 $2\n $3", -- Tower. $1 is ↑ or ↓, $2 is tower number, $3 is current position
-
 LEVELSLIST = "Levels",
 LOADTHISLEVEL = "Laad dit level: ",
 ENTERNAMESAVE = "Naam om mee op te slaan: ",
@@ -283,7 +262,6 @@ RENAMESCRIPT = "Script hernoemen",
 LINE = "regel ",
 
 SAVEMAP = "Kaart opslaan",
-SAVEFULLSIZEMAP = "Grote kaart opslaan",
 COPYROOMS = "Kamer kopiëren",
 SWAPROOMS = "Wissel kamers",
 
@@ -310,7 +288,6 @@ NEVERASKBEFOREQUIT = "Nooit vragen voor afsluiten, zelfs als er niet-opgeslagen 
 COORDS0 = "Coördinaten laten beginnen bĳ 0 (zoals in interne scripting)",
 ALLOWDEBUG = "Debugmodus inschakelen",
 SHOWFPS = "FPS-teller tonen",
-IIXSCALE = "2x schaal",
 CHECKFORUPDATES = "Controleren op updates",
 PAUSEDRAWUNFOCUSED = "Niet tekenen als het venster inactief is",
 ENABLEOVERWRITEBACKUPS = "Reservekopie maken van levelbestanden die worden overschreven",
@@ -379,6 +356,7 @@ SYNTAXCOLOR_ERRORTEXT = "Niet-herkend commando",
 SYNTAXCOLOR_CURSOR = "Cursor",
 SYNTAXCOLOR_FLAGNAME = "Vlagnaam",
 SYNTAXCOLOR_NEWFLAGNAME = "Nieuwe vlagnaam",
+SYNTAXCOLOR_COMMENT = "Commentaar",
 RESETCOLORS = "Kleuren resetten",
 STRINGNOTFOUND = "\"$1\" kan niet worden gevonden",
 
@@ -437,7 +415,6 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 -- 1.3.4
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
 REQUIRESHIGHERLOVE = " (vereist L{VE $1 of hoger)",
-SYNTAXCOLOR_COMMENT = "Commentaar",
 FPSLIMIT = "FPS-limiet",
 
 MAPRESOLUTION = "Resolutie", -- Map export size
@@ -559,21 +536,10 @@ MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bĳ $2 is groter dan $3 bĳ $4! (Onder
 BTNOVERRIDE = "Omzeilen",
 TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-PLATFORM_VCE = "VVVVVV-CE",
 TIMETRIALS = "Races tegen de klok",
-SWITCHEDTOALTSTATEMAIN = "Geschakeld naar hoofdtoestand",
-SWITCHEDTOALTSTATE = "Geschakeld naar alternatieve toestand $1",
-ADDEDALTSTATE = "Nieuwe alternatieve toestand $1 toegevoegd",
-REMOVEDALTSTATE = "Alternatieve toestand $1 verwĳderd",
 TIMETRIALTRINKETS = "Aantal trinkets",
 TIMETRIALTIME = "Partĳd",
 SUREDELETETRIAL = "Weet je zeker dat je de race tegen de klok \"$1\" wilt verwĳderen?",
-
-CUSTOMGRAPHICS = "Alternatieve afbeeldingen", -- Alternative tileset or sprites images
-CUSTOMTILESET = "Tileset-afbeelding:", -- What variant of tiles*.png is used
-CUSTOMSPRITESHEET = "Sprites-afbeelding:", -- What variant of sprites*.png is used
-CUSTOMTILESET_DEFAULT = "Standaard ($1)", -- Placeholder can be tiles.png, tiles2.png or tiles3.png
-CUSTOMSPRITESHEET_DEFAULT = "Standaard (sprites.png)",
 
 CUT = "Knippen",
 PASTE = "Plakken",
@@ -647,10 +613,6 @@ L_PLU = {
 	NOTALLTILESVALID = {
 		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
 		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199",
-	},
-	NOTALLTILESVALID_ALTSTATE = {
-		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199 in alteratieve toestand $2 voor kamer $3,$4",
-		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199 in alternatieve toestand $2 voor kamer $3,$4",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -961,7 +923,7 @@ Ved-opties.
 {
 splitid = "020_Tile_placement_modes",
 subj = "Plaatsingsmodi",
-imgs = {"autodemo.png", "auto2demo.png", "manualdemo2.png"},
+imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
 Plaatsingsmodi\wh#
 \C=
@@ -996,7 +958,7 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
 {
 splitid = "030_Tools",
 subj = "Tools",
-imgs = {"tools2/on/1.png", "tools2/on/2.png", "tools2/on/3.png", "tools2/on/4.png", "tools2/on/5.png", "tools2/on/6.png", "tools2/on/7.png", "tools2/on/8.png", "tools2/on/9.png", "tools2/on/10.png", "tools2/on/11.png", "tools2/on/12.png", "tools2/on/13.png", "tools2/on/14.png", "tools2/on/15.png", "tools2/on/16.png", "tools2/on/17.png", },
+imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
 Tools\wh#
 \C=
@@ -2763,7 +2725,7 @@ _ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
 {
 splitid = "990_Credits",
 subj = "Credits",
-imgs = {"credits.png"},
+imgs = {"images/credits.png"},
 cont = [[
 \0
 
