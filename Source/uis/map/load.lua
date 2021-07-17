@@ -1,11 +1,7 @@
 -- map/load
 
 return function()
-	mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)
-	--mapxoffset = (640-(((1/mapscale)-metadata.mapwidth)*mapscale*640))/2
-	--mapyoffset = (480-(((1/mapscale)-metadata.mapheight)*mapscale*480))/2
-	mapxoffset = (((1/mapscale)-metadata.mapwidth)*mapscale*640)/2
-	mapyoffset = (((1/mapscale)-metadata.mapheight)*mapscale*480)/2
+	map_screen_init()
 
 	selectingrooms = 0
 	selected1x = -1; selected1y = -1

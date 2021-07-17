@@ -114,13 +114,29 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	end
 end
 
-function addrooms(neww, newh)
+function resize_level(new_w, new_h)
+	-- Should be used instead of simply assigning to metadata.mapwidth or metadata.mapheight
+	local reset_map = false
+	if s.mapstyle == "minimap" and getminimapzoom(metadata) ~= getminimapzoom(new_w, new_h) then
+		reset_map = true
+	end
+
+	metadata.mapwidth = new_w
+	metadata.mapheight = new_h
+	add_rooms(new_w, new_h)
+	if reset_map then
+		map_init()
+	end
+	gotoroom(math.min(roomx, new_w-1), math.min(roomy, new_h-1))
+end
+
+function add_rooms(new_w, new_h)
 	-- Will add rooms in case we increase the map size. Or in case we create a new level, this prepares empty rooms. (not used for that)
 	-- I'm gonna do this in a very simple way, just loop through all rooms and add a room wherever it's nil.
 	-- This is because we can have decreased one side and increased another, then increase the other side and still have room data there we don't want to lose in case resizing was an accident
-	cons("Maybe adding rooms: new map size is " .. neww .. " " .. newh)
+	cons("Maybe adding rooms: new map size is " .. new_w .. " " .. new_h)
 
-	for y = 0, newh-1 do
+	for y = 0, new_h-1 do
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
@@ -128,8 +144,8 @@ function addrooms(neww, newh)
 			levelmetadata[y] = {}
 		end
 
-		for x = 0, neww-1 do
-			if x >= ( y < math.min(newh, limit.mapheight) and neww or limit.mapwidth ) or y >= limit.mapheight then
+		for x = 0, new_w-1 do
+			if x >= ( y < math.min(new_h, limit.mapheight) and new_w or limit.mapwidth ) or y >= limit.mapheight then
 				map_resetroom(x, y)
 			else
 				if levelmetadata[y][x] == nil then
@@ -148,17 +164,17 @@ function addrooms(neww, newh)
 		end
 	end
 
-	if neww > limit.mapwidth then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (neww-1) / limit.mapwidth )
+	if new_w > limit.mapwidth then
+		local max_tiles_rows_outside_20xHEIGHT = math.floor( (new_w-1) / limit.mapwidth )
 		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(newh, limit.mapheight)
+		local capped_height = math.min(new_h, limit.mapheight)
 		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
 			roomdata[yk] = roomdata[yk] or {}
 
 			for xk = 0, limit.mapwidth-1 do
 				roomdata[yk][xk] = roomdata[yk][xk] or {}
 
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < neww%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
+				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < new_w%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
 					for xt = 0, 39 do
 						roomdata[yk][xk][yt*40 + xt+1] = roomdata[yk][xk][yt*40 + xt+1] or 0
 					end
@@ -1901,8 +1917,18 @@ function undo()
 			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
 		end
 	elseif undobuffer[#undobuffer].undotype == "metadata" then
+		local new_width, new_height
 		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-			metadata[v.key] = v.oldvalue
+			if v.key == "mapwidth" then
+				new_width = v.oldvalue
+			elseif v.key == "mapheight" then
+				new_height = v.oldvalue
+			else
+				metadata[v.key] = v.oldvalue
+			end
+		end
+		if new_width ~= nil and new_height ~= nil then
+			resize_level(new_width, new_height)
 		end
 		temporaryroomname = L.METADATAUNDONE
 		temporaryroomnametimer = 90
@@ -2005,8 +2031,18 @@ function redo()
 			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
 		end
 	elseif redobuffer[#redobuffer].undotype == "metadata" then
+		local new_width, new_height
 		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-			metadata[v.key] = v.newvalue
+			if v.key == "mapwidth" then
+				new_width = v.newvalue
+			elseif v.key == "mapheight" then
+				new_height = v.newvalue
+			else
+				metadata[v.key] = v.newvalue
+			end
+		end
+		if new_width ~= nil and new_height ~= nil then
+			resize_level(new_width, new_height)
 		end
 		temporaryroomname = L.METADATAREDONE
 		temporaryroomnametimer = 90
@@ -2870,6 +2906,31 @@ function displayminimaproom(offsetx, offsety, theroomdata, themetadata, zoomscal
 				do_row(tiley, actualy)
 				actualx = 0
 				actualy = actualy + 1
+			end
+		end
+	end
+end
+
+function displayvtoolsroom(offsetx, offsety, theroomdata, themetadata)
+	-- Display a room in VTools map style, so one pixel per tile
+	local ts = usedtilesets[themetadata.tileset]
+
+	-- Tower? Nah, we can't support that at this time.
+	if ts == 3 then
+		return
+	end
+
+	local tsimage = "vtools_" .. tileset_image(themetadata)
+
+	for aty = 0, 29 do
+		for atx = 0, 39 do
+			local t = theroomdata[(aty*40)+(atx+1)]
+			if t ~= 0 then
+				love.graphics.draw(
+					tilesets[tsimage]["img"],
+					tilesets[tsimage]["tiles"][anythingbutnil0(tonumber(t))],
+					offsetx+atx, offsety+aty
+				)
 			end
 		end
 	end

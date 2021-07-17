@@ -191,26 +191,6 @@ lowprio_maploading_states = {
 	[28] = true,
 }
 
--- Map exporting resolutions
-map_resolutions = {
-	{-1, L.MAPRES_ASSHOWN},
-	{1/8, langkeys(L.MAPRES_RATIO, {1, 8, 40, 30})},
-	{1/4, langkeys(L.MAPRES_PERCENT, {25, 80, 60})},
-	{1/2, langkeys(L.MAPRES_PERCENT, {50, 160, 120})},
-	{1, langkeys(L.MAPRES_PERCENT, {100, 320, 240})},
-	{2, langkeys(L.MAPRES_PERCENT, {200, 640, 480})}
-}
-
--- Make some dropdownable arrays from that.
-map_resolutions_labels = {}
-map_resolutions_numbertolabel = {}
-map_resolutions_labeltonumber = {}
-for k,v in pairs(map_resolutions) do
-	table.insert(map_resolutions_labels, v[2])
-	map_resolutions_numbertolabel[v[1]] = v[2]
-	map_resolutions_labeltonumber[v[2]] = v[1]
-end
-
 limit_v = {
 	mapwidth = 20,
 	mapheight = 20,

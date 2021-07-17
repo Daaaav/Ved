@@ -198,6 +198,10 @@ configs = {
 		["type"] = "string",
 		comment = "VVVVVV-CE equivalent of vvvvvv23 option, now obsolete.",
 	},
+	mapstyle = {
+		default = "full",
+		["type"] = "string"
+	},
 }
 
 function saveconfig()

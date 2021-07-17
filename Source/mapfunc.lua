@@ -177,12 +177,13 @@ function map_doroom(x, y)
 	-- LÖVE 0.9.x is still supported, with support for ancient graphics cards/drivers.
 	if love.graphics.isSupported("canvas") then
 		local canvas
-		if love.graphics.isSupported("npot") then
-			-- You're running a system that's not, what, 12 years old?
-			canvas = love.graphics.newCanvas(320, 240)
+		if s.mapstyle == "minimap" then
+			local zoom = getminimapzoom(metadata)
+			canvas = love.graphics.newCanvas(canvas_size(12*zoom, 9*zoom))
+		elseif s.mapstyle == "vtools" then
+			canvas = love.graphics.newCanvas(canvas_size(40, 30))
 		else
-			-- I have access to a cardboard box that doesn't have NPOT support.
-			canvas = love.graphics.newCanvas(512, 256)
+			canvas = love.graphics.newCanvas(canvas_size(320, 240))
 		end
 
 		love.graphics.setCanvas(canvas)
@@ -190,7 +191,13 @@ function map_doroom(x, y)
 		--love.graphics.setColor(0,0,0,255)
 		--love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
-		displayroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y), 0.5)
+		if s.mapstyle == "minimap" then
+			displayminimaproom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y))
+		elseif s.mapstyle == "vtools" then
+			displayvtoolsroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y))
+		else
+			displayroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y), 0.5)
+		end
 		love.graphics.setCanvas()
 
 		rooms_map[y][x].map = canvas
@@ -205,31 +212,26 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 	-- So for resolution 2, every room is displayed at 640x480.
 	-- Assumes everything has been checked for validity before.
 
-	local room_w, room_h, used_resolution
+	local room_w, room_h
+	local used_resolution = resolution
 
 	if resolution == -1 then
+		-- "As shown" can only be selected in the full 320x240-per-room minimap
 		room_w, room_h = 640*mapscale, 480*mapscale
 		used_resolution = mapscale*2
+	elseif s.mapstyle == "minimap" then
+		local zoom = getminimapzoom(metadata)
+		room_w, room_h = 12*zoom*resolution, 9*zoom*resolution
+	elseif s.mapstyle == "vtools" then
+		room_w, room_h = 40*resolution, 30*resolution
 	else
 		room_w, room_h = 320*resolution, 240*resolution
-		used_resolution = resolution
 	end
 	local w_size, h_size = room_w*w, room_h*h
 
 	-- Now create the canvas, which should be possible, but a crash may be luring...
 	local status, err = pcall(function()
-		local canvas
-		if love.graphics.isSupported("npot") then
-			-- Perfectly normal
-			canvas = love.graphics.newCanvas(w_size, h_size)
-		else
-			-- Don't mind that empty filler, be glad that non-npot-compatible thing even works!
-			canvas = love.graphics.newCanvas(
-				math.pow(2, math.ceil(math.log(w_size)/math.log(2))),
-				math.pow(2, math.ceil(math.log(h_size)/math.log(2)))
-			)
-		end
-
+		local canvas = love.graphics.newCanvas(canvas_size(w_size, h_size))
 		love.graphics.setCanvas(canvas)
 		clear_canvas(canvas)
 		if not transparentbg then
@@ -393,4 +395,18 @@ function getminimapzoom(...)
 		zoom = 4
 	end
 	return zoom
+end
+
+function map_screen_init()
+	mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)
+	if s.mapstyle == "minimap" then
+		local zoom = getminimapzoom(metadata)
+		maproomscale = (mapscale*640)/(12*zoom)
+	elseif s.mapstyle == "vtools" then
+		maproomscale = (mapscale*640)/40
+	else
+		maproomscale = mapscale*2
+	end
+	mapxoffset = (((1/mapscale)-metadata.mapwidth)*mapscale*640)/2
+	mapyoffset = (((1/mapscale)-metadata.mapheight)*mapscale*480)/2
 end

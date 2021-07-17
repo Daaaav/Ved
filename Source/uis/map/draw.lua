@@ -25,7 +25,7 @@ return function()
 				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
 				love.graphics.setColor(255,255,255,255)
 
-				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, mapscale*2)
+				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, maproomscale)
 			end
 
 			if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
@@ -260,6 +260,7 @@ return function()
 				selectedtool = actual_t
 				updatewindowicon()
 				toolscroll()
+				mousepressed = true
 			end
 			if nodialog and not mousepressed and love.mouse.isDown("r") and mouseon(16, (16+(48*(t-1))), 32, 32) and t == 4 then
 				gotostartpointroom()
@@ -299,10 +300,5 @@ return function()
 		if toolanyofthese then
 			love.graphics.draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
 		end
-	end
-
-	-- Put this here, otherwise we get tripped up when clicking on the tools
-	if love.mouse.isDown("l") and nodialog then
-		mousepressed = true
 	end
 end

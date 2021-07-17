@@ -5,6 +5,27 @@ return {
 		{
 		},
 		{
+			DrawingFunction(
+				function(x, y, maxw, maxh)
+					ved_printf(L.MAP_STYLE, x, y, maxw, "center")
+					for k,v in pairs({
+						{"full", L.MAP_STYLE_FULL},
+						{"minimap", L.MAP_STYLE_MINIMAP},
+						{"vtools", L.MAP_STYLE_VTOOLS},
+					}) do
+						radio(s.mapstyle == v[1], x, y+(24*k)-4, v[1], v[2],
+							function(key)
+								s.mapstyle = v[1]
+								saveconfig()
+								map_init()
+								map_screen_init()
+							end
+						)
+					end
+
+					return 112, 20+24*3
+				end
+			),
 			EditorIconBar(),
 			LabelButton(L.COPYROOMS,
 				function()

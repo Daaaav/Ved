@@ -360,10 +360,12 @@ function loadtilesets(levelassetsfolder)
 	-- Normally called without argument. This function may call itself once more with it filled.
 	-- levelassetsfolder may be a path to a level-specific assets folder, which overrides any existing assets
 
-	loadtileset("tiles.png", levelassetsfolder)
-	loadtileset("tiles2.png", levelassetsfolder)
-	loadtileset("tiles3.png", levelassetsfolder)
-	loadtileset("entcolours.png", levelassetsfolder)
+	loadtileset("tiles.png", 8, levelassetsfolder)
+	loadtileset("tiles2.png", 8, levelassetsfolder)
+	loadtileset("tiles3.png", 8, levelassetsfolder)
+	loadtileset("entcolours.png", 8, levelassetsfolder)
+	loadtileset("vtools_tiles.png", 1, levelassetsfolder)
+	loadtileset("vtools_tiles2.png", 1, levelassetsfolder)
 	loadsprites("sprites.png", 32, levelassetsfolder)
 	loadsprites("teleporter.png", 96, levelassetsfolder)
 
@@ -390,7 +392,7 @@ function loadtilesets(levelassetsfolder)
 	loadwarpbgs()
 end
 
-function loadtileset(file, levelassetsfolder)
+function loadtileset(file, res, levelassetsfolder)
 	local readsuccess, contents
 	if levelassetsfolder == nil then
 		-- Just loading global assets, either custom or built-in
@@ -428,8 +430,8 @@ function loadtileset(file, levelassetsfolder)
 	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
 	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
 	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
-	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/8)
-	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/8)
+	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/res)
+	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/res)
 
 	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
 
@@ -443,13 +445,13 @@ function loadtileset(file, levelassetsfolder)
 
 	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
 		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
-			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*8, tsy*8, 8, 8, tilesets[file]["width"], tilesets[file]["height"])
+			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*res, tsy*res, res, res, tilesets[file]["width"], tilesets[file]["height"])
 		end
 	end
 
 	-- If this tileset is smaller than 1200 (tiles3) then fill up with tile 0 to prevent crashes
 	for filler = tilesets[file].tileswidth*tilesets[file].tilesheight, 1199 do
-		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, 8, 8, tilesets[file].width, tilesets[file].height)
+		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, res, res, tilesets[file].width, tilesets[file].height)
 	end
 end
 
@@ -3191,6 +3193,16 @@ function draw_script_warn_light(id, x, y, active)
 			"left"
 		)
 	end
+end
+
+function canvas_size(w, h)
+	if love.graphics.isSupported("npot") then
+		-- You're running a system that's not, what, 15 years old?
+		return w, h
+	end
+
+	-- I have access to a cardboard box that doesn't have NPOT support.
+	return math.pow(2, math.ceil(math.log(w)/math.log(2))), math.pow(2, math.ceil(math.log(h)/math.log(2)))
 end
 
 hook("func")

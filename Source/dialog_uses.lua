@@ -46,14 +46,41 @@ function dialog.form.exportmap_make()
 	local wh_pos = font8:getWidth(L.TOPLEFT)/8 + round(spacing)
 	local br_pos = 46 - font8:getWidth(L.BOTTOMRIGHT)/8
 
+	local map_resolutions, room_w, room_h
+	if s.mapstyle == "minimap" then
+		local zoom = getminimapzoom(metadata)
+		room_w, room_h = 12*zoom, 9*zoom
+		map_resolutions = {
+			{1, langkeys(L.MAPRES_PERCENT, {100, room_w, room_h})},
+			{2, langkeys(L.MAPRES_PERCENT, {200, room_w*2, room_h*2})},
+			{4, langkeys(L.MAPRES_PERCENT, {400, room_w*4, room_h*4})},
+			{8, langkeys(L.MAPRES_PERCENT, {800, room_w*8, room_h*8})}
+		}
+	elseif s.mapstyle == "vtools" then
+		room_w, room_h = 40, 30
+		map_resolutions = {
+			{1, langkeys(L.MAPRES_PERCENT, {100, room_w, room_h})},
+			{2, langkeys(L.MAPRES_PERCENT, {200, room_w*2, room_h*2})},
+			{4, langkeys(L.MAPRES_PERCENT, {400, room_w*4, room_h*4})},
+			{8, langkeys(L.MAPRES_PERCENT, {800, room_w*8, room_h*8})}
+		}
+	else
+		room_w, room_h = 320, 240
+		map_resolutions = {
+			{-1, L.MAPRES_ASSHOWN},
+			{1/8, langkeys(L.MAPRES_RATIO, {1, 8, 40, 30})},
+			{1/4, langkeys(L.MAPRES_PERCENT, {25, 80, 60})},
+			{1/2, langkeys(L.MAPRES_PERCENT, {50, 160, 120})},
+			{1, langkeys(L.MAPRES_PERCENT, {100, 320, 240})},
+			{2, langkeys(L.MAPRES_PERCENT, {200, 640, 480})}
+		}
+	end
+
 	return {
 		{"", 0, 0, 40, L.MAPRESOLUTION, DF.LABEL},
 		{
-			"resolution", 0, 1, 30, -1, DF.DROPDOWN,
-			map_resolutions_labels, map_resolutions_numbertolabel,
-			function(picked)
-				return map_resolutions_labeltonumber[picked]
-			end
+			"resolution", 0, 1, 30, s.mapstyle == "full" and -1 or 1, DF.DROPDOWN,
+			generate_dropdown_tables(map_resolutions)
 		},
 		{
 			"res_label", 33, 1, 12,
@@ -62,7 +89,7 @@ function dialog.form.exportmap_make()
 				if fields.resolution == -1 then
 					return 640*mapscale*w .. "x" .. 480*mapscale*h
 				end
-				return 320*fields.resolution*w .. "x" .. 240*fields.resolution*h
+				return room_w*fields.resolution*w .. "x" .. room_h*fields.resolution*h
 			end, DF.LABEL
 		},
 		{"", 0, 3, 40, L.TOPLEFT, DF.LABEL},
@@ -509,7 +536,17 @@ function dialog.callback.mapexport_validate(button, fields, identifier)
 		if fields.resolution == -1 then
 			w_size, h_size = 640*mapscale*w, 480*mapscale*h
 		else
-			w_size, h_size = 320*fields.resolution*w, 240*fields.resolution*h
+			local room_w, room_h
+			if s.mapstyle == "minimap" then
+				local zoom = getminimapzoom(metadata)
+				room_w, room_h = 12*zoom, 9*zoom
+			elseif s.mapstyle == "vtools" then
+				room_w, room_h = 40, 30
+			else
+				room_w, room_h = 320, 240
+			end
+
+			w_size, h_size = room_w*fields.resolution*w, room_h*fields.resolution*h
 		end
 
 		if w_size > sizelimit or h_size > sizelimit then
@@ -888,13 +925,6 @@ function dialog.callback.leveloptions(button, fields)
 			if s.allowbiggerthansizelimit then
 				newbuttons = {L.BTNOVERRIDE, DB.OK}
 			end
-			-- Hack to smuggle the fields through the bigger size confirmation dialog
-			-- Hopefully Ved doesn't update its dialog system again and break this
-			local newfields =
-				{
-				mapwidth = {"mapwidth", 0, 0, 0, w, -1},
-				mapheight = {"mapheight", 0, 0, 0, h, -1},
-				}
 
 			dialog.create(
 				langkeys(
@@ -904,14 +934,11 @@ function dialog.callback.leveloptions(button, fields)
 				newbuttons,
 				dialog.callback.leveloptions_maxlevelsize,
 				"",
-				newfields
+				dialog.form.hidden_make({mapwidth=w, mapheight=h})
 			)
 		else
-			metadata.mapwidth = w
-			metadata.mapheight = h
+			resize_level(w, h)
 		end
-		addrooms(metadata.mapwidth, metadata.mapheight)
-		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 	end
 
 	if not converted then
@@ -1079,11 +1106,6 @@ end
 
 function dialog.callback.leveloptions_maxlevelsize(button, fields)
 	if button == L.BTNOVERRIDE then
-		local newfields =
-			{
-			mapwidth = {"mapwidth", 0, 0, 0, fields.mapwidth, -1},
-			mapheight = {"mapheight", 0, 0, 0, fields.mapheight, -1},
-			}
 		dialog.create(
 			langkeys(
 				L.CONFIRMBIGGERSIZE,
@@ -1096,13 +1118,10 @@ function dialog.callback.leveloptions_maxlevelsize(button, fields)
 			DBS.YESNO,
 			dialog.callback.leveloptions_biggersize,
 			"",
-			newfields
+			dialog.form.hidden_make({mapwidth=fields.mapwidth, mapheight=fields.mapheight})
 		)
 	elseif button == DB.OK then
-		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
-		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
-		addrooms(metadata.mapwidth, metadata.mapheight)
-		gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
+		resize_level(math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight))
 
 		-- Uh, yeah, this is kind of an ugly hack and kind of relies on the
 		-- assumptions that (1) the user can't undo, redo, or make any other
@@ -1119,15 +1138,10 @@ end
 
 function dialog.callback.leveloptions_biggersize(button, fields)
 	if button == DB.NO then
-		metadata.mapwidth = math.min(fields.mapwidth, limit.mapwidth)
-		metadata.mapheight = math.min(fields.mapheight, limit.mapheight)
+		resize_level(math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight))
 	elseif button == DB.YES then
-		metadata.mapwidth = fields.mapwidth
-		metadata.mapheight = fields.mapheight
+		resize_level(fields.mapwidth, fields.mapheight)
 	end
-
-	addrooms(metadata.mapwidth, metadata.mapheight)
-	gotoroom(math.min(roomx, metadata.mapwidth-1), math.min(roomy, metadata.mapheight-1))
 
 	if #undobuffer == 0 then
 		return
