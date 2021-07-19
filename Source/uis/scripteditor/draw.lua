@@ -322,6 +322,8 @@ return function()
 			love.graphics.setColor(255,255,255)
 			if carg1 >= 0 and carg1 < metadata.mapwidth
 			and carg2 >= 0 and carg2 < metadata.mapheight
+			and rooms_map[carg2] ~= nil
+			and rooms_map[carg2][carg1] ~= nil
 			and rooms_map[carg2][carg1].map ~= nil then
 				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, 0.25)
 
