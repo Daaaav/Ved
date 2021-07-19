@@ -75,10 +75,6 @@ function love.draw()
 		ved_printf(notification_text, 16, boxy+4, 80*8, "left")
 	end
 
-	if love.keyboard.isDown("f9") and state_hotkeys[state] ~= nil then
-		--ved_print("HOTKEYS MENU", love.mouse.getX(), love.mouse.getY())
-	end
-
 	-- Middle click cursor
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
 		v6_setcol(3)
@@ -99,7 +95,6 @@ function love.draw()
 	if middlescroll_shatter then
 		for k,v in pairs(middlescroll_shatter_pieces) do
 			love.graphics.setColor(130+love.math.random(0,70), 110+love.math.random(0,70), 170+love.math.random(0,70))
-			--love.graphics.rectangle("fill", v.x, v.y, 4, 4)
 			love.graphics.setScissor(v.x, v.y, 4, 4)
 			drawentitysprite(22, v.x-v.ox, v.y-v.oy, false)
 		end
@@ -152,17 +147,7 @@ function love.draw()
 		end
 	end
 
-	--[[ some debug stuff for the new map
-	if rooms_map_current_x ~= nil then
-	ved_print(rooms_map_current_y .. "/" .. rooms_map_current_x .. "\n" .. (#rooms_map_dirty_rooms), 20, 3)
-	end
-	]]
-
 	hook("love_draw_end")
-
-	-- Are we displaying a replacement cursor?
-	--if replacecursor ~= -1 then
-		--cursorimg
 
 	if s.fpslimit_ix ~= 4 then
 		limit_draw_fps()

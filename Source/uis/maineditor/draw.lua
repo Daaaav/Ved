@@ -167,8 +167,6 @@ return function()
 				end
 
 				if selectedtool <= 2 then
-					--cons("Tile clicked: " .. atx .. " " .. aty .. ", set to " .. selectedtile .. ", subtool " .. selectedsubtool[selectedtool])
-
 					if love.mouse.isDown("r") then
 						useselectedtile = 0
 					else
@@ -366,8 +364,6 @@ return function()
 						toout = anythingbutnil0(toout) + 1
 					end
 				else
-					--cons("Tile clicked spike: " .. atx .. " " .. aty .. ", set to " .. selectedtile .. ", subtool " .. selectedsubtool[3])
-
 					if love.mouse.isDown("r") then
 						useselectedtile = 0
 					else
@@ -1643,7 +1639,6 @@ return function()
 	_= not editingroomname and showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
 	_= not editingroomname and showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
-	--rbutton((upperoptpage2 and L.UNDO or L.VEDOPTIONS), 0, 40, false, 20)
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
 	rbutton((upperoptpage2 and (not editingroomname and {L.COMPARE, "cD"} or L.COMPARE) or (not editingroomname and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
 	rbutton((upperoptpage2 and L.STATS or (not editingroomname and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)

@@ -607,7 +607,6 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 19 then
 		-- Script box, draw it as an actual box.
-		--love.graphics.draw(cursorimg[1], x, y)
 		love.graphics.setColor(0,0,255)
 		love.graphics.draw(scriptboximg[1], x, y)
 		if editingsboxid == k and selectedsubtool[13] ~= 3 then
@@ -630,11 +629,6 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			end
 		else
 			-- Normal box
-			--[[
-			love.graphics.draw(cursorimg[2], x + (v.p1-1)*16, y)
-			love.graphics.draw(cursorimg[3], x, y + (v.p2-1)*16)
-			love.graphics.draw(cursorimg[4], x + (v.p1-1)*16, y + (v.p2-1)*16)
-			]]
 			love.graphics.draw(scriptboximg[3], x + (v.p1-1)*16, y)
 			love.graphics.draw(scriptboximg[7], x, y + (v.p2-1)*16)
 			love.graphics.draw(scriptboximg[9], x + (v.p1-1)*16, y + (v.p2-1)*16)

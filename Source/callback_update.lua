@@ -31,7 +31,6 @@ function love.update(dt)
 
 	if takinginput or sp_t > 0 then
 		cursorflashtime = (cursorflashtime + dt) % 1
-		--__ = (cursorflashtime <= .5 and "_" or (input_r:sub(1, 1) == "" and " " or firstUTF8(input_r))) .. input_r:sub(2, -1)
 		firstchar = firstUTF8(input_r)
 		if cursorflashtime <= .5 then
 			__ = "_" .. input_r:sub(1 + firstchar:len())
