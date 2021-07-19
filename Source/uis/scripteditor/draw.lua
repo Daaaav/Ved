@@ -325,7 +325,16 @@ return function()
 			and rooms_map[carg2] ~= nil
 			and rooms_map[carg2][carg1] ~= nil
 			and rooms_map[carg2][carg1].map ~= nil then
-				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, 0.25)
+				local room_scale
+				if s.mapstyle == "minimap" then
+					local zoom = getminimapzoom(metadata)
+					room_scale = 320/(12*zoom)
+				elseif s.mapstyle == "vtools" then
+					room_scale = 8
+				else
+					room_scale = 1
+				end
+				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, room_scale/4)
 
 				if mouseon(map_x, map_y, 80, 60) then
 					love.graphics.setColor(128,128,128)
@@ -333,7 +342,7 @@ return function()
 					love.graphics.setColor(0,0,0)
 					love.graphics.rectangle("fill", love.mouse.getX()-380, love.mouse.getY()-120, 320, 240)
 					love.graphics.setColor(255,255,255)
-					love.graphics.draw(rooms_map[carg2][carg1].map, love.mouse.getX()-380, love.mouse.getY()-120)
+					love.graphics.draw(rooms_map[carg2][carg1].map, love.mouse.getX()-380, love.mouse.getY()-120, 0, room_scale)
 				end
 			else
 				love.graphics.draw(image.covered_80x60, map_x, map_y)
