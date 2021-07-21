@@ -208,12 +208,11 @@ function dialog.form.musicfilemetadata_make(file_metadata)
 	}
 end
 
-function dialog.form.savevvvvvvmusic_make(default)
-	return {
-		{"name", 0, 1, 40, default, DF.TEXT},
-		{"savemetadata", 0, 3, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX},
-		{"", 2, 3, 40, L.SAVEMETADATA, DF.LABEL}
-	}
+function dialog.form.savevvvvvvmusic_make(startfolder, defaultname)
+	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 9)
+	table.insert(form, {"savemetadata", 0, 13, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
+	table.insert(form, {"", 2, 13, 40, L.SAVEMETADATA, DF.LABEL})
+	return form
 end
 
 function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
@@ -959,6 +958,7 @@ function dialog.callback.loadvvvvvvmusic(button, fields)
 	end
 
 	musiceditorfile_forcevvvvvvfolder = false
+	musiceditorfolder = fields.folder
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
@@ -987,11 +987,15 @@ function dialog.callback.savevvvvvvmusic(button, fields)
 		return
 	end
 
-	local success, errormessage = savevvvvvvmusic(musicplayerfile, fields.name .. ".vvv", fields.savemetadata)
+	musiceditorfolder = fields.folder
+
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	local success, errormessage = savevvvvvvmusic(musicplayerfile, filepath, fields.savemetadata)
 	if not success then
 		dialog.create(L.SAVENOSUCCESS .. errormessage)
 	else
-		musiceditorfile = fields.name .. ".vvv"
+		musiceditorfile = filename
 	end
 end
 

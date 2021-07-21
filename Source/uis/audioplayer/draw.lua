@@ -251,7 +251,7 @@ return function()
 			mousepressed = true
 		elseif musiceditor and onrbutton(3, nil, true) then
 			-- Save
-			assets_savedialog()
+			assets_musicsavedialog()
 		elseif musiceditor and onrbutton(5, nil, true) then
 			-- File metadata (editor)
 			assets_metadataeditordialog()

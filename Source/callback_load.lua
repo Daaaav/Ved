@@ -376,6 +376,7 @@ function love.load()
 	initvvvvvvmusic()
 	musiceditorfile = ""
 	musiceditorfile_forcevvvvvvfolder = false
+	musiceditorfolder = vvvvvvfolder
 
 	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
 	subtoolnames[2] = subtoolnames[1]

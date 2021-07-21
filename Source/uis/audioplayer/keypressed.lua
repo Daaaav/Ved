@@ -14,7 +14,7 @@ return function(key)
 			pausemusic()
 		end
 	elseif musiceditor and key == "s" then
-		assets_savedialog()
+		assets_musicsavedialog()
 	elseif musiceditor and key == "m" then
 		assets_metadataeditordialog()
 	elseif not musiceditor and file_metadata_anyset and key == "m" then

@@ -428,7 +428,7 @@ local musicblobnames = {
 
 function savevvvvvvmusic(file, realfile, savemetadata)
 	-- Again, file is one of three possible values including "musiceditor", realfile is an actual filename
-	local success, os_fh = multiwritefile_open(vvvvvvfolder .. dirsep .. realfile)
+	local success, os_fh = multiwritefile_open(realfile)
 	if not success then
 		return false, os_fh -- os_fh is error message here
 	end

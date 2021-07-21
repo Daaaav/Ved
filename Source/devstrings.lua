@@ -9,3 +9,5 @@ L.MAP_STYLE = "Map style"
 L.MAP_STYLE_FULL = "Full" -- Max 12 characters
 L.MAP_STYLE_MINIMAP = "Minimap" -- Max 12 characters
 L.MAP_STYLE_VTOOLS = "VTools" -- Max 12 characters
+
+L.SAVEMUSICNAME = "Save .vvv" -- place next to L.LOADMUSICNAME

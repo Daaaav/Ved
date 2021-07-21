@@ -2934,13 +2934,13 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	end
 end
 
-function assets_savedialog()
+function assets_musicsavedialog()
 	dialog.create(
-		L.ENTERNAMESAVE,
-		DBS.OKCANCEL,
+		"",
+		DBS.SAVECANCEL,
 		dialog.callback.savevvvvvvmusic,
-		nil,
-		dialog.form.savevvvvvvmusic_make(musiceditorfile:sub(1,-5))
+		L.SAVEMUSICNAME,
+		dialog.form.savevvvvvvmusic_make(musiceditorfolder, musiceditorfile)
 	)
 end
 
@@ -2969,7 +2969,7 @@ function assets_musicloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.loadvvvvvvmusic,
 		L.LOADMUSICNAME,
-		dialog.form.files_make(vvvvvvfolder, "", ".vvv", true, 11)
+		dialog.form.files_make(musiceditorfolder, "", ".vvv", true, 11)
 	)
 end
 
