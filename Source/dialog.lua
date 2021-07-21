@@ -513,12 +513,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		self:setColor(0,0,0,255)
 		for k,v in pairs(menuitems) do
 			-- Only display this item if it will be visible
-			if k*8+listscroll <= 8+8*list_height and k*8+listscroll >= 0 then
+			if k*12+listscroll-4 <= 8+8*list_height and k*12+listscroll-4 >= 0 then
+				local row_y = real_y+1+k*12+listscroll-4
 				local selected = self:return_fields().name == v.name
-				local moused = (mouseon(real_x, real_y+1+k*8+listscroll, real_w-16, 8) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and window_active())
+				local moused = (mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and window_active())
 				if selected or moused then
 					self:setColor(172,172,172,255)
-					love.graphics.rectangle("fill", real_x, real_y+1+k*8+listscroll, real_w-16, 8)
+					love.graphics.rectangle("fill", real_x, row_y, real_w-16, 12)
 					self:setColor(0,0,0,255)
 					if moused and love.mouse.isDown("l") and not mousepressed then
 						self.currentfield = n
@@ -534,13 +535,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				if v.isdir then
 					self:setColor(255,255,255,255)
-					love.graphics.draw(image.smallfolder, real_x, real_y+1+k*8+listscroll)
+					love.graphics.draw(image.smallfolder, real_x, row_y+2)
 					if active and selected then
-						showhotkey(" ", real_x+real_w-20, real_y+k*8+listscroll, ALIGN.RIGHT, topmost, self)
+						showhotkey(" ", real_x+real_w-20, row_y-1, ALIGN.RIGHT, topmost, self)
 					end
 					self:setColor(0,0,0,255)
 				end
-				ved_print(displayable_filename(v.name), real_x+8, real_y+1+k*8+listscroll)
+				ved_print(displayable_filename(v.name), real_x+8, row_y+2)
 			end
 		end
 		if folder_error ~= "" then
@@ -551,13 +552,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 		-- Scrollbar
 		local newfraction = scrollbar(
-			real_x+real_w-16, real_y+9, 8*list_height, #menuitems*8,
-			(-listscroll)/((#menuitems*8)-(8*list_height)),
+			real_x+real_w-16, real_y+9, 8*list_height, #menuitems*12,
+			(-listscroll)/((#menuitems*12)-(8*list_height)),
 			self
 		)
 
 		if newfraction ~= nil then
-			self.fields[n][DFP.FILES_LISTSCROLL] = -(newfraction*((#menuitems*8)-(8*list_height)))
+			self.fields[n][DFP.FILES_LISTSCROLL] = -(newfraction*((#menuitems*12)-(8*list_height)))
 		end
 	end
 

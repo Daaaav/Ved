@@ -1783,6 +1783,10 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		local cf = dialogs[#dialogs].currentfield
 		local cfistext = anythingbutnil(dialogs[#dialogs].fields[cf])[DFP.T] == DF.TEXT
 		if k ~= nil then
+			if distance % 8 == 0 then
+				-- Account for 12px high items, 16 scroll distance is jarring
+				distance = distance * 1.5
+			end
 			local fieldscroll = topdialog.fields[k][DFP.FILES_LISTSCROLL]
 			if direction == "u" then
 				if mkinput == "home" and not cfistext then
@@ -1794,7 +1798,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 					end
 				end
 			elseif direction == "d" then
-				local upperbound = (#topdialog.fields[k][DFP.FILES_MENUITEMS])*8-8*topdialog.fields[k][DFP.FILES_LIST_HEIGHT]
+				local upperbound = (#topdialog.fields[k][DFP.FILES_MENUITEMS])*12-8*topdialog.fields[k][DFP.FILES_LIST_HEIGHT]
 				if mkinput == "end" and not cfistext then
 					fieldscroll = math.min(-upperbound, 0)
 				else
