@@ -3148,6 +3148,8 @@ function assets_openimage(filepath, filename)
 	elseif filename:sub(1,7) == "sprites"
 	or filename:sub(1,11) == "flipsprites" then
 		imageviewer_grid = 32
+	elseif filename:sub(1,12) == "vtools_tiles" then
+		imageviewer_grid = 1
 	end
 end
 
