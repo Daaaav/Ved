@@ -406,7 +406,7 @@ return function()
 		rbutton(L.SENDFEEDBACK, 6, 40, false, 20)
 		if updatecheck.notes_available then
 			rbutton(L.MOREINFO, 11, 40, false, 20)
-		elseif not s.pcheckforupdates then
+		elseif not s.pcheckforupdates or updatecheck.check_error then
 			rbutton(L.VERSIONCHECKNOW, 11, 40, false, 20)
 		end
 		if updatecheck.scrolling_text ~= nil then
@@ -456,7 +456,7 @@ return function()
 				if updatecheck.notes_available then
 					stopinput()
 					tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
-				elseif not s.pcheckforupdates then
+				elseif not s.pcheckforupdates or updatecheck.check_error then
 					s.pcheckforupdates = true
 					updatecheck.start_check()
 				end
