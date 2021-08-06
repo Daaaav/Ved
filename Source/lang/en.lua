@@ -177,7 +177,6 @@ MOREB = "More >>",
 AUTOMODE = "Mode: auto",
 AUTO2MODE = "Mode: multi",
 MANUALMODE = "Mode: manual",
-PLATFORMSPEED = "Platf. spd.: $1",
 ENEMYTYPE = "Enemy type: $1",
 PLATFORMBOUNDS = "Platf. bounds",
 WARPDIR = "Warp dir: $1",
@@ -248,6 +247,11 @@ SAVEMAP = "Save map",
 COPYROOMS = "Copy room",
 SWAPROOMS = "Swap rooms",
 
+MAP_STYLE = "Map style",
+MAP_STYLE_FULL = "Full", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Pauxzekraneca", -- Max 12 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+
 FLAGS = "Flags",
 ROOM = "room",
 CONTENTFILLER = "Content",
@@ -264,9 +268,8 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "You do not have a custom VVVVVV directory set.\n
 CUSTOMVVVVVVDIRECTORY_SET = "Your VVVVVV directory is set to a custom path:\n$1\n\n",
 LANGUAGE = "Language",
 DIALOGANIMATIONS = "Dialog animations",
-FLIPSUBTOOLSCROLL = "Flip subtool scrolling direction",
+FLIPSUBTOOLSCROLL = "Flip tool scrolling direction",
 ADJACENTROOMLINES = "Indicators of tiles in adjacent rooms",
-ASKBEFOREQUIT = "Ask before quitting",
 NEVERASKBEFOREQUIT = "Never ask before quitting, even if there are unsaved changes",
 COORDS0 = "Display coordinates as starting at 0 (as in internal scripting)",
 ALLOWDEBUG = "Enable debug mode",
@@ -449,6 +452,7 @@ RELOAD = "Reload",
 UNLOAD = "Unload",
 MUSICEDITOR = "Music editor",
 LOADMUSICNAME = "Load .vvv",
+SAVEMUSICNAME = "Save .vvv",
 INSERTSONG = "Insert song at track $1",
 SUREDELETESONG = "Are you sure you want to remove song $1?",
 SONGOPENFAIL = "Unable to open $1, song not replaced.",
@@ -547,6 +551,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for 
 PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "All plugins",
 ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",

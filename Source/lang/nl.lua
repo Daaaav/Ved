@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-07-17 01:45:52 (CEST)
+--- Last converted: 2021-08-06 21:21:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,7 +39,6 @@ OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blĳft L{ve 0.
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
 MAXTRINKETS = "Het maximumaantal trinkets ($1) is bereikt in dit level.",
 MAXCREWMATES = "Het maximumaantal bemanningsleden ($1) is bereikt in dit level.",
-STARTPOINTNOLONGERFOUND = "Het oude startpunt kan niet meer worden gevonden!",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Kon de inhoud van de levelsmap niet verkrĳgen. Controleer of $1 bestaat en probeer het opnieuw.",
 MAPSAVEDAS = "Kaart opgeslagen als $1!",
@@ -58,7 +57,6 @@ FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelĳken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
 SUREQUITNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het afsluiten?",
 SURENEWLEVELNEW = "Je hebt niet-opgeslagen wĳzigingen. Wil je deze wĳzigingen opslaan voor het maken van een nieuw level?",
-SCALEREBOOT = "De nieuwe schaalinstellingen zullen van toepassing worden na het herstarten van Ved.",
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
 ENTITY404 = "Entiteit #$1 bestaat niet meer!",
@@ -178,7 +176,6 @@ CHANGEEXIT = "Uitgang verplaatsen",
 COPYENTRANCE = "Ingang kopiëren",
 LOCK = "Vergrendelen",
 UNLOCK = "Ontgrendelen",
-BUG = "[Bug!]",
 
 VEDOPTIONS = "Ved-opties",
 LEVELOPTIONS = "Levelopties",
@@ -194,7 +191,6 @@ MOREB = "Meer >>",
 AUTOMODE = "Modus: auto",
 AUTO2MODE = "Modus: multi",
 MANUALMODE = "Modus: handm.",
-PLATFORMSPEED = "Snelheid: $1",
 ENEMYTYPE = "Type: $1",
 PLATFORMBOUNDS = "Begrenzing",
 WARPDIR = "Warprichting:$1",
@@ -207,7 +203,7 @@ HIDEBOUNDS = "Grenzen verb.",
 SHOWBOUNDS = "Grenzen tonen",
 
 ROOMPLATFORMS = "Platformen", -- basically, platforms/enemies in/for this room
-ROOMENEMIES = "Kamervĳanden",
+ROOMENEMIES = "Vĳanden",
 
 OPTNAME = "Naam",
 OPTBY = "Door",
@@ -265,6 +261,11 @@ SAVEMAP = "Kaart opslaan",
 COPYROOMS = "Kamer kopiëren",
 SWAPROOMS = "Wissel kamers",
 
+MAP_STYLE = "Kaartstĳl",
+MAP_STYLE_FULL = "Volledig", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+
 FLAGS = "Vlaggen",
 ROOM = "kamer",
 CONTENTFILLER = "Inhoud",
@@ -281,9 +282,8 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "Je hebt geen aangepaste VVVVVV-map ingesteld.\n\
 CUSTOMVVVVVVDIRECTORY_SET = "Je VVVVVV-map is ingesteld op een aangepast pad:\n$1\n\n",
 LANGUAGE = "Taal",
 DIALOGANIMATIONS = "Dialoogvenster-animaties",
-FLIPSUBTOOLSCROLL = "Scrollrichting voor subtools omkeren",
+FLIPSUBTOOLSCROLL = "Scrollrichting voor gereedschap omkeren",
 ADJACENTROOMLINES = "Aanduidingen van blokken in naastgelegen kamers",
-ASKBEFOREQUIT = "Vragen voor afsluiten",
 NEVERASKBEFOREQUIT = "Nooit vragen voor afsluiten, zelfs als er niet-opgeslagen wĳzigingen zĳn",
 COORDS0 = "Coördinaten laten beginnen bĳ 0 (zoals in interne scripting)",
 ALLOWDEBUG = "Debugmodus inschakelen",
@@ -326,7 +326,7 @@ MAPWIDTHINVALID = "Levelbreedte is ongeldig: $1",
 MAPHEIGHTINVALID = "Levelhoogte is ongeldig: $1",
 LEVMUSICEMPTY = "Levelmuziek is leeg!",
 NOT400ROOMS = "Het aantal elementen in levelMetaData is niet 400!",
-MOREERRORS = "$1 meer",
+MOREERRORS = "nog $1",
 
 DEBUGMODEON = "Debugmodus aan",
 FPS = "FPS",
@@ -385,7 +385,6 @@ OVERWRITTENTIME = "Overschreven", -- List header
 SAVEBACKUP = "Opslaan in VVVVVV-map",
 DATEFORMAT = "Datumformaat",
 TIMEFORMAT = "Tĳdformaat",
-CUSTOMDATEFORMAT = "Aangepast datumformaat",
 SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳven, hiervoor wordt namelĳk GEEN backup gemaakt!",
 
 -- 1.2.4
@@ -467,9 +466,10 @@ RELOAD = "Herladen",
 UNLOAD = "Ontladen",
 MUSICEDITOR = "Muziekbewerker",
 LOADMUSICNAME = ".vvv laden",
+SAVEMUSICNAME = ".vvv opslaan",
 INSERTSONG = "Nummer invoegen op positie $1",
 SUREDELETESONG = "Weet je zeker dat je nummer $1 wilt verwĳderen?",
-SONGOPENFAIL = "Kon $1 niet openen, nummer niet vervangen.",
+SONGOPENFAIL = "Kon $1 niet openen, nummer is niet vervangen.",
 SONGREPLACEFAIL = "Er ging iets fout bĳ het vervangen van het nummer.",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
@@ -565,6 +565,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "Je hebt nog geen $1-applicatie ingesteld die ge
 PLAYTESTING_EXECUTABLE_SET = "De $1-applicatie die gebruikt wordt om levels te testen is ingesteld op:\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition wordt niet meer onderhouden. Het wordt niet aanbevolen om het te gebruiken, en ondersteuning voor VVVVVV-CE-levels zal worden verwĳderd in een toekomstige versie van Ved.\n\nKijk voor meer informatie op https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition wordt niet meer onderhouden, en ondersteuning voor VVVVVV-CE levels is verwĳderd uit Ved. Dit level wordt behandeld als een gewoon VVVVVV-level. Kijk voor meer informatie op https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Alle plugins",
 ALL_PLUGINS_MOREINFO = "Ga naar ¤https://tolp.nl/ved/plugins.php¤deze pagina¤ voor meer informatie over plugins.\\nLCl",
@@ -898,11 +899,12 @@ gaan, moet je een level laden, of een nieuwe maken.
 
 De editor\h#
 
-Aan de linkerkant staan de verschillende gereedschappen, de tools. De meeste tools
-hebben subtools die rechts ervan worden weergegeven. Om tussen tools te schakelen
-kun je de bĳbehorende snelkoppelingen gebruiken of scrollen met Shift of Ctrl
-ingedrukt. Om tussen subtools te schakelen kun je overal scrollen. Kĳk voor meer
-informatie over de tools op de ¤Tools¤-helppagina.\nwl
+Aan de linkerkant staan de verschillende gereedschappen. De meeste gereedschappen
+hebben sub-gereedschappen die rechts ervan worden weergegeven. Om tussen
+gereedschappen te schakelen kun je de bĳbehorende snelkoppelingen gebruiken of
+scrollen met Shift of Ctrl ingedrukt. Om tussen sub-gereedschappen te schakelen
+kun je overal scrollen. Kĳk voor meer informatie over de gereedschappen op de
+Gereedschap¤-helppagina.\wl
 Je kunt op entiteiten klikken met de rechtermuisknop voor een menu met acties voor
 die entiteit. Om entiteiten te verwĳderen zonder dat menu te gebruiken kun je er
 rechts op klikken met Shift ingedrukt.
@@ -957,13 +959,13 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
 
 {
 splitid = "030_Tools",
-subj = "Tools",
+subj = "Gereedschap",
 imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
-Tools\wh#
+Gereedschap\wh#
 \C=
 
-Je kunt de volgende tools gebruiken om kamers te vullen in je level:
+Je kunt de volgende gereedschappen gebruiken om kamers te vullen in je level:
 
 \0
    Muur\h#
@@ -981,8 +983,9 @@ Hiermee kun je achtergronden plaatsen.
    Spĳker\h#
 
 
-Hiermee kun je spĳkers plaatsen. Je kunt de "automatisch uitbreiden"-subtools
-gebruiken om spĳkers te plaatsen op een oppervlak met één klik (of schuif).
+Hiermee kun je spĳkers plaatsen. Je kunt de sub-gereedschappen voor automatisch
+uitbreiden gebruiken om spĳkers te plaatsen op een oppervlak met één klik (of
+verschuiving).
 
 \3
    Trinket\h#
@@ -1257,8 +1260,8 @@ S¤  Level opslaan\C
 Z¤  3x3-kwast (muren en achtergronden)\C
 X¤  5x5-kwast (")\C
 
-< ¤en¤ >¤  tussen tools schakelen\CnC
-Ctrl/Cmd+< ¤en¤ Ctrl/Cmd+>¤  tussen subtools schakelen\CnC
+< ¤en¤ >¤  tussen gereedschap schakelen\CnC
+Ctrl/Cmd+< ¤en¤ Ctrl/Cmd+>¤  tussen sub-gereedschap schakelen\CnC
 
 Meer snelkoppelingen\h#
 
@@ -2648,14 +2651,14 @@ dus je kunt zelf de stĳl van de link bepalen.
 Je kunt naar artikelen linken door simpelweg de naam van het artikel te gebruiken:
 
 \-
-Tools\bl\
+Gereedschap\bl\
 
-Tools\bl
+Gereedschap\bl
 \-
 
-Als je hierboven op "Tools" klikt ga je naar het artikel genaamd "Tools". Ik heb
-hier de kleurcode¤ b ¤gebruikt om de link blauw te maken, en zoals je kunt zien is\nb
-de¤ l ¤van toepassing op datzelfde gekleurde gedeelte.\nY
+Als je hierboven op "Gereedschap" klikt ga je naar het artikel genaamd
+"Gereedschap". Ik heb hier de kleurcode¤ b ¤gebruikt om de link blauw te maken, en\nb
+zoals je kunt zien is de¤ l ¤van toepassing op datzelfde gekleurde gedeelte.\nY
 
 Je kunt een koppeling maken naar een anker in hetzelfde artikel door een¤ # ¤te\nY
 gebruiken gevolgd door alle tekst op die regel. (Gevallen van¤ ¤¤ ¤worden daar\nY
@@ -2688,13 +2691,13 @@ Je kunt een kleurblok met kleurcode¤ L ¤gebruiken dat de bestemming van de lin
 bevat vóór de tekst van de link, en zo de link een andere tekst laten zien:
 
 \-
-Tools¤¤Ga naar een ander artikel\Lbl\
+Gereedschap¤¤Ga naar een ander artikel\Lbl\
 
-Tools¤Ga naar een ander artikel\Lbl
+Gereedschap¤Ga naar een ander artikel\Lbl
 \-
-Klik ¤¤Tools¤¤hier¤¤ om naar een ander artikel te gaan\nLbl\
+Klik ¤¤Gereedschap¤¤hier¤¤ om naar een ander artikel te gaan\nLbl\
 
-Klik ¤Tools¤hier¤ om naar een ander artikel te gaan\nLbl
+Klik ¤Gereedschap¤hier¤ om naar een ander artikel te gaan\nLbl
 \-
 [¤¤#Links¤¤Like¤¤] [¤¤#Voorbeeld:¤¤Dislike¤¤]\n L vl n L rl\
 

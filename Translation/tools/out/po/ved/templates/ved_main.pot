@@ -24,10 +24,6 @@ msgctxt "L.MAXCREWMATES"
 msgid "The maximum amount of crewmates ($1) has been reached in this level."
 msgstr ""
 
-msgctxt "L.STARTPOINTNOLONGERFOUND"
-msgid "The old start point can no longer be found!"
-msgstr ""
-
 msgctxt "L.UNSUPPORTEDTOOL"
 msgid "Unsupported tool! Tool: "
 msgstr ""
@@ -99,10 +95,6 @@ msgstr ""
 
 msgctxt "L.SURENEWLEVELNEW"
 msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
-msgstr ""
-
-msgctxt "L.SCALEREBOOT"
-msgid "The new scale settings will take effect after rebooting Ved."
 msgstr ""
 
 msgctxt "L.NAMEFORFLAG"
@@ -537,10 +529,6 @@ msgctxt "L.UNLOCK"
 msgid "Unlock"
 msgstr ""
 
-msgctxt "L.BUG"
-msgid "[Bug!]"
-msgstr ""
-
 msgctxt "L.VEDOPTIONS"
 msgid "Ved options"
 msgstr ""
@@ -591,10 +579,6 @@ msgstr ""
 
 msgctxt "L.MANUALMODE"
 msgid "Mode: manual"
-msgstr ""
-
-msgctxt "L.PLATFORMSPEED"
-msgid "Platf. spd.: $1"
 msgstr ""
 
 msgctxt "L.ENEMYTYPE"
@@ -817,6 +801,25 @@ msgctxt "L.SWAPROOMS"
 msgid "Swap rooms"
 msgstr ""
 
+msgctxt "L.MAP_STYLE"
+msgid "Map style"
+msgstr ""
+
+#. Max 12 characters
+msgctxt "L.MAP_STYLE_FULL"
+msgid "Full"
+msgstr ""
+
+#. Max 12 characters
+msgctxt "L.MAP_STYLE_MINIMAP"
+msgid "Minimap"
+msgstr ""
+
+#. Max 12 characters
+msgctxt "L.MAP_STYLE_VTOOLS"
+msgid "VTools"
+msgstr ""
+
 msgctxt "L.FLAGS"
 msgid "Flags"
 msgstr ""
@@ -875,15 +878,11 @@ msgid "Dialog animations"
 msgstr ""
 
 msgctxt "L.FLIPSUBTOOLSCROLL"
-msgid "Flip subtool scrolling direction"
+msgid "Flip tool scrolling direction"
 msgstr ""
 
 msgctxt "L.ADJACENTROOMLINES"
 msgid "Indicators of tiles in adjacent rooms"
-msgstr ""
-
-msgctxt "L.ASKBEFOREQUIT"
-msgid "Ask before quitting"
 msgstr ""
 
 msgctxt "L.NEVERASKBEFOREQUIT"
@@ -1281,11 +1280,6 @@ msgid "Time format"
 msgstr ""
 
 #. 1.2.0
-msgctxt "L.CUSTOMDATEFORMAT"
-msgid "Custom date format"
-msgstr ""
-
-#. 1.2.0
 msgctxt "L.SAVEBACKUPNOBACKUP"
 msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
 msgstr ""
@@ -1588,6 +1582,10 @@ msgstr ""
 
 msgctxt "L.LOADMUSICNAME"
 msgid "Load .vvv"
+msgstr ""
+
+msgctxt "L.SAVEMUSICNAME"
+msgid "Save .vvv"
 msgstr ""
 
 msgctxt "L.INSERTSONG"
@@ -1954,6 +1952,10 @@ msgstr ""
 
 msgctxt "L.VCE_DEPRECATED"
 msgid "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/"
+msgstr ""
+
+msgctxt "L.VCE_REMOVED"
+msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
 msgstr ""
 
 msgctxt "L.ALL_PLUGINS"

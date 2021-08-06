@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-07-17 01:45:52 (CEST)
+--- Last converted: 2021-08-06 21:21:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -51,7 +51,6 @@ OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli alt
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
 MAXCREWMATES = "La maksimuma kvanto da ŝipanoj ($1) estas atingita en ĉi tiu nivelo.",
-STARTPOINTNOLONGERFOUND = "La malnova komenciĝejo ne plu troveblas!",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Ne povis akiri la enhavon de la nivelodosierujo. Bonvolu kontroli ĉu $1 ekzistas, kaj reprovu.",
 MAPSAVEDAS = "Map-bildo konservita kiel $1!",
@@ -70,7 +69,6 @@ FLAGNAMEINUSE = "La flagnomo $1 jam estas uzata de flago $2",
 DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos konsiderata kiel pli malnova versio.",
 SUREQUITNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol eliri?",
 SURENEWLEVELNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol krei novan nivelon?",
-SCALEREBOOT = "La novaj skalagordoj efikos post relanĉi Ved-on.",
 NAMEFORFLAG = "Nomo de flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
 ENTITY404 = "Ento #$1 ne plu ekzistas!",
@@ -190,7 +188,6 @@ CHANGEEXIT = "Movigi elirejon",
 COPYENTRANCE = "Kopii enirejon",
 LOCK = "Ŝlosi",
 UNLOCK = "Malŝlosi",
-BUG = "[Erareto!]",
 
 VEDOPTIONS = "Ved-agordoj",
 LEVELOPTIONS = "Nivelagordoj",
@@ -206,7 +203,6 @@ MOREB = "Pli  >>",
 AUTOMODE = "Reĝimo: aŭtomata",
 AUTO2MODE = "Reĝimo: multblokara",
 MANUALMODE = "Reĝimo: permana",
-PLATFORMSPEED = "Platformrapido: $1",
 ENEMYTYPE = "Malamiko-tipo: $1",
 PLATFORMBOUNDS = "Platformlimo",
 WARPDIR = "Teleport-\ndirekto: $1",
@@ -277,6 +273,11 @@ SAVEMAP = "Konservi mapon",
 COPYROOMS = "Kopii ĉambron",
 SWAPROOMS = "Permuti ĉambrojn",
 
+MAP_STYLE = "Stilo de mapo",
+MAP_STYLE_FULL = "Plena", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Paŭzekrana", -- Max 12 characters
+MAP_STYLE_VTOOLS = "VTools-stila", -- Max 12 characters
+
 FLAGS = "Flagoj",
 ROOM = "ĉambro",
 CONTENTFILLER = "Enhavo",
@@ -293,9 +294,8 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "Vi ne havas propran dosierujon de VVVVVV agordit
 CUSTOMVVVVVVDIRECTORY_SET = "Via dosierujo de VVVVVV estas agordita al propra indiko:\n$1\n\n",
 LANGUAGE = "Lingvo",
 DIALOGANIMATIONS = "Dialoganimacioj",
-FLIPSUBTOOLSCROLL = "Renversi ruluman direkton de ilido",
+FLIPSUBTOOLSCROLL = "Renversi rulumdirekton de ilo",
 ADJACENTROOMLINES = "Indikiloj de blokoj en najbaraj ĉambroj",
-ASKBEFOREQUIT = "Demandi antaŭ ol eliri",
 NEVERASKBEFOREQUIT = "Neniam demandi antaŭ ol eliri, eĉ se estas nekonservitaj ŝanĝoj",
 COORDS0 = "Montri koordinatojn komence je nulo (kiel en interna skriptado)",
 ALLOWDEBUG = "Ebligi sencimigan reĝimon",
@@ -397,7 +397,6 @@ OVERWRITTENTIME = "Superskribita je", -- List header
 SAVEBACKUP = "Konservi al dosierujo de VVVVVV",
 DATEFORMAT = "Dato-formo",
 TIMEFORMAT = "Tempo-formo",
-CUSTOMDATEFORMAT = "Tajlorita dato-formo",
 SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
 
 -- 1.2.4
@@ -479,6 +478,7 @@ RELOAD = "Reŝargi",
 UNLOAD = "Malŝargi",
 MUSICEDITOR = "Muzikredaktilo",
 LOADMUSICNAME = "Ŝargi .vvv",
+SAVEMUSICNAME = "Konservi .vvv",
 INSERTSONG = "Enmeti melodion ĉe trako $1",
 SUREDELETESONG = "Ĉu vi certas, ke vi volas forigi melodion $1?",
 SONGOPENFAIL = "Ne eblis malfermi $1, melodio ne anstataŭigiĝis.",
@@ -577,6 +577,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "Vi ne jam agordis ruleblan dosieron de $1 por u
 PLAYTESTING_EXECUTABLE_SET = "La rulebla dosiero de $1 por uzi dum ludtestado estas agordita al:\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu\nhttps://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition ne plu estas prilaborata, kaj subteno por niveloj de VVVVVV-CE estas forigita de Ved. Tiu ĉi nivelo estos traktata kiel normalan nivelon de VVVVVV. Por pli da informoj, vidu https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Ĉiuj aldonaĵoj",
 ALL_PLUGINS_MOREINFO = "Bonvolu iri al ¤https://tolp.nl/ved/plugins.php¤tiu ĉi paĝo¤ por pli da informoj pri aldonaĵoj.\\nLCl",

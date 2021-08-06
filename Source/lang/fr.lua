@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-07-17 01:45:52 (CEST)
+--- Last converted: 2021-08-06 21:21:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -43,7 +43,6 @@ OUTDATEDLOVE090 = "Ved ne supporte plus L{ve 0.9.0. Cependant, L{ve 0.9.1 et tou
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
 MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",
 MAXCREWMATES = "Le nombre maximum d'équipiers ($1) a été atteint dans ce niveau.",
-STARTPOINTNOLONGERFOUND = "L'ancien point de départ ne peut plus être trouvé !",
 UNSUPPORTEDTOOL = "Outil non supporté! Outil : ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Le contenu du dossier de niveaux n'a pas pu être récupéré. Veuillez vérifier si $1 existe et réessayez.",
 MAPSAVEDAS = "L'image de la carte a été sauvegardée en tant que $1 !",
@@ -62,7 +61,6 @@ FLAGNAMEINUSE = "Le nom de drapeau $1 est déjà utilisé par le drapeau $2",
 DIFFSELECT = "Choisissez le niveau à comparer. Le niveau que vous sélectionnez sera considéré comme l'ancienne version.",
 SUREQUITNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de quitter ?",
 SURENEWLEVELNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de créer un nouveau niveau ?",
-SCALEREBOOT = "La nouvelle configuration d'échelle seront prises en compte après avoir redémarré Ved.",
 NAMEFORFLAG = "Nom pour le drapeau $1 :",
 SCRIPT404 = "Le script \"$1\" n'existe pas !",
 ENTITY404 = "L'entité #$1 n'existe plus !",
@@ -182,7 +180,6 @@ CHANGEEXIT = "Déplacer la sortie",
 COPYENTRANCE = "Copier l'entrée",
 LOCK = "Vérouiller",
 UNLOCK = "Dévérouiller",
-BUG = "[Bogue!]",
 
 VEDOPTIONS = "Options de Ved",
 LEVELOPTIONS = "Options de niveau",
@@ -198,7 +195,6 @@ MOREB = "Plus >>",
 AUTOMODE = "Mode : auto",
 AUTO2MODE = "Mode : multi",
 MANUALMODE = "Mode : manuel",
-PLATFORMSPEED = "Vit. de plateforme : $1",
 ENEMYTYPE = "Type d'ennemi: $1",
 PLATFORMBOUNDS = "Limites de plateforme",
 WARPDIR = "Dir de TP: $1",
@@ -269,6 +265,11 @@ SAVEMAP = "Sauver la carte",
 COPYROOMS = "Copier la salle",
 SWAPROOMS = "Échanger les salles",
 
+MAP_STYLE = "Map style",
+MAP_STYLE_FULL = "Full", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+
 FLAGS = "Drapeaux",
 ROOM = "salle",
 CONTENTFILLER = "Contenu",
@@ -285,9 +286,8 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "Vous n'avez pas donné de dossier VVVVVV personn
 CUSTOMVVVVVVDIRECTORY_SET = "Votre dossier de VVVVVV est situé dans un chemin personnalisé:\n$1\n\n",
 LANGUAGE = "Langue",
 DIALOGANIMATIONS = "Animations de dialogue",
-FLIPSUBTOOLSCROLL = "Inverser la direction de défilage des sous-outils",
+FLIPSUBTOOLSCROLL = "Flip tool scrolling direction",
 ADJACENTROOMLINES = "Indicateurs de tuiles dans les salles adjacentes",
-ASKBEFOREQUIT = "Demander avant de quitter",
 NEVERASKBEFOREQUIT = "Ne jamais demander avant de quitter, même s'il y a des modifications non sauvegardées",
 COORDS0 = "Afficher les coordonnées en commençant à 0 (comme dans les scripts internes)",
 ALLOWDEBUG = "Activer le mode de débogage",
@@ -389,7 +389,6 @@ OVERWRITTENTIME = "Remplacé", -- List header
 SAVEBACKUP = "Sauver dans le dossier de VVVVVV",
 DATEFORMAT = "Format de date",
 TIMEFORMAT = "Format d'heure",
-CUSTOMDATEFORMAT = "Format de date personnalisé",
 SAVEBACKUPNOBACKUP = "Faites en sorte de choisir un nom unique pour ceci si vous ne voulez rien remplacer, car AUCUNE sauvegarde ne sera effectuée dans ce cas-ci !",
 
 -- 1.2.4
@@ -471,6 +470,7 @@ RELOAD = "Recharger",
 UNLOAD = "Décharger",
 MUSICEDITOR = "Editeur de musique",
 LOADMUSICNAME = "Charger .vvv",
+SAVEMUSICNAME = "Save .vvv",
 INSERTSONG = "Insérer une chanson dans la piste $1",
 SUREDELETESONG = "Etes-vous sûr de vouloir supprimer la chanson $1 ?",
 SONGOPENFAIL = "Impossible d'ouvrir $1, la chanson n'a pas été remplacée.",
@@ -569,6 +569,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de
 PLAYTESTING_EXECUTABLE_SET = "L'exécutable de $1 à utiliser pour les tests de jeu est :\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition n'est plus maintenu. L'utiliser n'est pas recommandé, et le support pour les niveaux de VVVVVV-CE sera enlevé de Ved dans une version future.\n\nPour plus d'informations, allez sur https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Tous les modules externes",
 ALL_PLUGINS_MOREINFO = "Veuillez visiter ¤https://tolp.nl/ved/plugins.php¤cette page¤ pour plus d'informations sur les modules externes.\\nLCl",

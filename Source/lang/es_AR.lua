@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-07-17 01:45:52 (CEST)
+--- Last converted: 2021-08-06 21:21:54 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -39,7 +39,6 @@ OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mej
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
 MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
-STARTPOINTNOLONGERFOUND = "El punto de inicio viejo no se puede encontrar!",
 UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "No se pudo obtener contenidos de la carpeta de niveles. Porfavor fijese si $1 existe y intente de nuevo.",
 MAPSAVEDAS = "Imagen de mapa guardada como $1!",
@@ -58,7 +57,6 @@ FLAGNAMEINUSE = "El nombre del flag $1 ya esta en uso por el flag $2",
 DIFFSELECT = "Seleccione el nivel al que quieres compararlo. Ese nivel se tratara como una version mas vieja.",
 SUREQUITNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de salir?",
 SURENEWLEVELNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de crear un nuevo nivel?",
-SCALEREBOOT = "Las nuevas configuraciones de escala tomaran efecto despued de reiniciar Ved.",
 NAMEFORFLAG = "Nombre para flag $1:",
 SCRIPT404 = "El script \"$1\" no existe!",
 ENTITY404 = "La entidad #$1 no existe!",
@@ -178,7 +176,6 @@ CHANGEEXIT = "Mover salida",
 COPYENTRANCE = "Copiar entrada",
 LOCK = "Bloquear",
 UNLOCK = "Desbloquear",
-BUG = "[Bug!]",
 
 VEDOPTIONS = "Opciones de Ved",
 LEVELOPTIONS = "Opciones de nivel",
@@ -194,7 +191,6 @@ MOREB = "Mas >>",
 AUTOMODE = "Modo: auto",
 AUTO2MODE = "Modo: multi",
 MANUALMODE = "Modo: manual",
-PLATFORMSPEED = "Veloc. Plataforma: $1",
 ENEMYTYPE = "Tipo de Enemigo: $1",
 PLATFORMBOUNDS = "Limites de Platf.",
 WARPDIR = "Dir de warp: $1",
@@ -265,6 +261,11 @@ SAVEMAP = "Guardar mapa",
 COPYROOMS = "Copiar habitacion",
 SWAPROOMS = "Intercambiar habitaciones",
 
+MAP_STYLE = "Map style",
+MAP_STYLE_FULL = "Full", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+
 FLAGS = "Flags",
 ROOM = "habitacion",
 CONTENTFILLER = "Contenido",
@@ -283,7 +284,6 @@ LANGUAGE = "Idioma",
 DIALOGANIMATIONS = "Animaciones de dialogo",
 FLIPSUBTOOLSCROLL = "Voltear direccion de desplazo de subherramienta",
 ADJACENTROOMLINES = "Indicadores de teja en habitaciones adjuntas",
-ASKBEFOREQUIT = "Preguntar antes de salir",
 NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin guardar",
 COORDS0 = "Mostrar coordenadas comenzando en 0 (como en scripting interno)",
 ALLOWDEBUG = "Habilitar modo debug",
@@ -385,7 +385,6 @@ OVERWRITTENTIME = "Sobreescribido", -- List header
 SAVEBACKUP = "Guardar al archivo VVVVVV",
 DATEFORMAT = "Formato de fecha",
 TIMEFORMAT = "Formato de tiempo",
-CUSTOMDATEFORMAT = "Formato de fecha personalizado",
 SAVEBACKUPNOBACKUP = "Asegurate de elegir un nombre unico para esto si no quieres sobreescribir algo, porque NO se haran respaldos en este caso!",
 
 -- 1.2.4
@@ -467,6 +466,7 @@ RELOAD = "Recargar",
 UNLOAD = "Descargar",
 MUSICEDITOR = "Editor de musica",
 LOADMUSICNAME = "Cargar .vvv",
+SAVEMUSICNAME = "Save .vvv",
 INSERTSONG = "Insertar cancion en pista $1",
 SUREDELETESONG = "Estas seguro que quieres remover cancion $1?",
 SONGOPENFAIL = "No se puede abrir $1, cancion no reemplazada.",
@@ -565,6 +565,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for 
 PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "All plugins",
 ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",
