@@ -215,6 +215,9 @@ function ved_showerror(msg)
 			love.graphics.origin()
 			love.graphics.clear(love.graphics.getBackgroundColor())
 			pcall(love.draw)
+			if love.graphics.getCanvas() ~= nil then
+				love.graphics.setCanvas()
+			end
 			love.graphics.present()
 		end
 	end
