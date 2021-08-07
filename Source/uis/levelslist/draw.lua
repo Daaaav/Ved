@@ -43,9 +43,9 @@ return function()
 				currentdir = currentbackupdir
 			end
 		else
-			if string.find(input .. input_r, dirsep) ~= nil then
-				local lastindex = string.find(input .. input_r, dirsep .. "[^" .. dirsep .. "]-$")
-				currentdir = (input .. input_r):sub(1, lastindex-1)
+			if string.find(inputs.levelname, dirsep) ~= nil then
+				local lastindex = string.find(inputs.levelname, dirsep .. "[^" .. dirsep .. "]-$")
+				currentdir = (inputs.levelname):sub(1, lastindex-1)
 			end
 		end
 		local lessheight = 48
@@ -53,7 +53,7 @@ return function()
 		if s.psmallerscreen then
 			width = width-12
 		end
-		if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+		if #s.recentfiles > 0 and currentdir == "" and inputs.levelname == "" then
 			lessheight = lessheight + 16 + #s.recentfiles*12
 			love.graphics.setColor(64,64,64)
 			--love.graphics.rectangle("line", 7.5, love.graphics.getHeight()-lessheight+34.5, hoverarea+1, lessheight-59)
@@ -335,14 +335,14 @@ return function()
 		end
 
 		if ((love.keyboard.isDown("up") or (keyboard_eitherIsDown("shift") and love.keyboard.isDown("tab"))) and nodialog) then
-			if tabselected == 0 and #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+			if tabselected == 0 and #s.recentfiles > 0 and currentdir == "" and inputs.levelname == "" then
 				tabselected = -1
 			elseif tabselected == 0 or tabselected < -#s.recentfiles then
 				-- Start from the bottom.
 				tabselected = k2-1
 			end
 		elseif tabselected >= k2 then
-			if #s.recentfiles > 0 and currentdir == "" and input == "" and input_r == "" then
+			if #s.recentfiles > 0 and currentdir == "" and inputs.levelname == "" then
 				tabselected = -#s.recentfiles
 			else
 				tabselected = 1
@@ -351,10 +351,8 @@ return function()
 	end
 
 	if not backupscreen then
-		ved_print(L.LOADTHISLEVEL .. input .. __, 10, love.graphics.getHeight()-20)
-		if nodialog then
-			startinputonce()
-		end
+		ved_print(L.LOADTHISLEVEL, 10, love.graphics.getHeight()-20)
+		newinputsys.print("levelname", font8:getWidth(L.LOADTHISLEVEL)+18, love.graphics.getHeight()-20)
 	end
 
 	if not secondlevel then
@@ -375,7 +373,6 @@ return function()
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if not secondlevel and mouseon(love.graphics.getWidth()-128+8, 8, 16, 16) then
 			-- Help
-			stopinput()
 			tostate(15)
 			mousepressed = true
 		elseif not secondlevel and mouseon(love.graphics.getWidth()-128+8+16, 8, 16, 16) then
@@ -385,14 +382,14 @@ return function()
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then -- -96
 			if not state6old1 then
 				-- New
-				stopinput()
+				newinputsys.close("levelname")
 				triggernewlevel()
 				-- Make sure we don't immediately click the next button
 				nodialog = false
 				mousepressed = true
 			else
 				-- Return to editor.
-				stopinput()
+				newinputsys.close("levelname")
 				tostate(1, true)
 				mousepressed = true
 			end
@@ -434,17 +431,14 @@ return function()
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
 			if onrbutton(0, 40) then
 				-- Ved options
-				stopinput()
 				tostate(13)
 
 				mousepressed = true
 			elseif onrbutton(1, 40) then
 				-- Plugins
-				stopinput()
 				tostate(15, nil, "plugins")
 			elseif onrbutton(2, 40) then
 				-- Language
-				stopinput()
 				tostate(33)
 			elseif not mousepressed and onrbutton(6, 40, false, 20) then
 				-- Test BUT "SEND FEEDBACK" FOR NOW
@@ -454,7 +448,6 @@ return function()
 			elseif not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
 				if updatecheck.notes_available then
-					stopinput()
 					tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
 				elseif not s.pcheckforupdates or updatecheck.check_error then
 					s.pcheckforupdates = true
@@ -468,9 +461,10 @@ return function()
 				else
 					backupscreen = not backupscreen
 					if backupscreen then
-						input, input_r = "", ""
 						currentbackupdir = ""
-						stopinput()
+						newinputsys.pause()
+					else
+						newinputsys.resume()
 					end
 				end
 				mousepressed = true
@@ -480,7 +474,6 @@ return function()
 				--mousepressed = true
 			elseif not mousepressed and onrbutton(2, nil, true) and not backupscreen then
 				-- Assets
-				stopinput()
 				tostate(30)
 				mousepressed = true
 			end

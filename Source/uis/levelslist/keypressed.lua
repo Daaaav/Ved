@@ -4,7 +4,7 @@ return function(key)
 	if key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if not state6old1 then
-			stopinput()
+			newinputsys.close("levelname")
 			triggernewlevel()
 			-- Don't immediately trigger the dialog in state 1!
 			nodialog = false
@@ -21,10 +21,9 @@ return function(key)
 	elseif key == "f11" and temporaryroomnametimer == 0 and not keyboard_eitherIsDown(ctrl) then
 		user_reload_tilesets()
 	elseif key == "f1" then
-		stopinput()
 		tostate(15)
 	elseif table.contains({"return", "kpenter"}, key) and tabselected == 0 then
-		state6load(input .. input_r)
+		state6load(inputs.levelname)
 	elseif (keyboard_eitherIsDown("shift") and key == "tab") or key == "up" then
 		if tabselected ~= 0 then
 			tabselected = tabselected - 1
@@ -40,7 +39,7 @@ return function(key)
 			tabselected = 0
 		else
 			if state6old1 then
-				stopinput()
+				newinputsys.close("levelname")
 				tostate(1, true)
 			end
 		end
@@ -49,7 +48,6 @@ return function(key)
 	elseif backupscreen and currentbackupdir ~= "" and key == "backspace" then
 		currentbackupdir = ""
 	elseif not secondlevel and not backupscreen and key == "r" and keyboard_eitherIsDown(ctrl) then
-		stopinput()
 		tostate(30)
 	elseif not secondlevel and not backupscreen and key == "f" and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()

@@ -25,6 +25,8 @@ return function(special_mode)
 	input = ""
 	input_r = ""
 
+	newinputsys.create(INPUT.ONELINE, "levelname")
+
 	--loadlevelsfolder()
 
 	oldinput = ""

@@ -226,6 +226,10 @@ function tostate(new, dontinitialize, ...)
 		cons("State changed: " .. oldstate .. " => " .. state .. " (not initialized)")
 	end
 
+	if newinputsys ~= nil then -- temporary nil check again
+		newinputsys.resume()
+	end
+
 	if special_cursor then
 		love.mouse.setCursor()
 		special_cursor = false
@@ -1229,14 +1233,11 @@ function state6load(levelname)
 		if not hastrailingdirsep then
 			-- Oh, it's just a level that has the same name as a directory. Carry on.
 		else
-			input = levelname .. dirsep
-			input_r = ""
+			inputs.levelname = levelname .. dirsep
 			tabselected = 0
 			return
 		end
 	end
-
-	stopinput()
 
 	-- Loading levels tends to happen where it shouldn't.
 	love.graphics.setScissor()
@@ -1272,6 +1273,7 @@ function state6load(levelname)
 				loadtilesets()
 				tile_batch_texture_needs_update = true
 			end
+			newinputsys.close("levelname")
 			tostate(1)
 		end
 	else
@@ -1837,7 +1839,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		elseif direction == "d" then
 			levellistscroll = levellistscroll - distance
 			local lessheight = 48
-			if #s.recentfiles > 0 and input == "" and input_r == "" then
+			if #s.recentfiles > 0 and inputs.levelname == "" then
 				lessheight = lessheight + 16 + #s.recentfiles*12
 			end
 			local upperbound = ((max_levellistscroll)-(love.graphics.getHeight()-lessheight))
@@ -2697,14 +2699,14 @@ end
 
 function search_levels_list(currentdir, prefix)
 	-- Marks matching levels in the levels list as shown and vice versa
-	if input .. input_r == oldinput then
+	if inputs.levelname == oldinput then
 		return
 	end
-	oldinput = input .. input_r
+	oldinput = inputs.levelname
 
 	for k,v in pairs(files[currentdir]) do
 		files[currentdir][k].result_shown =
-			(prefix .. v.name):lower():sub(1, (input .. input_r):len()) == (input .. input_r):lower()
+			(prefix .. v.name):lower():sub(1, (inputs.levelname):len()) == (inputs.levelname):lower()
 	end
 end
 
