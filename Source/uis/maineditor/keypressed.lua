@@ -95,11 +95,8 @@ return function(key)
 			toolscroll()
 		end
 
-	elseif key == "q" or key == "g" then
+	elseif key == "g" then
 		coordsdialog.activate()
-		if key == "q" then
-			show_notification(L.OLDSHORTCUT_GOTOROOM)
-		end
 	elseif key == "m" or key == "kp5" then
 		tostate(12)
 		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed

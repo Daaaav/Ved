@@ -249,7 +249,7 @@ SWAPROOMS = "Swap rooms",
 
 MAP_STYLE = "Map style",
 MAP_STYLE_FULL = "Full", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Pauxzekraneca", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
 MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
 
 FLAGS = "Flags",
@@ -499,13 +499,6 @@ LISTALLCREWMATES = "List all crewmates", -- "Give a list of all rescuable crewma
 LISTOFALLCREWMATES = "List of all rescuable crewmates",
 NOCREWMATESINLEVEL = "There are no rescuable crewmates in this level.",
 SHIFTROOMS = "Shift rooms", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+left/right will stop working soon, use ALT+left/right instead", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Ctrl+A will stop working soon, use Ctrl+R instead",
-OLDSHORTCUT_OPENLVLDIR = "Ctrl+D will stop working soon, use Ctrl+F instead",
-OLDSHORTCUT_GOTOROOM = "Q will stop working soon, use G instead",
-OLDSHORTCUT_SHOWBG = "K will stop working soon, use Shift+; instead",
 
 FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Room $1",

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2021-08-06 21:21:53 (CEST)
+--- Last converted: 2021-08-07 18:49:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -501,13 +501,6 @@ LISTALLCREWMATES = "Показать всех членов экипажа", -- "
 LISTOFALLCREWMATES = "Список всех членов экипажа",
 NOCREWMATESINLEVEL = "В этом уровне нет членов экипажа.",
 SHIFTROOMS = "Сдвинуть комнаты", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+влево/вправо скоро перестанет работать. Используйте ALT+влево/вправо", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Ctrl+A скоро перестанет работать. Используйте Ctrl+R",
-OLDSHORTCUT_OPENLVLDIR = "Ctrl+D скоро перестанет работать. Используйте Ctrl+F",
-OLDSHORTCUT_GOTOROOM = "Q скоро перестанет работать. Используйте G",
-OLDSHORTCUT_SHOWBG = "K скоро перестанет работать. Используйте Shift+;",
 
 FRAMESTOSECONDS = "$1 = $2 сек",
 ROOMNUM = "Комната $1",

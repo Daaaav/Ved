@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-08-06 21:21:54 (CEST)
+--- Last converted: 2021-08-07 18:49:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -525,13 +525,6 @@ LISTALLCREWMATES = "Listigi ĉiujn ŝipanojn", -- "Give a list of all rescuable 
 LISTOFALLCREWMATES = "Listo de ĉiuj saveblaj ŝipanoj",
 NOCREWMATESINLEVEL = "Ne estas saveblaj ŝipanoj en tiu ĉi nivelo.",
 SHIFTROOMS = "Ŝovi ĉambrojn", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "REG+(mal)dekstra klavo ĉesos funkcii baldaŭ, anstataŭ tio uzu ALT+(mal)dekstra klavo", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "REG+A ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+R",
-OLDSHORTCUT_OPENLVLDIR = "REG+D ĉesos funkcii baldaŭ, anstataŭ tio uzu REG+F",
-OLDSHORTCUT_GOTOROOM = "Q ĉesos funkcii baldaŭ, anstataŭ tio uzu G",
-OLDSHORTCUT_SHOWBG = "K ĉesos funkcii baldaŭ, anstataŭ tio uzu SHIFT+;",
 
 FRAMESTOSECONDS = "$1 = $2 sek",
 ROOMNUM = "Ĉambro $1",

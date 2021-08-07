@@ -48,17 +48,11 @@ return function(key)
 		loadlevelsfolder()
 	elseif backupscreen and currentbackupdir ~= "" and key == "backspace" then
 		currentbackupdir = ""
-	elseif not secondlevel and not backupscreen and (key == "a" or key == "r") and keyboard_eitherIsDown(ctrl) then
+	elseif not secondlevel and not backupscreen and key == "r" and keyboard_eitherIsDown(ctrl) then
 		stopinput()
 		tostate(30)
-		if key == "a" then
-			show_notification(L.OLDSHORTCUT_ASSETS)
-		end
-	elseif not secondlevel and not backupscreen and (key == "d" or key == "f") and keyboard_eitherIsDown(ctrl) then
+	elseif not secondlevel and not backupscreen and key == "f" and keyboard_eitherIsDown(ctrl) then
 		explore_lvl_dir()
-		if key == "d" then
-			show_notification(L.OLDSHORTCUT_OPENLVLDIR)
-		end
 	elseif allowdebug and key == "f2" and keyboard_eitherIsDown("shift") then
 		table.insert(files[""], {name="--[debug]--", isdir=false, bu_lastmodified=0, bu_overwritten=0, result_shown=true})
 	elseif allowdebug and key == "f3" and keyboard_eitherIsDown("shift") then

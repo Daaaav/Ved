@@ -917,11 +917,9 @@ return function()
 			displayminimapgrid = false
 		end
 		-- Display the room now including its entities
-		local showroom = not (love.keyboard.isDown("k") or (love.keyboard.isDown(";") and keyboard_eitherIsDown("shift"))) or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
+		local showroom = not (love.keyboard.isDown(";") and keyboard_eitherIsDown("shift")) or love.mouse.isDown("l") or love.mouse.isDown("m") or love.mouse.isDown("r") or not nodialog or RCMactive or editingroomtext > 0 or editingroomname
 		if showroom then
 			displayroom(screenoffset, 0, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), nil, displaytilenumbers, displaysolid, displayminimapgrid)
-		elseif love.keyboard.isDown("k") then
-			show_notification(L.OLDSHORTCUT_SHOWBG)
 		end
 
 		-- Display indicators for tiles in adjacent rooms

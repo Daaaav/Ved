@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-08-06 21:21:54 (CEST)
+--- Last converted: 2021-08-07 18:49:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -513,13 +513,6 @@ LISTALLCREWMATES = "Alle leden opsommen", -- "Give a list of all rescuable crewm
 LISTOFALLCREWMATES = "Lĳst met alle bemanningsleden",
 NOCREWMATESINLEVEL = "Er zĳn geen bemanningsleden in dit level.",
 SHIFTROOMS = "Verschuif kamers", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+links/rechts werkt binnenkort niet meer, gebruik in plaats daarvan ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Ctrl+A werkt binnenkort niet meer, gebruik in plaats daarvan Ctrl+R",
-OLDSHORTCUT_OPENLVLDIR = "Ctrl+D werkt binnenkort niet meer, gebruik in plaats daarvan Ctrl+F",
-OLDSHORTCUT_GOTOROOM = "Q werkt binnenkort niet meer, gebruik in plaats daarvan G",
-OLDSHORTCUT_SHOWBG = "K werkt binnenkort niet meer, gebruik in plaats daarvan Shift+;",
 
 FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Kamer $1",

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-08-06 21:21:53 (CEST)
+--- Last converted: 2021-08-07 18:49:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -513,13 +513,6 @@ LISTALLCREWMATES = "Crewmitglieder auflisten", -- "Give a list of all rescuable 
 LISTOFALLCREWMATES = "Liste aller rettbaren Crewmitglieder",
 NOCREWMATESINLEVEL = "Es gibt keine rettbaren Crewmitglieder in diesem Level.",
 SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "STRG+links/rechts wird bald nicht mehr funktionieren, benutze sattdessen ALT+links/rechts", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Strg+A funktioniert bald nicht mehr, benutze stattdessen Strg+R",
-OLDSHORTCUT_OPENLVLDIR = "Strg+D funktioniert bald nicht mehr, benutze stattdessen Strg+F",
-OLDSHORTCUT_GOTOROOM = "Q funktioniert bald nicht mehr, benutze stattdessen G",
-OLDSHORTCUT_SHOWBG = "K funktioniert bald nicht mehr, benutze stattdessen Shift+;",
 
 FRAMESTOSECONDS = "$1 = $2 Sek",
 ROOMNUM = "Raum $1",

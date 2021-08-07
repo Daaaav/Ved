@@ -26,23 +26,18 @@ return function(key)
 		tostate(15)
 	elseif key == "f3" then
 		inscriptsearch(scriptsearchterm)
-	elseif keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("alt") then
-		local temp_jumped_lr = false
+	elseif keyboard_eitherIsDown("alt") then
 		if key == "left" and #scripthistorystack > 0 then
 			editorjumpscript(scripthistorystack[#scripthistorystack][1], true, scripthistorystack[#scripthistorystack][2])
-			temp_jumped_lr = true
 		elseif key == "right" and (context == "flagscript" or context == "crewmatescript") and carg2 ~= nil and carg2 ~= "" and not scriptinstack(carg2) then
 			editorjumpscript(carg2)
-			temp_jumped_lr = true
 		elseif key == "right" and context == "script" and not scriptinstack(carg1) then
 			editorjumpscript(carg1)
-			temp_jumped_lr = true
 		elseif key == "right" and context == "roomscript" and not scriptinstack(carg3) then
 			editorjumpscript(carg3)
-			temp_jumped_lr = true
-		elseif not keyboard_eitherIsDown(ctrl) then
-			-- Temporary catch while both ctrl/alt+left/right are possible, from here on only ctrl
-		elseif key == "c" then
+		end
+	elseif keyboard_eitherIsDown(ctrl) then
+		if key == "c" then
 			copyscriptline()
 		elseif key == "a" then
 			copyscript()
@@ -88,10 +83,6 @@ return function(key)
 			input = anythingbutnil(scriptlines[editingline])
 			input_r = ""
 			dirty()
-		end
-
-		if temp_jumped_lr and not keyboard_eitherIsDown("alt") then
-			show_notification(L.OLDSHORTCUT_SCRIPTJUMP)
 		end
 	elseif key == "tab" then
 		matching = {}

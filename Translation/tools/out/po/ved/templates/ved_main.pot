@@ -1771,27 +1771,6 @@ msgctxt "L.SHIFTROOMS"
 msgid "Shift rooms"
 msgstr ""
 
-#. CTRL and ALT are capitalized here for extra clarity in this string
-msgctxt "L.OLDSHORTCUT_SCRIPTJUMP"
-msgid "CTRL+left/right will stop working soon, use ALT+left/right instead"
-msgstr ""
-
-msgctxt "L.OLDSHORTCUT_ASSETS"
-msgid "Ctrl+A will stop working soon, use Ctrl+R instead"
-msgstr ""
-
-msgctxt "L.OLDSHORTCUT_OPENLVLDIR"
-msgid "Ctrl+D will stop working soon, use Ctrl+F instead"
-msgstr ""
-
-msgctxt "L.OLDSHORTCUT_GOTOROOM"
-msgid "Q will stop working soon, use G instead"
-msgstr ""
-
-msgctxt "L.OLDSHORTCUT_SHOWBG"
-msgid "K will stop working soon, use Shift+; instead"
-msgstr ""
-
 msgctxt "L.FRAMESTOSECONDS"
 msgid "$1 = $2 sec"
 msgstr ""

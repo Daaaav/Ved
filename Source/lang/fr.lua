@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-08-06 21:21:54 (CEST)
+--- Last converted: 2021-08-07 18:49:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -517,13 +517,6 @@ LISTALLCREWMATES = "Lister tous les équipiers", -- "Give a list of all rescuabl
 LISTOFALLCREWMATES = "Liste de tous les équipiers secourables",
 NOCREWMATESINLEVEL = "Il n'a pas d'équipier secourable dans ce niveau.",
 SHIFTROOMS = "Déplacer la salle", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+gauche/droite sera bientôt enlevé, utilisez ALT+gauche/droite à la place", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "Ctrl+A sera bientôt enlevé, utilisez Ctrl+R à la place",
-OLDSHORTCUT_OPENLVLDIR = "Ctrl+D sera bientôt enlevé, utilisez Ctrl+F à la place",
-OLDSHORTCUT_GOTOROOM = "Q sera bientôt enlevé, utilisez G à la place",
-OLDSHORTCUT_SHOWBG = "K sera bientôt enlevé, utilisez Maj+; à la place",
 
 FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Salle $1",

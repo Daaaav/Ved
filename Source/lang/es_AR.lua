@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-08-06 21:21:54 (CEST)
+--- Last converted: 2021-08-07 18:49:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -513,13 +513,6 @@ LISTALLCREWMATES = "Enlistar todos los compañeros", -- "Give a list of all resc
 LISTOFALLCREWMATES = "Lista de compañeros rescatables",
 NOCREWMATESINLEVEL = "No hay compañeros rescatables en este nivel.",
 SHIFTROOMS = "Cambiar habitacion", -- In the map. Move all rooms in the entire level in any direction
-
-
-OLDSHORTCUT_SCRIPTJUMP = "CTRL+izquierda/derecha dejara de funcionar pronto, usa ALT+izquierda/derecha", -- CTRL and ALT are capitalized here for extra clarity in this string
-OLDSHORTCUT_ASSETS = "CTRL+A dejara de funcionar pronto, usa CTRL+R",
-OLDSHORTCUT_OPENLVLDIR = "CTRL+D dejara de funcionar pronto, usa CTRL+F",
-OLDSHORTCUT_GOTOROOM = "Q dejara de funcionar pronto, usa G",
-OLDSHORTCUT_SHOWBG = "K dejara de funcionar pronto, usa SHIFT+;",
 
 FRAMESTOSECONDS = "$1 = $2 seg.",
 ROOMNUM = "Habitacion $1",
