@@ -1496,7 +1496,10 @@ return function()
 
 		if roomx < limit.mapwidth and roomy < limit.mapheight then
 			-- Display the minimap of the current room, just underneath our subtools
-			local atx, aty = getcursor()
+			local atx, aty
+			if nodialog then
+				atx, aty = getcursor()
+			end
 			local zoom = getminimapzoom(metadata)
 			love.graphics.setColor(255, 255, 255, 63)
 			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
