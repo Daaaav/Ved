@@ -76,7 +76,7 @@ cDialog =
 	moved_from_wy = 100,
 	moved_from_mx = 0,
 	moved_from_my = 0,
-	windowani = -15,
+	windowani = -11,
 	closing = false,
 
 	title = "",
@@ -123,8 +123,18 @@ function cDialog:new(o)
 end
 
 function cDialog:draw(topmost)
-	if self.windowani >= 16 then
+	local canvas
+	if self.windowani >= 12 then
 		return
+	elseif self.windowani ~= 0 and love.graphics.isSupported("canvas") then
+		local canvas_w, canvas_h = love.graphics.getWidth()*s.pscale, love.graphics.getHeight()*s.pscale
+
+		-- It's still possible to break the limit in certain cases
+		local texture_limit = love.graphics.getSystemLimit("texturesize")
+		if canvas_w <= texture_limit and canvas_h <= texture_limit then
+			canvas = love.graphics.newCanvas(canvas_size(canvas_w, canvas_h))
+			love.graphics.setCanvas(canvas)
+		end
 	end
 
 	-- Window contents
@@ -256,6 +266,18 @@ function cDialog:draw(topmost)
 	ved_print(self.title, self.x+4, self.y+self.windowani-12)
 	self:setColor(255,255,255,255, not topmost)
 	ved_print(self.title, self.x+3, self.y+self.windowani-13)
+
+	if canvas ~= nil then
+		love.graphics.setCanvas()
+		if math.floor(self.windowani) < 0 then
+			love.graphics.setColor(255, 255, 255, ((math.floor(self.windowani)+11)/11)*255)
+		elseif math.floor(self.windowani) == 0 then
+			love.graphics.setColor(255, 255, 255, 255)
+		else
+			love.graphics.setColor(255, 255, 255, ((11-math.floor(self.windowani))/11)*255)
+		end
+		love.graphics.draw(canvas, 0, 0, 0, 1/s.pscale)
+	end
 end
 
 function cDialog:update(dt, topmost)
@@ -271,11 +293,11 @@ function cDialog:update(dt, topmost)
 	-- Increase to max 0 if not closing, to max 16 if closing
 	if not self.closing and self.windowani < 0 then
 		self.windowani = math.min(self.windowani + dt*60, 0)
-	elseif self.closing and self.windowani < 16 then
-		self.windowani = math.min(self.windowani + dt*60, 16)
+	elseif self.closing and self.windowani < 12 then
+		self.windowani = math.min(self.windowani + dt*60, 12)
 	end
 
-	if self.windowani >= 16 and topmost then
+	if self.windowani >= 12 and topmost then
 		self:closed()
 	end
 end
@@ -635,13 +657,7 @@ function cDialog:setColor(red, green, blue, alpha, nottopmost)
 		alpha = alpha / 2
 	end
 
-	if math.floor(self.windowani) < 0 then
-		love.graphics.setColor(red, green, blue, ((math.floor(self.windowani)+15)/15)*alpha)
-	elseif math.floor(self.windowani) == 0 then
-		love.graphics.setColor(red, green, blue, alpha)
-	else
-		love.graphics.setColor(red, green, blue, ((15-math.floor(self.windowani))/15)*alpha)
-	end
+	love.graphics.setColor(red, green, blue, alpha)
 end
 
 function cDialog:set_field(key, value)
