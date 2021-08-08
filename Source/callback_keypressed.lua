@@ -1,7 +1,7 @@
 function love.keypressed(key)
-	if focusregainedtimer < .1 then
-		if not table.contains(skipnextkeys, key) then
-			table.insert(skipnextkeys, key)
+	if focus_regained_timer < .1 then
+		if not table.contains(skip_next_keys, key) then
+			table.insert(skip_next_keys, key)
 		end
 		return
 	end

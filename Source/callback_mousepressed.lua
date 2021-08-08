@@ -10,9 +10,9 @@ function love.mousepressed(x, y, button)
 		end
 	end
 
-	if focusregainedtimer < .1 and not table.contains({"wu", "wd"}, button) then
-		if not table.contains(skipnextmouses, button) then
-			table.insert(skipnextmouses, button)
+	if focus_regained_timer < .1 and not table.contains({"wu", "wd"}, button) then
+		if not table.contains(skip_next_mouses, button) then
+			table.insert(skip_next_mouses, button)
 		end
 		return
 	end

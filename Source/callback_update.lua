@@ -2,10 +2,10 @@ function love.update(dt)
 	hook("love_update_start", {dt})
 
 	if window_active() then
-		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
+		focus_regained_timer = math.min(focus_regained_timer + dt, .1)
 		textinput_started_timer = math.min(textinput_started_timer + dt, .1)
 	else
-		focusregainedtimer = 0
+		focus_regained_timer = 0
 	end
 
 	if playtesting_active then

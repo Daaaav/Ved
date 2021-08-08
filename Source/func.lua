@@ -8,7 +8,7 @@ end
 love.keyboard.isDownOR = love.keyboard.isDown
 love.keyboard.isDown = function(...)
 	for _,key in pairs({...}) do
-		if table.contains(skipnextkeys, key) then
+		if table.contains(skip_next_keys, key) then
 		elseif love.keyboard.isDownOR(key) then
 			return true
 		end
@@ -19,7 +19,7 @@ end
 love.mouse.isDownOR = love.mouse.isDown
 love.mouse.isDown = function(...)
 	for _,button in pairs({...}) do
-		if table.contains(skipnextmouses, button) then
+		if table.contains(skip_next_mouses, button) then
 		elseif love.mouse.isDownOR(button) then
 			return true
 		end

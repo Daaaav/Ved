@@ -1,5 +1,5 @@
 function love.textinput(char)
-	if focusregainedtimer < .1 or textinput_started_timer < .1 then
+	if focus_regained_timer < .1 or textinput_started_timer < .1 then
 		return
 	end
 

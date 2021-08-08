@@ -10,9 +10,9 @@ function love.mousereleased(x, y, button)
 		end
 	end
 
-	for k,v in pairs(skipnextmouses) do
+	for k,v in pairs(skip_next_mouses) do
 		if v == button then
-			table.remove(skipnextmouses, k)
+			table.remove(skip_next_mouses, k)
 			return
 		end
 	end

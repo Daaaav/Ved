@@ -1,7 +1,7 @@
 function love.keyreleased(key)
-	for k,v in pairs(skipnextkeys) do
+	for k,v in pairs(skip_next_keys) do
 		if v == key then
-			table.remove(skipnextkeys, k)
+			table.remove(skip_next_keys, k)
 			return
 		end
 	end
