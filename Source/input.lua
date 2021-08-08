@@ -105,6 +105,8 @@ inputs = {}
 function input.create(type_, id, initial, ix, iy)
 	input.active = true
 
+	textinput_started_timer = 0
+
 	if inputs[id] ~= nil then
 		return
 	end

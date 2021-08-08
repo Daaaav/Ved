@@ -156,6 +156,7 @@ function love.load()
 	focusregainedtimer = 0
 	skipnextkeys = {}
 	skipnextmouses = {}
+	textinput_started_timer = 0
 
 	limitglow = 0
 	limitglow_enabled = false

@@ -3,6 +3,7 @@ function love.update(dt)
 
 	if window_active() then
 		focusregainedtimer = math.min(focusregainedtimer + dt, .1)
+		textinput_started_timer = math.min(textinput_started_timer + dt, .1)
 	else
 		focusregainedtimer = 0
 	end
