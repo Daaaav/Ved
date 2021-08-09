@@ -158,8 +158,6 @@ return function()
 						}
 					)
 				end
-				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():find("^" .. escapegsub(input .. input_r)) then
-				--if backupscreen or (input == "" and input_r == "") or (prefix .. v.name):lower():sub(1, (input .. input_r):len()) == input .. input_r then
 				if backupscreen or v.result_shown then
 					if 16+12*k2+levellistscroll > -64 and 16+12*k2+levellistscroll < love.graphics.getHeight()+64 then
 						local mouseishovering = nodialog and not mousepressed and mouseon(8, 10+12*k2+levellistscroll, hoverarea, 12) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and window_active()
