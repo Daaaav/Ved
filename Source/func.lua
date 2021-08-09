@@ -2870,7 +2870,7 @@ end
 
 function exitdisplayoptions()
 	if nonintscale then
-		stopinput()
+		newinputsys.close("scale")
 		s.scale = num_scale
 	end
 	saveconfig()

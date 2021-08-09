@@ -5,8 +5,7 @@ return function()
 
 	ved_print(L.SCALE, 8, 8+(24*1)+4)
 	if nonintscale then
-		-- Something
-		ved_print(input .. __, 16+font8:getWidth(L.SCALE), 8+(24*1)+4)
+		newinputsys.print("scale", 16+font8:getWidth(L.SCALE), 8+(24*1)+4)
 	else
 		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
 			function(value)
@@ -32,10 +31,9 @@ return function()
 		function(key, newvalue)
 			nonintscale = newvalue
 			if nonintscale then
-				startinput()
-				input = tostring(s.scale)
+				newinputsys.create(INPUT.ONELINE, "scale", tostring(s.scale))
 			else
-				stopinput()
+				newinputsys.close("scale")
 				s.scale = math.floor(num_scale)
 				if s.scale <= 0 then
 					s.scale = 1
@@ -57,7 +55,7 @@ return function()
 	)
 
 	if nonintscale then
-		num_scale = anythingbutnil0(tonumber((input:gsub(",", "."))))
+		num_scale = anythingbutnil0(tonumber((inputs.scale:gsub(",", "."))))
 	else
 		num_scale = anythingbutnil0(tonumber(s.scale))
 	end
