@@ -16,7 +16,7 @@ function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 	RCMabovedialog = abovedialog == true
 	RCMwidth = 240
 	for k,v in pairs(items) do
-		local w = font8:getWidth(v)
+		local w = font8:getWidth(v)+8
 		if w > RCMwidth then
 			RCMwidth = w
 		end
@@ -30,14 +30,17 @@ function rightclickmenu.draw()
 
 	for k,v in pairs(RCMitems) do
 		if v:sub(1, 1) == "#" then
-			love.graphics.setColor(128,128,128,192)
-			love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, RCMwidth, 16) -- 150 -> 188 -> 240 -> just do it dynamically lol
+			love.graphics.setColor(112,112,112,216)
+			love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, RCMwidth, 16)
 			love.graphics.setColor(192,192,192,255)
-			ved_print(v:sub(2, -1), RCMx+1, (k-1)*16+RCMy+4)
+			ved_print(v:sub(2, -1), RCMx+5, (k-1)*16+RCMy+4)
 			love.graphics.setColor(255,255,255,255)
 		else
-			hoverrectangle(128,128,128,192, RCMx, (k-1)*16+RCMy, RCMwidth, 16, true)
-			ved_print(v, RCMx+1, (k-1)*16+RCMy+4)
+			if hoverrectangle(112,112,112,216, RCMx, (k-1)*16+RCMy, RCMwidth, 16, true) then
+				love.graphics.setColor(255,255,128,255)
+			end
+			ved_print(v, RCMx+5, (k-1)*16+RCMy+4)
+			love.graphics.setColor(255,255,255,255)
 		end
 	end
 

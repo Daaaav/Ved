@@ -583,7 +583,8 @@ function hoverdraw(img, x, y, w, h, s)
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
-	if (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active() then
+	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
+	if hovering then
 		love.graphics.setColor(r, g, b, 255)
 		love.graphics.rectangle("fill", x, y, w, h)
 	else
@@ -592,6 +593,8 @@ function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	end
 
 	love.graphics.setColor(255,255,255,255)
+
+	return hovering
 end
 
 function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
