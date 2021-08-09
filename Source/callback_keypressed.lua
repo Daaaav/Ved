@@ -524,7 +524,7 @@ function love.keypressed(key)
 			]]
 		end
 	elseif allowdebug and (key == "f12") then
-		tostate(0, true)
+		tostate(0)
 	end
 
 	if RCMactive or dialog.is_open() then

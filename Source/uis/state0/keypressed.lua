@@ -2,7 +2,8 @@
 
 return function(key)
 	if table.contains({"return", "kpenter"}, key) then
-		stopinput()
-		tostate(input, keyboard_eitherIsDown("shift"))
+		local s = inputs.state
+		newinputsys.close("state")
+		tostate(s, keyboard_eitherIsDown("shift"))
 	end
 end
