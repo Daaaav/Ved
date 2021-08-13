@@ -30,27 +30,13 @@ function love.textinput(char)
 		elseif (state == 1) and holdingzvx then
 			-- TODO Remove at least this branch when tool overhaul, needed for upside down terminal
 			-- Just for grepping if holdingzvx doesn't do: selectedtool selectedsubtool
-		elseif (state == 3) and not nodialog and (char == "/" or char == "?") then
-		-- Pipes are newlines in scripts (on PC at least)
-		elseif (state == 3) and char == "|" then
-			table.insert(scriptlines, editingline+1, "")
-			editingline = editingline + 1
-			input = anythingbutnil(scriptlines[editingline])
 		else
 			input = input .. char
 		end
 
 		cursorflashtime = 0
 
-		if state == 3 then
-			scriptlines[editingline] = input
-			-- nodialog as a temp global var is checked here too
-			if nodialog then
-				dirty()
-			elseif table.contains({"/", "?"}, char) then
-				nodialog = true
-			end
-		elseif state == 15 and helpeditingline ~= 0 then
+		if state == 15 and helpeditingline ~= 0 then
 			helparticlecontent[helpeditingline] = input
 		elseif state == 6 then
 			tabselected = 0

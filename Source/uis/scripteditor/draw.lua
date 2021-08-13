@@ -14,20 +14,13 @@ return function()
 		love.graphics.line(43*8, 24, 43*8, love.graphics.getHeight())
 	end
 
-	-- The comment below is a bad way of doing it.
-	love.graphics.setScissor(0, 24, love.graphics.getWidth(), love.graphics.getHeight()-24)
+	love.graphics.setScissor(0, 24, love.graphics.getWidth()-128, love.graphics.getHeight()-24)
 
 	local textq, textc, alttextcolor, lasttextcolor
+	local _, editing_line = newinputsys.getpos("script_lines")
 
-	-- -- Make sure to display all lines but if we put the cursor further, then do display line numbers
-	-- I could make it #scriptlines now
-	for k = 1, math.max(table.maxn(scriptlines), editingline) do
-		v = anythingbutnil(scriptlines[k])
-		local text_r
-		if k == editingline then
-			v = v .. anythingbutnil(input_r)
-			text_r = input_r
-		end
+	for k = 1, table.maxn(inputs.script_lines) do
+		v = anythingbutnil(inputs.script_lines[k])
 
 		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
 		local partss = explode(",", text2)
@@ -38,12 +31,8 @@ return function()
 				-- Search forward for a createcrewman unless we hit a speak(_active) first
 				local i = k + textlinestogo + 1
 				local l
-				while scriptlines[i] ~= nil do
-					if i == editingline then
-						l = (input .. input_r):gsub(" ", "")
-					else
-						l = (scriptlines[i]):gsub(" ", "")
-					end
+				while inputs.script_lines[i] ~= nil do
+					l = (inputs.script_lines[i]):gsub(" ", "")
 					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
 						alttextcolor = true
 						break
@@ -61,9 +50,9 @@ return function()
 		-- Save the whales, only display this line if we can see it!
 		local fontsize = s.scripteditor_largefont and 16 or 8
 		if (scriptscroll+24+(fontsize*k) >= 16) and (scriptscroll+24+(fontsize*k) <= love.graphics.getHeight()) then
-			if k >= limit.scriptlines and editingline == k then
+			if k >= limit.scriptlines and editing_line == k then
 				love.graphics.setColor(255,128,128,255) -- 255 64 64?
-			elseif editingline == k then
+			elseif editing_line == k then
 				love.graphics.setColor(255,255,255,255)
 			elseif k >= limit.scriptlines then
 				love.graphics.setColor(255,0,0,255)
@@ -73,18 +62,18 @@ return function()
 
 			if s.scripteditor_largefont then
 				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(16*k)-8, 2)
-				textq, textc = syntaxhl(v, 104, scriptscroll+24+(16*k)-8, textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
+				textq, textc = syntaxhl(v, 104, scriptscroll+24+(16*k)-8, textlinestogo > 0, syntaxhlon, lasttextcolor, alttextcolor)
 			else
 				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(8*k))
-				textq, textc = syntaxhl(v, 56, scriptscroll+24+(8*k), textlinestogo > 0, editingline == k, syntaxhlon, lasttextcolor, text_r, alttextcolor)
+				textq, textc = syntaxhl(v, 56, scriptscroll+24+(8*k), textlinestogo > 0, syntaxhlon, lasttextcolor, alttextcolor)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
 			textq, textc = justtext(v, textlinestogo > 0)
 		end
 
-		if editingline == k then --and textlinestogo == 0 then
-			context, carg1, carg2, carg3 = scriptcontext(input .. input_r)
+		if editing_line == k then --and textlinestogo == 0 then
+			context, carg1, carg2, carg3 = scriptcontext(inputs.script_lines[k])
 		end
 
 		if textq ~= nil then
@@ -97,11 +86,7 @@ return function()
 			local maxwidthtextbox = 0
 			local l
 			for i = k+1, k+textlinestogo do
-				if i == editingline then
-					l = input .. input_r
-				else
-					l = scriptlines[i]
-				end
+				l = inputs.script_lines[i]
 
 				if l == nil then
 					break
@@ -112,7 +97,7 @@ return function()
 				end
 			end
 
-			if k < table.maxn(scriptlines) and syntaxhlon then
+			if k < table.maxn(inputs.script_lines) and syntaxhlon then
 				if alttextcolor then
 					if alttextboxcolors[textc] == nil then
 						textc = "gray"
@@ -136,6 +121,14 @@ return function()
 		end
 	end
 
+	love.graphics.setColor(255,255,255,255)
+
+	if s.scripteditor_largefont then
+		newinputsys.drawcas("script_lines", 104, scriptscroll+24+16-8, 2)
+	else
+		newinputsys.drawcas("script_lines", 56, scriptscroll+24+8)
+	end
+
 	love.graphics.setScissor()
 
 	-- Any warnings?
@@ -148,10 +141,10 @@ return function()
 
 	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
 	local textscale = s.scripteditor_largefont and 2 or 1
-	local newfraction = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#scriptlines*8+8)*textscale, ((-scriptscroll))/(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
+	local newfraction = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#inputs.script_lines*8+8)*textscale, ((-scriptscroll))/(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32)))
 
 	if newfraction ~= nil then
-		scriptscroll = -(newfraction*(((#scriptlines*8)*textscale)-(love.graphics.getHeight()-32)))
+		scriptscroll = -(newfraction*(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32)))
 	end
 
 	-- Now put some buttons on the right!
@@ -173,7 +166,8 @@ return function()
 	rbutton(s.scripteditor_largefont and L.TEXTSIZEL or L.TEXTSIZEN, 11)
 
 	-- Column
-	ved_printf(L.COLUMN .. (input:len()+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")
+	local x = newinputsys.getpos("script_lines")
+	ved_printf(L.COLUMN .. (x+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
 
@@ -203,8 +197,6 @@ return function()
 			copyscript()
 		elseif onrbutton(4) then
 			-- Split scripts
-			stopinput()
-			scriptlines[editingline] = input
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
 				dialog.callback.newscript, L.SPLITSCRIPT, dialog.form.simplename,
@@ -258,20 +250,16 @@ return function()
 			mousepressed = true
 		elseif not mousepressed and onrbutton(0, nil, true) then
 			-- Return
-			leavescript_to_state = function()
-				stopinput()
-				scriptlines[editingline] = input
-				scripts[scriptname] = table.copy(scriptlines)
+			local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+			if success then
+				scripts[scriptname] = raw_script
+				newinputsys.close("script_lines")
 				if scriptfromsearch then
 					resume_search = true
 					tostate(11)
 				else
 					tostate(10)
 				end
-			end
-
-			if not processflaglabelsreverse() then
-				leavescript_to_state()
 			end
 
 			mousepressed = true

@@ -4,24 +4,7 @@ return function(key)
 	if key == "up" or key == "down" or key == "pageup" or key == "pagedown" then
 		if keyboard_eitherIsDown(ctrl) and keyboard_eitherIsDown("alt") then
 			inplacescroll(key)
-		elseif key == "up" then
-			scriptgotoline(editingline-1)
-		elseif key == "down" then
-			scriptgotoline(editingline+1)
-		elseif key == "pageup" then
-			scriptgotoline(editingline-57)
-		elseif key == "pagedown" then
-			scriptgotoline(editingline+57)
 		end
-	elseif table.contains({"return", "kpenter"}, key) then
-		-- We can split lines because the current line is in input and input_r.
-		-- So input_r is simply transferred to the newly inserted line along with the cursor.
-		table.insert(scriptlines, editingline+1, "")
-		editingline = editingline + 1
-		input = anythingbutnil(scriptlines[editingline])
-		dirty()
-		-- We also want to scroll the screen if necessary
-		scriptlineonscreen()
 	elseif key == "f1" then
 		tostate(15)
 	elseif key == "f3" then
@@ -37,11 +20,7 @@ return function(key)
 			editorjumpscript(carg3)
 		end
 	elseif keyboard_eitherIsDown(ctrl) then
-		if key == "c" then
-			copyscriptline()
-		elseif key == "a" then
-			copyscript()
-		elseif key == "f" then
+		if key == "f" then
 			startinscriptsearch()
 		elseif key == "g" then
 			startscriptgotoline()
@@ -67,24 +46,14 @@ return function(key)
 				end
 			end
 			dirty()
-		elseif key == "d" then
-			if #scriptlines > 1 then
-				table.remove(scriptlines, editingline)
-			else
-				scriptlines[editingline] = ""
-			end
-			if keyboard_eitherIsDown("shift") then
-				editingline = math.max(editingline - 1, 1)
-			else
-				if editingline > #scriptlines and editingline > 1 then
-					editingline = editingline - 1
-				end
-			end
-			input = anythingbutnil(scriptlines[editingline])
-			input_r = ""
-			dirty()
 		end
 	elseif key == "tab" then
+		-- TODO scriptlines2021
+		dialog.create("tab completion")
+		if true then
+			return
+		end
+
 		matching = {}
 
 		for k,v in pairs(knowncommands) do
@@ -104,10 +73,10 @@ return function(key)
 			dirty()
 		end
 	elseif key == "escape" then
-		leavescript_to_state = function()
-			stopinput()
-			scriptlines[editingline] = input
-			scripts[scriptname] = table.copy(scriptlines)
+		local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+		if success then
+			scripts[scriptname] = raw_script
+			newinputsys.close("script_lines")
 			if scriptfromsearch then
 				resume_search = true
 				tostate(11)
@@ -115,10 +84,6 @@ return function(key)
 				tostate(10)
 			end
 			nodialog = false
-		end
-
-		if not processflaglabelsreverse() then
-			leavescript_to_state()
 		end
 	end
 end

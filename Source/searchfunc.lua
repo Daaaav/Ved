@@ -128,57 +128,48 @@ function inscriptsearch(this)
 	if this ~= "" then
 		this = escapegsub(this)
 
-		searchingline = editingline
+		local editing_column, editing_line = newinputsys.getpos("script_lines")
+		local searching_line = editing_line
 
-		foundline, afterfound = 0, 0
+		local found_line, after_found = 0, 0
 
 		repeat
-			if searchingline == editingline then
-				cons("INPUTR IS " .. input_r)
-				_, afterfound = input_r:lower():find(this)
-				if afterfound ~= nil then
-					afterfound = afterfound + input:len()
-				end
+			if searching_line == editing_line then
+				local line = inputs.script_lines[editing_line]
+				_, after_found = line:lower():find(this, utf8.offset(line, editing_column))
 			else
-				_, afterfound = scriptlines[searchingline]:lower():find(this)
+				_, after_found = inputs.script_lines[searching_line]:lower():find(this)
 			end
 
-			if afterfound ~= nil then
-				foundline = searchingline
+			if after_found ~= nil then
+				found_line = searching_line
 				break
 			end
 
-			searchingline = searchingline + 1
+			searching_line = searching_line + 1
 
-			if searchingline > #scriptlines then
-				searchingline = 1
+			if searching_line > #inputs.script_lines then
+				searching_line = 1
 			end
-		until searchingline == editingline 
+		until searching_line == editing_line 
 
-		if foundline == 0 then
-			-- Also search that part before the cursor, then
-			_, afterfound = input:lower():find(this)
+		if found_line == 0 then
+			-- Also search that part before the cursor, then. And after once more, but that doesn't matter.
+			_, after_found = inputs.script_lines[editing_line]:lower():find(this)
 
-			if afterfound ~= nil then
-				foundline = editingline
+			if after_found ~= nil then
+				found_line = editing_line
 			end
 		end
 
-		if foundline == 0 then
+		if found_line == 0 then
 			-- Still not found?
 			dialog.create(langkeys(L.STRINGNOTFOUND, {scriptsearchterm}))
 			return
 		end
 
 		-- Jump to the line!
-		scriptgotoline(foundline)
-
-		-- Put the cursor behind the found word
-		input_r = input:sub(afterfound+1, -1)
-		input = input:sub(1, afterfound)
-		scriptlines[editingline] = input
-
-		cons("afterfound is " .. afterfound)
+		scriptgotoline(found_line, after_found)
 	end
 end
 

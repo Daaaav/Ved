@@ -173,18 +173,8 @@ function love.keypressed(key)
 		if key == "backspace" then
 			input = backspace(input)
 
-			if state == 3 then
+			if state == 15 then
 				-- We're checking for the not-yet-changed line, hence why this doesn't cause the exact same backspace problem VVVVVV has
-				if scriptlines[editingline] == "" and editingline ~= 1 then
-					table.remove(scriptlines, editingline)
-					editingline = editingline - 1
-					input = anythingbutnil(scriptlines[editingline])
-				else
-					scriptlines[editingline] = input
-				end
-				dirty()
-			elseif state == 15 then
-				-- Exact same story here.
 				if helparticlecontent[helpeditingline] == "" and helpeditingline ~= 1 then
 					table.remove(helparticlecontent, helpeditingline)
 					helpeditingline = helpeditingline - 1
@@ -198,30 +188,7 @@ function love.keypressed(key)
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("v") then
 			input = input .. love.system.getClipboardText()
 
-			if state == 3 then
-				-- Let's process people trying to sneak past pipes first before processing newlines
-				if input:find("|") then
-					input = input:gsub("|", "\n")
-				end
-
-				if input:find("\n") then
-					-- CRLF -> LF
-					local inputparts = explode("\n", input:gsub("\r\n", "\n"))
-
-					scriptlines[editingline] = inputparts[1]
-
-					for k = 2, #inputparts do
-						table.insert(scriptlines, editingline+(k-1), inputparts[k])
-					end
-
-					editingline = editingline + #inputparts - 1
-					input = anythingbutnil(scriptlines[editingline])
-				else
-					scriptlines[editingline] = input
-				end
-				dirty()
-			elseif state == 15 then
-				-- Same
+			if state == 15 then
 				if input:find("\n") then
 					-- CRLF -> LF
 					local inputparts = explode("\n", input:gsub("\r\n", "\n"))
@@ -244,27 +211,18 @@ function love.keypressed(key)
 			-- If you use Linux you may like this shortcut!
 			input = ""
 
-			if state == 3 then
-				scriptlines[editingline] = input
-				dirty()
-			elseif state == 15 then
+			if state == 15 then
 				helparticlecontent[helpeditingline] = input
 			end
 		elseif keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("k") then
 			-- If you like symmetry and use Linux you may like this shortcut too
 			input_r = ""
-
-			if state == 3 then
-				dirty()
-			end
 		elseif key == "left" and not keyboard_eitherIsDown(ctrl) then
 			input, input_r = leftspace(input, input_r)
 
 			cursorflashtime = 0
 
-			if state == 3 then
-				scriptlines[editingline] = input
-			elseif state == 15 and helpeditingline ~= 0 then
+			if state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			end
 		elseif key == "right" and not keyboard_eitherIsDown(ctrl) then
@@ -272,9 +230,7 @@ function love.keypressed(key)
 
 			cursorflashtime = 0
 
-			if state == 3 then
-				scriptlines[editingline] = input
-			elseif state == 15 and helpeditingline ~= 0 then
+			if state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			end
 		elseif key == "home" then
@@ -283,9 +239,7 @@ function love.keypressed(key)
 
 			cursorflashtime = 0
 
-			if state == 3 then
-				scriptlines[editingline] = input
-			elseif state == 15 and helpeditingline ~= 0 then
+			if state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			end
 		elseif key == "end" then
@@ -294,21 +248,13 @@ function love.keypressed(key)
 
 			cursorflashtime = 0
 
-			if state == 3 then
-				scriptlines[editingline] = input
-			elseif state == 15 and helpeditingline ~= 0 then
+			if state == 15 and helpeditingline ~= 0 then
 				helparticlecontent[helpeditingline] = input
 			end
 		elseif key == "delete" then
 			_, input_r = rightspace(input, input_r)
 
-			if state == 3 then
-				if input_r == "" and editingline < #scriptlines then
-					input_r = anythingbutnil(scriptlines[editingline + 1])
-					table.remove(scriptlines, editingline + 1)
-				end
-				dirty()
-			elseif state == 15 then
+			if state == 15 then
 				if input_r == "" and helpeditingline < #helparticlecontent then
 					input_r = anythingbutnil(helparticlecontent[helpeditingline + 1])
 					table.remove(helparticlecontent, helpeditingline + 1)

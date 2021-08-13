@@ -1,16 +1,12 @@
 -- scripteditor/load
 
 return function()
-	-- Scripts can be fully contentless- without even one line.
-	if #scriptlines == 0 then
-		table.insert(scriptlines, "")
-	end
+	newinputsys.create(INPUT.MULTILINE, "script_lines", processflaglabels(scripts[scriptname]))
+	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
+	newinputsys.setpos("script_lines", utf8.len(inputs.script_lines[1]), 1)
 
-	editingline = 1 --#scriptlines
 	textlinestogo = 0
-	startinput()
 	scriptscroll = 0
-	input = scriptlines[editingline]
 	syntaxhlon = true
 
 	-- Little bit of caching

@@ -410,84 +410,69 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 
 	if button ~= DB.OK then
 		-- Not pressing OK
-		if identifier == "split_editor" then
-			-- We were already editing a script so re-enable input for that!
-			takinginput = true
-		end
 		return
 	end
 
-	-- Add a script with this name. In case we're making a new script while editing one already that uses
-	-- an unused flag name and all flags are occupied, make this all a function.
+	local spl_originaleditingline, originalscript
+	if identifier == "split_editor" then
+		-- Splitting
+		local _, editing_line = newinputsys.getpos("script_lines")
+		spl_originaleditingline = editing_line
+		originalscript = table.copy(inputs.script_lines) -- We need to have the unconverted version
+		local totalnumberlines = #inputs.script_lines
 
-	leavescript_to_state = function()
-		if identifier == "split_editor" then
-			-- Splitting a script, but we already saved the input earlier
-			scripts[scriptname] = table.copy(scriptlines)
-		end
-
-		if scripts[fields.name] == nil then
-			table.insert(scriptnames, fields.name)
-			if identifier ~= "split_editor" and identifier ~= "duplicate_list" then
-				-- Creating an empty script
-				scripts[fields.name] = {""}
-
-				scriptlines = {""}
-
-				-- Also make sure internal scripting mode doesn't stick
-				internalscript = false
-				cutscenebarsinternalscript = false
-			else
-				-- Splitting/duplicating the current script
-				local keepinternal, keepcutscenebarsinternal
-				if identifier == "split_editor" then
-					-- Splitting, meaning in editor
-					scripts[fields.name] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
-
-					-- Now cut off the top part of the new script
-					for i = 1, spl_originaleditingline-1 do
-						table.remove(scripts[fields.name], 1)
-					end
-
-					-- Oh, was the script an internal script by the way?
-					keepinternal = internalscript
-					keepcutscenebarsinternal = cutscenebarsinternalscript
-				else
-					-- Duplicating, meaning in menu
-					scripts[fields.name] = table.copy(scripts[scriptnames[fields.script_i]])
-				end
-
-				scriptlines = table.copy(scripts[fields.name])
-
-				processflaglabels()
-				if identifier == "split_editor" then
-					-- Splitting
-					internalscript = keepinternal
-					cutscenebarsinternalscript = keepcutscenebarsinternal
-				end
-			end
-			scriptname = fields.name
-			tostate(3)
+		-- Before we save the current (possibly internal) script, split the contents of the old script.
+		for i = spl_originaleditingline, totalnumberlines do
+			table.remove(inputs.script_lines)
 		end
 	end
 
 	if identifier == "split_editor" then
-		-- Splitting
-		scriptlines[editingline] = anythingbutnil(input) .. anythingbutnil(input_r)
-		spl_originaleditingline = editingline
-		editingline = 1
-		input, input_r = scriptlines[1], ""
-		originalscript = table.copy(scriptlines) -- We need to have the unconverted version
-		local totalnumberlines = #scriptlines
-
-		-- Before we save the current (possibly internal) script, split the contents of the old script.
-		for i = spl_originaleditingline, totalnumberlines do
-			table.remove(scriptlines)
+		-- Splitting a script, but we already saved the input earlier
+		local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+		if not success then
+			return
 		end
+		scripts[scriptname] = raw_script
 	end
 
-	if identifier ~= "split_editor" or (not processflaglabelsreverse()) then
-		leavescript_to_state()
+	if scripts[fields.name] == nil then
+		table.insert(scriptnames, fields.name)
+		if identifier ~= "split_editor" and identifier ~= "duplicate_list" then
+			-- Creating an empty script
+			scripts[fields.name] = {""}
+
+			-- Also make sure internal scripting mode doesn't stick
+			internalscript = false
+			cutscenebarsinternalscript = false
+		else
+			-- Splitting/duplicating the current script
+			local keepinternal, keepcutscenebarsinternal
+			if identifier == "split_editor" then
+				-- Splitting, meaning in editor
+				scripts[fields.name] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
+
+				-- Now cut off the top part of the new script
+				for i = 1, spl_originaleditingline-1 do
+					table.remove(scripts[fields.name], 1)
+				end
+
+				-- Oh, was the script an internal script by the way?
+				keepinternal = internalscript
+				keepcutscenebarsinternal = cutscenebarsinternalscript
+			else
+				-- Duplicating, meaning in menu
+				scripts[fields.name] = table.copy(scripts[scriptnames[fields.script_i]])
+			end
+
+			if identifier == "split_editor" then
+				-- Splitting
+				internalscript = keepinternal
+				cutscenebarsinternalscript = keepcutscenebarsinternal
+			end
+		end
+		scriptname = fields.name
+		tostate(3)
 	end
 
 	dirty()
@@ -604,8 +589,6 @@ function dialog.callback.scriptsearch(button, fields)
 		scriptsearchterm = fields.name
 		inscriptsearch(fields.name)
 	end
-
-	takinginput = true -- We were working on a script
 end
 
 function dialog.callback.scriptgotoline_validate(button, fields)
@@ -627,15 +610,6 @@ function dialog.callback.scriptgotoline(button, fields, _, notclosed)
 
 	if button == DB.OK then
 		scriptgotoline(tonumber(fields.line))
-	end
-
-	takinginput = true -- We were working on a script
-end
-
-function dialog.callback.noflagsleft(button)
-	if button == DB.YES then
-		-- Leave the editor even though a flag label doesn't have a number now.
-		leavescript_to_state()
 	end
 end
 

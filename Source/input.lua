@@ -225,6 +225,10 @@ function input.close(id, updatemappings)
 end
 
 function input.getfocused()
+	if not nodialog then
+		return nil
+	end
+
 	local thestate = state
 	local id = input.focused[thestate]
 
