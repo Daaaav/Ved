@@ -429,7 +429,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 
 	if identifier == "split_editor" then
 		-- Splitting a script, but we already saved the input earlier
-		local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+		local success, raw_script = script_compile(inputs.script_lines)
 		if not success then
 			return
 		end

@@ -250,7 +250,7 @@ return function()
 			mousepressed = true
 		elseif not mousepressed and onrbutton(0, nil, true) then
 			-- Return
-			local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+			local success, raw_script = script_compile(inputs.script_lines)
 			if success then
 				scripts[scriptname] = raw_script
 				newinputsys.close("script_lines")

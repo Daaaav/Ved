@@ -1,7 +1,7 @@
 -- scripteditor/load
 
 return function()
-	newinputsys.create(INPUT.MULTILINE, "script_lines", processflaglabels(scripts[scriptname]))
+	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(scripts[scriptname]))
 	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
 	newinputsys.setpos("script_lines", utf8.len(inputs.script_lines[1]), 1)
 

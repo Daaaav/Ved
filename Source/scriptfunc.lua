@@ -307,7 +307,7 @@ function scriptcontext(text)
 	end
 end
 
-function processflaglabels(raw_script)
+function script_decompile(raw_script)
 	-- Run when OPENING the script for display and editing
 	-- Takes the script as runnable by VVVVVV (raw_script) and returns "human-readable" conversion
 
@@ -396,7 +396,7 @@ function processflaglabels(raw_script)
 	return readable_script
 end
 
-function processflaglabelsreverse(readable_script)
+function script_compile(readable_script)
 	-- Run when LEAVING the script
 	-- Converts flag labels to numbers, and if an internal script, convert to a format that works in VVVVVV
 	-- Takes the "human-readable" script and returns success and conversion as runnable by VVVVVV (raw_script)
@@ -831,7 +831,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 		dirty()
 	else
 		-- Go to script- but save the current script first!
-		local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+		local success, raw_script = script_compile(inputs.script_lines)
 		if success then
 			if goingback then
 				table.remove(scripthistorystack)

@@ -73,7 +73,7 @@ return function(key)
 			dirty()
 		end
 	elseif key == "escape" then
-		local success, raw_script = processflaglabelsreverse(inputs.script_lines)
+		local success, raw_script = script_compile(inputs.script_lines)
 		if success then
 			scripts[scriptname] = raw_script
 			newinputsys.close("script_lines")
