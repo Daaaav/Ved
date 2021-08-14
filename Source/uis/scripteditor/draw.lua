@@ -14,7 +14,7 @@ return function()
 		love.graphics.line(43*8, 24, 43*8, love.graphics.getHeight())
 	end
 
-	love.graphics.setScissor(0, 24, love.graphics.getWidth()-128, love.graphics.getHeight()-24)
+	love.graphics.setScissor(0, 24, love.graphics.getWidth()-128-16, love.graphics.getHeight()-24)
 
 	local textq, textc, alttextcolor, lasttextcolor
 	local _, editing_line = newinputsys.getpos("script_lines")

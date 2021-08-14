@@ -365,12 +365,14 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 	if mouseoninput and not RCMactive then
 		love.mouse.setCursor(text_cursor)
+		special_cursor = true
 
 		if (love.mouse.isDown("l") or love.mouse.isDown("r")) and not input.ignoremousepressed then
 			input.mousepressed(id, x, y, sx, sy, lineh)
 		end
-	else
+	elseif special_cursor then
 		love.mouse.setCursor()
+		special_cursor = false
 	end
 
 	-- Selection

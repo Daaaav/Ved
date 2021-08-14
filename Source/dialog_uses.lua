@@ -434,6 +434,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 			return
 		end
 		scripts[scriptname] = raw_script
+		newinputsys.close("script_lines")
 	end
 
 	if scripts[fields.name] == nil then
@@ -447,7 +448,6 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 			cutscenebarsinternalscript = false
 		else
 			-- Splitting/duplicating the current script
-			local keepinternal, keepcutscenebarsinternal
 			if identifier == "split_editor" then
 				-- Splitting, meaning in editor
 				scripts[fields.name] = originalscript -- We now have a duplicate. Might as well leave this as a reference.
@@ -456,19 +456,9 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 				for i = 1, spl_originaleditingline-1 do
 					table.remove(scripts[fields.name], 1)
 				end
-
-				-- Oh, was the script an internal script by the way?
-				keepinternal = internalscript
-				keepcutscenebarsinternal = cutscenebarsinternalscript
 			else
 				-- Duplicating, meaning in menu
 				scripts[fields.name] = table.copy(scripts[scriptnames[fields.script_i]])
-			end
-
-			if identifier == "split_editor" then
-				-- Splitting
-				internalscript = keepinternal
-				cutscenebarsinternalscript = keepcutscenebarsinternal
 			end
 		end
 		scriptname = fields.name
