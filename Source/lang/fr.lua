@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-08-07 18:49:38 (CEST)
+--- Last converted: 2021-08-15 00:01:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -50,7 +50,7 @@ RAWENTITYPROPERTIES = "Vous pouvez changer les valeurs brutes des propriétés d
 UNKNOWNENTITYTYPE = "Type d'entité $1 inconnu",
 WARPTOKENENT404 = "Le jeton de téléportation n'existe plus !",
 SPLITFAILED = "La séparation a misérablement échoué ! Avez-vous trop de lignes entre une commande texte et une commande speak ou speak_active ?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Il n'y a plus de drapeaux disponibles, donc au moins un nouveau nom de drapeau ne peut pas être associé à un numéro de drapeau. L'utilisation de ce script dans VVVVVV a des chances de le casser. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.\n\nQuitter l'éditeur ?",
+NOFLAGSLEFT = "Il n'y a plus de drapeaux disponibles, donc au moins un nouveau nom de drapeau ne peut pas être associé à un numéro de drapeau. L'utilisation de ce script dans VVVVVV a des chances de le casser. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.",
 NOFLAGSLEFT_LOADSCRIPT = "Il n'y a plus de drapeaux disponibles, donc un script de chargement utilisant un nouveau drapeau n'a pas pu être créé. A la place, un script de chargement qui charge le script cible avec iftrinkets(0,$1) a été créé. Veuillez enlever toutes les références vers des drapeaux que vous n'utilisez plus et réessayez.",
 LEVELOPENFAIL = "Impossible d'ouvrir le fichier $1.vvvvvv.",
 SIZELIMIT = "La taille maximum d'un niveau est de $1 par $2.\n\nA la place, la taille du niveau va être changée en $3 par $4.",

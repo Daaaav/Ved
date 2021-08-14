@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-08-07 18:49:37 (CEST)
+--- Last converted: 2021-08-15 00:01:36 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -58,7 +58,7 @@ RAWENTITYPROPERTIES = "Vi povas ŝanĝi la krudajn atributvalorojn de ĉi tiu en
 UNKNOWNENTITYTYPE = "Nekonata entotipo $1",
 WARPTOKENENT404 = "Teleportila ento ne plu ekzistas!",
 SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.\n\nĈu eliri la redaktilon?",
+NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.",
 NOFLAGSLEFT_LOADSCRIPT = "Ne plu restas flagoj, do ŝarg-skripto uzanta novan flagon ne povis kreiĝi. Anstataŭe, ŝarg-skripto estis kreita, kiu ĉiam ŝargas la celatan skripton per iftrinkets(0,$1). Konsideru forigi ĉiujn aludojn al flagoj ne plu bezonataj kaj reprovu.",
 LEVELOPENFAIL = "Ne povis malfermi $1.vvvvvv.",
 SIZELIMIT = "La maksimuma grando de nivelo estas $1 oble $2.\n\nLa grando anstataŭe ŝanĝiĝos al $3 oble $4.",

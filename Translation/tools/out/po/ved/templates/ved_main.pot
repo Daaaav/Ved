@@ -54,7 +54,7 @@ msgid "Split failed miserably! Do you have too many lines between a text command
 msgstr ""
 
 msgctxt "L.NOFLAGSLEFT"
-msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again.\n\nLeave the editor?"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again."
 msgstr ""
 
 msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"

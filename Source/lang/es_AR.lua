@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-08-07 18:49:37 (CEST)
+--- Last converted: 2021-08-15 00:01:36 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -46,7 +46,7 @@ RAWENTITYPROPERTIES = "Puedes cambiar las propiedades crudas de esta entidad aqu
 UNKNOWNENTITYTYPE = "Tipo de entidad desconocida $1",
 WARPTOKENENT404 = "La entidad de warp token no existe!",
 SPLITFAILED = "Division fallada miserablemente! Tienes muchas lineas en medio de un comando de texto y un speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.\n\nSalir del editor?",
+NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
 NOFLAGSLEFT_LOADSCRIPT = "No quedan mas flags, asi que un script de carga usando un flag nuevo no se puede crear. En vez de eso, un script de carga que se ha creado que siempre carga el script tarjeta con iftrinkets(0,$1). considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
 LEVELOPENFAIL = "No se puede abrir $1.vvvvvv.",
 SIZELIMIT = "El tamaño maximo de un nivel es de $1 por $2.\n\nEl tamaño del nivel se cambiara a $3 por $4.",

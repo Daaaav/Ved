@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-08-07 18:49:38 (CEST)
+--- Last converted: 2021-08-15 00:01:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -46,7 +46,7 @@ RAWENTITYPROPERTIES = "Je kunt de eigenschappen van deze entiteit hier wĳzigen.
 UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
 WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.\n\nDe editor verlaten?",
+NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 NOFLAGSLEFT_LOADSCRIPT = "Er zĳn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden. In plaats daarvan is er een laadscript gemaakt dat het doelscript altĳd laadt met iftrinkets(0,$1). Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 LEVELOPENFAIL = "Kon $1.vvvvvv niet openen.",
 SIZELIMIT = "De maximale grootte van een level is $1 bĳ $2.\n\nDe levelgrootte zal worden aangepast naar $3 bĳ $4.",

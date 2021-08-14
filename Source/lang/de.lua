@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-08-07 18:49:37 (CEST)
+--- Last converted: 2021-08-15 00:01:36 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -46,7 +46,7 @@ RAWENTITYPROPERTIES = "Du kannst die Eigenschaften von diesem Objekt ändern.",
 UNKNOWNENTITYTYPE = "Unbekannter Objekttyp $1",
 WARPTOKENENT404 = "Teleporterobjekt existiert nicht mehr!",
 SPLITFAILED = "Trennung ist fehlgeschlagen! Hast du zu viele Zeilen zwischen einem Textbefehl und einem speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.\n\nEditor verlassen?",
+NOFLAGSLEFT = "Es sind keine Flags mehr übrig, also kann eine oder mehr Flagkennzeichnungen in diesem Skript nicht mit Flagnummern verbunden werden. Wenn versucht wird dieses Skript in VVVVVV auszuführen, klappt es vielleicht nicht. Ziehe in betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 NOFLAGSLEFT_LOADSCRIPT = "Es sind keine Flags mehr übrig, also ein Ladeskript mit einer neuen Flag konnte nicht erstellt werden. Stattdessen, wurde ein Ladeskript erstellt welches immer das Zielskript ladet mit iftrinkets(0,$1). Ziehe in Betracht, alle Verweise auf nicht mehr benötigte Flags zu entfernen, und versuche es erneut.",
 LEVELOPENFAIL = "Kann nicht $1.vvvvvv öffnen.",
 SIZELIMIT = "Die maximale Größe eines Levels ist $1 bis $2.\n\nDie Levelgröße wird geändert zu $3 bis $4.",
