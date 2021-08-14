@@ -634,6 +634,7 @@ function script_compile(readable_script)
 				for flag = 0, limit.flags-1 do
 					if vedmetadata.flaglabel[flag] == partss[2] then
 						useflag = flag
+						usedflags[flag] = true
 						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. flag)
 						break
 					end
