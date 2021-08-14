@@ -479,9 +479,7 @@ function script_compile(readable_script)
 		end
 
 		if splithasfailed then
-			-- Just leave the script unconverted and disengage internal scripting mode. There's still flag names
-			internalscript = false
-			cutscenebarsinternalscript = false
+			-- Just leave the script unconverted. There's still flag names
 			dialog.create(L.SPLITFAILED)
 			success = false
 		else
