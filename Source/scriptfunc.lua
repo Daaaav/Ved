@@ -198,6 +198,7 @@ function scriptcontext(text)
 	elseif (
 		parts[1] == "loadscript"
 		or parts[1] == "ifskip"
+		or parts[1] == "teleportscript"
 	) and parts[2] ~= nil and parts[2] ~= "custom_" and string.sub(parts[2], 1, string.len("custom_")) == "custom_" then
 		return "script", string.sub(parts[2], string.len("custom_")+1, string.len(parts[2])), nil
 	elseif (
@@ -757,7 +758,7 @@ function findscriptreferences(argscriptname)
 				(partss[1] == "ifwarp" and partss[5] == argscriptname)
 			)
 			local scriptcond = (
-				(partss[2] ~= nil and (partss[1] == "loadscript" or partss[1] == "ifskip") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
+				(partss[2] ~= nil and (partss[1] == "loadscript" or partss[1] == "ifskip" or partss[1] == "teleportscript") and string.sub(partss[2], string.len("custom_")+1, string.len(partss[2])) == argscriptname)
 				or
 				(partss[3] ~= nil and (partss[1] == "ifcrewlost" or partss[1] == "iflast") and string.sub(partss[3], string.len("custom_")+1, string.len(partss[3])) == argscriptname)
 				or
@@ -800,7 +801,7 @@ function findusedscripts()
 				add = partss[3]
 			elseif partss[1] == "ifwarp" then
 				add = partss[5]
-			elseif (partss[1] == "loadscript" or partss[1] == "ifskip") and partss[2] ~= nil and string.sub(partss[2], 1, string.len("custom_")) == "custom_" then
+			elseif (partss[1] == "loadscript" or partss[1] == "ifskip" or partss[1] == "teleportscript") and partss[2] ~= nil and string.sub(partss[2], 1, string.len("custom_")) == "custom_" then
 				add = string.sub(partss[2], string.len("custom_")+1, string.len(partss[2]))
 			elseif (partss[1] == "ifcrewlost" or partss[1] == "iflast") and partss[3] ~= nil and string.sub(partss[3], 1, string.len("custom_")) == "custom_" then
 				add = string.sub(partss[3], string.len("custom_")+1, string.len(partss[3]))
