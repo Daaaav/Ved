@@ -1276,7 +1276,9 @@ function state6load(levelname)
 				loadtilesets()
 				tile_batch_texture_needs_update = true
 			end
-			newinputsys.close("levelname")
+			if state == 6 then
+				newinputsys.close("levelname")
+			end
 			tostate(1)
 		end
 	else
