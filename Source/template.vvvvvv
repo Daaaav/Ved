@@ -12,7 +12,7 @@
             <Desc2>$DESC2$</Desc2>
             <Desc3>$DESC3$</Desc3>
             <website>$WEBSITE$</website>
-        </MetaData>
+$OPTIONAL_METADATA$        </MetaData>
         <mapwidth>$MAPWIDTH$</mapwidth>
         <mapheight>$MAPHEIGHT$</mapheight>
         <levmusic>$LEVMUSIC$</levmusic>

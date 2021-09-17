@@ -41,6 +41,13 @@ function loadlevelmetadata(path)
 		thismetadata[v] = unxmlspecialchars(m)
 	end
 
+	-- This one is optional.
+	thismetadata.onewaycol_override = false
+	local m = xmetadata:match("<onewaycol_override>(.*)</onewaycol_override>")
+	if m ~= nil then
+		thismetadata.onewaycol_override = m ~= "0"
+	end
+
 	-- But we'll have room size and music also move in with the metadata.
 	cons("Loading room size and music...")
 	for _,v in pairs({"mapwidth", "mapheight", "levmusic"}) do
@@ -670,6 +677,13 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", newthis)
 	end
 
+	-- Special case of metadata that may or may not be stored...
+	local optional_metadata = ""
+	if thismetadata.onewaycol_override then
+		optional_metadata = optional_metadata .. "            <onewaycol_override>1</onewaycol_override>\n"
+	end
+	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", optional_metadata)
+
 	-- Hold on for a second, we need the map size and music too!
 	savethis = savethis:gsub("%$MAPWIDTH%$", thismetadata["mapwidth"]):gsub("%$MAPHEIGHT%$", thismetadata["mapheight"]):gsub("%$LEVMUSIC%$", thismetadata["levmusic"])
 
@@ -953,6 +967,7 @@ function createblanklevel(lvwidth, lvheight)
 		Modifiers = "2",
 		Desc1 = "", Desc2 = "", Desc3 = "",
 		website = "",
+		onewaycol_override = false,
 		mapwidth = lvwidth,
 		mapheight = lvheight,
 		levmusic = 0,
