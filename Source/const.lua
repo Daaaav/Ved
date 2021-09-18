@@ -189,7 +189,6 @@ limit_v = {
 	mapwidth = 20,
 	mapheight = 20,
 	scripts = math.huge,
-	scriptlines = math.huge,
 	flags = 100,
 	entities = math.huge,
 	trinkets = 100,
