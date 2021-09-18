@@ -1,19 +1,24 @@
 toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P"}
 
-tilesetnames = {
-	"tiles.png",
-	"tiles2.png",
-	"tiles3.png"
+tileset_names = {
+	[0] = "tiles.png",  -- space station
+
+	[1] = "tiles2.png", -- outside
+	[2] = "tiles2.png", -- lab
+	[3] = "tiles2.png", -- warp zone
+	[4] = "tiles2.png", -- ship
+
+	[5] = "tiles3.png", -- tower
 }
 
 usedtilesets = {
 	[0] = 1, -- space station
-				-- 
+
 	[1] = 2, -- outside
 	[2] = 2, -- lab
 	[3] = 2, -- warp zone
 	[4] = 2, -- ship
-				--
+
 	[5] = 3, -- tower
 }
 

@@ -39,22 +39,23 @@ return function(key)
 			tilespicker_shortcut = true
 		end
 
-		local tsw = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-		local tsh = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight
+		local tsw = tilesets[tileset_names[selectedtileset]].tiles_width_picker
+		local tsh = tilesets[tileset_names[selectedtileset]].tiles_height_picker
+		local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
 		if levelmetadata_get(roomx, roomy).directmode == 1 then
 			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
 			elseif table.contains({"right", "d"}, key) then
-				selectedtile = (selectedtile + 1) % (tsw*tsh)
+				selectedtile = (selectedtile + 1) % total_tiles
 			elseif table.contains({"up", "w"}, key) then
 				selectedtile = selectedtile - tsw
 			elseif table.contains({"down", "s"}, key) then
-				selectedtile = (selectedtile + tsw) % (tsw*tsh)
+				selectedtile = (selectedtile + tsw) % total_tiles
 			end
 		end
 
 		if selectedtile < 0 then
-			selectedtile = selectedtile + tsw*tsh
+			selectedtile = selectedtile + total_tiles
 		end
 
 	elseif key == "," then

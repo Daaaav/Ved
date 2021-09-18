@@ -431,30 +431,44 @@ function loadtileset(file, res, levelassetsfolder)
 		asimgdata_white = love.image.newImageData("vgraphics/" .. file)
 	end
 
-	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
-	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
-	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
-	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/res)
-	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/res)
+	tilesets[file].img = love.graphics.newImage(asimgdata)
+	tilesets[file].width = tilesets[file].img:getWidth()
+	tilesets[file].height = tilesets[file].img:getHeight()
+	tilesets[file].tiles_width = math.floor(tilesets[file].width/res)
+	tilesets[file].tiles_height = math.floor(tilesets[file].height/res)
 
-	cons("Loading tileset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
+	tilesets[file].total_tiles = tilesets[file].tiles_width * tilesets[file].tiles_height
+
+	tilesets[file].tiles_width_picker = math.min(40, tilesets[file].tiles_width)
+	if tilesets[file].tiles_width_picker == 0 then
+		tilesets[file].tiles_height_picker = 0
+	else
+		tilesets[file].tiles_height_picker = tilesets[file].total_tiles / tilesets[file].tiles_width_picker
+	end
+
+	cons("Loading tileset: " .. file .. ", "
+		.. tilesets[file].width .. "x" .. tilesets[file].height .. ", "
+		.. tilesets[file].tiles_width .. "x" .. tilesets[file].tiles_height
+	)
 
 	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
 	asimgdata_white:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
-	tilesets[file]["white_img"] = love.graphics.newImage(asimgdata_white)
+	tilesets[file].white_img = love.graphics.newImage(asimgdata_white)
 
-	tilesets[file]["tiles"] = {}
+	tilesets[file].tiles = {}
 
-	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
-		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
-			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*res, tsy*res, res, res, tilesets[file]["width"], tilesets[file]["height"])
+	for tsy = 0, (tilesets[file].tiles_height-1) do
+		for tsx = 0, (tilesets[file].tiles_width-1) do
+			tilesets[file].tiles[(tsy*tilesets[file].tiles_width)+tsx] = love.graphics.newQuad(
+				tsx*res, tsy*res, res, res, tilesets[file].width, tilesets[file].height
+			)
 		end
 	end
 
 	-- If this tileset is smaller than 1200 (tiles3) then fill up with tile 0 to prevent crashes
-	for filler = tilesets[file].tileswidth*tilesets[file].tilesheight, 1199 do
+	for filler = tilesets[file].tiles_width*tilesets[file].tiles_height, 1199 do
 		tilesets[file].tiles[filler] = love.graphics.newQuad(0, 0, res, res, tilesets[file].width, tilesets[file].height)
 	end
 end
@@ -489,25 +503,30 @@ function loadsprites(file, res, levelassetsfolder)
 		cons("No custom image for " .. file .. ", " .. contents)
 		asimgdata = love.image.newImageData("vgraphics/" .. file)
 	end
-	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
-	tilesets[file]["width"] = tilesets[file]["img"]:getWidth()
-	tilesets[file]["height"] = tilesets[file]["img"]:getHeight()
-	tilesets[file]["tileswidth"] = math.floor(tilesets[file]["width"]/res)
-	tilesets[file]["tilesheight"] = math.floor(tilesets[file]["height"]/res)
+	tilesets[file].img = love.graphics.newImage(asimgdata)
+	tilesets[file].width = tilesets[file].img:getWidth()
+	tilesets[file].height = tilesets[file].img:getHeight()
+	tilesets[file].tiles_width = math.floor(tilesets[file].width/res)
+	tilesets[file].tiles_height = math.floor(tilesets[file].height/res)
 
-	cons("Loading spriteset: " .. file .. ", " .. tilesets[file]["width"] .. "x" .. tilesets[file]["height"] .. ", " .. tilesets[file]["tileswidth"] .. "x" .. tilesets[file]["tilesheight"])
+	cons("Loading spriteset: " .. file .. ", "
+		.. tilesets[file].width .. "x" .. tilesets[file].height .. ", "
+		.. tilesets[file].tiles_width .. "x" .. tilesets[file].tiles_height
+	)
 
 	-- Now make everything white so we can color-correct it!
 	asimgdata:mapPixel(function(x, y, r, g, b, a)
 		return 255, 255, 255, a
 	end)
-	tilesets[file]["img"] = love.graphics.newImage(asimgdata)
+	tilesets[file].img = love.graphics.newImage(asimgdata)
 
-	tilesets[file]["tiles"] = {}
+	tilesets[file].tiles = {}
 
-	for tsy = 0, (tilesets[file]["tilesheight"]-1) do
-		for tsx = 0, (tilesets[file]["tileswidth"]-1) do
-			tilesets[file]["tiles"][(tsy*tilesets[file]["tileswidth"])+tsx] = love.graphics.newQuad(tsx*res, tsy*res, res, res, tilesets[file]["width"], tilesets[file]["height"])
+	for tsy = 0, (tilesets[file].tiles_height-1) do
+		for tsx = 0, (tilesets[file].tiles_width-1) do
+			tilesets[file].tiles[(tsy*tilesets[file].tiles_width)+tsx] = love.graphics.newQuad(
+				tsx*res, tsy*res, res, res, tilesets[file].width, tilesets[file].height
+			)
 		end
 	end
 end

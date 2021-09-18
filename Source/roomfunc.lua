@@ -3,7 +3,7 @@ function tileset_image(themetadata, chosentileset)
 		chosentileset = themetadata.tileset
 	end
 
-	return tilesetnames[usedtilesets[chosentileset]]
+	return tileset_names[chosentileset]
 end
 
 function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid, displayminimapgrid)
@@ -791,7 +791,26 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 end
 
 function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, displaysolid)
-	love.graphics.draw(tilesets[tilesetname]["img"], offsetx, offsety, 0, 2)
+	local tiles_width_picker = tilesets[tilesetname].tiles_width_picker
+	local tiles_height_picker = tilesets[tilesetname].tiles_height_picker
+
+	if tilesets[tilesetname].tiles_width == tiles_width_picker then
+		-- Optimization: why draw it tile-by-tile if we can just draw the whole thing?
+		love.graphics.draw(tilesets[tilesetname].img, offsetx, offsety, 0, 2)
+	else
+		-- This could use a SpriteBatch... But why make your tileset so wide in the first place?
+		-- You make your tileset too wide to fit, I'm taking some CPU cycles away from you >:c
+		for aty = 0, tiles_height_picker-1 do
+			for atx = 0, tiles_width_picker-1 do
+				local t = (aty*tiles_width_picker)+atx
+				love.graphics.draw(
+					tilesets[tilesetname].img,
+					tilesets[tilesetname].tiles[t],
+					offsetx+atx*16, offsety+aty*16, 0, 2
+				)
+			end
+		end
+	end
 
 	if displaytilenumbers or displaysolid then
 		local ts = 1
@@ -801,9 +820,9 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 			ts = 3
 		end
 
-		for aty = 0, tilesets[tilesetname].tilesheight-1 do
-			for atx = 0, tilesets[tilesetname].tileswidth-1 do
-				local t = (aty*tilesets[tilesetname].tileswidth)+atx
+		for aty = 0, tiles_height_picker-1 do
+			for atx = 0, tiles_width_picker-1 do
+				local t = (aty*tiles_width_picker)+atx
 				local x, y = offsetx+(16*atx), offsety+(16*aty)
 
 				if displaysolid then
@@ -854,8 +873,8 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 			love.graphics.setColor(255,255,255,255)
 		else
 			-- Also draw a box around the currently selected tile!
-			local selectedx = selectedtile % tilesets[tilesetname].tileswidth
-			local selectedy = (selectedtile-selectedx) / tilesets[tilesetname].tileswidth
+			local selectedx = selectedtile % tiles_width_picker
+			local selectedy = (selectedtile-selectedx) / tiles_width_picker
 
 			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
 		end

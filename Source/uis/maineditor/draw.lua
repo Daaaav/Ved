@@ -77,9 +77,12 @@ return function()
 						nodialog = false
 						tilespicker = false
 					end
-				elseif atx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-				and aty < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
-					selectedtile = (aty*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+(atx+1)-1
+				elseif atx < tilesets[tileset_names[selectedtileset]].tiles_width_picker
+				and aty < tilesets[tileset_names[selectedtileset]].tiles_height_picker then
+					selectedtile = math.min(
+						(aty*tilesets[tileset_names[selectedtileset]].tiles_width_picker)+(atx+1)-1,
+						tilesets[tileset_names[selectedtileset]].total_tiles-1
+					)
 				end
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
@@ -819,14 +822,7 @@ return function()
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
-		local atx, aty = getcursor()
-
-		if atx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-		and aty < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
-			selectedtile = (aty*tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth)+atx
-		end
-	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and levelmetadata_get(roomx, roomy).directmode == 1 then
+	elseif nodialog and love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and not tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
 		editingroomname = false
 		local atx, aty = getcursor()
 
@@ -845,7 +841,7 @@ return function()
 			end
 		end
 
-		local ts_name = tilesetnames[usedtilesets[levelmetadata_get(roomx, roomy).tileset]]
+		local ts_name = tileset_names[levelmetadata_get(roomx, roomy).tileset]
 
 		displaytilespicker(screenoffset, 0, ts_name, displaytilenumbers, displaysolid)
 	else
@@ -1242,8 +1238,8 @@ return function()
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then
 			if levelmetadata_get(roomx, roomy).directmode ~= 0
-			and cursorx < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-			and cursory < tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight then
+			and cursorx < tilesets[tileset_names[selectedtileset]].tiles_width_picker
+			and cursory < tilesets[tileset_names[selectedtileset]].tiles_height_picker then
 				-- Just one tile, but only in manual/direct mode.
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 			end
@@ -1969,17 +1965,17 @@ return function()
 
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
 	if tilespicker then
-		local tileswidth = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tileswidth
-		local tilesheight = tilesets[tilesetnames[usedtilesets[selectedtileset]]].tilesheight
+		local tiles_width_picker = tilesets[tileset_names[selectedtileset]].tiles_width_picker
+		local tiles_height_picker = tilesets[tileset_names[selectedtileset]].tiles_height_picker
 		if cursorx ~= "--" and cursory ~= "--"
-		and cursorx < tileswidth
-		and cursory < tilesheight then
+		and cursorx < tiles_width_picker
+		and cursory < tiles_height_picker then
 			ved_printf(
-				langkeys(L.TILE, {(cursory*tileswidth)+cursorx}),
+				langkeys(L.TILE, {(cursory*tiles_width_picker)+cursorx}),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
 			ved_printf(
-				(issolid((cursory*tileswidth)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
+				(issolid((cursory*tiles_width_picker)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
