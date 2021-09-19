@@ -6,7 +6,7 @@ function tileset_image(themetadata, chosentileset)
 	return tileset_names[chosentileset]
 end
 
-function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid, displayminimapgrid)
+function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, displaytilenumbers, displaysolid, displayminimapgrid, adjacent_room_lines)
 	if zoomscale2 == nil then zoomscale2 = 1 end
 	-- This assumes the room is already loaded in roomdata. It just displays a room, without the entities. Also include scale for zooming out.
 	local ts = usedtilesets[themetadata.tileset]
@@ -49,6 +49,190 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	end
 	love.graphics.draw(tile_batch, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
 
+	-- Display indicators for tiles in adjacent rooms
+	if adjacent_room_lines then
+		local roomupW, roomleftW, roomrightW, roomdownW = false, false, false, false
+		local roomup, roomleft, roomright, roomdown
+
+		-- Make sure there are no warp lines in the room. If there are, then the background doesn't apply
+		local warplines = warplinesinroom(roomx, roomy)
+
+		-- Room up.
+		if (themetadata.warpdir == 2 or themetadata.warpdir == 3) and not warplines then
+			-- Use this room because it warps.
+			roomup = roomy
+			roomupW = true
+		else
+			if roomy+1 <= 1 then
+				roomup = metadata.mapheight-1
+			else
+				roomup = roomy - 1
+			end
+		end
+		-- Room left
+		if (themetadata.warpdir == 1 or themetadata.warpdir == 3) and not warplines then
+			-- Use this room because it warps.
+			roomleft = roomx
+			roomleftW = true
+		else
+			if roomx+1 <= 1 then
+				roomleft = metadata.mapwidth-1
+			else
+				roomleft = roomx - 1
+			end
+		end
+		-- Room right
+		if (themetadata.warpdir == 1 or themetadata.warpdir == 3) and not warplines then
+			-- Use this room because it warps.
+			roomright = roomx
+			roomrightW = true
+		else
+			if roomx+1 >= metadata.mapwidth then
+				roomright = 0
+			else
+				roomright = roomx + 1
+			end
+		end
+		-- Room down
+		if (themetadata.warpdir == 2 or themetadata.warpdir == 3) and not warplines then
+			-- Use this room because it warps.
+			roomdown = roomy
+			roomdownW = true
+		else
+			if roomy+1 >= metadata.mapheight then
+				roomdown = 0
+			else
+				roomdown = roomy + 1
+			end
+		end
+
+		-- Up
+		for t = 0, 39 do
+			-- Wall
+			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset]) then
+				if roomupW then
+					love.graphics.setColor(0, 192, 255)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 2)
+
+				if roomupW then
+					love.graphics.setColor(255, 255, 255)
+				end
+			elseif not roomupW and ( (levelmetadata_get(roomx, roomup).warpdir == 2) or (levelmetadata_get(roomx, roomup).warpdir == 3) ) and not warplinesinroom(roomx, roomup) then
+				love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
+			end
+
+			-- Spikes
+			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], false) ~= issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], true) then
+				love.graphics.setColor(255, 0, 0)
+
+				if roomupW then
+					love.graphics.setColor(255, 192, 0)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 2)
+
+				love.graphics.setColor(255, 255, 255)
+			end
+		end
+		-- Left
+		for t = 0, 29 do
+			-- Wall
+			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset]) then
+				if roomleftW then
+					love.graphics.setColor(0, 192, 255)
+				end
+
+				love.graphics.rectangle("fill", screenoffset, t*16, 2, 16)
+
+				if roomleftW then
+					love.graphics.setColor(255, 255, 255)
+				end
+			elseif not roomleftW and ( (levelmetadata_get(roomleft, roomy).warpdir == 1) or (levelmetadata_get(roomleft, roomy).warpdir == 3) ) and not warplinesinroom(roomleft, roomy) then
+				love.graphics.rectangle("fill", screenoffset, t*16, 1, 16)
+			end
+
+			-- Spikes
+			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], false) ~= issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], true) then
+				love.graphics.setColor(255, 0, 0)
+
+				if roomleftW then
+					love.graphics.setColor(255, 192, 0)
+				end
+
+				love.graphics.rectangle("fill", screenoffset, t*16, 2, 16)
+
+				love.graphics.setColor(255, 255, 255)
+			end
+		end
+		-- Right
+		for t = 0, 29 do
+			-- Wall
+			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset]) then
+
+				if roomrightW then
+					love.graphics.setColor(0, 192, 255)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(39*16)+16-2, t*16, 2, 16)
+
+				if roomrightW then
+					love.graphics.setColor(255, 255, 255)
+				end
+
+			elseif not roomrightW and ( (levelmetadata_get(roomright, roomy).warpdir == 1) or (levelmetadata_get(roomright, roomy).warpdir == 3) ) and not warplinesinroom(roomright, roomy) then
+				love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
+			end
+
+			-- Spikes
+			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], false) ~= issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], true) then
+				love.graphics.setColor(255, 0, 0)
+
+				if roomrightW then
+					love.graphics.setColor(255, 192, 0)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(39*16)+16-2, t*16, 2, 16)
+
+				love.graphics.setColor(255, 255, 255)
+			end
+		end
+		-- Down
+		for t = 0, 39 do
+			-- Wall
+			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset]) then
+
+				if roomdownW then
+					love.graphics.setColor(0, 192, 255)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-2, 16, 2)
+
+				if roomdownW then
+					love.graphics.setColor(255, 255, 255)
+				end
+
+			elseif not roomdownW and ( (levelmetadata_get(roomx, roomdown).warpdir == 2) or (levelmetadata_get(roomx, roomdown).warpdir == 3) ) and not warplinesinroom(roomx, roomdown) then
+				love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
+			end
+
+			-- Spikes
+			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], false) ~= issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], true) then
+				love.graphics.setColor(255, 0, 0)
+
+				if roomdownW then
+					love.graphics.setColor(255, 192, 0)
+				end
+
+				love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-2, 16, 2)
+
+				love.graphics.setColor(255, 255, 255)
+			end
+		end
+	end
+
+
 	if not displaysolid and not displaytilenumbers and not displayminimapgrid then
 		return
 	end
@@ -89,7 +273,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 
 			if displaytilenumbers then
-				ved_print(t, x, y)
+				print_tile_number(t, x, y)
 			end
 
 			if displayminimapgrid then
@@ -860,7 +1044,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 				end
 
 				if displaytilenumbers then
-					ved_print(t, x, y)
+					print_tile_number(t, x, y)
 				end
 			end
 		end

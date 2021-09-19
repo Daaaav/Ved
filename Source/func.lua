@@ -3264,4 +3264,28 @@ function canvas_size(w, h)
 	return math.pow(2, math.ceil(math.log(w)/math.log(2))), math.pow(2, math.ceil(math.log(h)/math.log(2)))
 end
 
+function print_tile_number(t, x, y)
+	-- Print a tile number in the "fading" style.
+	-- Assumes tinynumbers font is already set.
+
+	local st = tostring(t)
+
+	if st:len() > 8 then
+		st = ("9"):rep(8)
+	end
+
+	for i = 0, st:len()-1 do
+		local print_y = math.floor(i/4)
+		local col = 255 - 32*i + 32*print_y
+
+		love.graphics.setColor(col, col, col)
+
+		ved_shadowprint(
+			st:sub(i+1,i+1),
+			x+(i%4)*4, y+print_y*7
+		)
+	end
+	love.graphics.setColor(255,255,255)
+end
+
 hook("func")
