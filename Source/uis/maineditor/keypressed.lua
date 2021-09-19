@@ -38,11 +38,14 @@ return function(key)
 		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown(rctrl) then
 			tilespicker_shortcut = true
 		end
+	end
 
-		local tsw = tilesets[tileset_names[selectedtileset]].tiles_width_picker
-		local tsh = tilesets[tileset_names[selectedtileset]].tiles_height_picker
-		local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
+	if tilespicker and table.contains({"left", "right", "up", "down", "a", "d", "w", "s"}, key) then
 		if levelmetadata_get(roomx, roomy).directmode == 1 then
+			local tsw = tilesets[tileset_names[selectedtileset]].tiles_width_picker
+			local tsh = tilesets[tileset_names[selectedtileset]].tiles_height_picker
+			local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
+
 			if table.contains({"left", "a"}, key) then
 				selectedtile = selectedtile - 1
 			elseif table.contains({"right", "d"}, key) then
@@ -52,12 +55,17 @@ return function(key)
 			elseif table.contains({"down", "s"}, key) then
 				selectedtile = (selectedtile + tsw) % total_tiles
 			end
-		end
 
-		if selectedtile < 0 then
-			selectedtile = selectedtile + total_tiles
-		end
+			if selectedtile < 0 then
+				selectedtile = selectedtile + total_tiles
+			end
 
+			tilespicker_selectedtile_page()
+		end
+	elseif tilespicker and key == "pageup" then
+		tilespicker_prev_page()
+	elseif tilespicker and key == "pagedown" then
+		tilespicker_next_page()
 	elseif key == "," then
 		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then

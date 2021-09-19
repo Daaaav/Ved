@@ -18,7 +18,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	if tile_batch_tileset ~= ts
 	or tile_batch_texture_needs_update then
 		tile_batch_needs_update = true
-		tile_batch:setTexture(tilesets[tsimage]["img"])
+		tile_batch:setTexture(tilesets[tsimage].img)
 		tile_batch_tileset = ts
 		tile_batch_texture_needs_update = false
 	end
@@ -39,8 +39,8 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			for atx = 0, 39 do
 				local t = theroomdata[(aty*40)+(atx+1)]
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
-				if t ~= 0 then
-					tile_batch:add(tilesets[tsimage]["tiles"][anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
+				if t ~= 0 and tilesets[tsimage].tiles[anythingbutnil0(tonumber(t))] ~= nil then
+					tile_batch:add(tilesets[tsimage].tiles[anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
 				end
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
@@ -683,22 +683,22 @@ end
 function drawentitysprite(tile, atx, aty, small)
 	local image = "sprites.png"
 
-	if tilesets[image]["tiles"][tile] ~= nil then
-		love.graphics.draw(tilesets[image]["img"], tilesets[image]["tiles"][tile], atx, aty, 0, small and 1 or 2)
+	if tilesets[image].tiles[tile] ~= nil then
+		love.graphics.draw(tilesets[image].img, tilesets[image].tiles[tile], atx, aty, 0, small and 1 or 2)
 	else
 		love.graphics.draw(cursorimg[5], atx, aty)
 	end
 end
 
 function drawentcolour(tile, atx, aty, small)
-	love.graphics.draw(tilesets["entcolours.png"]["img"], tilesets["entcolours.png"]["tiles"][tile], atx, aty, 0, small and 1 or 2)
+	love.graphics.draw(tilesets["entcolours.png"].img, tilesets["entcolours.png"].tiles[tile], atx, aty, 0, small and 1 or 2)
 end
 
 function drawtele(atx, aty, small)
 	love.graphics.setColor(16,16,16)
-	love.graphics.draw(tilesets["teleporter.png"]["img"], tilesets["teleporter.png"]["tiles"][0], atx, aty, 0, small and 1 or 2)
+	love.graphics.draw(tilesets["teleporter.png"].img, tilesets["teleporter.png"].tiles[0], atx, aty, 0, small and 1 or 2)
 	v6_setcol(100)
-	love.graphics.draw(tilesets["teleporter.png"]["img"], tilesets["teleporter.png"]["tiles"][1], atx, aty, 0, small and 1 or 2)
+	love.graphics.draw(tilesets["teleporter.png"].img, tilesets["teleporter.png"].tiles[1], atx, aty, 0, small and 1 or 2)
 	love.graphics.setColor(255,255,255)
 end
 
@@ -790,24 +790,29 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 	end
 end
 
-function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, displaysolid)
+function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumbers, displaysolid)
 	local tiles_width_picker = tilesets[tilesetname].tiles_width_picker
 	local tiles_height_picker = tilesets[tilesetname].tiles_height_picker
+	local total_tiles = tilesets[tilesetname].total_tiles
 
 	if tilesets[tilesetname].tiles_width == tiles_width_picker then
 		-- Optimization: why draw it tile-by-tile if we can just draw the whole thing?
-		love.graphics.draw(tilesets[tilesetname].img, offsetx, offsety, 0, 2)
+		love.graphics.setScissor(offsetx, offsety, 640, 480)
+		love.graphics.draw(tilesets[tilesetname].img, offsetx, offsety-page*480, 0, 2)
+		love.graphics.setScissor()
 	else
 		-- This could use a SpriteBatch... But why make your tileset so wide in the first place?
 		-- You make your tileset too wide to fit, I'm taking some CPU cycles away from you >:c
-		for aty = 0, tiles_height_picker-1 do
+		for aty = page*30, math.min(page*30+29, tiles_height_picker-1) do
 			for atx = 0, tiles_width_picker-1 do
 				local t = (aty*tiles_width_picker)+atx
-				love.graphics.draw(
-					tilesets[tilesetname].img,
-					tilesets[tilesetname].tiles[t],
-					offsetx+atx*16, offsety+aty*16, 0, 2
-				)
+				if t < total_tiles then
+					love.graphics.draw(
+						tilesets[tilesetname].img,
+						tilesets[tilesetname].tiles[t],
+						offsetx+atx*16, offsety+(aty%30)*16, 0, 2
+					)
+				end
 			end
 		end
 	end
@@ -820,10 +825,14 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 			ts = 3
 		end
 
-		for aty = 0, tiles_height_picker-1 do
+		for aty = page*30, math.min(page*30+29, tiles_height_picker-1) do
 			for atx = 0, tiles_width_picker-1 do
 				local t = (aty*tiles_width_picker)+atx
-				local x, y = offsetx+(16*atx), offsety+(16*aty)
+				local x, y = offsetx+(16*atx), offsety+(16*(aty%30))
+
+				if t >= total_tiles then
+					break
+				end
 
 				if displaysolid then
 					if issolid(t, ts, false, true) then
@@ -860,23 +869,25 @@ function displaytilespicker(offsetx, offsety, tilesetname, displaytilenumbers, d
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then
 			-- We're currently creating a stamp from the tileset
-			local cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
-			local cursory = math.floor(love.mouse.getY() / 16)
+			local cursorx = math.floor((love.mouse.getX()-offsetx) / 16)
+			local cursory = math.floor((love.mouse.getY()-offsety) / 16)
+
+			local page_relative_customsizecoory = customsizecoory-page*30
 
 			love.graphics.setColor(255,255,0,255)
 			love.graphics.rectangle("line",
-				screenoffset+customsizecoorx*16,
-				customsizecoory*16,
+				offsetx+customsizecoorx*16,
+				offsety+page_relative_customsizecoory*16,
 				(math.max(cursorx, customsizecoorx)-customsizecoorx+1)*16,
-				(math.max(cursory, customsizecoory)-customsizecoory+1)*16
+				(math.max(cursory, page_relative_customsizecoory)-page_relative_customsizecoory+1)*16
 			)
 			love.graphics.setColor(255,255,255,255)
 		else
 			-- Also draw a box around the currently selected tile!
 			local selectedx = selectedtile % tiles_width_picker
-			local selectedy = (selectedtile-selectedx) / tiles_width_picker
+			local selectedy = ((selectedtile-selectedx) / tiles_width_picker) - page*30
 
-			love.graphics.draw(cursorimg[20], (16*selectedx+screenoffset)-2, (16*selectedy)-2)
+			love.graphics.draw(cursorimg[20], (16*selectedx+offsetx)-2, (16*selectedy+offsety)-2)
 		end
 	end
 end
@@ -908,7 +919,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 	for ly = 0, 4 do
 		for lx = 0, 5 do
 			-- The number is (6ly)+lx+1. The below line was a monster. Display this.
-			love.graphics.draw(tilesets[tsimage]["img"], tilesets[tsimage]["tiles"][toolarray[(6*ly)+lx+1]], offsetx+(scale*8*lx), offsety+(scale*8*ly), 0, scale)
+			love.graphics.draw(tilesets[tsimage].img, tilesets[tsimage].tiles[toolarray[(6*ly)+lx+1]], offsetx+(scale*8*lx), offsety+(scale*8*ly), 0, scale)
 
 			-- Is this tile the selected one?
 			if toolarray[(6*ly)+lx+1] == selectedtile then
@@ -1345,14 +1356,16 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 				if customsize and customsizetile ~= nil then
 					displayedtile = customsizetile[forfory+1][forforx+1]
 				end
-				love.graphics.draw(
-					tilesets[tsimage]["img"],
-					tilesets[tsimage]["tiles"][displayedtile],
-					screenoffset+(16*(cursorx-leftblx+forforx)),
-					(16*(cursory-upblx+forfory)),
-					0,
-					2
-				)
+				if tilesets[tsimage].tiles[displayedtile] ~= nil then
+					love.graphics.draw(
+						tilesets[tsimage].img,
+						tilesets[tsimage].tiles[displayedtile],
+						screenoffset+(16*(cursorx-leftblx+forforx)),
+						(16*(cursory-upblx+forfory)),
+						0,
+						2
+					)
+				end
 			end
 		end
 		love.graphics.setColor(255,255,255,255)
@@ -1389,11 +1402,14 @@ end
 function displayalphatile_hor()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+		if tilesets[tsimage].tiles[selectedtile] == nil then
+			return
+		end
 		love.graphics.setColor(255,255,255,128)
 		for forforx = 0, 39 do
 			love.graphics.draw(
-				tilesets[tsimage]["img"],
-				tilesets[tsimage]["tiles"][selectedtile],
+				tilesets[tsimage].img,
+				tilesets[tsimage].tiles[selectedtile],
 				screenoffset+(16*forforx),
 				(16*cursory),
 				0,
@@ -1407,11 +1423,14 @@ end
 function displayalphatile_ver()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+		if tilesets[tsimage].tiles[selectedtile] == nil then
+			return
+		end
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
 			love.graphics.draw(
-				tilesets[tsimage]["img"],
-				tilesets[tsimage]["tiles"][selectedtile],
+				tilesets[tsimage].img,
+				tilesets[tsimage].tiles[selectedtile],
 				screenoffset+(16*cursorx),
 				(16*forfory),
 				0,
@@ -1425,12 +1444,15 @@ end
 function displayalphatile_all()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
 		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+		if tilesets[tsimage].tiles[selectedtile] == nil then
+			return
+		end
 		love.graphics.setColor(255,255,255,128)
 		for forfory = 0, 29 do
 			for forforx = 0, 39 do
 				love.graphics.draw(
-					tilesets[tsimage]["img"],
-					tilesets[tsimage]["tiles"][selectedtile],
+					tilesets[tsimage].img,
+					tilesets[tsimage].tiles[selectedtile],
 					screenoffset+(16*forforx),
 					(16*forfory),
 					0,
@@ -2937,11 +2959,11 @@ function displayvtoolsroom(offsetx, offsety, theroomdata, themetadata)
 
 	for aty = 0, 29 do
 		for atx = 0, 39 do
-			local t = theroomdata[(aty*40)+(atx+1)]
-			if t ~= 0 then
+			local t = anythingbutnil0(tonumber(theroomdata[(aty*40)+(atx+1)]))
+			if t ~= 0 and tilesets[tsimage].tiles[t] ~= nil then
 				love.graphics.draw(
-					tilesets[tsimage]["img"],
-					tilesets[tsimage]["tiles"][anythingbutnil0(tonumber(t))],
+					tilesets[tsimage].img,
+					tilesets[tsimage].tiles[t],
 					offsetx+atx, offsety+aty
 				)
 			end

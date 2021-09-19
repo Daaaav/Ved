@@ -443,7 +443,7 @@ function loadtileset(file, res, levelassetsfolder)
 	if tilesets[file].tiles_width_picker == 0 then
 		tilesets[file].tiles_height_picker = 0
 	else
-		tilesets[file].tiles_height_picker = tilesets[file].total_tiles / tilesets[file].tiles_width_picker
+		tilesets[file].tiles_height_picker = math.ceil(tilesets[file].total_tiles / tilesets[file].tiles_width_picker)
 	end
 
 	cons("Loading tileset: " .. file .. ", "
@@ -542,11 +542,11 @@ function loadwarpbgs()
 
 		for d = 1, 2 do
 			table.insert(warpbgs[c],
-				love.graphics.newSpriteBatch(tilesets["tiles2.png"]["img"], 16*21, "static")
+				love.graphics.newSpriteBatch(tilesets["tiles2.png"].img, 16*21, "static")
 			)
 			local quad = love.graphics.newQuad(
 				-24+24*c, 128 + 16*d, 16, 16,
-				tilesets["tiles2.png"]["width"], tilesets["tiles2.png"]["height"]
+				tilesets["tiles2.png"].width, tilesets["tiles2.png"].height
 			)
 			for bgy = -1, 14 do
 				for bgx = -1, 19 do
@@ -874,6 +874,8 @@ function switchtileset()
 	finish_undo("TILESET")
 
 	autocorrectroom() -- this already checks if automatic mode is on
+
+	tilespicker_page = 0
 end
 
 function switchtilecol()
@@ -1098,6 +1100,31 @@ function toggleeditroomname()
 		startinputonce()
 		input = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
 	end
+end
+
+function tilespicker_last_page_number()
+	-- Return the number of the last tilespicker page
+	return math.ceil(tilesets[tileset_names[levelmetadata_get(roomx, roomy).tileset]].tiles_height_picker/30)-1
+end
+
+function tilespicker_prev_page()
+	tilespicker_page = tilespicker_page - 1
+	if tilespicker_page < 0 then
+		tilespicker_page = tilespicker_last_page_number()
+	end
+end
+
+function tilespicker_next_page()
+	tilespicker_page = tilespicker_page + 1
+	if tilespicker_page > tilespicker_last_page_number() then
+		tilespicker_page = 0
+	end
+end
+
+function tilespicker_selectedtile_page()
+	-- Ensure the current page is set so that selectedtile is on screen
+	local ts = tilesets[tileset_names[levelmetadata_get(roomx, roomy).tileset]]
+	tilespicker_page = math.floor(selectedtile/(ts.tiles_width_picker*30))
 end
 
 function saveroomname()

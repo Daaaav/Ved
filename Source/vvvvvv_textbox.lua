@@ -29,17 +29,17 @@ function vvvvvv_textbox(color, x, y, text)
 
 	-- All the edge parts
 	love.graphics.setColor(textboxcolors[color])
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][40], x*2, y*2, 0, 2) -- top left
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][42], x*2+16+maxwidth*16, y*2, 0, 2) -- top right
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][45], x*2, y*2+16+(#text*16), 0, 2) -- bottom left
-	love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][47], x*2+16+maxwidth*16, y*2+16+(#text*16), 0, 2) -- bottom right
+	love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[40], x*2, y*2, 0, 2) -- top left
+	love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[42], x*2+16+maxwidth*16, y*2, 0, 2) -- top right
+	love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[45], x*2, y*2+16+(#text*16), 0, 2) -- bottom left
+	love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[47], x*2+16+maxwidth*16, y*2+16+(#text*16), 0, 2) -- bottom right
 	for i = 1, maxwidth do
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][41], x*2+i*16, y*2, 0, 2) -- top
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][46], x*2+i*16, y*2+16+(#text*16), 0, 2) -- bottom
+		love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[41], x*2+i*16, y*2, 0, 2) -- top
+		love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[46], x*2+i*16, y*2+16+(#text*16), 0, 2) -- bottom
 	end
 	for i = 1, #text do
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][43], x*2, y*2+i*16, 0, 2) -- left
-		love.graphics.draw(tilesets["tiles.png"]["white_img"], tilesets["tiles.png"]["tiles"][44], x*2+16+maxwidth*16, y*2+i*16, 0, 2) -- right
+		love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[43], x*2, y*2+i*16, 0, 2) -- left
+		love.graphics.draw(tilesets["tiles.png"].white_img, tilesets["tiles.png"].tiles[44], x*2+16+maxwidth*16, y*2+i*16, 0, 2) -- right
 	end
 
 	-- Now put the text in

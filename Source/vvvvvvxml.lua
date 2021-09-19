@@ -685,7 +685,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", optional_metadata)
 
 	-- Hold on for a second, we need the map size and music too!
-	savethis = savethis:gsub("%$MAPWIDTH%$", thismetadata["mapwidth"]):gsub("%$MAPHEIGHT%$", thismetadata["mapheight"]):gsub("%$LEVMUSIC%$", thismetadata["levmusic"])
+	savethis = savethis
+		:gsub("%$MAPWIDTH%$", thismetadata.mapwidth)
+		:gsub("%$MAPHEIGHT%$", thismetadata.mapheight)
+		:gsub("%$LEVMUSIC%$", thismetadata.levmusic)
 
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")

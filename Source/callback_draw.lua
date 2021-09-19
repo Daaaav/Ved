@@ -89,7 +89,12 @@ function love.draw()
 		elseif middlescroll_rolling_x > love.graphics.getWidth() then
 			furtherfall = middlescroll_rolling_x - love.graphics.getWidth()
 		end
-		love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][22], middlescroll_rolling_x, love.graphics.getHeight()-16+furtherfall/1.2, 0, 2, 2, 8, 8)
+		love.graphics.draw(
+			tilesets["sprites.png"].img,
+			tilesets["sprites.png"].tiles[22],
+			middlescroll_rolling_x, love.graphics.getHeight()-16+furtherfall/1.2,
+			0, 2, 2, 8, 8
+		)
 	end
 
 	if middlescroll_shatter then

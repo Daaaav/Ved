@@ -51,23 +51,26 @@ return function()
 		if s.psmallerscreen and (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) and love.mouse.getX() < 128 then
 			-- Discard anything we're doing with the mouse in the room, we're now on the toolbar
 		elseif tilespicker then
+			-- The tiles picker page changes the Y position, of course
+			local aty_paged = aty + tilespicker_page*30
+
 			if levelmetadata_get(roomx, roomy).directmode == 1 then
 				if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and not mousepressed and customsizemode ~= 0 then
 					-- You can also make a stamp from the tileset
 					if customsizemode ~= 0 and customsizemode ~= 2 then
 						customsizecoorx = atx
-						customsizecoory = aty
+						customsizecoory = aty_paged
 						customsizemode = 2
 						mousepressed = true
 					elseif customsizemode == 2 then
 						atx = math.max(atx, customsizecoorx)
-						aty = math.max(aty, customsizecoory)
+						aty_paged = math.max(aty_paged, customsizecoory)
 						customsizex = (atx-customsizecoorx)/2
-						customsizey = (aty-customsizecoory)/2
+						customsizey = (aty_paged-customsizecoory)/2
 						cons("sizex sizey " .. customsizex .. "," .. customsizey)
 						customsizemode = 0
 						customsizetile = {}
-						for sty = customsizecoory, aty do
+						for sty = customsizecoory, aty_paged do
 							table.insert(customsizetile, {})
 							for stx = customsizecoorx, atx do
 								table.insert(customsizetile[#customsizetile], (sty*40)+stx)
@@ -78,11 +81,11 @@ return function()
 						tilespicker = false
 					end
 				elseif atx < tilesets[tileset_names[selectedtileset]].tiles_width_picker
-				and aty < tilesets[tileset_names[selectedtileset]].tiles_height_picker then
-					selectedtile = math.min(
-						(aty*tilesets[tileset_names[selectedtileset]].tiles_width_picker)+(atx+1)-1,
-						tilesets[tileset_names[selectedtileset]].total_tiles-1
-					)
+				and aty_paged < tilesets[tileset_names[selectedtileset]].tiles_height_picker then
+					local new_tile = (aty_paged*tilesets[tileset_names[selectedtileset]].tiles_width_picker)+(atx+1)-1
+					if new_tile < tilesets[tileset_names[selectedtileset]].total_tiles then
+						selectedtile = new_tile
+					end
 				end
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
@@ -843,7 +846,7 @@ return function()
 
 		local ts_name = tileset_names[levelmetadata_get(roomx, roomy).tileset]
 
-		displaytilespicker(screenoffset, 0, ts_name, displaytilenumbers, displaysolid)
+		displaytilespicker(screenoffset, 0, ts_name, tilespicker_page, displaytilenumbers, displaysolid)
 	else
 		-- If we have gravity lines and such, make sure they don't go offscreen
 		love.graphics.setScissor(screenoffset, 0, 640, 480)
@@ -1237,9 +1240,13 @@ return function()
 
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then
+			local ts = tilesets[tileset_names[selectedtileset]]
+			local tile = ((tilespicker_page*30+cursory)*ts.tiles_width_picker)+cursorx
+
 			if levelmetadata_get(roomx, roomy).directmode ~= 0
-			and cursorx < tilesets[tileset_names[selectedtileset]].tiles_width_picker
-			and cursory < tilesets[tileset_names[selectedtileset]].tiles_height_picker then
+			and cursorx < ts.tiles_width_picker
+			and cursory < ts.tiles_height_picker
+			and tile < ts.total_tiles then
 				-- Just one tile, but only in manual/direct mode.
 				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
 			end
@@ -1967,15 +1974,21 @@ return function()
 	if tilespicker then
 		local tiles_width_picker = tilesets[tileset_names[selectedtileset]].tiles_width_picker
 		local tiles_height_picker = tilesets[tileset_names[selectedtileset]].tiles_height_picker
-		if cursorx ~= "--" and cursory ~= "--"
+		local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
+		local cursor_not_dashes = cursorx ~= "--" and cursory ~= "--"
+		local tile
+		if cursor_not_dashes then
+			tile = ((tilespicker_page*30+cursory)*tiles_width_picker)+cursorx
+		end
+		if cursor_not_dashes
 		and cursorx < tiles_width_picker
-		and cursory < tiles_height_picker then
+		and tile < total_tiles then
 			ved_printf(
-				langkeys(L.TILE, {(cursory*tiles_width_picker)+cursorx}),
+				langkeys(L.TILE, {tile}),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
 			ved_printf(
-				(issolid((cursory*tiles_width_picker)+(cursorx+1)-1, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
+				(issolid(tile, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
@@ -2038,16 +2051,43 @@ return function()
 	_= not voided_metadata showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
 	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
-	-- Some text below the tiles picker-- how many trinkets and crewmates do we have?
-	love.graphics.draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
-	love.graphics.draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
-	love.graphics.draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
-	ved_printf(
-		fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
-		.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
-		.. fixdig(anythingbutnil(count.entities), 5, ""),
-		640+screenoffset+11, love.graphics.getHeight()-16-10, 128, "left"
-	)
+	if tilespicker then
+		if tilespicker_last_page_number() ~= 0 then
+			-- Display page switcher for big tiles picker
+			local label = tilespicker_page+1 .. "/" .. tilespicker_last_page_number()+1
+			ved_print(
+				label,
+				640+screenoffset+3, love.graphics.getHeight()-8-10
+			)
+
+			local label_w = font8:getWidth(label)
+			hoverrectangle(128,128,128,128, 640+screenoffset+1, love.graphics.getHeight()-19-10, label_w+4, 10)
+			hoverrectangle(128,128,128,128, 640+screenoffset+1, love.graphics.getHeight()-10, label_w+4, 10)
+			ved_printf(arrow_up, 640+screenoffset+1, love.graphics.getHeight()-19-10+1, label_w+4, "center")
+			ved_printf(arrow_down, 640+screenoffset+1, love.graphics.getHeight()-10+1, label_w+4, "center")
+
+			if love.mouse.isDown("l") and not mousepressed then
+				if mouseon(640+screenoffset+1, love.graphics.getHeight()-19-10, label_w+4, 10) then
+					tilespicker_prev_page()
+					mousepressed = true
+				elseif mouseon(640+screenoffset+1, love.graphics.getHeight()-10, label_w+4, 10) then
+					tilespicker_next_page()
+					mousepressed = true
+				end
+			end
+		end
+	else
+		-- Some text below the small tiles picker-- how many trinkets and crewmates do we have?
+		love.graphics.draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
+		love.graphics.draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
+		love.graphics.draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
+		ved_printf(
+			fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
+			.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
+			.. fixdig(anythingbutnil(count.entities), 5, ""),
+			640+screenoffset+11, love.graphics.getHeight()-16-10, 128, "left"
+		)
+	end
 
 	if coordsdialog.active then
 		coordsdialog.draw()

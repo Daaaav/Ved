@@ -3,6 +3,7 @@
 return function()
 	tilespicker = false
 	tilespicker_shortcut = false
+	tilespicker_page = 0
 	selectedtool = 1; selectedsubtool = {1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1, 1,1,1}
 	selectedtile = 1
 	selectedtileset = 0 --"spacestation" --"outside"

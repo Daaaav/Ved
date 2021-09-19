@@ -10,7 +10,7 @@ return function()
 				love.graphics.setColor(255,255,255)
 			end
 
-			love.graphics.draw(tilesets["sprites.png"]["img"], tilesets["sprites.png"]["tiles"][(y*24)+x], x*32, y*32)
+			love.graphics.draw(tilesets["sprites.png"].img, tilesets["sprites.png"].tiles[(y*24)+x], x*32, y*32)
 		end
 	end
 end
