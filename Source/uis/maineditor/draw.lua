@@ -1482,7 +1482,7 @@ return function()
 	end
 
 	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	local _, voided_metadata = levelmetadata_get(roomx, roomy)
+	local voided_metadata = levelmetadata_get(roomx, roomy).voided
 	_= not voided_metadata and rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)

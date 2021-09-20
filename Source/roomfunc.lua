@@ -2495,10 +2495,11 @@ function levelmetadata_get(x, y, uselevel2)
 		warpdir = 0,
 		roomname = "",
 		auto2mode = 0,
+		voided = true,
 	}
 
 	if y >= limit.mapheight then
-		return voided_metadata, true
+		return voided_metadata
 	end
 
 	local distortion = math.floor(x/limit.mapwidth)
@@ -2509,7 +2510,7 @@ function levelmetadata_get(x, y, uselevel2)
 		return usethislevelmetadata[y][x]
 	end
 
-	return voided_metadata, true
+	return voided_metadata
 end
 
 function levelmetadata_set(x, y, param1, param2)

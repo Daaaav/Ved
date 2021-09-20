@@ -31,7 +31,7 @@ return function(key)
 		return
 	end
 
-	local _, voided_metadata = levelmetadata_get(roomx, roomy)
+	local voided_metadata = levelmetadata_get(roomx, roomy).voided
 
 	if keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
