@@ -93,10 +93,10 @@ function syntaxhl(text, x, y, thisistext, docolor, lasttextcolor, alttextcolor)
 					end
 				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)
-				elseif k == 2 and (partss_parsed[1] == "flag" or partss_parsed[1] == "ifflag" or partss_parsed[1] == "customifflag") and tostring(tonumber(v_parsed)) ~= tostring(v_parsed) then
+				elseif k == 2 and (partss_parsed[1] == "flag" or partss_parsed[1] == "ifflag" or partss_parsed[1] == "customifflag") and tostring(tonumber(v)) ~= tostring(v) then
 					-- if flag name is not used yet, newflagname
 					for fl = 0, limit.flags-1 do
-						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v_parsed then
+						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
 							setColorArr(s.syntaxcolor_flagname)
 							break
 						end
