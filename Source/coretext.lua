@@ -12,9 +12,16 @@ function loadfonts()
 	if fontpng_works then
 		-- Use font.png
 
+		local glyphs_success
+		glyphs_success, fontpng_glyphs = readfile(graphicsfolder .. dirsep .. "font.txt")
+		if not glyphs_success then
+			fontpng_glyphs = nil
+		end
+
 		-- The following function can be found in imagefont.lua
 		convertfontpng(
-			love.image.newImageData(love.filesystem.newFileData(fontpngcontents, "font.png", "file"))
+			love.image.newImageData(love.filesystem.newFileData(fontpngcontents, "font.png", "file")),
+			fontpng_glyphs
 		)
 
 		arrow_up = "^"
@@ -113,6 +120,12 @@ function loadlanguage()
 				"([\194-\244][\128-\191]*)",
 				function(c)
 					if c == "¤" or c == "§" or c == "°" then
+						return
+					end
+
+					if fontpng_glyphs ~= nil and fontpng_glyphs:find(c) ~= nil then
+						-- The font supports it, no need to replace it!
+						-- (this already fully accounts for UTF-8, by the way)
 						return
 					end
 
