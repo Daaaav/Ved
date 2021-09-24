@@ -23,11 +23,17 @@ function convertfontpng(imagedata, glyphs_string)
 		full = 255
 	end
 
+	-- Make a mapping from each (pixel) column to the corresponding character
+	local column_map = imagefont_make_column_map(glyphs_string)
+
 	imagefont:mapPixel(
 		function(x, y) -- r, g, b, a
-			local typ, charnum, xcoord = imagefont_xtochar(x)
+			local typ, charnum, xcoord
+			if column_map[x] ~= nil then
+				typ, charnum, xcoord = unpack(column_map[x])
+			end
 
-			if typ == 1 then
+			if typ == 1 or typ == nil then
 				return 0, 0, 0, 0
 			elseif typ == 2 then
 				return full, full, 0, full
@@ -54,38 +60,43 @@ function convertfontpng(imagedata, glyphs_string)
 	cons("Custom font.png loaded")
 end
 
-function imagefont_xtochar(x)
-	-- Given an x coordinate in the new image font strip, returns which character that column belongs to,
-	-- along with the x coordinate in that character (0-7).
-	-- returns type, charnum, xcoord
+function imagefont_make_column_map(glyphs_string)
+	-- Make a mapping that, given an x coordinate in the new image font strip, contains which character
+	-- that column belongs to, along with the x coordinate in that character (0-7).
+	-- returns table of x -> {type, charnum, xcoord}
 	-- type: 0: char (part of character)
 	--       1: transparent (not part of character, and also not part of separator)
 	--       2: separator (part of separator)
-	-- charnum: 0x00 - 0x7f (nil if type ~= 0)
+	-- charnum: number of glyph that appears in the font (nil if type ~= 0)
 	-- xcoord: 0-7 (nil if type ~= 0)
 
-	if x == 0 then
-		-- Row 0 is a separator
-		return 2
-	elseif x <= 0x20*9 then
-		-- Characters 0x00 - 0x1f; these are 9 pixels wide including separator
-		local x_start = x-1
-		local col = x_start % 9
+	local column_map = {}
+	column_map[0] = {2} -- Row 0 is a separator
+	local cur_x = 1
+	local charnum = 0
 
-		if col <= 7 then
-			return 0, math.floor(x_start/9), col
+	for byte, code in utf8.codes(glyphs_string) do
+		if code < 32 then
+			-- Characters 0x00 - 0x1f; these are 9 pixels wide including separator
+			for xcoord = 0, 7 do
+				column_map[cur_x] = {0, charnum, xcoord}
+				cur_x = cur_x + 1
+			end
+			column_map[cur_x] = {2}
+			cur_x = cur_x + 1
+		else
+			-- Characters 0x20 - ...; these are 11 pixels wide including separator (yes!)
+			for xcoord = 0, 7 do
+				column_map[cur_x] = {0, charnum, xcoord}
+				cur_x = cur_x + 1
+			end
+			column_map[cur_x+0] = {1}
+			column_map[cur_x+1] = {1}
+			column_map[cur_x+2] = {2}
+			cur_x = cur_x + 3
 		end
-		return 2
-	else
-		-- Characters 0x20 - 0x7f; these are 11 pixels wide including separator (yes!)
-		local x_start = (x-1)-0x20*9
-		local col = x_start % 11
-
-		if col <= 7 then
-			return 0, math.floor(x_start/11)+0x20, col
-		elseif col <= 9 then
-			return 1
-		end
-		return 2
+		charnum = charnum + 1
 	end
+
+	return column_map
 end

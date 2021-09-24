@@ -77,6 +77,7 @@ function love.load()
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
+	utf8 = require("utf8lib_wrapper")
 	ved_require("imagefont")
 
 	loadfonts()
@@ -106,7 +107,6 @@ function love.load()
 	ved_require("playtesting")
 	ved_require("updatecheck")
 
-	utf8 = require("utf8lib_wrapper")
 	ved_require("input")
 
 	dodisplaysettings()
