@@ -7,3 +7,5 @@ L_PLU.NOTALLTILESVALID = {
 	[0] = "$1 tile is not a valid whole number greater than or equal to 0",
 	[1] = "$1 tiles are not a valid whole number greater than or equal to 0",
 }
+
+L.USELEVELFONTPNG = "Use per-level custom font.png as font"

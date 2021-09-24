@@ -18,13 +18,19 @@ return function()
 			"autosavecrashlogs",
 			"loadallmetadata",
 			"usefontpng",
+			"uselevelfontpng",
 			"opaqueroomnamebackground"
 		}
 	) do
 		if v then
 			local label = L[v:upper()]
-			if v == "usefontpng" then
-				label = L.USEFONTPNG .. (not love_version_meets(10) and langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"}) or "")
+			local affects_font = false
+			if v == "usefontpng" or v == "uselevelfontpng" then
+				if love_version_meets(10) then
+					affects_font = true
+				else
+					label = label .. langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"})
+				end
 			end
 
 			checkbox(s[v], 8, 8+(24*k), v, label,
@@ -32,7 +38,7 @@ return function()
 					s[key] = newvalue
 					if key == "showfps" then
 						savedwindowtitle = ""
-					elseif key == "usefontpng" and love_version_meets(10) then
+					elseif affects_font then
 						loadfonts()
 						unloadlanguage()
 						loadlanguage()

@@ -123,6 +123,10 @@ configs = {
 		default = false,
 		["type"] = "bool",
 	},
+	uselevelfontpng = {
+		default = true,
+		["type"] = "bool",
+	},
 	colored_textboxes = {
 		default = true,
 		["type"] = "bool",

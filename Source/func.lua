@@ -1320,6 +1320,7 @@ function state6load(levelname)
 			if level_assets_loaded or getlevelassetsfolder() ~= nil then
 				-- Either previous or new level has level-specific assets, so reload.
 				loadtilesets()
+				loadfonts()
 				tile_batch_texture_needs_update = true
 			end
 			if state == 6 then
@@ -1793,6 +1794,7 @@ function triggernewlevel(width, height)
 	editingmap = "untitled\n"
 	if level_assets_loaded then
 		loadtilesets()
+		loadfonts()
 		tile_batch_texture_needs_update = true
 	end
 	tostate(1)

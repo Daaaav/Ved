@@ -3,24 +3,35 @@ function loadfonts()
 	-- Set up alignment offset values depending on font and LÖVE version
 
 	fontpng_works = false
-	local fontpngcontents
+	local fontpng_folder, fontpng_contents
 
-	if s ~= nil and s.usefontpng and love_version_meets(10) then
-		fontpng_works, fontpngcontents = readfile(graphicsfolder .. dirsep .. "font.png")
+	-- First try level-specific fonts... If we're ready for that, and it's enabled.
+	if s ~= nil and s.uselevelfontpng and love_version_meets(10) and editingmap ~= nil then
+		local levelassets = getlevelassetsfolder()
+		if levelassets ~= nil then
+			fontpng_folder = levelassets .. dirsep .. "graphics"
+			fontpng_works, fontpng_contents = readfile(fontpng_folder .. dirsep .. "font.png")
+		end
+	end
+
+	-- If that doesn't exist (not already fontpng_works) try the graphics folder font. If enabled.
+	if s ~= nil and s.usefontpng and love_version_meets(10) and not fontpng_works then
+		fontpng_folder = graphicsfolder
+		fontpng_works, fontpng_contents = readfile(fontpng_folder .. dirsep .. "font.png")
 	end
 
 	if fontpng_works then
 		-- Use font.png
 
 		local glyphs_success
-		glyphs_success, fontpng_glyphs = readfile(graphicsfolder .. dirsep .. "font.txt")
+		glyphs_success, fontpng_glyphs = readfile(fontpng_folder .. dirsep .. "font.txt")
 		if not glyphs_success then
 			fontpng_glyphs = nil
 		end
 
 		-- The following function can be found in imagefont.lua
 		convertfontpng(
-			love.image.newImageData(love.filesystem.newFileData(fontpngcontents, "font.png", "file")),
+			love.image.newImageData(love.filesystem.newFileData(fontpng_contents, "font.png", "file")),
 			fontpng_glyphs
 		)
 
