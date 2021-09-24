@@ -1564,8 +1564,9 @@ Clears the teleporter script set with teleportscript(x)
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Makes the specified crewmate a companion.
+
+x - 0 (none) or 6/7/8/9/10/11
 
 createactivityzone¤(color)\b#h
 
@@ -1892,13 +1893,13 @@ Play a sound effect.
 n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
 offset in milliseconds at which the sound effect started.
 
-position¤(type1,type2)\w#h
+position¤(type,above/below)\w#h
 
 Overrides the x,y of the text command and thus sets the position of the text box.
 
-type1 - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
 purple
-type2 - above/below, only used if type1 is a color name
+above/below - Only used if type is a color name
 
 purplecontrol\b#h
 
