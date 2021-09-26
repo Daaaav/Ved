@@ -259,6 +259,10 @@ function rightclickmenu.handler(RCMreturn)
 					editingsboxid = tonumber(entdetails[3])
 					selectedsubtool[13] = 3
 					selectedtool = 13
+				elseif RCMreturn == L.FLIP then -- only for terminals obviously
+					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+					rcm_changingentity(entdetails, {p1 = new_p1})
+					entitydata[tonumber(entdetails[3])].p1 = new_p1
 				elseif RCMreturn == toolnames[12] then
 					local ret = namefound(entitydata[tonumber(entdetails[3])])
 					if ret == 1 then
