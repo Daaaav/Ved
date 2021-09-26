@@ -1939,13 +1939,21 @@ function rotateroom180(rx, ry, undoing)
 
 				if v.p1 == 1 then entitydata[k].p1 = 0 else entitydata[k].p1 = 1 end
 			elseif v.t == 15 or v.t == 16 or v.t == 18 then
-				-- Rescuable crewmate, start point and terminal, all 2x3 blocks. I won't let myself be stopped from making room rotation/flip functions because you can't rotate these!
+				-- Rescuable crewmate, start point and terminal, all 2x3 blocks.
+				-- I won't let myself be stopped from making room rotation/flip functions because you can't rotate crewmates!
 				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
 
-				-- Well at least we can flip the start point horizontally, that's something, right?
 				if v.t == 16 then
-					if v.p1 == 1 then entitydata[k].p1 = 0 else entitydata[k].p1 = 1 end
+					-- Well at least we can flip the start point horizontally, that's something, right?
+					entitydata[k].p1 = (v.p1 == 0) and 1 or 0
+				elseif v.t == 18 then
+					-- Terminals can be flipped in 2.3 and up! Well... They can have any sprite, let's only flip terminals.
+					if v.p1 == 1 then
+						entitydata[k].p1 = 0
+					elseif v.p1 == 0 then
+						entitydata[k].p1 = 1
+					end
 				end
 			elseif v.t == 3 or (v.t == 2 and v.p1 <= 6) then
 				-- Disappearing platform, moving platform, or a 4-block conveyor
