@@ -1283,6 +1283,7 @@ function state6load(levelname)
 			-- Oh, it's just a level that has the same name as a directory. Carry on.
 		else
 			inputs.levelname = levelname .. dirsep
+			newinputsys.rightmost("levelname")
 			tabselected = 0
 			return
 		end

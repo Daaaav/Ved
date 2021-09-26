@@ -865,11 +865,11 @@ function scriptgotoline(linenum, colnum)
 
 	local line_contents = anythingbutnil(inputs.script_lines[linenum])
 	if colnum == nil then
-		newinputsys.setpos("script_lines", utf8.len(line_contents), linenum)
+		newinputsys.setpos("script_lines", 0, linenum, true)
 	else
 		local col_offset = utf8.offset(line_contents, colnum)
 		if col_offset == nil then
-			newinputsys.setpos("script_lines", utf8.len(line_contents), linenum)
+			newinputsys.setpos("script_lines", 0, linenum, true)
 		else
 			newinputsys.setpos("script_lines", colnum, linenum)
 		end

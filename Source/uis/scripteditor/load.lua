@@ -4,7 +4,7 @@ return function()
 	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(scripts[scriptname]))
 	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
 	newinputsys.setwordseps("script_lines", "[ %(%),]")
-	newinputsys.setpos("script_lines", utf8.len(inputs.script_lines[1]), 1)
+	newinputsys.rightmost("script_lines")
 
 	textlinestogo = 0
 	scriptscroll = 0
