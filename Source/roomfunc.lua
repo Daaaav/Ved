@@ -755,7 +755,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				entityrightclick(
 					x, y,
 					{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_17_" .. k,
-					data:len(), 1
+					font8:getWidth(data)/8, 1
 				)
 			end
 		end
@@ -1971,7 +1971,7 @@ function rotateroom180(rx, ry, undoing)
 				end
 			elseif v.t == 17 then
 				-- Roomtext, the new placement of x depends on the length of the string!
-				entitydata[k].x = ((rx*40)+39 - v.x - (v.data:len()-1))+(rx*40)
+				entitydata[k].x = ((rx*40)+39 - v.x - (math.floor(font8:getWidth(v.data)/8)-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
 			elseif v.t == 19 then
 				-- Script box.
