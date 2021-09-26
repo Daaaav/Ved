@@ -623,7 +623,11 @@ function dialog.callback.suredeletenote(button)
 		end
 
 		-- Go to the new article (removing this line will cause the deleted article to be left on the screen, along with its buttons, but not the button in the left menu for it)
-		helparticlecontent = explode("\n", helppages[helparticle].cont)
+		if helppages[helparticle] == nil then
+			helparticlecontent = nil
+		else
+			helparticlecontent = explode("\n", helppages[helparticle].cont)
+		end
 	end
 end
 
