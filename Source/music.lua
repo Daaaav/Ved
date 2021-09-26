@@ -190,7 +190,7 @@ end
 function loadvvvvvvsounds()
 	music["sounds"] = {}
 
-	for k,v in pairs(listsoundids) do
+	for k,v in pairs(list_sound_ids) do
 		local readsuccess, ficontents = readfile(soundsfolder .. dirsep .. v)
 		if readsuccess then
 			loadmusicsong("sounds", k, ficontents, false)

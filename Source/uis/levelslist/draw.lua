@@ -43,8 +43,8 @@ return function()
 				currentdir = currentbackupdir
 			end
 		else
-			if string.find(inputs.levelname, dirsep) ~= nil then
-				local lastindex = string.find(inputs.levelname, dirsep .. "[^" .. dirsep .. "]-$")
+			if inputs.levelname:find(dirsep) ~= nil then
+				local lastindex = inputs.levelname:find(dirsep .. "[^" .. dirsep .. "]-$")
 				currentdir = (inputs.levelname):sub(1, lastindex-1)
 			end
 		end

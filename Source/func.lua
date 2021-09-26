@@ -46,8 +46,8 @@ function backspace(text)
 
 	if byteoffset then
 		-- remove the last UTF-8 character.
-		-- string.sub operates on bytes rather than UTF-8 characters, so we couldn't do string.sub(text, 1, -2).
-		text = string.sub(text, 1, byteoffset - 1)
+		-- string.sub operates on bytes rather than UTF-8 characters, so we couldn't do text:sub(1, -2).
+		text = text:sub(1, byteoffset - 1)
 	end
 	]]
 
@@ -55,16 +55,16 @@ function backspace(text)
 
 	local worktext = text
 	while true do
-		local lastchar = string.sub(worktext, -1, -1):byte()
+		local lastchar = worktext:sub(-1, -1):byte()
 		if lastchar == nil then return "" end
 
 		-- Are we about to kill a UTF-8 continuation byte?
 		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
-			worktext = string.sub(worktext, 1, -2)
+			worktext = worktext:sub(1, -2)
 		else
 			-- All clear!
-			return string.sub(worktext, 1, -2)
+			return worktext:sub(1, -2)
 		end
 	end
 end
@@ -73,18 +73,18 @@ function leftspace(text, righttext)
 	if (text == nil) or (righttext == nil) then return end
 
 	while true do
-		local lastchar = string.sub(text, -1, -1):byte()
+		local lastchar = text:sub(-1, -1):byte()
 		if lastchar == nil then return "", righttext end
 
 		-- Are we about to kill a UTF-8 continuation byte?
 		if lastchar >= 0x80 and lastchar <= 0xBF then -- 10xxxxxx
 			-- We are, do this again.
-			righttext = string.sub(text, -1, -1) .. righttext
-			text = string.sub(text, 1, -2)
+			righttext = text:sub(-1, -1) .. righttext
+			text = text:sub(1, -2)
 		else
 			-- All clear!
-			righttext = string.sub(text, -1, -1) .. righttext
-			return string.sub(text, 1, -2), righttext
+			righttext = text:sub(-1, -1) .. righttext
+			return text:sub(1, -2), righttext
 		end
 	end
 end
@@ -92,48 +92,48 @@ end
 function rightspace(text, righttext)	
 	if (text == nil) or (righttext == nil) then return end
 
-	local lastchar = string.sub(righttext, 1, 1):byte()
+	local lastchar = righttext:sub(1, 1):byte()
 	if lastchar == nil then return text, "" end
 
 	-- Different UTF-8 stuff going on here.
 	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
-		text = text .. string.sub(righttext, 1, 2)
-		return text, string.sub(righttext, 3, -1)
+		text = text .. righttext:sub(1, 2)
+		return text, righttext:sub(3, -1)
 	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
-		text = text .. string.sub(righttext, 1, 3)
-		return text, string.sub(righttext, 4, -1)
+		text = text .. righttext:sub(1, 3)
+		return text, righttext:sub(4, -1)
 	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
-		text = text .. string.sub(righttext, 1, 4)
-		return text, string.sub(righttext, 5, -1)
+		text = text .. righttext:sub(1, 4)
+		return text, righttext:sub(5, -1)
 	else
 		-- Just one byte of course.
-		text = text .. string.sub(righttext, 1, 1)
-		return text, string.sub(righttext, 2, -1)
+		text = text .. righttext:sub(1, 1)
+		return text, righttext:sub(2, -1)
 	end
 end
 
 function firstUTF8(text)
 	if text == nil then return end
 
-	local lastchar = string.sub(text, 1, 1):byte()
+	local lastchar = text:sub(1, 1):byte()
 	if lastchar == nil then return text end
 
 	-- Mostly the same as rightspace()
 	if lastchar >= 0xC0 and lastchar <= 0xDF then -- 110xxxxx
 		-- Two bytes to move at once!
-		return string.sub(text, 1, 2)
+		return text:sub(1, 2)
 	elseif lastchar >= 0xE0 and lastchar <= 0xEF then -- 1110xxxx
 		-- Three bytes to move at once!
-		return string.sub(text, 1, 3)
+		return text:sub(1, 3)
 	elseif lastchar >= 0xF0 and lastchar <= 0xF7 then -- 11110xxx
 		-- Four!
-		return string.sub(text, 1, 4)
+		return text:sub(1, 4)
 	else
 		-- Just one byte of course.
-		return string.sub(text, 1, 1)
+		return text:sub(1, 1)
 	end
 end
 
@@ -718,12 +718,12 @@ end
 function fixdig(number, dig, filler)
 	if filler == nil then filler = "0" end
 
-	if string.len(tostring(number)) > dig then
-		return string.rep("9", dig)
-	elseif string.len(tostring(number)) == dig then
+	if tostring(number):len() > dig then
+		return ("9"):rep(dig)
+	elseif tostring(number):len() == dig then
 		return tostring(number)
 	else
-		return string.rep(filler, dig-string.len(tostring(number))) .. tostring(number)
+		return filler:rep(dig-tostring(number):len()) .. tostring(number)
 	end
 end
 
@@ -1174,7 +1174,7 @@ function endeditingroomtext(currently_targetting)
 						outofrangeflags = {}
 
 						-- See which flags have been used in this level.
-						returnusedflags(usedflags, outofrangeflags)
+						return_used_flags(usedflags, outofrangeflags)
 
 						local useflag = -1
 						for flag = 0, limit.flags-1 do

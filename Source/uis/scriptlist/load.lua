@@ -6,5 +6,5 @@ return function()
 		scriptdisplay_used = true
 		scriptdisplay_unused = true
 	end
-	usedscripts, n_usedscripts = findusedscripts()
+	usedscripts, n_usedscripts = find_used_scripts()
 end

@@ -39,7 +39,7 @@ return function()
 
 						-- We also want to know where this was used.
 						local usages = {}
-						local n_usages = returnusedflags(nil, nil, flgnum, usages)
+						local n_usages = return_used_flags(nil, nil, flgnum, usages)
 
 						dialog.create(
 							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"

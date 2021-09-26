@@ -1780,7 +1780,7 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 		finish_undo("PASTING")
 	end
 
-	local _, count = string.gsub(data, ",", "")
+	local _, count = data:gsub(",", "")
 
 	if count ~= 1214 then -- 14+1+1199
 		cons("Paste failed- count of , is " .. count .. " so this is probably not the data we're looking for.")

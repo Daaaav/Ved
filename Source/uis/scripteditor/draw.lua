@@ -22,7 +22,7 @@ return function()
 	for k = 1, table.maxn(inputs.script_lines) do
 		v = anythingbutnil(inputs.script_lines[k])
 
-		local text2 = string.gsub(string.gsub(string.gsub(v, "%(", ","), "%)", ","), " ", "")
+		local text2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 		local partss = explode(",", text2)
 		if partss[1] == "text" and textlinestogo == 0 then
 			textlinestogo = math.max(anythingbutnil0(tonumber(partss[5])), 0)
@@ -36,7 +36,9 @@ return function()
 					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
 						alttextcolor = true
 						break
-					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak") or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active") or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
+					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak")
+					or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active")
+					or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
 						alttextcolor = false
 						break
 					end
@@ -58,18 +60,34 @@ return function()
 
 			if s.scripteditor_largefont then
 				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(16*k)-8, 2)
-				textq, textc = syntaxhl(v, 104, scriptscroll+24+(16*k)-8, textlinestogo > 0, syntaxhlon, lasttextcolor, alttextcolor)
+				textq, textc = syntax_hl(
+					v,
+					104,
+					scriptscroll+24+(16*k)-8,
+					textlinestogo > 0,
+					syntaxhlon,
+					lasttextcolor,
+					alttextcolor
+				)
 			else
 				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(8*k))
-				textq, textc = syntaxhl(v, 56, scriptscroll+24+(8*k), textlinestogo > 0, syntaxhlon, lasttextcolor, alttextcolor)
+				textq, textc = syntax_hl(
+					v,
+					56,
+					scriptscroll+24+(8*k),
+					textlinestogo > 0,
+					syntaxhlon,
+					lasttextcolor,
+					alttextcolor
+				)
 			end
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
-			textq, textc = justtext(v, textlinestogo > 0)
+			textq, textc = just_text(v, textlinestogo > 0)
 		end
 
 		if editing_line == k then --and textlinestogo == 0 then
-			context, carg1, carg2, carg3 = scriptcontext(inputs.script_lines[k])
+			context, carg1, carg2, carg3 = script_context(inputs.script_lines[k])
 		end
 
 		if textq ~= nil then
@@ -129,15 +147,36 @@ return function()
 
 	-- Any warnings?
 	check_script_warnings(scriptname)
-	draw_script_warn_light("loadscript_required", love.graphics.getWidth()-168, 4, internalscript and scrwarncache_warn_noloadscript)
-	draw_script_warn_light("direct_reference", love.graphics.getWidth()-168-28, 4, internalscript and scrwarncache_warn_boxed)
-	draw_script_warn_light("name", love.graphics.getWidth()-168-(28*2), 4, scrwarncache_warn_name)
+	draw_script_warn_light(
+		"loadscript_required",
+		love.graphics.getWidth()-168,
+		4,
+		internalscript and scrwarncache_warn_noloadscript
+	)
+	draw_script_warn_light(
+		"direct_reference",
+		love.graphics.getWidth()-168-28,
+		4,
+		internalscript and scrwarncache_warn_boxed
+	)
+	draw_script_warn_light(
+		"name",
+		love.graphics.getWidth()-168-(28*2),
+		4,
+		scrwarncache_warn_name
+	)
 
 	love.graphics.setColor(255,255,255,255)
 
 	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
 	local textscale = s.scripteditor_largefont and 2 or 1
-	local newfraction = scrollbar(love.graphics.getWidth()-144, 24, love.graphics.getHeight()-32, (#inputs.script_lines*8+8)*textscale, ((-scriptscroll))/(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32)))
+	local newfraction = scrollbar(
+		love.graphics.getWidth()-144,
+		24,
+		love.graphics.getHeight()-32,
+		(#inputs.script_lines*8+8)*textscale,
+		((-scriptscroll))/(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32))
+	)
 
 	if newfraction ~= nil then
 		scriptscroll = -(newfraction*(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32)))
@@ -153,9 +192,21 @@ return function()
 	rbutton(L.SCRIPTSPLIT, 4)
 	rbutton({L.SEARCHSCRIPT, "cF"}, 5)
 	rbutton({L.GOTOLINE, "cG"}, 6)
-	rbutton({(internalscript or cutscenebarsinternalscript) and L.INTERNALON or L.INTERNALOFF, "cI"}, 7, nil, nil, nil, internalscript or cutscenebarsinternalscript)
+	rbutton(
+		{(internalscript or cutscenebarsinternalscript) and L.INTERNALON or L.INTERNALOFF, "cI"},
+		7, nil, nil, nil,
+		internalscript or cutscenebarsinternalscript
+	)
 	if internalscript or cutscenebarsinternalscript then
-		rbutton({internalscript and L.INTERNALNOBARS or cutscenebarsinternalscript and L.INTERNALYESBARS or L.INTERNALOFF, "cI"}, 8, nil, nil, nil, cutscenebarsinternalscript)
+		rbutton(
+			{
+				internalscript and L.INTERNALNOBARS
+				or cutscenebarsinternalscript and L.INTERNALYESBARS
+				or L.INTERNALOFF, "cI"
+			},
+			8, nil, nil, nil,
+			cutscenebarsinternalscript
+		)
 	end
 	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
@@ -163,7 +214,13 @@ return function()
 
 	-- Column
 	local x = newinputsys.getpos("script_lines")
-	ved_printf(L.COLUMN .. (x+1), love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left")
+	ved_printf(
+		L.COLUMN .. (x+1),
+		love.graphics.getWidth()-(128-8),
+		(love.graphics.getHeight()-(24*2))+4,
+		128-16,
+		"left"
+	)
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
 
@@ -174,20 +231,25 @@ return function()
 			tostate(15)
 		elseif onrbutton(1) then
 			-- Usages
-			local uentityuses, uloadscriptuses, uscriptuses = findscriptreferences(scriptname)
+			local uentityuses, uloadscriptuses, uscriptuses = find_script_references(scriptname)
 
 			local roomsstr, scriptsstr = "", ""
 			local co = not s.coords0 and 1 or 0 -- coordoffset
 
 			for k,v in pairs(uentityuses) do
-				roomsstr = roomsstr .. (roomsstr == "" and "" or ", ") .. "(" .. (math.floor(entitydata[v].x/40)+co) .. "," .. (math.floor(entitydata[v].y/30)+co) .. ")"
+				roomsstr = roomsstr .. (roomsstr == "" and "" or ", ") .. "("
+					.. (math.floor(entitydata[v].x/40)+co) .. ","
+					.. (math.floor(entitydata[v].y/30)+co) .. ")"
 			end
 
 			for k,v in pairs(uscriptuses) do
 				scriptsstr = scriptsstr .. (scriptsstr == "" and "" or ", ") .. v[1] .. ":" .. v[2]
 			end
 
-			dialog.create(langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n" .. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr}))
+			dialog.create(
+				langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n"
+				.. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr})
+			)
 		elseif onrbutton(3) then
 			-- Copy script
 			copyscript()
@@ -346,20 +408,44 @@ return function()
 		if carg1 ~= nil then
 			local seconds = carg1 * 34 / 1000
 			seconds = round(seconds, 2)
-			ved_printf(langkeys(L.FRAMESTOSECONDS, {carg1, seconds}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			ved_printf(
+				langkeys(L.FRAMESTOSECONDS, {carg1, seconds}),
+				love.graphics.getWidth()-(128-8),
+				8+(24*12)+4,
+				128-16,
+				"center"
+			)
 		end
 	elseif context == "roomnum" then
 		carg1 = tonumber(carg1)
 		if carg1 ~= nil then
-			ved_printf(langkeys(L.ROOMNUM, {carg1}), love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			ved_printf(
+				langkeys(L.ROOMNUM, {carg1}),
+				love.graphics.getWidth()-(128-8),
+				8+(24*12)+4,
+				128-16,
+				"center"
+			)
 		end
 	elseif context == "track" then
 		carg1 = tonumber(carg1)
 		if carg1 ~= nil then
 			if carg1 == -1 then
-				ved_printf(L.STOPSMUSIC, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+				ved_printf(
+					L.STOPSMUSIC,
+					love.graphics.getWidth()-(128-8),
+					8+(24*12)+4,
+					128-16,
+					"center"
+				)
 			else
-				ved_printf(langkeys(L.TRACKNUM, {carg1}) .. "\n\n" .. listmusiccommandsids[carg1], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+				ved_printf(
+					langkeys(L.TRACKNUM, {carg1}) .. "\n\n" .. list_music_commands_ids[carg1],
+					love.graphics.getWidth()-(128-8),
+					8+(24*12)+4,
+					128-16,
+					"center"
+				)
 			end
 		end
 	end

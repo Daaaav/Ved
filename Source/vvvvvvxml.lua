@@ -674,7 +674,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	for k,v in pairs(metadataitems) do
 		cons("Doing " .. v)
 		newthis = xmlspecialchars(anythingbutnil(thismetadata[v]))
-		savethis = savethis:gsub("%$" .. string.upper(v) .. "%$", newthis)
+		savethis = savethis:gsub("%$" .. v:upper() .. "%$", newthis)
 	end
 
 	-- Special case of metadata that may or may not be stored...
@@ -752,9 +752,9 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			if allentities[k] ~= nil then
 				local v = allentities[k]
 				local data = v.data
-				if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and string.len(data) > 40 then
+				if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and data:len() > 40 then
 					-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
-					entitydatasaved = entitydatasaved + string.len(data)
+					entitydatasaved = entitydatasaved + data:len()
 					data = ""
 				end
 				table.insert(thenewentities,

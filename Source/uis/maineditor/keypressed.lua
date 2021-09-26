@@ -466,7 +466,7 @@ return function(key)
 		tilespicker = false
 	else
 		for k,v in pairs(toolshortcuts) do
-			if key == string.lower(v) then
+			if key == v:lower() then
 				if selectedtool == k and k ~= 13 and k ~= 14 then
 					-- We're re-pressing this button, so set the subtool to the first one.
 					selectedsubtool[k] = 1

@@ -121,12 +121,12 @@ return function()
 			end
 			if soundviewer then
 				ved_print(
-					"[" .. fixdig(m, 2) .. "] " .. listsoundids[m]:sub(1, -5),
+					"[" .. fixdig(m, 2) .. "] " .. list_sound_ids[m]:sub(1, -5),
 					musicnamex, 36+24*my
 				)
 			else
 				ved_print(
-					"[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or listmusicids[m]),
+					"[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or list_music_ids[m]),
 					musicnamex, 36+24*my
 				)
 			end

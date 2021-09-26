@@ -158,9 +158,9 @@ function dialog.form.leveloptions_make()
 		{"mapheight", 12, 8, 3, metadata.mapheight, DF.TEXT},
 		{"", 0, 10, 8, L.OPTMUSIC, DF.LABEL},
 		{
-			"levmusic", 8, 10, 30, metadata.levmusic, DF.DROPDOWN, listmusicnames, listmusicids,
+			"levmusic", 8, 10, 30, metadata.levmusic, DF.DROPDOWN, list_music_names, list_music_ids,
 			function(picked)
-				for k,v in pairs(listmusicnamesids) do
+				for k,v in pairs(list_music_names_ids) do
 					if picked == v[1] then
 						return v[2]
 					end
@@ -760,7 +760,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 		end
 
 		-- Update referenced scripts, since we changed some around
-		usedscripts, n_usedscripts = findusedscripts()
+		usedscripts, n_usedscripts = find_used_scripts()
 	end
 end
 

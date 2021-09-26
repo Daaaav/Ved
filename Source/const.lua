@@ -1,4 +1,4 @@
-toolshortcuts = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "R", "T", "Y", "U", "I", "O", "P"}
+toolshortcuts = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "R", "T", "Y", "U", "I", "O", "P"}
 
 tileset_names = {
 	[0] = "tiles.png",  -- space station
@@ -79,7 +79,7 @@ enemyframes = {
 }
 
 -- Some array with arrays of names+ids
-listmusicnamesids = {
+list_music_names_ids = {
 	{"Pending Silence (" .. L.CAPNONE .. ")", 0}, -- Path Complete, but this is about custom levels where 0 is silence
 	{"Pushing Onwards", 1},
 	{"Positive Force", 2},
@@ -99,28 +99,28 @@ listmusicnamesids = {
 }
 
 -- Just the names because right click menu
-listmusicnames = {}
-for k,v in pairs(listmusicnamesids) do
-	table.insert(listmusicnames, v[1])
+list_music_names = {}
+for k,v in pairs(list_music_names_ids) do
+	table.insert(list_music_names, v[1])
 end
 
 -- Internal VVVVVV IDs as keys
-listmusicids = {}
-for k,v in pairs(listmusicnamesids) do
-	table.insert(listmusicids, v[2], v[1])
+list_music_ids = {}
+for k,v in pairs(list_music_names_ids) do
+	table.insert(list_music_ids, v[2], v[1])
 end
 
 -- Ok well I guess we actually need Path Complete for music commands
-listmusiccommandsnamesids = table.copy(listmusicnamesids)
-listmusiccommandsnamesids[1] = {"Path Complete", 0}
+list_music_commands_names_ids = table.copy(list_music_names_ids)
+list_music_commands_names_ids[1] = {"Path Complete", 0}
 
-listmusiccommandsids = {}
-for _, v in pairs(listmusiccommandsnamesids) do
-	table.insert(listmusiccommandsids, v[2], v[1])
+list_music_commands_ids = {}
+for _, v in pairs(list_music_commands_names_ids) do
+	table.insert(list_music_commands_ids, v[2], v[1])
 end
 
 -- Mappings from simplified `music` IDs to internal `play` IDs
-musicsimplifiedtointernal = {
+music_simplified_to_internal = {
 	[0] = -1,
 	[1] = 1,
 	[2] = 2,
@@ -135,7 +135,7 @@ musicsimplifiedtointernal = {
 	[11] = 14,
 }
 
-listsoundids = {
+list_sound_ids = {
 	[0] = "jump.wav",
 	"jump2.wav",
 	"hurt.wav",
@@ -166,7 +166,6 @@ listsoundids = {
 	"rescue.wav",
 }
 
---entityidtotool = {9, }
 entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
 
 platform_labels = {

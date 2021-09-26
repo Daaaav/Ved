@@ -141,7 +141,7 @@ return function()
 		if changed_scriptdisplay then
 			scriptlistscroll = 0
 			if usedscripts == nil then
-				usedscripts, n_usedscripts = findusedscripts()
+				usedscripts, n_usedscripts = find_used_scripts()
 			end
 		end
 

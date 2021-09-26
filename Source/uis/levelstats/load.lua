@@ -4,7 +4,7 @@ return function()
 	local usedflags = {}
 
 	-- See which flags have been used in this level.
-	returnusedflags(usedflags, {})
+	return_used_flags(usedflags, {})
 
 	local n_usedflags = 0
 	for fl = 0, limit.flags-1 do
