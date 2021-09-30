@@ -7,6 +7,8 @@ function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 		menuposy = love.mouse.getY()
 	end
 
+	reset_special_cursor()
+
 	RCMactive = true
 	RCMx = math.min(menuposx, love.graphics.getWidth()-240)
 	RCMy = math.min(menuposy, love.graphics.getHeight()-(#items*16))

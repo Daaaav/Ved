@@ -230,10 +230,7 @@ function tostate(new, dontinitialize, ...)
 		newinputsys.resume()
 	end
 
-	if special_cursor then
-		love.mouse.setCursor()
-		special_cursor = false
-	end
+	reset_special_cursor()
 
 	if middlescroll_x ~= -1 and middlescroll_y ~= -1 then
 		unset_middlescroll()
@@ -3293,6 +3290,13 @@ function print_tile_number(t, x, y)
 		)
 	end
 	love.graphics.setColor(255,255,255)
+end
+
+function reset_special_cursor()
+	if special_cursor then
+		love.mouse.setCursor()
+		special_cursor = false
+	end
 end
 
 hook("func")

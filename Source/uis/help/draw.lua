@@ -422,9 +422,8 @@ return function()
 					rightclickmenu.create({L.COPYLINK}, "lnk_" .. hoveringlink)
 				end
 			end
-		elseif special_cursor then
-			love.mouse.setCursor()
-			special_cursor = false
+		else
+			reset_special_cursor()
 		end
 
 		if love.mouse.isDown("l") and nodialog then

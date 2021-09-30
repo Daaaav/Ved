@@ -370,9 +370,8 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		if (love.mouse.isDown("l") or love.mouse.isDown("r")) and not input.ignoremousepressed then
 			input.mousepressed(id, x, y, sx, sy, lineh)
 		end
-	elseif special_cursor then
-		love.mouse.setCursor()
-		special_cursor = false
+	else
+		reset_special_cursor()
 	end
 
 	-- Selection

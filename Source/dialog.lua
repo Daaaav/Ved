@@ -760,10 +760,7 @@ function dialog.create(message, buttons, handler, title, fields, noclosechecker,
 		tilespicker_shortcut = false
 	end
 
-	if special_cursor then
-		love.mouse.setCursor()
-		special_cursor = false
-	end
+	reset_special_cursor()
 
 	table.insert(dialogs,
 		cDialog:new{
