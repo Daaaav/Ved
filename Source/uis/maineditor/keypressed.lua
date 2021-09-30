@@ -129,8 +129,6 @@ return function(key)
 		mouselockx = love.mouse.getX()
 	elseif key == "[" and mouselocky == -1 then
 		mouselocky = love.mouse.getY()
-	elseif key == "tab" then
-		eraserlocked = not eraserlocked
 	elseif editingbounds ~= 0 and key == "escape" then
 		if editingbounds == 1 then
 			local changeddata = {}

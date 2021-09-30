@@ -552,14 +552,6 @@ return function()
 			tinyprint("}" .. L.TINY_CTRL, 128-tinywidth, love.graphics.getHeight()-7)
 			love.graphics.setColor(255,255,255,255)
 		end
-
-		hoverdraw((eraserlocked and image.eraseroff or image.eraseron), 88, 0, 16, 16)
-		_= not editingroomname and showhotkey("f", 88-1, 16-8)
-
-		if not mousepressed and nodialog and love.mouse.isDown("l") and mouseon(88, 0, 16, 16) then
-			eraserlocked = not eraserlocked
-			mousepressed = true
-		end
 	else
 		-- Still have a background, in case we have a brush that's so big it overlaps with this part of the screen
 		love.graphics.setColor(0, 0, 0, 192)

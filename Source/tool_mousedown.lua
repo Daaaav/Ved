@@ -160,297 +160,295 @@ function handle_tool_mousedown()
 				mousepressed = true
 			end
 		elseif selectedtool <= 3 then
-			if not (eraserlocked and love.mouse.isDown("r")) then
-				if undosaved == 0 then
-					table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata_get(roomx, roomy)), toredotiles = {}})
-					undosaved = #undobuffer
-					finish_undo("SAVED BEGIN RESULT FOR UNDO")
-				end
-
-				if selectedtool <= 2 then
-					if love.mouse.isDown("r") then
-						useselectedtile = 0
-					else
-						if levelmetadata_get(roomx, roomy).directmode == 0 then
-							-- Auto mode
-							useselectedtile = selectedtool
-
-							-- Tower doesn't have 1 as a solid tile
-							if levelmetadata_get(roomx, roomy).tileset == 5 and useselectedtile == 1 then
-								useselectedtile = 12
-							end
-						else
-							useselectedtile = selectedtile
-						end
-					end
-
-					if selectedsubtool[selectedtool] == 1 then
-						-- 1x1
-						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
-					elseif selectedsubtool[selectedtool] == 2 then
-						-- 3x3
-						for sty = (aty-1), (aty+1) do
-							for stx = (atx-1), (atx+1) do
-								--if roomdata[roomy][roomx][(sty*40)+(stx+1)] ~= nil then
-								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-					elseif selectedsubtool[selectedtool] == 3 then
-						-- 5x5
-						for sty = (aty-2), (aty+2) do
-							for stx = (atx-2), (atx+2) do
-								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-					elseif selectedsubtool[selectedtool] == 4 then
-						-- 7x7
-						for sty = (aty-3), (aty+3) do
-							for stx = (atx-3), (atx+3) do
-								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-					elseif selectedsubtool[selectedtool] == 5 then
-						-- 9x9
-						for sty = (aty-4), (aty+4) do
-							for stx = (atx-4), (atx+4) do
-								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-					elseif selectedsubtool[selectedtool] == 6 then
-						-- horizontal fill
-						if minsmear == -1 and maxsmear == -1 then
-							minsmear = aty; maxsmear = aty
-							for stx = 0, 39 do
-								roomdata_set(roomx, roomy, stx, aty, useselectedtile)
-							end
-						end
-
-						if aty < minsmear or aty > maxsmear then
-							for sty = math.min(aty, minsmear), math.max(aty, maxsmear) do
-								for stx = 0, 39 do
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-
-						if aty < minsmear then
-							minsmear = aty
-						elseif aty > maxsmear then
-							maxsmear = aty
-						end
-					elseif selectedsubtool[selectedtool] == 7 then
-						-- vertical fill
-						if minsmear == -1 and maxsmear == -1 then
-							minsmear = atx; maxsmear = atx
-							for sty = 0, 29 do
-								roomdata_set(roomx, roomy, atx, sty, useselectedtile)
-							end
-						end
-
-						if atx < minsmear or atx > maxsmear then
-							for stx = math.min(atx, minsmear), math.max(atx, maxsmear) do
-								for sty = 0, 29 do
-									roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-								end
-							end
-						end
-
-						if atx < minsmear then
-							minsmear = atx
-						elseif atx > maxsmear then
-							maxsmear = atx
-						end
-					elseif not mousepressed_custombrush and selectedsubtool[selectedtool] == 8 then
-						-- custom size
-						if customsizemode == 0 then
-							local iy = 1
-							for sty = (aty-math.floor(customsizey)), (aty+math.ceil(customsizey)) do
-								local ix = 1
-								for stx = (atx-math.floor(customsizex)), (atx+math.ceil(customsizex)) do
-									if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-										if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
-											-- Stamp
-											roomdata_set(roomx, roomy, stx, sty, customsizetile[iy][ix])
-										elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
-											roomdata_set(roomx, roomy, stx, sty, useselectedtile)
-										end
-									end
-									ix = ix + 1
-								end
-								iy = iy + 1
-							end
-						elseif customsizemode <= 2 then -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
-							customsizex = (atx)/2
-							customsizey = (29-aty)/2
-							customsizemode = 0
-							customsizetile = nil
-							mousepressed_custombrush = true
-						elseif customsizemode == 3 then
-							customsizecoorx = atx
-							customsizecoory = aty
-							customsizemode = 4
-							mousepressed_custombrush = true
-						elseif customsizemode == 4 then
-							atx = math.max(atx, customsizecoorx)
-							aty = math.max(aty, customsizecoory)
-							customsizex = (atx-customsizecoorx)/2
-							customsizey = (aty-customsizecoory)/2
-							customsizemode = 0
-							customsizetile = {}
-							local foundnonzero = false
-							for sty = customsizecoory, aty do
-								table.insert(customsizetile, {})
-								for stx = customsizecoorx, atx do
-									local tnum = roomdata_get(roomx, roomy, stx, sty)
-									table.insert(customsizetile[#customsizetile], tnum)
-									if tnum ~= 0 then
-										foundnonzero = true
-									end
-								end
-							end
-							if not foundnonzero then
-								-- Ok, we don't need a useless brush.
-								customsizetile = nil
-							end
-
-							mousepressed_custombrush = true
-							cons("That is " .. (atx-customsizecoorx) .. " by " .. (aty-customsizecoory) .. " starting at " .. customsizecoorx .. "," .. customsizecoory)
-						end
-					elseif selectedsubtool[selectedtool] == 9 then
-						-- Fill bucket
-						-- What "color" is the tile we're clicking on?
-						local oldtile = roomdata_get(roomx, roomy, atx, aty)
-						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
-
-						-- It's only useful to fill if we're not filling an area with exactly the same tile.
-						if oldtile ~= useselectedtile then
-							-- Start a list of tiles
-							local tilesarea, i = {{atx, aty}}, 1
-
-							while tilesarea[i] ~= nil and i < 1200 do
-								local f_x, f_y = unpack(tilesarea[i])
-								for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
-									if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
-									and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
-									and roomdata_get(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
-										roomdata_set(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
-
-										table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
-									end
-								end
-
-								i = i + 1
-							end
-						end
-					elseif selectedsubtool[selectedtool] == 10 then
-						-- to out
-						-- rot
-
-						for rot = 0, anythingbutnil0(toout)-1 do
-							local tooutnow = toout - rot
-							roomdata_set(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
-							roomdata_set(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
-							roomdata_set(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
-							roomdata_set(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
-						end
-
-						toout = anythingbutnil0(toout) + 1
-					end
-				else
-					if love.mouse.isDown("r") then
-						useselectedtile = 0
-					else
-						if levelmetadata_get(roomx, roomy).directmode == 0 then
-							-- Auto mode
-							useselectedtile = tilesetblocks[selectedtileset].colors[selectedcolor].spikes[9]
-						else
-							useselectedtile = selectedtile
-						end
-					end
-
-					-- No comment.
-					if selectedsubtool[3] > 1 then
-						doorroomx = roomx
-						doorroomy = roomy
-					end
-
-					if selectedsubtool[3] == 1 then
-						-- 1 spike
-						roomdata_set(roomx, roomy, atx, aty, useselectedtile)
-					elseif selectedsubtool[3] == 2 then
-						-- <-->
-						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
-							-- There's a solid block below this spike.
-							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
-							-- There's a solid block above this spike.
-							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						else
-							-- No solid blocks directly surrounding this spike
-
-						end
-					elseif selectedsubtool[3] == 3 then
-						-- <--
-						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
-							-- There's a solid block below this spike.
-							spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
-							-- There's a solid block above this spike.
-							spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						else
-							-- No solid blocks directly surrounding this spike
-
-						end
-					elseif selectedsubtool[3] == 4 then
-						-- -->
-						if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
-							-- There's a solid block below this spike.
-							spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
-							-- There's a solid block above this spike.
-							spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
-							-- There's a solid block to the left of this spike.
-							spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
-						else
-							-- No solid blocks directly surrounding this spike
-
-						end
-					end
-				end
-
-				autocorrectroom()
-
-				-- Make sure warp lines and gravity lines are not floating or inside of new walls.
-				autocorrectlines()
+			if undosaved == 0 then
+				table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata_get(roomx, roomy)), toredotiles = {}})
+				undosaved = #undobuffer
+				finish_undo("SAVED BEGIN RESULT FOR UNDO")
 			end
+
+			if selectedtool <= 2 then
+				if love.mouse.isDown("r") then
+					useselectedtile = 0
+				else
+					if levelmetadata_get(roomx, roomy).directmode == 0 then
+						-- Auto mode
+						useselectedtile = selectedtool
+
+						-- Tower doesn't have 1 as a solid tile
+						if levelmetadata_get(roomx, roomy).tileset == 5 and useselectedtile == 1 then
+							useselectedtile = 12
+						end
+					else
+						useselectedtile = selectedtile
+					end
+				end
+
+				if selectedsubtool[selectedtool] == 1 then
+					-- 1x1
+					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+				elseif selectedsubtool[selectedtool] == 2 then
+					-- 3x3
+					for sty = (aty-1), (aty+1) do
+						for stx = (atx-1), (atx+1) do
+							--if roomdata[roomy][roomx][(sty*40)+(stx+1)] ~= nil then
+							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+				elseif selectedsubtool[selectedtool] == 3 then
+					-- 5x5
+					for sty = (aty-2), (aty+2) do
+						for stx = (atx-2), (atx+2) do
+							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+				elseif selectedsubtool[selectedtool] == 4 then
+					-- 7x7
+					for sty = (aty-3), (aty+3) do
+						for stx = (atx-3), (atx+3) do
+							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+				elseif selectedsubtool[selectedtool] == 5 then
+					-- 9x9
+					for sty = (aty-4), (aty+4) do
+						for stx = (atx-4), (atx+4) do
+							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+				elseif selectedsubtool[selectedtool] == 6 then
+					-- horizontal fill
+					if minsmear == -1 and maxsmear == -1 then
+						minsmear = aty; maxsmear = aty
+						for stx = 0, 39 do
+							roomdata_set(roomx, roomy, stx, aty, useselectedtile)
+						end
+					end
+
+					if aty < minsmear or aty > maxsmear then
+						for sty = math.min(aty, minsmear), math.max(aty, maxsmear) do
+							for stx = 0, 39 do
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+
+					if aty < minsmear then
+						minsmear = aty
+					elseif aty > maxsmear then
+						maxsmear = aty
+					end
+				elseif selectedsubtool[selectedtool] == 7 then
+					-- vertical fill
+					if minsmear == -1 and maxsmear == -1 then
+						minsmear = atx; maxsmear = atx
+						for sty = 0, 29 do
+							roomdata_set(roomx, roomy, atx, sty, useselectedtile)
+						end
+					end
+
+					if atx < minsmear or atx > maxsmear then
+						for stx = math.min(atx, minsmear), math.max(atx, maxsmear) do
+							for sty = 0, 29 do
+								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+							end
+						end
+					end
+
+					if atx < minsmear then
+						minsmear = atx
+					elseif atx > maxsmear then
+						maxsmear = atx
+					end
+				elseif not mousepressed_custombrush and selectedsubtool[selectedtool] == 8 then
+					-- custom size
+					if customsizemode == 0 then
+						local iy = 1
+						for sty = (aty-math.floor(customsizey)), (aty+math.ceil(customsizey)) do
+							local ix = 1
+							for stx = (atx-math.floor(customsizex)), (atx+math.ceil(customsizex)) do
+								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
+									if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
+										-- Stamp
+										roomdata_set(roomx, roomy, stx, sty, customsizetile[iy][ix])
+									elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
+										roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+									end
+								end
+								ix = ix + 1
+							end
+							iy = iy + 1
+						end
+					elseif customsizemode <= 2 then -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
+						customsizex = (atx)/2
+						customsizey = (29-aty)/2
+						customsizemode = 0
+						customsizetile = nil
+						mousepressed_custombrush = true
+					elseif customsizemode == 3 then
+						customsizecoorx = atx
+						customsizecoory = aty
+						customsizemode = 4
+						mousepressed_custombrush = true
+					elseif customsizemode == 4 then
+						atx = math.max(atx, customsizecoorx)
+						aty = math.max(aty, customsizecoory)
+						customsizex = (atx-customsizecoorx)/2
+						customsizey = (aty-customsizecoory)/2
+						customsizemode = 0
+						customsizetile = {}
+						local foundnonzero = false
+						for sty = customsizecoory, aty do
+							table.insert(customsizetile, {})
+							for stx = customsizecoorx, atx do
+								local tnum = roomdata_get(roomx, roomy, stx, sty)
+								table.insert(customsizetile[#customsizetile], tnum)
+								if tnum ~= 0 then
+									foundnonzero = true
+								end
+							end
+						end
+						if not foundnonzero then
+							-- Ok, we don't need a useless brush.
+							customsizetile = nil
+						end
+
+						mousepressed_custombrush = true
+						cons("That is " .. (atx-customsizecoorx) .. " by " .. (aty-customsizecoory) .. " starting at " .. customsizecoorx .. "," .. customsizecoory)
+					end
+				elseif selectedsubtool[selectedtool] == 9 then
+					-- Fill bucket
+					-- What "color" is the tile we're clicking on?
+					local oldtile = roomdata_get(roomx, roomy, atx, aty)
+					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+
+					-- It's only useful to fill if we're not filling an area with exactly the same tile.
+					if oldtile ~= useselectedtile then
+						-- Start a list of tiles
+						local tilesarea, i = {{atx, aty}}, 1
+
+						while tilesarea[i] ~= nil and i < 1200 do
+							local f_x, f_y = unpack(tilesarea[i])
+							for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
+								if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
+								and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
+								and roomdata_get(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
+									roomdata_set(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
+
+									table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
+								end
+							end
+
+							i = i + 1
+						end
+					end
+				elseif selectedsubtool[selectedtool] == 10 then
+					-- to out
+					-- rot
+
+					for rot = 0, anythingbutnil0(toout)-1 do
+						local tooutnow = toout - rot
+						roomdata_set(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
+						roomdata_set(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
+						roomdata_set(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
+						roomdata_set(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
+					end
+
+					toout = anythingbutnil0(toout) + 1
+				end
+			else
+				if love.mouse.isDown("r") then
+					useselectedtile = 0
+				else
+					if levelmetadata_get(roomx, roomy).directmode == 0 then
+						-- Auto mode
+						useselectedtile = tilesetblocks[selectedtileset].colors[selectedcolor].spikes[9]
+					else
+						useselectedtile = selectedtile
+					end
+				end
+
+				-- No comment.
+				if selectedsubtool[3] > 1 then
+					doorroomx = roomx
+					doorroomy = roomy
+				end
+
+				if selectedsubtool[3] == 1 then
+					-- 1 spike
+					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+				elseif selectedsubtool[3] == 2 then
+					-- <-->
+					if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
+						-- There's a solid block below this spike.
+						spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
+						spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
+						-- There's a solid block above this spike.
+						spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
+						spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
+						spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
+						spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					else
+						-- No solid blocks directly surrounding this spike
+
+					end
+				elseif selectedsubtool[3] == 3 then
+					-- <--
+					if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
+						-- There's a solid block below this spike.
+						spikes_floor_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
+						-- There's a solid block above this spike.
+						spikes_ceiling_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_leftwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_rightwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					else
+						-- No solid blocks directly surrounding this spike
+
+					end
+				elseif selectedsubtool[3] == 4 then
+					-- -->
+					if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
+						-- There's a solid block below this spike.
+						spikes_floor_right(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 0, -1), ts) then
+						-- There's a solid block above this spike.
+						spikes_ceiling_left(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, -1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_leftwall_down(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					elseif issolidmultispikes(adjtile(atx, aty, 1, 0), ts) then
+						-- There's a solid block to the left of this spike.
+						spikes_rightwall_up(atx, aty, tilesetblocks[selectedtileset].tileimg)
+					else
+						-- No solid blocks directly surrounding this spike
+
+					end
+				end
+			end
+
+			autocorrectroom()
+
+			-- Make sure warp lines and gravity lines are not floating or inside of new walls.
+			autocorrectlines()
 
 			mousepressed = true
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then

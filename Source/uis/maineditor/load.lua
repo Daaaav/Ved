@@ -56,6 +56,5 @@ return function()
 	customsizecoorx = nil -- coordinates of tile selected in mode 3
 	customsizecoory = nil
 
-	eraserlocked = false
 	keyboardmode = false
 end
