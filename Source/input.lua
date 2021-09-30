@@ -1534,7 +1534,7 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 
 	if love.mouse.isDown("r") and not mousepressed then
 		local items = {}
-		local separator = "#------"
+		local separator = "#-"
 		if #input.undostack[id] > 0 then
 			table.insert(items, L.UNDO)
 		end

@@ -33,7 +33,11 @@ function rightclickmenu.draw()
 			love.graphics.setColor(112,112,112,216)
 			love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, RCMwidth, 16)
 			love.graphics.setColor(192,192,192,255)
-			ved_print(v:sub(2, -1), RCMx+5, (k-1)*16+RCMy+4)
+			if v == "#-" then
+				love.graphics.rectangle("fill", RCMx+1, (k-1)*16+RCMy+8, RCMwidth-2, 1)
+			else
+				ved_print(v:sub(2, -1), RCMx+5, (k-1)*16+RCMy+4)
+			end
 			love.graphics.setColor(255,255,255,255)
 		else
 			if hoverrectangle(112,112,112,216, RCMx, (k-1)*16+RCMy, RCMwidth, 16, true) then
