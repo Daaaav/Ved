@@ -25,6 +25,9 @@ function love.mousereleased(x, y, button)
 
 	mousepressed = false
 	mousepressed_custombrush = false
+	if button == "r" then
+		mousepressed_editor_right = false
+	end
 	if mousepressed_flag then
 		mousepressed_flag = false
 		mousereleased_flag = true

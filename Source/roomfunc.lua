@@ -397,17 +397,12 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 		end
 
 		if shown then
-			-- First of all, we can remove an entity by shift-right clicking
-			if keyboard_eitherIsDown("shift") and love.mouse.isDown("r") and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
-				removeentity(k, entitydata[k].t)
-			else
-				showtooltip, scriptname_shown, scriptname_editingshown = displayentity(
-					offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext, nthscriptbox
-				)
+			showtooltip, scriptname_shown, scriptname_editingshown = displayentity(
+				offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext, nthscriptbox
+			)
 
-				if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
-					showtooltipof = v
-				end
+			if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
+				showtooltipof = v
 			end
 
 			if v.t == 19 then
@@ -467,11 +462,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		ved_print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), x + 8, y + 8, 2)
 
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[9], L.DELETE, L.CHANGEDIRECTION, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_1_" .. k,
-				2, 2
-			)
+			entity_highlight(x, y, 2, 2)
 		end
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
@@ -539,11 +530,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. getentityname(2, v.p1), L.DELETE, L.CYCLETYPE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_2_" .. k,
-				v.p1 < 7 and 4 or 8, 1
-			)
+			entity_highlight(x, y, v.p1 < 7 and 4 or 8, 1)
 		end
 	elseif v.t == 3 then
 		-- Disappearing platform
@@ -562,11 +549,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- This is a disappearing platform.
 		ved_print("////", x, y, 2)
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[6], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_3_" .. k,
-				4, 1
-			)
+			entity_highlight(x, y, 4, 1)
 		end
 	elseif v.t == 9 then
 		-- Trinket
@@ -574,11 +557,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		drawentitysprite(22, x, y)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (count.trinkets >= limit.trinkets and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_9_" .. k,
-				2, 2
-			)
+			entity_highlight(x, y, 2, 2)
 		end
 	elseif v.t == 10 then
 		-- Checkpoint. p1=0 is upside down, p1=1 is upright. Yes, VVVVVV works this way:
@@ -586,11 +565,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		drawentitysprite(20+v.p1, x, y)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[5], L.DELETE, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_10_" .. k,
-				2, 2
-			)
+			entity_highlight(x, y, 2, 2)
 		end
 	elseif v.t == 11 or v.t == 50 then
 		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
@@ -661,29 +636,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Where is it, though?
 		love.graphics.draw(cursorimg[0], x, y)
 		if interact then
-			if v.t == 11 then
-				local thisentrcm = {"#" .. toolnames[10], L.DELETE, (v.p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR), (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
-				if v.p4 == 1 then
-					table.insert(thisentrcm, #thisentrcm, L.COPY)
-					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
-				end
-				entityrightclick(
-					x, y,
-					thisentrcm, "ent_11_" .. k,
-					sel_w, sel_h, sel_x, sel_y
-				)
-			else
-				local thisentrcm = {"#" .. toolnames[15], L.DELETE, (v.p4 == 1 and L.UNLOCK or L.LOCK), L.PROPERTIES}
-				if v.p4 == 1 then
-					table.insert(thisentrcm, #thisentrcm, L.COPY)
-					table.insert(thisentrcm, #thisentrcm-1, L.MOVEENTITY)
-				end
-				entityrightclick(
-					x, y,
-					thisentrcm, "ent_50_" .. k,
-					sel_w, sel_h, sel_x, sel_y
-				)
-			end
+			entity_highlight(x, y, sel_w, sel_h, sel_x, sel_y)
 		end
 	elseif v.t == 13 then
 		-- Warp token. But are we currently displaying the entrance or the destination? Or both?
@@ -693,11 +646,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			drawentitysprite(18, x, y)
 			love.graphics.setColor(255, 255, 255)
 			if interact then
-				entityrightclick(
-					x, y,
-					{"#" .. toolnames[14], L.DELETE, L.GOTODESTINATION, L.CHANGEENTRANCE, L.CHANGEEXIT, L.COPYENTRANCE, L.PROPERTIES}, "ent_13_" .. k,
-					2, 2
-				)
+				entity_highlight(x, y, 2, 2)
 			end
 		end
 		-- warpid = what warp token destination we're placing.
@@ -707,11 +656,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16)
 			love.graphics.setColor(255,255,255,255)
 			if interact then
-				entityrightclick(
-					offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16,
-					{"#" .. toolnames[14], L.DELETE, L.GOTOENTRANCE, L.CHANGEENTRANCE, L.CHANGEEXIT, L.COPYENTRANCE, L.PROPERTIES}, "ent_13_" .. k,
-					2, 2
-				)
+				entity_highlight(offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16, 2, 2)
 			end
 		end
 	elseif v.t == 15 then
@@ -721,11 +666,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		drawentitysprite(sprite, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (count.crewmates >= limit.crewmates and "#" or "") .. L.COPY, L.PROPERTIES}, "ent_15_" .. k,
-				2, 3
-			)
+			entity_highlight(x, y, 2, 3)
 		end
 	elseif v.t == 16 then
 		-- Start point
@@ -733,11 +674,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		drawentitysprite(3*v.p1, x - 8, y + 2)
 		love.graphics.setColor(255, 255, 255)
 		if interact then
-			entityrightclick(
-				x, y,
-				{"#" .. toolnames[17], L.DELETE, L.CHANGEDIRECTION, L.MOVEENTITY, L.PROPERTIES}, "ent_16_" .. k,
-				2, 3
-			)
+			entity_highlight(x, y, 2, 3)
 		end
 	elseif v.t == 17 then
 		-- Roomtext
@@ -752,11 +689,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			ved_print(data, x, y, 2)
 			love.graphics.setColor(255, 255, 255)
 			if interact then
-				entityrightclick(
-					x, y,
-					{"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_17_" .. k,
-					font8:getWidth(data)/8, 1
-				)
+				entity_highlight(x, y, font8:getWidth(data)/8, 1)
 			end
 		end
 	elseif v.t == 18 then
@@ -783,11 +716,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			scriptname_args[1], scriptname_args[2], scriptname_args[3] = false, k, v
 		end
 		if interact then
-			entityrightclick(
-				x, y,
-				{(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_18_" .. k,
-				2, 3
-			)
+			entity_highlight(x, y, 2, 3)
 		end
 	elseif v.t == 19 then
 		-- Script box, draw it as an actual box.
@@ -831,11 +760,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			love.graphics.setColor(255,255,255)
 
 			if interact then
-				entityrightclick(
-					x, y,
-					{"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_19_" .. k,
-					v.p1, v.p2
-				)
+				entity_highlight(x, y, v.p1, v.p2)
 			end
 		end
 		love.graphics.setColor(255,255,255)
@@ -853,11 +778,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.draw(cursorimg[5], x, y)
 		showtooltip = true
 		if v.t ~= nil and interact then
-			entityrightclick(
-				x, y,
-				{"#" .. "Type " .. v.t, L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}, "ent_" .. v.t .. "_" .. k,
-				1, 1
-			)
+			entity_highlight(x, y, 1, 1)
 		end
 	end
 
@@ -914,15 +835,15 @@ function displaymapentities()
 
 end
 
-function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y)
-	-- entityrightclick(x, y, menuitems, newmenuid[, sel_w, sel_h[, sel_x, sel_y]])
+function entity_highlight(x, y, sel_w, sel_h, sel_x, sel_y)
+	-- entity_highlight(x, y[, sel_w, sel_h[, sel_x, sel_y]])
 	-- sel_* are used for the cyan selection rectangle - w and h are number of tiles,
 	-- x and y are used to specify alternative values for x and y (first two args)
 	-- which are thus in pixels!
 	if lockablemouseon(x, y, 16, 16) and nodialog then
 		if sel_w ~= nil and sel_h ~= nil then
 			if sel_x == nil or sel_y == nil then
-				sel_x = x; sel_y = y
+				sel_x, sel_y = x, y
 			end
 			love.graphics.setColor(0,255,255)
 			love.graphics.setLineWidth(2)
@@ -930,31 +851,41 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 			love.graphics.setLineWidth(1)
 			love.graphics.setColor(255,255,255)
 		end
+	end
+end
+
+function entity_interactable(k, x, y, menuitems, newmenuid)
+	-- Checks whether we're right clicking or clicking to start moving for this entity
+	-- If the user does press a mouse button, return true (so we can stop a click on the canvas as well)
+	if lockablemouseon(x, y, 16, 16) and nodialog then
 		if love.mouse.isDown("r") then
 			rightclickmenu.create(menuitems, newmenuid)
+			return true
 		end
-		if nodialog and love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
+		if love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
 			editingroomname = false
-			-- Start moving this entity, if we can! Heh, cheap trick to inspect the menu items.
-			local entdetails = explode("_", newmenuid)
+			-- Start moving this entity, if we can!
+			local success = false
 			if not keyboard_eitherIsDown("shift") then
-				cons("Checking alt+click to move entity...")
 				for k2,v2 in pairs(menuitems) do
 					if v2 == L.MOVEENTITY then
 						-- Just a regular, moveable entity.
-						movingentity = tonumber(entdetails[3])
+						movingentity = tonumber(k)
+						success = true
 						break
 					elseif v2 == L.GOTODESTINATION then
 						-- This must be a warp token entrance, works a little different to move this.
 						selectedtool = 14
 						selectedsubtool[14] = 3
-						warpid = tonumber(entdetails[3])
+						warpid = tonumber(k)
+						success = true
 						break
 					elseif v2 == L.GOTOENTRANCE then
 						-- Warp token destination.
 						selectedtool = 14
 						selectedsubtool[14] = 4
-						warpid = tonumber(entdetails[3])
+						warpid = tonumber(k)
+						success = true
 						break
 					end
 				end
@@ -964,14 +895,18 @@ function entityrightclick(x, y, menuitems, newmenuid, sel_w, sel_h, sel_x, sel_y
 					if v2 == L.COPY or v2 == L.COPYENTRANCE then
 						-- The nice thing is, this can't be a trinket/crewmate when 100 already
 						-- exist, since the menu item would be "#Copy" to disable it
-						setcopyingentity(tonumber(entdetails[3]))
+						setcopyingentity(tonumber(k))
+						success = true
 						break
 					end
 				end
 			end
 			nodialog = false
+			return success
 		end
 	end
+
+	return false
 end
 
 function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumbers, displaysolid)

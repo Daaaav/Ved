@@ -2352,6 +2352,10 @@ function getlockablemouseY()
 	return mouselocky
 end
 
+function maineditor_get_cursor()
+	return math.floor((getlockablemouseX()-screenoffset) / 16), math.floor(getlockablemouseY() / 16)
+end
+
 function backup_level(levelsfolder, levelname)
 	-- levelname is `editingmap` - without ".vvvvvv"
 	-- What's the full path?

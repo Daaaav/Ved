@@ -88,4 +88,18 @@ return function(dt)
 			love.mouse.setPosition(x,y)
 		end
 	end
+
+	if nodialog then
+		local caught = false
+		if not mousepressed_editor_right then
+			caught = handle_entity_mousedown()
+		end
+		if not caught then
+			handle_tool_mousedown()
+
+			if love.mouse.isDown("r") and not keyboard_eitherIsDown("shift") then
+				mousepressed_editor_right = true
+			end
+		end
+	end
 end

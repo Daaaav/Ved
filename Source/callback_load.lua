@@ -106,8 +106,9 @@ function love.load()
 	ved_require("vvvvvvfunc")
 	ved_require("playtesting")
 	ved_require("updatecheck")
-
 	ved_require("input")
+	ved_require("entity_mousedown")
+	ved_require("tool_mousedown")
 
 	dodisplaysettings()
 
@@ -122,6 +123,7 @@ function love.load()
 
 	mousepressed = false
 	mousepressed_custombrush = false
+	mousepressed_editor_right = false
 	mousepressed_flag = false
 	mousepressed_flag_x = -1
 	mousepressed_flag_y = -1
