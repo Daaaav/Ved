@@ -66,6 +66,10 @@ want to create a new input, which enables it automatically)
 To focus an input so all further typing will go there, just do
 `input.bump(<id>)`.
 
+To set a callback to be run whenever the text is changed, you can do
+`input.setcallback(<id>, "text_changed", <callback>)`. This callback will be
+given the ID of the input and the event name ("text_changed" in this case).
+
 When you're done, close it by doing `input.close(<id>)`.
 
 ]]
@@ -88,6 +92,8 @@ local input = {
 
 	undostack = {},
 	redostack = {},
+
+	callback = {},
 
 	wordseps = {},
 
@@ -155,6 +161,8 @@ function input.create(type_, id, initial, ix, iy)
 
 	input.undostack[id] = {}
 	input.redostack[id] = {}
+
+	input.callback[id] = {}
 
 	input.setnewlinechars(id, "[\r\n]")
 	input.setwordseps(id, " ")
@@ -709,6 +717,8 @@ function input.deletechars(id, chars)
 		input.setpos(id, x, y)
 	end
 
+	input.event(id, "text_changed")
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -768,6 +778,8 @@ function input.actualinsertchars(id, text)
 		input.pos[id] = x
 	end
 
+	input.event(id, "text_changed")
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -790,6 +802,8 @@ function input.newline(id)
 	y = y + 1
 
 	input.setpos(id, x, y)
+
+	input.event(id, "text_changed")
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1167,6 +1181,8 @@ function input.removelines(id, lines)
 
 	input.pos[id][2] = y
 
+	input.event(id, "text_changed")
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 end
@@ -1276,6 +1292,8 @@ function input.tothisstate(id, state)
 			input.selpos[id] = nil
 		end
 	end
+
+	input.event(id, "text_changed")
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -1862,6 +1880,8 @@ function input.atomicmovevertical(id, lines)
 	end
 	if table.contains(successes, true) then
 		input.unre(id, nil, unpack(oldstate))
+
+		input.event(id, "text_changed")
 	end
 end
 
@@ -1873,6 +1893,8 @@ function input.atomicdupeline(id, move_cursor)
 		input.pos[id][2] = input.pos[id][2] + 1
 	end
 	input.unre(id, nil, unpack(oldstate))
+
+	input.event(id, "text_changed")
 end
 
 function input.selectword(id, posx)
@@ -1907,5 +1929,17 @@ function input.selectword(id, posx)
 		input.movexwords(id, -1)
 		input.setselpos(id)
 		input.movexwords(id, 1)
+	end
+end
+
+function input.setcallback(id, event, callback)
+	input.callback[id][event] = callback
+end
+
+function input.event(id, event)
+	if input.callback[id][event] ~= nil then
+		input.callback[id][event](id, event)
+	elseif input.callback[id].any ~= nil then
+		input.callback[id].any(id, event)
 	end
 end

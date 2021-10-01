@@ -4,6 +4,12 @@ return function()
 	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(scripts[scriptname]))
 	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
 	newinputsys.setwordseps("script_lines", "[ %(%),]")
+	newinputsys.setcallback("script_lines", "text_changed",
+		function(id, event)
+			dirty()
+			scriptlineonscreen()
+		end
+	)
 	newinputsys.rightmost("script_lines")
 
 	textlinestogo = 0
