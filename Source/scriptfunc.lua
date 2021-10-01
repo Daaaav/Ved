@@ -197,6 +197,16 @@ function script_context(text)
 
 	parts = explode(",", text2)
 
+	local function get_wrapped_coords(thex, they)
+		local roomnum = thex + they*20
+		if roomnum < 0 or roomnum >= 400 then
+			return nil
+		end
+		they = math.floor(roomnum/20)
+		thex = roomnum % 20
+		return thex, they
+	end
+
 	if parts[1] == "flag" and parts[2] ~= nil then
 		return "flag", tonumber(parts[2]), nil, nil
 	elseif (
@@ -232,15 +242,7 @@ function script_context(text)
 			return "roomscript", x, y, nil
 		end
 		local script = parts[4]:sub(("custom_"):len()+1, parts[4]:len())
-		local roomnum = x + y*20
-		if roomnum >= 0 and roomnum < 400 then
-			local x_again, y_again
-			y_again = math.floor(roomnum/20)
-			x_again = roomnum % 20
-			return "roomscript", x_again, y_again, script
-		else
-			return "roomnumscript", roomnum, script
-		end
+		x, y = get_wrapped_coords(x, y)
 		return "roomscript", x, y, script
 	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
 		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
@@ -255,15 +257,8 @@ function script_context(text)
 			return "roomscript", x, y, nil
 		end
 		local script = parts[5]
-		local roomnum = x + y*20
-		if roomnum >= 0 and roomnum < 400 then
-			local x_again, y_again
-			y_again = math.floor(roomnum/20)
-			x_again = roomnum % 20
-			return "roomscript", x_again, y_again, script
-		else
-			return "roomnumscript", roomnum, script
-		end
+		x, y = get_wrapped_coords(x, y)
+		return "roomscript", x, y, script
 	elseif (
 		parts[1] == "gotoroom"
 		or parts[1] == "hidecoordinates"
@@ -274,17 +269,20 @@ function script_context(text)
 			return "room", x, y, nil
 		end
 		if parts[1] == "gotoroom" then
-			x, y = x % metadata.mapwidth, y % metadata.mapheight
-		elseif table.contains({"hidecoordinates", "showcoordinates"}, parts[1]) then
-			local roomnum = x + y*20
-			if roomnum >= 0 and roomnum < 400 then
-				local x_again, y_again
-				y_again = math.floor(roomnum/20)
-				x_again = roomnum % 20
-				return "room", x_again, y_again, nil
-			else
-				return "roomnum", roomnum
+			if x > metadata.mapwidth - 1 then
+				x = 0
 			end
+			if y > metadata.mapheight - 1 then
+				y = 0
+			end
+			if x < 0 then
+				x = metadata.mapwidth - 1
+			end
+			if y < 0 then
+				y = metadata.mapheight - 1
+			end
+		elseif table.contains({"hidecoordinates", "showcoordinates"}, parts[1]) then
+			x, y = get_wrapped_coords(x, y)
 		end
 		return "room", x, y, nil
 	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then
