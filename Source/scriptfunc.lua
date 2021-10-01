@@ -198,12 +198,12 @@ function script_context(text)
 	parts = explode(",", text2)
 
 	local function get_wrapped_coords(thex, they)
-		local roomnum = thex + they*20
-		if roomnum < 0 or roomnum >= 400 then
+		local roomnum = thex + they*limit.mapwidth
+		if roomnum < 0 or roomnum >= limit.mapwidth * limit.mapheight then
 			return nil
 		end
-		they = math.floor(roomnum/20)
-		thex = roomnum % 20
+		they = math.floor(roomnum/limit.mapwidth)
+		thex = roomnum % limit.mapwidth
 		return thex, they
 	end
 
