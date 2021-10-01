@@ -120,17 +120,6 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 					end
 				end
 			end
-		elseif attr == DIRTY.OUTROW29 then
-			local absolute_row = 19*30 + 29 -- tile row 29 on room row 19
-			for mrx = x, metadata.mapwidth-1, 20 do
-				local roomywithrow = math.floor(absolute_row/30)
-				dirty(rooms, mrx, roomywithrow)
-
-				absolute_row = absolute_row - 1
-				if absolute_row < 0 then
-					break
-				end
-			end
 		elseif attr == DIRTY.PROPERTY then
 			local mry = y
 			local cnt = 0

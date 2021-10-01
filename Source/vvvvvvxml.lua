@@ -126,7 +126,7 @@ function loadlevel(path)
 	for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
 		--print("Y: " .. yk)
 		theserooms[yk] = {}
-		for xk = 0, ( yk < math.min(thismetadata.mapheight, thislimit.mapheight) and thismetadata.mapwidth or thislimit.mapwidth ) - 1 do
+		for xk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
 			theserooms[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
@@ -140,32 +140,6 @@ function loadlevel(path)
 					end
 
 					theserooms[yk][xk][(40*yt) + xt + 1] = t
-				end
-			end
-		end
-	end
-	-- Partial rooms due to VVVVVV's concatenated rows thing bleeding out past the normal 20xHEIGHT range and shifting rooms upward (within the first 20 room rows)
-	if s.allowbiggerthansizelimit and thismetadata.mapwidth > thislimit.mapwidth then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / thislimit.mapwidth )
-		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(thismetadata.mapheight, thislimit.mapheight)
-		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
-			theserooms[yk] = {}
-			for xk = 0, thislimit.mapwidth-1 do
-				theserooms[yk][xk] = {}
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < thismetadata.mapwidth%thislimit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or thismetadata.mapwidth%thislimit.mapwidth == 0 and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
-					for xt = 0, 39 do
-						t = tonumber(x.alltiles[(capped_height-1)*1200*thismetadata.mapwidth + (yk-capped_height)*1200*thislimit.mapheight + (xk+(thislimit.mapwidth-1))*40 + (yt+29)*thismetadata.mapwidth*40 + xt+40+1])
-						if t == nil or t < 0 then
-							t = 0
-							failedtiles = failedtiles + 1
-						elseif math.floor(t) ~= t then
-							t = math.floor(t)
-							failedtiles = failedtiles + 1
-						end
-
-						theserooms[yk][xk][yt*40 + xt+1] = t
-					end
 				end
 			end
 		end
@@ -716,24 +690,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		end
 		if nested_break then
 			break
-		end
-	end
-	if thismetadata.mapwidth > limit.mapwidth then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (thismetadata.mapwidth-1) / limit.mapwidth )
-		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(thismetadata.mapheight, limit.mapheight)
-		local potential_line
-		for lroomy = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
-			-- Repeating console output from above...
-			cons("Y: " .. lroomy)
-			for line = 0, 29 do
-				for lroomx = 0, limit.mapwidth-1 do
-					potential_line = {unpack(theserooms[lroomy][lroomx], line*40 + 1, line*40 + 40)}
-					if #potential_line > 0 --[[ just to check that it's not nil ]] then
-						table.insert(thenewcontents, table.concat(potential_line, ","))
-					end
-				end
-			end
 		end
 	end
 	savethis = savethis:gsub("%$CONTENTS%$", table.concat(thenewcontents, ",") .. ",")

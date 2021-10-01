@@ -2515,12 +2515,19 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 		ty = 0
 	end
 
+	local function tile_get(thery, therx, thetileidx)
+		if thery < limit.mapheight then
+			return usethisroomdata[thery][therx][thetileidx]
+		end
+		return 0
+	end
+
 	if just_one_tile then
 		rx = rx % limit.mapwidth
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
 
-		return usethisroomdata[ry][rx][ty*40 + tx+1]
+		return tile_get(ry, rx, ty*40 + tx+1)
 	end
 
 	if rx < limit.mapwidth and ry < limit.mapheight then
@@ -2537,7 +2544,7 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 		local repeated_roomdata = {}
 		for ity = 1, 30 do
 			for itx = 1, 40 do
-				table.insert(repeated_roomdata, usethisroomdata[ry][rx][distortion*40 + itx])
+				table.insert(repeated_roomdata, tile_get(ry, rx, distortion*40 + itx))
 			end
 		end
 		return repeated_roomdata
@@ -2548,7 +2555,7 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 	for ity = 1, distortion do
 		for itx = 1, 40 do
 			table.remove(distorted_roomdata, 1)
-			table.insert(distorted_roomdata, usethisroomdata[ry+1][rx][(ity-1)*40 + itx])
+			table.insert(distorted_roomdata, tile_get(ry+1, rx, (ity-1)*40 + itx))
 		end
 	end
 
@@ -2581,12 +2588,8 @@ function roomdata_set(rx, ry, param1, param2, param3)
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
 
-		roomdata[ry][rx][ty*40 + tx+1] = value
-
-		if ry >= limit.mapheight then
-			local absolute_outrow = (ry-limit.mapheight) * 30 + ty
-			map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
-		else
+		if ry < limit.mapheight then
+			roomdata[ry][rx][ty*40 + tx+1] = value
 			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
 		end
 		return
@@ -2610,19 +2613,13 @@ function roomdata_set(rx, ry, param1, param2, param3)
 	for ity = 0, 29 do
 		for itx = 0, 39 do
 			if ity < 30-distortion then
-				roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
-				if ry >= limit.mapheight then
-					local absolute_outrow = (ry-limit.mapheight) * 30 + ity
-					map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
-				else
+				if ry < limit.mapheight then
+					roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
 					table.insert(topsectrows, ity+distortion)
 				end
 			else
-				roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
-				if ry+1 >= limit.mapheight then
-					local absolute_outrow = (ry-limit.mapheight-1) * 30 + (ity+distortion) % 30
-					map_correspondreset(rx + limit.mapwidth + absolute_outrow*limit.mapheight, limit.mapheight-1, {DIRTY.OUTROW29})
-				else
+				if ry+1 < limit.mapheight then
+					roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
 					table.insert(bottomsectrows, (ity+distortion) % 30)
 				end
 			end
