@@ -108,12 +108,12 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 					end
 				end
 
-				if metadata.mapheight > 20 then
+				if metadata.mapheight > limit.mapheight then
 					absolute_row = 30*y + row
-					for mrx = x, metadata.mapwidth-1, 20 do
-						local distortion = math.floor(mrx/20)
+					for mrx = x, metadata.mapwidth-1, limit.mapwidth do
+						local distortion = math.floor(mrx/limit.mapwidth)
 						if absolute_row == distortion then
-							for mry = 20, metadata.mapheight-1 do
+							for mry = limit.mapheight, metadata.mapheight-1 do
 								dirty(rooms, mrx, mry)
 							end
 						end
@@ -123,7 +123,7 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 		elseif attr == DIRTY.PROPERTY then
 			local mry = y
 			local cnt = 0
-			for mrx = x, metadata.mapwidth-1, 20 do
+			for mrx = x, metadata.mapwidth-1, limit.mapwidth do
 				cnt = cnt + 1
 				dirty(rooms, mrx, mry)
 
