@@ -65,6 +65,7 @@ return function()
 					104,
 					scriptscroll+24+(16*k)-8,
 					textlinestogo > 0,
+					editing_line == k,
 					syntaxhlon,
 					lasttextcolor,
 					alttextcolor
@@ -76,6 +77,7 @@ return function()
 					56,
 					scriptscroll+24+(8*k),
 					textlinestogo > 0,
+					editing_line == k,
 					syntaxhlon,
 					lasttextcolor,
 					alttextcolor

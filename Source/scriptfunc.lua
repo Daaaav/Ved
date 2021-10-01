@@ -35,7 +35,7 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 	return specificflag_n_real_usages
 end
 
-function syntax_hl(text, x, y, thisistext, docolor, lasttextcolor, alttextcolor)
+function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor, alttextcolor)
 	local textscale = s.scripteditor_largefont and 2 or 1
 	local fontsize = s.scripteditor_largefont and 16 or 8
 
@@ -81,8 +81,12 @@ function syntax_hl(text, x, y, thisistext, docolor, lasttextcolor, alttextcolor)
 				if offsetchars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
 					-- `say` and `reply` are special and still work capitalized even with no argument separators
-					local addcursor = false -- TODO scriptlines2021 don't start acting like a Java IDE
-					if (addcursor and #partss == 1 and v:sub(-1, -1) ~= " ")
+					local editing_command = false
+					if current_line then
+						local line_x = newinputsys.getpos("script_lines")
+						editing_command = line_x <= utf8.len(v)
+					end
+					if editing_command
 					or knowncommands[v_parsed]
 					or knowninternalcommands[v_parsed]
 					or v_parsed:lower() == "say" or v_parsed:lower() == "reply" then
