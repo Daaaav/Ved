@@ -48,30 +48,35 @@ return function(key)
 			dirty()
 		end
 	elseif key == "tab" then
-		-- TODO scriptlines2021
-		dialog.create("tab completion")
-		if true then
-			return
-		end
+		local matching = {}
 
-		matching = {}
+		local line_x, editing_line = newinputsys.getpos("script_lines")
+		local command_part = utf8.sub(inputs.script_lines[editing_line], 1, line_x)
 
 		for k,v in pairs(knowncommands) do
-			if k:sub(1, input:len()) == input then
+			if k:sub(1, command_part:len()) == command_part then
 				table.insert(matching, k)
 			end
 		end
 		for k,v in pairs(knowninternalcommands) do
-			if k:sub(1, input:len()) == input and not table.contains(matching, k) then
+			if k:sub(1, command_part:len()) == command_part and not table.contains(matching, k) then
 				table.insert(matching, k)
 			end
 		end
 
-		if #matching == 1 then
-			input = matching[1]
-			scriptlines[editingline] = input
-			dirty()
+		local shortest_match = nil
+		for k,v in pairs(matching) do
+			if v ~= command_part and (shortest_match == nil or v:len() < shortest_match:len()) then
+				shortest_match = v
+			end
 		end
+		if shortest_match == nil then
+			return
+		end
+
+		local oldstate = {newinputsys.getstate("script_lines")}
+		newinputsys.insertchars("script_lines", shortest_match:sub(command_part:len()+1))
+		newinputsys.unre("script_lines", UNRE.INSERT, unpack(oldstate))
 	elseif key == "escape" then
 		local success, raw_script = script_compile(inputs.script_lines)
 		if success then
