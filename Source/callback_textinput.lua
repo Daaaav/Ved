@@ -3,7 +3,7 @@ function love.textinput(char)
 		return
 	end
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+	if newinputsys.active and newinputsys.getfocused() ~= nil then
 		local id = newinputsys.getfocused()
 		if newinputsys.hex[id] ~= nil then
 			if table.contains({" ", "space"}, char) then -- I'd rather check the Spacebar key than the Space char, but y'know

@@ -383,7 +383,7 @@ function rightclickmenu.handler(RCMreturn)
 			unloadvvvvvvmusic(musicplayerfile)
 			collectgarbage("collect")
 		end
-	elseif RCMid:sub(1, 5) == "input" and newinputsys ~= nil and --[[ nil check only because we're slowly transitioning to the new system ]] newinputsys.active then
+	elseif RCMid:sub(1, 5) == "input" and newinputsys.active then
 		local id = newinputsys.input_ids[#newinputsys.nth_input] -- Sidestep putting the id in RCMid, because if we did it'd convert it to a string
 		if RCMreturn == L.UNDO then
 			newinputsys.undo(id)

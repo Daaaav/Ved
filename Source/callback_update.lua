@@ -22,7 +22,7 @@ function love.update(dt)
 		end
 	end
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+	if newinputsys.active and newinputsys.getfocused() ~= nil then
 		if RCMactive then
 			cursorflashtime = 0
 		else

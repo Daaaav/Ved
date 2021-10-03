@@ -35,7 +35,7 @@ function love.mousereleased(x, y, button)
 	minsmear = -1; maxsmear = -1
 	toout = 0
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+	if newinputsys.active and newinputsys.getfocused() ~= nil then
 		newinputsys.ignoremousepressed = false
 
 		local id = newinputsys.getfocused()

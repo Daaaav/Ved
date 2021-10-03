@@ -213,9 +213,7 @@ function tostate(new, dontinitialize, ...)
 		dontinitialize = false
 	end
 
-	if newinputsys ~= nil then -- nil check only because we're in a temporary transitional period
-		newinputsys.pause()
-	end
+	newinputsys.pause()
 
 	oldstate = state
 	state = anythingbutnil0(tonumber(new)) -- please
@@ -226,9 +224,7 @@ function tostate(new, dontinitialize, ...)
 		cons("State changed: " .. oldstate .. " => " .. state .. " (not initialized)")
 	end
 
-	if newinputsys ~= nil then -- temporary nil check again
-		newinputsys.resume()
-	end
+	newinputsys.resume()
 
 	reset_special_cursor()
 

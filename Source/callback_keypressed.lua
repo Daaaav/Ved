@@ -22,7 +22,7 @@ function love.keypressed(key)
 		RCMactive = false
 	end
 
-	if newinputsys ~= nil and --[[ nil check only because we're in a transition ]] newinputsys.active and newinputsys.getfocused() ~= nil then
+	if newinputsys.active and newinputsys.getfocused() ~= nil then
 		local id = newinputsys.getfocused()
 		local multiline = type(inputs[id]) == "table"
 
