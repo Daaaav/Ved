@@ -53,6 +53,10 @@ return function(key)
 		local line_x, editing_line = newinputsys.getpos("script_lines")
 		local command_part = utf8.sub(inputs.script_lines[editing_line], 1, line_x)
 
+		if command_part == "" then
+			return
+		end
+
 		for k,v in pairs(knowncommands) do
 			if k:sub(1, command_part:len()) == command_part then
 				table.insert(matching, k)
