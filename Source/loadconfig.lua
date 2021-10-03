@@ -170,6 +170,7 @@ configs = {
 	syntaxcolor_cursor = {
 		default = {255, 255, 255},
 		["type"] = "numbersarray",
+		comment = "Obsolete since new input system"
 	},
 	syntaxcolor_flagname = {
 		default = {255, 128, 0},
