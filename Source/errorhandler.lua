@@ -34,7 +34,7 @@ function error_printer(msg, layer)
 	return debug.traceback()
 end
 
-function love.errhand(msg)
+function ved_errorhandler(msg)
 	local status, err = pcall(ved_showerror, msg)
 
 	if not status then
@@ -68,6 +68,12 @@ function love.errhand(msg)
 			end
 		end
 	end
+end
+
+if love_version_meets(11) then
+	love.errorhandler = ved_errorhandler
+else
+	love.errhand = ved_errorhandler
 end
 
 function ved_showerror(msg)
