@@ -53,7 +53,7 @@ function backspace(text)
 
 	if text == nil then return end
 
-	local worktext = text
+	local worktext = tostring(text)
 	while true do
 		local lastchar = worktext:sub(-1, -1):byte()
 		if lastchar == nil then return "" end
@@ -72,6 +72,7 @@ end
 function leftspace(text, righttext)	
 	if (text == nil) or (righttext == nil) then return end
 
+	text = tostring(text)
 	while true do
 		local lastchar = text:sub(-1, -1):byte()
 		if lastchar == nil then return "", righttext end
@@ -92,6 +93,7 @@ end
 function rightspace(text, righttext)	
 	if (text == nil) or (righttext == nil) then return end
 
+	righttext = tostring(righttext)
 	local lastchar = righttext:sub(1, 1):byte()
 	if lastchar == nil then return text, "" end
 
@@ -118,6 +120,7 @@ end
 function firstUTF8(text)
 	if text == nil then return end
 
+	text = tostring(text)
 	local lastchar = text:sub(1, 1):byte()
 	if lastchar == nil then return text end
 
@@ -140,6 +143,7 @@ end
 function allbutfirstUTF8(text)
 	if text == nil then return end
 
+	text = tostring(text)
 	local firstchar = text:sub(1, 1):byte()
 	if firstchar == nil then
 		return text
