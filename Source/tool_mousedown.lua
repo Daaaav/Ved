@@ -4,7 +4,7 @@ function handle_tool_mousedown()
 
 	if (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3)
-	and not keyboard_eitherIsDown("shift") then
+	and (not keyboard_eitherIsDown("shift") or tilespicker) then
 		editingroomname = false
 		local atx, aty = maineditor_get_cursor()
 
