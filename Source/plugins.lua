@@ -292,23 +292,25 @@ function ved_require(reqfile)
 
 		for editk,editv in pairs(pluginfileedits[reqfile]) do
 			-- Is this a plain string or a pattern?
+			local find_original = editv.find
+			local find = editv.find
+			local replace = editv.replace
 			if not editv.luapattern then
-				editv.findoriginal = editv.find
-				editv.find = escapegsub_plugin(editv.find)
-				editv.replace = editv.replace:gsub("%%", "%%%%")
+				find = escapegsub_plugin(find)
+				replace = replace:gsub("%%", "%%%%")
 			end
 
-			if readlua:find(editv.find) == nil then
+			if readlua:find(find) == nil then
 				-- Something went wrong here! But should we complain loudly about it?
 				if not editv.ignore_error then
 					if plugins[editv.plugin] ~= nil then
 						plugins[editv.plugin].info.failededits = plugins[editv.plugin].info.failededits + 1
 					end
-					pluginerror(reqfile, editv.plugin, "TO BE ADDED", (editv.luapattern and editv.find or editv.findoriginal), editv.luapattern)
+					pluginerror(reqfile, editv.plugin, "TO BE ADDED", find_original, editv.luapattern)
 				end
 			else
 				-- Alright, this change can be done!
-				readlua = "--[[## " .. reqfile .. " ##]] " .. readlua:gsub(editv.find, editv.replace)
+				readlua = "--[[## " .. reqfile .. " ##]] " .. readlua:gsub(find, replace)
 			end
 		end
 
