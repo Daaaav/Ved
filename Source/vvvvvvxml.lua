@@ -126,7 +126,7 @@ function loadlevel(path)
 	for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
 		--print("Y: " .. yk)
 		theserooms[yk] = {}
-		for xk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
+		for xk = 0, math.min(thismetadata.mapwidth, thislimit.mapwidth)-1 do
 			theserooms[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
