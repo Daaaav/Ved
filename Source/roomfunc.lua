@@ -300,17 +300,10 @@ end
 
 function resize_level(new_w, new_h)
 	-- Should be used instead of simply assigning to metadata.mapwidth or metadata.mapheight
-	local reset_map = false
-	if s.mapstyle == "minimap" and getminimapzoom(metadata) ~= getminimapzoom(new_w, new_h) then
-		reset_map = true
-	end
-
 	metadata.mapwidth = new_w
 	metadata.mapheight = new_h
 	add_rooms(new_w, new_h)
-	if reset_map then
-		map_init()
-	end
+	map_init()
 	gotoroom(math.min(roomx, new_w-1), math.min(roomy, new_h-1))
 end
 
@@ -329,9 +322,7 @@ function add_rooms(new_w, new_h)
 		end
 
 		for x = 0, new_w-1 do
-			if x >= ( y < math.min(new_h, limit.mapheight) and new_w or limit.mapwidth ) or y >= limit.mapheight then
-				map_resetroom(x, y)
-			else
+			if x < ( y < math.min(new_h, limit.mapheight) and new_w or limit.mapwidth ) and y < limit.mapheight then
 				if levelmetadata[y][x] == nil then
 					levelmetadata[y][x] = default_levelmetadata(x, y)
 				end
@@ -340,9 +331,6 @@ function add_rooms(new_w, new_h)
 					for t = 1, 1200 do
 						roomdata[y][x][t] = 0
 					end
-				end
-				if rooms_map[y] == nil or rooms_map[y][x] == nil then
-					map_resetroom(x, y)
 				end
 			end
 		end

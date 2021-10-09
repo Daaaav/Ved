@@ -81,7 +81,7 @@ end
 
 function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 	local rooms = {}
-	local function dirty(rooms, x, y)
+	local function map_dirty(rooms, x, y)
 		local alreadyexists = false
 		for _,r in pairs(rooms) do
 			if x == r[1] and y == r[2] then
@@ -100,7 +100,7 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 				local absolute_row = 30*y + row
 				for mrx = x, metadata.mapwidth-1, 20 do
 					local roomywithrow = math.floor(absolute_row/30)
-					dirty(rooms, mrx, roomywithrow)
+					map_dirty(rooms, mrx, roomywithrow)
 
 					absolute_row = absolute_row - 1
 					if absolute_row < 0 then
@@ -114,7 +114,7 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 						local distortion = math.floor(mrx/limit.mapwidth)
 						if absolute_row == distortion then
 							for mry = limit.mapheight, metadata.mapheight-1 do
-								dirty(rooms, mrx, mry)
+								map_dirty(rooms, mrx, mry)
 							end
 						end
 					end
@@ -125,7 +125,7 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 			local cnt = 0
 			for mrx = x, metadata.mapwidth-1, limit.mapwidth do
 				cnt = cnt + 1
-				dirty(rooms, mrx, mry)
+				map_dirty(rooms, mrx, mry)
 
 				mry = mry - 1
 				if mry < 0 then
@@ -133,7 +133,7 @@ function map_correspondreset(x, y, dirty_attrs, dirty_rows)
 				end
 			end
 		elseif attr == DIRTY.ENTITY then
-			dirty(rooms, x, y)
+			map_dirty(rooms, x, y)
 		end
 	end
 
