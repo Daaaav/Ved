@@ -798,7 +798,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		end
 	else
 		-- We don't!
-		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities />")
+		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities/>")
 	end
 
 	cons("Saving room metadata...")
