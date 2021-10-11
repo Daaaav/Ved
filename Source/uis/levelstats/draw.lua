@@ -24,7 +24,9 @@ return function()
 		else
 			perone = v.value / v.max
 		end
-		if perone < .8 or unlimited then
+		if unlimited then
+			love.graphics.setColor(0,64,0)
+		elseif perone < .8 then
 			love.graphics.setColor(38,127,0)
 		elseif perone < .95 then
 			love.graphics.setColor(255,216,0)
@@ -44,7 +46,7 @@ return function()
 		end
 
 		local bar_x, bar_y = 24+basic_stats_max_text_width, 16*k
-		local bar_width = math.min(perone, 1)*p100
+		local bar_width = math.floor(math.min(perone, 1)*p100)
 		love.graphics.rectangle("fill", bar_x, bar_y, bar_width, 8)
 
 		if unlimited then
@@ -56,7 +58,7 @@ return function()
 			ved_printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
 
 			love.graphics.setScissor(bar_x, bar_y, bar_width, 8)
-			love.graphics.setColor(0, 64, 0)
+			love.graphics.setColor(0, 128, 0)
 			love.graphics.rectangle("fill", alt_max_x, bar_y, 1, 8)
 			ved_printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
 
