@@ -287,6 +287,9 @@ function cDialog:update(dt, topmost)
 	end
 
 	if not s.dialoganimations then
+		if self.closing and topmost then
+			self:closed()
+		end
 		return
 	end
 
@@ -622,10 +625,6 @@ function cDialog:close(button)
 
 	self.showtabrect = false
 	self.closing = true
-
-	if not s.dialoganimations then
-		self:closed()
-	end
 end
 
 function cDialog:closed()
