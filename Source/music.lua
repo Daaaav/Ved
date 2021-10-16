@@ -1,3 +1,5 @@
+require("ogg_vorbis_metadata")
+
 local ffi = require("ffi")
 
 ffi.cdef([[
@@ -206,7 +208,18 @@ function loadmusicsong(file, song, data, edited)
 		-- Don't bother
 		return
 	end
-	music[file][song] = {edited=edited, filedata=m_filedata, audio=nil}
+	local audio_metadata
+	if file ~= "sounds" then
+		audio_metadata = ogg_vorbis_metadata(m_filedata)
+	else
+		audio_metadata = {}
+	end
+	music[file][song] = {
+		edited=edited,
+		filedata=m_filedata,
+		metadata=audio_metadata,
+		audio=nil,
+	}
 	local m_success, maybe_source = pcall(love.audio.newSource, m_filedata, "stream")
 	if not m_success then
 		cons("Could not load song " .. song .. " from " .. file ..  " because " .. maybe_source)
