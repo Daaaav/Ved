@@ -1807,7 +1807,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 
 	if viakeyboard then
 		distance = 10*46
-		if takinginput and table.contains({"home", "end"}, mkinput) then
+		if (takinginput or newinputsys.active) and table.contains({"home", "end"}, mkinput) then
 			return
 		elseif table.contains({"pageup", "home"}, mkinput) then
 			direction = "u"
