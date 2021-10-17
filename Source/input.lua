@@ -614,6 +614,8 @@ function input.movey(id, chars)
 
 	input.pos[id][2] = y
 
+	input.event(id, "pos_changed")
+
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
@@ -649,6 +651,8 @@ function input.rightmost(id)
 	local multiline = type(inputs[id]) == "table"
 
 	input.rightmosts[id] = true
+
+	input.event(id, "pos_changed")
 
 	cursorflashtime = 0
 	inputcopiedtimer = 0
@@ -775,6 +779,7 @@ function input.actualinsertchars(id, text)
 		input.pos[id] = x
 	end
 
+	input.event(id, "pos_changed")
 	input.event(id, "text_changed")
 
 	cursorflashtime = 0
@@ -1074,6 +1079,8 @@ function input.setpos(id, x, ...)
 	end
 
 	input.rightmosts[id] = rightmost
+
+	input.event(id, "pos_changed")
 end
 
 function input.selallright(id)
@@ -1182,6 +1189,7 @@ function input.removelines(id, lines)
 
 	input.pos[id][2] = y
 
+	input.event(id, "pos_changed")
 	input.event(id, "text_changed")
 
 	cursorflashtime = 0
@@ -1294,6 +1302,7 @@ function input.tothisstate(id, state)
 		end
 	end
 
+	input.event(id, "pos_changed")
 	input.event(id, "text_changed")
 
 	cursorflashtime = 0
@@ -1882,6 +1891,7 @@ function input.atomicmovevertical(id, lines)
 	if table.contains(successes, true) then
 		input.unre(id, nil, unpack(oldstate))
 
+		input.event(id, "pos_changed")
 		input.event(id, "text_changed")
 	end
 end
@@ -1892,6 +1902,7 @@ function input.atomicdupeline(id, move_cursor)
 	table.insert(inputs[id], y+1, line)
 	if move_cursor then
 		input.pos[id][2] = input.pos[id][2] + 1
+		input.event(id, "pos_changed")
 	end
 	input.unre(id, nil, unpack(oldstate))
 

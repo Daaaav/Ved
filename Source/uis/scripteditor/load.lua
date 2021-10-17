@@ -1,19 +1,24 @@
 -- scripteditor/load
 
 return function()
+	scriptscroll = 0
+
 	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(scripts[scriptname]))
 	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
 	newinputsys.setwordseps("script_lines", "[ %(%),]")
 	newinputsys.setcallback("script_lines", "text_changed",
 		function(id, event)
 			dirty()
+		end
+	)
+	newinputsys.setcallback("script_lines", "pos_changed",
+		function(id, event)
 			scriptlineonscreen()
 		end
 	)
 	newinputsys.rightmost("script_lines")
 
 	textlinestogo = 0
-	scriptscroll = 0
 	syntaxhlon = true
 
 	-- Little bit of caching
