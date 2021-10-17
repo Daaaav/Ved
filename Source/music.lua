@@ -151,7 +151,7 @@ function loadvvvvvvmusic(file, realfile)
 						local m_end = m_start+(F_size-sizeof_F_tip)-2
 						local strings = explode("\0", ficontents:sub(m_start, m_end))
 						m_start = m_end+2
-						setmusicmeta_file(file, F_tip.export_time, unpack(strings))
+						music_set_file_vvv_metadata(file, F_tip.export_time, unpack(strings))
 					end
 
 					-- Song metadata now.
@@ -163,7 +163,7 @@ function loadvvvvvvmusic(file, realfile)
 						local m_end = m_start+music_headers[m].start-2
 						local strings = explode("\0", ficontents:sub(m_start, m_end))
 						m_start = m_end+2
-						setmusicmeta_song(file, m, unpack(strings))
+						music_get_song_vvv_metadata(file, m, unpack(strings))
 					end
 				end
 			end
@@ -217,7 +217,8 @@ function loadmusicsong(file, song, data, edited)
 	music[file][song] = {
 		edited=edited,
 		filedata=m_filedata,
-		metadata=audio_metadata,
+		audio_metadata=audio_metadata,
+		vvv_metadata=nil,
 		audio=nil,
 	}
 	local m_success, maybe_source = pcall(love.audio.newSource, m_filedata, "stream")
@@ -231,7 +232,7 @@ function loadmusicsong(file, song, data, edited)
 	end
 end
 
-function getmusicfiledata(file, song)
+function music_get_filedata(file, song)
 	if music[file] == nil or music[file][song] == nil then
 		return nil
 	end
@@ -239,7 +240,7 @@ function getmusicfiledata(file, song)
 	return music[file][song].filedata
 end
 
-function getmusicaudio(file, song)
+function music_get_audio(file, song)
 	if music[file] == nil or music[file][song] == nil then
 		return nil
 	end
@@ -247,15 +248,15 @@ function getmusicaudio(file, song)
 	return music[file][song].audio
 end
 
-function getmusicaudioplaying()
+function music_get_audio_playing()
 	if currentmusic_file == nil or currentmusic == nil then
 		return
 	end
 
-	return getmusicaudio(currentmusic_file, currentmusic)
+	return music_get_audio(currentmusic_file, currentmusic)
 end
 
-function getmusicedited(file, song)
+function music_get_edited(file, song)
 	if music[file] == nil or music[file][song] == nil then
 		return nil
 	end
@@ -263,69 +264,69 @@ function getmusicedited(file, song)
 	return music[file][song].edited
 end
 
-function getmusicmeta_file(file)
+function music_get_file_vvv_metadata(file)
 	-- As second argument, returns whether any of the data is even set.
-	if music[file] == nil or music[file].meta == nil then
+	if music[file] == nil or music[file].vvv_metadata == nil then
 		return nil, false
 	end
 
 	local anyset = false
-	if music[file].meta.export_time ~= 0
-	or music[file].meta.name ~= ""
-	or music[file].meta.artist ~= ""
-	or music[file].meta.notes ~= "" then
+	if music[file].vvv_metadata.export_time ~= 0
+	or music[file].vvv_metadata.name ~= ""
+	or music[file].vvv_metadata.artist ~= ""
+	or music[file].vvv_metadata.notes ~= "" then
 		anyset = true
 	end
 
-	return music[file].meta, anyset
+	return music[file].vvv_metadata, anyset
 end
 
-function setmusicmeta_file(file, data_export_time, data_name, data_artist, data_notes)
+function music_set_file_vvv_metadata(file, data_export_time, data_name, data_artist, data_notes)
 	if music[file] == nil then
 		return false
 	end
 
-	if music[file].meta == nil then
-		music[file].meta = {
+	if music[file].vvv_metadata == nil then
+		music[file].vvv_metadata = {
 			export_tile = 0
 		}
 	end
 
 	if data_export_time ~= nil then
-		music[file].meta.export_time = data_export_time
+		music[file].vvv_metadata.export_time = data_export_time
 	end
-	music[file].meta.name = anythingbutnil(data_name)
-	music[file].meta.artist = anythingbutnil(data_artist)
-	music[file].meta.notes = anythingbutnil(data_notes)
+	music[file].vvv_metadata.name = anythingbutnil(data_name)
+	music[file].vvv_metadata.artist = anythingbutnil(data_artist)
+	music[file].vvv_metadata.notes = anythingbutnil(data_notes)
 end
 
-function getmusicmeta_song(file, song)
+function music_get_song_vvv_metadata(file, song)
 	-- As second argument, returns whether any of the data is even set.
-	if music[file] == nil or music[file].meta == nil or music[file].meta[song] == nil then
+	if music[file] == nil or music[file].vvv_metadata == nil or music[file].vvv_metadata[song] == nil then
 		return nil, false
 	end
 
 	local anyset = false
-	if music[file].meta[song].name ~= ""
-	or music[file].meta[song].filename ~= ""
-	or music[file].meta[song].notes ~= "" then
+	if music[file].vvv_metadata[song].name ~= ""
+	or music[file].vvv_metadata[song].filename ~= ""
+	or music[file].vvv_metadata[song].notes ~= "" then
 		anyset = true
 	end
 
-	return music[file].meta[song], anyset
+	return music[file].vvv_metadata[song], anyset
 end
 
-function setmusicmeta_song(file, song, data_name, data_filename, data_notes)
+function music_get_song_vvv_metadata(file, song, data_name, data_filename, data_notes)
 	if music[file] == nil then
 		return false
 	end
 
-	if music[file].meta == nil then
-		setmusicmeta_file(file, 0, "", "", "")
+	if music[file].vvv_metadata == nil then
+		music_set_file_vvv_metadata(file, 0, "", "", "")
 	end
 
-	if music[file].meta[song] == nil then
-		music[file].meta[song] = {
+	if music[file].vvv_metadata[song] == nil then
+		music[file].vvv_metadata[song] = {
 			name = "",
 			filename = "",
 			notes = ""
@@ -333,20 +334,20 @@ function setmusicmeta_song(file, song, data_name, data_filename, data_notes)
 	end
 
 	if data_name ~= nil then
-		music[file].meta[song].name = data_name
+		music[file].vvv_metadata[song].name = data_name
 	end
 	if data_filename ~= nil then
-		music[file].meta[song].filename = data_filename
+		music[file].vvv_metadata[song].filename = data_filename
 	end
 	if data_notes ~= nil then
-		music[file].meta[song].notes = data_notes
+		music[file].vvv_metadata[song].notes = data_notes
 	end
 end
 
 function playmusic(file, song)
 	stopmusic()
 
-	local audio = getmusicaudio(file, song)
+	local audio = music_get_audio(file, song)
 	if audio == nil then
 		return false
 	end
@@ -359,7 +360,7 @@ function playmusic(file, song)
 end
 
 function stopmusic()
-	local audio = getmusicaudioplaying()
+	local audio = music_get_audio_playing()
 	if audio == nil then
 		return
 	end
@@ -370,7 +371,7 @@ function stopmusic()
 end
 
 function pausemusic()
-	local audio = getmusicaudioplaying()
+	local audio = music_get_audio_playing()
 	if audio == nil then
 		return
 	end
@@ -383,7 +384,7 @@ function resumemusic()
 		return false
 	end
 
-	local audio = getmusicaudioplaying()
+	local audio = music_get_audio_playing()
 	if audio == nil then
 		return false
 	end
@@ -454,7 +455,7 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 		F_tip.ver_major = 1
 		F_tip.export_time = os.time()
 		local name, artist, notes
-		local filemeta = getmusicmeta_file(file)
+		local filemeta = music_get_file_vvv_metadata(file)
 		if filemeta ~= nil then
 			name = filemeta.name
 			artist = filemeta.artist
@@ -470,7 +471,7 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 
 	for m = 0, 15 do
 		ffi.copy(music_headers[m].name, musicblobnames[m+1])
-		local filedata = getmusicfiledata(file, m)
+		local filedata = music_get_filedata(file, m)
 		if filedata == nil then
 			music_headers[m].size = 1
 		else
@@ -479,7 +480,7 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 		music_headers[m].valid = true
 
 		if savemetadata then
-			local songmeta, anyset = getmusicmeta_song(file, m)
+			local songmeta, anyset = music_get_song_vvv_metadata(file, m)
 			if songmeta ~= nil and anyset then
 				local data = anythingbutnil(songmeta.name) .. "\0"
 					.. anythingbutnil(songmeta.filename) .. "\0"
@@ -501,7 +502,7 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 	if not success then return false, everr end
 
 	for m = 0, 15 do
-		local filedata = getmusicfiledata(file, m)
+		local filedata = music_get_filedata(file, m)
 		local write
 		if filedata == nil then
 			write = "\0"

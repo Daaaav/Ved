@@ -24,7 +24,7 @@ return function(key)
 	elseif not musiceditor and key == "l" then
 		assets_musicreload()
 	elseif key == "home" or key == "kp7" then
-		local current_audio = getmusicaudioplaying()
+		local current_audio = music_get_audio_playing()
 		if current_audio ~= nil then
 			current_audio:seek(0)
 		end
@@ -38,7 +38,7 @@ return function(key)
 		if keyboard_eitherIsDown("shift") then
 			seconds = seconds * 2
 		end
-		local current_audio = getmusicaudioplaying()
+		local current_audio = music_get_audio_playing()
 		if current_audio ~= nil then
 			local duration = current_audio:getDuration("seconds")
 			if duration ~= nil and duration > 0 then

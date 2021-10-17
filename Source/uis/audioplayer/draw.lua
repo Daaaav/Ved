@@ -12,7 +12,7 @@ return function()
 	else
 		ved_print(musicplayerfile, 16, 12)
 	end
-	file_metadata, file_metadata_anyset = getmusicmeta_file(musicplayerfile)
+	file_metadata, file_metadata_anyset = music_get_file_vvv_metadata(musicplayerfile)
 	local musicnamex_offset
 	if musiceditor then
 		musicnamex_offset = 76
@@ -35,7 +35,7 @@ return function()
 			if (soundviewer and m > 27) or (not soundviewer and m > 15) then
 				break
 			end
-			local audio = getmusicaudio(musicplayerfile, m)
+			local audio = music_get_audio(musicplayerfile, m)
 			if audio == nil then
 				love.graphics.setColor(64,64,64)
 				love.graphics.draw(image.sound_play, musicx, 32+24*my)
@@ -47,7 +47,7 @@ return function()
 			end
 			local song_metadata, song_metadata_anyset
 			if musiceditor or file_metadata ~= nil then
-				song_metadata, song_metadata_anyset = getmusicmeta_song(musicplayerfile, m)
+				song_metadata, song_metadata_anyset = music_get_song_vvv_metadata(musicplayerfile, m)
 				if not musiceditor and not song_metadata_anyset then
 					love.graphics.setColor(64,64,64)
 					love.graphics.draw(image.infograybtn, musicx+16, 32+24*my)
@@ -58,7 +58,7 @@ return function()
 				end
 			end
 			local can_remove = false
-			local filedata = getmusicfiledata(musicplayerfile, m)
+			local filedata = music_get_filedata(musicplayerfile, m)
 			if musiceditor then
 				can_remove = filedata ~= nil
 				hoverdraw(image.loadbtn, musicx+32, 32+24*my, 16, 16)
@@ -116,7 +116,7 @@ return function()
 					)
 				end
 			end
-			if getmusicedited(musicplayerfile, m) then
+			if music_get_edited(musicplayerfile, m) then
 				love.graphics.setColor(255,0,0)
 			end
 			if soundviewer then
@@ -157,7 +157,7 @@ return function()
 		end
 	end
 
-	local current_audio = getmusicaudioplaying()
+	local current_audio = music_get_audio_playing()
 	local cura_y = love.graphics.getHeight()-32
 	local width = 568
 	if s.psmallerscreen then
