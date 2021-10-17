@@ -573,7 +573,6 @@ function input.movex(id, chars)
 
 	local x, y, line = input.getpos(id)
 
-	x = math.min(math.max(x, 0), utf8.len(line))
 	x = x + chars
 	x = math.min(math.max(x, 0), utf8.len(line))
 
@@ -608,7 +607,7 @@ function input.movey(id, chars)
 	end
 
 	local lines = inputs[id]
-	local x, y = input.getpos(id)
+	local x, y = input.getpos(id, true)
 
 	y = y + chars
 	y = math.min(math.max(y, 1), #lines)
@@ -654,7 +653,7 @@ function input.rightmost(id)
 	cursorflashtime = 0
 	inputcopiedtimer = 0
 
-	local x, y, line = input.getpos(id)
+	local x, y, line = input.getpos(id, true)
 
 	if input.selpos[id] ~= nil then
 		local conditional
@@ -679,8 +678,6 @@ function input.deletechars(id, chars)
 	local x, y, line
 	for _ = 1, math.abs(chars) do
 		x, y, line = input.getpos(id)
-
-		x = math.min(math.max(x, 0), utf8.len(line))
 
 		if chars > 0 then
 			if x == utf8.len(line) then
@@ -813,8 +810,6 @@ function input.setselpos(id)
 	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line = input.getpos(id)
-
-	x = math.min(math.max(x, 0), utf8.len(line))
 
 	if multiline then
 		input.selpos[id] = {x, y}
@@ -1025,7 +1020,7 @@ function input.delseltext(id)
 	input.clearselpos(id)
 end
 
-function input.getpos(id)
+function input.getpos(id, virtual)
 	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line
@@ -1039,6 +1034,12 @@ function input.getpos(id)
 
 	if input.rightmosts[id] then
 		x = utf8.len(line)
+	end
+
+	x = math.max(x, 0)
+	if not virtual then
+		-- A non-virtual position cannot be beyond the end of the line
+		x = math.min(x, utf8.len(line))
 	end
 
 	if multiline then
