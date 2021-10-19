@@ -1253,7 +1253,6 @@ G¤  Go to room (type in coordinates as four digits)\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
-Tab¤  enable/disable eraser\C
 
 Entities\gh#
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-10-19 23:24:18 (CEST)
+--- Last converted: 2021-10-19 23:32:36 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1278,7 +1278,6 @@ G¤  Naar kamer gaan (typ coördinaten in als vier cĳfers)\C
 [¤  Y van muis vastzetten (om makkelĳker horizontale lĳnen te tekenen)\C
 ]¤  X van muis vastzetten (om makkelĳker verticale lĳnen te tekenen)\C
 F11¤  tilesets en sprites opnieuw laden\C
-Tab¤  gum in-/uitschakelen\C
 
 Entiteiten\gh#
 

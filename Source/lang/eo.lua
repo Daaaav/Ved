@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-10-19 23:24:18 (CEST)
+--- Last converted: 2021-10-19 23:32:35 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1281,7 +1281,6 @@ G¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
 [¤  ŝlosi Y de muso dum premadata (por fari horizontalajn strekojn pli facile)\C
 ]¤  ŝlosi X de muso dum premadata (por fari vertikalajn strekojn pli facile)\C
 F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
-Tabklavo¤  (mal)ebligi viŝilon\C
 
 Entoj\gh#
 

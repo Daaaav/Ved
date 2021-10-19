@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-10-19 23:24:18 (CEST)
+--- Last converted: 2021-10-19 23:32:35 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1301,7 +1301,6 @@ G¤  Aller à la salle (entrer les coordonnées avec 4 chiffres)\C
 ]¤  Bloquer la position X de la souris tant qu'elle est appuyée\C
    (pour dessiner des lignes verticales facilement)
 F11¤  Recharger les jeux de tuiles et images\C
-Tab¤  Activer/Désactiver la gomme\C
 
 Entités\gh#
 

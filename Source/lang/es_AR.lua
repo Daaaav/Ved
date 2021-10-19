@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2021-10-19 23:24:17 (CEST)
+--- Last converted: 2021-10-19 23:32:35 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1273,7 +1273,6 @@ G¤  Go to room (type in coordinates as four digits)\C
 [¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
 ]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
 F11¤  reload tilesets and sprites\C
-Tab¤  enable/disable eraser\C
 
 Entities\gh#
 
