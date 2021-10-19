@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2021-08-15 00:01:36 (CEST)
+--- Last converted: 2021-10-19 23:24:17 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -261,9 +261,9 @@ SAVEMAP = "Karte speichern",
 COPYROOMS = "Kopiere Raum",
 SWAPROOMS = "Tausche Räume",
 
-MAP_STYLE = "Map style",
-MAP_STYLE_FULL = "Full", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
+MAP_STYLE = "Kartenstil",
+MAP_STYLE_FULL = "Voll", -- Max 12 characters
+MAP_STYLE_MINIMAP = "Minikarte", -- Max 12 characters
 MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
 
 FLAGS = "Flags",
@@ -282,7 +282,7 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "Du hast keinen eigenen VVVVVV-Order gesetzt.\n\n
 CUSTOMVVVVVVDIRECTORY_SET = "Dein VVVVVV-Order ist zu einem benutzerdefiniertem Pfad gesetzt:\n$1\n\n",
 LANGUAGE = "Sprache",
 DIALOGANIMATIONS = "Dialoganimationen",
-FLIPSUBTOOLSCROLL = "Flip tool scrolling direction",
+FLIPSUBTOOLSCROLL = "Drehe Scrollrichtung des Werkzeugs",
 ADJACENTROOMLINES = "Indikatoren für Tiles in angrenzenden Räumen",
 NEVERASKBEFOREQUIT = "Frage niemals vor dem Beenden, auch wenn es ungespeicherte Änderungen gibt",
 COORDS0 = "Zeige Koordinaten an, beginnend bei 0 (wie im internen Skripting)",
@@ -344,7 +344,6 @@ PINK = "Pink",
 BROWN = "Braun",
 RAINBOWBG = "Regenbogen",
 
--- b14
 SYNTAXCOLORS = "Syntaxfarben",
 SYNTAXCOLORSETTINGSTITLE = "Skriptingsyntaxhervorhebungsfarbeneinstellungen",
 SYNTAXCOLOR_COMMAND = "Befehl",
@@ -360,7 +359,7 @@ SYNTAXCOLOR_COMMENT = "Kommentar",
 RESETCOLORS = "Farben zurücksetzen",
 STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
 
--- b17 - L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with L.[...]CORRUPT
 MAL = "Das Level ist beschädigt: ",
 METADATACORRUPT = "Metadaten fehlen oder sind beschädigt.",
 METADATAITEMCORRUPT = "Metadaten für $1 fehlt oder ist beschädigt.",
@@ -369,7 +368,6 @@ ENTITIESCORRUPT = "Objekte fehlen oder sind beschädigt.",
 LEVELMETADATACORRUPT = "Raummetadaten fehlen oder sind beschädigt.",
 SCRIPTCORRUPT = "Skripte fehlen oder sind beschädigt.",
 
--- 1.1.0
 LOADSCRIPTMADE = "Ladeskript erstellt",
 COPY = "Kopieren",
 CUSTOMSIZE = "Eigene Pinselgröße: $1x$2",
@@ -377,7 +375,6 @@ SELECTINGA = "Auswählen - klicke oben links",
 SELECTINGB = "Ausgewählt: $1x$2",
 TILESETSRELOADED = "Tilesets und Sprites neugeladen",
 
--- 1.2.0
 BACKUPS = "Backups",
 BACKUPSOFLEVEL = "Backups von Level $1",
 LASTMODIFIEDTIME = "Ursprünglich zuletzt geändert", -- List header
@@ -387,7 +384,6 @@ DATEFORMAT = "Datumsformat",
 TIMEFORMAT = "Zeitformat",
 SAVEBACKUPNOBACKUP = "Achte darauf einen einzigartigen Namen zu nehmen wenn du nichts überschreiben willst, denn KEIN Backup wird in diesem Fall gemacht!",
 
--- 1.2.4
 AUTOSAVECRASHLOGS = "Absturzprotokolle automatisch speichern",
 MOREINFO = "Neuste Infos",
 COPYLINK = "Link kopieren",
@@ -395,12 +391,10 @@ SCRIPTDISPLAY = "Anzeigen",
 SCRIPTDISPLAY_USED = "Benutzt",
 SCRIPTDISPLAY_UNUSED = "Unbenutzt",
 
--- 1.3.0 (more changes)
 RECENTLYOPENED = "Zuletzt geöffnete Level",
 REMOVERECENT = "Willst du es von der Liste der zuletzt geöffneten Level entfernen?",
 RESETCUSTOMBRUSH = "(Rechtsklick um eine neue Größe einzustellen)",
 
--- 1.3.2
 DISPLAYSETTINGS = "Anzeige/\nSkalierung",
 DISPLAYSETTINGSTITLE = "Anzeige/Skalierungseinstellungen",
 SMALLERSCREEN = "Kleinere Fensterbreite (800px breit anstatt 896px)",
@@ -411,8 +405,8 @@ MONITORSIZE = "$1x$2 Monitor",
 VEDRES = "Ved Auflösung: $1x$2",
 NONINTSCALE = "Nicht-ganzzahlige Skalierung",
 
--- 1.3.4
 USEFONTPNG = "Benutze font.png vom VVVVVV-Grafikordner als Schrift",
+USELEVELFONTPNG = "Benutze pro Level benutzerdefinierte font.png als Schrift",
 REQUIRESHIGHERLOVE = " (benötigt LÖVE $1 oder höher)",
 FPSLIMIT = "FPS-Limit",
 
@@ -466,7 +460,7 @@ RELOAD = "Neu laden",
 UNLOAD = "Entfernen",
 MUSICEDITOR = "Musikeditor",
 LOADMUSICNAME = "Lade .vvv",
-SAVEMUSICNAME = "Save .vvv",
+SAVEMUSICNAME = "Speichere .vvv",
 INSERTSONG = "Füge Song ein bei Spur $1",
 SUREDELETESONG = "Bist du sicher, dass du Song $1 entfernen willst?",
 SONGOPENFAIL = "$1 kann nicht geöffnet werden, Song wurde nicht ersetzt.",
@@ -524,7 +518,7 @@ ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load".
 MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
 STARTPOINTNOTFOUND = "Es gibt keinen Startpunkt!",
 
-CONFIRMBIGGERSIZE = "Du hast $1 mal $2 ausgewählt, was eine Größere Karte als $3 mal $4 ist. Außerhalb der normalen $3 mal $4 Karte, Räume und Raumeigenschaften passen sich an, sind aber verzerrt. Du kriegst nicht komplett neue Räume, und auch nicht mehrRaumeigenschaften. VVVVVV kann auch aus vielen Gründen in diesen Räumen Abstürzen.\n\nDrücke Ja wenn du weißt was du tust und willst diese Größere Karte. Drücke Nein um die Kartengröße zu $5 mal $6 zu setzen.\n\nWenn unsicher, drücke Nein.",
+CONFIRMBIGGERSIZE = "Du hast $1 mal $2 ausgewählt, was eine Größere Karte als $3 mal $4 ist. Außerhalb der normalen $3 mal $4 Karte, Räume und Raumeigenschaften passen sich an, sind aber verzerrt. Du kriegst nicht komplett neue Räume, und auch nicht mehr Raumeigenschaften.\n\nDrücke Ja wenn du weißt was du tust und willst diese Größere Karte. Drücke Nein um die Kartengröße zu $5 mal $6 zu setzen.\n\nWenn unsicher, drücke Nein.",
 MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4! (Größer-als-$3-mal-$4-Unterstützung nicht aktiviert)",
 BTNOVERRIDE = "Überschreiben",
 TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
@@ -558,7 +552,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "Sie haben noch keine ausführbare Datei für $1
 PLAYTESTING_EXECUTABLE_SET = "Die ausführbare Datei $1, die für den Spieltest verwendet werden soll, ist:\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition wird nicht mehr gewartet. Es zu verwenden wird nicht empfohlen, und die Unterstützung für VVVVVV-CE-Level wird in einer zukünftigen Version aus Ved entfernt.\n\nFür mehr Informationen, siehe https://vsix.dev/vce/status/",
-VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition wird nicht mehr gewartet und VVVVVV-CE-Level werden nicht mehr von Ved unterstützt. Dieses Level wird wie ein normales VVVVVV-Level behandelt. Für mehr Informationen, siehe https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Alle Plugins",
 ALL_PLUGINS_MOREINFO = "Bitte besuche ¤https://tolp.nl/ved/plugins.php¤diese Seite¤ für mehr Informationen bezüglich Plugins.\\nLCl",
@@ -605,8 +599,8 @@ L_PLU = {
 		[1] = "Wurde $1 male in diesen Skripts benutzt: $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 Tile ist keine gültige Ganzzahl im Bereich 0-1199",
-		[1] = "$1 Tiles sind keine gültige Ganzzahl im Bereich 0-1199",
+		[0] = "$1 Tile ist keine gültige Ganzzahl größer oder gleich 0",
+		[1] = "$1 Tiles sind keine gültige Ganzzahl größer oder gleich 0",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -1473,11 +1467,17 @@ alarmon\w#h
 
 Turns the alarm on
 
-altstates¤(x)\b#h
+altstates¤(state)\b#h
 
 Changes the layout of some rooms, like the trinket room in the ship before and
 after the explosion, and the secret lab entrance (custom levels don't support
 altstates at all)
+
+audiopause¤(on/off)\w#h
+
+Added in 2.3. Force-enable or disable unfocus audio pause, regardless of the
+user-set audio pause setting. Defaults to off, i.e. pause audio during unfocus
+pause.
 
 backgroundtext\w#h
 
@@ -1519,6 +1519,13 @@ been created using the createcrewman command)
 a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
 b - Color to change to
 
+changecustommood¤(color,mood)\w#h
+
+Changes the mood of a crewmate (works for rescuable crewmates)
+
+color - cyan/player/blue/red/yellow/green/purple
+mood - 0 for happy, 1 for sad
+
 changedir¤(color,direction)\w#h
 
 Just like changeai(color,faceleft/faceright), this changes face direction.
@@ -1534,8 +1541,7 @@ crewmate - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
 
 changemood¤(color,mood)\w#h
 
-Changes the mood of a crewmate (only works for crewmates created with
-createcrewman)
+Changes the mood of the player or a crewmate created with createcrewman()
 
 color - cyan/player/blue/red/yellow/green/purple
 mood - 0 for happy, 1 for sad
@@ -1545,6 +1551,12 @@ changeplayercolour¤(color)\w#h
 Changes the player's color
 
 color - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(color)\w#h
+
+Added in 2.4. Changes the color the player respawns with upon death.
+
+color - red/yellow/green/cyan/blue/purple/teleporter or number
 
 changetile¤(color,tile)\w#h
 
@@ -1560,13 +1572,14 @@ Clears the teleporter script set with teleportscript(x)
 
 companion¤(x)\b#h
 
-Makes the specified crewmate a companion (as far as I remember, this also depends
-on on the location on the map)
+Makes the specified crewmate a companion.
+
+x - 0 (none) or 6/7/8/9/10/11
 
 createactivityzone¤(color)\b#h
 
-Creates a zone where you are standing which says "Press ACTION to talk to
-(Crewmate)"
+Creates an activity zone at the specified crewmate (or the player, if the crewmate
+doesn't exist) which says "Press ACTION to talk to (crewmate)"
 
 createcrewman¤(x,y,color,mood,ai1,ai2)\w#h
 
@@ -1583,9 +1596,10 @@ Creates an entity, check the lists reference for entity numbers
 
 n - The entity number
 
-createlastrescued¤(x,y)\b#h
+createlastrescued¤()\b#h
 
-Creates the last rescued crewmate at position x,y (?)
+Creates the last rescued crewmate at hardcoded position 200,153. The last rescued
+crewmate is based on the Level Complete gamestate.
 
 createrescuedcrew¤()\b#h
 
@@ -1597,40 +1611,39 @@ Same as ifflag(n,script) in simplified scripting
 
 customiftrinkets¤(n,script)\w#h
 
-Same as iftrinkets(n,script) in simplfied scripting
+Same as iftrinkets(n,script) in simplified scripting
 
 customiftrinketsless¤(n,script)\w#h
 
-Same as iftrinketsless(n,script) in simplfied scripting (but remember it is
-broken)
+Same as iftrinketsless(n,script) in simplified scripting
 
 custommap¤(on/off)\w#h
 
 The internal variant of the map command
 
-customposition¤(x,y)\w#h
+customposition¤(type,above/below)\w#h
 
 Overrides the x,y of the text command and thus sets the position of the text box,
 but for crewmates, rescuable crewmates are used to position against, instead of
 createcrewman crewmates.
 
-x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
 purple (rescuable)
-y - Only used if x is a color name. Can be above/below
+above/below - Only used if type is a color name
 
 cutscene¤()\w#h
 
 Makes cutscene bars appear
 
-delay¤(x)\w#h
+delay¤(n)\w#h
 
-Same behaviour as simplified command
+Same behavior as simplified command
 
-destroy¤(x)\w#h
+destroy¤(object)\w#h
 
-Same behaviour as simplified command
+Removes an entity. This is the same as the simplified scripting command.
 
-x - gravitylines/warptokens/platforms
+object - gravitylines/warptokens/platforms
 
 do¤(n)\w#h
 
@@ -1651,8 +1664,10 @@ Makes a text box disappear immediately (without fading out)
 
 entersecretlab\r#h
 
-Actually unlocks the secret lab for the main game, which is probably an unwanted
-effect for a custom level to have. Turns on secret lab mode.
+Turns on Secret Lab mode.
+
+2.2 AND BELOW: Actually unlocks the Secret Lab, which is probably an unwanted
+effect for a custom level to have.
 
 everybodysad¤()\w#h
 
@@ -1679,17 +1694,17 @@ finalmode¤(x,y)\b#h
 Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
 Final Level
 
-flag¤(x,on/off)\w#h
+flag¤(n,on/off)\w#h
 
-Same behaviour as simplified command
+Same behavior as simplified command
 
-flash¤(x)\w#h
+flash¤(n)\w#h
 
 Makes the screen white, you can change the time how long the screen should stay
 white (just flash won't work, you have to use flash(5) in combination with
 playef(9) and shake(20) if you want a normal flash)
 
-x - The amount of ticks. 30 ticks is almost one second.
+n - The amount of frames. 30 frames is almost one second.
 
 flip\w#h
 
@@ -1697,7 +1712,8 @@ Make the player flip
 
 flipgravity¤(color)\w#h
 
-Flips the gravity of a certain crewmate (it won't always work on yourself)
+Flips the gravity of a certain crewmate. It won't work on the player, and it
+cannot unflip crewmates.
 
 color - cyan/player/blue/red/yellow/green/purple
 
@@ -1753,7 +1769,8 @@ and press ENTER. Also creates an activity zone afterwards.
 
 hascontrol¤()\w#h
 
-Makes the player have control, however doesn't work in the middle of scripts
+Makes the player have control, however you can't use this to regain control while
+in the middle of a delay()
 
 hidecoordinates¤(x,y)\w#h
 
@@ -1812,7 +1829,10 @@ Same as simplified scripting, but loads an internal (main game) script
 
 iftrinketsless¤(n,script)\b#h
 
-Same as simplified scripting, but loads an internal (main game) script
+Checks if the number given is less than an amount that's related to trinkets.
+However, it checks against the greatest number of trinkets that you have ever
+gotten during a single playthrough of the main game, NOT the amount of trinkets
+you actually have. Loads an internal (main game) script
 
 ifwarp¤(x,y,dir,script)\w#h
 
@@ -1822,11 +1842,14 @@ x - Room x coordinate, starting at 1
 y - Room y coordinate, starting at 1
 dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
 
-jukebox¤(x)\w#h
+jukebox¤(n)\w#h
 
-Makes a jukebox terminal white and turns off the color of all the other terminals
-(in custom levels, it just seems to turn off the white color of all activated
-terminals).
+Makes a jukebox terminal white and turns off the color of all the other terminals.
+If n is given, a jukebox activity zone will be spawned at a hardcoded position and
+if a terminal is at the same hardcoded position it will be lit up.
+The possible values of n and the hardcoded positions are these:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
 
 leavesecretlab¤()\b#h
 
@@ -1852,7 +1875,8 @@ use negative numbers to make them move up or to the left
 
 musicfadein¤()\w#h
 
-An unfinished command. This does nothing.
+An unfinished command. This does nothing in 2.2, but works exactly as you'd think
+it'd work in 2.3.
 
 musicfadeout¤()\w#h
 
@@ -1860,13 +1884,15 @@ Fades out the music.
 
 nocontrol¤()\w#h
 
-The opposite of hascontrol()
+Sets game.hascontrol to false, which removes control from the player.
+game.hascontrol is automatically set during "- Press ACTION to advance text -" and
+closing text boxes, so this gets undone after those prompts
 
-play¤(x)\w#h
+play¤(n)\w#h
 
 Start playing a song with internal song number.
 
-x - Internal song number
+n - Internal song number
 
 playef¤(x,n)\w#h
 
@@ -1875,13 +1901,13 @@ Play a sound effect.
 n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
 offset in milliseconds at which the sound effect started.
 
-position¤(x,y)\w#h
+position¤(type,above/below)\w#h
 
 Overrides the x,y of the text command and thus sets the position of the text box.
 
-x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
 purple
-y - Only used if x is a color name. Can be above/below
+above/below - Only used if type is a color name
 
 purplecontrol\b#h
 
@@ -1908,12 +1934,16 @@ Changes the player's color back to cyan
 
 resumemusic¤()\w#h
 
-An unfinished command. Reads from uninitialized memory, which results in a crash
-on some machines and just results in playing Path Complete on others.
+An unfinished command. On 2.2 and below, it reads from uninitialized memory, which
+results in a crash on some machines and just results in playing Path Complete on
+others. On 2.3, it no longer reads from uninitialized memory and will correctly
+resume music after musicfadeout().
 
 rollcredits¤()\r#h
 
-Makes the credits roll. It destroys your save after the credits are completed!
+Makes the credits roll.
+
+2.2 AND BELOW: It destroys your save after the credits are completed!
 
 setcheckpoint¤()\w#h
 
@@ -1972,7 +2002,7 @@ Makes a squeak sound from a crewmate, or a terminal sound
 
 color - cyan/player/blue/red/yellow/green/purple/terminal
 
-startintermission2\w#h
+startintermission2\b#h
 
 Alternate finalmode(46,54), takes you to the final level without accepting
 arguments. Crashes in timeslip.
@@ -1987,7 +2017,9 @@ Used to set a script which is run when you use a teleporter
 
 telesave¤()\r#h
 
-Saves your game (in the regular teleporter save, so don't use it!)
+Does nothing in custom levels.
+
+2.2 AND BELOW: Saves your game in the regular teleporter save, so don't use it!
 
 text¤(color,x,y,lines)\w#h
 

@@ -330,7 +330,6 @@ PINK = "Pink",
 BROWN = "Brown",
 RAINBOWBG = "Rainbow BG",
 
--- b14
 SYNTAXCOLORS = "Syntax colors",
 SYNTAXCOLORSETTINGSTITLE = "Scripting syntax highlighting color settings",
 SYNTAXCOLOR_COMMAND = "Command",
@@ -346,7 +345,7 @@ SYNTAXCOLOR_COMMENT = "Comment",
 RESETCOLORS = "Reset colors",
 STRINGNOTFOUND = "\"$1\" was not found",
 
--- b17 - L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with L.[...]CORRUPT
 MAL = "The level file is malformed: ",
 METADATACORRUPT = "Metadata is missing or corrupt.",
 METADATAITEMCORRUPT = "Metadata for $1 is missing or corrupt.",
@@ -355,7 +354,6 @@ ENTITIESCORRUPT = "Entities missing or corrupt.",
 LEVELMETADATACORRUPT = "Room metadata missing or corrupt.",
 SCRIPTCORRUPT = "Scripts missing or corrupt.",
 
--- 1.1.0
 LOADSCRIPTMADE = "Load script created",
 COPY = "Copy",
 CUSTOMSIZE = "Custom brush size: $1x$2",
@@ -363,7 +361,6 @@ SELECTINGA = "Selecting - click top left",
 SELECTINGB = "Selecting: $1x$2",
 TILESETSRELOADED = "Tilesets and sprites reloaded",
 
--- 1.2.0
 BACKUPS = "Backups",
 BACKUPSOFLEVEL = "Backups of level $1",
 LASTMODIFIEDTIME = "Originally last modified", -- List header
@@ -373,7 +370,6 @@ DATEFORMAT = "Date format",
 TIMEFORMAT = "Time format",
 SAVEBACKUPNOBACKUP = "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!",
 
--- 1.2.4
 AUTOSAVECRASHLOGS = "Automatically save crash logs",
 MOREINFO = "Latest info",
 COPYLINK = "Copy link",
@@ -381,12 +377,10 @@ SCRIPTDISPLAY = "Show",
 SCRIPTDISPLAY_USED = "Used",
 SCRIPTDISPLAY_UNUSED = "Unused",
 
--- 1.3.0 (more changes)
 RECENTLYOPENED = "Recently opened levels",
 REMOVERECENT = "Do you want to remove it from the list of recently opened levels?",
 RESETCUSTOMBRUSH = "(Right click to set new size)",
 
--- 1.3.2
 DISPLAYSETTINGS = "Display/Scale",
 DISPLAYSETTINGSTITLE = "Display/Scale settings",
 SMALLERSCREEN = "Smaller window width (800px wide instead of 896px)",
@@ -397,8 +391,8 @@ MONITORSIZE = "$1x$2 monitor",
 VEDRES = "Ved resolution: $1x$2",
 NONINTSCALE = "Non-integer scaling",
 
--- 1.3.4
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
+USELEVELFONTPNG = "Use per-level custom font.png as font",
 REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
 FPSLIMIT = "FPS limit",
 
@@ -510,7 +504,7 @@ ORDRAGDROP = "or drag and drop onto here", -- follows after "Click on Load". You
 MORETHANONESTARTPOINT = "There is more than one start point in this level!",
 STARTPOINTNOTFOUND = "There is no start point!",
 
-CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
+CONFIRMBIGGERSIZE = "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No.",
 MAPBIGGERTHANSIZELIMIT = "Map size $1 by $2 is bigger than $3 by $4! (Bigger than $3 by $4 support not enabled)",
 BTNOVERRIDE = "Override",
 TARGETPLATFORM = "Target platform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
@@ -591,8 +585,8 @@ L_PLU = {
 		[1] = "Used $1 times in scripts: $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 tile is not a valid whole number in the range 0-1199",
-		[1] = "$1 tiles are not a valid whole number in the range 0-1199"
+		[0] = "$1 tile is not a valid whole number greater than or equal to 0",
+		[1] = "$1 tiles are not a valid whole number greater than or equal to 0",
 	},
 	BYTES = {
 		[0] = "$1 byte",

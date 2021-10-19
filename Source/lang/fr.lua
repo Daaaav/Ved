@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2021-08-15 00:01:37 (CEST)
+--- Last converted: 2021-10-19 23:24:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -265,8 +265,8 @@ SAVEMAP = "Sauver la carte",
 COPYROOMS = "Copier la salle",
 SWAPROOMS = "Échanger les salles",
 
-MAP_STYLE = "Map style",
-MAP_STYLE_FULL = "Full", -- Max 12 characters
+MAP_STYLE = "Style de carte",
+MAP_STYLE_FULL = "Entier", -- Max 12 characters
 MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
 MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
 
@@ -286,7 +286,7 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "Vous n'avez pas donné de dossier VVVVVV personn
 CUSTOMVVVVVVDIRECTORY_SET = "Votre dossier de VVVVVV est situé dans un chemin personnalisé:\n$1\n\n",
 LANGUAGE = "Langue",
 DIALOGANIMATIONS = "Animations de dialogue",
-FLIPSUBTOOLSCROLL = "Flip tool scrolling direction",
+FLIPSUBTOOLSCROLL = "Inverser la direction de défilement des outils",
 ADJACENTROOMLINES = "Indicateurs de tuiles dans les salles adjacentes",
 NEVERASKBEFOREQUIT = "Ne jamais demander avant de quitter, même s'il y a des modifications non sauvegardées",
 COORDS0 = "Afficher les coordonnées en commençant à 0 (comme dans les scripts internes)",
@@ -348,7 +348,6 @@ PINK = "Rose",
 BROWN = "Marron",
 RAINBOWBG = "Arc-en-ciel",
 
--- b14
 SYNTAXCOLORS = "Couleurs syntaxiques",
 SYNTAXCOLORSETTINGSTITLE = "Options de coloration syntaxique lors de la modification de scripts",
 SYNTAXCOLOR_COMMAND = "Commande",
@@ -364,7 +363,7 @@ SYNTAXCOLOR_COMMENT = "Commentaire",
 RESETCOLORS = "Remise à zéro des couleurs",
 STRINGNOTFOUND = "\"$1\" n'a pas été trouvé",
 
--- b17 - L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with L.[...]CORRUPT
 MAL = "Le fichier de niveau est mal formaté : ",
 METADATACORRUPT = "Les métadonnées sont manquantes ou corrompues.",
 METADATAITEMCORRUPT = "Les métadonnées pour $1 sont manquantes ou corrompues.",
@@ -373,7 +372,6 @@ ENTITIESCORRUPT = "Les entités sont manquantes ou corrompues.",
 LEVELMETADATACORRUPT = "Les métadonnées des salles sont manquantes ou corrompues.",
 SCRIPTCORRUPT = "Les scripts sont manquants ou corrompus.",
 
--- 1.1.0
 LOADSCRIPTMADE = "Script de chargement créé",
 COPY = "Copier",
 CUSTOMSIZE = "Taille de pinceau customisée : $1x$2",
@@ -381,7 +379,6 @@ SELECTINGA = "Sélection - coin haut gauche",
 SELECTINGB = "Sélection : $1x$2",
 TILESETSRELOADED = "Jeux de tuiles et images rechargées",
 
--- 1.2.0
 BACKUPS = "Sauvegardes",
 BACKUPSOFLEVEL = "Sauvegardes du niveau $1",
 LASTMODIFIEDTIME = "Dernière modification", -- List header
@@ -391,7 +388,6 @@ DATEFORMAT = "Format de date",
 TIMEFORMAT = "Format d'heure",
 SAVEBACKUPNOBACKUP = "Faites en sorte de choisir un nom unique pour ceci si vous ne voulez rien remplacer, car AUCUNE sauvegarde ne sera effectuée dans ce cas-ci !",
 
--- 1.2.4
 AUTOSAVECRASHLOGS = "Sauver les historiques de plantage automatiquement",
 MOREINFO = "Dernières nouvelles",
 COPYLINK = "Copier le lien",
@@ -399,12 +395,10 @@ SCRIPTDISPLAY = "Montrer",
 SCRIPTDISPLAY_USED = "Utilisé",
 SCRIPTDISPLAY_UNUSED = "Non utilisé",
 
--- 1.3.0 (more changes)
 RECENTLYOPENED = "Niveaux récemment ouverts",
 REMOVERECENT = "Voulez-vous l'enlever de la liste des niveaux ouverts récemment ?",
 RESETCUSTOMBRUSH = "(Clic droit pour donner une nouvelle taille)",
 
--- 1.3.2
 DISPLAYSETTINGS = "Affichage/\nÉchelle",
 DISPLAYSETTINGSTITLE = "Options d'Affichage/Échelle",
 SMALLERSCREEN = "Largeur de la fenêtre plus petite (800px au lieu de 896px)",
@@ -415,8 +409,8 @@ MONITORSIZE = "Moniteur $1x$2",
 VEDRES = "Résolution de Ved : $1x$2",
 NONINTSCALE = "Échelonnage non entière",
 
--- 1.3.4
 USEFONTPNG = "Utiliser font.png du dossier d'images de VVVVVV comme police",
+USELEVELFONTPNG = "Utiliser un font.png personnalisé par niveau comme police",
 REQUIRESHIGHERLOVE = " (requiert L{VE $1 ou version ultérieure)",
 FPSLIMIT = "Limite de FPS",
 
@@ -470,7 +464,7 @@ RELOAD = "Recharger",
 UNLOAD = "Décharger",
 MUSICEDITOR = "Editeur de musique",
 LOADMUSICNAME = "Charger .vvv",
-SAVEMUSICNAME = "Save .vvv",
+SAVEMUSICNAME = "Sauvegarder .vvv",
 INSERTSONG = "Insérer une chanson dans la piste $1",
 SUREDELETESONG = "Etes-vous sûr de vouloir supprimer la chanson $1 ?",
 SONGOPENFAIL = "Impossible d'ouvrir $1, la chanson n'a pas été remplacée.",
@@ -526,9 +520,9 @@ EDITSCRIPTWOBUMPING = "Modifier le script sans réordonner la liste",
 CLICKONTHING = "Clique sur $1",
 ORDRAGDROP = "ou glisse et pose ici", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
-STARTPOINTNOTFOUND = "Il n'y a pas de point de départ!",
+STARTPOINTNOTFOUND = "Il n'y a pas de point de départ !",
 
-CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire. VVVVVV peut aussi planter pour n'importe quelle raison dans n'importe laquelle de ces salles.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
+CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
 MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4! (Le support d'une taille plus grande que $3 par $4 n'est pas activé)",
 BTNOVERRIDE = "Mettre à jour",
 TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
@@ -562,7 +556,7 @@ PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de
 PLAYTESTING_EXECUTABLE_SET = "L'exécutable de $1 à utiliser pour les tests de jeu est :\n$2", -- $1: VVVVVV 2.3
 
 VCE_DEPRECATED = "VVVVVV: Community Edition n'est plus maintenu. L'utiliser n'est pas recommandé, et le support pour les niveaux de VVVVVV-CE sera enlevé de Ved dans une version future.\n\nPour plus d'informations, allez sur https://vsix.dev/vce/status/",
-VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition n'est plus maintenu, et le support pour les niveaux de VVVVVV-CE a été supprimé de Ved. Ce niveau est traité comme un niveau de VVVVVV standard. Pour plus d'informations, allez sur https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Tous les modules externes",
 ALL_PLUGINS_MOREINFO = "Veuillez visiter ¤https://tolp.nl/ved/plugins.php¤cette page¤ pour plus d'informations sur les modules externes.\\nLCl",
@@ -609,8 +603,8 @@ L_PLU = {
 		[1] = "Utilisé $1 fois dans les scripts : $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "La tuile $1 n'est pas un nombre entier valide dans l'intervalle 0-1199",
-		[1] = "Les tuiles $1 ne sont pas des nombres entiers valides dans l'intervalle 0-1199",
+		[0] = "La tuile $1 n'est pas un nombre entier supérieur ou égal à 0",
+		[1] = "Les tuiles $1 ne sont pas des nombres entiers supérieurs ou égaux à 0",
 	},
 	BYTES = {
 		[0] = "$1 octet",
@@ -1525,11 +1519,18 @@ alarmon\w#h
 
 Active l'alarme
 
-altstates¤(x)\b#h
+altstates¤(state)\b#h
 
 Change l'agencement de quelques salles, telles que la salle des médailles dans le
 vaisseau ou l'entrée du laboratoire (les niveaux personnalisés ne supportent pas
 du tout altstates)
+
+audiopause¤(on/off)\w#h
+
+Ajouté dans la 2.3. Force l'activation ou la désactivation de la pause de l'audio
+lorsque la fenêtre n'est pas sélectionnée, peu importe les préférences de
+l'utilisateur sur la pause de l'audio. Désactivé par défaut, ce qui veut dire que
+l'audio est en pause lorsque la fenêtre n'est pas sélectionnée.
 
 backgroundtext\w#h
 
@@ -1576,6 +1577,13 @@ Change la couleur d'un équipier (note: cette commande ne marque qu'avec les
 a - Couleur de l'équipier à changer cyan/player/blue/red/yellow/green/purple
 b - Nouvelle couleur de l'équipier
 
+changecustommood¤(couleur,humeur)\w#h
+
+Change l'humeur d'un équipier (marche pour les équipiers secourables)
+
+couleur - cyan/player/blue/red/yellow/green/purple
+humeur - 0 pour heureux, 1 pour triste
+
 changedir¤(couleur,direction)\w#h
 
 Comme changeai(couleur,faceleft/faceright), cette fonction change la
@@ -1588,12 +1596,12 @@ changegravity¤(equipier)\w#h
 
 Augmente l'index d'image de l'équipier donné de 12.
 
-equipier - Couleur de l'équipier à changer cyan/player/blue/red/yellow/green/purple
+equipier - Couleur de l'équipier à changer
+           cyan/player/blue/red/yellow/green/purple
 
 changemood¤(couleur,humeur)\w#h
 
-Change l'humeur d'un équipier (marche seulement sur les équipiers créés
-avec la commande createcrewman)
+Change l'humeur du joueur ou d'un équipier créé avec createcrewman()
 
 couleur - cyan/player/blue/red/yellow/green/purple
 humeur - 0 pour heureux, 1 pour triste
@@ -1603,6 +1611,14 @@ changeplayercolour¤(couleur)\w#h
 Change la couleur du joueur
 
 couleur - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(couleur)\w#h
+
+Ajouté dans la 2.4. Change la couleur du joueur après être réapparu après une
+mort.
+
+couleur - red(rouge) / yellow(jaune) / green(vert) / cyan / blue(bleu)
+          / purple(violet) / teleporter(téléorteur) ou number(nombre)
 
 changetile¤(couleur,tuile)\w#h
 
@@ -1620,13 +1636,14 @@ teleportscript(x)
 
 companion¤(x)\b#h
 
-Force l'équipier spécifié en tant que compagnon (d'après mes souvenirs,
-il me semble que cette commande dépend de la position sur la carte)
+Force l'équipier spécifié en tant que compagnon.
+
+x - 0 (aucun) ou 6/7/8/9/10/11
 
 createactivityzone¤(couleur)\b#h
 
-Créée une zone dans laquelle le joueur peut être qui dira "Press ACTION to
-talk to (Équipier)"
+Créée une zone d'activité à l'équipier spécifié (ou au joueur, si l'équipier
+n'existe pas) qui dit "Press ACTION to talk to (crewmate)"
 
 createcrewman¤(x,y,couleur,humeur,ia1,ia2)\w#h
 
@@ -1644,9 +1661,10 @@ pour les index d'entités
 
 n - L'index d'entité
 
-createlastrescued¤(x,y)\b#h
+createlastrescued¤()\b#h
 
-Créée le dernier équipier secouru à la position x,y (?)
+Créée le dernier équipier secouru à la position fixe 200,153. Le dernier équipier
+secouru est basé sur l'état de jeu Level Complete.
 
 createrescuedcrew¤()\b#h
 
@@ -1663,37 +1681,39 @@ Même comportement que iftrinkets(n,script) dans un script simplifié
 customiftrinketsless¤(n,script)\w#h
 
 Même comportement que iftrinketsless(n,script) dans un script simplifié
-(mais rappelez-vous que cette fonction ne marche pas)
 
 custommap¤(on/off)\w#h
 
 La variante interne de la commande map
 
-customposition¤(x,y)\w#h
+customposition¤(type,above/below)\w#h
 
 Remplace les valeurs x,y d'une commande de texte et par conséquent change la
 position de la boite de dialogue, mais pour les équipiers, les équipiers à
 secourir sont utilisés pour positionner la boite de dialogue à la place des
 équipiers créés via la commande createcrewman.
 
-x - center/centerx/centery, ou un nom de couleur
-cyan/player/blue/red/yellow/green/purple (secourable)
-y - Seulement utilisé si x est un nom de couleur. Peut prendre comme
-valeur above (au-dessus)/below (au-dessous)
+type - center(centré) / center(centré en x) / centery(centré en y), ou un nom de
+couleur cyan/ player(joueur) / blue(bleu) / red(rouge) / yellow(jaune) /
+green(vert) / purple(violet) (secourable)
+above(au-dessus) / below(au-dessous) - Seulement utilisé si type est un nom
+de couleur.
 
 cutscene¤()\w#h
 
 Affiche les barres de cinématique
 
-delay¤(x)\w#h
+delay¤(n)\w#h
 
 Même comportement que la commande dans un script simplifié
 
-destroy¤(x)\w#h
+destroy¤(object)\w#h
 
-Même comportement que la commande dans un script simplifié
+Enlève une entité. C'est la même chose que la fonction d'édition de script
+simplifié.
 
-x - gravitylines/warptokens/platforms
+object - gravitylines(lignes de gravité) / warptokens(jeton de téléportation)
+         / platforms(plateformes)
 
 do¤(n)\w#h
 
@@ -1714,9 +1734,11 @@ Force une boite de dialogue à disparaître immédiatement (sans fondu)
 
 entersecretlab\r#h
 
-Débloque le laboratoire secret pour le jeu principal, ce qui n'est
-probablement pas quelque chose qu'un niveau personnalisé devrait
-faire. Active le mode laboratoire secret.
+Active le mode Laboratoire Secret.
+
+2.2 ET ULTERIEUR: Débloque le Laboratoire Secret pour le jeu principal, ce qui
+n'est probablement pas quelque chose qu'un niveau personnalisé devrait
+faire.
 
 everybodysad¤()\w#h
 
@@ -1744,17 +1766,17 @@ finalmode¤(x,y)\b#h
 Vous téléporte dans la Dimension Externe VVVVVV, (46,54) est la première
 salle du dernier niveau
 
-flag¤(x,on/off)\w#h
+flag¤(n,on/off)\w#h
 
 Même comportement que la commande dans un script simplifié
 
-flash¤(x)\w#h
+flash¤(n)\w#h
 
 Rend l'écran blanc, vous pouvez changer le temps pendant lequel l'écran doit
 être blanc (flash tout seul ne marchera pas, vous devez utiliser flash(5) avec
 playef(9) et shake(20) si vous voulez un flash normal)
 
-x - Le nombre de trames. 30 trames fait presque une seconde.
+n - Le nombre de trames. 30 trames forment presque une seconde.
 
 flip\w#h
 
@@ -1762,7 +1784,8 @@ Retourne le joueur
 
 flipgravity¤(couleur)\w#h
 
-Change la gravité d'un équipier (peut ne pas marcher sur le joueur)
+Change la gravité d'un équipier donné. Ne marche pas sur le joueur, et
+ne peut pas restaurer la gravité normale des équipiers.
 
 couleur - cyan/player/blue/red/yellow/green/purple
 
@@ -1823,8 +1846,8 @@ ENTREE. Créée aussi une zone d'activité après l'exécution.
 
 hascontrol¤()\w#h
 
-Rend le contrôle au joueur, cependant cette commande ne marche pas au
-milieu d'un script
+Redonne le contrôle au joueur, cependant vous ne pouvez pas utiliser ceci pour
+regagner le contrôle au milieu d'un appel à delay()
 
 hidecoordinates¤(x,y)\w#h
 
@@ -1887,8 +1910,10 @@ mais exécute un script interne (du jeu principal)
 
 iftrinketsless¤(n,script)\b#h
 
-Même comportement que iftrinkets(n,script) dans un script simplifié,
-mais exécute un script interne (du jeu principal)
+Vérifie si le nombre donné est inférieur au nombre qui est lié aux médailles.
+Cependant, il vérifie le plus grand nombre de médailles que vous avez récupéré
+dans un seule instance du jeu principal, PAS le nombre de médailles que vous
+avez maintenant. Charge un script interne (du jeu principal)
 
 ifwarp¤(x,y,dir,script)\w#h
 
@@ -1899,11 +1924,15 @@ y - Coordonnée y de la salle, commence à 1
 dir - Direction de la téléportation. Normalement 0-3, mais les valeurs en dehors
 de cette fourchette sont valides
 
-jukebox¤(x)\w#h
+jukebox¤(n)\w#h
 
 Rend un terminal jukebox blanc et désactive la couleur de tous les autres
-terminaux (dans un niveau personnalisé, on dirait que cette commande
-ne fait qu'enlever la couleur blanche de tous les terminaux actifs).
+terminaux.
+Si n est donné, une zone d'activité de jukebox sera créée à une position fixe
+et si un terminal est à la même position, il sera allumé.
+Les valeurs possibles de n et les positions fixes sont:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
 
 leavesecretlab¤()\b#h
 
@@ -1930,7 +1959,8 @@ utiliser des valeurs négatives pour le déplacer en haut ou à gauche
 
 musicfadein¤()\w#h
 
-Une commande non terminée. Ne fait rien.
+Une commande non terminée. Ne fait rien dans la 2.2, mais marche exactement
+comme vous pensez qu'elle doit marcher dans la 2.3.
 
 musicfadeout¤()\w#h
 
@@ -1938,13 +1968,16 @@ Termine la musique en fondu.
 
 nocontrol¤()\w#h
 
-Contraire de hascontrol()
+Met game.hascontrol à false, ce qui enlève le contrôle du joueur.
+game.hascontrol est automatiquement changé pendant "- Press ACTION to 
+advance text -" et lors de la fermeture des boîtes de dialogue, donc cet appel
+est défait après l'une de ces actions.
 
-play¤(x)\w#h
+play¤(n)\w#h
 
 Joue la chanson ayant l'identifiant de chanson interne donné.
 
-x - Index de chanson interne
+n - Index de chanson interne
 
 playef¤(x,n)\w#h
 
@@ -1954,15 +1987,16 @@ n - Actuellement non utilisé, et peut être omis. Dans VVVVVV 1.x, cet argument
 permettait de contrôler le temps en millisecondes auquel le son devait
 commencer.
 
-position¤(x,y)\w#h
+position¤(type,above/below)\w#h
 
 Écrase les valeurs x,y d'une commande de texte, fixant la position de la boite
 de dialogue.
 
-x - center/centerx/centery ou un nom de couleur
-cyan/player/blue/red/yellow/green/purple
-y - Seulement utilisé si x est un nom de couleur. Peut prendre comme
-valeur above (au-dessus)/below (au-dessous)
+type - center(centré) / center(centré en x) / centery(centré en y), ou un nom de
+couleur cyan/ player(joueur) / blue(bleu) / red(rouge) / yellow(jaune) /
+green(vert) / purple(violet) (secourable)
+above(au-dessus) / below(au-dessous) - Seulement utilisé si type est un nom
+de couleur.
 
 purplecontrol\b#h
 
@@ -1991,13 +2025,16 @@ Restaure la couleur du joueur par défaut (cyan)
 
 resumemusic¤()\w#h
 
-Une commande non terminée. Lit dans de la mémoire non-initialisée, ce qui peut
-planter le jeu sur certaines machines ou résulte à jouer Path Complete pour
-d'autres.
+Une commande non terminée. Dans la 2.2 et ultérieur, elle lit dans de la mémoire
+non-initialisée, ce qui peut planter le jeu sur certaines machines ou jouer Path
+Complete pour d'autres. Dans la 2.3, elle ne lit plus dans de la mémoire
+non-initialisée et va correctement continuer la musique après musicfadeout().
 
 rollcredits¤()\r#h
 
-Affiche les crédits de fin. Cette commande détruit votre sauvegarde après
+Affiche les crédits de fin.
+
+2.2 ET ULTERIEUR: Cette commande détruit votre sauvegarde après
 que les crédits de fin soient finis!
 
 setcheckpoint¤()\w#h
@@ -2062,7 +2099,7 @@ squeak¤(couleur)\w#h
 
 couleur - cyan/player/blue/red/yellow/green/purple/terminal
 
-startintermission2\w#h
+startintermission2\b#h
 
 Fonctionne comme la commande finalmode(46,54), et téléporte le
 joueur dans le dernier niveau sans argument. Plante le jeu en mode
@@ -2079,8 +2116,10 @@ utilisé
 
 telesave¤()\r#h
 
-Sauvegarde votre partie (dans la sauvegarde de téléporteur normale,
-donc ne l'utilisez pas!)
+Ne fait rien dans des niveaux personnalisés.
+
+2.2 ET ULTERIEUR: Sauvegarde votre partie dans la sauvegarde de téléporteur
+normale, donc ne l'utilisez pas!
 
 text¤(couleur,x,y,lignes)\w#h
 

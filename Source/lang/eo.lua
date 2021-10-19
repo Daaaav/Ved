@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2021-08-15 00:01:36 (CEST)
+--- Last converted: 2021-10-19 23:24:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -43,7 +43,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Esperantigo de Hejmstel", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Esperantigo de Reese Rivers", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
@@ -52,28 +52,28 @@ OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistema
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
 MAXCREWMATES = "La maksimuma kvanto da ŝipanoj ($1) estas atingita en ĉi tiu nivelo.",
 UNSUPPORTEDTOOL = "Nesubtenata ilo! Ilo: ",
-COULDNOTGETCONTENTSLEVELFOLDER = "Ne povis akiri la enhavon de la nivelodosierujo. Bonvolu kontroli ĉu $1 ekzistas, kaj reprovu.",
+COULDNOTGETCONTENTSLEVELFOLDER = "Ne eblis akiri la enhavon de la nivelodosierujo. Bonvolu kontroli ĉu $1 ekzistas, kaj reprovu.",
 MAPSAVEDAS = "Map-bildo konservita kiel $1!",
 RAWENTITYPROPERTIES = "Vi povas ŝanĝi la krudajn atributvalorojn de ĉi tiu ento ĉi tie.",
 UNKNOWNENTITYTYPE = "Nekonata entotipo $1",
 WARPTOKENENT404 = "Teleportila ento ne plu ekzistas!",
 SPLITFAILED = "Fendado mizere malsukcesis! Ĉu estas tro da linioj inter tekstkomando kaj speak aŭ speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Ne plu restas pliaj flagoj, do unu aŭ pli da novaj flagetikedoj en ĉi tiu skripto ne povas esti asociita kun iu ajn flagnumero. Provi plenumi la skripton en VVVVVV eble kaŭzos erarojn. Konsideru viŝi ĉiujn referencojn al flagoj, kiujn vi ne plu bezonas, kaj reprovu.",
-NOFLAGSLEFT_LOADSCRIPT = "Ne plu restas flagoj, do ŝarg-skripto uzanta novan flagon ne povis kreiĝi. Anstataŭe, ŝarg-skripto estis kreita, kiu ĉiam ŝargas la celatan skripton per iftrinkets(0,$1). Konsideru forigi ĉiujn aludojn al flagoj ne plu bezonataj kaj reprovu.",
-LEVELOPENFAIL = "Ne povis malfermi $1.vvvvvv.",
+NOFLAGSLEFT_LOADSCRIPT = "Ne plu restas flagoj, do ŝarg-skripto uzanta novan flagon ne povis kreiĝi. Anstataŭe, ŝarg-skripto estis kreita, kiu ĉiam ŝargas la celatan skripton per iftrinkets(0,$1). Konsideru forigi ĉiujn referencojn al flagoj ne plu bezonataj kaj reprovu.",
+LEVELOPENFAIL = "Ne eblis malfermi $1.vvvvvv.",
 SIZELIMIT = "La maksimuma grando de nivelo estas $1 oble $2.\n\nLa grando anstataŭe ŝanĝiĝos al $3 oble $4.",
 SCRIPTALREADYEXISTS = "Skripto \"$1\" jam ekzistas!",
 FLAGNAMENUMBERS = "Flagnomoj ne povas esti nur ciferoj.",
-FLAGNAMECHARS = "Flagnomoj ne povas enhavi parentezojn, komojn aŭ spacetojn.",
+FLAGNAMECHARS = "Flagnomoj ne povas enhavi krampojn, komojn aŭ spacetojn.",
 FLAGNAMEINUSE = "La flagnomo $1 jam estas uzata de flago $2",
-DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos konsiderata kiel pli malnova versio.",
+DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos traktata kiel pli malnova versio.",
 SUREQUITNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol eliri?",
 SURENEWLEVELNEW = "Vi havas nekonservitajn ŝanĝojn. Ĉu vi volas konservi ilin antaŭ ol krei novan nivelon?",
 NAMEFORFLAG = "Nomo de flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
 ENTITY404 = "Ento #$1 ne plu ekzistas!",
 GRAPHICSCARDCANVAS = "Pardonon, sed ŝajnas ke via grafikkarto ne subtenas tiun trajton!",
-MAXTEXTURESIZE = "Pardonon, krei bildon de $1x$2 ne ŝajnas esti subtenata de via grafikkarto aŭ pelilo.\n\nLa limo de grando ĉe tiu ĉi sistemo estas $3x$3.",
+MAXTEXTURESIZE = "Pardonon, krei bildon de $1x$2 ne ŝajnas esti subtenate de via grafikkarto aŭ pelilo.\n\nLa limo de grando ĉe tiu ĉi sistemo estas $3x$3.",
 SUREDELETESCRIPT = "Ĉu vi certas, ke vi volas forigi la skripton \"$1\"?",
 SUREDELETENOTE = "Ĉu vi certas, ke vi volas forigi ĉi tiun noton?",
 THREADERROR = "Fadena eraro!",
@@ -81,23 +81,23 @@ WHATDIDYOUDO = "Kion vi faris?!",
 UNDOFAULTY = "Kion vi faras?",
 SOURCEDESTROOMSSAME = "Originala kaj nova ĉambroj estas samaj!",
 UNKNOWNUNDOTYPE = "Nekonata malfaro-tipo \"$1\"!",
-MDEVERSIONWARNING = "Ĉi tiu nivelo ŝajnas esti farita en pli nova versio de Ved, kaj eble enhavas iujn datumojn, kiuj perdiĝos kiam vi konservas la nivelon.",
+MDEVERSIONWARNING = "Ĉi tiu nivelo ŝajnas esti farita per pli nova versio de Ved, kaj eble enhavas iujn datumojn, kiuj perdiĝos kiam vi konservas la nivelon.",
 FORGOTPATH = "Vi forgesis specifi dosierindikon!",
 
-SELECTCOPY1 = "Elektu la ĉambron kopii",
-SELECTCOPY2 = "Elektu la lokon kopii ĉi tiun ĉambron al",
-SELECTSWAP1 = "Elektu la unuan ĉambron permuti",
-SELECTSWAP2 = "Elektu la duan ĉambron permuti",
+SELECTCOPY1 = "Elektu la ĉambron kopiotan",
+SELECTCOPY2 = "Elektu la lokon, kien kopiiĝu la ĉambro",
+SELECTSWAP1 = "Elektu la unuan ĉambron permutotan",
+SELECTSWAP2 = "Elektu la duan ĉambron permutotan",
 
-TILESETCHANGEDTO = "Blokaro ŝanĝita al $1",
-TILESETCOLORCHANGEDTO = "Koloro de blokaro ŝanĝita al $1",
+TILESETCHANGEDTO = "Kahelaro ŝanĝita al $1",
+TILESETCOLORCHANGEDTO = "Koloro de kahelaro ŝanĝita al $1",
 ENEMYTYPECHANGED = "Malamiko-tipo ŝanĝita al $1",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
-CHANGEDTOMODE = "$1 bloko-metado",
-CHANGEDTOMODEAUTO = "Aŭtomata",
-CHANGEDTOMODEMANUAL = "Permana",
-CHANGEDTOMODEMULTI = "Multblokara",
+CHANGEDTOMODE = "Kahelo-metado $1 estas uzata",
+CHANGEDTOMODEAUTO = "aŭtomata",
+CHANGEDTOMODEMANUAL = "permana",
+CHANGEDTOMODEMULTI = "multkahelara",
 
 BUSYSAVING = "Konservado...",
 SAVEDLEVELAS = "Konservita kiel $1.vvvvvv",
@@ -112,7 +112,7 @@ METADATAREDONE = "Nivelagordoj refaritaj",
 BOUNDSTOPLEFT = "Alklaku la supra-maldekstran angulon de la limo",
 BOUNDSBOTTOMRIGHT = "Alklaku la malsupra-dekstran angulon",
 
-TILE = "Bloko $1",
+TILE = "Kahelo $1",
 HIDEALL = "Kaŝi ĉiujn",
 SHOWALL = "Montri ĉiujn",
 SCRIPTEDITOR = "Skriptilo",
@@ -132,18 +132,18 @@ GOTOLINE = "Salti al linio",
 GOTOLINE2 = "Salti al linio:",
 INTERNALON = "Int.skr: JES",
 INTERNALOFF = "Int.skr: NE",
-INTERNALYESBARS = "say(-1) int.skr",
-INTERNALNOBARS = "Ŝargskripto int.skr",
+INTERNALYESBARS = "Int.skr say(-1)",
+INTERNALNOBARS = "Int.skr ŝargskripta",
 VIEW = "Vidi",
 SYNTAXHLOFF = "Sintakso: JES",
 SYNTAXHLON = "Sintakso: NE",
 TEXTSIZEN = "Tekstgrando: N",
-TEXTSIZEL = "Tekstgrando: L",
+TEXTSIZEL = "Tekstgrando: G",
 INSERT = "Enmeti",
 HELP = "Helpo",
 INTSCRWARNING_NOLOADSCRIPT = "Ŝargskripto bezonata!",
 INTSCRWARNING_NOLOADSCRIPT_EXPL = "Skripto, kiu ŝargas tiun ĉi skripton ne detektiĝis. Tia ĉi interna skripto probable ne funkcios tiel, kiel vi atendas se ĝi ne estas ŝargata per alia skripto.",
-INTSCRWARNING_BOXED = "Refrencita rekte de skriptkvadrato/komputilo!",
+INTSCRWARNING_BOXED = "Referencita rekte de skriptkvadrato/komputilo!",
 INTSCRWARNING_BOXED_EXPL = "Estas komputilo aŭ skriptkvadrato, kiu rekte ŝargas tiun ĉi skripton. Aktivigi tiun komputilon aŭ skriptkvadraton probable ne funkcios tiel, kiel vi atendas; tia ĉi interna skripto devas ŝargiĝi per ŝargskripto.",
 INTSCRWARNING_NAME = "Netaŭga skriptnomo!",
 INTSCRWARNING_NAME_EXPL = "La nomo de tiu ĉi skripto havas majusklan literon, spaceton, krampon aŭ komon. Tia ĉi skripto nur povas rekte ŝargiĝi per komputilo aŭ skriptkvadrato.",
@@ -201,7 +201,7 @@ PLUGINS = "Aldonaĵoj",
 BACKB = "Reen <<",
 MOREB = "Pli  >>",
 AUTOMODE = "Reĝimo: aŭtomata",
-AUTO2MODE = "Reĝimo: multblokara",
+AUTO2MODE = "Reĝimo: multkahelara",
 MANUALMODE = "Reĝimo: permana",
 ENEMYTYPE = "Malamiko-tipo: $1",
 PLATFORMBOUNDS = "Platformlimo",
@@ -218,7 +218,7 @@ ROOMPLATFORMS = "Platformoj en ĉambro", -- basically, platforms/enemies in/for 
 ROOMENEMIES = "Malamikoj en ĉambro",
 
 OPTNAME = "Nomo",
-OPTBY = "Kreinto",
+OPTBY = "De",
 OPTWEBSITE = "Retejo ",
 OPTDESC = "Pri-\nskribo", -- If necessary, you can span multiple lines
 OPTSIZE = "Grando",
@@ -236,16 +236,16 @@ TSCOLOR = "Koloro $1",
 LEVELSLIST = "Niveloj",
 LOADTHISLEVEL = "Ŝargi nivelon: ",
 ENTERNAMESAVE = "Enmetu nomon por konservi: ",
-SEARCHFOR = "Serĉi por: ",
+SEARCHFOR = "Priserĉi: ",
 
-VERSIONERROR = "Ne povis kontroli version.",
+VERSIONERROR = "Ne eblis kontroli version.",
 VERSIONUPTODATE = "Via versio de Ved estas aktuala.",
 VERSIONOLD = "Ĝisdatigo disponebla! Plej freŝa versio: $1",
 VERSIONCHECKING = "Kontrolado de ĝisdatigoj...",
 VERSIONDISABLED = "Kontrolado de ĝisdatigoj malŝaltita",
-VERSIONCHECKNOW = "Kontrolu nun", -- Check for updates now
+VERSIONCHECKNOW = "Kontroli nun", -- Check for updates now
 
-SAVENOSUCCESS = "Konservado ne sukcesa! Eraro: ",
+SAVENOSUCCESS = "Konservado malsukcesis! Eraro: ",
 INVALIDFILESIZE = "Nevalida dosiergrando.",
 
 EDIT = "Redakti",
@@ -295,22 +295,22 @@ CUSTOMVVVVVVDIRECTORY_SET = "Via dosierujo de VVVVVV estas agordita al propra in
 LANGUAGE = "Lingvo",
 DIALOGANIMATIONS = "Dialoganimacioj",
 FLIPSUBTOOLSCROLL = "Renversi rulumdirekton de ilo",
-ADJACENTROOMLINES = "Indikiloj de blokoj en najbaraj ĉambroj",
+ADJACENTROOMLINES = "Indikiloj de kaheloj en najbaraj ĉambroj",
 NEVERASKBEFOREQUIT = "Neniam demandi antaŭ ol eliri, eĉ se estas nekonservitaj ŝanĝoj",
-COORDS0 = "Montri koordinatojn komence je nulo (kiel en interna skriptado)",
+COORDS0 = "Montri koordinatojn komence je 0 (kiel en interna skriptado)",
 ALLOWDEBUG = "Ebligi sencimigan reĝimon",
 SHOWFPS = "Montri kadrojn sekunde",
 CHECKFORUPDATES = "Kontroli ĝisdatigojn",
 PAUSEDRAWUNFOCUSED = "Ne bildigi kiam la fenestro estas elfokusa",
 ENABLEOVERWRITEBACKUPS = "Fari savkopiojn de niveldosieroj, kiuj superskribiĝas",
-AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj por konservi por ĉiu nivelo",
+AMOUNTOVERWRITEBACKUPS = "Nombro da savkopioj konservendaj por ĉiu nivelo",
 SCALE = "Skalo",
 LOADALLMETADATA = "Ŝargi metadatumojn (kiel titolon, aŭtoron kaj priskribon) por ĉiuj dosieroj en nivelolisto",
 COLORED_TEXTBOXES = "Uzi verajn tekstskatol-kolorojn",
 
 SCRIPTSPLIT = "Fendi",
 SPLITSCRIPT = "Fendi skriptojn",
-COUNT = "Kvanto:",
+COUNT = "Kvanto: ",
 SMALLENTITYDATA = "datumoj",
 
 -- Stats screen
@@ -320,20 +320,20 @@ AMOUNTENTITIES = "Entoj:",
 AMOUNTTRINKETS = "Kolektaĵoj:",
 AMOUNTCREWMATES = "Ŝipanoj:",
 AMOUNTINTERNALSCRIPTS = "Internaj skriptoj:",
-TILESETUSSAGE = "Uzado de blokaroj",
-TILESETSONLYUSED = "(nur ĉambroj kun blokoj estas konsiderataj)",
+TILESETUSSAGE = "Uzado de kahelaroj",
+TILESETSONLYUSED = "(nur ĉambroj kun kaheloj estas konsiderataj)",
 AMOUNTROOMSWITHNAMES = "Ĉambroj kun nomoj:",
 PLACINGMODEUSAGE = "Blokmetadaj reĝimoj:",
 AMOUNTLEVELNOTES = "Nivelnotoj:",
 AMOUNTFLAGNAMES = "Flagnomoj:",
 TILESUSAGE = "Uzado de blokoj",
 AMOUNTTILES = "Kaheloj:",
-AMOUNTSOLIDTILES = "Solidaj kaheloj:",
-AMOUNTSPIKES = "Pintaĵoj:",
+AMOUNTSOLIDTILES = "Masivaj kaheloj:",
+AMOUNTSPIKES = "Pikaĵoj:",
 
 
 UNEXPECTEDSCRIPTLINE = "Neatendita skriptlinio sen skripto: $1",
-DUPLICATESCRIPT = "Skripto $1 estas duplikato! Nur unu povas esti ŝargita.",
+DUPLICATESCRIPT = "Skripto $1 estas duoblaĵo! Nur unu povas esti ŝargita.",
 MAPWIDTHINVALID = "Maplarĝo estas malvalida: $1",
 MAPHEIGHTINVALID = "Mapalto estas malvalida: $1",
 LEVMUSICEMPTY = "Nivelo-muziko estas nula!",
@@ -356,7 +356,6 @@ PINK = "Rozkolora",
 BROWN = "Bruna",
 RAINBOWBG = "Ĉielarka fono",
 
--- b14
 SYNTAXCOLORS = "Koloroj de sintakso",
 SYNTAXCOLORSETTINGSTITLE = "Agordoj de koloroj de skripta sintaksmarkado",
 SYNTAXCOLOR_COMMAND = "Komando",
@@ -370,26 +369,24 @@ SYNTAXCOLOR_FLAGNAME = "Flagnomo",
 SYNTAXCOLOR_NEWFLAGNAME = "Nova flagnomo",
 SYNTAXCOLOR_COMMENT = "Komento",
 RESETCOLORS = "Defaŭltigi kolorojn",
-STRINGNOTFOUND = "\"$1\" ne estis trovita",
+STRINGNOTFOUND = "\"$1\" ne troviĝis",
 
--- b17 - L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with L.[...]CORRUPT
 MAL = "La nivelo-dosiero estas misformigita: ",
 METADATACORRUPT = "Meta-datumoj estas mankantaj aŭ koruptitaj.",
 METADATAITEMCORRUPT = "Meta-datumoj por $1 estas mankantaj aŭ koruptitaj.",
-TILESCORRUPT = "Blokoj mankantaj aŭ koruptitaj.",
-ENTITIESCORRUPT = "Entoj mankantaj aŭ koruptitaj.",
-LEVELMETADATACORRUPT = "Ĉambraj meta-datumoj mankantaj aŭ koruptitaj.",
-SCRIPTCORRUPT = "Skriptoj mankantaj aŭ koruptitaj.",
+TILESCORRUPT = "Kaheloj mankas aŭ estas koruptitaj.",
+ENTITIESCORRUPT = "Entoj mankas aŭ estas koruptitaj.",
+LEVELMETADATACORRUPT = "Ĉambraj meta-datumoj mankas aŭ estas koruptitaj.",
+SCRIPTCORRUPT = "Skriptoj mankas aŭ estas koruptitaj.",
 
--- 1.1.0
 LOADSCRIPTMADE = "Ŝargskripto kreita",
 COPY = "Kopii",
-CUSTOMSIZE = "Tajlorita grando de broso: $1x$2",
+CUSTOMSIZE = "Tajlorita grando de peniko: $1x$2",
 SELECTINGA = "Elektado - alklaku supre maldekstre",
 SELECTINGB = "Elektado: $1x$2",
-TILESETSRELOADED = "Tegolaroj kaj ento-grafikoj reŝargitaj",
+TILESETSRELOADED = "Kahelaroj kaj ento-grafikoj reŝargitaj",
 
--- 1.2.0
 BACKUPS = "Savkopioj",
 BACKUPSOFLEVEL = "Savkopioj de nivelo $1",
 LASTMODIFIEDTIME = "Originale laste modifita", -- List header
@@ -397,9 +394,8 @@ OVERWRITTENTIME = "Superskribita je", -- List header
 SAVEBACKUP = "Konservi al dosierujo de VVVVVV",
 DATEFORMAT = "Dato-formo",
 TIMEFORMAT = "Tempo-formo",
-SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tiu se vi ne volas superskribi ion ajn, pro ke NENIU savkopio estas farota ĉi-okaze!",
+SAVEBACKUPNOBACKUP = "Certigu ke vi elektas unikan nomon por ĉi tio se vi ne volas superskribi ion ajn, ĉar NENIU savkopio estos farita ĉi-okaze!",
 
--- 1.2.4
 AUTOSAVECRASHLOGS = "Aŭtomate konservi kraŝo-protokolojn",
 MOREINFO = "Plej aktualaj informoj",
 COPYLINK = "Kopii ligilon",
@@ -407,36 +403,34 @@ SCRIPTDISPLAY = "Montri",
 SCRIPTDISPLAY_USED = "Uzita",
 SCRIPTDISPLAY_UNUSED = "Neuzita",
 
--- 1.3.0 (more changes)
 RECENTLYOPENED = "Lastatempe malfermitaj niveloj",
-REMOVERECENT = "Ĉu vi volas forigi ĝin de la listo de lastatempe malfermitaj niveloj?",
+REMOVERECENT = "Ĉu vi volas forigi ĝin el la listo de lastatempe malfermitaj niveloj?",
 RESETCUSTOMBRUSH = "(Dekstre alklaku por agordi novan grandon)",
 
--- 1.3.2
 DISPLAYSETTINGS = "Ekrano/grando",
 DISPLAYSETTINGSTITLE = "Agordoj de ekrano/grando",
 SMALLERSCREEN = "Pli malgranda fenestro-larĝo (larĝa je 800px anstataŭ 896px)",
 FORCESCALE = "Devigi agordojn de grando",
 SCALENOFIT = "La nunaj agordoj de grando tro grandigas la fenestron por laŭmezuriĝi.",
 SCALENONUM = "La nunaj agordoj de grando estas nevalidaj.",
-MONITORSIZE = "$1x$2 ekrano",
+MONITORSIZE = "Ekrano $1x$2",
 VEDRES = "Distingivo de Ved: $1x$2",
 NONINTSCALE = "Neentjera skalado",
 
--- 1.3.4
-USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparo",
-REQUIRESHIGHERLOVE = " (bezonas L{VE $1 aŭ pli altan)",
+USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparon",
+USELEVELFONTPNG = "Uzi font.png de propra nivelo kiel tiparon",
+REQUIRESHIGHERLOVE = " (L{VE $1 aŭ pli alta necesas)",
 FPSLIMIT = "KS-limo",
 
 MAPRESOLUTION = "Distingivo", -- Map export size
 MAPRES_ASSHOWN = "Kiel montrate (maks. 640x480)", -- $1x$2 is resolution, max 640x480
 MAPRES_PERCENT = "$1% (po $2x$3 por ĉambro)", -- Example: 50% (160x120 per room)
 MAPRES_RATIO = "$1:$2 (po $3x$4 por ĉambro)", -- Example: 1:8 (40x30 per room)
-TOPLEFT = "Sp.-maldekstro",
+TOPLEFT = "Su.-maldekstro",
 WIDTHHEIGHT = "Larĝo k alto",
 BOTTOMRIGHT = "Malsp.-dekstro",
 RENDERERINFO = "Informoj de bildigilo:",
-MAPINCOMPLETE = "La mapo ne jam pretas (je la tempo, kiam vi premis Konservi), bonvole reprovu kiam ĝi ja pretas.",
+MAPINCOMPLETE = "La mapo ne jam pretas (je la tempo, kiam vi premis Konservi), bonvole reprovu kiam ĝi estos preta.",
 KEEPDIALOGOPEN = "Restigi dialogon malferma",
 TRANSPARENTMAPBG = "Travidebla fono",
 MAPEXPORTERROR = "Eraro dum kreado de mapo.",
@@ -445,16 +439,16 @@ INVALIDLINENUMBER = "Bonvolu enigi validan linio-numeron.",
 OPENLEVELSFOLDER = "Malfermi dosierujon", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
 MOVEENTITY = "Movigi",
 GOTOROOM = "Iri al ĉambro",
-ESCTOCANCEL = "[Premu ESC por nuligi]",
+ESCTOCANCEL = "[Premu ESK por nuligi]",
 
-INVALIDFILENAME_WIN = "Windows ne permesas la jenajn signojn en dosiernomoj:\n\n: * ? \" < > |\n\n(| estante vertikala streko)",
+INVALIDFILENAME_WIN = "Windows ne permesas la jenajn signojn en dosiernomoj:\n\n: * ? \" < > |\n\n(| estas vertikala streko)",
 INVALIDFILENAME_MAC = "macOS ne permesas la signon : en dosiernomoj.",
 
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "REG",
-TINY_SHIFT = "MAJUSKLO",
+TINY_SHIFT = "ŜOV",
 TINY_ALT = "ALT",
-TINY_ESC = "ESC",
+TINY_ESC = "ESK",
 TINY_TAB = "TAB",
 TINY_HOME = "HOME",
 TINY_END = "END",
@@ -466,7 +460,7 @@ SEARCHRESULTS_SCRIPTS = "Skriptoj [$1]",
 SEARCHRESULTS_ROOMS = "Ĉambroj [$1]",
 SEARCHRESULTS_NOTES = "Notoj [$1]",
 
-ASSETS = "Valoraĵoj", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+ASSETS = "Resursoj", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "Ne eblas ludi tiun ĉi melodion. Ĝi eble ne ekzistas aŭ estas de nesubtenata tipo.",
 SOUNDPLAYERROR = "Ne eblas ludi tiun ĉi sonon. Ĝi eble ne ekzistas aŭ estas de nesubtenata tipo.",
 MUSICLOADERROR = "Ne eblas ŝargi $1: ",
@@ -493,7 +487,7 @@ MUSICFILENAME = "Dosiernomo: ",
 MUSICNOTES = "Notoj:",
 SONGMETADATA = "Metadatumoj por melodio $1",
 MUSICFILEMETADATA = "Metadatumoj de dosiero",
-MUSICEXPORTEDON = "Eksportita: ", -- Followed by date and time
+MUSICEXPORTEDON = "Eksportita je: ", -- Followed by date and time
 SAVEMETADATA = "Konservi metadatumojn",
 SOUNDS = "Sonoj",
 GRAPHICS = "Grafikoj",
@@ -503,13 +497,13 @@ DRIVES = "Diskoj", -- like C: or F: on Windows
 DOFILTER = "Nur montru *$1", -- "*.txt" for example
 DOFILTERDIR = "Nur montru dosierujojn",
 FILEDIALOGLUV = "Bedaŭrinde, via operaciumo ne estas konata, do la dosierdialogujo ne funkcias.",
-RESET = "Rekomencigi",
+RESET = "Restarigi",
 CHANGEVERB = "Ŝanĝi", -- verb
 LOADIMAGE = "Ŝargi bildon",
 GRID = "Krado",
 NOTALPHAONLY = "RVB",
 
-OPAQUEROOMNAMEBACKGROUND = "Faru la nigrajn ĉambronomo-fonojn opakaj",
+OPAQUEROOMNAMEBACKGROUND = "Fari la nigrajn ĉambronomo-fonojn opakaj",
 PLATVCHANGE_TITLE = "Ŝanĝi rapidon de platformoj",
 PLATVCHANGE_MSG = "Rapido:",
 PLATVCHANGE_INVALID = "Vi devas entajpi numeron.",
@@ -536,15 +530,15 @@ ORDRAGDROP = "aŭ ŝovmetu ĉi tien", -- follows after "Click on Load". You can 
 MORETHANONESTARTPOINT = "Estas pli ol unu komencejo en tiu ĉi nivelo!",
 STARTPOINTNOTFOUND = "Ne estas komencejo!",
 
-CONFIRMBIGGERSIZE = "Vi elektas $1 oble $2. Tio estas pli granda mapgrando ol $3 oble $4. Ekster la normala mapo $3 oble $4, ĉambroj kaj ĉambrotrajtoj ĉirkaŭfluas, sed estas distorditaj. Vi ne havos tute novajn ĉambrojn, nek pli da ĉambrotrajtoj. VVVVVV ankaŭ eble kraŝos ial ajn en tiuj ĉambroj.\n\nPremu Jes se vi scias, kion vi faras, kaj volas tiun ĉi pli grandan mapograndon. Premu Ne por agordi la grandon al $5 oble $6.\n\nSe vi ne certas, premu Ne.",
+CONFIRMBIGGERSIZE = "Vi elektas $1 oble $2. Tio estas pli granda mapgrando ol $3 oble $4. Ekster la normala mapo $3 oble $4, ĉambroj kaj ĉambrotrajtoj ĉirkaŭfluas, sed estas distorditaj. Vi ne havos tute novajn ĉambrojn, nek pli da ĉambrotrajtoj.\n\nPremu Jes se vi scias, kion vi faras, kaj volas tiun ĉi pli grandan mapograndon. Premu Ne por agordi la grandon al $5 oble $6.\n\nSe vi ne certas, premu Ne.",
 MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4! (Subteno por pli ol $3 oble $4 ne ebligita)",
 BTNOVERRIDE = "Transpasi",
 TARGETPLATFORM = "Celata platformo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-TIMETRIALS = "Tempelprovoj",
+TIMETRIALS = "Tempoprovoj",
 TIMETRIALTRINKETS = "Nombro da kolektaĵoj",
 TIMETRIALTIME = "Alpara tempo",
-SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempelprovon \"$1\"?",
+SUREDELETETRIAL = "Ĉu vi certas, ke vi volas forigi la tempoprovon \"$1\"?",
 
 CUT = "Eltondi",
 PASTE = "Alglui",
@@ -561,7 +555,7 @@ YOUAREPLAYTESTING = "Vi nuntempe ludtestas",
 LOCATEVVVVVV = "Elektu vian plenumeblan dosieron de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Vi jam ludtestas!",
 PLAYTESTINGFAILED = "Io fuŝiĝis dum malfermi VVVVVV:\n$1\n\nSe vi devas ŝangi la ruleblan dosieron de VVVVVV, kiu estas uzata por ludtestado, premtenu la ŝov-klavon dum premi la ludtestad-butonon.",
-PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti en $1.", -- you cannot playtest on <operating system>
+PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti ĉe $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bonvolu elekti la dosieron nomitan '$1'.",
 CHANGINGPATHAFTERASK = "La dosierindiko de VVVVVV ŝanĝiĝis post premi 'ludi' kaj ne plu validas!",
 
@@ -569,7 +563,7 @@ PLAYTESTINGOPTIONS = "Ludtestado",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vi ne jam agordis ruleblan dosieron de $1 por uzi dum ludtestado.\nVed petos tion dum ludi nivelon de $2 unuafoje.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "La rulebla dosiero de $1 por uzi dum ludtestado estas agordita al:\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu\nhttps://vsix.dev/vce/status/",
+VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu https://vsix.dev/vce/status/",
 VCE_REMOVED = "VVVVVV: Community Edition ne plu estas prilaborata, kaj subteno por niveloj de VVVVVV-CE estas forigita de Ved. Tiu ĉi nivelo estos traktata kiel normalan nivelon de VVVVVV. Por pli da informoj, vidu https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Ĉiuj aldonaĵoj",
@@ -617,8 +611,8 @@ L_PLU = {
 		[1] = "Uzita $1 fojojn en skriptoj: $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 kahelo ne estas valida entjero en la intervalo 0-1199",
-		[1] = "$1 kaheloj ne estas validaj entjeroj en la intervalo 0-1199",
+		[0] = "$1 kahelo ne estas valida entjero pli ol aŭ egala al 0",
+		[1] = "$1 kaheloj ne estas validaj entjeroj pli ol aŭ egalaj al 0",
 	},
 	BYTES = {
 		[0] = "$1 bajto",
@@ -647,7 +641,7 @@ toolnames = {
 "Malamiko",
 "Renversilo",
 "Ĉambroteksto",
-"Komputilo",
+"Terminalo",
 "Skriptkvadrato",
 "Teleportilo",
 "Teleportlinio",
@@ -658,7 +652,7 @@ toolnames = {
 
 subtoolnames = {
 
-[1] = {"Broso 1x1", "Broso 3x3", "Broso 5x5", "Broso 7x7", "Broso 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de broso", "Plenigilo", "Mirinda mojosa magia terpomo"},
+[1] = {"Peniko 1x1", "Peniko 3x3", "Peniko 5x5", "Peniko 7x7", "Peniko 9x9", "Plenigi horizantale", "Plenigi vertikale", "Tajlorita grando de peniko", "Plenigilo", "Mirinda mojosa magia terpomo"},
 [2] = {},
 [3] = {"Aŭtomata", "Aŭtomata ambaŭen", "Aŭtomata maldekstren", "Aŭtomata dekstren"},
 [4] = {},
@@ -718,7 +712,7 @@ ERR_VEDVERSION = "Versio de Ved:"
 ERR_LOVEVERSION = "Versio de L{VE:"
 ERR_STATE = "Stato:"
 ERR_OS = "Operaciumo:"
-ERR_TIMESINCESTART = "Tempo ekde starto:"
+ERR_TIMESINCESTART = "Tempo ekde lanĉo:"
 ERR_PLUGINS = "Aldonaĵoj:"
 ERR_PLUGINSNOTLOADED = "(ne ŝargitaj)"
 ERR_PLUGINSNONE = "(neniuj)"
@@ -729,12 +723,12 @@ ERR_TOONEW = " (tro nova)"
 ERR_PLUGINERROR = "Eraro de aldonaĵo!"
 ERR_FILE = "Dosiero redaktata:"
 ERR_FILEEDITORS = "Aldonaĵoj, kiuj redaktas tiun dosieron:"
-ERR_CURRENTPLUGIN = "Aldonaĵo, kiu ekagigis la eraron:"
-ERR_PLEASETELLAUTHOR = "Aldonaĵo devus fari redakton al kodo en Ved, sed la kodo por anstataŭigi ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
+ERR_CURRENTPLUGIN = "Aldonaĵo, kiu kaŭzis la eraron:"
+ERR_PLEASETELLAUTHOR = "Iu aldonaĵo provis fari redakton al kodo en Ved, sed la kodo anstataŭigenda ne troviĝis.\nEblas, ke tion kaŭzis konflikto inter du aldonaĵoj, aŭ ĝisdatigo de Ved rompis la aldonaĵon.\n\nDetaloj: (premu Ctrl+C/Cmd+C por kopii al la tondejo)\n\n"
 ERR_CONTINUE = "Vi povas daŭrigi per premi ESC aŭ ENTER, sed notu ke tiu malsukcesinta redakto eble kaŭzos erarojn."
 ERR_OPENPLUGINSFOLDER = "Vi povas malfermi vian aldonaĵ-dosierujon per premi F, por ripari aŭ forigi la probleman aldonaĵon. Poste, relanĉu Ved."
-ERR_REPLACECODE = "Malsukceso trovi ĉi tiun en %s.lua:"
-ERR_REPLACECODEPATTERN = "Malsukceso trovi ĉi tiun en %s.lua (kiel modelo):"
+ERR_REPLACECODE = "Malsukcesis trovi ĉi tiun en %s.lua:"
+ERR_REPLACECODEPATTERN = "Malsukcesis trovi ĉi tiun en %s.lua (kiel modelo):"
 ERR_LINESTOTAL = "%i linioj entute"
 
 ERR_SAVELEVEL = "Por konservi kopion de via nivelo, premu S"
@@ -765,12 +759,12 @@ diffmessages = {
 		levmusic = "Nivelmuziko estas ŝanĝita de $1 al $2",
 	},
 	rooms = {
-		added1 = "Aldonis ($1,$2) ($3)\\G",
-		added2 = "Aldonis ($1,$2) ($3 -> $4)\\G",
-		changed1 = "Ŝanĝis ($1,$2) ($3)\\Y",
-		changed2 = "Ŝanĝis ($1,$2) ($3 -> $4)\\Y",
-		cleared1 = "Ĉiuj blokoj viŝitaj en ($1,$2) ($3)\\R",
-		cleared2 = "Ĉiuj blokoj viŝitaj en ($1,$2) ($3 -> $4)\\R",
+		added1 = "Aldoniĝis ($1,$2) ($3)\\G",
+		added2 = "Aldoniĝis ($1,$2) ($3 -> $4)\\G",
+		changed1 = "Ŝanĝiĝis ($1,$2) ($3)\\Y",
+		changed2 = "Ŝanĝiĝis ($1,$2) ($3 -> $4)\\Y",
+		cleared1 = "Ĉiuj kaheloj viŝiĝis en ($1,$2) ($3)\\R",
+		cleared2 = "Ĉiuj kaheloj viŝiĝis en ($1,$2) ($3 -> $4)\\R",
 	},
 	roommetadata = {
 		changed0 = "Ĉambro $1,$2:",
@@ -778,7 +772,7 @@ diffmessages = {
 		roomname = "Ĉambronomo ŝanĝita de \"$1\" al \"$2\"\\Y",
 		roomnameremoved = "Ĉambronomo \"$1\" viŝita\\R",
 		roomnameadded = "Ĉambro nomita \"$1\"\\G",
-		tileset = "Blokaro $1 kaj blokarokoloro $2 ŝanĝitaj al blokaro $3 kaj blokarokoloro $4\\Y",
+		tileset = "Kahelaro $1 kaj kahelarkoloro $2 ŝanĝitaj al $3 kaj $4\\Y",
 		platv = "Platformrapido ŝanĝita de $1 al $2\\Y",
 		enemytype = "Malamiko-tipo ŝanĝita de $1 al $2\\Y",
 		platbounds = "Platformlimo ŝanĝita de $1,$2,$3,$4 al $5,$6,$7,$8\\Y",
@@ -788,21 +782,21 @@ diffmessages = {
 		warpdir = "Teleportdirekto ŝanĝita de $1 al $2\\Y",
 	},
 	entities = {
-		added = "Aldonis ento-tipon $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\G",
-		removed = "Forigis ento-tipon $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\R",
-		changed = "Ŝanĝis ento-tipon $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\Y",
-		changedtype = "Ŝanĝis ento-tipon $1 al tipo $2 ĉe pozicio $3,$4 en ĉambro ($5,$6)\\Y",
-		multiple1 = "Ŝanĝis entojn ĉe pozicio $1,$2 en ĉambro ($3,$4):\\Y",
+		added = "Aldoniĝis ento-tipo $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\G",
+		removed = "Foriĝis ento-tipo $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\R",
+		changed = "Ŝanĝiĝis ento-tipo $1 ĉe pozicio $2,$3 en ĉambro ($4,$5)\\Y",
+		changedtype = "Ŝanĝiĝis ento-tipo $1 al tipo $2 ĉe pozicio $3,$4 en ĉambro ($5,$6)\\Y",
+		multiple1 = "Ŝanĝiĝis entoj ĉe pozicio $1,$2 en ĉambro ($3,$4):\\Y",
 		multiple2 = "al:",
-		addedmultiple = "Aldonis entojn ĉe pozicio $1,$2 en ĉambro ($3,$4):\\G",
-		removedmultiple = "Forigis entojn ĉe pozicio $1,$2 en ĉambro ($3,$4):\\R",
+		addedmultiple = "Aldoniĝis entoj ĉe pozicio $1,$2 en ĉambro ($3,$4):\\G",
+		removedmultiple = "Foriĝis entoj ĉe pozicio $1,$2 en ĉambro ($3,$4):\\R",
 		entity = "Tipo $1",
 		incomplete = "Ne ĉiuj entoj estas traktitaj! Bonvolu raporti tion al Dav.\\r",
 	},
 	scripts = {
-		added = "Aldonis skripton \"$1\"\\G",
-		removed = "Forigis skripton \"$1\"\\R",
-		edited = "Redaktis skripton \"$1\"\\Y",
+		added = "Aldoniĝis skripto \"$1\"\\G",
+		removed = "Foriĝis skripto \"$1\"\\R",
+		edited = "Redaktiĝis skripto \"$1\"\\Y",
 	},
 	flagnames = {
 		added = "Agordiĝis nomo por flago $1 al \"$2\"\\G",
@@ -1485,11 +1479,17 @@ alarmon\w#h
 
 Ŝaltas la sonorilon
 
-altstates¤(x)\b#h
+altstates¤(state)\b#h
 
 Ŝanĝas la aranĝon de iuj ĉambroj, kiel la kolektaĵa ĉambro en la ŝipo antaŭ kaj
 post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj tute
 ne subtenas ĉi tion)
+
+audiopause¤(on/off)\w#h
+
+Added in 2.3. Force-enable or disable unfocus audio pause, regardless of the
+user-set audio pause setting. Defaults to off, i.e. pause audio during unfocus
+pause.
 
 backgroundtext\w#h
 
@@ -1531,6 +1531,13 @@ komando createcrewman)
 a - Koloro de ŝanĝota ŝipano (cyan/player/blue/red/yellow/green/purple)
 b - Nova koloro
 
+changecustommood¤(koloro,animstato)\w#h
+
+Changes the mood of a crewmate (works for rescuable crewmates)
+
+koloro - cyan/player/blue/red/yellow/green/purple
+animstato - 0 por feliĉa, 1 por malfeliĉa
+
 changedir¤(koloro,direkto)\w#h
 
 Ĝuste kiel changeai(koloro,faceleft/faceright), tio ĉi ŝanĝas frontan direkton.
@@ -1546,7 +1553,7 @@ Pliigi la grafikan numeron de la donita ŝipano per 12.
 
 changemood¤(koloro,animstato)\w#h
 
-Ŝanĝas la animstaton de ŝipano (nur funkcias por ŝipanoj de createcrewman)
+Changes the mood of the player or a crewmate created with createcrewman()
 
 koloro - cyan/player/blue/red/yellow/green/purple
 animstato - 0 por feliĉa, 1 por malfeliĉa
@@ -1556,6 +1563,12 @@ changeplayercolour¤(koloro)\w#h
 Ŝanĝas la koloron de la ludanto.
 
 koloro - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(koloro)\w#h
+
+Added in 2.4. Changes the color the player respawns with upon death.
+
+color - red/yellow/green/cyan/blue/purple/teleporter or number
 
 changetile¤(koloro,kahelo)\w#h
 
@@ -1571,11 +1584,14 @@ Viŝas la teleportilan skripton agorditan per la supra komando.
 
 companion¤(x)\b#h
 
-Faras la specifitan ŝipanon akompananto (eble dependas de la loko sur la mapo)
+Makes the specified crewmate a companion.
+
+x - 0 (none) or 6/7/8/9/10/11
 
 createactivityzone¤(koloro)\b#h
 
-Kreas zonon kie vi staras, kiu diras "Press ACTION to talk to (Crewmate)"
+Creates an activity zone at the specified crewmate (or the player, if the crewmate
+doesn't exist) which says "Press ACTION to talk to (crewmate)"
 
 createcrewman¤(x,y,koloro,animstato,ai1,ai2)\w#h
 
@@ -1592,9 +1608,10 @@ Kreas enton, kontrolu la listan referencon por ento-numeroj
 
 n - La ento-numero
 
-createlastrescued¤(x,y)\b#h
+createlastrescued¤()\b#h
 
-Kreas la laste savitan ŝipanon ĉe pozicio x,y (?)
+Creates the last rescued crewmate at hardcoded position 200,153. The last rescued
+crewmate is based on the Level Complete gamestate.
 
 createrescuedcrew¤()\b#h
 
@@ -1610,35 +1627,34 @@ Same kiel iftrinkets(n,skripto) en simpligita skriptado
 
 customiftrinketsless¤(n,skripto)\w#h
 
-Same kiel iftrinketsless(n,skripto) en simpligita skriptado (sed memoru, ke tio
-estas nefunkcia)
+Same kiel iftrinketsless(n,skripto) en simpligita skriptado
 
 custommap¤(on/off)\w#h
 
 Same kiel map() en simpligita skriptado
 
-customposition¤(x,y)\w#h
+customposition¤(type,above/below)\w#h
 
 Superskribas la x,y de la komando text kaj do agordas la pozicion de la dialog-
 skatolo (por saveblaj ŝipanoj anstataŭ ŝipanoj de createcrewman).
 
-x - center/centerx/centery, aŭ kolornomo
-cyan/player/blue/red/yellow/green/purple (savebla)
-y - Nur uzata se x estas kolornomo. Povas esti above/below
+type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+purple (rescuable)
+above/below - Only used if type is a color name
 
 cutscene¤()\w#h
 
 Aperigas striojn de rakontsekvenco.
 
-delay¤(x)\w#h
+delay¤(n)\w#h
 
 Same kiel simpligita komando
 
-destroy¤(x)\w#h
+destroy¤(object)\w#h
 
-Same kiel simpligita komando
+Removes an entity. This is the same as the simplified scripting command.
 
-x- gravitylines/warptokens/platforms
+object - gravitylines/warptokens/platforms
 
 do¤(n)\w#h
 
@@ -1659,8 +1675,10 @@ Tuje forigas dialog-skatolon (sen fordissolvo).
 
 entersecretlab\r#h
 
-Fakte malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne nevolata
-efiko por propra nivelo. Ŝaltas sekretlaboratorian reĝimon.
+Turns on Secret Lab mode.
+
+2.2 AND BELOW: Actually unlocks the Secret Lab, which is probably an unwanted
+effect for a custom level to have.
 
 everybodysad¤()\w#h
 
@@ -1686,17 +1704,17 @@ finalmode¤(x,y)\b#h
 Teleportigas vin al ekster Dimension VVVVVV, (46,54) estas la inicia ĉambro de la
 Fina Nivelo
 
-flag¤(x,on/off)\w#h
+flag¤(n,on/off)\w#h
 
 Same kiel simpligita komando
 
-flash¤(x)\w#h
+flash¤(n)\w#h
 
 Blankigas la ekranon, vi povas ŝanĝi kiom longe la ekrano restu blanka
 (nur flash ne funkcios, vi devas uzi flash(5) kombine kun playef(9) kaj
 shake(20) se vi volas normalan flash)
 
-x - La kvanto da kadroj. 30 kadroj estas preskaŭ unu sekundo.
+n - The amount of frames. 30 frames is almost one second.
 
 flip\w#h
 
@@ -1704,7 +1722,8 @@ Renversigas la ludanton
 
 flipgravity¤(koloro)\w#h
 
-Renversas la graviton de iu ŝipano (ne ĉiam funkcias kun vi mem)
+Flips the gravity of a certain crewmate. It won't work on the player, and it
+cannot unflip crewmates.
 
 koloro - cyan/player/blue/red/yellow/green/purple
 
@@ -1762,7 +1781,8 @@ ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 hascontrol¤()\w#h
 
-Donas regpovon al la ludanto, sed ne funkcias en la mezo de skriptoj
+Makes the player have control, however you can't use this to regain control while
+in the middle of a delay()
 
 hidecoordinates¤(x,y)\w#h
 
@@ -1821,7 +1841,10 @@ Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
 
 iftrinketsless¤(n,skripto)\b#h
 
-Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
+Checks if the number given is less than an amount that's related to trinkets.
+However, it checks against the greatest number of trinkets that you have ever
+gotten during a single playthrough of the main game, NOT the amount of trinkets
+you actually have. Loads an internal (main game) script
 
 ifwarp¤(x,y,dir,skripto)\w#h
 
@@ -1832,10 +1855,14 @@ x - Ĉambra x-koordinato, ekante de 1
 y - Ĉambra y-koordinato, ekante de 1
 dir - La varpdirekto. Normale 0-3, sed ellimaj valutoj ankaŭ akceptiĝas
 
-jukebox¤(x)\w#h
+jukebox¤(n)\w#h
 
-Blankigas muzikan komputilon kaj malkolorigas ĉiujn aliajn komputilojn
-(En propraj niveloj, tiu komando ŝajnas simple malkolorigi ĉiun komputilon).
+Makes a jukebox terminal white and turns off the color of all the other terminals.
+If n is given, a jukebox activity zone will be spawned at a hardcoded position and
+if a terminal is at the same hardcoded position it will be lit up.
+The possible values of n and the hardcoded positions are these:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
 
 leavesecretlab¤()\b#h
 
@@ -1861,7 +1888,8 @@ uzi minusajn nombrojn por movi tiun maldekstren/supren
 
 musicfadein¤()\w#h
 
-Nefinita komando. Ĝi nenion faras.
+An unfinished command. This does nothing in 2.2, but works exactly as you'd think
+it'd work in 2.3.
 
 musicfadeout¤()\w#h
 
@@ -1869,13 +1897,15 @@ Dissolvigas la muzikon.
 
 nocontrol¤()\w#h
 
-La malo de hascontrol()
+Sets game.hascontrol to false, which removes control from the player.
+game.hascontrol is automatically set during "- Press ACTION to advance text -" and
+closing text boxes, so this gets undone after those prompts
 
-play¤(x)\w#h
+play¤(n)\w#h
 
 Komenci ludi melodion kun interna melodi-numero.
 
-x - Interna melodi-numero
+n - Interna melodi-numero
 
 playef¤(x,n)\w#h
 
@@ -1884,14 +1914,14 @@ Ludi sonon.
 n - Fakte neuzata, kaj povas esti forlasita. En VVVVVV 1.x, tio iam regis la
 deŝovon, en milisekundoj, je kio la sono ekis.
 
-position¤(x,y)\w#h
+position¤(type,above/below)\w#h
 
 Superskribas la x,y de la komando text kaj do agordas la pozicion de la
 dialog-skatolo.
 
-x - center/centerx/centery, aŭ kolornomo
-cyan/player/blue/red/yellow/green/purple
-y - Nur uzita se x estas kolornomo. Povas esti above/below
+type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
+purple
+above/below - Only used if type is a color name
 
 purplecontrol\b#h
 
@@ -1918,13 +1948,16 @@ Reŝanĝas la koloron de la ludanto al cejana
 
 resumemusic¤()\w#h
 
-Nefinita komando. Legas el malpravalorizita memoro, kio rezultas en kraŝo
-en iuj maŝinoj kaj simple rezultas en ludi Path Complete en aliaj.
+An unfinished command. On 2.2 and below, it reads from uninitialized memory, which
+results in a crash on some machines and just results in playing Path Complete on
+others. On 2.3, it no longer reads from uninitialized memory and will correctly
+resume music after musicfadeout().
 
 rollcredits¤()\r#h
 
-Montras la kreditojn. Tio ĉi detruas viajn konservitajn datumojn kiam ĝi estas
-finiĝinta!
+Montras la kreditojn.
+
+2.2 AND BELOW: It destroys your save after the credits are completed!
 
 setcheckpoint¤()\w#h
 
@@ -1982,7 +2015,7 @@ Faras pep-sonon de ŝipano, aŭ sonon de komputilo.
 
 koloro - cyan/player/blue/red/yellow/green/purple/terminal
 
-startintermission2\w#h
+startintermission2\b#h
 
 Alterna finalmode(46,54), metas vin en la fina nivelo sen akcepti argumentojn.
 Kraŝigas la ludon en Timeslip.
@@ -1997,8 +2030,9 @@ Iam agordis skripton, kiu plenumiĝus kiam vi uzus teleportilegon
 
 telesave¤()\r#h
 
-Konservas vian ludon (superskribas viajn konservitajn datumojn de la ĉefa ludo, do
-ne uzu ĝin!)
+Does nothing in custom levels.
+
+2.2 AND BELOW: Saves your game in the regular teleporter save, so don't use it!
 
 text¤(koloro,x,y,linioj)\w#h
 

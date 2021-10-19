@@ -1109,282 +1109,239 @@ msgctxt "L.RAINBOWBG"
 msgid "Rainbow BG"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLORS"
 msgid "Syntax colors"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
 msgid "Scripting syntax highlighting color settings"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_COMMAND"
 msgid "Command"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_GENERIC"
 msgid "Generic"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_SEPARATOR"
 msgid "Separator"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_NUMBER"
 msgid "Number"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_TEXTBOX"
 msgid "Textbox"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
 msgid "Unrecognized command"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_CURSOR"
 msgid "Cursor"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_FLAGNAME"
 msgid "Flag name"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
 msgid "New flag name"
 msgstr ""
 
-#. b14
 msgctxt "L.SYNTAXCOLOR_COMMENT"
 msgid "Comment"
 msgstr ""
 
-#. b14
 msgctxt "L.RESETCOLORS"
 msgid "Reset colors"
 msgstr ""
 
-#. b14
 msgctxt "L.STRINGNOTFOUND"
 msgid "\"$1\" was not found"
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.MAL"
 msgid "The level file is malformed: "
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.METADATACORRUPT"
 msgid "Metadata is missing or corrupt."
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.METADATAITEMCORRUPT"
 msgid "Metadata for $1 is missing or corrupt."
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.TILESCORRUPT"
 msgid "Tiles missing or corrupt."
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.ENTITIESCORRUPT"
 msgid "Entities missing or corrupt."
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.LEVELMETADATACORRUPT"
 msgid "Room metadata missing or corrupt."
 msgstr ""
 
-#. b17 - L.MAL is concatenated with L.[...]CORRUPT
+#. L.MAL is concatenated with L.[...]CORRUPT
 msgctxt "L.SCRIPTCORRUPT"
 msgid "Scripts missing or corrupt."
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.LOADSCRIPTMADE"
 msgid "Load script created"
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.COPY"
 msgid "Copy"
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.CUSTOMSIZE"
 msgid "Custom brush size: $1x$2"
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.SELECTINGA"
 msgid "Selecting - click top left"
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.SELECTINGB"
 msgid "Selecting: $1x$2"
 msgstr ""
 
-#. 1.1.0
 msgctxt "L.TILESETSRELOADED"
 msgid "Tilesets and sprites reloaded"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.BACKUPS"
 msgid "Backups"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.BACKUPSOFLEVEL"
 msgid "Backups of level $1"
 msgstr ""
 
-#. List header / 1.2.0
+#. List header
 msgctxt "L.LASTMODIFIEDTIME"
 msgid "Originally last modified"
 msgstr ""
 
-#. List header / 1.2.0
+#. List header
 msgctxt "L.OVERWRITTENTIME"
 msgid "Overwritten"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.SAVEBACKUP"
 msgid "Save to VVVVVV folder"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.DATEFORMAT"
 msgid "Date format"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.TIMEFORMAT"
 msgid "Time format"
 msgstr ""
 
-#. 1.2.0
 msgctxt "L.SAVEBACKUPNOBACKUP"
 msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.AUTOSAVECRASHLOGS"
 msgid "Automatically save crash logs"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.MOREINFO"
 msgid "Latest info"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.COPYLINK"
 msgid "Copy link"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.SCRIPTDISPLAY"
 msgid "Show"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.SCRIPTDISPLAY_USED"
 msgid "Used"
 msgstr ""
 
-#. 1.2.4
 msgctxt "L.SCRIPTDISPLAY_UNUSED"
 msgid "Unused"
 msgstr ""
 
-#. 1.3.0 (more changes)
 msgctxt "L.RECENTLYOPENED"
 msgid "Recently opened levels"
 msgstr ""
 
-#. 1.3.0 (more changes)
 msgctxt "L.REMOVERECENT"
 msgid "Do you want to remove it from the list of recently opened levels?"
 msgstr ""
 
-#. 1.3.0 (more changes)
 msgctxt "L.RESETCUSTOMBRUSH"
 msgid "(Right click to set new size)"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.DISPLAYSETTINGS"
 msgid "Display/Scale"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.DISPLAYSETTINGSTITLE"
 msgid "Display/Scale settings"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.SMALLERSCREEN"
 msgid "Smaller window width (800px wide instead of 896px)"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.FORCESCALE"
 msgid "Force scale settings"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.SCALENOFIT"
 msgid "The current scale settings make the window too large to fit."
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.SCALENONUM"
 msgid "The current scale settings are invalid."
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.MONITORSIZE"
 msgid "$1x$2 monitor"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.VEDRES"
 msgid "Ved resolution: $1x$2"
 msgstr ""
 
-#. 1.3.2
 msgctxt "L.NONINTSCALE"
 msgid "Non-integer scaling"
 msgstr ""
 
-#. 1.3.4
 msgctxt "L.USEFONTPNG"
 msgid "Use font.png from VVVVVV graphics folder as font"
 msgstr ""
 
-#. 1.3.4
+msgctxt "L.USELEVELFONTPNG"
+msgid "Use per-level custom font.png as font"
+msgstr ""
+
 msgctxt "L.REQUIRESHIGHERLOVE"
 msgid " (requires L{VE $1 or higher)"
 msgstr ""
 
-#. 1.3.4
 msgctxt "L.FPSLIMIT"
 msgid "FPS limit"
 msgstr ""
@@ -1809,7 +1766,7 @@ msgid "There is no start point!"
 msgstr ""
 
 msgctxt "L.CONFIRMBIGGERSIZE"
-msgid "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties. VVVVVV can also crash for any reason in those rooms.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No."
+msgid "You are selecting $1 by $2, which is a bigger map size than $3 by $4. Outside the normal $3 by $4 map, rooms and room properties wrap around, but are distorted. You do not get entirely new rooms, nor do you get more room properties.\n\nPress Yes if you know what you're doing and want this bigger map size. Press No to set the map size to $5 by $6.\n\nIf unsure, press No."
 msgstr ""
 
 msgctxt "L.MAPBIGGERTHANSIZELIMIT"
@@ -2011,8 +1968,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgctxt "L_PLU.NOTALLTILESVALID"
-msgid "$1 tile is not a valid whole number in the range 0-1199"
-msgid_plural "$1 tiles are not a valid whole number in the range 0-1199"
+msgid "$1 tile is not a valid whole number greater than or equal to 0"
+msgid_plural "$1 tiles are not a valid whole number greater than or equal to 0"
 msgstr[0] ""
 msgstr[1] ""
 

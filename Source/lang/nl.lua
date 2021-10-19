@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-08-15 00:01:37 (CEST)
+--- Last converted: 2021-10-19 23:24:18 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -298,7 +298,7 @@ COLORED_TEXTBOXES = "Gebruik echte kleuren voor tekstvakken",
 
 SCRIPTSPLIT = "Splitsen",
 SPLITSCRIPT = "Scripts splitsen",
-COUNT = "Aantal:",
+COUNT = "Aantal: ",
 SMALLENTITYDATA = "data",
 
 -- Stats screen
@@ -344,7 +344,6 @@ PINK = "Roze",
 BROWN = "Bruin",
 RAINBOWBG = "Regenbg-AG",
 
--- b14
 SYNTAXCOLORS = "Syntaxis-\nkleuren",
 SYNTAXCOLORSETTINGSTITLE = "Scriptsyntaxiskleuren",
 SYNTAXCOLOR_COMMAND = "Commando",
@@ -360,7 +359,7 @@ SYNTAXCOLOR_COMMENT = "Commentaar",
 RESETCOLORS = "Kleuren resetten",
 STRINGNOTFOUND = "\"$1\" kan niet worden gevonden",
 
--- b17 - L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with L.[...]CORRUPT
 MAL = "Het levelbestand is niet in orde: ",
 METADATACORRUPT = "Metadata ontbreekt of is corrupt.",
 METADATAITEMCORRUPT = "Metadata voor $1 ontbreekt of is corrupt.",
@@ -369,7 +368,6 @@ ENTITIESCORRUPT = "Data voor entiteiten ontbreekt of is corrupt.",
 LEVELMETADATACORRUPT = "Kamermetadata ontbreekt of is corrupt.",
 SCRIPTCORRUPT = "Scripts ontbreken of zĳn corrupt.",
 
--- 1.1.0
 LOADSCRIPTMADE = "Laadscript gemaakt",
 COPY = "Kopiëren",
 CUSTOMSIZE = "Aangepaste kwastgrootte: $1x$2",
@@ -377,7 +375,6 @@ SELECTINGA = "Selecteren - klik op linkerbovenhoek",
 SELECTINGB = "Selecteren: $1x$2",
 TILESETSRELOADED = "Tilesets en sprites opnieuw geladen",
 
--- 1.2.0
 BACKUPS = "Reservekopieën",
 BACKUPSOFLEVEL = "Reservekopieën van level $1",
 LASTMODIFIEDTIME = "Oorspronkelĳk laatst gewĳzigd", -- List header
@@ -387,7 +384,6 @@ DATEFORMAT = "Datumformaat",
 TIMEFORMAT = "Tĳdformaat",
 SAVEBACKUPNOBACKUP = "Kies een unieke naam hiervoor als je niets wilt overschrĳven, hiervoor wordt namelĳk GEEN backup gemaakt!",
 
--- 1.2.4
 AUTOSAVECRASHLOGS = "Crashlogboeken automatisch opslaan",
 MOREINFO = "Laatste info",
 COPYLINK = "Link kopiëren",
@@ -395,12 +391,10 @@ SCRIPTDISPLAY = "Tonen",
 SCRIPTDISPLAY_USED = "Gebruikt",
 SCRIPTDISPLAY_UNUSED = "Ongebruikt",
 
--- 1.3.0 (more changes)
 RECENTLYOPENED = "Recent geopende levels",
 REMOVERECENT = "Wil je het uit de lĳst met recent geopende levels verwĳderen?",
 RESETCUSTOMBRUSH = "(Klik rechts om nieuwe grootte in te stellen)",
 
--- 1.3.2
 DISPLAYSETTINGS = "Beeld/Schaal",
 DISPLAYSETTINGSTITLE = "Beeld-/Schaalinstellingen",
 SMALLERSCREEN = "Kleinere vensterbreedte (800px breed in plaats van 896px)",
@@ -411,8 +405,8 @@ MONITORSIZE = "$1x$2-beeldscherm",
 VEDRES = "Resolutie van Ved: $1x$2",
 NONINTSCALE = "Schalen met niet-gehele getallen",
 
--- 1.3.4
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
+USELEVELFONTPNG = "Gebruik level-afhankelĳke font.png als lettertype",
 REQUIRESHIGHERLOVE = " (vereist L{VE $1 of hoger)",
 FPSLIMIT = "FPS-limiet",
 
@@ -524,7 +518,7 @@ ORDRAGDROP = "of sleep bestand hierheen", -- follows after "Click on Load". You 
 MORETHANONESTARTPOINT = "Er is meer dan één startpunt in dit level!",
 STARTPOINTNOTFOUND = "Er is geen startpunt!",
 
-CONFIRMBIGGERSIZE = "Je hebt $1 bĳ $2 gekozen, wat groter is dan $3 bĳ $4. Buiten de normale kaart van $3 bĳ $4 zullen kamers en eigenschappen daarvan zich om de kaart wikkelen, maar verstoord. Je krĳgt geen nieuwe kamers en ook geen nieuwe kamereigenschappen. VVVVVV kan ook om wat voor reden dan ook in die kamers crashen.\n\nDruk op Ja als je weet wat je doet en deze grotere grootte wil. Druk op Nee om de kaartgrootte in te stellen op $5 bĳ $6.\n\nAls je het niet zeker weet, druk op Nee.",
+CONFIRMBIGGERSIZE = "Je hebt $1 bĳ $2 gekozen, wat groter is dan $3 bĳ $4. Buiten de normale kaart van $3 bĳ $4 zullen kamers en eigenschappen daarvan zich om de kaart wikkelen, maar verstoord. Je krĳgt geen nieuwe kamers en ook geen nieuwe kamereigenschappen.\n\nDruk op Ja als je weet wat je doet en deze grotere grootte wil. Druk op Nee om de kaartgrootte in te stellen op $5 bĳ $6.\n\nAls je het niet zeker weet, druk op Nee.",
 MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bĳ $2 is groter dan $3 bĳ $4! (Ondersteuning voor groter dan $3 bĳ $4 niet ingeschakeld)",
 BTNOVERRIDE = "Omzeilen",
 TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
@@ -605,8 +599,8 @@ L_PLU = {
 		[1] = "$1 keer gebruikt in scripts: $2",
 	},
 	NOTALLTILESVALID = {
-		[0] = "$1 blok is geen geldig geheel getal in het bereik 0-1199",
-		[1] = "$1 blokken zĳn geen geldig geheel getal in het bereik 0-1199",
+		[0] = "$1 blok is geen geldig geheel getal groter dan of gelĳk aan 0",
+		[1] = "$1 blokken zĳn geen geldig geheel getal groter dan of gelĳk aan 0",
 	},
 	BYTES = {
 		[0] = "$1 byte",
@@ -1492,11 +1486,18 @@ alarmon\w#h
 
 Zet het alarm aan
 
-altstates¤(x)\b#h
+altstates¤(toestand)\b#h
 
 Verander de layout van sommige kamers, zoals de trinket-kamer in het schip voor en
 na de explosie, en de ingang van het geheime lab (aangepaste levels ondersteunen
 altstates helemaal niet)
+
+audiopause¤(on/off)\w#h
+
+Toegevoegd in 2.3. Schakelt het pauzeren van de audio wanneer het venster inactief
+is geforceerd in of uit, ongeacht de gebruikersinstelling voor het pauzeren van
+audio. Standaard uitgeschakeld, oftewel pauzeer audio tĳdens het automatische
+pauzescherm.
 
 backgroundtext\w#h
 
@@ -1539,6 +1540,14 @@ a - Kleur van het bemanningslid om te veranderen
 cyan/player/blue/red/yellow/green/purple
 b - Kleur om naar te veranderen
 
+changecustommood¤(kleur,stemming)\w#h
+
+Verandert de stemming van een bemanningslid (werkt voor bemanningsleden die gered
+kunnen worden)
+
+kleur - cyan/player/blue/red/yellow/green/purple
+stemming - 0 voor blĳ, 1 voor verdrietig
+
 changedir¤(kleur,richting)\w#h
 
 Net zoals changeai(kleur,faceleft/faceright), verandert dit de gezichtsrichting.
@@ -1555,8 +1564,8 @@ bemanningslid - Kleur van bemanningslid om te wĳzigen, cyan/player/blue/red/yel
 
 changemood¤(kleur,stemming)\w#h
 
-Verandert de stemming van een bemanningslid (werkt alleen voor bemanningsleden
-die gemaakt zĳn met createcrewman)
+Verandert de stemming van de speler of een bemanningslid dat gemaakt is met
+createcrewman()
 
 kleur - cyan/player/blue/red/yellow/green/purple
 stemming - 0 voor blĳ, 1 voor verdrietig
@@ -1566,6 +1575,13 @@ changeplayercolour¤(kleur)\w#h
 Verandert de kleur van de speler
 
 kleur - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(kleur)\w#h
+
+Toegevoegd in 2.4. Verandert de kleur waarmee de speler terugkomt na dood te zĳn
+gegaan.
+
+kleur - red/yellow/green/cyan/blue/purple/teleporter of getal
 
 changetile¤(kleur,tile)\w#h
 
@@ -1582,12 +1598,14 @@ Verwĳdert het teleporter-script ingesteld met teleportscript(x)
 
 companion¤(x)\b#h
 
-Laat het opgegeven bemanningslid de speler volgen (voor zover ik me kan herinneren
-hangt dit ook af van de locatie op de kaart)
+Laat het opgegeven bemanningslid de speler volgen.
+
+x - 0 (geen) of 6/7/8/9/10/11
 
 createactivityzone¤(kleur)\b#h
 
-Maakt een zone waar je staat die zegt "Press ACTION to talk to (Bemanningslid)"
+Maakt een activiteitszone bij het gegeven bemanningslid (of de speler, als het
+bemanningslid niet bestaat) met de tekst "Press ACTION to talk to (bemanningslid)"
 
 createcrewman¤(x,y,kleur,stemming,ai1,ai2)\w#h
 
@@ -1604,9 +1622,10 @@ Maakt een entiteit, zie de Lĳsten-pagina voor nummers van entiteiten
 
 n - Het nummer van de entiteit
 
-createlastrescued¤(x,y)\b#h
+createlastrescued¤()\b#h
 
-Maak het laatst geredde bemanningslid op positie x,y (?)
+Maak het laatst geredde bemanningslid op de vaste positie 200,153. Het laatst
+geredde bemanningslid is gebaseerd op de Level Complete-gamestate.
 
 createrescuedcrew¤()\b#h
 
@@ -1622,37 +1641,36 @@ Hetzelfde als iftrinkets(n,script) in vereenvoudigde scripting
 
 customiftrinketsless¤(n,script)\w#h
 
-Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting (maar onthoud
-dat het stuk is)
+Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting
 
 custommap¤(on/off)\w#h
 
 De interne variant van het map-commando
 
-customposition¤(x,y)\w#h
+customposition¤(type,above/below)\w#h
 
 Overschrĳft de x,y van het text-commando en stelt daarmee de positie van het
 tekstvak in, maar voor bemanningsleden worden bemanningsleden die gered kunnen
 worden gebruikt om mee te positioneren, in plaats van
 createcrewman-bemanningsleden.
 
-x - center/centerx/centery, of de naam van een kleur
+type - center/centerx/centery, of de naam van een kleur
 cyan/player/blue/red/yellow/green/purple (kan gered worden)
-y - Wordt alleen gebruikt als x de naam van een kleur is. Kan above/below zĳn
+above/below - Wordt alleen gebruikt als type de naam van een kleur is
 
 cutscene¤()\w#h
 
 Laat de cutscene-balken verschĳnen
 
-delay¤(x)\w#h
+delay¤(n)\w#h
 
 Hetzelfde gedrag als het vereenvoudigde commando
 
-destroy¤(x)\w#h
+destroy¤(object)\w#h
 
-Hetzelfde gedrag als het vereenvoudigde commando
+Verwĳdert een entiteit. Dit is hetzelfde als het vereenvoudigde commando.
 
-x - gravitylines/warptokens/platforms
+object - gravitylines/warptokens/platforms
 
 do¤(n)\w#h
 
@@ -1673,8 +1691,10 @@ Laat een tekstvak onmiddellĳk verdwĳnen (zonder fade-out)
 
 entersecretlab\r#h
 
-Ontgrendelt het geheime lab voor het hoofdspel, wat waarschĳnlĳk een ongewenst
-effect is voor een aangepast level om te hebben. Zet "secret lab mode" aan.
+Schakelt "Secret Lab mode" in.
+
+2.2 EN LAGER: Ontgrendelt daadwerkelĳk het Secret Lab, wat waarschĳnlĳk
+een ongewenst effect is voor een aangepast level om te hebben.
 
 everybodysad¤()\w#h
 
@@ -1702,17 +1722,17 @@ finalmode¤(x,y)\b#h
 Teleporteert je naar Outside Dimension VVVVVV, (46,54) is de eerste kamer van het
 Final Level
 
-flag¤(x,on/off)\w#h
+flag¤(n,on/off)\w#h
 
 Hetzelfde gedrag als het vereenvoudigde commando
 
-flash¤(x)\w#h
+flash¤(n)\w#h
 
 Maakt het beeld wit, je kunt de tĳd veranderen voor hoe lang het scherm wit moet
 blĳven (alleen flash zal niet werken, je moet flash(5) gebruiken in combinatie met
 playef(9) en shake(20) als je een normale flits wil)
 
-x - Het aantal ticks. 30 ticks is bĳna een seconde.
+n - Het aantal frames. 30 frames is bĳna een seconde.
 
 flip\w#h
 
@@ -1720,8 +1740,8 @@ Laat de zwaartekracht van de speler omdraaien
 
 flipgravity¤(kleur)\w#h
 
-Keert de zwaartekracht om van een bepaald bemanningslid (het werkt niet altĳd op
-jezelf)
+Keert de zwaartekracht om van een bepaald bemanningslid. Het werkt niet op de
+speler, en het kan bemanningsleden niet naar beneden toe omkeren.
 
 kleur - cyan/player/blue/red/yellow/green/purple
 
@@ -1778,8 +1798,8 @@ en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 hascontrol¤()\w#h
 
-Laat de speler besturing hebben, maar dit werkt niet tĳdens het uitvoeren van
-scripts
+Laat de speler besturing krĳgen, maar je kunt dit niet gebruiken om de besturing
+terug te krĳgen gedurende een delay()
 
 hidecoordinates¤(x,y)\w#h
 
@@ -1839,8 +1859,10 @@ hoofdspel)
 
 iftrinketsless¤(n,script)\b#h
 
-Hetzelfde als vereenvoudigde scripting, maar laadt een intern script (uit het
-hoofdspel)
+Controleert of het gegeven getal kleiner is dan een aantal dat gerelateerd is aan
+trinkets. Echter, het vergelĳkt het met het grootste aantal trinkets dat je ooit
+hebt gekregen tĳdens het spelen van het hoofdspel, NIET het aantal trinkets dat
+je eigenlĳk hebt. Laadt een intern script (uit het hoofdspel)
 
 ifwarp¤(x,y,richting,script)\w#h
 
@@ -1852,11 +1874,15 @@ y - y-coördinaat van kamer, beginnend bĳ 1
 richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
 geaccepteerd
 
-jukebox¤(x)\w#h
+jukebox¤(n)\w#h
 
-Maakt een jukeboxterminal wit en zet de kleur van alle andere terminals uit (in
-aangepaste levels lĳkt het gewoon de witte kleur van alle geactiveerde terminals
-uit te zetten).
+Maakt een jukeboxterminal wit en zet de kleur van alle andere terminals uit.
+Als n is gegeven zal een jukebox-activiteitszone geplaatst worden op een vaste
+positie, en als er een terminal staat op dezelfde vaste positie dan zal deze gaan
+oplichten.
+De mogelĳke waarden van n en de vaste posities zĳn als volgt:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
 
 leavesecretlab¤()\b#h
 
@@ -1882,7 +1908,8 @@ je ook negatieve getallen gebruiken om deze omhoog en naar links te verplaatsen
 
 musicfadein¤()\w#h
 
-Een niet afgemaakt commando. Dit doet niks.
+Een niet afgemaakt commando. Dit doet niks in 2.2, maar werkt precies zoals je zou
+denken in 2.3.
 
 musicfadeout¤()\w#h
 
@@ -1890,13 +1917,16 @@ Laat de muziek outfaden.
 
 nocontrol¤()\w#h
 
-Het omgekeerde van hascontrol()
+Zet game.hascontrol op false, wat de besturing weghaalt van de speler.
+game.hascontrol wordt automatisch ingesteld tĳdens "- Press ACTION to advance
+text -" en het sluiten van tekstvakken, dus dit wordt in dat geval ongedaan
+gemaakt
 
-play¤(x)\w#h
+play¤(n)\w#h
 
 Begin met het spelen van muziek met intern nummer.
 
-x - Intern liednummer
+n - Intern liednummer
 
 playef¤(x,n)\w#h
 
@@ -1905,14 +1935,14 @@ Speel een geluidseffect.
 n - Eigenlĳk ongebruikt, en kan weggelaten worden. In VVVVVV 1.x werd dit gebruikt
 voor het startpunt van het geluidseffect in milliseconden.
 
-position¤(x,y)\w#h
+position¤(type,above/below)\w#h
 
 Overschrĳft de x,y van het text-commando en stelt daarmee de positie van het
 tekstvak in.
 
-x - center/centerx/centery, of de naam van een kleur
+type - center/centerx/centery, of de naam van een kleur
 cyan/player/blue/red/yellow/green/purple
-y - Wordt alleen gebruikt als x de naam van een kleur is. Kan above/below zĳn
+above/below - Wordt alleen gebruikt als x de naam van een kleur is
 
 purplecontrol\b#h
 
@@ -1939,13 +1969,16 @@ Verandert de kleur van de speler terug naar cyaan
 
 resumemusic¤()\w#h
 
-Een niet afgemaakt commando. Leest uit niet-geïnitialiseerd geheugen, met op
-sommige systemen een crash tot gevolg en op andere het spelen van Path Complete.
+Een niet afgemaakt commando. Leest in 2.2 en lager uit niet-geïnitialiseerd
+geheugen, met op sommige systemen een crash tot gevolg en op andere het spelen
+van Path Complete. Op 2.3 leest het niet langer uit niet-geïnitialiseerd geheugen
+en zal het correct de muziek hervatten na musicfadeout().
 
 rollcredits¤()\r#h
 
-Laat de credits rollen. Het vernietigt je opgeslagen data nadat de credits
-afgelopen zĳn!
+Laat de credits rollen.
+
+2.2 EN LAGER: Het vernietigt je opgeslagen data nadat de credits afgelopen zĳn!
 
 setcheckpoint¤()\w#h
 
@@ -2004,7 +2037,7 @@ Zorgt dat een bemanningslid een geluid maakt, of een terminal-geluid
 
 kleur - cyan/player/blue/red/yellow/green/purple/terminal
 
-startintermission2\w#h
+startintermission2\b#h
 
 Alternatieve finalmode(46,54), brengt je naar het Final Level zonder argumenten te
 accepteren. Crasht bĳ Timeslip.
@@ -2020,7 +2053,10 @@ teleporter gebruikt
 
 telesave¤()\r#h
 
-Slaat je spel op (in het normale teleporter-bestand, dus gebruik het niet!)
+Doet niks in aangepaste levels.
+
+2.2 EN LAGER: Slaat je spel op in het normale teleporter-bestand, dus gebruik het
+niet!
 
 text¤(kleur,x,y,regels)\w#h
 

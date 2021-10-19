@@ -39,10 +39,16 @@ msgstr ""
 msgid "Turns the alarm on"
 msgstr ""
 
-msgid "altstates¤(x)\\b#h"
+msgid "altstates¤(state)\\b#h"
 msgstr ""
 
 msgid "Changes the layout of some rooms, like the trinket room in the ship before and\nafter the explosion, and the secret lab entrance (custom levels don't support\naltstates at all)"
+msgstr ""
+
+msgid "audiopause¤(on/off)\\w#h"
+msgstr ""
+
+msgid "Added in 2.3. Force-enable or disable unfocus audio pause, regardless of the\nuser-set audio pause setting. Defaults to off, i.e. pause audio during unfocus\npause."
 msgstr ""
 
 msgid "backgroundtext\\w#h"
@@ -93,6 +99,15 @@ msgstr ""
 msgid "a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple\nb - Color to change to"
 msgstr ""
 
+msgid "changecustommood¤(color,mood)\\w#h"
+msgstr ""
+
+msgid "Changes the mood of a crewmate (works for rescuable crewmates)"
+msgstr ""
+
+msgid "color - cyan/player/blue/red/yellow/green/purple\nmood - 0 for happy, 1 for sad"
+msgstr ""
+
 msgid "changedir¤(color,direction)\\w#h"
 msgstr ""
 
@@ -114,10 +129,7 @@ msgstr ""
 msgid "changemood¤(color,mood)\\w#h"
 msgstr ""
 
-msgid "Changes the mood of a crewmate (only works for crewmates created with\ncreatecrewman)"
-msgstr ""
-
-msgid "color - cyan/player/blue/red/yellow/green/purple\nmood - 0 for happy, 1 for sad"
+msgid "Changes the mood of the player or a crewmate created with createcrewman()"
 msgstr ""
 
 msgid "changeplayercolour¤(color)\\w#h"
@@ -127,6 +139,15 @@ msgid "Changes the player's color"
 msgstr ""
 
 msgid "color - cyan/player/blue/red/yellow/green/purple/teleporter"
+msgstr ""
+
+msgid "changerespawncolour¤(color)\\w#h"
+msgstr ""
+
+msgid "Added in 2.4. Changes the color the player respawns with upon death."
+msgstr ""
+
+msgid "color - red/yellow/green/cyan/blue/purple/teleporter or number"
 msgstr ""
 
 msgid "changetile¤(color,tile)\\w#h"
@@ -147,13 +168,16 @@ msgstr ""
 msgid "companion¤(x)\\b#h"
 msgstr ""
 
-msgid "Makes the specified crewmate a companion (as far as I remember, this also depends\non on the location on the map)"
+msgid "Makes the specified crewmate a companion."
+msgstr ""
+
+msgid "x - 0 (none) or 6/7/8/9/10/11"
 msgstr ""
 
 msgid "createactivityzone¤(color)\\b#h"
 msgstr ""
 
-msgid "Creates a zone where you are standing which says \"Press ACTION to talk to\n(Crewmate)\""
+msgid "Creates an activity zone at the specified crewmate (or the player, if the crewmate\ndoesn't exist) which says \"Press ACTION to talk to (crewmate)\""
 msgstr ""
 
 msgid "createcrewman¤(x,y,color,mood,ai1,ai2)\\w#h"
@@ -174,10 +198,10 @@ msgstr ""
 msgid "n - The entity number"
 msgstr ""
 
-msgid "createlastrescued¤(x,y)\\b#h"
+msgid "createlastrescued¤()\\b#h"
 msgstr ""
 
-msgid "Creates the last rescued crewmate at position x,y (?)"
+msgid "Creates the last rescued crewmate at hardcoded position 200,153. The last rescued\ncrewmate is based on the Level Complete gamestate."
 msgstr ""
 
 msgid "createrescuedcrew¤()\\b#h"
@@ -195,13 +219,13 @@ msgstr ""
 msgid "customiftrinkets¤(n,script)\\w#h"
 msgstr ""
 
-msgid "Same as iftrinkets(n,script) in simplfied scripting"
+msgid "Same as iftrinkets(n,script) in simplified scripting"
 msgstr ""
 
 msgid "customiftrinketsless¤(n,script)\\w#h"
 msgstr ""
 
-msgid "Same as iftrinketsless(n,script) in simplfied scripting (but remember it is\nbroken)"
+msgid "Same as iftrinketsless(n,script) in simplified scripting"
 msgstr ""
 
 msgid "custommap¤(on/off)\\w#h"
@@ -210,13 +234,13 @@ msgstr ""
 msgid "The internal variant of the map command"
 msgstr ""
 
-msgid "customposition¤(x,y)\\w#h"
+msgid "customposition¤(type,above/below)\\w#h"
 msgstr ""
 
 msgid "Overrides the x,y of the text command and thus sets the position of the text box,\nbut for crewmates, rescuable crewmates are used to position against, instead of\ncreatecrewman crewmates."
 msgstr ""
 
-msgid "x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple (rescuable)\ny - Only used if x is a color name. Can be above/below"
+msgid "type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple (rescuable)\nabove/below - Only used if type is a color name"
 msgstr ""
 
 msgid "cutscene¤()\\w#h"
@@ -225,16 +249,19 @@ msgstr ""
 msgid "Makes cutscene bars appear"
 msgstr ""
 
-msgid "delay¤(x)\\w#h"
+msgid "delay¤(n)\\w#h"
 msgstr ""
 
-msgid "Same behaviour as simplified command"
+msgid "Same behavior as simplified command"
 msgstr ""
 
-msgid "destroy¤(x)\\w#h"
+msgid "destroy¤(object)\\w#h"
 msgstr ""
 
-msgid "x - gravitylines/warptokens/platforms"
+msgid "Removes an entity. This is the same as the simplified scripting command."
+msgstr ""
+
+msgid "object - gravitylines/warptokens/platforms"
 msgstr ""
 
 msgid "do¤(n)\\w#h"
@@ -264,7 +291,10 @@ msgstr ""
 msgid "entersecretlab\\r#h"
 msgstr ""
 
-msgid "Actually unlocks the secret lab for the main game, which is probably an unwanted\neffect for a custom level to have. Turns on secret lab mode."
+msgid "Turns on Secret Lab mode."
+msgstr ""
+
+msgid "2.2 AND BELOW: Actually unlocks the Secret Lab, which is probably an unwanted\neffect for a custom level to have."
 msgstr ""
 
 msgid "everybodysad¤()\\w#h"
@@ -300,16 +330,16 @@ msgstr ""
 msgid "Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the\nFinal Level"
 msgstr ""
 
-msgid "flag¤(x,on/off)\\w#h"
+msgid "flag¤(n,on/off)\\w#h"
 msgstr ""
 
-msgid "flash¤(x)\\w#h"
+msgid "flash¤(n)\\w#h"
 msgstr ""
 
 msgid "Makes the screen white, you can change the time how long the screen should stay\nwhite (just flash won't work, you have to use flash(5) in combination with\nplayef(9) and shake(20) if you want a normal flash)"
 msgstr ""
 
-msgid "x - The amount of ticks. 30 ticks is almost one second."
+msgid "n - The amount of frames. 30 frames is almost one second."
 msgstr ""
 
 msgid "flip\\w#h"
@@ -321,7 +351,7 @@ msgstr ""
 msgid "flipgravity¤(color)\\w#h"
 msgstr ""
 
-msgid "Flips the gravity of a certain crewmate (it won't always work on yourself)"
+msgid "Flips the gravity of a certain crewmate. It won't work on the player, and it\ncannot unflip crewmates."
 msgstr ""
 
 msgid "color - cyan/player/blue/red/yellow/green/purple"
@@ -396,7 +426,7 @@ msgstr ""
 msgid "hascontrol¤()\\w#h"
 msgstr ""
 
-msgid "Makes the player have control, however doesn't work in the middle of scripts"
+msgid "Makes the player have control, however you can't use this to regain control while\nin the middle of a delay()"
 msgstr ""
 
 msgid "hidecoordinates¤(x,y)\\w#h"
@@ -483,6 +513,9 @@ msgstr ""
 msgid "iftrinketsless¤(n,script)\\b#h"
 msgstr ""
 
+msgid "Checks if the number given is less than an amount that's related to trinkets.\nHowever, it checks against the greatest number of trinkets that you have ever\ngotten during a single playthrough of the main game, NOT the amount of trinkets\nyou actually have. Loads an internal (main game) script"
+msgstr ""
+
 msgid "ifwarp¤(x,y,dir,script)\\w#h"
 msgstr ""
 
@@ -492,10 +525,10 @@ msgstr ""
 msgid "x - Room x coordinate, starting at 1\ny - Room y coordinate, starting at 1\ndir - The warp direction. Normally 0-3, but out-of-bounds values are accepted"
 msgstr ""
 
-msgid "jukebox¤(x)\\w#h"
+msgid "jukebox¤(n)\\w#h"
 msgstr ""
 
-msgid "Makes a jukebox terminal white and turns off the color of all the other terminals\n(in custom levels, it just seems to turn off the white color of all activated\nterminals)."
+msgid "Makes a jukebox terminal white and turns off the color of all the other terminals.\nIf n is given, a jukebox activity zone will be spawned at a hardcoded position and\nif a terminal is at the same hardcoded position it will be lit up.\nThe possible values of n and the hardcoded positions are these:\n1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,\n128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)"
 msgstr ""
 
 msgid "leavesecretlab¤()\\b#h"
@@ -531,7 +564,7 @@ msgstr ""
 msgid "musicfadein¤()\\w#h"
 msgstr ""
 
-msgid "An unfinished command. This does nothing."
+msgid "An unfinished command. This does nothing in 2.2, but works exactly as you'd think\nit'd work in 2.3."
 msgstr ""
 
 msgid "musicfadeout¤()\\w#h"
@@ -543,16 +576,16 @@ msgstr ""
 msgid "nocontrol¤()\\w#h"
 msgstr ""
 
-msgid "The opposite of hascontrol()"
+msgid "Sets game.hascontrol to false, which removes control from the player.\ngame.hascontrol is automatically set during \"- Press ACTION to advance text -\" and\nclosing text boxes, so this gets undone after those prompts"
 msgstr ""
 
-msgid "play¤(x)\\w#h"
+msgid "play¤(n)\\w#h"
 msgstr ""
 
 msgid "Start playing a song with internal song number."
 msgstr ""
 
-msgid "x - Internal song number"
+msgid "n - Internal song number"
 msgstr ""
 
 msgid "playef¤(x,n)\\w#h"
@@ -564,13 +597,13 @@ msgstr ""
 msgid "n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the\noffset in milliseconds at which the sound effect started."
 msgstr ""
 
-msgid "position¤(x,y)\\w#h"
+msgid "position¤(type,above/below)\\w#h"
 msgstr ""
 
 msgid "Overrides the x,y of the text command and thus sets the position of the text box."
 msgstr ""
 
-msgid "x - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple\ny - Only used if x is a color name. Can be above/below"
+msgid "type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/\npurple\nabove/below - Only used if type is a color name"
 msgstr ""
 
 msgid "purplecontrol\\b#h"
@@ -606,13 +639,16 @@ msgstr ""
 msgid "resumemusic¤()\\w#h"
 msgstr ""
 
-msgid "An unfinished command. Reads from uninitialized memory, which results in a crash\non some machines and just results in playing Path Complete on others."
+msgid "An unfinished command. On 2.2 and below, it reads from uninitialized memory, which\nresults in a crash on some machines and just results in playing Path Complete on\nothers. On 2.3, it no longer reads from uninitialized memory and will correctly\nresume music after musicfadeout()."
 msgstr ""
 
 msgid "rollcredits¤()\\r#h"
 msgstr ""
 
-msgid "Makes the credits roll. It destroys your save after the credits are completed!"
+msgid "Makes the credits roll."
+msgstr ""
+
+msgid "2.2 AND BELOW: It destroys your save after the credits are completed!"
 msgstr ""
 
 msgid "setcheckpoint¤()\\w#h"
@@ -696,7 +732,7 @@ msgstr ""
 msgid "color - cyan/player/blue/red/yellow/green/purple/terminal"
 msgstr ""
 
-msgid "startintermission2\\w#h"
+msgid "startintermission2\\b#h"
 msgstr ""
 
 msgid "Alternate finalmode(46,54), takes you to the final level without accepting\narguments. Crashes in timeslip."
@@ -717,7 +753,10 @@ msgstr ""
 msgid "telesave¤()\\r#h"
 msgstr ""
 
-msgid "Saves your game (in the regular teleporter save, so don't use it!)"
+msgid "Does nothing in custom levels."
+msgstr ""
+
+msgid "2.2 AND BELOW: Saves your game in the regular teleporter save, so don't use it!"
 msgstr ""
 
 msgid "text¤(color,x,y,lines)\\w#h"
