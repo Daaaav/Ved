@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2021-10-19 23:32:36 (CEST)
+--- Last converted: 2022-01-01 23:00:18 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2804,7 +2804,7 @@ gemotiveerd om dit te maken!
 
 Licentie\h#
 \
-Copyright 2015-2021  Dav999
+Copyright 2015-2022  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
