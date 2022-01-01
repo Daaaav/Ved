@@ -3216,17 +3216,25 @@ function isclear(key)
 end
 
 function draw_script_warn_light(id, x, y, active)
+	local light = script_warn_lights[id]
+	local active_hovering = false
+
 	if active then
-		love.graphics.setColor(255,224,0,255)
+		active_hovering = mouseon(x, y, light.img:getDimensions())
+		local red
+		if active_hovering or love.timer.getTime() % 1 < .5 then
+			red = 255
+		else
+			red = 224
+		end
+		love.graphics.setColor(red,12,12,255)
 	else
 		love.graphics.setColor(12,12,12,255)
 	end
 
-	local light = script_warn_lights[id]
-
 	love.graphics.draw(light.img, x, y)
 
-	if active and mouseon(x, y, light.img:getDimensions()) then
+	if active_hovering then
 		local box_w = math.max(
 			256,
 			font8:getWidth(L[light.lang_title]) + 16
@@ -3244,7 +3252,7 @@ function draw_script_warn_light(id, x, y, active)
 
 		love.graphics.setColor(64,64,64,128)
 		love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
-		love.graphics.setColor(255,224,0,255)
+		love.graphics.setColor(255,12,12,255)
 		love.graphics.print(L[light.lang_title], box_x+8, box_y+8)
 		love.graphics.draw(light.img_hq, box_x+8, box_y+24)
 		love.graphics.setColor(255,255,255,255)
