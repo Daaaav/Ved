@@ -163,7 +163,7 @@ function loadvvvvvvmusic(file, realfile)
 						local m_end = m_start+music_headers[m].start-2
 						local strings = explode("\0", ficontents:sub(m_start, m_end))
 						m_start = m_end+2
-						music_get_song_vvv_metadata(file, m, unpack(strings))
+						music_set_song_vvv_metadata(file, m, unpack(strings))
 					end
 				end
 			end
@@ -316,7 +316,7 @@ function music_get_song_vvv_metadata(file, song)
 	return music[file].vvv_metadata[song], anyset
 end
 
-function music_get_song_vvv_metadata(file, song, data_name, data_filename, data_notes)
+function music_set_song_vvv_metadata(file, song, data_name, data_filename, data_notes)
 	if music[file] == nil then
 		return false
 	end

@@ -991,7 +991,7 @@ function dialog.callback.replacesong(button, fields)
 	if not success then
 		dialog.create(L.SONGREPLACEFAIL .. "\n\n" .. anythingbutnil(err))
 	else
-		music_get_song_vvv_metadata(musicplayerfile, fields.song, nil, filename, nil)
+		music_set_song_vvv_metadata(musicplayerfile, fields.song, nil, filename, nil)
 	end
 end
 
@@ -1000,7 +1000,7 @@ function dialog.callback.songmetadata(button, fields)
 		return
 	end
 
-	music_get_song_vvv_metadata(musicplayerfile, fields.song, fields.name, fields.filename, fields.notes)
+	music_set_song_vvv_metadata(musicplayerfile, fields.song, fields.name, fields.filename, fields.notes)
 end
 
 function dialog.callback.musicfilemetadata(button, fields)
