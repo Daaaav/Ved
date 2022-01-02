@@ -1158,7 +1158,7 @@ function endeditingroomtext(currently_targetting)
 	elseif input ~= "" or editingroomtext == currently_targetting then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
-		if makescriptroomtext and scripts[input] == nil then
+		if makescriptroomtext then
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
 				local warnloadscriptexists = false
 				local loadscriptname = langkeys(s.loadscriptname, {input})
@@ -1195,30 +1195,32 @@ function endeditingroomtext(currently_targetting)
 							}
 						end
 						table.insert(scriptnames, loadscriptname)
-						entitydata[editingroomtext].data = loadscriptname
 
 						temporaryroomname = L.LOADSCRIPTMADE
 						temporaryroomnametimer = 90
 					end
+					entitydata[editingroomtext].data = loadscriptname
 				elseif keyboard_eitherIsDown(ctrl) then -- trinkets
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
 						scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
 						table.insert(scriptnames, loadscriptname)
-						entitydata[editingroomtext].data = loadscriptname
 
 						temporaryroomname = L.LOADSCRIPTMADE
 						temporaryroomnametimer = 90
 					end
+					entitydata[editingroomtext].data = loadscriptname
 				end
 				if warnloadscriptexists then
 					dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}))
 				end
 			end
 
-			scripts[input] = {""}
-			table.insert(scriptnames, input)
+			if scripts[input] == nil then
+				scripts[input] = {""}
+				table.insert(scriptnames, input)
+			end
 		end
 		if newroomtext then
 			entityplaced(editingroomtext)
