@@ -29,6 +29,8 @@ return function()
 	warpid = nil
 	oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
 	oldbounds = {0, 0, 0, 0}
+	makescriptroomtext = false
+	create_load_script = LOAD_SCRIPT_CREATION_MODE.NO
 
 	minsmear = -1; maxsmear = -1
 

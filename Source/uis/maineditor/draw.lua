@@ -542,7 +542,9 @@ return function()
 			love.graphics.setColor(255,255,0,255)
 			tinyprint(L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-7)
 			love.graphics.setColor(255,255,255,255)
-		elseif editingroomtext > 0 and entitydata[editingroomtext] ~= nil and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
+		elseif editingroomtext > 0
+		and entitydata[editingroomtext] ~= nil
+		and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
 			-- Name for script box
 			local tinywidth = math.max(tinynumbers:getWidth("{" .. L.TINY_SHIFT), tinynumbers:getWidth("}" .. L.TINY_CTRL))
 			love.graphics.setColor(0, 0, 0, 224)
@@ -839,7 +841,7 @@ return function()
 			selectedtool == 8 and L.ROOMPLATFORMS or
 			selectedtool == 9 and L.ROOMENEMIES or L.CREWMATES,
 			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+4, 128-16, "center"
-		) -- hier is 4 afgegaan. ---- -(6*16)-16-24-12-8-(24*0))+4 => -156)+4
+		)
 
 		local changedplatv, oldplatv = false, levelmetadata_get(roomx, roomy).platv
 
@@ -921,7 +923,7 @@ return function()
 			end
 		end
 
-		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed and not voided_metadata then -- -(6*16)-16-24-12-8-(24*-1)-4 => -136
+		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) and not mousepressed and not voided_metadata then
 			changedplatv = true
 			levelmetadata_set(roomx, roomy, "platv", 4)
 			mousepressed = true
@@ -939,6 +941,52 @@ return function()
 				}
 			)
 			finish_undo("PLATV (reset to 4)")
+		end
+	end
+
+	-- If we're placing a terminal or script box, display some radio buttons
+	if (selectedtool == 12 or selectedtool == 13) then
+		local y = (love.graphics.getHeight()-156)+1
+		ved_printf(
+			L.CREATE_LOAD_SCRIPT,
+			love.graphics.getWidth()-(128-4),
+			y,
+			128-8,
+			"center"
+		)
+		for k,v in pairs({
+			"NO",
+			"RUNONCE",
+			"REPEATING"
+		}) do
+			local mode = LOAD_SCRIPT_CREATION_MODE[v]
+			local name = L["CREATE_LOAD_SCRIPT_" .. v]
+			local selected = get_load_script_creation_mode() == mode
+			radio(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, mode, name,
+				function(key)
+					create_load_script = mode
+				end,
+				function(key)
+					local title = L["CREATE_LOAD_SCRIPT_TITLE_" .. v]
+					local expl_prefix
+					if selectedtool == 12 then
+						expl_prefix = "CREATE_LOAD_SCRIPT_EXPL_T_"
+					else
+						expl_prefix = "CREATE_LOAD_SCRIPT_EXPL_S_"
+					end
+					local explanation = L[expl_prefix .. v]
+					local box_w, box_h = tooltip_box_dimensions(title, explanation)
+					tooltip_box_draw(
+						title,
+						explanation,
+						nil,
+						love.graphics.getWidth()-128-box_w,
+						y+(19*k),
+						box_w, box_h,
+						255,255,128
+					)
+				end
+			)
 		end
 	end
 

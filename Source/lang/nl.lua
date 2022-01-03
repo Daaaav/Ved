@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2022-01-01 23:00:18 (CET)
+--- Last converted: 2022-01-03 19:57:12 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -47,7 +47,7 @@ UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
 WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zĳn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Er zĳn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
-NOFLAGSLEFT_LOADSCRIPT = "Er zĳn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden. In plaats daarvan is er een laadscript gemaakt dat het doelscript altĳd laadt met iftrinkets(0,$1). Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
+NOFLAGSLEFT_LOADSCRIPT = "Er zĳn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden met een nieuwe vlag. In plaats daarvan is er een laadscript gemaakt dat het doelscript altĳd laadt met iftrinkets(0,$1). Overweeg om alle verwĳzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 LEVELOPENFAIL = "Kon $1.vvvvvv niet openen.",
 SIZELIMIT = "De maximale grootte van een level is $1 bĳ $2.\n\nDe levelgrootte zal worden aangepast naar $3 bĳ $4.",
 SCRIPTALREADYEXISTS = "Script \"$1\" bestaat al!",
@@ -120,6 +120,8 @@ GOTOLINE = "Ga naar regel",
 GOTOLINE2 = "Ga naar regel:",
 INTERNALON = "Int.sc is aan",
 INTERNALOFF = "Int.sc is uit",
+INTERNALON_LONG = "Interne scripting-modus is ingeschakeld",
+INTERNALOFF_LONG = "Interne scripting-modus is uitgeschakeld",
 INTERNALYESBARS = "say(-1)-int.sc",
 INTERNALNOBARS = "Laadscript-\nint.sc",
 VIEW = "Beeld",
@@ -551,8 +553,7 @@ PLAYTESTINGOPTIONS = "Testen",
 PLAYTESTING_EXECUTABLE_NOTSET = "Je hebt nog geen $1-applicatie ingesteld die gebruikt wordt om levels te testen.\nVed zal hier de eerste keer dat je een $2-level test om vragen.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "De $1-applicatie die gebruikt wordt om levels te testen is ingesteld op:\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition wordt niet meer onderhouden. Het wordt niet aanbevolen om het te gebruiken, en ondersteuning voor VVVVVV-CE-levels zal worden verwĳderd in een toekomstige versie van Ved.\n\nKijk voor meer informatie op https://vsix.dev/vce/status/",
-VCE_REMOVED = "VVVVVV: Community Edition wordt niet meer onderhouden, en ondersteuning voor VVVVVV-CE levels is verwĳderd uit Ved. Dit level wordt behandeld als een gewoon VVVVVV-level. Kijk voor meer informatie op https://vsix.dev/vce/status/",
+VCE_REMOVED = "VVVVVV: Community Edition wordt niet meer onderhouden, en ondersteuning voor VVVVVV-CE levels is verwĳderd uit Ved. Dit level wordt behandeld als een gewoon VVVVVV-level. Kĳk voor meer informatie op https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Alle plugins",
 ALL_PLUGINS_MOREINFO = "Ga naar ¤https://tolp.nl/ved/plugins.php¤deze pagina¤ voor meer informatie over plugins.\\nLCl",
@@ -561,6 +562,28 @@ ALL_PLUGINS_NOPLUGINS = "Je hebt nog geen plugins.",
 
 PLUGIN_NOT_SUPPORTED = "[Deze plugin wordt niet ondersteund omdat deze Ved $1 of hoger vereist!]\\r",
 PLUGIN_AUTHOR_VERSION = "door $1, versie $2", -- by Person, version 1.0.0
+
+CREATE_LOAD_SCRIPT = "Laadscript maken",
+
+-- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+CREATE_LOAD_SCRIPT_NO = "Nee",
+CREATE_LOAD_SCRIPT_RUNONCE = "Eenmalig",
+CREATE_LOAD_SCRIPT_REPEATING = "Herhalend",
+
+-- Explanation for "No"
+CREATE_LOAD_SCRIPT_TITLE_NO = "Geen laadscript maken",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "Deze terminal zal rechtstreeks verwĳzen naar het script.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "Dit scriptvak zal rechtstreeks verwĳzen naar het script.",
+
+-- Explanation for "Run once"
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Laadscript maken om eenmalig uit te voeren",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "Deze terminal zal verwĳzen naar een nieuw laadscript, dat het echte script maar één keer laadt. Ved zal een ongebruikte vlag kiezen.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Dit scriptvak zal verwĳzen naar een nieuw laadscript, dat het echte script maar één keer laadt. Ved zal een ongebruikte vlag kiezen.",
+
+-- Explanation for "Repeating"
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Herhalend laadscript maken",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Deze terminal zal verwĳzen naar een nieuw laadscript, dat het echte script onvoorwaardelĳk laadt.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Dit scriptvak zal verwĳzen naar een nieuw laadscript, dat het echte script onvoorwaardelĳk laadt.",
 
 }
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2022-01-01 23:00:17 (CET)
+--- Last converted: 2022-01-03 19:57:11 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -120,6 +120,8 @@ GOTOLINE = "Gehe zu Zeile",
 GOTOLINE2 = "Gehe zu Zeile:",
 INTERNALON = "Int.sc ist an",
 INTERNALOFF = "Int.sc ist aus",
+INTERNALON_LONG = "Interner Skript-Modus eingeschaltet",
+INTERNALOFF_LONG = "Interner Skript-Modus ausgeschaltet",
 INTERNALYESBARS = "say(-1) int.sc",
 INTERNALNOBARS = "Ladeskript int.sc",
 VIEW = "Ansehen",
@@ -551,7 +553,6 @@ PLAYTESTINGOPTIONS = "Spieltest",
 PLAYTESTING_EXECUTABLE_NOTSET = "Sie haben noch keine ausführbare Datei für $1 zum Spieltesten festgelegt.\nVed wird danach fragen, wenn du zum ersten Mal ein $2-Level testest.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "Die ausführbare Datei $1, die für den Spieltest verwendet werden soll, ist:\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition wird nicht mehr gewartet. Es zu verwenden wird nicht empfohlen, und die Unterstützung für VVVVVV-CE-Level wird in einer zukünftigen Version aus Ved entfernt.\n\nFür mehr Informationen, siehe https://vsix.dev/vce/status/",
 VCE_REMOVED = "VVVVVV: Community Edition wird nicht mehr gewartet und VVVVVV-CE-Level werden nicht mehr von Ved unterstützt. Dieses Level wird wie ein normales VVVVVV-Level behandelt. Für mehr Informationen, siehe https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Alle Plugins",
@@ -561,6 +562,28 @@ ALL_PLUGINS_NOPLUGINS = "Du hast noch keine Plugins.",
 
 PLUGIN_NOT_SUPPORTED = "[Dieses Plugin ist nicht unterstützt, da Ved $1 oder höher benötigt wird!]\\r",
 PLUGIN_AUTHOR_VERSION = "von $1, Version $2", -- by Person, version 1.0.0
+
+CREATE_LOAD_SCRIPT = "Neues Ladeskript",
+
+-- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+CREATE_LOAD_SCRIPT_NO = "Nein",
+CREATE_LOAD_SCRIPT_RUNONCE = "Einmal",
+CREATE_LOAD_SCRIPT_REPEATING = "Wiederholend",
+
+-- Explanation for "No"
+CREATE_LOAD_SCRIPT_TITLE_NO = "Kein neues Ladeskript",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "Dieses Terminal wird direkt zum Skript zeigen.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "Diese Skriptbox wird direkt zum Skript zeigen.",
+
+-- Explanation for "Run once"
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Neues Einmal-Ladeskript",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "Dieses Terminal wird zu einem neuen Ladeskript zeigen welches das echte Skript nur einmal lädt in einem Spieldurchlauf. Ved wird eine unbenutzte Flag wählen.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Diese Skriptbox wird zu einem neuen Ladeskript zeigen welches das echte Skript nur einmal lädt in einem Spieldurchlauf. Ved wird eine unbenutzte Flag wählen.",
+
+-- Explanation for "Repeating"
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Neues wiederholende Ladeskript",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Dieses Terminal wird zu einem neuen Ladeskript zeigen, welches wiederholend das echte Skript lädt.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Diese Skriptbox wird zu einem neuen Ladeskript zeigen, welches wiederholend das echte Skript lädt.",
 
 }
 

@@ -655,7 +655,7 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 	end
 end
 
-function radio(selected, x, y, key, label, onclickfunc)
+function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
 	local clickable_w = 8+32+font8:getWidth(label)
 	hoverdraw(
 		selected and image.radioon_hq or image.radiooff_hq,
@@ -667,13 +667,19 @@ function radio(selected, x, y, key, label, onclickfunc)
 	ved_print(label, x+16+8, y+4)
 	love.graphics.setColor(255,255,255)
 
-	if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
-		onclickfunc(key)
-		mousepressed = true
+	if nodialog and mouseon(x, y, clickable_w, 16) then
+		if onhoverfunc ~= nil then
+			onhoverfunc(key)
+		end
+
+		if not mousepressed and love.mouse.isDown("l") then
+			onclickfunc(key)
+			mousepressed = true
+		end
 	end
 end
 
-function checkbox(selected, x, y, key, label, onclickfunc)
+function checkbox(selected, x, y, key, label, onclickfunc, onhoverfunc)
 	local clickable_w = 8+32+font8:getWidth(label)
 	hoverdraw(
 		selected and image.checkon_hq or image.checkoff_hq,
@@ -681,9 +687,15 @@ function checkbox(selected, x, y, key, label, onclickfunc)
 	)
 	ved_print(label, x+16+8, y+4)
 
-	if nodialog and not mousepressed and mouseon(x, y, clickable_w, 16) and love.mouse.isDown("l") then
-		onclickfunc(key, not selected)
-		mousepressed = true
+	if nodialog and mouseon(x, y, clickable_w, 16) then
+		if onhoverfunc ~= nil then
+			onhoverfunc(key)
+		end
+
+		if not mousepressed and love.mouse.isDown("l") then
+			onclickfunc(key, not selected)
+			mousepressed = true
+		end
 	end
 end
 
@@ -1142,6 +1154,24 @@ function saveroomname()
 	finish_undo("ROOMNAME")
 end
 
+function get_load_script_creation_mode()
+	local mode = create_load_script
+	if keyboard_eitherIsDown("shift") then
+		if mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then
+			mode = LOAD_SCRIPT_CREATION_MODE.NO
+		else
+			mode = LOAD_SCRIPT_CREATION_MODE.RUNONCE
+		end
+	elseif keyboard_eitherIsDown(ctrl) then
+		if mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then
+			mode = LOAD_SCRIPT_CREATION_MODE.NO
+		else
+			mode = LOAD_SCRIPT_CREATION_MODE.REPEATING
+		end
+	end
+	return mode
+end
+
 function endeditingroomtext(currently_targetting)
 	-- currently_targetting may be specified if input is being ended BECAUSE we're going to
 	-- modify an entity, to bypass the entity getting deleted now for having an empty data.
@@ -1162,7 +1192,8 @@ function endeditingroomtext(currently_targetting)
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
 				local warnloadscriptexists = false
 				local loadscriptname = langkeys(s.loadscriptname, {input})
-				if keyboard_eitherIsDown("shift") then -- flag
+				local create_mode = get_load_script_creation_mode()
+				if create_mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then -- flag
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
@@ -1200,7 +1231,7 @@ function endeditingroomtext(currently_targetting)
 						temporaryroomnametimer = 90
 					end
 					entitydata[editingroomtext].data = loadscriptname
-				elseif keyboard_eitherIsDown(ctrl) then -- trinkets
+				elseif create_mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then -- trinkets
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
@@ -3217,6 +3248,52 @@ function isclear(key)
 	return key == "numlock" and love.system.getOS() == "OS X"
 end
 
+function tooltip_box_dimensions(title, explanation, icon)
+	local box_w = math.max(
+		256,
+		font8:getWidth(title) + 16
+	)
+	local icon_w, icon_h = 0, 0
+	if icon ~= nil then
+		icon_w, icon_h = icon:getWidth()+8, icon:getHeight()
+	end
+	local expl_w = box_w - 16 - icon_w
+	local _, lines = font8:getWrap(explanation, expl_w)
+	if type(lines) == "table" then
+		lines = #lines
+	end
+	local box_h = 32+math.max(
+		icon_h,
+		lines*font8:getHeight()
+	)
+
+	return box_w, box_h
+end
+
+function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, title_r, title_g, title_b)
+	local icon_w = 0
+	if icon ~= nil then
+		icon_w = icon:getWidth()+8
+	end
+	local expl_w = box_w - 16 - icon_w
+
+	love.graphics.setColor(64,64,64,128)
+	love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
+	love.graphics.setColor(title_r, title_g, title_b ,255)
+	love.graphics.print(title, box_x+8, box_y+8)
+	if icon ~= nil then
+		love.graphics.draw(icon, box_x+8, box_y+24)
+	end
+	love.graphics.setColor(255,255,255,255)
+	love.graphics.printf(
+		explanation,
+		box_x + 8 + icon_w,
+		box_y + 24,
+		expl_w,
+		"left"
+	)
+end
+
 function draw_script_warn_light(id, x, y, active)
 	local light = script_warn_lights[id]
 	local active_hovering = false
@@ -3237,33 +3314,16 @@ function draw_script_warn_light(id, x, y, active)
 	love.graphics.draw(light.img, x, y)
 
 	if active_hovering then
-		local box_w = math.max(
-			256,
-			font8:getWidth(L[light.lang_title]) + 16
-		)
-		local expl_w = box_w - 24 - light.img_hq:getWidth()
-		local _, lines = font8:getWrap(L[light.lang_expl], expl_w)
-		if type(lines) == "table" then
-			lines = #lines
-		end
-		local box_h = 32+math.max(
-			light.img_hq:getHeight(),
-			lines*font8:getHeight()
-		)
+		local box_w, box_h = tooltip_box_dimensions(L[light.lang_title], L[light.lang_expl], light.img_hq)
 		local box_x, box_y = x+light.img:getWidth()-box_w, y+light.img:getHeight()+1
 
-		love.graphics.setColor(64,64,64,128)
-		love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
-		love.graphics.setColor(255,12,12,255)
-		love.graphics.print(L[light.lang_title], box_x+8, box_y+8)
-		love.graphics.draw(light.img_hq, box_x+8, box_y+24)
-		love.graphics.setColor(255,255,255,255)
-		love.graphics.printf(
+		tooltip_box_draw(
+			L[light.lang_title],
 			L[light.lang_expl],
-			box_x + light.img_hq:getWidth() + 16,
-			box_y + 24,
-			expl_w,
-			"left"
+			light.img_hq,
+			box_x, box_y,
+			box_w, box_h,
+			255,12,12
 		)
 	end
 end

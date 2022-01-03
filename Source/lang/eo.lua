@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-01-01 23:00:18 (CET)
+--- Last converted: 2022-01-03 19:57:11 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -132,6 +132,8 @@ GOTOLINE = "Salti al linio",
 GOTOLINE2 = "Salti al linio:",
 INTERNALON = "Int.skr: JES",
 INTERNALOFF = "Int.skr: NE",
+INTERNALON_LONG = "Reĝimo de interna skriptado estas ebligita",
+INTERNALOFF_LONG = "Reĝimo de interna skriptado estas malebligita",
 INTERNALYESBARS = "Int.skr say(-1)",
 INTERNALNOBARS = "Int.skr ŝargskripta",
 VIEW = "Vidi",
@@ -563,7 +565,6 @@ PLAYTESTINGOPTIONS = "Ludtestado",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vi ne jam agordis ruleblan dosieron de $1 por uzi dum ludtestado.\nVed petos tion dum ludi nivelon de $2 unuafoje.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "La rulebla dosiero de $1 por uzi dum ludtestado estas agordita al:\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition ne plu estas subtenata. Uzi ĝin ne estas rekomendate, kaj subteno por niveloj de VVVVVV-CE foriĝos de Ved en versio estonteca.\n\nPor pli da informoj, vidu https://vsix.dev/vce/status/",
 VCE_REMOVED = "VVVVVV: Community Edition ne plu estas prilaborata, kaj subteno por niveloj de VVVVVV-CE estas forigita de Ved. Tiu ĉi nivelo estos traktata kiel normalan nivelon de VVVVVV. Por pli da informoj, vidu https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Ĉiuj aldonaĵoj",
@@ -573,6 +574,28 @@ ALL_PLUGINS_NOPLUGINS = "Vi ne jam havas aldonaĵojn.",
 
 PLUGIN_NOT_SUPPORTED = "[Tiu ĉi aldonaĵo ne estas subtenata, ĉar necesas Ved $1 aŭ pli nove!]\\r",
 PLUGIN_AUTHOR_VERSION = "de $1, versio $2", -- by Person, version 1.0.0
+
+CREATE_LOAD_SCRIPT = "Krei ŝargskripton",
+
+-- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+CREATE_LOAD_SCRIPT_NO = "Neniun",
+CREATE_LOAD_SCRIPT_RUNONCE = "Unufojan",
+CREATE_LOAD_SCRIPT_REPEATING = "Ripetan",
+
+-- Explanation for "No"
+CREATE_LOAD_SCRIPT_TITLE_NO = "Ne krei ŝargskripton",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "Tiu ĉi terminalo rekte indikos al la skripto.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "Tiu ĉi skriptskatolo rekte indikos al la skripto.",
+
+-- Explanation for "Run once"
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Krei ŝargskripton por ruli unu fojon",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "Tiu ĉi terminalo indikos al nova ŝargskripto, kiu ŝargas la veran skripton nur unu fojon en ludado. Ved elektos neuzatan flagon.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Tiu ĉi skriptskatolo indikos al nova ŝargskripto, kiu ŝargas la veran skripton nur unu fojon en ludado. Ved elektos neuzatan flagon.",
+
+-- Explanation for "Repeating"
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Krei ripetantan ŝargskripton",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Tiu ĉi terminalo indikos al nova ŝargskripto, kiu senkondiĉe ŝargas la veran skripton.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Tiu ĉi skriptskatolo indikos al nova ŝargskripto, kiu senkondiĉe ŝargas la veran skripton.",
 
 }
 

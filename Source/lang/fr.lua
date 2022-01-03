@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2022-01-01 23:00:18 (CET)
+--- Last converted: 2022-01-03 19:57:12 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -124,6 +124,8 @@ GOTOLINE = "Aller à la ligne",
 GOTOLINE2 = "Aller à la ligne :",
 INTERNALON = "Sc.int est activé",
 INTERNALOFF = "Sc.int est désactivé",
+INTERNALON_LONG = "Le mode de scripting interne est activé",
+INTERNALOFF_LONG = "Le mode de scripting interne est désactivé",
 INTERNALYESBARS = "say(-1) sc.int",
 INTERNALNOBARS = "Chgt script sc.int",
 VIEW = "Vue",
@@ -555,7 +557,6 @@ PLAYTESTINGOPTIONS = "Test de jeu",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de $1 à utiliser pour le test de jeu.\nVed vous le demandera lors du premier test d'un niveau de $2.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "L'exécutable de $1 à utiliser pour les tests de jeu est :\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition n'est plus maintenu. L'utiliser n'est pas recommandé, et le support pour les niveaux de VVVVVV-CE sera enlevé de Ved dans une version future.\n\nPour plus d'informations, allez sur https://vsix.dev/vce/status/",
 VCE_REMOVED = "VVVVVV: Community Edition n'est plus maintenu, et le support pour les niveaux de VVVVVV-CE a été supprimé de Ved. Ce niveau est traité comme un niveau de VVVVVV standard. Pour plus d'informations, allez sur https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "Tous les modules externes",
@@ -565,6 +566,28 @@ ALL_PLUGINS_NOPLUGINS = "Vous n'avez pas encore de module externe.",
 
 PLUGIN_NOT_SUPPORTED = "[Ce module externe n'est pas supporté car il requiert Ved $1 ou une version ultérieure!]\\r",
 PLUGIN_AUTHOR_VERSION = "par $1, version $2", -- by Person, version 1.0.0
+
+CREATE_LOAD_SCRIPT = "Créer un script de chargement",
+
+-- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+CREATE_LOAD_SCRIPT_NO = "Non",
+CREATE_LOAD_SCRIPT_RUNONCE = "Unique",
+CREATE_LOAD_SCRIPT_REPEATING = "Basique",
+
+-- Explanation for "No"
+CREATE_LOAD_SCRIPT_TITLE_NO = "Ne pas créer de script de chargement",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "Ce terminal va directement pointer vers le script.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "Cette boîte de script va directement pointer vers le script.",
+
+-- Explanation for "Run once"
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Créer un script de chargement à ne lancer qu'une seule fois",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "Ce terminal va pointer vers un nouveau script de chargement qui charge le vrai script une seule fois. Ved choisira un drapeau inutilisé.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Cette boîte de script va pointer vers un nouveau script de chargement qui charge le vrai script une seule fois. Ved choisira un drapeau inutilisé.",
+
+-- Explanation for "Repeating"
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Créer un script de chargement répété",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Ce terminal va pointer vers un nouveau script de chargement qui charge le script réel sans condition.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Cette boîte de script va pointer vers un nouveau script de chargement qui charge le script réel sans condition.",
 
 }
 

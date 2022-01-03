@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-01-01 23:00:17 (CET)
+--- Last converted: 2022-01-03 19:57:11 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -120,6 +120,8 @@ GOTOLINE = "Ir a linea",
 GOTOLINE2 = "Ir a linea:",
 INTERNALON = "Sc.Interno activado",
 INTERNALOFF = "Sc.Interno desactivado",
+INTERNALON_LONG = "Internal scripting mode is enabled",
+INTERNALOFF_LONG = "Internal scripting mode is disabled",
 INTERNALYESBARS = "Sc.Interno say(-1)",
 INTERNALNOBARS = "Sc.Interno Loadscript",
 VIEW = "Ver",
@@ -551,7 +553,6 @@ PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
 
-VCE_DEPRECATED = "VVVVVV: Community Edition is no longer being maintained. Using it is not recommended, and support for VVVVVV-CE levels will be removed from Ved in a future version.\n\nFor more information, see https://vsix.dev/vce/status/",
 VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
 ALL_PLUGINS = "All plugins",
@@ -561,6 +562,28 @@ ALL_PLUGINS_NOPLUGINS = "You do not have any plugins yet.",
 
 PLUGIN_NOT_SUPPORTED = "[This plugin is not supported because it requires Ved $1 or higher!]\\r",
 PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
+
+CREATE_LOAD_SCRIPT = "Create load script",
+
+-- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+CREATE_LOAD_SCRIPT_NO = "No",
+CREATE_LOAD_SCRIPT_RUNONCE = "Run once",
+CREATE_LOAD_SCRIPT_REPEATING = "Repeating",
+
+-- Explanation for "No"
+CREATE_LOAD_SCRIPT_TITLE_NO = "Don't create load script",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "This terminal will directly point to the script.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "This script box will directly point to the script.",
+
+-- Explanation for "Run once"
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Create load script to run once",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag.",
+
+-- Explanation for "Repeating"
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Create repeating load script",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "This terminal will point to a new load script, which unconditionally loads the real script.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "This script box will point to a new load script, which unconditionally loads the real script.",
 
 }
 

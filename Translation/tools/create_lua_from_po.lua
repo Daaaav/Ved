@@ -236,7 +236,7 @@ for lang_code, lang_name in pairs(all_languages) do
 				elseif line:match("^#%. .*$") ~= nil then
 					-- #. developer's comment
 					handled = true
-				elseif line:match("^# .*$") ~= nil then
+				elseif line:match("^# .*$") ~= nil or line == "#" then
 					-- # translator comment
 					handled = true
 				elseif line:match("^#~ .*$") ~= nil then

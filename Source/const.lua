@@ -429,3 +429,9 @@ UNRE = {
 	INSERT = 1,
 	DELETE = 2,
 }
+
+LOAD_SCRIPT_CREATION_MODE = {
+	NO = 0,
+	RUNONCE = 1,
+	REPEATING = 2,
+}
