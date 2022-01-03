@@ -287,6 +287,9 @@ function love.load()
 		stat_trinkets = love.graphics.newImage("images/stat_trinkets.png"),
 		stat_crewmates = love.graphics.newImage("images/stat_crewmates.png"),
 		stat_entities = love.graphics.newImage("images/stat_entities.png"),
+
+		intsc_off = love.graphics.newImage("images/intsc_off.png"),
+		intsc_on = love.graphics.newImage("images/intsc_on.png"),
 	}
 
 	script_warn_lights = {

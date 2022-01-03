@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-01-03 19:57:11 (CET)
+--- Last converted: 2022-01-03 22:30:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -120,8 +120,8 @@ GOTOLINE = "Ir a linea",
 GOTOLINE2 = "Ir a linea:",
 INTERNALON = "Sc.Interno activado",
 INTERNALOFF = "Sc.Interno desactivado",
-INTERNALON_LONG = "Internal scripting mode is enabled",
-INTERNALOFF_LONG = "Internal scripting mode is disabled",
+INTERNALON_LONG = "Sc.Interno activado",
+INTERNALOFF_LONG = "Sc.Interno desactivado",
 INTERNALYESBARS = "Sc.Interno say(-1)",
 INTERNALNOBARS = "Sc.Interno Loadscript",
 VIEW = "Ver",

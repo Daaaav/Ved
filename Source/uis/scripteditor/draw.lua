@@ -2,7 +2,7 @@
 
 return function()
 	love.graphics.setColor(255,255,255,255)
-	ved_print(L.SCRIPTEDITOR .. " - " .. scriptname, 8, 8)
+	ved_print(L.SCRIPTEDITOR .. " - " .. scriptname, 28, 8)
 
 	-- This can roll over, prevent that!
 	local textlinestogo = 0
@@ -167,6 +167,32 @@ return function()
 		4,
 		scrwarncache_warn_name
 	)
+
+	-- Simplified/Internal scripting mode icon
+	local ic_icon, ic_explanation, ic_r, ic_g, ic_b
+	if internalscript or cutscenebarsinternalscript then
+		ic = image.intsc_on
+		ic_explanation = L.INTERNALON_LONG
+		ic_r, ic_g, ic_b = 64, 64, 255
+	else
+		ic = image.intsc_off
+		ic_explanation = L.INTERNALOFF_LONG
+		ic_r, ic_g, ic_b = 0, 160, 0
+	end
+	love.graphics.setColor(ic_r, ic_g, ic_b, 255)
+	love.graphics.draw(ic, 8, 4)
+
+	if mouseon(8, 4, script_warn_lights.direct_reference.img:getDimensions()) then
+		local box_w, box_h = tooltip_box_dimensions(ic_explanation, "", nil)
+		tooltip_box_draw(
+			ic_explanation,
+			"",
+			nil,
+			8, 4+script_warn_lights.direct_reference.img:getHeight()+1,
+			box_w, box_h,
+			ic_r, ic_g, ic_b
+		)
+	end
 
 	love.graphics.setColor(255,255,255,255)
 

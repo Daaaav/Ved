@@ -3267,6 +3267,10 @@ function tooltip_box_dimensions(title, explanation, icon)
 		lines*font8:getHeight()
 	)
 
+	if lines == 0 then
+		box_h = box_h - 8
+	end
+
 	return box_w, box_h
 end
 
@@ -3279,7 +3283,7 @@ function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, 
 
 	love.graphics.setColor(64,64,64,128)
 	love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
-	love.graphics.setColor(title_r, title_g, title_b ,255)
+	love.graphics.setColor(title_r, title_g, title_b, 255)
 	love.graphics.print(title, box_x+8, box_y+8)
 	if icon ~= nil then
 		love.graphics.draw(icon, box_x+8, box_y+24)

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-01-03 19:57:11 (CET)
+--- Last converted: 2022-01-03 22:30:30 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
