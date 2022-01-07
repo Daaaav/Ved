@@ -6,6 +6,7 @@ languages = {
 	de = "de",
 	fr = "fr",
 	es_AR = "es_AR",
+	id = "id",
 }
 
 langdir_path = "../../Source/lang" -- must not include a trailing /
@@ -33,9 +34,10 @@ function assert_lang_arg(argnum, allownone)
 	return true
 end
 
+orig_package_path = package.path
 function load_lua_lang(lang)
 	-- Load the language file that is given by the first argument
-	package.path = package.path .. ";" .. langdir_path .. "/" .. languages[lang] .. ".lua"
+	package.path = orig_package_path .. ";" .. langdir_path .. "/" .. languages[lang] .. ".lua"
 	require(languages[lang] .. ".lua")
 end
 

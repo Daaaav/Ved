@@ -15,12 +15,10 @@
 	template .pot files are read and are filled with translated
 	strings from the given language
 
-	This script is kinda outdated in two ways:
-	- It wasn't updated for supporting plural forms
-	- It wasn't updated for supporting split help pages
-	So these things would need to be done manually. Not much of a problem,
-	since this should be rarely needed anyway, and the vast majority of the
-	file would be handled.
+	This script was also updated to handle the split help pages, but it does
+	not handle any of the plural forms, so those will need to be done manually.
+	Not much of a problem, since this should be rarely needed anyway, and the
+	plural forms are only a small part of the language files.
 ]]
 
 require("inc")
@@ -35,24 +33,87 @@ end
 os.execute("mkdir out/po/ved/" .. arg[1] .. "/ -p") -- it must be a language code
 os.execute("mkdir out/po/ved_help/" .. arg[1] .. "/ -p")
 
+-- First make sure we can copy the English help articles...
+load_lua_lang("templates")
+english_help = {}
+
+for k,v in pairs(LH) do
+	local paragraphs, blanklines = split_help_page(v.cont)
+	english_help[v.splitid] = {
+		splitid = v.splitid,
+		paragraphs = paragraphs,
+		blanklines = blanklines
+	}
+end
+
 -- Load the language
 load_lua_lang(arg[1])
 
 local count_translated = 1 -- count fontpng_ascii as translated
 local count_total = 0
 
-for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
+local pofiles = {"ved_main", "ved_help", "ved_lua_func"}
+
+for k,v in pairs(english_help) do
+	table.insert(pofiles, k)
+end
+
+for _, pofile in pairs(pofiles) do
 	local po_list = {}
 
 	local current_value = nil
 	local current_english = nil
 
+	local split_help_mode = english_help[pofile] ~= nil
+
 	local project = "ved"
-	if pofile == "ved_help" then
+	if pofile == "ved_help" or split_help_mode then
 		project = "ved_help"
 	end
 
+	local help_ix
+	local help_map = {}
+	if split_help_mode then
+		for k,v in pairs(LH) do
+			if v.splitid == pofile then
+				help_ix = k
+				break
+			end
+		end
+
+		local paragraphs, blanklines = split_help_page(LH[help_ix].cont)
+
+		if #paragraphs ~= #english_help[pofile].paragraphs
+		or #blanklines ~= #english_help[pofile].blanklines then
+			print("WARNING: paragraph counts for " .. pofile .. " not equal between languages! Skipping file, needs to be done manually")
+			break
+		end
+
+		for k,v in pairs(paragraphs) do
+			local eng_paragraph = english_help[pofile].paragraphs[k]
+			local _, len_eng = eng_paragraph:gsub("\n", "")
+			local _, len_tra = v:gsub("\n", "")
+			if len_tra < len_eng - 2 or len_tra > len_eng + 2 then
+				print("WARNING: Paragraph " .. k .. " (1-ix) in " .. pofile .. " is a whopping " .. math.abs(len_eng - len_tra) .. " lines longer/shorter")
+			end
+
+			local eng_escaped = escape_po_str(eng_paragraph)
+			if help_map[eng_escaped] == nil then
+				help_map[eng_escaped] = escape_po_str(v)
+			end
+		end
+
+		for k,v in pairs(blanklines) do
+			local eng_blankline = english_help[pofile].blanklines[k]
+			if v ~= eng_blankline then
+				print("WARNING: Spacing between paragraphs " .. (k-1) .. " and " .. k .. " (1-ix) in " .. pofile .. " is different: " .. eng_blankline .. "/" .. v)
+			end
+		end
+	end
+
+	local line_number = 0
 	for line in io.lines("out/po/" .. project .. "/templates/" .. pofile .. ".pot") do
+		line_number = line_number + 1
 		local export_line = line
 		local handled = false
 
@@ -64,12 +125,26 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 		elseif line:match("^msgid \".*\"$") ~= nil then
 			-- English string
 			current_english = line:match("^msgid \"(.*)\"$")
+
+			if split_help_mode and current_value == nil then
+				current_value = help_map[current_english]
+
+				if current_value == nil then
+					print("WARNING: English paragraph in " .. pofile .. " can't be found!")
+				end
+			end
+
+			handled = true
+		elseif line:match("^msgid_plural \".*\"$") ~= nil then
+			-- English string (plural)
 			handled = true
 		elseif line:match("^msgctxt \".*\"$") ~= nil then
 			-- Key
 			local key = line:match("^msgctxt \"(.*)\"$")
 
-			if key == "fontpng_ascii" then
+			if split_help_mode and key == "LHS." .. pofile .. ".subj" then
+				current_value = LH[help_ix].subj
+			elseif key == "fontpng_ascii" then
 				print("You'll need to change the value of fontpng_ascii by hand.")
 			else
 				-- Actually get the value from this
@@ -93,7 +168,9 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 				if val == nil then
 					print("WARNING: Value of " .. key .. " is nil")
 				else
-					if type(val) ~= "string" then
+					if type(val) == "table" and key:sub(1,6) == "L_PLU." then
+						-- Ignore, it's just a plural string that we ignore
+					elseif type(val) ~= "string" then
 						print("WARNING: Type of " .. key .. " is " .. type(val))
 					else
 						current_value = escape_po_str(val)
@@ -103,22 +180,29 @@ for _, pofile in pairs({"ved_main", "ved_help", "ved_lua_func"}) do
 
 			handled = true
 		elseif line == "msgstr \"\"" then
-			if current_value ~= nil and current_value ~= current_english then
-				-- If it's the same, count as not translated, just in case
-				-- (plus by definition it'll be the same if it's English)
+			if current_value ~= nil then
+				if current_value == current_english then
+					if not split_help_mode then
+						-- If it's the same, warn, just in case
+						print("Is \"" .. current_value .. "\" the same in both languages?")
+					end
+				else
+					count_translated = count_translated + 1
+				end
 				export_line = "msgstr \"" .. current_value .. "\""
-				count_translated = count_translated + 1
 			end
 			count_total = count_total + 1
 			current_value = nil
 			current_english = nil
 
 			handled = true
+		elseif line == "msgstr[0] \"\"" or line == "msgstr[1] \"\"" then
+			handled = true
 		end
 
 		if not handled then
-			print("WARNING: Line " .. line_number .. " not handled:")
-			print(line)
+			print("WARNING: Line " .. line_number .. " in " .. pofile .. ".pot not handled:")
+			print("  " .. line)
 		end
 		table.insert(po_list, export_line)
 	end
@@ -138,6 +222,8 @@ msgstr ""
 	end
 end
 
+print("You'll need to do the plural strings by hand.")
+
 if count_total == 0 then
 	print("Total is 0?")
 else
@@ -147,3 +233,5 @@ else
 end
 
 print("If you want to import it into Pootle, please download the empty files from there, and fill in the X-Pootle-Revision headers in each file correspondingly! Better not use revision 0, seems like that triggers everything to be suggestions instead of submissions.")
+
+print("Of course, diff the lua->po->lua version with the original .lua")
