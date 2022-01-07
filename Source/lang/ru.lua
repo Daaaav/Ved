@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2022-01-03 22:30:30 (CET)
+--- Last converted: 2022-01-07 02:50:25 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2813,6 +2813,7 @@ cont = [[
 Перевод на немецкий: r00ster
 Перевод на французский: RhenaudTheLukark
 Перевод на испанский: Valso22/naether
+Indonesian translation: _march31onne/Marchionne Evangelisti
 
 
 Отдельная благодарность:\h#
@@ -2823,7 +2824,6 @@ cont = [[
 Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
 \
 \
-
 
 
 

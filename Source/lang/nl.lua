@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2022-01-03 22:30:31 (CET)
+--- Last converted: 2022-01-07 02:50:27 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2811,6 +2811,7 @@ Esperanto vertaling: Hejmstel
 Duitse vertaling: r00ster
 Franse vertaling: RhenaudTheLukark
 Spaanse vertaling: Valso22/naether
+Indonesische vertaling: _march31onne/Marchionne Evangelisti
 
 
 Met dank aan:\h#
@@ -2821,7 +2822,6 @@ Terry Cavanagh voor het maken van VVVVVV
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mĳ heeft
 gemotiveerd om dit te maken!
 \
-
 
 
 

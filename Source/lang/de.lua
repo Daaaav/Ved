@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2022-01-03 22:30:30 (CET)
+--- Last converted: 2022-01-07 02:50:26 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2756,6 +2756,7 @@ Esperanto Übersetzung: Hejmstel
 Deutsche Übersetzung: r00ster
 Französische Übersetzung: RhenaudTheLukark
 Spanische Übersetzung: Valso22/naether
+Indonesian translation: _march31onne/Marchionne Evangelisti
 
 
 Besonderen Dank an:\h#
@@ -2767,7 +2768,6 @@ Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
 machen!
 \
 \
-
 
 
 License\h#

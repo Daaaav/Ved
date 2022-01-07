@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-01-03 22:30:30 (CET)
+--- Last converted: 2022-01-07 02:50:25 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2762,6 +2762,7 @@ Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
 Spanish translation: Valso22/naether
+Indonesian translation: _march31onne/Marchionne Evangelisti
 
 
 Special thanks to:\h#
@@ -2773,7 +2774,6 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 \
 \
 \
-
 
 
 License\h#

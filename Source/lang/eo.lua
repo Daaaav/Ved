@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-01-03 22:30:30 (CET)
+--- Last converted: 2022-01-07 02:50:26 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2779,6 +2779,7 @@ Esperanta traduko: Stelpjo
 Germanlingva traduko: r00ster
 Franclingva traduko: RhenaudTheLukark
 Hispanlingva traduko: Valso22/naether
+Indonesian translation: _march31onne/Marchionne Evangelisti
 
 
 Special-dank' al:\h#
@@ -2789,7 +2790,6 @@ Terry Cavanagh pro lia faro de VVVVVV
 Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion!
 \
 \
-
 
 
 

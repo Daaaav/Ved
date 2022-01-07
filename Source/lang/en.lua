@@ -674,7 +674,7 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "A"
+[3] = "A",
 
 }
 
@@ -2742,6 +2742,7 @@ Esperanto translation: Hejmstel
 German translation: r00ster
 French translation: RhenaudTheLukark
 Spanish translation: Valso22/naether
+Indonesian translation: _march31onne/Marchionne Evangelisti
 
 
 Special thanks to:\h#
@@ -2753,7 +2754,6 @@ Everyone who reported bugs, came up with ideas and motivated me to make this!
 \
 \
 \
-
 
 
 License\h#
