@@ -69,7 +69,7 @@ function ogg_vorbis_metadata(filedata)
 		-- Read `size` bytes of Vorbis data and advance the offset.
 		-- Reads across Ogg pages if necessary
 		-- Return char[size] of data
-		local bytes = ffi.new("char[?]",size)
+		local bytes = ffi.new("unsigned char[?]",size)
 
 		local size_remaining = size
 		while size_remaining > 0 do
@@ -224,7 +224,6 @@ function ogg_vorbis_metadata(filedata)
 		loop_start, loop_length, loop_end = 0, 0, 0
 	end
 
-	-- Possible todo: also check loop_end <= full_length
 	if loop_end > 0 and loop_start < loop_end then
 		audio_metadata.loop_start = loop_start
 		audio_metadata.loop_length = loop_length

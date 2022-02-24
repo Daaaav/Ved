@@ -8,6 +8,11 @@ function love.update(dt)
 		focus_regained_timer = 0
 	end
 
+	local current_audio = music_get_audio_playing()
+	if current_audio ~= nil and current_audio.update ~= nil then
+		current_audio:update()
+	end
+
 	if playtesting_active then
 		local chanmessage = playtestthread_outchannel:pop()
 

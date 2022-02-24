@@ -1,4 +1,5 @@
 require("ogg_vorbis_metadata")
+require("music_vedsource")
 
 local ffi = require("ffi")
 
@@ -221,14 +222,16 @@ function loadmusicsong(file, song, data, edited)
 		vvv_metadata=nil,
 		audio=nil,
 	}
-	local m_success, maybe_source = pcall(love.audio.newSource, m_filedata, "stream")
-	if not m_success then
-		cons("Could not load song " .. song .. " from " .. file ..  " because " .. maybe_source)
+
+	local vedsource
+	if audio_metadata.loop_start ~= nil and love_version_meets(11) then
+		vedsource = cVedQueueableSource:new()
 	else
-		music[file][song].audio = maybe_source
-		if file ~= "sounds" and song ~= 0 and song ~= 7 then
-			music[file][song].audio:setLooping(true)
-		end
+		vedsource = cVedSource:new()
+	end
+	local init_success = vedsource:init(file, song)
+	if init_success then
+		music[file][song].audio = vedsource
 	end
 end
 
@@ -352,11 +355,13 @@ function playmusic(file, song)
 		return false
 	end
 
-	audio:play()
-	currentmusic_file = file
-	currentmusic = song
+	if audio:play() then
+		currentmusic_file = file
+		currentmusic = song
+		return true
+	end
 
-	return true
+	return false
 end
 
 function stopmusic()

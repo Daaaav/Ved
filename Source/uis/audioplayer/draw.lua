@@ -73,12 +73,15 @@ return function()
 			if love.mouse.isDown("l") and not mousepressed and nodialog then
 				if mouseon(musicx, 32+24*my, 16, 16) then
 					-- Play
-					if audio == nil then
-						dialog.create(soundviewer and L.SOUNDPLAYERROR or L.MUSICPLAYERROR)
-					else
-						playmusic(musicplayerfile, m)
-						mousepressed = true
+					local success = false
+					if audio ~= nil then
+						success = playmusic(musicplayerfile, m)
 					end
+
+					if not success then
+						dialog.create(soundviewer and L.SOUNDPLAYERROR or L.MUSICPLAYERROR)
+					end
+					mousepressed = true
 				elseif musiceditor and mouseon(musicx+16, 32+24*my, 16, 16) then
 					-- Song metadata (editor)
 					dialog.create(
@@ -177,10 +180,7 @@ return function()
 		hoverdraw(image.sound_stop, 32, cura_y, 16, 16)
 		hoverdraw(image.sound_rewind, 48, cura_y, 16, 16)
 		local elapsed = current_audio:tell()
-		local duration
-		if love_version_meets(10) then
-			duration = current_audio:getDuration()
-		end
+		local duration = current_audio:getDuration()
 		if duration ~= nil and duration ~= 0 then
 			-- LÖVE can sometimes fail to reset the time to 0 when looping if we started playing close to the end
 			elapsed = elapsed % duration
