@@ -55,11 +55,11 @@ function dodisplaysettings(reload)
 		if love_version_meets(9,2) then
 			local zd,ze,zf = love.window.getPosition()
 			local zwidth,zheight = love.window.getDesktopDimensions(zf)
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
-			love.window.setPosition((zwidth-za*s.pscale)/2,(zheight-zb*s.pscale)/2,zf)
-		else
-			love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+			zc.x = (zwidth-za*s.pscale)/2
+			zc.y = (zheight-zb*s.pscale)/2
+			zc.display = zf
 		end
+		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
 	end
 
 	if s.psmallerscreen then

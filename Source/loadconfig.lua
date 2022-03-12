@@ -340,13 +340,6 @@ function constraindisplaysettings(reload)
 		end
 	end
 
-	if not reload then
-		if s.smallerscreen then
-			_, _, graphicsflags = love.window.getMode()
-			love.window.setMode(800, 480, graphicsflags)
-		end
-	end
-
 	s.pscale = s.scale
 	s.psmallerscreen = s.smallerscreen
 end

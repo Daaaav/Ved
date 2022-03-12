@@ -458,16 +458,6 @@ function love.keypressed(key)
 				end
 			end
 			cons("\n***********************************\n* E N D                           *\n***********************************\n")
-			--test = test .. test -- temporary crash on purpose
-		else
-			--[[
-			if love.window.getFullscreen() then
-				-- It is already fullscreen.
-				love.window.setMode(64+640+192, 480, {fullscreen=false})
-			else
-				love.window.setMode(64+640+192, 480, {fullscreen=true})
-			end
-			]]
 		end
 	elseif allowdebug and (key == "f12") then
 		tostate(0)
