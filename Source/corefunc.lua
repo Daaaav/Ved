@@ -196,9 +196,25 @@ function create_fallback_window()
 	-- For example, early crash, incompatible LÖVE - hence the ancient LÖVE 0.8- support!
 	if love_version_meets(9) then
 		love.window.setMode(896, 480)
-		love.window.setTitle("Ved")
 	else
 		love.graphics.setMode(896, 480)
-		love.graphics.setCaption("Ved")
+	end
+
+	init_window_properties()
+end
+
+function init_window_properties()
+	-- Again, compatibility for every LÖVE version under the sun
+	local title = "Ved " .. ved_ver_human()
+	local icon = love.image.newImageData("tools/prepared/1.png")
+
+	if love_version_meets(9) then
+		love.window.setTitle(title)
+		love.window.setIcon(icon)
+	else
+		love.graphics.setCaption(title)
+		if love.graphics.setIcon ~= nil then
+			love.graphics.setIcon(love.graphics.newImage(icon))
+		end
 	end
 end

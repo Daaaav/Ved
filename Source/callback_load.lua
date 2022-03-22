@@ -4,6 +4,7 @@ function love.load()
 	ved_require("loadconfig")
 
 	dodisplaysettings()
+	init_window_properties()
 
 	love.graphics.clear()
 	love.graphics.scale(s.pscale,s.pscale)
