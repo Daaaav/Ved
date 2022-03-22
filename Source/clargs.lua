@@ -45,7 +45,9 @@ local clargs = {
 				">ved \"my level.vvvvvv\" --debug\n"
 			)
 			clhelp()
-			print("\n\n")
+
+			-- Quit
+			return true
 		end
 	}
 }

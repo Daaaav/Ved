@@ -66,7 +66,7 @@ return function()
 
 	ved_print(
 		ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
-		.. ERR_LOVEVERSION .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+		.. ERR_LOVEVERSION .. " " .. love_ver_human(),
 		8, love.graphics.getHeight()-23
 	)
 end

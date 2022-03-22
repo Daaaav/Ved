@@ -51,16 +51,14 @@ function dodisplaysettings(reload)
 		za = 896
 	end
 	zb = 480
-	if reload or s.psmallerscreen or s.pscale ~= 1 then
-		if love_version_meets(9,2) then
-			local zd,ze,zf = love.window.getPosition()
-			local zwidth,zheight = love.window.getDesktopDimensions(zf)
-			zc.x = (zwidth-za*s.pscale)/2
-			zc.y = (zheight-zb*s.pscale)/2
-			zc.display = zf
-		end
-		love.window.setMode(za*s.pscale,zb*s.pscale,zc)
+	if love_version_meets(9,2) then
+		local zd,ze,zf = love.window.getPosition()
+		local zwidth,zheight = love.window.getDesktopDimensions(zf)
+		zc.x = (zwidth-za*s.pscale)/2
+		zc.y = (zheight-zb*s.pscale)/2
+		zc.display = zf
 	end
+	love.window.setMode(za*s.pscale,zb*s.pscale,zc)
 
 	if s.psmallerscreen then
 		screenoffset = 32
@@ -89,11 +87,8 @@ function dodisplaysettings(reload)
 	end
 end
 
--- We also want this font on a possible crash screen...
---love.graphics.setNewFont = function() end
-
 begint = love.timer.getTime()
-sincet = begint
+sincet = 0
 
 print([[
 
@@ -104,23 +99,16 @@ print([[
   @@    @@@@@@  @@@@                              Editor
 ]])
 
+print("Ved " .. ved_ver_human())
+print("LÖVE " .. love_ver_human())
 print(_VERSION)
 
-print("begint: " .. begint)
+print("")
 
-love.graphics.clear()
-local loadingimg = love.graphics.newImage("images/loading.png")
-love.graphics.draw(loadingimg,
-	(love.graphics.getWidth()-loadingimg:getWidth())/2,
-	(love.graphics.getHeight()-loadingimg:getHeight())/2
-)
-love.graphics.present()
 
-if love.window == nil then
-	loadfonts()
+if not love_version_meets(9) then
 	require("incompatmain8")
 elseif not love_version_meets(9,1) then
-	loadfonts()
 	require("incompatmain9")
 else
 	-- How recent is our love2d version?
@@ -140,7 +128,7 @@ else
 	if #arg > 0 then
 		local clargs = ved_require("clargs")
 
-		local nextpartto = nil
+		local quit_ved = false
 
 		for k,v in pairs(arg) do
 			if k < 0 then
@@ -150,16 +138,27 @@ else
 			elseif v:sub(1,2) == "--" then
 				local a = v:sub(3,-1)
 				if clargs[a] ~= nil and clargs[a].func ~= nil then
-					clargs[a].func()
+					local quit = clargs[a].func()
+					if quit then
+						quit_ved = true
+					end
 				end
 			elseif v:sub(1,1) == "-" then
 				for c = 2, v:len() do
 					local a = clargs[v:sub(c,c)]
 					if a ~= nil and clargs[a] ~= nil and clargs[a].func ~= nil then
-						clargs[a].func()
+						local quit = clargs[a].func()
+						if quit then
+							quit_ved = true
+						end
 					end
 				end
 			end
+		end
+
+		if quit_ved then
+			love.event.quit()
+			return
 		end
 	end
 

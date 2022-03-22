@@ -40,3 +40,5 @@ function love.graphics.setBlendMode(mode)
 		love.graphics.setBlendMode10(mode)
 	end
 end
+
+love.window.isCreated = love.window.isOpen

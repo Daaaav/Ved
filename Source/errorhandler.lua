@@ -79,6 +79,10 @@ end
 function ved_showerror(msg)
 	print("* * * E R R O R * * *\n" .. msg)
 
+	if not love.window.isCreated() then
+		create_fallback_window()
+	end
+
 	if font8 == nil then
 		loadfonts()
 	end
@@ -99,8 +103,8 @@ function ved_showerror(msg)
 	-- Decide what's going to be in the message
 	local mainmessage = msg:gsub("\n", ".") .. "\n\n"
 		.. "    " .. anythingbutnil(ERR_VEDVERSION) .. " " .. ved_ver_human() .. (intermediate_version and ERR_INTERMEDIATE or "")
-		.. "\n    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision
-		.. (love._version_major >= 12 and ERR_TOONEW or "")
+		.. "\n    " .. anythingbutnil(ERR_LOVEVERSION) .. " " .. love_ver_human()
+		.. (love_version_meets(12) and ERR_TOONEW or "")
 		.. "\n    " .. anythingbutnil(ERR_STATE) .. " " .. (state == nil and "nil" or state)
 		.. "\n    " .. anythingbutnil(ERR_OS) .. " " .. love.system.getOS()
 		.. "\n    " .. anythingbutnil(ERR_TIMESINCESTART) .. " " .. (love.timer.getTime()-begint)
@@ -245,6 +249,10 @@ function ved_showerror(msg)
 	love.graphics.clear(love.graphics.getBackgroundColor())
 	love.graphics.origin()
 
+	if s ~= nil and s.pscale ~= nil then
+		love.graphics.scale(s.pscale,s.pscale)
+	end
+
 	local err = {}
 
 	if ctrl == nil then
@@ -366,6 +374,10 @@ end
 function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 	print("* * * P L U G I N   E R R O R * * *\n")
 
+	if not love.window.isCreated() then
+		create_fallback_window()
+	end
+
 	if font8 == nil then
 		loadfonts()
 	end
@@ -382,6 +394,10 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 	lg_clear(love.graphics.getBackgroundColor())
 	love.graphics.origin()
+
+	if s ~= nil and s.pscale ~= nil then
+		love.graphics.scale(s.pscale,s.pscale)
+	end
 
 	local err = {}
 
@@ -462,7 +478,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		--love.graphics.setColor(0,0,0,255)
 		--ved_print(ERR_PLUGINERROR, pos+4, pos+4, 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_print(ERR_PLUGINERROR, pos, pos, 2)
+		ved_shadowprint(ERR_PLUGINERROR, pos, pos, 2)
 
 		-- Draw boxes for the important details
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
@@ -475,7 +491,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		--love.graphics.setColor(0,0,0,255)
 		--ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_printf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
+		ved_shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
 
 		--dialog.draw()
 		love.graphics.setColor(255,255,255,255)
@@ -491,6 +507,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 				love.event.quit()
 				return
 			elseif e == "keypressed" and table.contains({"escape", "return", "kpenter"}, a) then
+				love.graphics.origin()
 				love.graphics.setBackgroundColor(0,0,0)
 				lg_clear()
 

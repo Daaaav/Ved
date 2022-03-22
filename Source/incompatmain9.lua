@@ -1,5 +1,7 @@
 function love.load()
-	love.window.setTitle("Ved")
+	create_fallback_window()
+
+	loadfonts()
 
 	-- Get the strings from every language!
 	local languagesarray = love.filesystem.getDirectoryItems("lang")
@@ -19,7 +21,7 @@ function love.draw()
 
 	love.graphics.print(
 		"Ved version: " .. ved_ver_human() .. "\n"
-		.. "LÖVE version: " .. love._version_major .. "." .. love._version_minor .. "." .. love._version_revision,
+		.. "LÖVE version: " .. love_ver_human(),
 		8, love.graphics.getHeight()-21
 	)
 end

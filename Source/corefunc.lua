@@ -119,6 +119,14 @@ function ved_ver_human()
 	return ver
 end
 
+function love_ver_human()
+	if love._version_major == nil then
+		return "0.7.x or lower"
+	else
+		return love._version_major .. "." .. love._version_minor .. "." .. love._version_revision
+	end
+end
+
 -- Returns the bit that signifies a certain significance from an integer.
 -- Assumes your check/sig bit is actually one bit.
 -- Example: bit(31, 8) == true because 31 is 11111, 8 is 01000, and that bit is 1.
@@ -181,4 +189,16 @@ function parsexmlattributes(text)
 		curpos = found_closequote+1
 	end
 	return attributes
+end
+
+function create_fallback_window()
+	-- Make a window if we can't get to the main love.window.setMode in dodisplaysettings
+	-- For example, early crash, incompatible LÖVE - hence the ancient LÖVE 0.8- support!
+	if love_version_meets(9) then
+		love.window.setMode(896, 480)
+		love.window.setTitle("Ved")
+	else
+		love.graphics.setMode(896, 480)
+		love.graphics.setCaption("Ved")
+	end
 end

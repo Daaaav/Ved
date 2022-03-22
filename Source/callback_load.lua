@@ -3,6 +3,18 @@ function love.load()
 
 	ved_require("loadconfig")
 
+	dodisplaysettings()
+
+	love.graphics.clear()
+	love.graphics.scale(s.pscale,s.pscale)
+	local loadingimg = love.graphics.newImage("images/loading.png")
+	love.graphics.draw(loadingimg,
+		(love.graphics.getWidth()-loadingimg:getWidth())/2,
+		(love.graphics.getHeight()-loadingimg:getHeight())/2
+	)
+	love.graphics.scale(1,1)
+	love.graphics.present()
+
 	local loaded_filefunc
 	if love.system.getOS() == "OS X" then
 		ctrl = "gui" -- cmd
@@ -109,8 +121,6 @@ function love.load()
 	ved_require("input")
 	ved_require("entity_mousedown")
 	ved_require("tool_mousedown")
-
-	dodisplaysettings()
 
 	math.randomseed(os.time())
 
