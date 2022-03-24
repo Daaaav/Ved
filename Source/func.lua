@@ -3373,4 +3373,68 @@ function reset_special_cursor()
 	end
 end
 
+-- Strips leading and trailing space characters only.
+-- Also returns the position of the first non-space character.
+function trim(str)
+	-- First strip leading whitespace
+	local rope = {}
+	local first_nonspace = 1
+	local first_nonspace_found = false
+	for i = 1, utf8.len(str) do
+		local chr = utf8.sub(str, i, i)
+
+		if chr ~= " " then
+			if not first_nonspace_found then
+				first_nonspace = i
+			end
+			first_nonspace_found = true
+		end
+
+		if first_nonspace_found then
+			table.insert(rope, chr)
+		end
+	end
+
+	-- Then strip trailing whitespace
+	for i = #rope, 1, -1 do
+		local chr = rope[i]
+		if chr == " " then
+			table.remove(rope, i)
+		else
+			break
+		end
+	end
+
+	return table.concat(rope), first_nonspace
+end
+
+function isinteger(str)
+	-- Check if an entire string is a valid integer.
+	-- This is better than the `tostring(tonumber(str)) == tostring(str)` trick for two reasons:
+	-- (1) Leading zeroes are allowed
+	-- (2) Decimals are disallowed
+
+	for idx = 1, #str do
+		local char = str:sub(idx, idx)
+		local byte = char:byte()
+
+		if (idx ~= 1 or char ~= "-")
+		and (byte < ("0"):byte() or byte > ("9"):byte()) then
+			return false
+		end
+	end
+
+	return true
+end
+
+function iterlines(buffer)
+	-- This pattern we use only gives us each line
+	-- if it ends with a newline as POSIX specifies
+	if not buffer:sub(-1) ~= "\n" then
+		buffer = buffer .. "\n"
+	end
+
+	return buffer:gmatch("(.-)\n")
+end
+
 hook("func")
