@@ -244,3 +244,8 @@ end
 function multiwritefile_close(os_fh)
 	os_fh:close()
 end
+
+function find_vvvvvv_exe()
+	-- returns `true, path` if success, `false, errmsg` if failure
+	return false, L.FIND_V_EXE_ERROR
+end

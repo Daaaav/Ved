@@ -1,5 +1,5 @@
 /*
-Version 03
+Version 04
 
 Header file intended for use with LuaJIT FFI's cdef
 */
@@ -38,3 +38,5 @@ bool ved_directory_exists(const char *path);
 bool ved_file_exists(const char *path);
 
 long long ved_getmodtime(const char *path);
+
+bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** errkey);

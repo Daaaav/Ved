@@ -494,3 +494,8 @@ function run_pipe_process(app_path, args, stdin)
 
 	return true
 end
+
+function find_vvvvvv_exe()
+	-- returns `true, path` if success, `false, errmsg` if failure
+	return false, "Not yet implemented for Windows!"
+end

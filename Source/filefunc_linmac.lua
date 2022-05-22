@@ -247,3 +247,20 @@ end
 function multiwritefile_close(os_fh)
 	os_fh:close()
 end
+
+function find_vvvvvv_exe()
+	-- returns `true, path` if success, `false, errmsg` if failure
+
+	if love.system.getOS() == "Linux" then
+		local buffer_path = ffi.new("char[?]", 4096)
+		local errkey = ffi.new("const char*[1]")
+
+		if not libC.ved_find_vvvvvv_exe_linux(buffer_path, 4096, errkey) then
+			return false, L[ffi.string(errkey[0])]
+		end
+
+		return true, ffi.string(buffer_path)
+	else
+		return false, "Not yet implemented for macOS!"
+	end
+end

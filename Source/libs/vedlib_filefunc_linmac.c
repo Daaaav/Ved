@@ -1,5 +1,5 @@
 /*
-Version 03
+Version 04
 
 Typical usage (in C):
 
@@ -18,8 +18,14 @@ ved_closedir(&diriter);
 #include <errno.h>
 #include <locale.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#if !defined(__APPLE__)
+/* For finding running VVVVVV executable on Linux */
+#include <unistd.h>
+#endif
 
 typedef struct _ved_filedata
 {
@@ -198,3 +204,77 @@ long long ved_getmodtime(const char *path)
 		return 0;
 	return dstat.st_mtime;
 }
+
+#if !defined(__APPLE__)
+/*
+ * Gets the path to the currently-running VVVVVV executable.
+ * If one (1) running VVVVVV is found, buffer contains the path to the
+ * executable, and the function returns true.
+ * A false return value indicates error or ambiguity.
+ * You may pass NULL for errkey. errkey is meaningless upon success.
+ */
+bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** errkey)
+{
+	/* Get IDs of processes named VVVVVV */
+	FILE* f_procid = popen("pgrep -x VVVVVV", "r");
+	if (f_procid == NULL)
+	{
+		if (errkey != NULL)
+		{
+			*errkey = "FIND_V_EXE_ERROR";
+		}
+		return false;
+	}
+
+	/* Default for !success: we simply didn't find it */
+	if (errkey != NULL)
+	{
+		*errkey = "FIND_V_EXE_NOTFOUND";
+	}
+
+	unsigned n_processes = 0;
+	bool success = false;
+	while (true)
+	{
+		char buf_procid[16];
+		if (fgets(buf_procid, 16, f_procid) == NULL)
+		{
+			break;
+		}
+
+		n_processes++;
+
+		char* newline = strchr(buf_procid, '\n');
+		if (newline != NULL)
+		{
+			newline[0] = '\0';
+		}
+
+		char proc_exe[PATH_MAX];
+		snprintf(proc_exe, sizeof(proc_exe), "/proc/%s/exe", buf_procid);
+
+		char real_exe[PATH_MAX];
+		real_exe[readlink(proc_exe, real_exe, sizeof(real_exe)-1)] = '\0';
+
+		/* If multiple VVVVVVs are running, we'll allow it if the executable is the same */
+		if (n_processes > 1 && strcmp(real_exe, buffer) != 0)
+		{
+			if (errkey != NULL)
+			{
+				*errkey = "FIND_V_EXE_MULTI";
+			}
+			success = false;
+			break;
+		}
+
+		strncpy(buffer, real_exe, buffer_size-1);
+		buffer[buffer_size-1] = '\0';
+
+		success = true;
+	}
+
+	pclose(f_procid);
+
+	return success;
+}
+#endif
