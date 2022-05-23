@@ -63,6 +63,17 @@ void init_lang(const char* (*l)(char* key))
 }
 
 /*
+ * Sets an error out parameter to the specified message except when NULL was passed.
+ */
+static void set_error(const char** out_err, const char* message)
+{
+	if (out_err != NULL)
+	{
+		*out_err = message;
+	}
+}
+
+/*
  * Returns true if filename ends in the filter text (like ".vvvvvv" or ".png")
  */
 bool is_filtered_file(ved_directoryiter* diriter, struct dirent* dirent)
@@ -118,10 +129,7 @@ bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filte
 	diriter->len_prefix = strlen(path);
 	if (diriter->len_prefix > 247 || path[diriter->len_prefix-1] != '/')
 	{
-		if (errmsg != NULL)
-		{
-			*errmsg = ved_L("PATHINVALID");
-		}
+		set_error(errmsg, ved_L("PATHINVALID"));
 		return false;
 	}
 	strcpy(diriter->path, path);
@@ -129,10 +137,7 @@ bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filte
 	diriter->dir = opendir(path);
 	if (!(bool)diriter->dir)
 	{
-		if (errmsg != NULL)
-		{
-			*errmsg = strerror(errno);
-		}
+		set_error(errmsg, strerror(errno));
 		return false;
 	}
 	return true;
@@ -243,18 +248,12 @@ bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** er
 	FILE* f_procid = popen("pgrep -x VVVVVV", "r");
 	if (f_procid == NULL)
 	{
-		if (errkey != NULL)
-		{
-			*errkey = "FIND_V_EXE_ERROR";
-		}
+		set_error(errkey, "FIND_V_EXE_ERROR");
 		return false;
 	}
 
 	/* Default for !success: we simply didn't find it */
-	if (errkey != NULL)
-	{
-		*errkey = "FIND_V_EXE_NOTFOUND";
-	}
+	set_error(errkey, "FIND_V_EXE_NOTFOUND");
 
 	unsigned n_processes = 0;
 	bool success = false;
@@ -265,8 +264,6 @@ bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** er
 		{
 			break;
 		}
-
-		n_processes++;
 
 		char* newline = strchr(buf_procid, '\n');
 		if (newline != NULL)
@@ -284,21 +281,24 @@ bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** er
 			/* Okay, maybe *this* VVVVVV causes a failing readlink...
 			 * Maybe there's still another where it doesn't fail.
 			 * Either way it's no longer a "not found". */
-			if (errkey != NULL)
-			{
-				*errkey = "FIND_V_EXE_ERROR";
-			}
+			set_error(errkey, "FIND_V_EXE_FOUNDERROR");
 			continue;
 		}
 		real_exe[link_len] = '\0';
 
+		if (strncmp(&real_exe[link_len-2], "sh", 2) == 0)
+		{
+			/* bash is NOT a valid VVVVVV executable. */
+			set_error(errkey, "FIND_V_EXE_FOUNDERROR");
+			continue;
+		}
+
+		n_processes++;
+
 		/* If multiple VVVVVVs are running, we'll allow it if the executable is the same */
 		if (n_processes > 1 && strcmp(real_exe, buffer) != 0)
 		{
-			if (errkey != NULL)
-			{
-				*errkey = "FIND_V_EXE_MULTI";
-			}
+			set_error(errkey, "FIND_V_EXE_MULTI");
 			success = false;
 			break;
 		}
