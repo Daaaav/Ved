@@ -278,7 +278,19 @@ bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** er
 		snprintf(proc_exe, sizeof(proc_exe), "/proc/%s/exe", buf_procid);
 
 		char real_exe[PATH_MAX];
-		real_exe[readlink(proc_exe, real_exe, sizeof(real_exe)-1)] = '\0';
+		ssize_t link_len = readlink(proc_exe, real_exe, sizeof(real_exe)-1);
+		if (link_len == -1)
+		{
+			/* Okay, maybe *this* VVVVVV causes a failing readlink...
+			 * Maybe there's still another where it doesn't fail.
+			 * Either way it's no longer a "not found". */
+			if (errkey != NULL)
+			{
+				*errkey = "FIND_V_EXE_ERROR";
+			}
+			continue;
+		}
+		real_exe[link_len] = '\0';
 
 		/* If multiple VVVVVVs are running, we'll allow it if the executable is the same */
 		if (n_processes > 1 && strcmp(real_exe, buffer) != 0)
