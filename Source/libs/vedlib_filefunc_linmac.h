@@ -17,7 +17,7 @@ typedef struct _DIR DIR;
 
 typedef struct _ved_directoryiter
 {
-	DIR *dir;
+	DIR* dir;
 	char path[256];
 	size_t len_prefix;
 	bool filter_active;
@@ -25,18 +25,18 @@ typedef struct _ved_directoryiter
 	bool show_hidden;
 } ved_directoryiter;
 
-void init_lang(const char *(*l)(char *key));
+void init_lang(const char* (*l)(char* key));
 
-bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filter, bool show_hidden, const char **errmsg);
+bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filter, bool show_hidden, const char** errmsg);
 
-bool ved_nextfile(ved_directoryiter *diriter, ved_filedata *filedata);
+bool ved_nextfile(ved_directoryiter* diriter, ved_filedata* filedata);
 
-void ved_closedir(ved_directoryiter *diriter);
+void ved_closedir(ved_directoryiter* diriter);
 
-bool ved_directory_exists(const char *path);
+bool ved_directory_exists(const char* path);
 
-bool ved_file_exists(const char *path);
+bool ved_file_exists(const char* path);
 
-long long ved_getmodtime(const char *path);
+long long ved_getmodtime(const char* path);
 
 bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** errkey);

@@ -7,7 +7,7 @@
 // I could have used a completion handler instead of a delegate of course, but I want progress updates later
 @interface VedHTTPSDelegate : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 {
-	NSMutableData *response;
+	NSMutableData* response;
 	BOOL done;
 	BOOL success;
 	dispatch_semaphore_t sem;
@@ -41,19 +41,21 @@
 	dispatch_semaphore_signal(sem);
 }
 
-- (void) URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error
+- (void) URLSession:(NSURLSession*)session didBecomeInvalidWithError:(NSError*)error
 {
 	if (!done)
+	{
 		[self doneSuccessfully:NO];
+	}
 }
 
-- (void) URLSession:(NSURLSession *)session task:(NSURLSessionTask*)task didCompleteWithError:(NSError *)error
+- (void) URLSession:(NSURLSession*)session task:(NSURLSessionTask*)task didCompleteWithError:(NSError*)error
 {
 	[self doneSuccessfully:(error == NULL)];
 	[session invalidateAndCancel];
 }
 
-- (void) URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask*)dataTask didReceiveData:(NSData *)data
+- (void) URLSession:(NSURLSession*)session dataTask:(NSURLSessionDataTask*)dataTask didReceiveData:(NSData*)data
 {
 	[response appendData:data];
 }
@@ -68,34 +70,36 @@
 	return [response length];
 }
 
-- (const void *) getResponseData
+- (const void*) getResponseData
 {
 	return [response bytes];
 }
 @end
 
-VedHTTPSDelegate *ved_delegate;
+VedHTTPSDelegate* ved_delegate;
 
-bool https_start_request(const char *cstr_url, unsigned long expected_length)
+bool https_start_request(const char* cstr_url, unsigned long expected_length)
 {
 	@autoreleasepool
 	{
-		NSURL *url = [NSURL URLWithString:[NSString stringWithUTF8String:cstr_url]];
+		NSURL* url = [NSURL URLWithString:[NSString stringWithUTF8String:cstr_url]];
 
-		NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+		NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
 		config.HTTPAdditionalHeaders = @{@"User-Agent": @"Ved/NSURLSession"};
 		config.HTTPShouldSetCookies = NO;
 
 		dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 
 		if (expected_length == 0)
+		{
 			expected_length = 16384;
+		}
 
 		ved_delegate = [[VedHTTPSDelegate alloc] initWithSemaphore:sem expectedResponseLength:expected_length];
 
-		NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:ved_delegate delegateQueue:nil];
+		NSURLSession* session = [NSURLSession sessionWithConfiguration:config delegate:ved_delegate delegateQueue:nil];
 
-		NSURLSessionTask *task = [session dataTaskWithURL:url];
+		NSURLSessionTask* task = [session dataTaskWithURL:url];
 		[task resume];
 
 		dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
@@ -109,7 +113,7 @@ unsigned long https_get_response_length(void)
 	return [ved_delegate getResponseLength];
 }
 
-const void *https_get_response_data(void)
+const void* https_get_response_data(void)
 {
 	return [ved_delegate getResponseData];
 }

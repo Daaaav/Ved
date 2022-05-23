@@ -5,12 +5,16 @@ Typical usage (in C):
 
 ved_directoryiter diriter;
 if (!ved_opendir(&diriter, ".", ".vvvvvv", false, NULL))
+{
 	return; // or error
+}
 ved_filedata filedata;
 while (ved_nextfile(&diriter, &filedata))
+{
 	printf("File %s, isdir %d, edited %lld\n",
 		filedata.name, filedata.isdir, filedata.lastmodified
 	);
+}
 ved_closedir(&diriter);
 */
 
@@ -37,7 +41,7 @@ typedef struct _ved_filedata
 
 typedef struct _ved_directoryiter
 {
-	DIR *dir;
+	DIR* dir;
 	char path[256];
 	size_t len_prefix;
 	bool filter_active;
@@ -46,12 +50,12 @@ typedef struct _ved_directoryiter
 } ved_directoryiter;
 
 
-const char *(*ved_L)(char *key);
+const char* (*ved_L)(char* key);
 
 /*
  * Register a callback to get translations from Lua, and set locale to system locale
  */
-void init_lang(const char *(*l)(char *key))
+void init_lang(const char* (*l)(char* key))
 {
 	ved_L = l;
 
@@ -61,11 +65,13 @@ void init_lang(const char *(*l)(char *key))
 /*
  * Returns true if filename ends in the filter text (like ".vvvvvv" or ".png")
  */
-bool is_filtered_file(ved_directoryiter *diriter, struct dirent *dirent)
+bool is_filtered_file(ved_directoryiter* diriter, struct dirent* dirent)
 {
 	if (strcmp(diriter->filter, "/") == 0)
+	{
 		/* If this were a directory, we wouldn't be calling this function. */
 		return false;
+	}
 	size_t len_filter = strlen(diriter->filter);
 	size_t len_name = strlen(dirent->d_name);
 	return len_name >= len_filter
@@ -75,15 +81,21 @@ bool is_filtered_file(ved_directoryiter *diriter, struct dirent *dirent)
 /*
  * Returns true if we should list this file - it's a directory, or is filtered
  */
-bool is_listable(ved_directoryiter *diriter, struct dirent *dirent, bool isdir)
+bool is_listable(ved_directoryiter* diriter, struct dirent* dirent, bool isdir)
 {
 	if (!diriter->show_hidden && dirent->d_name[0] == '.')
+	{
 		return false;
+	}
 	if (diriter->show_hidden && (strcmp(dirent->d_name, ".") == 0 || strcmp(dirent->d_name, "..") == 0))
+	{
 		return false;
+	}
 #if defined(__APPLE__)
 	if (diriter->show_hidden && strcmp(dirent->d_name, ".DS_Store") == 0)
+	{
 		return false;
+	}
 #endif
 	return isdir || !diriter->filter_active || is_filtered_file(diriter, dirent);
 }
@@ -97,7 +109,7 @@ bool is_listable(ved_directoryiter *diriter, struct dirent *dirent, bool isdir)
  * Returns true if successful. If unsuccessful, and errmsg is not NULL, errmsg
  * will point to an error string.
  */
-bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filter, bool show_hidden, const char **errmsg)
+bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filter, bool show_hidden, const char** errmsg)
 {
 	diriter->filter_active = filter != NULL && filter[0] != '\0';
 	strncpy(diriter->filter, filter, 7);
@@ -107,7 +119,9 @@ bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filte
 	if (diriter->len_prefix > 247 || path[diriter->len_prefix-1] != '/')
 	{
 		if (errmsg != NULL)
+		{
 			*errmsg = ved_L("PATHINVALID");
+		}
 		return false;
 	}
 	strcpy(diriter->path, path);
@@ -116,7 +130,9 @@ bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filte
 	if (!(bool)diriter->dir)
 	{
 		if (errmsg != NULL)
+		{
 			*errmsg = strerror(errno);
+		}
 		return false;
 	}
 	return true;
@@ -126,16 +142,18 @@ bool ved_opendir(ved_directoryiter *diriter, const char *path, const char *filte
  * Stores data about the next file in filedata.
  * Returns false if there is no file anymore.
  */
-bool ved_nextfile(ved_directoryiter *diriter, ved_filedata *filedata)
+bool ved_nextfile(ved_directoryiter* diriter, ved_filedata* filedata)
 {
-	struct dirent *dirent;
+	struct dirent* dirent;
 	struct stat dstat;
 	bool isdir;
 	do /* normally once */
 	{
 		dirent = readdir(diriter->dir);
 		if (dirent == NULL)
+		{
 			return false;
+		}
 		strncpy(diriter->path+diriter->len_prefix, dirent->d_name, 255-diriter->len_prefix);
 		if (stat(diriter->path, &dstat) == -1)
 		{
@@ -162,7 +180,7 @@ bool ved_nextfile(ved_directoryiter *diriter, ved_filedata *filedata)
 /*
  * Simply closes the DIR we had open
  */
-void ved_closedir(ved_directoryiter *diriter)
+void ved_closedir(ved_directoryiter* diriter)
 {
 	closedir(diriter->dir);
 }
@@ -170,24 +188,28 @@ void ved_closedir(ved_directoryiter *diriter)
 /*
  * Checks if a path exists and is a directory
  */
-bool ved_directory_exists(const char *path)
+bool ved_directory_exists(const char* path)
 {
 	struct stat dstat;
 	if (stat(path, &dstat) == -1)
+	{
 		/* stat failed */
 		return false;
+	}
 	return S_ISDIR(dstat.st_mode);
 }
 
 /*
  * Checks if a path exists and is not a directory
  */
-bool ved_file_exists(const char *path)
+bool ved_file_exists(const char* path)
 {
 	struct stat dstat;
 	if (stat(path, &dstat) == -1)
+	{
 		/* stat failed */
 		return false;
+	}
 	return !S_ISDIR(dstat.st_mode);
 }
 
@@ -196,12 +218,14 @@ bool ved_file_exists(const char *path)
  * If stat fails, returns 0.
  * Since this is a 64-bit value, LuaJIT FFI requires tonumber() for it.
  */
-long long ved_getmodtime(const char *path)
+long long ved_getmodtime(const char* path)
 {
 	struct stat dstat;
 	if (stat(path, &dstat) == -1)
+	{
 		/* stat failed */
 		return 0;
+	}
 	return dstat.st_mtime;
 }
 
