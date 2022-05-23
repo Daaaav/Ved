@@ -65,7 +65,7 @@ function playtesting_locate_path()
 	end
 end
 
-function playtesting_ask_path(target, continue_playtesting)
+function playtesting_ask_path_manual(target, continue_playtesting)
 	local ext = ""
 	if love.system.getOS() == "Windows" then
 		ext = ".exe"
@@ -92,6 +92,24 @@ function playtesting_get_vvvvvv_message(target)
 		elseif love.system.getOS() == "Windows" then
 			return langkeys(L.VVVVVVFILE, {"VVVVVV.exe"})
 		end
+	end
+end
+
+function playtesting_ask_path_autodetect(target, continue_playtesting)
+	dialog.create(
+		L.FIND_V_EXE_EXPLANATION,
+		{L.BTN_AUTODETECT, L.BTN_MANUALLY, DB.CANCEL},
+		dialog.callback.locatevvvvvvchoice,
+		nil,
+		dialog.form.hidden_make({target=target, start=continue_playtesting})
+	)
+end
+
+function playtesting_ask_path(target, continue_playtesting)
+	if autodetect_vvvvvv_available then
+		playtesting_ask_path_autodetect(target, continue_playtesting)
+	else
+		playtesting_ask_path_manual(target, continue_playtesting)
 	end
 end
 

@@ -1072,8 +1072,34 @@ function dialog.callback.locatevvvvvv_validate(button, fields)
 
 	local path = fields.folder .. dirsep .. fields.name
 	if not playtesting_validate_path(path) then
-		dialog.create(L.PATHINVALID .. " " .. playtesting_get_vvvvvv_message(fields.target))
+		dialog.create(L.PATHINVALID .. "\n\n" .. playtesting_get_vvvvvv_message(fields.target))
 		return true
+	end
+end
+
+function dialog.callback.locatevvvvvvchoice(button, fields)
+	if button == L.BTN_AUTODETECT or button == L.BTN_RETRY then
+		local success, path = find_vvvvvv_exe()
+		if not success then
+			dialog.create(
+				path,
+				{L.BTN_RETRY, DB.CANCEL},
+				dialog.callback.locatevvvvvvchoice,
+				nil,
+				dialog.form.hidden_make(fields)
+			)
+		else
+			if fields.target == "V" then
+				s.vvvvvv23 = path
+			end
+			saveconfig()
+
+			if fields.start then
+				playtesting_start(false)
+			end
+		end
+	elseif button == L.BTN_MANUALLY then
+		playtesting_ask_path_manual(fields.target, fields.start)
 	end
 end
 

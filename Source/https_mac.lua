@@ -1,5 +1,5 @@
 local ffi = require("ffi")
-local lib = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_https_mac00.so")
+local lib = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_https_mac01.so")
 ffi.cdef((love.filesystem.read("libs/vedlib_https_mac.h")))
 
 function https_request(url)

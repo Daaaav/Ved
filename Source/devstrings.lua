@@ -7,4 +7,8 @@ L.FIND_V_EXE_FOUNDERROR = "Found something that looks like VVVVVV, but couldn't 
 L.FIND_V_EXE_NOTFOUND = "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
 L.FIND_V_EXE_MULTI = "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
 
-L.FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting.\n\nTo autodetect VVVVVV, simply make sure the game is running and press \"Detect\".\n\nTo choose an executable manually instead, press \"Manual\"."
+L.FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n\n\nTo autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
+
+L.BTN_AUTODETECT = "Detect"
+L.BTN_MANUALLY = "Override" -- choose path to VVVVVV.exe manually. I didn't want "Manual" in English because it sounds like "instruction manual", but translations may use some form of "manual setup". This button should come across like "I know what I'm doing, I want to override automatic detection"
+L.BTN_RETRY = "Retry"

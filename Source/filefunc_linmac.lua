@@ -8,11 +8,11 @@ local standardvvvvvvfolder
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin03.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin04.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac03.so")
+	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac04.so")
 end
 
 ffi.cdef((love.filesystem.read("libs/vedlib_filefunc_linmac.h")))

@@ -29,13 +29,14 @@ function love.load()
 			love.filesystem.createDirectory("available_libs")
 		end
 		-- Too bad there's no love.filesystem.copy()
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac03.so") then
-			love.filesystem.write("available_libs/vedlib_filefunc_mac03.so", love.filesystem.read("libs/vedlib_filefunc_mac03.so"))
+		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac04.so") then
+			love.filesystem.write("available_libs/vedlib_filefunc_mac04.so", love.filesystem.read("libs/vedlib_filefunc_mac04.so"))
 		end
-		if not love.filesystem.exists("available_libs/vedlib_https_mac00.so") then
-			love.filesystem.write("available_libs/vedlib_https_mac00.so", love.filesystem.read("libs/vedlib_https_mac00.so"))
+		if not love.filesystem.exists("available_libs/vedlib_https_mac01.so") then
+			love.filesystem.write("available_libs/vedlib_https_mac01.so", love.filesystem.read("libs/vedlib_https_mac01.so"))
 		end
 		playtesting_available = true
+		autodetect_vvvvvv_available = false
 	elseif love.system.getOS() == "Windows" then
 		ctrl = "ctrl"
 		modifier = "ctrl"
@@ -45,6 +46,7 @@ function love.load()
 		hook("love_load_win")
 		loaded_filefunc = "win"
 		playtesting_available = true
+		autodetect_vvvvvv_available = false
 	elseif love.system.getOS() == "Linux" then
 		ctrl = "ctrl"
 		modifier = "ctrl"
@@ -56,13 +58,13 @@ function love.load()
 			love.filesystem.createDirectory("available_libs")
 		end
 		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin03.so") then
+		if love.filesystem.exists("available_libs/vedlib_filefunc_lin04.so") then
 			vedlib_filefunc_available = true
 		else
 			-- Too bad there's no love.filesystem.copy()
 			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
 			if os.execute("gcc -shared -fPIC -o '"
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin03.so' '"
+				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin04.so' '"
 				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c'"
 			) == 0 then
 				vedlib_filefunc_available = true
@@ -70,8 +72,10 @@ function love.load()
 		end
 		if vedlib_filefunc_available then
 			loaded_filefunc = "linmac"
+			autodetect_vvvvvv_available = true
 		else
 			loaded_filefunc = "lin_fallback"
+			autodetect_vvvvvv_available = false
 		end
 		playtesting_available = true
 	else
@@ -84,6 +88,7 @@ function love.load()
 		hook("love_load_luv")
 		loaded_filefunc = "luv"
 		playtesting_available = false
+		autodetect_vvvvvv_available = false
 	end
 	lctrl = "l" .. ctrl
 	rctrl = "r" .. ctrl
