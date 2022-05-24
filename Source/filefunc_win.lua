@@ -537,7 +537,7 @@ function find_vvvvvv_exe()
 			local process_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
 
 			if psapi.GetModuleBaseNameW(hProcess, nil, process_name_utf16, MAX_PATH)
-			and path_utf16_to_utf8(process_name_utf16) == "VVVVVV.exe" then
+			and path_utf16_to_utf8(process_name_utf16):lower() == "vvvvvv.exe" then
 				if not psapi.GetModuleFileNameExW(hProcess, nil, process_path_utf16, MAX_PATH) then
 					-- Okay, maybe *this* VVVVVV causes a failing GetModuleFileNameExW...
 					-- Maybe there's still another where it doesn't fail.

@@ -212,6 +212,14 @@ HANDLE OpenProcess(
   DWORD dwProcessId
 );
 
+BOOL EnumProcessModulesEx(
+  HANDLE  hProcess,
+  HMODULE *lphModule,
+  DWORD   cb,
+  LPDWORD lpcbNeeded,
+  DWORD   dwFilterFlag
+);
+
 DWORD GetModuleBaseNameW(
   HANDLE  hProcess,
   HMODULE hModule,
