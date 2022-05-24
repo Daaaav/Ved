@@ -200,6 +200,32 @@ DWORD WaitForSingleObject(
   DWORD  dwMilliseconds
 );
 
+BOOL EnumProcesses(
+  DWORD   *lpidProcess,
+  DWORD   cb,
+  LPDWORD lpcbNeeded
+);
+
+HANDLE OpenProcess(
+  DWORD dwDesiredAccess,
+  BOOL  bInheritHandle,
+  DWORD dwProcessId
+);
+
+DWORD GetModuleBaseNameW(
+  HANDLE  hProcess,
+  HMODULE hModule,
+  LPWSTR  lpBaseName,
+  DWORD   nSize
+);
+
+DWORD GetModuleFileNameExW(
+  HANDLE  hProcess,
+  HMODULE hModule,
+  LPWSTR  lpFilename,
+  DWORD   nSize
+);
+
 /* UTF-8 -> UTF-16 */
 int MultiByteToWideChar(
   UINT   CodePage,

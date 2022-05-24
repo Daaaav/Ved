@@ -5,6 +5,7 @@ require("libs/windows_constants")
 
 local ffi = require("ffi")
 local shell32 = ffi.load("Shell32") -- SHGetFolderPathW
+local psapi = ffi.load("Psapi") -- EnumProcesses, GetModule*
 ffi.cdef((love.filesystem.read("libs/windows_types.h")))
 ffi.cdef((love.filesystem.read("libs/windows_main.h")))
 
@@ -497,5 +498,75 @@ end
 
 function find_vvvvvv_exe()
 	-- returns `true, path` if success, `false, errmsg` if failure
-	return false, "Not yet implemented for Windows!"
+
+	local processes_max = 8192
+	local processes
+	local processes_bytes_used = ffi.new("DWORD[1]")
+	local fits
+	repeat
+		processes = ffi.new("DWORD[?]", processes_max)
+
+		if not psapi.EnumProcesses(processes, processes_max * 4, processes_bytes_used) then
+			return false, L.FIND_V_EXE_ERROR
+		end
+
+		fits = processes_bytes_used[0] < processes_max * 4
+		if not fits then
+			processes_max = processes_max * 2
+		end
+	until fits
+
+	local n_returned = processes_bytes_used[0] / 4
+
+	-- Default for !success: we simply didn't find it
+	local errmsg = L.FIND_V_EXE_NOTFOUND
+
+	local path
+	local n_processes = 0
+	local success = false
+
+	for i = 0, n_returned do
+		local hProcess = ffi.C.OpenProcess(
+			PROCESS_QUERY_INFORMATION + PROCESS_VM_READ,
+			false,
+			processes[i]
+		);
+
+		if hProcess ~= nil then
+			local process_name_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
+			local process_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
+
+			if psapi.GetModuleBaseNameW(hProcess, nil, process_name_utf16, MAX_PATH)
+			and path_utf16_to_utf8(process_name_utf16) == "VVVVVV.exe" then
+				if not psapi.GetModuleFileNameExW(hProcess, nil, process_path_utf16, MAX_PATH) then
+					-- Okay, maybe *this* VVVVVV causes a failing GetModuleFileNameExW...
+					-- Maybe there's still another where it doesn't fail.
+					-- Either way it's no longer a "not found".
+					errmsg = L.FIND_V_EXE_FOUNDERROR
+				end
+
+				n_processes = n_processes + 1
+				local process_path_utf8 = path_utf16_to_utf8(process_path_utf16)
+
+				-- If multiple VVVVVVs are running, we'll allow it if the executable is the same
+				if n_processes > 1 and process_path_utf8 ~= path then
+					errmsg = L.FIND_V_EXE_MULTI
+					success = false
+					ffi.C.CloseHandle(hProcess)
+					break
+				end
+
+				path = process_path_utf8
+				success = true
+			end
+
+			ffi.C.CloseHandle(hProcess)
+		end
+	end
+
+	if not success then
+		return false, errmsg
+	end
+
+	return true, path
 end

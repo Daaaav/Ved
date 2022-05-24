@@ -27,3 +27,6 @@ typedef void* LPOVERLAPPED;
 typedef long LONG;
 typedef LONG HRESULT;
 typedef HANDLE HWND;
+
+typedef HANDLE HINSTANCE;
+typedef HINSTANCE HMODULE;

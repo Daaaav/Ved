@@ -46,7 +46,7 @@ function love.load()
 		hook("love_load_win")
 		loaded_filefunc = "win"
 		playtesting_available = true
-		autodetect_vvvvvv_available = false
+		autodetect_vvvvvv_available = true
 	elseif love.system.getOS() == "Linux" then
 		ctrl = "ctrl"
 		modifier = "ctrl"
