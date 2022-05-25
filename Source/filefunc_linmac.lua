@@ -2,6 +2,7 @@ userprofile = os.getenv("HOME")
 
 local ffi = require("ffi")
 local libC
+local findv6_mac
 
 local standardvvvvvvfolder
 
@@ -13,6 +14,9 @@ elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
 	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac04.so")
+	findv6_mac = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_findv6_mac00.so")
+
+	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))
 end
 
 ffi.cdef((love.filesystem.read("libs/vedlib_filefunc_linmac.h")))
@@ -251,16 +255,19 @@ end
 function find_vvvvvv_exe()
 	-- returns `true, path` if success, `false, errmsg` if failure
 
+	local ffi_find_vvvvvv_exe
 	if love.system.getOS() == "Linux" then
-		local buffer_path = ffi.new("char[?]", 4096)
-		local errkey = ffi.new("const char*[1]")
-
-		if not libC.ved_find_vvvvvv_exe_linux(buffer_path, 4096, errkey) then
-			return false, L[ffi.string(errkey[0])]
-		end
-
-		return true, ffi.string(buffer_path)
-	else
-		return false, "Not yet implemented for macOS!"
+		ffi_find_vvvvvv_exe = libC.ved_find_vvvvvv_exe_linux
+	elseif love.system.getOS() == "OS X" then
+		ffi_find_vvvvvv_exe = findv6_mac.ved_find_vvvvvv_exe_macos
 	end
+
+	local buffer_path = ffi.new("char[?]", 4096)
+	local errkey = ffi.new("const char*[1]")
+
+	if not ffi_find_vvvvvv_exe(buffer_path, 4096, errkey) then
+		return false, L[ffi.string(errkey[0])]
+	end
+
+	return true, ffi.string(buffer_path)
 end
