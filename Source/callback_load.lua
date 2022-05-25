@@ -35,8 +35,8 @@ function love.load()
 		if not love.filesystem.exists("available_libs/vedlib_https_mac01.so") then
 			love.filesystem.write("available_libs/vedlib_https_mac01.so", love.filesystem.read("libs/vedlib_https_mac01.so"))
 		end
-		if not love.filesystem.exists("available_libs/vedlib_findv6_mac00.so") then
-			love.filesystem.write("available_libs/vedlib_findv6_mac00.so", love.filesystem.read("libs/vedlib_findv6_mac00.so"))
+		if not love.filesystem.exists("available_libs/vedlib_findv6_mac01.so") then
+			love.filesystem.write("available_libs/vedlib_findv6_mac01.so", love.filesystem.read("libs/vedlib_findv6_mac01.so"))
 		end
 		playtesting_available = true
 		autodetect_vvvvvv_available = true

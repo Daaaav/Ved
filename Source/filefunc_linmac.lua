@@ -14,7 +14,7 @@ elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
 	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac04.so")
-	findv6_mac = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_findv6_mac00.so")
+	findv6_mac = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_findv6_mac01.so")
 
 	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))
 end

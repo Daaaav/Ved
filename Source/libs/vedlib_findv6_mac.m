@@ -34,7 +34,7 @@ bool ved_find_vvvvvv_exe_macos(char* buffer, size_t buffer_size, const char** er
 		/* Default for !success: we simply didn't find it */
 		set_error(errkey, "FIND_V_EXE_NOTFOUND");
 
-		NSString* result_path = [[NSString alloc] init];
+		NSMutableString* result_path = [NSMutableString stringWithCapacity:buffer_size];
 		unsigned n_processes = 0;
 		for (NSRunningApplication* app in running_v6s)
 		{
@@ -67,8 +67,7 @@ bool ved_find_vvvvvv_exe_macos(char* buffer, size_t buffer_size, const char** er
 				break;
 			}
 
-			[result_path release];
-			result_path = [[NSString alloc] initWithString:exe];
+			[result_path setString:exe];
 
 			success = true;
 		}
@@ -77,7 +76,6 @@ bool ved_find_vvvvvv_exe_macos(char* buffer, size_t buffer_size, const char** er
 		{
 			[result_path getCString:buffer maxLength:buffer_size encoding:NSUTF8StringEncoding];
 		}
-		[result_path release];
 	}
 
 	return success;
