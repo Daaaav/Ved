@@ -5,7 +5,10 @@ require("libs/windows_constants")
 
 local ffi = require("ffi")
 local shell32 = ffi.load("Shell32") -- SHGetFolderPathW
-local psapi = ffi.load("Psapi") -- EnumProcesses, GetModule*
+local psapi_loaded, psapi = pcall(ffi.load, "Psapi") -- EnumProcesses, GetModule*
+if not psapi_loaded then
+	autodetect_vvvvvv_available = false
+end
 ffi.cdef((love.filesystem.read("libs/windows_types.h")))
 ffi.cdef((love.filesystem.read("libs/windows_main.h")))
 

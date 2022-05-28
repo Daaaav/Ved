@@ -1,3 +1,8 @@
+if load_library == nil then
+	-- This can also be used in a thread...
+	require("librarian")
+end
+
 userprofile = os.getenv("HOME")
 
 local ffi = require("ffi")
@@ -9,23 +14,25 @@ local standardvvvvvvfolder
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin04.so")
+	libC = load_library(ffi, "vedlib_filefunc_lin04.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_mac04.so")
-	findv6_mac = ffi.load(love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_findv6_mac01.so")
+	libC = load_library(ffi, "vedlib_filefunc_mac04.so")
+	findv6_mac = load_library(ffi, "vedlib_findv6_mac01.so")
 
 	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))
 end
 
 ffi.cdef((love.filesystem.read("libs/vedlib_filefunc_linmac.h")))
 
-libC.init_lang(
-	function(key)
-		return L[ffi.string(key)]
-	end
-)
+if libC ~= nil then
+	libC.init_lang(
+		function(key)
+			return L[ffi.string(key)]
+		end
+	)
+end
 
 
 local function new_filedata()

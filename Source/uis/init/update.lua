@@ -1,7 +1,7 @@
 -- init/update
 
 return function(dt)
-	if settings_ok then
+	if settings_ok and lib_load_errmsg == nil then
 		if not s.langchosen or opt_forcelanguagescreen then
 			opt_forcelanguagescreen = false
 			tostate(33)

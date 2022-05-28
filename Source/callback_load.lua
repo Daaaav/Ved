@@ -16,6 +16,9 @@ function love.load()
 	love.graphics.scale(1,1)
 	love.graphics.present()
 
+	ved_require("librarian")
+
+	lib_load_errmsg = nil
 	local loaded_filefunc
 	if love.system.getOS() == "OS X" then
 		ctrl = "gui" -- cmd
@@ -25,21 +28,13 @@ function love.load()
 		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
-		if not love.filesystem.exists("available_libs") then
-			love.filesystem.createDirectory("available_libs")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_mac04.so")
+		if not lib_ok then
+			lib_load_errmsg = errmsg
 		end
-		-- Too bad there's no love.filesystem.copy()
-		if not love.filesystem.exists("available_libs/vedlib_filefunc_mac04.so") then
-			love.filesystem.write("available_libs/vedlib_filefunc_mac04.so", love.filesystem.read("libs/vedlib_filefunc_mac04.so"))
-		end
-		if not love.filesystem.exists("available_libs/vedlib_https_mac01.so") then
-			love.filesystem.write("available_libs/vedlib_https_mac01.so", love.filesystem.read("libs/vedlib_https_mac01.so"))
-		end
-		if not love.filesystem.exists("available_libs/vedlib_findv6_mac01.so") then
-			love.filesystem.write("available_libs/vedlib_findv6_mac01.so", love.filesystem.read("libs/vedlib_findv6_mac01.so"))
-		end
+		prepare_library("vedlib_https_mac01.so")
+		autodetect_vvvvvv_available = prepare_library("vedlib_findv6_mac01.so")
 		playtesting_available = true
-		autodetect_vvvvvv_available = true
 	elseif love.system.getOS() == "Windows" then
 		ctrl = "ctrl"
 		modifier = "ctrl"
@@ -57,30 +52,13 @@ function love.load()
 		macscrolling = false
 		newline = "\n"
 		hook("love_load_lin")
-		if not love.filesystem.exists("available_libs") then
-			love.filesystem.createDirectory("available_libs")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_lin04.so", "vedlib_filefunc_linmac.c")
+		if not lib_ok then
+			lib_load_errmsg = errmsg
 		end
-		local vedlib_filefunc_available = false
-		if love.filesystem.exists("available_libs/vedlib_filefunc_lin04.so") then
-			vedlib_filefunc_available = true
-		else
-			-- Too bad there's no love.filesystem.copy()
-			love.filesystem.write("available_libs/vedlib_filefunc_linmac.c", love.filesystem.read("libs/vedlib_filefunc_linmac.c"))
-			if os.execute("gcc -shared -fPIC -o '"
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_lin04.so' '"
-				.. love.filesystem.getSaveDirectory() .. "/available_libs/vedlib_filefunc_linmac.c'"
-			) == 0 then
-				vedlib_filefunc_available = true
-			end
-		end
-		if vedlib_filefunc_available then
-			loaded_filefunc = "linmac"
-			autodetect_vvvvvv_available = true
-		else
-			loaded_filefunc = "lin_fallback"
-			autodetect_vvvvvv_available = false
-		end
+		loaded_filefunc = "linmac"
 		playtesting_available = true
+		autodetect_vvvvvv_available = true
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
@@ -157,6 +135,8 @@ function love.load()
 	middlescroll_rolling_x = -1
 	middlescroll_t, middlescroll_v = 0, 0
 
+	next_frame_time = love.timer.getTime()
+
 	v6_frametimer = 0
 	conveyortimer = 0
 	conveyorleftcycle = 1
@@ -193,8 +173,6 @@ function love.load()
 	nodialog = true
 
 	vvvvvv_textboxes = {}
-
-	tilesets = {}
 
 	-- Load a couple of images
 	cursorimg = {}
@@ -369,6 +347,11 @@ function love.load()
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
 
+	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
+	subtoolnames[2] = subtoolnames[1]
+	subtoolnames[9] = subtoolnames[8]
+	subtoolnames[12] = table.copy(subtoolnames[5])
+
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
 
@@ -379,6 +362,12 @@ function love.load()
 	love.keyboard.setKeyRepeat(true)
 	load_konami()
 
+	secondlevel = false
+	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
+
+	previous_search = ""
+	resume_search = false
+
 	if loaded_filefunc == "luv" then
 		dialog.create(
 			langkeys(L.OSNOTRECOGNIZED,
@@ -387,11 +376,30 @@ function love.load()
 		)
 	end
 
-	secondlevel = false
-	levels_refresh = 0 -- refresh counter, so we know when metadata requests are outdated
+	if lib_load_errmsg ~= nil then
+		local template = L.LIB_LOAD_ERRMSG
+		if love.system.getOS() == "Linux" then
+			template = template .. L.LIB_LOAD_ERRMSG_GCC
+		end
+		dialog.create(langkeys(template, {lib_load_errmsg}), DBS.QUIT,
+			function()
+				love.event.quit()
+			end
+		)
 
-	previous_search = ""
-	resume_search = false
+		hook("love_load_end")
+		return
+	elseif not settings_ok then
+		-- If the settings file is broken, good chance we don't know what the language setting was.
+		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,
+			function()
+				saveconfig()
+				settings_ok = true
+			end
+		)
+	end
+
+	tilesets = {}
 
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
@@ -402,11 +410,6 @@ function love.load()
 	musiceditorfile = ""
 	musiceditorfile_forcevvvvvvfolder = false
 	musiceditorfolder = vvvvvvfolder
-
-	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
-	subtoolnames[2] = subtoolnames[1]
-	subtoolnames[9] = subtoolnames[8]
-	subtoolnames[12] = table.copy(subtoolnames[5])
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")
@@ -428,8 +431,6 @@ function love.load()
 	playtestthread_inchannel = love.thread.getChannel("playtestthread_in")
 	playtestthread_outchannel = love.thread.getChannel("playtestthread_out")
 
-	next_frame_time = love.timer.getTime()
-
 	-- If I add layers, I should probably increase the max number of sprites and just add them after each other.
 	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.
 	tile_batch = love.graphics.newSpriteBatch(tilesets["tiles.png"].img, 1200, "dynamic")
@@ -440,16 +441,6 @@ function love.load()
 	tile_batch_tiles = {}
 	for i = 1, 1200 do
 		tile_batch_tiles[i] = 0
-	end
-
-	if not settings_ok then
-		-- If the settings file is broken, good chance we don't know what the language setting was.
-		dialog.create("The settings file has an error and can not be loaded.\n\nPress OK to proceed with the default settings.\n\n\n\n\nError: " .. anythingbutnil(settings_err), DBS.OK,
-			function()
-				saveconfig()
-				settings_ok = true
-			end
-		)
 	end
 
 	hook("love_load_end")

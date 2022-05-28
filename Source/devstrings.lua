@@ -12,3 +12,6 @@ L.FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VV
 L.BTN_AUTODETECT = "Detect"
 L.BTN_MANUALLY = "Override" -- choose path to VVVVVV.exe manually. I didn't want "Manual" in English because it sounds like "instruction manual", but translations may use some form of "manual setup". This button should come across like "I know what I'm doing, I want to override automatic detection"
 L.BTN_RETRY = "Retry"
+
+L.LIB_LOAD_ERRMSG = "Failed to load an essential library. Please tell Dav999 about this problem.\n\n$1"
+L.LIB_LOAD_ERRMSG_GCC = "\n\nTry installing GCC to solve this problem, if it isn't already installed."
