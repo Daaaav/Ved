@@ -1199,11 +1199,7 @@ return function()
 	end
 
 	if bottomwidemsg ~= nil then
-		local _, lines = font8:getWrap(bottomwidemsg, love.graphics.getWidth())
-		-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
-		if type(lines) == "table" then
-			lines = #lines
-		end
+		local _, lines = font8_getWrap(bottomwidemsg, love.graphics.getWidth())
 		local yoff = 16 * (lines-1)
 
 		love.graphics.setColor(255, 255, 127, 63)

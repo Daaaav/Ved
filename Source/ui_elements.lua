@@ -653,10 +653,7 @@ function elText:draw(x, y, maxw, maxh)
 	if self.wrapped then
 		ved_printf(text, x, y, maxw, self.align, self.sx, self.sy)
 
-		local width, lines = font8:getWrap(text, maxw/(self.sx or 1))
-		if type(lines) == "table" then
-			lines = #lines
-		end
+		local width, lines = font8_getWrap(text, maxw/(self.sx or 1))
 		self.pw, self.ph = width*(self.sx or 1), lines*font8:getHeight()*(self.sy or 1)
 	else
 		ved_print(text, x, y, self.sx, self.sy)

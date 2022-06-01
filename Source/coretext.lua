@@ -262,3 +262,22 @@ function ved_shadowprintf(text, x, y, limit, align, sx, sy)
 	love.graphics.setColor(r, g, b, a)
 	ved_printf(text, x, y, limit, align, sx, sy)
 end
+
+function font8_getWrap(text, wraplimit)
+	-- font8:getWrap(), but unify LÖVE version differences.
+	-- Gives the number of lines (not the table of lines) because we never need the table.
+
+	if text == "" then
+		-- Passing an empty string gives different results between LÖVE 11.3 and 11.4...
+		return 0, 0
+	end
+
+	local width, lines = font8:getWrap(text, wraplimit)
+
+	-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
+	if type(lines) == "table" then
+		lines = #lines
+	end
+
+	return width, lines
+end

@@ -2297,14 +2297,9 @@ function updatewindowicon()
 end
 
 function roomtext_extralines(text)
-	_, thelines = font8:getWrap(text, 40*8)
+	local _, lines = font8_getWrap(text, 40*8)
 
-	-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
-	if type(thelines) == "table" then
-		return #thelines - 1
-	else
-		return thelines - 1
-	end
+	return lines - 1
 end
 
 function gotohelparticle(n)
@@ -3258,10 +3253,7 @@ function tooltip_box_dimensions(title, explanation, icon)
 		icon_w, icon_h = icon:getWidth()+8, icon:getHeight()
 	end
 	local expl_w = box_w - 16 - icon_w
-	local _, lines = font8:getWrap(explanation, expl_w)
-	if type(lines) == "table" then
-		lines = #lines
-	end
+	local _, lines = font8_getWrap(explanation, expl_w)
 	local box_h = 32+math.max(
 		icon_h,
 		lines*font8:getHeight()

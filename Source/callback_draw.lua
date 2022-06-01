@@ -61,12 +61,7 @@ function love.draw()
 	end
 
 	if generictimer_mode == 3 and generictimer > 0 then
-		local width, lines = font8:getWrap(notification_text, 80*8)
-
-		-- thelines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
-		if type(lines) == "table" then
-			lines = #lines
-		end
+		local width, lines = font8_getWrap(notification_text, 80*8)
 
 		local boxy = love.graphics.getHeight()-16-lines*8
 		love.graphics.setColor(128,128,128,192)
