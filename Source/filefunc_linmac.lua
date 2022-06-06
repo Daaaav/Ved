@@ -14,11 +14,11 @@ local standardvvvvvvfolder
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_lin04.so")
+	libC = load_library(ffi, "vedlib_filefunc_lin05.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_mac04.so")
+	libC = load_library(ffi, "vedlib_filefunc_mac05.so")
 	findv6_mac = load_library(ffi, "vedlib_findv6_mac01.so")
 
 	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))
@@ -277,4 +277,97 @@ function find_vvvvvv_exe()
 	end
 
 	return true, ffi.string(buffer_path)
+end
+
+function start_process(path, args_table, timeout, retain_stdin, retain_stdout, retain_stderr)
+	-- Start a child process and get its "processinfo" (an OS-dependent pid or handle).
+	-- On success, returns true, processinfo, stdin_write_end, stdout_read_end, stderr_read_end
+	-- On failure, returns false, err
+	-- You can choose which stdio pipe handles to retain, unretained handles are nil (retrieved pipes
+	-- will need to be closed later). You probably SHOULD retain stdout, or VVVVVV may get SIGPIPE'd.
+	-- Note that this function will return true - indicating success - even if starting VVVVVV is going
+	-- to fail. This will become apparent when calling await_process, because the process exits with
+	-- a special code and prints the error to stderr. You may thus want to get the stderr pipe for passing
+	-- it to await_process, it handles this and you can get a more detailed error message in this case.
+
+	local cmd = ffi.new("const char* [?]", #args_table+2)
+	cmd[0] = path
+	for i = 1, #args_table - 1 do
+		cmd[i] = tostring(args_table[i])
+	end
+	cmd[#args_table+1] = nil
+
+	local stdin_write_end, stdout_read_end, stderr_read_end = nil, nil, nil
+	if retain_stdin then
+		stdin_write_end = ffi.new("int[1]")
+	end
+	if retain_stdout then
+		stdout_read_end = ffi.new("int[1]")
+	end
+	if retain_stderr then
+		stderr_read_end = ffi.new("int[1]")
+	end
+	local errmsg = ffi.new("const char*[1]")
+
+	local pid = libC.start_process(
+		cmd,
+		timeout,
+		stdin_write_end,
+		stdout_read_end,
+		stderr_read_end,
+		errmsg
+	)
+	if tonumber(pid) < 0 then
+		return false, ffi.string(errmsg[0])
+	end
+
+	return true, pid, stdin_write_end, stdout_read_end, stderr_read_end
+end
+
+function write_to_pipe(write_end, data)
+	-- Returns success, err
+	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
+
+	local errmsg = ffi.new("const char*[1]")
+	local success = libC.write_to_pipe(write_end[0], data, data:len(), errmsg)
+	if not success then
+		return false, ffi.string(errmsg[0])
+	end
+	return true
+end
+
+function read_from_pipe(read_end)
+	-- Returns success, maybe_data (`true, data` on success, `false, err` on failure)
+
+	local bytes_read = ffi.new("size_t[1]")
+	local errmsg = ffi.new("const char*[1]")
+	local data_alloc = libC.read_from_pipe(read_end[0], bytes_read, errmsg)
+	if data_alloc == nil then
+		return false, ffi.string(errmsg[0])
+	end
+	local data = ffi.string(data_alloc, bytes_read)
+	libC.pipedata_free(data_alloc)
+	return true, data
+end
+
+function await_process(processinfo, stderr_read_end)
+	-- Wait for a child process to finish.
+	-- You HAVE to call this function at some point after successfully starting a process!
+	-- Returns success, maybe_exitcode (`true, exitcode` if process started and exited cleanly, else `false, err`)
+
+	local pid = processinfo
+	local exitcode = ffi.new("int[1]")
+	local errmsg = ffi.new("const char*[1]")
+	local success = libC.await_process(pid, stderr_read_end, exitcode, errmsg)
+	if not success then
+		return false, ffi.string(errmsg[0])
+	end
+	return true, exitcode[0]
+end
+
+function process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
+	-- Needs to be called at some point after doing await_process, even if that failed.
+	-- Cleans up internally, and also closes the pipe handles you give.
+
+	libC.process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
 end

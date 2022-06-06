@@ -1,5 +1,5 @@
 /*
-Version 04
+Version 05
 
 Header file intended for use with LuaJIT FFI's cdef
 */
@@ -39,4 +39,28 @@ bool ved_file_exists(const char* path);
 
 long long ved_getmodtime(const char* path);
 
+bool ved_mkdir(const char* pathname, const char** errmsg);
+
 bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** errkey);
+
+int64_t start_process(
+	const char* const cmd[], /* in */
+	unsigned int timeout,    /* in, 0 for no timeout */
+	int* stdin_write_end,    /* out, nullable */
+	int* stdout_read_end,    /* out, nullable */
+	int* stderr_read_end,    /* out, nullable */
+	const char** errmsg      /* out, nullable */
+);
+
+bool write_to_pipe(int write_end, const char* data, size_t data_size, const char** errmsg);
+char* read_from_pipe(int read_end, size_t* out_bytes_read, const char** errmsg);
+void pipedata_free(char* data);
+
+bool await_process(
+	int64_t pid,          /* in */
+	int* stderr_read_end, /* in, nullable */
+	int* out_exitcode,    /* out, nullable */
+	const char** errmsg   /* out, nullable */
+);
+
+void process_cleanup(int* stdin_write_end, int* stdout_read_end, int* stderr_read_end);

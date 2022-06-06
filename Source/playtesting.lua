@@ -4,6 +4,8 @@
 -- playtesting_endaskwherestart() will set it to false, then call playtesting_execute(),
 -- which will start a thread that just io.popen()s VVVVVV (or VVVVVV-CE) with command line args to immediately load the level.
 
+local playtesting_levelcontents
+
 function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycontrol)
 	thisroomx = thisroomx + 100
 	thisroomy = thisroomy + 100
@@ -27,32 +29,30 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		end
 	end
 
-	local args = table.concat({
-			"-p",
-			"special/stdin",
-			"-playx",
-			posx,
-			"-playy",
-			posy,
-			"-playrx",
-			thisroomx,
-			"-playry",
-			thisroomy,
-			"-playgc",
-			gravitycontrol,
-			"-playmusic",
-			music,
-			playassets
-		},
-		" "
-	)
+	local args = {
+		"-p",
+		"special/stdin",
+		"-playx",
+		posx,
+		"-playy",
+		posy,
+		"-playrx",
+		thisroomx,
+		"-playry",
+		thisroomy,
+		"-playgc",
+		gravitycontrol,
+		"-playmusic",
+		music,
+		playassets
+	}
 
-	cons("RUNNING VVVVVV AT THIS PATH:\n" .. path .. "\nWITH THESE ARGUMENTS:\n" .. args)
+	cons("RUNNING VVVVVV AT THIS PATH:\n" .. path .. "\nWITH THESE ARGUMENTS:\n" .. table.concat(args, " "))
 
 	if playtestthread == nil then
 		playtestthread = love.thread.newThread("playtestthread.lua")
 	end
-	playtestthread:start(love.system.getOS(), path, args, playtesting_levelcontents)
+	playtestthread:start(path, args, playtesting_levelcontents, L)
 	-- Don't leave this laying around
 	playtesting_levelcontents = ""
 
@@ -158,7 +158,6 @@ function playtesting_start(force_ask_path)
 	else
 		playtesting_askwherestart = true
 
-		-- Ah crud a global
 		playtesting_levelcontents = thissavederror
 	end
 end

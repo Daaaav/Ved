@@ -1,24 +1,17 @@
-dirsep, levelsfolder, loaded_filefunc, getOS, L = ...
+dirsep, levelsfolder, loaded_filefunc, L = ...
 
 local inchannel = love.thread.getChannel("allmetadata_in")
 local outchannel = love.thread.getChannel("allmetadata_out")
 
--- Needed in LÖVE 0.9.x
+-- love.filesystem is needed in LÖVE 0.9.x
 require("love.filesystem")
+require("love.system")
 
 -- Workaround for including func
 love.graphics = {}
 love.keyboard = {}
 love.mouse = {}
 function hook() end
-
--- Workaround for love.system.getOS()
-if love.system == nil then
-	love.system = {}
-end
-love.system.getOS = function()
-	return getOS
-end
 
 require("corefunc")
 require("func")

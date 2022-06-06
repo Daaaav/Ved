@@ -28,7 +28,7 @@ function love.load()
 		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
-		local lib_ok, errmsg = prepare_library("vedlib_filefunc_mac04.so")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_mac05.so")
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end
@@ -52,7 +52,7 @@ function love.load()
 		macscrolling = false
 		newline = "\n"
 		hook("love_load_lin")
-		local lib_ok, errmsg = prepare_library("vedlib_filefunc_lin04.so", "vedlib_filefunc_linmac.c")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_lin05.so", "vedlib_filefunc_linmac.c")
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end
@@ -423,7 +423,7 @@ function love.load()
 	end
 
 	loadallmetadatathread = love.thread.newThread("loadallmetadata.lua")
-	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, love.system.getOS(), L)
+	loadallmetadatathread:start(dirsep, levelsfolder, loaded_filefunc, L)
 
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
