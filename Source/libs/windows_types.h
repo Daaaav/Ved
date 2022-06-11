@@ -16,13 +16,12 @@ typedef wchar_t* LPWSTR, *PWSTR;
 typedef const wchar_t* LPCWSTR;
 
 typedef void* DWORD_PTR;
+typedef void* ULONG_PTR;
 
 typedef LPCSTR LPCCH;
 typedef LPCWSTR LPCWCH;
 
 typedef void TIME_ZONE_INFORMATION;
-
-typedef void* LPOVERLAPPED;
 
 typedef long LONG;
 typedef LONG HRESULT;

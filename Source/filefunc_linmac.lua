@@ -281,96 +281,132 @@ function find_vvvvvv_exe()
 	return true, ffi.string(buffer_path)
 end
 
-function start_process(path, args_table, timeout, retain_stdin, retain_stdout, retain_stderr)
-	-- Start a child process and get its "processinfo" (an OS-dependent pid or handle).
-	-- On success, returns true, processinfo, stdin_write_end, stdout_read_end, stderr_read_end
-	-- On failure, returns false, err
+cProcess =
+{
+	path = nil,
+	args_table = {},
+	timeout = 0,
+	will_read = false,
+	will_write = false,
+
+	stdin_write_end = nil,
+	stdout_read_end = nil,
+	stderr_read_end = nil,
+
+	pid = 0,
+}
+
+function cProcess:new(o)
+	-- Usage:
+	-- process = cProcess:new{path="", args_table={}, timeout=0, will_read=false, will_write=false}
+	-- All attributes are optional except for path.
+	--
 	-- The timeout is an integer amount of seconds that the process can take in total, 0 for no timeout.
-	-- You can choose which stdio pipe handles to retain, unretained handles are nil (retrieved pipes
-	-- will need to be closed later). You probably SHOULD retain stdout, or VVVVVV may get SIGPIPE'd.
-	-- Note that this function will return true - indicating success - even if starting VVVVVV is going
-	-- to fail. This will become apparent when calling await_process, because the process exits with
-	-- a special code and prints the error to stderr. You may thus want to get the stderr pipe for passing
-	-- it to await_process, it handles this and you can get a more detailed error message in this case.
+	-- To be able to use process:read_stdout() or process:read_stderr(), will_read must be true.
+	-- To be able to use process:write_stdin(data), will_write must be true.
 
-	local cmd = ffi.new("const char* [?]", #args_table+2)
-	cmd[0] = path
-	for i = 1, #args_table - 1 do
-		cmd[i] = tostring(args_table[i])
-	end
-	cmd[#args_table+1] = nil
+	setmetatable(o, self)
+	self.__index = self
 
-	local stdin_write_end, stdout_read_end, stderr_read_end = nil, nil, nil
-	if retain_stdin then
-		stdin_write_end = ffi.new("int[1]")
+	return o
+end
+
+function cProcess:start()
+	-- Start the child process and get its OS-dependent pid or handle.
+	-- Returns `true` on success, `false, err` on failure.
+	-- Note that this function may return true - indicating success - even if starting VVVVVV is going
+	-- to fail. This will become apparent when calling :await_completion() (or :write_stdin(data)).
+
+	local cmd = ffi.new("const char* [?]", #self.args_table+2)
+	cmd[0] = self.path
+	for i = 1, #self.args_table - 1 do
+		cmd[i] = tostring(self.args_table[i])
 	end
-	if retain_stdout then
-		stdout_read_end = ffi.new("int[1]")
+	cmd[#self.args_table+1] = nil
+
+	if self.will_write then
+		self.stdin_write_end = ffi.new("int[1]")
 	end
-	if retain_stderr then
-		stderr_read_end = ffi.new("int[1]")
-	end
+	-- Retain stdout and stderr handles even if not self.will_read to avoid SIGPIPE
+	self.stdout_read_end = ffi.new("int[1]")
+	self.stderr_read_end = ffi.new("int[1]")
+
 	local errmsg = ffi.new("const char*[1]")
 
 	local pid = libC.start_process(
 		cmd,
-		timeout,
-		stdin_write_end,
-		stdout_read_end,
-		stderr_read_end,
+		self.timeout,
+		self.stdin_write_end,
+		self.stdout_read_end,
+		self.stderr_read_end,
 		errmsg
 	)
 	if tonumber(pid) < 0 then
 		return false, ffi.string(errmsg[0])
 	end
 
-	return true, pid, stdin_write_end, stdout_read_end, stderr_read_end
+	self.pid = pid
+
+	return true
 end
 
-function write_to_pipe(write_end, data)
+function cProcess:write_stdin(data)
 	-- Returns success, err
 	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
 
 	local errmsg = ffi.new("const char*[1]")
-	local success = libC.write_to_pipe(write_end[0], data, data:len(), errmsg)
+	local success = libC.write_to_pipe(self.stdin_write_end[0], data, data:len(), errmsg)
 	if not success then
 		return false, ffi.string(errmsg[0])
 	end
 	return true
 end
 
-function read_from_pipe(read_end)
-	-- Returns success, maybe_data (`true, data` on success, `false, err` on failure)
+function cProcess:read_from_pipe(read_end)
+	-- Internal function
 
 	local bytes_read = ffi.new("size_t[1]")
 	local errmsg = ffi.new("const char*[1]")
 	local data_alloc = libC.read_from_pipe(read_end[0], bytes_read, errmsg)
 	if data_alloc == nil then
-		return false, ffi.string(errmsg[0])
+		return nil, ffi.string(errmsg[0])
 	end
 	local data = ffi.string(data_alloc, bytes_read[0])
 	libC.pipedata_free(data_alloc)
-	return true, data
+	return data
 end
 
-function await_process(processinfo, stderr_read_end)
+function cProcess:read_stdout()
+	-- Returns `data` on success, `nil, err` on failure
+	-- You should only call this function after process completion.
+
+	return self:read_from_pipe(self.stdout_read_end)
+end
+
+function cProcess:read_stderr()
+	-- Returns `data` on success, `nil, err` on failure
+	-- You should only call this function after process completion.
+
+	return self:read_from_pipe(self.stderr_read_end)
+end
+
+function cProcess:await_completion()
 	-- Wait for a child process to finish.
 	-- You HAVE to call this function at some point after successfully starting a process!
-	-- Returns success, maybe_exitcode (`true, exitcode` if process started and exited cleanly, else `false, err`)
+	-- Returns `exitcode` if process started and exited cleanly, `nil, err` otherwise
 
-	local pid = processinfo
 	local exitcode = ffi.new("int[1]")
 	local errmsg = ffi.new("const char*[1]")
-	local success = libC.await_process(pid, stderr_read_end, exitcode, errmsg)
+	local success = libC.await_process(self.pid, self.stderr_read_end, exitcode, errmsg)
 	if not success then
-		return false, ffi.string(errmsg[0])
+		return nil, ffi.string(errmsg[0])
 	end
-	return true, exitcode[0]
+	return exitcode[0]
 end
 
-function process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
+function cProcess:cleanup()
 	-- Needs to be called at some point after doing await_process, even if that failed.
 	-- Cleans up internally, and also closes the pipe handles you give.
 
-	libC.process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
+	libC.process_cleanup(self.stdin_write_end, self.stdout_read_end, self.stderr_read_end)
 end

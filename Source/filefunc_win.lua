@@ -497,17 +497,41 @@ function find_vvvvvv_exe()
 	return true, path
 end
 
-function start_process(path, args_table, timeout, retain_stdin, retain_stdout, retain_stderr)
-	-- Start a child process and get its "processinfo" (an OS-dependent pid or handle).
-	-- On success, returns true, processinfo, stdin_write_end, stdout_read_end, stderr_read_end
-	-- On failure, returns false, err
+cProcess =
+{
+	path = nil,
+	args_table = {},
+	timeout = 0,
+	will_read = false,
+	will_write = false,
+
+	stdin_write_end = nil,
+	stdout_read_end = nil,
+	stderr_read_end = nil,
+
+	processinfo = nil,
+}
+
+function cProcess:new(o)
+	-- Usage:
+	-- process = cProcess:new{path="", args_table={}, timeout=0, will_read=false, will_write=false}
+	-- All attributes are optional except for path.
+	--
 	-- The timeout is an integer amount of seconds that the process can take in total, 0 for no timeout.
-	-- You can choose which stdio pipe handles to retain, unretained handles are nil (retrieved pipes
-	-- will need to be closed later). You probably SHOULD retain stdout, or VVVVVV may get SIGPIPE'd.
-	-- Note that this function will return true - indicating success - even if starting VVVVVV is going
-	-- to fail. This will become apparent when calling await_process, because the process exits with
-	-- a special code and prints the error to stderr. You may thus want to get the stderr pipe for passing
-	-- it to await_process, it handles this and you can get a more detailed error message in this case.
+	-- To be able to use process:read_stdout() or process:read_stderr(), will_read must be true.
+	-- To be able to use process:write_stdin(data), will_write must be true.
+
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function cProcess:start()
+	-- Start the child process and get its OS-dependent pid or handle.
+	-- Returns `true` on success, `false, err` on failure.
+	-- Note that this function may return true - indicating success - even if starting VVVVVV is going
+	-- to fail. This will become apparent when calling :await_completion() (or :write_stdin(data)).
 
 	-- The pipes need to be inherited
 	local sattr = ffi.new("SECURITY_ATTRIBUTES")
@@ -539,11 +563,12 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 		return false, errmsg
 	end
 
-	if retain_stdin then
+	if self.will_write then
 		if not ffi.C.CreatePipe(p_stdin[READ_END], p_stdin[WRITE_END], sattr, 204800) then
 			return cleanup_win_error()
 		end
 		p_stdin_made = true
+
 		-- VVVVVV should not inherit the write end
 		if not ffi.C.SetHandleInformation(p_stdin[WRITE_END][0], HANDLE_FLAG_INHERIT, 0) then
 			return cleanup_win_error()
@@ -552,30 +577,26 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 		p_stdin[READ_END][0] = ffi.C.GetStdHandle(STD_INPUT_HANDLE)
 		p_stdin[WRITE_END] = nil
 	end
-	if retain_stdout then
+
+	if self.will_read then
 		if not ffi.C.CreatePipe(p_stdout[READ_END], p_stdout[WRITE_END], sattr, 1024) then
 			return cleanup_win_error()
 		end
 		p_stdout_made = true
-		-- VVVVVV should not inherit the read end
-		if not ffi.C.SetHandleInformation(p_stdout[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
-			return cleanup_win_error()
-		end
-	else
-		p_stdout[READ_END] = nil
-		p_stdout[WRITE_END][0] = ffi.C.GetStdHandle(STD_OUTPUT_HANDLE)
-	end
-	if retain_stderr then
 		if not ffi.C.CreatePipe(p_stderr[READ_END], p_stderr[WRITE_END], sattr, 1024) then
 			return cleanup_win_error()
 		end
 		p_stderr_made = true
-		-- VVVVVV should not inherit the read end
-		if not ffi.C.SetHandleInformation(p_stderr[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
+
+		-- VVVVVV should not inherit the read ends
+		if not ffi.C.SetHandleInformation(p_stdout[READ_END][0], HANDLE_FLAG_INHERIT, 0)
+		or not ffi.C.SetHandleInformation(p_stderr[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
 			return cleanup_win_error()
 		end
 	else
+		p_stdout[READ_END] = nil
 		p_stderr[READ_END] = nil
+		p_stdout[WRITE_END][0] = ffi.C.GetStdHandle(STD_OUTPUT_HANDLE)
 		p_stderr[WRITE_END][0] = ffi.C.GetStdHandle(STD_ERROR_HANDLE)
 	end
 
@@ -585,22 +606,21 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 	startupinfo.hStdOutput = p_stdout[WRITE_END][0]
 	startupinfo.hStdError = p_stderr[WRITE_END][0]
 	startupinfo.dwFlags = STARTF_USESTDHANDLES
-	local processinfo = ffi.new("PROCESS_INFORMATION_VED")
-	processinfo.vedTimeout = timeout
+	self.processinfo = ffi.new("PROCESS_INFORMATION")
 
 	-- Arguments?
-	local cmdline = "\"" .. path .. "\" " .. table.concat(args_table, " ")
+	local cmdline = "\"" .. self.path .. "\" " .. table.concat(self.args_table, " ")
 	local len_cmdline = cmdline:len()+1
 	local buffer_cmdline_utf16 = ffi.new("WCHAR[?]", len_cmdline)
 	ffi.C.MultiByteToWideChar(CP_UTF8, 0, cmdline, -1, buffer_cmdline_utf16, len_cmdline)
 
 	-- VVVVVV-CE 1.0-pre1 expected data.zip in the working directory, still can't hurt to start the process there
 	local buffer_workingdir_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
-	ffi.copy(buffer_workingdir_utf16, path_utf8_to_utf16(get_parent_path(path)), MAX_PATH)
+	ffi.copy(buffer_workingdir_utf16, path_utf8_to_utf16(get_parent_path(self.path)), MAX_PATH)
 
 	-- Start VVVVVV
 	local success = ffi.C.CreateProcessW(
-		path_utf8_to_utf16(path),
+		path_utf8_to_utf16(self.path),
 		buffer_cmdline_utf16,
 		nil,
 		nil,
@@ -609,7 +629,7 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 		nil,
 		buffer_workingdir_utf16,
 		startupinfo,
-		ffi.cast("LPPROCESS_INFORMATION", processinfo)
+		self.processinfo
 	)
 	if not success then
 		return cleanup_win_error()
@@ -626,34 +646,39 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 		ffi.C.CloseHandle(p_stderr[WRITE_END][0])
 	end
 
-	return true, processinfo, p_stdin[WRITE_END], p_stdout[READ_END], p_stderr[READ_END]
+	self.stdin_write_end = p_stdin[WRITE_END]
+	self.stdout_read_end = p_stdout[READ_END]
+	self.stderr_read_end = p_stderr[READ_END]
+
+	return true
 end
 
-function write_to_pipe(write_end, data)
+function cProcess:write_stdin(data)
 	-- Returns success, err
 	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
 
 	local bytes_written = ffi.new("DWORD[1]")
-	success = ffi.C.WriteFile(write_end[0], data, data:len(), bytes_written, nil)
+	success = ffi.C.WriteFile(self.stdin_write_end[0], data, data:len(), bytes_written, nil)
 
 	if not success then
 		local errmsg = format_last_win_error()
-		ffi.C.CloseHandle(write_end[0])
+		ffi.C.CloseHandle(self.stdin_write_end[0])
 		return false, errmsg
 	end
 
-	ffi.C.CloseHandle(write_end[0])
+	ffi.C.CloseHandle(self.stdin_write_end[0])
 	return true
 end
 
-function read_from_pipe(read_end)
-	-- Returns success, maybe_data (`true, data` on success, `false, err` on failure)
+function cProcess:read_from_pipe(read_end)
+	-- Internal function
+	-- TODO: This is currently broken, instead just asynchronously maintain a buffer (if self.will_read)
 
 	-- capacity excludes space for a null terminator, so we know we can always add one
 	local capacity = 1024
 	local buf = ffi.C.malloc(capacity + 1)
 	if buf == nil then
-		return false, "NULL malloc"
+		return nil, "NULL malloc"
 	end
 
 	local pos = 0
@@ -665,12 +690,12 @@ function read_from_pipe(read_end)
 				-- (If not all handles are closed it blocks)
 				local data = ffi.string(buf, pos)
 				ffi.C.free(buf)
-				return true, data
+				return data
 			end
 
 			local errmsg = format_last_win_error()
 			ffi.C.free(buf)
-			return false, errmsg
+			return nil, errmsg
 		end
 		pos = pos + cur_bytes_read[0]
 
@@ -680,48 +705,58 @@ function read_from_pipe(read_end)
 			local tmp = ffi.C.realloc(buf, capacity + 1)
 			if tmp == nil then
 				ffi.C.free(buf)
-				return false, "NULL malloc"
+				return nil, "NULL malloc"
 			end
 			buf = tmp
 		end
 	end
 end
 
+function cProcess:read_stdout()
+	-- Returns `data` on success, `nil, err` on failure
+	-- You should only call this function after process completion.
+	-- TODO: Currently broken on Windows
 
-function await_process(processinfo, stderr_read_end)
-	-- Wait for a child process to finish.
-	-- You HAVE to call this function at some point after successfully starting a process!
-	-- Returns success, maybe_exitcode (`true, exitcode` if process started and exited cleanly, else `false, err`)
-
-	local timeout = INFINITE
-	if processinfo.vedTimeout > 0 then
-		timeout = processinfo.vedTimeout * 1000
-	end
-
-	local event = ffi.C.WaitForSingleObject(processinfo.hProcess, timeout)
-
-	local success, maybe_exitcode
-	if event == WAIT_FAILED then
-		success, maybe_exitcode = false, format_last_win_error()
-	elseif event == WAIT_TIMEOUT then
-		ffi.C.TerminateProcess(processinfo.hProcess, 70)
-
-		success, maybe_exitcode = false, L.VVVVVV_22_OR_OLDER
-	else
-		local exitcode = ffi.new("DWORD[1]")
-		if not ffi.C.GetExitCodeProcess(processinfo.hProcess, exitcode) then
-			success, maybe_exitcode = false, format_last_win_error()
-		else
-			success, maybe_exitcode = true, exitcode[0]
-		end
-	end
-
-	ffi.C.CloseHandle(processinfo.hProcess)
-	ffi.C.CloseHandle(processinfo.hThread)
-	return success, maybe_exitcode
+	return self:read_from_pipe(self.stdout_read_end)
 end
 
-function process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
+function cProcess:read_stderr()
+	-- Returns `data` on success, `nil, err` on failure
+	-- You should only call this function after process completion.
+	-- TODO: Currently broken on Windows
+
+	return self:read_from_pipe(self.stderr_read_end)
+end
+
+function cProcess:await_completion()
+	-- Wait for a child process to finish.
+	-- You HAVE to call this function at some point after successfully starting a process!
+	-- Returns `exitcode` if process started and exited cleanly, `nil, err` otherwise
+
+	local win_timeout = INFINITE
+	if self.timeout > 0 then
+		win_timeout = self.timeout * 1000
+	end
+
+	local event = ffi.C.WaitForSingleObject(self.processinfo.hProcess, win_timeout)
+
+	if event == WAIT_FAILED then
+		return nil, format_last_win_error()
+	elseif event == WAIT_TIMEOUT then
+		ffi.C.TerminateProcess(self.processinfo.hProcess, 70)
+
+		return nil, L.VVVVVV_22_OR_OLDER
+	end
+
+	local exitcode = ffi.new("DWORD[1]")
+	if not ffi.C.GetExitCodeProcess(self.processinfo.hProcess, exitcode) then
+		return nil, format_last_win_error()
+	end
+
+	return exitcode[0]
+end
+
+function cProcess:cleanup()
 	-- Needs to be called at some point after doing await_process, even if that failed.
 	-- Cleans up internally, and also closes the pipe handles you give.
 
@@ -734,4 +769,7 @@ function process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
 	if stderr_read_end ~= nil then
 		ffi.C.CloseHandle(stderr_read_end[0])
 	end
+
+	ffi.C.CloseHandle(self.processinfo.hProcess)
+	ffi.C.CloseHandle(self.processinfo.hThread)
 end

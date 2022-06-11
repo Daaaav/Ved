@@ -66,14 +66,18 @@ typedef struct _PROCESS_INFORMATION {
   DWORD  dwThreadId;
 } PROCESS_INFORMATION, *PPROCESS_INFORMATION, *LPPROCESS_INFORMATION;
 
-/* Non-standard, but Windows won't do anything with the extra field */
-typedef struct _PROCESS_INFORMATION_VED {
-  HANDLE hProcess;
-  HANDLE hThread;
-  DWORD  dwProcessId;
-  DWORD  dwThreadId;
-  UINT   vedTimeout;
-} PROCESS_INFORMATION_VED, *PPROCESS_INFORMATION_VED, *LPPROCESS_INFORMATION_VED;
+typedef struct _OVERLAPPED {
+  ULONG_PTR Internal;
+  ULONG_PTR InternalHigh;
+  union {
+    struct {
+      DWORD Offset;
+      DWORD OffsetHigh;
+    } DUMMYSTRUCTNAME;
+    PVOID Pointer;
+  } DUMMYUNIONNAME;
+  HANDLE    hEvent;
+} OVERLAPPED, *LPOVERLAPPED;
 
 HANDLE FindFirstFileW(
   LPCWSTR            lpFileName,
