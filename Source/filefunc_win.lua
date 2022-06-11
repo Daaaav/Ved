@@ -9,6 +9,7 @@ local psapi_loaded, psapi = pcall(ffi.load, "Psapi") -- EnumProcesses, GetModule
 if not psapi_loaded then
 	autodetect_vvvvvv_available = false
 end
+ffi.cdef((love.filesystem.read("libs/universal.h")))
 ffi.cdef((love.filesystem.read("libs/windows_types.h")))
 ffi.cdef((love.filesystem.read("libs/windows_main.h")))
 
@@ -421,84 +422,6 @@ function multiwritefile_close(os_fh)
 	ffi.C.CloseHandle(os_fh)
 end
 
-function run_pipe_process(app_path, args, stdin)
-	-- The pipe needs to be inherited
-	local sattr = ffi.new("SECURITY_ATTRIBUTES")
-	sattr.nLength = ffi.sizeof("SECURITY_ATTRIBUTES")
-	sattr.bInheritHandle = true
-	sattr.lpSecurityDescriptor = nil
-
-	-- Set up the pipe - it has a send end and a receive end
-	local pipe_send = ffi.new("HANDLE[1]")
-	local pipe_recv = ffi.new("HANDLE[1]")
-	if not ffi.C.CreatePipe(pipe_recv, pipe_send, sattr, stdin:len()+1) then
-		return false, format_last_win_error()
-	end
-	-- VVVVVV should not inherit the send end
-	if not ffi.C.SetHandleInformation(pipe_send[0], HANDLE_FLAG_INHERIT, 0) then
-		ffi.C.CloseHandle(pipe_recv[0])
-		ffi.C.CloseHandle(pipe_send[0])
-		return false, format_last_win_error()
-	end
-
-	local startupinfo = ffi.new("STARTUPINFOW")
-	startupinfo.cb = ffi.sizeof("STARTUPINFOW")
-	startupinfo.hStdInput = pipe_recv[0]
-	startupinfo.dwFlags = STARTF_USESTDHANDLES
-	local processinfo = ffi.new("PROCESS_INFORMATION")
-
-	-- Arguments?
-	local cmdline = "\"" .. app_path .. "\" " .. args
-	local len_cmdline = cmdline:len()+1
-	local buffer_cmdline_utf16 = ffi.new("WCHAR[?]", len_cmdline)
-	ffi.C.MultiByteToWideChar(CP_UTF8, 0, cmdline, -1, buffer_cmdline_utf16, len_cmdline)
-
-	-- VVVVVV-CE 1.0-pre1 expects data.zip in the working directory, can't hurt to start the process there
-	local buffer_workingdir_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
-	ffi.copy(buffer_workingdir_utf16, path_utf8_to_utf16(get_parent_path(app_path)), MAX_PATH)
-
-	-- Start VVVVVV
-	local success = ffi.C.CreateProcessW(
-		path_utf8_to_utf16(app_path),
-		buffer_cmdline_utf16,
-		nil,
-		nil,
-		true,
-		CREATE_NO_WINDOW,
-		nil,
-		buffer_workingdir_utf16,
-		startupinfo,
-		processinfo
-	)
-	if not success then
-		ffi.C.CloseHandle(pipe_recv[0])
-		ffi.C.CloseHandle(pipe_send[0])
-		return false, format_last_win_error()
-	end
-
-	-- Write to stdin pipe
-	local lpNumberOfBytesWritten = ffi.new("DWORD[1]")
-	success = ffi.C.WriteFile(pipe_send[0], stdin, stdin:len(), lpNumberOfBytesWritten, nil)
-
-	ffi.C.CloseHandle(pipe_send[0])
-	ffi.C.CloseHandle(pipe_recv[0])
-
-	if not success then
-		ffi.C.CloseHandle(processinfo.hProcess)
-		ffi.C.CloseHandle(processinfo.hThread)
-
-		return false, format_last_win_error()
-	end
-
-	-- Wait until completion
-	ffi.C.WaitForSingleObject(processinfo.hProcess, INFINITE)
-
-	ffi.C.CloseHandle(processinfo.hProcess)
-	ffi.C.CloseHandle(processinfo.hThread)
-
-	return true
-end
-
 function find_vvvvvv_exe()
 	-- returns `true, path` if success, `false, errmsg` if failure
 
@@ -572,4 +495,243 @@ function find_vvvvvv_exe()
 	end
 
 	return true, path
+end
+
+function start_process(path, args_table, timeout, retain_stdin, retain_stdout, retain_stderr)
+	-- Start a child process and get its "processinfo" (an OS-dependent pid or handle).
+	-- On success, returns true, processinfo, stdin_write_end, stdout_read_end, stderr_read_end
+	-- On failure, returns false, err
+	-- The timeout is an integer amount of seconds that the process can take in total, 0 for no timeout.
+	-- You can choose which stdio pipe handles to retain, unretained handles are nil (retrieved pipes
+	-- will need to be closed later). You probably SHOULD retain stdout, or VVVVVV may get SIGPIPE'd.
+	-- Note that this function will return true - indicating success - even if starting VVVVVV is going
+	-- to fail. This will become apparent when calling await_process, because the process exits with
+	-- a special code and prints the error to stderr. You may thus want to get the stderr pipe for passing
+	-- it to await_process, it handles this and you can get a more detailed error message in this case.
+
+	-- The pipes need to be inherited
+	local sattr = ffi.new("SECURITY_ATTRIBUTES")
+	sattr.nLength = ffi.sizeof("SECURITY_ATTRIBUTES")
+	sattr.bInheritHandle = true
+	sattr.lpSecurityDescriptor = nil
+
+	-- Set up the pipes - they have a read end and a write end
+	local READ_END, WRITE_END = 0, 1
+	-- I'd have liked HANDLE[2][1], but I need to be able to set them to nil arbitrarily...
+	local p_stdin, p_stdin_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
+	local p_stdout, p_stdout_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
+	local p_stderr, p_stderr_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
+
+	local function cleanup_win_error()
+		local errmsg = format_last_win_error()
+		if p_stdin_made then
+			ffi.C.CloseHandle(p_stdin[READ_END][0])
+			ffi.C.CloseHandle(p_stdin[WRITE_END][0])
+		end
+		if p_stdout_made then
+			ffi.C.CloseHandle(p_stdout[READ_END][0])
+			ffi.C.CloseHandle(p_stdout[WRITE_END][0])
+		end
+		if p_stderr_made then
+			ffi.C.CloseHandle(p_stderr[READ_END][0])
+			ffi.C.CloseHandle(p_stderr[WRITE_END][0])
+		end
+		return false, errmsg
+	end
+
+	if retain_stdin then
+		if not ffi.C.CreatePipe(p_stdin[READ_END], p_stdin[WRITE_END], sattr, 204800) then
+			return cleanup_win_error()
+		end
+		p_stdin_made = true
+		-- VVVVVV should not inherit the write end
+		if not ffi.C.SetHandleInformation(p_stdin[WRITE_END][0], HANDLE_FLAG_INHERIT, 0) then
+			return cleanup_win_error()
+		end
+	else
+		p_stdin[READ_END][0] = ffi.C.GetStdHandle(STD_INPUT_HANDLE)
+		p_stdin[WRITE_END] = nil
+	end
+	if retain_stdout then
+		if not ffi.C.CreatePipe(p_stdout[READ_END], p_stdout[WRITE_END], sattr, 1024) then
+			return cleanup_win_error()
+		end
+		p_stdout_made = true
+		-- VVVVVV should not inherit the read end
+		if not ffi.C.SetHandleInformation(p_stdout[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
+			return cleanup_win_error()
+		end
+	else
+		p_stdout[READ_END] = nil
+		p_stdout[WRITE_END][0] = ffi.C.GetStdHandle(STD_OUTPUT_HANDLE)
+	end
+	if retain_stderr then
+		if not ffi.C.CreatePipe(p_stderr[READ_END], p_stderr[WRITE_END], sattr, 1024) then
+			return cleanup_win_error()
+		end
+		p_stderr_made = true
+		-- VVVVVV should not inherit the read end
+		if not ffi.C.SetHandleInformation(p_stderr[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
+			return cleanup_win_error()
+		end
+	else
+		p_stderr[READ_END] = nil
+		p_stderr[WRITE_END][0] = ffi.C.GetStdHandle(STD_ERROR_HANDLE)
+	end
+
+	local startupinfo = ffi.new("STARTUPINFOW")
+	startupinfo.cb = ffi.sizeof("STARTUPINFOW")
+	startupinfo.hStdInput = p_stdin[READ_END][0]
+	startupinfo.hStdOutput = p_stdout[WRITE_END][0]
+	startupinfo.hStdError = p_stderr[WRITE_END][0]
+	startupinfo.dwFlags = STARTF_USESTDHANDLES
+	local processinfo = ffi.new("PROCESS_INFORMATION_VED")
+	processinfo.vedTimeout = timeout
+
+	-- Arguments?
+	local cmdline = "\"" .. path .. "\" " .. table.concat(args_table, " ")
+	local len_cmdline = cmdline:len()+1
+	local buffer_cmdline_utf16 = ffi.new("WCHAR[?]", len_cmdline)
+	ffi.C.MultiByteToWideChar(CP_UTF8, 0, cmdline, -1, buffer_cmdline_utf16, len_cmdline)
+
+	-- VVVVVV-CE 1.0-pre1 expected data.zip in the working directory, still can't hurt to start the process there
+	local buffer_workingdir_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
+	ffi.copy(buffer_workingdir_utf16, path_utf8_to_utf16(get_parent_path(path)), MAX_PATH)
+
+	-- Start VVVVVV
+	local success = ffi.C.CreateProcessW(
+		path_utf8_to_utf16(path),
+		buffer_cmdline_utf16,
+		nil,
+		nil,
+		true,
+		CREATE_NO_WINDOW,
+		nil,
+		buffer_workingdir_utf16,
+		startupinfo,
+		ffi.cast("LPPROCESS_INFORMATION", processinfo)
+	)
+	if not success then
+		return cleanup_win_error()
+	end
+
+	-- Now we can close our unused pipe handles right?
+	if p_stdin_made then
+		ffi.C.CloseHandle(p_stdin[READ_END][0])
+	end
+	if p_stdout_made then
+		ffi.C.CloseHandle(p_stdout[WRITE_END][0])
+	end
+	if p_stderr_made then
+		ffi.C.CloseHandle(p_stderr[WRITE_END][0])
+	end
+
+	return true, processinfo, p_stdin[WRITE_END], p_stdout[READ_END], p_stderr[READ_END]
+end
+
+function write_to_pipe(write_end, data)
+	-- Returns success, err
+	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
+
+	local bytes_written = ffi.new("DWORD[1]")
+	success = ffi.C.WriteFile(write_end[0], data, data:len(), bytes_written, nil)
+
+	if not success then
+		local errmsg = format_last_win_error()
+		ffi.C.CloseHandle(write_end[0])
+		return false, errmsg
+	end
+
+	ffi.C.CloseHandle(write_end[0])
+	return true
+end
+
+function read_from_pipe(read_end)
+	-- Returns success, maybe_data (`true, data` on success, `false, err` on failure)
+
+	-- capacity excludes space for a null terminator, so we know we can always add one
+	local capacity = 1024
+	local buf = ffi.C.malloc(capacity + 1)
+	if buf == nil then
+		return false, "NULL malloc"
+	end
+
+	local pos = 0
+	while true do
+		local cur_bytes_read = ffi.new("DWORD[1]")
+		if not ffi.C.ReadFile(read_end[0], buf+pos, capacity-pos, cur_bytes_read, nil) then
+			if ffi.C.GetLastError() == ERROR_BROKEN_PIPE then
+				-- When all write handles are closed, it finishes off with one "unsuccessful" 0 bytes read
+				-- (If not all handles are closed it blocks)
+				local data = ffi.string(buf, pos)
+				ffi.C.free(buf)
+				return true, data
+			end
+
+			local errmsg = format_last_win_error()
+			ffi.C.free(buf)
+			return false, errmsg
+		end
+		pos = pos + cur_bytes_read[0]
+
+		-- Buffer full?
+		if pos >= capacity then
+			capacity = capacity * 2
+			local tmp = ffi.C.realloc(buf, capacity + 1)
+			if tmp == nil then
+				ffi.C.free(buf)
+				return false, "NULL malloc"
+			end
+			buf = tmp
+		end
+	end
+end
+
+
+function await_process(processinfo, stderr_read_end)
+	-- Wait for a child process to finish.
+	-- You HAVE to call this function at some point after successfully starting a process!
+	-- Returns success, maybe_exitcode (`true, exitcode` if process started and exited cleanly, else `false, err`)
+
+	local timeout = INFINITE
+	if processinfo.vedTimeout > 0 then
+		timeout = processinfo.vedTimeout * 1000
+	end
+
+	local event = ffi.C.WaitForSingleObject(processinfo.hProcess, timeout)
+
+	local success, maybe_exitcode
+	if event == WAIT_FAILED then
+		success, maybe_exitcode = false, format_last_win_error()
+	elseif event == WAIT_TIMEOUT then
+		ffi.C.TerminateProcess(processinfo.hProcess, 70)
+
+		success, maybe_exitcode = false, L.VVVVVV_22_OR_OLDER
+	else
+		local exitcode = ffi.new("DWORD[1]")
+		if not ffi.C.GetExitCodeProcess(processinfo.hProcess, exitcode) then
+			success, maybe_exitcode = false, format_last_win_error()
+		else
+			success, maybe_exitcode = true, exitcode[0]
+		end
+	end
+
+	ffi.C.CloseHandle(processinfo.hProcess)
+	ffi.C.CloseHandle(processinfo.hThread)
+	return success, maybe_exitcode
+end
+
+function process_cleanup(stdin_write_end, stdout_read_end, stderr_read_end)
+	-- Needs to be called at some point after doing await_process, even if that failed.
+	-- Cleans up internally, and also closes the pipe handles you give.
+
+	if stdin_write_end ~= nil then
+		ffi.C.CloseHandle(stdin_write_end[0])
+	end
+	if stdout_read_end ~= nil then
+		ffi.C.CloseHandle(stdout_read_end[0])
+	end
+	if stderr_read_end ~= nil then
+		ffi.C.CloseHandle(stderr_read_end[0])
+	end
 end

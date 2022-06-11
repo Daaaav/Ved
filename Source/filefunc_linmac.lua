@@ -11,6 +11,8 @@ local findv6_mac
 
 local standardvvvvvvfolder
 
+ffi.cdef((love.filesystem.read("libs/universal.h")))
+
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
@@ -283,6 +285,7 @@ function start_process(path, args_table, timeout, retain_stdin, retain_stdout, r
 	-- Start a child process and get its "processinfo" (an OS-dependent pid or handle).
 	-- On success, returns true, processinfo, stdin_write_end, stdout_read_end, stderr_read_end
 	-- On failure, returns false, err
+	-- The timeout is an integer amount of seconds that the process can take in total, 0 for no timeout.
 	-- You can choose which stdio pipe handles to retain, unretained handles are nil (retrieved pipes
 	-- will need to be closed later). You probably SHOULD retain stdout, or VVVVVV may get SIGPIPE'd.
 	-- Note that this function will return true - indicating success - even if starting VVVVVV is going
@@ -345,7 +348,7 @@ function read_from_pipe(read_end)
 	if data_alloc == nil then
 		return false, ffi.string(errmsg[0])
 	end
-	local data = ffi.string(data_alloc, bytes_read)
+	local data = ffi.string(data_alloc, bytes_read[0])
 	libC.pipedata_free(data_alloc)
 	return true, data
 end

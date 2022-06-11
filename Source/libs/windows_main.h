@@ -66,6 +66,15 @@ typedef struct _PROCESS_INFORMATION {
   DWORD  dwThreadId;
 } PROCESS_INFORMATION, *PPROCESS_INFORMATION, *LPPROCESS_INFORMATION;
 
+/* Non-standard, but Windows won't do anything with the extra field */
+typedef struct _PROCESS_INFORMATION_VED {
+  HANDLE hProcess;
+  HANDLE hThread;
+  DWORD  dwProcessId;
+  DWORD  dwThreadId;
+  UINT   vedTimeout;
+} PROCESS_INFORMATION_VED, *PPROCESS_INFORMATION_VED, *LPPROCESS_INFORMATION_VED;
+
 HANDLE FindFirstFileW(
   LPCWSTR            lpFileName,
   LPWIN32_FIND_DATAW lpFindFileData
@@ -182,6 +191,10 @@ BOOL SetHandleInformation(
   DWORD  dwFlags
 );
 
+HANDLE GetStdHandle(
+  DWORD nStdHandle
+);
+
 BOOL CreateProcessW(
   LPCWSTR               lpApplicationName,
   LPWSTR                lpCommandLine,
@@ -198,6 +211,16 @@ BOOL CreateProcessW(
 DWORD WaitForSingleObject(
   HANDLE hHandle,
   DWORD  dwMilliseconds
+);
+
+BOOL TerminateProcess(
+  HANDLE hProcess,
+  UINT   uExitCode
+);
+
+BOOL GetExitCodeProcess(
+  HANDLE  hProcess,
+  LPDWORD lpExitCode
 );
 
 BOOL EnumProcesses(
