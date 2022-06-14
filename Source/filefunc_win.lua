@@ -23,6 +23,8 @@ buffer_path_utf16 = ffi.new("WCHAR[?]", MAX_PATH)
 buffer_formatmessage_utf16 = ffi.new("WCHAR[?]", 512)
 buffer_formatmessage_utf8 = ffi.new("CHAR[?]", 512)
 
+named_pipe_id = 0
+
 
 
 function path_utf8_to_utf16(lua_str)
@@ -510,6 +512,12 @@ cProcess =
 	stderr_read_end = nil,
 
 	processinfo = nil,
+	read_error_stdout = nil,
+	read_error_stderr = nil,
+	buf_stdout = {buf=nil, capacity=0, pos=0},
+	buf_stderr = {buf=nil, capacity=0, pos=0},
+	res_stdout = {error_code=107, bytes_read=0},
+	res_stderr = {error_code=107, bytes_read=0},
 }
 
 function cProcess:new(o)
@@ -539,9 +547,8 @@ function cProcess:start()
 	sattr.bInheritHandle = true
 	sattr.lpSecurityDescriptor = nil
 
-	-- Set up the pipes - they have a read end and a write end
-	local READ_END, WRITE_END = 0, 1
 	-- I'd have liked HANDLE[2][1], but I need to be able to set them to nil arbitrarily...
+	local READ_END, WRITE_END = 0, 1
 	local p_stdin, p_stdin_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
 	local p_stdout, p_stdout_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
 	local p_stderr, p_stderr_made = {[READ_END]=ffi.new("HANDLE[1]"), [WRITE_END]=ffi.new("HANDLE[1]")}, false
@@ -579,20 +586,33 @@ function cProcess:start()
 	end
 
 	if self.will_read then
-		if not ffi.C.CreatePipe(p_stdout[READ_END], p_stdout[WRITE_END], sattr, 1024) then
+		-- We can't use asynchronous reading without named pipes...
+		local pid = tostring(ffi.C.GetCurrentProcessId())
+		local tid = tostring(ffi.C.GetCurrentThreadId())
+		local named_pipe_prefix = "\\\\.\\pipe\\ved_" .. pid .. "_" .. tid .. "_" .. named_pipe_id
+		named_pipe_id = named_pipe_id + 1
+
+		p_stdout[WRITE_END][0] = ffi.C.CreateNamedPipeA(named_pipe_prefix .. "_stdout", PIPE_ACCESS_OUTBOUND, 0, 1, 4096, 4096, 0, sattr)
+		if handle_is_invalid(p_stdout[WRITE_END][0]) then
+			return cleanup_win_error()
+		end
+		p_stdout[READ_END][0] = ffi.C.CreateFileA(named_pipe_prefix .. "_stdout", GENERIC_READ, 0, nil, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, nil)
+		if handle_is_invalid(p_stdout[READ_END][0]) then
+			ffi.C.CloseHandle(p_stdout[WRITE_END][0])
 			return cleanup_win_error()
 		end
 		p_stdout_made = true
-		if not ffi.C.CreatePipe(p_stderr[READ_END], p_stderr[WRITE_END], sattr, 1024) then
+
+		p_stderr[WRITE_END][0] = ffi.C.CreateNamedPipeA(named_pipe_prefix .. "_stderr", PIPE_ACCESS_OUTBOUND, 0, 1, 4096, 4096, 0, sattr)
+		if handle_is_invalid(p_stderr[WRITE_END][0]) then
+			return cleanup_win_error()
+		end
+		p_stderr[READ_END][0] = ffi.C.CreateFileA(named_pipe_prefix .. "_stderr", GENERIC_READ, 0, nil, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, nil)
+		if handle_is_invalid(p_stderr[READ_END][0]) then
+			ffi.C.CloseHandle(p_stderr[WRITE_END][0])
 			return cleanup_win_error()
 		end
 		p_stderr_made = true
-
-		-- VVVVVV should not inherit the read ends
-		if not ffi.C.SetHandleInformation(p_stdout[READ_END][0], HANDLE_FLAG_INHERIT, 0)
-		or not ffi.C.SetHandleInformation(p_stderr[READ_END][0], HANDLE_FLAG_INHERIT, 0) then
-			return cleanup_win_error()
-		end
 	else
 		p_stdout[READ_END] = nil
 		p_stderr[READ_END] = nil
@@ -663,69 +683,88 @@ function cProcess:write_stdin(data)
 	if not success then
 		local errmsg = format_last_win_error()
 		ffi.C.CloseHandle(self.stdin_write_end[0])
+		self.stdin_write_end = nil
 		return false, errmsg
 	end
 
 	ffi.C.CloseHandle(self.stdin_write_end[0])
+	self.stdin_write_end = nil
 	return true
-end
-
-function cProcess:read_from_pipe(read_end)
-	-- Internal function
-	-- TODO: This is currently broken, instead just asynchronously maintain a buffer (if self.will_read)
-
-	-- capacity excludes space for a null terminator, so we know we can always add one
-	local capacity = 1024
-	local buf = ffi.C.malloc(capacity + 1)
-	if buf == nil then
-		return nil, "NULL malloc"
-	end
-
-	local pos = 0
-	while true do
-		local cur_bytes_read = ffi.new("DWORD[1]")
-		if not ffi.C.ReadFile(read_end[0], buf+pos, capacity-pos, cur_bytes_read, nil) then
-			if ffi.C.GetLastError() == ERROR_BROKEN_PIPE then
-				-- When all write handles are closed, it finishes off with one "unsuccessful" 0 bytes read
-				-- (If not all handles are closed it blocks)
-				local data = ffi.string(buf, pos)
-				ffi.C.free(buf)
-				return data
-			end
-
-			local errmsg = format_last_win_error()
-			ffi.C.free(buf)
-			return nil, errmsg
-		end
-		pos = pos + cur_bytes_read[0]
-
-		-- Buffer full?
-		if pos >= capacity then
-			capacity = capacity * 2
-			local tmp = ffi.C.realloc(buf, capacity + 1)
-			if tmp == nil then
-				ffi.C.free(buf)
-				return nil, "NULL malloc"
-			end
-			buf = tmp
-		end
-	end
 end
 
 function cProcess:read_stdout()
 	-- Returns `data` on success, `nil, err` on failure
 	-- You should only call this function after process completion.
-	-- TODO: Currently broken on Windows
 
-	return self:read_from_pipe(self.stdout_read_end)
+	if self.read_error_stdout ~= nil then
+		return nil, self.read_error_stdout
+	end
+	if self.buf_stdout.buf == nil or self.buf_stdout.capacity == 0 then
+		return ""
+	end
+
+	return ffi.string(self.buf_stdout.buf, self.buf_stdout.pos)
 end
 
 function cProcess:read_stderr()
 	-- Returns `data` on success, `nil, err` on failure
 	-- You should only call this function after process completion.
-	-- TODO: Currently broken on Windows
 
-	return self:read_from_pipe(self.stderr_read_end)
+	if self.read_error_stderr ~= nil then
+		return nil, self.read_error_stderr
+	end
+	if self.buf_stderr.buf == nil or self.buf_stderr.capacity == 0 then
+		return ""
+	end
+
+	return ffi.string(self.buf_stderr.buf, self.buf_stderr.pos)
+end
+
+function cProcess:async_read_from_pipe(res, buf, read_end, overlapped, event_handle)
+	-- Internal function
+	-- Start an async read from a pipe into a buffer.
+	-- We make sure the "overlapped completion routine" is ALWAYS called after calling this function.
+
+	local function completion_routine(error_code, bytes_read, void_overlapped)
+		res.error_code = error_code
+		res.bytes_read = bytes_read
+
+		ffi.C.SetEvent(ffi.cast("LPOVERLAPPED", void_overlapped).hEvent)
+	end
+
+	ffi.fill(overlapped, ffi.sizeof("OVERLAPPED"))
+	overlapped.hEvent = event_handle
+
+	-- Still need to do the initial malloc?
+	if buf.capacity == 0 then
+		-- capacity excludes space for a null terminator, so we know we can always add one
+		buf.capacity = 1024
+		buf.buf = ffi.cast("char*", ffi.C.malloc(buf.capacity + 1))
+		if buf.buf == nil then
+			completion_routine(ERROR_NOT_ENOUGH_MEMORY, 0, overlapped)
+			return
+		end
+	end
+
+	-- Make sure the buffer isn't full
+	if buf.pos >= buf.capacity then
+		buf.capacity = buf.capacity * 2
+		local tmp = ffi.cast("char*", ffi.C.realloc(buf.buf, buf.capacity + 1))
+		if tmp == nil then
+			ffi.C.free(buf.buf)
+			buf.buf = nil
+			completion_routine(ERROR_NOT_ENOUGH_MEMORY, 0, overlapped)
+			return
+		end
+		buf.buf = tmp
+	end
+
+	ffi.C.ResetEvent(event_handle)
+
+	if not ffi.C.ReadFileEx(read_end[0], buf.buf+buf.pos, buf.capacity-buf.pos, overlapped, completion_routine) then
+		-- If you won't call the completion routine, I'll do it for ya
+		completion_routine(ffi.C.GetLastError(), 0, overlapped)
+	end
 end
 
 function cProcess:await_completion()
@@ -733,43 +772,183 @@ function cProcess:await_completion()
 	-- You HAVE to call this function at some point after successfully starting a process!
 	-- Returns `exitcode` if process started and exited cleanly, `nil, err` otherwise
 
-	local win_timeout = INFINITE
+	local process_still_open = true
+	local stdout_still_open, reading_stdout = false, false
+	local stderr_still_open, reading_stderr = false, false
+	local overlapped_stdout = ffi.new("OVERLAPPED")
+	local overlapped_stderr = ffi.new("OVERLAPPED")
+	local event_stdout, event_stderr
+	if self.will_read then
+		local bad = false
+		event_stdout = ffi.C.CreateEventW(nil, true, false, nil)
+		if event_stdout == nil then
+			self.read_error_stdout = format_last_win_error()
+			self.read_error_stderr = self.read_error_stdout
+			bad = true
+		else
+			event_stderr = ffi.C.CreateEventW(nil, true, false, nil)
+			if event_stderr == nil then
+				self.read_error_stdout = format_last_win_error()
+				self.read_error_stderr = self.read_error_stdout
+				bad = true
+				ffi.C.CloseHandle(event_stdout)
+			end
+		end
+		if bad then
+			self.will_read = false
+			ffi.C.CloseHandle(self.stdout_read_end[0])
+			ffi.C.CloseHandle(self.stderr_read_end[0])
+		end
+	end
+	if self.will_read then
+		stdout_still_open = true
+		stderr_still_open = true
+	end
+
+	local wait_handles = ffi.new("HANDLE[3]")
+	local process_handle_ix, stdout_handle_ix, stderr_handle_ix
+
+	local timeout_expires
 	if self.timeout > 0 then
-		win_timeout = self.timeout * 1000
+		require("love.timer")
+		timeout_expires = love.timer.getTime() + self.timeout
 	end
 
-	local event = ffi.C.WaitForSingleObject(self.processinfo.hProcess, win_timeout)
+	local break_error
+	while true do
+		local wait_handles_len = 0
+		if process_still_open then
+			process_handle_ix = wait_handles_len
+			wait_handles[process_handle_ix] = self.processinfo.hProcess
+			wait_handles_len = wait_handles_len + 1
+		end
+		if stdout_still_open then
+			stdout_handle_ix = wait_handles_len
+			wait_handles[stdout_handle_ix] = event_stdout
+			wait_handles_len = wait_handles_len + 1
 
-	if event == WAIT_FAILED then
-		return nil, format_last_win_error()
-	elseif event == WAIT_TIMEOUT then
-		ffi.C.TerminateProcess(self.processinfo.hProcess, 70)
+			if not reading_stdout then
+				self:async_read_from_pipe(self.res_stdout, self.buf_stdout, self.stdout_read_end, overlapped_stdout, event_stdout)
+				reading_stdout = true
+			end
+		end
+		if stderr_still_open then
+			stderr_handle_ix = wait_handles_len
+			wait_handles[stderr_handle_ix] = event_stderr
+			wait_handles_len = wait_handles_len + 1
 
-		return nil, L.VVVVVV_22_OR_OLDER
+			if not reading_stderr then
+				self:async_read_from_pipe(self.res_stderr, self.buf_stderr, self.stderr_read_end, overlapped_stderr, event_stderr)
+				reading_stderr = true
+			end
+		end
+
+		if wait_handles_len == 0 then
+			local exitcode = ffi.new("DWORD[1]")
+			if not ffi.C.GetExitCodeProcess(self.processinfo.hProcess, exitcode) then
+				return nil, format_last_win_error()
+			end
+			return exitcode[0]
+		end
+
+		local win_timeout = INFINITE
+		if self.timeout > 0 then
+			-- Don't keep resetting to full timeout
+			win_timeout = math.max(0, (timeout_expires - love.timer.getTime()) * 1000)
+		end
+
+		local event
+		repeat
+			event = ffi.C.WaitForMultipleObjectsEx(wait_handles_len, wait_handles, false, win_timeout, true)
+		until event ~= WAIT_IO_COMPLETION
+
+		local event_is_pipe = false
+		local event_read_end, event_overlapped, event_buf
+
+		if event == WAIT_FAILED then
+			break_error = format_last_win_error()
+			break
+		elseif event == WAIT_TIMEOUT then
+			-- Just use the same exit code I used on Linux and macOS... Doesn't really matter
+			ffi.C.TerminateProcess(self.processinfo.hProcess, 70)
+			break_error = L.VVVVVV_22_OR_OLDER
+			break
+		elseif process_still_open and event-WAIT_OBJECT_0 == process_handle_ix then
+			-- Process handle
+			process_still_open = false
+		elseif stdout_still_open and event-WAIT_OBJECT_0 == stdout_handle_ix then
+			-- stdout handle
+			reading_stdout = false
+			event_is_pipe = true
+			event_is_stdout = true
+			event_read_end = self.stdout_read_end[0]
+			event_event = event_stdout
+			event_buf = self.buf_stdout
+			event_res = self.res_stdout
+		elseif stderr_still_open and event-WAIT_OBJECT_0 == stderr_handle_ix then
+			-- stderr handle
+			reading_stderr = false
+			event_is_pipe = true
+			event_is_stdout = false
+			event_read_end = self.stderr_read_end[0]
+			event_event = event_stderr
+			event_buf = self.buf_stderr
+			event_res = self.res_stderr
+		end
+
+		if event_is_pipe then
+			if event_res.error_code ~= ERROR_SUCCESS then
+				-- When all write handles are closed, it finishes off with one "unsuccessful" 0 bytes read
+				if event_res.error_code ~= ERROR_BROKEN_PIPE then
+					-- Not the failure we were expecting
+					ffi.C.SetLastError(event_res.error_code)
+					local errmsg = format_last_win_error()
+					if event_is_stdout then
+						self.read_error_stdout = errmsg
+					else
+						self.read_error_stderr = errmsg
+					end
+				end
+
+				if event_is_stdout then
+					stdout_still_open = false
+					ffi.C.CloseHandle(self.stdout_read_end[0])
+				else
+					stderr_still_open = false
+					ffi.C.CloseHandle(self.stderr_read_end[0])
+				end
+				ffi.C.CloseHandle(event_event)
+			else
+				event_buf.pos = event_buf.pos + event_res.bytes_read
+			end
+		end
 	end
 
-	local exitcode = ffi.new("DWORD[1]")
-	if not ffi.C.GetExitCodeProcess(self.processinfo.hProcess, exitcode) then
-		return nil, format_last_win_error()
+	-- Break means error here
+	if stdout_still_open then
+		ffi.C.CloseHandle(self.stdout_read_end[0])
+		ffi.C.CloseHandle(event_stdout)
+	end
+	if stderr_still_open then
+		ffi.C.CloseHandle(self.stdout_read_end[0])
+		ffi.C.CloseHandle(event_stderr)
 	end
 
-	return exitcode[0]
+	return nil, break_error
 end
 
 function cProcess:cleanup()
 	-- Needs to be called at some point after doing await_process, even if that failed.
-	-- Cleans up internally, and also closes the pipe handles you give.
 
-	if stdin_write_end ~= nil then
-		ffi.C.CloseHandle(stdin_write_end[0])
-	end
-	if stdout_read_end ~= nil then
-		ffi.C.CloseHandle(stdout_read_end[0])
-	end
-	if stderr_read_end ~= nil then
-		ffi.C.CloseHandle(stderr_read_end[0])
+	if self.stdin_write_end ~= nil then
+		ffi.C.CloseHandle(self.stdin_write_end[0])
 	end
 
 	ffi.C.CloseHandle(self.processinfo.hProcess)
 	ffi.C.CloseHandle(self.processinfo.hThread)
+
+	ffi.C.free(self.buf_stdout.buf)
+	ffi.C.free(self.buf_stderr.buf)
+	self.buf_stdout.buf = nil
+	self.buf_stderr.buf = nil
 end

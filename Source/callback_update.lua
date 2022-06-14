@@ -21,7 +21,7 @@ function love.update(dt)
 				playtesting_active = false
 			elseif chanmessage == PLAYTESTING.ERROR then
 				playtesting_active = false
-				local err = playtestthread_outchannel:pop()
+				local err = playtestthread_outchannel:demand(0.2)
 				dialog.create(langkeys(L.PLAYTESTINGFAILED, {err}))
 			end
 		end

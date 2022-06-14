@@ -108,6 +108,16 @@ DWORD GetFileAttributesW(
   LPCWSTR lpFileName
 );
 
+HANDLE CreateFileA(
+  LPCSTR                lpFileName,
+  DWORD                 dwDesiredAccess,
+  DWORD                 dwShareMode,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+  DWORD                 dwCreationDisposition,
+  DWORD                 dwFlagsAndAttributes,
+  HANDLE                hTemplateFile
+);
+
 HANDLE CreateFileW(
   LPCWSTR               lpFileName,
   DWORD                 dwDesiredAccess,
@@ -142,6 +152,14 @@ BOOL ReadFile(
   LPOVERLAPPED lpOverlapped
 );
 
+BOOL ReadFileEx(
+  HANDLE                          hFile,
+  LPVOID                          lpBuffer,
+  DWORD                           nNumberOfBytesToRead,
+  LPOVERLAPPED                    lpOverlapped,
+  LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
+);
+
 BOOL WriteFile(
   HANDLE       hFile,
   LPCVOID      lpBuffer,
@@ -155,6 +173,10 @@ BOOL FlushFileBuffers(
 );
 
 DWORD GetLastError(void);
+
+void SetLastError(
+  DWORD dwErrCode
+);
 
 DWORD FormatMessageW(
   DWORD   dwFlags,
@@ -189,6 +211,17 @@ BOOL CreatePipe(
   DWORD                 nSize
 );
 
+HANDLE CreateNamedPipeA(
+  LPCSTR                lpName,
+  DWORD                 dwOpenMode,
+  DWORD                 dwPipeMode,
+  DWORD                 nMaxInstances,
+  DWORD                 nOutBufferSize,
+  DWORD                 nInBufferSize,
+  DWORD                 nDefaultTimeOut,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+
 BOOL SetHandleInformation(
   HANDLE hObject,
   DWORD  dwMask,
@@ -216,6 +249,46 @@ DWORD WaitForSingleObject(
   HANDLE hHandle,
   DWORD  dwMilliseconds
 );
+
+DWORD WaitForMultipleObjects(
+  DWORD        nCount,
+  const HANDLE *lpHandles,
+  BOOL         bWaitAll,
+  DWORD        dwMilliseconds
+);
+
+DWORD WaitForMultipleObjectsEx(
+  DWORD        nCount,
+  const HANDLE *lpHandles,
+  BOOL         bWaitAll,
+  DWORD        dwMilliseconds,
+  BOOL         bAlertable
+);
+
+HANDLE CreateEventW(
+  LPSECURITY_ATTRIBUTES lpEventAttributes,
+  BOOL                  bManualReset,
+  BOOL                  bInitialState,
+  LPCWSTR               lpName
+);
+
+BOOL SetEvent(
+  HANDLE hEvent
+);
+
+BOOL ResetEvent(
+  HANDLE hEvent
+);
+
+BOOL GetOverlappedResult(
+  HANDLE       hFile,
+  LPOVERLAPPED lpOverlapped,
+  LPDWORD      lpNumberOfBytesTransferred,
+  BOOL         bWait
+);
+
+DWORD GetCurrentProcessId();
+DWORD GetCurrentThreadId();
 
 BOOL TerminateProcess(
   HANDLE hProcess,

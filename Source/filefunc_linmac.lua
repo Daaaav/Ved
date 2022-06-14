@@ -406,7 +406,6 @@ end
 
 function cProcess:cleanup()
 	-- Needs to be called at some point after doing await_process, even if that failed.
-	-- Cleans up internally, and also closes the pipe handles you give.
 
 	libC.process_cleanup(self.stdin_write_end, self.stdout_read_end, self.stderr_read_end)
 end

@@ -29,3 +29,9 @@ typedef HANDLE HWND;
 
 typedef HANDLE HINSTANCE;
 typedef HINSTANCE HMODULE;
+
+typedef VOID (__stdcall *LPOVERLAPPED_COMPLETION_ROUTINE) (
+  DWORD  dwErrorCode,
+  DWORD  dwNumberOfBytesTransfered,
+  LPVOID lpOverlapped
+);
