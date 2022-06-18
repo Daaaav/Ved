@@ -18,17 +18,6 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		music = -1
 	end
 
-	local playassets = ""
-	if editingmap ~= "untitled\n" then
-		-- Level names can contain spaces, so quote and escape correctly
-		local opsys = love.system.getOS()
-		if opsys == "Windows" then
-			playassets = "-playassets \"" .. editingmap .. "\""
-		else
-			playassets = "-playassets '" .. escapename(editingmap) .. "'"
-		end
-	end
-
 	local args = {
 		"-p",
 		"special/stdin",
@@ -43,9 +32,19 @@ function playtesting_execute(path, thisroomx, thisroomy, posx, posy, gravitycont
 		"-playgc",
 		gravitycontrol,
 		"-playmusic",
-		music,
-		playassets
+		music
 	}
+
+	if editingmap ~= "untitled\n" then
+		table.insert(args, "-playassets")
+		if love.system.getOS() == "Windows" then
+			-- On Windows the args are passed as a single string, and level names can contain spaces
+			table.insert(args, "\"" .. editingmap .. "\"")
+		else
+			-- On Linux and macOS we basically directly control argv[]
+			table.insert(args, editingmap)
+		end
+	end
 
 	cons("RUNNING VVVVVV AT THIS PATH:\n" .. path .. "\nWITH THESE ARGUMENTS:\n" .. table.concat(args, " "))
 

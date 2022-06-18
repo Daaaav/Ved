@@ -848,6 +848,10 @@ function cProcess:await_completion()
 			if not ffi.C.GetExitCodeProcess(self.processinfo.hProcess, exitcode) then
 				return nil, format_last_win_error()
 			end
+			if exitcode[0] >= 0x40000000 then
+				-- This is where Windows exception codes start, I think? Not normal in any case.
+				return nil, langkeys(L.VVVVVV_EXITCODE_FAILURE, {string.format("0x%X", exitcode[0])})
+			end
 			return exitcode[0]
 		end
 

@@ -319,7 +319,7 @@ function cProcess:start()
 
 	local cmd = ffi.new("const char* [?]", #self.args_table+2)
 	cmd[0] = self.path
-	for i = 1, #self.args_table - 1 do
+	for i = 1, #self.args_table do
 		cmd[i] = tostring(self.args_table[i])
 	end
 	cmd[#self.args_table+1] = nil
