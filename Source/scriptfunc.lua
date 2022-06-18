@@ -86,13 +86,21 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 						local line_x = newinputsys.getpos("script_lines")
 						editing_command = line_x <= utf8.len(v)
 					end
-					if editing_command
-					or knowncommands[v_parsed]
-					or knowninternalcommands[v_parsed]
-					or v_parsed:lower() == "say" or v_parsed:lower() == "reply" then
+					if editing_command then
 						setColorArr(s.syntaxcolor_command)
 					else
-						setColorArr(s.syntaxcolor_errortext)
+						local intsc = internalscript or cutscenebarsinternalscript
+						local is_sim = knowncommands[v_parsed:lower()]
+						local is_int = knowninternalcommands[v_parsed]
+
+						if (not intsc and is_sim)
+						or (intsc and is_int) then
+							setColorArr(s.syntaxcolor_command)
+						elseif is_sim or is_int then
+							setColorArr(s.syntaxcolor_wronglang)
+						else
+							setColorArr(s.syntaxcolor_errortext)
+						end
 					end
 				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)

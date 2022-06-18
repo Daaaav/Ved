@@ -9,11 +9,12 @@ return function()
 	color_setting(L.SYNTAXCOLOR_NUMBER,      4, s.syntaxcolor_number     )
 	color_setting(L.SYNTAXCOLOR_TEXTBOX,     5, s.syntaxcolor_textbox    )
 	color_setting(L.SYNTAXCOLOR_ERRORTEXT,   6, s.syntaxcolor_errortext  )
-	color_setting(L.SYNTAXCOLOR_FLAGNAME,    7, s.syntaxcolor_flagname   )
-	color_setting(L.SYNTAXCOLOR_NEWFLAGNAME, 8, s.syntaxcolor_newflagname)
-	color_setting(L.SYNTAXCOLOR_COMMENT,     9, s.syntaxcolor_comment    )
+	color_setting(L.SYNTAXCOLOR_WRONGLANG,   7, s.syntaxcolor_wronglang  )
+	color_setting(L.SYNTAXCOLOR_FLAGNAME,    8, s.syntaxcolor_flagname   )
+	color_setting(L.SYNTAXCOLOR_NEWFLAGNAME, 9, s.syntaxcolor_newflagname)
+	color_setting(L.SYNTAXCOLOR_COMMENT,    10, s.syntaxcolor_comment    )
 
-	checkbox(s.colored_textboxes, 8, 8+(24*11), "colored_textboxes", L.COLORED_TEXTBOXES,
+	checkbox(s.colored_textboxes, 8, 8+(24*12), "colored_textboxes", L.COLORED_TEXTBOXES,
 		function(key, newvalue)
 			s[key] = newvalue
 		end

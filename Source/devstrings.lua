@@ -19,3 +19,5 @@ L.LIB_LOAD_ERRMSG_GCC = "\n\nTry installing GCC to solve this problem, if it isn
 L.VVVVVV_EXITCODE_FAILURE = "VVVVVV exited with code $1" -- for example, code 1, indicating failure
 L.VVVVVV_22_OR_OLDER = "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
 L.VVVVVV_SOMETHING_HAPPENED = "Something seems to have gone wrong with VVVVVV."
+
+L.SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa"

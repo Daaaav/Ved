@@ -167,6 +167,10 @@ configs = {
 		default = {255, 0, 0},
 		["type"] = "numbersarray",
 	},
+	syntaxcolor_wronglang = {
+		default = {160, 0, 0},
+		["type"] = "numbersarray",
+	},
 	syntaxcolor_cursor = {
 		default = {255, 255, 255},
 		["type"] = "numbersarray",
