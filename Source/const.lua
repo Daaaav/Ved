@@ -405,10 +405,32 @@ SHIFT = {
 	DOWN = 4,
 }
 
--- For playtesting
-PLAYTESTING = {
-	DONE = 1,
-	ERROR = 2,
+-- Final result from playtesting thread
+PT_RESULT = {
+	DONE = 1, -- thread finished with success result
+	ERROR = 2, -- followed by the message. Thread finished with error result
+}
+
+-- Messages from main thread to playtesting thread
+PT_CMD = {
+	DATA_LEVEL = 1, -- followed by level XML
+	DATA_POS = 2, -- followed by starting position table
+	GO = 3, -- you have all the data now - make VVVVVV show its window!
+	CANCEL = 4, -- stop VVVVVV if it's running and terminate (only possible in IDLE state)
+}
+
+-- Playtesting engine states
+PT_ENGSTATE = {
+	OFF = 0,
+	IDLE = 1,
+	PLAYTESTING = 2,
+	CANCELING = 3,
+}
+
+PT_UISTATE = {
+	OFF = 0,
+	ASKING = 1,
+	PLAYTESTING = 2,
 }
 
 -- For map_correspondreset()

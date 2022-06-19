@@ -368,6 +368,9 @@ function love.load()
 	previous_search = ""
 	resume_search = false
 
+	playtesting_engstate = PT_ENGSTATE.OFF
+	playtesting_uistate = PT_UISTATE.OFF
+
 	if loaded_filefunc == "luv" then
 		dialog.create(
 			langkeys(L.OSNOTRECOGNIZED,
@@ -428,6 +431,7 @@ function love.load()
 	allmetadata_inchannel = love.thread.getChannel("allmetadata_in")
 	allmetadata_outchannel = love.thread.getChannel("allmetadata_out")
 
+	playtestthread = love.thread.newThread("playtestthread.lua")
 	playtestthread_inchannel = love.thread.getChannel("playtestthread_in")
 	playtestthread_outchannel = love.thread.getChannel("playtestthread_out")
 

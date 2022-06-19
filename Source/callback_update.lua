@@ -13,14 +13,16 @@ function love.update(dt)
 		current_audio:update()
 	end
 
-	if playtesting_active then
+	if playtesting_engstate ~= PT_ENGSTATE.OFF then
 		local chanmessage = playtestthread_outchannel:pop()
 
 		if chanmessage ~= nil then
-			if chanmessage == PLAYTESTING.DONE then
-				playtesting_active = false
-			elseif chanmessage == PLAYTESTING.ERROR then
-				playtesting_active = false
+			if chanmessage == PT_RESULT.DONE then
+				playtesting_engstate = PT_ENGSTATE.OFF
+				playtesting_uistate = PT_UISTATE.OFF
+			elseif chanmessage == PT_RESULT.ERROR then
+				playtesting_engstate = PT_ENGSTATE.OFF
+				playtesting_uistate = PT_UISTATE.OFF
 				local err = playtestthread_outchannel:demand(0.2)
 				dialog.create(langkeys(L.PLAYTESTINGFAILED, {err}))
 			end
@@ -132,7 +134,7 @@ function love.update(dt)
 		map_work(0.005)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_uistate == PT_UISTATE.ASKING then
 		nodialog = false
 	elseif not love.mouse.isDown("l") then
 		nodialog = true

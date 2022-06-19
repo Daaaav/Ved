@@ -58,7 +58,7 @@ function love.textinput(char)
 		coordsdialog.type(char)
 	end
 
-	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_askwherestart then
+	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_uistate == PT_UISTATE.ASKING then
 		return
 	end
 

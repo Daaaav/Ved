@@ -236,6 +236,10 @@ function tostate(new, dontinitialize, ...)
 		unset_middlescroll()
 	end
 
+	if playtesting_uistate == PT_UISTATE.ASKING then
+		playtesting_cancelask()
+	end
+
 	if oldstate == 1 then
 		editingroomname = false
 	end

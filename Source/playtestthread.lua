@@ -1,5 +1,5 @@
-local path, args, levelcontents
-path, args, levelcontents, L = ...
+local path, editingmap
+path, editingmap, L = ...
 
 require("love.filesystem")
 require("love.system")
@@ -12,12 +12,44 @@ require("const")
 local inchannel = love.thread.getChannel("playtestthread_in")
 local outchannel = love.thread.getChannel("playtestthread_out")
 
+local version = 2.3
+local data_levelcontents = nil
+local data_pos = nil
+local continue_cmd = nil
+local cancel_err = nil
+
 local function push_result(success, err)
 	if not success then
-		outchannel:push(PLAYTESTING.ERROR)
+		outchannel:push(PT_RESULT.ERROR)
 		outchannel:push(err)
 	else
-		outchannel:push(PLAYTESTING.DONE)
+		outchannel:push(PT_RESULT.DONE)
+	end
+end
+
+local function push_cancel()
+	push_result(cancel_err == nil, cancel_err)
+end
+
+local function await_cmd()
+	local cmd = inchannel:demand()
+
+	if cmd == PT_CMD.DATA_LEVEL then
+		data_levelcontents = inchannel:demand()
+	elseif cmd == PT_CMD.DATA_POS then
+		data_pos = inchannel:demand()
+	elseif cmd == PT_CMD.GO then
+		if data_levelcontents == nil or data_pos == nil then
+			cancel_err = "Trying to start playtesting without all required data!"
+			continue_cmd = PT_CMD.CANCEL
+		else
+			continue_cmd = cmd
+		end
+	elseif cmd == PT_CMD.CANCEL then
+		continue_cmd = cmd
+	else
+		cancel_err = "Invalid playtesting command " .. tostring(cmd)
+		continue_cmd = PT_CMD.CANCEL
 	end
 end
 
@@ -64,7 +96,6 @@ end
 	- VVVVVV-CE, since it has --version and behaves like 2.2 on -version (but you should never
 	  playtest VVVVVV levels in VVVVVV-CE anyway because of the differences in behavior)
 ]]
-local version = 2.3
 local version_process = cProcess:new{path=path, args_table={"-version"}, timeout=2, will_read=true}
 local success, err = version_process:start()
 
@@ -97,13 +128,89 @@ if success then
 	version_process:cleanup()
 end
 
+-- Now prepare for launching the real thing.
+local args
+
+if version <= 2.3 then
+	while continue_cmd == nil do
+		await_cmd()
+	end
+	if continue_cmd == PT_CMD.CANCEL then
+		-- We haven't started anything yet
+		push_cancel()
+		return
+	end
+
+	args = {
+		"-p",
+		"special/stdin",
+		"-playx",
+		data_pos.x,
+		"-playy",
+		data_pos.y,
+		"-playrx",
+		data_pos.rx,
+		"-playry",
+		data_pos.ry,
+		"-playgc",
+		data_pos.gc,
+		"-playmusic",
+		data_pos.music
+	}
+else
+	-- Version 2.4 or later
+	args = {
+		"-p",
+		"special/stdin"
+	}
+end
+
+if editingmap ~= "untitled\n" then
+	table.insert(args, "-playassets")
+	if love.system.getOS() == "Windows" then
+		-- On Windows the args are passed as a single string, and level names can contain spaces
+		table.insert(args, "\"" .. editingmap .. "\"")
+	else
+		-- On Linux and macOS we basically directly control argv[]
+		table.insert(args, editingmap)
+	end
+end
+
+
 local process = cProcess:new{path=path, args_table=args, will_write=true}
 success, err = process:start()
 
 if success then
 	-- From now on, there could be multiple error messages simultaneously, I guess...
 	local errs = {}
-	local write_success, write_err = process:write_stdin(levelcontents)
+
+	while continue_cmd == nil do
+		await_cmd()
+	end
+	if continue_cmd == PT_CMD.CANCEL then
+		-- First clean up
+		process:write_stdin("")
+		process:await_completion()
+		process:cleanup()
+		push_cancel()
+		return
+	end
+	if version >= 2.4 then
+		data_levelcontents = data_levelcontents:gsub(
+			"</MapData>",
+			"    <Playtest>\n" ..
+			"        <playx>" .. data_pos.x .. "</playx>\n" ..
+			"        <playy>" .. data_pos.y .. "</playy>\n" ..
+			"        <playrx>" .. data_pos.rx .. "</playrx>\n" ..
+			"        <playry>" .. data_pos.ry .. "</playry>\n" ..
+			"        <playgc>" .. data_pos.gc .. "</playgc>\n" ..
+			"        <playmusic>" .. data_pos.music .. "</playmusic>\n" ..
+			"    </Playtest>\n" ..
+			"</MapData>"
+		)
+	end
+
+	local write_success, write_err = process:write_stdin(data_levelcontents)
 	if not write_success then
 		table.insert(errs, write_err)
 	end

@@ -533,7 +533,6 @@ ALREADYPLAYTESTING = "You're already playtesting!",
 PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
 PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Please select the file named '$1'.",
-CHANGINGPATHAFTERASK = "The VVVVVV path was changed after pressing play and it is no longer valid!",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV

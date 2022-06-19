@@ -581,7 +581,7 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 	local usethisbtn
 	if playtesting_available then
-		if playtesting_askwherestart then
+		if playtesting_uistate == PT_UISTATE.ASKING then
 			usethisbtn = image.playstopbtn_hq
 		else
 			usethisbtn = image.playbtn_hq
@@ -662,10 +662,11 @@ return function()
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
 		if mouseon(love.graphics.getWidth()-128, 0, 32, 32) then
 			-- Play
-			if playtesting_askwherestart then
+			if playtesting_uistate == PT_UISTATE.ASKING then
 				playtesting_cancelask()
 			else
 				playtesting_start(keyboard_eitherIsDown("shift"))
+				playtesting_mousepressed = true
 			end
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-120+40, 40, 16, 16) then
@@ -1126,13 +1127,13 @@ return function()
 	end
 
 	local bottomwidemsg
-	if playtesting_askwherestart then
+	if playtesting_uistate == PT_UISTATE.ASKING then
 		bottomwidemsg = L.WHEREPLACEPLAYER
-	elseif playtesting_active then
+	elseif playtesting_uistate == PT_UISTATE.PLAYTESTING then
 		bottomwidemsg = L.YOUAREPLAYTESTING
 	end
 
-	if playtesting_askwherestart then
+	if playtesting_uistate == PT_UISTATE.ASKING then
 		local mouseoncanvas = mouseon(screenoffset, 0, 640, love.graphics.getHeight())
 
 		if mouseoncanvas then
@@ -1183,19 +1184,6 @@ return function()
 		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth(flipindicator), love.graphics.getHeight()-15)
 		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(unlockindicator), love.graphics.getHeight()-7)
 		love.graphics.setColor(255, 255, 255, 255)
-
-		if love.mouse.isDown("l") and not mousepressed then
-			mousepressed = true
-			if mouseoncanvas then
-				local atx, aty = love.mouse.getPosition()
-				atx = atx - screenoffset
-				atx = math.floor(atx / 2)
-				aty = math.floor(aty / 2)
-				playtesting_endaskwherestart(atx, aty)
-			else
-				playtesting_askwherestart = false
-			end
-		end
 	end
 
 	if bottomwidemsg ~= nil then
@@ -1208,7 +1196,7 @@ return function()
 		ved_shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
 	end
 
-	if playtesting_askwherestart then
+	if playtesting_uistate == PT_UISTATE.ASKING then
 		showhotkey("b", love.graphics.getWidth()-128, 32-8, nil, true)
 	end
 

@@ -109,7 +109,7 @@ return function(key)
 	elseif key == "m" or key == "kp5" then
 		tostate(12)
 		return -- temporary, until state 1 got GUI overhaul and this is in ui.keypressed
-	elseif playtesting_askwherestart and key == "escape" then
+	elseif playtesting_uistate == PT_UISTATE.ASKING and key == "escape" then
 		playtesting_cancelask()
 	elseif key == "/" then
 		if keyboard_eitherIsDown(ctrl) then
