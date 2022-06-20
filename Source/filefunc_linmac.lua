@@ -16,11 +16,11 @@ ffi.cdef((love.filesystem.read("libs/universal.h")))
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_lin05.so")
+	libC = load_library(ffi, "vedlib_filefunc_lin06.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_mac05.so")
+	libC = load_library(ffi, "vedlib_filefunc_mac06.so")
 	findv6_mac = load_library(ffi, "vedlib_findv6_mac01.so")
 
 	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))

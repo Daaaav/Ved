@@ -1,5 +1,5 @@
 /*
-Version 05
+Version 06
 
 Typical usage (in C):
 
@@ -393,7 +393,11 @@ int64_t start_process(
 
 	if (pid == 0)
 	{
-		/* Child code */
+		/* Child code. First stop blocking signals - this is a main thread now. */
+		sigset_t sig_mask;
+		sigemptyset(&sig_mask);
+		sigprocmask(SIG_SETMASK, &sig_mask, NULL);
+
 		close(p_stdin[WRITE_END]);
 		close(p_stdout[READ_END]);
 		close(p_stderr[READ_END]);
