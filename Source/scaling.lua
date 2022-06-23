@@ -50,14 +50,14 @@ end
 love.mouse.getXOR = love.mouse.getX
 
 love.mouse.getX = function()
-	return love.mouse.getXOR()*s.pscale^-1
+	return math.floor(love.mouse.getXOR()*s.pscale^-1)
 end
 
 
 love.mouse.getYOR = love.mouse.getY
 
 love.mouse.getY = function()
-	return love.mouse.getYOR()*s.pscale^-1
+	return math.floor(love.mouse.getYOR()*s.pscale^-1)
 end
 
 

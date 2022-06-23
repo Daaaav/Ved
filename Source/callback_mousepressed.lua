@@ -18,7 +18,7 @@ function love.mousepressed(x, y, button)
 	end
 
 	if s.pscale ~= 1 then
-		x, y = x*s.pscale^-1, y*s.pscale^-1
+		x, y = math.floor(x*s.pscale^-1), math.floor(y*s.pscale^-1)
 	end
 
 	if s.pausedrawunfocused and not window_active() and table.contains({"wu", "wd"}, button) then
