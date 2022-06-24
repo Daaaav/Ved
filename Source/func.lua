@@ -283,7 +283,7 @@ function loadlevelsfolder()
 	if allmetadata_inchannel ~= nil then
 		allmetadata_inchannel:clear()
 	end
-	lsuccess = directory_exists(vvvvvvfolder, "levels")
+	lsuccess = directory_exists(levelsfolder)
 	if lsuccess then
 		files = listlevelfiles(levelsfolder)
 	else
@@ -353,7 +353,7 @@ end
 function getlevelassetsfolder()
 	-- Priority: lev.data.zip, everything in .zip, lev/ folder
 	-- Currently lev/ folder is supported
-	if directory_exists(levelsfolder, editingmap) then
+	if directory_exists(levelsfolder .. dirsep .. editingmap) then
 		return levelsfolder .. dirsep .. editingmap
 	end
 

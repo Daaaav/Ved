@@ -97,8 +97,8 @@ function setvvvvvvpaths()
 	soundsfolder = "sounds"
 end
 
-function directory_exists(where, what)
-	return love.filesystem.isDirectory(where .. "/" .. what)
+function directory_exists(path)
+	return love.filesystem.isDirectory(path)
 end
 
 function file_exists(path)

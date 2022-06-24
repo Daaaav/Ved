@@ -173,8 +173,8 @@ function setvvvvvvpaths()
 	soundsfolder = vvvvvvfolder .. "/sounds"
 end
 
-function directory_exists(where, what)
-	return libC.ved_directory_exists(where .. "/" .. what)
+function directory_exists(path)
+	return libC.ved_directory_exists(path)
 end
 
 function file_exists(path)

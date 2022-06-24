@@ -254,8 +254,8 @@ function setvvvvvvpaths()
 	soundsfolder = vvvvvvfolder .. "\\sounds"
 end
 
-function directory_exists(where, what)
-	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(where .. "\\" .. what))
+function directory_exists(path)
+	local dwAttributes = ffi.C.GetFileAttributesW(path_utf8_to_utf16(path))
 
 	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and file_attributes_directory(dwAttributes)
 end
