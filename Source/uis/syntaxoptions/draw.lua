@@ -61,6 +61,11 @@ return function()
 		ved_printf(editingcolor[1], love.graphics.getWidth()-160, love.graphics.getHeight()-265, 50, "center")
 		ved_printf(editingcolor[2], love.graphics.getWidth()-105, love.graphics.getHeight()-265, 50, "center")
 		ved_printf(editingcolor[3], love.graphics.getWidth()-50, love.graphics.getHeight()-265, 50, "center")
+		ved_printf(
+			string.format("#%02x%02x%02x", unpack(editingcolor)),
+			love.graphics.getWidth()-160, love.graphics.getHeight()-295,
+			160, "center"
+		)
 
 		-- The arrows
 		love.graphics.draw(image.colorsel, love.graphics.getWidth()-164, love.graphics.getHeight()-editingcolor[1]-4)
