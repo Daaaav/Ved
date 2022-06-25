@@ -1154,8 +1154,11 @@ end
 
 function dialog.callback.create_assets_folder(button, fields)
 	if button == DB.YES then
-		dialog.create("TODO mkdir \"" .. fields.folder .. "\"")
-
-		assetsmenu_vvvvvvfolder_exists = true
+		local success, errmsg = create_directory(fields.folder)
+		if not success then
+			dialog.create(langkeys(L.CREATE_FOLDER_FAIL, {errmsg}))
+		else
+			assetsmenu_vvvvvvfolder_exists = true
+		end
 	end
 end

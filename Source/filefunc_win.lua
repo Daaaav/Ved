@@ -269,6 +269,14 @@ function file_exists(path)
 	return dwAttributes ~= INVALID_FILE_ATTRIBUTES and not file_attributes_directory(dwAttributes)
 end
 
+function create_directory(path)
+	-- returns success, errmsg
+	if not ffi.C.CreateDirectoryW(path_utf8_to_utf16(path), nil) then
+		return false, format_last_win_error()
+	end
+	return true
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 

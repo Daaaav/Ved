@@ -184,6 +184,16 @@ function file_exists(path)
 	return libC.ved_file_exists(path)
 end
 
+function create_directory(path)
+	-- returns success, errmsg
+	local errmsg = ffi.new("const char*[1]")
+	local success = libC.ved_mkdir(path, errmsg)
+	if not success then
+		return false, ffi.string(errmsg[0])
+	end
+	return true
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 
@@ -196,6 +206,10 @@ function readlevelfile(path)
 	local ficontents = fh:read("*a")
 
 	fh:close()
+
+	if ficontents == nil then
+		return false, "nil data"
+	end
 
 	return true, ficontents
 end
@@ -232,6 +246,10 @@ function readfile(filename)
 	local ficontents = fh:read("*a")
 
 	fh:close()
+
+	if ficontents == nil then
+		return false, "nil data"
+	end
 
 	return true, ficontents
 end

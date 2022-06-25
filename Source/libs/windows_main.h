@@ -132,6 +132,11 @@ BOOL CloseHandle(
   HANDLE hObject
 );
 
+BOOL CreateDirectoryW(
+  LPCWSTR               lpPathName,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+
 DWORD GetFileSize(
   HANDLE  hFile,
   LPDWORD lpFileSizeHigh

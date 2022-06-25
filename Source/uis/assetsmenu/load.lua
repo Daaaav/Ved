@@ -44,7 +44,7 @@ return function(show_level_assets)
 		local success, files = listfiles_generic(assetsmenu_graphicsfolder, ".png", true)
 		for k,file in pairs(files) do
 			for k_image,image_name in pairs(list_graphics_files) do
-				if file.name == image_name then
+				if not file.isdir and file.name == image_name then
 					assetsmenu_graphicsfolder_num = assetsmenu_graphicsfolder_num + 1
 				end
 			end
@@ -55,7 +55,7 @@ return function(show_level_assets)
 		local success, files = listfiles_generic(assetsmenu_soundsfolder, ".wav", true)
 		for k,file in pairs(files) do
 			for k_sound,sound_name in pairs(list_sound_ids) do
-				if file.name == sound_name then
+				if not file.isdir and file.name == sound_name then
 					assetsmenu_soundsfolder_num = assetsmenu_soundsfolder_num + 1
 				end
 			end

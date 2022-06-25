@@ -24,6 +24,9 @@ L.SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa"
 
 L.UNSAVED_LEVEL_ASSETS_FOLDER = "The level needs to be saved before it can use custom assets."
 L.CREATE_ASSETS_FOLDER = "Would you like to create a custom assets folder for this level?\n\n$1" -- $1: path
+L.CREATE_VVVVVV_FOLDER = "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+L.CREATE_LEVELS_FOLDER = "It seems like the levels folder doesn't exist. Would you like to create it?"
+L.CREATE_FOLDER_FAIL = "Unable to create folder.\n\n$1"
 L.ASSETS_FOLDER_FOR_LEVEL = "Assets folder for $1"
 
 L.ASSETS_FOLDER_EXISTS_NO = "Does not exist - click to create"

@@ -109,6 +109,14 @@ function file_exists(path)
 	return love.filesystem.isFile(path)
 end
 
+function create_directory(path)
+	-- returns success, errmsg
+	if not love.filesystem.createDirectory(path) then
+		return false, "Failed."
+	end
+	return true
+end
+
 function readlevelfile(path)
 	-- returns success, contents
 

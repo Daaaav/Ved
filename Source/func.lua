@@ -3097,14 +3097,14 @@ function assets_create_or_explore_folder()
 		explore_folder(assetsmenu_vvvvvvfolder)
 		assetsmenu_vvvvvvfolder_exists = true
 	else
-		local folder_rel
+		local message
 		if assetsmenu_show_level_assets then
-			folder_rel = "levels" .. dirsep .. editingmap
+			message = langkeys(L.CREATE_ASSETS_FOLDER, {"levels" .. dirsep .. editingmap})
 		else
-			folder_rel = "VVVVVV"
+			message = L.CREATE_VVVVVV_FOLDER
 		end
 		dialog.create(
-			langkeys(L.CREATE_ASSETS_FOLDER, {folder_rel}),
+			message,
 			DBS.YESNO,
 			dialog.callback.create_assets_folder,
 			nil,
