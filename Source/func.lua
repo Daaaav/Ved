@@ -1352,6 +1352,7 @@ function state6load(levelname)
 			editingmap = levelname
 			recentlyopened(editingmap)
 			map_init()
+			unloadvvvvvvmusics_level()
 			if level_assets_loaded or getlevelassetsfolder() ~= nil then
 				-- Either previous or new level has level-specific assets, so reload.
 				loadtilesets()
@@ -1827,6 +1828,7 @@ function triggernewlevel(width, height)
 	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, extra = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
+	unloadvvvvvvmusics_level()
 	if level_assets_loaded then
 		loadtilesets()
 		loadfonts()
@@ -2780,8 +2782,12 @@ function renderer_info_string()
 		.. rend_vendor
 end
 
+function explore_folder(folder)
+	love.system.openURL("file://" .. folder)
+end
+
 function explore_lvl_dir()
-	love.system.openURL("file://" .. levelsfolder)
+	explore_folder(levelsfolder)
 end
 
 function search_levels_list(currentdir, prefix)
@@ -3077,8 +3083,35 @@ function assets_graphicsloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.openimage,
 		L.LOADIMAGE,
-		dialog.form.files_make(graphicsfolder, "", ".png", true, 11)
+		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 11)
 	)
+end
+
+function assets_create_or_explore_folder()
+	if assetsmenu_unsaved_level then
+		dialog.create(L.UNSAVED_LEVEL_ASSETS_FOLDER)
+		return
+	end
+
+	if directory_exists(assetsmenu_vvvvvvfolder) then
+		explore_folder(assetsmenu_vvvvvvfolder)
+		assetsmenu_vvvvvvfolder_exists = true
+	else
+		local folder_rel
+		if assetsmenu_show_level_assets then
+			folder_rel = "levels" .. dirsep .. editingmap
+		else
+			folder_rel = "VVVVVV"
+		end
+		dialog.create(
+			langkeys(L.CREATE_ASSETS_FOLDER, {folder_rel}),
+			DBS.YESNO,
+			dialog.callback.create_assets_folder,
+			nil,
+			dialog.form.hidden_make({folder=assetsmenu_vvvvvvfolder})
+		)
+		assetsmenu_vvvvvvfolder_exists = false
+	end
 end
 
 function hotkey(checkkey, checkmod)

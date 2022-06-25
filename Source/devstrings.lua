@@ -21,3 +21,21 @@ L.VVVVVV_22_OR_OLDER = "It looks like you are using VVVVVV 2.2 or older. Please 
 L.VVVVVV_SOMETHING_HAPPENED = "Something seems to have gone wrong with VVVVVV."
 
 L.SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa"
+
+L.UNSAVED_LEVEL_ASSETS_FOLDER = "The level needs to be saved before it can use custom assets."
+L.CREATE_ASSETS_FOLDER = "Would you like to create a custom assets folder for this level?\n\n$1" -- $1: path
+L.ASSETS_FOLDER_FOR_LEVEL = "Assets folder for $1"
+
+L.ASSETS_FOLDER_EXISTS_NO = "Does not exist - click to create"
+L.ASSETS_FOLDER_EXISTS_YES = "Exists - click to open"
+
+L.NO_ASSETS_SUBFOLDER = "No \"$1\" folder"
+
+L_PLU.NUM_GRAPHICS_CUSTOMIZED = {
+	[-1] = "$1 image customized",
+	[-2] = "$1 images customized",
+}
+L_PLU.NUM_SOUNDS_CUSTOMIZED = {
+	[-1] = "$1 sound effect customized",
+	[-2] = "$1 sound effects customized",
+}

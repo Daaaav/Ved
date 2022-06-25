@@ -21,7 +21,7 @@ function cVedSource:init(file, song)
 
 	self.love_source = maybe_source
 
-	if file ~= "sounds" and song ~= 0 and song ~= 7 then
+	if file ~= "sounds" and file ~= "level/sounds" and song ~= 0 and song ~= 7 then
 		self.love_source:setLooping(true)
 	end
 

@@ -249,9 +249,12 @@ function setvvvvvvpaths()
 		vvvvvvfolder = s.customvvvvvvdir
 	end
 
-	levelsfolder = vvvvvvfolder .. "\\levels"
-	graphicsfolder = vvvvvvfolder .. "\\graphics"
-	soundsfolder = vvvvvvfolder .. "\\sounds"
+	levelsfolder_rel = "\\levels"
+	graphicsfolder_rel = "\\graphics"
+	soundsfolder_rel = "\\sounds"
+	levelsfolder = vvvvvvfolder .. levelsfolder_rel
+	graphicsfolder = vvvvvvfolder .. graphicsfolder_rel
+	soundsfolder = vvvvvvfolder .. soundsfolder_rel
 end
 
 function directory_exists(path)

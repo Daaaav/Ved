@@ -166,6 +166,30 @@ list_sound_ids = {
 	"rescue.wav",
 }
 
+list_graphics_files = {
+	"covered.png",
+	"elephant.png",
+	"ending.png",
+	"entcolours.png",
+	"flipgamecomplete.png",
+	"fliplevelcomplete.png",
+	"flipsprites.png",
+	"font.png",
+	"fontmask.png",
+	"gamecomplete.png",
+	"levelcomplete.png",
+	"minimap.png",
+	"site.png",
+	"site2.png",
+	"site3.png",
+	"site4.png",
+	"sprites.png",
+	"teleporter.png",
+	"tiles.png",
+	"tiles2.png",
+	"tiles3.png",
+}
+
 entitytooltoid = {nil, nil, nil, 9, 10, 3, 2, 2, 1, 11, 17, 18, 19, 13, 50, 15, 16}
 
 platform_labels = {

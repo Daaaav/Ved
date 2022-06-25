@@ -9,6 +9,8 @@ return function()
 		end
 	elseif soundviewer then
 		ved_print(L.SOUNDS, 16, 12)
+	elseif musicplayerfile:sub(1, 6) == "level/" then
+		ved_print(musicplayerfile:sub(7), 16, 12)
 	else
 		ved_print(musicplayerfile, 16, 12)
 	end

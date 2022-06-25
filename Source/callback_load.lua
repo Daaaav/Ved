@@ -413,6 +413,7 @@ function love.load()
 	musiceditorfile = ""
 	musiceditorfile_forcevvvvvvfolder = false
 	musiceditorfolder = vvvvvvfolder
+	musiceditorfolder_set = false
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")

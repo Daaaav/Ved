@@ -92,6 +92,10 @@ function setvvvvvvpaths()
 	end
 
 	vvvvvvfolder = ""
+
+	levelsfolder_rel = "/levels"
+	graphicsfolder_rel = "/graphics"
+	soundsfolder_rel = "/sounds"
 	levelsfolder = "levels"
 	graphicsfolder = "graphics"
 	soundsfolder = "sounds"

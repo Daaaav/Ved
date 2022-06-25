@@ -928,6 +928,7 @@ function dialog.callback.loadvvvvvvmusic(button, fields)
 
 	musiceditorfile_forcevvvvvvfolder = false
 	musiceditorfolder = fields.folder
+	musiceditorfolder_set = true
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
@@ -957,6 +958,7 @@ function dialog.callback.savevvvvvvmusic(button, fields)
 	end
 
 	musiceditorfolder = fields.folder
+	musiceditorfolder_set = true
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
@@ -1148,4 +1150,12 @@ function dialog.callback.leveloptions_biggersize(button, fields)
 	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
 	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
 	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
+end
+
+function dialog.callback.create_assets_folder(button, fields)
+	if button == DB.YES then
+		dialog.create("TODO mkdir \"" .. fields.folder .. "\"")
+
+		assetsmenu_vvvvvvfolder_exists = true
+	end
 end

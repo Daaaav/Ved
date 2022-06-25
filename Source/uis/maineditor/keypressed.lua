@@ -121,6 +121,8 @@ return function(key)
 		tostate(15)
 	elseif key == "f" and keyboard_eitherIsDown(ctrl) then
 		tostate(11)
+	elseif key == "r" and keyboard_eitherIsDown(ctrl) then
+		tostate(30, nil, true)
 	elseif key == "p" and keyboard_eitherIsDown(ctrl) then
 		gotostartpointroom()
 	elseif key == "d" and keyboard_eitherIsDown(ctrl) then

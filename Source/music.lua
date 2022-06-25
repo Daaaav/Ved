@@ -28,6 +28,7 @@ ffi.cdef([[
 
 function initvvvvvvmusic()
 	music = {}
+	music["musiceditor"] = {}
 	currentmusic = nil
 	currentmusic_file = nil
 	currentmusic_paused = false
@@ -37,9 +38,15 @@ end
 function loadvvvvvvmusics()
 	loadvvvvvvmusic("vvvvvvmusic.vvv")
 	loadvvvvvvmusic("mmmmmm.vvv")
-	loadvvvvvvsounds()
-	music["musiceditor"] = {}
+	loadvvvvvvsounds(false)
 	music_loaded = true
+end
+
+function loadvvvvvvmusics_level()
+	loadvvvvvvmusic("level/vvvvvvmusic.vvv")
+	loadvvvvvvmusic("level/mmmmmm.vvv")
+	loadvvvvvvsounds(true)
+	level_music_loaded = true
 end
 
 function unloadvvvvvvmusic(file)
@@ -47,20 +54,44 @@ function unloadvvvvvvmusic(file)
 	music[file] = nil
 end
 
+function unloadvvvvvvmusics_level()
+	if not level_music_loaded then
+		return
+	end
+
+	if musicfileexists("level/vvvvvvmusic.vvv") then
+		unloadvvvvvvmusic("level/vvvvvvmusic.vvv")
+	end
+	if musicfileexists("level/mmmmmm.vvv") then
+		unloadvvvvvvmusic("level/mmmmmm.vvv")
+	end
+	unloadvvvvvvmusic("level/sounds")
+
+	level_music_loaded = false
+end
+
 function loadvvvvvvmusic(file, realfile)
-	-- file is the name to be stored in the table (one of vvvvvvmusic.vvv, mmmmmm.vvv, musiceditor or sounds)
-	-- realfile is the actual path to load, if file is musiceditor.
+	-- file is the name to be stored in the table
+	-- (one of vvvvvvmusic.vvv, mmmmmm.vvv, musiceditor, sounds,
+	-- level/vvvvvvmusic.vvv, level/mmmmmm.vvv, or level/sounds.)
+	-- realfile is the actual path to load, if file is musiceditor or a level/ path.
 	-- Filenames containing any directory separator will always be considered absolute.
 	-- Thus, pass full paths wherever possible, unless you want to load vvvvvvmusic.vvv or mmmmmm.vvv.
 	-- Returns success, errormessage.
 	if file == "sounds" then
-		return loadvvvvvvsounds()
+		return loadvvvvvvsounds(false)
+	elseif file == "level/sounds" then
+		return loadvvvvvvsounds(true)
 	end
 
 	errormessage = nil
 
 	if realfile == nil then
-		realfile = file
+		if file:sub(1, 6) == "level/" then
+			realfile = assetsmenu_vvvvvvfolder .. dirsep .. file:sub(7)
+		else
+			realfile = file
+		end
 	end
 
 	stopmusic()
@@ -190,13 +221,21 @@ function loadvvvvvvmusic(file, realfile)
 	return success, errormessage
 end
 
-function loadvvvvvvsounds()
-	music["sounds"] = {}
+function loadvvvvvvsounds(is_level_assets)
+	local file, folder_prefix
+	if is_level_assets then
+		file = "level/sounds"
+		folder_prefix = assetsmenu_soundsfolder .. dirsep
+	else
+		file = "sounds"
+		folder_prefix = soundsfolder .. dirsep
+	end
+	music[file] = {}
 
 	for k,v in pairs(list_sound_ids) do
-		local readsuccess, ficontents = readfile(soundsfolder .. dirsep .. v)
+		local readsuccess, ficontents = readfile(folder_prefix .. v)
 		if readsuccess then
-			loadmusicsong("sounds", k, ficontents, false)
+			loadmusicsong(file, k, ficontents, false)
 		end
 	end
 
@@ -204,13 +243,14 @@ function loadvvvvvvsounds()
 end
 
 function loadmusicsong(file, song, data, edited)
-	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. (file == "sounds" and ".wav" or ".ogg"), "file")
+	local is_sounds = file == "sounds" or file == "level/sounds"
+	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. (is_sounds and ".wav" or ".ogg"), "file")
 	if m_filedata:getSize() <= 1 then
 		-- Don't bother
 		return
 	end
 	local audio_metadata
-	if file ~= "sounds" then
+	if not is_sounds then
 		audio_metadata = ogg_vorbis_metadata(m_filedata)
 	else
 		audio_metadata = {}

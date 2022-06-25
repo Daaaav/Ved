@@ -632,8 +632,8 @@ return function()
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
 	rbutton((upperoptpage2 and (not editingroomname and {L.COMPARE, "cD"} or L.COMPARE) or (not editingroomname and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
 	rbutton((upperoptpage2 and L.STATS or (not editingroomname and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)
+	rbutton((upperoptpage2 and {L.ASSETS, "cR"} or (not editingroomname and {L.SEARCH, "cF"} or L.SEARCH)), 4, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton(not editingroomname and {L.SEARCH, "cF"} or L.SEARCH, 4, 40, false, 20)
 		rbutton(not editingroomname and {L.LEVELNOTEPAD, "c/"} or L.LEVELNOTEPAD, 5, 40, false, 20)
 	end
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
@@ -756,6 +756,9 @@ return function()
 			if not upperoptpage2 then
 				-- Search
 				tostate(11)
+			else
+				-- Assets
+				tostate(30, nil, true)
 			end
 		elseif onrbutton(5, 40, false, 20) then
 			if not upperoptpage2 then

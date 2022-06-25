@@ -10,9 +10,9 @@ return function(mode)
 		else
 			musicplayerfile = "musiceditor"
 		end
-	elseif mode == "sounds" then
+	elseif mode == "sounds" or mode == "level/sounds" then
 		soundviewer = true
-		musicplayerfile = "sounds"
+		musicplayerfile = mode
 	else
 		musicplayerfile = mode
 	end
