@@ -185,14 +185,22 @@ function rightclickmenu.handler(RCMreturn)
 				finish_undo("CHANGED ENTITY (GRAVLINE)")
 			elseif tonumber(entdetails[2]) == 13 then
 				-- Warp token
-				if RCMreturn == L.GOTODESTINATION then
-					gotoroom(math.floor(entitydata[tonumber(entdetails[3])].p1 / 40), math.floor(entitydata[tonumber(entdetails[3])].p2 / 30))
-					love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].p1 - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].p2 - (roomy*30))*16 + 8)
-					cons("Destination token is at " .. entitydata[tonumber(entdetails[3])].p1 .. " " .. entitydata[tonumber(entdetails[3])].p2 .. "... So at " .. entitydata[tonumber(entdetails[3])].p1 - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].p2 - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
-				elseif RCMreturn == L.GOTOENTRANCE then
-					gotoroom(math.floor(entitydata[tonumber(entdetails[3])].x / 40), math.floor(entitydata[tonumber(entdetails[3])].y / 30))
-					love.mouse.setPosition(64+64 + (entitydata[tonumber(entdetails[3])].x - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0), (entitydata[tonumber(entdetails[3])].y - (roomy*30))*16 + 8)
-					cons("Entrance token is at " .. entitydata[tonumber(entdetails[3])].x .. " " .. entitydata[tonumber(entdetails[3])].y .. "... So at " .. entitydata[tonumber(entdetails[3])].x - (roomx*40) .. " " .. entitydata[tonumber(entdetails[3])].y - (roomy*30) .. " in room " .. roomx .. " " .. roomy)
+				if RCMreturn == L.GOTODESTINATION or RCMreturn == L.GOTOENTRANCE then
+					local ent = entitydata[tonumber(entdetails[3])]
+					local dest_px, dest_py
+					if RCMreturn == L.GOTODESTINATION then
+						dest_px = ent.p1
+						dest_py = ent.p2
+					else
+						dest_px = ent.x
+						dest_py = ent.y
+					end
+					if gotoroom(math.floor(dest_px / 40), math.floor(dest_py / 30)) then
+						love.mouse.setPosition(
+							64+64 + (dest_px - (roomx*40))*16 + 8 - (s.psmallerscreen and 96 or 0),
+							(dest_py - (roomy*30))*16 + 8
+						)
+					end
 				elseif RCMreturn == L.CHANGEENTRANCE then
 					selectedtool = 14
 					selectedsubtool[14] = 3

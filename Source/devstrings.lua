@@ -34,6 +34,8 @@ L.ASSETS_FOLDER_EXISTS_YES = "Exists - click to open"
 
 L.NO_ASSETS_SUBFOLDER = "No \"$1\" folder"
 
+L.COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!"
+
 L_PLU.NUM_GRAPHICS_CUSTOMIZED = {
 	[-1] = "$1 image customized",
 	[-2] = "$1 images customized",

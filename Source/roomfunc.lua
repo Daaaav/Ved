@@ -2341,9 +2341,22 @@ function pasteroom()
 end
 
 function gotoroom(rx, ry)
+	if rx < 0 or ry < 0
+	or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+		local disp_rx, disp_ry = rx, ry
+		if not s.coords0 then
+			disp_rx = disp_rx + 1
+			disp_ry = disp_ry + 1
+		end
+		dialog.create(L.COORDS_OUT_OF_RANGE, nil, nil, langkeys("($1,$2)", {disp_rx, disp_ry}))
+		return false
+	end
+
 	roomx = rx
 	roomy = ry
 	gotoroom_finish()
+
+	return true
 end
 
 function gotoroom_l()
