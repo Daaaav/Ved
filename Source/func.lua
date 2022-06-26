@@ -3114,6 +3114,16 @@ function assets_create_or_explore_folder()
 	end
 end
 
+function assets_reload_pressed()
+	user_reload_tilesets()
+	if assetsmenu_show_level_assets then
+		unloadvvvvvvmusics_level()
+	else
+		unloadvvvvvvmusics()
+	end
+	tostate(oldstate, true)
+end
+
 function hotkey(checkkey, checkmod)
 	return function(detectedkey)
 		return detectedkey == checkkey and (checkmod == nil or keyboard_eitherIsDown(checkmod))

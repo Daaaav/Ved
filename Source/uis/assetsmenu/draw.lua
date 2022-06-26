@@ -130,11 +130,16 @@ return function()
 	end
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
+	rbutton({L.RELOAD, "k"}, 2, nil, true)
 
 	if nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then
 			-- Return
 			tostate(oldstate, true)
+			mousepressed = true
+		elseif onrbutton(2, nil, true) then
+			-- Reload
+			assets_reload_pressed()
 			mousepressed = true
 		end
 	end

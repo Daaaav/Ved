@@ -33,6 +33,7 @@ function initvvvvvvmusic()
 	currentmusic_file = nil
 	currentmusic_paused = false
 	music_loaded = false
+	level_music_loaded = false
 end
 
 function loadvvvvvvmusics()
@@ -52,6 +53,22 @@ end
 function unloadvvvvvvmusic(file)
 	stopmusic()
 	music[file] = nil
+end
+
+function unloadvvvvvvmusics()
+	if not music_loaded then
+		return
+	end
+
+	if musicfileexists("vvvvvvmusic.vvv") then
+		unloadvvvvvvmusic("vvvvvvmusic.vvv")
+	end
+	if musicfileexists("mmmmmm.vvv") then
+		unloadvvvvvvmusic("mmmmmm.vvv")
+	end
+	unloadvvvvvvmusic("sounds")
+
+	music_loaded = false
 end
 
 function unloadvvvvvvmusics_level()
