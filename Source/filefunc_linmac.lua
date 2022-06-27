@@ -187,8 +187,7 @@ end
 function create_directory(path)
 	-- returns success, errmsg
 	local errmsg = ffi.new("const char*[1]")
-	local success = libC.ved_mkdir(path, errmsg)
-	if not success then
+	if not libC.ved_mkdir(path, errmsg) then
 		return false, ffi.string(errmsg[0])
 	end
 	return true
