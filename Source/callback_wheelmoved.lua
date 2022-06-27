@@ -14,7 +14,13 @@ function love.wheelmoved(xm, ym)
 	end
 
 	if ym < 0 or ym > 0 then
-		handle_scrolling(false, ym > 0 and "wu" or "wd", math.abs(ym)*16)
+		local use_ym = ym
+		if s.mousescrollingspeed < 0 then
+			-- Alright, I guess you want opposite scrolling in Ved than in the rest of your system!
+			-- (Especially with trackpads there might be usecases where this makes sense)
+			use_ym = -ym
+		end
+		handle_scrolling(false, use_ym > 0 and "wu" or "wd", round(math.abs(ym)*math.abs(s.mousescrollingspeed)))
 	end
 
 	if coordsdialog.active or dialog.is_open() then

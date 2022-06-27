@@ -35,6 +35,10 @@ configs = {
 		default = false,
 		["type"] = "bool",
 	},
+	mousescrollingspeed = {
+		default = 16,
+		["type"] = "number",
+	},
 	adjacentroomlines = {
 		default = true,
 		["type"] = "bool",
