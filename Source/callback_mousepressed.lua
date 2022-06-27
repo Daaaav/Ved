@@ -10,7 +10,14 @@ function love.mousepressed(x, y, button)
 		end
 	end
 
-	if focus_regained_timer < .1 and not table.contains({"wu", "wd"}, button) then
+	-- However, we do now fully use love.wheelmoved.
+	-- So it's 0.9-style love.mousepressed with "l", "r" and "m", and 0.10+-style love.wheelmoved.
+	if button == "wu" or button == "wd" then
+		love.wheelmoved(0, button == "wu" and 1 or -1)
+		return
+	end
+
+	if focus_regained_timer < .1 then
 		if not table.contains(skip_next_mouses, button) then
 			table.insert(skip_next_mouses, button)
 		end
@@ -19,12 +26,6 @@ function love.mousepressed(x, y, button)
 
 	if s.pscale ~= 1 then
 		x, y = math.floor(x*s.pscale^-1), math.floor(y*s.pscale^-1)
-	end
-
-	if s.pausedrawunfocused and not window_active() and table.contains({"wu", "wd"}, button) then
-		-- When drawing is paused it won't look like the scrollbar has moved,
-		-- so just don't move it so the visual will be accurate
-		return
 	end
 
 	hook("love_mousepressed_start", {x, y, button})
@@ -36,8 +37,6 @@ function love.mousepressed(x, y, button)
 	if dialog.is_open() and button == "l" then
 		dialogs[#dialogs]:mousepressed(x, y)
 	end
-
-	handle_scrolling(false, button)
 
 	if button == "m" then
 		if middlescroll_x ~= -1 and middlescroll_y ~= -1 then

@@ -174,6 +174,7 @@ else
 	ved_require("callback_keyreleased")
 	ved_require("callback_mousepressed")
 	ved_require("callback_mousereleased")
+	ved_require("callback_wheelmoved")
 	ved_require("callback_directorydropped")
 	ved_require("callback_filedropped")
 	ved_require("callback_focus")

@@ -13,14 +13,6 @@ love.mouse.isDown = function(button)
 end
 
 
-function love.wheelmoved(x, y)
-	if y > 0 then
-		love.mousepressed(love.mouse.getX(), love.mouse.getY(), "wu")
-	elseif y < 0 then
-		love.mousepressed(love.mouse.getX(), love.mouse.getY(), "wd")
-	end
-end
-
 function love.graphics.isSupported()
 	-- Only used for canvas in Ved as far as I know
 	return true

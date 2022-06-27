@@ -824,19 +824,15 @@ function escapegsub(text, keepcaps)
 		:gsub("%$", "%%%$")
 end
 
-function flipscrollmore(wheel)
+function flipscrollmore(movement)
 	-- Ok so on OSX by default scrolling is the opposite of Windows, which can feel natural because you're using two fingers instead of rolling a wheel
 	-- Now this does not feel normal when you're switching between items instead of scrolling
 	-- So on Mac we reverse that with the subtools but you can also reverse this way of scrolling, in which case our flipped code changes to the unnatural feeling one
 	-- In which case you can change a setting in Ved to again reverse that
 	if s.flipsubtoolscroll then
-		if wheel == "wu" then
-			return "wd"
-		else
-			return "wu"
-		end
+		return -movement
 	else
-		return wheel
+		return movement
 	end
 end
 
@@ -3172,6 +3168,7 @@ function load_ui(ui_name)
 	load_ui_part("textinput")
 	load_ui_part("mousepressed")
 	load_ui_part("mousereleased")
+	load_ui_part("wheelmoved")
 
 	return ui
 end
