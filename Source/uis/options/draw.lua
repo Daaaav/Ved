@@ -65,12 +65,12 @@ return function()
 		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
 	end
 
+	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(24*17)+4)
+	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(24*17), "mousescrollingspeed", -999, 999)
+
 	ved_print(
 		ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"
 		.. ERR_LOVEVERSION .. " " .. love_ver_human(),
 		8, love.graphics.getHeight()-23
 	)
-
-	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(24*17)+4)
-	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(24*17), "mousescrollingspeed", -999, 999)
 end
