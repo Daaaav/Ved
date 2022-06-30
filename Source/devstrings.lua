@@ -38,6 +38,11 @@ L.COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!"
 
 L.MOUSESCROLLINGSPEED = "Mouse scrolling speed"
 
+L.BTN_ADVANCED = "Advanced"
+
+L.ADVANCED_LEVEL_OPTIONS = "Advanced level options"
+L.ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)" -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
 L_PLU.NUM_GRAPHICS_CUSTOMIZED = {
 	[-1] = "$1 image customized",
 	[-2] = "$1 images customized",

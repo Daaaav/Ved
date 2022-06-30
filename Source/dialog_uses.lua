@@ -170,6 +170,13 @@ function dialog.form.leveloptions_make()
 	}
 end
 
+function dialog.form.advancedleveloptions_make()
+	return {
+		{"", 2, 0, 46, L.ONEWAYCOL_OVERRIDE, DF.LABEL},
+		{"onewaycol_override", 0, 0, 2+math.min(font8:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
+	}
+end
+
 function dialog.form.songmetadata_make(song_metadata, song)
 	local name, filename, notes = "", "", ""
 	if song_metadata ~= nil then
@@ -307,6 +314,11 @@ function dialog.callback.noclose_on.save(button)
 end
 function dialog.callback.noclose_on.apply(button)
 	if button == DB.APPLY then
+		return true
+	end
+end
+function dialog.callback.noclose_on_advanced(button)
+	if button == DB.ADVANCED then
 		return true
 	end
 end
@@ -855,18 +867,25 @@ end
 function dialog.callback.leveloptions(button, fields)
 	if button == DB.CANCEL then
 		return
+	elseif button == DB.ADVANCED then
+		dialog.create(
+			"",
+			DBS.OKCANCEL,
+			dialog.callback.advancedleveloptions,
+			L.ADVANCED_LEVEL_OPTIONS,
+			dialog.form.advancedleveloptions_make()
+		)
+		return
 	end
 
 	-- What are the old properties?
 	local undo_propertynames = {"Title", "Creator", "website", "Desc1", "Desc2", "Desc3", "mapwidth", "mapheight", "levmusic"}
 	local undo_properties = {}
-	if not converted then
-		for k,v in pairs(undo_propertynames) do
-			undo_properties[k] = {
-				key = v,
-				oldvalue = metadata[v]
-			}
-		end
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k] = {
+			key = v,
+			oldvalue = metadata[v]
+		}
 	end
 
 	-- Level properties
@@ -909,16 +928,42 @@ function dialog.callback.leveloptions(button, fields)
 		end
 	end
 
-	if not converted then
-		--What are the new properties again?
-		for k,v in pairs(undo_propertynames) do
-			undo_properties[k].newvalue = metadata[v]
-		end
-
-		-- Make sure we can undo and redo it
-		table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
-		finish_undo("CHANGED METADATA")
+	--What are the new properties again?
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k].newvalue = metadata[v]
 	end
+
+	-- Make sure we can undo and redo it
+	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
+	finish_undo("CHANGED METADATA")
+end
+
+function dialog.callback.advancedleveloptions(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	-- What are the old properties?
+	local undo_propertynames = {"onewaycol_override"}
+	local undo_properties = {}
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k] = {
+			key = v,
+			oldvalue = metadata[v]
+		}
+	end
+
+	-- Level properties
+	metadata.onewaycol_override = fields.onewaycol_override
+
+	--What are the new properties again?
+	for k,v in pairs(undo_propertynames) do
+		undo_properties[k].newvalue = metadata[v]
+	end
+
+	-- Make sure we can undo and redo it
+	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
+	finish_undo("CHANGED METADATA")
 end
 
 function dialog.callback.loadvvvvvvmusic(button, fields)

@@ -723,10 +723,11 @@ return function()
 				-- Level options
 				dialog.create(
 					"",
-					DBS.OKCANCEL,
+					DBS.OKCANCELADVANCED,
 					dialog.callback.leveloptions,
 					L.LEVELOPTIONS,
-					dialog.form.leveloptions_make()
+					dialog.form.leveloptions_make(),
+					dialog.callback.noclose_on_advanced
 				)
 				editingroomname = false
 			else
