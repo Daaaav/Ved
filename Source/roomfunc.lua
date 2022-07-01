@@ -437,13 +437,15 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		y = offsety+(v.y-myroomy*30)*16
 	end
 
+	local lmd = levelmetadata_get(myroomx, myroomy)
+
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
 		love.graphics.draw(cursorimg[5], x, y)
 	elseif v.t == 1 then
 		-- Enemy
-		v6_setcol(tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].v6col)
-		drawentitysprite(enemysprites[levelmetadata_get(myroomx, myroomy).enemytype], x, y) -- 78
+		v6_setcol(tilesetblocks[lmd.tileset].colors[lmd.tilecol].v6col)
+		drawentitysprite(enemysprites[lmd.enemytype], x, y)
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
@@ -455,14 +457,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[lmd.tileset].colors[lmd.tilecol].entcolourrow
 		if v.p1 <= 4 then
 			-- Moving platform
 			local usethisentcolour
 			if entcolourrow ~= nil then
 				usethisentcolour = entcolourrow*12
 			end
-			if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
+			if lmd.tileset == 0 and lmd.tilecol == -1 then
 				usethisentcolour = 1
 			end
 			for eachx = x, x+48, 16 do
@@ -481,7 +483,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				thiscycle = 3 - conveyorrightcycle
 			end
 			local usethisentcolour
-			if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
+			if lmd.tileset == 0 and lmd.tilecol == -1 then
 				-- This one's the weirdest of all the entcolour sprites for Space Station tilecol -1
 				local tmp
 				if table.contains({5, 7}, v.p1) then
@@ -523,12 +525,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 3 then
 		-- Disappearing platform
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[levelmetadata_get(myroomx, myroomy).tileset].colors[levelmetadata_get(myroomx, myroomy).tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[lmd.tileset].colors[lmd.tilecol].entcolourrow
 		local usethisentcolour
 		if entcolourrow ~= nil then
 			usethisentcolour = entcolourrow*12
 		end
-		if levelmetadata_get(myroomx, myroomy).tileset == 0 and levelmetadata_get(myroomx, myroomy).tilecol == -1 then
+		if lmd.tileset == 0 and lmd.tilecol == -1 then
 			usethisentcolour = 2
 		end
 		for eachx = x, x+48, 16 do
