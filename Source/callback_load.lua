@@ -439,6 +439,7 @@ function love.load()
 	-- If I add layers, I should probably increase the max number of sprites and just add them after each other.
 	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.
 	tile_batch = love.graphics.newSpriteBatch(tilesets["tiles.png"].img, 1200, "dynamic")
+	tile_batch_oneway = love.graphics.newSpriteBatch(tilesets["tiles.png"].img, 1200, "dynamic")
 	tile_batch_needs_update = false
 	tile_batch_texture_needs_update = false
 	tile_batch_tileset = 1
@@ -446,6 +447,18 @@ function love.load()
 	tile_batch_tiles = {}
 	for i = 1, 1200 do
 		tile_batch_tiles[i] = 0
+	end
+	tile_batch_has_oneway = false
+
+	if love.graphics.isSupported("shader") then
+		-- The shader should be valid, but just in case.
+		local success
+		success, shader_tint = pcall(love.graphics.newShader, "shader_tint.frag")
+		if not success then
+			cons("Shader creation failed!")
+			cons(shader_tint)
+			shader_tint = nil
+		end
 	end
 
 	hook("love_load_end")

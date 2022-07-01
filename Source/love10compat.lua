@@ -14,7 +14,7 @@ end
 
 
 function love.graphics.isSupported()
-	-- Only used for canvas in Ved as far as I know
+	-- Only used for "canvas", "npot" and "shader" in Ved
 	return true
 end
 

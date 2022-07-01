@@ -19,6 +19,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	or tile_batch_texture_needs_update then
 		tile_batch_needs_update = true
 		tile_batch:setTexture(tilesets[tsimage].img)
+		tile_batch_oneway:setTexture(tilesets[tsimage].img)
 		tile_batch_tileset = ts
 		tile_batch_texture_needs_update = false
 	end
@@ -33,14 +34,22 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 	end
 	if tile_batch_needs_update then
 		tile_batch:clear()
+		tile_batch_oneway:clear()
 		tile_batch_zoomscale2 = zoomscale2
+		tile_batch_has_oneway = false
 
 		for aty = 0, 29 do
 			for atx = 0, 39 do
-				local t = theroomdata[(aty*40)+(atx+1)]
+				local t = anythingbutnil0(tonumber(theroomdata[(aty*40)+(atx+1)]))
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
-				if t ~= 0 and tilesets[tsimage].tiles[anythingbutnil0(tonumber(t))] ~= nil then
-					tile_batch:add(tilesets[tsimage].tiles[anythingbutnil0(tonumber(t))], x, y, 0, 2*zoomscale2)
+				if t ~= 0 and tilesets[tsimage].tiles[t] ~= nil then
+					local tile = tilesets[tsimage].tiles[t]
+					if shader_tint ~= nil and t >= 14 and t <= 17 then
+						tile_batch_oneway:add(tile, x, y, 0, 2*zoomscale2)
+						tile_batch_has_oneway = true
+					else
+						tile_batch:add(tile, x, y, 0, 2*zoomscale2)
+					end
 				end
 				tile_batch_tiles[(aty*40)+(atx+1)] = t
 			end
@@ -48,6 +57,18 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 		tile_batch_needs_update = false
 	end
 	love.graphics.draw(tile_batch, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
+	if tile_batch_has_oneway then
+		local use_tint = (not tilesets[tsimage].level_specific) or metadata.onewaycol_override
+		if use_tint then
+			love.graphics.setColor(tilesetblocks[themetadata.tileset].colors[themetadata.tilecol].entcolor)
+			love.graphics.setShader(shader_tint)
+		end
+		love.graphics.draw(tile_batch_oneway, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
+		if use_tint then
+			love.graphics.setShader()
+			love.graphics.setColor(255,255,255)
+		end
+	end
 
 	-- Display indicators for tiles in adjacent rooms
 	if adjacent_room_lines then

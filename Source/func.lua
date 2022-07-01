@@ -402,6 +402,7 @@ function loadtileset(file, res, levelassetsfolder)
 	if levelassetsfolder == nil then
 		-- Just loading global assets, either custom or built-in
 		tilesets[file] = {}
+		tilesets[file].level_specific = false
 
 		-- Try loading custom assets first
 		readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
@@ -416,6 +417,7 @@ function loadtileset(file, res, levelassetsfolder)
 
 		-- This level-specific file definitely exists
 		tilesets[file] = {}
+		tilesets[file].level_specific = true
 	end
 
 	local asimgdata, asimgdata_white
