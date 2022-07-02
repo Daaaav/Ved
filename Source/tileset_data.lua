@@ -1587,7 +1587,7 @@ tilesetblocks = {
 					   0,    0,    0,    0,    0,    0,
 				},
 				entcolor = {109,109,109},
-				v6col = 7,
+				v6col = 18,
 				warpbg = 7,
 				entcolourrow = 53,
 			},

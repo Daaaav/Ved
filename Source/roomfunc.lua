@@ -459,6 +459,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	end
 
 	local lmd = levelmetadata_get(myroomx, myroomy)
+	local gray_warpzone = lmd.tileset == 3 and lmd.tilecol == 6
 
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
@@ -489,7 +490,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				usethisentcolour = 1
 			end
 			for eachx = x, x+48, 16 do
-				drawentcolour(usethisentcolour, eachx, y)
+				drawentcolour(usethisentcolour, eachx, y, gray_warpzone)
 			end
 		elseif v.p1 <= 8 then
 			-- Conveyor
@@ -517,7 +518,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				usethisentcolour = entcolourrow*12 + 4 + thiscycle + leftrightoffset
 			end
 			for eachx = x, x+48+addlength, 16 do
-				drawentcolour(usethisentcolour, eachx, y)
+				drawentcolour(usethisentcolour, eachx, y, gray_warpzone)
 			end
 			-- Also draw a nice border on top
 			love.graphics.setColor(255, 255, 255, 127)
@@ -555,7 +556,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			usethisentcolour = 2
 		end
 		for eachx = x, x+48, 16 do
-			drawentcolour(usethisentcolour, eachx, y)
+			drawentcolour(usethisentcolour, eachx, y, gray_warpzone)
 		end
 		-- This is a disappearing platform.
 		ved_print("////", x, y, 2)
@@ -806,8 +807,15 @@ function drawentitysprite(tile, atx, aty, small)
 	end
 end
 
-function drawentcolour(tile, atx, aty, small)
-	love.graphics.draw(tilesets["entcolours.png"].img, tilesets["entcolours.png"].tiles[tile], atx, aty, 0, small and 1 or 2)
+function drawentcolour(tile, atx, aty, tint_gray)
+	local use_shader = tint_gray and shader_tint ~= nil
+	if use_shader then
+		love.graphics.setShader(shader_tint)
+	end
+	love.graphics.draw(tilesets["entcolours.png"].img, tilesets["entcolours.png"].tiles[tile], atx, aty, 0, 2)
+	if use_shader then
+		love.graphics.setShader()
+	end
 end
 
 function drawtele(atx, aty, small)
