@@ -74,8 +74,11 @@ end
 ]]
 cVedQueueableSource =
 {
+	love_decoder = nil,
 	love_sounddata = nil,
 	love_queueablesource = nil,
+
+	audio_metadata = nil,
 
 	loop_start_samples = nil,
 	loop_length_samples = nil,
@@ -95,8 +98,21 @@ function cVedQueueableSource:new(o)
 end
 
 function cVedQueueableSource:init(file, song)
-	-- TODO: maybe use a Decoder instead of a SoundData so we only load SoundData when we actually play
-	local success, maybe_sounddata = pcall(love.sound.newSoundData, music[file][song].filedata)
+	-- Only create a Decoder now, we only load a SoundData when we actually play
+	local success, maybe_decoder = pcall(love.sound.newDecoder, music[file][song].filedata)
+	if not success then
+		cons("Could not create decoder for song " .. song .. " from " .. file .. " because " .. maybe_decoder)
+		return false
+	end
+
+	self.love_decoder = maybe_decoder
+	self.audio_metadata = music[file][song].audio_metadata
+
+	return true
+end
+
+function cVedQueueableSource:load_sounddata()
+	local success, maybe_sounddata = pcall(love.sound.newSoundData, self.love_decoder)
 	if not success then
 		cons("Could not load sounddata for song " .. song .. " from " .. file .. " because " .. maybe_sounddata)
 		return false
@@ -114,11 +130,11 @@ function cVedQueueableSource:init(file, song)
 	local n_samples = self.love_sounddata:getSampleCount()
 	self.loop_start_samples = math.min(
 		n_samples-1,
-		music[file][song].audio_metadata.loop_start
+		self.audio_metadata.loop_start
 	)
 	self.loop_length_samples = math.min(
 		n_samples-self.loop_start_samples,
-		music[file][song].audio_metadata.loop_length
+		self.audio_metadata.loop_length
 	)
 
 	local sample_rate = self.love_sounddata:getSampleRate()
@@ -178,6 +194,9 @@ function cVedQueueableSource:seek(offset, unit)
 end
 
 function cVedQueueableSource:getDuration(unit)
+	if self.love_sounddata == nil then
+		return self.love_decoder:getDuration(unit)
+	end
 	return self.love_sounddata:getDuration(unit)
 end
 
@@ -185,6 +204,11 @@ function cVedQueueableSource:play()
 	if not self.stopped then
 		self.love_queueablesource:play()
 		return true
+	end
+
+	-- Does the sounddata exist yet?
+	if self.love_sounddata == nil and not self:load_sounddata() then
+		return false
 	end
 
 	local success = self:fillBuffers(true)
