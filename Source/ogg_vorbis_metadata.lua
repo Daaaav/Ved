@@ -194,7 +194,7 @@ function ogg_vorbis_metadata(filedata)
 	end
 
 	-- Now check if we have loop points!
-	local loop_start, loop_length, loop_end = 0, 0, 0
+	local loop_start, loop_length, loop_end = 0, 0, math.huge
 	local is_loop_length = false
 
 	for k,v in pairs(audio_metadata.comments) do
