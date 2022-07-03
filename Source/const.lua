@@ -83,8 +83,8 @@ list_music_names_ids = {
 	{"Pending Silence (" .. L.CAPNONE .. ")", 0}, -- Path Complete, but this is about custom levels where 0 is silence
 	{"Pushing Onwards", 1},
 	{"Positive Force", 2},
-	{"Potential For Anything", 3},
-	{"Passion For Exploring", 4},
+	{"Potential for Anything", 3},
+	{"Passion for Exploring", 4},
 	{"Pause", 5},
 	{"Presenting VVVVVV", 6},
 	{"Plenary", 7},
@@ -94,8 +94,8 @@ list_music_names_ids = {
 	{"Pipe Dream", 11},
 	{"Pressure Cooker", 12},
 	{"Paced Energy", 13},
-	{"Piercing The Sky", 14},
-	{"Predestined Fate remix", 15},
+	{"Piercing the Sky", 14},
+	{"Predestined Fate Remix", 15},
 }
 
 -- Just the names because right click menu

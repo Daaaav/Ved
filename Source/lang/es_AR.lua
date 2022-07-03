@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-07-03 03:53:57 (CEST)
+--- Last converted: 2022-07-03 04:08:37 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -2146,23 +2146,23 @@ Music numbers (simplified scripting)\h#
 0 - Silence (no music)
 1 - Pushing Onwards
 2 - Positive Force
-3 - Potential For Anything
-4 - Passion For Exploring
+3 - Potential for Anything
+4 - Passion for Exploring
 5 - Presenting VVVVVV
 6 - Predestined Fate
 7 - Popular Potpourri
 8 - Pipe Dream
 9 - Pressure Cooker
 10 - Paced Energy
-11 - Piercing The Sky
+11 - Piercing the Sky
 
 Music numbers (internal)\h#
 
 0 - Path Complete
 1 - Pushing Onwards
 2 - Positive Force
-3 - Potential For Anything
-4 - Passion For Exploring
+3 - Potential for Anything
+4 - Passion for Exploring
 5 - Pause
 6 - Presenting VVVVVV
 7 - Plenary
@@ -2172,8 +2172,8 @@ Music numbers (internal)\h#
 11 - Pipe Dream
 12 - Pressure Cooker
 13 - Paced Energy
-14 - Piercing The Sky
-15 - Predestined Fate remixed
+14 - Piercing the Sky
+15 - Predestined Fate Remix
 
 Sound effect numbers\h#
 
