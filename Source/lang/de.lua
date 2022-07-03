@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2022-01-07 02:50:26 (CET)
+--- Last converted: 2022-07-03 03:53:57 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -547,7 +547,6 @@ ALREADYPLAYTESTING = "Du Spieltestest schon!",
 PLAYTESTINGFAILED = "Etwas ist schief gelaufen beim Öffnen von VVVVVV:\n$1\n\nWenn du die ausführbare Datei die zum Spieltest für VVVVVV genutzt wird ändern musst, halte Shift während du den Spieltest-Knopf drückst.",
 PLAYTESTUNAVAILABLE = "Tut mir leid, du kannst nicht Spieltesten auf $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bitte wähle die Datei namens '$1' aus.",
-CHANGINGPATHAFTERASK = "Der VVVVVV-Pfad wurde geändert nachdem Spielen gedrückt wurde und ist nicht mehr gültig!",
 
 PLAYTESTINGOPTIONS = "Spieltest",
 PLAYTESTING_EXECUTABLE_NOTSET = "Sie haben noch keine ausführbare Datei für $1 zum Spieltesten festgelegt.\nVed wird danach fragen, wenn du zum ersten Mal ein $2-Level testest.", -- $1: VVVVVV 2.3, $2: VVVVVV

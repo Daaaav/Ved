@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2022-01-07 02:50:26 (CET)
+--- Last converted: 2022-07-03 03:53:58 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -37,8 +37,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Votre version de L{ve est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure.\nVous pouvez télécharger la dernière version de L{ve sur le site https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ne supporte plus L{ve 0.9.0. Cependant, L{ve 0.9.1 et toute version ultérieure seront supportées.\nVous pouvez télécharger la dernière version de L{ve sur https://love2d.org/.",
+OUTDATEDLOVE = "Votre version de LÖVE est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure.\nVous pouvez télécharger la dernière version de LÖVE sur le site https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ne supporte plus LÖVE 0.9.0. Cependant, LÖVE 0.9.1 et toute version ultérieure seront supportées.\nVous pouvez télécharger la dernière version de LÖVE sur https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
 MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",
@@ -413,7 +413,7 @@ NONINTSCALE = "Échelonnage non entière",
 
 USEFONTPNG = "Utiliser font.png du dossier d'images de VVVVVV comme police",
 USELEVELFONTPNG = "Utiliser un font.png personnalisé par niveau comme police",
-REQUIRESHIGHERLOVE = " (requiert L{VE $1 ou version ultérieure)",
+REQUIRESHIGHERLOVE = " (requiert LÖVE $1 ou version ultérieure)",
 FPSLIMIT = "Limite de FPS",
 
 MAPRESOLUTION = "Résolution", -- Map export size
@@ -551,7 +551,6 @@ ALREADYPLAYTESTING = "Vous êtes déjà dans un test de jeu !",
 PLAYTESTINGFAILED = "Une erreur inattendue est apparue lors du lancement de VVVVVV :\n$1\n\nSi vous devez changer l'exécutable de VVVVVV qui est utilisé lors du test de jeu, maintenez Maj en appuyant sur le bouton de test de jeu.",
 PLAYTESTUNAVAILABLE = "Désolé, vous ne pouvez pas être dans un test de jeu sur un $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Veuillez sélectionner le fichier nommé '$1'.",
-CHANGINGPATHAFTERASK = "Le chemin de VVVVVV a été changé après avoir lancé le jeu et n'est plus valide !",
 
 PLAYTESTINGOPTIONS = "Test de jeu",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de $1 à utiliser pour le test de jeu.\nVed vous le demandera lors du premier test d'un niveau de $2.", -- $1: VVVVVV 2.3, $2: VVVVVV
@@ -724,7 +723,7 @@ long5 = "Tour",
 
 ERR_VEDHASCRASHED = "Ved a planté !"
 ERR_VEDVERSION = "Version de Ved :"
-ERR_LOVEVERSION = "Version de L{VE :"
+ERR_LOVEVERSION = "Version de LÖVE :"
 ERR_STATE = "État :"
 ERR_OS = "SE :"
 ERR_TIMESINCESTART = "Temps depuis le début :"
@@ -1758,7 +1757,7 @@ entersecretlab\r#h
 
 Active le mode Laboratoire Secret.
 
-2.2 ET ULTERIEUR: Débloque le Laboratoire Secret pour le jeu principal, ce qui
+2.2 ET ANTÉRIEUR: Débloque le Laboratoire Secret pour le jeu principal, ce qui
 n'est probablement pas quelque chose qu'un niveau personnalisé devrait
 faire.
 
@@ -2047,7 +2046,7 @@ Restaure la couleur du joueur par défaut (cyan)
 
 resumemusic¤()\w#h
 
-Une commande non terminée. Dans la 2.2 et ultérieur, elle lit dans de la mémoire
+Une commande non terminée. Dans la 2.2 et antérieur, elle lit dans de la mémoire
 non-initialisée, ce qui peut planter le jeu sur certaines machines ou jouer Path
 Complete pour d'autres. Dans la 2.3, elle ne lit plus dans de la mémoire
 non-initialisée et va correctement continuer la musique après musicfadeout().
@@ -2056,7 +2055,7 @@ rollcredits¤()\r#h
 
 Affiche les crédits de fin.
 
-2.2 ET ULTERIEUR: Cette commande détruit votre sauvegarde après
+2.2 ET ANTÉRIEUR: Cette commande détruit votre sauvegarde après
 que les crédits de fin soient finis!
 
 setcheckpoint¤()\w#h
@@ -2140,7 +2139,7 @@ telesave¤()\r#h
 
 Ne fait rien dans des niveaux personnalisés.
 
-2.2 ET ULTERIEUR: Sauvegarde votre partie dans la sauvegarde de téléporteur
+2.2 ET ANTÉRIEUR: Sauvegarde votre partie dans la sauvegarde de téléporteur
 normale, donc ne l'utilisez pas!
 
 text¤(couleur,x,y,lignes)\w#h

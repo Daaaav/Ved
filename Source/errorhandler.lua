@@ -167,7 +167,7 @@ function ved_showerror(msg)
 				end
 			end
 		end
-		local contents = (mainmessage:gsub("\n    ", "\n"):gsub("L{VE", "LÖVE") .. "\n"
+		local contents = (mainmessage:gsub("\n    ", "\n") .. "\n"
 			.. "\n"
 			.. "Time: " .. os.date("%Y-%m-%d %H:%M:%S") .. " (" .. os.time() .. ")\n"
 			.. "Debug mode: " .. (allowdebug and "enabled" or "disabled") .. "\n"
@@ -329,7 +329,7 @@ function ved_showerror(msg)
 			elseif e == "keypressed" and (a == "escape") then
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown(lctrl) or love.keyboard.isDown(rctrl)) then
-				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"):gsub("L{VE", "LÖVE"))
+				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
 			elseif e == "keypressed" and a == "s" and not alreadysaved
 			and metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 				if editingmap == "untitled\n" or editingmap == nil then

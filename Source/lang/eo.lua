@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-01-07 02:50:26 (CET)
+--- Last converted: 2022-07-03 03:53:58 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -45,8 +45,8 @@ L = {
 
 TRANSLATIONCREDIT = "Esperantigo de Reese Rivers", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Via versio de L{ve estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ne plu subtenas L{ve 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de L{ve ĉe https://love2d.org/.",
+OUTDATEDLOVE = "Via versio de LÖVE estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej freŝan version de LÖVE ĉe https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ne plu subtenas LÖVE 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej freŝan version de LÖVE ĉe https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",
@@ -421,7 +421,7 @@ NONINTSCALE = "Neentjera skalado",
 
 USEFONTPNG = "Uzi font.png de grafiko-dosierujo de VVVVVV kiel tiparon",
 USELEVELFONTPNG = "Uzi font.png de propra nivelo kiel tiparon",
-REQUIRESHIGHERLOVE = " (L{VE $1 aŭ pli alta necesas)",
+REQUIRESHIGHERLOVE = " (LÖVE $1 aŭ pli alta necesas)",
 FPSLIMIT = "KS-limo",
 
 MAPRESOLUTION = "Distingivo", -- Map export size
@@ -559,7 +559,6 @@ ALREADYPLAYTESTING = "Vi jam ludtestas!",
 PLAYTESTINGFAILED = "Io fuŝiĝis dum malfermi VVVVVV:\n$1\n\nSe vi devas ŝangi la ruleblan dosieron de VVVVVV, kiu estas uzata por ludtestado, premtenu la ŝov-klavon dum premi la ludtestad-butonon.",
 PLAYTESTUNAVAILABLE = "Bedaŭrinde, vi ne povas ludtesti ĉe $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bonvolu elekti la dosieron nomitan '$1'.",
-CHANGINGPATHAFTERASK = "La dosierindiko de VVVVVV ŝanĝiĝis post premi 'ludi' kaj ne plu validas!",
 
 PLAYTESTINGOPTIONS = "Ludtestado",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vi ne jam agordis ruleblan dosieron de $1 por uzi dum ludtestado.\nVed petos tion dum ludi nivelon de $2 unuafoje.", -- $1: VVVVVV 2.3, $2: VVVVVV
@@ -732,7 +731,7 @@ long5 = "Turo",
 
 ERR_VEDHASCRASHED = "Ved estas kraŝinta!"
 ERR_VEDVERSION = "Versio de Ved:"
-ERR_LOVEVERSION = "Versio de L{VE:"
+ERR_LOVEVERSION = "Versio de LÖVE:"
 ERR_STATE = "Stato:"
 ERR_OS = "Operaciumo:"
 ERR_TIMESINCESTART = "Tempo ekde lanĉo:"

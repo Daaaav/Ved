@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-01-07 02:50:25 (CET)
+--- Last converted: 2022-07-03 03:53:57 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -33,8 +33,8 @@ L = {
 
 TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Su versión de L{ve esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ahora no soporta L{ve 0.9.0. Con suerte, L{ve 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de L{ve desde https://love2d.org/.",
+OUTDATEDLOVE = "Su versión de LÖVE esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ahora no soporta LÖVE 0.9.0. Con suerte, LÖVE 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
@@ -409,7 +409,7 @@ NONINTSCALE = "Escala no-entera",
 
 USEFONTPNG = "Usar font.png de las graficas de VVVVVV como fuente",
 USELEVELFONTPNG = "Use per-level custom font.png as font",
-REQUIRESHIGHERLOVE = " (requiere L{VE $1 o mejor)",
+REQUIRESHIGHERLOVE = " (requiere LÖVE $1 o mejor)",
 FPSLIMIT = "Limite de FPS",
 
 MAPRESOLUTION = "Resolucion", -- Map export size
@@ -547,7 +547,6 @@ ALREADYPLAYTESTING = "Ya estas probando!",
 PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
 PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
-CHANGINGPATHAFTERASK = "El camino de VVVVVV se cambio al presionar play y ahora no es valido!",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
@@ -720,7 +719,7 @@ long5 = "Torre",
 
 ERR_VEDHASCRASHED = "Ved ha crasheado!"
 ERR_VEDVERSION = "Version de Ved:"
-ERR_LOVEVERSION = "Version de L{VE:"
+ERR_LOVEVERSION = "Version de LÖVE:"
 ERR_STATE = "Estado:"
 ERR_OS = "SO:"
 ERR_TIMESINCESTART = "Tiempo desde el inicio:"

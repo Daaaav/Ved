@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2022-01-07 02:50:27 (CET)
+--- Last converted: 2022-07-03 03:53:58 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -33,8 +33,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Deze versie van L{ve is verouderd. De minimale versie is 0.9.1.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ondersteunt L{ve 0.9.0 niet meer. Gelukkig blĳft L{ve 0.9.1 en hoger werken.\nJe kunt de laatste versie van L{ve downloaden op https://love2d.org/.",
+OUTDATEDLOVE = "Deze versie van LÖVE is verouderd. De minimale versie is 0.9.1.\nJe kunt de laatste versie van LÖVE downloaden op https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved ondersteunt LÖVE 0.9.0 niet meer. Gelukkig blĳft LÖVE 0.9.1 en hoger werken.\nJe kunt de laatste versie van LÖVE downloaden op https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
 MAXTRINKETS = "Het maximumaantal trinkets ($1) is bereikt in dit level.",
@@ -184,7 +184,7 @@ LEVELOPTIONS = "Levelopties",
 MAP = "Kaart",
 SCRIPTS = "Scripts",
 SEARCH = "Zoeken",
-SENDFEEDBACK = "Stuur feedback",
+SENDFEEDBACK = "Geef feedback",
 LEVELNOTEPAD = "Levelkladblok",
 PLUGINS = "Plugins",
 
@@ -409,7 +409,7 @@ NONINTSCALE = "Schalen met niet-gehele getallen",
 
 USEFONTPNG = "Gebruik font.png uit de graphics-map van VVVVVV als lettertype",
 USELEVELFONTPNG = "Gebruik level-afhankelĳke font.png als lettertype",
-REQUIRESHIGHERLOVE = " (vereist L{VE $1 of hoger)",
+REQUIRESHIGHERLOVE = " (vereist LÖVE $1 of hoger)",
 FPSLIMIT = "FPS-limiet",
 
 MAPRESOLUTION = "Resolutie", -- Map export size
@@ -450,7 +450,7 @@ SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
 SEARCHRESULTS_ROOMS = "Kamers [$1]",
 SEARCHRESULTS_NOTES = "Notities [$1]",
 
-ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+ASSETS = "Bronbestanden", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "Kan dit nummer niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zĳn.",
 SOUNDPLAYERROR = "Kan dit geluid niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zĳn.",
 MUSICLOADERROR = "Kan $1 niet laden: ",
@@ -547,7 +547,6 @@ ALREADYPLAYTESTING = "Je bent al aan het testen!",
 PLAYTESTINGFAILED = "Er ging iets mis bĳ het openen van VVVVVV:\n$1\n\nAls je de VVVVVV-applicatie die gebruikt wordt voor het testen moet wĳzigen, houd dan Shift ingedrukt terwĳl je op de testknop drukt.",
 PLAYTESTUNAVAILABLE = "Sorry, je kunt niet testen op $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Selecteer het bestand genaamd '$1'.",
-CHANGINGPATHAFTERASK = "Het pad naar VVVVVV is gewĳzigd nadat je op spelen hebt gedrukt en is niet meer geldig!",
 
 PLAYTESTINGOPTIONS = "Testen",
 PLAYTESTING_EXECUTABLE_NOTSET = "Je hebt nog geen $1-applicatie ingesteld die gebruikt wordt om levels te testen.\nVed zal hier de eerste keer dat je een $2-level test om vragen.", -- $1: VVVVVV 2.3, $2: VVVVVV
@@ -720,7 +719,7 @@ long5 = "Toren",
 
 ERR_VEDHASCRASHED = "Ved is gecrasht!"
 ERR_VEDVERSION = "Ved-versie:"
-ERR_LOVEVERSION = "L{VE-versie:"
+ERR_LOVEVERSION = "LÖVE-versie:"
 ERR_STATE = "Toestand:"
 ERR_OS = "Besturingssysteem:"
 ERR_TIMESINCESTART = "Tĳd sinds opstarten:"

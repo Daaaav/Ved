@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2022-01-07 02:50:26 (CET)
+--- Last converted: 2022-07-03 03:53:58 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -21,8 +21,8 @@ L = {
 
 TRANSLATIONCREDIT = "Terjemahan dibuat oleh _march31onne (Marchionne Evangelisti)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Versi L{ve Anda sudah usang. Silakan gunakan versi 0.9.1 atau lebih tinggi.\nAnda dapat mengunduh L{ve versi terbaru dari https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved tidak lagi mendukung L{ve 0.9.0. Untungnya, L{ve 0.9.1 dan yang lebih baru akan tetap berfungsi.\nAnda dapat mengunduh versi terbaru L{ve dari https://love2d.org/.",
+OUTDATEDLOVE = "Versi LÖVE Anda sudah usang. Silakan gunakan versi 0.9.1 atau lebih tinggi.\nAnda dapat mengunduh LÖVE versi terbaru dari https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved tidak lagi mendukung LÖVE 0.9.0. Untungnya, LÖVE 0.9.1 dan yang lebih baru akan tetap berfungsi.\nAnda dapat mengunduh versi terbaru LÖVE dari https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Sistem operasi Anda ($1) tidak dikenali! Kembali ke fungsi sistem file default; level disimpan di:\n\n$2",
 MAXTRINKETS = "Jumlah maksimum trinket ($1) telah tercapai di level ini.",
@@ -71,7 +71,7 @@ ENEMYTYPECHANGED = "Jenis musuhan berubah",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
 CHANGEDTOMODE = "Berubah menjadi $1 penempatan ubin",
-CHANGEDTOMODEAUTO = "automatis",
+CHANGEDTOMODEAUTO = "otomatis",
 CHANGEDTOMODEMANUAL = "manual",
 CHANGEDTOMODEMULTI = "multi-tileset",
 
@@ -397,7 +397,7 @@ NONINTSCALE = "Penskalaan non-integer",
 
 USEFONTPNG = "Gunakan font.png dari folder grafis VVVVVV sebagai font",
 USELEVELFONTPNG = "Gunakan font kustom per level.png sebagai font",
-REQUIRESHIGHERLOVE = " (membutuhkan L{VE $1 atau lebih tinggi)",
+REQUIRESHIGHERLOVE = " (membutuhkan LÖVE $1 atau lebih tinggi)",
 FPSLIMIT = "Batas FPS",
 
 MAPRESOLUTION = "Resolusi", -- Map export size
@@ -535,7 +535,6 @@ ALREADYPLAYTESTING = "Anda sudah playtesting!",
 PLAYTESTINGFAILED = "Ada yang salah saat membuka VVVVVV:\n$1\n\nJika Anda perlu mengubah executable VVVVVV yang digunakan untuk playtesting, tahan Shift sambil menekan tombol playtest.",
 PLAYTESTUNAVAILABLE = "Maaf, Anda tidak dapat bermain dengan $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Silakan pilih file bernama '$1'.",
-CHANGINGPATHAFTERASK = "Jalur VVVVVV diubah setelah menekan putar dan tidak lagi valid!",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "Anda belum menetapkan $1 yang dapat dieksekusi untuk digunakan untuk pengujian bermain.\nVed akan memintanya saat menguji level $2 untuk pertama kalinya.", -- $1: VVVVVV 2.3, $2: VVVVVV
@@ -696,7 +695,7 @@ long5 = "Menara",
 
 ERR_VEDHASCRASHED = "Ved rusak!"
 ERR_VEDVERSION = "Versi Ved:"
-ERR_LOVEVERSION = "Versi L{VE:"
+ERR_LOVEVERSION = "Versi LÖVE:"
 ERR_STATE = "State/status:"
 ERR_OS = "OS:"
 ERR_TIMESINCESTART = "Waktu sejak mulai:"
@@ -1234,7 +1233,7 @@ F3¤  Ubah musuhan\C
 F4¤  Batasan musuhan\C
 F5¤  Batasan platform\C
 
-F10¤  Mode manual/automatis (mode pengatur/mode non-pengatur)\C
+F10¤  Mode manual/otomatis (mode pengatur/mode non-pengatur)\C
 
 W¤  Ubah arah warp\C
 E¤  Ubah nama ruang\C

@@ -19,8 +19,8 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Your version of L{ve is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of L{ve from https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved no longer supports L{ve 0.9.0. Luckily, L{ve 0.9.1 and up will keep working.\nYou can download the latest version of L{ve from https://love2d.org/.",
+OUTDATEDLOVE = "Your version of LÖVE is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of LÖVE from https://love2d.org/.",
+OUTDATEDLOVE090 = "Ved no longer supports LÖVE 0.9.0. Luckily, LÖVE 0.9.1 and up will keep working.\nYou can download the latest version of LÖVE from https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2",
 MAXTRINKETS = "The maximum amount of trinkets ($1) has been reached in this level.",
@@ -395,7 +395,7 @@ NONINTSCALE = "Non-integer scaling",
 
 USEFONTPNG = "Use font.png from VVVVVV graphics folder as font",
 USELEVELFONTPNG = "Use per-level custom font.png as font",
-REQUIRESHIGHERLOVE = " (requires L{VE $1 or higher)",
+REQUIRESHIGHERLOVE = " (requires LÖVE $1 or higher)",
 FPSLIMIT = "FPS limit",
 
 MAPRESOLUTION = "Resolution", -- Map export size
@@ -705,7 +705,7 @@ long5 = "Tower",
 
 ERR_VEDHASCRASHED = "Ved has crashed!"
 ERR_VEDVERSION = "Ved version:"
-ERR_LOVEVERSION = "L{VE version:"
+ERR_LOVEVERSION = "LÖVE version:"
 ERR_STATE = "State:"
 ERR_OS = "OS:"
 ERR_TIMESINCESTART = "Time since start:"
