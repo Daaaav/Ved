@@ -43,7 +43,7 @@ function loadfonts()
 		print_font8_y_off = 0
 	else
 		-- Use the TTF
-		font8 = love.graphics.newFont("fonts/Space Station.ttf", 8)
+		font8 = love.graphics.newFont("fonts/space-station.ttf", 8)
 
 		arrow_up = "↑"
 		arrow_down = "↓"
@@ -51,7 +51,7 @@ function loadfonts()
 		arrow_right = "→"
 
 		if not love_version_meets(11) then
-			print_font8_y_off = 2
+			print_font8_y_off = 1
 		else
 			print_font8_y_off = 0
 		end
