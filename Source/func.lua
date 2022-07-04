@@ -3302,7 +3302,7 @@ function tooltip_box_dimensions(title, explanation, icon)
 	local _, lines = font8_getWrap(explanation, expl_w)
 	local box_h = 32+math.max(
 		icon_h,
-		lines*font8:getHeight()
+		lines*font8_getHeight()
 	)
 
 	if lines == 0 then

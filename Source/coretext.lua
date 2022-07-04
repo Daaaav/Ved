@@ -45,6 +45,9 @@ function loadfonts()
 		-- Use the TTF
 		font8 = love.graphics.newFont("fonts/space-station.ttf", 8)
 
+		-- And welcome to the wonderful world of TTF, ugh
+		font8:setLineHeight(8/font8:getHeight())
+
 		arrow_up = "↑"
 		arrow_down = "↓"
 		arrow_left = "←"
@@ -280,4 +283,9 @@ function font8_getWrap(text, wraplimit)
 	end
 
 	return width, lines
+end
+
+function font8_getHeight()
+	-- I should really make my own text renderer...
+	return font8:getHeight()*font8:getLineHeight()
 end
