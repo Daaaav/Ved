@@ -43,6 +43,22 @@ L.BTN_ADVANCED = "Advanced"
 L.ADVANCED_LEVEL_OPTIONS = "Advanced level options"
 L.ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)" -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
+L.CUSTOM_SIZED_BRUSH = "Custom brush"
+
+-- These are limited to 12 characters
+L.CUSTOM_SIZED_BRUSH_BRUSH = "Brush"
+L.CUSTOM_SIZED_BRUSH_STAMP = "Stamp"
+L.CUSTOM_SIZED_BRUSH_TILESET = "Tileset"
+
+L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Custom brush size"
+L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Choose the size of the brush you need."
+
+L.CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stamp from room"
+L.CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Select tiles from the room to create a stamp."
+
+L.CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stamp from tileset"
+L.CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Select tiles from the tileset to create a stamp. Only works in manual mode."
+
 L_PLU.NUM_GRAPHICS_CUSTOMIZED = {
 	[-1] = "$1 image customized",
 	[-2] = "$1 images customized",

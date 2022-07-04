@@ -1041,7 +1041,7 @@ return function()
 	end
 
 	-- Also display a smaller tiles picker for semi-undirect mode
-	if selectedtool <= 3 and not voided_metadata then
+	if ((selectedtool <= 2 and selectedsubtool[selectedtool] ~= 8) or selectedtool == 3) and not voided_metadata then
 		local picker_x, picker_y = love.graphics.getWidth()-(7*16), love.graphics.getHeight()-156 -- -(6*16)-16-24-12-8 => -156
 		local picker_scale = 2
 		local picker_w, picker_h = 6*picker_scale*8, 5*picker_scale*8
@@ -1052,6 +1052,90 @@ return function()
 		love.graphics.rectangle("fill", picker_x, picker_y, picker_w, picker_h)
 		love.graphics.setColor(255,255,255,255)
 		displaysmalltilespicker(picker_x, picker_y, selectedtileset, selectedcolor, picker_scale)
+	elseif selectedtool <= 2 and selectedsubtool[selectedtool] == 8 then
+		-- The custom brush needs radio buttons as well...
+		local y = (love.graphics.getHeight()-156)+1
+		local title_y = y
+		if font8:getWidth(L.CUSTOM_SIZED_BRUSH) < 128-8 then
+			title_y = title_y + 4
+			y = y - 4
+		end
+		ved_printf(
+			L.CUSTOM_SIZED_BRUSH,
+			love.graphics.getWidth()-(128-4),
+			title_y,
+			128-8,
+			"center"
+		)
+		if customsizemode == 0 then
+			rbutton(L.RESET, 0, 156-19*2, true)
+
+			if not mousepressed and nodialog and love.mouse.isDown("l") then
+				if onrbutton(0, 156-19*2, true) then
+					customsizemode = 1
+					customsizex = 0
+					customsizey = 0
+					customsizetile = nil
+				end
+			end
+		else
+			for k,v in pairs({
+				"BRUSH",
+				"STAMP",
+				"TILESET"
+			}) do
+				local name = L["CUSTOM_SIZED_BRUSH_" .. v]
+				local selected = false
+				if tilespicker then
+					selected = k == 3
+				elseif customsizemode <= 2 then
+					selected = k == 1
+				else
+					selected = k == 2
+				end
+				radio(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, k, name,
+					function(key)
+						editingroomname = false
+						if key == 1 then
+							-- Brush
+							tilespicker = false
+							customsizemode = 1
+							customsizex = 0
+							customsizey = 0
+							customsizetile = nil
+						elseif key == 2 then
+							-- Stamp
+							tilespicker = false
+							customsizemode = 3
+							customsizex = 0
+							customsizey = 0
+							customsizetile = nil
+						elseif key == 3 then
+							-- Tileset
+							tilespicker = true
+							customsizemode = 1
+							customsizex = 0
+							customsizey = 0
+							customsizetile = nil
+						end
+					end,
+					function(key)
+						local title = L["CUSTOM_SIZED_BRUSH_TITLE_" .. v]
+						local explanation = L["CUSTOM_SIZED_BRUSH_EXPL_" .. v]
+						local box_w, box_h = tooltip_box_dimensions(title, explanation)
+						tooltip_box_draw(
+							title,
+							explanation,
+							nil,
+							love.graphics.getWidth()-128-box_w,
+							y+(19*k),
+							box_w, box_h,
+							255,255,128
+						)
+					end
+				)
+			end
+		end
 	end
 
 	_= not voided_metadata and hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
@@ -1084,8 +1168,8 @@ return function()
 		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-44, 6*16, "center"
 	) -- -16-16-4-8 => -44
 
-	_= not voided_metadata showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
-	_= not voided_metadata showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
+	_= not voided_metadata and showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
+	_= not voided_metadata and showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
 	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	if tilespicker then
