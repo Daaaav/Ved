@@ -3322,12 +3322,12 @@ function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, 
 	love.graphics.setColor(40,40,40,192)
 	love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
 	love.graphics.setColor(title_r, title_g, title_b, 255)
-	love.graphics.print(title, box_x+8, box_y+8)
+	ved_print(title, box_x+8, box_y+8)
 	if icon ~= nil then
 		love.graphics.draw(icon, box_x+8, box_y+24)
 	end
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.printf(
+	ved_printf(
 		explanation,
 		box_x + 8 + icon_w,
 		box_y + 24,

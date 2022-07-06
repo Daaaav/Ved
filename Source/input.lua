@@ -296,7 +296,8 @@ end
 function input.print(id, x, y, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
 
-	lineh = lineh or love.graphics.getFont():getHeight()
+	local thisfont = love.graphics.getFont()
+	lineh = lineh or thisfont:getHeight()*thisfont:getLineHeight()
 
 	sx = sx or 1
 	sy = sy or sx
@@ -331,7 +332,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 	sy = sy or sx
 
 	local thisfont = love.graphics.getFont()
-	local fontheight = thisfont:getHeight()
+	local fontheight = thisfont:getHeight()*thisfont:getLineHeight()
 	lineh = lineh or fontheight
 
 	-- Clicking
@@ -1551,7 +1552,7 @@ end
 function input.mousepressed(id, x, y, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
 	local thisfont = love.graphics.getFont()
-	local fontheight = lineh or thisfont:getHeight()
+	local fontheight = lineh or thisfont:getHeight()*thisfont:getLineHeight()
 
 	if input.hex[id] ~= nil then
 		-- Don't use input.stophex(),
