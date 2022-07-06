@@ -146,9 +146,7 @@ return function()
 				ved_print(shown_name, musicnamex+248, 36+24*my)
 				love.graphics.setScissor()
 			end
-			if not love_version_meets(10) then
-				ved_print("?:??", musicdurationx, 36+24*my)
-			elseif audio == nil then
+			if audio == nil then
 				ved_print("-:--", musicdurationx, 36+24*my)
 			else
 				ved_print(mmss_duration(audio:getDuration()), musicdurationx, 36+24*my)

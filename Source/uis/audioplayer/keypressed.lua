@@ -28,7 +28,7 @@ return function(key)
 		if current_audio ~= nil then
 			current_audio:seek(0)
 		end
-	elseif love_version_meets(10) and (key == "left" or key == "kp4" or key == "right" or key == "kp6") then
+	elseif key == "left" or key == "kp4" or key == "right" or key == "kp6" then
 		local seconds = 0
 		if key == "left" or key == "kp4" then
 			seconds = -5

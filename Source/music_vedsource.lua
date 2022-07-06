@@ -1,7 +1,15 @@
 -- A wrapper for a regular LÖVE Source
 cVedSource =
 {
-	love_source = nil
+	-- Indices for music[file][song]
+	file = nil,
+	song = nil,
+
+	love_source = nil,
+
+	-- Only used on LÖVE 0.9
+	duration = nil,
+	n_samples = nil,
 }
 
 function cVedSource:new(o)
@@ -13,6 +21,9 @@ function cVedSource:new(o)
 end
 
 function cVedSource:init(file, song)
+	self.file = file
+	self.song = song
+
 	local success, maybe_source = pcall(love.audio.newSource, music[file][song].filedata, "stream")
 	if not success then
 		cons("Could not load song " .. song .. " from " .. file .. " because " .. maybe_source)
@@ -38,12 +49,23 @@ end
 
 function cVedSource:getDuration(unit)
 	if not love_version_meets(10) then
-		return nil
+		if unit == "samples" then
+			return self.n_samples
+		end
+		return self.duration
 	end
 	return self.love_source:getDuration(unit)
 end
 
 function cVedSource:play()
+	if not love_version_meets(10) and self.duration == nil then
+		local success, maybe_sounddata = pcall(love.sound.newSoundData, music[self.file][self.song].filedata)
+		if not success then
+			return false
+		end
+		self.duration = maybe_sounddata:getDuration()
+		self.n_samples = maybe_sounddata:getSampleCount()
+	end
 	return self.love_source:play()
 end
 
