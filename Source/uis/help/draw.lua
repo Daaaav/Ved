@@ -169,7 +169,7 @@ return function()
 						if rowlinkmodes[kn] ~= 1 then
 							-- It's not the link belonging to a link text
 							local currenttextxoffset = textxoffset
-							textxoffset = textxoffset + love.graphics.getFont():getWidth(vn:gsub("¤¤","¤"))*textsx
+							textxoffset = textxoffset + font8:getWidth(vn:gsub("¤¤","¤"))*textsx
 							local bgx, bgy = 8+200+8+currenttextxoffset+screenxoffset-1, helparticlescroll+8+(10*linee)+3
 
 							if rowcolors[kn] == nil then
@@ -219,7 +219,7 @@ return function()
 					if rowcolors[1] ~= nil then
 						if #rowcolors[1] >= 6 then
 							love.graphics.setColor(rowcolors[1][4], rowcolors[1][5], rowcolors[1][6])
-							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10)
+							love.graphics.rectangle("fill", bgx, bgy, bgexpandmode and 656 or font8:getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10)
 
 							setColorArr(rowcolors[1])
 						else
@@ -229,7 +229,7 @@ return function()
 
 					ved_print(part1:gsub("¤¤","¤"), 8+200+8+screenxoffset, helparticlescroll+8+(10*linee)+4, textsx, textsy)
 
-					if rowlinkmodes[1] == 2 and mouseon(bgx, bgy, love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10) then
+					if rowlinkmodes[1] == 2 and mouseon(bgx, bgy, font8:getWidth(part1:gsub("¤¤","¤"))*textsx, doublesize and 20 or 10) then
 						hoveringlink = part1
 						if startinghash then
 							hoveringlink = "#" .. hoveringlink
@@ -237,7 +237,7 @@ return function()
 					end
 
 					if doublesize then
-						lastheaderwidth = love.graphics.getFont():getWidth(part1:gsub("¤¤","¤"))*textsx/8
+						lastheaderwidth = font8:getWidth(part1:gsub("¤¤","¤"))*textsx/8
 					end
 				end
 				love.graphics.setColor(192,192,192,255)

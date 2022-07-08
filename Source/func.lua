@@ -2341,7 +2341,7 @@ end
 
 function textshadow(text, x, y, largefont)
 	love.graphics.setColor(128,128,128,192)
-	love.graphics.rectangle("fill", x, y, love.graphics.getFont():getWidth(text)*(largefont and 2 or 1), largefont and 16 or 8)
+	love.graphics.rectangle("fill", x, y, font8:getWidth(text)*(largefont and 2 or 1), largefont and 16 or 8)
 	love.graphics.setColor(255,255,255,255)
 end
 
