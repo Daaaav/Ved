@@ -9,6 +9,8 @@ function love.draw()
 		love.graphics.scale(s.pscale,s.pscale)
 	end
 
+	font8:frame_start()
+
 	hook("love_draw_state")
 
 	local callback_state = state

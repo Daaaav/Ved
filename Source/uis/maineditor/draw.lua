@@ -9,7 +9,6 @@ return function()
 		local displaytilenumbers, displaysolid
 		if nodialog and editingroomtext == 0 and not editingroomname then
 			if love.keyboard.isDown("n") then
-				ved_setFont(tinynumbers)
 				displaytilenumbers = true
 			end
 			if love.keyboard.isDown("j") then
@@ -75,7 +74,6 @@ return function()
 		local displaytilenumbers, displaysolid, displayminimapgrid
 		if nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) then
 			if love.keyboard.isDown("n") then
-				ved_setFont(tinynumbers)
 				displaytilenumbers = true
 			end
 			if love.keyboard.isDown("j") then
@@ -94,7 +92,6 @@ return function()
 			displayroom(screenoffset, 0, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), nil, displaytilenumbers, displaysolid, displayminimapgrid, s.adjacentroomlines)
 		end
 
-		ved_setFont(font8)
 		local hasroomname = levelmetadata_get(roomx, roomy).roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
@@ -328,9 +325,7 @@ return function()
 
 			-- If direct mode is on, we want to know what tile number we're about to place!
 			if levelmetadata_get(roomx, roomy).directmode == 1 then
-				ved_setFont(tinynumbers)
 				print_tile_number(selectedtile, screenoffset+(16*cursorx), (16*cursory))
-				ved_setFont(font8)
 			end
 		elseif selectedtool == 3 then
 			-- Spike

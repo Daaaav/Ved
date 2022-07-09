@@ -233,7 +233,6 @@ function ved_showerror(msg)
 	end
 
 	love.graphics.reset()
-	ved_setFont(font8)
 
 	--love.graphics.setBackgroundColor(89, 157, 220)
 	love.graphics.setBackgroundColor(255, 0, 0)
@@ -282,6 +281,8 @@ function ved_showerror(msg)
 
 
 	local function draw()
+		font8:frame_start()
+
 		local pos = 40
 		love.graphics.clear(love.graphics.getBackgroundColor())
 		love.graphics.setColor(255,255,255,64)
@@ -471,6 +472,8 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 
 	local function draw()
+		font8:frame_start()
+
 		local pos = 40
 		lg_clear(love.graphics.getBackgroundColor())
 
@@ -487,7 +490,6 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		love.graphics.rectangle("fill", pos-2, pos+40+49+80, love.graphics.getWidth()-(2*pos)+4, 56+8)
 
 		-- Main text
-		ved_setFont(font8)
 		--love.graphics.setColor(0,0,0,255)
 		--ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)

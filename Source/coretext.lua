@@ -1,12 +1,13 @@
+require("vedfont")
+
 function loadfonts()
-	-- load font8, either TTF or font.png, depending on setting for font.png
-	-- Set up alignment offset values depending on font and LÖVE version
+	-- load font8, either provided or customized, depending on settings for font.png
 
 	fontpng_works = false
 	local fontpng_folder, fontpng_contents
 
 	-- First try level-specific fonts... If we're ready for that, and it's enabled.
-	if s ~= nil and s.uselevelfontpng and love_version_meets(10) and editingmap ~= nil then
+	if s ~= nil and s.uselevelfontpng and editingmap ~= nil then
 		local levelassets = getlevelassetsfolder()
 		if levelassets ~= nil then
 			fontpng_folder = levelassets .. dirsep .. "graphics"
@@ -15,53 +16,51 @@ function loadfonts()
 	end
 
 	-- If that doesn't exist (not already fontpng_works) try the graphics folder font. If enabled.
-	if s ~= nil and s.usefontpng and love_version_meets(10) and not fontpng_works then
+	if s ~= nil and s.usefontpng and not fontpng_works then
 		fontpng_folder = graphicsfolder
 		fontpng_works, fontpng_contents = readfile(fontpng_folder .. dirsep .. "font.png")
 	end
 
+	local custom_imgdata, custom_chars = nil, nil
 	if fontpng_works then
-		-- Use font.png
+		-- Use a customized font.png with the built-in as fallback
 
-		local glyphs_success
-		glyphs_success, fontpng_glyphs = readfile(fontpng_folder .. dirsep .. "font.txt")
-		if not glyphs_success then
-			fontpng_glyphs = nil
+		local chars_success
+		chars_success, custom_chars = readfile(fontpng_folder .. dirsep .. "font.txt")
+		if not chars_success then
+			local glyphs_table = {}
+			for g = 0x00, 0x7f do
+				table.insert(glyphs_table, string.char(g))
+			end
+
+			custom_chars = table.concat(glyphs_table, "")
 		end
 
-		-- The following function can be found in imagefont.lua
-		convertfontpng(
-			love.image.newImageData(love.filesystem.newFileData(fontpng_contents, "font.png", "file")),
-			fontpng_glyphs
+		custom_imgdata = love.image.newImageData(
+			love.filesystem.newFileData(fontpng_contents, "font.png", "file")
 		)
+	end
 
-		arrow_up = "^"
-		arrow_down = "V"
-		arrow_left = "<"
-		arrow_right = ">"
+	-- The font that comes with Ved
+	local builtin_imgdata = love.image.newImageData("fonts/font.png")
+	local builtin_chars = love.filesystem.read("fonts/font.txt")
 
-		print_font8_y_off = 0
-	else
-		-- Use the TTF
-		font8 = love.graphics.newFont("fonts/space-station.ttf", 8)
+	font8 = cVedFont:new()
+	font8:init(8, 8, custom_imgdata, custom_chars, builtin_imgdata, builtin_chars)
 
-		-- And welcome to the wonderful world of TTF, ugh
-		font8:setLineHeight(8/font8:getHeight())
+	font8:set_glyph_width(6, 0x00, 0x1F)
 
+	if font8:has_glyphs("↑↓←→", true) then
 		arrow_up = "↑"
 		arrow_down = "↓"
 		arrow_left = "←"
 		arrow_right = "→"
-
-		if not love_version_meets(11) then
-			print_font8_y_off = 1
-		else
-			print_font8_y_off = 0
-		end
+	else
+		arrow_up = "^"
+		arrow_down = "V"
+		arrow_left = "<"
+		arrow_right = ">"
 	end
-
-	-- Update the font to the new object
-	ved_setFont(font8)
 end
 
 function loadlanginfo()
@@ -137,7 +136,7 @@ function loadlanguage()
 						return
 					end
 
-					if fontpng_glyphs ~= nil and fontpng_glyphs:find(c) ~= nil then
+					if font8:has_glyphs(c, true) then
 						-- The font supports it, no need to replace it!
 						-- (this already fully accounts for UTF-8, by the way)
 						return
@@ -203,41 +202,16 @@ function loadtinynumbersfont()
 		table.insert(fallbacks, tinynumbers_all)
 		tinynumbers:setFallbacks(unpack(fallbacks))
 	end
+
+	love.graphics.setFont(tinynumbers)
 end
 
-function ved_setFont(font)
-	if font == font8 then
-		print_y_off = print_font8_y_off
-	else
-		print_y_off = 0
-	end
-
-	love.graphics.setFont(font)
+function ved_print(...)
+	font8:print(...)
 end
 
-function ved_print(text, x, y, sx, sy)
-	local y_off = print_y_off
-	if sy ~= nil then
-		y_off = y_off * sy
-	elseif sx ~= nil then
-		y_off = y_off * sx
-	end
-
-	love.graphics.print(text, x, y + y_off, nil, sx, sy)
-end
-
-function ved_printf(text, x, y, limit, align, sx, sy)
-	local y_off = print_y_off
-	if sy ~= nil then
-		y_off = y_off * sy
-	elseif sx ~= nil then
-		y_off = y_off * sx
-	end
-	if sx ~= nil then
-		limit = limit/sx
-	end
-
-	love.graphics.printf(text, x, y + y_off, limit, align, nil, sx, sy)
+function ved_printf(...)
+	font8:printf(...)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)
@@ -266,26 +240,49 @@ function ved_shadowprintf(text, x, y, limit, align, sx, sy)
 	ved_printf(text, x, y, limit, align, sx, sy)
 end
 
+function ved_shadowprint_tiny(text, x, y, sx, sy)
+	if sx == nil then sx = 1 end
+	if sy == nil then sy = sx end
+	local r, g, b, a = love.graphics.getColor()
+	love.graphics.setColor(0,0,0,255)
+	tinyfont:print(text, x, y-sy, sx, sy)
+	tinyfont:print(text, x-sx, y, sx, sy)
+	tinyfont:print(text, x+sx, y, sx, sy)
+	tinyfont:print(text, x, y+sy, sx, sy)
+	love.graphics.setColor(r, g, b, a)
+	tinyfont:print(text, x, y, sx, sy)
+end
+
 function font8_getWrap(text, wraplimit)
+	-- DEPRECATED
 	-- font8:getWrap(), but unify LÖVE version differences.
 	-- Gives the number of lines (not the table of lines) because we never need the table.
 
-	if text == "" then
-		-- Passing an empty string gives different results between LÖVE 11.3 and 11.4...
-		return 0, 0
-	end
-
-	local width, lines = font8:getWrap(text, wraplimit)
-
-	-- lines is a number in 0.9.x, and a table/sequence in 0.10.x and higher
-	if type(lines) == "table" then
-		lines = #lines
-	end
-
-	return width, lines
+	return font8:getWrap(text, wraplimit)
 end
 
 function font8_getHeight()
-	-- I should really make my own text renderer...
-	return font8:getHeight()*font8:getLineHeight()
+	-- DEPRECATED
+	return font8:getHeight()
 end
+
+
+cTempTinyfontWrapper = {}
+
+function cTempTinyfontWrapper:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function cTempTinyfontWrapper:print(text, x, y, sx, sy)
+	love.graphics.print(text, x, y, 0, sx, sy)
+end
+
+function cTempTinyfontWrapper:printf(...)
+	love.graphics.printf(...)
+end
+
+tinyfont = cTempTinyfontWrapper:new()

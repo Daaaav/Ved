@@ -27,11 +27,7 @@ return function()
 			local label = L[v:upper()]
 			local affects_font = false
 			if v == "usefontpng" or v == "uselevelfontpng" then
-				if love_version_meets(10) then
-					affects_font = true
-				else
-					label = label .. langkeys(L.REQUIRESHIGHERLOVE, {"0.10.0"})
-				end
+				affects_font = true
 			end
 
 			checkbox(s[v], 8, 8+(24*k), v, label,

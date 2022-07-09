@@ -51,19 +51,17 @@ return function()
 
 		if unlimited then
 			local alt_max_x = math.floor(bar_x+(p100/(math.max(perone, 1)))-1)
-			ved_setFont(tinynumbers)
 
 			love.graphics.setColor(96, 96, 96)
 			love.graphics.rectangle("fill", alt_max_x, bar_y, 1, 8)
-			ved_printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
+			tinyfont:printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
 
 			love.graphics.setScissor(bar_x, bar_y, bar_width, 8)
 			love.graphics.setColor(0, 128, 0)
 			love.graphics.rectangle("fill", alt_max_x, bar_y, 1, 8)
-			ved_printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
+			tinyfont:printf(v.alt_max, 0, bar_y+1, alt_max_x, "right")
 
 			love.graphics.setScissor()
-			ved_setFont(font8)
 		end
 
 		love.graphics.setColor(255,255,255)

@@ -77,7 +77,6 @@ function love.load()
 	setvvvvvvpaths()
 
 	utf8 = require("utf8lib_wrapper")
-	ved_require("imagefont")
 
 	loadfonts()
 	loadlanginfo()

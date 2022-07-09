@@ -2334,9 +2334,7 @@ end
 
 -- Simply print a string in the tiny font
 function tinyprint(text, x, y)
-	ved_setFont(tinynumbers)
-	ved_print(text, x, y)
-	ved_setFont(font8)
+	tinyfont:print(text, x, y)
 end
 
 function textshadow(text, x, y, largefont)
@@ -3003,7 +3001,6 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 
 	if love.keyboard.isDown("f9") and (nodialog or topmost) then
-		ved_setFont(tinynumbers)
 		local hotkey_w = tinynumbers:getWidth(hotkey)
 		if align == ALIGN.RIGHT then
 			x = x - hotkey_w
@@ -3021,13 +3018,12 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 		else
 			love.graphics.setColor(0,0,0,255)
 		end
-		ved_print(hotkey, x+2, y+2)
+		tinyfont:print(hotkey, x+2, y+2)
 		if dialog_obj ~= nil then
 			dialog_obj:setColor(255,255,255,255)
 		else
 			love.graphics.setColor(255,255,255)
 		end
-		ved_setFont(font8)
 	end
 end
 
@@ -3382,7 +3378,6 @@ end
 
 function print_tile_number(t, x, y)
 	-- Print a tile number in the "fading" style.
-	-- Assumes tinynumbers font is already set.
 
 	local st = tostring(t)
 
@@ -3396,7 +3391,7 @@ function print_tile_number(t, x, y)
 
 		love.graphics.setColor(col, col, col)
 
-		ved_shadowprint(
+		ved_shadowprint_tiny(
 			st:sub(i+1,i+1),
 			x+(i%4)*4, y+print_y*7
 		)
