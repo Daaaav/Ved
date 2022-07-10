@@ -525,10 +525,10 @@ cProcess =
 	processinfo = nil,
 	read_error_stdout = nil,
 	read_error_stderr = nil,
-	buf_stdout = {buf=nil, capacity=0, pos=0},
-	buf_stderr = {buf=nil, capacity=0, pos=0},
-	res_stdout = {error_code=107, bytes_read=0},
-	res_stderr = {error_code=107, bytes_read=0},
+	buf_stdout = nil,
+	buf_stderr = nil,
+	res_stdout = nil,
+	res_stderr = nil,
 }
 
 function cProcess:new(o)
@@ -542,6 +542,11 @@ function cProcess:new(o)
 
 	setmetatable(o, self)
 	self.__index = self
+
+	o.buf_stdout = {buf=nil, capacity=0, pos=0}
+	o.buf_stderr = {buf=nil, capacity=0, pos=0}
+	o.res_stdout = {error_code=107, bytes_read=0}
+	o.res_stderr = {error_code=107, bytes_read=0}
 
 	return o
 end
