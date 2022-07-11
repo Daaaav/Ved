@@ -1270,7 +1270,7 @@ return function()
 	end
 
 	if bottomwidemsg ~= nil then
-		local _, lines = font8_getWrap(bottomwidemsg, love.graphics.getWidth())
+		local _, lines = font8:getWrap(bottomwidemsg, love.graphics.getWidth())
 		local yoff = 16 * (lines-1)
 
 		love.graphics.setColor(255, 255, 127, 63)

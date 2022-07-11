@@ -2301,7 +2301,7 @@ function updatewindowicon()
 end
 
 function roomtext_extralines(text)
-	local _, lines = font8_getWrap(text, 40*8)
+	local _, lines = font8:getWrap(text, 40*8)
 
 	return lines - 1
 end
@@ -3295,10 +3295,10 @@ function tooltip_box_dimensions(title, explanation, icon)
 		icon_w, icon_h = icon:getWidth()+8, icon:getHeight()
 	end
 	local expl_w = box_w - 16 - icon_w
-	local _, lines = font8_getWrap(explanation, expl_w)
+	local _, lines = font8:getWrap(explanation, expl_w)
 	local box_h = 32+math.max(
 		icon_h,
-		lines*font8_getHeight()
+		lines*font8:getHeight()
 	)
 
 	if lines == 0 then

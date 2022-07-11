@@ -253,19 +253,6 @@ function ved_shadowprint_tiny(text, x, y, sx, sy)
 	tinyfont:print(text, x, y, sx, sy)
 end
 
-function font8_getWrap(text, wraplimit)
-	-- DEPRECATED
-	-- font8:getWrap(), but unify LÖVE version differences.
-	-- Gives the number of lines (not the table of lines) because we never need the table.
-
-	return font8:getWrap(text, wraplimit)
-end
-
-function font8_getHeight()
-	-- DEPRECATED
-	return font8:getHeight()
-end
-
 
 cTempTinyfontWrapper = {}
 

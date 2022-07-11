@@ -100,7 +100,7 @@ return function()
 			infostring = infostring .. "\n" .. L.ORDRAGDROP
 		end
 
-		local _, lines = font8_getWrap(infostring, love.graphics.getWidth()-136)
+		local _, lines = font8:getWrap(infostring, love.graphics.getWidth()-136)
 
 		local centery = (love.graphics.getHeight() - 8*lines) / 2
 
