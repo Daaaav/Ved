@@ -218,6 +218,10 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 	end
 	local w_size, h_size = room_w*w, room_h*h
 
+	-- This might be called inside love.draw, while scaling is being applied...
+	love.graphics.push()
+	love.graphics.origin()
+
 	-- Now create the canvas, which should be possible, but a crash may be luring...
 	local status, err = pcall(function()
 		local canvas = love.graphics.newCanvas(canvas_size(w_size, h_size))
@@ -268,7 +272,11 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 		collectgarbage("collect")
 	end)
 
+	-- Restore possibly scaled old configuration
+	love.graphics.pop()
+
 	if not status then
+		love.graphics.setCanvas()
 		dialog.create(
 			L.MAPEXPORTERROR .. "\n\n"
 			.. err .. "\n\n\n"
