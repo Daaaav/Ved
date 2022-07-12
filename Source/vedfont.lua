@@ -55,7 +55,7 @@ end
 function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars_fallback)
 	-- Initialize the font with all necessary configuration.
 	-- glyph_w and glyph_h are the dimensions of each glyph, and are the same for every glyph.
-	-- (the width can be changed per-glyph or per range of glyphs with :set_glyph_width afterwards)
+	-- (the width can be changed per-glyph or per range of glyphs with :set_glyph_advance afterwards)
 	-- imgdata is an ImageData with the font image, chars is a string with the characters.
 	-- imgdata_fallback and chars_fallback are optional and represent a fallback font.
 
@@ -187,7 +187,7 @@ function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars
 				end
 
 				self.chars[codepoints[i]] = {
-					width = glyph_w,
+					advance = glyph_w,
 					subfont = subfont
 				}
 
@@ -255,16 +255,16 @@ function cVedFont:get_glyph(c)
 	return glyph
 end
 
-function cVedFont:get_glyph_width(c)
+function cVedFont:get_glyph_advance(c)
 	local glyph = self:get_glyph(c)
 	if glyph == nil then
 		return self.glyph_w
 	end
-	return glyph.width
+	return glyph.advance
 end
 
-function cVedFont:set_glyph_width(w, c, c_end)
-	-- Set the width of the glyph for codepoint c to w, if the glyph exists.
+function cVedFont:set_glyph_advance(a, c, c_end)
+	-- Set the width of the glyph for codepoint c to a, if the glyph exists.
 	-- If c_end is specified, this is applied to the range c - c_end
 	if c_end == nil then
 		c_end = c
@@ -272,9 +272,14 @@ function cVedFont:set_glyph_width(w, c, c_end)
 
 	for g = c, c_end do
 		if self.chars[g] ~= nil then
-			self.chars[g].width = w
+			self.chars[g].advance = a
 		end
 	end
+end
+
+function cVedFont:copy_glyph(c_target, c_source)
+	-- Overwrite the glyph for c_target with the one for c_source.
+	self.chars[c_target] = self.chars[c_source]
 end
 
 function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
@@ -338,7 +343,7 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 
 		for i = 0, len-1 do
 			local c = batch.text[i]
-			local w = self.glyph_w
+			local advance = self.glyph_w
 
 			local blank = false
 			local glyph = self:get_glyph(c)
@@ -346,7 +351,7 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 				blank = true
 			else
 				blank = glyph.blank
-				w = glyph.width
+				advance = glyph.advance
 			end
 
 			if not blank then
@@ -357,7 +362,7 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 				end
 			end
 
-			cur_x = cur_x + w
+			cur_x = cur_x + advance
 		end
 
 		batch.width = cur_x
@@ -404,7 +409,7 @@ function cVedFont:buf_wordwrap(max_width)
 		if print_buf[i] == 0 then
 			break
 		end
-		local char_w = self:get_glyph_width(print_buf[i])
+		local char_w = self:get_glyph_advance(print_buf[i])
 		line_width = line_width + char_w
 		word_width = word_width + char_w
 
@@ -474,7 +479,7 @@ function cVedFont:getWrap(text, max_width)
 				break
 			end
 		else
-			line_width = line_width + self:get_glyph_width(print_buf[i])
+			line_width = line_width + self:get_glyph_advance(print_buf[i])
 		end
 		i = i + 1
 	end

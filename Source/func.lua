@@ -2954,7 +2954,7 @@ function changelanguage(newlanguage)
 	s.lang = newlanguage
 	loadlanguage()
 
-	loadtinynumbersfont()
+	loadtinyfont()
 end
 
 function exitdisplayoptions()
@@ -3001,7 +3001,7 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 	align = align or ALIGN.LEFT
 
 	if love.keyboard.isDown("f9") and (nodialog or topmost) then
-		local hotkey_w = tinynumbers:getWidth(hotkey)
+		local hotkey_w = tinyfont:getWidth(hotkey)
 		if align == ALIGN.RIGHT then
 			x = x - hotkey_w
 		elseif align == ALIGN.CENTER then

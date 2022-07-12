@@ -48,7 +48,7 @@ function loadfonts()
 	font8 = cVedFont:new()
 	font8:init(8, 8, custom_imgdata, custom_chars, builtin_imgdata, builtin_chars)
 
-	font8:set_glyph_width(6, 0x00, 0x1F)
+	font8:set_glyph_advance(6, 0x00, 0x1F)
 
 	if font8:has_glyphs("↑↓←→", true) then
 		arrow_up = "↑"
@@ -177,33 +177,35 @@ function loadlanguage()
 	end
 end
 
-function loadtinynumbersfont()
-	-- Load the tinynumbers font, accounting for the current language
-	tinynumbers_all = love.graphics.newImageFont(
-		"fonts/tinynumbersfont.png",
-		"0123456789.,~RTYUIOPZXCVHBLSF{}ADEGJKMNQWcsaqwertyuiopkl<>/[]zxnbf+-d hgvj;",
-		love_version_meets(10) and 1 or nil
-	)
-	if not love_version_meets(10) then
-		tinynumbers = tinynumbers_all
-	else
-		tinynumbers = love.graphics.newImageFont("fonts/tinynumbersfont.png", "", 1)
+function loadtinyfont()
+	local xml, err = love.filesystem.read("fonts/tinyfont.xml")
+	if xml == nil then
+		-- I don't want to hardcode a "default" width for tinyfont, and this HAS to exist...
+		error(err)
+	end
+	local w = tonumber(xml:match("<width>(.-)</width>"))
+	local h = tonumber(xml:match("<height>(.-)</height>"))
 
-		-- First has highest priority
-		local fallbacks = {}
-		if love.system.getOS() == "OS X" then
-			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_mac.png", "c", 1))
+	tinyfont = cVedFont:new()
+	tinyfont:init(w, h, love.image.newImageData("fonts/tinyfont.png"), (love.filesystem.read("fonts/tinyfont.txt")))
+
+	local xspecial = xml:match("<special>(.*)</special>")
+	if xspecial ~= nil then
+		for range in xspecial:gmatch("<range (.-)/>") do
+			local attr = parsexmlattributes(range)
+			tinyfont:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
 		end
-		if s.lang == "de" then
-			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_de.png", "c", 1))
-		elseif s.lang == "fr" then
-			table.insert(fallbacks, love.graphics.newImageFont("fonts/tinynumbersfont_fr.png", "b", 1))
-		end
-		table.insert(fallbacks, tinynumbers_all)
-		tinynumbers:setFallbacks(unpack(fallbacks))
 	end
 
-	love.graphics.setFont(tinynumbers)
+	-- Replace some key glyphs based on OS and language
+	if s.lang == "de" then
+		tinyfont:copy_glyph(0x63, 0xDF) -- c [CTRL] <- ß [STRG]
+	elseif s.lang == "fr" then
+		tinyfont:copy_glyph(0x62, 0xE9) -- b [ESC] <- é [ECHAP]
+	end
+	if love.system.getOS() == "OS X" then
+		tinyfont:copy_glyph(0x63, 0x6D) -- c [CTRL] <- m [cmd]
+	end
 end
 
 function ved_print(...)
@@ -252,24 +254,3 @@ function ved_shadowprint_tiny(text, x, y, sx, sy)
 	love.graphics.setColor(r, g, b, a)
 	tinyfont:print(text, x, y, sx, sy)
 end
-
-
-cTempTinyfontWrapper = {}
-
-function cTempTinyfontWrapper:new(o)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
-
-	return o
-end
-
-function cTempTinyfontWrapper:print(text, x, y, sx, sy)
-	love.graphics.print(text, x, y, 0, sx, sy)
-end
-
-function cTempTinyfontWrapper:printf(...)
-	love.graphics.printf(...)
-end
-
-tinyfont = cTempTinyfontWrapper:new()

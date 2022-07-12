@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<font_metadata>
+	<width>22</width>
+	<height>7</height>
+	<special>
+		<range start="0x20" end="0x20" advance="11"/>
+		<range start="0x2c" end="0x5d" advance="4"/>
+		<range start="0x2b" end="0x2b" advance="6"/>
+		<range start="0x2d" end="0x2d" advance="6"/>
+		<range start="0x3b" end="0x3b" advance="9"/>
+		<range start="0x61" end="0x61" advance="15"/>
+		<range start="0x62" end="0x62" advance="14"/>
+		<range start="0x63" end="0x63" advance="19"/>
+		<range start="0x64" end="0x64" advance="8"/>
+		<range start="0x65" end="0x79" advance="10"/>
+		<range start="0x66" end="0x66" advance="15"/>
+		<range start="0x67" end="0x67" advance="8"/>
+		<range start="0x68" end="0x68" advance="19"/>
+		<range start="0x6a" end="0x6d" advance="8"/>
+		<range start="0x6b" end="0x6c" advance="14"/>
+		<range start="0x6e" end="0x6e" advance="9"/>
+		<range start="0x70" end="0x70" advance="14"/>
+		<range start="0x73" end="0x73" advance="9"/>
+		<range start="0x76" end="0x76" advance="9"/>
+		<range start="0x78" end="0x78" advance="6"/>
+		<range start="0x7a" end="0x7a" advance="6"/>
+		<range start="0x7b" end="0x7d" advance="7"/>
+		<range start="0x7e" end="0x7e" advance="2"/>
+		<range start="0xdf" end="0xdf" advance="19"/>
+		<range start="0xfffd" end="0xfffd" advance="6"/>
+	</special>
+</font_metadata>

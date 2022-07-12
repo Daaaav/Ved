@@ -531,7 +531,7 @@ return function()
 		-- For certain features, it would be nice to indicate that there are shortcuts you can use
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode ~= 0 then
 			-- Custom cursor size
-			local tinywidth = tinynumbers:getWidth(L.TINY_SHIFT)
+			local tinywidth = tinyfont:getWidth(L.TINY_SHIFT)
 			love.graphics.setColor(0, 0, 0, 224)
 			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-8, tinywidth+2, 9)
 			love.graphics.setColor(255,255,0,255)
@@ -541,7 +541,7 @@ return function()
 		and entitydata[editingroomtext] ~= nil
 		and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
 			-- Name for script box
-			local tinywidth = math.max(tinynumbers:getWidth("{" .. L.TINY_SHIFT), tinynumbers:getWidth("}" .. L.TINY_CTRL))
+			local tinywidth = math.max(tinyfont:getWidth("{" .. L.TINY_SHIFT), tinyfont:getWidth("}" .. L.TINY_CTRL))
 			love.graphics.setColor(0, 0, 0, 224)
 			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-15, tinywidth+2, 16)
 			love.graphics.setColor(255,255,0,255)
@@ -1257,15 +1257,15 @@ return function()
 		local flipindicator = "gvj"
 		local unlockindicator = ";"
 
-		local tinywidth = math.max(tinynumbers:getWidth(L.TINY_SHIFT), tinynumbers:getWidth(L.TINY_ALT))
-		local tinyiconwidth = math.max(tinynumbers:getWidth(flipindicator), tinynumbers:getWidth(unlockindicator))
+		local tinywidth = math.max(tinyfont:getWidth(L.TINY_SHIFT), tinyfont:getWidth(L.TINY_ALT))
+		local tinyiconwidth = math.max(tinyfont:getWidth(flipindicator), tinyfont:getWidth(unlockindicator))
 		local totalwidth = tinywidth + tinyiconwidth
 
 		love.graphics.setColor(0, 0, 0, 224)
 		love.graphics.rectangle("fill", 128-totalwidth-1, love.graphics.getHeight()-15, totalwidth+2, 16)
 		love.graphics.setColor(255, 255, 0, 255)
-		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinynumbers:getWidth(flipindicator), love.graphics.getHeight()-15)
-		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinynumbers:getWidth(unlockindicator), love.graphics.getHeight()-7)
+		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinyfont:getWidth(flipindicator), love.graphics.getHeight()-15)
+		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinyfont:getWidth(unlockindicator), love.graphics.getHeight()-7)
 		love.graphics.setColor(255, 255, 255, 255)
 	end
 

@@ -81,7 +81,7 @@ function love.load()
 	loadfonts()
 	loadlanginfo()
 	loadlanguage()
-	loadtinynumbersfont()
+	loadtinyfont()
 
 	ved_require("const")
 	ved_require("tileset_data")
