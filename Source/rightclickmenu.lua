@@ -242,21 +242,21 @@ function rightclickmenu.handler(RCMreturn)
 				end
 			elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 				-- Terminal or script box
-				if table.contains({L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING}, RCMreturn) then
+				if table.contains({L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.EDITSCRIPTWBUMPING}, RCMreturn) then
 					-- Were we already editing roomtext or a name?
 					if editingroomtext > 0 then
 						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
 						endeditingroomtext(tonumber(entdetails[3]))
 					end
 
-					local script_i
-					if RCMreturn == L.EDITSCRIPTWOBUMPING then
-						script_i = -1
+					local invert_bump_preference = false
+					if RCMreturn == L.EDITSCRIPTWOBUMPING or RCMreturn == L.EDITSCRIPTWBUMPING then
+						invert_bump_preference = true
 					end
 					if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 						dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 					else
-						scriptineditor(entitydata[tonumber(entdetails[3])].data, script_i)
+						scriptineditor(entitydata[tonumber(entdetails[3])].data, nil, invert_bump_preference)
 					end
 				elseif RCMreturn == L.OTHERSCRIPT then
 					-- Were we already editing roomtext or a name?
@@ -335,8 +335,8 @@ function rightclickmenu.handler(RCMreturn)
 
 		if RCMreturn == L.EDIT then
 			scriptineditor(scriptnames[script_i], script_i)
-		elseif RCMreturn == L.EDITWOBUMPING then
-			scriptineditor(scriptnames[script_i], -1)
+		elseif RCMreturn == L.EDITWOBUMPING or RCMreturn == L.EDITWBUMPING then
+			scriptineditor(scriptnames[script_i], script_i, true)
 		elseif RCMreturn == L.COPYNAME then
 			love.system.setClipboardText(scriptnames[script_i])
 		elseif RCMreturn == L.COPYCONTENTS then

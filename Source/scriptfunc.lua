@@ -763,16 +763,22 @@ function movescriptdown(scriptid)
 	table.insert(scriptnames, scriptid+1, temp)
 end
 
-function scriptineditor(scriptnamearg, script_i)
-	if script_i == nil then
-		-- Find out which script it is
-		for k,v in pairs(scriptnames) do
-			if v == scriptnamearg then
-				bumpscript(k)
+function scriptineditor(scriptnamearg, script_i, invert_bump_preference)
+	local should_bump = s.bumpscriptsbydefault
+	if invert_bump_preference then
+		should_bump = not should_bump
+	end
+	if should_bump then
+		if script_i == nil then
+			-- Find out which script it is
+			for k,v in pairs(scriptnames) do
+				if v == scriptnamearg then
+					bumpscript(k)
+				end
 			end
+		else
+			bumpscript(script_i)
 		end
-	elseif script_i ~= -1 then
-		bumpscript(script_i)
 	end
 
 	scriptname = scriptnamearg

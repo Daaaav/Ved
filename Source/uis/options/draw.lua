@@ -20,7 +20,8 @@ return function()
 			"usefontpng",
 			"uselevelfontpng",
 			"opaqueroomnamebackground",
-			false
+			false,
+			"bumpscriptsbydefault",
 		}
 	) do
 		if v then
@@ -30,7 +31,7 @@ return function()
 				affects_font = true
 			end
 
-			checkbox(s[v], 8, 8+(24*k), v, label,
+			checkbox(s[v], 8, 8+(22*k), v, label,
 				function(key, newvalue)
 					s[key] = newvalue
 					if key == "showfps" then
@@ -45,8 +46,8 @@ return function()
 		end
 	end
 
-	ved_print(L.FPSLIMIT, 8, 8+(24*7)+4)
-	int_control(16+font8:getWidth(L.FPSLIMIT), 8+(24*7), "fpslimit_ix", 1, 4, nil, nil,
+	ved_print(L.FPSLIMIT, 8, 8+(22*7)+4)
+	int_control(16+font8:getWidth(L.FPSLIMIT), 8+(22*7), "fpslimit_ix", 1, 4, nil, nil,
 		function(value)
 			local ret = ({"30", "60", "120", "---"})[value]
 			if ret == nil then
@@ -57,12 +58,12 @@ return function()
 	)
 
 	if s.enableoverwritebackups then
-		ved_print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(24*11)+4)
-		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(24*11), "amountoverwritebackups", 0, 999)
+		ved_print(L.AMOUNTOVERWRITEBACKUPS, 8, 8+(22*11)+4)
+		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(22*11), "amountoverwritebackups", 0, 999)
 	end
 
-	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(24*17)+4)
-	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(24*17), "mousescrollingspeed", -999, 999)
+	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(22*17)+4)
+	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(22*17), "mousescrollingspeed", -999, 999)
 
 	ved_print(
 		ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"

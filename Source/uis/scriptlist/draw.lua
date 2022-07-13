@@ -36,7 +36,13 @@ return function()
 				if love.mouse.isDown("l") then
 					scriptineditor(scriptnames[script_i], script_i)
 				elseif love.mouse.isDown("r") then
-					rightclickmenu.create({L.EDIT, L.EDITWOBUMPING, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. script_i)
+					local inverted_bump_option
+					if s.bumpscriptsbydefault then
+						inverted_bump_option = L.EDITWOBUMPING
+					else
+						inverted_bump_option = L.EDITWBUMPING
+					end
+					rightclickmenu.create({L.EDIT, inverted_bump_option, L.COPYNAME, L.COPYCONTENTS, L.DUPLICATE, L.RENAME, L.DELETE}, "spt_" .. script_i)
 				end
 			elseif script_i ~= #scriptnames and mouseon(8+screenoffset+640-8-24 -36 +4, scriptlistscroll+8+(24*j), 16, 16) and love.mouse.isDown("l") then
 				movescriptdown(script_i)

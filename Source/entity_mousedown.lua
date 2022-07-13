@@ -82,12 +82,21 @@ function handle_entity_mousedown()
 				elseif v.t == 17 then
 					-- Roomtext
 					menu = {"#" .. toolnames[11], L.DELETE, L.EDITTEXT, L.COPYTEXT, L.MOVEENTITY, L.COPY, L.PROPERTIES}
-				elseif v.t == 18 then
-					-- Terminal
-					menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}
-				elseif v.t == 19 then
-					-- Script box.
-					menu = {"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}
+				elseif v.t == 18 or v.t == 19 then
+					-- Terminal or script box
+					local inverted_bump_option
+					if s.bumpscriptsbydefault then
+						inverted_bump_option = L.EDITSCRIPTWOBUMPING
+					else
+						inverted_bump_option = L.EDITSCRIPTWBUMPING
+					end
+					if v.t == 18 then
+						-- Terminal
+						menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}
+					else
+						-- Script box
+						menu = {"#" .. toolnames[13], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.RESIZE, L.MOVEENTITY, L.COPY, L.PROPERTIES}
+					end
 				else
 					-- We don't know what this is, actually!
 					menu = {"#" .. langkeys(L.UNKNOWNENTITYTYPE, {v.t}), L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}

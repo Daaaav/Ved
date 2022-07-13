@@ -38,6 +38,10 @@ L.COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!"
 
 L.MOUSESCROLLINGSPEED = "Mouse scrolling speed"
 
+L.BUMPSCRIPTSBYDEFAULT = "Bump scripts to the top of the list when editing them by default"
+L.EDITSCRIPTWBUMPING = "Edit script and bump"
+L.EDITWBUMPING = "Edit and bump"
+
 L.BTN_ADVANCED = "Advanced"
 
 L.ADVANCED_LEVEL_OPTIONS = "Advanced level options"

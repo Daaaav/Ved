@@ -215,6 +215,10 @@ configs = {
 		default = "full",
 		["type"] = "string"
 	},
+	bumpscriptsbydefault = {
+		default = true,
+		["type"] = "bool"
+	},
 }
 
 function saveconfig()
