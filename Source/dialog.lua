@@ -199,15 +199,31 @@ function cDialog:draw(topmost)
 	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
 
 	-- Buttons
-	local btnwidth = 72
 	-- The Enter key can press different buttons depending on their priority
-	-- and whether or not they are one of the buttons in this dialog
+	-- and whether or not they are one of the buttons in this dialog.
 	-- Make sure we don't end up displaying it twice, if there happen to be
-	-- multiple for whatever reason
+	-- multiple for whatever reason.
+	-- Also: We display the right-aligned buttons from left to right, but the
+	-- widths can change...
+	local button_widths = {}
+	for k,v in pairs(self.buttons) do
+		local btn_text
+		if type(v) == "number" and DB_keys[v] ~= nil then
+			btn_text = L["BTN_" .. DB_keys[v]]
+		else
+			btn_text = v
+		end
+		button_widths[k] = math.max(72, (font8:getWrap(btn_text, 72))+4)
+	end
 	local returnalreadyshown = false
 	for k,v in pairs(self.buttons) do
+		local btnwidth = button_widths[k]
 		local rapos = (#self.buttons)-k+1 -- right-aligned position
-		local btn_x = self.x+self.width-rapos*btnwidth-(5*(rapos-1))-1
+		local button_widths_to_right = 0
+		for rk = k, #self.buttons do
+			button_widths_to_right = button_widths_to_right + button_widths[rk]
+		end
+		local btn_x = self.x+self.width-button_widths_to_right-(5*(rapos-1))-1
 		local btn_y = self.y+self.windowani+self.height-26
 
 		if topmost and mouseon(btn_x, btn_y, btnwidth, 25) and window_active() then
