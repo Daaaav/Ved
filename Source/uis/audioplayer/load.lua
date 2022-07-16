@@ -16,4 +16,6 @@ return function(mode)
 	else
 		musicplayerfile = mode
 	end
+
+	music_page = 0
 end

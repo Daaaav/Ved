@@ -33,8 +33,8 @@ return function()
 			musicdurationx = musicdurationx - 128 + 16
 		end
 		for my = 0, 15 do
-			local m = mx*16 + my
-			if (soundviewer and m > 27) or (not soundviewer and m > 15) then
+			local m = mx*16 + my + music_page*16
+			if (soundviewer and m > 27) or (not soundviewer and m > 126) then
 				break
 			end
 			local audio = music_get_audio(musicplayerfile, m)
@@ -130,8 +130,18 @@ return function()
 					musicnamex, 36+24*my
 				)
 			else
+				local normal_name = ""
+				if m == 0 then
+					normal_name = "Path Complete"
+				elseif m <= 15 then
+					normal_name = list_music_ids[m]
+				end
+				local num = m
+				if num < 10 then
+					num = fixdig(num, 2)
+				end
 				ved_print(
-					"[" .. fixdig(m, 2) .. "] " .. (m == 0 and "Path Complete" or list_music_ids[m]),
+					"[" .. num .. "] " .. normal_name,
 					musicnamex, 36+24*my
 				)
 			end
@@ -160,6 +170,33 @@ return function()
 		end
 	end
 
+	-- Page chooser, if needed
+	local last_valid = music_get_last_valid(musicplayerfile)
+	if not soundviewer and (musiceditor or last_valid > 15) then
+		local max_page = last_valid/16
+		if musiceditor then
+			max_page = 126/16
+		end
+		for page = 0, max_page do
+			local btn_x, btn_y = love.graphics.getWidth()-96, 32+12+24*page
+			if page*16 <= last_valid or music_page == page then
+				hoverrectangle(128,128,128,128, btn_x, btn_y, 64, 16)
+			else
+				hoverrectangle(64,64,64,128, btn_x, btn_y, 64, 16)
+				love.graphics.setColor(128,128,128)
+			end
+			if music_page == page then
+				love.graphics.setColor(255,255,128)
+			end
+			ved_printf(page*16 .. "-" .. math.min(page*16+15, 126), btn_x+1, btn_y+4, 64, "center")
+			love.graphics.setColor(255,255,255,255)
+
+			if nodialog and love.mouse.isDown("l") and mouseon(btn_x, btn_y, 64, 16) then
+				music_page = page
+			end
+		end
+	end
+
 	local current_audio = music_get_audio_playing()
 	local cura_y = love.graphics.getHeight()-32
 	local width = 568
@@ -185,7 +222,7 @@ return function()
 			-- LÖVE can sometimes fail to reset the time to 0 when looping if we started playing close to the end
 			elapsed = elapsed % duration
 		end
-		ved_print("[" .. fixdig(currentmusic, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
+		ved_print("[" .. fixdig(currentmusic%100, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(16, cura_y, 16, 16) then
 				-- Play/pause

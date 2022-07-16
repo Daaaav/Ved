@@ -28,7 +28,7 @@ ffi.cdef([[
 
 function initvvvvvvmusic()
 	music = {}
-	music["musiceditor"] = {}
+	music["musiceditor"] = {last_valid = 15}
 	currentmusic = nil
 	currentmusic_file = nil
 	currentmusic_paused = false
@@ -87,6 +87,25 @@ function unloadvvvvvvmusics_level()
 	level_music_loaded = false
 end
 
+local musicblobnames = {
+	"data/music/0levelcomplete.ogg",
+	"data/music/1pushingonwards.ogg",
+	"data/music/2positiveforce.ogg",
+	"data/music/3potentialforanything.ogg",
+	"data/music/4passionforexploring.ogg",
+	"data/music/5intermission.ogg",
+	"data/music/6presentingvvvvvv.ogg",
+	"data/music/7gamecomplete.ogg",
+	"data/music/8predestinedfate.ogg",
+	"data/music/9positiveforcereversed.ogg",
+	"data/music/10popularpotpourri.ogg",
+	"data/music/11pipedream.ogg",
+	"data/music/12pressurecooker.ogg",
+	"data/music/13pacedenergy.ogg",
+	"data/music/14piercingthesky.ogg",
+	"data/music/predestinedfatefinallevel.ogg",
+}
+
 function loadvvvvvvmusic(file, realfile)
 	-- file is the name to be stored in the table
 	-- (one of vvvvvvmusic.vvv, mmmmmm.vvv, musiceditor, sounds,
@@ -142,38 +161,75 @@ function loadvvvvvvmusic(file, realfile)
 
 		ffi.copy(music_headers, ficontents, sizeof_headers)
 
+		-- First do some boring validation steps on the headers so we don't have to later
+		local last_name_char = ffi.sizeof(music_headers[0].name)-1
+		for m = 0, 127 do
+			-- "/* Name can be stupid, just needs to be terminated */"
+			music_headers[m].name[last_name_char] = 0
+
+			if music_headers[m].size < 1 then
+				music_headers[m].valid = false
+			end
+		end
+
+		-- 2.3: All valid headers are considered, an invalid header no longer terminates the list.
+		-- First all named songs are looked up and added to the songs vector,
+		-- then all remaining (unrecognized) songs are added to the end of this vector.
+		-- So, we first make a mapping from header index to the resulting vector index. (-1 is null)
+		-- Ved will use and save with the vector index because there's no reason to do anything else
+		local vector_mapping = ffi.new("int8_t[128]", -1)
+		local next_vector_index = 0
+		for k,v in pairs(musicblobnames) do
+			for m = 0, 127 do
+				if music_headers[m].valid and vector_mapping[m] == -1
+				and ffi.string(music_headers[m].name) == v then
+					vector_mapping[m] = next_vector_index
+					next_vector_index = next_vector_index + 1
+					break
+				end
+			end
+		end
+		-- Now the unnamed songs
+		for m = 0, 127 do
+			if music_headers[m].valid and vector_mapping[m] == -1 then
+				vector_mapping[m] = next_vector_index
+				next_vector_index = next_vector_index + 1
+			end
+		end
+
+		music[file].last_valid = next_vector_index - 1
+
 		local sum_mdlen = 0
 		local md_possibly_valid = true
 		local m_start = 1+sizeof_headers
 		for m = 0, 127 do
-			if not music_headers[m].valid then
-				-- If one song is invalid, VVVVVV doesn't load the ones after
-				break
-			end
+			-- If this song is valid, we gave it a vector mapping
+			if vector_mapping[m] ~= -1 then
+				if m_start > ficontents_len then
+					cons("Song " .. m .. " in " .. file .. " is completely out of range")
+					md_possibly_valid = false
+					break
+				end
 
-			if m_start > ficontents_len then
-				cons("Song " .. m .. " in " .. file .. " is completely out of range")
-				md_possibly_valid = false
-				break
-			end
+				if music_headers[m].start < 0 or music_headers[m].start > 0xFFFFFF then
+					md_possibly_valid = false
+				else
+					sum_mdlen = sum_mdlen + music_headers[m].start
+				end
 
-			if music_headers[m].start < 0 or music_headers[m].start > 0xFFFFFF then
-				md_possibly_valid = false
-			else
-				sum_mdlen = sum_mdlen + music_headers[m].start
+				local m_end = m_start+music_headers[m].size-1
+				if m_end > ficontents_len then
+					cons(file .. " abruptly ended at song " .. m)
+					m_end = ficontents_len
+				end
+				loadmusicsong(file, vector_mapping[m], ficontents:sub(m_start, m_end), false)
+				m_start = m_end+1
 			end
-
-			local m_end = m_start+music_headers[m].size-1
-			if m_end > ficontents_len then
-				cons(file .. " abruptly ended at song " .. m)
-				m_end = ficontents_len
-			end
-			loadmusicsong(file, m, ficontents:sub(m_start, m_end), false)
-			m_start = m_end+1
 		end
 
 		local F_size = music_headers[127].start
-		if md_possibly_valid and sum_mdlen + F_size == music_headers[127].size and F_size >= 2
+		if md_possibly_valid and not music_headers[127].valid
+		and sum_mdlen + F_size == music_headers[127].size and F_size >= 2
 		and m_start+sum_mdlen+F_size > ficontents_len then
 			-- Okay, metadata seems to be valid.
 			local F_long, sizeof_F_tip
@@ -205,14 +261,12 @@ function loadvvvvvvmusic(file, realfile)
 
 					-- Song metadata now.
 					for m = 0, 127 do
-						if not music_headers[m].valid then
-							break
+						if vector_mapping[m] ~= -1 then
+							local m_end = m_start+music_headers[m].start-2
+							local strings = explode("\0", ficontents:sub(m_start, m_end))
+							m_start = m_end+2
+							music_set_song_vvv_metadata(file, vector_mapping[m], unpack(strings))
 						end
-
-						local m_end = m_start+music_headers[m].start-2
-						local strings = explode("\0", ficontents:sub(m_start, m_end))
-						m_start = m_end+2
-						music_set_song_vvv_metadata(file, m, unpack(strings))
 					end
 				end
 			end
@@ -247,7 +301,7 @@ function loadvvvvvvsounds(is_level_assets)
 		file = "sounds"
 		folder_prefix = soundsfolder .. dirsep
 	end
-	music[file] = {}
+	music[file] = {last_valid = 27}
 
 	for k,v in pairs(list_sound_ids) do
 		local readsuccess, ficontents = readfile(folder_prefix .. v)
@@ -404,6 +458,33 @@ function music_set_song_vvv_metadata(file, song, data_name, data_filename, data_
 	end
 end
 
+function music_get_last_valid(file)
+	if music[file] == nil then
+		return -1
+	end
+	return music[file].last_valid
+end
+
+function music_calculate_last_valid(file)
+	if music[file] == nil then
+		return
+	end
+
+	-- What is the last valid song?
+	-- In other words, from which song onward are no more songs valid?
+	-- Always consider song 127 invalid, at least for now (for metadata)
+	-- Always consider songs 0-15 valid (for historical reasons, but this is debatable)
+	local last_valid = 15
+	for m = 126, 16, -1 do
+		if music_get_filedata(file, m) ~= nil then
+			last_valid = m
+			break
+		end
+	end
+	music[file].last_valid = last_valid
+	return last_valid
+end
+
 function playmusic(file, song)
 	stopmusic()
 
@@ -469,6 +550,8 @@ function musicedit_deletesong(file, song)
 	end
 
 	music[file][song] = nil
+
+	music_calculate_last_valid(file)
 end
 
 function musicedit_replacesong(file, song, data)
@@ -480,27 +563,12 @@ function musicedit_replacesong(file, song, data)
 		music[file] = {}
 	end
 
-	return pcall(loadmusicsong, file, song, data, true)
-end
+	local success, err = pcall(loadmusicsong, file, song, data, true)
 
-local musicblobnames = {
-	"data/music/0levelcomplete.ogg",
-	"data/music/1pushingonwards.ogg",
-	"data/music/2positiveforce.ogg",
-	"data/music/3potentialforanything.ogg",
-	"data/music/4passionforexploring.ogg",
-	"data/music/5intermission.ogg",
-	"data/music/6presentingvvvvvv.ogg",
-	"data/music/7gamecomplete.ogg",
-	"data/music/8predestinedfate.ogg",
-	"data/music/9positiveforcereversed.ogg",
-	"data/music/10popularpotpourri.ogg",
-	"data/music/11pipedream.ogg",
-	"data/music/12pressurecooker.ogg",
-	"data/music/13pacedenergy.ogg",
-	"data/music/14piercingthesky.ogg",
-	"data/music/predestinedfatefinallevel.ogg",
-}
+	music_calculate_last_valid(file)
+
+	return success, err
+end
 
 function savevvvvvvmusic(file, realfile, savemetadata)
 	-- Again, file is one of three possible values including "musiceditor", realfile is an actual filename
@@ -531,8 +599,12 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 		music_headers[127].start = table.concat(metadatablobtable):len()
 	end
 
-	for m = 0, 15 do
-		ffi.copy(music_headers[m].name, musicblobnames[m+1])
+	local last_valid = music_calculate_last_valid(file)
+
+	for m = 0, last_valid do
+		if m <= 15 then
+			ffi.copy(music_headers[m].name, musicblobnames[m+1])
+		end
 		local filedata = music_get_filedata(file, m)
 		if filedata == nil then
 			music_headers[m].size = 1
@@ -559,11 +631,11 @@ function savevvvvvvmusic(file, realfile, savemetadata)
 		music_headers[127].size = metadatablob:len()
 	end
 
-	-- Note that 16-126/127 will just be nulls, which is good
+	-- Note that unset/invalid headers will just be nulls, which is good
 	local success, everr = multiwritefile_write(os_fh, ffi.string(music_headers, ffi.sizeof("resourceheader")*128))
 	if not success then return false, everr end
 
-	for m = 0, 15 do
+	for m = 0, last_valid do
 		local filedata = music_get_filedata(file, m)
 		local write
 		if filedata == nil then
