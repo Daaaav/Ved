@@ -661,8 +661,10 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 	end
 end
 
-function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
-	local clickable_w = 8+32+font8:getWidth(label)
+function radio_wrap(selected, x, y, key, label, label_max_width, onclickfunc, onhoverfunc)
+	-- label_max_width is allowed to be nil (Ved has its own :getWrap that explicitly allows it)
+	local clickable_w, label_lines = font8:getWrap(label, label_max_width)
+	clickable_w = clickable_w + 8 + 32
 	hoverdraw(
 		selected and image.radioon_hq or image.radiooff_hq,
 		x, y, clickable_w, 16
@@ -670,7 +672,15 @@ function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
 	if selected then
 		love.graphics.setColor(255,255,128)
 	end
-	ved_print(label, x+16+8, y+4)
+	local print_y = y+4
+	if label_lines > 1 then
+		print_y = y
+	end
+	if label_max_width ~= nil then
+		ved_printf(label, x+16+8, print_y, label_max_width, "left")
+	else
+		ved_print(label, x+16+8, print_y)
+	end
 	love.graphics.setColor(255,255,255)
 
 	if nodialog and mouseon(x, y, clickable_w, 16) then
@@ -683,6 +693,10 @@ function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
 			mousepressed = true
 		end
 	end
+end
+
+function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
+	radio_wrap(selected, x, y, key, label, nil, onclickfunc, onhoverfunc)
 end
 
 function checkbox(selected, x, y, key, label, onclickfunc, onhoverfunc)

@@ -962,7 +962,7 @@ return function()
 			local mode = LOAD_SCRIPT_CREATION_MODE[v]
 			local name = L["CREATE_LOAD_SCRIPT_" .. v]
 			local selected = get_load_script_creation_mode() == mode
-			radio(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, mode, name,
+			radio_wrap(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, mode, name, 96,
 				function(key)
 					create_load_script = mode
 				end,
@@ -1088,7 +1088,7 @@ return function()
 				else
 					selected = k == 2
 				end
-				radio(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, k, name,
+				radio_wrap(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, k, name, 96,
 					function(key)
 						editingroomname = false
 						if key == 1 then

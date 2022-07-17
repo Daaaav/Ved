@@ -13,7 +13,7 @@ return {
 						{"minimap", L.MAP_STYLE_MINIMAP},
 						{"vtools", L.MAP_STYLE_VTOOLS},
 					}) do
-						radio(s.mapstyle == v[1], x, y+(24*k)-4, v[1], v[2],
+						radio_wrap(s.mapstyle == v[1], x, y+(24*k)-4, v[1], v[2], 96,
 							function(key)
 								s.mapstyle = v[1]
 								saveconfig()
