@@ -27,6 +27,7 @@
 		<range start="0x7b" end="0x7d" advance="7"/>
 		<range start="0x7e" end="0x7e" advance="2"/>
 		<range start="0xdf" end="0xdf" advance="19"/>
+		<range start="0x15c" end="0x15c" advance="4"/>
 		<range start="0xfffd" end="0xfffd" advance="6"/>
 	</special>
 </font_metadata>
