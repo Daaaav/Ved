@@ -324,7 +324,7 @@ function script_context(text)
 				if track < 0 then
 					track = nil
 				else
-					track = track % 16
+					track = track
 				end
 			end
 			return "track", track, nil, nil

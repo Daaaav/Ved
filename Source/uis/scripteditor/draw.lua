@@ -456,8 +456,12 @@ return function()
 					"center"
 				)
 			else
+				local trackname = ""
+				if list_music_commands_ids[carg1] ~= nil then
+					trackname = "\n\n" .. list_music_commands_ids[carg1]
+				end
 				ved_printf(
-					langkeys(L.TRACKNUM, {carg1}) .. "\n\n" .. list_music_commands_ids[carg1],
+					langkeys(L.TRACKNUM, {carg1}) .. trackname,
 					love.graphics.getWidth()-(128-8),
 					8+(24*12)+4,
 					128-16,
