@@ -390,7 +390,7 @@ function cDialog:dropdown_onchange(key, picked)
 		if v[DFP.KEY] == key then
 			local new_value = nil
 			if v[DFP.DROPDOWN_ONCHANGE] ~= nil then
-				new_value = v[DFP.DROPDOWN_ONCHANGE](picked, v[DFP.DROPDOWN_MENUITEMS], v[DFP.DROPDOWN_MENUITEMSLABEL])
+				new_value = v[DFP.DROPDOWN_ONCHANGE](picked, v[DFP.DROPDOWN_MENUITEMS], v[DFP.DROPDOWN_MENUITEMSLABEL], self)
 			end
 			if new_value == nil then
 				new_value = picked

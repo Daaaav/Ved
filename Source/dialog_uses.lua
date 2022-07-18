@@ -142,6 +142,39 @@ function dialog.form.rawentityproperties_make()
 end
 
 function dialog.form.leveloptions_make()
+	local function get_music_list(music_page)
+		local music_list, music_kv = {}, {}
+		for m = music_page, math.min(126, music_page+15) do
+			local label
+			if m <= 15 then
+				label = "[" .. m .. "] " .. list_music_names[m+1]
+			else
+				label = "[" .. m .. "]"
+			end
+			table.insert(music_list, label)
+			music_kv[m] = label
+		end
+		return music_list, music_kv
+	end
+
+	local music_page_list = {}
+	local music_page_kv = {}
+	local music_page_vk = {}
+	local selected_page = 0
+	for music_page = 0, 126, 16 do
+		local label = music_page .. "-" .. math.min(126, music_page+15)
+		table.insert(music_page_list, label)
+		music_page_kv[music_page] = label
+		music_page_vk[label] = music_page
+
+		local levmusic = anythingbutnil0(tonumber(metadata.levmusic))
+		if levmusic >= music_page and levmusic <= music_page+15 then
+			selected_page = music_page
+		end
+	end
+
+	local main_music_list, main_music_kv = get_music_list(selected_page)
+
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
 		{"Title", 8, 0, 20, metadata.Title, DF.TEXT},
@@ -158,13 +191,30 @@ function dialog.form.leveloptions_make()
 		{"mapheight", 12, 8, 3, metadata.mapheight, DF.TEXT},
 		{"", 0, 10, 8, L.OPTMUSIC, DF.LABEL},
 		{
-			"levmusic", 8, 10, 30, metadata.levmusic, DF.DROPDOWN, list_music_names, list_music_ids,
-			function(picked)
-				for k,v in pairs(list_music_names_ids) do
-					if picked == v[1] then
-						return v[2]
+			"levmusic_page", 8, 10, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,
+			function(picked, _, _, dialog_obj)
+				local page_start = music_page_vk[picked]
+
+				-- Modify the other dropdown lol
+				for k,v in pairs(dialog_obj.fields) do
+					if v[DFP.KEY] == "levmusic" then
+						v[DFP.DROPDOWN_MENUITEMS], v[DFP.DROPDOWN_MENUITEMSLABEL] = get_music_list(page_start)
+						v[DFP.VALUE] = page_start
 					end
 				end
+
+				return page_start
+			end
+		},
+		{
+			"levmusic", 17, 10, 30, metadata.levmusic, DF.DROPDOWN, main_music_list, main_music_kv,
+			function(picked, _, menuitemslabel)
+				for k,v in pairs(menuitemslabel) do
+					if picked == v then
+						return k
+					end
+				end
+				return 0
 			end
 		},
 	}
