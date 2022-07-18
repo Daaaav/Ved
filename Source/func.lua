@@ -1172,7 +1172,9 @@ end
 
 function get_load_script_creation_mode()
 	local mode = create_load_script
-	if keyboard_eitherIsDown("shift") then
+	if not nodialog or editingroomname then
+		-- No Shift/Ctrl switching now
+	elseif keyboard_eitherIsDown("shift") then
 		if mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then
 			mode = LOAD_SCRIPT_CREATION_MODE.NO
 		else
