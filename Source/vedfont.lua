@@ -439,11 +439,17 @@ function cVedFont:buf_wordwrap(max_width)
 end
 
 function cVedFont:print(text, x, y, sx, sy)
+	if text == nil then
+		text = "nil"
+	end
 	utf8_to_utf32(text, print_buf, print_buf_n)
 	self:buf_print(x, y, sx, sy)
 end
 
 function cVedFont:printf(text, x, y, max_width, align, sx, sy)
+	if text == nil then
+		text = "nil"
+	end
 	if sx == nil then
 		sx = 1
 	end
@@ -457,6 +463,9 @@ function cVedFont:getWrap(text, max_width)
 	-- Gives the number of lines (not the table of lines) because we never need the table.
 	-- max_width can also be nil, to indicate no limit.
 
+	if text == nil then
+		text = "nil"
+	end
 	if text == "" then
 		-- Only LÖVE 11.4 and up returns 1 line, and I needed 0...
 		return 0, 0
