@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-07-03 04:08:37 (CEST)
+--- Last converted: 2022-07-21 22:22:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -68,9 +68,12 @@ THREADERROR = "Error de cadena!",
 WHATDIDYOUDO = "Que hiciste?!",
 UNDOFAULTY = "Que estas haciendo?",
 SOURCEDESTROOMSSAME = "Las habitaciones de entrada y salida son las mismas!",
+COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!",
 UNKNOWNUNDOTYPE = "Tipo de deshacer desconocido \"$1\"!",
 MDEVERSIONWARNING = "Parece que este nivel se ha hecho en una version mas reciente de Ved, y podria contener unos datos que se perderan cuando guardes este nivel.",
 FORGOTPATH = "Te olvidaste de especificar un camino!",
+LIB_LOAD_ERRMSG = "Failed to load an essential library. Please tell Dav999 about this problem.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nTry installing GCC to solve this problem, if it isn't already installed.",
 
 SELECTCOPY1 = "Seleccione la habitacion para copiar",
 SELECTCOPY2 = "Seleccione donde copiar la habitacion",
@@ -149,6 +152,11 @@ BTN_DISCARD = "Descartar",
 BTN_SAVE = "Guardar",
 BTN_CLOSE = "Cerrar",
 BTN_LOAD = "Cargar",
+BTN_ADVANCED = "Advanced",
+
+BTN_AUTODETECT = "Detect",
+BTN_MANUALLY = "Override", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "Retry",
 
 COMPARINGTHESE = "Comparando $1.vvvvvv con $2.vvvvvv",
 COMPARINGTHESENEW = "Comparando (nivel sin guardar) con $1.vvvvvv",
@@ -240,6 +248,7 @@ INVALIDFILESIZE = "Tamaño de archivo invalido.",
 
 EDIT = "Editar",
 EDITWOBUMPING = "Editar sin chocar",
+EDITWBUMPING = "Edit and bump",
 COPYNAME = "Copiar nombre",
 COPYCONTENTS = "Copiar contenidos",
 DUPLICATE = "Duplicar",
@@ -264,9 +273,9 @@ COPYROOMS = "Copiar habitacion",
 SWAPROOMS = "Intercambiar habitaciones",
 
 MAP_STYLE = "Map style",
-MAP_STYLE_FULL = "Full", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+MAP_STYLE_FULL = "Full", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
 
 FLAGS = "Flags",
 ROOM = "habitacion",
@@ -297,6 +306,8 @@ AMOUNTOVERWRITEBACKUPS = "Numeros de respaldos para mantener por nivel",
 SCALE = "Escala",
 LOADALLMETADATA = "Cargar metadatos (como el titulo, autor y descripcion) para todos los archivos en la lista de niveles",
 COLORED_TEXTBOXES = "Usar color verdaderos de dialogos",
+MOUSESCROLLINGSPEED = "Mouse scrolling speed",
+BUMPSCRIPTSBYDEFAULT = "Bump scripts to the top of the list when editing them by default",
 
 SCRIPTSPLIT = "Dividir",
 SPLITSCRIPT = "Dividir scripts",
@@ -358,6 +369,7 @@ SYNTAXCOLOR_CURSOR = "Cursor",
 SYNTAXCOLOR_FLAGNAME = "Nombre de flag",
 SYNTAXCOLOR_NEWFLAGNAME = "Nuevo nombre de flag",
 SYNTAXCOLOR_COMMENT = "Comentario",
+SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa",
 RESETCOLORS = "Reiniciar colores",
 STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
 
@@ -457,6 +469,9 @@ MUSICLOADERROR = "No se puede cargar $1: ",
 MUSICLOADERROR_TOOSMALL = "El archivo de musica es muy pequeño para ser valido.",
 MUSICEXISTSYES = "Existe",
 MUSICEXISTSNO = "No existe",
+ASSETS_FOLDER_EXISTS_NO = "Does not exist - click to create",
+ASSETS_FOLDER_EXISTS_YES = "Exists - click to open",
+NO_ASSETS_SUBFOLDER = "No \"$1\" folder",
 LOAD = "Cargar",
 RELOAD = "Recargar",
 UNLOAD = "Descargar",
@@ -493,6 +508,13 @@ LOADIMAGE = "Cargar imagen",
 GRID = "Red",
 NOTALPHAONLY = "RGB",
 
+UNSAVED_LEVEL_ASSETS_FOLDER = "The level needs to be saved before it can use custom assets.",
+CREATE_ASSETS_FOLDER = "Would you like to create a custom assets folder for this level?\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "It seems like the VVVVVV folder doesn't exist. Would you like to create it?",
+CREATE_LEVELS_FOLDER = "It seems like the levels folder doesn't exist. Would you like to create it?",
+CREATE_FOLDER_FAIL = "Unable to create folder.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "Assets folder for $1",
+
 OPAQUEROOMNAMEBACKGROUND = "Hacer el fondo del nombre de habitacion negro opaco",
 PLATVCHANGE_TITLE = "Cambiar velocidad de plataforma",
 PLATVCHANGE_MSG = "Velocidad:",
@@ -515,6 +537,7 @@ ROOMNUM = "Habitacion $1",
 TRACKNUM = "Pista $1",
 STOPSMUSIC = "Para la musica",
 EDITSCRIPTWOBUMPING = "Editar script sin chocar",
+EDITSCRIPTWBUMPING = "Edit script and bump",
 CLICKONTHING = "Haz click en $1",
 ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Hay mas de un punto de inicio en este nivel!",
@@ -545,12 +568,22 @@ YOUAREPLAYTESTING = "Estas probando justo ahora.",
 LOCATEVVVVVV = "Seleccione su ejecutable de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Ya estas probando!",
 PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
+VVVVVV_EXITCODE_FAILURE = "VVVVVV exited with code $1", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later.",
+VVVVVV_SOMETHING_HAPPENED = "Something seems to have gone wrong with VVVVVV.",
 PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
+
+FIND_V_EXE_ERROR = "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually.",
+FIND_V_EXE_FOUNDERROR = "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually.",
+FIND_V_EXE_NOTFOUND = "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again.",
+FIND_V_EXE_MULTI = "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again.",
+
+FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n\n\nTo autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\".",
 
 VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
@@ -564,7 +597,7 @@ PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "Create load script",
 
--- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+-- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 CREATE_LOAD_SCRIPT_NO = "No",
 CREATE_LOAD_SCRIPT_RUNONCE = "Run once",
 CREATE_LOAD_SCRIPT_REPEATING = "Repeating",
@@ -583,6 +616,28 @@ CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "This script box will point to a new load sc
 CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Create repeating load script",
 CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "This terminal will point to a new load script, which unconditionally loads the real script.",
 CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "This script box will point to a new load script, which unconditionally loads the real script.",
+
+CUSTOM_SIZED_BRUSH = "Custom brush",
+
+-- These are limited to 12*2 characters
+CUSTOM_SIZED_BRUSH_BRUSH = "Brush",
+CUSTOM_SIZED_BRUSH_STAMP = "Stamp",
+CUSTOM_SIZED_BRUSH_TILESET = "Tileset",
+
+-- Explanation for "Brush"
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Custom brush size",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Choose the size of the brush you need.",
+
+-- Explanation for "Stamp"
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stamp from room",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Select tiles from the room to create a stamp.",
+
+-- Explanation for "Tileset"
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stamp from tileset",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Select tiles from the tileset to create a stamp. Only works in manual mode.",
+
+ADVANCED_LEVEL_OPTIONS = "Advanced level options",
+ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
 }
 
@@ -635,6 +690,14 @@ L_PLU = {
 	XMLNULLS = {
 		[0] = "Hay $1 caracter XML nulo!",
 		[1] = "Hay $1 caracteres XML nulos!",
+	},
+	NUM_GRAPHICS_CUSTOMIZED = {
+		[-1] = "$1 image customized",
+		[-2] = "$1 images customized",
+	},
+	NUM_SOUNDS_CUSTOMIZED = {
+		[-1] = "$1 sound effect customized",
+		[-2] = "$1 sound effects customized",
 	},
 }
 
@@ -2754,10 +2817,10 @@ Ved is made by Dav999
 
 Further code contributors: Info Teddy
 
-Some of the graphics and the font were made by Hejmstel
+Some of the graphics and the font were made by Reese Rivers
 
 Russian translation: CreepiX, Cheep, Omegaplex
-Esperanto translation: Hejmstel
+Esperanto translation: Reese Rivers
 German translation: r00ster
 French translation: RhenaudTheLukark
 Spanish translation: Valso22/naether

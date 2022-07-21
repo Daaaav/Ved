@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2022-07-03 04:08:37 (CEST)
+--- Last converted: 2022-07-21 22:22:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -56,9 +56,12 @@ THREADERROR = "Kesalahan utas!",
 WHATDIDYOUDO = "Apa yang kamu lakukan?!",
 UNDOFAULTY = "Apa yang kamu ngapain?",
 SOURCEDESTROOMSSAME = "Ruang sumber dan tujuan sama!",
+COORDS_OUT_OF_RANGE = "Hah? Koordinat ini bahkan tidak ada di dimensi ini!",
 UNKNOWNUNDOTYPE = "Jenis pembatalan tidak diketahui \"$1\"!",
 MDEVERSIONWARNING = "Level ini tampaknya dibuat dalam versi Ved yang lebih baru, dan mungkin berisi beberapa data yang akan hilang saat Anda menyimpan level ini.",
 FORGOTPATH = "Anda lupa menentukan jalur!",
+LIB_LOAD_ERRMSG = "Gagal memuat perpustakaan penting. Silakan beri tahu Dav999 tentang masalah ini.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nCoba instal GCC untuk mengatasi masalah ini, jika belum diinstal.",
 
 SELECTCOPY1 = "Pilih ruangan yang akan disalin",
 SELECTCOPY2 = "Pilih lokasi untuk menyalin ruangan ini",
@@ -137,6 +140,11 @@ BTN_DISCARD = "Buang",
 BTN_SAVE = "Simpan",
 BTN_CLOSE = "Tutup",
 BTN_LOAD = "Muat",
+BTN_ADVANCED = "Lanjutan",
+
+BTN_AUTODETECT = "Mendeteksi",
+BTN_MANUALLY = "Secr. manual", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "Cob. ulng.",
 
 COMPARINGTHESE = "Membandingkan $1.vvvvvv dengan $2.vvvvvv",
 COMPARINGTHESENEW = "Membandingkan (level yang belum disimpan) dengan $1.vvvvvv",
@@ -228,6 +236,7 @@ INVALIDFILESIZE = "Ukuran file tidak valid.",
 
 EDIT = "Ubah",
 EDITWOBUMPING = "Edit tanpa menabrak",
+EDITWBUMPING = "Edit dan bentrok",
 COPYNAME = "Salin nama",
 COPYCONTENTS = "Salin konten",
 DUPLICATE = "Duplikat",
@@ -252,9 +261,9 @@ COPYROOMS = "Salin ruang",
 SWAPROOMS = "Tukar ruang",
 
 MAP_STYLE = "Jenis peta",
-MAP_STYLE_FULL = "Penuh", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Mini-peta", -- Max 12 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+MAP_STYLE_FULL = "Penuh", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "Mini-peta", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
 
 FLAGS = "Tanda",
 ROOM = "ruang",
@@ -285,6 +294,8 @@ AMOUNTOVERWRITEBACKUPS = "Jumlah cadangan yang harus disimpan per level",
 SCALE = "Skala",
 LOADALLMETADATA = "Muat metadata (seperti judul, penulis, dan deskripsi) untuk semua file dalam daftar level",
 COLORED_TEXTBOXES = "Gunakan warna kotak teks yang benar",
+MOUSESCROLLINGSPEED = "Kecepatan gulir mouse",
+BUMPSCRIPTSBYDEFAULT = "Membentrok skrip ke bagian atas daftar saat mengeditnya secara default",
 
 SCRIPTSPLIT = "Pisahkan",
 SPLITSCRIPT = "Pisahkan skrip",
@@ -346,6 +357,7 @@ SYNTAXCOLOR_CURSOR = "Kursor",
 SYNTAXCOLOR_FLAGNAME = "Nama tanda",
 SYNTAXCOLOR_NEWFLAGNAME = "Nama tanda baru",
 SYNTAXCOLOR_COMMENT = "Komen",
+SYNTAXCOLOR_WRONGLANG = "Perintah sederhana dalam mode sk.int atau sebaliknya",
 RESETCOLORS = "Setel ulang warna",
 STRINGNOTFOUND = "\"$1\" tidak ditemukan",
 
@@ -445,6 +457,9 @@ MUSICLOADERROR = "Tidak dapat memuat $1: ",
 MUSICLOADERROR_TOOSMALL = "File musik terlalu kecil untuk valid.",
 MUSICEXISTSYES = "Ada",
 MUSICEXISTSNO = "Tidak ada",
+ASSETS_FOLDER_EXISTS_NO = "Tidak ada - klik untuk membuat",
+ASSETS_FOLDER_EXISTS_YES = "Ada - klik untuk membuka",
+NO_ASSETS_SUBFOLDER = "Tidak ada folder \"$1\"",
 LOAD = "Muat",
 RELOAD = "Muat ulang",
 UNLOAD = "Bongkarkan",
@@ -481,6 +496,13 @@ LOADIMAGE = "Muat gambar",
 GRID = "Kisi-kisi",
 NOTALPHAONLY = "RGB",
 
+UNSAVED_LEVEL_ASSETS_FOLDER = "Level harus disimpan sebelum dapat menggunakan aset kustom.",
+CREATE_ASSETS_FOLDER = "Apakah Anda ingin membuat folder aset kustom untuk level ini?\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "Sepertinya folder VVVVVV tidak ada. Apakah Anda ingin membuatnya?",
+CREATE_LEVELS_FOLDER = "Sepertinya folder level tidak ada. Apakah Anda ingin membuatnya?",
+CREATE_FOLDER_FAIL = "Tidak dapat membuat folder.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "Folder aset untuk $1",
+
 OPAQUEROOMNAMEBACKGROUND = "Jadikan latar belakang nama ruang hitam buram",
 PLATVCHANGE_TITLE = "Ubah kecepatan platform",
 PLATVCHANGE_MSG = "Kecepatan:",
@@ -503,6 +525,7 @@ ROOMNUM = "Ruang $1",
 TRACKNUM = "Trek $1",
 STOPSMUSIC = "Menghentikan musik",
 EDITSCRIPTWOBUMPING = "Edit skrip tanpa menabrak",
+EDITSCRIPTWBUMPING = "Edit skrip dan bentrok",
 CLICKONTHING = "Klik $1",
 ORDRAGDROP = "atau seret dan lepas ke sini", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Ada lebih dari satu titik awal di level ini!",
@@ -533,12 +556,22 @@ YOUAREPLAYTESTING = "Anda sedang playtesting",
 LOCATEVVVVVV = "Pilih $1 Anda yang dapat dieksekusi", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Anda sudah playtesting!",
 PLAYTESTINGFAILED = "Ada yang salah saat membuka VVVVVV:\n$1\n\nJika Anda perlu mengubah executable VVVVVV yang digunakan untuk playtesting, tahan Shift sambil menekan tombol playtest.",
+VVVVVV_EXITCODE_FAILURE = "VVVVVV keluar dengan kode $1", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "Sepertinya Anda menggunakan VVVVVV 2.2 atau lebih lama. Silakan tingkatkan ke VVVVVV 2.3 atau lebih baru.",
+VVVVVV_SOMETHING_HAPPENED = "Sepertinya ada yang salah dengan VVVVVV.",
 PLAYTESTUNAVAILABLE = "Maaf, Anda tidak dapat bermain dengan $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Silakan pilih file bernama '$1'.",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "Anda belum menetapkan $1 yang dapat dieksekusi untuk digunakan untuk pengujian bermain.\nVed akan memintanya saat menguji level $2 untuk pertama kalinya.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "$1 yang dapat dieksekusi untuk digunakan untuk pengujian bermain disetel ke:\n$2", -- $1: VVVVVV 2.3
+
+FIND_V_EXE_ERROR = "Maaf, ada yang tidak beres saat mencoba menemukan VVVVVV. Coba atur jalur ke yang dapat dieksekusi secara manual.",
+FIND_V_EXE_FOUNDERROR = "Menemukan sesuatu yang terlihat seperti VVVVVV, tetapi tidak bisa mendapatkan jalur yang bisa digunakan untuk dieksekusi. Pastikan Anda tidak menggunakan versi game yang lama (diperlukan 2.3 atau yang lebih baru) atau coba atur jalur ke yang dapat dieksekusi secara manual.",
+FIND_V_EXE_NOTFOUND = "Sepertinya VVVVVV tidak berjalan. Pastikan Anda menjalankan VVVVVV dan coba lagi.",
+FIND_V_EXE_MULTI = "Ditemukan beberapa contoh berbeda dari VVVVVV berjalan. Pastikan Anda hanya memiliki satu versi permainan yang terbuka dan coba lagi.",
+
+FIND_V_EXE_EXPLANATION = "Ved membutuhkan VVVVVV untuk playtesting, dan jalur ke VVVVVV perlu diatur terlebih dahulu.\n\n\nUntuk mendeteksi VVVVVV secara otomatis, cukup mulai permainan jika belum berjalan dan tekan \"Deteksikan\".",
 
 VCE_REMOVED = "VVVVVV: Community Edition tidak lagi dipertahankan, dan dukungan untuk level VVVVVV-CE telah dihapus dari Ved. Tingkat ini diperlakukan seperti tingkat VVVVVV biasa. Untuk informasi lebih lanjut, lihat https://vsix.dev/vce/status/",
 
@@ -552,7 +585,7 @@ PLUGIN_AUTHOR_VERSION = "oleh $1, versi $2", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "Buat skrip pemuatan",
 
--- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+-- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 CREATE_LOAD_SCRIPT_NO = "Tidak",
 CREATE_LOAD_SCRIPT_RUNONCE = "Jalankan 1x",
 CREATE_LOAD_SCRIPT_REPEATING = "Mengulang",
@@ -571,6 +604,28 @@ CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Kotak skrip ini akan menunjuk ke skrip pemu
 CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Buat skrip pemuatan berulang",
 CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Terminal ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli tanpa syarat.",
 CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Kotak skrip ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli tanpa syarat.",
+
+CUSTOM_SIZED_BRUSH = "Kuas kustom",
+
+-- These are limited to 12*2 characters
+CUSTOM_SIZED_BRUSH_BRUSH = "Kuas",
+CUSTOM_SIZED_BRUSH_STAMP = "Stempel",
+CUSTOM_SIZED_BRUSH_TILESET = "Tileset",
+
+-- Explanation for "Brush"
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Ukuran kuas kustom",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Pilih ukuran kuas yang Anda butuhkan.",
+
+-- Explanation for "Stamp"
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stempel dari ruang",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Pilih ubin dari ruangan untuk membuat stempel.",
+
+-- Explanation for "Tileset"
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stempel dari tileset",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Pilih ubin dari ubin untuk membuat stempel. Hanya bekerja dalam mode manual.",
+
+ADVANCED_LEVEL_OPTIONS = "Opsi level lanjutan",
+ONEWAYCOL_OVERRIDE = "Warnai ulang ubin satu arah di aset kustom juga (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
 }
 
@@ -611,6 +666,12 @@ L_PLU = {
 	},
 	XMLNULLS = {
 		[0] = "Ada $1 karakter null XML!",
+	},
+	NUM_GRAPHICS_CUSTOMIZED = {
+		[0] = "$1 gambar disesuaikan",
+	},
+	NUM_SOUNDS_CUSTOMIZED = {
+		[0] = "$1 efek suara disesuaikan",
 	},
 }
 
@@ -2771,10 +2832,10 @@ Ved dibuat oleh Dav999
 
 Kontributor kode lebih lanjut: Info Teddy
 
-Beberapa grafik dan font dibuat oleh Hejmstel
+Beberapa grafik dan font dibuat oleh Reese Rivers
 
 Terjemahan Rusia: CreepiX, Cheep, Omegaplex
-Terjemahan Esperanto: Hejmstel
+Terjemahan Esperanto: Reese Rivers
 Terjemahan Jerman: r00ster
 Terjemahan Perancis: RhenaudTheLukark
 Terjemahan Spanyol: Valso22/naether

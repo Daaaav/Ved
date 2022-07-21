@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2022-07-03 04:08:38 (CEST)
+--- Last converted: 2022-07-21 22:22:39 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -72,9 +72,12 @@ THREADERROR = "Erreur de processus !",
 WHATDIDYOUDO = "Qu'avez-vous fait ?!",
 UNDOFAULTY = "Qu'est-ce que vous faites ?",
 SOURCEDESTROOMSSAME = "La salle de départ et de destination sont les mêmes !",
+COORDS_OUT_OF_RANGE = "Hein ? Ces coordonnées ne sont même pas dans cette dimension !",
 UNKNOWNUNDOTYPE = "Type de retour en arrière \"$1\" inconnu !",
 MDEVERSIONWARNING = "Ce niveau semble avoir été créé dans une version ultérieure de Ved, et peut contenir des données pouvant être perdues lorsque vous sauverez ce niveau.",
 FORGOTPATH = "Vous avez oublié de spécifier un chemin !",
+LIB_LOAD_ERRMSG = "Impossible de charger une bibliothèque essentielle. Veuillez renseigner Dav999 à propos de ce problème.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nEssayez d'installer GCC pour résoudre ce problème, s'il n'est pas déjà installé.",
 
 SELECTCOPY1 = "Sélectionnez la salle à copier",
 SELECTCOPY2 = "Sélectionnez l'emplacement où copier cette salle",
@@ -153,6 +156,11 @@ BTN_DISCARD = "Jeter",
 BTN_SAVE = "Sauver",
 BTN_CLOSE = "Fermer",
 BTN_LOAD = "Charger",
+BTN_ADVANCED = "Avancé",
+
+BTN_AUTODETECT = "Détecter",
+BTN_MANUALLY = "Mettre à jour", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "Réessayer",
 
 COMPARINGTHESE = "Comparaison entre $1.vvvvvv et $2.vvvvvv en cours",
 COMPARINGTHESENEW = "Comparaison entre (niveau non sauvegardé) et $1.vvvvvv en cours",
@@ -243,7 +251,8 @@ SAVENOSUCCESS = "La sauvegarde a échouée! Erreur : ",
 INVALIDFILESIZE = "Taille de fichier invalide.",
 
 EDIT = "Modifier",
-EDITWOBUMPING = "Modifier sans réordonner la liste",
+EDITWOBUMPING = "Modifier sans le monter en haut de la liste",
+EDITWBUMPING = "Modifier et le monter en haut de la liste",
 COPYNAME = "Copier le nom",
 COPYCONTENTS = "Copier le contenu",
 DUPLICATE = "Dupliquer",
@@ -268,9 +277,9 @@ COPYROOMS = "Copier la salle",
 SWAPROOMS = "Échanger les salles",
 
 MAP_STYLE = "Style de carte",
-MAP_STYLE_FULL = "Entier", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+MAP_STYLE_FULL = "Entier", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
 
 FLAGS = "Drapeaux",
 ROOM = "salle",
@@ -301,6 +310,8 @@ AMOUNTOVERWRITEBACKUPS = "Nombre de sauvegardes à garder par niveau",
 SCALE = "Échelle",
 LOADALLMETADATA = "Charger des métadonnées (ex : titre, auteur, description) pour tous les fichiers dans la liste de niveaux",
 COLORED_TEXTBOXES = "Utiliser des couleurs pour l'éditeur de script",
+MOUSESCROLLINGSPEED = "Vitesse de défilement de roulette de souris",
+BUMPSCRIPTSBYDEFAULT = "Par défaut, monter le script en haut de la liste lors de leur édition",
 
 SCRIPTSPLIT = "Séparer",
 SPLITSCRIPT = "Scripts de séparation",
@@ -362,6 +373,7 @@ SYNTAXCOLOR_CURSOR = "Curseur",
 SYNTAXCOLOR_FLAGNAME = "Nom de drapeau",
 SYNTAXCOLOR_NEWFLAGNAME = "Nouveau nom de drapeau",
 SYNTAXCOLOR_COMMENT = "Commentaire",
+SYNTAXCOLOR_WRONGLANG = "Commande simplifiée en mode int.sc ou vice-versa",
 RESETCOLORS = "Remise à zéro des couleurs",
 STRINGNOTFOUND = "\"$1\" n'a pas été trouvé",
 
@@ -461,6 +473,9 @@ MUSICLOADERROR = "Impossible de charger $1 : ",
 MUSICLOADERROR_TOOSMALL = "Le fichier son est trop petit pour être valide.",
 MUSICEXISTSYES = "Existe",
 MUSICEXISTSNO = "N'existe pas",
+ASSETS_FOLDER_EXISTS_NO = "N'existe pas - cliquer pour le créer",
+ASSETS_FOLDER_EXISTS_YES = "Existe - cliquer pour l'ouvrir",
+NO_ASSETS_SUBFOLDER = "Pas de dossier \"$1\"",
 LOAD = "Charger",
 RELOAD = "Recharger",
 UNLOAD = "Décharger",
@@ -497,6 +512,13 @@ LOADIMAGE = "Charger image",
 GRID = "Grille",
 NOTALPHAONLY = "RBV",
 
+UNSAVED_LEVEL_ASSETS_FOLDER = "Le niveau doit être sauvegardé avant qu'il puisse utiliser des ressources personnalisées.",
+CREATE_ASSETS_FOLDER = "Voulez-vous créer un dossier de ressources personnalisées pour ce niveau?\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "On dirait que le dossier de VVVVVV n'existe pas. Voulez-vous le créer ?",
+CREATE_LEVELS_FOLDER = "On dirait que le dossier de niveaux n'existe pas. Voulez-vous le créer ?",
+CREATE_FOLDER_FAIL = "Impossible de créer le dossier.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "Dossier de ressources pour $1",
+
 OPAQUEROOMNAMEBACKGROUND = "Rendre l'arrière-plan du nom de salle opaque",
 PLATVCHANGE_TITLE = "Changer la vitesse de la plateforme",
 PLATVCHANGE_MSG = "Vitesse :",
@@ -518,7 +540,8 @@ FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Salle $1",
 TRACKNUM = "Piste $1",
 STOPSMUSIC = "Arrête la musique",
-EDITSCRIPTWOBUMPING = "Modifier le script sans réordonner la liste",
+EDITSCRIPTWOBUMPING = "Modifier le script sans le monter en haut de la liste",
+EDITSCRIPTWBUMPING = "Modifier le script et le monter en haut de la liste",
 CLICKONTHING = "Clique sur $1",
 ORDRAGDROP = "ou glisse et pose ici", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
@@ -549,12 +572,22 @@ YOUAREPLAYTESTING = "Vous êtes dans un test de jeu",
 LOCATEVVVVVV = "Selectionnez votre exécutable de $1", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Vous êtes déjà dans un test de jeu !",
 PLAYTESTINGFAILED = "Une erreur inattendue est apparue lors du lancement de VVVVVV :\n$1\n\nSi vous devez changer l'exécutable de VVVVVV qui est utilisé lors du test de jeu, maintenez Maj en appuyant sur le bouton de test de jeu.",
+VVVVVV_EXITCODE_FAILURE = "VVVVVV s'est terminé avec comme code $1", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "On dirait que vous utilisez VVVVVV 2.2 ou une version antérieure. Veuillez mettre à jour vers VVVVVV 2.3 ou une version ultérieure.",
+VVVVVV_SOMETHING_HAPPENED = "Quelque chose ne s'est pas bien passé avec VVVVVV.",
 PLAYTESTUNAVAILABLE = "Désolé, vous ne pouvez pas être dans un test de jeu sur un $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Veuillez sélectionner le fichier nommé '$1'.",
 
 PLAYTESTINGOPTIONS = "Test de jeu",
 PLAYTESTING_EXECUTABLE_NOTSET = "Vous n'avez pas encore ajouté d'exécutable de $1 à utiliser pour le test de jeu.\nVed vous le demandera lors du premier test d'un niveau de $2.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "L'exécutable de $1 à utiliser pour les tests de jeu est :\n$2", -- $1: VVVVVV 2.3
+
+FIND_V_EXE_ERROR = "Désolé, quelque chose ne s'est pas bien passé en cherchant VVVVVV. Essayez de donner le chemin vers l'exécutable manuellement.",
+FIND_V_EXE_FOUNDERROR = "Nous avons trouvé quelque chose ressemblant à VVVVVV, mais nous n'avons pas pu trouver un chemin vers son exécutable. Assurez-vous que vous n'utilisez pas une vieille version du jeu (2.3 ou ultérieur est requis) ou essayez de donner le chemin vers l'exécutable manuellement.",
+FIND_V_EXE_NOTFOUND = "On dirait que VVVVVV n'est pas lancé. Assurez-vous que VVVVVV est ouvert et réessayez.",
+FIND_V_EXE_MULTI = "Plusieurs instances différentes de VVVVVV ont été trouvées. Vérifiez qu'une seule version du jeu est ouverte et réessayez.",
+
+FIND_V_EXE_EXPLANATION = "Ved a besion de VVVVVV pour tester le jeu, donc le chemin vers VVVVVV doit être donné en premier lieu.\n\n\nPour auto-détecter VVVVVV, veuillez simplement lancer lejeu s'il n'est pas déjà lancé et appuyez sur \"Détecter\".",
 
 VCE_REMOVED = "VVVVVV: Community Edition n'est plus maintenu, et le support pour les niveaux de VVVVVV-CE a été supprimé de Ved. Ce niveau est traité comme un niveau de VVVVVV standard. Pour plus d'informations, allez sur https://vsix.dev/vce/status/",
 
@@ -568,7 +601,7 @@ PLUGIN_AUTHOR_VERSION = "par $1, version $2", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "Créer un script de chargement",
 
--- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+-- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 CREATE_LOAD_SCRIPT_NO = "Non",
 CREATE_LOAD_SCRIPT_RUNONCE = "Unique",
 CREATE_LOAD_SCRIPT_REPEATING = "Basique",
@@ -588,6 +621,28 @@ CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Créer un script de chargement répété",
 CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Ce terminal va pointer vers un nouveau script de chargement qui charge le script réel sans condition.",
 CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Cette boîte de script va pointer vers un nouveau script de chargement qui charge le script réel sans condition.",
 
+CUSTOM_SIZED_BRUSH = "Pinceau personnalisé",
+
+-- These are limited to 12*2 characters
+CUSTOM_SIZED_BRUSH_BRUSH = "Pinceau",
+CUSTOM_SIZED_BRUSH_STAMP = "Tampon",
+CUSTOM_SIZED_BRUSH_TILESET = "Jeu de tuiles",
+
+-- Explanation for "Brush"
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Taille de pinceau personnalisée",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Choisissez la taille du pinceau dont vous avez besoin.",
+
+-- Explanation for "Stamp"
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Tampon depuis la salle",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Sélectionne des tuiles de la salle pour créer un tampon.",
+
+-- Explanation for "Tileset"
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Tampon depuis le jeu de tuiles",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Sélectionne des tuiles depuis le jeu de tuiles pour créer un tampon. Ne marche qu'en mode manuel.",
+
+ADVANCED_LEVEL_OPTIONS = "Options de niveau avancées",
+ONEWAYCOL_OVERRIDE = "Recolore aussi les tuiles à sens unique dans les ressources personnalisées (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
 }
 
 -- Please check the reference for plural forms
@@ -597,8 +652,8 @@ L_PLU = {
 		[1] = "Vous avez $1 modules qui ne sont pas supportés dans cette version.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "Ce niveau a échoué $1 test. Le problème a peut-être été réparé automatiquement, mais il est possible que certains problèmes et incohérences subsistent.",
-		[1] = "Ce niveau a échoué $1 tests. Les problèmes ont peut-être été réparés automatiquement, mais il est possible que certains problèmes et incohérences subsistent.",
+		[0] = "Ce niveau a échoué $1 test. Le problème a peut-être été réparé automatiquement, mais il est possible que certains plantages et incohérences subsistent.",
+		[1] = "Ce niveau a échoué $1 tests. Les problèmes ont peut-être été réparés automatiquement, mais il est possible que certains plantages et incohérences subsistent.",
 	},
 	SCRIPTUSAGESROOMS = {
 		[0] = "$1 utilisation dans les salles : $2",
@@ -639,6 +694,14 @@ L_PLU = {
 	XMLNULLS = {
 		[0] = "Il y a $1 caractère XML null !",
 		[1] = "Il y a $1 caractères XML null !",
+	},
+	NUM_GRAPHICS_CUSTOMIZED = {
+		[0] = "$1 image personnalisée",
+		[1] = "$1 images personnalisées",
+	},
+	NUM_SOUNDS_CUSTOMIZED = {
+		[0] = "$1 effet sonore personnalisé",
+		[1] = "$1 effets sonores personnalisés",
 	},
 }
 
@@ -739,7 +802,7 @@ ERR_FILE = "Fichier à éditer :"
 ERR_FILEEDITORS = "Modules qui modifient ce fichier :"
 ERR_CURRENTPLUGIN = "Module qui a provoqué cette erreur :"
 ERR_PLEASETELLAUTHOR = "Un module était supposé modifier le code de Ved, mais le code à remplacer n'a pas été trouvé.\nIl est possible que ceci soit causé par un conflit entre deux modules, ou qu'une mise à jour de Ved aie cassé ce module.\n\nDétails : (appuyez sur Ctrl/Cmd+C pour copier dans le presse papiers)\n\n"
-ERR_CONTINUE = "Vous pouvez continuer en appuyant sur Échap ou Entrée, mais cette modification erronée peut causer des problèmes."
+ERR_CONTINUE = "Vous pouvez continuer en appuyant sur Echap ou Entrée, mais veuillez noter que cette modification erronée peut causer des problèmes."
 ERR_OPENPLUGINSFOLDER = "Vous pouvez ouvrir votre dossier de greffons en appuyant sur F, pour que vous puissiez réparer ou enlever le greffon défectueux. Après cela, relancez Ved."
 ERR_REPLACECODE = "Impossible de trouver ceci dans %s.lua :"
 ERR_REPLACECODEPATTERN = "Impossible de trouver ceci dans %s.lua (en tant que motif) :"
@@ -2888,14 +2951,14 @@ Ved a été créé par Dav999
 
 Autres contributeurs de code: Info Teddy
 
-Quelques graphismes et la police ont été créés par Hejmstel
+Quelques graphismes et la police ont été créés par Reese Rivers
 
 Traduction russe : CreepiX, Cheep, Omegaplex
-Traduction esperanto : Hejmstel
+Traduction esperanto : Reese Rivers
 Traduction allemande : r00ster
 Traduction française : RhenaudTheLukark
 Traduction espagnole : Valso22/naether
-Indonesian translation: _march31onne/Marchionne Evangelisti
+Traduction indonésienne: _march31onne/Marchionne Evangelisti
 
 
 Remerciements spéciaux à :\h#

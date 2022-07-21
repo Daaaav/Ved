@@ -54,9 +54,12 @@ THREADERROR = "Thread error!",
 WHATDIDYOUDO = "What did you do?!",
 UNDOFAULTY = "What are you doing?",
 SOURCEDESTROOMSSAME = "Source and destination rooms are the same!",
+COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!",
 UNKNOWNUNDOTYPE = "Unknown undo type \"$1\"!",
 MDEVERSIONWARNING = "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level.",
 FORGOTPATH = "You forgot to specify a path!",
+LIB_LOAD_ERRMSG = "Failed to load an essential library. Please tell Dav999 about this problem.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nTry installing GCC to solve this problem, if it isn't already installed.",
 
 SELECTCOPY1 = "Select the room to copy",
 SELECTCOPY2 = "Select the location to copy this room to",
@@ -135,6 +138,11 @@ BTN_DISCARD = "Discard",
 BTN_SAVE = "Save",
 BTN_CLOSE = "Close",
 BTN_LOAD = "Load",
+BTN_ADVANCED = "Advanced",
+
+BTN_AUTODETECT = "Detect",
+BTN_MANUALLY = "Override", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "Retry",
 
 COMPARINGTHESE = "Comparing $1.vvvvvv to $2.vvvvvv",
 COMPARINGTHESENEW = "Comparing (unsaved level) to $1.vvvvvv",
@@ -226,6 +234,7 @@ INVALIDFILESIZE = "Invalid file size.",
 
 EDIT = "Edit",
 EDITWOBUMPING = "Edit without bumping",
+EDITWBUMPING = "Edit and bump",
 COPYNAME = "Copy name",
 COPYCONTENTS = "Copy contents",
 DUPLICATE = "Duplicate",
@@ -250,9 +259,9 @@ COPYROOMS = "Copy room",
 SWAPROOMS = "Swap rooms",
 
 MAP_STYLE = "Map style",
-MAP_STYLE_FULL = "Full", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Minimap", -- Max 12 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+MAP_STYLE_FULL = "Full", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "Minimap", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
 
 FLAGS = "Flags",
 ROOM = "room",
@@ -283,6 +292,8 @@ AMOUNTOVERWRITEBACKUPS = "Number of backups to keep per level",
 SCALE = "Scale",
 LOADALLMETADATA = "Load metadata (such as title, author and description) for all files in levels list",
 COLORED_TEXTBOXES = "Use true textbox colors",
+MOUSESCROLLINGSPEED = "Mouse scrolling speed",
+BUMPSCRIPTSBYDEFAULT = "Bump scripts to the top of the list when editing them by default",
 
 SCRIPTSPLIT = "Split",
 SPLITSCRIPT = "Split scripts",
@@ -344,6 +355,7 @@ SYNTAXCOLOR_CURSOR = "Cursor",
 SYNTAXCOLOR_FLAGNAME = "Flag name",
 SYNTAXCOLOR_NEWFLAGNAME = "New flag name",
 SYNTAXCOLOR_COMMENT = "Comment",
+SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa",
 RESETCOLORS = "Reset colors",
 STRINGNOTFOUND = "\"$1\" was not found",
 
@@ -443,6 +455,9 @@ MUSICLOADERROR = "Can not load $1: ",
 MUSICLOADERROR_TOOSMALL = "The music file is too small to be valid.",
 MUSICEXISTSYES = "Exists",
 MUSICEXISTSNO = "Does not exist",
+ASSETS_FOLDER_EXISTS_NO = "Does not exist - click to create",
+ASSETS_FOLDER_EXISTS_YES = "Exists - click to open",
+NO_ASSETS_SUBFOLDER = "No \"$1\" folder",
 LOAD = "Load",
 RELOAD = "Reload",
 UNLOAD = "Unload",
@@ -479,6 +494,13 @@ LOADIMAGE = "Load image",
 GRID = "Grid",
 NOTALPHAONLY = "RGB",
 
+UNSAVED_LEVEL_ASSETS_FOLDER = "The level needs to be saved before it can use custom assets.",
+CREATE_ASSETS_FOLDER = "Would you like to create a custom assets folder for this level?\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "It seems like the VVVVVV folder doesn't exist. Would you like to create it?",
+CREATE_LEVELS_FOLDER = "It seems like the levels folder doesn't exist. Would you like to create it?",
+CREATE_FOLDER_FAIL = "Unable to create folder.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "Assets folder for $1",
+
 OPAQUEROOMNAMEBACKGROUND = "Make the black roomname backgrounds opaque",
 PLATVCHANGE_TITLE = "Change platform speed",
 PLATVCHANGE_MSG = "Speed:",
@@ -501,6 +523,7 @@ ROOMNUM = "Room $1",
 TRACKNUM = "Track $1",
 STOPSMUSIC = "Stops music",
 EDITSCRIPTWOBUMPING = "Edit script without bumping",
+EDITSCRIPTWBUMPING = "Edit script and bump",
 CLICKONTHING = "Click on $1",
 ORDRAGDROP = "or drag and drop onto here", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "There is more than one start point in this level!",
@@ -531,12 +554,22 @@ YOUAREPLAYTESTING = "You are currently playtesting",
 LOCATEVVVVVV = "Select your $1 executable", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "You're already playtesting!",
 PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
+VVVVVV_EXITCODE_FAILURE = "VVVVVV exited with code $1", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later.",
+VVVVVV_SOMETHING_HAPPENED = "Something seems to have gone wrong with VVVVVV.",
 PLAYTESTUNAVAILABLE = "Sorry, you cannot playtest on $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Please select the file named '$1'.",
 
 PLAYTESTINGOPTIONS = "Playtesting",
 PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
+
+FIND_V_EXE_ERROR = "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually.",
+FIND_V_EXE_FOUNDERROR = "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually.",
+FIND_V_EXE_NOTFOUND = "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again.",
+FIND_V_EXE_MULTI = "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again.",
+
+FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n\n\nTo autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\".",
 
 VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
@@ -550,7 +583,7 @@ PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "Create load script",
 
--- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+-- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 CREATE_LOAD_SCRIPT_NO = "No",
 CREATE_LOAD_SCRIPT_RUNONCE = "Run once",
 CREATE_LOAD_SCRIPT_REPEATING = "Repeating",
@@ -569,6 +602,28 @@ CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "This script box will point to a new load sc
 CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Create repeating load script",
 CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "This terminal will point to a new load script, which unconditionally loads the real script.",
 CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "This script box will point to a new load script, which unconditionally loads the real script.",
+
+CUSTOM_SIZED_BRUSH = "Custom brush",
+
+-- These are limited to 12*2 characters
+CUSTOM_SIZED_BRUSH_BRUSH = "Brush",
+CUSTOM_SIZED_BRUSH_STAMP = "Stamp",
+CUSTOM_SIZED_BRUSH_TILESET = "Tileset",
+
+-- Explanation for "Brush"
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Custom brush size",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Choose the size of the brush you need.",
+
+-- Explanation for "Stamp"
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stamp from room",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Select tiles from the room to create a stamp.",
+
+-- Explanation for "Tileset"
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stamp from tileset",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Select tiles from the tileset to create a stamp. Only works in manual mode.",
+
+ADVANCED_LEVEL_OPTIONS = "Advanced level options",
+ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
 }
 
@@ -621,6 +676,14 @@ L_PLU = {
 	XMLNULLS = {
 		[0] = "There is $1 XML null character!",
 		[1] = "There are $1 XML null characters!",
+	},
+	NUM_GRAPHICS_CUSTOMIZED = {
+		[0] = "$1 image customized",
+		[1] = "$1 images customized",
+	},
+	NUM_SOUNDS_CUSTOMIZED = {
+		[0] = "$1 sound effect customized",
+		[1] = "$1 sound effects customized",
 	},
 }
 
@@ -2734,10 +2797,10 @@ Ved is made by Dav999
 
 Further code contributors: Info Teddy
 
-Some of the graphics and the font were made by Hejmstel
+Some of the graphics and the font were made by Reese Rivers
 
 Russian translation: CreepiX, Cheep, Omegaplex
-Esperanto translation: Hejmstel
+Esperanto translation: Reese Rivers
 German translation: r00ster
 French translation: RhenaudTheLukark
 Spanish translation: Valso22/naether

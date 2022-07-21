@@ -141,6 +141,10 @@ msgctxt "L.SOURCEDESTROOMSSAME"
 msgid "Source and destination rooms are the same!"
 msgstr ""
 
+msgctxt "L.COORDS_OUT_OF_RANGE"
+msgid "Huh? These coordinates aren't even in this dimension!"
+msgstr ""
+
 msgctxt "L.UNKNOWNUNDOTYPE"
 msgid "Unknown undo type \"$1\"!"
 msgstr ""
@@ -151,6 +155,14 @@ msgstr ""
 
 msgctxt "L.FORGOTPATH"
 msgid "You forgot to specify a path!"
+msgstr ""
+
+msgctxt "L.LIB_LOAD_ERRMSG"
+msgid "Failed to load an essential library. Please tell Dav999 about this problem.\n\n$1"
+msgstr ""
+
+msgctxt "L.LIB_LOAD_ERRMSG_GCC"
+msgid "\n\nTry installing GCC to solve this problem, if it isn't already installed."
 msgstr ""
 
 msgctxt "L.SELECTCOPY1"
@@ -427,6 +439,23 @@ msgstr ""
 
 msgctxt "L.BTN_LOAD"
 msgid "Load"
+msgstr ""
+
+msgctxt "L.BTN_ADVANCED"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "L.BTN_AUTODETECT"
+msgid "Detect"
+msgstr ""
+
+#. choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+msgctxt "L.BTN_MANUALLY"
+msgid "Override"
+msgstr ""
+
+msgctxt "L.BTN_RETRY"
+msgid "Retry"
 msgstr ""
 
 msgctxt "L.COMPARINGTHESE"
@@ -745,6 +774,10 @@ msgctxt "L.EDITWOBUMPING"
 msgid "Edit without bumping"
 msgstr ""
 
+msgctxt "L.EDITWBUMPING"
+msgid "Edit and bump"
+msgstr ""
+
 msgctxt "L.COPYNAME"
 msgid "Copy name"
 msgstr ""
@@ -813,17 +846,17 @@ msgctxt "L.MAP_STYLE"
 msgid "Map style"
 msgstr ""
 
-#. Max 12 characters
+#. Max 12*2 characters
 msgctxt "L.MAP_STYLE_FULL"
 msgid "Full"
 msgstr ""
 
-#. Max 12 characters
+#. Max 12*2 characters
 msgctxt "L.MAP_STYLE_MINIMAP"
 msgid "Minimap"
 msgstr ""
 
-#. Max 12 characters
+#. Max 12*2 characters
 msgctxt "L.MAP_STYLE_VTOOLS"
 msgid "VTools"
 msgstr ""
@@ -935,6 +968,14 @@ msgstr ""
 
 msgctxt "L.COLORED_TEXTBOXES"
 msgid "Use true textbox colors"
+msgstr ""
+
+msgctxt "L.MOUSESCROLLINGSPEED"
+msgid "Mouse scrolling speed"
+msgstr ""
+
+msgctxt "L.BUMPSCRIPTSBYDEFAULT"
+msgid "Bump scripts to the top of the list when editing them by default"
 msgstr ""
 
 msgctxt "L.SCRIPTSPLIT"
@@ -1163,6 +1204,10 @@ msgstr ""
 
 msgctxt "L.SYNTAXCOLOR_COMMENT"
 msgid "Comment"
+msgstr ""
+
+msgctxt "L.SYNTAXCOLOR_WRONGLANG"
+msgid "Simplified command in int.sc mode or vice versa"
 msgstr ""
 
 msgctxt "L.RESETCOLORS"
@@ -1529,6 +1574,18 @@ msgctxt "L.MUSICEXISTSNO"
 msgid "Does not exist"
 msgstr ""
 
+msgctxt "L.ASSETS_FOLDER_EXISTS_NO"
+msgid "Does not exist - click to create"
+msgstr ""
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_YES"
+msgid "Exists - click to open"
+msgstr ""
+
+msgctxt "L.NO_ASSETS_SUBFOLDER"
+msgid "No \"$1\" folder"
+msgstr ""
+
 msgctxt "L.LOAD"
 msgid "Load"
 msgstr ""
@@ -1673,6 +1730,31 @@ msgctxt "L.NOTALPHAONLY"
 msgid "RGB"
 msgstr ""
 
+msgctxt "L.UNSAVED_LEVEL_ASSETS_FOLDER"
+msgid "The level needs to be saved before it can use custom assets."
+msgstr ""
+
+#. $1: path
+msgctxt "L.CREATE_ASSETS_FOLDER"
+msgid "Would you like to create a custom assets folder for this level?\n\n$1"
+msgstr ""
+
+msgctxt "L.CREATE_VVVVVV_FOLDER"
+msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+msgstr ""
+
+msgctxt "L.CREATE_LEVELS_FOLDER"
+msgid "It seems like the levels folder doesn't exist. Would you like to create it?"
+msgstr ""
+
+msgctxt "L.CREATE_FOLDER_FAIL"
+msgid "Unable to create folder.\n\n$1"
+msgstr ""
+
+msgctxt "L.ASSETS_FOLDER_FOR_LEVEL"
+msgid "Assets folder for $1"
+msgstr ""
+
 msgctxt "L.OPAQUEROOMNAMEBACKGROUND"
 msgid "Make the black roomname backgrounds opaque"
 msgstr ""
@@ -1754,6 +1836,10 @@ msgstr ""
 
 msgctxt "L.EDITSCRIPTWOBUMPING"
 msgid "Edit script without bumping"
+msgstr ""
+
+msgctxt "L.EDITSCRIPTWBUMPING"
+msgid "Edit script and bump"
 msgstr ""
 
 msgctxt "L.CLICKONTHING"
@@ -1867,6 +1953,19 @@ msgctxt "L.PLAYTESTINGFAILED"
 msgid "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
 msgstr ""
 
+#. for example, code 1, indicating failure
+msgctxt "L.VVVVVV_EXITCODE_FAILURE"
+msgid "VVVVVV exited with code $1"
+msgstr ""
+
+msgctxt "L.VVVVVV_22_OR_OLDER"
+msgid "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
+msgstr ""
+
+msgctxt "L.VVVVVV_SOMETHING_HAPPENED"
+msgid "Something seems to have gone wrong with VVVVVV."
+msgstr ""
+
 #. you cannot playtest on <operating system>
 msgctxt "L.PLAYTESTUNAVAILABLE"
 msgid "Sorry, you cannot playtest on $1."
@@ -1888,6 +1987,26 @@ msgstr ""
 #. $1: VVVVVV 2.3
 msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
 msgid "The $1 executable to use for playtesting is set to:\n$2"
+msgstr ""
+
+msgctxt "L.FIND_V_EXE_ERROR"
+msgid "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually."
+msgstr ""
+
+msgctxt "L.FIND_V_EXE_FOUNDERROR"
+msgid "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually."
+msgstr ""
+
+msgctxt "L.FIND_V_EXE_NOTFOUND"
+msgid "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
+msgstr ""
+
+msgctxt "L.FIND_V_EXE_MULTI"
+msgid "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
+msgstr ""
+
+msgctxt "L.FIND_V_EXE_EXPLANATION"
+msgid "Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n\n\nTo autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
 msgstr ""
 
 msgctxt "L.VCE_REMOVED"
@@ -1923,17 +2042,17 @@ msgctxt "L.CREATE_LOAD_SCRIPT"
 msgid "Create load script"
 msgstr ""
 
-#. These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 msgctxt "L.CREATE_LOAD_SCRIPT_NO"
 msgid "No"
 msgstr ""
 
-#. These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 msgctxt "L.CREATE_LOAD_SCRIPT_RUNONCE"
 msgid "Run once"
 msgstr ""
 
-#. These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 msgctxt "L.CREATE_LOAD_SCRIPT_REPEATING"
 msgid "Repeating"
 msgstr ""
@@ -1981,6 +2100,64 @@ msgstr ""
 #. Explanation for "Repeating"
 msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_REPEATING"
 msgid "This script box will point to a new load script, which unconditionally loads the real script."
+msgstr ""
+
+msgctxt "L.CUSTOM_SIZED_BRUSH"
+msgid "Custom brush"
+msgstr ""
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_BRUSH"
+msgid "Brush"
+msgstr ""
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_STAMP"
+msgid "Stamp"
+msgstr ""
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_TILESET"
+msgid "Tileset"
+msgstr ""
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH"
+msgid "Custom brush size"
+msgstr ""
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH"
+msgid "Choose the size of the brush you need."
+msgstr ""
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_STAMP"
+msgid "Stamp from room"
+msgstr ""
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_STAMP"
+msgid "Select tiles from the room to create a stamp."
+msgstr ""
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_TILESET"
+msgid "Stamp from tileset"
+msgstr ""
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_TILESET"
+msgid "Select tiles from the tileset to create a stamp. Only works in manual mode."
+msgstr ""
+
+msgctxt "L.ADVANCED_LEVEL_OPTIONS"
+msgid "Advanced level options"
+msgstr ""
+
+#. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+msgctxt "L.ONEWAYCOL_OVERRIDE"
+msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
@@ -2052,6 +2229,18 @@ msgstr[1] ""
 msgctxt "L_PLU.XMLNULLS"
 msgid "There is $1 XML null character!"
 msgid_plural "There are $1 XML null characters!"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.NUM_GRAPHICS_CUSTOMIZED"
+msgid "$1 image customized"
+msgid_plural "$1 images customized"
+msgstr[0] ""
+msgstr[1] ""
+
+msgctxt "L_PLU.NUM_SOUNDS_CUSTOMIZED"
+msgid "$1 sound effect customized"
+msgid_plural "$1 sound effects customized"
 msgstr[0] ""
 msgstr[1] ""
 

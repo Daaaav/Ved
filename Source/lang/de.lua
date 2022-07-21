@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2022-07-03 04:08:37 (CEST)
+--- Last converted: 2022-07-21 22:22:38 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -31,7 +31,7 @@ end
 
 L = {
 
-TRANSLATIONCREDIT = "Übersetzt von r00ster", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Möchtest du bei der Übersetzung auf Deutsch helfen? Bitte nimm Kontakt mit Dav999 auf!", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE-Version von https://love2d.org downloaden.",
 OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
@@ -68,9 +68,12 @@ THREADERROR = "Threadfehler!",
 WHATDIDYOUDO = "Was hast du getan?!",
 UNDOFAULTY = "Was tust du?",
 SOURCEDESTROOMSSAME = "Quell- und Zielräume sind identisch!",
+COORDS_OUT_OF_RANGE = "Hm? Diese Koordinaten befinden sich nicht einmal in dieser Dimension!",
 UNKNOWNUNDOTYPE = "Konnte nicht rückgängig machen: \"$1\"!",
 MDEVERSIONWARNING = "Dieses Level scheint in einer neueren Version von Ved gemacht zu sein, und kann Daten enthalten die verloren gehen wenn du dieses Level speicherst.",
 FORGOTPATH = "Du hast vergessen einen Pfad anzugeben!",
+LIB_LOAD_ERRMSG = "Eine benötigte Bibliothek konnte nicht geladen werden. Bitte informiere Dav999 über dieses Problem.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nVersuche, GCC zu installieren, um dieses Problem zu lösen, falls es nicht bereits installiert ist.",
 
 SELECTCOPY1 = "Wähle den Raum aus zum kopieren",
 SELECTCOPY2 = "Wähle die Position wo der Raum hinkopiert werden soll",
@@ -149,6 +152,11 @@ BTN_DISCARD = "Verwerfen",
 BTN_SAVE = "Speichern",
 BTN_CLOSE = "Schließen",
 BTN_LOAD = "Laden",
+BTN_ADVANCED = "Erweitert",
+
+BTN_AUTODETECT = "Erkennen",
+BTN_MANUALLY = "Manuell", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "Erneut versuchen",
 
 COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
 COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
@@ -240,6 +248,7 @@ INVALIDFILESIZE = "Ungültige Dateigröße.",
 
 EDIT = "Bearbeiten",
 EDITWOBUMPING = "Bearbeite ohne Stoß zum Anfang",
+EDITWBUMPING = "Bearbeite mit Stoß zum Anfang",
 COPYNAME = "Name kopieren",
 COPYCONTENTS = "Inhalt kopieren",
 DUPLICATE = "Duplizieren",
@@ -264,9 +273,9 @@ COPYROOMS = "Kopiere Raum",
 SWAPROOMS = "Tausche Räume",
 
 MAP_STYLE = "Kartenstil",
-MAP_STYLE_FULL = "Voll", -- Max 12 characters
-MAP_STYLE_MINIMAP = "Minikarte", -- Max 12 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12 characters
+MAP_STYLE_FULL = "Voll", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "Minikarte", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
 
 FLAGS = "Flags",
 ROOM = "Raum",
@@ -297,6 +306,8 @@ AMOUNTOVERWRITEBACKUPS = "Anzahl an Backups die gemacht werden sollen pro Level"
 SCALE = "Größe",
 LOADALLMETADATA = "Lade Metadaten (sowas wie Titel, Author und Beschreibung) für alle Dateien in der Levelliste",
 COLORED_TEXTBOXES = "Benutze Echtfarben für Textbox",
+MOUSESCROLLINGSPEED = "Geschwindigkeit des Mausbildlaufs",
+BUMPSCRIPTSBYDEFAULT = "Skripte beim Bearbeiten standardmäßig an den Anfang der Liste verschieben",
 
 SCRIPTSPLIT = "Trennen",
 SPLITSCRIPT = "Skripts trennen",
@@ -358,6 +369,7 @@ SYNTAXCOLOR_CURSOR = "Mauszeiger",
 SYNTAXCOLOR_FLAGNAME = "Flagname",
 SYNTAXCOLOR_NEWFLAGNAME = "Neuer Flagname",
 SYNTAXCOLOR_COMMENT = "Kommentar",
+SYNTAXCOLOR_WRONGLANG = "Vereinfachtes Kommando in Int.sc-Modus oder andersherum",
 RESETCOLORS = "Farben zurücksetzen",
 STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
 
@@ -457,6 +469,9 @@ MUSICLOADERROR = "$1 kann nicht geladen werden: ",
 MUSICLOADERROR_TOOSMALL = "Die Musikdatei ist zu klein um gültig zu sein.",
 MUSICEXISTSYES = "Existiert",
 MUSICEXISTSNO = "Existiert nicht",
+ASSETS_FOLDER_EXISTS_NO = "Existiert nicht - klicken zum Erstellen",
+ASSETS_FOLDER_EXISTS_YES = "Existiert - klicken zum Öffnen",
+NO_ASSETS_SUBFOLDER = "Kein \"$1\"-Ordner",
 LOAD = "Laden",
 RELOAD = "Neu laden",
 UNLOAD = "Entfernen",
@@ -493,6 +508,13 @@ LOADIMAGE = "Lade Bild",
 GRID = "Netz",
 NOTALPHAONLY = "RGB",
 
+UNSAVED_LEVEL_ASSETS_FOLDER = "Der Level muss gespeichert werden, bevor er benutzerdefinierte Assets verwenden kann.",
+CREATE_ASSETS_FOLDER = "Möchtest du einen benutzerdefinierten Assets-Ordner für diesen Level erstellen?\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "Es scheint, dass der Ordner VVVVVV nicht existiert. Möchtest du ihn erstellen?",
+CREATE_LEVELS_FOLDER = "Es scheint, dass der Ordner \"levels\" nicht existiert. Möchtest du ihn erstellen?",
+CREATE_FOLDER_FAIL = "Ordner kann nicht erstellt werden.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "Assets-Ordner für $1",
+
 OPAQUEROOMNAMEBACKGROUND = "Mache die schwarzen Raumnamenhintergründe undurchsichtig",
 PLATVCHANGE_TITLE = "Plattformgeschwindigkeit ändern",
 PLATVCHANGE_MSG = "Geschwindigkeit:",
@@ -515,6 +537,7 @@ ROOMNUM = "Raum $1",
 TRACKNUM = "Track $1",
 STOPSMUSIC = "Stoppt Musik",
 EDITSCRIPTWOBUMPING = "Bearbeite Skript ohne Stoß zum Anfang",
+EDITSCRIPTWBUMPING = "Bearbeite Skript mit Stoß zum Anfang",
 CLICKONTHING = "Klicke auf $1",
 ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
 MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
@@ -545,12 +568,22 @@ YOUAREPLAYTESTING = "Du Spieltestest momentan",
 LOCATEVVVVVV = "Wähle dein $1 Program aus", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Du Spieltestest schon!",
 PLAYTESTINGFAILED = "Etwas ist schief gelaufen beim Öffnen von VVVVVV:\n$1\n\nWenn du die ausführbare Datei die zum Spieltest für VVVVVV genutzt wird ändern musst, halte Shift während du den Spieltest-Knopf drückst.",
+VVVVVV_EXITCODE_FAILURE = "VVVVVVV hat sich mit Code $1 beendet", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "Es sieht so aus, als ob du VVVVVV 2.2 oder älter verwendest. Bitte aktualisiert auf VVVVVV 2.3 oder höher.",
+VVVVVV_SOMETHING_HAPPENED = "Bei VVVVVVV scheint etwas schief gelaufen zu sein.",
 PLAYTESTUNAVAILABLE = "Tut mir leid, du kannst nicht Spieltesten auf $1.", -- you cannot playtest on <operating system>
 VVVVVVFILE = "Bitte wähle die Datei namens '$1' aus.",
 
 PLAYTESTINGOPTIONS = "Spieltest",
 PLAYTESTING_EXECUTABLE_NOTSET = "Sie haben noch keine ausführbare Datei für $1 zum Spieltesten festgelegt.\nVed wird danach fragen, wenn du zum ersten Mal ein $2-Level testest.", -- $1: VVVVVV 2.3, $2: VVVVVV
 PLAYTESTING_EXECUTABLE_SET = "Die ausführbare Datei $1, die für den Spieltest verwendet werden soll, ist:\n$2", -- $1: VVVVVV 2.3
+
+FIND_V_EXE_ERROR = "Leider ist bei der Suche nach VVVVVV etwas schief gegangen. Versuche, den Pfad zur ausführbaren Datei manuell einzugeben.",
+FIND_V_EXE_FOUNDERROR = "Etwas gefunden, das wie VVVVVV aussieht, aber es konnte keinen brauchbaren Pfad zu seiner ausführbaren Datei gefunden werden. Stelle sicher, dass du keine alte Version des Spiels verwendest (2.3 oder neuer ist erforderlich) oder versuche, den Pfad zur ausführbaren Datei manuell festzulegen.",
+FIND_V_EXE_NOTFOUND = "Es sieht so aus, als ob VVVVVV nicht läuft. Stell sicher, dass VVVVVV läuft und versuche es erneut.",
+FIND_V_EXE_MULTI = "Mehrere verschiedene Exemplare von VVVVVV laufen. Stelle sicher, dass du nur eine Version des Spiels geöffnet hast und versuche es erneut.",
+
+FIND_V_EXE_EXPLANATION = "Ved benötigt VVVVVVV zum Spieltesten, und der Pfad zu VVVVVV muss zuerst festgelegt werden.\n\n\nUm VVVVVV automatisch zu erkennen, starte einfach das Spiel, wenn es noch nicht läuft, und drücke \"Erkennen\".",
 
 VCE_REMOVED = "VVVVVV: Community Edition wird nicht mehr gewartet und VVVVVV-CE-Level werden nicht mehr von Ved unterstützt. Dieses Level wird wie ein normales VVVVVV-Level behandelt. Für mehr Informationen, siehe https://vsix.dev/vce/status/",
 
@@ -564,7 +597,7 @@ PLUGIN_AUTHOR_VERSION = "von $1, Version $2", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "Neues Ladeskript",
 
--- These three are limited to 12 characters unfortunately. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+-- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
 CREATE_LOAD_SCRIPT_NO = "Nein",
 CREATE_LOAD_SCRIPT_RUNONCE = "Einmal",
 CREATE_LOAD_SCRIPT_REPEATING = "Wiederholend",
@@ -583,6 +616,28 @@ CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "Diese Skriptbox wird zu einem neuen Ladeskr
 CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Neues wiederholende Ladeskript",
 CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "Dieses Terminal wird zu einem neuen Ladeskript zeigen, welches wiederholend das echte Skript lädt.",
 CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "Diese Skriptbox wird zu einem neuen Ladeskript zeigen, welches wiederholend das echte Skript lädt.",
+
+CUSTOM_SIZED_BRUSH = "Eigene Pinsel",
+
+-- These are limited to 12*2 characters
+CUSTOM_SIZED_BRUSH_BRUSH = "Pinsel",
+CUSTOM_SIZED_BRUSH_STAMP = "Stempel",
+CUSTOM_SIZED_BRUSH_TILESET = "Tileset",
+
+-- Explanation for "Brush"
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Eigene Pinselgröße",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Wähle die Größe der Pinsel, die du brauchst.",
+
+-- Explanation for "Stamp"
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stempel vom Zimmer",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Wähle Tiles aus dem Raum aus, um einen Stempel zu erstellen.",
+
+-- Explanation for "Tileset"
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stempel aus Tileset",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Wählen Sie Tiles aus dem Tileset aus, um einen Stempel zu erstellen. Funktioniert nur im manuellen Modus.",
+
+ADVANCED_LEVEL_OPTIONS = "Erweiterte Leveloptionen",
+ONEWAYCOL_OVERRIDE = "Einwegblöcke auch in benutzerdefinierten Assets umfärben (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
 }
 
@@ -635,6 +690,14 @@ L_PLU = {
 	XMLNULLS = {
 		[0] = "Es gibt $1 XML Nullcharakter!",
 		[1] = "Es gibt $1 XML Nullcharakter!",
+	},
+	NUM_GRAPHICS_CUSTOMIZED = {
+		[0] = "$1 Abbildung angepasst",
+		[1] = "$1 Abbildungen angepasst",
+	},
+	NUM_SOUNDS_CUSTOMIZED = {
+		[0] = "$1 Soundeffekt angepasst",
+		[1] = "$1 Soundeffekte angepasst",
 	},
 }
 
@@ -2748,14 +2811,14 @@ Ved ist gemacht von Dav999
 
 Weitere Code-Beiträge: Info Teddy
 
-Manche der Grafiken und Schriftarten wurden von Hejmstel gemacht
+Manche der Grafiken und Schriftarten wurden von Reese Rivers gemacht
 
 Russische Übersetzung: CreepiX, Cheep, Omegaplex
-Esperanto Übersetzung: Hejmstel
+Esperanto Übersetzung: Reese Rivers
 Deutsche Übersetzung: r00ster
 Französische Übersetzung: RhenaudTheLukark
 Spanische Übersetzung: Valso22/naether
-Indonesian translation: _march31onne/Marchionne Evangelisti
+Indonesische Übersetzung: _march31onne/Marchionne Evangelisti
 
 
 Besonderen Dank an:\h#
