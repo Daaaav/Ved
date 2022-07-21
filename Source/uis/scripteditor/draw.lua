@@ -352,7 +352,10 @@ return function()
 		end
 	end
 
-	if context == "script" then
+	if table.contains({"syntaxcolor_wronglang", "syntaxcolor_errortext"}, context) then
+		setColorArr(s[context])
+		ved_printf(L[context:upper()], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+	elseif context == "script" then
 		ved_printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		if not scriptinstack(carg1) then
 			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "ax"}, 13)

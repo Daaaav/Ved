@@ -86,21 +86,20 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 						local line_x = newinputsys.getpos("script_lines")
 						editing_command = line_x <= utf8.len(v)
 					end
-					if editing_command then
+
+					local intsc = internalscript or cutscenebarsinternalscript
+					local is_sim = knowncommands[v_parsed:lower()]
+					local is_int = knowninternalcommands[v_parsed]
+
+					if (not intsc and is_sim)
+					or (intsc and is_int) then
+						setColorArr(s.syntaxcolor_command)
+					elseif is_sim or is_int then
+						setColorArr(s.syntaxcolor_wronglang)
+					elseif editing_command then
 						setColorArr(s.syntaxcolor_command)
 					else
-						local intsc = internalscript or cutscenebarsinternalscript
-						local is_sim = knowncommands[v_parsed:lower()]
-						local is_int = knowninternalcommands[v_parsed]
-
-						if (not intsc and is_sim)
-						or (intsc and is_int) then
-							setColorArr(s.syntaxcolor_command)
-						elseif is_sim or is_int then
-							setColorArr(s.syntaxcolor_wronglang)
-						else
-							setColorArr(s.syntaxcolor_errortext)
-						end
+						setColorArr(s.syntaxcolor_errortext)
 					end
 				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
 					setColorArr(s.syntaxcolor_number)
@@ -213,6 +212,26 @@ function script_context(text)
 		they = math.floor(roomnum/limit.mapwidth)
 		thex = roomnum % limit.mapwidth
 		return thex, they
+	end
+
+	local line_x = newinputsys.getpos("script_lines")
+	local editing_command = line_x <= utf8.len(parts[1])
+	do
+		local intsc = internalscript or cutscenebarsinternalscript
+		local is_sim = knowncommands[parts[1]:lower()]
+		local is_int = knowninternalcommands[parts[1]]
+
+		if (not intsc and is_sim)
+		or (intsc and is_int) then
+			-- pass
+		elseif is_sim or is_int then
+			return "syntaxcolor_wronglang", parts[1]
+		elseif editing_command then
+			-- No Java IDE behavior, the cursor is on the command
+			return nil
+		else
+			return "syntaxcolor_errortext", parts[1]
+		end
 	end
 
 	if parts[1] == "flag" and parts[2] ~= nil then
