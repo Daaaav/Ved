@@ -2,23 +2,33 @@
 This is the repository for Ved, an external editor for VVVVVV levels.
 
 # Downloading
-You can choose to download the source version, which is a `.love` file, or, if you are using Windows or macOS, you can also choose to download a `.exe` or `.app` version.
+You can choose to download the source version, which is a `.love` file, or you can also choose to download an `.exe`, `.app`, or `.AppImage` version (depending on your operating system).
 
 The main place to download Ved is [https://tolp.nl/ved/download](https://tolp.nl/ved/download). That page has the changelog (including for the upcoming version) and download links for each version.
+
 ## Source
 You can download the latest version from [here](https://tolp.nl/ved/files/download/love/). You'll need to download [LÖVE](https://love2d.org/) 0.9.1+, 0.10.x or 11.x once. After that, you should be able to double-click the `.love`, or drag it on top of the love binary (`love.exe`, `love.app` or `love`).
+
 As long as your version of LÖVE is 0.9.1 or above and wasn't released _too_ recently, you don't really have to worry about getting a specific old version of LÖVE, even if "0.9.1 or higher" might give that impression. I try to add compatibility for new LÖVE versions soon after they're released, and if possible even earlier, without dropping compatibility for old versions.
 
 ## Windows version
-You can download the latest version from [here](https://tolp.nl/ved/files/download/win/). You do not need to install LÖVE, because each version comes with the required DLLs which causes one version to take up about 6 MB uncompressed. An advantage of using the Windows version and not the source version is that you can pin Ved to the taskbar or start menu.
-You must extract all files to the same folder, moving out just the `.exe` will not work! It's possible that you get an error about OpenGL, especially if you have an older system, in which case you need to follow the instructions for the source version (using LÖVE 0.9.1 or 0.9.2).
+You can download the latest version from [here](https://tolp.nl/ved/files/download/win/). You do not need to install LÖVE, because each version comes with the required DLLs. An advantage of using the Windows version and not the source version is that you can pin Ved to the taskbar or start menu.
+
+You must extract all files to the same folder, moving out just the `.exe` will not work!
+
+Other than the typical "Windows protected your PC" (just click "More info" and then "Run anyway") if you get an error when trying to start Ved, you might need to follow the instructions for the source version. If you have an old enough system, you might need to specifically use LÖVE 0.9.1 or 0.9.2 (especially if the error is about OpenGL). If you have a 32-bit system, just use 32-bit LÖVE.
 
 ## macOS version
 You can download the latest version from [here](https://tolp.nl/ved/files/download/mac/). You do not need to install LÖVE.
 
+If you get "Ved cannot be opened because the developer cannot be verified" - you might be used to this by now - right click (or control+click) the app, and select Open, which gives you the option to open the app. Or go to System Preferences > Security & Privacy > Open Anyway. If *that* didn't work and you're completely stuck, you might need to run `sudo spctl --global-disable` in a Terminal. Or `sudo spctl --master-disable`
+
 ## Linux
-On Linux, you need to use the source version, see the instructions above. For Ubuntu and its flavors, these days you can easily get a supported version of LÖVE with `sudo apt install love`. Unless you use 14.04 or older. (If/When Ved drops support for LÖVE 0.9.1, 18.04's version will be too old too, but that will probably not happen very soon.)
-If you really want to have a binary, you can `cat` the `.love` file to your `love` binary.
+Since Ved 1.10.0, you can download the latest version as an AppImage from [here](https://tolp.nl/ved/files/download/lin/). You may only need to mark it executable, and then you should be able to run it directly as a binary.
+
+You can also use the source version, see the instructions above. For Ubuntu and its flavors, you can easily get a supported version of LÖVE with `sudo apt install love`. Unless you use 14.04 or older. (If/When Ved drops support for LÖVE 0.9.1, 18.04's version will be too old too, but that will probably not happen very soon.)
+
+Do not install love via Snap! Ved will be too sandboxed to access your VVVVVV levels folder. Use `apt install love` instead of `snap install love`.
 
 # Feedback
 For places where you can report bugs, make feature requests or ask questions, see [this page](https://tolp.nl/ved/feedback) on the website.
