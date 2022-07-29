@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-07-21 22:22:39 (CEST)
+--- Last converted: 2022-07-30 01:13:29 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1610,8 +1610,8 @@ ai2 - deviga se followposition estas uzata por ai1
 
 changecolour¤(a,b)\w#h
 
-Ŝanĝas la koloron de skipano (notu: tio ĉi nur funkcias por skipanoj kreitaj per la
-komando createcrewman)
+Ŝanĝas la koloron de skipano (notu: tio ĉi nur funkcias por skipanoj kreitaj per
+la komando createcrewman)
 
 a - Koloro de ŝanĝota skipano (cyan/player/blue/red/yellow/green/purple)
 b - Nova koloro
@@ -1762,8 +1762,8 @@ entersecretlab\r#h
 
 Ŝaltas reĝimon de sekreta laboratorio.
 
-2.2 KAJ SUBE: Vere malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne nevolata
-efiko por propra nivelo.
+2.2 KAJ SUBE: Vere malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne
+nevolata efiko por propra nivelo.
 
 everybodysad¤()\w#h
 
@@ -1933,8 +1933,8 @@ dum individua ludado de la ĉefa ludo, kaj NE kontraŭ via aktuala fakta kvanto.
 
 ifwarp¤(x,y,dir,skripto)\w#h
 
-Se la warpdir por ĉambro x,y (1-indice) estas agordita al dir, iras al (simpligita)
-skripto
+Se la warpdir por ĉambro x,y (1-indice) estas agordita al dir, iras al
+(simpligita) skripto
 
 x - Ĉambra x-koordinato, ekde 1
 y - Ĉambra y-koordinato, ekde 1
@@ -2034,8 +2034,8 @@ Reŝanĝas la koloron de la ludanto al bluverda
 resumemusic¤()\w#h
 
 Nefinita komando. En 2.2 kaj sube, ĝi legas el malpravalorizita memoro,
-kio rezultas en paneo ĉe iuj maŝinoj kaj simple rezultas en ludado de Path Complete
-ĉe aliaj.
+kio rezultas en paneo ĉe iuj maŝinoj kaj simple rezultas en ludado de
+Path Complete ĉe aliaj.
 
 rollcredits¤()\r#h
 
@@ -2510,9 +2510,9 @@ Statoj 90-95 rilatas al tempoprovoj, sed ne funkcias ĝuste en propraj niveloj.
 110 - "Follow me!"
 112 - Forigas dialog-skatolojn
 115 - Esence nenio, daŭras al stato 116
-116 - Ruĝa dialog-skatolo ĉe la malsupro de la ekrano, kiu diras "Sorry Eurogamers!
-      Teleporting around the map doesn't work in this version!", daŭras al stato
-      117, kiu ne ekzistas, do eraroj eble okazos
+116 - Ruĝa dialog-skatolo ĉe la malsupro de la ekrano, kiu diras "Sorry
+      Eurogamers! Teleporting around the map doesn't work in this version!",
+      daŭras al stato 117, kiu ne ekzistas, do eraroj eble okazos
 118 - Forigas dialog-skatolojn
 Statoj 120-128 funkcias iome kiel 102-112, t.e. en serio, sed kun malpli da
       rompitaj aferoj
@@ -2550,8 +2550,8 @@ Statoj 3000-3099:
 4070 - La fina nivelo, sed la ludo paneos kiam vi atingas Tempgliton (pro la
        maniero en kiu la ludo akiras ento-informojn, kiu estas rompita en
        propraj niveloj)
-4080 - Viridiano estas teleportita reen al la ŝipo: "Saluton!" [K[K[K[K[Kapitano!],
-       intersceno kaj agnoskoj.
+4080 - Viridiano estas teleportita reen al la ŝipo: "Saluton!"
+       [K[K[K[K[Kapitano!], intersceno kaj agnoskoj.
        La supra difektos viajn konservitajn datumojn, do ne uzu ĝin, krom se vi
        havas savkopion!
 4090 - Intersceno post kompletigo de la unua kosmostacio

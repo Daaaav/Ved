@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2022-07-21 22:22:38 (CEST)
+--- Last converted: 2022-07-30 01:13:28 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1378,8 +1378,8 @@ say¤([baris[,warna]] .. "]]" .. [[)\h#w
 Menampilkan kotak teks. Tanpa argumen apa pun, ini akan membuat kotak teks dengan
 satu baris, dan secara default ini akan menghasilkan kotak teks terminal terpusat.
 Argumen warna bisa berupa warna, atau nama crewmate.
-Jika Anda menggunakan warna dan crewmate yang dapat diselamatkan dengan warna itu ada
-di dalam ruangan, maka kotak teks akan ditampilkan di atas crewmate itu.
+Jika Anda menggunakan warna dan crewmate yang dapat diselamatkan dengan warna itu
+ada di dalam ruangan, maka kotak teks akan ditampilkan di atas crewmate itu.
 
 reply¤([baris])\h#w
 
@@ -1598,7 +1598,8 @@ b - Warna untuk diubah menjadi
 
 changecustommood¤(warna,suasana)\w#h
 
-Mengubah suasana seorang crewmate (berfungsi untuk rekan crewmate yang dapat diselamatkan)
+Mengubah suasana seorang crewmate (berfungsi untuk rekan crewmate yang dapat
+diselamatkan)
 
 warna - cyan/player/blue/red/yellow/green/purple
 suasana - 0 untuk senang, 1 untuk sedih
@@ -1637,8 +1638,8 @@ warna - red/yellow/green/cyan/blue/purple/teleporter atau nomor
 
 changetile¤(warna,ubin)\w#h
 
-Mengubah ubin crewmate (Anda dapat mengubahnya ke sprite apa pun di sprite.png, dan
-itu hanya berfungsi untuk rekan crewmate yang dibuat dengan createcrewman)
+Mengubah ubin crewmate (Anda dapat mengubahnya ke sprite apa pun di sprite.png,
+dan itu hanya berfungsi untuk rekan crewmate yang dibuat dengan createcrewman)
 
 warna - cyan/player/blue/red/yellow/green/purple/gray
 ubin - Nomor ubin
@@ -1676,8 +1677,8 @@ n - Nomor entitas
 
 createlastrescued¤()\b#h
 
-Membuat crewmate terakhir yang diselamatkan pada posisi kode keras 200,153. Rekan crewmate
-terakhir yang diselamatkan didasarkan pada status game Level Complete.
+Membuat crewmate terakhir yang diselamatkan pada posisi kode keras 200,153. Rekan
+crewmate terakhir yang diselamatkan didasarkan pada status game Level Complete.
 
 createrescuedcrew¤()\b#h
 
@@ -2069,7 +2070,8 @@ Tunjukkan trinket di peta
 speak\w#h
 
 Memperlihatkan kotak teks, tanpa menghapus kotak teks lama. Juga jeda skrip
-sampai Anda menekan action/tindakan (kecuali ada perintah backgroundtext di atasnya)
+sampai Anda menekan action/tindakan (kecuali ada perintah backgroundtext di
+atasnya)
 
 speak_active\w#h
 
@@ -2436,7 +2438,8 @@ Gamestate\h#
 30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
      out ok..."
 31 - adegan potong "Violet, is that you?" (selama flag 6 adalah 0)
-32 - Jika tanda 7 adalah 0: "A teleporter!" "I can get back to the ship with this!"
+32 - Jika tanda 7 adalah 0: "A teleporter!" "I can get back to the ship with
+     this!"
 33 - Jika tanda 9 adalah 0: Victoria-cutscene
 34 - Jika tanda 10 adalah 0: Vitellary-cutscene
 35 - Jika tanda 11 adalah 0: Verdigris-cutscene
@@ -2452,8 +2455,8 @@ Gamestate\h#
 45 - Jika tanda 65 adalah 0: jalankan cutscene ke-6 istirahat 1
 46 - Jika tanda 66 adalah 0: jalankan cutscene ke-7 istirahat 1
 47 - Jika tanda 69 adalah 0: "Ohh! I wonder what that is?" adegan potong trinket
-48 - Jika tanda 70 adalah 0: "This seems like a good place to store anything I find out
-     there..." (Victoria belum ditemukan)
+48 - Jika tanda 70 adalah 0: "This seems like a good place to store anything I
+     find out there..." (Victoria belum ditemukan)
 49 - Jika tanda 71 adalah 0: Mainkan Predestined Fate
 50 - "Help! Can anyone hear this message?"
 51 - "Verdigris? Are you out there? Are you ok?"
@@ -2472,9 +2475,9 @@ Dengan gamestate 50-56, Anda dapat memilih dari mana harus memulai, karena
 84 - Hasil time trial (saya pikir 82 bekerja lebih baik dari 84)
 85 - Versi Time Trial dari gamestate 200 (Flash, mainkan Positive Force, aktifkan
      mode finalstretch)
-State 90-95 terkait dengan uji waktu, tetapi tidak berfungsi dengan baik di level kustom.
-      Satu-satunya efek nyata yang terjadi di level kustom adalah lengkungan, 
-      perubahan musik
+State 90-95 terkait dengan uji waktu, tetapi tidak berfungsi dengan baik di level
+      kustom. Satu-satunya efek nyata yang terjadi di level kustom adalah
+      lengkungan, perubahan musik
 90 - Statiun Luar Angkasa 1
 91 - Laboratorium
 92 - Zona Warp
@@ -2525,11 +2528,12 @@ State 120-128 berfungsi seperti 102-112, yaitu dalam rangkaian, tetapi dengan
 2512 - Viridian: "Is anybody there?", lanjutkan dengan state 2514
 2514 - Menghapus kotak teks, mainkan Potential For Anything
 State 3000-3099:
-3000-3005 - "Level Complete! You've rescued the crewmate" diterapkan ke companion(),
-            default ke Verdigris. 6=Verdigris, 7=Vitellary, 8=Victoria,
-            9=Vermilion, 10=Viridian (ya, betulkah), 11=Violet (Gamestate:
-            3006-3011=Verdigris, 3020-3026=Vitellary, 3040-3046=Victoria,
-            3060-3066=Vermilion, 3080-3086=Viridian, 3050-3056=Violet)
+3000-3005 - "Level Complete! You've rescued the crewmate" diterapkan ke
+            companion(), default ke Verdigris. 6=Verdigris, 7=Vitellary,
+            8=Victoria, 9=Vermilion, 10=Viridian (ya, betulkah), 11=Violet
+            (Gamestate: 3006-3011=Verdigris, 3020-3026=Vitellary,
+            3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
+            3050-3056=Violet)
 3070-3072 - Lakukan hal-hal pasca penyelamatan, biasanya kembali ke kapal
 3501 - Game Complete
 4010 - Flash + warp
@@ -2591,9 +2595,13 @@ B - Biru (Victoria)\B
 Contoh:\h#
 
 \-
-Teks oranye bsr. ("oh" memiliki hsil yg sama)\ho\
-\
-Teks oranye bsr. ("oh" memiliki hsil yg sama)\ho
+Teks oranye bsr. ("oh" memiliki hsil yg\ho\
+
+sama)\ho\
+
+Teks oranye bsr. ("oh" memiliki hsil yg\ho
+
+sama)\ho
 
 \-
 Teks besar yang digarisbawahi\wh\
@@ -2660,9 +2668,11 @@ Teks hitam pada latar belakang putih yang diperluas!\z&w+\
 \
 Teks hitam pada latar belakang putih yang diperluas!\z&w+
 \-
-Merah di atas kuning¤¤, ¤Hitam di atas putih¤¤ (spasi opsional meningkatkan keterbacaan)\r&y n z&w\
+Merah di atas kuning¤¤, ¤Hitam di atas putih¤¤ (spasi opsional meningkatkan\r&y n z&w\
+keterbacaan)
 \
-Merah di atas kuning¤, ¤Hitam di atas putih¤ (spasi opsional meningkatkan keterbacaan)\r&y n z&w
+Merah di atas kuning¤, ¤Hitam di atas putih¤ (spasi opsional meningkatkan\r&y n z&w
+keterbacaan)
 \-
 Ini masih ¤¤berfungsi¤¤ untuk mewarnai karakter tun¤¤g§¤¤gal\n P n n&r (\
 \

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2022-07-21 22:22:39 (CEST)
+--- Last converted: 2022-07-30 01:13:29 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
