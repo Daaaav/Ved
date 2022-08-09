@@ -14,6 +14,7 @@ love.mouse = {}
 function hook() end
 
 require("corefunc")
+utf8 = require("utf8lib_wrapper")
 require("func")
 require("vvvvvvxml")
 require("filefunc_" .. loaded_filefunc)

@@ -1,6 +1,8 @@
 function love.load()
 	hook("love_load_start")
 
+	utf8 = require("utf8lib_wrapper")
+
 	ved_require("loadconfig")
 
 	dodisplaysettings()
@@ -75,8 +77,6 @@ function love.load()
 	rctrl = "r" .. ctrl
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
-
-	utf8 = require("utf8lib_wrapper")
 
 	loadfonts()
 	loadlanginfo()
