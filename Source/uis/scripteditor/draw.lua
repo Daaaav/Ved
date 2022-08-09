@@ -88,8 +88,8 @@ return function()
 			textq, textc = just_text(v, textlinestogo > 0)
 		end
 
-		if editing_line == k then --and textlinestogo == 0 then
-			context, carg1, carg2, carg3 = script_context(inputs.script_lines[k])
+		if editing_line == k then
+			context, carg1, carg2, carg3 = script_context(inputs.script_lines[k], textlinestogo)
 		end
 
 		if textq ~= nil then

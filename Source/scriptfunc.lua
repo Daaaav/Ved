@@ -198,7 +198,11 @@ function just_text(text, thisistext)
 	return nil -- redundant
 end
 
-function script_context(text)
+function script_context(text, textlinestogo)
+	if textlinestogo ~= 0 or text:sub(1,1) == "#" or text:sub(1,2) == "//" then
+		return nil
+	end
+
 	local text2 = anythingbutnil(text):gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 	text2 = scriptlinecasing(text2)
 
