@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2022-07-30 01:13:28 (CEST)
+--- Last converted: 2022-08-10 00:21:23 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999

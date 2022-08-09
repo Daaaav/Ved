@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2022-07-30 01:13:29 (CEST)
+--- Last converted: 2022-08-10 00:21:24 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1008,6 +1008,7 @@ Ved ondersteunt drie verschillende modi om muren te tekenen.
           je muren en achtergronden tekenen, en de hoekpunten en zijkanten zullen
           automatisch goed afgewerkt worden. Het is in deze stand echter niet
           mogelijk om meerdere verschillende tilesets of kleuren te gebruiken.
+
 
      Multi-tileset-modus\h#1
 
