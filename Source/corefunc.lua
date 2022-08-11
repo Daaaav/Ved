@@ -161,7 +161,7 @@ function unxmlnumericentities(text)
 	return text:gsub(
 		"&#(%d+);",
 		function(n)
-			return utf8.char(n)
+			return utf8.char(tonumber(n))
 		end
 	):gsub(
 		"&#x(%x+);",
