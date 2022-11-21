@@ -1,5 +1,5 @@
-require("ogg_vorbis_metadata")
-require("music_vedsource")
+ved_require("ogg_vorbis_metadata")
+ved_require("music_vedsource")
 
 local ffi = require("ffi")
 

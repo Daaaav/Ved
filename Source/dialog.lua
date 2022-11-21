@@ -792,4 +792,4 @@ function dialog.create(message, buttons, handler, title, fields, noclosechecker,
 	)
 end
 
-require("dialog_uses")
+ved_require("dialog_uses")
