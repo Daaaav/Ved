@@ -28,12 +28,7 @@ function loadfonts()
 		local chars_success
 		chars_success, custom_chars = readfile(fontpng_folder .. dirsep .. "font.txt")
 		if not chars_success then
-			local glyphs_table = {}
-			for g = 0x00, 0x7f do
-				table.insert(glyphs_table, string.char(g))
-			end
-
-			custom_chars = table.concat(glyphs_table, "")
+			custom_chars = nil
 		end
 
 		custom_imgdata = love.image.newImageData(
@@ -46,9 +41,7 @@ function loadfonts()
 	local builtin_chars = love.filesystem.read("fonts/font.txt")
 
 	font8 = cVedFont:new()
-	font8:init(8, 8, custom_imgdata, custom_chars, builtin_imgdata, builtin_chars)
-
-	font8:set_glyph_advance(6, 0x00, 0x1F)
+	font8:init(custom_imgdata, custom_chars, nil, builtin_imgdata, builtin_chars, nil)
 
 	if font8:has_glyphs("↑↓←→", true) then
 		arrow_up = "↑"
@@ -183,19 +176,9 @@ function loadtinyfont()
 		-- I don't want to hardcode a "default" width for tinyfont, and this HAS to exist...
 		error(err)
 	end
-	local w = tonumber(xml:match("<width>(.-)</width>"))
-	local h = tonumber(xml:match("<height>(.-)</height>"))
 
 	tinyfont = cVedFont:new()
-	tinyfont:init(w, h, love.image.newImageData("fonts/tinyfont.png"), (love.filesystem.read("fonts/tinyfont.txt")))
-
-	local xspecial = xml:match("<special>(.*)</special>")
-	if xspecial ~= nil then
-		for range in xspecial:gmatch("<range (.-)/>") do
-			local attr = parsexmlattributes(range)
-			tinyfont:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
-		end
-	end
+	tinyfont:init(love.image.newImageData("fonts/tinyfont.png"), (love.filesystem.read("fonts/tinyfont.txt")), xml)
 
 	-- Replace some key glyphs based on OS and language
 	if s.lang == "de" then

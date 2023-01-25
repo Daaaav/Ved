@@ -52,21 +52,36 @@ function cVedFont:new(o)
 	return o
 end
 
-function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars_fallback)
+function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, fontmeta_fallback)
 	-- Initialize the font with all necessary configuration.
-	-- glyph_w and glyph_h are the dimensions of each glyph, and are the same for every glyph.
-	-- (the width can be changed per-glyph or per range of glyphs with :set_glyph_advance afterwards)
-	-- imgdata is an ImageData with the font image, chars is a string with the characters.
-	-- imgdata_fallback and chars_fallback are optional and represent a fallback font.
+	-- imgdata is an ImageData with the font image, loaded from a .png.
+	-- txt is a string with the characters, loaded from a .txt (may be nil if missing)
+	-- fontmeta is a string with the XML loaded from a .fontmeta (may be nil if missing)
+	-- imgdata_fallback, txt_fallback and fontmeta_fallback are optional
+	-- and represent a fallback font. (The fallback font must have the same glyph width and height)
 
-	self.glyph_w, self.glyph_h = glyph_w, glyph_h
+	self.glyph_w, self.glyph_h = 8, 8
 
 	-- It's also possible to pass only the _fallbacks, in which case that'll be promoted to main font.
 	if imgdata == nil then
 		imgdata = imgdata_fallback
-		chars = chars_fallback
+		txt = txt_fallback
+		fontmeta = fontmeta_fallback
 		imgdata_fallback = nil
-		chars_fallback = nil
+		txt_fallback = nil
+		fontmeta_fallback = nil
+	end
+
+	local white_teeth = false
+	local white_teeth_fallback = false
+
+	if fontmeta ~= nil then
+		self.glyph_w = tonumber(fontmeta:match("<width>(.-)</width>"))
+		self.glyph_h = tonumber(fontmeta:match("<height>(.-)</height>"))
+		white_teeth = fontmeta:match("<white_teeth>(.-)</white_teeth>") == "1"
+	end
+	if fontmeta_fallback ~= nil then
+		white_teeth_fallback = fontmeta_fallback:match("<white_teeth>(.-)</white_teeth>") == "1"
 	end
 
 	local imgA_w, imgA_h = imgdata:getWidth(), imgdata:getHeight()
@@ -76,7 +91,30 @@ function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars
 	local target_w, target_h = imgA_w, imgA_h
 	local need_paste = false
 
+	local function toothbrush(imgd)
+		local rgb_full
+		if love_version_meets(11) then
+			rgb_full = 1
+		else
+			rgb_full = 255
+		end
+
+		imgd:mapPixel(
+			function(x, y, r, g, b, a)
+				return rgb_full, rgb_full, rgb_full, a
+			end
+		)
+	end
+
+	if not white_teeth then
+		toothbrush(imgdata)
+	end
+
 	if imgdata_fallback ~= nil then
+		if not white_teeth_fallback then
+			toothbrush(imgdata_fallback)
+		end
+
 		imgB_w, imgB_h = imgdata_fallback:getWidth(), imgdata_fallback:getHeight()
 
 		-- We'll place both fonts in the same image; decide what fits best
@@ -110,27 +148,20 @@ function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars
 		target = imgdata
 	end
 
-	local rgb_full
-	if love_version_meets(11) then
-		rgb_full = 1
-	else
-		rgb_full = 255
-	end
-
-	target:mapPixel(
-		function(x, y, r, g, b, a)
-			return rgb_full, rgb_full, rgb_full, a
-		end
-	)
-
 	self.image = love.graphics.newImage(target)
 	pcall(self.image.setFilter, self.image, "linear", "nearest")
 
-	local codepoints_n = chars:len() + 1
-	if chars_fallback ~= nil then
-		codepoints_n = math.max(codepoints_n, chars_fallback:len() + 1)
+	local codepoints_n = 0
+	if txt ~= nil then
+		codepoints_n = txt:len() + 1
 	end
-	local codepoints = ffi.new("uint32_t[?]", codepoints_n)
+	if txt_fallback ~= nil then
+		codepoints_n = math.max(codepoints_n, txt_fallback:len() + 1)
+	end
+	local codepoints
+	if codepoints_n > 0 then
+		codepoints = ffi.new("uint32_t[?]", codepoints_n)
+	end
 
 	for subfont = 0, 1 do
 		if subfont == 1 and imgdata_fallback == nil then
@@ -141,14 +172,45 @@ function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars
 		local img_x, img_y = 0, 0
 		local img_w, img_h
 
-		local codepoints_found
+		local subfont_txt, subfont_fontmeta
 		if subfont == 0 then
 			img_w, img_h = imgA_w, imgA_h
-			codepoints_found = utf8_to_utf32(chars, codepoints, codepoints_n)
+			subfont_txt = txt
+			subfont_fontmeta = fontmeta
 		else
 			img_x, img_y = imgB_paste_x, imgB_paste_y
 			img_w, img_h = imgB_w, imgB_h
-			codepoints_found = utf8_to_utf32(chars_fallback, codepoints, codepoints_n)
+			subfont_txt = txt_fallback
+			subfont_fontmeta = fontmeta_fallback
+		end
+
+		local charset_loaded = false
+		local char_ranges = {}
+		if subfont_txt ~= nil then
+			-- If font.txt exists, it takes priority over <chars>.
+			local codepoints_found = utf8_to_utf32(subfont_txt, codepoints, codepoints_n)
+
+			-- It's the old system anyway...
+			for i = 0, codepoints_found-1 do
+				table.insert(char_ranges, {tonumber(codepoints[i]), tonumber(codepoints[i])})
+			end
+			charset_loaded = true
+		end
+
+		if subfont_fontmeta ~= nil and not charset_loaded then
+			local xchars = subfont_fontmeta:match("<chars>(.*)</chars>")
+			if xchars ~= nil then
+				for range in xchars:gmatch("<range (.-)/>") do
+					local attr = parsexmlattributes(range)
+					table.insert(char_ranges, {tonumber(attr.start), tonumber(attr["end"])})
+				end
+				charset_loaded = true
+			end
+		end
+
+		if not charset_loaded then
+			-- If we don't have font.txt and no <chars>, this is 2.2-style plain ASCII
+			table.insert(char_ranges, {0x00, 0x7F})
 		end
 
 		-- cur_cx and cur_cy are the character (not pixel) coordinate in the current subfont.
@@ -156,55 +218,75 @@ function cVedFont:init(glyph_w, glyph_h, imgdata, chars, imgdata_fallback, chars
 
 		-- n_cx and n_cy are the total number of characters that can fit in this subfont.
 		-- if cur_cx >= n_cx we go to the next line, if cur_cy >= n_cy then we're out of glyphs
-		local n_cx, n_cy = math.floor(img_w/glyph_w), math.floor(img_h/glyph_h)
+		local n_cx, n_cy = math.floor(img_w/self.glyph_w), math.floor(img_h/self.glyph_h)
 
-		for i = 0, codepoints_found-1 do
-			if cur_cy >= n_cy then
-				-- No more glyphs
-				break
-			end
+		for k,v in pairs(char_ranges) do
+			for codepoint = v[1], v[2] do
+				if cur_cy >= n_cy then
+					-- No more glyphs
+					break
+				end
 
-			if self.chars[codepoints[i]] == nil then
-				local char_px = img_x + cur_cx*glyph_w
-				local char_py = img_y + cur_cy*glyph_h
+				if self.chars[codepoint] == nil then
+					local char_px = img_x + cur_cx*self.glyph_w
+					local char_py = img_y + cur_cy*self.glyph_h
 
-				local blank = false
-				if codepoints[i] == 0x20 then
-					-- It's pretty likely space is empty, _and_ it's used a lot.
-					blank = true
-					for y = 0, glyph_h-1 do
-						for x = 0, glyph_w-1 do
-							local r,g,b,a = target:getPixel(char_px+x, char_py+y)
-							if a > 0 then
-								blank = false
+					local blank = false
+					if codepoint == 0x20 then
+						-- It's pretty likely space is empty, _and_ it's used a lot.
+						blank = true
+						for y = 0, self.glyph_h-1 do
+							for x = 0, self.glyph_w-1 do
+								local r,g,b,a = target:getPixel(char_px+x, char_py+y)
+								if a > 0 then
+									blank = false
+									break
+								end
+							end
+							if blank then
 								break
 							end
 						end
-						if blank then
-							break
-						end
+					end
+
+					self.chars[codepoint] = {
+						advance = self.glyph_w,
+						subfont = subfont
+					}
+
+					if blank then
+						self.chars[codepoint].blank = true
+					else
+						self.chars[codepoint].quad = love.graphics.newQuad(
+							char_px, char_py, self.glyph_w, self.glyph_h, target_w, target_h
+						)
 					end
 				end
 
-				self.chars[codepoints[i]] = {
-					advance = glyph_w,
-					subfont = subfont
-				}
-
-				if blank then
-					self.chars[codepoints[i]].blank = true
-				else
-					self.chars[codepoints[i]].quad = love.graphics.newQuad(
-						char_px, char_py, glyph_w, glyph_h, target_w, target_h
-					)
+				cur_cx = cur_cx + 1
+				if cur_cx >= n_cx then
+					cur_cx = 0
+					cur_cy = cur_cy + 1
 				end
 			end
+		end
 
-			cur_cx = cur_cx + 1
-			if cur_cx >= n_cx then
-				cur_cx = 0
-				cur_cy = cur_cy + 1
+		local special_loaded = false
+		if subfont_fontmeta ~= nil then
+			local xspecial = subfont_fontmeta:match("<special>(.*)</special>")
+			if xspecial ~= nil then
+				for range in xspecial:gmatch("<range (.-)/>") do
+					local attr = parsexmlattributes(range)
+					self:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
+				end
+				special_loaded = true
 			end
+		end
+
+		if not special_loaded and self.glyph_w == 8 and self.glyph_h == 8 then
+			-- If we don't have <special>, and the font is 8x8,
+			-- 0x00-0x1F will be less wide because that's how it has always been.
+			self:set_glyph_advance(6, 0x00, 0x1F)
 		end
 	end
 
