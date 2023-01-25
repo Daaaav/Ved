@@ -21,14 +21,19 @@ function loadfonts()
 		fontpng_works, fontpng_contents = readfile(fontpng_folder .. dirsep .. "font.png")
 	end
 
-	local custom_imgdata, custom_chars = nil, nil
+	local custom_imgdata, custom_txt, custom_fontmeta = nil, nil, nil
 	if fontpng_works then
 		-- Use a customized font.png with the built-in as fallback
 
-		local chars_success
-		chars_success, custom_chars = readfile(fontpng_folder .. dirsep .. "font.txt")
-		if not chars_success then
-			custom_chars = nil
+		local success
+		success, custom_txt = readfile(fontpng_folder .. dirsep .. "font.txt")
+		if not success then
+			custom_txt = nil
+		end
+
+		success, custom_fontmeta = readfile(fontpng_folder .. dirsep .. "font.fontmeta")
+		if not success then
+			custom_fontmeta = nil
 		end
 
 		custom_imgdata = love.image.newImageData(
@@ -38,10 +43,10 @@ function loadfonts()
 
 	-- The font that comes with Ved
 	local builtin_imgdata = love.image.newImageData("fonts/font.png")
-	local builtin_chars = love.filesystem.read("fonts/font.txt")
+	local builtin_fontmeta = love.filesystem.read("fonts/font.fontmeta")
 
 	font8 = cVedFont:new()
-	font8:init(custom_imgdata, custom_chars, nil, builtin_imgdata, builtin_chars, nil)
+	font8:init(custom_imgdata, custom_txt, custom_fontmeta, builtin_imgdata, nil, builtin_fontmeta)
 
 	if font8:has_glyphs("↑↓←→", true) then
 		arrow_up = "↑"
@@ -171,7 +176,7 @@ function loadlanguage()
 end
 
 function loadtinyfont()
-	local xml, err = love.filesystem.read("fonts/tinyfont.xml")
+	local xml, err = love.filesystem.read("fonts/tinyfont.fontmeta")
 	if xml == nil then
 		-- I don't want to hardcode a "default" width for tinyfont, and this HAS to exist...
 		error(err)
