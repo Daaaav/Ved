@@ -573,7 +573,20 @@ function input.movex(id, chars)
 	local x, y, line = input.getpos(id)
 
 	x = x + chars
-	x = math.min(math.max(x, 0), utf8.len(line))
+
+	if x < 0 then
+		if multiline and y > 1 then
+			input.movey(id, -1)
+			input.setpos(id, utf8.len(inputs[id][y - 1]))
+		end
+		return
+	elseif x > utf8.len(line) then
+		if multiline and y < #inputs[id] then
+			input.movey(id, 1)
+			input.setpos(id, 0)
+		end
+		return
+	end
 
 	input.setpos(id, x)
 
@@ -1412,9 +1425,17 @@ function input.movexwords(id, words)
 
 	local x, y, line = input.getpos(id)
 
-	if (words > 0 and x == utf8.len(line)) or (words < 0 and x == 0) then
-		cursorflashtime = 0
-		inputcopiedtimer = 0
+	if words < 0 and x == 0 then
+		if multiline and y > 1 then
+			input.movey(id, -1)
+			input.setpos(id, utf8.len(inputs[id][y - 1]))
+		end
+		return
+	elseif words > 0 and x == utf8.len(line) then
+		if multiline and y < #inputs[id] then
+			input.movey(id, 1)
+			input.setpos(id, 0)
+		end
 		return
 	end
 
