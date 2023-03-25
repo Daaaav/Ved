@@ -33,6 +33,7 @@ function love.mousereleased(x, y, button)
 		mousereleased_flag = true
 	end
 	minsmear = -1; maxsmear = -1
+	last_atx = -1; last_aty = -1
 	toout = 0
 
 	if newinputsys.active and newinputsys.getfocused() ~= nil then

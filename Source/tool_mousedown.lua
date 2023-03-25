@@ -19,6 +19,9 @@ function handle_tool_mousedown()
 			end
 		end
 
+		last_atx = (last_atx == -1) and atx or last_atx
+		last_aty = (last_aty == -1) and aty or last_aty
+
 		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
 		local entityalreadyhere = false
 		if love.mouse.isDown("l") and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
@@ -185,44 +188,63 @@ function handle_tool_mousedown()
 
 				if selectedsubtool[selectedtool] == 1 then
 					-- 1x1
-					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+						if x >= 0 and x <= 39 and y >= 0 and y <= 29 then
+							roomdata_set(roomx, roomy, x, y, useselectedtile)
+						end
+					end)
 				elseif selectedsubtool[selectedtool] == 2 then
 					-- 3x3
-					for sty = (aty-1), (aty+1) do
-						for stx = (atx-1), (atx+1) do
-							--if roomdata[roomy][roomx][(sty*40)+(stx+1)] ~= nil then
-							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+						for sty = -1, 1 do
+							for stx = -1, 1 do
+								local use_x = x + stx
+								local use_y = y + sty
+								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
+									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+								end
 							end
 						end
-					end
+					end)
 				elseif selectedsubtool[selectedtool] == 3 then
 					-- 5x5
-					for sty = (aty-2), (aty+2) do
-						for stx = (atx-2), (atx+2) do
-							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+						for sty = -2, 2 do
+							for stx = -2, 2 do
+								local use_x = x + stx
+								local use_y = y + sty
+								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
+									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+								end
 							end
 						end
-					end
+					end)
 				elseif selectedsubtool[selectedtool] == 4 then
 					-- 7x7
-					for sty = (aty-3), (aty+3) do
-						for stx = (atx-3), (atx+3) do
-							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+						for sty = -3, 3 do
+							for stx = -3, 3 do
+								local use_x = x + stx
+								local use_y = y + sty
+								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
+									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+								end
 							end
 						end
-					end
+					end)
 				elseif selectedsubtool[selectedtool] == 5 then
 					-- 9x9
-					for sty = (aty-4), (aty+4) do
-						for stx = (atx-4), (atx+4) do
-							if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+						for sty = -4, 4 do
+							for stx = -4, 4 do
+								local use_x = x + stx
+								local use_y = y + sty
+								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
+									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+								end
 							end
 						end
-					end
+					end)
 				elseif selectedsubtool[selectedtool] == 6 then
 					-- horizontal fill
 					if minsmear == -1 and maxsmear == -1 then
@@ -270,22 +292,26 @@ function handle_tool_mousedown()
 				elseif not mousepressed_custombrush and selectedsubtool[selectedtool] == 8 then
 					-- custom size
 					if customsizemode == 0 then
-						local iy = 1
-						for sty = (aty-math.floor(customsizey)), (aty+math.ceil(customsizey)) do
-							local ix = 1
-							for stx = (atx-math.floor(customsizex)), (atx+math.ceil(customsizex)) do
-								if stx >= 0 and stx <= 39 and sty >= 0 and sty <= 29 then
-									if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
-										-- Stamp
-										roomdata_set(roomx, roomy, stx, sty, customsizetile[iy][ix])
-									elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
-										roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+						draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
+							local iy = 1
+							for sty = -math.floor(customsizey), math.ceil(customsizey) do
+								local ix = 1
+								for stx = -math.floor(customsizex), math.ceil(customsizex) do
+									local use_x = x + stx
+									local use_y = y + sty
+									if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
+										if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
+											-- Stamp
+											roomdata_set(roomx, roomy, use_x, use_y, customsizetile[iy][ix])
+										elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
+											roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+										end
 									end
+									ix = ix + 1
 								end
-								ix = ix + 1
+								iy = iy + 1
 							end
-							iy = iy + 1
-						end
+						end)
 					elseif customsizemode <= 2 then -- Either 1 or 2 is fine, if we're at 2 and we closed the tiles picker then we'll just consider it 1
 						customsizex = (atx)/2
 						customsizey = (29-aty)/2
@@ -383,7 +409,12 @@ function handle_tool_mousedown()
 
 				if selectedsubtool[3] == 1 then
 					-- 1 spike
-					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+					local last_atx_modified = (last_atx == -1) and atx or last_atx
+					local last_aty_modified = (last_aty == -1) and aty or last_aty
+
+					draw_tile_line(last_atx_modified, atx, last_aty_modified, aty, function(x, y)
+						roomdata_set(roomx, roomy, x, y, useselectedtile)
+					end)
 				elseif selectedsubtool[3] == 2 then
 					-- <-->
 					if issolidmultispikes(adjtile(atx, aty, 0, 1), ts) then
@@ -818,6 +849,10 @@ function handle_tool_mousedown()
 			dialog.create(L.UNSUPPORTEDTOOL .. anythingbutnil(selectedtool))
 			mousepressed = true
 		end
+
+		last_atx = atx
+		last_aty = aty
+
 	elseif love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and not tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
 		editingroomname = false
 		local atx, aty = maineditor_get_cursor()

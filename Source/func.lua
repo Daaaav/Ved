@@ -69,7 +69,7 @@ function backspace(text)
 	end
 end
 
-function leftspace(text, righttext)	
+function leftspace(text, righttext)
 	if (text == nil) or (righttext == nil) then return end
 
 	text = tostring(text)
@@ -90,7 +90,7 @@ function leftspace(text, righttext)
 	end
 end
 
-function rightspace(text, righttext)	
+function rightspace(text, righttext)
 	if (text == nil) or (righttext == nil) then return end
 
 	righttext = tostring(righttext)
@@ -2177,7 +2177,7 @@ function s_noep()
 				gekozenplek = gekozenplek - 1
 			end
 		end
-	end		
+	end
 
 	dialog.create("s_noep() failed!")
 end
@@ -3419,6 +3419,26 @@ function reset_special_cursor()
 	if special_cursor then
 		love.mouse.setCursor()
 		special_cursor = false
+	end
+end
+
+function draw_tile_line(x1, x2, y1, y2, callback)
+	-- DDA to draw a line from (x1, y1) to (x2, y2).
+	-- callback is called for each pixel.
+
+	local dx = x2 - x1
+	local dy = y2 - y1
+	local steps = math.max(math.abs(dx), math.abs(dy))
+
+	if steps == 0 then
+		callback(x1, y1)
+		return
+	end
+
+	for i = 0, steps do
+		local x = math.floor(x1 + (i*dx)/steps)
+		local y = math.floor(y1 + (i*dy)/steps)
+		callback(x, y)
 	end
 end
 

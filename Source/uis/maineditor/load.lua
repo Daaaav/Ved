@@ -33,6 +33,7 @@ return function()
 	create_load_script = LOAD_SCRIPT_CREATION_MODE.NO
 
 	minsmear = -1; maxsmear = -1
+	last_atx = -1; last_aty = -1
 
 	holdingzvx = false
 	oldzxsubtool = 1
