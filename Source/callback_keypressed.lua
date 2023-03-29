@@ -46,13 +46,13 @@ function love.keypressed(key)
 			end
 		end
 
-		if key == "left" then
+		if key == "left" and not keyboard_eitherIsDown("alt") then
 			if keyboard_eitherIsDown(modifier) then
 				newinputsys.movexwords(id, -1)
 			else
 				newinputsys.movex(id, -1)
 			end
-		elseif key == "right" then
+		elseif key == "right" and not keyboard_eitherIsDown("alt") then
 			if keyboard_eitherIsDown(modifier) then
 				newinputsys.movexwords(id, 1)
 			else
