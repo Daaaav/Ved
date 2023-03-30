@@ -612,8 +612,10 @@ function input.movey(id, chars)
 	local multiline = type(inputs[id]) == "table"
 
 	if not multiline then
-		if input.selpos[id] ~= nil then
-			input.clearselpos(id)
+		if chars < 0 then
+			input.leftmost(id)
+		elseif chars > 0 then
+			input.rightmost(id)
 		end
 		return
 	end
@@ -622,7 +624,14 @@ function input.movey(id, chars)
 	local x, y = input.getpos(id, true)
 
 	y = y + chars
-	y = math.min(math.max(y, 1), #lines)
+
+	if y < 1 then
+		input.leftmost(id)
+		return
+	elseif y > #lines then
+		input.rightmost(id)
+		return
+	end
 
 	input.pos[id][2] = y
 
