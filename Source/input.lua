@@ -576,14 +576,12 @@ function input.movex(id, chars)
 
 	if x < 0 then
 		if multiline and y > 1 then
-			input.movey(id, -1)
-			input.setpos(id, utf8.len(inputs[id][y - 1]))
+			input.setpos(id, utf8.len(inputs[id][y - 1]), y - 1)
 		end
 		return
 	elseif x > utf8.len(line) then
 		if multiline and y < #inputs[id] then
-			input.movey(id, 1)
-			input.setpos(id, 0)
+			input.setpos(id, 0, y + 1)
 		end
 		return
 	end
@@ -1436,14 +1434,12 @@ function input.movexwords(id, words)
 
 	if words < 0 and x == 0 then
 		if multiline and y > 1 then
-			input.movey(id, -1)
-			input.setpos(id, utf8.len(inputs[id][y - 1]))
+			input.setpos(id, utf8.len(inputs[id][y - 1]), y - 1)
 		end
 		return
 	elseif words > 0 and x == utf8.len(line) then
 		if multiline and y < #inputs[id] then
-			input.movey(id, 1)
-			input.setpos(id, 0)
+			input.setpos(id, 0, y + 1)
 		end
 		return
 	end
