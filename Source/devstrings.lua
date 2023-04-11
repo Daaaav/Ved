@@ -3,3 +3,4 @@
 
 --L. = ""
 
+L.SUREOPENLEVEL = "You have unsaved changes. Do you want to save these changes before opening this level?"

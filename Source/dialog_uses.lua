@@ -349,7 +349,7 @@ end
 
 --function dialog.form.
 
--- 
+--
 dialog.form.simplename = {
 	{"name", 0, 1, 40, "", DF.TEXT},
 }
@@ -393,6 +393,20 @@ function dialog.callback.surenewlevel(button)
 		)
 	elseif button == DB.DISCARD then
 		triggernewlevel()
+	end
+end
+
+function dialog.callback.sureopenlevel(button, fields)
+	if button == DB.SAVE then
+		dialog.create(
+			L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+			dialog.callback.saveopenlevel,
+			nil,
+			dialog.form.hidden_make({levelname=fields.levelname}, dialog.form.save_make()),
+			nil
+		)
+	elseif button == DB.DISCARD then
+		state6load(fields.levelname)
 	end
 end
 
@@ -440,6 +454,15 @@ function dialog.callback.savenewlevel(button, fields)
 	if button == DB.OK and not has_unsaved_changes() then
 		dialogs[#dialogs]:press_button(0)
 		triggernewlevel()
+	end
+end
+
+function dialog.callback.saveopenlevel(button, fields)
+	dialog.callback.save(button, fields)
+
+	if button == DB.OK and not has_unsaved_changes() then
+		dialogs[#dialogs]:press_button(0)
+		state6load(fields.levelname)
 	end
 end
 
