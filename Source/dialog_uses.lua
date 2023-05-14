@@ -347,6 +347,45 @@ function dialog.form.hidden_make(values, existing_form)
 	return form
 end
 
+function dialog.form.referencefont_make()
+	return {
+		{
+			"format", 0, 5, 0, s.fonteditor_reffont_format, DF.RADIOS,
+			{L.REFERENCEFONT_USE_8X8, L.REFERENCEFONT_USE_TTF},
+			{[0] = L.REFERENCEFONT_USE_8X8, [1] = L.REFERENCEFONT_USE_TTF},
+			function(picked)
+				if picked == L.REFERENCEFONT_USE_8X8 then
+					s.fonteditor_reffont_format = 0
+				else
+					s.fonteditor_reffont_format = 1
+					if not fonteditor_reffont_loaded then
+						fonteditor_load_reference_font()
+					end
+				end
+				saveconfig()
+				return s.fonteditor_reffont_format
+			end
+		},
+		{
+			"", 0, 8, 40,
+			function()
+				if s.fonteditor_reffont_ttf_filename == nil then
+					return ""
+				end
+				return langkeys(L.REFERENCEFONT_TTFNAME, {s.fonteditor_reffont_ttf_filename})
+			end,
+			DF.LABEL
+		},
+	}
+end
+
+function dialog.form.newfont_make()
+	return {
+		{"glyph_w", 0, 0, 3, "8", DF.TEXT},
+		{"glyph_h", 0, 1, 3, "8", DF.TEXT},
+	}
+end
+
 --function dialog.form.
 
 --
@@ -1139,6 +1178,71 @@ function dialog.callback.openimage(button, fields)
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
 	assets_openimage(filepath, filename)
+end
+
+function dialog.callback.referencefont_validate(button)
+	if button == L.REFERENCEFONT_LOADTTF then
+		return true
+	end
+end
+
+function dialog.callback.referencefont(button, fields)
+	if button == L.REFERENCEFONT_LOADTTF then
+		dialog.create(
+			"",
+			DBS.LOADCANCEL,
+			dialog.callback.referencefont_loadttf,
+			L.REFERENCEFONT_LOADTTF_DIALOGTITLE,
+			dialog.form.files_make(userprofile, "", ".ttf", true, 11, 0)
+		)
+		return
+	end
+end
+
+function dialog.callback.referencefont_loadttf(button, fields)
+	if button == DB.CANCEL or fields.name == "" then
+		return
+	end
+
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	if fonteditor_load_reference_font(filepath, filename) then
+		s.fonteditor_reffont_format = 1
+		s.fonteditor_reffont_ttf_filepath = filepath
+		s.fonteditor_reffont_ttf_filename = filename
+		saveconfig()
+	end
+end
+
+function dialog.callback.loadfont(button, fields)
+	if button == DB.CANCEL or fields.name == "" then
+		return
+	end
+
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	fonteditor_load_font(filepath, filename)
+end
+
+function dialog.callback.newfont_validate(button, fields)
+	local glyph_w = math.floor(anythingbutnil0(tonumber(fields.glyph_w)))
+	local glyph_h = math.floor(anythingbutnil0(tonumber(fields.glyph_h)))
+
+	if glyph_w < 1 or glyph_w > 255 or glyph_h < 1 or glyph_h > 255 then
+		dialog.create(L.INVALIDGLYPHSIZE)
+		return true
+	end
+end
+
+function dialog.callback.newfont(button, fields, identifier, notclosed)
+	if button == DB.CANCEL or notclosed then
+		return
+	end
+
+	local glyph_w = math.floor(anythingbutnil0(tonumber(fields.glyph_w)))
+	local glyph_h = math.floor(anythingbutnil0(tonumber(fields.glyph_h)))
+
+	fonteditor_new_font(glyph_w, glyph_h)
 end
 
 function dialog.callback.platv_validate(button, fields)

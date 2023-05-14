@@ -2,7 +2,7 @@
 
 return function()
 	local selecting
-	for a = 0, 5 do
+	for a = 0, 6 do
 		local w, x, y
 		w = love.graphics.getWidth()-128-32
 		if a == 0 then
@@ -90,6 +90,9 @@ return function()
 			else
 				ved_print(langkeys(L.NO_ASSETS_SUBFOLDER, {"graphics"}), x+17, y+21)
 			end
+		elseif a == 6 then
+			love.graphics.draw(image.asset_fonteditor, x+5, y+5)
+			ved_print(L.FONTEDITOR, x+17, y+5)
 		end
 
 		love.graphics.setColor(255,255,255)
@@ -113,6 +116,8 @@ return function()
 		selecting = 4
 	elseif love.keyboard.isDown("g") then
 		selecting = 5
+	elseif love.keyboard.isDown("f") then
+		selecting = 6
 	end
 
 	if selecting == 0 then
@@ -127,6 +132,8 @@ return function()
 		tostate(31, false, assetsmenu_music_prefix .. "sounds")
 	elseif selecting == 5 then
 		tostate(32)
+	elseif selecting == 6 then
+		tostate(36)
 	end
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)

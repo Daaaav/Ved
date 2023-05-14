@@ -107,6 +107,7 @@ function love.load()
 	ved_require("input")
 	ved_require("entity_mousedown")
 	ved_require("tool_mousedown")
+	ved_require("fonteditor")
 
 	math.randomseed(os.time())
 
@@ -261,6 +262,7 @@ function love.load()
 		asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png"),
 		asset_sounds = love.graphics.newImage("images/asset_sounds.png"),
 		asset_graphics = love.graphics.newImage("images/asset_graphics.png"),
+		asset_fonteditor = love.graphics.newImage("images/asset_fonteditor.png"),
 
 		sound_play = love.graphics.newImage("images/sound_play.png"),
 		sound_play_current = love.graphics.newImage("images/sound_play_current.png"),
@@ -413,6 +415,9 @@ function love.load()
 	musiceditorfile_forcevvvvvvfolder = false
 	musiceditorfolder = vvvvvvfolder
 	musiceditorfolder_set = false
+
+	fonteditor_init()
+	fonteditor_reffont_loaded = false
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")

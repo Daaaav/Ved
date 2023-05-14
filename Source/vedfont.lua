@@ -308,16 +308,26 @@ function cVedFont:frame_start()
 	self.current_batch = 0
 end
 
+function cVedFont:has_glyph_codepoint(c, require_main)
+	-- Returns true if the font can render the given Unicode codepoint.
+	-- If require_main is true, characters may not be from the fallback font either.
+	if self.chars[c] == nil then
+		return false
+	end
+	if require_main and self.chars[c].subfont > 0 then
+		return false
+	end
+
+	return true
+end
+
 function cVedFont:has_glyphs(str, require_main)
 	-- Returns true if the font can render all UTF-8 characters in the string.
 	-- If require_main is true, characters may not be from the fallback font either.
 	local codepoints = utf8_to_utf32(str, print_buf, print_buf_n)
 	local i = 0
 	while i < print_buf_n and i < codepoints do
-		if self.chars[print_buf[0]] == nil then
-			return false
-		end
-		if require_main and self.chars[print_buf[0]].subfont > 0 then
+		if not self:has_glyph_codepoint(print_buf[i]) then
 			return false
 		end
 

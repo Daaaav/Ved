@@ -2056,6 +2056,19 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				input = anythingbutnil(helparticlecontent[helpeditingline])
 			end
 		end
+	elseif state == 36 then
+		if direction == "u" then
+			fonteditor_scroll = fonteditor_scroll + distance
+			if fonteditor_scroll > 0 then
+				fonteditor_scroll = 0
+			end
+		elseif direction == "d" then
+			fonteditor_scroll = fonteditor_scroll - distance
+			local upperbound = fonteditor_maxscroll
+			if -fonteditor_scroll > upperbound then
+				fonteditor_scroll = math.min(-upperbound, 0)
+			end
+		end
 	end
 end
 
@@ -2063,7 +2076,7 @@ function is_scrollable(x, y)
 	if dialog.is_open() then
 		return dialogs[#dialogs]:get_on_scrollable_field(x, y) ~= nil
 	end
-	if state == 3 or state == 10 or state == 11 or state == 15 then
+	if state == 3 or state == 10 or state == 11 or state == 15 or state == 36 then
 		return true
 	end
 	if state == 6 and x < love.graphics.getWidth()-128 then
@@ -3218,6 +3231,7 @@ function load_uis()
 	uis[33] = load_ui("language")
 	uis[34] = load_ui("inputtest")
 	uis[35] = load_ui("vvvvvvsetupoptions")
+	uis[36] = load_ui("fonteditormain")
 	-- Don't forget states.txt
 end
 

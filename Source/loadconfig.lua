@@ -219,6 +219,18 @@ configs = {
 		default = true,
 		["type"] = "bool"
 	},
+	fonteditor_reffont_format = {
+		default = 0,
+		["type"] = "number"
+	},
+	fonteditor_reffont_ttf_filepath = {
+		default = "",
+		["type"] = "string"
+	},
+	fonteditor_reffont_ttf_filename = {
+		default = "",
+		["type"] = "string"
+	},
 }
 
 function saveconfig()

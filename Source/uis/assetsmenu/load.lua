@@ -7,6 +7,7 @@ return function(show_level_assets)
 	if show_level_assets then
 		assetsmenu_vvvvvvfolder = levelsfolder .. dirsep .. editingmap
 		assetsmenu_graphicsfolder = assetsmenu_vvvvvvfolder .. graphicsfolder_rel
+		assetsmenu_fontsfolder = assetsmenu_vvvvvvfolder .. graphicsfolder_rel
 		assetsmenu_soundsfolder = assetsmenu_vvvvvvfolder .. soundsfolder_rel
 		assetsmenu_music_prefix = "level/"
 
@@ -14,6 +15,7 @@ return function(show_level_assets)
 	else
 		assetsmenu_vvvvvvfolder = vvvvvvfolder
 		assetsmenu_graphicsfolder = graphicsfolder
+		assetsmenu_fontsfolder = graphicsfolder
 		assetsmenu_soundsfolder = soundsfolder
 		assetsmenu_music_prefix = ""
 	end

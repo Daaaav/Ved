@@ -11,6 +11,7 @@ DB = {
 	CLOSE = 9,
 	LOAD = 10,
 	ADVANCED = 11,
+	CREATE = 12,
 }
 
 -- We'd also like that being indexable by the values...
@@ -31,6 +32,7 @@ DBS = {
 	YESNOCANCEL = {DB.YES, DB.NO, DB.CANCEL},
 	SAVECANCEL = {DB.SAVE, DB.CANCEL},
 	LOADCANCEL = {DB.LOAD, DB.CANCEL},
+	CREATECANCEL = {DB.CREATE, DB.CANCEL},
 }
 
 -- Field type constants
@@ -147,6 +149,7 @@ function cDialog:draw(topmost)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
 	ved_printf(self.text, self.x+10, self.y+self.windowani+8, self.width-20, "left")
 	love.graphics.setScissor()
+	self:setColor(255,255,255,255)
 
 	-- Text boxes
 	local fieldactive = false
@@ -260,7 +263,14 @@ function cDialog:draw(topmost)
 			-- in the same order as in cDialog:keypressed()
 			if DB_keys[v] == "SAVE" and #self.fields == 0 then
 				showhotkey("S", unpack(args))
-			elseif not returnalreadyshown and (DB_keys[v] == "OK" or DB_keys[v] == "CLOSE" or DB_keys[v] == "SAVE" or DB_keys[v] == "LOAD" or DB_keys[v] == "QUIT") then
+			elseif not returnalreadyshown and (
+				DB_keys[v] == "OK"
+				or DB_keys[v] == "CLOSE"
+				or DB_keys[v] == "SAVE"
+				or DB_keys[v] == "LOAD"
+				or DB_keys[v] == "CREATE"
+				or DB_keys[v] == "QUIT"
+			) then
 				showhotkey("n", unpack(args))
 				returnalreadyshown = true
 			elseif DB_keys[v] == "CANCEL" then
@@ -363,6 +373,8 @@ function cDialog:keypressed(key)
 			self:press_button(DB.SAVE)
 		elseif self.buttons_present[DB.LOAD] then
 			self:press_button(DB.LOAD)
+		elseif self.buttons_present[DB.CREATE] then
+			self:press_button(DB.CREATE)
 		elseif self.buttons_present[DB.QUIT] then
 			self:press_button(DB.QUIT)
 		end
