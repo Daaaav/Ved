@@ -327,6 +327,8 @@ function script_context(text, textlinestogo)
 			return "frames", nil
 		end
 		return "frames", frames, nil, nil
+	elseif parts[1] == "playef" and parts[2] ~= nil then
+		return "sound", tonumber(parts[2]), nil, nil
 	elseif table.contains({"music", "play", "stopmusic", "playremix"}, parts[1]) then
 		if parts[1] == "stopmusic" then
 			return "track", -1, nil, nil
@@ -746,7 +748,7 @@ function script_compile(readable_script)
 						noflagsleftwarning = true
 						success = false
 					end
-				else					
+				else
 					-- When replacing, make sure a flag named "flag" or similar won't replace the command itself. Also don't change the style of brackets/commas by imploding as x(y,z)
 					-- And also, just remove all the spaces from the line if there are any
 					usev = usev:gsub(" ", "")

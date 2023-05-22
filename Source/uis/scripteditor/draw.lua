@@ -447,6 +447,48 @@ return function()
 				"center"
 			)
 		end
+	elseif context == "sound" then
+		carg1 = tonumber(carg1)
+		local ef_name = list_sound_ids[carg1]
+		if ef_name == nil then
+			ef_name = langkeys(L.SOUNDNUM, {carg1})
+		elseif carg1 == 3 then
+			-- This single one is too long to fit (even without .wav), so make it have a newline :I
+			ef_name = "souleyemini\njingle.wav"
+		end
+		ved_printf(
+			ef_name,
+			love.graphics.getWidth()-(128-8),
+			8+(24*12)+4,
+			128-16,
+			"center"
+		)
+		rbutton(L.PLAYSOUND, 13)
+
+		if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
+			-- Play
+			if not level_music_loaded then
+				-- FIXME a bit of copy-pasting from uis/assetsmenu/load, since sound effects
+				-- right now are hooked into "from where are you opening the assets menu",
+				-- but this should be replaced with an Assets object.
+				assetsmenu_vvvvvvfolder = levelsfolder .. dirsep .. editingmap
+				assetsmenu_soundsfolder = assetsmenu_vvvvvvfolder .. soundsfolder_rel
+				assetsmenu_music_prefix = "level/"
+
+				loadvvvvvvmusics_level()
+			end
+
+			local success = false
+			local audio = music_get_audio("level/sounds", carg1)
+			if audio ~= nil then
+				success = playmusic("level/sounds", carg1)
+			end
+
+			if not success then
+				dialog.create(L.SOUNDPLAYERROR)
+			end
+			mousepressed = true
+		end
 	elseif context == "track" then
 		carg1 = tonumber(carg1)
 		if carg1 ~= nil then
