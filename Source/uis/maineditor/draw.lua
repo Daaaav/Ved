@@ -32,12 +32,12 @@ return function()
 			if levelmetadata_get(roomx, roomy).warpdir == 1 then
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][1],
-					screenoffset + (32-warpbganimation), 0
+					screenoffset + (32-math.floor(warpbganimation)), 0
 				)
 			elseif levelmetadata_get(roomx, roomy).warpdir == 2 then
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][2],
-					screenoffset, 32-warpbganimation
+					screenoffset, 32-math.floor(warpbganimation)
 				)
 			end
 
@@ -50,7 +50,7 @@ return function()
 
 			for squarel = 11, 0, -1 do
 				-- Centerx: 128+320 = 448
-				local side = (squarel-1)*64 + (warpbganimation*2)
+				local side = (squarel-1)*64 + (math.floor(warpbganimation)*2)
 
 				if squarel % 2 == 0 then
 					love.graphics.setColor(warpbgcolors[tilesetblocks[tils].colors[tilc].warpbg][2])

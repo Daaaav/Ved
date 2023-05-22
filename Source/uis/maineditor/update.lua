@@ -49,9 +49,9 @@ return function(dt)
 	end
 
 	if levelmetadata_get(roomx, roomy).warpdir == 3 then
-		warpbganimation = (warpbganimation + 2) % 64
+		warpbganimation = (warpbganimation + 120*dt) % 64
 	elseif levelmetadata_get(roomx, roomy).warpdir ~= 0 then
-		warpbganimation = (warpbganimation + 3) % 32
+		warpbganimation = (warpbganimation + 180*dt) % 32
 	end
 
 	if vedmetadata == nil then
