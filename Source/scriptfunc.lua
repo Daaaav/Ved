@@ -155,6 +155,8 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 			else
 				return tonumber(partss_parsed[5]), partss_parsed[2]
 			end
+		elseif partss_parsed[1] == "setactivitytext" then
+			return 1, "orange"
 		end
 	end
 end
@@ -189,6 +191,8 @@ function just_text(text, thisistext)
 				else
 					return tonumber(partss[5]), partss[2]
 				end
+			elseif partss_parsed[1] == "setactivitytext" then
+				return 1, "orange"
 			end
 		end
 
