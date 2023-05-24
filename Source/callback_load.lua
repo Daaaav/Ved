@@ -312,6 +312,8 @@ function love.load()
 	snd_break = love.audio.newSource("sounds/break.ogg", "static")
 	snd_roll = love.audio.newSource("sounds/roll.ogg", "static")
 
+	v6_sounds = {} -- can be used in the sound script context
+
 	scaleimgs = {
 		[false] = love.graphics.newImage("images/scale_normal.png"),
 		[true] = love.graphics.newImage("images/scale_small.png")

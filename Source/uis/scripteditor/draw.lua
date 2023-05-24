@@ -450,14 +450,15 @@ return function()
 	elseif context == "sound" then
 		carg1 = tonumber(carg1)
 		local ef_name = list_sound_ids[carg1]
-		if ef_name == nil then
-			ef_name = langkeys(L.SOUNDNUM, {carg1})
+		local ef_name_displayed = ef_name
+		if ef_name_displayed == nil then
+			ef_name_displayed = langkeys(L.SOUNDNUM, {carg1})
 		elseif carg1 == 3 then
 			-- This single one is too long to fit (even without .wav), so make it have a newline :I
-			ef_name = "souleyemini\njingle.wav"
+			ef_name_displayed = "souleyemini\njingle.wav"
 		end
 		ved_printf(
-			ef_name,
+			ef_name_displayed,
 			love.graphics.getWidth()-(128-8),
 			8+(24*12)+4,
 			128-16,
@@ -484,8 +485,14 @@ return function()
 				success = playmusic("level/sounds", carg1)
 			end
 
-			if not success then
-				dialog.create(L.SOUNDPLAYERROR)
+			if not success and ef_name ~= nil then
+				-- Play the built-in one. Except we use .ogg files instead of .wav
+				ef_name = ef_name:sub(1,-5) .. ".ogg"
+				if v6_sounds[ef_name] == nil then
+					v6_sounds[ef_name] = love.audio.newSource("sounds/" .. ef_name, "static")
+				end
+				v6_sounds[ef_name]:stop()
+				v6_sounds[ef_name]:play()
 			end
 			mousepressed = true
 		end
