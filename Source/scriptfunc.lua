@@ -333,6 +333,11 @@ function script_context(text, textlinestogo)
 		return "frames", frames, nil, nil
 	elseif parts[1] == "playef" and parts[2] ~= nil then
 		return "sound", tonumber(parts[2]), nil, nil
+	elseif parts[1] == "squeak" and parts[2] ~= nil then
+		local effect = squeak_sounds[parts[2]]
+		if effect ~= nil then
+			return "sound", effect, nil, nil
+		end
 	elseif table.contains({"music", "play", "stopmusic", "playremix"}, parts[1]) then
 		if parts[1] == "stopmusic" then
 			return "track", -1, nil, nil

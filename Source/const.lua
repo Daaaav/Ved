@@ -135,6 +135,18 @@ music_simplified_to_internal = {
 	[11] = 14,
 }
 
+squeak_sounds = {
+	player = 11,
+	cyan = 11,
+	red = 16,
+	green = 12,
+	yellow = 14,
+	blue = 13,
+	purple = 15,
+	cry = 2,
+	terminal = 20,
+}
+
 list_sound_ids = {
 	[0] = "jump.wav",
 	"jump2.wav",
