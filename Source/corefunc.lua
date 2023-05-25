@@ -129,9 +129,9 @@ end
 
 -- Returns the bit that signifies a certain significance from an integer.
 -- Assumes your check/sig bit is actually one bit.
--- Example: bit(31, 8) == true because 31 is 11111, 8 is 01000, and that bit is 1.
--- Useful for checking attributes on Windows, think of bit(fileAttributes, FILE_ATTRIBUTE_DIRECTORY)
-function bit(integer, sig)
+-- Example: check_bit(31, 8) == true because 31 is 11111, 8 is 01000, and that bit is 1.
+-- Useful for checking attributes on Windows, think of check_bit(fileAttributes, FILE_ATTRIBUTE_DIRECTORY)
+function check_bit(integer, sig)
 	return (integer % (sig*2)) - (integer % sig) ~= 0
 end
 

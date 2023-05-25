@@ -38,7 +38,7 @@ function path_utf16_to_utf8(wstr)
 end
 
 function file_attributes_directory(dwAttributes)
-	return bit(dwAttributes, FILE_ATTRIBUTE_DIRECTORY)
+	return check_bit(dwAttributes, FILE_ATTRIBUTE_DIRECTORY)
 end
 
 function handle_is_invalid(handle)
@@ -152,7 +152,7 @@ function listfiles_generic(directory, filter, show_hidden)
 		local drivebits = ffi.C.GetLogicalDrives()
 
 		for d = 0, 25 do
-			if bit(drivebits, 2^d) then
+			if check_bit(drivebits, 2^d) then
 				table.insert(files,
 					{
 						name = string.char(0x41+d) .. ":",
@@ -176,8 +176,8 @@ function listfiles_generic(directory, filter, show_hidden)
 		current_name = path_utf16_to_utf8(buffer_filedata.cFileName)
 		if current_name ~= "." and current_name ~= ".."
 		and (isdir or filter == "" or current_name:sub(-filter:len(), -1) == filter)
-		and not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_SYSTEM)
-		and (show_hidden or not bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_HIDDEN)) then
+		and not check_bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_SYSTEM)
+		and (show_hidden or not check_bit(buffer_filedata.dwFileAttributes, FILE_ATTRIBUTE_HIDDEN)) then
 			ffi.C.FileTimeToSystemTime(buffer_filedata.ftLastWriteTime, buffer_st_utc)
 			ffi.C.SystemTimeToTzSpecificLocalTime(nil, buffer_st_utc, buffer_st_loc)
 
