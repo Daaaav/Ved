@@ -314,14 +314,15 @@ function loadvvvvvvsounds(is_level_assets)
 end
 
 function loadmusicsong(file, song, data, edited)
-	local is_sounds = file == "sounds" or file == "level/sounds"
-	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. (is_sounds and ".wav" or ".ogg"), "file")
+	local is_ogg = data:sub(1,4) == "OggS"
+	local m_filedata = love.filesystem.newFileData(data, "song" .. song .. (is_ogg and ".ogg" or ".wav"), "file")
 	if m_filedata:getSize() <= 1 then
 		-- Don't bother
 		return
 	end
 	local audio_metadata
-	if not is_sounds then
+	local is_sounds = file == "sounds" or file == "level/sounds"
+	if not is_sounds and is_ogg then
 		audio_metadata = ogg_vorbis_metadata(m_filedata)
 	else
 		audio_metadata = {}
