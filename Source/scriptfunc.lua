@@ -279,8 +279,6 @@ function script_context(text, textlinestogo)
 		local script = parts[4]:sub(("custom_"):len()+1, parts[4]:len())
 		x, y = get_wrapped_coords(x, y)
 		return "roomscript", x, y, script
-	elseif parts[1] == "gotoposition" and parts[2] ~= nil and parts[3] ~= nil then
-		return "position", tonumber(parts[2]), tonumber(parts[3]), nil
 	elseif parts[1] == "ifwarp"
 	and parts[2] ~= nil
 	and parts[3] ~= nil
@@ -320,6 +318,9 @@ function script_context(text, textlinestogo)
 			x, y = get_wrapped_coords(x, y)
 		end
 		return "room", x, y, nil
+	elseif table.contains({"createentity", "createcrewman", "gotoposition"}, parts[1])
+	and parts[2] ~= nil and parts[3] ~= nil then
+		return "roomcoords", tonumber(parts[2]), tonumber(parts[3]), nil
 	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then
 		local frames
 		if parts[1] == "walk" then

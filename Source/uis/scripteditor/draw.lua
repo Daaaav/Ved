@@ -389,18 +389,28 @@ return function()
 				end
 			end
 		end
-	elseif context == "room" then
-		carg1, carg2 = tonumber(carg1), tonumber(carg2)
-		if carg1 ~= nil and carg2 ~= nil then
+	elseif context == "room" or context == "roomcoords" then
+		local rx, ry
+		local cx, cy
+		local valid = false
+		if context == "room" then
+			rx, ry = carg1, carg2
+			valid = rx ~= nil and ry ~= nil
+		elseif context == "roomcoords" then
+			rx, ry = roomx, roomy
+			cx, cy = carg1, carg2
+			valid = cx ~= nil and cy ~= nil
+		end
+		if valid then
 			local map_x, map_y = love.graphics.getWidth()-(128-8)+16, 8+(24*12)+4
 			love.graphics.setColor(128,128,128)
 			love.graphics.rectangle("line", map_x-.5, map_y-.5, 81, 61)
 			love.graphics.setColor(255,255,255)
-			if carg1 >= 0 and carg1 < metadata.mapwidth
-			and carg2 >= 0 and carg2 < metadata.mapheight
-			and rooms_map[carg2] ~= nil
-			and rooms_map[carg2][carg1] ~= nil
-			and rooms_map[carg2][carg1].map ~= nil then
+			if rx >= 0 and rx < metadata.mapwidth
+			and ry >= 0 and ry < metadata.mapheight
+			and rooms_map[ry] ~= nil
+			and rooms_map[ry][rx] ~= nil
+			and rooms_map[ry][rx].map ~= nil then
 				local room_scale
 				if s.mapstyle == "minimap" then
 					local zoom = getminimapzoom(metadata)
@@ -410,29 +420,43 @@ return function()
 				else
 					room_scale = 1
 				end
-				love.graphics.draw(rooms_map[carg2][carg1].map, map_x, map_y, 0, room_scale/4)
-
-				if mouseon(map_x, map_y, 80, 60) then
-					love.graphics.setColor(128,128,128)
-					love.graphics.rectangle("line", love.mouse.getX()-380.5, love.mouse.getY()-120.5, 321, 241)
-					love.graphics.setColor(0,0,0)
-					love.graphics.rectangle("fill", love.mouse.getX()-380, love.mouse.getY()-120, 320, 240)
+				love.graphics.draw(rooms_map[ry][rx].map, map_x, map_y, 0, room_scale/4)
+				if context == "roomcoords" then
+					love.graphics.draw(image.crosshair_mini, map_x+round(cx/4)-2, map_y+round(cy/4)-2)
 					love.graphics.setColor(255,255,255)
-					love.graphics.draw(rooms_map[carg2][carg1].map, love.mouse.getX()-380, love.mouse.getY()-120, 0, room_scale)
+				end
+
+				if nodialog and mouseon(map_x, map_y, 80, 60) then
+					local hover_x, hover_y = love.mouse.getX()-380, love.mouse.getY()-120
+					love.graphics.setColor(128,128,128)
+					love.graphics.rectangle("line", hover_x-.5, hover_y-.5, 321, 241)
+					love.graphics.setColor(0,0,0)
+					love.graphics.rectangle("fill", hover_x, hover_y, 320, 240)
+					love.graphics.setColor(255,255,255)
+					love.graphics.draw(rooms_map[ry][rx].map, hover_x, hover_y, 0, room_scale)
+
+					if context == "roomcoords" then
+						love.graphics.draw(image.crosshair_mini, hover_x+cx-2, hover_y+cy-2)
+						love.graphics.setColor(255,255,255)
+					end
 				end
 			else
 				love.graphics.draw(image.covered_80x60, map_x, map_y)
 			end
 
-			local disp_carg1, disp_carg2
+			local disp_rx, disp_ry
 			if s.coords0 then
-				disp_carg1 = carg1
-				disp_carg2 = carg2
+				disp_rx = rx
+				disp_ry = ry
 			else
-				disp_carg1 = carg1+1
-				disp_carg2 = carg2+1
+				disp_rx = rx+1
+				disp_ry = ry+1
 			end
-			ved_printf(disp_carg1 .. "," .. disp_carg2, map_x, map_y+62, 80, "center")
+			if context == "room" then
+				ved_printf(disp_rx .. "," .. disp_ry, map_x, map_y+62, 80, "center")
+			elseif context == "roomcoords" then
+				ved_printf(cx .. "," .. cy, map_x, map_y+62, 80, "center")
+			end
 		end
 	elseif context == "frames" then
 		carg1 = tonumber(carg1)
