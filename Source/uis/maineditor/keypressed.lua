@@ -355,7 +355,7 @@ return function(key)
 	elseif editingbounds == 0 and table.contains({"return", "kpenter"}, key) then
 		-- Play
 		playtesting_start(keyboard_eitherIsDown("shift"))
-	elseif key == "n" and keyboard_eitherIsDown(ctrl) then
+	elseif key == "n" and keyboard_eitherIsDown(ctrl) and not keyboard_eitherIsDown("shift") then
 		-- New level?
 		if has_unsaved_changes() then
 			dialog.create(
