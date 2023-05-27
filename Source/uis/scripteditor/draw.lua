@@ -436,8 +436,22 @@ return function()
 					love.graphics.draw(rooms_map[ry][rx].map, hover_x, hover_y, 0, room_scale)
 
 					if context == "roomcoords" then
-						love.graphics.draw(image.crosshair_mini, hover_x+cx-2, hover_y+cy-2)
+						love.graphics.draw(image.crosshair_gigantic, hover_x+cx-3, hover_y+cy-3)
 						love.graphics.setColor(255,255,255)
+					end
+
+					if love.mouse.isDown("l") then
+						local click_x = (love.mouse.getX() - map_x) * 4
+						local click_y = (love.mouse.getY() - map_y) * 4
+
+						-- FIXME: Make a proper function for replacing command arguments
+						-- (there is already updateroomline, but it's too specifically about gotorooms)
+						local _, editing_line = newinputsys.getpos("script_lines")
+						inputs.script_lines[editing_line] = inputs.script_lines[editing_line]:gsub(
+							"^(.-[%(,%)])[0-9]+([%(,%)])[0-9]+",
+							"%1" .. click_x .. "%2" .. click_y
+						)
+						dirty()
 					end
 				end
 			else

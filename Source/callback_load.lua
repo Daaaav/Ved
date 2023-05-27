@@ -288,6 +288,7 @@ function love.load()
 		intsc_on = love.graphics.newImage("images/intsc_on.png"),
 
 		crosshair_mini = love.graphics.newImage("images/crosshair_mini.png"),
+		crosshair_gigantic = love.graphics.newImage("images/crosshair_gigantic.png"),
 	}
 
 	script_warn_lights = {
