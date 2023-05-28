@@ -35,6 +35,17 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 	return specificflag_n_real_usages
 end
 
+function parse_textbox_line_count(count)
+	if count == nil then
+		return nil
+	end
+
+	if count:sub(-1):lower() == "l" then
+		return tonumber(count:sub(1,-2))
+	end
+	return tonumber(count)
+end
+
 function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor, alttextcolor)
 	local textscale = s.scripteditor_largefont and 2 or 1
 	local fontsize = s.scripteditor_largefont and 16 or 8
@@ -101,7 +112,8 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 					else
 						setColorArr(s.syntaxcolor_errortext)
 					end
-				elseif tostring(tonumber(v_parsed)) == tostring(v_parsed) then -- It's a number!
+				elseif parse_textbox_line_count(v_parsed) ~= nil then
+					-- It's a number! It might be suffixed L, used in long textboxes
 					setColorArr(s.syntaxcolor_number)
 				elseif k == 2 and (
 					partss_parsed[1] == "flag"
@@ -138,22 +150,22 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 
 		-- `say` and `reply` are exceptions - they still work when they're capitalized even with no argument separators
 		if partss_parsed[1]:lower() == "say" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss_parsed[2])) <= 1 then
+			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
 				return 1, normalize_simplified_color(partss_parsed[3])
 			else
-				return tonumber(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
+				return parse_textbox_line_count(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
 			end
 		elseif partss_parsed[1]:lower() == "reply" then
-			if partss[2] == nil or anythingbutnil0(tonumber(partss_parsed[2])) <= 1 then
+			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
 				return 1, "player"
 			else
-				return tonumber(partss_parsed[2]), "player"
+				return parse_textbox_line_count(partss_parsed[2]), "player"
 			end
 		elseif partss_parsed[1] == "text" then
-			if partss[5] == nil or anythingbutnil0(tonumber(partss_parsed[5])) <= 0 then
+			if partss[5] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[5])) <= 0 then
 				return 0, partss_parsed[2]
 			else
-				return tonumber(partss_parsed[5]), partss_parsed[2]
+				return parse_textbox_line_count(partss_parsed[5]), partss_parsed[2]
 			end
 		elseif partss_parsed[1] == "setactivitytext" then
 			return 1, "orange"
@@ -174,22 +186,22 @@ function just_text(text, thisistext)
 			partss = explode(",", text2)
 
 			if partss[1] == "say" then
-				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss[2])) <= 1 then
 					return 1, normalize_simplified_color(partss[3])
 				else
-					return tonumber(partss[2]), normalize_simplified_color(partss[3])
+					return parse_textbox_line_count(partss[2]), normalize_simplified_color(partss[3])
 				end
 			elseif partss[1] == "reply" then
-				if partss[2] == nil or anythingbutnil0(tonumber(partss[2])) <= 1 then
+				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss[2])) <= 1 then
 					return 1, "player"
 				else
-					return tonumber(partss[2]), "player"
+					return parse_textbox_line_count(partss[2]), "player"
 				end
 			elseif partss[1] == "text" then
-				if partss[5] == nil or anythingbutnil0(tonumber(partss[5])) <= 0 then
+				if partss[5] == nil or anythingbutnil0(parse_textbox_line_count(partss[5])) <= 0 then
 					return 0, partss[2]
 				else
-					return tonumber(partss[5]), partss[2]
+					return parse_textbox_line_count(partss[5]), partss[2]
 				end
 			elseif partss_parsed[1] == "setactivitytext" then
 				return 1, "orange"
