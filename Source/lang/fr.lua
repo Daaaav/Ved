@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2022-08-10 00:21:23 (CEST)
+--- Last converted: 2023-05-28 20:15:13 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -61,6 +61,7 @@ FLAGNAMEINUSE = "Le nom de drapeau $1 est déjà utilisé par le drapeau $2",
 DIFFSELECT = "Choisissez le niveau à comparer. Le niveau que vous sélectionnez sera considéré comme l'ancienne version.",
 SUREQUITNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de quitter ?",
 SURENEWLEVELNEW = "Vous avez des changements non sauvegardés. Voulez-vous sauver ces changements avant de créer un nouveau niveau ?",
+SUREOPENLEVEL = "Vous avez des changements non sauvegardés. Voulez-vous sauvegarder ces changements avant d'ouvrir ce niveau ?",
 NAMEFORFLAG = "Nom pour le drapeau $1 :",
 SCRIPT404 = "Le script \"$1\" n'existe pas !",
 ENTITY404 = "L'entité #$1 n'existe plus !",
@@ -538,8 +539,10 @@ SHIFTROOMS = "Déplacer la salle", -- In the map. Move all rooms in the entire l
 
 FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Salle $1",
+SOUNDNUM = "Son $1",
 TRACKNUM = "Piste $1",
 STOPSMUSIC = "Arrête la musique",
+PLAYSOUND = "Jouer le son",
 EDITSCRIPTWOBUMPING = "Modifier le script sans le monter en haut de la liste",
 EDITSCRIPTWBUMPING = "Modifier le script et le monter en haut de la liste",
 CLICKONTHING = "Clique sur $1",
@@ -1191,7 +1194,7 @@ Mode de création de script interne\h#
 
 Pour utiliser un script interne dans Ved, vous pouvez activer le mode de création
 de script interne dans l'éditeur pour gérer toutes les commandes de ce script
-en tant que script interne. Voir le mode Sc.int¤ pour plus d'informations sur le
+en tant que script interne. Voir ¤Mode sc.int¤ pour plus d'informations sur le\nwl
 mode de création de scripte interne. Pour plus d'informations sur la création de
 script interne, veuillez consulter la référence sur la création de script interne.
 
@@ -1230,7 +1233,7 @@ script interne; vous n'avez pas à utiliser de commande ¤say¤, de compter les\
 lignes, d'entrer ¤text(1,0,0,4)¤ ou ¤text,,,,4¤ ou n'importe quelle forme de ces\nwnw
 commandes - vous n'avez qu'à écrire vos scripts internes comme s'ils étaient
 pour le vrai jeu. Vous n'avez même pas besoin de finir avec une commande
-¤loadscript¤.\nw
+loadscript¤.\w
 
 Ved supporte différentes méthodes de création de script interne. Pour mettre
 en évidence leurs différences techniques, nous allons utiliser ce script d'exemple

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2022-08-10 00:21:22 (CEST)
+--- Last converted: 2023-05-28 20:15:12 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -57,6 +57,7 @@ FLAGNAMEINUSE = "El nombre del flag $1 ya esta en uso por el flag $2",
 DIFFSELECT = "Seleccione el nivel al que quieres compararlo. Ese nivel se tratara como una version mas vieja.",
 SUREQUITNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de salir?",
 SURENEWLEVELNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de crear un nuevo nivel?",
+SUREOPENLEVEL = "You have unsaved changes. Do you want to save these changes before opening this level?",
 NAMEFORFLAG = "Nombre para flag $1:",
 SCRIPT404 = "El script \"$1\" no existe!",
 ENTITY404 = "La entidad #$1 no existe!",
@@ -534,8 +535,10 @@ SHIFTROOMS = "Cambiar habitacion", -- In the map. Move all rooms in the entire l
 
 FRAMESTOSECONDS = "$1 = $2 seg.",
 ROOMNUM = "Habitacion $1",
+SOUNDNUM = "Sound $1",
 TRACKNUM = "Pista $1",
 STOPSMUSIC = "Para la musica",
+PLAYSOUND = "Play sound",
 EDITSCRIPTWOBUMPING = "Editar script sin chocar",
 EDITSCRIPTWBUMPING = "Edit script and bump",
 CLICKONTHING = "Haz click en $1",

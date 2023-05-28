@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2022-08-10 00:21:23 (CEST)
+--- Last converted: 2023-05-28 20:15:12 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -69,6 +69,7 @@ FLAGNAMEINUSE = "La flaga nomo $1 jam estas uzata de flago $2",
 DIFFSELECT = "Elektu la nivelon komparotan. La nivelo, kiun vi nun elektas, estos traktata kiel pli-malnovan version.",
 SUREQUITNEW = "Estas nekonservitaj ŝanĝoj. Ĉu vi volas konservi ilin antaŭ ol eliri?",
 SURENEWLEVELNEW = "Estas nekonservitaj ŝanĝoj. Ĉu vi volas konservi ilin antaŭ ol krei novan nivelon?",
+SUREOPENLEVEL = "Estas nekonservitaj ŝanĝoj. Ĉu vi volas konservi ilin antaŭ ol malfermi ĉi tiun nivelon?",
 NAMEFORFLAG = "Nomo por flago $1:",
 SCRIPT404 = "Skripto \"$1\" ne ekzistas!",
 ENTITY404 = "Ento #$1 ne plu ekzistas!",
@@ -546,8 +547,10 @@ SHIFTROOMS = "Ŝovi ĉambrojn", -- In the map. Move all rooms in the entire leve
 
 FRAMESTOSECONDS = "$1 = $2 sek",
 ROOMNUM = "Ĉambro $1",
+SOUNDNUM = "Sono $1",
 TRACKNUM = "Trako $1",
 STOPSMUSIC = "Haltigas muzikon",
+PLAYSOUND = "Ludi sonon",
 EDITSCRIPTWOBUMPING = "Redakti skripton sen suprenigi",
 EDITSCRIPTWBUMPING = "Redakti skripton kaj suprenigi",
 CLICKONTHING = "Alklaku $1",
@@ -1051,57 +1054,57 @@ Vi povas uzi la sekvajn ilojn por plenigi ĉambrojn en via nivelo:
    Muro\h#
 
 
-Tiu ĉi ilo estas uzebla por meti murojn.
+Uzu ĉi tiun ilon por meti murojn.
 
 \1
    Fono\h#
 
 
-Tiu ĉi ilo estas uzebla por meti fonojn.
+Uzu ĉi tiun ilon por meti fonojn.
 
 \2
    Pikaĵo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti pikaĵojn. Vi povas uzi la etendan ilidon por
+Uzu ĉi tiun ilon por meti pikaĵojn. Vi povas uzi la etendan ilidon por
 meti pikaĵojn sur surfacon per unu klako (aŭ deŝovo).
 
 \3
    Kolektaĵo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti kolektaĵojn. Bonvole notu, ke estas limo
+Uzu ĉi tiun ilon por meti kolektaĵojn. Bonvole notu, ke estas limo
 de dudek kolektaĵoj en nivelo.
 
 \4
    Konservejo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti konservejojn.
+Uzu ĉi tiun ilon por meti konservejojn.
 
 \5
    Malaperanta platformo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti malaperantajn platformojn.
+Uzu ĉi tiun ilon por meti malaperantajn platformojn.
 
 \6
    Transportbendo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti transportbendojn.
+Uzu ĉi tiun ilon por meti transportbendojn.
 
 \7
    Moviĝanta platformo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti moviĝantajn platformojn.
+Uzu ĉi tiun ilon por meti moviĝantajn platformojn.
 
 \8
    Malamiko\h#
 
 
-Tiu ĉi ilo estas uzebla por meti malamikojn. La formo kaj koloro de la malamiko
+Uzu ĉi tiun ilon por meti malamikojn. La formo kaj koloro de la malamiko
 estas determinitaj de la agordo de la malamika tipo, kaj la (koloro de la)
 kahelaro, respektive.
 
@@ -1109,19 +1112,19 @@ kahelaro, respektive.
    Gravita linio\h#
 
 
-Tiu ĉi ilo estas uzebla por meti gravitajn liniojn.
+Uzu ĉi tiun ilon por meti gravitajn liniojn.
 
 \^0
    Ĉambroteksto\h#
 
 
-Tiu ĉi ilo estas uzebla por meti ĉambrotekston.
+Uzu ĉi tiun ilon por meti ĉambrotekston.
 
 \^1
    Terminalo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti terminalojn. Unue metu ĝin, kaj tiam
+Uzu ĉi tiun ilon por meti terminalojn. Unue metu ĝin, kaj tiam
 tajpu nomon por la skripto. Por pli da informoj pri skriptado, bonvolu legi
 la helpopaĝojn pri skriptado.
 
@@ -1129,7 +1132,7 @@ la helpopaĝojn pri skriptado.
    Skriptkvadrato\h#
 
 
-Tiu ĉi ilo estas uzebla por meti skriptkvadratojn. Unue alklaku la supran
+Uzu ĉi tiun ilon por meti skriptkvadratojn. Unue alklaku la supran
 maldekstran angulon, kaj tiam la malsupran dekstran, kaj tiam tajpu nomon por la
 skripto. Por pli da informoj pri skriptado, bonvolu legi la helpopaĝojn de
 skriptado.
@@ -1138,29 +1141,28 @@ skriptado.
    Teleportĵetono\h#
 
 
-Tiu ĉi ilo estas uzebla por meti teleportĵetonojn. Unue alklaku la lokon por la
+Uzu ĉi tiun ilon por meti teleportĵetonojn. Unue alklaku la lokon por la
 enirejo, kaj tiam alklaku la lokon por la elirejo.
 
 \^4
    Teleportlinio\h#
 
 
-Tiu ĉi ilo estas uzebla por meti teleportliniojn. Bonvole notu, ke ili estas
+Uzu ĉi tiun ilon por meti teleportliniojn. Bonvole notu, ke ili estas
 meteblaj nur ĉe la randoj de ĉambro.
 
 \^5
    Skipano\h#
 
 
-Tiu ĉi ilo estas uzebla por meti mankantajn skipanojn, kiuj estas saveblaj. Se
-ĉiuj skipanoj estas savitaj, la nivelo finiĝos. Bonvolu noti, ke estas limo de
-dudek skipanoj en nivelo.
+Uzu ĉi tiun ilon por meti saveblajn skipanojn. Se ĉiuj skipanoj estas savitaj,
+la nivelo finiĝos. Bonvolu noti, ke estas limo de dudek skipanoj en nivelo.
 
 \^6
    Komencejo\h#
 
 
-Tiu ĉi ilo estas uzebla por meti la komencejon.
+Uzu ĉi tiun ilon por meti la komencejon.
 ]]
 },
 {
@@ -1914,7 +1916,7 @@ iflast¤(skipano,skripto)\b#h
 Se skipano x estas savita laste, saltas al skripto
 
 skipano - Numeroj uziĝas ĉi tie: 0: Viridiano, 1: Violeto, 2: Vitelario, 3:
-Vermiliono, 4: Verdigriso, 5: Viktoria
+Vermiljo, 4: Verdigriso, 5: Viktoria
 
 ifskip¤(x)\b#h
 
@@ -2015,7 +2017,7 @@ ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 redcontrol\b#h
 
-Komencas konversacion kun Vermiliono ĝuste kiel kiam vi renkontas lin en la ĉefa
+Komencas konversacion kun Vermiljo ĝuste kiel kiam vi renkontas lin en la ĉefa
 ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
 
 rescued¤(koloro)\b#h
@@ -2211,7 +2213,7 @@ Tabelo\w&Z+
 #Sonaj numeroj\C&Z+l
 #Entoj\C&Z+l
 #Koloroj por skipanoj de createentity()\C&Z+l
-#Moviĝtipoj por malamikoj\C&Z+l
+#Moviĝaj tipoj de malamikoj\C&Z+l
 #Ludstatoj\C&Z+l
 
 
@@ -2267,7 +2269,7 @@ Sonaj numeroj\h#
 13 - Pepo de Viktoria
 14 - Pepo de Vitelario
 15 - Pepo de Violeto
-16 - Pepo de Vermiliono
+16 - Pepo de Vermiljo
 17 - Terminalo tuŝita
 18 - Teleportilo tuŝita
 19 - Sonorilo
@@ -2325,7 +2327,7 @@ Enhavo0 - La ludanto
 18 - Skipano
      Metadatumoj: Koloro (uzante krudan kolorliston, ne la skipanajn kolorojn),
      humoro
-19 - Vermiliono
+19 - Vermiljo
      Metadatumo: Stato de AI
 20 - Terminalo
      Metadatumoj: Sprajto, skript-idento(?)
@@ -2365,7 +2367,7 @@ Koloroj por skipanoj de createentity()\h#
 3: Koloro de kolektaĵo
 4: Grizo
 5: Brilanta blanko
-6: Ruĝo (iomete pli malhela ol Vermiliono)
+6: Ruĝo (iomete pli malhela ol Vermiljo)
 7: Limea verdo
 8: Brilega rozkoloro
 9: Brilega flavo
@@ -2374,7 +2376,7 @@ Koloroj por skipanoj de createentity()\h#
 12: Bluo, same kiel Viktoria
 13: Verdo, same kiel Verdigriso
 14: Flavo, same kiel Vitelario
-15: Ruĝo, same kiel Vermiliono
+15: Ruĝo, same kiel Vermiljo
 16: Bluo, same kiel Viktoria
 17: Plihela oranĝkoloro
 18: Grizo
@@ -2449,16 +2451,16 @@ Ludstatoj\h#
 20 - Se flago 1 estas 0, agordas ĝin al 1 kaj forigas dialog-skatolojn
 21 - Se flago 2 estas 0, agordas ĝin al 1 kaj forigas dialog-skatolojn
 22 - "Premu AGBUTONON por renversiĝi"
-30 - "Hm, kial la ŝipo teleportigis min ĉi tien sola?" "Mi esperas, ke la aliuloj
+30 - "Kial la ŝipo teleportigis min ĉi tien sola?" "Mi esperas, ke la aliuloj
      eskapis enordaj..."
 31 - Sekvenco: "Violeto! Ĉu estas vi?" (se flago 6 estas 0)
 32 - Se flago 7 estas 0: "Ho! Teleportilo!" "Mi povas reveni al la ŝipo per ĝi!"
 33 - Se flago 9 estas 0: Sekvenco de Viktoria
 34 - Se flago 10 estas 0: Sekvenco de Vitelario
 35 - Se flago 11 estas 0: Sekvenco de Verdigriso
-36 - Se flago 8 estas 0: Sekvenco de Vermiliono
+36 - Se flago 8 estas 0: Sekvenco de Vermiljo
 37 - Vitelario post Gravitrono
-38 - Vermiliono post Gravitrono
+38 - Vermiljo post Gravitrono
 39 - Verdigriso post Gravitrono
 40 - Viktoria post Gravitrono
 41 - Se flago 60 estas 0: plenumas komencon de sekvenco de Interakto 1
@@ -2467,7 +2469,7 @@ Ludstatoj\h#
 44 - Se flago 64 estas 0: plenumas kvinan sekvencon de Interakto 1
 45 - Se flago 65 estas 0: plenumas sesan sekvencon de Interakto 1
 46 - Se flago 66 estas 0: plenumas sepan sekvencon de Interakto 1
-47 - Se flago 69 estas 0: Kolektaĵa sekvenco: "Ho! Kio estas tio?"
+47 - Se flago 69 estas 0: Kolektaĵa sekvenco: "Ho! Kio estas tio, mi scivolas..."
 48 - Se flago 70 estas 0: "Tie ĉi ŝajnas bona loko por konservi la aferojn, kiujn
      mi trovas en tiu ĉi dimensio." (Victoria ne jam troviĝis)
 49 - Se flago 71 estas 0: Ludas Predestined Fate
@@ -2540,9 +2542,9 @@ Statoj 120-128 funkcias iome kiel 102-112, t.e. en serio, sed kun malpli da
 Statoj 3000-3099:
 3000-3005: "Fino de nivelo! Vi savis..." kaj la skipano aplikita al
            companion(), defaŭlte Verdigriso. 6=Verdigriso, 7=Vitelario,
-           8=Viktoria, 9=Vermiliono, 10=Viridiano (jes, vere), 11=Violeto
+           8=Viktoria, 9=Vermiljo, 10=Viridiano (jes, vere), 11=Violeto
            (Ludstatoj: 3006-3011=Verdigriso, 3020-3026=Vitelario, 3040-
-           3046=Viktoria, 3060-3066=Vermiliono, 3080-3086=Viridiano, 3050-
+           3046=Viktoria, 3060-3066=Vermiljo, 3080-3086=Viridiano, 3050-
            3056=Violeto)
 3070-3072 - Plenumas postsavajn aferojn, kutime revenas al ŝipo
 3501 - Fino de ludo (ludo estas kompletigita)
@@ -2595,7 +2597,7 @@ Z - Malhel-griza\Z
 C - Bluverda (Viridiano)\C
 P - Rozkolora (Violeto)\P
 Y - Flava (Vitelario)\Y
-R - Ruĝa (Vermiliono)\R
+R - Ruĝa (Vermiljo)\R
 G - Verda (Verdigriso)\G
 B - Blua (Viktoria)\B
 
@@ -2626,7 +2628,7 @@ signo¤ ¤¤ ¤(kiun vi povas tajpi uzante la klavon ¤Insert/Enigi¤), metante 
 kolorkodojn en ordon post¤ \¤. Se la lasta koloro sur la linio estas la defaŭlta\nC
 koloro (n), ne necesas listigi tion ĉefine. Se vi volas uzi la signon¤ ¤¤ ¤sur\nY
 linio, kiu uzas¤ \¤, skribu¤ ¤¤¤¤ ¤anstataŭe. Pro teknikaj kaŭzoj, ne eb¤l§¤as\nCnYnR(
-kolorigi unu signon sole metante ĝin inter du¤ ¤¤§¤oj, krom se vi aldonas ankaŭ\nY
+kolorigi unu signon sole metante ĝin inter du¤ ¤¤§¤oj, krom se vi aldonas ankaŭ\nY(
 spaceton aŭ alian signon.
 
 \-

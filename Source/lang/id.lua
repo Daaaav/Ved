@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2022-08-10 00:21:23 (CEST)
+--- Last converted: 2023-05-28 20:15:12 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -45,6 +45,7 @@ FLAGNAMEINUSE = "Nama tanda $1 sudah digunakan oleh tanda $2",
 DIFFSELECT = "Pilih level utk dibandingkan. Level yg Anda pilih skrg akan diperlakukan sebagai versi yg lebih lama.",
 SUREQUITNEW = "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum keluar?",
 SURENEWLEVELNEW = "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum membuat level baru?",
+SUREOPENLEVEL = "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum membuka level ini?",
 NAMEFORFLAG = "Nama untuk tanda $1:",
 SCRIPT404 = "Skrip \"$1\" tidak ada!",
 ENTITY404 = "Entitas #$1 tidak ada lagi!",
@@ -413,7 +414,7 @@ REQUIRESHIGHERLOVE = " (membutuhkan LÖVE $1 atau lebih tinggi)",
 FPSLIMIT = "Batas FPS",
 
 MAPRESOLUTION = "Resolusi", -- Map export size
-MAPRES_ASSHOWN = "Seperti yang ditunjukkan (maks 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_ASSHOWN = "Seprti yg ditunjukkn (maks 640x480)", -- $1x$2 is resolution, max 640x480
 MAPRES_PERCENT = "$1% ($2x$3 per ruang)", -- Example: 50% (160x120 per room)
 MAPRES_RATIO = "$1:$2 ($3x$4 per ruang)", -- Example: 1:8 (40x30 per room)
 TOPLEFT = "Kiri atas",
@@ -446,9 +447,9 @@ TINY_INSERT = "INS",
 TINY_DEL = "DEL",
 
 -- Header for search results
-SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
-SEARCHRESULTS_ROOMS = "Rooms [$1]",
-SEARCHRESULTS_NOTES = "Notes [$1]",
+SEARCHRESULTS_SCRIPTS = "Skrip [$1]",
+SEARCHRESULTS_ROOMS = "Ruang [$1]",
+SEARCHRESULTS_NOTES = "Cacatan [$1]",
 
 ASSETS = "Sumber", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
 MUSICPLAYERROR = "Tidak dapat memutar lagu ini. Itu mungkin tidak ada atau dari jenis yang tidak didukung.",
@@ -522,8 +523,10 @@ SHIFTROOMS = "Pergeseran ruang", -- In the map. Move all rooms in the entire lev
 
 FRAMESTOSECONDS = "$1 = $2 dtk.",
 ROOMNUM = "Ruang $1",
+SOUNDNUM = "Suara $1",
 TRACKNUM = "Trek $1",
 STOPSMUSIC = "Menghentikan musik",
+PLAYSOUND = "Putar suara",
 EDITSCRIPTWOBUMPING = "Edit skrip tanpa menabrak",
 EDITSCRIPTWBUMPING = "Edit skrip dan bentrok",
 CLICKONTHING = "Klik $1",

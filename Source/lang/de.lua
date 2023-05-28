@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2022-08-10 00:21:23 (CEST)
+--- Last converted: 2023-05-28 20:15:12 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -57,6 +57,7 @@ FLAGNAMEINUSE = "Der Flagname $1 wird bereits von Flag $2 benutzt",
 DIFFSELECT = "Vergleiche Level. Das Level was du auswählst wird behandelt als stamme es von einer älteren Version.",
 SUREQUITNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du beendest?",
 SURENEWLEVELNEW = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du ein neues Level erstellst?",
+SUREOPENLEVEL = "Du hast ungespeicherte Änderungen. Willst du diese Änderungen speichern bevor du dieses Level öffnest?",
 NAMEFORFLAG = "Name für Flag $1:",
 SCRIPT404 = "Skript \"$1\" existiert nicht!",
 ENTITY404 = "Objekt #$1 existiert nicht mehr!",
@@ -534,8 +535,10 @@ SHIFTROOMS = "Verschiebe Räume", -- In the map. Move all rooms in the entire le
 
 FRAMESTOSECONDS = "$1 = $2 Sek",
 ROOMNUM = "Raum $1",
+SOUNDNUM = "Geräusch $1",
 TRACKNUM = "Track $1",
 STOPSMUSIC = "Stoppt Musik",
+PLAYSOUND = "Geräusch abspielen",
 EDITSCRIPTWOBUMPING = "Bearbeite Skript ohne Stoß zum Anfang",
 EDITSCRIPTWBUMPING = "Bearbeite Skript mit Stoß zum Anfang",
 CLICKONTHING = "Klicke auf $1",

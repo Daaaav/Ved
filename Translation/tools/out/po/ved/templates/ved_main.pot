@@ -97,6 +97,10 @@ msgctxt "L.SURENEWLEVELNEW"
 msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
 msgstr ""
 
+msgctxt "L.SUREOPENLEVEL"
+msgid "You have unsaved changes. Do you want to save these changes before opening this level?"
+msgstr ""
+
 msgctxt "L.NAMEFORFLAG"
 msgid "Name for flag $1:"
 msgstr ""
@@ -1826,12 +1830,20 @@ msgctxt "L.ROOMNUM"
 msgid "Room $1"
 msgstr ""
 
+msgctxt "L.SOUNDNUM"
+msgid "Sound $1"
+msgstr ""
+
 msgctxt "L.TRACKNUM"
 msgid "Track $1"
 msgstr ""
 
 msgctxt "L.STOPSMUSIC"
 msgid "Stops music"
+msgstr ""
+
+msgctxt "L.PLAYSOUND"
+msgid "Play sound"
 msgstr ""
 
 msgctxt "L.EDITSCRIPTWOBUMPING"

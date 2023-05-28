@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2022-08-10 00:21:24 (CEST)
+--- Last converted: 2023-05-28 20:15:13 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -55,6 +55,7 @@ FLAGNAMEINUSE = "De vlagnaam $1 wordt al gebruikt door vlag $2",
 DIFFSELECT = "Selecteer level om mee te vergelijken. Het level dat je nu kiest zal worden gezien als een oudere versie.",
 SUREQUITNEW = "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het afsluiten?",
 SURENEWLEVELNEW = "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het maken van een nieuw level?",
+SUREOPENLEVEL = "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het openen van dit level?",
 NAMEFORFLAG = "Naam voor vlag $1:",
 SCRIPT404 = "Script \"$1\" bestaat niet!",
 ENTITY404 = "Entiteit #$1 bestaat niet meer!",
@@ -532,8 +533,10 @@ SHIFTROOMS = "Verschuif kamers", -- In the map. Move all rooms in the entire lev
 
 FRAMESTOSECONDS = "$1 = $2 sec",
 ROOMNUM = "Kamer $1",
+SOUNDNUM = "Geluid $1",
 TRACKNUM = "Nummer $1",
 STOPSMUSIC = "Stopt muziek",
+PLAYSOUND = "Geluid afspelen",
 EDITSCRIPTWOBUMPING = "Script bewerken, niet naar boven verplaatsen",
 EDITSCRIPTWBUMPING = "Script bewerken en naar boven verplaatsen",
 CLICKONTHING = "Klik op $1",
