@@ -616,12 +616,22 @@ function handle_tool_mousedown()
 			-- Script box
 			-- Subtool is changed in the background
 			if selectedsubtool[13] == 1 then
-				-- Placing top left corner. Refactoring multi-step entities is definitely on my todo list.
+				-- Placing first corner. Refactoring multi-step entities is definitely on my todo list.
 				insert_entity(atx, aty, 19)
 			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
-				-- Placing bottom right corner
-				local new_p1 = math.max((40*roomx + atx) - entitydata[editingsboxid].x + 1, 1)
-				local new_p2 = math.max((30*roomy + aty) - entitydata[editingsboxid].y + 1, 1)
+				-- Placing second corner
+				local old_x = entitydata[editingsboxid].x % 40
+				local old_y = entitydata[editingsboxid].y % 30
+				if atx < old_x then
+					entitydata[editingsboxid].x = 40*roomx + atx
+					atx = old_x
+				end
+				if aty < old_y then
+					entitydata[editingsboxid].y = 30*roomy + aty
+					aty = old_y
+				end
+				local new_p1 = (40*roomx + atx) - entitydata[editingsboxid].x + 1
+				local new_p2 = (30*roomy + aty) - entitydata[editingsboxid].y + 1
 				entitydata[editingsboxid].p1 = new_p1
 				entitydata[editingsboxid].p2 = new_p2
 

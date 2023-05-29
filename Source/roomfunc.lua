@@ -733,41 +733,60 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 19 then
 		-- Script box, draw it as an actual box.
 		love.graphics.setColor(0,0,255)
-		love.graphics.draw(scriptboximg[1], x, y)
+
 		if editingsboxid == k and selectedsubtool[13] ~= 3 then
 			-- Currently placing
-			love.graphics.draw(scriptboximg[3], math.max(math.floor(love.mouse.getX()/16)*16, x), y)
-			love.graphics.draw(scriptboximg[7], x, math.max(math.floor(love.mouse.getY()/16)*16, y))
-			love.graphics.draw(scriptboximg[9], math.max(math.floor(love.mouse.getX()/16)*16, x), math.max(math.floor(love.mouse.getY()/16)*16, y))
+			local cur_x = math.floor(love.mouse.getX()/16)*16
+			local cur_y = math.floor(love.mouse.getY()/16)*16
+			local low_x, low_y, high_x, high_y
+			if cur_x < x then
+				low_x = cur_x
+				high_x = x
+			else
+				low_x = x
+				high_x = cur_x
+			end
+			if cur_y < y then
+				low_y = cur_y
+				high_y = y
+			else
+				low_y = y
+				high_y = cur_y
+			end
+
+			love.graphics.draw(scriptboximg[1], low_x, low_y)
+			love.graphics.draw(scriptboximg[3], high_x, low_y)
+			love.graphics.draw(scriptboximg[7], low_x, high_y)
+			love.graphics.draw(scriptboximg[9], high_x, high_y)
 
 			-- Horizontal
-
-			for prt = x + 16, math.max(math.floor(love.mouse.getX()/16)*16), 16 do
-				love.graphics.draw(scriptboximg[2], prt, y)
-				love.graphics.draw(scriptboximg[8], prt, math.max(math.floor((love.mouse.getY()/16))*16, y))
+			for part = low_x + 16, high_x - 16, 16 do
+				love.graphics.draw(scriptboximg[2], part, low_y)
+				love.graphics.draw(scriptboximg[8], part, high_y)
 			end
 
 			-- Vertical
-			for prt = y + 16, math.max(math.floor(love.mouse.getY()/16)*16, y) - 16, 16 do
-				love.graphics.draw(scriptboximg[4], x, prt)
-				love.graphics.draw(scriptboximg[6], math.max(math.floor(love.mouse.getX()/16)*16, x), prt)
+			for part = low_y + 16, high_y - 16, 16 do
+				love.graphics.draw(scriptboximg[4], low_x, part)
+				love.graphics.draw(scriptboximg[6], high_x, part)
 			end
 		else
 			-- Normal box
+			love.graphics.draw(scriptboximg[1], x, y)
 			love.graphics.draw(scriptboximg[3], x + (v.p1-1)*16, y)
 			love.graphics.draw(scriptboximg[7], x, y + (v.p2-1)*16)
 			love.graphics.draw(scriptboximg[9], x + (v.p1-1)*16, y + (v.p2-1)*16)
 
 			-- Horizontal
-			for prt = x + 16, x + (v.p1-1)*16 - 16, 16 do
-				love.graphics.draw(scriptboximg[2], prt, y)
-				love.graphics.draw(scriptboximg[8], prt, y + (v.p2-1)*16)
+			for part = x + 16, x + (v.p1-1)*16 - 16, 16 do
+				love.graphics.draw(scriptboximg[2], part, y)
+				love.graphics.draw(scriptboximg[8], part, y + (v.p2-1)*16)
 			end
 
 			-- Vertical
-			for prt = y + 16, y + (v.p2-1)*16 - 16, 16 do
-				love.graphics.draw(scriptboximg[4], x, prt)
-				love.graphics.draw(scriptboximg[6], x + (v.p1-1)*16, prt)
+			for part = y + 16, y + (v.p2-1)*16 - 16, 16 do
+				love.graphics.draw(scriptboximg[4], x, part)
+				love.graphics.draw(scriptboximg[6], x + (v.p1-1)*16, part)
 			end
 			love.graphics.setColor(255,255,255)
 
