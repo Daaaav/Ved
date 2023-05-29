@@ -805,13 +805,22 @@ return function()
 	end
 
 	-- We also have buttons for trinkets, enemy and platform settings, and crewmates!
-	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 or selectedtool == 16 then
+	-- FIXME: This code is in dire need of refactoring
+	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 or selectedtool == 16 or selectedtool == 17 then
 		local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv}
-		if selectedtool ~= 4 and selectedtool ~= 16 and not voided_metadata then
+		if selectedtool ~= 4 and selectedtool ~= 16 and selectedtool ~= 17 and not voided_metadata then
 			rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
 		end
-		if selectedtool == 4 or selectedtool == 16 then
-			rbutton(selectedtool == 4 and L.LISTALLTRINKETS or L.LISTALLCREWMATES, -2, 164+4, true)
+		if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
+			local label
+			if selectedtool == 4 then
+				label = L.LISTALLTRINKETS
+			elseif selectedtool == 16 then
+				label = L.LISTALLCREWMATES
+			else
+				label = L.GOTO
+			end
+			rbutton(label, -2, 164+4, true)
 		elseif voided_metadata then
 		elseif selectedtool == 9 then
 			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
@@ -839,7 +848,8 @@ return function()
 		ved_printf(
 			selectedtool == 4 and L.TRINKETS or
 			selectedtool == 8 and L.ROOMPLATFORMS or
-			selectedtool == 9 and L.ROOMENEMIES or L.CREWMATES,
+			selectedtool == 9 and L.ROOMENEMIES or
+			selectedtool == 16 and L.CREWMATES or toolnames[selectedtool],
 			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+4, 128-16, "center"
 		)
 
@@ -891,7 +901,11 @@ return function()
 				end
 				editingroomname = false
 				dialog.create(crewmates, nil, nil, L.LISTOFALLCREWMATES)
-			elseif selectedtool == 4 or selectedtool == 16 or voided_metadata then
+			elseif onrbutton(-2, 164+4, true) and selectedtool == 17 then
+				-- Go to start point
+				gotostartpointroom()
+				mousepressed = true
+			elseif selectedtool == 4 or selectedtool == 16 or selectedtool == 17 or voided_metadata then
 			elseif onrbutton(-3, 164+4, true) then
 				-- Enemy/platform bounds
 				if selectedtool == 9 then
