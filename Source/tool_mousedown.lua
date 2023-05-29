@@ -521,8 +521,19 @@ function handle_tool_mousedown()
 				levelmetadata_set(roomx, roomy, "platy2", 240)
 				editingbounds = 2
 			elseif editingbounds == 2 then
-				levelmetadata_set(roomx, roomy, "platx2", atx*8+8)
-				levelmetadata_set(roomx, roomy, "platy2", aty*8+8)
+				local lmd = levelmetadata_get(roomx, roomy)
+				local old_x, old_y = lmd.platx1, lmd.platy1
+				local new_x, new_y = atx*8, aty*8
+				if old_x > atx*8 then
+					levelmetadata_set(roomx, roomy, "platx1", atx*8)
+					new_x = old_x
+				end
+				if old_y > aty*8 then
+					levelmetadata_set(roomx, roomy, "platy1", aty*8)
+					new_y = old_y
+				end
+				levelmetadata_set(roomx, roomy, "platx2", new_x+8)
+				levelmetadata_set(roomx, roomy, "platy2", new_y+8)
 				editingbounds = 0
 
 				local changeddata = {}
@@ -554,8 +565,19 @@ function handle_tool_mousedown()
 				levelmetadata_set(roomx, roomy, "enemyy2", 240)
 				editingbounds = 1
 			elseif editingbounds == 1 then
-				levelmetadata_set(roomx, roomy, "enemyx2", atx*8+8)
-				levelmetadata_set(roomx, roomy, "enemyy2", aty*8+8)
+				local lmd = levelmetadata_get(roomx, roomy)
+				local old_x, old_y = lmd.enemyx1, lmd.enemyy1
+				local new_x, new_y = atx*8, aty*8
+				if old_x > atx*8 then
+					levelmetadata_set(roomx, roomy, "enemyx1", atx*8)
+					new_x = old_x
+				end
+				if old_y > aty*8 then
+					levelmetadata_set(roomx, roomy, "enemyy1", aty*8)
+					new_y = old_y
+				end
+				levelmetadata_set(roomx, roomy, "enemyx2", new_x+8)
+				levelmetadata_set(roomx, roomy, "enemyy2", new_y+8)
 				editingbounds = 0
 
 				local changeddata = {}
