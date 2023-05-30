@@ -447,8 +447,15 @@ return function()
 						-- FIXME: Make a proper function for replacing command arguments
 						-- (there is already updateroomline, but it's too specifically about gotorooms)
 						local _, editing_line = newinputsys.getpos("script_lines")
+						local first_coord_arg = carg3
+						local pattern
+						if first_coord_arg == 2 then
+							pattern = "^([^%(,%)]-[%(,%)])[0-9]+([%(,%)])[0-9]+"
+						elseif first_coord_arg == 3 then
+							pattern = "^([^%(,%)]*[%(,%)][^%(,%)]*[%(,%)])[0-9]+([%(,%)])[0-9]+"
+						end
 						inputs.script_lines[editing_line] = inputs.script_lines[editing_line]:gsub(
-							"^(.-[%(,%)])[0-9]+([%(,%)])[0-9]+",
+							pattern,
 							"%1" .. click_x .. "%2" .. click_y
 						)
 						dirty()

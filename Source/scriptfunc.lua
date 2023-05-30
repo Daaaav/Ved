@@ -332,7 +332,12 @@ function script_context(text, textlinestogo)
 		return "room", x, y, nil
 	elseif table.contains({"createentity", "createcrewman", "gotoposition"}, parts[1])
 	and parts[2] ~= nil and parts[3] ~= nil then
-		return "roomcoords", tonumber(parts[2]), tonumber(parts[3]), nil
+		return "roomcoords", tonumber(parts[2]), tonumber(parts[3]), 2
+	elseif table.contains({"text"}, parts[1])
+	and tonumber(parts[3]) ~= nil and tonumber(parts[4]) ~= nil
+	and tonumber(parts[3]) > 0
+	and tonumber(parts[4]) > 0 then
+		return "roomcoords", tonumber(parts[3]), tonumber(parts[4]), 3
 	elseif table.contains({"delay", "walk", "flash", "shake"}, parts[1]) and parts[2] ~= nil then
 		local frames
 		if parts[1] == "walk" then
