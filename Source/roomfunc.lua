@@ -1494,7 +1494,7 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 	return removedentities
 end
 
-function displayshapedcursor(leftblx, upblx, rightblx, downblx)	
+function displayshapedcursor(leftblx, upblx, rightblx, downblx)
 	love.graphics.draw(cursorimg[1], (cursorx*16)+screenoffset-(leftblx*16), (cursory*16)-(upblx*16))
 	love.graphics.draw(cursorimg[2], (cursorx*16)+screenoffset+(rightblx*16), (cursory*16)-(upblx*16))
 	love.graphics.draw(cursorimg[3], (cursorx*16)+screenoffset-(leftblx*16), (cursory*16)+(downblx*16))
@@ -2289,7 +2289,7 @@ function redo()
 	if state == 12 then
 		locatetrinketscrewmates()
 	end
-end	
+end
 
 function entityplaced(id)
 	if id == nil then

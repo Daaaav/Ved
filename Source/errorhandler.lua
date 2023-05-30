@@ -180,7 +180,7 @@ function ved_showerror(msg)
 		if love.system.getOS() == "Windows" then
 			contents = contents:gsub("\n", "\r\n")
 		end
-		
+
 		if love.filesystem.exists(logfilename) then
 			love.filesystem.append(logfilename, contents)
 		else

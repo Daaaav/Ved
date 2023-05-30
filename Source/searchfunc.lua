@@ -151,7 +151,7 @@ function inscriptsearch(this)
 			if searching_line > #inputs.script_lines then
 				searching_line = 1
 			end
-		until searching_line == editing_line 
+		until searching_line == editing_line
 
 		if found_line == 0 then
 			-- Also search that part before the cursor, then. And after once more, but that doesn't matter.
