@@ -1,4 +1,6 @@
-jit.off() -- temporary for 1.10.2
+if jit ~= nil then
+	jit.off() -- temporary for 1.10.2
+end
 
 function love.conf(t)
 	if love._version_major == nil or (love._version_major == 0 and love._version_minor <= 8) then
