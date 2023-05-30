@@ -251,6 +251,7 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 
 					self.chars[codepoint] = {
 						advance = self.glyph_w,
+						color = false,
 						subfont = subfont
 					}
 
@@ -277,7 +278,12 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 			if xspecial ~= nil then
 				for range in xspecial:gmatch("<range (.-)/>") do
 					local attr = parsexmlattributes(range)
-					self:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
+					if attr.advance ~= nil then
+						self:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
+					end
+					if attr.color ~= nil then
+						self:set_glyph_color(attr.color == "1", tonumber(attr.start), tonumber(attr["end"]))
+					end
 				end
 				special_loaded = true
 			end
@@ -296,7 +302,8 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 				text = ffi.new("uint32_t[?]", self.limit_line_chars),
 				text_len = 0,
 				width = 0,
-				spritebatch = love.graphics.newSpriteBatch(self.image, self.limit_line_chars)
+				spritebatch = love.graphics.newSpriteBatch(self.image, self.limit_line_chars),
+				r = 0, g = 0, b = 0, a = 0
 			}
 		)
 	end
@@ -359,6 +366,20 @@ function cVedFont:set_glyph_advance(a, c, c_end)
 	end
 end
 
+function cVedFont:set_glyph_color(value, c, c_end)
+	-- Set the colored state of the glyph for codepoint c to value, if the glyph exists.
+	-- If c_end is specified, this is applied to the range c - c_end
+	if c_end == nil then
+		c_end = c
+	end
+
+	for g = c, c_end do
+		if self.chars[g] ~= nil then
+			self.chars[g].color = value
+		end
+	end
+end
+
 function cVedFont:copy_glyph(c_target, c_source)
 	-- Overwrite the glyph for c_target with the one for c_source.
 	self.chars[c_target] = self.chars[c_source]
@@ -417,9 +438,27 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 		changed = true
 	end
 
+	local global_r, global_g, global_b, global_a = love.graphics.getColor()
+
+	if not changed and (
+	batch.r ~= global_r or
+	batch.g ~= global_g or
+	batch.b ~= global_b or
+	batch.a ~= global_a) then
+		changed = true
+	end
+
 	if len > 0 and changed then
 		batch.text_len = len
+		batch.r = global_r
+		batch.g = global_g
+		batch.b = global_b
+		batch.a = global_a
 		batch.spritebatch:clear()
+
+		-- Since the global color may need to be overridden per-character (colored glyphs),
+		-- we set the global color to white and instead set the SpriteBatch color to the global color
+		spritebatch_set_color(batch.spritebatch, global_r, global_g, global_b, global_a)
 
 		local cur_x = 0
 
@@ -437,10 +476,18 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 			end
 
 			if not blank then
+				if glyph.color then
+					spritebatch_set_color(batch.spritebatch, 255, 255, 255, global_a)
+				end
+
 				if love_version_meets(9) then
 					batch.spritebatch:add(glyph.quad, cur_x, 0)
 				else
 					batch.spritebatch:addq(glyph.quad, cur_x, 0)
+				end
+
+				if glyph.color then
+					spritebatch_set_color(batch.spritebatch, global_r, global_g, global_b, global_a)
 				end
 			end
 
@@ -459,7 +506,9 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 				px = px + (max_width - batch.width*sx)
 			end
 		end
+		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.draw(batch.spritebatch, math.floor(px), math.floor(py), nil, sx, sy)
+		love.graphics.setColor(global_r, global_g, global_b, global_a)
 	end
 
 	if newline_continue ~= nil then

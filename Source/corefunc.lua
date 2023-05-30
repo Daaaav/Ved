@@ -218,3 +218,25 @@ function init_window_properties()
 		end
 	end
 end
+
+function spritebatch_set_color(spritebatch, r, g, b, a)
+	if not love_version_meets(8) then
+		-- We're forcing text to be white in DINOSAUR love2d, but it already was white, so...
+		-- Otherwise, just add another of these around the lg.setColor(255, 255, 255, 255)
+		return
+	end
+
+	-- Colors in Ved are still 0-255
+	local white = 255
+	local div = 1
+	if love_version_meets(11) then
+		white = 1
+		div = 255
+	end
+
+	if a == nil then
+		a = 255
+	end
+
+	spritebatch:setColor(r/div, g/div, b/div, a/div)
+end
