@@ -2933,7 +2933,7 @@ cont = [[
 
 License\h#
 \
-Copyright 2015-2022  Dav999
+Copyright 2015-2023  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
