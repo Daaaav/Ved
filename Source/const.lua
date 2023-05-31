@@ -365,6 +365,7 @@ knowninternalcommands = {
 	["setactivitytext"] = true,
 	["setcheckpoint"] = true,
 	["setfont"] = true,
+	["setroomname"] = true,
 	["shake"] = true,
 	["showcoordinates"] = true,
 	["showplayer"] = true,

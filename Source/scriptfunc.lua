@@ -169,6 +169,8 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 			end
 		elseif partss_parsed[1] == "setactivitytext" then
 			return 1, "orange"
+		elseif partss_parsed[1] == "setroomname" then
+			return 1, "white"
 		end
 	end
 end
@@ -205,6 +207,8 @@ function just_text(text, thisistext)
 				end
 			elseif partss_parsed[1] == "setactivitytext" then
 				return 1, "orange"
+			elseif partss_parsed[1] == "setroomname" then
+				return 1, "white"
 			end
 		end
 
