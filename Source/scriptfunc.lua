@@ -353,7 +353,7 @@ function script_context(text, textlinestogo)
 			return "frames", nil
 		end
 		return "frames", frames, nil, nil
-	elseif parts[1] == "playef" and parts[2] ~= nil then
+	elseif parts[1] == "playef" and tonumber(parts[2]) ~= nil then
 		return "sound", tonumber(parts[2]), nil, nil
 	elseif parts[1] == "squeak" and parts[2] ~= nil then
 		local effect = squeak_sounds[parts[2]]
