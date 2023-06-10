@@ -69,7 +69,9 @@ function loadplugins()
 		folders = love.filesystem.getDirectoryItems("plugins")
 
 		for k,v in pairs(folders) do
-			if love.filesystem.isDirectory("plugins/" .. v) or v:sub(-4, -1) == ".zip" then
+			if love.filesystem.isDirectory("plugins/" .. v)
+			or (love_version_meets(9, 2) and love.filesystem.isSymlink("plugins/" .. v))
+			or v:sub(-4, -1) == ".zip" then
 				-- This is a plugin folder/zip, neat! But if it's a zip, then we first need to mount it.
 				local pluginpath, pluginname
 
