@@ -621,15 +621,16 @@ function input.movey(id, chars)
 	local lines = inputs[id]
 	local x, y = input.getpos(id, true)
 
-	y = y + chars
-
-	if y < 1 then
+	if y <= 1 and chars < 0 then
 		input.leftmost(id)
 		return
-	elseif y > #lines then
+	elseif y >= #lines and chars > 0 then
 		input.rightmost(id)
 		return
 	end
+
+	y = y + chars
+	y = math.min(math.max(y, 1), #lines)
 
 	input.pos[id][2] = y
 
