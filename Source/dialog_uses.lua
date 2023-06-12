@@ -28,7 +28,7 @@ function dialog.form.save_make()
 	return {
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
-		{"title", 0, 4, 40, metadata.Title, DF.TEXT},
+		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
 	}
 end
 
