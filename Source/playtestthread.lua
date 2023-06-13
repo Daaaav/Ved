@@ -85,7 +85,7 @@ end
 
 	So to summarize the mapping of -version behavior to playtesting support version:
 	- If stdERR says "invalid option", it's early 2.4, counting as 2.3 (don't mind if it segfaults)
-	- If it hasn't exited within 2 seconds, it's 2.2
+	- If it hasn't exited within some seconds, it's 2.2
 	- If stdOUT gives any version number, it's 2.4 or later
 	- If stdOUT says "invalid option", it's 2.3
 
@@ -96,7 +96,7 @@ end
 	- VVVVVV-CE, since it has --version and behaves like 2.2 on -version (but you should never
 	  playtest VVVVVV levels in VVVVVV-CE anyway because of the differences in behavior)
 ]]
-local version_process = cProcess:new{path=path, args_table={"-version"}, timeout=2, will_read=true}
+local version_process = cProcess:new{path=path, args_table={"-version"}, timeout=5, will_read=true}
 local success, err = version_process:start()
 
 if success then
