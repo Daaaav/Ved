@@ -716,7 +716,7 @@ function script_compile(readable_script)
 		end
 
 		if partss_scriptcasing[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
-			textlinestogo = anythingbutnil0(tonumber(partss[5]))
+			textlinestogo = anythingbutnil0(partss[5])
 		end
 
 		-- Would be a good idea to stop accidental script splits from happening... People could much better use the actual split button

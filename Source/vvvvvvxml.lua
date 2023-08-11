@@ -217,7 +217,7 @@ function loadlevel(path)
 
 				myvedmetadata = createmde(thislimit)
 
-				myvedmetadata.mdeversion = anythingbutnil0(tonumber(explodedmetadata[1]))
+				myvedmetadata.mdeversion = anythingbutnil0(explodedmetadata[1])
 
 				if myvedmetadata.mdeversion > thismdeversion then
 					dialog.create(L.MDEVERSIONWARNING)

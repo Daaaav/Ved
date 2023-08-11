@@ -20,7 +20,7 @@ intermediate_version = true -- If true, this is a WIP version
 
 if intermediate_version then
 	-- Extra pair of brackets to not turn the number of bytes into the base for tonumber
-	commitversion = anythingbutnil0(tonumber((love.filesystem.read("commitversion"))))
+	commitversion = anythingbutnil0((love.filesystem.read("commitversion")))
 end
 
 thismdeversion = 3

@@ -40,7 +40,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 
 		for aty = 0, 29 do
 			for atx = 0, 39 do
-				local t = anythingbutnil0(tonumber(theroomdata[(aty*40)+(atx+1)]))
+				local t = anythingbutnil0(theroomdata[(aty*40)+(atx+1)])
 				local x, y = 16*atx*zoomscale2, 16*aty*zoomscale2
 				if t ~= 0 and tilesets[tsimage].tiles[t] ~= nil then
 					local tile = tilesets[tsimage].tiles[t]
@@ -3135,7 +3135,7 @@ function displayvtoolsroom(offsetx, offsety, theroomdata, themetadata)
 
 	for aty = 0, 29 do
 		for atx = 0, 39 do
-			local t = anythingbutnil0(tonumber(theroomdata[(aty*40)+(atx+1)]))
+			local t = anythingbutnil0(theroomdata[(aty*40)+(atx+1)])
 			if t ~= 0 and tilesets[tsimage].tiles[t] ~= nil then
 				love.graphics.draw(
 					tilesets[tsimage].img,

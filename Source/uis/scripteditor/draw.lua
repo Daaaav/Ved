@@ -25,7 +25,7 @@ return function()
 		local text2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 		local partss = explode(",", text2)
 		if partss[1] == "text" and textlinestogo == 0 then
-			textlinestogo = math.max(anythingbutnil0(tonumber(partss[5])), 0)
+			textlinestogo = math.max(anythingbutnil0(partss[5]), 0)
 
 			if textlinestogo > 0 then
 				-- Search forward for a createcrewman unless we hit a speak(_active) first

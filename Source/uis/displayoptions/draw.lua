@@ -55,9 +55,9 @@ return function()
 	)
 
 	if nonintscale then
-		num_scale = anythingbutnil0(tonumber((inputs.scale:gsub(",", "."))))
+		num_scale = anythingbutnil0((inputs.scale:gsub(",", ".")))
 	else
-		num_scale = anythingbutnil0(tonumber(s.scale))
+		num_scale = anythingbutnil0(s.scale)
 	end
 	local ved_w, ved_h = 896*num_scale, 480*num_scale
 	if s.smallerscreen then

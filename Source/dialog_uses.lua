@@ -167,7 +167,7 @@ function dialog.form.leveloptions_make()
 		music_page_kv[music_page] = label
 		music_page_vk[label] = music_page
 
-		local levmusic = anythingbutnil0(tonumber(metadata.levmusic))
+		local levmusic = anythingbutnil0(metadata.levmusic)
 		if levmusic >= music_page and levmusic <= music_page+15 then
 			selected_page = music_page
 		end
@@ -892,9 +892,9 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 	-- thisentity is still this entity
 	local correctlines = false
 	if (thisentity.t == 11 or thisentity.t == 50) -- gravity line or warp line
-	and thisentity.p1 == anythingbutnil0(tonumber(fields.p1))
-	and thisentity.p2 == anythingbutnil0(tonumber(fields.p2))
-	and thisentity.p3 == anythingbutnil0(tonumber(fields.p3)) then
+	and thisentity.p1 == anythingbutnil0(fields.p1)
+	and thisentity.p2 == anythingbutnil0(fields.p2)
+	and thisentity.p3 == anythingbutnil0(fields.p3) then
 		correctlines = true
 	end
 
@@ -904,7 +904,7 @@ function dialog.callback.rawentityproperties(button, fields, identifier, notclos
 		local newvalue = fields[v]
 		if v ~= "data" then
 			-- Needs to be a number
-			newvalue = anythingbutnil0(tonumber(newvalue))
+			newvalue = anythingbutnil0(newvalue)
 		end
 		table.insert(changeddata, {
 				key = v,

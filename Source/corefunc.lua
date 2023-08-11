@@ -57,7 +57,7 @@ function anythingbutnil0(this)
 	if this == nil then
 		return 0
 	else
-		return this
+		return tonumber(this)
 	end
 end
 

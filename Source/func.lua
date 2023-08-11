@@ -220,7 +220,7 @@ function tostate(new, dontinitialize, ...)
 	newinputsys.pause()
 
 	oldstate = state
-	state = anythingbutnil0(tonumber(new)) -- please
+	state = anythingbutnil0(new)
 	if not dontinitialize then
 		cons("State changed: " .. oldstate .. " => " .. state .. " (inited)")
 		loadstate(state, ...) -- just so states can be prepared easily
@@ -333,7 +333,7 @@ function loadlevelsfolder()
 					local ov, lm = 0, 0
 					local parts = explode("_", f2)
 					if #parts >= 2 then
-						ov, lm = anythingbutnil0(tonumber(parts[1])), anythingbutnil0(tonumber(parts[2]))
+						ov, lm = anythingbutnil0(parts[1]), anythingbutnil0(parts[2])
 					end
 					table.insert(files[".ved-sys" .. dirsep .. "backups" .. dirsep .. f1],
 						{
@@ -2418,7 +2418,7 @@ function backup_level(levelsfolder, levelname)
 
 	-- What to save it as?
 	local nowtime = os.time()
-	local modtime = anythingbutnil0(tonumber(getmodtime(fullpath)))
+	local modtime = anythingbutnil0(getmodtime(fullpath))
 	local savename = nowtime .. "_" .. modtime .. "_" .. levelname:gsub("/", "__") .. ".vvvvvv"
 
 	-- Actually save
