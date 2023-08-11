@@ -440,7 +440,7 @@ return function()
 						love.graphics.setColor(255,255,255)
 					end
 
-					if not mousepressed and love.mouse.isDown("l") then
+					if carg3 ~= nil and not mousepressed and love.mouse.isDown("l") then
 						local click_x = (love.mouse.getX() - map_x) * 4
 						local click_y = (love.mouse.getY() - map_y) * 4
 
