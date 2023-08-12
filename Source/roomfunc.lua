@@ -853,11 +853,11 @@ end
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy, n)
 	local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
-		local dispx = math.min((offsetx+640)-((input .. __):len()*16)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
+		local dispx = math.min((offsetx+640)-(font8:getWidth(input .. __)*2)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
 		textshadow(input, dispx, dispy, true)
 		ved_print(input .. __, dispx, dispy, 2)
 	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
-		local dispx = math.min((offsetx+640)-(v.data:len()*16), offsetx+(v.x-myroomx*40)*16)
+		local dispx = math.min((offsetx+640)-(font8:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
 		textshadow(v.data, dispx, dispy, true)
 		ved_print(v.data, dispx, dispy, 2)
 		if n ~= nil then
