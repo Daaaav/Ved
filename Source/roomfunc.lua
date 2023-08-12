@@ -1775,7 +1775,9 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 			elseif k == 1 and (numw < 0 or numw > maxtileset) then
 				cons("Paste failed- tileset is out of range! (" .. numw .. ")")
 				return
-			elseif k == 2 and (numw < 0
+			elseif k == 2 and (
+			explodeddata[1] == 0 and numw < -1
+			or explodeddata[1] ~= 0 and numw < 0
 			or explodeddata[1] == 0 and numw > 31
 			or explodeddata[1] == 1 and numw > 7
 			or explodeddata[1] == 2 and numw > 6
