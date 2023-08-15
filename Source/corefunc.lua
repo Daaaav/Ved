@@ -54,10 +54,11 @@ end
 
 function anythingbutnil0(this)
 	-- Same, but instead of an empty string return 0
-	if this == nil then
+	local num = tonumber(this)
+	if num == nil then
 		return 0
 	else
-		return tonumber(this)
+		return num
 	end
 end
 
