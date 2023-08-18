@@ -294,7 +294,7 @@ return function()
 		if not window_active() then
 			love.graphics.setColor(255,255,255,128)
 		end
-		tinyprint(L.TINY_CTRL, 0, 0)
+		tinyfont:print(L.TINY_CTRL, 0, 0)
 
 		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if toolanyofthese then

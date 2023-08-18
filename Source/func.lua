@@ -2248,7 +2248,7 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 	if sp_t > 0 then
 		if sp_go and sp_got > 0 then
 			if s_ge2ten > 99 then
-				tinyprint(s_ge2ten, ox+4, oy+4)
+				tinyfont:print(s_ge2ten, ox+4, oy+4)
 			else
 				ved_print(s_ge2ten, ox+3, oy+3)
 			end
@@ -2346,11 +2346,6 @@ function keyboard_eitherIsDown(...)
 		end
 	end
 	return love.keyboard.isDown(unpack(list))
-end
-
--- Simply print a string in the tiny font
-function tinyprint(text, x, y)
-	tinyfont:print(text, x, y)
 end
 
 function textshadow(text, x, y, largefont)

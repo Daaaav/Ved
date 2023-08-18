@@ -416,7 +416,7 @@ return function()
 			love.graphics.setColor(255,255,255,255)
 
 			-- Put the shortcut next to it.
-			tinyprint(toolshortcuts[t], coorx-2+32+1, coory)
+			tinyfont:print(toolshortcuts[t], coorx-2+32+1, coory)
 
 			if nodialog and ((not mouseon(16, 0, 32, 16)) and not (mouseon(16, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32))) then
 				thistooltip = toolnames[t]
@@ -470,7 +470,7 @@ return function()
 
 			-- Shortcut text, but only for ZXCV
 			if (selectedtool <= 3 or selectedtool == 5 or (selectedtool >= 7 and selectedtool <= 10) or selectedtool == 12) and k >= 2 and k <= 9 then
-				tinyprint(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
+				tinyfont:print(({"", "Z", "X", "C", "V", "H", "B", "", "F"})[k], coorx-2+32+1, coory)
 			end
 
 			if nodialog and ((not mouseon(16+64, 0, 32, 16)) and not (mouseon(16+64, love.graphics.getHeight()-16, 32, 16)) and (mouseon(16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll, 32, 32))) and window_active() then
@@ -535,7 +535,7 @@ return function()
 			love.graphics.setColor(0, 0, 0, 224)
 			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-8, tinywidth+2, 9)
 			love.graphics.setColor(255,255,0,255)
-			tinyprint(L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-7)
+			tinyfont:print(L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-7)
 			love.graphics.setColor(255,255,255,255)
 		elseif editingroomtext > 0
 		and entitydata[editingroomtext] ~= nil
@@ -545,8 +545,8 @@ return function()
 			love.graphics.setColor(0, 0, 0, 224)
 			love.graphics.rectangle("fill", 128-tinywidth-1, love.graphics.getHeight()-15, tinywidth+2, 16)
 			love.graphics.setColor(255,255,0,255)
-			tinyprint("{" .. L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-14)
-			tinyprint("}" .. L.TINY_CTRL, 128-tinywidth, love.graphics.getHeight()-7)
+			tinyfont:print("{" .. L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-14)
+			tinyfont:print("}" .. L.TINY_CTRL, 128-tinywidth, love.graphics.getHeight()-7)
 			love.graphics.setColor(255,255,255,255)
 		end
 	else
@@ -557,7 +557,7 @@ return function()
 		if not window_active() then
 			love.graphics.setColor(255,255,255,128)
 		end
-		tinyprint(L.TINY_CTRL, 0, 0)
+		tinyfont:print(L.TINY_CTRL, 0, 0)
 
 		-- Also display the current (sub)tool!
 		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
@@ -1007,11 +1007,11 @@ return function()
 	-- And coordinates.
 	love.graphics.setColor(128,128,128)
 	if s.coords0 then
-		tinyprint("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
+		tinyfont:print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
 		ved_printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	else
-		tinyprint("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
+		tinyfont:print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
 		ved_printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	end
@@ -1278,8 +1278,8 @@ return function()
 		love.graphics.setColor(0, 0, 0, 224)
 		love.graphics.rectangle("fill", 128-totalwidth-1, love.graphics.getHeight()-15, totalwidth+2, 16)
 		love.graphics.setColor(255, 255, 0, 255)
-		tinyprint(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinyfont:getWidth(flipindicator), love.graphics.getHeight()-15)
-		tinyprint(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinyfont:getWidth(unlockindicator), love.graphics.getHeight()-7)
+		tinyfont:print(flipindicator .. L.TINY_SHIFT, 128-tinywidth-tinyfont:getWidth(flipindicator), love.graphics.getHeight()-15)
+		tinyfont:print(unlockindicator .. L.TINY_ALT, 128-tinywidth-tinyfont:getWidth(unlockindicator), love.graphics.getHeight()-7)
 		love.graphics.setColor(255, 255, 255, 255)
 	end
 
