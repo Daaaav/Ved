@@ -107,6 +107,9 @@ function love.load()
 	ved_require("input")
 	ved_require("entity_mousedown")
 	ved_require("tool_mousedown")
+	autotiling = ved_require("autotiling")
+	autotiling:init()
+
 
 	math.randomseed(os.time())
 

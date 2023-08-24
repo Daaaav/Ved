@@ -1120,10 +1120,10 @@ function autocorrectroom()
 	if levelmetadata_get(roomx, roomy).directmode == 0 then
 		for thisy = 0, 29 do
 			for thisx = 0, 39 do
-				if levelmetadata_get(roomx, roomy).auto2mode == 0 or tileincurrenttileset(roomdata_get(roomx, roomy, thisx, thisy)) then
-					local correctret = correcttile(roomx, roomy, thisx, thisy, selectedtileset, selectedcolor)
-					if roomdata_get(roomx, roomy, thisx, thisy) ~= correctret then
-						roomdata_set(roomx, roomy, thisx, thisy, correctret)
+				if levelmetadata_get(roomx, roomy).auto2mode == 0 or autotiling:in_tileset(roomdata_get(roomx, roomy, thisx, thisy)) then
+					local new_tile = autotiling:autotile(thisx, thisy)
+					if roomdata_get(roomx, roomy, thisx, thisy) ~= new_tile then
+						roomdata_set(roomx, roomy, thisx, thisy, new_tile)
 					end
 				end
 			end
@@ -1247,155 +1247,6 @@ function issolidforgravline(tilenum, linetype)
 	end
 
 	return false
-end
-
-function correcttile(inroomx, inroomy, tx, ty, tileset, tilecol)
-	-- tilesetblocks[tileset].colors[tilecol].blocks[x]
-	ts = tilesetblocks[tileset].tileimg
-
-	--[[
-	if dowhat == nil then
-		-- Blocks
-		myissolid = issolid
-		mytype = "blocks"
-	elseif dowhat == 1 then
-		-- Background
-		myissolid = isnot0
-		mytype = "background"
-	end
-	]]
-
-
-	doorroomx = inroomx
-	doorroomy = inroomy
-
-
-	-- This is all a complete mess. Basically: wall=8 background=1 spikes=2 nothing=4  outsidebackground = 6
-	--local dowhat = issolid(adjtile(t, 0, 0), ts) and 8 or (issolid(adjtile(t, 0, 0), ts) ~= issolid(adjtile(t, 0, 0), ts, true) and 2 or (isnot0(adjtile(t, 0, 0), ts) and (tileset == 1 and 6 or 1) or 4))
-	local dowhat
-	if issolid(adjtile(tx, ty, 0, 0), ts) then
-		dowhat = 8  -- WALL
-	elseif (issolid(adjtile(tx, ty, 0, 0), ts, false, true) ~= issolid(adjtile(tx, ty, 0, 0), ts, true, true)) then
-		dowhat = 2  -- SPIKES
-	elseif isnot0(adjtile(tx, ty, 0, 0), ts) then
-		if tileset == 1 then
-			dowhat = 6  -- OUTSIDEBACKGROUND
-		else
-			dowhat = 1  -- BACKGROUND
-		end
-	else
-		dowhat = 4  -- NOTHING
-	end
-
-	--local myissolid = ((dowhat == 8 or dowhat == 2) and issolid or ((dowhat == 1 or dowhat == 6) and isnot0 or isnot0))
-	local myissolid
-	if dowhat == 8 then
-		myissolid = issolid
-	elseif dowhat == 2 then
-		if levelmetadata_get(roomx, roomy).auto2mode == 1 then
-			myissolid = issolidmultispikes
-		else
-			myissolid = issolid
-		end
-	elseif dowhat == 1 then
-		myissolid = isnot0
-	elseif dowhat == 6 then
-		myissolid = isoutsidebg
-	else
-		myissolid = isnot0
-	end
-
-	local mytype = ((dowhat == 8) and "blocks" or ((dowhat == 1 or dowhat == 6) and "background" or "spikes"))
-
-
-	--if myissolid(adjtile(t, 0, 0), ts) then
-	if dowhat ~= 4 and dowhat ~= 2 and dowhat ~= 6 then
-		-- W A L L S   A N D   B A C K G R O U N D S   ( N O N - O U T S I D E   B G )
-		if not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) then
-			-- All 4 sides are empty
-			return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
-		elseif myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
-			-- All 4 sides are filled.
-			if not myissolid(adjtile(tx, ty, -1, -1), ts) then
-				-- Top left corner is empty.
-				return tilesetblocks[tileset].colors[tilecol][mytype][9] -- BOTTOM RIGHT INNER CORNER
-			elseif not myissolid(adjtile(tx, ty, 1, -1), ts) then
-				-- Top right corner is empty.
-				return tilesetblocks[tileset].colors[tilecol][mytype][8] -- BOTTOM LEFT INNER CORNER
-			elseif not myissolid(adjtile(tx, ty, -1, 1), ts) then
-				-- Bottom left corner is empty.
-				return tilesetblocks[tileset].colors[tilecol][mytype][3] -- TOP RIGHT INNER CORNER
-			elseif not myissolid(adjtile(tx, ty, 1, 1), ts) then
-				-- Bottom right corner is empty.
-				return tilesetblocks[tileset].colors[tilecol][mytype][2] -- TOP LEFT INNER CORNER
-			else
-				-- Tile is completely surrounded!
-				return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
-			end
-		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, -1, 0), ts) then
-			-- Top side and left side are empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][13] -- TOP LEFT CORNER
-		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
-			-- Top side and right side are empty, left side is NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][15] -- TOP RIGHT CORNER
-		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) then
-			-- Left side and bottom side are empty, top side is NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][25] -- BOTTOM LEFT CORNER
-		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) then
-			-- Right side and bottom side are empty, top and left side are NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][27] -- BOTTOM RIGHT CORNER
-		elseif not myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
-			-- Top side is of course empty, left and right side are NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][14] -- TOP
-		elseif not myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
-			-- Left side is empty, top and bottom sides are NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][19] -- LEFT
-		elseif not myissolid(adjtile(tx, ty, 1, 0), ts) and myissolid(adjtile(tx, ty, 0, -1), ts) and myissolid(adjtile(tx, ty, 0, 1), ts) then
-			-- Right side is empty, top and bottom sides are NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][21] -- RIGHT
-		elseif not myissolid(adjtile(tx, ty, 0, 1), ts) and myissolid(adjtile(tx, ty, -1, 0), ts) and myissolid(adjtile(tx, ty, 1, 0), ts) then
-			-- Bottom side is empty, left and right side are NOT empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][26] -- BOTTOM
-		else
-			-- Anything I left out? Fall back on center.
-			cons("Fell back on center! Tile " .. t)
-			return tilesetblocks[tileset].colors[tilecol][mytype][1] -- CENTER
-		end
-	elseif dowhat == 6 then
-		-- O U T S I D E   B A C K G R O U N D S
-		if (myissolid(adjtile(tx, ty, 0, -1), ts) or myissolid(adjtile(tx, ty, 0, 1), ts)) and (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
-			-- Both the left || right side and the top || bottom side are not empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][3] -- SQUARE
-		elseif (myissolid(adjtile(tx, ty, -1, 0), ts) or myissolid(adjtile(tx, ty, 1, 0), ts)) then
-			-- Either the left or right side is not empty.
-			return tilesetblocks[tileset].colors[tilecol][mytype][2] -- HORIZONTAL
-		else
-			-- Either nothing surrounding it or only on the top or bottom side.
-			return tilesetblocks[tileset].colors[tilecol][mytype][1] -- VERTICAL
-		end
-	elseif dowhat == 2 then
-		-- S P I K E S
-		-- The extra true for adjtile means that spikes get treated differently at the edges of the screen. The true in myissolid means that multi mode should be ignored for spikes.
-		if myissolid(adjtile(tx, ty, 0, 1, true), ts, nil, true) then
-			-- There's a solid block below this spike.
-			return tilesetblocks[tileset].colors[tilecol].spikes[9] -- UP
-		elseif myissolid(adjtile(tx, ty, 0, -1, true), ts, nil, true) then
-			-- There's a solid block above this spike.
-			return tilesetblocks[tileset].colors[tilecol].spikes[21] -- DOWN
-		elseif myissolid(adjtile(tx, ty, -1, 0, true), ts, nil, true) then
-			-- There's a solid block to the left of this spike.
-			return tilesetblocks[tileset].colors[tilecol].spikes[16] -- RIGHT
-		elseif myissolid(adjtile(tx, ty, 1, 0, true), ts, nil, true) then
-			-- There's a solid block to the left of this spike.
-			return tilesetblocks[tileset].colors[tilecol].spikes[14] -- LEFT
-		else
-			-- No solid blocks directly surrounding this spike
-			return tilesetblocks[tileset].colors[tilecol].spikes[9] -- UP
-		end
-	end
-
-	-- Just return what it already is.
-	return roomdata_get(inroomx, inroomy, tx, ty)
 end
 
 function adjtile(tilx, tily, xoff, yoff, spike)
