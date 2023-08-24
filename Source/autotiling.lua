@@ -16,6 +16,9 @@ self.tiletypes.SPIKE = 2
 
 function self:init()
 
+	self.tileset = 0
+	self.tilecol = 0
+
 	self.tileset_colours = {}
 	self.tileset_names = {}
 	self.tileset_min_colour = {}
@@ -235,6 +238,11 @@ function self:init()
 	self:register_tilecol(self.tilesets.SHIP, 5, basic, 116, basic, 756)
 end
 
+function self:cache_data()
+	self.tileset = self:get_tileset()
+	self.tilecol = self:get_tilecol()
+end
+
 function self:register_tileset(id, name)
 	self.tilesets[id] = name
 end
@@ -259,16 +267,6 @@ function self:register_tilecol(tileset, index, foreground_type, foreground_base,
 	self.tileset_max_colour_direct[tileset] = math.max(self.tileset_max_colour_direct[tileset] or 0, index)
 end
 
-function self:is_warp_zone_background(tile)
-	-- TODO: Unhardcode!
-
-	if (self:get_tileset() == self.tilesets.SPACE_STATION) then
-		return false
-	end
-
-	return (tile == 120 or tile == 123 or tile == 126 or tile == 129 or tile == 132 or tile == 135 or tile == 138)
-end
-
 function self:autotile(x, y)
 	local tile = self:get_tile(x, y)
 	local type = self:get_tile_type(tile)
@@ -277,23 +275,20 @@ function self:autotile(x, y)
 		return 0
 	end
 
-	local tileset = self:get_tileset()
-	local tilecol = self:get_tilecol()
-
 	if type == self.tiletypes.SPIKE then
 		local tile_up = self:get_tile_type(self:get_tile(x, y - 1)) == self.tiletypes.SOLID
 		local tile_down = self:get_tile_type(self:get_tile(x, y + 1)) == self.tiletypes.SOLID
 		local tile_left = self:get_tile_type(self:get_tile(x - 1, y)) == self.tiletypes.SOLID
 		local tile_right = self:get_tile_type(self:get_tile(x + 1, y)) == self.tiletypes.SOLID
 
-		if tileset == self.tilesets.LAB then
+		if self.tileset == self.tilesets.LAB then
 			-- If this is the lab, use the colourful lab spikes!
 
-			if tile_down then return 63 + tilecol * 2 end
-			if tile_up then return 64 + tilecol * 2 end
-			if tile_left then return 51 + tilecol * 2 end
-			if tile_right then return 52 + tilecol * 2 end
-			return 63 + tilecol * 2
+			if tile_down then return 63 + self.tilecol * 2 end
+			if tile_up then return 64 + self.tilecol * 2 end
+			if tile_left then return 51 + self.tilecol * 2 end
+			if tile_right then return 52 + self.tilecol * 2 end
+			return 63 + self.tilecol * 2
 		end
 
 		-- Not in the lab, so use the boring normal spikes
@@ -325,11 +320,11 @@ function self:autotile(x, y)
 	if tile_left then tile_value = tile_value + 64 end
 	if tile_up_left then tile_value = tile_value + 128 end
 
-	local background = (type == self.tiletypes.NONSOLID or self:is_warp_zone_background(tile))
+	local background = (type == self.tiletypes.NONSOLID or self:in_background(tile))
 
-	local base = background and self.tileset_colours[tileset][tilecol].background_base or self.tileset_colours[tileset][tilecol].foreground_base
+	local base = background and self.tileset_colours[self.tileset][self.tilecol].background_base or self.tileset_colours[self.tileset][self.tilecol].foreground_base
 
-	return base + (background and self.tileset_colours[tileset][tilecol].background_type or self.tileset_colours[tileset][tilecol].foreground_type)[tile_value + 1]
+	return base + (background and self.tileset_colours[self.tileset][self.tilecol].background_type or self.tileset_colours[self.tileset][self.tilecol].foreground_type)[tile_value + 1]
 end
 
 function self:get_tile(x, y)
@@ -345,7 +340,6 @@ function self:get_tilecol()
 end
 
 function self:get_tile_type(tile)
-	local tileset = self:get_tileset()
 	local multi = self:is_multi_tileset_mode()
 
 	if (tile == 1 or (tile >= 80 and tile <= 679)) then
@@ -359,7 +353,7 @@ function self:get_tile_type(tile)
 		return self.tiletypes.SPIKE
 	end
 
-	if (tileset ~= self.tilesets.SPACE_STATION) then
+	if (self.tileset ~= self.tilesets.SPACE_STATION) then
 		-- tiles2.png is slightly different.
 
 		if (tile >= 51 and tile <= 74) then
@@ -390,7 +384,7 @@ function self:autotile_connector(x, y, original_type)
 		return false
 	end
 
-	if (new_type == self.tiletypes.SOLID and not self:is_warp_zone_background(tile)) then
+	if (new_type == self.tiletypes.SOLID and not self:in_background(tile)) then
 		return true
 	end
 
@@ -400,14 +394,7 @@ end
 function self:in_tileset(tile)
 	if (tile == 1 or tile == 2) then return true end
 
-	-- See the notes in is_background about get_tileset and get_tilecol.
-	-- TL;DR they're slow, and should be cached somewhere.
-	-- Unlike is_background, this function IS used, for multi mode.
-
-	local tileset = self:get_tileset()
-	local tilecol = self:get_tilecol()
-
-	local info = self.tileset_colours[tileset][tilecol]
+	local info = self.tileset_colours[self.tileset][self.tilecol]
 
 	local base = info.foreground_base
 
@@ -429,20 +416,9 @@ function self:in_tileset(tile)
 end
 
 function self:in_background(tile)
-	-- TODO: This is unused, but is supposed to replace is_warp_zone_background.
-	-- Use this instead of is_warp_zone_background when custom tilesets are implemented,
-	-- in case someone wants their background tiles to be solid.
-
-	-- But first, uh, try to find a way to speed it up?
-	-- The main slowdown comes from the get_tileset/get_tilecol calls,
-	-- and not the for loop. Maybe cache the tileset/tilecol somewhere?
-
 	if (tile == 2) then return true end
 
-	local tileset = self:get_tileset()
-	local tilecol = self:get_tilecol()
-
-	local info = self.tileset_colours[tileset][tilecol]
+	local info = self.tileset_colours[self.tileset][self.tilecol]
 
 	local base = info.background_base
 

@@ -1118,6 +1118,7 @@ end
 
 function autocorrectroom()
 	if levelmetadata_get(roomx, roomy).directmode == 0 then
+		autotiling:cache_data()
 		for thisy = 0, 29 do
 			for thisx = 0, 39 do
 				if levelmetadata_get(roomx, roomy).auto2mode == 0 or autotiling:in_tileset(roomdata_get(roomx, roomy, thisx, thisy)) then
