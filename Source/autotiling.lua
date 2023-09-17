@@ -19,6 +19,8 @@ function self:init()
 	self.tileset = 0
 	self.tilecol = 0
 
+	self.tileset_tile_cache = {}
+
 	self.tileset_colours = {}
 	self.tileset_names = {}
 	self.tileset_min_colour = {}
@@ -238,6 +240,11 @@ function self:cache_data()
 	self.tilecol = self:get_tilecol()
 end
 
+function self:reset_tile_cache()
+	-- Call this when reloading tilesets, once those become data-driven!
+	self.tileset_tile_cache = {}
+end
+
 function self:register_tileset(id, name)
 	self.tilesets[id] = name
 end
@@ -389,12 +396,23 @@ end
 function self:in_tileset(tile)
 	if (tile == 1 or tile == 2) then return true end
 
+	self.tileset_tile_cache[self.tileset] = self.tileset_tile_cache[self.tileset] or {}
+	self.tileset_tile_cache[self.tileset][self.tilecol] = self.tileset_tile_cache[self.tileset][self.tilecol] or {}
+
+	if (self.tileset_tile_cache[self.tileset][self.tilecol][tile] or 0) > 0 then
+		-- If it's not nil or 0, then it's in the tileset.
+		return true
+	elseif self.tileset_tile_cache[self.tileset][self.tilecol][tile] == 0 then
+		return false
+	end
+
 	local info = self.tileset_colours[self.tileset][self.tilecol]
 
 	local base = info.foreground_base
 
 	for i = 1, #info.foreground_type do
 		if base + info.foreground_type[i] == tile then
+			self.tileset_tile_cache[self.tileset][self.tilecol][tile] = 1
 			return true
 		end
 	end
@@ -403,9 +421,12 @@ function self:in_tileset(tile)
 
 	for i = 1, #info.background_type do
 		if base + info.background_type[i] == tile then
+			self.tileset_tile_cache[self.tileset][self.tilecol][tile] = 2
 			return true
 		end
 	end
+
+	self.tileset_tile_cache[self.tileset][self.tilecol][tile] = 0
 
 	return false
 end
@@ -413,15 +434,28 @@ end
 function self:in_background(tile)
 	if (tile == 2) then return true end
 
+	self.tileset_tile_cache[self.tileset] = self.tileset_tile_cache[self.tileset] or {}
+	self.tileset_tile_cache[self.tileset][self.tilecol] = self.tileset_tile_cache[self.tileset][self.tilecol] or {}
+
+	if self.tileset_tile_cache[self.tileset][self.tilecol][tile] == 2 then
+		-- If it's 2 then it's a background in the tileset.
+		return true
+	elseif self.tileset_tile_cache[self.tileset][self.tilecol][tile] ~= nil then
+		return false
+	end
+
 	local info = self.tileset_colours[self.tileset][self.tilecol]
 
 	local base = info.background_base
 
 	for i = 1, #info.background_type do
 		if base + info.background_type[i] == tile then
+			self.tileset_tile_cache[self.tileset][self.tilecol][tile] = 2
 			return true
 		end
 	end
+
+	self.tileset_tile_cache[self.tileset][self.tilecol][tile] = self.tileset_tile_cache[self.tileset][self.tilecol][tile] or 0
 
 	return false
 end
