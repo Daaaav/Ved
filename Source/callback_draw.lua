@@ -10,6 +10,7 @@ function love.draw()
 	end
 
 	font8:frame_start()
+	tinyfont:frame_start()
 
 	hook("love_draw_state")
 
