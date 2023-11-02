@@ -109,6 +109,8 @@ function love.load()
 	ved_require("tool_mousedown")
 	autotiling = ved_require("autotiling")
 	autotiling:init()
+	tilenumberbatch = ved_require("tilenumberbatch")
+	tilenumberbatch:init()
 
 
 	math.randomseed(os.time())

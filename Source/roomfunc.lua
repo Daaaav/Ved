@@ -263,6 +263,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 		zoom = getminimapzoom(metadata)
 	end
 
+	if displaytilenumbers then
+		tilenumberbatch:prepare()
+	end
+
 	for aty = 0, 29 do
 		for atx = 0, 39 do
 			local t = theroomdata[(aty*40)+(atx+1)]
@@ -294,7 +298,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 
 			if displaytilenumbers then
-				print_tile_number(t, x, y)
+				tilenumberbatch:add(t, x, y)
 			end
 
 			if displayminimapgrid then
@@ -316,6 +320,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				love.graphics.setColor(255, 255, 255)
 			end
 		end
+	end
+
+	if displaytilenumbers then
+		tilenumberbatch:draw()
 	end
 end
 
@@ -982,6 +990,10 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 			ts = 3
 		end
 
+		if displaytilenumbers then
+			tilenumberbatch:prepare()
+		end
+
 		for aty = page*30, math.min(page*30+29, tiles_height_picker-1) do
 			for atx = 0, tiles_width_picker-1 do
 				local t = (aty*tiles_width_picker)+atx
@@ -1017,9 +1029,13 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 				end
 
 				if displaytilenumbers then
-					print_tile_number(t, x, y)
+					tilenumberbatch:add(t, x, y)
 				end
 			end
+		end
+
+		if displaytilenumbers then
+			tilenumberbatch:draw()
 		end
 	end
 

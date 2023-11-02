@@ -3389,6 +3389,7 @@ end
 
 function print_tile_number(t, x, y)
 	-- Print a tile number in the "fading" style.
+	-- Not used for showing the whole room - see tilenumberbatch.lua
 
 	local st = tostring(t)
 
