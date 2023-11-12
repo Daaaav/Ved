@@ -456,7 +456,7 @@ function self:in_background(tile)
 		end
 	end
 
-	self.tileset_tile_cache[self.tileset][self.tilecol][tile] = self.tileset_tile_cache[self.tileset][self.tilecol][tile] or 0
+	self.tileset_tile_cache[self.tileset][self.tilecol][tile] = self.tileset_tile_cache[self.tileset][self.tilecol][tile] or -1
 
 	return false
 end
