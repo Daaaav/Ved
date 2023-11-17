@@ -1557,51 +1557,61 @@ Red¤    - Red commands shouldn't be used in custom levels because they will eit
 
 activateteleporter¤()\w#h
 
-If there's a teleporter in the room, it will start flashing random colors and
-touching it won't destroy save data. Only targets the first-spawned teleporter.
+Activate the first teleporter in the room, which makes it flash random colors, and
+animate erratically.
+
+The teleporter's ¤tile¤ is set to 6, and the ¤color¤ is set to 102. This command makes\gn&Zgn&Zg
+the teleporter do nothing when touched, as the teleporter's tile is set to\g
+something which isn't ¤1§¤.\gn&Zg(
 
 activeteleporter¤()\w#h
 
-Makes the teleporter in the room white, but touching it will still annihilate your
-save data. Only targets the first-spawned teleporter.
+Makes the first teleporter in the room white, aka color ¤101¤.\nn&Z
+
+This command does not change the tile, so it will not affect functionality.\g
 
 alarmoff\w#h
 
-Turns the alarm off
+Turns the alarm off.
 
 alarmon\w#h
 
-Turns the alarm on
+Turns the alarm on.
 
 altstates¤(state)\b#h
 
-Changes the layout of some rooms, like the trinket room in the ship before and
+Changes the layout of certain rooms, being the trinket room in the ship before and
 after the explosion, and the secret lab entrance (custom levels don't support
-altstates at all)
+altstates at all).
+
+In the code, this changes the global ¤altstates¤ variable.\gn&Zg
 
 audiopause¤(on/off)\w#h
 
-Added in 2.3. Force-enable or disable unfocus audio pause, regardless of the
-user-set audio pause setting. Defaults to off, i.e. pause audio during unfocus
-pause.
+Force-enable or disable unfocus audio pause, regardless of the user-set audio
+pause setting. Defaults to off, i.e. pause audio during unfocus pause.
+
+This command was added in 2.3.\g
 
 backgroundtext\w#h
 
-If you put this command on the line above speak or speak_active, the game will not
-wait until you press action after creating the text box. This can be used to
-create multiple text boxes at the same time.
+Makes the next shown textbox not wait for ACTION to be pressed before continuing
+the script. The most common usage of this is to display multiple textboxes at
+once.
 
 befadein¤()\w#h
 
-Instantly fade in from fadeout()
+Instantly remove a fade, such as from ¤#fadeout()¤fadeout¤ or ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
 
 blackon¤()\w#h
 
-Back to normal from blackout()
+Resume rendering if it was paused by ¤#blackout()¤blackout¤.\nLwl&Z
 
 blackout¤()\w#h
 
-Make the screen black/freezes the screen
+Pauses rendering.
+
+To make the screen black, use ¤#shake(n)¤shake¤ at the same time.\gLwl&Zg
 
 bluecontrol\b#h
 
@@ -1614,27 +1624,29 @@ Can change the face direction of a crewmate or the walking behaviour
 
 crewmate - cyan/player/blue/red/yellow/green/purple
 ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-faceplayer/panic/faceleft/faceright/followposition,ai2
+faceleft/faceright/followposition,ai2
 ai2 - required if followposition is used for ai1
+
+faceplayer¤ is missing, use 18 instead. ¤panic¤ also does not work, requiring ¤20¤.\n&Zgn&Zgn&Zg
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate (note: this only works with crewmates who have
-been created using the createcrewman command)
+Changes the color of a crewmate. This command can be used with Arbitrary Entity
+Manipulation.
 
-a - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
-b - Color to change to
+a - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
+b - Color name to change to. Since 2.4, you can also use a color ID
 
 changecustommood¤(color,mood)\w#h
 
-Changes the mood of a crewmate (works for rescuable crewmates)
+Changes the mood of a rescuable crewmate.
 
-color - cyan/player/blue/red/yellow/green/purple
+color - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
 mood - 0 for happy, 1 for sad
 
 changedir¤(color,direction)\w#h
 
-Just like changeai(color,faceleft/faceright), this changes face direction.
+Just like ¤#changeai(crewmate,ai1,ai2)¤changeai¤, this changes face direction.\nLwl&Z
 
 color - cyan/player/blue/red/yellow/green/purple
 direction - 0 is left, 1 is right
@@ -1647,10 +1659,12 @@ crewmate - Color of crewmate to change cyan/player/blue/red/yellow/green/purple
 
 changemood¤(color,mood)\w#h
 
-Changes the mood of the player or a crewmate created with createcrewman()
+Changes the mood of the player or a cutscene crewmate.
 
 color - cyan/player/blue/red/yellow/green/purple
 mood - 0 for happy, 1 for sad
+
+Cutscene crewmates are crewmates created with ¤#createcrewman(x,y,color,mood,ai1,ai2)¤createcrewman¤.\gLwl&Zg
 
 changeplayercolour¤(color)\w#h
 
@@ -1660,9 +1674,11 @@ color - cyan/player/blue/red/yellow/green/purple/teleporter
 
 changerespawncolour¤(color)\w#h
 
-Added in 2.4. Changes the color the player respawns with upon death.
+Changes the color the player respawns with upon death.
 
 color - red/yellow/green/cyan/blue/purple/teleporter or number
+
+This command was added in 2.4.\g
 
 changetile¤(color,tile)\w#h
 
@@ -1696,16 +1712,18 @@ ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
 faceplayer/panic/faceleft/faceright/followposition,ai2
 ai2 - required if followposition is used for ai1
 
-createentity¤(x,y,n,meta1,meta2)\o#h
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
 
-Creates an entity, check the lists reference for entity numbers
+Creates the entity with the ID ¤e§¤, two ¤meta¤ values, and 4 ¤p§¤ values.\nn&Znn&Znn&Z(
 
-n - The entity number
+e - The entity ID
+
+A list of entity IDs and the ¤meta¤/§¤p§¤ values they use can be found ¤https://vsix.dev/wiki/Createentity_list¤here¤.\gn&Zgn&ZgLClg(
 
 createlastrescued¤()\b#h
 
-Creates the last rescued crewmate at hardcoded position 200,153. The last rescued
-crewmate is based on the Level Complete gamestate.
+Creates the last rescued crewmate at hardcoded position ¤(200,153)¤. The last\nn&Z
+rescued crewmate is based on the Level Complete gamestate.
 
 createrescuedcrew¤()\b#h
 
@@ -1713,15 +1731,15 @@ Creates all rescued crewmates
 
 customifflag¤(n,script)\w#h
 
-Same as ifflag(n,script) in simplified scripting
+Same as ¤ifflag(n,script)¤ in simplified scripting\nn&Z
 
 customiftrinkets¤(n,script)\w#h
 
-Same as iftrinkets(n,script) in simplified scripting
+Same as ¤iftrinkets(n,script)¤ in simplified scripting\nn&Z
 
 customiftrinketsless¤(n,script)\w#h
 
-Same as iftrinketsless(n,script) in simplified scripting
+Same as ¤iftrinketsless(n,script)¤ in simplified scripting\nn&Z
 
 custommap¤(on/off)\w#h
 
@@ -1741,20 +1759,25 @@ cutscene¤()\w#h
 
 Makes cutscene bars appear
 
-delay¤(n)\w#h
+delay¤(frames)\w#h
 
-Same behavior as simplified command
+Pauses the script for the specified number of frames. Controls are forced to be
+unpressed during this pause.
 
 destroy¤(object)\w#h
 
 Removes an entity. This is the same as the simplified scripting command.
 
-object - gravitylines/warptokens/platforms
+object - gravitylines/warptokens/platforms/moving/disappear
 
-do¤(n)\w#h
+moving¤ and ¤disappear¤ were added in 2.4.\n&Zgn&Zg
 
-Starts a loop block which will repeat n times. End the block with the loop
-command.
+do¤(times)\w#h
+
+Starts a loop block which will repeat a specified number of times. End the block
+using ¤#loop¤loop¤.\nLwl&Z
+
+times - The amount of times the block will loop.
 
 endcutscene¤()\w#h
 
@@ -1777,51 +1800,61 @@ effect for a custom level to have.
 
 everybodysad¤()\w#h
 
-Makes everybody sad (only for crewmates created with createcrewman and the player)
+Makes all crewmates sad.
 
-face¤(a,b)\w#h
+Does not work on crewmates placed in the editor.\g
 
-Makes the face of crewmate a point to crewmate b (only works with crewmates
-created with createcrewman)
+face¤(A,B)\w#h
 
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - same
+Makes crewmate A look at crewmate B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Does not work on crewmates placed in the editor.\g
 
 fadein¤()\w#h
 
-Fades back
+Fades back in from ¤#fadeout()¤fadeout¤.\nLwl&Z
 
 fadeout¤()\w#h
 
-Fades the screen to black
+Fades the screen to black. To undo, use ¤#fadein()¤fadein¤ or ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
 
 finalmode¤(x,y)\b#h
 
-Teleports you to Outside Dimension VVVVVV, (46,54) is the initial room of the
+Teleports you to Outside Dimension VVVVVV, ¤(46,54)¤ is the initial room of the\nn&Z
 Final Level
 
 flag¤(n,on/off)\w#h
 
 Same behavior as simplified command
 
-flash¤(n)\w#h
+flash¤(length)\w#h
 
-Makes the screen white, you can change the time how long the screen should stay
-white (just flash won't work, you have to use flash(5) in combination with
-playef(9) and shake(20) if you want a normal flash)
+Makes the screen white for ¤length¤ amount of frames.\nn&Z
 
-n - The amount of frames. 30 frames is almost one second.
+length - The amount of frames. 30 frames is almost one second.
+
+This is different from the simplified command, which actually calls ¤flash(5)¤,\gn&Zg
+playef(9)¤ and ¤shake(20)¤ at the same time. See: ¤#playef(sound)¤playef¤ and ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
 
 flip\w#h
 
-Make the player flip
+Make the player flip by pressing ACTION.
+
+If the player is not on the ground, this will not work, since it's simulating an\g
+ACTION press. Likewise, this command right after a textbox will not function for\g
+the same reason as two consecutive ACTION presses in a row is treated as holding\g
+the button down, which does not flip the player.\g
 
 flipgravity¤(color)\w#h
 
-Flips the gravity of a certain crewmate. It won't work on the player, and it
-cannot unflip crewmates.
+Flips the gravity of a certain crewmate, or the player.
 
 color - cyan/player/blue/red/yellow/green/purple
+
+Before 2.3, this wouldn't unflip crewmates, or affect the player.\g
 
 flipme\w#h
 
@@ -1849,24 +1882,30 @@ teleporter to show the map, game to hide it (shows teleporters of the main game)
 
 x - teleporter/game
 
-gamestate¤(x)\o#h
+gamestate¤(state)\o#h
 
-Change the gamestate to the specified state number
+Change the current gamestate to the specified state number.
 
-gotoposition¤(x,y,f)\w#h
+state - The gamestate to jump to
 
-Change Viridian's position to x,y in this room, and f is whether you're flipped or
-not. (1 for flipped, 0 for not flipped)
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤.\gLClg
 
-f - 1 for flipped, 0 for not flipped. WARNING: Do not leave this unspecified, or
-else you could softlock the game!
+gotoposition¤(x,y,gravity)\w#h
+
+Change Viridian's position to ¤(x,y)¤ in this room, and change their gravity as\nn&Z
+well.
+
+gravity - 1 for flipped, 0 for not flipped. Any other values result in glitchy
+player gravity.
 
 gotoroom¤(x,y)\w#h
 
-Change the current room to x,y, where x and y start at 0.
+Change the current room to ¤(x,y)¤.\nn&Z
 
-x - Room x coordinate, starting at 0
-y - Room y coordinate, starting at 0
+x - x coordinate
+y - y coordinate
+
+These room coordinates are 0-indexed.\g
 
 greencontrol\b#h
 
@@ -1875,12 +1914,12 @@ and press ENTER. Also creates an activity zone afterwards.
 
 hascontrol¤()\w#h
 
-Makes the player have control, however you can't use this to regain control while
-in the middle of a delay()
+Makes the player have control. Note that you can't use this to regain control
+while in the middle of a ¤#delay(frames)¤delay¤.\nLwl&Z
 
 hidecoordinates¤(x,y)\w#h
 
-Hide coordinates x,y on the map (This works for the map for custom levels)
+Set the room at the given coordinates to unexplored
 
 hideplayer¤()\w#h
 
@@ -1912,11 +1951,25 @@ If crewmate is lost, go to script
 
 ifexplored¤(x,y,script)\w#h
 
-If x+1,y+1 is explored, go to (internal) script
+If ¤(x,y)¤ is explored, go to internal script.\nn&Z
+
+These room coordinates are 0-indexed.\g
 
 ifflag¤(n,script)\b#h
 
 Same as customifflag, but loads an internal (main game) script
+
+iflang¤(language,script)\w#h
+
+Check if the current language of the game is a certain language, and if so, jump
+to the given custom script. ¤#loadtext(language)¤loadtext¤ has no influence on this command; only what\nLwl&Z
+language the user has selected in the menu.
+
+language - The language to check, usually a two-letter code, such as ¤en¤ for\nn&Z
+English
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.4.\g
 
 iflast¤(crewmate,script)\b#h
 
@@ -1942,7 +1995,7 @@ you actually have. Loads an internal (main game) script
 
 ifwarp¤(x,y,dir,script)\w#h
 
-If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
+If the warpdir for room ¤(x,y)¤, 1-indexed, is set to dir, go to (simplified) script\nn&Z
 
 x - Room x coordinate, starting at 1
 y - Room y coordinate, starting at 1
@@ -1966,9 +2019,19 @@ loadscript¤(script)\b#h
 Load an internal (main game) script. Commonly used in custom levels as
 loadscript(stop)
 
+loadtext¤(language)\w#h
+
+In custom levels, load the translation for the given language.
+
+language - The language to load, usually a two-letter code, such as ¤en¤ for\nn&Z
+English. Pass an empty language code to revert to the default behavior of simply
+using VVVVVV's language.
+
+This command was added in 2.4.\g
+
 loop\w#h
 
-Put this at the end of a loop block started with the do command.
+Put this at the end of a loop block started with the ¤#do(times)¤do¤ command.\nLwl&Z
 
 missing¤(color)\b#h
 
@@ -1976,13 +2039,14 @@ Makes someone missing
 
 moveplayer¤(x,y)\w#h
 
-Moves the player x pixels to the right and y pixels down. Of course you can also
-use negative numbers to make them move up or to the left
+Moves the player by x pixels to the right and y pixels down. Negative numbers are
+accepted as well.
 
 musicfadein¤()\w#h
 
-An unfinished command. This does nothing in 2.2, but works exactly as you'd think
-it'd work in 2.3.
+Fades the music in.
+
+Before 2.3, this command did nothing.\g
 
 musicfadeout¤()\w#h
 
@@ -2000,12 +2064,15 @@ Start playing a song with internal song number.
 
 n - Internal song number
 
-playef¤(x,n)\w#h
+playef¤(sound)\w#h
 
 Play a sound effect.
 
-n - Actually unused, and can be left out. In VVVVVV 1.x, this used to control the
-offset in milliseconds at which the sound effect started.
+sound - Sound ID
+
+In VVVVVV 1.x, there was a second argument which controlled the offset in\g
+milliseconds at which the sound effect started. This was removed during the C++\g
+port.\g
 
 position¤(type,above/below)\w#h
 
@@ -2040,10 +2107,9 @@ Changes the player's color back to cyan
 
 resumemusic¤()\w#h
 
-An unfinished command. On 2.2 and below, it reads from uninitialized memory, which
-results in a crash on some machines and just results in playing Path Complete on
-others. On 2.3, it no longer reads from uninitialized memory and will correctly
-resume music after musicfadeout().
+Resumes the music after ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Before 2.3, this was unfinished and caused various glitches, including crashes.\g
 
 rollcredits¤()\r#h
 
@@ -2051,9 +2117,53 @@ Makes the credits roll.
 
 2.2 AND BELOW: It destroys your save after the credits are completed!
 
+setactivitycolour¤(color)\w#h
+
+Change the color of the next activity zone that gets spawned.
+
+color - Any color that ¤#text(color,x,y,lines)¤text¤ takes\nLwl&Z
+
+This command was added in 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Change the position of the next activity zone that gets spawned.
+
+y - The y position
+
+This command was added in 2.4.\g
+
+setactivitytext\w#h
+
+Change the text of the next activity zone that gets spawned. The line after this
+command will be taken as the text (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This command was added in 2.4.\g
+
 setcheckpoint¤()\w#h
 
 Sets the checkpoint to the current location
+
+setfont¤(font)\w#h
+
+In custom levels, set the font to the given font.
+
+font - The font to set the font to. If left blank, this will set the font to the
+default font of the custom level.
+
+This command was added in 2.4.\g
+
+setroomname\w#h
+
+Change the room name of the current room. The line after this command will be
+taken as the name (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This name is not persistent and will go back to the default room name when the
+room is reloaded (e.g. by leaving and coming back).
+
+This name overrides any special changing room name, if the room has one. 
+
+This command was added in 2.4.\g
 
 shake¤(n)\w#h
 
@@ -2061,7 +2171,7 @@ Shake the screen for n ticks. This will not create a delay.
 
 showcoordinates¤(x,y)\w#h
 
-Show coordinates x,y on the map (This works for the map for custom levels)
+Set the room at the given coordinates to explored
 
 showplayer¤()\w#h
 
@@ -2081,12 +2191,13 @@ Show the targets on the map (unknown teleporters which show up as ?s)
 
 showteleporters¤()\b#h
 
-Show the teleporters on the map (I guess it only shows the teleporter in Space
-Station 1)
+Show the teleporters in explored rooms on the map
 
-showtrinkets¤()\b#h
+showtrinkets¤()\w#h
 
 Show the trinkets on the map
+
+Since 2.3, this command was changed to work in custom levels.\g
 
 speak\w#h
 
@@ -2110,12 +2221,12 @@ color - cyan/player/blue/red/yellow/green/purple/terminal
 
 startintermission2\b#h
 
-Alternate finalmode(46,54), takes you to the final level without accepting
-arguments. Crashes in timeslip.
+Alternate ¤finalmode(46,54)¤, takes you to the final level without accepting\nn&Z
+arguments.
 
 stopmusic¤()\w#h
 
-Stops the music immediately. Equivalent to music(0) in simplified scripting.
+Stops the music immediately. Equivalent to ¤music(0)¤ in simplified scripting.\nn&Z
 
 teleportscript¤(script)\b#h
 
@@ -2133,14 +2244,72 @@ Store a text box in memory with color, position and number of lines. Usually, th
 position command is used after the text command (and its lines of text), which
 will overwrite the coordinates given here, so these are usually left as 0.
 
-color - cyan/player/blue/red/yellow/green/purple/gray
+color - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
 x - The x position of the text box
 y - The y position of the text box
 lines - The number of lines
 
+The ¤transparent¤ color was added in 2.4, along with arbitrary colored textboxes.\gn&Zg
+The coordinates can be -500 to center the textbox in the respective axis (if you\g
+don't want to use ¤#position(type,above/below)¤position¤).\gLwl&Zg
+
 textboxactive\w#h
 
 Makes all text boxes on the screen disappear except for the last created one
+
+textboxtimer¤(frames)\w#h
+
+Makes the next shown textbox disappear after a certain amount of frames, without
+advancing the script.
+
+frames - The amount of frames to wait before fading out
+
+This command was added in 2.4.\g
+
+textbuttons¤()\w#h
+
+For the text box in memory, replace certain button placeholders by button labels
+(such as keyboard keys or controller glyphs).
+
+The replaced placeholders are:
+- {b_act} - ACTION
+- {b_int} - Interact
+- {b_map} - Map
+- {b_res} - Restart
+- {b_esc} - Esc/Menu
+
+This command was added in 2.4.\g
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - The case number, between 1 and 255.
+
+This command was added in 2.4.\g
+
+textimage¤(image)\w#h
+
+For the text box in memory, draw the given image. There can only be one image per
+text box.
+
+image - levelcomplete/gamecomplete, or an unknown value to remove the image
+
+This command was added in 2.4.\g
+
+textsprite¤(x,y,sprite,color)\w#h
+
+For the text box in memory, draw the given sprite. There can be multiple sprites
+per text box.
+
+x - The x-coordinate of the sprite. This is relative to the text box.
+y - The y-coordinate of the sprite. This is relative to the text box.
+sprite - The sprite number of the sprite, from ¤sprites.png¤.\nn&Z
+color - The color ID of the sprite.
+
+This command was added in 2.4.\g
 
 tofloor\w#h
 
@@ -2152,7 +2321,7 @@ Dialog of Victoria when she gives you a trinket in the real game
 
 trinketscriptmusic\w#h
 
-Plays Passion for Exploring. Does nothing else.
+Plays Passion for Exploring.
 
 trinketyellowcontrol¤()\b#h
 
@@ -2160,19 +2329,21 @@ Dialog of Vitellary when he gives you a trinket in the real game
 
 undovvvvvvman¤()\w#h
 
-Back to normal
+Resets the player's hitbox to the normal size, sets their color to 0, and sets
+their X position to 100.
 
 untilbars¤()\w#h
 
-Wait until cutscene()/endcutscene() is completed
+Wait until ¤#cutscene()¤cutscene¤ or ¤#endcutscene()¤endcutscene¤ is completed.\nLwl&ZnLwl&Z
 
 untilfade¤()\w#h
 
-Wait until fadeout()/fadein() is completed
+Wait until ¤#fadeout()¤fadeout¤ or ¤#fadein()¤fadein¤ is completed.\nLwl&ZnLwl&Z
 
 vvvvvvman¤()\w#h
 
-Makes the player huge
+Makes the player 6x larger, sets their position to ¤(30,46)¤ and sets their color to\nn&Z
+23¤.\n&Z
 
 walk¤(direction,x)\w#h
 
@@ -2183,8 +2354,8 @@ direction - left/right
 warpdir¤(x,y,dir)\w#h
 
 Changes the warp direction for room x,y, 1-indexed, to the given direction. This
-could be checked with ifwarp, resulting in a relatively powerful extra
-flags/variable system.
+could be checked with ifwarp, resulting in a relatively powerful extra flags/
+variable system.
 
 x - Room x coordinate, starting at 1
 y - Room y coordinate, starting at 1
