@@ -39,6 +39,9 @@ msgstr ""
 msgid "Makes a crewmate sad. Without an argument, this will make Viridian sad. You\ncan also use \"all\", \"everyone\" or \"everybody\" as an argument to make everybody\nsad."
 msgstr ""
 
+msgid "Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\\nwnw"
+msgstr ""
+
 msgid "flag¤(flag,on/off)\\h#w"
 msgstr ""
 
@@ -66,7 +69,10 @@ msgstr ""
 msgid "destroy¤(something)\\h#w"
 msgstr ""
 
-msgid "Valid arguments can be:\nwarptokens - Remove all warp tokens from the room until you re-enter the room.\ngravitylines - Remove all gravity lines from the room until you re-enter the room.\nThe option \"platforms\" also exists, but it doesn't work properly."
+msgid "Remove all objects of the given type, until you re-enter the room."
+msgstr ""
+
+msgid "Valid arguments can be:\nwarptokens - Warp tokens\ngravitylines - Gravity lines\nplatforms - Doesn't work properly\nmoving - Moving platforms (added in 2.4)\ndisappear - Disappearing platforms (added in 2.4)"
 msgstr ""
 
 msgid "music¤(number)\\h#w"
@@ -118,4 +124,34 @@ msgid "ifwarp¤(x,y,dir,script)\\w#h"
 msgstr ""
 
 msgid "If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script"
+msgstr ""
+
+msgid "loadtext¤(language)\\w#h"
+msgstr ""
+
+msgid "Load a translation for the level by language code. Use an empty value to use\nVVVVVV's language again."
+msgstr ""
+
+msgid "language - A language code, like fr or pt_BR"
+msgstr ""
+
+msgid "iflang¤(language,script)\\w#h"
+msgstr ""
+
+msgid "If VVVVVV's language is set to the given language, go to a script. This is not\naffected by the language code you pass to loadtext(), only by what language the\nuser has selected in the menu."
+msgstr ""
+
+msgid "setfont¤(font)\\w#h"
+msgstr ""
+
+msgid "Change the font used for text in the level. This can be a font supplied with the\ngame, such as font_ja for Japanese, or a font supplied with the level. Leave blank\nto revert to the default font for the level."
+msgstr ""
+
+msgid "textcase¤(case)\\w#h"
+msgstr ""
+
+msgid "If your level has translation files, and you have multiple text boxes with the\nsame text in a single script, this command can make them have unique translations.\nPlace it before a textbox."
+msgstr ""
+
+msgid "case - A number between 1 and 255"
 msgstr ""

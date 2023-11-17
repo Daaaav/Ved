@@ -1406,6 +1406,8 @@ Makes a crewmate sad. Without an argument, this will make Viridian sad. You
 can also use "all", "everyone" or "everybody" as an argument to make everybody
 sad.
 
+Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\nwnw
+
 flag¤(flag,on/off)\h#w
 
 Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
@@ -1440,10 +1442,14 @@ If your amount of trinkets >= number, continue in the current script.
 
 destroy¤(something)\h#w
 
+Remove all objects of the given type, until you re-enter the room.
+
 Valid arguments can be:
-warptokens - Remove all warp tokens from the room until you re-enter the room.
-gravitylines - Remove all gravity lines from the room until you re-enter the room.
-The option "platforms" also exists, but it doesn't work properly.
+warptokens - Warp tokens
+gravitylines - Gravity lines
+platforms - Doesn't work properly
+moving - Moving platforms (added in 2.4)
+disappear - Disappearing platforms (added in 2.4)
 
 music¤(number)\h#w
 
@@ -1491,6 +1497,33 @@ If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
 x - Room x coordinate, starting at 1
 y - Room y coordinate, starting at 1
 dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+loadtext¤(language)\w#h
+
+Load a translation for the level by language code. Use an empty value to use
+VVVVVV's language again.
+
+language - A language code, like fr or pt_BR
+
+iflang¤(language,script)\w#h
+
+If VVVVVV's language is set to the given language, go to a script. This is not
+affected by the language code you pass to loadtext(), only by what language the
+user has selected in the menu.
+
+setfont¤(font)\w#h
+
+Change the font used for text in the level. This can be a font supplied with the
+game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
+to revert to the default font for the level.
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - A number between 1 and 255
 ]]
 },
 
