@@ -90,6 +90,9 @@ METADATAREDONE = "<L.METADATAREDONE>",
 BOUNDSTOPLEFT = "<L.BOUNDSTOPLEFT>",
 BOUNDSBOTTOMRIGHT = "<L.BOUNDSBOTTOMRIGHT>",
 
+BOUNDSFIRST = "<L.BOUNDSFIRST>", -- Old string: Click the top left corner of the bounds
+BOUNDSLAST = "<L.BOUNDSLAST>", -- Old string: Click the bottom right corner
+
 TILE = "<L.TILE>",
 HIDEALL = "<L.HIDEALL>",
 SHOWALL = "<L.SHOWALL>",
@@ -576,6 +579,11 @@ FIND_V_EXE_EXPLANATION = "<L.FIND_V_EXE_EXPLANATION>",
 
 VCE_REMOVED = "<L.VCE_REMOVED>",
 
+VVVVVV_VERSION = "<L.VVVVVV_VERSION>", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+VVVVVV_VERSION_AUTO = "<L.VVVVVV_VERSION_AUTO>",
+VVVVVV_VERSION_23PLUS = "<L.VVVVVV_VERSION_23PLUS>",
+VVVVVV_VERSION_24PLUS = "<L.VVVVVV_VERSION_24PLUS>",
+
 ALL_PLUGINS = "<L.ALL_PLUGINS>",
 ALL_PLUGINS_MOREINFO = "<L.ALL_PLUGINS_MOREINFO>",
 ALL_PLUGINS_FOLDER = "<L.ALL_PLUGINS_FOLDER>",
@@ -627,6 +635,15 @@ CUSTOM_SIZED_BRUSH_EXPL_TILESET = "<L.CUSTOM_SIZED_BRUSH_EXPL_TILESET>",
 
 ADVANCED_LEVEL_OPTIONS = "<L.ADVANCED_LEVEL_OPTIONS>",
 ONEWAYCOL_OVERRIDE = "<L.ONEWAYCOL_OVERRIDE>", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
+ZIP_SAVE_AS = "<L.ZIP_SAVE_AS>", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+ZIP_CREATE_TITLE = "<L.ZIP_CREATE_TITLE>",
+ZIP_BUSY_TITLE = "<L.ZIP_BUSY_TITLE>",
+ZIP_LOVE11_ONLY = "<L.ZIP_LOVE11_ONLY>", -- $1: version number
+ZIP_SAVING_SUCCESS = "<L.ZIP_SAVING_SUCCESS>",
+ZIP_SAVING_FAIL = "<L.ZIP_SAVING_FAIL>",
+
+OPENFOLDER = "<L.OPENFOLDER>", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
 }
 

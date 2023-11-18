@@ -253,6 +253,16 @@ msgctxt "L.BOUNDSBOTTOMRIGHT"
 msgid "Click the bottom right corner"
 msgstr ""
 
+#. Old string: Click the top left corner of the bounds
+msgctxt "L.BOUNDSFIRST"
+msgid "Click the first corner of the bounds"
+msgstr ""
+
+#. Old string: Click the bottom right corner
+msgctxt "L.BOUNDSLAST"
+msgid "Click the last corner"
+msgstr ""
+
 msgctxt "L.TILE"
 msgid "Tile $1"
 msgstr ""
@@ -2025,6 +2035,23 @@ msgctxt "L.VCE_REMOVED"
 msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
 msgstr ""
 
+#. Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+msgctxt "L.VVVVVV_VERSION"
+msgid "VVVVVV version"
+msgstr ""
+
+msgctxt "L.VVVVVV_VERSION_AUTO"
+msgid "Auto"
+msgstr ""
+
+msgctxt "L.VVVVVV_VERSION_23PLUS"
+msgid "2.3+"
+msgstr ""
+
+msgctxt "L.VVVVVV_VERSION_24PLUS"
+msgid "2.4+"
+msgstr ""
+
 msgctxt "L.ALL_PLUGINS"
 msgid "All plugins"
 msgstr ""
@@ -2170,6 +2197,37 @@ msgstr ""
 #. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 msgctxt "L.ONEWAYCOL_OVERRIDE"
 msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
+msgstr ""
+
+#. .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+msgctxt "L.ZIP_SAVE_AS"
+msgid "Create ZIP of this version for sharing"
+msgstr ""
+
+msgctxt "L.ZIP_CREATE_TITLE"
+msgid "Save ZIP"
+msgstr ""
+
+msgctxt "L.ZIP_BUSY_TITLE"
+msgid "Creating ZIP..."
+msgstr ""
+
+#. $1: version number
+msgctxt "L.ZIP_LOVE11_ONLY"
+msgid "Creating a ZIP file requires LÖVE $1 or higher"
+msgstr ""
+
+msgctxt "L.ZIP_SAVING_SUCCESS"
+msgid "ZIP saved!"
+msgstr ""
+
+msgctxt "L.ZIP_SAVING_FAIL"
+msgid "Could not save ZIP file!"
+msgstr ""
+
+#. Button, open a directory/folder in Explorer, Finder or another system file manager.
+msgctxt "L.OPENFOLDER"
+msgid "Open folder"
 msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"

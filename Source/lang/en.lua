@@ -90,6 +90,9 @@ METADATAREDONE = "Level options redone",
 BOUNDSTOPLEFT = "Click the top left corner of the bounds",
 BOUNDSBOTTOMRIGHT = "Click the bottom right corner",
 
+BOUNDSFIRST = "Click the first corner of the bounds", -- Old string: Click the top left corner of the bounds
+BOUNDSLAST = "Click the last corner", -- Old string: Click the bottom right corner
+
 TILE = "Tile $1",
 HIDEALL = "Hide all",
 SHOWALL = "Show all",
@@ -576,6 +579,11 @@ FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VVVV
 
 VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
 
+VVVVVV_VERSION = "VVVVVV version", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+VVVVVV_VERSION_AUTO = "Auto",
+VVVVVV_VERSION_23PLUS = "2.3+",
+VVVVVV_VERSION_24PLUS = "2.4+",
+
 ALL_PLUGINS = "All plugins",
 ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",
 ALL_PLUGINS_FOLDER = "Your plugins folder is:",
@@ -627,6 +635,15 @@ CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Select tiles from the tileset to create a sta
 
 ADVANCED_LEVEL_OPTIONS = "Advanced level options",
 ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
+ZIP_SAVE_AS = "Create ZIP of this version for sharing", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+ZIP_CREATE_TITLE = "Save ZIP",
+ZIP_BUSY_TITLE = "Creating ZIP...",
+ZIP_LOVE11_ONLY = "Creating a ZIP file requires LÖVE $1 or higher", -- $1: version number
+ZIP_SAVING_SUCCESS = "ZIP saved!",
+ZIP_SAVING_FAIL = "Could not save ZIP file!",
+
+OPENFOLDER = "Open folder", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
 }
 
