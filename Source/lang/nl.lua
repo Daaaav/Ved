@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2023-05-28 20:15:13 (CEST)
+--- Last converted: 2023-11-26 03:11:37 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -101,6 +101,9 @@ METADATAREDONE = "Levelopties opnieuw gewijzigd",
 
 BOUNDSTOPLEFT = "Klik op de linkerbovenhoek van de begrenzing",
 BOUNDSBOTTOMRIGHT = "Klik op de rechteronderhoek",
+
+BOUNDSFIRST = "Klik op de eerste hoek van de begrenzing", -- Old string: Click the top left corner of the bounds
+BOUNDSLAST = "Klik op de laatste hoek", -- Old string: Click the bottom right corner
 
 TILE = "Blok $1",
 HIDEALL = "Verbergen",
@@ -588,6 +591,11 @@ FIND_V_EXE_EXPLANATION = "Ved heeft VVVVVV nodig voor het testen, en het pad naa
 
 VCE_REMOVED = "VVVVVV: Community Edition wordt niet meer onderhouden, en ondersteuning voor VVVVVV-CE levels is verwijderd uit Ved. Dit level wordt behandeld als een gewoon VVVVVV-level. Kijk voor meer informatie op https://vsix.dev/vce/status/",
 
+VVVVVV_VERSION = "VVVVVV-versie", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+VVVVVV_VERSION_AUTO = "Auto",
+VVVVVV_VERSION_23PLUS = "2.3+",
+VVVVVV_VERSION_24PLUS = "2.4+",
+
 ALL_PLUGINS = "Alle plugins",
 ALL_PLUGINS_MOREINFO = "Ga naar ¤https://tolp.nl/ved/plugins.php¤deze pagina¤ voor meer informatie over plugins.\\nLCl",
 ALL_PLUGINS_FOLDER = "Je pluginsmap is:",
@@ -639,6 +647,15 @@ CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Selecteer blokken uit de tileset om een stemp
 
 ADVANCED_LEVEL_OPTIONS = "Geavanceerde levelopties",
 ONEWAYCOL_OVERRIDE = "Herkleur eenrichtingsblokken ook in aangepaste bronbestanden (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
+ZIP_SAVE_AS = "Maak ZIP van deze versie om te delen", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+ZIP_CREATE_TITLE = "ZIP opslaan",
+ZIP_BUSY_TITLE = "ZIP maken...",
+ZIP_LOVE11_ONLY = "LÖVE $1 of hoger is vereist om een ZIP-bestand te maken", -- $1: version number
+ZIP_SAVING_SUCCESS = "ZIP opgeslagen!",
+ZIP_SAVING_FAIL = "ZIP-bestand kon niet worden opgeslagen!",
+
+OPENFOLDER = "Map openen", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
 }
 
@@ -1432,6 +1449,8 @@ Maakt een bemanningslid verdrietig. Zonder een argument zal dit Viridian
 verdrietig maken. Je kunt ook "all", "everyone" of "everybody" gebruiken als een
 argument om iedereen verdrietig te maken.
 
+Opmerking: dit commando kan ook worden geschreven als ¤cry¤ in plaats van ¤sad¤.\nwnw
+
 flag¤(vlag,on/off)\h#w
 
 Zet een bepaalde vlag aan of uit. flag(4,on) zal bijvoorbeeld vlag 4 aanzetten.
@@ -1466,11 +1485,15 @@ Als je aantal trinkets >= aantal, ga dan verder in het huidige script.
 
 destroy¤(iets)\h#w
 
+Verwijder alle objecten van het gegeven type, totdat je opnieuw de kamer
+binnenkomt.
+
 Geldige argumenten kunnen zijn:
-warptokens - Verwijder alle warptokens totdat je opnieuw de kamer binnenkomt.
-gravitylines - Verwijder alle zwaartekrachtlijnen totdat je opnieuw de kamer
-               binnenkomt.
-De optie "platforms" bestaat ook, maar werkt niet goed.
+warptokens - Teleportatietokens
+gravitylines - Zwaartekrachtlijnen
+platforms - Werkt niet goed
+moving - Bewegende platformen (toegevoegd in 2.4)
+disappear - Brekende platformen (toegevoegd in 2.4)
 
 music¤(nummer)\h#w
 
@@ -1521,6 +1544,34 @@ x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
 richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
 geaccepteerd
+
+loadtext¤(taal)\w#h
+
+Laad een vertaling voor het level aan de hand van een taalcode. Gebruik een lege
+waarde om de taal van VVVVVV weer te gebruiken.
+
+language - Een taalcode, zoals nl of pt_BR
+
+iflang¤(taal,script)\w#h
+
+Als de taal van VVVVVV is ingesteld op de gegeven taal, ga naar een script. Dit
+wordt niet beïnvloed door de taal die je aan loadtext() kunt geven, alleen welke
+taal de gebruiker heeft geselecteerd in het menu.
+
+setfont¤(lettertype)\w#h
+
+Wijzig het lettertype dat wordt gebruikt voor tekst in het level. Dit kan een
+lettertype zijn dat meegeleverd wordt met het spel, zoals font_ja voor Japans, of
+een lettertype dat meegeleverd is met het level. Laat leeg om terug te gaan naar
+het standaardlettertype van het level.
+
+textcase¤(case)\w#h
+
+Als je level vertaalbestanden heeft, en je hebt meerdere tekstvakken met dezelfde
+tekst in een enkel script, kan dit commando ze unieke vertalingen laten hebben.
+Zet het voor een tekstvak.
+
+case - Een getal tussen 1 en 255
 ]]
 },
 
@@ -1556,54 +1607,64 @@ Rood¤    - Rode commando's moeten niet gebruikt worden in levels omdat ze ofwel
 
 activateteleporter¤()\w#h
 
-Als er een teleporter in de kamer is zal deze kleurrijk gaan flitsen, en deze
-teleporter aanraken zal de opgeslagen data niet beschadigen. Is alleen van
-toepassing op de eerst gecreëerde teleporter.
+Activeer de eerste teleport in de kamer, waardoor deze kleurrijk zal flitsen,
+en op een rare manier zal animeren.
+
+De ¤tile¤ van de teleport wordt 6, en de ¤color¤ wordt 102. Dit commando zorgt ervoor\gn&Zgn&Zg
+dat de teleport niets doet als hij wordt aangeraakt, omdat het blok ervan iets\g
+anders is dan ¤1§¤.\gn&Zg(
 
 activeteleporter¤()\w#h
 
-Maakt de teleporter in de kamer wit, maar deze aanraken zal nog steeds je
-opgeslagen data vernietigen. Is alleen van toepassing op de eerst gecreëerde
-teleporter.
+Maakt de eerste teleport in de kamer wit, oftewel kleur ¤101¤.\nn&Z
+
+Dit commando zal het blok niet aanpassen, dus het heeft geen invloed op de\g
+functionaliteit.\g
 
 alarmoff\w#h
 
-Zet het alarm uit
+Zet het alarm uit.
 
 alarmon\w#h
 
-Zet het alarm aan
+Zet het alarm aan.
 
 altstates¤(toestand)\b#h
 
-Verander de layout van sommige kamers, zoals de trinket-kamer in het schip voor en
-na de explosie, en de ingang van het geheime lab (aangepaste levels ondersteunen
-altstates helemaal niet)
+Verander de layout van sommige kamers, namelijk de trinket-kamer in het schip voor
+en na de explosie, en de ingang van het geheime lab (aangepaste levels
+ondersteunen altstates helemaal niet).
+
+In de code verandert dit de globale variabele ¤altstates¤.\gn&Zg
 
 audiopause¤(on/off)\w#h
 
-Toegevoegd in 2.3. Schakelt het pauzeren van de audio wanneer het venster inactief
-is geforceerd in of uit, ongeacht de gebruikersinstelling voor het pauzeren van
-audio. Standaard uitgeschakeld, oftewel pauzeer audio tijdens het automatische
+Schakelt het pauzeren van de audio wanneer het venster inactief is geforceerd
+in of uit, ongeacht de gebruikersinstelling voor het pauzeren van audio.
+Standaard uitgeschakeld, oftewel pauzeer audio tijdens het automatische
 pauzescherm.
+
+Dit commando is toegevoegd in 2.3.\g
 
 backgroundtext\w#h
 
-Als je dit commando op de regel boven speak of speak_active plaatst zal het spel
-niet wachten totdat je op action drukt nadat een tekstvak gemaakt is. Dit kan
-gebruikt worden om meerdere tekstvakken tegelijk te maken.
+Laat het volgende tekstvak niet wachten voordat je op ACTIE drukt om door te gaan
+met het script. Dit wordt vooral gebruikt om meerdere tekstvakken tegelijk weer
+te geven.
 
 befadein¤()\w#h
 
-Laat het beeld onmiddellijk herstellen van fadeout()
+Stop een fade onmiddelijk, zoals van ¤#fadeout()¤fadeout¤ of ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
 
 blackon¤()\w#h
 
-Terug naar normaal van blackout()
+Hervat het beeld als het was gepauzeerd door ¤#blackout()¤blackout¤.\nLwl&Z
 
 blackout¤()\w#h
 
-Maakt het beeld zwart/bevriest het beeld
+Pauzeert het beeld.
+
+Gebruik tegelijkertijd ¤#shake(n)¤shake¤ om het scherm zwart te maken.\gLwl&Zg
 
 bluecontrol\b#h
 
@@ -1616,29 +1677,32 @@ Kan de gezichtsrichting van een bemanningslid veranderen of het loopgedrag
 
 bemanningslid - cyan/player/blue/red/yellow/green/purple
 ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-faceplayer/panic/faceleft/faceright/followposition,ai2
+faceleft/faceright/followposition,ai2
 ai2 - nodig als followposition gebruikt wordt voor ai1
+
+faceplayer¤ ontbreekt, gebruik in plaats daarvan 18. ¤panic¤ werkt ook niet,\n&Zgn&Zg
+daarvoor is ¤20¤ nodig.\gn&Zg
 
 changecolour¤(a,b)\w#h
 
-Verandert de kleur van een bemanningslid (let op: dit werkt alleen met
-bemanningsleden die gemaakt zijn met het createcrewman-commando)
+Verandert de kleur van een bemanningslid. Dit commando kan worden gebruikt met
+Arbitrary Entity Manipulation.
 
 a - Kleur van het bemanningslid om te veranderen
-cyan/player/blue/red/yellow/green/purple
-b - Kleur om naar te veranderen
+(cyan/player/blue/red/yellow/green/purple)
+b - Kleurnaam om naar te veranderen. Vanaf 2.4 kun je ook een kleur-ID gebruiken
 
 changecustommood¤(kleur,stemming)\w#h
 
-Verandert de stemming van een bemanningslid (werkt voor bemanningsleden die gered
-kunnen worden)
+Verandert de stemming van een redbaar bemanningslid.
 
-kleur - cyan/player/blue/red/yellow/green/purple
+kleur - Kleur van bemanningslid om te veranderen
+        (cyan/player/blue/red/yellow/green/purple)
 stemming - 0 voor blij, 1 voor verdrietig
 
 changedir¤(kleur,richting)\w#h
 
-Net zoals changeai(kleur,faceleft/faceright), verandert dit de gezichtsrichting.
+Net zoals ¤#changeai(bemanningslid,ai1,ai2)¤changeai¤, verandert dit de gezichtsrichting.\nLwl&Z
 
 kleur - cyan/player/blue/red/yellow/green/purple
 richting - 0 is links, 1 is rechts
@@ -1652,11 +1716,12 @@ bemanningslid - Kleur van bemanningslid om te wijzigen, cyan/player/blue/red
 
 changemood¤(kleur,stemming)\w#h
 
-Verandert de stemming van de speler of een bemanningslid dat gemaakt is met
-createcrewman()
+Verandert de stemming van de speler of een cutscene-bemanningslid.
 
 kleur - cyan/player/blue/red/yellow/green/purple
 stemming - 0 voor blij, 1 voor verdrietig
+
+Cutscene-bemanningsleden zijn bemanningsleden die gemaakt zijn met ¤#createcrewman(x,y,kleur,stemming,ai1,ai2)¤createcrewman¤.\gLwl&Zg
 
 changeplayercolour¤(kleur)\w#h
 
@@ -1666,10 +1731,11 @@ kleur - cyan/player/blue/red/yellow/green/purple/teleporter
 
 changerespawncolour¤(kleur)\w#h
 
-Toegevoegd in 2.4. Verandert de kleur waarmee de speler terugkomt na dood te zijn
-gegaan.
+Verandert de kleur waarmee de speler terugkomt na dood te zijn gegaan.
 
 kleur - red/yellow/green/cyan/blue/purple/teleporter of getal
+
+Dit commando is toegevoegd in 2.4.\g
 
 changetile¤(kleur,tile)\w#h
 
@@ -1704,15 +1770,17 @@ ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
 faceplayer/panic/faceleft/faceright/followposition,ai2
 ai2 - nodig als followposition gebruikt wordt voor ai1
 
-createentity¤(x,y,n,meta1,meta2)\o#h
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
 
-Maakt een entiteit, zie de Lijsten-pagina voor nummers van entiteiten
+Creëert een entiteit met het ID ¤e§¤, twee ¤meta¤-waarden, en 4 ¤p§¤-waarden.\nn&Znn&Znn&Z(
 
-n - Het nummer van de entiteit
+e - Het nummer van de entiteit
+
+Een lijst met entity-IDs en de bijbehorende ¤meta¤/§¤p§¤-waarden vind je ¤https://vsix.dev/wiki/Createentity_list¤hier¤.\gn&Zgn&ZgLClg(
 
 createlastrescued¤()\b#h
 
-Maak het laatst geredde bemanningslid op de vaste positie 200,153. Het laatst
+Maak het laatst geredde bemanningslid op de vaste positie ¤(200,153)¤. Het laatst\nn&Z
 geredde bemanningslid is gebaseerd op de Level Complete-gamestate.
 
 createrescuedcrew¤()\b#h
@@ -1721,15 +1789,15 @@ Maakt alle geredde bemanningsleden
 
 customifflag¤(n,script)\w#h
 
-Hetzelfde als ifflag(n,script) in vereenvoudigde scripting
+Hetzelfde als ¤ifflag(n,script)¤ in vereenvoudigde scripting\nn&Z
 
 customiftrinkets¤(n,script)\w#h
 
-Hetzelfde als iftrinkets(n,script) in vereenvoudigde scripting
+Hetzelfde als ¤iftrinkets(n,script)¤ in vereenvoudigde scripting\nn&Z
 
 customiftrinketsless¤(n,script)\w#h
 
-Hetzelfde als iftrinketsless(n,script) in vereenvoudigde scripting
+Hetzelfde als ¤iftrinketsless(n,script)¤ in vereenvoudigde scripting\nn&Z
 
 custommap¤(on/off)\w#h
 
@@ -1750,20 +1818,25 @@ cutscene¤()\w#h
 
 Laat de cutscene-balken verschijnen
 
-delay¤(n)\w#h
+delay¤(frames)\w#h
 
-Hetzelfde gedrag als het vereenvoudigde commando
+Pauzeert het script voor het gegeven aantal frames. De besturing is geforceerd
+niet-ingedrukt tijdens deze pauze.
 
 destroy¤(object)\w#h
 
 Verwijdert een entiteit. Dit is hetzelfde als het vereenvoudigde commando.
 
-object - gravitylines/warptokens/platforms
+object - gravitylines/warptokens/platforms/moving/disappear
 
-do¤(n)\w#h
+moving¤ en ¤disappear¤ zijn toegevoegd in 2.4.\n&Zgn&Zg
 
-Start een lusblok dat n keer herhaald zal worden. Eindig het lusblok met het
-loop-commando.
+do¤(herhalingen)\w#h
+
+Start een lusblok dat het gegeven aantal keer herhaald zal worden. Eindig het
+lusblok met het ¤#loop¤loop¤-commando.\nLwl&Z
+
+herhalingen - Het aantal keer dat het blok zal worden herhaald.
 
 endcutscene¤()\w#h
 
@@ -1786,52 +1859,62 @@ een ongewenst effect is voor een aangepast level om te hebben.
 
 everybodysad¤()\w#h
 
-Maakt iedereen verdrietig (alleen voor bemanningsleden die gemaakt zijn met
-createcrewman en de speler)
+Maakt alle bemanningsleden verdrietig.
 
-face¤(a,b)\w#h
+Werkt niet op bemanningsleden die geplaatst zijn in de editor.\g
 
-Laat het gezicht van bemanningslid a kijken naar bemanningslid b (werkt alleen met
-bemanningsleden die gemaakt zijn met createcrewman)
+face¤(A,B)\w#h
 
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - zelfde
+Laat bemanningslid A kijken naar bemanningslid B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Werkt niet op bemanningsleden die geplaatst zijn in de editor.\g
 
 fadein¤()\w#h
 
-Laat het beeld herstellen
+Herstel van een ¤#fadeout()¤fadeout¤.\nLwl&Z
 
 fadeout¤()\w#h
 
-Laat het beeld zwart worden
+Laat het beeld zwart worden. Gebruik ¤#fadein()¤fadein¤ of ¤#befadein()¤befadein¤ om ongedaan te maken.\nLwl&ZnLwl&Z
 
 finalmode¤(x,y)\b#h
 
-Teleporteert je naar Outside Dimension VVVVVV, (46,54) is de eerste kamer van het
-Final Level
+Teleporteert je naar Outside Dimension VVVVVV, ¤(46,54)¤ is de eerste kamer van het\nn&Z
+Eindlevel
 
 flag¤(n,on/off)\w#h
 
 Hetzelfde gedrag als het vereenvoudigde commando
 
-flash¤(n)\w#h
+flash¤(lengte)\w#h
 
-Maakt het beeld wit, je kunt de tijd veranderen voor hoe lang het scherm wit moet
-blijven (alleen flash zal niet werken, je moet flash(5) gebruiken in combinatie
-met playef(9) en shake(20) als je een normale flits wil)
+Maakt het scherm wit voor ¤lengte¤ frames.\nn&Z
 
-n - Het aantal frames. 30 frames is bijna een seconde.
+lengte - Het aantal frames. 30 frames is bijna een seconde.
+
+Dit verschilt van het vereenvoudigde commando, dat eigenlijk ¤flash(5)¤,\gn&Zg
+playef(9)¤ and ¤shake(20)¤ tegelijk aanroept. Zie: ¤#playef(sound)¤playef¤ en ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
 
 flip\w#h
 
-Laat de zwaartekracht van de speler omdraaien
+Laat de zwaartekracht van de speler omkeren door op ACTION te drukken.
+
+Als de speler niet op de grond staat zal dit niet werken, omdat het een druk op\g
+ACTIE simuleert. Op dezelfde manier zal dit commando net na een tekstvak niet\g
+werken omdat twee drukken op ACTIE achter elkaar gezien worden als het ingedrukt\g
+houden van de knop, wat dus de speler niet zal laten omkeren.\g
 
 flipgravity¤(kleur)\w#h
 
-Keert de zwaartekracht om van een bepaald bemanningslid. Het werkt niet op de
-speler, en het kan bemanningsleden niet naar beneden toe omkeren.
+Keert de zwaartekracht om van een bepaald bemanningslid, of de speler.
 
 kleur - cyan/player/blue/red/yellow/green/purple
+
+Voor 2.3 kon dit bemanningsleden niet naar beneden omkeren, en ook niet werken\g
+op de speler.\g
 
 flipme\w#h
 
@@ -1860,24 +1943,30 @@ het hoofdspel)
 
 x - teleporter/game
 
-gamestate¤(x)\o#h
+gamestate¤(state)\o#h
 
-Verander de gamestate naar het opgegeven state-nummer
+Verander de huidige gamestate naar het opgegeven state-nummer.
 
-gotoposition¤(x,y,f)\w#h
+state - De gamestate om naar te springen
 
-Verander Viridians positie naar x,y in deze kamer, en f is of je zwaartekracht
-omgedraaid is of niet. (1 voor omgedraaid, 0 voor niet omgedraaid)
+Een volledige lijst met gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤hier¤.\gLClg
 
-f - 1 voor zwaartekracht omgedraaid, 0 voor niet omgedraaid. WAARSCHUWING: Laat
-dit niet weg, anders kan het spel vastlopen!
+gotoposition¤(x,y,zwaartekracht)\w#h
+
+Verander Viridians positie naar ¤(x,y)¤ in deze kamer, en verander ook de\nn&Z
+zwaartekracht.
+
+gravity - 1 voor zwaartekracht omgekeerd, 0 voor niet omgekeerd.
+Alle andere waarden zorgen voor zwaartekracht die niet meer goed werkt.
 
 gotoroom¤(x,y)\w#h
 
-Wijzig de huidige kamer naar x,y, waar x en y beginnen bij 0.
+Wijzig de huidige kamer naar ¤(x,y)¤.\nn&Z
 
-x - x-coördinaat van kamer, beginnend bij 0
-y - y-coördinaat van kamer, beginnend bij 0
+x - x-coördinaat
+y - y-coördinaat
+
+Deze kamercoördinaten beginnen bij 0.\g
 
 greencontrol\b#h
 
@@ -1886,12 +1975,12 @@ en op ENTER drukt. Maakt daarna ook een activiteitszone.
 
 hascontrol¤()\w#h
 
-Laat de speler besturing krijgen, maar je kunt dit niet gebruiken om de besturing
-terug te krijgen gedurende een delay()
+Laat de speler besturing krijgen. Denk eraan dat je dit niet kunt gebruiken om
+controle te krijgen middenin een ¤#delay(frames)¤delay¤.\nLwl&Z
 
 hidecoordinates¤(x,y)\w#h
 
-Verberg coördinaten x,y op de kaart (Dit werkt voor de kaart in aangepaste levels)
+Maakt de kamer op de gegeven coördinaten niet-verkend
 
 hideplayer¤()\w#h
 
@@ -1923,11 +2012,25 @@ Als bemanningslid vermist is, ga naar script
 
 ifexplored¤(x,y,script)\w#h
 
-Als x+1,y+1 bezocht is, ga naar (intern) script
+Als ¤(x,y)¤ bezocht is, ga naar intern script.\nn&Z
+
+Deze kamercoördinaten beginnen bij 0.\g
 
 ifflag¤(n,script)\b#h
 
 Hetzelfde als customifflag, maar laadt een intern script (uit het hoofdspel)
+
+iflang¤(taal,script)\w#h
+
+Controleer of de huidige taal van het spel is ingesteld op een bepaalde taal, en
+zo ja, spring naar het gegeven vereenvoudigde script. ¤#loadtext(taal)¤loadtext¤ heeft geen invloed\nLwl&Z
+op dit commando; alleen welke taal de gebruiker heeft gekozen in het menu.
+
+taal - De taal om te controleren, meestal een code van twee letters, zoals ¤nl¤ voor\nn&Z
+Nederlands
+script - Het vereenvoudigde script om naar te springen als de controle waar is
+
+Dit commando is toegevoegd in 2.4.\g
 
 iflast¤(bemanningslid,script)\b#h
 
@@ -1954,8 +2057,8 @@ je eigenlijk hebt. Laadt een intern script (uit het hoofdspel)
 
 ifwarp¤(x,y,richting,script)\w#h
 
-Als de warprichting voor kamer x,y, beginnend bij 1, is ingesteld op richting, ga
-naar (vereenvoudigd) script
+Als de warprichting voor kamer ¤(x,y)¤, beginnend bij 1, is ingesteld op richting,\nn&Z
+ga naar (vereenvoudigd) script
 
 x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
@@ -1981,9 +2084,18 @@ loadscript¤(script)\b#h
 Laadt een intern script (uit het hoofdspel). Regelmatig gebruikt in aangepaste
 levels als loadscript(stop)
 
+loadtext¤(taal)\w#h
+
+Laad in spelerlevels de vertaling voor de gegeven taal.
+
+taal - De taal om te laden, meestal een code van twee letters, zoals ¤nl¤ voor\nn&Z
+Nederlands. Geef een lege taalcode om weer gewoon de taal van VVVVVV te gebruiken.
+
+Dit commando is toegevoegd in 2.4.\g
+
 loop\w#h
 
-Zet dit aan het eind van het lusblok dat begint met het do-commando.
+Zet dit aan het eind van het lusblok dat begint met het ¤#do(herhalingen)¤do¤-commando.\nLwl&Z
 
 missing¤(kleur)\b#h
 
@@ -1991,13 +2103,14 @@ Maakt iemand vermist
 
 moveplayer¤(x,y)\w#h
 
-Verplaatst de speler x pixels naar rechts en y pixels naar beneden. Natuurlijk kun
-je ook negatieve getallen gebruiken om deze omhoog en naar links te verplaatsen
+Verplaatst de speler x pixels naar rechts en y pixels naar beneden. Negatieve
+getallen werken ook.
 
 musicfadein¤()\w#h
 
-Een niet afgemaakt commando. Dit doet niks in 2.2, maar werkt precies zoals je zou
-denken in 2.3.
+Fade de muziek in.
+
+Voor 2.3 deed dit commando niets.\g
 
 musicfadeout¤()\w#h
 
@@ -2016,12 +2129,14 @@ Begin met het spelen van muziek met intern nummer.
 
 n - Intern liednummer
 
-playef¤(x,n)\w#h
+playef¤(geluid)\w#h
 
 Speel een geluidseffect.
 
-n - Eigenlijk ongebruikt, en kan weggelaten worden. In VVVVVV 1.x werd dit
-gebruikt voor het startpunt van het geluidseffect in milliseconden.
+geluid - Geluids-ID
+
+In VVVVVV 1.x was er een tweede argument dat bepaalde op welke milliseconde het\g
+geluidseffect moest starten. Dit is verwijderd tijdens de C++-port.\g
 
 position¤(type,above/below)\w#h
 
@@ -2057,10 +2172,10 @@ Verandert de kleur van de speler terug naar cyaan
 
 resumemusic¤()\w#h
 
-Een niet afgemaakt commando. Leest in 2.2 en lager uit niet-geïnitialiseerd
-geheugen, met op sommige systemen een crash tot gevolg en op andere het spelen
-van Path Complete. Op 2.3 leest het niet langer uit niet-geïnitialiseerd geheugen
-en zal het correct de muziek hervatten na musicfadeout().
+Hervat de muziek na ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Voor 2.3 was dit een niet-afgemaakt commando en veroorzaakte verschillende\g
+glitches, waaronder crashes.\g
 
 rollcredits¤()\r#h
 
@@ -2068,9 +2183,54 @@ Laat de credits rollen.
 
 2.2 EN LAGER: Het vernietigt je opgeslagen data nadat de credits afgelopen zijn!
 
+setactivitycolour¤(kleur)\w#h
+
+Verander de kleur van de volgende activiteitszone die gemaakt wordt.
+
+kleur - Elke kleur die ¤#text(kleur,x,y,regels)¤text¤ accepteert\nLwl&Z
+
+Dit commando is toegevoegd in 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Verander de positie van de volgende activiteitszone die gemaakt wordt.
+
+y - De y-positie
+
+Dit commando is toegevoegd in 2.4.\g
+
+setactivitytext\w#h
+
+Verander de tekst van de volgende activiteitszone die gemaakt wordt. De regel
+onder dit commando zal gebruikt worden als de tekst (net als ¤#text(kleur,x,y,regels)¤text¤ met 1 regel).\nLwl&Z
+
+Dit commando is toegevoegd in 2.4.\g
+
 setcheckpoint¤()\w#h
 
 Stelt het checkpoint in op de huidige locatie
+
+setfont¤(lettertype)\w#h
+
+In spelerlevels verandert dit het lettertype naar het gegeven lettertype.
+
+lettertype - Het lettertype om het lettertype naar te veranderen.
+Indien leeggelaten zal het standaardlettertype van het level gebruikt worden.
+
+Dit commando is toegevoegd in 2.4.\g
+
+setroomname\w#h
+
+Wijzig de naam van de huidige kamer. De regel onder dit commando zal gebruikt
+worden als de naam (net als ¤#text(kleur,x,y,regels)¤text¤ met 1 regel).\nLwl&Z
+
+Deze naam is niet permanent en zal terug worden gezet naar de standaard kamernaam
+als de kamer opnieuw wordt geladen (bijvoorbeeld door weg te gaan en terug te
+komen)
+
+Deze naam overschrijft speciale veranderende kamernamen, als de kamer die heeft.
+
+Dit commando is toegevoegd in 2.4.\g
 
 shake¤(n)\w#h
 
@@ -2078,7 +2238,7 @@ Schud het beeld voor n ticks. Dit zal geen wachttijd veroorzaken.
 
 showcoordinates¤(x,y)\w#h
 
-Toon coördinaten x,y op de kaart (Dit werkt voor de kaart in aangepaste levels)
+Maakt de kamer op de gegeven coördinaten verkend
 
 showplayer¤()\w#h
 
@@ -2098,12 +2258,13 @@ Toon de doelen op de kaart (onbekende teleporters die getoond worden als ?'s)
 
 showteleporters¤()\b#h
 
-Toon de teleporters op de kaart (Ik denk dat het alleen de teleporter in Space
-Station 1 toont)
+Toon de teleports in verkende kamers op de kaart
 
-showtrinkets¤()\b#h
+showtrinkets¤()\w#h
 
 Toon de trinkets op de kaart
+
+Vanaf 2.3 werkt dit commando ook in spelerlevels.\g
 
 speak\w#h
 
@@ -2127,12 +2288,12 @@ kleur - cyan/player/blue/red/yellow/green/purple/terminal
 
 startintermission2\b#h
 
-Alternatieve finalmode(46,54), brengt je naar het Final Level zonder argumenten te
-accepteren. Crasht bij Timeslip.
+Alternatieve ¤finalmode(46,54)¤, brengt je naar het Final Level zonder argumenten te\nn&Z
+accepteren.
 
 stopmusic¤()\w#h
 
-Stopt de muziek onmiddellijk. Equivalent aan music(0) in vereenvoudigde scripting.
+Stopt de muziek onmiddellijk. Hetzelfde als ¤music(0)¤ in vereenvoudigde scripting.\nn&Z
 
 teleportscript¤(script)\b#h
 
@@ -2153,14 +2314,74 @@ wordt het position-commando gebruikt na het text-commando (en het aantal regels)
 wat de coördinaten zal overschrijven die hier gegeven zijn, dus deze worden
 meestal op 0 gelaten.
 
-kleur - cyan/player/blue/red/yellow/green/purple/gray
+kleur - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
 x - De x-positie van het tekstvak
 y - De y-positie van het tekstvak
 regels - Het aantal regels
 
+De kleur ¤transparent¤ is toegevoegd in 2.4, net als arbitrair gekleurde\gn&Zg
+tekstvakken.\g
+De coördinaten kunnen -500 zijn om het tekstvak in die as te centreren (als je\g
+#position(type,above/below)¤position¤ niet wil gebruiken).\Lwl&Zg
+
 textboxactive\w#h
 
 Laat alle tekstvakken op het scherm verdwijnen behalve de laatst gemaakte
+
+textboxtimer¤(frames)\w#h
+
+Laat het volgende tekstvak na een bepaald aantal frames verdwijnen, zonder het
+script te laten verdergaan.
+
+frames - Het aantal frames om te wachten voor het te laten verdwijnen
+
+Dit commando is toegevoegd in 2.4.\g
+
+textbuttons¤()\w#h
+
+Vervang bepaalde placeholders door knoplabels in het tekstvak dat in het geheugen
+staat (zoals toetsen op het toetsenbord of controllerknoppen).
+
+De placeholders die worden vervangen zijn:
+- {b_act} - ACTIE
+- {b_int} - Interactie
+- {b_map} - Kaart
+- {b_res} - Herstarten
+- {b_esc} - Esc/Menu
+
+Dit commando is toegevoegd in 2.4.\g
+
+textcase¤(geval)\w#h
+
+Als je level vertaalbestanden heeft, en je hebt meerdere tekstvakken met dezelfde
+tekst in een enkel script, kan dit commando ze unieke vertalingen laten hebben.
+Zet het voor een tekstvak.
+
+geval - Het nummer van dit geval, tussen 1 en 255.
+
+Dit commando is toegevoegd in 2.4.\g
+
+textimage¤(afbeelding)\w#h
+
+Geef de opgegeven afbeelding weer voor het tekstvak dat in het geheugen staat.
+Er kan maar één afbeelding zijn per tekstvak.
+
+afbeelding - levelcomplete/gamecomplete, of een onbekende waarde om de afbeelding
+             te verwijderen
+
+Dit commando is toegevoegd in 2.4.\g
+
+textsprite¤(x,y,sprite,kleur)\w#h
+
+Geef de opgegeven sprite weer voor het tekstvak dat in het geheugen staat.
+Er kunnen meerdere sprites zijn per tekstvak.
+
+x - De x-coördinaat van de sprite. Dit is relatief aan het tekstvak.
+y - De y-coördinaat van de sprite. Dit is relatief aan het tekstvak.
+sprite - Het nummer van de sprite, uit ¤sprites.png¤.\nn&Z
+kleur - Het kleur-ID van de sprite.
+
+Dit commando is toegevoegd in 2.4.\g
 
 tofloor\w#h
 
@@ -2172,7 +2393,7 @@ Tekst van Victoria wanneer ze je een trinket geeft in het echte spel
 
 trinketscriptmusic\w#h
 
-Speelt Passion for Exploring. Verder niks.
+Speelt Passion for Exploring.
 
 trinketyellowcontrol¤()\b#h
 
@@ -2180,19 +2401,20 @@ Tekst van Vitellary wanneer hij je een trinket geeft in het echte spel
 
 undovvvvvvman¤()\w#h
 
-Terug naar normaal
+Herstelt de hitbox van de speler naar de normale grootte, zet de kleur op 0, en
+zet de X-positie op 100.
 
 untilbars¤()\w#h
 
-Wacht tot cutscene()/untilbars() is voltooid
+Wacht tot ¤#cutscene()¤cutscene¤ of ¤#endcutscene()¤endcutscene¤ is voltooid.\nLwl&ZnLwl&Z
 
 untilfade¤()\w#h
 
-Wacht totdat fadeout()/fadein() klaar is
+Wacht totdat ¤#fadeout()¤fadeout¤ of ¤#fadein()¤fadein¤ klaar is.\nLwl&ZnLwl&Z
 
 vvvvvvman¤()\w#h
 
-Maakt de speler gigantisch
+Maakt de speler 6x zo groot, zet de positie op ¤(30,46)¤ en zet de kleur op ¤23¤.\nn&Znn&Z
 
 walk¤(richting,x)\w#h
 

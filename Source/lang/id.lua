@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2023-05-28 20:15:12 (CEST)
+--- Last converted: 2023-11-26 03:11:37 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -30,7 +30,7 @@ MAXCREWMATES = "Jumlah maksimum crewmate ($1) telah tercapai di level ini.",
 UNSUPPORTEDTOOL = "Alat tidak didukung! Alat: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Tidak bisa mendapatkan konten folder level. Silakan periksa apakah $1 ada dan coba lagi.",
 MAPSAVEDAS = "Gambar peta disimpan sebagai $1!",
-RAWENTITYPROPERTIES = "Anda dapat mengubah nilai properti entitas ini di sini.",
+RAWENTITYPROPERTIES = "Anda dapat mengubah nilai properti mentah entitas ini di sini.",
 UNKNOWNENTITYTYPE = "Jenis entitas tidak dikenal $1",
 WARPTOKENENT404 = "Entitas warp token tidak ada lagi!",
 SPLITFAILED = "Berpisah gagal total! Apakah Anda memiliki terlalu banyak baris antara perintah teks dan speak/speak_active?", -- Command names are best left untranslated
@@ -92,9 +92,12 @@ METADATAREDONE = "Opsi level diulang",
 BOUNDSTOPLEFT = "Klik sudut kiri atas batas",
 BOUNDSBOTTOMRIGHT = "Klik pojok kanan bawah",
 
+BOUNDSFIRST = "Klik sudut pertama batas", -- Old string: Click the top left corner of the bounds
+BOUNDSLAST = "Klik sudut terakhir", -- Old string: Click the bottom right corner
+
 TILE = "Ubin $1",
 HIDEALL = "Smbunyi smua",
-SHOWALL = "Liat smua",
+SHOWALL = "Lihat semua",
 SCRIPTEDITOR = "Editor skrip",
 FILE = "File",
 NEW = "Baru",
@@ -116,7 +119,7 @@ INTERNALON_LONG = "Mode skrip internal diaktifkan",
 INTERNALOFF_LONG = "Mode skrip internal dinonaktifkan",
 INTERNALYESBARS = "Sk.int say(-1)",
 INTERNALNOBARS = "Sk.int Loadscript",
-VIEW = "Liat",
+VIEW = "Lihat",
 SYNTAXHLOFF = "PNY sintaksis: aktif",
 SYNTAXHLON = "PNY sintaksis: nonaktif",
 TEXTSIZEN = "Ukuran teks: N",
@@ -187,7 +190,7 @@ PLUGINS = "Plugin",
 
 BACKB = "Kembali <<",
 MOREB = "Lebih >>",
-AUTOMODE = "Mode: auto",
+AUTOMODE = "Mode: oto",
 AUTO2MODE = "Mode: multi",
 MANUALMODE = "Mode: manual",
 ENEMYTYPE = "Jenis musuhan: $1",
@@ -198,8 +201,8 @@ ROOMNAME = "Nama ruangan",
 ROOMOPTIONS = "Opsi ruangan",
 ROTATE180 = "Putar 180der",
 ROTATE180UNI = "Putar 180°",
-HIDEBOUNDS = "Sembunyikn. batas",
-SHOWBOUNDS = "Liatkan batas",
+HIDEBOUNDS = "Sembunyikan batas",
+SHOWBOUNDS = "Menunjukkan batas",
 
 ROOMPLATFORMS = "Ruangan platf.", -- basically, platforms/enemies in/for this room
 ROOMENEMIES = "Ruangan musuhan",
@@ -229,7 +232,7 @@ VERSIONERROR = "Tidak dapat memeriksa versi.",
 VERSIONUPTODATE = "Versi Ved Anda mutakhir.",
 VERSIONOLD = "Pembaruan tersedia! Versi terbaru: $1",
 VERSIONCHECKING = "Memeriksa pembaruan...",
-VERSIONDISABLED = "Perbarui cek dinonaktifkan",
+VERSIONDISABLED = "Pemeriksa pembaruan dinonaktifkan",
 VERSIONCHECKNOW = "Cek skrg.", -- Check for updates now
 
 SAVENOSUCCESS = "Menyimpan tidak berhasil! Kesalahan: ",
@@ -578,6 +581,11 @@ FIND_V_EXE_EXPLANATION = "Ved membutuhkan VVVVVV untuk playtesting, dan jalur ke
 
 VCE_REMOVED = "VVVVVV: Community Edition tidak lagi dipertahankan, dan dukungan untuk level VVVVVV-CE telah dihapus dari Ved. Tingkat ini diperlakukan seperti tingkat VVVVVV biasa. Untuk informasi lebih lanjut, lihat https://vsix.dev/vce/status/",
 
+VVVVVV_VERSION = "Versi VVVVVV", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+VVVVVV_VERSION_AUTO = "Oto",
+VVVVVV_VERSION_23PLUS = "2.3+",
+VVVVVV_VERSION_24PLUS = "2.4+",
+
 ALL_PLUGINS = "Semua plugin",
 ALL_PLUGINS_MOREINFO = "Silakan buka ¤https://tolp.nl/ved/plugins.php¤halaman ini¤ untuk informasi lebih lanjut tentang plugin.\\nLCl",
 ALL_PLUGINS_FOLDER = "Folder plugin Anda adalah:",
@@ -629,6 +637,15 @@ CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Pilih ubin dari ubin untuk membuat stempel. H
 
 ADVANCED_LEVEL_OPTIONS = "Opsi level lanjutan",
 ONEWAYCOL_OVERRIDE = "Warnai ulang ubin satu arah di aset kustom juga (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+
+ZIP_SAVE_AS = "Buat ZIP versi ini untuk dibagikan", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+ZIP_CREATE_TITLE = "Simpan ZIP",
+ZIP_BUSY_TITLE = "Membuat ZIP...",
+ZIP_LOVE11_ONLY = "Membuat file ZIP memerlukan LÖVE $1 atau lebih tinggi", -- $1: version number
+ZIP_SAVING_SUCCESS = "ZIP disimpan!",
+ZIP_SAVING_FAIL = "Tidak dapat menyimpan file ZIP!",
+
+OPENFOLDER = "Buka folder", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
 }
 
@@ -704,7 +721,7 @@ subtoolnames = {
 
 [1] = {"kuas 1x1", "kuas 3x3", "kuas 5x5", "kuas 7x7", "kuas 9x9", "Isi secara horizontal", "Isi secara vertikal", "Ukuran kuas kustom", "Isi ember", "Kentang untuk Melakukan Hal-hal yang Ajaib"},
 [2] = {},
-[3] = {"Auto 1", "Auto luas kiri+kanan", "Auto luas kiri", "Auto luas kanan"},
+[3] = {"Oto 1", "Oto luas kiri+kanan", "Oto luas kiri", "Oto luas kanan"},
 [4] = {},
 [5] = {"Tegak lurus", "Terbalik"},
 [6] = {},
@@ -1405,6 +1422,8 @@ Membuat crewmate sedih. Tanpa argumen, ini akan membuat Viridian sedih.
 Anda juga dapat menggunakan "semua", "semua orang" atau "semua orang" sebagai
 argumen untuk membuat semua orang sedih.
 
+Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\nwnw
+
 flag¤(flag,on/off)\h#w
 
 Mengaktifkan atau menonaktifkan tanda tertentu. Misalnya, flag(4,on) akan
@@ -1440,12 +1459,14 @@ Jika jumlah trinket Anda >= jumlah, lanjutkan di skrip saat ini.
 
 destroy¤(apapun)\h#w
 
-Argumen yang valid dapat berupa:
-warptokens - Hapus semua token warp dari ruangan sampai Anda masuk kembali ke
-ruangan.
-gravitylines - Hapus semua garis gravitasi dari ruangan sampai Anda masuk
-kembali ke ruangan.
-Opsi "platforms" juga ada, tetapi tidak berfungsi dengan baik.
+Remove all objects of the given type, until you re-enter the room.
+
+Valid arguments can be:
+warptokens - Warp tokens
+gravitylines - Gravity lines
+platforms - Doesn't work properly
+moving - Moving platforms (added in 2.4)
+disappear - Disappearing platforms (added in 2.4)
 
 music¤(nomor)\h#w
 
@@ -1494,6 +1515,33 @@ Jika warpdir untuk kamar x,y, 1-indexed, diatur ke dir, buka skrip
 x - Kamar x koordinat, mulai dari 1
 y - Kamar koordinat y, mulai dari 1
 dir - Arah warp. Biasanya 0-3, tetapi nilai di luar batas diterima
+
+loadtext¤(language)\w#h
+
+Load a translation for the level by language code. Use an empty value to use
+VVVVVV's language again.
+
+language - A language code, like fr or pt_BR
+
+iflang¤(language,script)\w#h
+
+If VVVVVV's language is set to the given language, go to a script. This is not
+affected by the language code you pass to loadtext(), only by what language the
+user has selected in the menu.
+
+setfont¤(font)\w#h
+
+Change the font used for text in the level. This can be a font supplied with the
+game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
+to revert to the default font for the level.
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - A number between 1 and 255
 ]]
 },
 
@@ -1529,53 +1577,62 @@ Merah¤  - Perintah merah tidak boleh digunakan di level kustom karena akan memb
 
 activateteleporter¤()\w#h
 
-Jika ada teleporter di dalam ruangan, itu akan mulai berkedip warna acak dan
-menyentuhnya tidak akan merusak data simpanan. Hanya menargetkan teleporter yang
-pertama kali muncul.
+Activate the first teleporter in the room, which makes it flash random colors, and
+animate erratically.
+
+The teleporter's ¤tile¤ is set to 6, and the ¤color¤ is set to 102. This command makes\gn&Zgn&Zg
+the teleporter do nothing when touched, as the teleporter's tile is set to\g
+something which isn't ¤1§¤.\gn&Zg(
 
 activeteleporter¤()\w#h
 
-Membuat teleporter di ruangan menjadi putih, tetapi menyentuhnya tetap akan
-menghapus data simpanan Anda. Hanya menargetkan teleporter yang pertama kali
-muncul.
+Makes the first teleporter in the room white, aka color ¤101¤.\nn&Z
+
+This command does not change the tile, so it will not affect functionality.\g
 
 alarmoff\w#h
 
-Menonatifkan alarm
+Menonatifkan alarm.
 
 alarmon\w#h
 
-Mengatifkan alarm
+Mengatifkan alarm.
 
 altstates¤(state)\b#h
 
 Mengubah tata letak beberapa ruangan, seperti ruang perhiasan di kapal sebelum
 dan sesudah ledakan, dan pintu masuk lab rahasia (level kustom tidak mendukung
-altstate sama sekali)
+altstate sama sekali).
+
+In the code, this changes the global ¤altstates¤ variable.\gn&Zg
 
 audiopause¤(on/off)\w#h
 
-Ditambahkan di 2.3. Aktifkan paksa atau nonaktifkan jeda audio tidak fokus,
-terlepas dari pengaturan jeda audio yang diatur pengguna. Default ke mati, yaitu
-menjeda audio selama jeda tidak fokus.
+Aktifkan paksa atau nonaktifkan jeda audio tidak fokus, terlepas dari pengaturan
+jeda audio yang diatur pengguna. Default ke mati, yaitu menjeda audio selama jeda
+tidak fokus.
+
+This command was added in 2.3.\g
 
 backgroundtext\w#h
 
-Jika Anda meletakkan perintah ini pada baris di atas speak atau speak_active,
-game tidak akan menunggu hingga Anda menekan tindakan setelah membuat kotak teks.
-Ini dapat digunakan untuk membuat beberapa kotak teks secara bersamaan.
+Makes the next shown textbox not wait for ACTION to be pressed before continuing
+the script. The most common usage of this is to display multiple textboxes at
+once.
 
 befadein¤()\w#h
 
-Langsung memudar dari fadeout()
+Instantly remove a fade, such as from ¤#fadeout()¤fadeout¤ or ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
 
 blackon¤()\w#h
 
-Kembali normal dari blackout()
+Resume rendering if it was paused by ¤#blackout()¤blackout¤.\nLwl&Z
 
 blackout¤()\w#h
 
-Jadikan layar menjadi hitam/membekukan layar
+Pauses rendering.
+
+To make the screen black, use ¤#shake(n)¤shake¤ at the same time.\gLwl&Zg
 
 bluecontrol\b#h
 
@@ -1588,28 +1645,29 @@ Dapat mengubah arah wajah crewmate atau perilaku berjalan
 
 crewmate - cyan/player/blue/red/yellow/green/purple
 ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
-faceplayer/panic/faceleft/faceright/followposition,ai2
+faceleft/faceright/followposition,ai2
 ai2 - diperlukan jika followposition digunakan untuk ai1
+
+faceplayer¤ is missing, use 18 instead. ¤panic¤ also does not work, requiring ¤20¤.\n&Zgn&Zgn&Zg
 
 changecolour¤(a,b)\w#h
 
-Mengubah warna crewmate (catatan: ini hanya bekerja dengan crewmates yang
-telah dibuat menggunakan perintah createcrewman)
+Changes the color of a crewmate. This command can be used with Arbitrary Entity
+Manipulation.
 
-a - Warna crewmate untuk mengubah cyan/player/blue/red/yellow/green/purple
-b - Warna untuk diubah menjadi
+a - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
+b - Color name to change to. Since 2.4, you can also use a color ID
 
 changecustommood¤(warna,suasana)\w#h
 
-Mengubah suasana seorang crewmate (berfungsi untuk rekan crewmate yang dapat
-diselamatkan)
+Changes the mood of a rescuable crewmate.
 
-warna - cyan/player/blue/red/yellow/green/purple
-suasana - 0 untuk senang, 1 untuk sedih
+color - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
+mood - 0 for happy, 1 for sad
 
 changedir¤(warna,arah)\w#h
 
-Sama seperti changeai(warna,faceleft/faceright), ini mengubah arah wajah.
+Sama seperti ¤#changeai(crewmate,ai1,ai2)¤changeai¤, ini mengubah arah wajah.\nLwl&Z
 
 warna - cyan/player/blue/red/yellow/green/purple
 arah - 0 = kiri, 1 = kanan
@@ -1622,10 +1680,12 @@ crewmate - Warna crewmate untuk berubah cyan/player/blue/red/yellow/green/purple
 
 changemood¤(warna,suasana)\w#h
 
-Mengubah suasana pemain atau crewmate yang dibuat dengan createcrewman()
+Changes the mood of the player or a cutscene crewmate.
 
 warna - cyan/player/blue/red/yellow/green/purple
 suasana - 0 untuk senang, 1 untuk sedih
+
+Cutscene crewmates are crewmates created with ¤#createcrewman(x,y,color,mood,ai1,ai2)¤createcrewman¤.\gLwl&Zg
 
 changeplayercolour¤(warna)\w#h
 
@@ -1635,9 +1695,11 @@ warna - cyan/player/blue/red/yellow/green/purple/teleporter
 
 changerespawncolour¤(warna)\w#h
 
-Ditambahkan dalam 2.4. Mengubah warna pemain yang dibangkitkan kembali saat mati.
+Mengubah warna pemain yang dibangkitkan kembali saat mati.
 
 warna - red/yellow/green/cyan/blue/purple/teleporter atau nomor
+
+This command was added in 2.4.\g
 
 changetile¤(warna,ubin)\w#h
 
@@ -1672,16 +1734,19 @@ ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
 faceplayer/panic/faceleft/faceright/followposition,ai2
 ai2 - diperlukan jika followposition digunakan untuk ai1
 
-createentity¤(x,y,n,meta1,meta2)\o#h
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
 
-Membuat entitas, periksa referensi daftar untuk nomor entitas
+Creates the entity with the ID ¤e§¤, two ¤meta¤ values, and 4 ¤p§¤ values.\nn&Znn&Znn&Z(
 
-n - Nomor entitas
+e - The entity ID
+
+A list of entity IDs and the ¤meta¤/§¤p§¤ values they use can be found ¤https://vsix.dev/wiki/Createentity_list¤here¤.\gn&Zgn&ZgLClg(
 
 createlastrescued¤()\b#h
 
-Membuat crewmate terakhir yang diselamatkan pada posisi kode keras 200,153. Rekan
-crewmate terakhir yang diselamatkan didasarkan pada status game Level Complete.
+Membuat crewmate terakhir yang diselamatkan pada posisi kode keras ¤(200,153)¤.\nn&Z
+Rekan crewmate terakhir yang diselamatkan didasarkan pada status game Level
+Complete.
 
 createrescuedcrew¤()\b#h
 
@@ -1689,15 +1754,15 @@ Membuat semua rekan crewmate yang diselamatkan
 
 customifflag¤(n,skrip)\w#h
 
-Sama seperti ifflag(n,skrip) dalam skrip sederhana
+Sama seperti ¤ifflag(n,skrip)¤ dalam skrip sederhana\nn&Z
 
 customiftrinkets¤(n,skrip)\w#h
 
-Sama seperti iftrinkets(n,skrip) dalam skrip sederhana
+Sama seperti ¤iftrinkets(n,skrip)¤ dalam skrip sederhana\nn&Z
 
 customiftrinketsless¤(n,skrip)\w#h
 
-Sama seperti iftrinketsless(n,skrip) dalam skrip sederhana
+Sama seperti ¤iftrinketsless(n,skrip)¤ dalam skrip sederhana\nn&Z
 
 custommap¤(on/off)\w#h
 
@@ -1717,19 +1782,25 @@ cutscene¤()\w#h
 
 Membuat bilah cutscene muncul
 
-delay¤(n)\w#h
+delay¤(frames)\w#h
 
-Perilaku yang sama seperti perintah yang disederhanakan
+Pauses the script for the specified number of frames. Controls are forced to be
+unpressed during this pause.
 
 destroy¤(objek)\w#h
 
 Menghapus entitas. Ini sama dengan perintah scripting yang disederhanakan.
 
-objek - gravitylines/warptokens/platforms
+objek - gravitylines/warptokens/platforms/moving/disappear
 
-do¤(n)\w#h
+moving¤ and ¤disappear¤ were added in 2.4.\n&Zgn&Zg
 
-Memulai blok loop yang akan berulang n kali. Akhiri blok dengan perintah loop.
+do¤(times)\w#h
+
+Starts a loop block which will repeat a specified number of times. End the block
+using ¤#loop¤loop¤.\nLwl&Z
+
+times - The amount of times the block will loop.
 
 endcutscene¤()\w#h
 
@@ -1752,51 +1823,60 @@ yang tidak diinginkan untuk memiliki level kustom.
 
 everybodysad¤()\w#h
 
-Membuat semua orang sedih (hanya untuk crewmate yang dibuat dengan createcrewman
-dan pemain)
+Makes all crewmates sad.
 
-face¤(a,b)\w#h
+Does not work on crewmates placed in the editor.\g
 
-Membuat wajah crewmate menunjuk ke crewmate b (hanya bekerja dengan crewmate yang
-dibuat dengan createcrewman)
+face¤(A,B)\w#h
 
-a - cyan/player/blue/red/yellow/green/purple/gray
-b - sama
+Makes crewmate A look at crewmate B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Does not work on crewmates placed in the editor.\g
 
 fadein¤()\w#h
 
-Memudar kembali
+Fades back in from ¤#fadeout()¤fadeout¤.\nLwl&Z
 
 fadeout¤()\w#h
 
-Memudarkan layar menjadi hitam
+Fades the screen to black. To undo, use ¤#fadein()¤fadein¤ or ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
 
 finalmode¤(x,y)\b#h
 
-Menteleportasimu ke Dimensi Luar VVVVVV, (46,54) adalah ruang awal Level Akhir
+Menteleportasimu ke Dimensi Luar VVVVVV, ¤(46,54)¤ adalah ruang awal Level Akhir\nn&Z
 
 flag¤(n,on/off)\w#h
 
 Perilaku yang sama seperti perintah yang disederhanakan
 
-flash¤(n)\w#h
+flash¤(length)\w#h
 
-Membuat layar putih, Anda dapat mengubah waktu berapa lama layar harus tetap putih
-(hanya flash tidak akan bekerja, Anda harus menggunakan flash(5) dalam kombinasi
-dengan playef(9) dan shake(20) jika Anda ingin normal kilatan)
+Makes the screen white for ¤length¤ amount of frames.\nn&Z
 
-n - Jumlah frame. 30 frame hampir satu detik.
+length - The amount of frames. 30 frames is almost one second.
+
+This is different from the simplified command, which actually calls ¤flash(5)¤,\gn&Zg
+playef(9)¤ and ¤shake(20)¤ at the same time. See: ¤#playef(sound)¤playef¤ and ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
 
 flip\w#h
 
-Buat pemain membalik
+Make the player flip by pressing ACTION.
+
+If the player is not on the ground, this will not work, since it's simulating an\g
+ACTION press. Likewise, this command right after a textbox will not function for\g
+the same reason as two consecutive ACTION presses in a row is treated as holding\g
+the button down, which does not flip the player.\g
 
 flipgravity¤(warna)\w#h
 
-Membalikkan gravitasi crewmate tertentu. Itu tidak akan bekerja pada pemain, dan
-crewmate tidak bisa membalik kembali.
+Flips the gravity of a certain crewmate, or the player.
 
 warna - cyan/player/blue/red/yellow/green/purple
+
+Before 2.3, this wouldn't unflip crewmates, or affect the player.\g
 
 flipme\w#h
 
@@ -1826,24 +1906,30 @@ teleporter dari game utama)
 
 x - teleporter/game
 
-gamestate¤(x)\o#h
+gamestate¤(state)\o#h
 
-Ubah status game ke nomor status yang ditentukan
+Change the current gamestate to the specified state number.
 
-gotoposition¤(x,y,f)\w#h
+state - The gamestate to jump to
 
-Ubah posisi Viridian menjadi x,y di ruangan ini, dan f adalah apakah Anda terbalik
-atau tidak. (1 untuk dibalik, 0 untuk tidak dibalik)
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤.\gLClg
 
-f - 1 untuk dibalik, 0 untuk tidak dibalik. PERINGATAN: Jangan biarkan ini tidak
-ditentukan, jika tidak, Anda dapat softlock di dalam game!
+gotoposition¤(x,y,gravity)\w#h
+
+Change Viridian's position to ¤(x,y)¤ in this room, and change their gravity as\nn&Z
+well.
+
+gravity - 1 for flipped, 0 for not flipped. Any other values result in glitchy
+player gravity.
 
 gotoroom¤(x,y)\w#h
 
-Ubah ruangan saat ini menjadi x,y, di mana x dan y mulai dari 0.
+Ubah ruangan saat ini menjadi ¤(x,y)¤.\nn&Z
 
-x - Ruang x koordinat, mulai dari 0
-y - Ruang y koordinat, mulai dari 0
+x - x coordinate
+y - y coordinate
+
+These room coordinates are 0-indexed.\g
 
 greencontrol\b#h
 
@@ -1852,12 +1938,12 @@ utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
 
 hascontrol¤()\w#h
 
-Membuat pemain memiliki kontrol, namun Anda tidak dapat menggunakan ini untuk
-mendapatkan kembali kontrol saat berada di tengah delay()
+Makes the player have control. Note that you can't use this to regain control
+while in the middle of a ¤#delay(frames)¤delay¤.\nLwl&Z
 
 hidecoordinates¤(x,y)\w#h
 
-Sembunyikan koordinat x,y di peta (Ini berfungsi untuk peta untuk level kustom)
+Set the room at the given coordinates to unexplored
 
 hideplayer¤()\w#h
 
@@ -1889,11 +1975,25 @@ Jika crewmate hilang, buka skrip
 
 ifexplored¤(x,y,skrip)\w#h
 
-Jika x+1,y+1 dieksplorasi, buka skrip (internal)
+Jika ¤(x,y)¤ dieksplorasi, buka skrip internal.\nn&Z
+
+These room coordinates are 0-indexed.\g
 
 ifflag¤(n,skrip)\b#h
 
 Sama seperti customifflag, tetapi memuat skrip internal (permainan utama)
+
+iflang¤(language,script)\w#h
+
+Check if the current language of the game is a certain language, and if so, jump
+to the given custom script. ¤#loadtext(language)¤loadtext¤ has no influence on this command; only what\nLwl&Z
+language the user has selected in the menu.
+
+language - The language to check, usually a two-letter code, such as ¤en¤ for\nn&Z
+English
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.4.\g
 
 iflast¤(crewmate,skrip)\b#h
 
@@ -1921,7 +2021,7 @@ sebenarnya Anda miliki. Memuat skrip internal (permainan utama)
 
 ifwarp¤(x,y,dir,skrip)\w#h
 
-Jika warpdir untuk kamar x,y, berindeks-1, diatur ke dir, buka skrip
+Jika warpdir untuk kamar ¤(x,y)¤, berindeks-1, diatur ke dir, buka skrip\nn&Z
 (yang disederhanakan)
 
 x - Ruang x koordinat, mulai dari 1
@@ -1946,9 +2046,19 @@ loadscript¤(script)\b#h
 Muat skrip internal (permainan utama). Biasanya digunakan di level kustom sebagai
 loadscript(stop)
 
+loadtext¤(language)\w#h
+
+In custom levels, load the translation for the given language.
+
+language - The language to load, usually a two-letter code, such as ¤en¤ for\nn&Z
+English. Pass an empty language code to revert to the default behavior of simply
+using VVVVVV's language.
+
+This command was added in 2.4.\g
+
 loop\w#h
 
-Letakkan ini di akhir blok loop yang dimulai dengan perintah do.
+Put this at the end of a loop block started with the ¤#do(times)¤do¤ command.\nLwl&Z
 
 missing¤(warna)\b#h
 
@@ -1956,13 +2066,14 @@ Membuat seseorang hilang
 
 moveplayer¤(x,y)\w#h
 
-Memindahkan pemutar x piksel ke kanan dan y piksel ke bawah. Tentu saja Anda juga
-dapat menggunakan angka negatif untuk membuatnya bergerak ke atas atau ke kiri
+Moves the player by x pixels to the right and y pixels down. Negative numbers are
+accepted as well.
 
 musicfadein¤()\w#h
 
-Perintah yang belum selesai. Ini tidak melakukan apa pun di 2.2, tetapi berfungsi
-persis seperti yang Anda kira akan berhasil di 2.3.
+Fades the music in.
+
+Before 2.3, this command did nothing.\g
 
 musicfadeout¤()\w#h
 
@@ -1981,12 +2092,15 @@ Mulai mainkan lagu dengan nomor lagu internal.
 
 n - Nomor lagu internal
 
-playef¤(x,n)\w#h
+playef¤(sound)\w#h
 
 Mainkan efek suara.
 
-n - Sebenarnya tidak terpakai, dan bisa ditinggalkan. Di VVVVVV 1.x, ini digunakan
-untuk mengontrol offset dalam milidetik saat efek suara dimulai.
+sound - Sound ID
+
+In VVVVVV 1.x, there was a second argument which controlled the offset in\g
+milliseconds at which the sound effect started. This was removed during the C++\g
+port.\g
 
 position¤(tipe,above/below)\w#h
 
@@ -2021,11 +2135,9 @@ Mengubah warna pemain kembali ke biru muda
 
 resumemusic¤()\w#h
 
-Perintah yang belum selesai. Pada 2.2 dan di bawahnya, ia membaca dari memori yang
-tidak diinisialisasi, yang mengakibatkan crash/mogok pada beberapa mesin dan hanya
-mengakibatkan bermain Path Complete pada yang lain. Pada 2.3, itu tidak lagi
-membaca dari memori yang tidak diinisialisasi dan akan melanjutkan musik dengan
-benar setelah musicfadeout().
+Resumes the music after ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Before 2.3, this was unfinished and caused various glitches, including crashes.\g
 
 rollcredits¤()\r#h
 
@@ -2033,9 +2145,53 @@ Membuat kredit bergulir.
 
 2.2 DAN DI BAWAH: Ini menghancurkan simpanan Anda setelah kredit selesai!
 
+setactivitycolour¤(color)\w#h
+
+Change the color of the next activity zone that gets spawned.
+
+color - Any color that ¤#text(color,x,y,lines)¤text¤ takes\nLwl&Z
+
+This command was added in 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Change the position of the next activity zone that gets spawned.
+
+y - The y position
+
+This command was added in 2.4.\g
+
+setactivitytext\w#h
+
+Change the text of the next activity zone that gets spawned. The line after this
+command will be taken as the text (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This command was added in 2.4.\g
+
 setcheckpoint¤()\w#h
 
 Setel pos pemeriksaan ke lokasi saat ini
+
+setfont¤(font)\w#h
+
+In custom levels, set the font to the given font.
+
+font - The font to set the font to. If left blank, this will set the font to the
+default font of the custom level.
+
+This command was added in 2.4.\g
+
+setroomname\w#h
+
+Change the room name of the current room. The line after this command will be
+taken as the name (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This name is not persistent and will go back to the default room name when the
+room is reloaded (e.g. by leaving and coming back).
+
+This name overrides any special changing room name, if the room has one. 
+
+This command was added in 2.4.\g
 
 shake¤(n)\w#h
 
@@ -2043,7 +2199,7 @@ Kocok layar untuk n kutu. Ini tidak akan membuat penundaan.
 
 showcoordinates¤(x,y)\w#h
 
-Tampilkan koordinat x,y pada peta (Ini berfungsi untuk peta untuk tingkat kustom)
+Set the room at the given coordinates to explored
 
 showplayer¤()\w#h
 
@@ -2063,12 +2219,13 @@ Tampilkan target di peta (teleporter tidak dikenal yang muncul sebagai [?])
 
 showteleporters¤()\b#h
 
-Tunjukkan teleporter di peta (saya kira itu hanya menunjukkan teleporter di
-Stasiun Luar Angkasa 1)
+Show the teleporters in explored rooms on the map
 
-showtrinkets¤()\b#h
+showtrinkets¤()\w#h
 
 Tunjukkan trinket di peta
+
+Since 2.3, this command was changed to work in custom levels.\g
 
 speak\w#h
 
@@ -2093,12 +2250,11 @@ warna - cyan/player/blue/red/yellow/green/purple/terminal
 
 startintermission2\b#h
 
-Alternate finalmode(46,54), membawa Anda ke level akhir tanpa menerima argumen.
-Crash/mogok di timeslip.
+Alternate ¤finalmode(46,54)¤, membawa Anda ke level akhir tanpa menerima argumen.\nn&Z
 
 stopmusic¤()\w#h
 
-Menghentikan musik segera. Setara dengan music(0) dalam skrip yang disederhanakan.
+Menghentikan musik segera. Setara dengan ¤music(0)¤ dalam skrip yang disederhanakan.\nn&Z
 
 teleportscript¤(skrip)\b#h
 
@@ -2117,14 +2273,72 @@ Simpan kotak teks dalam memori dengan warna, posisi dan jumlah baris. Biasanya,
 perintah posisi digunakan setelah perintah teks (dan baris teksnya), yang akan
 menimpa koordinat yang diberikan di sini, jadi ini biasanya dibiarkan sebagai 0.
 
-warna - cyan/player/blue/red/yellow/green/purple/gray
+warna - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
 x - Posisi x dari kotak teks
 y - Posisi y dari kotak teks
 baris - Jumlah baris
 
+The ¤transparent¤ color was added in 2.4, along with arbitrary colored textboxes.\gn&Zg
+The coordinates can be -500 to center the textbox in the respective axis (if you\g
+don't want to use ¤#position(type,above/below)¤position¤).\gLwl&Zg
+
 textboxactive\w#h
 
 Membuat semua kotak teks di layar menghilang kecuali yang terakhir dibuat
+
+textboxtimer¤(frames)\w#h
+
+Makes the next shown textbox disappear after a certain amount of frames, without
+advancing the script.
+
+frames - The amount of frames to wait before fading out
+
+This command was added in 2.4.\g
+
+textbuttons¤()\w#h
+
+For the text box in memory, replace certain button placeholders by button labels
+(such as keyboard keys or controller glyphs).
+
+The replaced placeholders are:
+- {b_act} - ACTION
+- {b_int} - Interact
+- {b_map} - Map
+- {b_res} - Restart
+- {b_esc} - Esc/Menu
+
+This command was added in 2.4.\g
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - The case number, between 1 and 255.
+
+This command was added in 2.4.\g
+
+textimage¤(image)\w#h
+
+For the text box in memory, draw the given image. There can only be one image per
+text box.
+
+image - levelcomplete/gamecomplete, or an unknown value to remove the image
+
+This command was added in 2.4.\g
+
+textsprite¤(x,y,sprite,color)\w#h
+
+For the text box in memory, draw the given sprite. There can be multiple sprites
+per text box.
+
+x - The x-coordinate of the sprite. This is relative to the text box.
+y - The y-coordinate of the sprite. This is relative to the text box.
+sprite - The sprite number of the sprite, from ¤sprites.png¤.\nn&Z
+color - The color ID of the sprite.
+
+This command was added in 2.4.\g
 
 tofloor\w#h
 
@@ -2136,7 +2350,7 @@ Dialog Victoria ketika dia memberi Anda perhiasan di game nyata
 
 trinketscriptmusic\w#h
 
-Memainkan Passion for Exploring. Tidak ada yang lain.
+Memainkan Passion for Exploring.
 
 trinketyellowcontrol¤()\b#h
 
@@ -2144,19 +2358,21 @@ Dialog Vitellary saat dia memberimu perhiasan di game yang sebenarnya
 
 undovvvvvvman¤()\w#h
 
-Kembali ke normal
+Resets the player's hitbox to the normal size, sets their color to 0, and sets
+their X position to 100.
 
 untilbars¤()\w#h
 
-Tunggu sampai cutscene()/endcutscene() selesai
+Tunggu sampai ¤#cutscene()¤cutscene¤/§¤#endcutscene()¤endcutscene¤ selesai.\nLwl&ZnLwl&Z(
 
 untilfade¤()\w#h
 
-Tunggu sampai fadeout()/fadein() selesai
+Tunggu sampai ¤#fadeout()¤fadeout¤/§¤#fadein()¤fadein¤ selesai.\nLwl&ZnLwl&Z(
 
 vvvvvvman¤()\w#h
 
-Membuat pemain menjadi besar
+Makes the player 6x larger, sets their position to ¤(30,46)¤ and sets their color to\nn&Z
+23¤.\n&Z
 
 walk¤(arah,x)\w#h
 
