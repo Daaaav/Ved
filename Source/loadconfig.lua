@@ -211,6 +211,11 @@ configs = {
 		["type"] = "string",
 		comment = "VVVVVV-CE equivalent of vvvvvv23 option, now obsolete.",
 	},
+	default_save_folder_zip = {
+		default = "",
+		["type"] = "string",
+		comment = "The default folder to offer saving level ZIPs to. If blank, uses the levels folder.",
+	},
 	mapstyle = {
 		default = "full",
 		["type"] = "string"

@@ -29,6 +29,8 @@ function dialog.form.save_make()
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
 		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
+		{"zip", 0, 12, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
+		{"", 2, 12, 46, L.ZIP_SAVE_AS, DF.LABEL},
 	}
 end
 
@@ -273,6 +275,10 @@ function dialog.form.savevvvvvvmusic_make(startfolder, defaultname)
 	return form
 end
 
+function dialog.form.zip_level_make(startfolder, defaultname)
+	return dialog.form.files_make(startfolder, defaultname, ".zip", true, 11)
+end
+
 function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
 	if yoff == nil then
 		yoff = 0
@@ -436,7 +442,68 @@ function dialog.callback.save(button, fields)
 			dialog.create(L.SAVENOSUCCESS .. anythingbutnil(savederror))
 		else
 			editingmap = fields.filename
+
+			if fields.zip then
+				if not love_version_meets(10) then
+					dialog.create(langkeys(L.ZIP_LOVE11_ONLY, {"0.10"}))
+					return
+				end
+
+				local folder = s.default_save_folder_zip
+				if folder == "" then
+					folder = levelsfolder
+				end
+
+				dialog.create(
+					"",
+					DBS.SAVECANCEL,
+					dialog.callback.zip_level,
+					L.ZIP_CREATE_TITLE,
+					dialog.form.zip_level_make(folder, editingmap .. ".zip")
+				)
+			end
 		end
+	end
+end
+
+function dialog.callback.zip_level(button, fields)
+	if button == DB.CANCEL then
+		return
+	end
+
+	local new_default_folder
+	if fields.folder == levelsfolder then
+		new_default_folder = ""
+	else
+		new_default_folder = fields.folder
+	end
+	if s.default_save_folder_zip ~= new_default_folder then
+		s.default_save_folder_zip = new_default_folder
+		saveconfig()
+	end
+
+	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
+
+	local success, err = zip_level(editingmap, filepath, filename)
+	if not success then
+		dialog.create(L.ZIP_SAVING_FAIL .. "\n\n" .. err)
+	else
+		dialog.create(
+			L.ZIP_SAVING_SUCCESS,
+			{L.OPENFOLDER, DB.OK},
+			function(button2)
+				if button2 == L.OPENFOLDER then
+					love.system.openURL("file://" .. fields.folder)
+				end
+			end,
+			filename,
+			nil,
+			function(button2)
+				if button2 == L.OPENFOLDER then
+					return true
+				end
+			end
+		)
 	end
 end
 
