@@ -111,6 +111,8 @@ function love.load()
 	autotiling:init()
 	tilenumberbatch = ved_require("tilenumberbatch")
 	tilenumberbatch:init()
+	ved_require("zipwriter")
+	ved_require("ziplevel")
 
 
 	math.randomseed(os.time())
