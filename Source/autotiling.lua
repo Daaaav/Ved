@@ -357,6 +357,10 @@ function self:autotile(x, y)
 end
 
 function self:get_tile(x, y)
+	if (x < 0 or x >= 40 or y < 0 or y >= 30) then
+		return 0
+	end
+
 	return roomdata_get(roomx, roomy, x, y)
 end
 

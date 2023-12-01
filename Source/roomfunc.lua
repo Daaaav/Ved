@@ -2444,6 +2444,10 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 	end
 
 	if just_one_tile then
+		if tx < 0 or tx > 39 or ty < 0 or ty > 29 then
+			error("Attempt to roomdata_get tile " .. tx .. "," .. ty .. ", which is out of room bounds")
+		end
+
 		rx = rx % limit.mapwidth
 		ry = ry + math.floor( (ty+distortion) / 30 )
 		ty = (ty+distortion) % 30
