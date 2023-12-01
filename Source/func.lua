@@ -898,6 +898,8 @@ function switchtileset()
 	)
 	finish_undo("TILESET")
 
+	autotiling:make_autotiling_base()
+
 	autocorrectroom() -- this already checks if automatic mode is on
 
 	tilespicker_page = 0
@@ -934,6 +936,8 @@ function switchtilecol()
 		}
 	)
 	finish_undo("TILECOL")
+
+	autotiling:make_autotiling_base()
 
 	autocorrectroom() -- this already checks if automatic mode is on
 end
