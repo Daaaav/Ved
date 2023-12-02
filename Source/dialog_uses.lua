@@ -28,6 +28,7 @@ function dialog.form.save_make()
 	return {
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
+		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
 		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
 		{"zip", 0, 12, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
 		{"", 2, 12, 46, L.ZIP_SAVE_AS, DF.LABEL},
@@ -371,7 +372,7 @@ end
 function dialog.callback.surequit(button)
 	if button == DB.SAVE then
 		dialog.create(
-			L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+			L.ENTERNAMESAVE, DBS.OKCANCEL,
 			dialog.callback.savequit, nil, dialog.form.save_make(), nil, "quit"
 		)
 	elseif button == DB.DISCARD then
@@ -383,7 +384,7 @@ end
 function dialog.callback.surenewlevel(button)
 	if button == DB.SAVE then
 		dialog.create(
-			L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+			L.ENTERNAMESAVE, DBS.OKCANCEL,
 			dialog.callback.savenewlevel, nil, dialog.form.save_make(), nil
 		)
 	elseif button == DB.DISCARD then
@@ -394,7 +395,7 @@ end
 function dialog.callback.sureopenlevel(button, fields)
 	if button == DB.SAVE then
 		dialog.create(
-			L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+			L.ENTERNAMESAVE, DBS.OKCANCEL,
 			dialog.callback.saveopenlevel,
 			nil,
 			dialog.form.hidden_make({levelname=fields.levelname}, dialog.form.save_make()),

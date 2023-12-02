@@ -691,7 +691,7 @@ return function()
 			--tostate(8)
 			editingroomname = false
 			dialog.create(
-				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+				L.ENTERNAMESAVE, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make()
 			)
 			mousepressed = true

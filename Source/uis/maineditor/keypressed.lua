@@ -345,7 +345,7 @@ return function(key)
 			end
 		else
 			dialog.create(
-				L.ENTERNAMESAVE .. "\n\n\n" .. L.ENTERLONGOPTNAME, DBS.OKCANCEL,
+				L.ENTERNAMESAVE, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make()
 			)
 		end
