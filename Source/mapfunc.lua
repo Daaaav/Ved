@@ -262,11 +262,7 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 				end
 			end,
 			nil, nil,
-			function(button)
-				if button == L.VIEWIMAGE then
-					return true
-				end
-			end
+			dialog.callback.noclose_on_make(L.VIEWIMAGE)
 		)
 
 		collectgarbage("collect")

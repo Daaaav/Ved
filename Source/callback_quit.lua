@@ -12,7 +12,7 @@ function love.quit()
 		dialog.create(
 			L.SUREQUITNEW, DBS.SAVEDISCARDCANCEL,
 			dialog.callback.surequit, nil, nil,
-			dialog.callback.noclose_on.save, "quit"
+			dialog.callback.noclose_on_make(DB.SAVE), "quit"
 		)
 
 		return true

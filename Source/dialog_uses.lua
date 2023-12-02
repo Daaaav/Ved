@@ -361,21 +361,10 @@ dialog.form.simplename = {
 }
 
 dialog.callback = {}
-dialog.callback.noclose_on = {}
 
-function dialog.callback.noclose_on.save(button)
-	if button == DB.SAVE then
-		return true
-	end
-end
-function dialog.callback.noclose_on.apply(button)
-	if button == DB.APPLY then
-		return true
-	end
-end
-function dialog.callback.noclose_on_advanced(button)
-	if button == DB.ADVANCED then
-		return true
+function dialog.callback.noclose_on_make(match_button)
+	return function(actual_button)
+		return actual_button == match_button
 	end
 end
 
@@ -498,11 +487,7 @@ function dialog.callback.zip_level(button, fields)
 			end,
 			filename,
 			nil,
-			function(button2)
-				if button2 == L.OPENFOLDER then
-					return true
-				end
-			end
+			dialog.callback.noclose_on_make(L.OPENFOLDER)
 		)
 	end
 end

@@ -13,7 +13,7 @@ return function(key)
 			dialog.create(
 				L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
 				dialog.callback.surenewlevel, nil, nil,
-				dialog.callback.noclose_on.save
+				dialog.callback.noclose_on_make(DB.SAVE)
 			)
 		else
 			triggernewlevel()

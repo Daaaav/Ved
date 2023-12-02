@@ -675,7 +675,7 @@ return function()
 				dialog.create(
 					L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
 					dialog.callback.surenewlevel, nil, nil,
-					dialog.callback.noclose_on.save
+					dialog.callback.noclose_on_make(DB.SAVE)
 				)
 			else
 				triggernewlevel()
@@ -722,7 +722,7 @@ return function()
 					dialog.callback.leveloptions,
 					L.LEVELOPTIONS,
 					dialog.form.leveloptions_make(),
-					dialog.callback.noclose_on_advanced
+					dialog.callback.noclose_on_make(DB.ADVANCED)
 				)
 				editingroomname = false
 			else

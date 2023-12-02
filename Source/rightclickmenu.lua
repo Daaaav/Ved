@@ -105,7 +105,7 @@ function rightclickmenu.handler(RCMreturn)
 					dialog.callback.rawentityproperties,
 					(allowdebug and "[ID: " .. tonumber(entdetails[3]) .. "] (do not rely on the ID)" or ""),
 					dialog.form.rawentityproperties_make(),
-					dialog.callback.noclose_on.apply
+					dialog.callback.noclose_on_make(DB.APPLY)
 				)
 			elseif tonumber(entdetails[2]) == 1 then
 				-- Enemy

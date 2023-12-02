@@ -16,7 +16,7 @@ function love.filedropped(file)
 				dialog.callback.sureopenlevel,
 				nil,
 				dialog.form.hidden_make({levelname=levelname}),
-				dialog.callback.noclose_on.save
+				dialog.callback.noclose_on_make(DB.SAVE)
 			)
 		else
 			state6load(levelname)
