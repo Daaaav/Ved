@@ -28,8 +28,10 @@ function dialog.form.save_make()
 	return {
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
-		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
-		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
+		{"", 0, 4, 46, L.ENTERLONGOPTNAME, DF.LABEL},
+		{"title", 0, 5, 20, metadata.Title, DF.TEXT},
+		{"", 0, 6, 46, L.OPTBY, DF.LABEL},
+		{"creator", 0, 7, 37, metadata.Creator, DF.TEXT},
 		{"zip", 0, 12, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
 		{"", 2, 12, 46, L.ZIP_SAVE_AS, DF.LABEL},
 	}
@@ -408,21 +410,34 @@ end
 
 function dialog.callback.save(button, fields)
 	if button == DB.OK then
-		-- Save the level with this name. But first apply the title!
-		local oldtitle = metadata.Title
+		-- Save the level with this name. But first apply the title/creator!
+		local old_title = metadata.Title
 		metadata.Title = fields.title
+		local old_creator = metadata.Creator
+		metadata.Creator = fields.creator
 
-		if metadata.Title ~= oldtitle then
-			table.insert(undobuffer, {undotype = "metadata", changedmetadata = {
-						{
-							key = "Title",
-							oldvalue = oldtitle,
-							newvalue = metadata.Title
-						}
-					}
+		local changed = {}
+
+		if metadata.Title ~= old_title then
+			table.insert(changed, {
+					key = "Title",
+					oldvalue = old_title,
+					newvalue = metadata.Title
 				}
 			)
-			finish_undo("TITLE WHEN SAVING")
+		end
+		if metadata.Creator ~= old_creator then
+			table.insert(changed, {
+					key = "Creator",
+					oldvalue = old_creator,
+					newvalue = metadata.Creator
+				}
+			)
+		end
+
+		if #changed > 0 then
+			table.insert(undobuffer, {undotype = "metadata", changedmetadata = changed})
+			finish_undo("TITLE/CREATOR WHEN SAVING")
 		end
 
 		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
