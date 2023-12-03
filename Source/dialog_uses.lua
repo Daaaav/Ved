@@ -28,12 +28,12 @@ function dialog.form.save_make()
 	return {
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
-		{"", 0, 4, 46, L.ENTERLONGOPTNAME, DF.LABEL},
-		{"title", 0, 5, 20, metadata.Title, DF.TEXT},
-		{"", 0, 6, 46, L.OPTBY, DF.LABEL},
-		{"creator", 0, 7, 37, metadata.Creator, DF.TEXT},
-		{"zip", 0, 12, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
-		{"", 2, 12, 46, L.ZIP_SAVE_AS, DF.LABEL},
+		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
+		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
+		{"", 0, 5, 46, L.OPTBY, DF.LABEL},
+		{"creator", 0, 6, 37, metadata.Creator, DF.TEXT},
+		{"zip", 0, 9, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
+		{"", 2, 9, 46, L.ZIP_SAVE_AS, DF.LABEL},
 	}
 end
 
@@ -100,11 +100,11 @@ function dialog.form.exportmap_make()
 		},
 		{"", 0, 3, 40, L.TOPLEFT, DF.LABEL},
 		{"", wh_pos, 3, 40, L.WIDTHHEIGHT, DF.LABEL},
-		{"x1", 0, 4, 3, co},
-		{"", 3, 4, 1, ",", DF.LABEL},
-		{"y1", 4, 4, 3, co},
-		{"w", wh_pos, 4, 3, metadata.mapwidth},
-		{"h", wh_pos+4, 4, 3, metadata.mapheight},
+		{"x1", 0, 4, 4, co},
+		{"", 4, 4, 1, ",", DF.LABEL},
+		{"y1", 5, 4, 4, co},
+		{"w", wh_pos, 4, 4, metadata.mapwidth},
+		{"h", wh_pos+5, 4, 4, metadata.mapheight},
 		{"", br_pos, 3, 40, L.BOTTOMRIGHT, DF.LABEL},
 		{
 			"bottomright_label", br_pos, 4, 40,
@@ -113,10 +113,10 @@ function dialog.form.exportmap_make()
 				return x2 .. "," .. y2
 			end, DF.LABEL
 		},
-		{"transparentbg", 0, 7, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},
-		{"", 2, 7, 40, L.TRANSPARENTMAPBG, DF.LABEL},
-		{"keepdialogopen", 0, 15, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, DF.CHECKBOX},
-		{"", 2, 15, 40, L.KEEPDIALOGOPEN, DF.LABEL},
+		{"transparentbg", 0, 6, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},
+		{"", 2, 6, 40, L.TRANSPARENTMAPBG, DF.LABEL},
+		{"keepdialogopen", 0, 11, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, DF.CHECKBOX},
+		{"", 2, 11, 40, L.KEEPDIALOGOPEN, DF.LABEL},
 	}
 end
 
@@ -124,7 +124,7 @@ function dialog.form.rawentityproperties_make()
 	local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6"}
 	local form = {}
 
-	local row, col = 3, 0
+	local row, col = 2, 0
 	for k,v in pairs(entitypropkeys) do
 		if v == "p1" then
 			row = row+1
@@ -191,12 +191,9 @@ function dialog.form.leveloptions_make()
 		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT},
 		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT},
 		{"Desc3", 8, 6, 40, metadata.Desc3, DF.TEXT},
-		{"", 0, 8, 8, L.OPTSIZE, DF.LABEL},
-		{"mapwidth", 8, 8, 3, metadata.mapwidth, DF.TEXT},
-		{"mapheight", 12, 8, 3, metadata.mapheight, DF.TEXT},
-		{"", 0, 10, 8, L.OPTMUSIC, DF.LABEL},
+		{"", 0, 8, 8, L.OPTMUSIC, DF.LABEL},
 		{
-			"levmusic_page", 8, 10, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,
+			"levmusic_page", 8, 8, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,
 			function(picked, _, _, dialog_obj)
 				local page_start = music_page_vk[picked]
 
@@ -212,7 +209,7 @@ function dialog.form.leveloptions_make()
 			end
 		},
 		{
-			"levmusic", 17, 10, 30, metadata.levmusic, DF.DROPDOWN, main_music_list, main_music_kv,
+			"levmusic", 17, 8, 30, metadata.levmusic, DF.DROPDOWN, main_music_list, main_music_kv,
 			function(picked, _, menuitemslabel)
 				for k,v in pairs(menuitemslabel) do
 					if picked == v then
@@ -222,6 +219,9 @@ function dialog.form.leveloptions_make()
 				return 0
 			end
 		},
+		{"", 0, 10, 8, L.OPTSIZE, DF.LABEL},
+		{"mapwidth", 8, 10, 4, metadata.mapwidth, DF.TEXT},
+		{"mapheight", 13, 10, 4, metadata.mapheight, DF.TEXT},
 	}
 end
 
@@ -267,19 +267,19 @@ function dialog.form.musicfilemetadata_make(file_metadata)
 		{"artist", 0, 4, 32, artist, DF.TEXT},
 		{"", 0, 6, 40, L.MUSICNOTES, DF.LABEL},
 		{"notes", 0, 7, 47, notes, DF.TEXT},
-		{"", 0, 15, 30, L.MUSICEXPORTEDON .. "\n" .. format_date(export_time), DF.LABEL}
+		{"", 0, 10, 30, L.MUSICEXPORTEDON .. "\n" .. format_date(export_time), DF.LABEL}
 	}
 end
 
 function dialog.form.savevvvvvvmusic_make(startfolder, defaultname)
-	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 9)
-	table.insert(form, {"savemetadata", 0, 13, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
-	table.insert(form, {"", 2, 13, 40, L.SAVEMETADATA, DF.LABEL})
+	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 8)
+	table.insert(form, {"savemetadata", 0, 10, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
+	table.insert(form, {"", 2, 10, 40, L.SAVEMETADATA, DF.LABEL})
 	return form
 end
 
 function dialog.form.zip_level_make(startfolder, defaultname)
-	return dialog.form.files_make(startfolder, defaultname, ".zip", true, 11)
+	return dialog.form.files_make(startfolder, defaultname, ".zip", true, 8)
 end
 
 function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
@@ -298,10 +298,10 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 
 	if filter ~= dirsep then
 		table.insert(form,
-			{"", 0, yoff+2+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
+			{"", 0, yoff+1+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
 		)
 		table.insert(form,
-			{"name", len_namelabel, yoff+2+list_height, 47-len_namelabel, defaultname, DF.TEXT}
+			{"name", len_namelabel, yoff+1+list_height, 47-len_namelabel, defaultname, DF.TEXT}
 		)
 	end
 	if filter ~= "" then
@@ -311,7 +311,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		else
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
-		table.insert(form, {"dofilter", 0, 15, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
+		table.insert(form, {"dofilter", 0, 11, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
 						if v[DFP.KEY] == "folder" then
@@ -333,7 +333,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 				end
 			}
 		)
-		table.insert(form, {"", 2, 15, 40, filtertext, DF.LABEL})
+		table.insert(form, {"", 2, 11, 40, filtertext, DF.LABEL})
 	end
 
 	return form

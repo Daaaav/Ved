@@ -39,7 +39,7 @@ return {
 										DBS.OKCANCEL,
 										dialog.callback.customvvvvvvdir,
 										L.CUSTOMVVVVVVDIRECTORY,
-										dialog.form.files_make(start, "", dirsep, true, 12)
+										dialog.form.files_make(start, "", dirsep, true, 9)
 									)
 								end,
 								nil, nil,

@@ -74,7 +74,7 @@ function playtesting_ask_path_manual(target, continue_playtesting)
 	if love.system.getOS() == "Windows" then
 		ext = ".exe"
 	end
-	local files = dialog.form.files_make(userprofile, "", ext, true, 9, 2)
+	local files = dialog.form.files_make(userprofile, "", ext, true, 6, 2)
 	dialog.create(
 		playtesting_get_vvvvvv_message(target),
 		DBS.OKCANCEL,

@@ -1908,7 +1908,7 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 					end
 				end
 			elseif direction == "d" then
-				local upperbound = (#topdialog.fields[k][DFP.FILES_MENUITEMS])*12-8*topdialog.fields[k][DFP.FILES_LIST_HEIGHT]
+				local upperbound = (#topdialog.fields[k][DFP.FILES_MENUITEMS])*12-12*topdialog.fields[k][DFP.FILES_LIST_HEIGHT]
 				if mkinput == "end" and not cfistext then
 					fieldscroll = math.min(-upperbound, 0)
 				else
@@ -3077,7 +3077,7 @@ function assets_musicloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.loadvvvvvvmusic,
 		L.LOADMUSICNAME,
-		dialog.form.files_make(musiceditorfolder, "", ".vvv", true, 11)
+		dialog.form.files_make(musiceditorfolder, "", ".vvv", true, 8)
 	)
 end
 
@@ -3092,7 +3092,7 @@ function assets_graphicsloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.openimage,
 		L.LOADIMAGE,
-		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 11)
+		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 8)
 	)
 end
 

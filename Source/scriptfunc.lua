@@ -1040,7 +1040,7 @@ function startscriptgotoline()
 		dialog.callback.scriptgotoline,
 		nil,
 		{
-			{"line", 0, 1, 5, ""}
+			{"line", 0, 1, 8, "", DF.TEXT}
 		},
 		dialog.callback.scriptgotoline_validate
 	)

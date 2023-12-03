@@ -109,7 +109,7 @@ return function()
 						langkeys(L.INSERTSONG, {m}),
 						dialog.form.hidden_make(
 							{song=m},
-							dialog.form.files_make(userprofile, "", ".ogg", true, 11)
+							dialog.form.files_make(userprofile, "", ".ogg", true, 8)
 						)
 					)
 				elseif can_remove and mouseon(musicx+48, 32+24*my, 16, 16) then

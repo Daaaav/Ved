@@ -42,7 +42,7 @@ return function()
 						local n_usages = return_used_flags(nil, nil, flgnum, usages)
 
 						dialog.create(
-							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n"
+							langkeys(L.NAMEFORFLAG, {flgnum}) .. "\n\n\n\n"
 							.. langkeys(L_PLU.FLAGUSAGES, {n_usages, table.concat(usages, ", ")}),
 							DBS.OKCANCEL,
 							dialog.callback.changeflagname,

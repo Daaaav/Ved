@@ -72,7 +72,7 @@ cDialog =
 	x = 16,
 	y = 16,
 	width = 400,
-	height = 150,
+	height = 162,
 	moving = false,
 	moved_from_wx = 100,
 	moved_from_wy = 100,
@@ -145,7 +145,7 @@ function cDialog:draw(topmost)
 	-- Text
 	self:setColor(0,0,0,255)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
-	ved_printf(self.text, self.x+10, self.y+self.windowani+8, self.width-20, "left")
+	ved_printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, "left")
 	love.graphics.setScissor()
 
 	-- Text boxes
@@ -167,18 +167,18 @@ function cDialog:draw(topmost)
 
 	if fieldactive and topmost then
 		active_x = self.x+10+active_x*8
-		active_y = self.y+self.windowani+10+active_y*8 + 1
+		active_y = self.y+self.windowani+10+active_y*12 + 1
 		if active_type == DF.RADIOS then
 			local tmp = {}
 			for k,v in pairs(active_dropdowns) do
 				tmp[k] = #v
 			end
 			active_w = math.max(unpack(tmp)) + 2
-			active_h = #active_dropdowns * 8
+			active_h = #active_dropdowns * 12
 		elseif active_type == DF.FILES then
-			active_h = active_listheight*8 + 8 + 4
+			active_h = active_listheight*12 + 8 + 4
 		else
-			active_h = 8
+			active_h = 12
 		end
 		active_w = active_w*8
 
@@ -427,7 +427,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 	end
 
 	local real_x = self.x+10+x*8
-	local real_y = self.y+self.windowani+10+y*8 + 1
+	local real_y = self.y+self.windowani+10+y*12 + 1
 	local real_w = w*8
 
 	if mode == DF.LABEL then
@@ -439,7 +439,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		else
 			textcontent = content
 		end
-		ved_printf(anythingbutnil(textcontent), real_x, real_y-1-2, real_w, "left")
+		ved_printf(anythingbutnil(textcontent), real_x, real_y-1-2+2, real_w, "left")
 		self:setColor(255,255,255,255)
 		return
 	end
@@ -448,12 +448,12 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 	if mode == DF.TEXT or mode == DF.DROPDOWN then
 		-- Text field or dropdown
-		if topmost and (active or mouseon(real_x, real_y-3, real_w, 8)) and window_active() then
+		if topmost and (active or mouseon(real_x, real_y-3, real_w, 12)) and window_active() then
 			self:setColor(255,255,255,255)
-			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
+			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 12)
 
 			if (active and love.keyboard.isDown("tab"))
-			or (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+			or (mouseon(real_x, real_y-3, real_w, 12) and love.mouse.isDown("l") and not mousepressed) then
 				if self.fields[self.currentfield] ~= nil and self.fields[self.currentfield][DFP.T] == DF.TEXT then
 					self.fields[self.currentfield][DFP.VALUE] = anythingbutnil(self.fields[self.currentfield][DFP.VALUE]) .. anythingbutnil(self.fields[self.currentfield][DFP.TEXT_CONTENT_R])
 					self.fields[self.currentfield][DFP.TEXT_CONTENT_R] = ""
@@ -461,7 +461,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				self.currentfield = n
 
 				if mode == DF.DROPDOWN and not RCMactive then
-					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+8, true) -- y+h
+					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+12, true) -- y+h
 
 					if love.mouse.isDown("l") then
 						mousepressed = true
@@ -470,36 +470,37 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 		else
 			self:setColor(255,255,255,192)
-			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 8)
+			love.graphics.rectangle("fill", real_x, real_y-3, real_w, 12)
 		end
 
 		self:setColor(0,0,0,255)
 
 		if mode == DF.TEXT then
-			love.graphics.setScissor(real_x, real_y-3, real_w, 8)
+			love.graphics.setScissor(real_x, real_y-3, real_w, 12)
 			if active then
 				ved_print(
 					anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)),
 					math.min(real_x, real_x+real_w-font8:getWidth(anythingbutnil(content) .. "_")),
-					real_y-3
+					real_y-3+2
 				)
 			else
-				ved_print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3)
+				ved_print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3+2)
 			end
 			love.graphics.setScissor()
 		elseif mode == DF.DROPDOWN then
 			if not menuitemslabel then
-				ved_print(anythingbutnil(content), real_x, real_y-3)
+				ved_print(anythingbutnil(content), real_x, real_y-3+2)
 			else
-				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3)
+				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3+2)
 			end
-			love.graphics.draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+2)
+			love.graphics.draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
 		end
 	elseif mode == DF.CHECKBOX then
 		-- Checkbox
-		self:hoverdraw(topmost, content and image.checkon or image.checkoff, real_x, real_y-3, real_w, 8)
+		-- FIXME the height is 10 here since the top left corner is the top left corner of the checkbox
+		self:hoverdraw(topmost, content and image.checkon or image.checkoff, real_x, real_y-3+2, real_w, 10)
 
-		if (mouseon(real_x, real_y-3, real_w, 8) and love.mouse.isDown("l") and not mousepressed) then
+		if (mouseon(real_x, real_y-3, real_w, 12) and love.mouse.isDown("l") and not mousepressed) then
 			self.currentfield = n
 
 			self.fields[n][DFP.VALUE] = not content
@@ -518,12 +519,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				selected = v == menuitemslabel[content]
 			end
 			real_w = 16+font8:getWidth(v)
-			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-11+k*8, real_w, 8)
+			-- FIXME same height 10 problem
+			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-11+k*12+2, real_w, 10)
 			self:setColor(0,0,0,255)
-			ved_print(v, real_x+16, real_y-10+k*8)
+			ved_print(v, real_x+16, real_y-10+k*12+2)
 			self:setColor(255,255,255,255)
 
-			if (mouseon(real_x, real_y-11+k*8, real_w, 8) and love.mouse.isDown("l") and not mousepressed) and not RCMactive then
+			if (mouseon(real_x, real_y-11+k*12, real_w, 12) and love.mouse.isDown("l") and not mousepressed) and not RCMactive then
 				self.currentfield = n
 
 				dialogs[#dialogs]:dropdown_onchange(key, v)
@@ -548,18 +550,18 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		end
 		love.graphics.setScissor(real_x+12, real_y-1, real_w-12, 8)
 		ved_print(toppath, real_x+real_w-font8:getWidth(toppath), real_y-1)
-		love.graphics.setScissor(real_x, real_y+9, real_w-16, 8*list_height)
+		love.graphics.setScissor(real_x, real_y+9, real_w-16, 12*list_height)
 		self:setColor(100,100,100,192)
 		--self:setColor(160,160,160,192)
 		--self:setColor(223,223,223,255)
-		love.graphics.rectangle("fill", real_x, real_y+9, real_w-16, 8*list_height)
+		love.graphics.rectangle("fill", real_x, real_y+9, real_w-16, 12*list_height)
 		self:setColor(0,0,0,255)
 		for k,v in pairs(menuitems) do
 			-- Only display this item if it will be visible
-			if k*12+listscroll-4 <= 8+8*list_height and k*12+listscroll-4 >= 0 then
+			if k*12+listscroll-4 <= 8+12*list_height and k*12+listscroll-4 >= 0 then
 				local row_y = real_y+1+k*12+listscroll-4
 				local selected = self:return_fields().name == v.name
-				local moused = (mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+9, real_w-16, 8*list_height) and window_active())
+				local moused = (mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+9, real_w-16, 12*list_height) and window_active())
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, row_y, real_w-16, 12)
@@ -595,13 +597,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 
 		-- Scrollbar
 		local newfraction = scrollbar(
-			real_x+real_w-16, real_y+9, 8*list_height, #menuitems*12,
-			(-listscroll)/((#menuitems*12)-(8*list_height)),
+			real_x+real_w-16, real_y+9, 12*list_height, #menuitems*12,
+			(-listscroll)/((#menuitems*12)-(12*list_height)),
 			self
 		)
 
 		if newfraction ~= nil then
-			self.fields[n][DFP.FILES_LISTSCROLL] = -(newfraction*((#menuitems*12)-(8*list_height)))
+			self.fields[n][DFP.FILES_LISTSCROLL] = -(newfraction*((#menuitems*12)-(12*list_height)))
 		end
 	end
 
@@ -694,10 +696,10 @@ function cDialog:get_on_scrollable_field(x, y, viakeyboard)
 	local scrollable_types = {DF.FILES}
 	local scrollable_fields = {}
 	for k,v in pairs(self.fields) do
-		local v_x, v_y = self.x+10+v[DFP.X]*8, self.y+self.windowani+10+v[DFP.Y]*8+10
+		local v_x, v_y = self.x+10+v[DFP.X]*8, self.y+self.windowani+10+v[DFP.Y]*12+10
 		if table.contains(scrollable_types, v[DFP.T]) then
 			if (x >= v_x and x < v_x+v[DFP.W]*8
-			and y >= v_y and y < v_y+8*v[DFP.FILES_LIST_HEIGHT])
+			and y >= v_y and y < v_y+12*v[DFP.FILES_LIST_HEIGHT])
 			or (viakeyboard and self.fields[self.currentfield] == k) then
 				if viakeyboard then
 					self.showtabrect = true

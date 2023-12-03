@@ -393,8 +393,9 @@ function love.keypressed(key)
 
 			local files = dialogs[#dialogs].fields[cf][DFP.FILES_MENUITEMS]
 			local file = 0
+			local filled_name = dialogs[#dialogs]:return_fields().name
 			for k,v in pairs(files) do
-				if v.name == dialogs[#dialogs]:return_fields().name then
+				if v.name == filled_name then
 					file = k
 					break
 				end
@@ -406,7 +407,7 @@ function love.keypressed(key)
 			elseif key == "up" or key == "kp8" or key == "down" or key == "kp2" then
 				local menuitems, folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on = unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf])
 				local real_x = dialogs[#dialogs].x+10+dialogs[#dialogs].fields[cf][DFP.X]*8
-				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][DFP.Y]*8 + 1
+				local real_y = dialogs[#dialogs].y+dialogs[#dialogs].windowani+10+dialogs[#dialogs].fields[cf][DFP.Y]*12 + 1
 				local real_w = dialogs[#dialogs].fields[cf][DFP.W]*8
 
 				if key == "up" or key == "kp8" then
@@ -424,10 +425,10 @@ function love.keypressed(key)
 
 				dialogs[#dialogs]:set_field("name", anythingbutnil(files[file]).name)
 
-				if 8*file - 8 < math.abs(listscroll) then
-					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -8*file + 8
-				elseif 8*file - 8 > math.abs(listscroll) + 8*list_height - 8 then
-					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -8*file + 8*list_height
+				if 12*file - 12 < math.abs(listscroll) then
+					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -12*file + 12
+				elseif 12*file - 12 > math.abs(listscroll) + 12*list_height - 12 then
+					dialogs[#dialogs].fields[cf][DFP.FILES_LISTSCROLL] = -12*file + 12*list_height
 				end
 			elseif (key == " " or key == "space") and files[file] ~= nil and files[file].isdir then
 				dialogs[#dialogs]:cd(files[file].name, cf, dialogs[#dialogs].fields[cf][DFP.VALUE], unpack(dialogs[#dialogs].fields[cf], 7, #dialogs[#dialogs].fields[cf]))
