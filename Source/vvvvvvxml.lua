@@ -41,11 +41,16 @@ function loadlevelmetadata(path)
 		thismetadata[v] = unxmlspecialchars(m)
 	end
 
-	-- This one is optional.
+	-- These ones are optional.
 	thismetadata.onewaycol_override = false
+	thismetadata.font = "font"
 	local m = xmetadata:match("<onewaycol_override>(.*)</onewaycol_override>")
 	if m ~= nil then
 		thismetadata.onewaycol_override = m ~= "0"
+	end
+	m = xmetadata:match("<font>(.*)</font>")
+	if m ~= nil then
+		thismetadata.font = m
 	end
 
 	-- But we'll have room size and music also move in with the metadata.
@@ -654,10 +659,13 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		savethis = savethis:gsub("%$" .. v:upper() .. "%$", newthis)
 	end
 
-	-- Special case of metadata that may or may not be stored...
+	-- Special cases of metadata that may or may not be stored...
 	local optional_metadata = ""
 	if thismetadata.onewaycol_override then
 		optional_metadata = optional_metadata .. "            <onewaycol_override>1</onewaycol_override>\n"
+	end
+	if thismetadata.font ~= "" and thismetadata.font ~= "font" then
+		optional_metadata = optional_metadata .. "            <font>" .. xmlspecialchars(thismetadata.font) .. "</font>\n"
 	end
 	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", optional_metadata)
 
@@ -930,6 +938,7 @@ function createblanklevel(lvwidth, lvheight)
 		Desc1 = "", Desc2 = "", Desc3 = "",
 		website = "",
 		onewaycol_override = false,
+		font = "font",
 		mapwidth = lvwidth,
 		mapheight = lvheight,
 		levmusic = 0,
