@@ -20,5 +20,5 @@ $EDENTITIES$
         <levelMetaData>
 $EDLEVELCLASSES$        </levelMetaData>
         <script>$SCRIPT$</script>
-    </Data>
+$TEXTBOXCOLOURS$$SPECIALROOMNAMES$    </Data>
 </MapData>

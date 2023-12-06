@@ -548,6 +548,12 @@ function loadlevel(path)
 		end
 	end
 
+	-- Some things that for now we'll have to hardcode carrying over...
+	-- If not found, they'll be nil, and we won't insert them later.
+	cons("Loading possible TextboxColours and SpecialRoomnames...")
+	thisextra.textboxcolors_xml = contents:match("<TextboxColours>(.*)</TextboxColours>")
+	thisextra.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
+
 	cons("Done loading!")
 
 	-- As many of the integrity checks as possible here
@@ -632,7 +638,7 @@ end
 
 
 -- Load a template that we'll need for saving...
-vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
+level_template = love.filesystem.read("template.vvvvvv") -- updated 1.11.0
 
 function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
@@ -650,7 +656,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
-	local savethis = vvvvvvxmltemplate
+	local savethis = level_template
 
 	cons("Placing metadata...")
 	for k,v in pairs(metadataitems) do
@@ -667,7 +673,7 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	if thismetadata.font ~= "" and thismetadata.font ~= "font" then
 		optional_metadata = optional_metadata .. "            <font>" .. xmlspecialchars(thismetadata.font) .. "</font>\n"
 	end
-	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", optional_metadata)
+	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", (optional_metadata:gsub("%%", "%%%%")))
 
 	-- Hold on for a second, we need the map size and music too!
 	savethis = savethis
@@ -873,6 +879,19 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	savethis = savethis:gsub("%$SCRIPT%$", (table.concat(allallscripts, ""):gsub("%%", "%%%%")))
 
+	-- Now all the 2.4 stuff...
+	cons("Assembling possible TextboxColours and SpecialRoomnames...")
+	local replace_textboxcolors = ""
+	local replace_specialroomnames = ""
+	if thisextra.textboxcolors_xml ~= nil then
+		replace_textboxcolors = "        <TextboxColours>" .. thisextra.textboxcolors_xml .. "</TextboxColours>\n"
+	end
+	if thisextra.specialroomnames_xml ~= nil then
+		replace_specialroomnames = "        <SpecialRoomnames>" .. thisextra.specialroomnames_xml .. "</SpecialRoomnames>\n"
+	end
+	savethis = savethis:gsub("%$TEXTBOXCOLOURS%$", (replace_textboxcolors:gsub("%%", "%%%%")))
+	savethis = savethis:gsub("%$SPECIALROOMNAMES%$", (replace_specialroomnames:gsub("%%", "%%%%")))
+
 	-- Alright, let's save!
 	cons("Saving file...")
 	local success, iferrmsg
@@ -987,6 +1006,9 @@ function createblanklevel(lvwidth, lvheight)
 
 	-- Extra. Since we start with a VVVVVV level, this is empty.
 	thisextra = {}
+	-- Except... now that we have 2.4, just for completeness...
+	thisextra.textboxcolors_xml = nil
+	thisextra.specialroomnames_xml = nil
 
 	cons("Done loading!")
 
