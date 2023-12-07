@@ -200,7 +200,7 @@ return function()
 							link = vn
 						end
 
-						if startinghash then
+						if startinghash and link ~= nil then
 							link = "#" .. link
 						end
 					end
