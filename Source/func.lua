@@ -3043,12 +3043,16 @@ function showhotkey(hotkey, x, y, align, topmost, dialog_obj)
 end
 
 function assets_musicsavedialog()
+	local default_filename = musiceditorfile
+	if default_filename == "" then
+		default_filename = "vvvvvvmusic.vvv"
+	end
 	dialog.create(
 		"",
 		DBS.SAVECANCEL,
 		dialog.callback.savevvvvvvmusic,
 		L.SAVEMUSICNAME,
-		dialog.form.savevvvvvvmusic_make(musiceditorfolder, musiceditorfile)
+		dialog.form.savevvvvvvmusic_make(musiceditorfolder, default_filename)
 	)
 end
 
