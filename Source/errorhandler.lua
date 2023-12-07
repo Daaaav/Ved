@@ -287,7 +287,11 @@ function ved_showerror(msg)
 		love.graphics.clear(love.graphics.getBackgroundColor())
 		love.graphics.setColor(255,255,255,64)
 		if crashscreenshot ~= nil then
-			love.graphics.draw(crashscreenshot, 0, 0, 0, s.pscale^-1)
+			local scale = 1
+			if s ~= nil and s.pscale ~= nil then
+				scale = s.pscale
+			end
+			love.graphics.draw(crashscreenshot, 0, 0, 0, scale^-1)
 		end
 
 		-- Title
