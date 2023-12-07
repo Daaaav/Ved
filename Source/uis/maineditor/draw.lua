@@ -133,9 +133,9 @@ return function()
 		if temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize then
 			-- Oh wait, we're displaying a message as room name!
 			if editingbounds < 0 then
-				temporaryroomname = L.BOUNDSTOPLEFT
+				temporaryroomname = L.BOUNDSFIRST
 			elseif editingbounds > 0 then
-				temporaryroomname = L.BOUNDSBOTTOMRIGHT
+				temporaryroomname = L.BOUNDSLAST
 			elseif editingcustomsize then
 				if customsizemode <= 2 then
 					local dispx, dispy = "--", "--"

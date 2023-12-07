@@ -89,9 +89,6 @@ ROOMPASTED = "Комната вставлена из буфера обмена",
 METADATAUNDONE = "Настройки уровня отменены",
 METADATAREDONE = "Настройки уровня восстановлены",
 
-BOUNDSTOPLEFT = "Кликните на левый верхний угол границы",
-BOUNDSBOTTOMRIGHT = "Кликните на правый нижний угол границы",
-
 BOUNDSFIRST = "Click the first corner of the bounds", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Click the last corner", -- Old string: Click the bottom right corner
 

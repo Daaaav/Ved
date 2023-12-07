@@ -105,9 +105,6 @@ ROOMPASTED = "Salle collée",
 METADATAUNDONE = "Options de niveaux remises en arrière",
 METADATAREDONE = "Options de niveaux rétablies",
 
-BOUNDSTOPLEFT = "Sélectionnez le coin en haut à gauche de la zone de sélection",
-BOUNDSBOTTOMRIGHT = "Sélectionnez le coin en bas à droite",
-
 BOUNDSFIRST = "Sélectionnez le premier coin de la zone", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Sélectionnez le second coin", -- Old string: Click the bottom right corner
 

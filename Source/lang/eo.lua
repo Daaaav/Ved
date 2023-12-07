@@ -113,9 +113,6 @@ ROOMPASTED = "Ĉambro algluiĝis",
 METADATAUNDONE = "Nivelagordoj malfariĝis",
 METADATAREDONE = "Nivelagordoj refariĝis",
 
-BOUNDSTOPLEFT = "Alklaku la supra-maldekstran angulon de la limo",
-BOUNDSBOTTOMRIGHT = "Alklaku la malsupra-dekstran angulon",
-
 BOUNDSFIRST = "Alklaku la unuan angulon de la limo", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Alklaku la lastan angulon", -- Old string: Click the bottom right corner
 

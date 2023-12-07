@@ -87,9 +87,6 @@ ROOMPASTED = "Pasted room",
 METADATAUNDONE = "Level options undone",
 METADATAREDONE = "Level options redone",
 
-BOUNDSTOPLEFT = "Click the top left corner of the bounds",
-BOUNDSBOTTOMRIGHT = "Click the bottom right corner",
-
 BOUNDSFIRST = "Click the first corner of the bounds", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Click the last corner", -- Old string: Click the bottom right corner
 

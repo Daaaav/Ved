@@ -101,9 +101,6 @@ ROOMPASTED = "Habitacion pegada",
 METADATAUNDONE = "Opcion de niveles deshecha",
 METADATAREDONE = "Opcion de niveles rehecha",
 
-BOUNDSTOPLEFT = "Haz click en la parte superior izquierda de los limites",
-BOUNDSBOTTOMRIGHT = "Haz click en la parte inferior derecha de los limites",
-
 BOUNDSFIRST = "Click the first corner of the bounds", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Click the last corner", -- Old string: Click the bottom right corner
 

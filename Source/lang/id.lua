@@ -89,9 +89,6 @@ ROOMPASTED = "Ruang ditempel",
 METADATAUNDONE = "Opsi level diurung",
 METADATAREDONE = "Opsi level diulang",
 
-BOUNDSTOPLEFT = "Klik sudut kiri atas batas",
-BOUNDSBOTTOMRIGHT = "Klik pojok kanan bawah",
-
 BOUNDSFIRST = "Klik sudut pertama batas", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Klik sudut terakhir", -- Old string: Click the bottom right corner
 

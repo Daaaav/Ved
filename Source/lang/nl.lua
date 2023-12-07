@@ -99,9 +99,6 @@ ROOMPASTED = "Kamer geplakt",
 METADATAUNDONE = "Levelopties ongedaan gemaakt",
 METADATAREDONE = "Levelopties opnieuw gewijzigd",
 
-BOUNDSTOPLEFT = "Klik op de linkerbovenhoek van de begrenzing",
-BOUNDSBOTTOMRIGHT = "Klik op de rechteronderhoek",
-
 BOUNDSFIRST = "Klik op de eerste hoek van de begrenzing", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Klik op de laatste hoek", -- Old string: Click the bottom right corner
 

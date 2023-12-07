@@ -101,9 +101,6 @@ ROOMPASTED = "Raum eingefügt",
 METADATAUNDONE = "Leveloptionen wurden rückgängig gemacht",
 METADATAREDONE = "Leveloptionen wiederholt",
 
-BOUNDSTOPLEFT = "Klicke auf die obere linke Ecke der Begrenzung",
-BOUNDSBOTTOMRIGHT = "Klicke auf die untere rechte Ecke",
-
 BOUNDSFIRST = "Klicke auf die erste Ecke der Begrenzung", -- Old string: Click the top left corner of the bounds
 BOUNDSLAST = "Klicke auf die letzte Ecke", -- Old string: Click the bottom right corner
 
