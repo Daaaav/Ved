@@ -185,17 +185,6 @@ function startinput()
 	takinginput = true
 end
 
-function startinputonce()
-	if not takinginput then
-		cons("Input started (once)")
-		input = ""
-		input_r = ""
-		__ = "_"
-		cursorflashtime = 0
-		takinginput = true
-	end
-end
-
 function stopinput()
 	cons("Input stopped.")
 	-- Do not clear input here, because then we can't use it anymore after using stopinput(). Output will now be locked.
