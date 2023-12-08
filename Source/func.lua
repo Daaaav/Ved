@@ -1378,7 +1378,7 @@ function state6load(levelname)
 				tile_batch_texture_needs_update = true
 			end
 			if state == 6 then
-				newinputsys.close("levelname")
+				levelslist_close_input()
 			end
 			tostate(1)
 		end
@@ -1392,6 +1392,11 @@ function state6load(levelname)
 			compare_level_differences(levelname)
 		end
 	end
+end
+
+function levelslist_close_input()
+	levelslist_old_input = inputs.levelname
+	newinputsys.close("levelname")
 end
 
 function compare_level_differences(second_level_name)

@@ -380,14 +380,14 @@ return function()
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then -- -96
 			if not state6old1 then
 				-- New
-				newinputsys.close("levelname")
+				levelslist_close_input()
 				triggernewlevel()
 				-- Make sure we don't immediately click the next button
 				nodialog = false
 				mousepressed = true
 			else
 				-- Return to editor.
-				newinputsys.close("levelname")
+				levelslist_close_input()
 				tostate(1, true)
 				mousepressed = true
 			end

@@ -25,7 +25,11 @@ return function(special_mode)
 	input = ""
 	input_r = ""
 
-	newinputsys.create(INPUT.ONELINE, "levelname")
+	if levelslist_old_input == nil then
+		levelslist_old_input = ""
+	end
+
+	newinputsys.create(INPUT.ONELINE, "levelname", levelslist_old_input)
 
 	--loadlevelsfolder()
 

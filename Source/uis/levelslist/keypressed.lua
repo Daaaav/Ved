@@ -4,7 +4,7 @@ return function(key)
 	if key == "n" and keyboard_eitherIsDown(ctrl) then
 		-- New level?
 		if not state6old1 then
-			newinputsys.close("levelname")
+			levelslist_close_input()
 			triggernewlevel()
 			-- Don't immediately trigger the dialog in state 1!
 			nodialog = false
@@ -39,7 +39,7 @@ return function(key)
 			tabselected = 0
 		else
 			if state6old1 then
-				newinputsys.close("levelname")
+				levelslist_close_input()
 				tostate(1, true)
 			end
 		end
