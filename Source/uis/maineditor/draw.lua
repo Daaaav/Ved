@@ -692,7 +692,7 @@ return function()
 			editingroomname = false
 			dialog.create(
 				L.ENTERNAMESAVE, DBS.OKCANCEL,
-				dialog.callback.save, nil, dialog.form.save_make()
+				dialog.callback.save, nil, dialog.form.save_make(true)
 			)
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-120, 40, 16, 16) then

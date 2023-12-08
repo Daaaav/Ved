@@ -346,7 +346,7 @@ return function(key)
 		else
 			dialog.create(
 				L.ENTERNAMESAVE, DBS.OKCANCEL,
-				dialog.callback.save, nil, dialog.form.save_make()
+				dialog.callback.save, nil, dialog.form.save_make(true)
 			)
 		end
 	elseif key == "l" then

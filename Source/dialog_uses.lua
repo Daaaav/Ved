@@ -24,17 +24,22 @@ end
 -- Some forms are tables directly, some are functions returning tables (those are prefixed _make).
 dialog.form = {}
 
-function dialog.form.save_make()
-	return {
+function dialog.form.save_make(show_zip)
+	local form = {
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
 		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
 		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
 		{"", 0, 5, 46, L.OPTBY, DF.LABEL},
 		{"creator", 0, 6, 37, metadata.Creator, DF.TEXT},
-		{"zip", 0, 9, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX},
-		{"", 2, 9, 46, L.ZIP_SAVE_AS, DF.LABEL},
 	}
+
+	if show_zip then
+		table.insert(form, {"zip", 0, 9, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX})
+		table.insert(form, {"", 2, 9, 46, L.ZIP_SAVE_AS, DF.LABEL})
+	end
+
+	return form
 end
 
 function dialog.form.simplename_make(default)
@@ -375,7 +380,7 @@ function dialog.callback.surequit(button)
 	if button == DB.SAVE then
 		dialog.create(
 			L.ENTERNAMESAVE, DBS.OKCANCEL,
-			dialog.callback.savequit, nil, dialog.form.save_make(), nil, "quit"
+			dialog.callback.savequit, nil, dialog.form.save_make(false), nil, "quit"
 		)
 	elseif button == DB.DISCARD then
 		no_more_quit_dialog = true
@@ -387,7 +392,7 @@ function dialog.callback.surenewlevel(button)
 	if button == DB.SAVE then
 		dialog.create(
 			L.ENTERNAMESAVE, DBS.OKCANCEL,
-			dialog.callback.savenewlevel, nil, dialog.form.save_make(), nil
+			dialog.callback.savenewlevel, nil, dialog.form.save_make(false), nil
 		)
 	elseif button == DB.DISCARD then
 		triggernewlevel()
@@ -400,7 +405,7 @@ function dialog.callback.sureopenlevel(button, fields)
 			L.ENTERNAMESAVE, DBS.OKCANCEL,
 			dialog.callback.saveopenlevel,
 			nil,
-			dialog.form.hidden_make({levelname=fields.levelname}, dialog.form.save_make()),
+			dialog.form.hidden_make({levelname=fields.levelname}, dialog.form.save_make(false)),
 			nil
 		)
 	elseif button == DB.DISCARD then
