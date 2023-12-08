@@ -25,9 +25,7 @@ function love.textinput(char)
 
 	-- Textual input isn't needed with a dialog on the screen, we have dialog fields
 	if takinginput and not dialog.is_open() then
-		-- Ugly, but at least won't need another global variable that appears here and there
-		if (state == 1) and not nodialog and editingroomname and (char:lower() == "e") then
-		elseif (state == 1) and holdingzvx then
+		if (state == 1) and holdingzvx then
 			-- TODO Remove at least this branch when tool overhaul, needed for upside down terminal
 			-- Just for grepping if holdingzvx doesn't do: selectedtool selectedsubtool
 		else

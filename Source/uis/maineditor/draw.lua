@@ -7,7 +7,7 @@ return function()
 
 	if tilespicker then
 		local displaytilenumbers, displaysolid
-		if nodialog and editingroomtext == 0 and not editingroomname then
+		if nodialog then
 			if love.keyboard.isDown("n") then
 				displaytilenumbers = true
 			end
@@ -163,30 +163,34 @@ return function()
 			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, 16 + extralines*16 + 4)
 			love.graphics.setColor(255,255,255,255)
 			ved_shadowprintf(temporaryroomname, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
-		elseif editingroomname then
-			-- We're editing this room name! If it doesn't fit, then just make it higher, we're editing it anyway
-			local text = input .. (__:sub(1,1) == "_" and __ or " " .. __:sub(2,-1))
-			local extralines = roomtext_extralines(text)
-
-			love.graphics.setColor(128,128,128,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16 - 4, 40*16, 16 + 4)
-			if extralines > 0 then
-				love.graphics.setColor(255,0,0,128)
-				love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, extralines*16 + 1)
+		elseif editingroomname or hasroomname then
+			local text
+			local bg_color
+			local bg_alpha
+			if editingroomname then
+				-- We're editing this room name!
+				text = inputs.roomname
+				bg_color = 128
+			else
+				text = levelmetadata_get(roomx, roomy).roomname
+				bg_color = 0
 			end
-			love.graphics.setColor(255,255,255,255)
-			ved_shadowprintf(text, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
-		elseif hasroomname then
-			-- Display it
-			local text = levelmetadata_get(roomx, roomy).roomname
-			local textx = (screenoffset+320)-font8:getWidth(text) -- We want double font size, /2. So, width of regular font.
+			if s.opaqueroomnamebackground then
+				bg_alpha = 255
+			else
+				bg_alpha = 128
+			end
+			local text_width = math.min(font8:getWidth(text)*2, 640)
+			local text_x = screenoffset + 320 - text_width/2
+			local text_y = 29*16 - 2
 
-			love.graphics.setColor(0,0,0,s.opaqueroomnamebackground and 255 or 128)
-			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
 			love.graphics.setScissor(screenoffset, 29*16-4, 40*16, 16+4)
+			love.graphics.setColor(bg_color, bg_color, bg_color, bg_alpha)
+			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
 			v6_setroomprintcol()
-			ved_shadowprint(text, textx, 29*16 -2, 2)
+			ved_shadowprint(text, text_x, text_y, 2)
 			love.graphics.setColor(255,255,255,255)
+			newinputsys.drawcas("roomname", text_x, text_y, 2)
 			love.graphics.setScissor()
 		end
 
@@ -197,7 +201,7 @@ return function()
 	end
 
 	-- Now display the cursor. If it's on the level
-	if nodialog and mouseon(screenoffset, 0, 639, 480) then
+	if nodialog and mouseon(screenoffset, 0, 639, 480) and not editingroomname and editingroomtext == 0 then
 		cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
 		cursory = math.floor(getlockablemouseY() / 16)
 
@@ -585,15 +589,20 @@ return function()
 		usethisbtn = image.playgraybtn_hq
 	end
 	hoverdraw(usethisbtn, love.graphics.getWidth()-128, 0, 32, 32)
-	_= not editingroomname and editingbounds == 0 and showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is after the side panels are darkened
 	hoverdraw(image.helpbtn, love.graphics.getWidth()-120+40, 40, 16, 16, 1)
-	_= not editingroomname and showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
 	hoverdraw(image.newbtn_hq, love.graphics.getWidth()-96, 0, 32, 32)
-	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
 	hoverdraw(image.loadbtn_hq, love.graphics.getWidth()-64, 0, 32, 32)
-	_= not editingroomname and showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
 	hoverdraw(image.savebtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
-	_= not editingroomname and showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
+	local show_hotkeys = not editingroomname and editingroomtext == 0
+	if show_hotkeys then
+		if editingbounds == 0 then
+			showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is later
+		end
+		showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
+		showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
+		showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
+		showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
+	end
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
@@ -613,23 +622,27 @@ return function()
 		love.graphics.setColor(255,255,255)
 	end
 
-	_= not editingroomname and showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
-	_= not editingroomname and showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
+	if show_hotkeys then
+		showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
+		showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
+	end
 
 	hoverdraw(image.cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(image.copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(image.pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
-	_= not editingroomname and showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
-	_= not editingroomname and showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
-	_= not editingroomname and showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
+	if show_hotkeys then
+		showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
+		showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
+		showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
+	end
 
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
-	rbutton((upperoptpage2 and (not editingroomname and {L.COMPARE, "cD"} or L.COMPARE) or (not editingroomname and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
-	rbutton((upperoptpage2 and L.STATS or (not editingroomname and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)
-	rbutton((upperoptpage2 and (not editingroomname and {L.LEVELNOTEPAD, "c/"} or L.LEVELNOTEPAD) or (not editingroomname and {L.SEARCH, "cF"} or L.SEARCH)), 4, 40, false, 20)
+	rbutton((upperoptpage2 and (show_hotkeys and {L.COMPARE, "cD"} or L.COMPARE) or (show_hotkeys and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
+	rbutton((upperoptpage2 and L.STATS or (show_hotkeys and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)
+	rbutton((upperoptpage2 and (show_hotkeys and {L.LEVELNOTEPAD, "c/"} or L.LEVELNOTEPAD) or (show_hotkeys and {L.SEARCH, "cF"} or L.SEARCH)), 4, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton({L.ASSETS, "cR"}, 5, 40, false, 20)
+		rbutton(show_hotkeys and {L.ASSETS, "cR"} or L.ASSETS, 5, 40, false, 20)
 	end
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
@@ -648,7 +661,7 @@ return function()
 	_= not voided_metadata and rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	_= not voided_metadata and rbutton(not editingroomname and {langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	_= not voided_metadata and rbutton(show_hotkeys and {langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	_= not voided_metadata and rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
@@ -670,7 +683,10 @@ return function()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-96, 0, 32, 32) then
 			-- New
-			editingroomname = false
+			cancel_editing_roomname()
+			if editingroomtext > 0 then
+				endeditingroomtext()
+			end
 			if has_unsaved_changes() then
 				dialog.create(
 					L.SURENEWLEVELNEW, DBS.SAVEDISCARDCANCEL,
@@ -683,13 +699,19 @@ return function()
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-64, 0, 32, 32) then
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
-			editingroomname = false
+			cancel_editing_roomname()
+			if editingroomtext > 0 then
+				endeditingroomtext()
+			end
 			tostate(6)
 			mousepressed = true
 		elseif mouseon(love.graphics.getWidth()-32, 0, 32, 32) then
 			-- Save
 			--tostate(8)
-			editingroomname = false
+			cancel_editing_roomname()
+			if editingroomtext > 0 then
+				endeditingroomtext()
+			end
 			dialog.create(
 				L.ENTERNAMESAVE, DBS.OKCANCEL,
 				dialog.callback.save, nil, dialog.form.save_make(true)
@@ -724,7 +746,6 @@ return function()
 					dialog.form.leveloptions_make(),
 					dialog.callback.noclose_on_make(DB.ADVANCED)
 				)
-				editingroomname = false
 			else
 				-- Ved options
 				tostate(13)
@@ -877,7 +898,6 @@ return function()
 				if trinkets == "" then
 					trinkets = L.NOTRINKETSINLEVEL
 				end
-				editingroomname = false
 				dialog.create(trinkets, nil, nil, L.LISTOFALLTRINKETS)
 			elseif onrbutton(-2, 164+4, true) and selectedtool == 16 then
 				-- List all crewmates
@@ -899,7 +919,6 @@ return function()
 				if crewmates == "" then
 					crewmates = L.NOCREWMATESINLEVEL
 				end
-				editingroomname = false
 				dialog.create(crewmates, nil, nil, L.LISTOFALLCREWMATES)
 			elseif onrbutton(-2, 164+4, true) and selectedtool == 17 then
 				-- Go to start point
@@ -931,7 +950,6 @@ return function()
 					{{"name", 0, 1, 5, ""}},
 					dialog.callback.platv_validate
 				)
-				editingroomname = false
 
 				mousepressed = true
 			end
@@ -1104,7 +1122,6 @@ return function()
 				end
 				radio_wrap(selected, love.graphics.getWidth()-(128-6), y+(19*k)+4, k, name, 96,
 					function(key)
-						editingroomname = false
 						if key == 1 then
 							-- Brush
 							tilespicker = false
@@ -1121,6 +1138,10 @@ return function()
 							customsizetile = nil
 						elseif key == 3 then
 							-- Tileset
+							cancel_editing_roomname()
+							if editingroomtext > 0 then
+								endeditingroomtext()
+							end
 							tilespicker = true
 							customsizemode = 1
 							customsizex = 0

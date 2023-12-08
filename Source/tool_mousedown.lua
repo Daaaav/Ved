@@ -2,10 +2,13 @@ function handle_tool_mousedown()
 	-- Handles general clicking on the canvas in the main editor, including all the tools, and placing down moved entities.
 	-- Excludes (right) clicking on entities, see handle_entity_mousedown() (entity_mousedown.lua) for that.
 
+	if editingroomname or editingroomtext > 0 then
+		return
+	end
+
 	if (love.mouse.isDown("l") or love.mouse.isDown("r")) and mouseon(screenoffset, 0, 639, 480)
 	and (not keyboard_eitherIsDown("alt") or movingentity > 0 or selectedsubtool[14] >= 3)
 	and (not keyboard_eitherIsDown("shift") or tilespicker) then
-		editingroomname = false
 		local atx, aty = maineditor_get_cursor()
 
 		-- If we're holding both [ and ] down, then let the cursor move only in the plus-shape created by those two lines
@@ -613,20 +616,10 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 11 then
 			-- Roomtext
-			if editingroomtext > 0 then
-				-- We were already typing a text!
-				endeditingroomtext()
-			end
-
 			insert_entity(atx, aty, 17)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 12 then
 			-- Terminal
-			if editingroomtext > 0 then
-				-- We were already typing a text!
-				endeditingroomtext()
-			end
-
 			if selectedsubtool[12] == 2 then
 				-- Upside down
 				insert_entity(atx, aty, 18, 1)
@@ -886,7 +879,6 @@ function handle_tool_mousedown()
 		last_aty = aty
 
 	elseif love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and not tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
-		editingroomname = false
 		local atx, aty = maineditor_get_cursor()
 
 		selectedtile = roomdata_get(roomx, roomy, atx, aty)

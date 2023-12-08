@@ -240,8 +240,8 @@ function tostate(new, dontinitialize, ...)
 		playtesting_cancelask()
 	end
 
-	if oldstate == 1 then
-		editingroomname = false
+	if oldstate == 1 and editingroomname then
+		saveroomname()
 	end
 end
 
@@ -788,13 +788,6 @@ function updatecountdelete(thet, id, undoing)
 		count.startpoint = nil
 	end
 
-	-- Is this a roomtext/terminal/script box entity and were we editing it?
-	if editingroomtext == id then
-		stopinput()
-		editingroomtext = 0
-		makescriptroomtext = false
-	end
-
 	-- Make sure we can undo this! If we're not already removing an entity by undoing
 	if not undoing then
 		table.insert(undobuffer, {undotype = "removeentity", rx = roomx, ry = roomy, entid = id, removedentitydata = table.copy(entitydata[id])})
@@ -1126,8 +1119,7 @@ function toggleeditroomname()
 	else
 		editingroomname = true
 		tilespicker = false
-		startinputonce()
-		input = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
+		newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
 	end
 end
 
@@ -1157,21 +1149,33 @@ function tilespicker_selectedtile_page()
 end
 
 function saveroomname()
+	if not editingroomname then
+		return
+	end
 	editingroomname = false
-	stopinput()
-	local oldroomname = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
-	levelmetadata_set(roomx, roomy, "roomname", input)
+	local old_roomname = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
+	local new_roomname = inputs.roomname
+	newinputsys.close("roomname")
+	levelmetadata_set(roomx, roomy, "roomname", new_roomname)
 
 	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "roomname",
-					oldvalue = oldroomname,
-					newvalue = input
+					oldvalue = old_roomname,
+					newvalue = new_roomname
 				}
 			}
 		}
 	)
 	finish_undo("ROOMNAME")
+end
+
+function cancel_editing_roomname()
+	if not editingroomname then
+		return
+	end
+	editingroomname = false
+	newinputsys.close("roomname")
 end
 
 function get_load_script_creation_mode()
@@ -1198,6 +1202,11 @@ function endeditingroomtext(currently_targetting)
 	-- currently_targetting may be specified if input is being ended BECAUSE we're going to
 	-- modify an entity, to bypass the entity getting deleted now for having an empty data.
 	-- Alternatively we could gray out the options, it's only used in entity right click menus.
+	if entitydata[editingroomtext] == nil then
+		cons("Existing room text we were editing is nil!")
+		editingroomtext = 0
+		return
+	end
 	if entitydata[editingroomtext].t ~= 17 and input:find("|") then
 		dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 		return
@@ -1205,9 +1214,7 @@ function endeditingroomtext(currently_targetting)
 
 	-- We were typing a text!
 	stopinput()
-	if entitydata[editingroomtext] == nil then
-		cons("Existing room text we were editing is nil!")
-	elseif input ~= "" or editingroomtext == currently_targetting then
+	if input ~= "" or editingroomtext == currently_targetting then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
 		if makescriptroomtext then

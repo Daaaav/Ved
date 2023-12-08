@@ -909,7 +909,7 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 			return true
 		end
 		if love.mouse.isDown("l") and keyboard_eitherIsDown("alt") then
-			editingroomname = false
+			cancel_editing_roomname()
 			-- Start moving this entity, if we can!
 			local success = false
 			if not keyboard_eitherIsDown("shift") then

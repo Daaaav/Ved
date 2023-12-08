@@ -18,8 +18,7 @@ return function(key)
 		if table.contains({"return", "kpenter"}, key) then
 			saveroomname()
 		elseif key == "escape" then
-			editingroomname = false
-			stopinput()
+			cancel_editing_roomname()
 		end
 		return
 	end
