@@ -3058,10 +3058,7 @@ function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 		warpid = count.entity_ai
 		selectedsubtool[14] = 2
 	elseif t == 17 or t == 18 then
-		editingroomtext = count.entity_ai
-		newroomtext = true
-		makescriptroomtext = t == 18
-		startinput()
+		start_editing_roomtext(count.entity_ai, true, t == 18)
 	elseif t == 19 then
 		editingsboxid = count.entity_ai
 		selectedsubtool[13] = 2

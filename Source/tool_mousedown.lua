@@ -651,10 +651,7 @@ function handle_tool_mousedown()
 				entitydata[editingsboxid].p2 = new_p2
 
 				if not sboxdontaskname then
-					editingroomtext = editingsboxid
-					newroomtext = true
-					makescriptroomtext = true
-					startinput()
+					start_editing_roomtext(editingsboxid, true, true)
 				else
 					-- Register entity change for undo/redo
 					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingsboxid, changedentitydata = {

@@ -21,7 +21,8 @@ return function()
 	end
 
 	editingroomtext = 0
-	newroomtext = false
+	editingroomtext_is_new = false
+	editingroomtext_make_script = false
 	editingroomname = false
 	movingentity = 0
 	movingentity_copying = false
@@ -29,7 +30,6 @@ return function()
 	warpid = nil
 	oldscriptx, oldscripty, oldscriptp1, oldscriptp2 = 0, 0, 0, 0
 	oldbounds = {0, 0, 0, 0}
-	makescriptroomtext = false
 	create_load_script = LOAD_SCRIPT_CREATION_MODE.NO
 
 	minsmear = -1; maxsmear = -1

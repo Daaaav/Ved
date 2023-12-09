@@ -222,10 +222,7 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 17 then
 				-- Roomtext
 				if RCMreturn == L.EDITTEXT then
-					startinput()
-					input = entitydata[tonumber(entdetails[3])].data
-					editingroomtext = tonumber(entdetails[3])
-					makescriptroomtext = false
+					start_editing_roomtext(tonumber(entdetails[3]), false, false)
 				elseif RCMreturn == L.COPYTEXT then
 					love.system.setClipboardText(entitydata[tonumber(entdetails[3])].data)
 				end
@@ -242,10 +239,7 @@ function rightclickmenu.handler(RCMreturn)
 						scriptineditor(entitydata[tonumber(entdetails[3])].data, nil, invert_bump_preference)
 					end
 				elseif RCMreturn == L.OTHERSCRIPT then
-					startinput()
-					input = entitydata[tonumber(entdetails[3])].data
-					editingroomtext = tonumber(entdetails[3])
-					makescriptroomtext = true
+					start_editing_roomtext(tonumber(entdetails[3]), false, true)
 				elseif RCMreturn == L.RESIZE then -- only for script boxes obviously
 					editingsboxid = tonumber(entdetails[3])
 					selectedsubtool[13] = 3

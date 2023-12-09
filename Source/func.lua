@@ -1187,6 +1187,19 @@ function get_load_script_creation_mode()
 	return mode
 end
 
+function start_editing_roomtext(ent_id, is_new, make_script)
+	editingroomtext = ent_id
+	editingroomtext_is_new = is_new
+	editingroomtext_make_script = make_script
+	local init = ""
+	if entitydata[ent_id] ~= nil then
+		init = entitydata[ent_id].data
+	end
+	startinput()
+	input = init
+	--newinputsys.create(INPUT.ONELINE, "roomtext", init)
+end
+
 function end_editing_roomtext()
 	if entitydata[editingroomtext] == nil then
 		cons("Existing room text we were editing is nil!")
@@ -1203,7 +1216,7 @@ function end_editing_roomtext()
 	if input ~= "" then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
-		if makescriptroomtext then
+		if editingroomtext_make_script then
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
 				local warnloadscriptexists = false
 				local loadscriptname = langkeys(s.loadscriptname, {input})
@@ -1268,9 +1281,9 @@ function end_editing_roomtext()
 				table.insert(scriptnames, input)
 			end
 		end
-		if newroomtext then
+		if editingroomtext_is_new then
 			entityplaced(editingroomtext)
-			newroomtext = false
+			editingroomtext_is_new = false
 		else
 			table.insert(undobuffer,
 				{
