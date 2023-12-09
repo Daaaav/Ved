@@ -1187,10 +1187,7 @@ function get_load_script_creation_mode()
 	return mode
 end
 
-function endeditingroomtext(currently_targetting)
-	-- currently_targetting may be specified if input is being ended BECAUSE we're going to
-	-- modify an entity, to bypass the entity getting deleted now for having an empty data.
-	-- Alternatively we could gray out the options, it's only used in entity right click menus.
+function end_editing_roomtext()
 	if entitydata[editingroomtext] == nil then
 		cons("Existing room text we were editing is nil!")
 		editingroomtext = 0
@@ -1203,7 +1200,7 @@ function endeditingroomtext(currently_targetting)
 
 	-- We were typing a text!
 	stopinput()
-	if input ~= "" or editingroomtext == currently_targetting then
+	if input ~= "" then
 		local olddata = entitydata[editingroomtext].data
 		entitydata[editingroomtext].data = input
 		if makescriptroomtext then

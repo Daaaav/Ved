@@ -682,7 +682,7 @@ return function()
 			-- New
 			cancel_editing_roomname()
 			if editingroomtext > 0 then
-				endeditingroomtext()
+				end_editing_roomtext()
 			end
 			if has_unsaved_changes() then
 				dialog.create(
@@ -698,7 +698,7 @@ return function()
 			-- Load. But first ask them if they want to save (make this save/don't save/cancel later, yes/no for now)
 			cancel_editing_roomname()
 			if editingroomtext > 0 then
-				endeditingroomtext()
+				end_editing_roomtext()
 			end
 			tostate(6)
 			mousepressed = true
@@ -707,7 +707,7 @@ return function()
 			--tostate(8)
 			cancel_editing_roomname()
 			if editingroomtext > 0 then
-				endeditingroomtext()
+				end_editing_roomtext()
 			end
 			dialog.create(
 				L.ENTERNAMESAVE, DBS.OKCANCEL,
@@ -1137,7 +1137,7 @@ return function()
 							-- Tileset
 							cancel_editing_roomname()
 							if editingroomtext > 0 then
-								endeditingroomtext()
+								end_editing_roomtext()
 							end
 							tilespicker = true
 							customsizemode = 1

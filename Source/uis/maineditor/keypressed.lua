@@ -3,7 +3,7 @@
 return function(key)
 	if editingroomtext > 0 then
 		if table.contains({"return", "kpenter"}, key) then
-			endeditingroomtext()
+			end_editing_roomtext()
 		elseif key == "escape" then
 			if entitydata[editingroomtext].data == "" then
 				removeentity(editingroomtext, nil, true)

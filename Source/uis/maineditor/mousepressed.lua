@@ -5,7 +5,7 @@ return function(x, y, button)
 		tilespicker = not tilespicker
 		cancel_editing_roomname()
 		if editingroomtext > 0 then
-			endeditingroomtext()
+			end_editing_roomtext()
 		end
 	end
 end

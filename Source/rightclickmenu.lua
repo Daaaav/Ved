@@ -92,12 +92,7 @@ function rightclickmenu.handler(RCMreturn)
 			elseif RCMreturn == L.COPY or RCMreturn == L.COPYENTRANCE then
 				setcopyingentity(tonumber(entdetails[3]))
 			elseif RCMreturn == L.PROPERTIES then
-				-- Edit properties of this entity, whatever it is. But if we were editing room text or a name of something, stop that first.
-				if editingroomtext > 0 then
-					-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the properties of
-					endeditingroomtext(tonumber(entdetails[3]))
-				end
-
+				-- Edit properties of this entity, whatever it is.
 				thisentity = entitydata[tonumber(entdetails[3])]
 				dialog.create(
 					L.RAWENTITYPROPERTIES,
@@ -227,12 +222,6 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 17 then
 				-- Roomtext
 				if RCMreturn == L.EDITTEXT then
-					-- Were we already editing roomtext or a name?
-					if editingroomtext > 0 then
-						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the text of
-						endeditingroomtext(tonumber(entdetails[3]))
-					end
-
 					startinput()
 					input = entitydata[tonumber(entdetails[3])].data
 					editingroomtext = tonumber(entdetails[3])
@@ -243,12 +232,6 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 				-- Terminal or script box
 				if table.contains({L.EDITSCRIPT, L.EDITSCRIPTWOBUMPING, L.EDITSCRIPTWBUMPING}, RCMreturn) then
-					-- Were we already editing roomtext or a name?
-					if editingroomtext > 0 then
-						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the script of
-						endeditingroomtext(tonumber(entdetails[3]))
-					end
-
 					local invert_bump_preference = false
 					if RCMreturn == L.EDITSCRIPTWOBUMPING or RCMreturn == L.EDITSCRIPTWBUMPING then
 						invert_bump_preference = true
@@ -259,12 +242,6 @@ function rightclickmenu.handler(RCMreturn)
 						scriptineditor(entitydata[tonumber(entdetails[3])].data, nil, invert_bump_preference)
 					end
 				elseif RCMreturn == L.OTHERSCRIPT then
-					-- Were we already editing roomtext or a name?
-					if editingroomtext > 0 then
-						-- The argument here is the number of the entity not to make nil- the entity we currently want to edit the name of
-						endeditingroomtext(tonumber(entdetails[3]))
-					end
-
 					startinput()
 					input = entitydata[tonumber(entdetails[3])].data
 					editingroomtext = tonumber(entdetails[3])
