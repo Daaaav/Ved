@@ -593,16 +593,13 @@ return function()
 	hoverdraw(image.newbtn_hq, love.graphics.getWidth()-96, 0, 32, 32)
 	hoverdraw(image.loadbtn_hq, love.graphics.getWidth()-64, 0, 32, 32)
 	hoverdraw(image.savebtn_hq, love.graphics.getWidth()-32, 0, 32, 32)
-	local show_hotkeys = not editingroomname and editingroomtext == 0
-	if show_hotkeys then
-		if editingbounds == 0 then
-			showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is later
-		end
-		showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
-		showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
-		showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
-		showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
+	if editingbounds == 0 then
+		showhotkey("n", love.graphics.getWidth()-128, 32-8) -- The Esc hotkey to cancel playtesting is later
 	end
+	showhotkey("cq", love.graphics.getWidth()-120+40+8-2, 40+2, ALIGN.CENTER)
+	showhotkey("cN", love.graphics.getWidth()-96-2, 32-8)
+	showhotkey("L", love.graphics.getWidth()-64-2, 32-8)
+	showhotkey("S", love.graphics.getWidth()-32-2, 32-8)
 
 	-- Now for the other buttons - about this variable, I can hardcode it again later.
 	local buttonspacing = 20 --24
@@ -622,27 +619,23 @@ return function()
 		love.graphics.setColor(255,255,255)
 	end
 
-	if show_hotkeys then
-		showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
-		showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
-	end
+	showhotkey("cZ", love.graphics.getWidth()-120+7, 40-4, ALIGN.CENTER)
+	showhotkey("cY", love.graphics.getWidth()-120+16+6, 40+8+2, ALIGN.CENTER)
 
 	hoverdraw(image.cutbtn, love.graphics.getWidth()-120+64, 40, 16, 16, 1)
 	hoverdraw(image.copybtn, love.graphics.getWidth()-120+80, 40, 16, 16, 1)
 	hoverdraw(image.pastebtn, love.graphics.getWidth()-120+96, 40, 16, 16, 1)
 
-	if show_hotkeys then
-		showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
-		showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
-		showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
-	end
+	showhotkey("cX", love.graphics.getWidth()-120+64+6, 40-4-2, ALIGN.CENTER)
+	showhotkey("cC", love.graphics.getWidth()-120+80+6, 40+8, ALIGN.CENTER)
+	showhotkey("cV", love.graphics.getWidth()-120+96+6, 40-4, ALIGN.CENTER)
 
 	rbutton((upperoptpage2 and L.VEDOPTIONS or L.LEVELOPTIONS), 1, 40, false, 20)
-	rbutton((upperoptpage2 and (show_hotkeys and {L.COMPARE, "cD"} or L.COMPARE) or (show_hotkeys and {L.MAP, "M"} or L.MAP)), 2, 40, false, 20)
-	rbutton((upperoptpage2 and L.STATS or (show_hotkeys and {L.SCRIPTS, "/"} or L.SCRIPTS)), 3, 40, false, 20)
-	rbutton((upperoptpage2 and (show_hotkeys and {L.LEVELNOTEPAD, "c/"} or L.LEVELNOTEPAD) or (show_hotkeys and {L.SEARCH, "cF"} or L.SEARCH)), 4, 40, false, 20)
+	rbutton((upperoptpage2 and {L.COMPARE, "cD"} or {L.MAP, "M"}), 2, 40, false, 20)
+	rbutton((upperoptpage2 and L.STATS or {L.SCRIPTS, "/"}), 3, 40, false, 20)
+	rbutton((upperoptpage2 and {L.LEVELNOTEPAD, "c/"} or {L.SEARCH, "cF"}), 4, 40, false, 20)
 	if not upperoptpage2 then
-		rbutton(show_hotkeys and {L.ASSETS, "cR"} or L.ASSETS, 5, 40, false, 20)
+		rbutton({L.ASSETS, "cR"}, 5, 40, false, 20)
 	end
 	rbutton((upperoptpage2 and L.BACKB or L.MOREB), 6, 40, false, 20)
 
@@ -661,7 +654,7 @@ return function()
 	_= not voided_metadata and rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	_= not voided_metadata and rbutton(show_hotkeys and {langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"} or langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	_= not voided_metadata and rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	_= not voided_metadata and rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 
 	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
@@ -830,7 +823,7 @@ return function()
 	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 or selectedtool == 16 or selectedtool == 17 then
 		local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv}
 		if selectedtool ~= 4 and selectedtool ~= 16 and selectedtool ~= 17 and not voided_metadata then
-			rbutton((selectedtool == 8 and (not editingroomname and {L.PLATFORMBOUNDS, "t"} or L.PLATFORMBOUNDS) or (not editingroomname and {L.ENEMYBOUNDS, "r"} or L.ENEMYBOUNDS)), -3, 164+4, true, nil, editingbounds ~= 0)
+			rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
 		end
 		if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
 			local label
@@ -1200,7 +1193,7 @@ return function()
 
 	_= not voided_metadata and showhotkey("q", love.graphics.getWidth()-16, love.graphics.getHeight()-70-2, ALIGN.RIGHT)
 	_= not voided_metadata and showhotkey("w", love.graphics.getWidth()-16, love.graphics.getHeight()-58-2, ALIGN.RIGHT)
-	_= not editingroomname and showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
+	showhotkey("cs", love.graphics.getWidth()-16, love.graphics.getHeight()-46-2, ALIGN.RIGHT)
 
 	if tilespicker then
 		if tilespicker_last_page_number() ~= 0 then
