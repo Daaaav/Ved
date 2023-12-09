@@ -60,9 +60,11 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 			elseif textboxcolors[lasttextcolor] == nil then
 				lasttextcolor = "gray"
 			end
-			_= docolor and setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
-		else
-			_= docolor and setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
+			if docolor then
+				setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
+			end
+		elseif docolor then
+			setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
 		ved_print(text, x, y, textscale)
 		offsetchars = utf8.len(text) + 1
