@@ -1195,9 +1195,7 @@ function start_editing_roomtext(ent_id, is_new, make_script)
 	if entitydata[ent_id] ~= nil then
 		init = entitydata[ent_id].data
 	end
-	startinput()
-	input = init
-	--newinputsys.create(INPUT.ONELINE, "roomtext", init)
+	newinputsys.create(INPUT.ONELINE, "roomtext", init)
 end
 
 function end_editing_roomtext()
@@ -1206,20 +1204,19 @@ function end_editing_roomtext()
 		editingroomtext = 0
 		return
 	end
-	if entitydata[editingroomtext].t ~= 17 and input:find("|") then
+	if entitydata[editingroomtext].t ~= 17 and inputs.roomtext:find("|") then
 		dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 		return
 	end
 
 	-- We were typing a text!
-	stopinput()
-	if input ~= "" then
+	if inputs.roomtext ~= "" then
 		local olddata = entitydata[editingroomtext].data
-		entitydata[editingroomtext].data = input
+		entitydata[editingroomtext].data = inputs.roomtext
 		if editingroomtext_make_script then
 			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
 				local warnloadscriptexists = false
-				local loadscriptname = langkeys(s.loadscriptname, {input})
+				local loadscriptname = langkeys(s.loadscriptname, {inputs.roomtext})
 				local create_mode = get_load_script_creation_mode()
 				if create_mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then -- flag
 					if scripts[loadscriptname] ~= nil then
@@ -1244,13 +1241,13 @@ function end_editing_roomtext()
 
 						if useflag == -1 then
 							-- No flags left?
-							dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {input}))
-							scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
+							dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {inputs.roomtext}))
+							scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
 						else
 							scripts[loadscriptname] = {
 								"ifflag(" .. useflag .. ",stop)",
 								"flag(" .. useflag .. ",on)",
-								"iftrinkets(0," .. input .. ")"
+								"iftrinkets(0," .. inputs.roomtext .. ")"
 							}
 						end
 						table.insert(scriptnames, loadscriptname)
@@ -1263,7 +1260,7 @@ function end_editing_roomtext()
 					if scripts[loadscriptname] ~= nil then
 						warnloadscriptexists = true
 					else
-						scripts[loadscriptname] = {"iftrinkets(0," .. input .. ")"}
+						scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
 						table.insert(scriptnames, loadscriptname)
 
 						temporaryroomname = L.LOADSCRIPTMADE
@@ -1276,9 +1273,9 @@ function end_editing_roomtext()
 				end
 			end
 
-			if scripts[input] == nil then
-				scripts[input] = {""}
-				table.insert(scriptnames, input)
+			if scripts[inputs.roomtext] == nil then
+				scripts[inputs.roomtext] = {""}
+				table.insert(scriptnames, inputs.roomtext)
 			end
 		end
 		if editingroomtext_is_new then
@@ -1300,6 +1297,19 @@ function end_editing_roomtext()
 		removeentity(editingroomtext, nil, true)
 	end
 	editingroomtext = 0
+	newinputsys.close("roomtext")
+end
+
+function print_editing_roomtext(x, y)
+	-- Print the roomtext that's currently being edited at x,y.
+
+	textshadow(inputs.roomtext, x, y, true)
+	-- We need to set the mouse area manually because this is in a scissored area,
+	-- which will take over otherwise...
+	local area_x1 = math.max(x-4, screenoffset)
+	local area_x2 = math.min(font8:getWidth(inputs.roomtext)*2+8 + (x-4), (screenoffset+640))
+	newinputsys.setmousearea("roomtext", area_x1, y-4, area_x2-area_x1, 16+8)
+	newinputsys.print("roomtext", x, y, 2)
 end
 
 function createmde(thislimit)
@@ -2364,7 +2374,7 @@ function keyboard_eitherIsDown(...)
 end
 
 function textshadow(text, x, y, largefont)
-	love.graphics.setColor(128,128,128,192)
+	love.graphics.setColor(96,96,96,192)
 	love.graphics.rectangle("fill", x, y, font8:getWidth(text)*(largefont and 2 or 1), largefont and 16 or 8)
 	love.graphics.setColor(255,255,255,255)
 end

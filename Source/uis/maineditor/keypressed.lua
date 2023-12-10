@@ -9,7 +9,7 @@ return function(key)
 				removeentity(editingroomtext, nil, true)
 			end
 			editingroomtext = 0
-			stopinput()
+			newinputsys.close("roomtext")
 		end
 		return
 	end

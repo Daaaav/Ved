@@ -700,16 +700,17 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Roomtext
 		if not bottom2rowstext and (v.y%30 == 28 or v.y%30 == 29) then
 		else
-			local data = v.data
+			v6_setroomprintcol()
 			if editingroomtext == k then
 				-- We're editing this text at the moment.
-				data = input .. __
-			end
-			v6_setroomprintcol()
-			ved_print(data, x, y, 2)
-			love.graphics.setColor(255, 255, 255)
-			if interact then
-				entity_highlight(x, y, font8:getWidth(data)/8, 1)
+				print_editing_roomtext(x, y)
+				love.graphics.setColor(255, 255, 255)
+			else
+				ved_print(v.data, x, y, 2)
+				love.graphics.setColor(255, 255, 255)
+				if interact then
+					entity_highlight(x, y, font8:getWidth(v.data)/8, 1)
+				end
 			end
 		end
 	elseif v.t == 18 then
@@ -859,15 +860,14 @@ function hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroom
 end
 
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy, n)
-	local dispy = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
+	local disp_y = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
-		local dispx = math.min((offsetx+640)-(font8:getWidth(input .. __)*2)-(__ == "" and 16 or 0), offsetx+(v.x-myroomx*40)*16)
-		textshadow(input, dispx, dispy, true)
-		ved_print(input .. __, dispx, dispy, 2)
+		local disp_x = math.min((offsetx+640)-(font8:getWidth(inputs.roomtext)*2), offsetx+(v.x-myroomx*40)*16)
+		print_editing_roomtext(disp_x, disp_y)
 	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
-		local dispx = math.min((offsetx+640)-(font8:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
-		textshadow(v.data, dispx, dispy, true)
-		ved_print(v.data, dispx, dispy, 2)
+		local disp_x = math.min((offsetx+640)-(font8:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
+		textshadow(v.data, disp_x, disp_y, true)
+		ved_print(v.data, disp_x, disp_y, 2)
 		if n ~= nil then
 			local nscriptdispx = offsetx + (v.x - myroomx*40) * 16 + v.p1*16 - 2 - #tostring(n)*8
 			local nscriptdispy = offsety + (v.y - myroomy*30) * 16 + 2
