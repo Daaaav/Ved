@@ -1860,7 +1860,9 @@ end
 
 function autocorrectlines()
 	for k,v in pairs(entitydata) do
-		if (v.p4 ~= 1) and (v.t == 11 or v.t == 50) and (v.x >= roomx*40) and (v.x <= (roomx*40)+39) and (v.y >= roomy*30) and (v.y <= (roomy*30)+29) then
+		if (v.t == 11 or v.t == 50) and (v.p4 ~= 1)
+		and (v.x >= roomx*40) and (v.x <= (roomx*40)+39)
+		and (v.y >= roomy*30) and (v.y <= (roomy*30)+29) then
 			-- This is a gravity line in this room.
 			if (v.t == 11 and v.p1 == 0) or (v.t == 50 and (v.p1 == 2 or v.p1 == 3)) then
 				-- Horizontal
@@ -1886,14 +1888,14 @@ function autocorrectlines()
 					linelength = -8
 				else
 					-- Now to see how long it should be!
-					for ft = math.max(startat, 0), 40 do
+					for ft = math.max(startat, 0), 39 do
 						if issolidforgravline(roomdata_get(roomx, roomy, ft, v.y%30), v.t) then
 							linelength = 8 * (ft-startat)
 							break
 						end
 					end
 					if linelength == nil then
-						linelength = 8 * (42-startat) - 8
+						linelength = 8 * (41-startat)
 					end
 				end
 
@@ -1910,7 +1912,6 @@ function autocorrectlines()
 
 				-- Backtrack to see what tile is solid
 				for bt = (v.y%30), 0, -1 do
-					--cons("Checking " .. (bt*40)+(atx+1) .. " " .. bt .. " " .. atx)
 					if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, bt), v.t) then
 						startat = bt+1
 						break
@@ -1929,14 +1930,13 @@ function autocorrectlines()
 				else
 					-- Now to see how long it should be!
 					for ft = math.max(startat, 0), 29 do
-						--cons("Checking2 " .. (ft*40)+(atx+1) .. " " .. ft .. " " .. atx)
 						if issolidforgravline(roomdata_get(roomx, roomy, v.x%40, ft), v.t) then
 							linelength = 8 * (ft-startat)
 							break
 						end
 					end
 					if linelength == nil then
-						linelength = 8 * (32-startat) - 8
+						linelength = 8 * (31-startat)
 					end
 				end
 
