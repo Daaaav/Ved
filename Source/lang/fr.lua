@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2023-11-26 03:11:37 (CET)
+--- Last converted: 2023-12-12 00:36:07 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1509,7 +1509,8 @@ Si votre nombre de médailles >= nombre, continuer dans ce script.
 
 destroy(objet)\h#w
 
-Enlève tous les objets d'un type donné, jusqu'à ce que le joueur re-rentre dans la salle.
+Enlève tous les objets d'un type donné, jusqu'à ce que le joueur re-rentre dans la
+salle.
 
 Les arguments valides sont :
 warptokens - Jetons de téléportation
@@ -2068,7 +2069,7 @@ iflang¤(langage,script)\w#h
 
 Vérifie si le langage courant du jeu est un langage donné, et si c'est le cas,
 lance le script personnalisé donné.
-#loadtext(language)¤loadtext¤ n'a aucune influence sur cette commande; seulement le langage que\Lwl&Z
+#loadtext(langage)¤loadtext¤ n'a aucune influence sur cette commande; seulement le langage que\Lwl&Z
 l'utilisateur a sélectionné dans le menu est pris en compte.
 
 langage - Le langage à vérifier, habituellement un code à deux lettres, tel que
@@ -2086,8 +2087,7 @@ Vermilion, 4: Verdigris, 5: Victoria
 
 ifskip¤(x)\b#h
 
-Si vous passez les cinématiques en Mode Sans Mort, exécuter le
-script x
+Si vous passez les cinématiques en Mode Sans Mort, exécuter le script x
 
 iftrinkets¤(n,script)\b#h
 
@@ -2142,7 +2142,7 @@ Cette commande a été ajoutée dans la 2.4.\g
 loop\w#h
 
 Ajoutez cette commande à la fin d'une boucle de code commencée avec la commande
-¤#do(times)¤do¤.\nLwl&Z
+#do(times)¤do¤.\Lwl&Z
 
 missing¤(couleur)\b#h
 
@@ -2150,8 +2150,8 @@ Force la disparition d'un équipier
 
 moveplayer¤(x,y)\w#h
 
-Déplace le joueur x pixels à droite et y pixels en bas. Les nombres négatifs sont aussi
-acceptés.
+Déplace le joueur x pixels à droite et y pixels en bas. Les nombres négatifs sont
+aussi acceptés.
 
 musicfadein¤()\w#h
 
@@ -2309,8 +2309,7 @@ Affiche le vaisseau sur la carte
 
 showtargets¤()\b#h
 
-Affiche les cibles sur la carte (téléporteurs inconnus affichés en
-tant que ?s)
+Affiche les cibles sur la carte (téléporteurs inconnus affichés en tant que ?s)
 
 showteleporters¤()\b#h
 

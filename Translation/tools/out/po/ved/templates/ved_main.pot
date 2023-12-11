@@ -245,14 +245,6 @@ msgctxt "L.METADATAREDONE"
 msgid "Level options redone"
 msgstr ""
 
-msgctxt "L.BOUNDSTOPLEFT"
-msgid "Click the top left corner of the bounds"
-msgstr ""
-
-msgctxt "L.BOUNDSBOTTOMRIGHT"
-msgid "Click the bottom right corner"
-msgstr ""
-
 #. Old string: Click the top left corner of the bounds
 msgctxt "L.BOUNDSFIRST"
 msgid "Click the first corner of the bounds"

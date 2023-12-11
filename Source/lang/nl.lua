@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2023-11-26 03:11:37 (CET)
+--- Last converted: 2023-12-12 00:36:07 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1683,7 +1683,7 @@ daarvoor is ¤20¤ nodig.\gn&Zg
 changecolour¤(a,b)\w#h
 
 Verandert de kleur van een bemanningslid. Dit commando kan worden gebruikt met
-Arbitrary Entity Manipulation.
+Arbitrary Entity Manipulation (arbitraire entiteitmanipulatie).
 
 a - Kleur van het bemanningslid om te veranderen
 (cyan/player/blue/red/yellow/green/purple)
@@ -1893,7 +1893,7 @@ Maakt het scherm wit voor ¤lengte¤ frames.\nn&Z
 lengte - Het aantal frames. 30 frames is bijna een seconde.
 
 Dit verschilt van het vereenvoudigde commando, dat eigenlijk ¤flash(5)¤,\gn&Zg
-playef(9)¤ and ¤shake(20)¤ tegelijk aanroept. Zie: ¤#playef(sound)¤playef¤ en ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
+playef(9)¤ and ¤shake(20)¤ tegelijk aanroept. Zie: ¤#playef(geluid)¤playef¤ en ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
 
 flip\w#h
 

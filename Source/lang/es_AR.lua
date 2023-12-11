@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2023-11-26 03:11:36 (CET)
+--- Last converted: 2023-12-12 00:36:06 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
