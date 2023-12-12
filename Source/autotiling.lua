@@ -282,10 +282,8 @@ function self:make_autotiling_base()
 			if (tile ~= 0) then
 				local type = self:get_tile_type(tile)
 
-				if type == self.tiletypes.NONSOLID then
-					if (self:in_background(tile)) then
-						roomdata_set(roomx, roomy, tile_x, tile_y, 2)
-					end
+				if type == self.tiletypes.NONSOLID or self:in_background(tile) then
+					roomdata_set(roomx, roomy, tile_x, tile_y, 2)
 				elseif type == self.tiletypes.SOLID and self:in_tileset(tile) then
 					roomdata_set(roomx, roomy, tile_x, tile_y, 1)
 				elseif type == self.tiletypes.SPIKE then
