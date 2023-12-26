@@ -45,7 +45,7 @@ function loadfonts()
 	local builtin_imgdata = love.image.newImageData("fonts/font.png")
 	local builtin_fontmeta = love.filesystem.read("fonts/font.fontmeta")
 
-	font8 = cVedFont:new()
+	font8 = cVedFont:new{standard_height=8}
 	font8:init(custom_imgdata, custom_txt, custom_fontmeta, builtin_imgdata, nil, builtin_fontmeta)
 
 	if font8:has_glyphs("↑↓←→", true) then
@@ -196,12 +196,12 @@ function loadtinyfont()
 	end
 end
 
-function ved_print(...)
-	font8:print(...)
+function ved_print(text, x, y, sx, sy)
+	font8:print(text, x, y, nil, sx, sy)
 end
 
-function ved_printf(...)
-	font8:printf(...)
+function ved_printf(text, x, y, max_width, align, sx, sy)
+	font8:printf(text, x, y, max_width, align, nil, sx, sy)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)
@@ -235,10 +235,10 @@ function ved_shadowprint_tiny(text, x, y, sx, sy)
 	if sy == nil then sy = sx end
 	local r, g, b, a = love.graphics.getColor()
 	love.graphics.setColor(0,0,0,255)
-	tinyfont:print(text, x, y-sy, sx, sy)
-	tinyfont:print(text, x-sx, y, sx, sy)
-	tinyfont:print(text, x+sx, y, sx, sy)
-	tinyfont:print(text, x, y+sy, sx, sy)
+	tinyfont:print(text, x, y-sy, nil, sx, sy)
+	tinyfont:print(text, x-sx, y, nil, sx, sy)
+	tinyfont:print(text, x+sx, y, nil, sx, sy)
+	tinyfont:print(text, x, y+sy, nil, sx, sy)
 	love.graphics.setColor(r, g, b, a)
-	tinyfont:print(text, x, y, sx, sy)
+	tinyfont:print(text, x, y, nil, sx, sy)
 end

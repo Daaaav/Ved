@@ -28,6 +28,10 @@ local print_buf = ffi.new("uint32_t[?]", print_buf_n)
 
 cVedFont =
 {
+	--== PUBLIC OPTIONS ==--
+	standard_height = nil, -- the height expected for non-CJK, as in 8 (optional)
+
+	--== PRIVATE ==--
 	glyph_w = nil,
 	glyph_h = nil,
 
@@ -385,7 +389,7 @@ function cVedFont:copy_glyph(c_target, c_source)
 	self.chars[c_target] = self.chars[c_source]
 end
 
-function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
+function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 	-- Print a string of codepoints from print_buf
 	-- sx and sy are scale factors (1 by default)
 	-- max_width is ONLY for alignment with align (which are both optional)
@@ -506,6 +510,18 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 				px = px + (max_width - batch.width*sx)
 			end
 		end
+		if self.standard_height ~= nil then
+			local h_diff_standard = (self.glyph_h-self.standard_height)*sy
+			if h_diff_standard < 0 then
+				-- If the font is less high than standard,
+				-- just center it (lower on screen)
+				py = py - h_diff_standard/2
+			elseif cjk_align == "cjk_high" then
+				py = py - h_diff_standard
+			elseif cjk_align ~= "cjk_low" then
+				py = py - h_diff_standard/2
+			end
+		end
 		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.draw(batch.spritebatch, math.floor(px), math.floor(py), nil, sx, sy)
 		love.graphics.setColor(global_r, global_g, global_b, global_a)
@@ -515,6 +531,7 @@ function cVedFont:buf_print(x, y, sx, sy, max_width, align, offset)
 		self:buf_print(
 			x,
 			y + self.glyph_h*sy,
+			cjk_align,
 			sx,
 			sy,
 			max_width,
@@ -569,15 +586,15 @@ function cVedFont:buf_wordwrap(max_width)
 	return lines
 end
 
-function cVedFont:print(text, x, y, sx, sy)
+function cVedFont:print(text, x, y, cjk_align, sx, sy)
 	if text == nil then
 		text = "nil"
 	end
 	utf8_to_utf32(text, print_buf, print_buf_n)
-	self:buf_print(x, y, sx, sy)
+	self:buf_print(x, y, cjk_align, sx, sy)
 end
 
-function cVedFont:printf(text, x, y, max_width, align, sx, sy)
+function cVedFont:printf(text, x, y, max_width, align, cjk_align, sx, sy)
 	if text == nil then
 		text = "nil"
 	end
@@ -586,7 +603,7 @@ function cVedFont:printf(text, x, y, max_width, align, sx, sy)
 	end
 	utf8_to_utf32(text, print_buf, print_buf_n)
 	self:buf_wordwrap(max_width/sx)
-	self:buf_print(x, y, sx, sy, max_width, align)
+	self:buf_print(x, y, cjk_align, sx, sy, max_width, align)
 end
 
 function cVedFont:getWrap(text, max_width)
