@@ -161,7 +161,8 @@ else
 	-- Version 2.4 or later
 	args = {
 		"-p",
-		"special/stdin"
+		"special/stdin",
+		"-leveldebugger"
 	}
 end
 
