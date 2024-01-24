@@ -48,7 +48,6 @@ end
 
 function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor, alttextcolor)
 	local textscale = s.scripteditor_largefont and 2 or 1
-	local fontsize = s.scripteditor_largefont and 16 or 8
 
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
@@ -67,11 +66,11 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 			setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
 		ved_print(text, x, y, textscale)
-		offsetchars = utf8.len(text) + 1
 
 		return nil
 	else
-		offsetchars = 0
+		local offset_chars = 0
+		local offset_width = 0
 
 		-- Replace characters by one with which we will split.
 		text2 = text:gsub("%(", ","):gsub("%)", ",")
@@ -91,7 +90,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 		if docolor then
 			for k,v in pairs(partss) do
 				local v_parsed = partss_parsed[k]
-				if offsetchars == 0 then -- First word on the line, so it's a command.
+				if offset_chars == 0 then -- First word on the line, so it's a command.
 					-- But is it recognized?
 					-- `say` and `reply` are special and still work capitalized even with no argument separators
 					local editing_command = false
@@ -134,17 +133,26 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				else
 					setColorArr(s.syntaxcolor_generic)
 				end
-				ved_print(v, x+(offsetchars*fontsize), y, textscale)
 
+				-- First print the non-separator word!
+				ved_print(v, x+offset_width, y, textscale)
+
+				offset_chars = offset_chars + utf8.len(v)
+				offset_width = offset_width + font8:getWidth(v)*textscale -- FIXME: level-specific font
+
+				-- Then the separator that follows it! (If present)
+				local separator = utf8.sub(text, 1+offset_chars, 1+offset_chars)
+				local separator_width = font8:getWidth(separator)*textscale -- FIXME: level-specific font
 				setColorArr(s.syntaxcolor_separator)
 				ved_print(
-					utf8.sub(text, 1+offsetchars+utf8.len(v), 1+offsetchars+utf8.len(v)),
-					x + (offsetchars*fontsize) + (utf8.len(v)*fontsize),
+					separator,
+					x + offset_width,
 					y,
 					textscale
 				)
 
-				offsetchars = offsetchars + (utf8.len(v)+1)
+				offset_chars = offset_chars + 1
+				offset_width = offset_width + separator_width
 			end
 		else -- not docolor
 			ved_print(text:sub(1, text:len()), x, y, textscale)
@@ -1053,13 +1061,15 @@ function scriptlineonscreen(ln)
 		_, ln = newinputsys.getpos("script_lines")
 	end
 
-	if s.scripteditor_largefont then
-		scriptscroll = math.max(scriptscroll, -(16*(ln-1)))
-		scriptscroll = math.min(scriptscroll, -(16*ln-16*28))
-	else
-		scriptscroll = math.max(scriptscroll, -(8*(ln-1)))
-		scriptscroll = math.min(scriptscroll, -(8*ln-8*56))
-	end
+	local font_height = font8:getHeight() -- FIXME: level-specific font. And the line numbers 8x8
+	local textscale = s.scripteditor_largefont and 2 or 1
+	local font_height_sc = font_height * textscale
+
+	-- How high is the part where commands are displayed? And keep a bit of space from the borders...
+	local fitting_height = love.graphics.getHeight()-24 - 16
+
+	scriptscroll = math.max(scriptscroll, -(font_height_sc*(ln-1)))
+	scriptscroll = math.min(scriptscroll, -(font_height_sc*ln-fitting_height))
 end
 
 function flagname_illegal_chars(name)

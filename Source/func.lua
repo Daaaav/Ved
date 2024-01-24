@@ -1950,7 +1950,8 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		elseif direction == "d" then
 			scriptscroll = scriptscroll - distance
 			local textscale = s.scripteditor_largefont and 2 or 1
-			local upperbound = (((#inputs.script_lines*8+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
+			local font_height = font8:getHeight() -- FIXME: level-specific font
+			local upperbound = (((#inputs.script_lines*font_height+16)*textscale-(s.scripteditor_largefont and 24 or 0))-(love.graphics.getHeight()-24)) -- scrollableHeight - visiblePart
 			if -scriptscroll > upperbound then
 				scriptscroll = math.min(-upperbound, 0)
 			end

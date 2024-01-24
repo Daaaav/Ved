@@ -19,6 +19,10 @@ return function()
 	local textq, textc, alttextcolor, lasttextcolor
 	local _, editing_line = newinputsys.getpos("script_lines")
 
+	local font_height = font8:getHeight() -- FIXME: level-specific font. And the line numbers 8x8
+	local textscale = s.scripteditor_largefont and 2 or 1
+	local font_height_sc = font_height * textscale
+
 	for k = 1, table.maxn(inputs.script_lines) do
 		v = anythingbutnil(inputs.script_lines[k])
 
@@ -49,9 +53,8 @@ return function()
 			end
 		end
 
-		-- Save the whales, only display this line if we can see it!
-		local fontsize = s.scripteditor_largefont and 16 or 8
-		if (scriptscroll+24+(fontsize*k) >= 16) and (scriptscroll+24+(fontsize*k) <= love.graphics.getHeight()) then
+		-- Save the environment, only display this line if we can see it!
+		if (scriptscroll+24+(font_height_sc*k) >= 16) and (scriptscroll+24+(font_height_sc*k) <= love.graphics.getHeight()) then
 			if editing_line == k then
 				love.graphics.setColor(255,255,255,255)
 			else
@@ -59,11 +62,11 @@ return function()
 			end
 
 			if s.scripteditor_largefont then
-				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(16*k)-8, 2)
+				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k)-8, 2)
 				textq, textc = syntax_hl(
 					v,
 					104,
-					scriptscroll+24+(16*k)-8,
+					scriptscroll+24+(font_height_sc*k)-8,
 					textlinestogo > 0,
 					editing_line == k,
 					syntaxhlon,
@@ -71,11 +74,11 @@ return function()
 					alttextcolor
 				)
 			else
-				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(8*k))
+				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k))
 				textq, textc = syntax_hl(
 					v,
 					56,
-					scriptscroll+24+(8*k),
+					scriptscroll+24+(font_height_sc*k),
 					textlinestogo > 0,
 					editing_line == k,
 					syntaxhlon,
@@ -99,7 +102,7 @@ return function()
 			-- Dialog bar
 
 			-- Let's figure out where the dialog ends horizontally
-			local maxwidthtextbox = 0
+			local max_textbox_width = 0
 			local l
 			for i = k+1, k+textlinestogo do
 				l = inputs.script_lines[i]
@@ -108,8 +111,9 @@ return function()
 					break
 				end
 
-				if utf8.len(l) > maxwidthtextbox then
-					maxwidthtextbox = utf8.len(l)
+				local line_width = font8:getWidth(l)*textscale -- FIXME: level-specific font
+				if line_width > max_textbox_width then
+					max_textbox_width = line_width
 				end
 			end
 
@@ -123,11 +127,11 @@ return function()
 				end
 				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
 				if s.scripteditor_largefont then
-					love.graphics.rectangle("fill", 92, scriptscroll+24+(16*k)+8, 6, textq*16)
-					love.graphics.rectangle("fill", 92+16*(maxwidthtextbox+1), scriptscroll+24+(16*k)+8, 6, textq*16)
+					love.graphics.rectangle("fill", 92, scriptscroll+24+(font_height_sc*k)+8, 6, textq*font_height_sc)
+					love.graphics.rectangle("fill", 92+max_textbox_width+16, scriptscroll+24+(font_height_sc*k)+8, 6, textq*font_height_sc)
 				else
-					love.graphics.rectangle("fill", 50, scriptscroll+24+(8*k)+8, 3, textq*8)
-					love.graphics.rectangle("fill", 50+8*(maxwidthtextbox+1), scriptscroll+24+(8*k)+8, 3, textq*8)
+					love.graphics.rectangle("fill", 50, scriptscroll+24+(font_height_sc*k)+8, 3, textq*font_height_sc)
+					love.graphics.rectangle("fill", 50+max_textbox_width+8, scriptscroll+24+(font_height_sc*k)+8, 3, textq*font_height_sc)
 				end
 			end
 		elseif textlinestogo > 0 then
@@ -140,9 +144,9 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 
 	if s.scripteditor_largefont then
-		newinputsys.drawcas("script_lines", 104, scriptscroll+24+16-8, 2)
+		newinputsys.drawcas("script_lines", 104, scriptscroll+24+font_height_sc-8, 2, nil, font_height)
 	else
-		newinputsys.drawcas("script_lines", 56, scriptscroll+24+8)
+		newinputsys.drawcas("script_lines", 56, scriptscroll+24+font_height_sc, nil, nil, font_height)
 	end
 
 	love.graphics.setScissor()
@@ -196,18 +200,17 @@ return function()
 
 	love.graphics.setColor(255,255,255,255)
 
-	-- Now let's put a scrollbar in sight! -- -144: -(128-8)-24, -32: -24-8
-	local textscale = s.scripteditor_largefont and 2 or 1
+	-- Now let's put a scrollbar in sight!
 	local newfraction = scrollbar(
 		love.graphics.getWidth()-144,
 		24,
 		love.graphics.getHeight()-32,
-		(#inputs.script_lines*8+8)*textscale,
-		((-scriptscroll))/(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32))
+		(#inputs.script_lines*font_height+8)*textscale,
+		((-scriptscroll))/(((#inputs.script_lines*font_height+8)*textscale)-(love.graphics.getHeight()-32))
 	)
 
 	if newfraction ~= nil then
-		scriptscroll = -(newfraction*(((#inputs.script_lines*8)*textscale)-(love.graphics.getHeight()-32)))
+		scriptscroll = -(newfraction*(((#inputs.script_lines*font_height+8)*textscale)-(love.graphics.getHeight()-32)))
 	end
 
 	-- Now put some buttons on the right!
