@@ -80,8 +80,14 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 	local white_teeth_fallback = false
 
 	if fontmeta ~= nil then
-		self.glyph_w = tonumber(fontmeta:match("<width>(.-)</width>"))
-		self.glyph_h = tonumber(fontmeta:match("<height>(.-)</height>"))
+		local w = tonumber(fontmeta:match("<width>(.-)</width>"))
+		local h = tonumber(fontmeta:match("<height>(.-)</height>"))
+		if w ~= nil then
+			self.glyph_w = w
+		end
+		if h ~= nil then
+			self.glyph_h = h
+		end
 		white_teeth = fontmeta:match("<white_teeth>(.-)</white_teeth>") == "1"
 	end
 	if fontmeta_fallback ~= nil then
