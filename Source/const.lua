@@ -262,6 +262,7 @@ knowncommands = {
 	loadtext = true,
 	textcase = true,
 	setfont = true,
+	setrtl = true,
 }
 
 knowninternalcommands = {
@@ -366,6 +367,7 @@ knowninternalcommands = {
 	["setcheckpoint"] = true,
 	["setfont"] = true,
 	["setroomname"] = true,
+	["setrtl"] = true,
 	["shake"] = true,
 	["showcoordinates"] = true,
 	["showplayer"] = true,
@@ -387,6 +389,8 @@ knowninternalcommands = {
 	["textboxtimer"] = true,
 	["textbuttons"] = true,
 	["textcase"] = true,
+	["textimage"] = true,
+	["textsprite"] = true,
 	["tofloor"] = true,
 	["trinketbluecontrol"] = true,
 	["trinketscriptmusic"] = true,
