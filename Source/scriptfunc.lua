@@ -159,13 +159,13 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 		end
 
 		-- `say` and `reply` are exceptions - they still work when they're capitalized even with no argument separators
-		if partss_parsed[1]:lower() == "say" then
+		if partss_parsed[1] == "say" then
 			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
 				return 1, normalize_simplified_color(partss_parsed[3])
 			else
 				return parse_textbox_line_count(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
 			end
-		elseif partss_parsed[1]:lower() == "reply" then
+		elseif partss_parsed[1] == "reply" then
 			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
 				return 1, "player"
 			else
@@ -196,24 +196,34 @@ function just_text(text, thisistext)
 			text2 = text:gsub("%(", ","):gsub("%)", ",")
 
 			partss = explode(",", text2)
+			local partss_parsed = {}
 
-			if partss[1] == "say" then
-				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss[2])) <= 1 then
-					return 1, normalize_simplified_color(partss[3])
+			for k, v in pairs(partss) do
+				v = v:gsub(" ", "")
+				if k < #partss then
+					table.insert(partss_parsed, v:lower())
 				else
-					return parse_textbox_line_count(partss[2]), normalize_simplified_color(partss[3])
+					table.insert(partss_parsed, v)
 				end
-			elseif partss[1] == "reply" then
-				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss[2])) <= 1 then
+			end
+
+			if partss_parsed[1] == "say" then
+				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
+					return 1, normalize_simplified_color(partss_parsed[3])
+				else
+					return parse_textbox_line_count(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
+				end
+			elseif partss_parsed[1] == "reply" then
+				if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
 					return 1, "player"
 				else
-					return parse_textbox_line_count(partss[2]), "player"
+					return parse_textbox_line_count(partss_parsed[2]), "player"
 				end
-			elseif partss[1] == "text" then
-				if partss[5] == nil or anythingbutnil0(parse_textbox_line_count(partss[5])) <= 0 then
-					return 0, partss[2]
+			elseif partss_parsed[1] == "text" then
+				if partss[5] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[5])) <= 0 then
+					return 0, partss_parsed[2]
 				else
-					return parse_textbox_line_count(partss[5]), partss[2]
+					return parse_textbox_line_count(partss_parsed[5]), partss_parsed[2]
 				end
 			elseif partss_parsed[1] == "setactivitytext" then
 				return 1, "orange"
