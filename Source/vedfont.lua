@@ -395,6 +395,23 @@ function cVedFont:copy_glyph(c_target, c_source)
 	self.chars[c_target] = self.chars[c_source]
 end
 
+function cVedFont:y_align(y, cjk_align, sy)
+	if self.standard_height ~= nil then
+		local h_diff_standard = (self.glyph_h-self.standard_height)*sy
+		if h_diff_standard < 0 then
+			-- If the font is less high than standard,
+			-- just center it (lower on screen)
+			y = y - h_diff_standard/2
+		elseif cjk_align == "cjk_high" then
+			y = y - h_diff_standard
+		elseif cjk_align ~= "cjk_low" then
+			y = y - h_diff_standard/2
+		end
+	end
+
+	return y
+end
+
 function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 	-- Print a string of codepoints from print_buf
 	-- sx and sy are scale factors (1 by default)
@@ -516,18 +533,7 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 				px = px + (max_width - batch.width*sx)
 			end
 		end
-		if self.standard_height ~= nil then
-			local h_diff_standard = (self.glyph_h-self.standard_height)*sy
-			if h_diff_standard < 0 then
-				-- If the font is less high than standard,
-				-- just center it (lower on screen)
-				py = py - h_diff_standard/2
-			elseif cjk_align == "cjk_high" then
-				py = py - h_diff_standard
-			elseif cjk_align ~= "cjk_low" then
-				py = py - h_diff_standard/2
-			end
-		end
+		py = self:y_align(py, cjk_align, sy)
 		love.graphics.setColor(255, 255, 255, 255)
 		love.graphics.draw(batch.spritebatch, math.floor(px), math.floor(py), nil, sx, sy)
 		love.graphics.setColor(global_r, global_g, global_b, global_a)
