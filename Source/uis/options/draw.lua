@@ -17,8 +17,6 @@ return function()
 			false,
 			"autosavecrashlogs",
 			"loadallmetadata",
-			"usefontpng",
-			"uselevelfontpng",
 			"opaqueroomnamebackground",
 			false,
 			"bumpscriptsbydefault",
@@ -27,9 +25,6 @@ return function()
 		if v then
 			local label = L[v:upper()]
 			local affects_font = false
-			if v == "usefontpng" or v == "uselevelfontpng" then
-				affects_font = true
-			end
 
 			checkbox(s[v], 8, 8+(22*k), v, label,
 				function(key, newvalue)
@@ -62,8 +57,8 @@ return function()
 		int_control(16+font8:getWidth(L.AMOUNTOVERWRITEBACKUPS), 8+(22*11), "amountoverwritebackups", 0, 999)
 	end
 
-	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(22*17)+4)
-	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(22*17), "mousescrollingspeed", -999, 999)
+	ved_print(L.MOUSESCROLLINGSPEED, 8, 8+(22*15)+4)
+	int_control(16+font8:getWidth(L.MOUSESCROLLINGSPEED), 8+(22*15), "mousescrollingspeed", -999, 999)
 
 	ved_print(
 		ERR_VEDVERSION .. " " .. ved_ver_human() .. "\n"

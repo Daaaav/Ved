@@ -126,10 +126,12 @@ configs = {
 	usefontpng = {
 		default = false,
 		["type"] = "bool",
+		comment = "Use graphics folder font.png. No longer used as of Ved 1.11.1, now always considered false"
 	},
 	uselevelfontpng = {
 		default = true,
 		["type"] = "bool",
+		comment = "Use level-specific font. No longer used as of Ved 1.11.1, now always considered true"
 	},
 	colored_textboxes = {
 		default = true,
