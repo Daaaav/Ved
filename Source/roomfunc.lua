@@ -703,13 +703,13 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			v6_setroomprintcol()
 			if editingroomtext == k then
 				-- We're editing this text at the moment.
-				print_editing_roomtext(x, y)
+				print_editing_roomtext(x, y, "cjk_low")
 				love.graphics.setColor(255, 255, 255)
 			else
-				ved_print(v.data, x, y, 2)
+				font_level:print(v.data, x, y, "cjk_low", 2)
 				love.graphics.setColor(255, 255, 255)
 				if interact then
-					entity_highlight(x, y, font8:getWidth(v.data)/8, 1)
+					entity_highlight(x, y, font8:getWidth(v.data)/8, font_level:getHeight()/8)
 				end
 			end
 		end
@@ -863,16 +863,16 @@ function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy
 	local disp_y = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
 		local disp_x = math.min((offsetx+640)-(font8:getWidth(inputs.roomtext)*2), offsetx+(v.x-myroomx*40)*16)
-		print_editing_roomtext(disp_x, disp_y)
+		print_editing_roomtext(disp_x, disp_y, "cjk_high")
 	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
 		local disp_x = math.min((offsetx+640)-(font8:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
-		textshadow(v.data, disp_x, disp_y, true)
-		ved_print(v.data, disp_x, disp_y, 2)
+		textshadow(v.data, disp_x, disp_y, font_level, "cjk_high", 2)
+		font_level:print(v.data, disp_x, disp_y, "cjk_high", 2)
 		if n ~= nil then
-			local nscriptdispx = offsetx + (v.x - myroomx*40) * 16 + v.p1*16 - 2 - #tostring(n)*8
+			local nscriptdispx = offsetx + (v.x - myroomx*40) * 16 + v.p1*16 - 2 - font_8x8:getWidth(n)
 			local nscriptdispy = offsety + (v.y - myroomy*30) * 16 + 2
-			textshadow(n, nscriptdispx, nscriptdispy)
-			ved_print(n, nscriptdispx, nscriptdispy)
+			textshadow(n, nscriptdispx, nscriptdispy, font_8x8)
+			font_8x8:print(n, nscriptdispx, nscriptdispy)
 		end
 	end
 end

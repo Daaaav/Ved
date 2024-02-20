@@ -1300,16 +1300,16 @@ function end_editing_roomtext()
 	newinputsys.close("roomtext")
 end
 
-function print_editing_roomtext(x, y)
+function print_editing_roomtext(x, y, cjk_align)
 	-- Print the roomtext that's currently being edited at x,y.
 
-	textshadow(inputs.roomtext, x, y, true)
+	textshadow(inputs.roomtext, x, y, font_level, cjk_align, 2)
 	-- We need to set the mouse area manually because this is in a scissored area,
 	-- which will take over otherwise...
 	local area_x1 = math.max(x-4, screenoffset)
 	local area_x2 = math.min(font_level:getWidth(inputs.roomtext)*2+8 + (x-4), (screenoffset+640))
 	newinputsys.setmousearea("roomtext", area_x1, y-4, area_x2-area_x1, 16+8)
-	newinputsys.print("roomtext", x, y, font_level, nil, 2)
+	newinputsys.print("roomtext", x, y, font_level, cjk_align, 2)
 end
 
 function createmde(thislimit)
@@ -2374,9 +2374,14 @@ function keyboard_eitherIsDown(...)
 	return love.keyboard.isDown(unpack(list))
 end
 
-function textshadow(text, x, y, largefont)
+function textshadow(text, x, y, font, cjk_align, sx, sy)
+	font = font or font_ui
+	sx = sx or 1
+	sy = sy or sx
+	y = font:y_align(y, cjk_align, sy)
+
 	love.graphics.setColor(96,96,96,192)
-	love.graphics.rectangle("fill", x, y, font8:getWidth(text)*(largefont and 2 or 1), largefont and 16 or 8)
+	love.graphics.rectangle("fill", x, y, font:getWidth(text)*sx, font:getHeight()*sy)
 	love.graphics.setColor(255,255,255,255)
 end
 
