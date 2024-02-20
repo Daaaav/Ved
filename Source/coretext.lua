@@ -227,40 +227,13 @@ function ved_printf(text, x, y, max_width, align, sx, sy)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)
-	if sx == nil then sx = 1 end
-	if sy == nil then sy = sx end
-	local r, g, b, a = love.graphics.getColor()
-	love.graphics.setColor(0,0,0,255)
-	ved_print(text, x, y-sy, sx, sy)
-	ved_print(text, x-sx, y, sx, sy)
-	ved_print(text, x+sx, y, sx, sy)
-	ved_print(text, x, y+sy, sx, sy)
-	love.graphics.setColor(r, g, b, a)
-	ved_print(text, x, y, sx, sy)
+	font_8x8:shadowprint(text, x, y, nil, sx, sy)
 end
 
 function ved_shadowprintf(text, x, y, limit, align, sx, sy)
-	if sx == nil then sx = 1 end
-	if sy == nil then sy = sx end
-	local r, g, b, a = love.graphics.getColor()
-	love.graphics.setColor(0,0,0,255)
-	ved_printf(text, x, y-sy, limit, align, sx, sy)
-	ved_printf(text, x-sx, y, limit, align, sx, sy)
-	ved_printf(text, x+sx, y, limit, align, sx, sy)
-	ved_printf(text, x, y+sy, limit, align, sx, sy)
-	love.graphics.setColor(r, g, b, a)
-	ved_printf(text, x, y, limit, align, sx, sy)
+	font_8x8:shadowprintf(text, x, y, limit, align, nil, sx, sy)
 end
 
 function ved_shadowprint_tiny(text, x, y, sx, sy)
-	if sx == nil then sx = 1 end
-	if sy == nil then sy = sx end
-	local r, g, b, a = love.graphics.getColor()
-	love.graphics.setColor(0,0,0,255)
-	tinyfont:print(text, x, y-sy, nil, sx, sy)
-	tinyfont:print(text, x-sx, y, nil, sx, sy)
-	tinyfont:print(text, x+sx, y, nil, sx, sy)
-	tinyfont:print(text, x, y+sy, nil, sx, sy)
-	love.graphics.setColor(r, g, b, a)
-	tinyfont:print(text, x, y, nil, sx, sy)
+	tinyfont:shadowprint(text, x, y, nil, sx, sy)
 end

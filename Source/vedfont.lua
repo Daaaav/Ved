@@ -618,6 +618,32 @@ function cVedFont:printf(text, x, y, max_width, align, cjk_align, sx, sy)
 	self:buf_print(x, y, cjk_align, sx, sy, max_width, align)
 end
 
+function cVedFont:shadowprint(text, x, y, cjk_align, sx, sy)
+	if sx == nil then sx = 1 end
+	if sy == nil then sy = sx end
+	local r, g, b, a = love.graphics.getColor()
+	love.graphics.setColor(0,0,0,255)
+	self:print(text, x, y-sy, cjk_align, sx, sy)
+	self:print(text, x-sx, y, cjk_align, sx, sy)
+	self:print(text, x+sx, y, cjk_align, sx, sy)
+	self:print(text, x, y+sy, cjk_align, sx, sy)
+	love.graphics.setColor(r, g, b, a)
+	self:print(text, x, y, cjk_align, sx, sy)
+end
+
+function cVedFont:shadowprintf(text, x, y, limit, align, cjk_align, sx, sy)
+	if sx == nil then sx = 1 end
+	if sy == nil then sy = sx end
+	local r, g, b, a = love.graphics.getColor()
+	love.graphics.setColor(0,0,0,255)
+	self:printf(text, x, y-sy, limit, align, cjk_align, sx, sy)
+	self:printf(text, x-sx, y, limit, align, cjk_align, sx, sy)
+	self:printf(text, x+sx, y, limit, align, cjk_align, sx, sy)
+	self:printf(text, x, y+sy, limit, align, cjk_align, sx, sy)
+	love.graphics.setColor(r, g, b, a)
+	self:printf(text, x, y, limit, align, cjk_align, sx, sy)
+end
+
 function cVedFont:getWrap(text, max_width)
 	-- LÖVE 0.9-style Font:getWrap (returns width and number of lines)
 	-- Gives the number of lines (not the table of lines) because we never need the table.
