@@ -138,11 +138,11 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				ved_print(v, x+offset_width, y, textscale)
 
 				offset_chars = offset_chars + utf8.len(v)
-				offset_width = offset_width + font8:getWidth(v)*textscale -- FIXME: level-specific font
+				offset_width = offset_width + font_level:getWidth(v)*textscale
 
 				-- Then the separator that follows it! (If present)
 				local separator = utf8.sub(text, 1+offset_chars, 1+offset_chars)
-				local separator_width = font8:getWidth(separator)*textscale -- FIXME: level-specific font
+				local separator_width = font_level:getWidth(separator)*textscale
 				setColorArr(s.syntaxcolor_separator)
 				ved_print(
 					separator,
@@ -1071,7 +1071,7 @@ function scriptlineonscreen(ln)
 		_, ln = newinputsys.getpos("script_lines")
 	end
 
-	local font_height = font8:getHeight() -- FIXME: level-specific font. And the line numbers 8x8
+	local font_height = font_level:getHeight()
 	local textscale = s.scripteditor_largefont and 2 or 1
 	local font_height_sc = font_height * textscale
 

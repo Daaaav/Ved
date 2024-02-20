@@ -78,7 +78,7 @@ function love.load()
 	ved_require("filefunc_" .. loaded_filefunc)
 	setvvvvvvpaths()
 
-	loadfonts()
+	init_coretext()
 	loadlanginfo()
 	loadlanguage()
 	loadtinyfont()

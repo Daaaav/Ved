@@ -55,6 +55,34 @@ function loadfonts()
 	end
 end
 
+function init_coretext()
+	loadfonts()
+
+	font_ui = {}
+	font_ui_metatable = {
+		__index = function(table, index)
+			return font8[index]
+		end
+	}
+	setmetatable(font_ui, font_ui_metatable)
+
+	font_level = {}
+	font_level_metatable = {
+		__index = function(table, index)
+			return font8[index]
+		end
+	}
+	setmetatable(font_level, font_level_metatable)
+
+	font_8x8 = {}
+	font_8x8_metatable = {
+		__index = function(table, index)
+			return font8[index]
+		end
+	}
+	setmetatable(font_8x8, font_8x8_metatable)
+end
+
 function loadlanginfo()
 	-- Load the language properties for all languages.
 	-- Language properties include the name, and in the future could have stuff like fonts, RTL, etc
@@ -191,11 +219,11 @@ function loadtinyfont()
 end
 
 function ved_print(text, x, y, sx, sy)
-	font8:print(text, x, y, nil, sx, sy)
+	font_8x8:print(text, x, y, nil, sx, sy)
 end
 
 function ved_printf(text, x, y, max_width, align, sx, sy)
-	font8:printf(text, x, y, max_width, align, nil, sx, sy)
+	font_8x8:printf(text, x, y, max_width, align, nil, sx, sy)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)

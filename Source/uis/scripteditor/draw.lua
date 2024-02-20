@@ -19,7 +19,7 @@ return function()
 	local textq, textc, alttextcolor, lasttextcolor
 	local _, editing_line = newinputsys.getpos("script_lines")
 
-	local font_height = font8:getHeight() -- FIXME: level-specific font. And the line numbers 8x8
+	local font_height = font_level:getHeight()
 	local textscale = s.scripteditor_largefont and 2 or 1
 	local font_height_sc = font_height * textscale
 
@@ -62,7 +62,7 @@ return function()
 			end
 
 			if s.scripteditor_largefont then
-				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k)-8, 2)
+				font_8x8:print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k)-8, nil, 2)
 				textq, textc = syntax_hl(
 					v,
 					104,
@@ -74,7 +74,7 @@ return function()
 					alttextcolor
 				)
 			else
-				ved_print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k))
+				font_8x8:print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k))
 				textq, textc = syntax_hl(
 					v,
 					56,
@@ -111,7 +111,7 @@ return function()
 					break
 				end
 
-				local line_width = font8:getWidth(l)*textscale -- FIXME: level-specific font
+				local line_width = font_level:getWidth(l)*textscale
 				if line_width > max_textbox_width then
 					max_textbox_width = line_width
 				end
