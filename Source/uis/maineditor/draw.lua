@@ -158,11 +158,13 @@ return function()
 
 			-- Is the text we're displaying going to fit?
 			local extralines = roomtext_extralines(temporaryroomname)
+			local font_height = font_ui:getHeight()
+			local box_height = 2 * (font_height + extralines*font_height) + 4
 
 			love.graphics.setColor(160,160,0,128)
-			love.graphics.rectangle("fill", screenoffset, 29*16 - extralines*16 - 4, 40*16, 16 + extralines*16 + 4)
+			love.graphics.rectangle("fill", screenoffset, 480-box_height, 40*16, box_height)
 			love.graphics.setColor(255,255,255,255)
-			ved_shadowprintf(temporaryroomname, screenoffset, 29*16 - extralines*16 - 2, 40*16, "center", 2)
+			font_ui:shadowprintf(temporaryroomname, screenoffset, 480-box_height+2, 40*16, "center", "cjk_low", 2)
 		elseif editingroomname or hasroomname then
 			local text
 			local bg_color
@@ -180,17 +182,24 @@ return function()
 			else
 				bg_alpha = 128
 			end
-			local text_width = math.min(font8:getWidth(text)*2, 640)
+			local text_width = math.min(font_level:getWidth(text)*2, 640)
+			local font_height = font_level:getHeight()
+			local box_height
+			if font_height <= 8 then
+				box_height = 2 * (font_height + 2)
+			else
+				box_height = 2 * (font_height + 1)
+			end
 			local text_x = screenoffset + 320 - text_width/2
-			local text_y = 29*16 - 2
+			local text_y = 480 - box_height + 2
 
-			love.graphics.setScissor(screenoffset, 29*16-4, 40*16, 16+4)
+			love.graphics.setScissor(screenoffset, text_y - 2, 40*16, box_height)
 			love.graphics.setColor(bg_color, bg_color, bg_color, bg_alpha)
-			love.graphics.rectangle("fill", screenoffset, 29*16-4, 40*16, 16+4)
+			love.graphics.rectangle("fill", screenoffset, text_y - 2, 40*16, box_height)
 			v6_setroomprintcol()
-			ved_shadowprint(text, text_x, text_y, 2)
+			font_level:shadowprint(text, text_x, text_y, "cjk_low", 2)
 			love.graphics.setColor(255,255,255,255)
-			newinputsys.drawcas("roomname", text_x, text_y, font_level, nil, 2)
+			newinputsys.drawcas("roomname", text_x, text_y, font_level, "cjk_low", 2)
 			love.graphics.setScissor()
 		end
 
