@@ -2,7 +2,7 @@
 
 return function()
 	ved_print("Placeholder main menu. Enter state:", 10, 10)
-	newinputsys.print("state", 20, 30, 2)
+	newinputsys.print("state", 20, 30, nil, nil, 2)
 	ved_print("ENTER: Go\nShift+ENTER: Go without loadstate() (tostate(x, true))", 10, 74)
 
 	local state_y = 16

@@ -190,7 +190,7 @@ return function()
 			v6_setroomprintcol()
 			ved_shadowprint(text, text_x, text_y, 2)
 			love.graphics.setColor(255,255,255,255)
-			newinputsys.drawcas("roomname", text_x, text_y, 2)
+			newinputsys.drawcas("roomname", text_x, text_y, font_level, nil, 2)
 			love.graphics.setScissor()
 		end
 

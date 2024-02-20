@@ -1307,9 +1307,9 @@ function print_editing_roomtext(x, y)
 	-- We need to set the mouse area manually because this is in a scissored area,
 	-- which will take over otherwise...
 	local area_x1 = math.max(x-4, screenoffset)
-	local area_x2 = math.min(font8:getWidth(inputs.roomtext)*2+8 + (x-4), (screenoffset+640))
+	local area_x2 = math.min(font_level:getWidth(inputs.roomtext)*2+8 + (x-4), (screenoffset+640))
 	newinputsys.setmousearea("roomtext", area_x1, y-4, area_x2-area_x1, 16+8)
-	newinputsys.print("roomtext", x, y, 2)
+	newinputsys.print("roomtext", x, y, font_level, nil, 2)
 end
 
 function createmde(thislimit)

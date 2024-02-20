@@ -15,7 +15,7 @@ multiline, to first set the input to whatever you give it.
 Then for whatever you're editing, say a variable named `thingbeingedited`, all
 you have to do is `thingbeingedited = inputs.<id>` (note the plural "inputs")
 
-You also need to call `input.print(<id>, <x>, <y>, [scale_x], [scale_y], [line_height])`
+You also need to call `input.print(<id>, <x>, <y>, [font], [cjk_align], [scale_x], [scale_y], [line_height])`
 with the top-left corner of whatever text you're drawing to print it along with
 the caret, the selection box, and other things. If you want to handle the
 printing yourself and want to draw the CAS (caret/selection/others) manually,
@@ -293,26 +293,27 @@ function input.bump(id)
 	input.focused[thestate] = id
 end
 
-function input.print(id, x, y, sx, sy, lineh)
+function input.print(id, x, y, font, cjk_align, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
 
-	lineh = lineh or font8:getHeight()
+	font = font or font_ui
+	lineh = lineh or font:getHeight()
 
 	sx = sx or 1
 	sy = sy or sx
 
 	if multiline then
 		for n, line in pairs(inputs[id]) do
-			ved_print(line, x, y + (n-1) * lineh * sy, sx, sy)
+			font:print(line, x, y + (n-1) * lineh * sy, cjk_align, sx, sy)
 		end
 	else
-		ved_print(inputs[id], x, y, sx, sy)
+		font:print(inputs[id], x, y, cjk_align, sx, sy)
 	end
 
-	input.drawcas(id, x, y, sx, sy, lineh)
+	input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 end
 
-function input.drawcas(id, x, y, sx, sy, lineh)
+function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 	if not input.active then
 		return
 	end
@@ -330,8 +331,11 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 	sx = sx or 1
 	sy = sy or sx
 
-	local fontheight = font8:getHeight()
+	font = font or font_ui
+	local fontheight = font:getHeight()
 	lineh = lineh or fontheight
+
+	y = font:y_align(y, cjk_align, sy)
 
 	-- Clicking
 
@@ -343,11 +347,11 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 			if multiline then
 				local tmp = {}
 				for _, l in pairs(inputs[id]) do
-					table.insert(tmp, font8:getWidth(l))
+					table.insert(tmp, font:getWidth(l))
 				end
 				width = math.max(unpack(tmp))
 			else
-				width = font8:getWidth(inputs[id])
+				width = font:getWidth(inputs[id])
 			end
 
 			local lines
@@ -375,7 +379,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		special_cursor = true
 
 		if (love.mouse.isDown("l") or love.mouse.isDown("r")) and not input.ignoremousepressed then
-			input.mousepressed(id, x, y, sx, sy, lineh)
+			input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 		end
 	else
 		reset_special_cursor()
@@ -425,20 +429,20 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 					line = lines[l]
 
 					if l == starty then
-						firstoffset = font8:getWidth(utf8.sub(line, 1, startx))
+						firstoffset = font:getWidth(utf8.sub(line, 1, startx))
 						if l == endy then
-							curlinewidth = font8:getWidth(utf8.sub(line, startx+1, endx))
+							curlinewidth = font:getWidth(utf8.sub(line, startx+1, endx))
 						else
-							curlinewidth = font8:getWidth(utf8.sub(line, startx+1, utf8.len(line)))
+							curlinewidth = font:getWidth(utf8.sub(line, startx+1, utf8.len(line)))
 							-- Add a small space to represent the newline
 							curlinewidth = curlinewidth + 4
 						end
 						table.insert(selrects, {firstoffset, l-1, curlinewidth})
 					else
 						if l == endy then
-							curlinewidth = font8:getWidth(utf8.sub(line, 1, endx))
+							curlinewidth = font:getWidth(utf8.sub(line, 1, endx))
 						else
-							curlinewidth = font8:getWidth(utf8.sub(line, 1, utf8.len(line)))
+							curlinewidth = font:getWidth(utf8.sub(line, 1, utf8.len(line)))
 							-- Again, add a small space to represent the newline
 							curlinewidth = curlinewidth + 4
 						end
@@ -470,8 +474,8 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 			local firstoffset = 0
 
 			if whichfirst ~= nil then
-				firstoffset = font8:getWidth(utf8.sub(line, 1, startx))
-				curlinewidth = font8:getWidth(utf8.sub(line, startx+1, endx))
+				firstoffset = font:getWidth(utf8.sub(line, 1, startx))
+				curlinewidth = font:getWidth(utf8.sub(line, startx+1, endx))
 				table.insert(selrects, {firstoffset, 0, curlinewidth})
 			end
 		end
@@ -508,7 +512,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		-- treat it like it's at the end of the line
 		postoget = math.min(postoget, utf8.len(line))
 
-		caretx = font8:getWidth(utf8.sub(line, 1, postoget))
+		caretx = font:getWidth(utf8.sub(line, 1, postoget))
 	else
 		local line = inputs[id]
 		local postoget = input.pos[id]
@@ -517,7 +521,7 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 		end
 		carety = 0
 
-		caretx = font8:getWidth(utf8.sub(line, 1, postoget))
+		caretx = font:getWidth(utf8.sub(line, 1, postoget))
 	end
 	caretx = anythingbutnil0(caretx)
 	carety = anythingbutnil0(carety)
@@ -550,14 +554,14 @@ function input.drawcas(id, x, y, sx, sy, lineh)
 
 		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
 		love.graphics.setColor(unpack(invertcol))
-		love.graphics.rectangle("fill", x + caretx, y + carety, font8:getWidth(text)*sx, fontheight*sy)
+		love.graphics.rectangle("fill", x + caretx, y + carety, font:getWidth(text)*sx, fontheight*sy)
 
 		love.graphics.setColor(unpack(oldcol))
 
-		love.graphics.rectangle("line", x + caretx, y + carety, font8:getWidth(text)*sx, fontheight*sy)
+		love.graphics.rectangle("line", x + caretx, y + carety, font:getWidth(text)*sx, fontheight*sy)
 
 		ved_print(text, x + caretx, y + carety, sx, sy)
-		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + font8:getWidth(prefix)*sx, y + carety + fontheight*sy)
+		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + font:getWidth(prefix)*sx, y + carety + fontheight*sy)
 
 		if #oldscissor > 0 then
 			love.graphics.setScissor(unpack(oldscissor))
@@ -1574,9 +1578,11 @@ function input.setmousearea(id, ...)
 	input.areas[id] = {...}
 end
 
-function input.mousepressed(id, x, y, sx, sy, lineh)
+function input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 	local multiline = type(inputs[id]) == "table"
-	local fontheight = lineh or font8:getHeight()
+	local fontheight = lineh or font:getHeight()
+
+	y = font:y_align(y, cjk_align, sy)
 
 	if input.hex[id] ~= nil then
 		-- Don't use input.stophex(),
@@ -1657,12 +1663,12 @@ function input.mousepressed(id, x, y, sx, sy, lineh)
 		line = inputs[id]
 	end
 
-	mousex = math.min(math.max(mousex, 0), font8:getWidth(line))
+	mousex = math.min(math.max(mousex, 0), font:getWidth(line))
 
 	local currentx = 0
 	local thiswidth
 	for thispos = 1, utf8.len(line) do
-		thiswidth = font8:getWidth(utf8.sub(line, thispos, thispos))
+		thiswidth = font:getWidth(utf8.sub(line, thispos, thispos))
 		currentx = currentx + thiswidth
 
 		if currentx - thiswidth/2 > mousex then

@@ -144,9 +144,9 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 
 	if s.scripteditor_largefont then
-		newinputsys.drawcas("script_lines", 104, scriptscroll+24+font_height_sc-8, 2, nil, font_height)
+		newinputsys.drawcas("script_lines", 104, scriptscroll+24+font_height_sc-8, font_level, nil, 2)
 	else
-		newinputsys.drawcas("script_lines", 56, scriptscroll+24+font_height_sc, nil, nil, font_height)
+		newinputsys.drawcas("script_lines", 56, scriptscroll+24+font_height_sc, font_level)
 	end
 
 	love.graphics.setScissor()

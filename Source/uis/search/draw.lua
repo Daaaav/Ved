@@ -2,7 +2,7 @@
 
 return function()
 	ved_print(L.SEARCHFOR, 12, 10)
-	newinputsys.print("search", font8:getWidth(L.SEARCHFOR)+20, 10)
+	newinputsys.print("search", font8:getWidth(L.SEARCHFOR)+20, 10, font_level)
 
 	ved_printf(langkeys(L.SEARCHRESULTS_SCRIPTS, {#searchscripts}), 8, 32+4, 284, "center")
 	ved_printf(langkeys(L.SEARCHRESULTS_ROOMS, {#searchrooms}), 8+284+4, 32+4, 284, "center")
