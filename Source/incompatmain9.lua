@@ -1,7 +1,7 @@
 function love.load()
 	create_fallback_window()
 
-	loadfonts()
+	loadfonts_main()
 
 	-- Get the strings from every language!
 	local languagesarray = love.filesystem.getDirectoryItems("lang")
@@ -17,11 +17,12 @@ function love.load()
 end
 
 function love.draw()
-	font8:frame_start()
+	font_8x8:frame_start()
 
+	-- TODO: lang-specific fonts
 	ved_printf(message, 10, 10, love.graphics.getWidth()-20, "center")
 
-	ved_print(
+	font_8x8:print(
 		"Ved version: " .. ved_ver_human() .. "\n"
 		.. "LÖVE version: " .. love_ver_human(),
 		8, love.graphics.getHeight()-21

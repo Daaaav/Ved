@@ -24,17 +24,12 @@ return function()
 	) do
 		if v then
 			local label = L[v:upper()]
-			local affects_font = false
 
 			checkbox(s[v], 8, 8+(22*k), v, label,
 				function(key, newvalue)
 					s[key] = newvalue
 					if key == "showfps" then
 						savedwindowtitle = ""
-					elseif affects_font then
-						loadfonts()
-						unloadlanguage()
-						loadlanguage()
 					end
 				end
 			)

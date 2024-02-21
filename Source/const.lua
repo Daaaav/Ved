@@ -216,6 +216,11 @@ platform_labels = {
 	[8] = "<<<<<<<<",
 }
 
+arrow_up = "↑"
+arrow_down = "↓"
+arrow_left = "←"
+arrow_right = "→"
+
 -- States in which the map is loaded at low priority
 lowprio_maploading_states = {
 	[3] = true,

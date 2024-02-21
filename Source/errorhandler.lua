@@ -83,8 +83,8 @@ function ved_showerror(msg)
 		create_fallback_window()
 	end
 
-	if font8 == nil then
-		loadfonts()
+	if font_ui == nil then
+		loadfonts_main()
 	end
 
 	msg = tostring(msg)
@@ -281,7 +281,7 @@ function ved_showerror(msg)
 
 
 	local function draw()
-		font8:frame_start()
+		font_ui:frame_start()
 
 		local pos = 40
 		love.graphics.clear(love.graphics.getBackgroundColor())
@@ -383,8 +383,8 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 		create_fallback_window()
 	end
 
-	if font8 == nil then
-		loadfonts()
+	if font_ui == nil then
+		loadfonts_main()
 	end
 
 	local lg_clear
@@ -476,7 +476,7 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 
 	local function draw()
-		font8:frame_start()
+		font_ui:frame_start()
 
 		local pos = 40
 		lg_clear(love.graphics.getBackgroundColor())

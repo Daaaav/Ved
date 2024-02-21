@@ -5,16 +5,24 @@ return function()
 	ved_print(L.LANGUAGE, language_x, 32+4)
 
 	for k,v in pairs(all_languages) do
-		local langname
+		local langname, font
 		if langinfo[v] ~= nil then
 			langname = langinfo[v].name
 		else
 			langname = v
 		end
+		if langinfo[v] ~= nil then
+			font = fonts_main[langinfo[v].font]
+		end
+		if font == nil then
+			font = font_8x8
+		end
 		radio(s.lang == v, language_x, 32+(24*k), v, langname,
 			function(key)
 				changelanguage(key)
-			end
+			end,
+			nil,
+			font
 		)
 	end
 

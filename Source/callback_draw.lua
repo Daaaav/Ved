@@ -9,7 +9,12 @@ function love.draw()
 		love.graphics.scale(s.pscale,s.pscale)
 	end
 
-	font8:frame_start()
+	for k,font in pairs(fonts_main) do
+		font:frame_start()
+	end
+	for k,font in pairs(fonts_custom) do
+		font:frame_start()
+	end
 	tinyfont:frame_start()
 
 	hook("love_draw_state")

@@ -552,7 +552,7 @@ end
 function user_reload_tilesets()
 	-- User pressed F11 to reload tilesets
 	loadtilesets()
-	loadfonts()
+	loadfonts_custom()
 	tile_batch_texture_needs_update = true
 	map_init()
 	temporaryroomname = L.TILESETSRELOADED
@@ -650,9 +650,10 @@ function onrbutton(pos, yoffset, bottom, buttonspacing)
 	end
 end
 
-function radio_wrap(selected, x, y, key, label, label_max_width, onclickfunc, onhoverfunc)
+function radio_wrap(selected, x, y, key, label, label_max_width, onclickfunc, onhoverfunc, font)
 	-- label_max_width is allowed to be nil (Ved has its own :getWrap that explicitly allows it)
-	local clickable_w, label_lines = font8:getWrap(label, label_max_width)
+	font = font or font_ui
+	local clickable_w, label_lines = font:getWrap(label, label_max_width)
 	clickable_w = clickable_w + 8 + 32
 	hoverdraw(
 		selected and image.radioon_hq or image.radiooff_hq,
@@ -666,9 +667,9 @@ function radio_wrap(selected, x, y, key, label, label_max_width, onclickfunc, on
 		print_y = y
 	end
 	if label_max_width ~= nil then
-		ved_printf(label, x+16+8, print_y, label_max_width, "left")
+		font:printf(label, x+16+8, print_y, label_max_width, "left")
 	else
-		ved_print(label, x+16+8, print_y)
+		font:print(label, x+16+8, print_y)
 	end
 	love.graphics.setColor(255,255,255)
 
@@ -684,17 +685,18 @@ function radio_wrap(selected, x, y, key, label, label_max_width, onclickfunc, on
 	end
 end
 
-function radio(selected, x, y, key, label, onclickfunc, onhoverfunc)
-	radio_wrap(selected, x, y, key, label, nil, onclickfunc, onhoverfunc)
+function radio(selected, x, y, key, label, onclickfunc, onhoverfunc, font)
+	radio_wrap(selected, x, y, key, label, nil, onclickfunc, onhoverfunc, font)
 end
 
-function checkbox(selected, x, y, key, label, onclickfunc, onhoverfunc)
-	local clickable_w = 8+32+font8:getWidth(label)
+function checkbox(selected, x, y, key, label, onclickfunc, onhoverfunc, font)
+	font = font or font_ui
+	local clickable_w = 8+32+font:getWidth(label)
 	hoverdraw(
 		selected and image.checkon_hq or image.checkoff_hq,
 		x, y, clickable_w, 16
 	)
-	ved_print(label, x+16+8, y+4)
+	font:print(label, x+16+8, y+4)
 
 	if nodialog and mouseon(x, y, clickable_w, 16) then
 		if onhoverfunc ~= nil then
@@ -1390,7 +1392,7 @@ function state6load(levelname)
 			if level_assets_loaded or getlevelassetsfolder() ~= nil then
 				-- Either previous or new level has level-specific assets, so reload.
 				loadtilesets()
-				loadfonts()
+				loadfonts_custom()
 				tile_batch_texture_needs_update = true
 			end
 			if state == 6 then
@@ -1870,7 +1872,7 @@ function triggernewlevel(width, height)
 	unloadvvvvvvmusics_level()
 	if level_assets_loaded then
 		loadtilesets()
-		loadfonts()
+		loadfonts_custom()
 		tile_batch_texture_needs_update = true
 	end
 	tostate(1)

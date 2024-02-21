@@ -1,67 +1,80 @@
 require("vedfont")
 
-function loadfonts()
-	-- load font8, either provided or customized, depending on settings for font.png
+function read_font_file(custom_folder, font_name, ext)
+	-- custom_folder can be the path to a level-specific
+	-- fonts folder, or nil to signify a built-in font.
+	-- Returns contents, or nil
 
-	fontpng_works = false
-	local fontpng_folder, fontpng_contents
-
-	-- First try level-specific fonts... If we're ready for that, and it's enabled.
-	if s ~= nil and editingmap ~= nil then
-		local levelassets = getlevelassetsfolder()
-		if levelassets ~= nil then
-			fontpng_folder = levelassets .. dirsep .. "graphics"
-			fontpng_works, fontpng_contents = readfile(fontpng_folder .. dirsep .. "font.png")
-		end
+	if custom_folder == nil then
+		return love.filesystem.read("fonts/" .. font_name .. ext)
 	end
 
-	local custom_imgdata, custom_txt, custom_fontmeta = nil, nil, nil
-	if fontpng_works then
-		-- Use a customized font.png with the built-in as fallback
-
-		local success
-		success, custom_txt = readfile(fontpng_folder .. dirsep .. "font.txt")
-		if not success then
-			custom_txt = nil
-		end
-
-		success, custom_fontmeta = readfile(fontpng_folder .. dirsep .. "font.fontmeta")
-		if not success then
-			custom_fontmeta = nil
-		end
-
-		custom_imgdata = love.image.newImageData(
-			love.filesystem.newFileData(fontpng_contents, "font.png", "file")
-		)
-	end
-
-	-- The font that comes with Ved
-	local builtin_imgdata = love.image.newImageData("fonts/font.png")
-	local builtin_fontmeta = love.filesystem.read("fonts/font.fontmeta")
-
-	font8 = cVedFont:new{standard_height=8}
-	font8:init(custom_imgdata, custom_txt, custom_fontmeta, builtin_imgdata, nil, builtin_fontmeta)
-
-	if font8:has_glyphs("↑↓←→", true) then
-		arrow_up = "↑"
-		arrow_down = "↓"
-		arrow_left = "←"
-		arrow_right = "→"
-	else
-		arrow_up = "^"
-		arrow_down = "V"
-		arrow_left = "<"
-		arrow_right = ">"
+	local success, contents = readfile(custom_folder .. dirsep .. font_name .. ext)
+	if success then
+		return contents
 	end
 end
 
-function init_coretext()
-	loadfonts()
+function load_font_filename(fonts, custom_folder, font_name)
+	local png_contents = read_font_file(custom_folder, font_name, ".png")
+	if png_contents ~= nil then
+		local txt_contents = read_font_file(custom_folder, font_name, ".txt")
+		local fontmeta_contents = read_font_file(custom_folder, font_name, ".fontmeta")
+
+		local fallback_imgdata, fallback_fontmeta_contents
+		local fallback = fontmeta_contents:match("<fallback>(.-)</fallback>")
+		if fallback ~= nil then
+			-- Fallback fonts can only be main fonts, so we can cut corners a liiitle bit...
+			fallback_png_contents = read_font_file(nil, fallback, ".png")
+			fallback_fontmeta_contents = read_font_file(nil, fallback, ".fontmeta")
+
+			if fallback_png_contents ~= nil and fallback_fontmeta_contents ~= nil then
+				fallback_imgdata = love.image.newImageData(
+					love.filesystem.newFileData(fallback_png_contents, fallback.. ".png", "file")
+				)
+			end
+		end
+
+		imgdata = love.image.newImageData(
+			love.filesystem.newFileData(png_contents, font_name .. ".png", "file")
+		)
+
+		fonts[font_name] = cVedFont:new{standard_height=8}
+		fonts[font_name]:init(
+			imgdata,
+			txt_contents,
+			fontmeta_contents,
+			fallback_imgdata,
+			nil,
+			fallback_fontmeta_contents
+		)
+	end
+end
+
+function loadfonts_main()
+	-- Load the main (built-in) fonts. This should only be needed once in a session.
+	fonts_main = {}
+	fonts_custom = {}
+
+	local files = love.filesystem.getDirectoryItems("fonts")
+	for k,file_name in pairs(files) do
+		if file_name:sub(-9) == ".fontmeta" then
+			local font_name = file_name:sub(1,-10)
+			load_font_filename(fonts_main, nil, font_name)
+		end
+	end
 
 	font_ui = {}
 	font_ui_metatable = {
 		__index = function(table, index)
-			return font8[index]
+			if s ~= nil and s.lang ~= nil
+			and langinfo ~= nil
+			and langinfo[s.lang] ~= nil
+			and langinfo[s.lang].font ~= nil
+			and fonts_main[langinfo[s.lang].font] ~= nil then
+				return fonts_main[langinfo[s.lang].font][index]
+			end
+			return font_8x8[index]
 		end
 	}
 	setmetatable(font_ui, font_ui_metatable)
@@ -69,7 +82,21 @@ function init_coretext()
 	font_level = {}
 	font_level_metatable = {
 		__index = function(table, index)
-			return font8[index]
+			local font = "font"
+			if metadata ~= nil and metadata.font ~= nil then
+				font = metadata.font
+			end
+
+			if fonts_custom[font] ~= nil then
+				return fonts_custom[font][index]
+			end
+			if fonts_main[font] ~= nil then
+				return fonts_main[font][index]
+			end
+			if fonts_custom["font"] ~= nil then
+				return fonts_custom["font"][index]
+			end
+			return font_8x8[index]
 		end
 	}
 	setmetatable(font_level, font_level_metatable)
@@ -77,15 +104,43 @@ function init_coretext()
 	font_8x8 = {}
 	font_8x8_metatable = {
 		__index = function(table, index)
-			return font8[index]
+			assert(fonts_main["font"] ~= nil, "Main font is missing!")
+			return fonts_main["font"][index]
 		end
 	}
 	setmetatable(font_8x8, font_8x8_metatable)
+
+	-- font8 is deprecated
+	font8 = {}
+	setmetatable(font8, font_8x8_metatable)
+end
+
+function loadfonts_custom()
+	-- Load the level-specific fonts
+	fonts_custom = {}
+
+	if editingmap ~= nil then
+		local levelassets = getlevelassetsfolder()
+		if levelassets ~= nil then
+			local fonts_folder = levelassets .. graphicsfolder_rel
+
+			-- Load font.png separately, it's not required to have a .fontmeta...
+			load_font_filename(fonts_custom, fonts_folder, "font")
+
+			local success, files = listfiles_generic(fonts_folder, ".fontmeta", true)
+			for k,file in pairs(files) do
+				if file.name ~= "font.fontmeta" then
+					local font_name = file.name:sub(1,-10)
+					load_font_filename(fonts_custom, fonts_folder, font_name)
+				end
+			end
+		end
+	end
 end
 
 function loadlanginfo()
 	-- Load the language properties for all languages.
-	-- Language properties include the name, and in the future could have stuff like fonts, RTL, etc
+	-- Language properties include the name, fonts, RTL, etc
 	langinfo = {}
 	local contents = love.filesystem.read("lang/info.xml")
 	if contents == nil then
@@ -219,21 +274,26 @@ function loadtinyfont()
 end
 
 function ved_print(text, x, y, sx, sy)
+	-- Deprecated
 	font_8x8:print(text, x, y, nil, sx, sy)
 end
 
 function ved_printf(text, x, y, max_width, align, sx, sy)
+	-- Deprecated
 	font_8x8:printf(text, x, y, max_width, align, nil, sx, sy)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)
+	-- Deprecated
 	font_8x8:shadowprint(text, x, y, nil, sx, sy)
 end
 
 function ved_shadowprintf(text, x, y, limit, align, sx, sy)
+	-- Deprecated
 	font_8x8:shadowprintf(text, x, y, limit, align, nil, sx, sy)
 end
 
 function ved_shadowprint_tiny(text, x, y, sx, sy)
+	-- Deprecated
 	tinyfont:shadowprint(text, x, y, nil, sx, sy)
 end
