@@ -67,7 +67,12 @@ function table.copy(t)
 	local t2 = {}
 	for k,v in pairs(t) do
 		if type(v) == "table" then
-			t2[k] = table.copy(v)
+			if getmetatable(v) ~= nil then
+				-- Special case...... We probably don't want to deepcopy objects
+				t2[k] = v
+			else
+				t2[k] = table.copy(v)
+			end
 		else
 			t2[k] = v
 		end

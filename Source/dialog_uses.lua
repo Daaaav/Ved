@@ -2,13 +2,20 @@ function generate_dropdown_tables(tuples)
 	-- Converts a table with key-value tuples into the three dropdown/radio arguments as
 	-- described in the technical documentation.
 	-- tuples must be structured like {{0.5, "50%"}, {1, "100%"}, {2, "200%"}}
+	-- It's also possible to add a font as a third element: {0.5, "50%", font_ui}
 
 	local displaylist = {}
 	local keyvalue = {}
+	local fonts = {}
 
 	for _,v in pairs(tuples) do
 		table.insert(displaylist, v[2])
 		keyvalue[v[1]] = v[2]
+		local font = font_ui
+		if v[3] ~= nil then
+			font = v[3]
+		end
+		table.insert(fonts, font)
 	end
 
 	return displaylist, keyvalue,
@@ -18,7 +25,8 @@ function generate_dropdown_tables(tuples)
 				return v[1]
 			end
 		end
-	end
+	end,
+	fonts
 end
 
 -- Some forms are tables directly, some are functions returning tables (those are prefixed _make).
@@ -231,9 +239,26 @@ function dialog.form.leveloptions_make()
 end
 
 function dialog.form.advancedleveloptions_make()
+	local font_keys_sorted = {}
+	for k in pairs(fonts_main) do
+		table.insert(font_keys_sorted, k)
+	end
+	table.sort(font_keys_sorted)
+
+	local fonts_kv = {}
+	for _,k in pairs(font_keys_sorted) do
+		local font = fonts_main[k]
+		if font.font_type ~= "buttons" then
+			table.insert(fonts_kv, {k, font.display_name, font})
+		end
+	end
+
 	return {
-		{"", 2, 0, 46, L.ONEWAYCOL_OVERRIDE, DF.LABEL},
-		{"onewaycol_override", 0, 0, 2+math.min(font8:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
+		{"", 0, 0, 40, L.LEVELFONT, DF.LABEL},
+		{"font", 0, 1, 30, metadata.font, DF.DROPDOWN, generate_dropdown_tables(fonts_kv)},
+
+		{"", 2, 3, 46, L.ONEWAYCOL_OVERRIDE, DF.LABEL},
+		{"onewaycol_override", 0, 3, 2+math.min(font8:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
 	}
 end
 
@@ -1090,7 +1115,7 @@ function dialog.callback.advancedleveloptions(button, fields)
 	end
 
 	-- What are the old properties?
-	local undo_propertynames = {"onewaycol_override"}
+	local undo_propertynames = {"font", "onewaycol_override"}
 	local undo_properties = {}
 	for k,v in pairs(undo_propertynames) do
 		undo_properties[k] = {
@@ -1100,6 +1125,7 @@ function dialog.callback.advancedleveloptions(button, fields)
 	end
 
 	-- Level properties
+	metadata.font = fields.font
 	metadata.onewaycol_override = fields.onewaycol_override
 
 	--What are the new properties again?

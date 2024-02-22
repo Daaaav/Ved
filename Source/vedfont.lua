@@ -32,6 +32,8 @@ cVedFont =
 	standard_height = nil, -- the height expected for non-CJK, as in 8 (optional)
 
 	--== PRIVATE ==--
+	font_type = "font",
+	display_name = "undefined",
 	glyph_w = nil,
 	glyph_h = nil,
 
@@ -80,6 +82,14 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 	local white_teeth_fallback = false
 
 	if fontmeta ~= nil then
+		local font_type = fontmeta:match("<type>(.-)</type>")
+		if font_type ~= nil then
+			self.font_type = font_type
+		end
+		local display_name = fontmeta:match("<display_name>(.-)</display_name>")
+		if display_name ~= nil then
+			self.display_name = display_name
+		end
 		local w = tonumber(fontmeta:match("<width>(.-)</width>"))
 		local h = tonumber(fontmeta:match("<height>(.-)</height>"))
 		if w ~= nil then

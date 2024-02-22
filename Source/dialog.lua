@@ -56,6 +56,7 @@ DFP = {
 	DROPDOWN_MENUITEMS = 7,
 	DROPDOWN_MENUITEMSLABEL = 8,
 	DROPDOWN_ONCHANGE = 9,
+	DROPDOWN_MENUFONTS = 10,
 	CHECKBOX_ONCHANGE = 7,
 	FILES_MENUITEMS = 7,
 	FILES_FOLDER_FILTER = 8,
@@ -389,7 +390,7 @@ function cDialog:dropdown_onchange(key, picked)
 	for k,v in pairs(self.fields) do
 		if v[DFP.KEY] == key then
 			local new_value = nil
-			if v[DFP.DROPDOWN_ONCHANGE] ~= nil then
+			if v[DFP.DROPDOWN_ONCHANGE] then
 				new_value = v[DFP.DROPDOWN_ONCHANGE](picked, v[DFP.DROPDOWN_MENUITEMS], v[DFP.DROPDOWN_MENUITEMSLABEL], self)
 			end
 			if new_value == nil then
@@ -419,7 +420,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 	if mode == DF.TEXT then
 		content_r = ...
 	elseif mode == DF.DROPDOWN or mode == DF.RADIOS then
-		menuitems, menuitemslabel = ...
+		menuitems, menuitemslabel, _, menufonts = ...
 	elseif mode == DF.CHECKBOX then
 		onchange = ...
 	elseif mode == DF.FILES then
@@ -461,7 +462,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				self.currentfield = n
 
 				if mode == DF.DROPDOWN and not RCMactive then
-					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+12, true) -- y+h
+					rightclickmenu.create(menuitems, "dia_" .. key, real_x, (real_y-3)+12, true, menufonts) -- y+h
 
 					if love.mouse.isDown("l") then
 						mousepressed = true
@@ -488,11 +489,25 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 			love.graphics.setScissor()
 		elseif mode == DF.DROPDOWN then
-			if not menuitemslabel then
-				ved_print(anythingbutnil(content), real_x, real_y-3+2)
+			local label
+			if menuitemslabel then
+				label = menuitemslabel[content]
 			else
-				ved_print(anythingbutnil(menuitemslabel[content]), real_x, real_y-3+2)
+				label = content
 			end
+
+			local font = font_ui
+			if menufonts then
+				-- When fields have gotten a big overhaul, probably just make this field.font...
+				-- Or better idea, just base it on the key instead.
+				for k,v in pairs(menuitems) do
+					if label == v then
+						font = menufonts[k]
+					end
+				end
+			end
+
+			font:print(anythingbutnil(label), real_x, real_y-3+2)
 			love.graphics.draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
 		end
 	elseif mode == DF.CHECKBOX then

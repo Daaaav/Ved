@@ -67,7 +67,7 @@ function loadfonts_main()
 		files = love.filesystem.enumerate("fonts")
 	end
 	for k,file_name in pairs(files) do
-		if file_name:sub(-9) == ".fontmeta" then
+		if file_name:sub(-9) == ".fontmeta" and file_name ~= "tinyfont.fontmeta" then
 			local font_name = file_name:sub(1,-10)
 			load_font_filename(fonts_main, nil, font_name)
 		end

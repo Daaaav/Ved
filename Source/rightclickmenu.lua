@@ -1,5 +1,5 @@
 rightclickmenu = {}
-function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
+function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog, fonts)
 	if menuposx == nil then
 		menuposx = love.mouse.getX()
 	end
@@ -14,15 +14,23 @@ function rightclickmenu.create(items, menuid, menuposx, menuposy, abovedialog)
 	RCMy = math.min(menuposy, love.graphics.getHeight()-(#items*16))
 	RCMactualy = menuposy -- In case we want to have this back
 	RCMitems = items
+	RCMfonts = fonts
 	RCMid = menuid -- can be anything, really
 	RCMabovedialog = abovedialog == true
 	RCMwidth = 240
 	for k,v in pairs(items) do
-		local w = font8:getWidth(v)+8
+		local w = rightclickmenu.item_font(k):getWidth(v)+8
 		if w > RCMwidth then
 			RCMwidth = w
 		end
 	end
+end
+
+function rightclickmenu.item_font(k)
+	if RCMfonts ~= nil and RCMfonts[k] ~= nil then
+		return RCMfonts[k]
+	end
+	return font_ui
 end
 
 function rightclickmenu.draw()
@@ -31,6 +39,8 @@ function rightclickmenu.draw()
 	end
 
 	for k,v in pairs(RCMitems) do
+		local font = rightclickmenu.item_font(k)
+
 		if v:sub(1, 1) == "#" then
 			love.graphics.setColor(112,112,112,216)
 			love.graphics.rectangle("fill", RCMx, (k-1)*16+RCMy, RCMwidth, 16)
@@ -38,14 +48,14 @@ function rightclickmenu.draw()
 			if v == "#-" then
 				love.graphics.rectangle("fill", RCMx+1, (k-1)*16+RCMy+8, RCMwidth-2, 1)
 			else
-				ved_print(v:sub(2, -1), RCMx+5, (k-1)*16+RCMy+4)
+				font:print(v:sub(2, -1), RCMx+5, (k-1)*16+RCMy+4)
 			end
 			love.graphics.setColor(255,255,255,255)
 		else
 			if hoverrectangle(112,112,112,216, RCMx, (k-1)*16+RCMy, RCMwidth, 16, true) then
 				love.graphics.setColor(255,255,128,255)
 			end
-			ved_print(v, RCMx+5, (k-1)*16+RCMy+4)
+			font:print(v, RCMx+5, (k-1)*16+RCMy+4)
 			love.graphics.setColor(255,255,255,255)
 		end
 	end
