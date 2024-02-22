@@ -65,7 +65,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 		elseif docolor then
 			setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end
-		ved_print(text, x, y, textscale)
+		font_level:print(text, x, y, nil, textscale)
 
 		return nil
 	else
@@ -135,7 +135,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				end
 
 				-- First print the non-separator word!
-				ved_print(v, x+offset_width, y, textscale)
+				font_level:print(v, x+offset_width, y, nil, textscale)
 
 				offset_chars = offset_chars + utf8.len(v)
 				offset_width = offset_width + font_level:getWidth(v)*textscale
@@ -144,10 +144,11 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				local separator = utf8.sub(text, 1+offset_chars, 1+offset_chars)
 				local separator_width = font_level:getWidth(separator)*textscale
 				setColorArr(s.syntaxcolor_separator)
-				ved_print(
+				font_level:print(
 					separator,
 					x + offset_width,
 					y,
+					nil,
 					textscale
 				)
 
@@ -155,7 +156,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				offset_width = offset_width + separator_width
 			end
 		else -- not docolor
-			ved_print(text:sub(1, text:len()), x, y, textscale)
+			font_level:print(text:sub(1, text:len()), x, y, nil, textscale)
 		end
 
 		-- `say` and `reply` are exceptions - they still work when they're capitalized even with no argument separators
