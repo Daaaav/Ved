@@ -6,7 +6,11 @@ function read_font_file(custom_folder, font_name, ext)
 	-- Returns contents, or nil
 
 	if custom_folder == nil then
-		return love.filesystem.read("fonts/" .. font_name .. ext)
+		local success, contents = pcall(love.filesystem.read, "fonts/" .. font_name .. ext)
+		if not success then
+			contents = nil
+		end
+		return contents
 	end
 
 	local success, contents = readfile(custom_folder .. dirsep .. font_name .. ext)
@@ -56,7 +60,12 @@ function loadfonts_main()
 	fonts_main = {}
 	fonts_custom = {}
 
-	local files = love.filesystem.getDirectoryItems("fonts")
+	local files
+	if love_version_meets(9) then
+		files = love.filesystem.getDirectoryItems("fonts")
+	else
+		files = love.filesystem.enumerate("fonts")
+	end
 	for k,file_name in pairs(files) do
 		if file_name:sub(-9) == ".fontmeta" then
 			local font_name = file_name:sub(1,-10)

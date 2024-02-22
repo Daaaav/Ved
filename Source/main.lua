@@ -106,10 +106,8 @@ print(_VERSION)
 print("")
 
 
-if not love_version_meets(9) then
-	require("incompatmain8")
-elseif not love_version_meets(9,1) then
-	require("incompatmain9")
+if not love_version_meets(9,1) then
+	require("incompatmain")
 else
 	-- How recent is our love2d version?
 	if love_version_meets(10) then
