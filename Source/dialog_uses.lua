@@ -195,15 +195,15 @@ function dialog.form.leveloptions_make()
 
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
-		{"Title", 8, 0, 20, metadata.Title, DF.TEXT},
+		{"Title", 8, 0, 20, metadata.Title, DF.TEXT, "", font_level},
 		{"", 0, 1, 8, L.OPTBY, DF.LABEL},
-		{"Creator", 8, 1, 37, metadata.Creator, DF.TEXT},
+		{"Creator", 8, 1, 37, metadata.Creator, DF.TEXT, "", font_level},
 		{"", 0, 2, 8, L.OPTWEBSITE, DF.LABEL},
-		{"website", 8, 2, 40, metadata.website, DF.TEXT},
+		{"website", 8, 2, 40, metadata.website, DF.TEXT, "", font_level},
 		{"", 0, 4, 8, L.OPTDESC, DF.LABEL},
-		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT},
-		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT},
-		{"Desc3", 8, 6, 40, metadata.Desc3, DF.TEXT},
+		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT, "", font_level},
+		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT, "", font_level},
+		{"Desc3", 8, 6, 40, metadata.Desc3, DF.TEXT, "", font_level},
 		{"", 0, 8, 8, L.OPTMUSIC, DF.LABEL},
 		{
 			"levmusic_page", 8, 8, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,

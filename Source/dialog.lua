@@ -53,6 +53,7 @@ DFP = {
 	VALUE = 5,
 	T = 6,
 	TEXT_CONTENT_R = 7,
+	TEXT_FONT = 8,
 	DROPDOWN_MENUITEMS = 7,
 	DROPDOWN_MENUITEMSLABEL = 8,
 	DROPDOWN_ONCHANGE = 9,
@@ -414,11 +415,12 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		return
 	end
 
-	local content_r
-	local menuitems, menuitemslabel, onchange
+	local content_r, font
+	local menuitems, menuitemslabel, menufonts, onchange
 	local folder_filter, folder_show_hidden, listscroll, folder_error, list_height, filter_on
 	if mode == DF.TEXT then
-		content_r = ...
+		content_r, font = ...
+		font = font or font_ui
 	elseif mode == DF.DROPDOWN or mode == DF.RADIOS then
 		menuitems, menuitemslabel, _, menufonts = ...
 	elseif mode == DF.CHECKBOX then
@@ -479,13 +481,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		if mode == DF.TEXT then
 			love.graphics.setScissor(real_x, real_y-3, real_w, 12)
 			if active then
-				ved_print(
+				font:print(
 					anythingbutnil(content) .. __ .. anythingbutnil(allbutfirstUTF8(content_r)),
-					math.min(real_x, real_x+real_w-font8:getWidth(anythingbutnil(content) .. "_")),
+					math.min(real_x, real_x+real_w-font:getWidth(anythingbutnil(content) .. "_")),
 					real_y-3+2
 				)
 			else
-				ved_print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3+2)
+				font:print(anythingbutnil(content) .. anythingbutnil(content_r), real_x, real_y-3+2)
 			end
 			love.graphics.setScissor()
 		elseif mode == DF.DROPDOWN then
