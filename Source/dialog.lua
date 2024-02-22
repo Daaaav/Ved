@@ -533,11 +533,15 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			else
 				selected = v == menuitemslabel[content]
 			end
-			real_w = 16+font8:getWidth(v)
+			local font = font_ui
+			if menufonts then
+				font = menufonts[k]
+			end
+			real_w = 16+font:getWidth(v)
 			-- FIXME same height 10 problem
 			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-11+k*12+2, real_w, 10)
 			self:setColor(0,0,0,255)
-			ved_print(v, real_x+16, real_y-10+k*12+2)
+			font:print(v, real_x+16, real_y-10+k*12+2)
 			self:setColor(255,255,255,255)
 
 			if (mouseon(real_x, real_y-11+k*12, real_w, 12) and love.mouse.isDown("l") and not mousepressed) and not RCMactive then
