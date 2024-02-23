@@ -556,7 +556,30 @@ function loadlevel(path)
 	-- Some things that for now we'll have to hardcode carrying over...
 	-- If not found, they'll be nil, and we won't insert them later.
 	cons("Loading possible TextboxColours and SpecialRoomnames...")
-	thisextra.textboxcolors_xml = contents:match("<TextboxColours>(.*)</TextboxColours>")
+
+	x.textboxcolors = contents:match("<TextboxColours>(.*)</TextboxColours>")
+	thisextra.textboxcolors = {}
+
+	-- <colour> has already appeared in both self-closing form and not, so...
+	-- Temporary Lua pattern moment
+	for color in x.textboxcolors:gmatch("<colour (.-)>?<?/c?o?l?o?u?r?>") do
+		local attr = parsexmlattributes(color)
+		if attr.name ~= nil then
+			local r, g, b = 255, 255, 255
+			if attr.r ~= nil then
+				r = tonumber(attr.r)
+			end
+			if attr.g ~= nil then
+				g = tonumber(attr.g)
+			end
+			if attr.b ~= nil then
+				b = tonumber(attr.b)
+			end
+
+			thisextra.textboxcolors[attr.name] = {r, g, b}
+		end
+	end
+
 	thisextra.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
 
 	cons("Done loading!")
@@ -891,9 +914,21 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	cons("Assembling possible TextboxColours and SpecialRoomnames...")
 	local replace_textboxcolors = ""
 	local replace_specialroomnames = ""
-	if thisextra.textboxcolors_xml ~= nil then
-		replace_textboxcolors = "        <TextboxColours>" .. thisextra.textboxcolors_xml .. "</TextboxColours>\n"
+
+	local any_color_tag = false
+	local all_color_tags = {}
+	for k,v in pairs(thisextra.textboxcolors) do
+		table.insert(all_color_tags,
+			"\n            <colour r=\"" .. v[1] .. "\" g=\"" .. v[2] .. "\" b=\"" .. v[3] .. "\" name=\"" .. k .. "\"/>"
+		)
+		any_color_tag = true
 	end
+	if any_color_tag then
+		replace_textboxcolors = "        <TextboxColours>"
+			.. table.concat(all_color_tags, "")
+			.. "\n        </TextboxColours>\n"
+	end
+
 	if thisextra.specialroomnames_xml ~= nil then
 		replace_specialroomnames = "        <SpecialRoomnames>" .. thisextra.specialroomnames_xml .. "</SpecialRoomnames>\n"
 	end
@@ -1016,7 +1051,7 @@ function createblanklevel(lvwidth, lvheight)
 	-- Extra. Since we start with a VVVVVV level, this is empty.
 	thisextra = {}
 	-- Except... now that we have 2.4, just for completeness...
-	thisextra.textboxcolors_xml = nil
+	thisextra.textboxcolors = {}
 	thisextra.specialroomnames_xml = nil
 
 	cons("Done loading!")
