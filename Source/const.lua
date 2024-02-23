@@ -430,21 +430,7 @@ textboxcolors = {
 	white = {244, 244, 244},
 	gray = {174, 174, 174},
 	orange = {255, 130, 20},
-	transparent = {196, 196, 223}
-}
-
-alttextboxcolors = {
-	player = {19, 164, 255},
-	cyan = {19, 164, 255},
-	red = {19, 60, 60},
-	yellow = {19, 255, 134},
-	green = {19, 255, 144},
-	blue = {19, 95, 255},
-	purple = {19, 134, 255},
-	white = {19, 244, 244},
-	gray = {19, 174, 174},
-	orange = {19, 130, 20},
-	transparent = {19, 0, 0}
+	transparent = {0, 0, 0}
 }
 
 -- For showhotkey()

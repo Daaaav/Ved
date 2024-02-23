@@ -46,22 +46,56 @@ function parse_textbox_line_count(count)
 	return tonumber(count)
 end
 
+function get_createcrewman_r(name)
+	-- Basically implements VVVVVV's getcolorfromname(name).
+	if name == "player" or name == "cyan" or name == "customcyan" then
+		return 0
+	elseif name == "red" then
+		return 15
+	elseif name == "green" then
+		return 13
+	elseif name == "yellow" then
+		return 14
+	elseif name == "blue" then
+		return 16
+	elseif name == "purple" then
+		return 20
+	elseif name == "teleporter" then
+		return 102
+	end
+
+	-- If a number, then it's that number
+	local n = tonumber(name)
+	if n ~= nil and n >= 0 then
+		return n
+	end
+
+	-- Gray, or anything unrecognized
+	return 19
+end
+
+function set_textbox_color(text_color, alttextcolor)
+	if textboxcolors[text_color] == nil then
+		text_color = "gray"
+	end
+	local r, g, b = unpack(textboxcolors[text_color])
+	if alttextcolor ~= nil then
+		r = get_createcrewman_r(alttextcolor)
+	end
+	if r == 0 and g == 0 and b == 0 then
+		v6_setroomprintcol()
+	else
+		love.graphics.setColor(r, g, b)
+	end
+end
+
 function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor, alttextcolor)
 	local textscale = s.scripteditor_largefont and 2 or 1
 
 	local thisiscomment = text:sub(1,1) == "#" or text:sub(1,2) == "//"
 	if thisistext or thisiscomment then
-		if thisistext and s.colored_textboxes then
-			if alttextcolor then
-				if alttextboxcolors[lasttextcolor] == nil then
-					lasttextcolor = "gray"
-				end
-			elseif textboxcolors[lasttextcolor] == nil then
-				lasttextcolor = "gray"
-			end
-			if docolor then
-				setColorArr(alttextcolor and alttextboxcolors[lasttextcolor] or textboxcolors[lasttextcolor])
-			end
+		if docolor and thisistext and s.colored_textboxes then
+			set_textbox_color(lasttextcolor, alttextcolor)
 		elseif docolor then
 			setColorArr(thisistext and s.syntaxcolor_textbox or s.syntaxcolor_comment)
 		end

@@ -23,27 +23,37 @@ return function()
 	local textscale = s.scripteditor_largefont and 2 or 1
 	local font_height_sc = font_height * textscale
 
+	-- Arguments are sticky if not specified, we could remember
+	-- all of them but we only need alternate textbox colors...
+	local last_arg4 = 0
+
 	for k = 1, table.maxn(inputs.script_lines) do
 		v = anythingbutnil(inputs.script_lines[k])
 
 		local text2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 		local partss = explode(",", text2)
+		if partss[4] ~= nil then
+			-- See above, just for accurate highlighting of textbox colors...
+			last_arg4 = partss[4]
+		end
 		if partss[1] == "text" and textlinestogo == 0 then
 			textlinestogo = math.max(anythingbutnil0(partss[5]), 0)
 
 			if textlinestogo > 0 then
 				-- Search forward for a createcrewman unless we hit a speak(_active) first
 				local i = k + textlinestogo + 1
-				local l
 				while inputs.script_lines[i] ~= nil do
-					l = (inputs.script_lines[i]):gsub(" ", "")
-					if (l:len() > 13 and l:match("^createcrewman[%(,%)]")) or l == "createcrewman" then
-						alttextcolor = true
+					local l = inputs.script_lines[i]:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
+					partss = explode(",", l)
+					if partss[4] ~= nil then
+						-- See above, _again_... But now it's a forward-search
+						last_arg4 = partss[4]
+					end
+					if partss[1] == "createcrewman" then
+						alttextcolor = last_arg4
 						break
-					elseif ((l:len() > 5 and l:match("^speak[%(,%)]")) or l == "speak")
-					or ((l:len() > 12 and l:match("^speak_active[%(,%)]")) or l == "speak_active")
-					or ((l:len() > 4 and l:match("^text[%(,%)]")) or l == "text") then
-						alttextcolor = false
+					elseif partss[1] == "speak" or partss[1] == "speak_active" or partss[1] == "text" then
+						alttextcolor = nil
 						break
 					end
 
@@ -118,26 +128,44 @@ return function()
 			end
 
 			if k < table.maxn(inputs.script_lines) and syntaxhlon then
-				if alttextcolor then
-					if alttextboxcolors[textc] == nil then
-						textc = "gray"
-					end
-				elseif textboxcolors[textc] == nil then
-					textc = "gray"
-				end
-				love.graphics.setColor(alttextcolor and alttextboxcolors[textc] or textboxcolors[textc])
+				set_textbox_color(textc, alttextcolor)
+
 				if s.scripteditor_largefont then
-					love.graphics.rectangle("fill", 92, scriptscroll+24+(font_height_sc*k)+8, 6, textq*font_height_sc)
-					love.graphics.rectangle("fill", 92+max_textbox_width+16, scriptscroll+24+(font_height_sc*k)+8, 6, textq*font_height_sc)
+					love.graphics.rectangle(
+						"fill",
+						92,
+						scriptscroll+24+(font_height_sc*k)+8,
+						6,
+						textq*font_height_sc
+					)
+					love.graphics.rectangle(
+						"fill",
+						92+max_textbox_width+16,
+						scriptscroll+24+(font_height_sc*k)+8,
+						6,
+						textq*font_height_sc
+					)
 				else
-					love.graphics.rectangle("fill", 50, scriptscroll+24+(font_height_sc*k)+8, 3, textq*font_height_sc)
-					love.graphics.rectangle("fill", 50+max_textbox_width+8, scriptscroll+24+(font_height_sc*k)+8, 3, textq*font_height_sc)
+					love.graphics.rectangle(
+						"fill",
+						50,
+						scriptscroll+24+(font_height_sc*k)+8,
+						3,
+						textq*font_height_sc
+					)
+					love.graphics.rectangle(
+						"fill",
+						50+max_textbox_width+8,
+						scriptscroll+24+(font_height_sc*k)+8,
+						3,
+						textq*font_height_sc
+					)
 				end
 			end
 		elseif textlinestogo > 0 then
 			textlinestogo = textlinestogo - 1
 		else
-			alttextcolor = false
+			alttextcolor = nil
 		end
 	end
 
