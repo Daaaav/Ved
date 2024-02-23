@@ -75,10 +75,15 @@ function get_createcrewman_r(name)
 end
 
 function set_textbox_color(text_color, alttextcolor)
-	if textboxcolors[text_color] == nil then
-		text_color = "gray"
+	local r, g, b
+	if extra.textboxcolors[text_color] ~= nil then
+		r, g, b = unpack(extra.textboxcolors[text_color])
+	else
+		if textboxcolors[text_color] == nil then
+			text_color = "gray"
+		end
+		r, g, b = unpack(textboxcolors[text_color])
 	end
-	local r, g, b = unpack(textboxcolors[text_color])
 	if alttextcolor ~= nil then
 		r = get_createcrewman_r(alttextcolor)
 	end
