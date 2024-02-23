@@ -478,7 +478,7 @@ function love.keypressed(key)
 				e:keypressed(key)
 			end
 		end
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, key)
 			if v.recurse ~= nil then
 				v:recurse("keypressed", caller, key)

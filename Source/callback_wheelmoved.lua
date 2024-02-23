@@ -43,7 +43,7 @@ function love.wheelmoved(xm, ym)
 		local pos_x, pos_y = love.mouse.getPosition()
 
 		-- If needed, you might want to change this to cycle through elements in reverse and catch scrolls
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, xm, ym, pos_x, pos_y)
 			if v.recurse ~= nil then
 				v:recurse("wheelmoved", caller, xm, ym, pos_x, pos_y)

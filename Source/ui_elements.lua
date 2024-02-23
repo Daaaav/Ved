@@ -19,6 +19,18 @@
 --   The max width and height that are given to the draw function are rules meant to be broken...
 --   Meaning the draw function definitely does not have to adhere to it.
 
+function elements_iter(elements, container)
+	-- Iterate over a collection of elements, which could be
+	-- either a simple table or an iterator function.
+	-- NOTE: Make sure not to recreate UI elements every frame!
+	-- Instead you might consider using a cached list of elements, and using
+	-- the iterator to guard that the list is updated first, only when needed.
+	if type(elements) == "function" then
+		return elements(container)
+	end
+	return pairs(elements)
+end
+
 -- Generic drawing function
 elDrawingFunction =
 {
@@ -190,7 +202,7 @@ function elScreenContainer:draw(x, y, maxw, maxh)
 	if ch == nil then ch = maxh end
 	self.pw, self.ph = cw, ch
 
-	for k,v in pairs(self.els) do
+	for k,v in elements_iter(self.els, self) do
 		v:draw(x, y, maxw, maxh)
 	end
 
@@ -198,7 +210,7 @@ function elScreenContainer:draw(x, y, maxw, maxh)
 end
 
 function elScreenContainer:recurse(name, func, ...)
-	for k,v in pairs(self.els) do
+	for k,v in elements_iter(self.els, self) do
 		func(v, ...)
 		if v.recurse ~= nil then
 			v:recurse(name, func, ...)
@@ -235,6 +247,7 @@ function elListContainer:new(o)
 end
 
 function ListContainer(els_top, els_bot, cw, ch, align, starty, spacing, starty_bot, spacing_bot)
+	if els_top == nil then els_top = {} end
 	if els_bot == nil then els_bot = {} end
 	if align == nil then align = ALIGN.CENTER end
 	if starty == nil then starty = 0 end
@@ -255,6 +268,7 @@ function ListContainer(els_top, els_bot, cw, ch, align, starty, spacing, starty_
 end
 
 function HorizontalListContainer(els_left, els_right, cw, ch, align, startx, spacing, startx_right, spacing_right)
+	if els_left == nil then els_left = {} end
 	if els_right == nil then els_right = {} end
 	if align == nil then align = VALIGN.CENTER end
 	if startx == nil then startx = 0 end
@@ -304,7 +318,7 @@ function elListContainer:draw(x, y, maxw, maxh)
 	else
 		cur_y = self.start
 	end
-	for k,v in pairs(self.els_top) do
+	for k,v in elements_iter(self.els_top, self) do
 		local el_pw, el_ph = anythingbutnil0(v.pw), anythingbutnil0(v.ph)
 		if self.horizontal then
 			local el_y
@@ -352,13 +366,13 @@ function elListContainer:draw(x, y, maxw, maxh)
 end
 
 function elListContainer:recurse(name, func, ...)
-	for k,v in pairs(self.els_top) do
+	for k,v in elements_iter(self.els_top, self) do
 		func(v, ...)
 		if v.recurse ~= nil then
 			v:recurse(name, func, ...)
 		end
 	end
-	for k,v in pairs(self.els_bot) do
+	for k,v in elements_iter(self.els_bot, self) do
 		func(v, ...)
 		if v.recurse ~= nil then
 			v:recurse(name, func, ...)

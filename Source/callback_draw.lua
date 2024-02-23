@@ -29,7 +29,7 @@ function love.draw()
 		-- This master container doesn't define positions,
 		-- and just gives the window width and height as information.
 		local w, h = love.graphics.getDimensions()
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			v:draw(0, 0, w, h)
 		end
 
@@ -48,7 +48,7 @@ function love.draw()
 				love.graphics.line(el.px, el.py, el.px+w, el.py)
 				love.graphics.line(el.px, el.py, el.px, el.py+h)
 			end
-			for k,v in pairs(uis[state].elements) do
+			for k,v in elements_iter(uis[state].elements) do
 				drawcoords(v)
 				if v.recurse ~= nil then
 					v:recurse("debug_drawcoords", drawcoords)

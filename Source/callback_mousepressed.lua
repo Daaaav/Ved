@@ -67,7 +67,7 @@ function love.mousepressed(x, y, button)
 			end
 		end
 		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, x, y, button)
 			if v.recurse ~= nil then
 				v:recurse("mousepressed", caller, x, y, button)

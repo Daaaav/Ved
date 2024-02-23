@@ -109,7 +109,7 @@ function love.mousereleased(x, y, button)
 		end
 		-- If needed, you might want to change this to cycle through elements in reverse and catch clicks
 		-- Also, since this is mouse released, maybe only call this iff we already called mousepressed??
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, x, y, button)
 			if v.recurse ~= nil then
 				v:recurse("mousereleased", caller, x, y, button)

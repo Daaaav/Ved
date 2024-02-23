@@ -70,7 +70,7 @@ function love.textinput(char)
 				e:textinput(char)
 			end
 		end
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, char)
 			if v.recurse ~= nil then
 				v:recurse("textinput", caller, char)

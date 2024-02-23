@@ -168,7 +168,7 @@ function love.update(dt)
 				e:update(dt)
 			end
 		end
-		for k,v in pairs(uis[state].elements) do
+		for k,v in elements_iter(uis[state].elements) do
 			caller(v, dt)
 			if v.recurse ~= nil then
 				v:recurse("update", caller, dt)
