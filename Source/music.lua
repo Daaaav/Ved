@@ -460,7 +460,7 @@ function music_set_song_vvv_metadata(file, song, data_name, data_filename, data_
 end
 
 function music_get_last_valid(file)
-	if music[file] == nil then
+	if music[file] == nil or music[file].last_valid == nil then
 		return -1
 	end
 	return music[file].last_valid
