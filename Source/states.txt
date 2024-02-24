@@ -38,3 +38,4 @@ States:
 33	Language screen
 34	New-input-system-that-is-not-2-or-3-vars-concated-together test
 35	"VVVVVV setup" options
+36	Textbox colors

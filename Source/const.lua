@@ -433,6 +433,20 @@ textboxcolors = {
 	transparent = {0, 0, 0}
 }
 
+textboxcolors_order = {
+	"player",
+	"cyan",
+	"red",
+	"yellow",
+	"green",
+	"blue",
+	"purple",
+	"white",
+	"gray",
+	"orange",
+	"transparent"
+}
+
 -- For showhotkey()
 ALIGN = {
 	LEFT = 1,

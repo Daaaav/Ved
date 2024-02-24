@@ -3250,6 +3250,7 @@ function load_uis()
 	uis[33] = load_ui("language")
 	uis[34] = load_ui("inputtest")
 	uis[35] = load_ui("vvvvvvsetupoptions")
+	uis[36] = load_ui("textboxcolors")
 	-- Don't forget states.txt
 end
 

@@ -93,9 +93,10 @@ return function()
 
 	rbutton({L.NEW, "N"}, 0)
 	rbutton({L.FLAGS, "F"}, 1)
+	rbutton({L.TEXTBOXCOLORS_BUTTON, "C"}, 2)
 
-	ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 84, 112, "center")
-	checkbox(scriptdisplay_used, love.graphics.getWidth()-120, 104, nil, L.SCRIPTDISPLAY_USED,
+	ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 108, 112, "center")
+	checkbox(scriptdisplay_used, love.graphics.getWidth()-120, 128, nil, L.SCRIPTDISPLAY_USED,
 		function(key, newvalue)
 			scriptdisplay_used = newvalue
 			if not scriptdisplay_used and not scriptdisplay_unused then
@@ -104,7 +105,7 @@ return function()
 			changed_scriptdisplay = true
 		end
 	)
-	checkbox(scriptdisplay_unused, love.graphics.getWidth()-120, 128, nil, L.SCRIPTDISPLAY_UNUSED,
+	checkbox(scriptdisplay_unused, love.graphics.getWidth()-120, 152, nil, L.SCRIPTDISPLAY_UNUSED,
 		function(key, newvalue)
 			scriptdisplay_unused = newvalue
 			if not scriptdisplay_used and not scriptdisplay_unused then
@@ -115,7 +116,7 @@ return function()
 	)
 
 	if not (scriptdisplay_used and scriptdisplay_unused) then
-		ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 180, 112, "center")
+		ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 204, 112, "center")
 	end
 
 	-- Script count
@@ -140,6 +141,10 @@ return function()
 			-- Flags
 			mousepressed = true
 			tostate(19, false)
+		elseif onrbutton(2) then
+			-- Text colors
+			mousepressed = true
+			tostate(36)
 		elseif onrbutton(0, nil, true) then
 			-- Return
 			tostate(1, true)

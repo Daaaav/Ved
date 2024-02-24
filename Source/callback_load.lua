@@ -2,6 +2,7 @@ function love.load()
 	hook("love_load_start")
 
 	utf8 = require("utf8lib_wrapper")
+	require("table.clear")
 
 	ved_require("loadconfig")
 
@@ -225,6 +226,7 @@ function love.load()
 		savebtn_hq = love.graphics.newImage("images/save_hq.png"),
 		loadbtn = love.graphics.newImage("images/load.png"),
 		loadbtn_hq = love.graphics.newImage("images/load_hq.png"),
+		newbtn = love.graphics.newImage("images/new.png"),
 		newbtn_hq = love.graphics.newImage("images/new_hq.png"),
 		helpbtn = love.graphics.newImage("images/help.png"),
 		retbtn_hq = love.graphics.newImage("images/ret_hq.png"),

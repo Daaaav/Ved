@@ -1379,3 +1379,43 @@ function dialog.callback.create_assets_folder(button, fields)
 		end
 	end
 end
+
+function dialog.callback.create_textboxcolor(button, fields)
+	-- Create, duplicate or rename a textboxcolor.
+	-- Old name is textboxcolors_editingcolor, or nil if creating a new one.
+	-- New name is fields.name
+	-- If fields.rename, then rename instead of duplicate
+
+	if button ~= DB.OK then
+		return
+	end
+
+	local existed = extra.textboxcolors[fields.name] ~= nil
+	if not existed then
+		extra.textboxcolors[fields.name] = {}
+		table.insert(extra.textboxcolors_order, fields.name)
+	end
+	local r, g, b = 255, 255, 255
+	if textboxcolors_editingcolor ~= nil then
+		r, g, b = get_textbox_color(textboxcolors_editingcolor)
+	end
+	extra.textboxcolors[fields.name][1] = r
+	extra.textboxcolors[fields.name][2] = g
+	extra.textboxcolors[fields.name][3] = b
+
+	if fields.rename then
+		-- After copying, remove the old one
+		extra.textboxcolors[textboxcolors_editingcolor] = nil
+		for k,v in pairs(extra.textboxcolors_order) do
+			if v == textboxcolors_editingcolor then
+				table.remove(extra.textboxcolors_order, k)
+				break
+			end
+		end
+	end
+
+	textboxcolors_editingcolor = fields.name
+
+	textboxcolors_update_elements()
+	dirty()
+end

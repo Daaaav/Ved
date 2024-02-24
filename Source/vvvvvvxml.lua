@@ -559,24 +559,30 @@ function loadlevel(path)
 
 	x.textboxcolors = contents:match("<TextboxColours>(.*)</TextboxColours>")
 	thisextra.textboxcolors = {}
+	thisextra.textboxcolors_order = {}
 
 	-- <colour> has already appeared in both self-closing form and not, so...
 	-- Temporary Lua pattern moment
-	for color in x.textboxcolors:gmatch("<colour (.-)>?<?/c?o?l?o?u?r?>") do
-		local attr = parsexmlattributes(color)
-		if attr.name ~= nil then
-			local r, g, b = 255, 255, 255
-			if attr.r ~= nil then
-				r = tonumber(attr.r)
-			end
-			if attr.g ~= nil then
-				g = tonumber(attr.g)
-			end
-			if attr.b ~= nil then
-				b = tonumber(attr.b)
-			end
+	if x.textboxcolors ~= nil then
+		for color in x.textboxcolors:gmatch("<colour (.-)>?<?/c?o?l?o?u?r?>") do
+			local attr = parsexmlattributes(color)
+			if attr.name ~= nil then
+				local r, g, b = 255, 255, 255
+				if attr.r ~= nil then
+					r = tonumber(attr.r)
+				end
+				if attr.g ~= nil then
+					g = tonumber(attr.g)
+				end
+				if attr.b ~= nil then
+					b = tonumber(attr.b)
+				end
 
-			thisextra.textboxcolors[attr.name] = {r, g, b}
+				if thisextra.textboxcolors[attr.name] == nil then
+					table.insert(thisextra.textboxcolors_order, attr.name)
+				end
+				thisextra.textboxcolors[attr.name] = {r, g, b}
+			end
 		end
 	end
 
@@ -917,9 +923,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	local any_color_tag = false
 	local all_color_tags = {}
-	for k,v in pairs(thisextra.textboxcolors) do
+	for k,v in pairs(thisextra.textboxcolors_order) do
+		local color = thisextra.textboxcolors[v]
 		table.insert(all_color_tags,
-			"\n            <colour r=\"" .. v[1] .. "\" g=\"" .. v[2] .. "\" b=\"" .. v[3] .. "\" name=\"" .. k .. "\"/>"
+			"\n            <colour r=\"" .. color[1] .. "\" g=\"" .. color[2] .. "\" b=\"" .. color[3] .. "\" name=\"" .. v .. "\"/>"
 		)
 		any_color_tag = true
 	end
@@ -1052,6 +1059,7 @@ function createblanklevel(lvwidth, lvheight)
 	thisextra = {}
 	-- Except... now that we have 2.4, just for completeness...
 	thisextra.textboxcolors = {}
+	thisextra.textboxcolors_order = {}
 	thisextra.specialroomnames_xml = nil
 
 	cons("Done loading!")

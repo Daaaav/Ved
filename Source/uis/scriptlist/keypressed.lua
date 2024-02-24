@@ -13,6 +13,8 @@ return function(key)
 		)
 	elseif key == "f" then
 		tostate(19,false)
+	elseif key == "c" then
+		tostate(36)
 	elseif key == "/" then
 		if #scriptnames >= 1 then
 			scriptineditor(scriptnames[#scriptnames], #scriptnames)

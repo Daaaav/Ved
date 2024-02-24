@@ -418,6 +418,7 @@ elButton =
 	pw = 0, ph = 0,
 	label = nil, -- Not nil for a "LabelButton"
 	image = nil, -- Not nil for an "ImageButton"
+	color_func = nil, -- Not nil for a "ColorButton"
 	imagescale = 1,
 	action = nil,
 	hotkey_text = nil,
@@ -462,6 +463,19 @@ function ImageButton(image, scale, action, hotkey_text, hotkey_func, status_func
 	}
 end
 
+function ColorButton(color_func, w, h, action, hotkey_text, hotkey_func, status_func, action_r, hotkey_r_func)
+	return elButton:new{
+		pw = w, ph = h,
+		color_func = color_func,
+		action = action,
+		hotkey_text = hotkey_text,
+		hotkey_func = hotkey_func,
+		status_func = status_func,
+		action_r = action_r,
+		hotkey_r_func = hotkey_r_func
+	}
+end
+
 function InvisibleButton(w, h, action, hotkey_text, hotkey_func, status_func, action_r, hotkey_r_func)
 	return elButton:new{
 		pw = w, ph = h,
@@ -495,11 +509,16 @@ function elButton:draw(x, y, maxw, maxh)
 				hoverdraw(self.image, x, y, self.pw, self.ph, self.imagescale)
 			end
 		elseif self.label ~= nil then
-			local label = self.label
+			local label
+			if type(self.label) == "function" then
+				label = self.label()
+			else
+				label = self.label
+			end
 
 			-- Text too long to fit?
 			local textyoffset = 4
-			if (font8:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
+			if (font_ui:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
 				textyoffset = 0
 			end
 
@@ -516,7 +535,24 @@ function elButton:draw(x, y, maxw, maxh)
 			else
 				hoverrectangle(r,g,b,128, x, y, 128-16, 16)
 			end
-			ved_printf(label, x+1, y+textyoffset, 128-16, "center")
+			font_ui:printf(label, x+1, y+textyoffset, 128-16, "center")
+			love.graphics.setColor(255,255,255)
+		elseif self.color_func ~= nil then
+			local hovering = mouseon(x, y, self.pw, self.ph)
+			if hovering then
+				love.graphics.setColor(255,255,255)
+			else
+				love.graphics.setColor(224,224,224)
+			end
+			love.graphics.rectangle("fill", x, y, self.pw, self.ph)
+			love.graphics.setColor(self.color_func())
+			love.graphics.rectangle("fill", x+1, y+1, self.pw-2, self.ph-2)
+
+			if hovering then
+				love.graphics.setColor(255,255,255,96)
+				love.graphics.rectangle("fill", x, y, self.pw, self.ph)
+			end
+
 			love.graphics.setColor(255,255,255)
 		end
 
@@ -604,6 +640,8 @@ elText =
 	wrapped = true,
 	maxwidth = nil, -- nil to fill remaining parent width
 	align = "left",
+	font = nil,
+	cjk_align = nil,
 	sx = nil, sy = nil,
 	color_func = nil
 }
@@ -616,23 +654,32 @@ function elText:new(o)
 	return o
 end
 
-function Text(text, color_func, sx, sy)
+function Text(text, color_func, font, sx, sy)
+	if font == nil then font = font_ui end
+	local cjk_align = "cjk_low"
+
 	return elText:new{
 		text = text,
 		wrapped = false,
+		font = font,
+		cjk_align = cjk_align,
 		sx = sx, sy = sy,
 		color_func = color_func
 	}
 end
 
-function WrappedText(text, maxwidth, align, color_func, sx, sy)
+function WrappedText(text, maxwidth, align, color_func, font, sx, sy)
 	if align == nil then align = "left" end
+	if font == nil then font = font_ui end
+	local cjk_align = "cjk_low"
 
 	return elText:new{
 		text = text,
 		wrapped = true,
 		maxwidth = maxwidth,
 		align = align,
+		font = font,
+		cjk_align = cjk_align,
 		sx = sx, sy = sy,
 		color_func = color_func
 	}
@@ -665,20 +712,106 @@ function elText:draw(x, y, maxw, maxh)
 	end
 
 	if self.wrapped then
-		ved_printf(text, x, y, maxw, self.align, self.sx, self.sy)
+		self.font:printf(text, x, y, maxw, self.align, self.cjk_align, self.sx, self.sy)
 
-		local width, lines = font8:getWrap(text, maxw/(self.sx or 1))
-		self.pw, self.ph = width*(self.sx or 1), lines*font8:getHeight()*(self.sy or 1)
+		local width, lines = self.font:getWrap(text, maxw/(self.sx or 1))
+		self.pw = width*(self.sx or 1)
+		self.ph = lines*self.font:getHeight()*(self.sy or 1)
 	else
-		ved_print(text, x, y, self.sx, self.sy)
+		self.font:print(text, x, y, self.cjk_align, self.sx, self.sy)
 
-		self.pw = font8:getWidth(text)*(self.sx or 1)
+		self.pw = self.font:getWidth(text)*(self.sx or 1)
 		local _, newlines = text:gsub("\n", "")
-		self.ph = (newlines+1)*font8:getHeight()*(self.sy or 1)
+		self.ph = (newlines+1)*self.font:getHeight()*(self.sy or 1)
 	end
 
 	if color_set then
 		love.graphics.setColor(255,255,255,255)
+	end
+
+	return self.pw, self.ph
+end
+
+
+elColorPicker =
+{
+	px = 0, py = 0,
+	pw = 160, ph = 298,
+	get_color_func = nil,
+	set_color_func = nil
+}
+
+function elColorPicker:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function ColorPicker(get_color_func, set_color_func)
+	return elColorPicker:new{
+		get_color_func = get_color_func,
+		set_color_func = set_color_func
+	}
+end
+
+function elColorPicker:draw(x, y, maxw, maxh)
+	self.px, self.py = x, y
+
+	local r, g, b = self.get_color_func()
+	if r == nil or g == nil or b == nil then
+		return self.pw, self.ph
+	end
+
+	for colb = 0, 255 do
+		love.graphics.setColor(colb,0,0)
+		love.graphics.rectangle("fill", x, y+294-colb, 50, 1)
+		love.graphics.setColor(0,colb,0)
+		love.graphics.rectangle("fill", x+55, y+294-colb, 50, 1)
+		love.graphics.setColor(0,0,colb)
+		love.graphics.rectangle("fill", x+110, y+294-colb, 50, 1)
+	end
+
+	-- A colored block at the top
+	love.graphics.setColor(255,255,255)
+	love.graphics.rectangle("fill", x, y+12, 160, 16)
+	love.graphics.setColor(r,g,b)
+	love.graphics.rectangle("fill", x+1, y+13, 158, 14)
+
+	-- The numbers
+	love.graphics.setColor(255,255,255)
+	ved_printf(r, x, y+30, 50, "center")
+	ved_printf(g, x+55, y+30, 50, "center")
+	ved_printf(b, x+110, y+30, 50, "center")
+	ved_printf(
+		string.format("#%02x%02x%02x", r, g, b),
+		x, y,
+		160, "center"
+	)
+
+	-- The arrows
+	love.graphics.draw(image.colorsel, x-4, y+291-r)
+	love.graphics.draw(image.colorsel, x+51, y+291-g)
+	love.graphics.draw(image.colorsel, x+106, y+291-b)
+
+	-- Are we clicking?
+	if love.mouse.isDown("l") and nodialog and not mousepressed then
+		local any = false
+		if mouseon(x, y+36, 50, 262) then
+			r = math.min(math.max(y+294-love.mouse.getY(), 0), 255)
+			any = true
+		elseif mouseon(x+55, y+36, 50, 262) then
+			g = math.min(math.max(y+294-love.mouse.getY(), 0), 255)
+			any = true
+		elseif mouseon(x+110, y+36, 50, 262) then
+			b = math.min(math.max(y+294-love.mouse.getY(), 0), 255)
+			any = true
+		end
+
+		if any then
+			self.set_color_func(r, g, b)
+		end
 	end
 
 	return self.pw, self.ph

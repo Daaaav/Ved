@@ -74,7 +74,7 @@ function get_createcrewman_r(name)
 	return 19
 end
 
-function set_textbox_color(text_color, alttextcolor)
+function get_textbox_color(text_color, alttextcolor)
 	local r, g, b
 	if extra.textboxcolors[text_color] ~= nil then
 		r, g, b = unpack(extra.textboxcolors[text_color])
@@ -87,6 +87,11 @@ function set_textbox_color(text_color, alttextcolor)
 	if alttextcolor ~= nil then
 		r = get_createcrewman_r(alttextcolor)
 	end
+	return r, g, b
+end
+
+function set_textbox_color(text_color, alttextcolor)
+	local r, g, b = get_textbox_color(text_color, alttextcolor)
 	if r == 0 and g == 0 and b == 0 then
 		v6_setroomprintcol()
 	else
