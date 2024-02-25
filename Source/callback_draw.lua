@@ -28,7 +28,22 @@ function love.draw()
 		-- Draw every element in this state's master element "container".
 		-- This master container doesn't define positions,
 		-- and just gives the window width and height as information.
+
 		local w, h = love.graphics.getDimensions()
+
+		if not uis[state].drawn then
+			-- Just throw away a couple of frames to make sure
+			-- everything's settled and nothing's flashing...
+			love.graphics.setColorMask(false,false,false,false)
+			for i = 1, 2 do
+				for k,v in elements_iter(uis[state].elements) do
+					v:draw(0, 0, w, h)
+				end
+			end
+			love.graphics.setColorMask(true,true,true,true)
+			uis[state].drawn = true
+		end
+
 		for k,v in elements_iter(uis[state].elements) do
 			v:draw(0, 0, w, h)
 		end

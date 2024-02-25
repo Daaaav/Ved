@@ -76,6 +76,8 @@ function textboxcolors_update_elements()
 			"N", hotkey("n")
 		)
 	)
+
+	uis[state].drawn = false
 end
 
 function create_textboxcolor_dialog(create, rename)
