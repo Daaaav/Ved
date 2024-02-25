@@ -34,12 +34,12 @@ dialog.form = {}
 
 function dialog.form.save_make(show_zip)
 	local form = {
-		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT},
+		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT, "", font_level},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
 		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
-		{"title", 0, 4, 20, metadata.Title, DF.TEXT},
+		{"title", 0, 4, 20, metadata.Title, DF.TEXT, "", font_level},
 		{"", 0, 5, 46, L.OPTBY, DF.LABEL},
-		{"creator", 0, 6, 37, metadata.Creator, DF.TEXT},
+		{"creator", 0, 6, 37, metadata.Creator, DF.TEXT, "", font_level},
 	}
 
 	if show_zip then
