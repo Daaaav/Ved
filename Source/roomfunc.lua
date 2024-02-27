@@ -709,7 +709,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				font_level:print(v.data, x, y, "cjk_low", 2)
 				love.graphics.setColor(255, 255, 255)
 				if interact then
-					entity_highlight(x, y, font8:getWidth(v.data)/8, font_level:getHeight()/8)
+					entity_highlight(x, y, font_level:getWidth(v.data)/8, font_level:getHeight()/8)
 				end
 			end
 		end
@@ -862,10 +862,10 @@ end
 function displayscriptname(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy, n)
 	local disp_y = math.max(3, offsety+(v.y-myroomy*30)*16 - 16)
 	if editingroomtext == k then
-		local disp_x = math.min((offsetx+640)-(font8:getWidth(inputs.roomtext)*2), offsetx+(v.x-myroomx*40)*16)
+		local disp_x = math.min((offsetx+640)-(font_level:getWidth(inputs.roomtext)*2), offsetx+(v.x-myroomx*40)*16)
 		print_editing_roomtext(disp_x, disp_y, "cjk_high")
 	elseif hovering_over_name(isscriptbox, k, v, offsetx, offsety, myroomx, myroomy) then
-		local disp_x = math.min((offsetx+640)-(font8:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
+		local disp_x = math.min((offsetx+640)-(font_level:getWidth(v.data)*2), offsetx+(v.x-myroomx*40)*16)
 		textshadow(v.data, disp_x, disp_y, font_level, "cjk_high", 2)
 		font_level:print(v.data, disp_x, disp_y, "cjk_high", 2)
 		if n ~= nil then
