@@ -701,15 +701,25 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		if not bottom2rowstext and (v.y%30 == 28 or v.y%30 == 29) then
 		else
 			v6_setroomprintcol()
+			local rtl = v.p1 ~= 0
+			local disp_x = x
 			if editingroomtext == k then
 				-- We're editing this text at the moment.
-				print_editing_roomtext(x, y, "cjk_low")
+				if rtl then
+					-- The 16 is the size of a tile, not font width!
+					disp_x = disp_x - font_level:getWidth(inputs.roomtext)*2 + 16
+				end
+				print_editing_roomtext(disp_x, y, "cjk_low")
 				love.graphics.setColor(255, 255, 255)
 			else
-				font_level:print(v.data, x, y, "cjk_low", 2)
+				if rtl then
+					-- The 16 is the size of a tile, not font width!
+					disp_x = disp_x - font_level:getWidth(v.data)*2 + 16
+				end
+				font_level:print(v.data, disp_x, y, "cjk_low", 2)
 				love.graphics.setColor(255, 255, 255)
 				if interact then
-					entity_highlight(x, y, font_level:getWidth(v.data)/8, font_level:getHeight()/8)
+					entity_highlight(x, y, font_level:getWidth(v.data)/8, font_level:getHeight()/8, disp_x, y)
 				end
 			end
 		end

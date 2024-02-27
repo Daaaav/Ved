@@ -616,7 +616,7 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 11 then
 			-- Roomtext
-			insert_entity(atx, aty, 17)
+			insert_entity(atx, aty, 17, metadata.rtl and 1 or 0)
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 12 then
 			-- Terminal
