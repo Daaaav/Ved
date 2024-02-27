@@ -1,5 +1,5 @@
 -- syntaxoptions/load
 
 return function()
-	editingcolor = nil
+	syntaxoptions_editingcolor = nil
 end

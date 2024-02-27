@@ -2114,30 +2114,6 @@ function get_all_languages()
 	return lang_codes
 end
 
-function color_setting(label, pos, mycolor)
-	love.graphics.setColor(255,255,255)
-	love.graphics.rectangle("fill", 8, 8+(24*pos), 32, 16)
-	love.graphics.setColor(mycolor)
-	love.graphics.rectangle("fill", 9, 9+(24*pos), 30, 14)
-	if editingcolor == mycolor then
-		love.graphics.setColor(255,255,255)
-	else
-		love.graphics.setColor(128,128,128)
-	end
-	ved_print(label, 8+32+8, 8+(24*pos)+4)
-
-	if mouseon(8, 8+(24*pos), 32, 16) then
-		love.graphics.setColor(255,255,255,64)
-		love.graphics.rectangle("fill", 9, 9+(24*pos), 30, 14)
-
-		if love.mouse.isDown("l") and editingcolor ~= mycolor then
-			editingcolor = mycolor
-		end
-	end
-
-	love.graphics.setColor(255,255,255,255)
-end
-
 function to_notepad()
 	if vedmetadata == false then
 		vedmetadata = createmde()
@@ -3021,13 +2997,6 @@ function exitdisplayoptions()
 		end
 	end
 
-	tostate(oldstate, true)
-	-- Just to make sure we don't get stuck in the settings
-	oldstate = olderstate
-end
-
-function exitsyntaxcoloroptions()
-	saveconfig()
 	tostate(oldstate, true)
 	-- Just to make sure we don't get stuck in the settings
 	oldstate = olderstate

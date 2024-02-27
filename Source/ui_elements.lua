@@ -310,7 +310,7 @@ function elListContainer:draw(x, y, maxw, maxh)
 	local cw, ch = self.cw, self.ch
 	if cw == nil then cw = maxw end
 	if ch == nil then ch = maxh end
-	self.pw, self.ph = cw, ch
+	local pw, ph = 0, 0
 
 	local cur_x, cur_y
 	if self.horizontal then
@@ -320,6 +320,8 @@ function elListContainer:draw(x, y, maxw, maxh)
 	end
 	for k,v in elements_iter(self.els_top, self) do
 		local el_pw, el_ph = anythingbutnil0(v.pw), anythingbutnil0(v.ph)
+		pw = pw + el_pw
+		ph = ph + el_ph
 		if self.horizontal then
 			local el_y
 			if self.align == VALIGN.TOP then
@@ -331,6 +333,7 @@ function elListContainer:draw(x, y, maxw, maxh)
 			end
 			local el_w, el_h = v:draw(x + cur_x, el_y, cw-cur_x, ch)
 			cur_x = cur_x + el_w + self.spacing
+			pw = pw + self.spacing
 		else
 			local el_x
 			if self.align == ALIGN.LEFT then
@@ -342,17 +345,22 @@ function elListContainer:draw(x, y, maxw, maxh)
 			end
 			local el_w, el_h = v:draw(el_x, y + cur_y, cw, ch-cur_y)
 			cur_y = cur_y + el_h + self.spacing
+			ph = ph + self.spacing
 		end
 	end
 	if self.horizontal then
 		cur_x = cw - self.start_bot
+		pw = pw - self.spacing
 	else
 		cur_y = ch - self.start_bot
+		ph = ph - self.spacing
 	end
 	for k = #self.els_bot, 1, -1 do
 		local v = self.els_bot[k]
 
 		local el_pw, el_ph = anythingbutnil0(v.pw), anythingbutnil0(v.ph)
+		pw = pw + el_pw
+		ph = ph + el_ph
 		if self.horizontal then
 			local el_w, el_h = v:draw(x + cur_x - el_pw, y + (ch-el_ph)/2, el_pw, ch)
 			cur_x = cur_x - el_w + self.spacing
@@ -362,7 +370,20 @@ function elListContainer:draw(x, y, maxw, maxh)
 		end
 	end
 
-	return self.pw, self.ph
+	if self.horizontal or #self.els_bot > 0 then
+		-- In a horizontal container, always use container height.
+		-- In a vertical container, only use container height if bottom elements exist,
+		-- otherwise use added up height of elements.
+		ph = ch
+	end
+	if not self.horizontal or #self.els_bot > 0 then
+		-- In a vertical container, always use container width.
+		-- In a horizontal container, only use container width if right elements exist,
+		-- otherwise use added up width of elements.
+		pw = cw
+	end
+	self.pw, self.ph = pw, ph
+	return pw, ph
 end
 
 function elListContainer:recurse(name, func, ...)
