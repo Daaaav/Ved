@@ -330,6 +330,7 @@ function script_context(text, textlinestogo)
 		or parts[1] == "iftrinketsless"
 		or parts[1] == "customiftrinkets"
 		or parts[1] == "customiftrinketsless"
+		or parts[1] == "iflang"
 	) and parts[3] ~= nil and parts[3] ~= "" then
 		return "script", parts[3], nil, nil
 	elseif (
