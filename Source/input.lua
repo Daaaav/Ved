@@ -1607,7 +1607,7 @@ function input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 			table.insert(items, L.COPY)
 			table.insert(items, L.CUT)
 		end
-		if love.system.getClipboardText():gsub("\r\n", "\n") ~= "" then -- Ugh duplicating code that can easily get out of line with updates
+		if love.system.getClipboardText() ~= "" then
 			table.insert(items, L.PASTE)
 		end
 		if hassel then
@@ -1871,6 +1871,8 @@ function input.atomiccopycut(id, do_cut)
 end
 
 function input.atomicpaste(id)
+	-- Note: if you change how the clipboard text comes out (stripping out whitespace or something),
+	-- consider doing that when the L.PASTE option is added too (which checks if the clipboard is empty)
 	local clipboard = love.system.getClipboardText():gsub("\r\n", "\n")
 	if clipboard ~= "" then
 		local oldstate = {input.getstate(id)}
