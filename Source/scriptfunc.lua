@@ -76,12 +76,12 @@ end
 
 function get_textbox_color(text_color, alttextcolor)
 	local r, g, b
+	if extra.textboxcolors[text_color] == nil and textboxcolors[text_color] == nil then
+		text_color = "gray"
+	end
 	if extra.textboxcolors[text_color] ~= nil then
 		r, g, b = unpack(extra.textboxcolors[text_color])
 	else
-		if textboxcolors[text_color] == nil then
-			text_color = "gray"
-		end
 		r, g, b = unpack(textboxcolors[text_color])
 	end
 	if alttextcolor ~= nil then
