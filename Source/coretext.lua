@@ -25,8 +25,10 @@ function load_font_filename(fonts, custom_folder, font_name)
 		local txt_contents = read_font_file(custom_folder, font_name, ".txt")
 		local fontmeta_contents = read_font_file(custom_folder, font_name, ".fontmeta")
 
-		local fallback_imgdata, fallback_fontmeta_contents
-		local fallback = fontmeta_contents:match("<fallback>(.-)</fallback>")
+		local fallback, fallback_imgdata, fallback_fontmeta_contents
+		if fontmeta_contents ~= nil then
+			fallback = fontmeta_contents:match("<fallback>(.-)</fallback>")
+		end
 		if fallback ~= nil then
 			-- Fallback fonts can only be main fonts, so we can cut corners a liiitle bit...
 			fallback_png_contents = read_font_file(nil, fallback, ".png")
