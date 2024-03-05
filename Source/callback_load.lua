@@ -23,6 +23,7 @@ function love.load()
 
 	lib_load_errmsg = nil
 	local loaded_filefunc
+	local bidi_available, bidi_load_errmsg
 	if love.system.getOS() == "OS X" then
 		ctrl = "gui" -- cmd
 		modifier = "alt"
@@ -37,6 +38,7 @@ function love.load()
 		end
 		prepare_library("vedlib_https_mac01.so")
 		autodetect_vvvvvv_available = prepare_library("vedlib_findv6_mac01.so")
+		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_mac00.so")
 		playtesting_available = true
 	elseif love.system.getOS() == "Windows" then
 		ctrl = "ctrl"
@@ -48,6 +50,8 @@ function love.load()
 		loaded_filefunc = "win"
 		playtesting_available = true
 		autodetect_vvvvvv_available = true
+		local ffi = require("ffi")
+		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_win00." .. ffi.arch .. ".dll")
 	elseif love.system.getOS() == "Linux" then
 		ctrl = "ctrl"
 		modifier = "ctrl"
@@ -62,6 +66,7 @@ function love.load()
 		loaded_filefunc = "linmac"
 		playtesting_available = true
 		autodetect_vvvvvv_available = true
+		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_lin00.so")
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
@@ -73,7 +78,13 @@ function love.load()
 		loaded_filefunc = "luv"
 		playtesting_available = false
 		autodetect_vvvvvv_available = false
+		bidi_available, bidi_load_errmsg = false, nil
 	end
+	if bidi_available then
+		copy_library_license("SheenBidi.txt")
+		copy_library_license("c-hashmap.txt")
+	end
+	init_font_libraries()
 	lctrl = "l" .. ctrl
 	rctrl = "r" .. ctrl
 	ved_require("filefunc_" .. loaded_filefunc)
@@ -413,6 +424,14 @@ function love.load()
 				settings_ok = true
 			end
 		)
+	end
+
+	if bidi_load_errmsg ~= nil then
+		local template = L.LIB_LOAD_ERRMSG_BIDI
+		if love.system.getOS() == "Windows" then
+			template = template .. L.LIB_LOAD_ERRMSG_AV
+		end
+		dialog.create(langkeys(template, {bidi_load_errmsg}))
 	end
 
 	tilesets = {}

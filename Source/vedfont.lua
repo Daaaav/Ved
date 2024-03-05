@@ -23,6 +23,27 @@ if not ffi_success then
 	end
 end
 
+local bidi
+function init_font_libraries()
+	if not ffi_success then
+		return
+	end
+
+	if love.system.getOS() == "Windows" then
+		bidi = load_library(ffi, "vedlib_bidi_win00." .. ffi.arch .. ".dll")
+	elseif love.system.getOS() == "Linux" then
+		bidi = load_library(ffi, "vedlib_bidi_lin00.so")
+	elseif love.system.getOS() == "OS X" then
+		bidi = load_library(ffi, "vedlib_bidi_mac00.so")
+	end
+
+	if bidi ~= nil then
+		ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
+
+		bidi.bidi_init()
+	end
+end
+
 local print_buf_n = 8192
 local print_buf = ffi.new("uint32_t[?]", print_buf_n)
 
@@ -319,7 +340,7 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 	for i = 1, self.limit_batches do
 		table.insert(self.batches,
 			{
-				text = ffi.new("uint32_t[?]", self.limit_line_chars),
+				text = ffi.new("uint32_t[?]", self.limit_line_chars+1),
 				text_len = 0,
 				width = 0,
 				spritebatch = love.graphics.newSpriteBatch(self.image, self.limit_line_chars),
@@ -450,12 +471,10 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 	local i = 0
 	while i < self.limit_line_chars and offset+i < print_buf_n do
 		local c = print_buf[offset + i]
-		if c == 0 then
-			break
-		end
+
 		if c == 0x0A then -- '\n'
 			newline_continue = i+1
-			break
+			c = 0
 		end
 
 		if not changed and batch.text[i] ~= c then
@@ -464,6 +483,10 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 
 		if changed then
 			batch.text[i] = c
+		end
+
+		if c == 0 then
+			break
 		end
 
 		i = i + 1
@@ -493,6 +516,22 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 		batch.a = global_a
 		batch.spritebatch:clear()
 
+		local used_buf
+		-- FIXME: rtl arg depends on level font or interface font individually!
+		local rtl = metadata ~= nil and metadata.rtl
+		if bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, batch.text) then
+			used_buf = bidi.bidi_transform_utf32(rtl, batch.text)
+			len = 0
+			local c
+			repeat
+				c = used_buf[len]
+				len = len + 1
+			until c == 0 or c == 0x0A
+			len = len - 1
+		else
+			used_buf = batch.text
+		end
+
 		-- Since the global color may need to be overridden per-character (colored glyphs),
 		-- we set the global color to white and instead set the SpriteBatch color to the global color
 		spritebatch_set_color(batch.spritebatch, global_r, global_g, global_b, global_a)
@@ -500,7 +539,7 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 		local cur_x = 0
 
 		for i = 0, len-1 do
-			local c = batch.text[i]
+			local c = used_buf[i]
 			local advance = self.glyph_w
 
 			local blank = false

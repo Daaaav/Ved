@@ -10,3 +10,6 @@ L.TEXTBOXCOLORS_TITLE = "Textbox colors"
 L.TEXTBOXCOLORS_RENAME = "Rename color \"$1\""
 L.TEXTBOXCOLORS_DUPLICATE = "Duplicate color \"$1\""
 L.TEXTBOXCOLORS_CREATE = "Add new color"
+
+L.LIB_LOAD_ERRMSG_BIDI = "Failed to load the library for right-to-left text support.\n\n$1"
+L.LIB_LOAD_ERRMSG_AV = "\n\nYour antivirus may be breaking it."

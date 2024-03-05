@@ -70,3 +70,16 @@ function prepare_library(dll_filename, source_filename)
 	cons("Additionally, compiled library also failed to load")
 	return false, errmsg
 end
+
+function copy_library_license(txt_filename)
+	if not love.filesystem.exists("available_libs/licenses") then
+		love.filesystem.createDirectory("available_libs/licenses")
+	end
+
+	if not love.filesystem.exists("available_libs/licenses/" .. txt_filename) then
+		local data = love.filesystem.read("libs/licenses/" .. txt_filename)
+		if data ~= nil then
+			love.filesystem.write("available_libs/licenses/" .. txt_filename, data)
+		end
+	end
+end
