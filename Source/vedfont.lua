@@ -711,21 +711,53 @@ function cVedFont:getWrap(text, max_width)
 	local total_width = 0
 	local line_width = 0
 
-	local i = 0
-	while i < print_buf_n-1 do
-		if print_buf[i] == 0x0A or print_buf[i] == 0 then -- '\n' or '\0'
+	local print_buf_i = 0
+	local line_is_bidi = nil -- nil: not yet determined for this line, otherwise true/false
+	local used_buf, used_i
+	while true do
+		if line_is_bidi == nil then
+			-- Bidiness is determined on a per-line basis... So...  ._.  some lines
+			-- will be from the original buffer, some will be from the bidi system's
+			-- buffer... with its own i that keeps starting from 0......
+
+			-- FIXME: rtl arg depends on level font or interface font individually!
+			local rtl = metadata ~= nil and metadata.rtl
+			line_is_bidi = bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, print_buf)
+
+			if line_is_bidi then
+				used_buf = bidi.bidi_transform_utf32(rtl, print_buf)
+				used_i = 0
+
+				-- The print_buf_i needs to catch up too... Meet us at the next '\n' or '\0'
+				while print_buf[print_buf_i] ~= 0x0A and print_buf[print_buf_i] ~= 0 do
+					print_buf_i = print_buf_i + 1
+				end
+			else
+				used_buf = print_buf
+				used_i = print_buf_i
+			end
+		end
+
+		if used_buf[used_i] == 0x0A or used_buf[used_i] == 0 then -- '\n' or '\0'
 			if line_width > total_width then
 				total_width = line_width
 			end
 			line_width = 0
 
-			if print_buf[i] == 0 then
+			-- Not a mistake - the bidi system changes a newline to a null terminator
+			if used_buf[print_buf_i] == 0 then
 				break
 			end
+
+			-- Next line
+			line_is_bidi = nil
 		else
-			line_width = line_width + self:get_glyph_advance(print_buf[i])
+			line_width = line_width + self:get_glyph_advance(used_buf[used_i])
 		end
-		i = i + 1
+		used_i = used_i + 1
+		if not line_is_bidi then -- intent: EITHER false OR nil
+			print_buf_i = print_buf_i + 1
+		end
 	end
 
 	return total_width, lines
