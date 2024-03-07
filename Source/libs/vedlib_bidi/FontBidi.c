@@ -293,6 +293,11 @@ bool bidi_should_transform_utf32(const bool rtl, const uint32_t* text)
     size_t i = 0;
     while ((ch = text[i++]))
     {
+        if (ch == '\n')
+        {
+            break;
+        }
+
         // The standard Hebrew and Arabic blocks
         if (ch >= 0x590 && ch <= 0x77F) return true;
 
@@ -315,8 +320,13 @@ bool bidi_should_transform_utf32(const bool rtl, const uint32_t* text)
     return false;
 }
 
-const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text)
+const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text, VisualLayoutGlyph* layout, size_t layout_n)
 {
+    if (layout != NULL)
+    {
+        layout[0].out_codepoint = 0;
+    }
+
     uint32_t utf32_in[1024];
     int n_codepoints = 0;
 
@@ -325,7 +335,7 @@ const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text)
     size_t text_i = 0;
     while ((codepoint = text[text_i++]))
     {
-        if (codepoint == '\r' || codepoint == '\n')
+        if (codepoint == '\n')
         {
             break;
         }
@@ -346,6 +356,8 @@ const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text)
 
     static uint32_t utf32_out[1024];
     size_t utf32_out_cur = 0;
+
+    size_t layout_cur = 0;
 
     SBCodepointSequence codepoint_sequence = {SBStringEncodingUTF32, (void*) utf32_in, (SBUInteger) n_codepoints};
 
@@ -514,8 +526,29 @@ const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text)
                 ix = runs[i].offset + runs[i].length - 1 - c;
             }
 
+            if (layout != NULL)
+            {
+                int layout_room_left = layout_n - 1 - layout_cur;
+                if (layout_room_left <= 0)
+                {
+                    goto no_more_runs;
+                }
+
+                layout[layout_cur].out_codepoint = utf32_in[ix];
+                layout[layout_cur].orig_char_index = ix;
+                layout[layout_cur].glyph_width = 0;
+                layout[layout_cur].tombstone = false;
+                layout[layout_cur].in_rtl_run = !is_ltr;
+            }
+
             if (utf32_in[ix] == 0xFFFFFFFF)
             {
+                if (layout != NULL)
+                {
+                    layout[layout_cur].tombstone = true;
+                    layout_cur++;
+                }
+
                 continue;
             }
 
@@ -526,10 +559,15 @@ const uint32_t* bidi_transform_utf32(const bool rtl, const uint32_t* text)
             }
 
             utf32_out[utf32_out_cur++] = utf32_in[ix];
+            layout_cur++;
         }
     }
     no_more_runs:
     utf32_out[utf32_out_cur] = '\0';
+    if (layout != NULL)
+    {
+        layout[layout_cur].out_codepoint = '\0';
+    }
 
     VVV_freefunc(SBLineRelease, paragraph_line);
     VVV_freefunc(SBParagraphRelease, paragraph);

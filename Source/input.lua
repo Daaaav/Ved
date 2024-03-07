@@ -427,27 +427,24 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 			if whichfirst ~= nil then
 				for l = starty, endy do
 					line = lines[l]
+					local bidi_layout, bidi_layout_last = font:get_bidi_layout(line)
 
-					if l == starty then
-						firstoffset = font:getWidth(utf8.sub(line, 1, startx))
-						if l == endy then
-							curlinewidth = font:getWidth(utf8.sub(line, startx+1, endx))
-						else
-							curlinewidth = font:getWidth(utf8.sub(line, startx+1, utf8.len(line)))
-							-- Add a small space to represent the newline
-							curlinewidth = curlinewidth + 4
-						end
-						table.insert(selrects, {firstoffset, l-1, curlinewidth})
-					else
-						if l == endy then
-							curlinewidth = font:getWidth(utf8.sub(line, 1, endx))
-						else
-							curlinewidth = font:getWidth(utf8.sub(line, 1, utf8.len(line)))
-							-- Again, add a small space to represent the newline
-							curlinewidth = curlinewidth + 4
-						end
-						table.insert(selrects, {0, l-1, curlinewidth})
+					local selrect_startx, selrect_endx = startx, endx
+					if l ~= starty then
+						selrect_startx = 0
 					end
+					if l ~= endy then
+						selrect_endx = math.huge
+					end
+					input.selrects_for_line(
+						selrects,
+						bidi_layout,
+						bidi_layout_last,
+						selrect_startx,
+						selrect_endx,
+						l-1,
+						l ~= endy
+					)
 				end
 			end
 		else
@@ -470,13 +467,10 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 				startx, endx = selx, curx
 			end
 
-			local curlinewidth = 0
-			local firstoffset = 0
+			local bidi_layout, bidi_layout_last = font:get_bidi_layout(line)
 
 			if whichfirst ~= nil then
-				firstoffset = font:getWidth(utf8.sub(line, 1, startx))
-				curlinewidth = font:getWidth(utf8.sub(line, startx+1, endx))
-				table.insert(selrects, {firstoffset, 0, curlinewidth})
+				input.selrects_for_line(selrects, bidi_layout, bidi_layout_last, startx, endx, 0, false)
 			end
 		end
 
@@ -501,29 +495,28 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 	end
 
 	local caretx, carety
+	local postoget, line
 	if multiline then
 		carety = input.pos[id][2]
-		local line = inputs[id][carety]
-		local postoget = input.pos[id][1]
+		line = inputs[id][carety]
+		postoget = input.pos[id][1]
 		if input.rightmosts[id] then
 			postoget = utf8.len(line)
+		else
+			-- If we're coming from a line with more chars,
+			-- treat it like it's at the end of the line
+			postoget = math.min(postoget, utf8.len(line))
 		end
-		-- If we're coming from a line with more chars,
-		-- treat it like it's at the end of the line
-		postoget = math.min(postoget, utf8.len(line))
-
-		caretx = font:getWidth(utf8.sub(line, 1, postoget))
 	else
-		local line = inputs[id]
-		local postoget = input.pos[id]
+		line = inputs[id]
+		postoget = input.pos[id]
 		if input.rightmosts[id] then
 			postoget = utf8.len(line)
 		end
 		carety = 0
-
-		caretx = font:getWidth(utf8.sub(line, 1, postoget))
 	end
-	caretx = anythingbutnil0(caretx)
+	local bidi_layout, bidi_layout_last = font:get_bidi_layout(line)
+	caretx = input.pos_to_xcoord(bidi_layout, bidi_layout_last, postoget)
 	carety = anythingbutnil0(carety)
 
 	if multiline then
@@ -1579,6 +1572,9 @@ function input.setmousearea(id, ...)
 end
 
 function input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
+	-- This is not a love.mousepressed event!
+	-- This can be called every frame as long as the mouse is held!
+
 	local multiline = type(inputs[id]) == "table"
 	local fontheight = lineh or font:getHeight()
 
@@ -1663,25 +1659,39 @@ function input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 		line = inputs[id]
 	end
 
+	local bidi_layout, bidi_layout_last = font:get_bidi_layout(line)
+
 	mousex = math.min(math.max(mousex, 0), font:getWidth(line))
 
 	local currentx = 0
 	local thiswidth
-	for thispos = 1, utf8.len(line) do
-		thiswidth = font:getWidth(utf8.sub(line, thispos, thispos))
-		currentx = currentx + thiswidth
+	for i = 0, bidi_layout_last do
+		thiswidth = bidi_layout[i].glyph_width
 
-		if currentx - thiswidth/2 > mousex then
-			posx = thispos - 1
+		if currentx + thiswidth/2 > mousex then
+			-- We're to the left of the centerline of the current character
+			if i == 0 then
+				posx = 0
+			elseif bidi_layout[i].in_rtl_run then
+				posx = bidi_layout[i].orig_char_index + 1
+			else
+				posx = bidi_layout[i-1].orig_char_index + 1
+			end
 			break
 		end
+
+		currentx = currentx + thiswidth
 	end
 
 	if posx == nil then
 		-- We've ruled out that the mouse is on the leftmost side,
 		-- and we haven't reached the mouse even though we've gone through the entire line...
 		-- The mouse must be on the rightmost end of the line!
-		posx = utf8.len(line)
+		if bidi_layout[bidi_layout_last].in_rtl_run then
+			posx = 0
+		else
+			posx = bidi_layout[bidi_layout_last].orig_char_index + 1
+		end
 	end
 
 	if inputnumclicks <= 1 then
@@ -1986,5 +1996,94 @@ function input.event(id, event)
 		input.callback[id][event](id, event)
 	elseif input.callback[id].any ~= nil then
 		input.callback[id].any(id, event)
+	end
+end
+
+function input.pos_to_xcoord(bidi_layout, bidi_layout_last, ch_index)
+	-- Convert a character index to an X coordinate
+	-- (for displaying the cursor for example)
+
+	if bidi_layout_last < 0 then
+		return 0
+	end
+
+	-- ch_index is 1-indexed, while bidi_layout is 0-indexed.
+	-- Nevertheless, ch_index == 0 is possible, as before the first character.
+	if ch_index == 0 then
+		-- Just assume that the first character is either the leftmost or rightmost...
+		if bidi_layout[bidi_layout_last].orig_char_index == 0 then
+			local total_width = 0
+			for i = 0, bidi_layout_last do
+				total_width = total_width + bidi_layout[i].glyph_width
+			end
+			return total_width
+		else
+			return 0
+		end
+	end
+
+	-- Otherwise, ch_index means "after this Lua string index"
+	-- ch_index == 0: |abc
+	-- ch_index == 1: a|bc
+	-- ch_index == 2: ab|c
+	local total_width = 0
+	for i = 0, bidi_layout_last do
+		local this_width = bidi_layout[i].glyph_width
+
+		if bidi_layout[i].orig_char_index + 1 == ch_index then
+			-- We found "our" character! So it's AFTER this one.
+			if bidi_layout[i].in_rtl_run then
+				return total_width
+			else
+				return total_width + this_width
+			end
+		end
+
+		total_width = total_width + this_width
+	end
+
+	-- huh ok
+	return total_width
+end
+
+function input.selrects_for_line(selrects, bidi_layout, bidi_layout_last, startx, endx, y, has_newline)
+	-- Add selection rectangles to the selrects table for the current line.
+	-- Each table in the selrects table looks like: {x (pixels), y (line), width (pixels)}
+	-- If has_newline, then we add a small space to represent a newline
+	-- (because the selection extends beyond this line)
+	-- In Lua character indices, a character is inside the selection if: startx < ch <= endx
+	-- 1 2 3
+	-- a[b]c
+	--  1 2
+
+	local in_selection = false
+	local cur_rect_x, cur_rect_width
+
+	local total_width = 0
+	for i = 0, bidi_layout_last do
+		local this_width = bidi_layout[i].glyph_width
+		local ix = bidi_layout[i].orig_char_index + 1
+		local selected = startx < ix and ix <= endx
+
+		if selected then
+			if not in_selection then
+				in_selection = true
+				cur_rect_x = total_width
+				cur_rect_width = 0
+			end
+			cur_rect_width = cur_rect_width + this_width
+		elseif in_selection then
+			in_selection = false
+			table.insert(selrects, {cur_rect_x, y, cur_rect_width})
+		end
+
+		total_width = total_width + this_width
+	end
+
+	if in_selection then
+		if has_newline then
+			cur_rect_width = cur_rect_width + 4
+		end
+		table.insert(selrects, {cur_rect_x, y, cur_rect_width})
 	end
 end

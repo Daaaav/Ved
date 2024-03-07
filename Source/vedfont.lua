@@ -23,6 +23,9 @@ if not ffi_success then
 	end
 end
 
+local bidi_layout_n = 2048
+local bidi_layout
+
 local bidi
 function init_font_libraries()
 	if not ffi_success then
@@ -41,6 +44,8 @@ function init_font_libraries()
 		ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
 
 		bidi.bidi_init()
+
+		bidi_layout = ffi.new("VisualLayoutGlyph[?]", bidi_layout_n)
 	end
 end
 
@@ -520,7 +525,7 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 		-- FIXME: rtl arg depends on level font or interface font individually!
 		local rtl = metadata ~= nil and metadata.rtl
 		if bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, batch.text) then
-			used_buf = bidi.bidi_transform_utf32(rtl, batch.text)
+			used_buf = bidi.bidi_transform_utf32(rtl, batch.text, nil, 0)
 			len = 0
 			local c
 			repeat
@@ -725,7 +730,7 @@ function cVedFont:getWrap(text, max_width)
 			line_is_bidi = bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, print_buf)
 
 			if line_is_bidi then
-				used_buf = bidi.bidi_transform_utf32(rtl, print_buf)
+				used_buf = bidi.bidi_transform_utf32(rtl, print_buf, nil, 0)
 				used_i = 0
 
 				-- The print_buf_i needs to catch up too... Meet us at the next '\n' or '\0'
@@ -769,6 +774,51 @@ end
 
 function cVedFont:getHeight()
 	return self.glyph_h
+end
+
+function cVedFont:get_bidi_layout(text)
+	local codepoints = utf8_to_utf32(text, print_buf, print_buf_n)
+	codepoints = math.min(codepoints, bidi_layout_n-1)
+
+	-- FIXME: rtl arg depends on level font or interface font individually!
+	local rtl = metadata ~= nil and metadata.rtl
+	if bidi == nil or not bidi.bidi_should_transform_utf32(rtl, print_buf) then
+		for i = 0, codepoints-1 do
+			bidi_layout[i].out_codepoint = print_buf[i]
+			bidi_layout[i].orig_char_index = i
+			bidi_layout[i].glyph_width = self:get_glyph_advance(print_buf[i])
+			bidi_layout[i].tombstone = false
+			bidi_layout[i].in_rtl_run = false
+		end
+		bidi_layout[codepoints].out_codepoint = 0
+		return bidi_layout, codepoints-1
+	end
+
+	bidi.bidi_transform_utf32(rtl, print_buf, bidi_layout, bidi_layout_n)
+
+	-- Now we just need to go through all layout slots, and get the width of all glyphs!
+	-- And we do that from right to left, because RTL runs can have tombstones
+	-- to the left of a ligature glyph, which needs to share half the width...
+	local last
+	for i = 0, bidi_layout_n-1 do
+		if bidi_layout[i].out_codepoint == 0 then
+			last = i - 1
+			break
+		end
+	end
+	for i = last, 0, -1 do
+		if bidi_layout[i].tombstone then
+			-- This is the second character of a ligature
+			local combined_width = bidi_layout[i+1].glyph_width
+			local one_half_width = math.floor(combined_width/2)
+			bidi_layout[i+1].glyph_width = one_half_width
+			bidi_layout[i].glyph_width = combined_width-one_half_width
+		else
+			bidi_layout[i].glyph_width = self:get_glyph_advance(bidi_layout[i].out_codepoint)
+		end
+	end
+
+	return bidi_layout, last
 end
 
 function utf8_to_utf32(str, buf, buf_n)
