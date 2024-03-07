@@ -2,7 +2,14 @@ function love.load()
 	hook("love_load_start")
 
 	utf8 = require("utf8lib_wrapper")
-	require("table.clear")
+	local table_clear_success = pcall(require, "table.clear")
+	if not table_clear_success then
+		function table.clear(t)
+			for k,v in pairs(t) do
+				t[k] = nil
+			end
+		end
+	end
 
 	ved_require("loadconfig")
 
