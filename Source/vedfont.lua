@@ -65,6 +65,8 @@ cVedFont =
 	fallback_glyph_w = nil,
 	fallback_glyph_h = nil,
 
+	context = nil, -- "ui" or "level", set when using font_ui or font_level
+
 	image = nil,
 	chars = {},
 	batches = {},
@@ -539,8 +541,7 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 		batch.spritebatch:clear()
 
 		local used_buf
-		-- FIXME: rtl arg depends on level font or interface font individually!
-		local rtl = metadata ~= nil and metadata.rtl
+		local rtl = self:is_rtl()
 		if bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, batch.text) then
 			used_buf = bidi.bidi_transform_utf32(rtl, batch.text, nil, 0)
 			len = 0
@@ -628,6 +629,8 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 			offset + newline_continue
 		)
 	end
+
+	self.context = nil
 end
 
 function cVedFont:buf_wordwrap(max_width)
@@ -731,6 +734,7 @@ function cVedFont:getWrap(text, max_width)
 	end
 	if text == "" then
 		-- Only LÖVE 11.4 and up returns 1 line, and I needed 0...
+		self.context = nil
 		return 0, 0
 	end
 
@@ -748,8 +752,7 @@ function cVedFont:getWrap(text, max_width)
 			-- will be from the original buffer, some will be from the bidi system's
 			-- buffer... with its own i that keeps starting from 0......
 
-			-- FIXME: rtl arg depends on level font or interface font individually!
-			local rtl = metadata ~= nil and metadata.rtl
+			local rtl = self:is_rtl()
 			line_is_bidi = bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, print_buf)
 
 			if line_is_bidi then
@@ -788,6 +791,8 @@ function cVedFont:getWrap(text, max_width)
 		end
 	end
 
+	self.context = nil
+
 	return total_width, lines
 end
 
@@ -803,8 +808,7 @@ function cVedFont:get_bidi_layout(text)
 	local codepoints = utf8_to_utf32(text, print_buf, print_buf_n)
 	codepoints = math.min(codepoints, bidi_layout_n-1)
 
-	-- FIXME: rtl arg depends on level font or interface font individually!
-	local rtl = metadata ~= nil and metadata.rtl
+	local rtl = self:is_rtl()
 	if bidi == nil or not bidi.bidi_should_transform_utf32(rtl, print_buf) then
 		for i = 0, codepoints-1 do
 			bidi_layout[i].out_codepoint = print_buf[i]
@@ -814,6 +818,7 @@ function cVedFont:get_bidi_layout(text)
 			bidi_layout[i].in_rtl_run = false
 		end
 		bidi_layout[codepoints].out_codepoint = 0
+		self.context = nil
 		return bidi_layout, codepoints-1
 	end
 
@@ -841,7 +846,42 @@ function cVedFont:get_bidi_layout(text)
 		end
 	end
 
+	self.context = nil
 	return bidi_layout, last
+end
+
+function cVedFont:is_rtl()
+	-- This function should only be used in functions listed below in :set_context
+	-- This function may never return nil! (cannot convert it to C bool)
+	if self.context == "ui" then
+		if langinfo ~= nil
+		and langinfo[s.lang] ~= nil
+		and langinfo[s.lang].rtl then
+			return true
+		end
+		return false
+	elseif self.context == "level" then
+		if metadata ~= nil and metadata.rtl then
+			return true
+		end
+		return false
+	end
+	return false
+end
+
+function cVedFont:set_context(index, context)
+	-- Set the context (whether this font is accessed through font_ui/font_level or not),
+	-- but only for some functions which actually use it, and can unset it...
+	-- This is annoying, but it seems the least hacky way to determine whether you're here
+	-- by doing font_ui:print() versus font_level:print(), while also not getting misled
+	-- by doing something like font_level.glyph_w; fonts_main["font"]:print()...
+	if index == "print"
+	or index == "printf"
+	or index == "getWrap"
+	or index == "getWidth"
+	or index == "get_bidi_layout" then
+		self.context = context
+	end
 end
 
 function utf8_to_utf32(str, buf, buf_n)

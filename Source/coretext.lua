@@ -78,14 +78,19 @@ function loadfonts_main()
 	font_ui = {}
 	font_ui_metatable = {
 		__index = function(table, index)
+			local f
 			if s ~= nil and s.lang ~= nil
 			and langinfo ~= nil
 			and langinfo[s.lang] ~= nil
 			and langinfo[s.lang].font ~= nil
 			and fonts_main[langinfo[s.lang].font] ~= nil then
-				return fonts_main[langinfo[s.lang].font][index]
+				f = fonts_main[langinfo[s.lang].font]
+			else
+				f = font_8x8
 			end
-			return font_8x8[index]
+
+			f:set_context(index, "ui")
+			return f[index]
 		end
 	}
 	setmetatable(font_ui, font_ui_metatable)
@@ -98,16 +103,19 @@ function loadfonts_main()
 				font = metadata.font
 			end
 
+			local f
 			if fonts_custom[font] ~= nil then
-				return fonts_custom[font][index]
+				f = fonts_custom[font]
+			elseif fonts_main[font] ~= nil then
+				f = fonts_main[font]
+			elseif fonts_custom["font"] ~= nil then
+				f = fonts_custom["font"]
+			else
+				f = font_8x8
 			end
-			if fonts_main[font] ~= nil then
-				return fonts_main[font][index]
-			end
-			if fonts_custom["font"] ~= nil then
-				return fonts_custom["font"][index]
-			end
-			return font_8x8[index]
+
+			f:set_context(index, "level")
+			return f[index]
 		end
 	}
 	setmetatable(font_level, font_level_metatable)
