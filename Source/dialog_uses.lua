@@ -1115,7 +1115,7 @@ function dialog.callback.advancedleveloptions(button, fields)
 	end
 
 	-- What are the old properties?
-	local undo_propertynames = {"font", "onewaycol_override"}
+	local undo_propertynames = {"font", "rtl", "onewaycol_override"}
 	local undo_properties = {}
 	for k,v in pairs(undo_propertynames) do
 		undo_properties[k] = {
@@ -1126,6 +1126,7 @@ function dialog.callback.advancedleveloptions(button, fields)
 
 	-- Level properties
 	metadata.font = fields.font
+	metadata.rtl = fields.font == "font_ar" -- same hardcoded check that VVVVVV has right now...
 	metadata.onewaycol_override = fields.onewaycol_override
 
 	--What are the new properties again?
