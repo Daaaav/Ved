@@ -226,6 +226,11 @@ configs = {
 		default = true,
 		["type"] = "bool"
 	},
+	new_level_font = {
+		default = "font",
+		["type"] = "string",
+		comment = "The default font to use for new levels"
+	}
 }
 
 function saveconfig()

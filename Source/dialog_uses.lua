@@ -1126,6 +1126,10 @@ function dialog.callback.advancedleveloptions(button, fields)
 
 	-- Level properties
 	metadata.font = fields.font
+	if s.new_level_font ~= fields.font then
+		s.new_level_font = fields.font
+		saveconfig()
+	end
 	metadata.rtl = fields.font == "font_ar" -- same hardcoded check that VVVVVV has right now...
 	metadata.onewaycol_override = fields.onewaycol_override
 

@@ -1007,7 +1007,7 @@ function createblanklevel(lvwidth, lvheight)
 		Desc1 = "", Desc2 = "", Desc3 = "",
 		website = "",
 		onewaycol_override = false,
-		font = "font",
+		font = s.new_level_font,
 		rtl = false,
 		mapwidth = lvwidth,
 		mapheight = lvheight,
