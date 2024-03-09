@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2023-12-12 00:36:07 (CET)
+--- Last converted: 2024-03-10 00:49:00 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -659,6 +659,17 @@ ZIP_SAVING_SUCCESS = "ZIP sauvegardé !",
 ZIP_SAVING_FAIL = "Le fichier ZIP n'a pas pu être sauvegardé !",
 
 OPENFOLDER = "Ouvrir un dossier", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
+
+LEVELFONT = "Police du niveau",
+
+TEXTBOXCOLORS_BUTTON = "Couleurs du texte",
+TEXTBOXCOLORS_TITLE = "Couleurs des boîtes de texte",
+TEXTBOXCOLORS_RENAME = "Renommer la couleur \"$1\"",
+TEXTBOXCOLORS_DUPLICATE = "Dupliquer la couleur \"$1\"",
+TEXTBOXCOLORS_CREATE = "Ajouter une couleur",
+
+LIB_LOAD_ERRMSG_BIDI = "Erreur de chargement de la bibliothèque pour le support de texte en lecture de droite à gauche.\n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nVotre antivirus pourrait en être la cause.",
 
 }
 
@@ -1592,6 +1603,14 @@ police donnée par le jeu, tel que font_ja pour la police Japonaise,
 ou une police donnée par le niveau. Ne donnez pas d'argument
 si vous souhaitez utiliser la police par défaut pour ce niveau.
 
+setrtl¤(on/off)\w#h
+
+Dans les niveaux personnalisés, détermine si la police se lit de droite à gauche
+ou non. Par défaut, la police se lit de gauche à droite.
+
+Le mode de lecture droite à gauche aligne les boîtes de dialogues sur la droite,
+ce qui est surtout utilisé pour les langues telles que l'Arabe.
+
 textcase¤(case)\w#h
 
 Si votre niveau a des fichiers de traduction, et que vous avez plusieurs
@@ -2264,14 +2283,17 @@ setcheckpoint¤()\w#h
 
 Créée un point de sauvegarde à la position actuelle
 
-setfont¤(police)\w#h
+setfont¤(police,all)\w#h
 
 Dans les niveaux personnalisés, change la police par celle donnée.
 
 police - La nouvelle police à utiliser. Si aucune n'est donnée, la police par
 défaut du niveau personnalisée sera utilisée.
+all - Si le mot ¤all¤ est donné (littéralement le mot ¤all¤), alors cela affectera\nn&Znn&Z
+absolument toutes les boîtes de dialogue à l'écran.
 
-Cette commande a été ajoutée dans la 2.4.\g
+Cette commande a été ajoutée dans la 2.4. L'argument ¤all¤ a été ajouté dans la\gn&Zg
+2.4.1.\g
 
 setroomname\w#h
 
@@ -2283,6 +2305,16 @@ Ce nom n'est pas persistant et le nom par défaut de la salle sera affiché si e
 est chargée à nouveau (par exemple en quittant et en ré-entrant dans la salle).
 
 Ce nom remplace aussi le nom de salle spécial qui change, si la salle en a un.
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+Dans les niveaux personnalisés, détermine si la police se lit de droite à gauche
+ou non. Par défaut, la police se lit de gauche à droite.
+
+Le mode de lecture droite à gauche aligne les boîtes de dialogues sur la droite,
+ce qui est surtout utilisé pour les langues telles que l'Arabe.
 
 Cette commande a été ajoutée dans la 2.4.\g
 
@@ -3195,7 +3227,7 @@ créer ce logiciel!
 
 Licence\h#
 \
-Droit d'auteur 2015-2023  Dav999
+Droit d'auteur 2015-2024  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

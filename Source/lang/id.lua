@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2023-12-12 00:36:07 (CET)
+--- Last converted: 2024-03-10 00:48:59 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -643,6 +643,17 @@ ZIP_SAVING_SUCCESS = "ZIP disimpan!",
 ZIP_SAVING_FAIL = "Tidak dapat menyimpan file ZIP!",
 
 OPENFOLDER = "Buka folder", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
+
+LEVELFONT = "Font level",
+
+TEXTBOXCOLORS_BUTTON = "Warna teks",
+TEXTBOXCOLORS_TITLE = "Warna kotak teks",
+TEXTBOXCOLORS_RENAME = "Ganti nama warna \"$1\"",
+TEXTBOXCOLORS_DUPLICATE = "Duplikasi warna \"$1\"",
+TEXTBOXCOLORS_CREATE = "Tambah warna baru",
+
+LIB_LOAD_ERRMSG_BIDI = "Gagal memuat perpustakaan untuk dukungan teks kanan ke kiri.\n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nAntivirus Anda mungkin merusaknya.",
 
 }
 
@@ -1460,7 +1471,7 @@ Hapus semua benda dari jenis tertentu, sampai Anda masuk kembali ke ruangan.
 
 Argumen yang valid dapat berupa:
 warptokens - Token warp
-gravitylines ] - Garis gravitasi
+gravitylines - Garis gravitasi
 platforms - Tidak berfungsi dengan benar
 moving - Platform bergerak (ditambahkan di 2.4)
 dissapear - Platform yang menghilang (ditambahkan di 2.4)
@@ -1532,6 +1543,13 @@ Ubah font yang digunakan untuk teks di level. Ini bisa berupa font yang disertak
 dengan game, seperti font_ja untuk bahasa Jepang, atau font yang disertakan dengan
 level. Biarkan kosong untuk kembali ke font default untuk level tersebut.
 
+setrtl¤(on/off)\w#h
+
+Di level kustom, alihkan apakah fontnya RTL (kanan ke kiri) atau tidak. Secara
+default, fontnya bukan RTL (melainkan LTR).
+
+Mode RTL terutama membuat kotak teks rata kanan, untuk bahasa seperti Arab.
+
 textcase¤(kasus)\w#h
 
 Jika level Anda memiliki file terjemahan, dan Anda memiliki beberapa kotak teks
@@ -1578,7 +1596,7 @@ Aktifkan teleporter pertama di ruangan itu, yang membuatnya memancarkan warna
 acak, dan menghidupkannya secara tidak menentu.
 
 tile¤ teleporter disetel ke 6, dan ¤color¤ disetel ke 102. Perintah ini membuat\n&Zgn&Zg
-teleporter tidak melakukan apa pun saat disentuh, karena ubin teleporter disetel
+teleporter tidak melakukan apa pun saat disentuh, karena ubin teleporter disetel\g
 ke sesuatu yang bukan 1.\gn&Zg(
 
 activeteleporter¤()\w#h
@@ -1797,7 +1815,7 @@ do¤(kali)\w#h
 Memulai blok perulangan yang akan berulang beberapa kali. Akhiri blok dengan
 perintah ¤#loop¤loop¤.\nLwl&Z
 
-times - Berapa kali blok akan berputar.
+kali - Berapa kali blok akan berputar.
 
 endcutscene¤()\w#h
 
@@ -2170,14 +2188,17 @@ setcheckpoint¤()\w#h
 
 Setel pos pemeriksaan ke lokasi saat ini
 
-setfont¤(font)\w#h
+setfont¤(font,all)\w#h
 
 Di level khusus, atur font ke font yang diberikan.
 
 font - Font untuk mengatur font. Jika dibiarkan kosong, ini akan mengatur font ke
 font default level kustom.
+all - Jika ¤all¤ ditentukan (secara harafiah kata ¤semua¤), maka ini akan\nn&Znn&Z
+mempengaruhi semua kotak teks yang sudah ada di layar secara surut. Kalau tidak,
+tinggalkan saja ini.
 
-Perintah ini ditambahkan di 2.4.\g
+Perintah ini ditambahkan di 2.4. Argumen ¤all¤ ditambahkan di 2.4.1.\gn&Zg
 
 setroomname\w#h
 
@@ -2189,6 +2210,15 @@ ruangan dimuat ulang (misalnya dengan keluar dan kembali).
 
 Nama ini menggantikan nama ruang ganti khusus apa pun, jika ruangan tersebut
 memilikinya.
+
+Perintah ini ditambahkan di 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+Di level kustom, alihkan apakah fontnya RTL (kanan ke kiri) atau tidak. Secara
+default, fontnya bukan RTL (melainkan LTR).
+
+Mode RTL terutama membuat kotak teks rata kanan, untuk bahasa seperti Arab.
 
 Perintah ini ditambahkan di 2.4.\g
 
@@ -2458,7 +2488,7 @@ Nomor suara efek\h#
 
 0 - Balik ke langit-langit
 1 - Balik kembali ke lantai
-2 - Menangis
+2 - Sedih
 3 - trinket dikumpulkan
 4 - Koin dikumpulkan
 5 - Checkpoint disentuh
@@ -3084,7 +3114,7 @@ untuk membuat ini!
 
 Lisensi\h#
 \
-Copyright 2015-2023  Dav999
+Copyright 2015-2024  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

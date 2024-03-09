@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2023-12-12 00:36:07 (CET)
+--- Last converted: 2024-03-10 00:49:00 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -35,14 +35,14 @@ OUTDATEDLOVE = "Deze versie van LÖVE is verouderd. De minimale versie is 0.9.1.
 OUTDATEDLOVE090 = "Ved ondersteunt LÖVE 0.9.0 niet meer. Gelukkig blijft LÖVE 0.9.1 en hoger werken.\nJe kunt de laatste versie van LÖVE downloaden op https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
-MAXTRINKETS = "Het maximumaantal trinkets ($1) is bereikt in dit level.",
-MAXCREWMATES = "Het maximumaantal bemanningsleden ($1) is bereikt in dit level.",
+MAXTRINKETS = "Het maximum aantal artefacten ($1) is bereikt in dit level.",
+MAXCREWMATES = "Het maximum aantal bemanningsleden ($1) is bereikt in dit level.",
 UNSUPPORTEDTOOL = "Niet-ondersteund gereedschap! Gereedschap: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Kon de inhoud van de levelsmap niet verkrijgen. Controleer of $1 bestaat en probeer het opnieuw.",
 MAPSAVEDAS = "Kaart opgeslagen als $1!",
 RAWENTITYPROPERTIES = "Je kunt de eigenschappen van deze entiteit hier wijzigen.",
 UNKNOWNENTITYTYPE = "Onbekend entiteitstype $1",
-WARPTOKENENT404 = "Warptoken-entiteit bestaat niet meer!",
+WARPTOKENENT404 = "Teleportatietoken-entiteit bestaat niet meer!",
 SPLITFAILED = "Splitsen is miserabel mislukt! Zijn er te veel regels tussen een text-commando en een speak/speak_active?", -- Command names are best left untranslated
 NOFLAGSLEFT = "Er zijn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwijzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
 NOFLAGSLEFT_LOADSCRIPT = "Er zijn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden met een nieuwe vlag. In plaats daarvan is er een laadscript gemaakt dat het doelscript altijd laadt met iftrinkets(0,$1). Overweeg om alle verwijzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw.",
@@ -317,7 +317,7 @@ SMALLENTITYDATA = "data",
 AMOUNTSCRIPTS = "Scripts:",
 AMOUNTUSEDFLAGS = "Vlaggen:",
 AMOUNTENTITIES = "Entiteiten:",
-AMOUNTTRINKETS = "Trinkets:",
+AMOUNTTRINKETS = "Artefacten:",
 AMOUNTCREWMATES = "Bemanningsleden:",
 AMOUNTINTERNALSCRIPTS = "Interne scripts:",
 TILESETUSSAGE = "Tilesetgebruik",
@@ -521,12 +521,12 @@ PLATVCHANGE_INVALID = "Je moet een getal invoeren.",
 RENAMESCRIPTREFERENCES = "Verwijzingen hernoemen",
 PLATFORMSPEEDSLIDER = "Tempo",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "Alle trinkets opsommen", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "Lijst met alle trinkets",
-NOTRINKETSINLEVEL = "Er zijn geen trinkets in dit level.",
+TRINKETS = "Artefacten",
+LISTALLTRINKETS = "Alle artefacten", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Lijst met alle artefacten",
+NOTRINKETSINLEVEL = "Er zijn geen artefacten in dit level.",
 CREWMATES = "Bemanning",
-LISTALLCREWMATES = "Alle leden opsommen", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTALLCREWMATES = "Alle leden", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "Lijst met alle bemanningsleden",
 NOCREWMATESINLEVEL = "Er zijn geen bemanningsleden in dit level.",
 SHIFTROOMS = "Verschuif kamers", -- In the map. Move all rooms in the entire level in any direction
@@ -550,7 +550,7 @@ BTNOVERRIDE = "Omzeilen",
 TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 TIMETRIALS = "Races tegen de klok",
-TIMETRIALTRINKETS = "Aantal trinkets",
+TIMETRIALTRINKETS = "Aantal artefacten",
 TIMETRIALTIME = "Partijd",
 SUREDELETETRIAL = "Weet je zeker dat je de race tegen de klok \"$1\" wilt verwijderen?",
 
@@ -654,6 +654,17 @@ ZIP_SAVING_FAIL = "ZIP-bestand kon niet worden opgeslagen!",
 
 OPENFOLDER = "Map openen", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
+LEVELFONT = "Levellettertype",
+
+TEXTBOXCOLORS_BUTTON = "Tekstkleuren",
+TEXTBOXCOLORS_TITLE = "Kleuren voor tekstvakken",
+TEXTBOXCOLORS_RENAME = "Kleur \"$1\" hernoemen",
+TEXTBOXCOLORS_DUPLICATE = "Kleur \"$1\" dupliceren",
+TEXTBOXCOLORS_CREATE = "Nieuwe kleur toevoegen",
+
+LIB_LOAD_ERRMSG_BIDI = "De bibliotheek met ondersteuning voor tekst van rechts naar links kan niet worden geladen.\n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nHet kan zijn dat je antivirus dit stukmaakt.",
+
 }
 
 -- Please check the reference for plural forms
@@ -721,7 +732,7 @@ toolnames = {
 "Muur",
 "Achtergrond",
 "Spijker",
-"Trinket",
+"Artefact",
 "Checkpoint",
 "Brekend platform",
 "Lopende band",
@@ -731,8 +742,8 @@ toolnames = {
 "Tekst",
 "Terminal",
 "Scriptvak",
-"Warptoken",
-"Warplijn",
+"Teleportatietoken",
+"Wikkellijn",
 "Bemanningslid",
 "Startpunt",
 
@@ -1076,11 +1087,11 @@ uitbreiden gebruiken om spijkers te plaatsen op een oppervlak met één klik (of
 verschuiving).
 
 \3
-   Trinket\h#
+   Artefact\h#
 
 
-Hiermee kun je trinkets plaatsen. Bedenk dat er maximaal twintig trinkets in een
-level geplaatst kunnen worden.
+Hiermee kun je artefacten plaatsen. Bedenk dat er maximaal honderd artefacten in
+een level geplaatst kunnen worden.
 
 \4
    Checkpoint\h#
@@ -1143,25 +1154,25 @@ rechteronderhoek, en typ vervolgens een naam voor het script. Kijk voor meer
 informatie over scripts naar de lijsten met scriptcommando's.
 
 \^3
-   Warptoken\h#
+   Teleportatietoken\h#
 
 
-Hiermee kun je warptokens plaatsen. Klik eerst op de plek waar de ingang moet
-komen te staan, dan waar de uitgang moet komen te staan.
+Hiermee kun je teleportatietokens plaatsen. Klik eerst op de plek waar de ingang
+moet komen te staan, dan waar de uitgang moet komen te staan.
 
 \^4
-   Warplijn\h#
+   Wikkellijn\h#
 
 
-Hiermee kun je warplijnen plaatsen. Bedenk dat warplijnen alleen aan de zijkanten
-van een kamer geplaatst kunnen worden.
+Hiermee kun je wikkellijnen plaatsen. Bedenk dat wikkellijnen alleen aan de
+randen van een kamer geplaatst kunnen worden.
 
 \^5
    Bemanningslid\h#
 
 
 Hiermee kun je bemanningsleden plaatsen die gered kunnen worden. Wanneer alle
-bemanningsleden worden gered, eindigt het level. Bedenk dat er maximaal twintig
+bemanningsleden worden gered, eindigt het level. Bedenk dat er maximaal honderd
 bemanningsleden in een level geplaatst kunnen worden.
 
 \^6
@@ -1466,19 +1477,19 @@ Opmerking: In Ved kun je ook vlagnamen gebruiken in plaats van de nummers.
 
 iftrinkets¤(aantal,scriptnaam)\h#w
 
-Als je aantal trinkets >= aantal, ga naar script met naam scriptnaam.
-Als je aantal trinkets < aantal, ga dan verder in het huidige script.
+Als je aantal artefacten >= aantal, ga naar script met naam scriptnaam.
+Als je aantal artefacten < aantal, ga dan verder in het huidige script.
 Voorbeeld:
-iftrinkets(3,enoughtrinkets) - Als je 3 of meer trinkets hebt zal het script
+iftrinkets(3,enoughtrinkets) - Als je 3 of meer artefacten hebt zal het script
                                "enoughtrinkets" worden uitgevoerd, anders zal het
                                huidige script verdergaan.
-Het is gebruikelijk om 0 als minimum aantal trinkets te gebruiken, om een script
+Het is gebruikelijk om 0 als minimum aantal artefacten te gebruiken, om een script
 altijd te laden.
 
 iftrinketsless¤(aantal,scriptnaam)\h#w
 
-Als je aantal trinkets < aantal, ga naar script met naam scriptnaam.
-Als je aantal trinkets >= aantal, ga dan verder in het huidige script.
+Als je aantal artefacten < aantal, ga naar script met naam scriptnaam.
+Als je aantal artefacten >= aantal, ga dan verder in het huidige script.
 
 destroy¤(iets)\h#w
 
@@ -1562,6 +1573,14 @@ lettertype zijn dat meegeleverd wordt met het spel, zoals font_ja voor Japans, o
 een lettertype dat meegeleverd is met het level. Laat leeg om terug te gaan naar
 het standaardlettertype van het level.
 
+setrtl¤(on/off)\w#h
+
+Schakel in spelerlevels of het lettertype RTL (rechts-naar-links) is of niet.
+Standaard is het lettertype niet RTL (het is dus links-naar-rechts).
+
+RTL-modus zorgt vooral dat tekstvakken rechts uitgelijnd zijn, voor talen zoals
+Arabisch.
+
 textcase¤(case)\w#h
 
 Als je level vertaalbestanden heeft, en je hebt meerdere tekstvakken met dezelfde
@@ -1628,8 +1647,8 @@ Zet het alarm aan.
 
 altstates¤(toestand)\b#h
 
-Verander de layout van sommige kamers, namelijk de trinket-kamer in het schip voor
-en na de explosie, en de ingang van het geheime lab (aangepaste levels
+Verander de layout van sommige kamers, namelijk de artefactenkamer in het schip
+voor en na de explosie, en de ingang van het geheime lab (aangepaste levels
 ondersteunen altstates helemaal niet).
 
 In de code verandert dit de globale variabele ¤altstates¤.\gn&Zg
@@ -1929,9 +1948,9 @@ ook geen endtext uit, en heeft geen verdere ongewenste effecten.
 
 foundtrinket¤(x)\w#h
 
-Laat een trinket gevonden zijn
+Laat een artefact gevonden zijn
 
-x - Nummer van het trinket
+x - Nummer van het artefact
 
 gamemode¤(x)\b#h
 
@@ -2001,7 +2020,7 @@ Verberg de teleporters op de kaart
 
 hidetrinkets¤()\b#h
 
-Verberg de trinkets op de kaart
+Verberg de artefacten op de kaart
 
 ifcrewlost¤(bemanningslid,script)\b#h
 
@@ -2048,9 +2067,9 @@ hoofdspel)
 iftrinketsless¤(n,script)\b#h
 
 Controleert of het gegeven getal kleiner is dan een aantal dat gerelateerd is aan
-trinkets. Echter, het vergelijkt het met het grootste aantal trinkets dat je ooit
-hebt gekregen tijdens het spelen van het hoofdspel, NIET het aantal trinkets dat
-je eigenlijk hebt. Laadt een intern script (uit het hoofdspel)
+artefacten. Echter, het vergelijkt het met het grootste aantal artefacten dat je
+ooit hebt gekregen tijdens het spelen van het hoofdspel, NIET het aantal
+artefacten dat je eigenlijk hebt. Laadt een intern script (uit het hoofdspel)
 
 ifwarp¤(x,y,richting,script)\w#h
 
@@ -2160,7 +2179,7 @@ Maakt iemand gered
 
 resetgame\w#h
 
-Reset alle trinkets, verzamelde bemanningsleden en vlaggen, en teleporteert de
+Reset alle artefacten, verzamelde bemanningsleden en vlaggen, en teleporteert de
 speler naar het laatste checkpoint.
 
 restoreplayercolour¤()\w#h
@@ -2207,14 +2226,17 @@ setcheckpoint¤()\w#h
 
 Stelt het checkpoint in op de huidige locatie
 
-setfont¤(lettertype)\w#h
+setfont¤(lettertype,all)\w#h
 
 In spelerlevels verandert dit het lettertype naar het gegeven lettertype.
 
 lettertype - Het lettertype om het lettertype naar te veranderen.
 Indien leeggelaten zal het standaardlettertype van het level gebruikt worden.
+all - Als ¤all¤ is opgegeven (letterlijk het woord ¤all¤), zal dit met terugwerkende\nn&Znn&Z
+kracht van toepassing worden op alle tekstvakken die al in beeld zijn. Laat dit
+anders leeg.
 
-Dit commando is toegevoegd in 2.4.\g
+Dit commando is toegevoegd in 2.4. Het ¤all¤-argument is toegevoegd in 2.4.1.\gn&Zg
 
 setroomname\w#h
 
@@ -2226,6 +2248,16 @@ als de kamer opnieuw wordt geladen (bijvoorbeeld door weg te gaan en terug te
 komen)
 
 Deze naam overschrijft speciale veranderende kamernamen, als de kamer die heeft.
+
+Dit commando is toegevoegd in 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+Schakel in spelerlevels of het lettertype RTL (rechts-naar-links) is of niet.
+Standaard is het lettertype niet RTL (het is dus links-naar-rechts).
+
+RTL-modus zorgt vooral dat tekstvakken rechts uitgelijnd zijn, voor talen zoals
+Arabisch.
 
 Dit commando is toegevoegd in 2.4.\g
 
@@ -2259,7 +2291,7 @@ Toon de teleports in verkende kamers op de kaart
 
 showtrinkets¤()\w#h
 
-Toon de trinkets op de kaart
+Toon de artefacten op de kaart
 
 Vanaf 2.3 werkt dit commando ook in spelerlevels.\g
 
@@ -2386,7 +2418,7 @@ Laat de speler naar de grond gaan als deze daar niet al staat.
 
 trinketbluecontrol¤()\b#h
 
-Tekst van Victoria wanneer ze je een trinket geeft in het echte spel
+Tekst van Victoria wanneer ze je een artefact geeft in het echte spel
 
 trinketscriptmusic\w#h
 
@@ -2394,7 +2426,7 @@ Speelt Passion for Exploring.
 
 trinketyellowcontrol¤()\b#h
 
-Tekst van Vitellary wanneer hij je een trinket geeft in het echte spel
+Tekst van Vitellary wanneer hij je een artefact geeft in het echte spel
 
 undovvvvvvman¤()\w#h
 
@@ -2499,7 +2531,7 @@ Geluidseffecten\h#
 0 - Keer zwaartekracht om naar plafond
 1 - Keer zwaartekracht om naar vloer
 2 - Huil
-3 - Trinket verzameld
+3 - Artefact verzameld
 4 - Muntje verzameld
 5 - Checkpoint aangeraakt
 6 - Sneller drijfzandblok aangeraakt
@@ -2544,9 +2576,9 @@ Entiteiten\h#
 7 - Zelfde als hierboven, maar flitst niet en is cyaan-gekleurd
 8 - Een munt uit het prototype
     Metadata: Munt-ID
-9 - Trinket
-    Metadata: Trinket-ID
-    Opmerking: trinket-ID's beginnen bij 0, en alles boven 19 wordt niet
+9 - Artefact
+    Metadata: Artefact-ID
+    Opmerking: artefact-ID's beginnen bij 0, en alles boven 19 wordt niet
     opgeslagen in het bestand wanneer je het level herstart
 10 - Checkpoint
      Metadata: Checkpoint-status (0=ondersteboven, 1=normaal), Checkpoint-ID
@@ -2555,7 +2587,7 @@ Entiteiten\h#
      Metadata: Lengte in pixels
 12 - Verticale zwaartekrachtlijn
      Metadata: Lengte in pixels
-13 - Warptoken
+13 - Teleportatietoken
      Metadata: Bestemming in blokken op X-as, bestemming in blokken op Y-as
 14 - De ronde teleporter
      Metadata: Checkpoint-ID(?)
@@ -2573,8 +2605,8 @@ Entiteiten\h#
      Metadata: Sprite, Script-ID(?)
 21 - Zelfde als hierboven maar wanneer aangeraakt zal de terminal geen licht geven
      Metadata: Sprite, Script-ID(?)
-22 - Verzamelde trinket
-     Metadata: Trinket-ID
+22 - Verzameld artefact
+     Metadata: Artefact-ID
 23 - Gravitron-vierkant
      Metadata: Richting
      Als je een negatieve X-coördinaat opgeeft (of te hoog) zal een pijltje
@@ -2587,8 +2619,8 @@ Entiteiten\h#
      Als de uitdaging voltooid is zal de basis-sprite-ID (wat je krijgt als je
      sprite=0 gebruikt) veranderen. Gebruik alleen 0 of 1 als je voorspelbare
      resultaten wil (0=normaal, 1=ondersteboven)
-26 - Het warptoken naar het Secret Lab
-     Houd in gedachten dat deze warp alleen geïmplementeerd is als een
+26 - Het teleportatietoken naar het Secret Lab
+     Houd in gedachten dat dit token alleen geïmplementeerd is als een
      mooi-uitziende sprite. Je moet de functionaliteit zelf scripten
 55 - Bemanningslid dat gered kan worden
      Metadata: Kleur van bemanningslid. Kleur >6 zal altijd een *blije* Viridian
@@ -2607,7 +2639,7 @@ bemanningsleden\h
 0: Cyaan
 1: Flitsend rood (gebruikt voor dood)
 2: Donker-oranje
-3: Trinket-kleur
+3: Artefact-kleur
 4: Grijs
 5: Flitsend wit
 6: Rood (beetje donkerder dan Vermilion)
@@ -2674,31 +2706,32 @@ Gamestates\h#
 0 - Breekt uit de meeste gamestates
 1 - Zet de gamestate op 0 (oftewel in de praktijk hetzelfde als hierboven)
 2 - "To do: write quick intro to story!"
-4 - "Press arrow keys or WASD to move"
+4 - "Druk op de pijltjestoetsen of WASD om te bewegen"
 5 - Voert het script "returntohub" uit (oftewel fadeout, teleporteer naar rechts
     voor The Tower, fadein, speel Passion for Exploring)
 7 - Verwijdert tekstvakken
-8 - "Press enter to view map and quicksave"
+8 - "Druk op ENTER voor kaart en opslaan"
 9 - Super Gravitron
 10 - Gravitron
 11 - "When you're NOT standing on stop and wait for you" (Probeert flipmode-check
      te gebruiken om "the ceiling" of "the floor" te laten zien, maar omdat dit
      fout gaat, wordt in plaats daarvan weergegeven wat hierboven staat)
-12 - "You can't continue to the next room until he is safely accross."
+12 - "Je kunt niet naar de volgende kamer totdat de ander veilig aan de overkant
+     is."
 13 - Verwijdert tekstvakken snel
 14 - "When you're standing on the floor," (hetzelfde is hier van toepassing als
      bij 11)
 15 - Maakt Viridian blij
 16 - Maakt Viridian verdrietig
-17 - "If you prefer, you can press UP or DOWN instead of ACTION to flip."
+17 - "Je kunt ook op OMHOOG of OMLAAG drukken in plaats van ACTIE om je
+     zwaartekracht om te keren."
 20 - Als vlag 1 op 0 staat, zet vlag 1 op 1 en verwijder tekstvakken
 21 - Als vlag 2 op 0 staat, zet vlag 2 op 1 en verwijder tekstvakken
-22 - "Press ACTION to flip"
-30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
-     out ok..."
-31 - "Violet, is that you?"-cutscene (zolang vlag 6 op 0 staat)
-32 - Als vlag 7 op 0 staat: "A teleporter!" "I can get back to the ship with
-     this!"
+22 - "Druk op ACTIE om je zwaartekracht om te keren"
+30 - "Waarom zou het schip mij hier in mijn eentje hebben geteleporteerd?"
+     "Ik hoop dat de rest in orde is..."
+31 - "Violet! Ben jij dat?"-cutscene (zolang vlag 6 op 0 staat)
+32 - Als vlag 7 op 0 staat: "Een teleport!" "Hiermee kan ik terug naar het schip!"
 33 - Als vlag 9 op 0 staat: Victoria-cutscene
 34 - Als vlag 10 op 0 staat: Vitellary-cutscene
 35 - Als vlag 11 op 0 staat: Verdigris-cutscene
@@ -2713,43 +2746,43 @@ Gamestates\h#
 44 - Als vlag 64 op 0 staat: draai de 5e intermission 1-cutscene
 45 - Als vlag 65 op 0 staat: draai de 6e intermission 1-cutscene
 46 - Als vlag 66 op 0 staat: draai de 7e intermission 1-cutscene
-47 - Als vlag 69 op 0 staat: "Ohh! I wonder what that is?"-trinket-cutscene
-48 - Als vlag 70 op 0 staat: "This seems like a good place to store anything I
-     find out there..." (Victoria nog niet gevonden)
+47 - Als vlag 69 op 0 staat: "Hé! Wat zou dat zijn?"-artefact-cutscene
+48 - Als vlag 70 op 0 staat: "Als ik buiten nog iets vind lijkt dit me wel een
+     goede plek om het te bewaren..." (Victoria nog niet gevonden)
 49 - Als vlag 71 op 0 staat: Speel Predestined Fate
-50 - "Help! Can anyone hear this message?"
-51 - "Verdigris? Are you out there? Are you ok?"
-52 - "Please help us! We've crashed and need assistance!"
-53 - "Hello? Anyone out there?"
-54 - "This is Doctor Violet from the D.S.S. Souleye! Please respond!"
-55 - "Please... Anyone..."
-56 - "Please be alright, everyone..."
+50 - "Help! Kan iemand dit horen?"
+51 - "Verdigris? Ben je daar ergens? Ben je in orde?"
+52 - "Help ons! We zijn neergestort en hebben assistentie nodig!"
+53 - "Hallo? Is er iemand in de buurt?"
+54 - "Dit is Doctor Violet van de D.S.S. Souleye! Antwoord alsjeblieft!"
+55 - "Alsjeblieft... Iemand..."
+56 - "Ik hoop dat jullie allemaal ongedeerd zijn..."
 Met gamestate 50-56 kun je kiezen waar te beginnen, want alles komt na elkaar
 80 - Dan en slechts dan als het beeld zwart is, ga door naar state 81 (Mijn gok is
      dat dit wordt aangeroepen wanneer ESC wordt ingedrukt, voor het pauze-menu
      wordt geopend)
 81 - Ga terug naar het hoofdmenu
-82 - Resultaten van time trial (bugged)
+82 - Resultaten van race tegen de klok
 83 - Als beeld zwart is, ga door naar state 84
-84 - Resultaten van time trial (Ik denk dat 82 beter werkt dan 84)
-85 - De Time Trial-versie van gamestate 200 (Flits, speel Positive Force, zet
-     finalstretch-mode aan)
-States 90-95 zijn gerelateerd aan time trials, maar werken niet goed in aangepaste
-     levels. De enige echte effecten die gebeuren in aangepaste levels zijn een
-     warp, en verandering van de muziek
-90 - Space Station 1
-91 - The Laboratory
-92 - Warp Zone
-93 - The Tower
-94 - Space Station 2
-95 - Final Level
+84 - Resultaten van race tegen de klok (Ik denk dat 82 beter werkt dan 84)
+85 - De race tegen de klok-versie van gamestate 200 (Flits, speel Positive Force,
+     zet finalstretch-modus aan)
+States 90-95 zijn gerelateerd aan races tegen de klok, maar werken niet goed in
+     spelerlevels. De enige echte effecten die gebeuren in spelerlevels zijn een
+     teleportatie, en verandering van de muziek
+90 - Ruimtestation 1
+91 - Het Laboratorium
+92 - Wikkelzone
+93 - De Toren
+94 - Ruimtestation 2
+95 - Eindlevel
 96 - Als het beeld zwart is, ga door naar state 97
-97 - Verlaat Super Gravitron (teleporteer en speel Pipe Dream)
+97 - Verlaat Supergravitron (teleporteer en speel Pipe Dream)
 100 - Als vlag 4 op 0 staat: ga door naar state 101
 101 - Als je zwaartekracht omgekeerd is, ga terug naar de vloer, ga naar state 102
 De volgende states (102-112) proberen naar de huidige state te gaan + 1, net zoals
       in 50-56 (maar vormt geen lus), maar kan problemen veroorzaken omdat de
-      helft van de staten (103, 105, 107, 109, 111) niet bestaat.
+      helft van de states (103, 105, 107, 109, 111) niet bestaat.
 102 - Verdigris: "Captain! I've been so worried!"
 104 - "I'm glad you're ok!"
 106 - "I've been trying to find a way out, but I keep going around in circles..."
@@ -2773,36 +2806,36 @@ State 120-128 werken een beetje zoals 102-112, d.w.z in serie, maar met minder
 132 - Verwijdert tekstvakken
 200 - Final mode
 1000 - Zet cutscenebalken aan, bevriest het spel, gaat door naar state 1001
-1001 - "You got a shiny trinket!" (maar je hebt er niet echt een gekregen, dit
-       wordt gewoon iedere keer dat je er een verzamelt aangeroepen), ga door naar
-       state 1003
+1001 - "Je hebt een glanzend artefact gevonden!" (maar je hebt er niet echt een
+       gekregen, dit wordt gewoon iedere keer dat je er een verzamelt
+       aangeroepen), ga door naar state 1003
 1003 - Herstel spel naar normale situatie
-1010 - You found a crewmate! op dezelfde manier als voor trinkets
+1010 - Je hebt een bemanningslid gevonden! op dezelfde manier als voor artefacten
 1013 - Beëindig level met sterren
 2000 - Sla het spel op
 2500-2509 - Teleporteer naar een of andere vreemde niet-bestaande locatie,
-            vermoedelijk naar The Laboratory denk ik, ga door naar state 2510
+            vermoedelijk naar het Laboratorium denk ik, ga door naar state 2510
 2510 - Viridian: "Hello?", ga door naar state 2512
 2512 - Viridian: "Is anybody there?", ga door naar state 2514
 2514 - Verwijdert tekstvakken, speel Potential For Anything
 States 3000-3099:
-3000-3005 - "Level Complete! You've rescued..." het bemanningslid toegepast op
+3000-3005 - "Level uitgespeeld! Je hebt gered..." het bemanningslid toegepast op
             companion(), standaard Verdigris. 6=Verdigris, 7=Vitellary,
             8=Victoria, 9=Vermilion, 10=Viridian (ja, echt), 11=Violet
             (Gamestates: 3006-3011=Verdigris, 3020-3026=Vitellary,
             3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
             3050-3056=Violet)
 3070-3072 - Doe dingen na redding, normaal gesproken terug naar schip
-3501 - Game Complete
-4010 - Flits + warp
-4070 - Het Final Level, maar het spel zal crashen wanneer je Timeslip bereikt
+3501 - Spel uitgespeeld
+4010 - Flits + teleportatie
+4070 - Het Eindlevel, maar het spel zal crashen wanneer je Timeslip bereikt
        (Door de manier waarop het spel entiteit-informatie krijgt, wat stuk is in
-       aangepaste levels)
+       spelerlevels)
 4080 - Kapitein teruggeteleporteerd naar het schip:
-       "Hello!" [C[C[C[C[Captain!]-cutscene + credits.
+       "Hallo!" [K[K[K[K[Kapitein!]-cutscene + credits.
        Het bovenstaande zal je opgeslagen data vernietigen dus doe het niet tenzij
        je een backup hebt gemaakt!
-4090 - Cutscene nadat je space station 1 hebt afgemaakt
+4090 - Cutscene nadat je ruimtestation 1 hebt afgemaakt
 ]]
 },
 
@@ -3114,7 +3147,7 @@ gemotiveerd om dit te maken!
 
 Licentie\h#
 \
-Copyright 2015-2023  Dav999
+Copyright 2015-2024  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

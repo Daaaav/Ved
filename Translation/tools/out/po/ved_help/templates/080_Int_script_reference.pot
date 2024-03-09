@@ -768,13 +768,16 @@ msgstr ""
 msgid "Sets the checkpoint to the current location"
 msgstr ""
 
-msgid "setfont¤(font)\\w#h"
+msgid "setfont¤(font,all)\\w#h"
 msgstr ""
 
 msgid "In custom levels, set the font to the given font."
 msgstr ""
 
-msgid "font - The font to set the font to. If left blank, this will set the font to the\ndefault font of the custom level."
+msgid "font - The font to set the font to. If left blank, this will set the font to the\ndefault font of the custom level.\nall - If ¤all¤ is specified (literally the word ¤all¤), then this retroactively\\nn&Znn&Z\naffects all textboxes that are already on screen. Otherwise simply leave this out."
+msgstr ""
+
+msgid "This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\\gn&Zg"
 msgstr ""
 
 msgid "setroomname\\w#h"
@@ -787,6 +790,15 @@ msgid "This name is not persistent and will go back to the default room name whe
 msgstr ""
 
 msgid "This name overrides any special changing room name, if the room has one. "
+msgstr ""
+
+msgid "setrtl¤(on/off)\\w#h"
+msgstr ""
+
+msgid "In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By\ndefault, the font is not RTL (it is LTR)."
+msgstr ""
+
+msgid "RTL mode mainly makes textboxes right-aligned, for languages like Arabic."
 msgstr ""
 
 msgid "shake¤(n)\\w#h"

@@ -147,6 +147,15 @@ msgstr ""
 msgid "Change the font used for text in the level. This can be a font supplied with the\ngame, such as font_ja for Japanese, or a font supplied with the level. Leave blank\nto revert to the default font for the level."
 msgstr ""
 
+msgid "setrtl¤(on/off)\\w#h"
+msgstr ""
+
+msgid "In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By\ndefault, the font is not RTL (it is LTR)."
+msgstr ""
+
+msgid "RTL mode mainly makes textboxes right-aligned, for languages like Arabic."
+msgstr ""
+
 msgid "textcase¤(case)\\w#h"
 msgstr ""
 

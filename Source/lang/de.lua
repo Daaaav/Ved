@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2023-12-12 00:36:06 (CET)
+--- Last converted: 2024-03-10 00:48:59 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -37,7 +37,7 @@ OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 od
 OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
-MAXTRINKETS = "Die maximale Anzahl an Trinkets ($1) wurde in diesem Level erreicht.",
+MAXTRINKETS = "Die maximale Anzahl an Dingsdas ($1) wurde in diesem Level erreicht.",
 MAXCREWMATES = "Die maximale Anzahl an Crewmitglieder ($1) wurde in diesem Level erreicht.",
 UNSUPPORTEDTOOL = "Nicht unterstütztes Werkzeug! Werkzeug: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Konnte nicht den Inhalt vom Levelordner bekommen. Bitte überprüfe ob $1 existiert und versuche es erneut.",
@@ -162,7 +162,7 @@ BTN_RETRY = "Erneut versuchen",
 COMPARINGTHESE = "Vergleiche $1.vvvvvv zu $2.vvvvvv",
 COMPARINGTHESENEW = "Vergleiche (ungespeichertes Level) zu $1.vvvvvv",
 
-RETURN = "Zurückkehren",
+RETURN = "Zurück",
 CREATE = "Erstellen",
 GOTO = "Gehe zu",
 DELETE = "Löschen",
@@ -265,7 +265,7 @@ IMAGEERROR = "[BILDFEHLER]",
 
 NEWNAME = "Neuer Name:",
 RENAMENOTE = "Notiz umbennen",
-RENAMESCRIPT = "Skript umbennen:",
+RENAMESCRIPT = "Skript umbennen",
 
 LINE = "Zeile ",
 
@@ -319,7 +319,7 @@ SMALLENTITYDATA = "Daten",
 AMOUNTSCRIPTS = "Skripts:",
 AMOUNTUSEDFLAGS = "Flags:",
 AMOUNTENTITIES = "Objekte:",
-AMOUNTTRINKETS = "Trinkets:",
+AMOUNTTRINKETS = "Dingsdas:",
 AMOUNTCREWMATES = "Crewmitglieder:",
 AMOUNTINTERNALSCRIPTS = "Interne Skripts:",
 TILESETUSSAGE = "Tileset Benutzung",
@@ -523,10 +523,10 @@ PLATVCHANGE_INVALID = "Du musst eine Nummer eingeben.",
 RENAMESCRIPTREFERENCES = "Hinweise umbenennen",
 PLATFORMSPEEDSLIDER = "Tempo",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "Trinkets auflisten", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "Liste aller Trinkets",
-NOTRINKETSINLEVEL = "Es gibt keine Trinkets in diesem Level.",
+TRINKETS = "Dingsdas",
+LISTALLTRINKETS = "Dingsdas auflisten", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "Liste aller Dingsdas",
+NOTRINKETSINLEVEL = "Es gibt keine Dingsdas in diesem Level.",
 CREWMATES = "Crewmitglieder",
 LISTALLCREWMATES = "Crewmitglieder auflisten", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
 LISTOFALLCREWMATES = "Liste aller rettbaren Crewmitglieder",
@@ -552,7 +552,7 @@ BTNOVERRIDE = "Überschreiben",
 TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
 TIMETRIALS = "Zeitprüfung",
-TIMETRIALTRINKETS = "Trinketanzahl",
+TIMETRIALTRINKETS = "Dingsda-anzahl",
 TIMETRIALTIME = "Zeitprüfungszeit",
 SUREDELETETRIAL = "Bist du sicher du willst die Zeitprüfung \"$1\" löschen?",
 
@@ -656,6 +656,17 @@ ZIP_SAVING_FAIL = "ZIP-Datei konnte nicht gespeichert werden!",
 
 OPENFOLDER = "Ordner öffnen", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
+LEVELFONT = "Level-Schriftart",
+
+TEXTBOXCOLORS_BUTTON = "Textfarben",
+TEXTBOXCOLORS_TITLE = "Textbox-farben",
+TEXTBOXCOLORS_RENAME = "Farbe \"$1\" umbennen",
+TEXTBOXCOLORS_DUPLICATE = "Farbe \"$1\" duplizieren",
+TEXTBOXCOLORS_CREATE = "Neue Farbe hinzufügen",
+
+LIB_LOAD_ERRMSG_BIDI = "Die Bibliothek, die Rechts-nach-Links-Text unterstützt, kann nicht geladen werden.\n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nEs könnte sein, dass dein Antivirus diese Funktion stört.",
+
 }
 
 -- Please check the reference for plural forms
@@ -723,7 +734,7 @@ toolnames = {
 "Mauer",
 "Hintergrund",
 "Spike",
-"Trinket",
+"Dingsda",
 "Checkpoint",
 "Verschwindende Plattform",
 "Conveyor",
@@ -1545,6 +1556,13 @@ Change the font used for text in the level. This can be a font supplied with the
 game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
 to revert to the default font for the level.
 
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+
 textcase¤(case)\w#h
 
 If your level has translation files, and you have multiple text boxes with the
@@ -2172,14 +2190,16 @@ setcheckpoint¤()\w#h
 
 Sets the checkpoint to the current location
 
-setfont¤(font)\w#h
+setfont¤(font,all)\w#h
 
 In custom levels, set the font to the given font.
 
 font - The font to set the font to. If left blank, this will set the font to the
 default font of the custom level.
+all - If ¤all¤ is specified (literally the word ¤all¤), then this retroactively\nn&Znn&Z
+affects all textboxes that are already on screen. Otherwise simply leave this out.
 
-This command was added in 2.4.\g
+This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\gn&Zg
 
 setroomname\w#h
 
@@ -2190,6 +2210,15 @@ This name is not persistent and will go back to the default room name when the
 room is reloaded (e.g. by leaving and coming back).
 
 This name overrides any special changing room name, if the room has one. 
+
+This command was added in 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
 
 This command was added in 2.4.\g
 
@@ -3055,7 +3084,7 @@ machen!
 
 License\h#
 \
-Copyright 2015-2023  Dav999
+Copyright 2015-2024  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:

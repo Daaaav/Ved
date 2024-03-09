@@ -2222,6 +2222,38 @@ msgctxt "L.OPENFOLDER"
 msgid "Open folder"
 msgstr ""
 
+msgctxt "L.LEVELFONT"
+msgid "Level font"
+msgstr ""
+
+msgctxt "L.TEXTBOXCOLORS_BUTTON"
+msgid "Text colors"
+msgstr ""
+
+msgctxt "L.TEXTBOXCOLORS_TITLE"
+msgid "Textbox colors"
+msgstr ""
+
+msgctxt "L.TEXTBOXCOLORS_RENAME"
+msgid "Rename color \"$1\""
+msgstr ""
+
+msgctxt "L.TEXTBOXCOLORS_DUPLICATE"
+msgid "Duplicate color \"$1\""
+msgstr ""
+
+msgctxt "L.TEXTBOXCOLORS_CREATE"
+msgid "Add new color"
+msgstr ""
+
+msgctxt "L.LIB_LOAD_ERRMSG_BIDI"
+msgid "Failed to load the library for right-to-left text support.\n\n$1"
+msgstr ""
+
+msgctxt "L.LIB_LOAD_ERRMSG_AV"
+msgid "\n\nYour antivirus may be breaking it."
+msgstr ""
+
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2023-12-12 00:36:07 (CET)
+--- Last converted: 2024-03-10 00:49:00 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -667,6 +667,17 @@ ZIP_SAVING_SUCCESS = "ZIP-arĥivo konserviĝis!",
 ZIP_SAVING_FAIL = "Ne eblis konservi ZIP-dosieron!",
 
 OPENFOLDER = "Malfermi dosierujon", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
+
+LEVELFONT = "Nivela tiparo",
+
+TEXTBOXCOLORS_BUTTON = "Tekstaj koloroj",
+TEXTBOXCOLORS_TITLE = "Tekstoskatolaj koloroj",
+TEXTBOXCOLORS_RENAME = "Renomi koloron \"$1\"",
+TEXTBOXCOLORS_DUPLICATE = "Duobligi koloron \"$1\"",
+TEXTBOXCOLORS_CREATE = "Aldoni novan koloron",
+
+LIB_LOAD_ERRMSG_BIDI = "Malsukcesis ŝargi bibliotekon por dedekstre skribata teksto.\n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nVia kontraŭvirusilo eble rompas ĝin.",
 
 }
 
@@ -1556,6 +1567,13 @@ Change the font used for text in the level. This can be a font supplied with the
 game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
 to revert to the default font for the level.
 
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+
 textcase¤(case)\w#h
 
 If your level has translation files, and you have multiple text boxes with the
@@ -2187,14 +2205,16 @@ setcheckpoint¤()\w#h
 
 Agordas la konservejon al via aktuala loko
 
-setfont¤(font)\w#h
+setfont¤(font,all)\w#h
 
 In custom levels, set the font to the given font.
 
 font - The font to set the font to. If left blank, this will set the font to the
 default font of the custom level.
+all - If ¤all¤ is specified (literally the word ¤all¤), then this retroactively\nn&Znn&Z
+affects all textboxes that are already on screen. Otherwise simply leave this out.
 
-This command was added in 2.4.\g
+This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\gn&Zg
 
 setroomname\w#h
 
@@ -2205,6 +2225,15 @@ This name is not persistent and will go back to the default room name when the
 room is reloaded (e.g. by leaving and coming back).
 
 This name overrides any special changing room name, if the room has one. 
+
+This command was added in 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
 
 This command was added in 2.4.\g
 
@@ -3085,7 +3114,7 @@ Terry Cavanagh pro krei la ludon VVVVVV
 
 Permesilo\h#
 \
-Copyright 2015-2023  Dav999
+Copyright 2015-2024  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
