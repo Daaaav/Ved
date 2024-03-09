@@ -418,9 +418,6 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 				endx, endy = curx, cury
 			end
 
-			local curlinewidth = 0
-			local firstoffset = 0
-
 			local line
 
 			local nested_break = false
