@@ -1,6 +1,6 @@
 --[[
 
-Two arrays are made:
+Two tables are made:
 
 plugins = {
 	[<PLUGIN NAME>] = {
@@ -45,13 +45,13 @@ pluginfileedits = {
 	}
 }
 
-Now we also have an array with included files:
+Now we also have a table with included files:
 
 pluginincludes = {
 	[<FILENAME W/O .lua>] = "full/path/to/file/in/plugin/folder"
 }
 
-(sourceedits file in a plugin contains an array similar to that, called sourceedits)
+(sourceedits file in a plugin contains a table similar to that, called sourceedits)
 ]]
 
 function loadplugins()
@@ -66,7 +66,7 @@ function loadplugins()
 		love.filesystem.createDirectory("plugins")
 	else
 		-- The folder exists, go ahead and load any plugins in it!
-		folders = love.filesystem.getDirectoryItems("plugins")
+		local folders = love.filesystem.getDirectoryItems("plugins")
 
 		for k,v in pairs(folders) do
 			if love.filesystem.isDirectory("plugins/" .. v)
@@ -127,19 +127,25 @@ function loadplugins()
 					end
 
 					-- Is this plugin supported?
-					--alphabetaver = tonumber(plugins[pluginname].info.minimumved:sub(2,-1))
-					pver1, pver2 = plugins[pluginname].info.minimumved:match("^1%.([0-9]+)%.([0-9]+)$")
-					if (plugins[pluginname].info.minimumved:sub(1,1) == "a" or plugins[pluginname].info.minimumved:sub(1,1) == "b")
-					or (pver1 ~= nil and pver2 ~= nil and not (tonumber(pver1) > vergroups[1] or (tonumber(pver1) == vergroups[1] and tonumber(pver2) > vergroups[2]))) then
+					local pver1, pver2 = plugins[pluginname].info.minimumved:match("^1%.([0-9]+)%.([0-9]+)$")
+					if (
+						plugins[pluginname].info.minimumved:sub(1,1) == "a" or
+						plugins[pluginname].info.minimumved:sub(1,1) == "b"
+					) or (
+						pver1 ~= nil and pver2 ~= nil and not (
+							tonumber(pver1) > vergroups[1] or
+							(tonumber(pver1) == vergroups[1] and tonumber(pver2) > vergroups[2])
+						)
+					) then
 						-- It is!
 
 						if love.filesystem.exists(pluginpath .. "/hooks") then
 							-- There are hooks, yay
-							thesehooks = love.filesystem.getDirectoryItems(pluginpath .. "/hooks")
+							local these_hooks = love.filesystem.getDirectoryItems(pluginpath .. "/hooks")
 
-							for k2,v2 in pairs(thesehooks) do
+							for k2,v2 in pairs(these_hooks) do
 								if v2:sub(1, 1) ~= "." then
-									hookname = v2:sub(1, -5)
+									local hookname = v2:sub(1, -5)
 
 									table.insert(plugins[pluginname].usedhooks, hookname)
 
@@ -189,10 +195,10 @@ function loadplugins()
 
 						-- Including any files?
 						if love.filesystem.exists(pluginpath .. "/include") then
-							plugin_includefrom = function(dir)
-								thesefiles = love.filesystem.getDirectoryItems(pluginpath .. "/include" .. dir)
+							local plugin_includefrom = function(dir)
+								local these_files = love.filesystem.getDirectoryItems(pluginpath .. "/include" .. dir)
 
-								for k2,v2 in pairs(thesefiles) do
+								for k2,v2 in pairs(these_files) do
 									if love.filesystem.isDirectory(pluginpath .. "/include" .. dir .. "/" .. v2) then
 										-- Do this directory as well!
 										plugin_includefrom(dir .. "/" .. v2)
@@ -209,7 +215,6 @@ function loadplugins()
 
 							plugin_includefrom("")
 						end
-						plugin_includefrom = nil
 					else
 						-- Unrecognized, this Ved must've been released before anyone heard of the minimum version for this plugin!
 						plugins[pluginname].info.supported = false
@@ -316,11 +321,6 @@ function ved_require(reqfile)
 			end
 		end
 
-		--[[
-		local succ, errormsg
-		succ, errormsg = loadstring(readlua)
-		assert(succ, errormsg)
-		]]
 		local module = assert(loadstring(readlua))
 		-- We're here, so it loaded fine
 		package.loaded[reqfile] = true
