@@ -49,6 +49,12 @@ function init_font_libraries()
 	end
 end
 
+function cleanup_font_libraries()
+	if bidi ~= nil then
+		bidi.bidi_destroy()
+	end
+end
+
 local print_buf_n = 8192
 local print_buf = ffi.new("uint32_t[?]", print_buf_n)
 

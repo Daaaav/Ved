@@ -17,4 +17,6 @@ function love.quit()
 
 		return true
 	end
+
+	cleanup_font_libraries()
 end
