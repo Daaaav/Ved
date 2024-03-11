@@ -52,6 +52,18 @@ pluginincludes = {
 }
 
 (sourceedits file in a plugin contains a table similar to that, called sourceedits)
+
+
+UIs:
+
+plugin_uis = {
+	[1] = {
+		state_number = 101,
+		ui_name = "my_screen",
+		ui_path = pluginpath .. "/uis/my_screen/"
+	},
+	...
+}
 ]]
 
 function loadplugins()
@@ -61,6 +73,7 @@ function loadplugins()
 	hooks = {}
 	pluginfileedits = {}
 	pluginincludes = {}
+	plugin_uis = {}
 
 	if not love.filesystem.exists("plugins") then
 		love.filesystem.createDirectory("plugins")
@@ -215,6 +228,24 @@ function loadplugins()
 
 							plugin_includefrom("")
 						end
+
+						-- Does this plugin have any 1.11.1+ UIs?
+						if love.filesystem.exists(pluginpath .. "/uis") then
+							local these_uis = love.filesystem.getDirectoryItems(pluginpath .. "/uis")
+
+							for k2,v2 in pairs(these_uis) do
+								if v2:sub(1, 1) ~= "." then
+									local new_state_number = allocate_states(v2)
+									table.insert(plugin_uis,
+										{
+											state_number = new_state_number,
+											ui_name = v2,
+											ui_path = pluginpath .. "/uis/" .. v2 .. "/"
+										}
+									)
+								end
+							end
+						end
 					else
 						-- Unrecognized, this Ved must've been released before anyone heard of the minimum version for this plugin!
 						plugins[pluginname].info.supported = false
@@ -336,7 +367,6 @@ function allocate_states(name, amount)
 	if amount == nil then
 		amount = 1
 	end
-	--assert(name == nil or amount == nil, "Attempt to allocate nil states, or attempt to allocate states for name nil") -- That crash will happen anyway
 	assert(state_allocations[name] == nil, "Attempt to allocate states for '" .. name .. "' multiple times; plugin included twice?")
 	assert(type(amount) == "number", "Attempt to allocate an amount of states for '" .. name .. "' that is " .. type(amount))
 	assert(math.floor(amount) == amount, "Attempt to allocate a non-integer amount of states (" .. amount .. ") for '" .. name .. "'")
@@ -344,8 +374,11 @@ function allocate_states(name, amount)
 
 	cons("Registering " .. amount .. " state(s) for '" .. name .. "' (" .. state_alloc_pointer .. "-" .. (state_alloc_pointer+amount-1) .. ")")
 
-	state_allocations[name] = {state_alloc_pointer, amount-1}
+	local first_new_state = state_alloc_pointer
+	state_allocations[name] = {first_new_state, amount-1}
 	state_alloc_pointer = state_alloc_pointer + amount
+
+	return first_new_state
 end
 
 function in_astate(name, s)

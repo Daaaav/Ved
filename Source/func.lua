@@ -3150,7 +3150,7 @@ function unload_uis()
 
 	for k,v in pairs(uis) do
 		for k2,v2 in pairs(v) do
-			local name = "uis/" .. v.name .. "/" .. k2
+			local name = v.path .. k2
 			if package.loaded[name] then
 				package.loaded[name] = false
 			end
@@ -3158,9 +3158,11 @@ function unload_uis()
 	end
 end
 
-function load_ui(ui_name)
-	local ui = {name = ui_name}
-	local ui_path = "uis/" .. ui_name .. "/"
+function load_ui(ui_name, ui_path)
+	if ui_path == nil then
+		ui_path = "uis/" .. ui_name .. "/"
+	end
+	local ui = {name = ui_name, path = ui_path}
 
 	local function load_ui_part(part_name)
 		if love.filesystem.exists(ui_path .. part_name .. ".lua") then
@@ -3221,6 +3223,10 @@ function load_uis()
 	uis[35] = load_ui("vvvvvvsetupoptions")
 	uis[36] = load_ui("textboxcolors")
 	-- Don't forget states.txt
+
+	for k,v in pairs(plugin_uis) do
+		uis[v.state_number] = load_ui(v.ui_name, v.ui_path)
+	end
 end
 
 function show_notification(text)
