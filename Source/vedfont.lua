@@ -567,22 +567,25 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 
 			local blank = false
 			local glyph = self:get_glyph(c)
-			if glyph == nil then
+			if bidi ~= nil and (bidi.is_directional_character(c) or bidi.is_joiner(c)) then
+				blank = true
+				advance = 0
+			elseif glyph == nil then
 				blank = true
 			else
 				blank = glyph.blank
 				advance = glyph.advance
 			end
 
-			local offsetx, offsety = 0, 0
-			if glyph.subfont ~= 0 then
-				offsetx = offsetx + math.floor((self.glyph_w - self.fallback_glyph_w) / 2)
-				offsety = offsety + math.floor((self.glyph_h - self.fallback_glyph_h) / 2)
-			end
-
 			if not blank then
 				if glyph.color then
 					spritebatch_set_color(batch.spritebatch, 255, 255, 255, global_a)
+				end
+
+				local offsetx, offsety = 0, 0
+				if glyph.subfont ~= 0 then
+					offsetx = offsetx + math.floor((self.glyph_w - self.fallback_glyph_w) / 2)
+					offsety = offsety + math.floor((self.glyph_h - self.fallback_glyph_h) / 2)
 				end
 
 				if love_version_meets(9) then
@@ -782,6 +785,11 @@ function cVedFont:getWrap(text, max_width)
 
 			-- Next line
 			line_is_bidi = nil
+		elseif bidi ~= nil and (
+			bidi.is_directional_character(used_buf[used_i]) or
+			bidi.is_joiner(used_buf[used_i])
+		) then
+			-- pass
 		else
 			line_width = line_width + self:get_glyph_advance(used_buf[used_i])
 		end
@@ -841,6 +849,11 @@ function cVedFont:get_bidi_layout(text)
 			local one_half_width = math.floor(combined_width/2)
 			bidi_layout[i+1].glyph_width = one_half_width
 			bidi_layout[i].glyph_width = combined_width-one_half_width
+		elseif bidi ~= nil and (
+			bidi.is_directional_character(bidi_layout[i].out_codepoint) or
+			bidi.is_joiner(bidi_layout[i].out_codepoint)
+		) then
+			bidi_layout[i].glyph_width = 0
 		else
 			bidi_layout[i].glyph_width = self:get_glyph_advance(bidi_layout[i].out_codepoint)
 		end
