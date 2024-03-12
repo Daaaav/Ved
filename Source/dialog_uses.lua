@@ -193,6 +193,8 @@ function dialog.form.leveloptions_make()
 
 	local main_music_list, main_music_kv = get_music_list(selected_page)
 
+	local desc3_type = get_desc3_field_type()
+
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
 		{"Title", 8, 0, 20, metadata.Title, DF.TEXT, "", font_level},
@@ -203,7 +205,7 @@ function dialog.form.leveloptions_make()
 		{"", 0, 4, 8, L.OPTDESC, DF.LABEL},
 		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT, "", font_level},
 		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT, "", font_level},
-		{"Desc3", 8, 6, 40, metadata.Desc3, DF.TEXT, "", font_level},
+		{"Desc3", 8, 6, 40, metadata.Desc3, desc3_type, "", font_level},
 		{"", 0, 8, 8, L.OPTMUSIC, DF.LABEL},
 		{
 			"levmusic_page", 8, 8, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,
@@ -1141,6 +1143,18 @@ function dialog.callback.advancedleveloptions(button, fields)
 	-- Make sure we can undo and redo it
 	table.insert(undobuffer, {undotype = "metadata", changedmetadata = undo_properties})
 	finish_undo("CHANGED METADATA")
+
+	-- We still have a "level options" dialog open, right? Desc3 might need to appear or disappear...
+	local desc3_type = get_desc3_field_type()
+	for k,dia in pairs(dialogs) do
+		if dia.identifier == "leveloptions" then
+			for k2,field in pairs(dia.fields) do
+				if field[DFP.KEY] == "Desc3" and field[DFP.T] ~= desc3_type then
+					field[DFP.T] = desc3_type
+				end
+			end
+		end
+	end
 end
 
 function dialog.callback.loadvvvvvvmusic(button, fields)

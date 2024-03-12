@@ -750,7 +750,8 @@ return function()
 					dialog.callback.leveloptions,
 					L.LEVELOPTIONS,
 					dialog.form.leveloptions_make(),
-					dialog.callback.noclose_on_make(DB.ADVANCED)
+					dialog.callback.noclose_on_make(DB.ADVANCED),
+					"leveloptions"
 				)
 			else
 				-- Ved options

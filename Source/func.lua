@@ -3451,4 +3451,12 @@ function draw_tile_line(x1, x2, y1, y2, callback)
 	end
 end
 
+function get_desc3_field_type()
+	local show_desc3 = font_level:getHeight() <= 10
+	if show_desc3 then
+		return DF.TEXT
+	end
+	return DF.HIDDEN
+end
+
 hook("func")
