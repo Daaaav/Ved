@@ -40,13 +40,13 @@ function init_font_libraries()
 		bidi = load_library(ffi, "vedlib_bidi_mac00.so")
 	end
 
+	ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
+
 	if bidi ~= nil then
-		ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
-
 		bidi.bidi_init()
-
-		bidi_layout = ffi.new("VisualLayoutGlyph[?]", bidi_layout_n)
 	end
+
+	bidi_layout = ffi.new("VisualLayoutGlyph[?]", bidi_layout_n)
 end
 
 function cleanup_font_libraries()
