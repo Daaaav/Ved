@@ -239,7 +239,7 @@ function loadstate(new, ...)
 		uis[new].load(...)
 	end
 
-	hook("func_loadstate", ...)
+	hook("func_loadstate", {...})
 end
 
 -- Go to state allocated by a plugin
