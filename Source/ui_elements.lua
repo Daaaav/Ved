@@ -289,7 +289,7 @@ function HorizontalListContainer(els_left, els_right, cw, ch, align, startx, spa
 	}
 end
 
-function RightBar(els_top, els_bot)
+function SideBar(els_top, els_bot, align)
 	return AlignContainer(
 		elListContainer:new{
 			cw = 128, ch = nil,
@@ -300,8 +300,16 @@ function RightBar(els_top, els_bot)
 			els_top = els_top,
 			els_bot = els_bot
 		},
-		ALIGN.RIGHT
+		align
 	)
+end
+
+function RightBar(els_top, els_bot)
+	return SideBar(els_top, els_bot, ALIGN.RIGHT)
+end
+
+function LeftBar(els_top, els_bot)
+	return SideBar(els_top, els_bot, ALIGN.LEFT)
 end
 
 function elListContainer:draw(x, y, maxw, maxh)
