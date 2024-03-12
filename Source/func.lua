@@ -243,7 +243,7 @@ function loadstate(new, ...)
 end
 
 -- Go to state allocated by a plugin
-function to_astate(name, new, dontinitialize)
+function to_astate(name, new, dontinitialize, ...)
 	if new == nil then
 		new = 0
 	end
