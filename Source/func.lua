@@ -239,7 +239,7 @@ function loadstate(new, ...)
 		uis[new].load(...)
 	end
 
-	hook("func_loadstate")
+	hook("func_loadstate", ...)
 end
 
 -- Go to state allocated by a plugin
@@ -259,7 +259,7 @@ function to_astate(name, new, dontinitialize)
 	if not dontinitialize then
 		cons("State changed: " .. oldstate .. " => " .. name .. "." .. new .. "(" .. state .. ") (inited)")
 		-- Now load the state!
-		hook("func_loadstate")
+		loadstate(state, ...)
 	else
 		cons("State changed: " .. oldstate .. " => " .. name .. "." .. new .. "(" .. state .. ") (not initialized)")
 	end
