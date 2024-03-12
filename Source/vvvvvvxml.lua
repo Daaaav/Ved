@@ -1008,7 +1008,7 @@ function createblanklevel(lvwidth, lvheight)
 		website = "",
 		onewaycol_override = false,
 		font = s.new_level_font,
-		rtl = false,
+		rtl = s.new_level_rtl,
 		mapwidth = lvwidth,
 		mapheight = lvheight,
 		levmusic = 0,

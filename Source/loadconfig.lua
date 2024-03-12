@@ -230,6 +230,11 @@ configs = {
 		default = "font",
 		["type"] = "string",
 		comment = "The default font to use for new levels"
+	},
+	new_level_rtl = {
+		default = false,
+		["type"] = "bool",
+		comment = "The default RTL setting to use for new levels"
 	}
 }
 
