@@ -28,7 +28,7 @@ function https_request(url)
 		return nil
 	end
 
-	local lua_string_data = ""
+	local lua_string_data = {}
 	local buffer_data = ffi.new("char[50000]")
 	local bytesRead = ffi.new("DWORD[1]")
 	while true do
@@ -43,11 +43,11 @@ function https_request(url)
 			-- success and 0 bytes read means done
 			break
 		end
-		lua_string_data = lua_string_data .. ffi.string(buffer_data, bytesRead[0])
+		table.insert(lua_string_data, ffi.string(buffer_data, bytesRead[0]))
 	end
 
 	wininet.InternetCloseHandle(hRequest)
 	wininet.InternetCloseHandle(hInternet)
 
-	return lua_string_data
+	return table.concat(lua_string_data)
 end
