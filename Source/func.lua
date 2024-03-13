@@ -3150,7 +3150,7 @@ function unload_uis()
 
 	for k,v in pairs(uis) do
 		for k2,v2 in pairs(v) do
-			local name = v.path .. k2
+			local name = (v.path .. k2):gsub("/", ".")
 			if package.loaded[name] then
 				package.loaded[name] = false
 			end

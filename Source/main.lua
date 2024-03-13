@@ -56,7 +56,11 @@ function dodisplaysettings(reload)
 		local zwidth,zheight = love.window.getDesktopDimensions(zf)
 		zc.x = (zwidth-za*s.pscale)/2
 		zc.y = (zheight-zb*s.pscale)/2
-		zc.display = zf
+		if (love_version_meets(12)) then
+			zc.displayindex = zf
+		else
+			zc.display = zf
+		end
 	end
 	love.window.setMode(za*s.pscale,zb*s.pscale,zc)
 
@@ -115,6 +119,10 @@ else
 
 		if love_version_meets(11) then
 			require("love11compat")
+
+			if love_version_meets(12) then
+				require("love12compat")
+			end
 		end
 	end
 	require("errorhandler")

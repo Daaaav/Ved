@@ -1,4 +1,4 @@
-require("libs/windows_constants")
+require("libs.windows_constants")
 
 local ffi = require("ffi")
 local wininet = ffi.load("wininet")

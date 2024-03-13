@@ -25,6 +25,7 @@ love.graphics.setBackgroundColor = function(r,g,b,a)
 	love.graphics.setBackgroundColor11(r/255, g/255, b/255, (a or 255) / 255)
 end
 
+love.filesystem.exists12 = love.filesystem.exists -- Keep this around for the love12compat file
 love.filesystem.exists = function(filename)
 	return love.filesystem.getInfo(filename) ~= nil
 end

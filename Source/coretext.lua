@@ -177,7 +177,7 @@ end
 
 function unloadlanguage()
 	-- Prepare for language change
-	package.loaded["lang/" .. s.lang] = false
+	package.loaded["lang." .. s.lang] = false
 	package.loaded.devstrings = false
 end
 
