@@ -247,7 +247,9 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 
 		local saveas = ((editingmap == "untitled\n" and "untitled" or editingmap) .. "_" .. os.time() .. ".png"):gsub(dirsep, "__")
 
-		if love_version_meets(10) then
+		if love_version_meets(12) then
+			love.graphics.readbackTexture(canvas):encode("png", "maps/" .. saveas)
+		elseif love_version_meets(10) then
 			canvas:newImageData():encode("png", "maps/" .. saveas)
 		else
 			canvas:getImageData():encode("maps/" .. saveas)

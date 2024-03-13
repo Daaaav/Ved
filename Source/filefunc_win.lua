@@ -1,7 +1,7 @@
 local cache_modtimes = {} -- filepath => unix_timestamp
 
 
-require("libs/windows_constants")
+require("libs.windows_constants")
 
 local ffi = require("ffi")
 local shell32 = ffi.load("Shell32") -- SHGetFolderPathW

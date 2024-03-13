@@ -185,8 +185,9 @@ function loadplugins()
 							editsfile()
 
 							for k2,v2 in pairs(sourceedits) do -- For each edited file
-								if pluginfileedits[k2] == nil then
-									pluginfileedits[k2] = {}
+								local key_dots = k2:gsub("/", ".")
+								if pluginfileedits[key_dots] == nil then
+									pluginfileedits[key_dots] = {}
 								end
 
 								for k3,v3 in pairs(v2) do -- For each edit in said file
@@ -194,7 +195,7 @@ function loadplugins()
 									if v3.luapattern == nil then v3.luapattern = false end
 									if v3.allowmultiple == nil then v3.allowmultiple = false end
 
-									table.insert(pluginfileedits[k2], {
+									table.insert(pluginfileedits[key_dots], {
 										["find"] = v3.find,
 										["replace"] = v3.replace,
 										ignore_error = v3.ignore_error,
@@ -218,8 +219,10 @@ function loadplugins()
 									else
 										local filename
 										filename = dir:sub(2, -1) .. "/" .. v2:sub(1, -5)
+										filename = filename:gsub("/", ".")
 
-										pluginincludes[filename] = pluginpath .. "/include/" .. filename
+										local path = (pluginpath .. ".include." .. filename):gsub("/", ".")
+										pluginincludes[filename] = path
 
 										cons("Included " .. filename)
 									end
@@ -319,16 +322,18 @@ function loadpluginpages()
 end
 
 function ved_require(reqfile)
-	if pluginincludes[reqfile] ~= nil then
+	-- Replace slashes with dots
+	local dots = reqfile:gsub("/", ".")
+	if pluginincludes[dots] ~= nil then
 		-- A plugin specifically included this version of this file!
-		return require(pluginincludes[reqfile])
-	elseif pluginfileedits[reqfile] == nil then
+		return require(pluginincludes[dots])
+	elseif pluginfileedits[dots] == nil then
 		-- No plugins want to edit this file!
-		return require(reqfile)
-	elseif not package.loaded[reqfile] then
+		return require(dots)
+	elseif not package.loaded[dots] then
 		local readlua = love.filesystem.read(reqfile .. ".lua")
 
-		for editk,editv in pairs(pluginfileedits[reqfile]) do
+		for editk,editv in pairs(pluginfileedits[dots]) do
 			-- Is this a plain string or a pattern?
 			local find_original = editv.find
 			local find = editv.find
@@ -344,7 +349,7 @@ function ved_require(reqfile)
 					if plugins[editv.plugin] ~= nil then
 						plugins[editv.plugin].info.failededits = plugins[editv.plugin].info.failededits + 1
 					end
-					pluginerror(reqfile, editv.plugin, "TO BE ADDED", find_original, editv.luapattern)
+					pluginerror(dots, editv.plugin, "TO BE ADDED", find_original, editv.luapattern)
 				end
 			else
 				-- Alright, this change can be done!
@@ -354,7 +359,7 @@ function ved_require(reqfile)
 
 		local module = assert(loadstring(readlua))
 		-- We're here, so it loaded fine
-		package.loaded[reqfile] = true
+		package.loaded[dots] = true
 		return module()
 	end
 end
