@@ -59,22 +59,4 @@ function love.textinput(char)
 	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_uistate == PT_UISTATE.ASKING then
 		return
 	end
-
-	local callback_state = state
-	if uis[state] ~= nil and uis[state].textinput ~= nil then
-		uis[state].textinput(char)
-	end
-	if callback_state == state and uis[state] ~= nil and uis[state].elements ~= nil then
-		local function caller(e, char)
-			if e.textinput ~= nil then
-				e:textinput(char)
-			end
-		end
-		for k,v in elements_iter(uis[state].elements) do
-			caller(v, char)
-			if v.recurse ~= nil then
-				v:recurse("textinput", caller, char)
-			end
-		end
-	end
 end
