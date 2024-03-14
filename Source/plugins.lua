@@ -209,7 +209,8 @@ function loadplugins()
 
 						-- Including any files?
 						if love.filesystem.exists(pluginpath .. "/include") then
-							local plugin_includefrom = function(dir)
+							local plugin_includefrom -- can't be a single line since it's recursive
+							plugin_includefrom = function(dir)
 								local these_files = love.filesystem.getDirectoryItems(pluginpath .. "/include" .. dir)
 
 								for k2,v2 in pairs(these_files) do
