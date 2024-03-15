@@ -147,7 +147,7 @@ function love.draw()
 	end
 
 	if allowdebug then
-		if takinginput then
+		if love.keyboard.hasTextInput() then
 			-- Taking input warning
 			love.graphics.setColor(255,160,0,192)
 			love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)

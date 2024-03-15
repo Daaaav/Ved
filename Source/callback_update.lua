@@ -4,6 +4,29 @@ function love.update(dt)
 	if window_active() then
 		focus_regained_timer = math.min(focus_regained_timer + dt, .1)
 		textinput_started_timer = math.min(textinput_started_timer + dt, .1)
+
+		local any_textinput = (
+			(newinputsys.active and newinputsys.getfocused() ~= nil)
+			or (takinginput and not dialog.is_open())
+			or coordsdialog.active
+		)
+		if not any_textinput and dialog.is_open() and not dialogs[#dialogs].closing then
+			-- OR...
+			local cf, cftype = dialogs[#dialogs].currentfield, nil
+			if dialogs[#dialogs].fields[cf] ~= nil then
+				-- Input boxes can also have their type set to nil and default to 0
+				cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
+			end
+			if cf ~= 0 and cftype == DF.TEXT then
+				any_textinput = true
+			end
+		end
+
+		if any_textinput and not love.keyboard.hasTextInput() then
+			love.keyboard.setTextInput(true)
+		elseif not any_textinput and love.keyboard.hasTextInput() then
+			love.keyboard.setTextInput(false)
+		end
 	else
 		focus_regained_timer = 0
 	end

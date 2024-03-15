@@ -40,7 +40,7 @@ function love.textinput(char)
 			tabselected = 0
 		end
 	elseif dialog.is_open() and not dialogs[#dialogs].closing then
-		local cf, cftype = dialogs[#dialogs].currentfield
+		local cf, cftype = dialogs[#dialogs].currentfield, nil
 		if dialogs[#dialogs].fields[cf] ~= nil then
 			-- Input boxes can also have their type set to nil and default to 0
 			cftype = anythingbutnil0(dialogs[#dialogs].fields[cf][DFP.T])
@@ -54,9 +54,5 @@ function love.textinput(char)
 
 	if coordsdialog.active then
 		coordsdialog.type(char)
-	end
-
-	if coordsdialog.active or RCMactive or dialog.is_open() or playtesting_uistate == PT_UISTATE.ASKING then
-		return
 	end
 end
