@@ -67,3 +67,11 @@ function helplineonscreen(ln)
 	helparticlescroll = math.max(helparticlescroll, -(10*(ln-1)))
 	helparticlescroll = math.min(helparticlescroll, -(10*ln-10*45))
 end
+
+function save_help_article()
+	helparticlecontent[helpeditingline] = input .. input_r
+	helpeditingline = 0
+	stopinput()
+	helppages[helparticle].cont = table.concat(helparticlecontent, "\n")
+	dirty()
+end

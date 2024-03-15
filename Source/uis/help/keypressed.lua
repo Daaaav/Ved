@@ -2,7 +2,9 @@
 
 return function(key)
 	if key == "escape" then
-		if oldstate == 11 then
+		if helpeditingline ~= 0 then
+			save_help_article()
+		elseif oldstate == 11 then
 			-- Back to search results
 			resume_search = true
 			tostate(11)

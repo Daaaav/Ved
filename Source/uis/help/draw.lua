@@ -343,12 +343,7 @@ return function()
 						setgenerictimer(1, .25)
 					elseif not mousepressed and mouseon(love.graphics.getWidth()-140, love.graphics.getHeight()-24, 128-16, 16) then
 						-- Save
-						helparticlecontent[helpeditingline] = input .. input_r
-						helpeditingline = 0
-						stopinput()
-						takinginput = false
-						helppages[helparticle].cont = table.concat(helparticlecontent, "\n")
-						dirty()
+						save_help_article()
 						nodialog = false
 					end
 				end
