@@ -7,6 +7,10 @@ end
 
 love.keyboard.isDownOR = love.keyboard.isDown
 love.keyboard.isDown = function(...)
+	if ime_textedited ~= "" then
+		return false
+	end
+
 	for _,key in pairs({...}) do
 		if table.contains(skip_next_keys, key) then
 		elseif love.keyboard.isDownOR(key) then

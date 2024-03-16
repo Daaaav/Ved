@@ -527,7 +527,7 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 	-- Hex input, before the caret is actually drawn so it doesn't get in the way
 
-	if input.hex[id] ~= nil then
+	if input.hex[id] ~= nil or ime_textedited ~= "" then
 		-- Not really the best look, but I don't want to reposition the caret,
 		-- so I have to stop rendering it or cover it up somehow
 
@@ -538,9 +538,17 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 		local oldcol = {love.graphics.getColor()}
 
-		local prefix = "u" -- not like we're gonna change it LOL
+		local text
+		local cursor_start, cursor_length
 
-		local text = prefix .. input.hex[id]
+		if input.hex[id] ~= nil then
+			local prefix = "u" -- not like we're gonna change it LOL
+			text = prefix .. input.hex[id]
+		elseif ime_textedited ~= "" then
+			text = ime_textedited
+			cursor_start = font:getWidth(utf8.sub(text, 1, ime_textstart))*sx
+			cursor_length = (font:getWidth(utf8.sub(text, ime_textstart+1, ime_textstart+ime_textlength)) + 2)*sx
+		end
 
 		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
 		love.graphics.setColor(unpack(invertcol))
@@ -550,8 +558,13 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 		love.graphics.rectangle("line", x + caretx, y + carety, font:getWidth(text)*sx, fontheight*sy)
 
-		ved_print(text, x + caretx, y + carety, sx, sy)
+		font:print(text, x + caretx, y + carety, sx, sy)
 		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + font:getWidth(prefix)*sx, y + carety + fontheight*sy)
+
+		if cursor_start ~= nil then
+			love.graphics.setColor(127, 0, 255, 127)
+			love.graphics.rectangle("fill", x + caretx + cursor_start, y + carety, cursor_length, fontheight*sy)
+		end
 
 		if #oldscissor > 0 then
 			love.graphics.setScissor(unpack(oldscissor))

@@ -172,10 +172,15 @@ else
 		love.filesystem.createDirectory("crash_logs")
 	end
 
+	ime_textedited = ""
+	ime_textstart = 0
+	ime_textlength = 0
+
 	ved_require("callback_load")
 	ved_require("callback_draw")
 	ved_require("callback_update")
 	ved_require("callback_textinput")
+	ved_require("callback_textedited")
 	ved_require("callback_keypressed")
 	ved_require("callback_keyreleased")
 	ved_require("callback_mousepressed")

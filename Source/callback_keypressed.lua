@@ -6,6 +6,10 @@ function love.keypressed(key)
 		return
 	end
 
+	if ime_textedited ~= "" then
+		return
+	end
+
 	hook("love_keypressed_start", {key})
 
 	-- It's not really a secret that you can use the konami code in the help pages to make them editable in-place, that's useful for translators.
