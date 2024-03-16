@@ -83,6 +83,30 @@ function love.draw()
 		rightclickmenu.draw()
 	end
 
+	if ime_textedited ~= "" and not (newinputsys.active and newinputsys.getfocused() ~= nil) then
+		-- Temporary, just a copy-paste from input.lua until the old input system is gone...
+		local cursor_start = font_level:getWidth(utf8.sub(ime_textedited, 1, ime_textstart))*2
+		local cursor_length = font_level:getWidth(utf8.sub(ime_textedited, ime_textstart+1, ime_textstart+ime_textlength))*2
+
+		local fontheight = font_level:getHeight()
+		local y = love.graphics.getHeight()-12-fontheight*2
+		love.graphics.setColor(0, 0, 0)
+		love.graphics.rectangle("fill", 12, y, font_level:getWidth(ime_textedited)*2, fontheight*2)
+
+		love.graphics.setColor(255, 255, 255)
+		love.graphics.rectangle("line", 12, y, font_level:getWidth(ime_textedited)*2, fontheight*2)
+
+		font_level:print(ime_textedited, 12, y, "cjk_low", 2, 2)
+
+		if ime_textlength > 0 then
+			love.graphics.setColor(255, 127, 0, 127)
+		else
+			cursor_length = cursor_length + 2
+		end
+		love.graphics.rectangle("fill", 12 + cursor_start, y, cursor_length, fontheight*2)
+		love.graphics.setColor(255, 255, 255)
+	end
+
 	if generictimer_mode == 3 and generictimer > 0 then
 		local width, lines = font8:getWrap(notification_text, 80*8)
 
