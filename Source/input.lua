@@ -487,7 +487,7 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 	-- Caret
 
-	if cursorflashtime > .5 and input.hex[id] == nil then
+	if cursorflashtime > .5 and input.hex[id] == nil and ime_textedited == "" then
 		return
 	end
 
@@ -547,7 +547,7 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 		elseif ime_textedited ~= "" then
 			text = ime_textedited
 			cursor_start = font:getWidth(utf8.sub(text, 1, ime_textstart))*sx
-			cursor_length = (font:getWidth(utf8.sub(text, ime_textstart+1, ime_textstart+ime_textlength)) + 2)*sx
+			cursor_length = font:getWidth(utf8.sub(text, ime_textstart+1, ime_textstart+ime_textlength))*sx
 		end
 
 		local invertcol = {oldcol[1] - 255, oldcol[2] - 255, oldcol[3] - 255, oldcol[4]}
@@ -558,12 +558,17 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 		love.graphics.rectangle("line", x + caretx, y + carety, font:getWidth(text)*sx, fontheight*sy)
 
-		font:print(text, x + caretx, y + carety, sx, sy)
+		font:print(text, x + caretx, y + carety, "cjk_low", sx, sy)
 		--love.graphics.line(x + caretx, y + carety + fontheight*sy, x + caretx + font:getWidth(prefix)*sx, y + carety + fontheight*sy)
 
 		if cursor_start ~= nil then
-			love.graphics.setColor(127, 0, 255, 127)
+			if ime_textlength > 0 then
+				love.graphics.setColor(255, 127, 0, 127)
+			else
+				cursor_length = cursor_length + 1*sx
+			end
 			love.graphics.rectangle("fill", x + caretx + cursor_start, y + carety, cursor_length, fontheight*sy)
+			love.graphics.setColor(unpack(oldcol))
 		end
 
 		if #oldscissor > 0 then
