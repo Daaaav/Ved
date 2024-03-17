@@ -128,6 +128,8 @@ function love.load()
 	ved_require("tool_mousedown")
 	autotiling = ved_require("autotiling")
 	autotiling:init()
+	theming = ved_require("theming")
+	theming:init()
 	tilenumberbatch = ved_require("tilenumberbatch")
 	tilenumberbatch:init()
 	ved_require("zipwriter")
@@ -200,18 +202,6 @@ function love.load()
 	vvvvvv_textboxes = {}
 
 	-- Load a couple of images
-	cursorimg = {}
-	cursorimg[0] = love.graphics.newImage("cursor/cursor.png")
-	cursorimg[1] = love.graphics.newImage("cursor/cursor1.png")
-	cursorimg[2] = love.graphics.newImage("cursor/cursor2.png")
-	cursorimg[3] = love.graphics.newImage("cursor/cursor3.png")
-	cursorimg[4] = love.graphics.newImage("cursor/cursor4.png")
-	cursorimg[5] = love.graphics.newImage("cursor/entity.png")
-	cursorimg[6] = love.graphics.newImage("cursor/specialentity.png")
-	cursorimg[8] = love.graphics.newImage("cursor/cursor8.png")
-
-	cursorimg[20] = love.graphics.newImage("cursor/selectedtile.png")
-	cursorimg[21] = love.graphics.newImage("cursor/selectedtile8.png")
 
 	cursorobjs = {}
 	if not love_version_meets(10) or love.mouse.hasCursor() then
@@ -226,16 +216,6 @@ function love.load()
 		text_cursor = love.mouse.getSystemCursor("ibeam")
 	end
 	special_cursor = false
-
-	scriptboximg = {}
-	scriptboximg[1] = love.graphics.newImage("cursor/script1.png")
-	scriptboximg[2] = love.graphics.newImage("cursor/script2.png")
-	scriptboximg[3] = love.graphics.newImage("cursor/script3.png")
-	scriptboximg[4] = love.graphics.newImage("cursor/script4.png")
-	scriptboximg[6] = love.graphics.newImage("cursor/script6.png")
-	scriptboximg[7] = love.graphics.newImage("cursor/script7.png")
-	scriptboximg[8] = love.graphics.newImage("cursor/script8.png")
-	scriptboximg[9] = love.graphics.newImage("cursor/script9.png")
 
 	image = {
 		selectedtool = love.graphics.newImage("images/selectedtool.png"),
