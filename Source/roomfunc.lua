@@ -471,7 +471,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
-		love.graphics.draw(cursorimg[5], x, y)
+		theming:draw("ui/entity", x, y)
 	elseif v.t == 1 then
 		-- Enemy
 		v6_setcol(tilesetblocks[lmd.tileset].colors[lmd.tilecol].v6col)
@@ -654,7 +654,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		love.graphics.setColor(255,255,255,255)
 
 		-- Where is it, though?
-		love.graphics.draw(cursorimg[0], x, y)
+		if (v.t == 11) then
+			theming:draw("ui/grav_line_origin", x, y)
+		else
+			theming:draw("ui/warp_line_origin", x, y)
+		end
+
 		if interact then
 			entity_highlight(x, y, sel_w, sel_h, sel_x, sel_y)
 		end
@@ -751,63 +756,21 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 19 then
 		-- Script box, draw it as an actual box.
-		love.graphics.setColor(0,0,255)
 
+		love.graphics.setColor(255,255,255)
 		if editingsboxid == k and selectedsubtool[13] ~= 3 then
 			-- Currently placing
 			local cur_x = math.floor(love.mouse.getX()/16)*16
 			local cur_y = math.floor(love.mouse.getY()/16)*16
-			local low_x, low_y, high_x, high_y
-			if cur_x < x then
-				low_x = cur_x
-				high_x = x
-			else
-				low_x = x
-				high_x = cur_x
-			end
-			if cur_y < y then
-				low_y = cur_y
-				high_y = y
-			else
-				low_y = y
-				high_y = cur_y
-			end
 
-			love.graphics.draw(scriptboximg[1], low_x, low_y)
-			love.graphics.draw(scriptboximg[3], high_x, low_y)
-			love.graphics.draw(scriptboximg[7], low_x, high_y)
-			love.graphics.draw(scriptboximg[9], high_x, high_y)
+			local low_x = math.min(x, cur_x)
+			local high_x = math.max(x, cur_x)
+			local low_y = math.min(y, cur_y)
+			local high_y = math.max(y, cur_y)
 
-			-- Horizontal
-			for part = low_x + 16, high_x - 16, 16 do
-				love.graphics.draw(scriptboximg[2], part, low_y)
-				love.graphics.draw(scriptboximg[8], part, high_y)
-			end
-
-			-- Vertical
-			for part = low_y + 16, high_y - 16, 16 do
-				love.graphics.draw(scriptboximg[4], low_x, part)
-				love.graphics.draw(scriptboximg[6], high_x, part)
-			end
+			theming:draw_nineslice("ui/placing_script", low_x, low_y, high_x + 16, high_y + 16)
 		else
-			-- Normal box
-			love.graphics.draw(scriptboximg[1], x, y)
-			love.graphics.draw(scriptboximg[3], x + (v.p1-1)*16, y)
-			love.graphics.draw(scriptboximg[7], x, y + (v.p2-1)*16)
-			love.graphics.draw(scriptboximg[9], x + (v.p1-1)*16, y + (v.p2-1)*16)
-
-			-- Horizontal
-			for part = x + 16, x + (v.p1-1)*16 - 16, 16 do
-				love.graphics.draw(scriptboximg[2], part, y)
-				love.graphics.draw(scriptboximg[8], part, y + (v.p2-1)*16)
-			end
-
-			-- Vertical
-			for part = y + 16, y + (v.p2-1)*16 - 16, 16 do
-				love.graphics.draw(scriptboximg[4], x, part)
-				love.graphics.draw(scriptboximg[6], x + (v.p1-1)*16, part)
-			end
-			love.graphics.setColor(255,255,255)
+			theming:draw_nineslice("ui/script", x, y, x + 16*v.p1, y + 16*v.p2)
 
 			if interact then
 				entity_highlight(x, y, v.p1, v.p2)
@@ -825,7 +788,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	-- 50 (warp line) handled above with gravity line (11)
 	else
 		-- We don't know what this is, actually!
-		love.graphics.draw(cursorimg[5], x, y)
+		theming:draw("ui/entity", x, y)
 		showtooltip = true
 		if v.t ~= nil and interact then
 			entity_highlight(x, y, 1, 1)
@@ -841,7 +804,7 @@ function drawentitysprite(tile, atx, aty, small)
 	if tilesets[image].tiles[tile] ~= nil then
 		love.graphics.draw(tilesets[image].white_img, tilesets[image].tiles[tile], atx, aty, 0, small and 1 or 2)
 	else
-		love.graphics.draw(cursorimg[5], atx, aty)
+		theming:draw("ui/entity", atx, aty)
 	end
 end
 
@@ -1070,19 +1033,15 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 			local selectedx = selectedtile % tiles_width_picker
 			local selectedy = ((selectedtile-selectedx) / tiles_width_picker) - page*30
 
-			love.graphics.draw(cursorimg[20], (16*selectedx+offsetx)-2, (16*selectedy+offsety)-2)
+			theming:draw("ui/selected_tile", 16*selectedx+offsetx-2, 16*selectedy+offsety-2)
 		end
 	end
 end
 
 function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, scale)
 	local cur_cur, cur_sel
-	if scale == 1 then
-		-- need 8x8 cursors
-		cur_cur, cur_sel = 8, 21
-	else
-		cur_cur, cur_sel = 0, 20
-	end
+
+	local small = scale == 1
 
 	local selectedx = -1
 	local selectedy = -1
@@ -1111,7 +1070,13 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 
 			-- Are we hovering on this tile? And are we in manual mode?
 			if levelmetadata_get(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(scale*8*lx), offsety+(scale*8*ly), scale*8, scale*8) then
-				love.graphics.draw(cursorimg[cur_cur], offsetx+(scale*8*lx), offsety+(scale*8*ly))
+				local cur_x = offsetx + (scale*8*lx)
+				local cur_y = offsety + (scale*8*ly)
+				if small then
+					theming:draw("ui/cursor_small", cur_x, cur_y)
+				else
+					theming:draw_nineslice("ui/cursor", cur_x, cur_y, cur_x + 16, cur_y + 16)
+				end
 
 				-- Heck, maybe we're even clicking this.
 				if love.mouse.isDown("l") or love.mouse.isDown("m") then
@@ -1131,14 +1096,14 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 
 	-- Were we highlighting a tile?
 	if levelmetadata_get(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
-		love.graphics.draw(cursorimg[cur_sel], offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
+		theming:draw("ui/selected_tile" .. (small and "_small" or ""), offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
 	end
 end
 
 function toolfinish(what)
 	if love.keyboard.isDown("v") and what[3] == 4 then
-		love.graphics.draw(cursorimg[6], what[1]+9, what[2]+4)
-		love.graphics.draw(cursorimg[6], what[1]+13, what[2]+4)
+		theming:draw("ui/special_entity", what[1]+9, what[2]+4)
+		theming:draw("ui/special_entity", what[1]+13, what[2]+4)
 	end
 end
 
@@ -1373,10 +1338,13 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 end
 
 function displayshapedcursor(leftblx, upblx, rightblx, downblx)
-	love.graphics.draw(cursorimg[1], (cursorx*16)+screenoffset-(leftblx*16), (cursory*16)-(upblx*16))
-	love.graphics.draw(cursorimg[2], (cursorx*16)+screenoffset+(rightblx*16), (cursory*16)-(upblx*16))
-	love.graphics.draw(cursorimg[3], (cursorx*16)+screenoffset-(leftblx*16), (cursory*16)+(downblx*16))
-	love.graphics.draw(cursorimg[4], (cursorx*16)+screenoffset+(rightblx*16), (cursory*16)+(downblx*16))
+	theming:draw_nineslice(
+		"ui/cursor",
+		(cursorx*16)+screenoffset-(leftblx*16),
+		(cursory*16)-(upblx*16),
+		(cursorx*16)+screenoffset+(rightblx*16) + 16,
+		(cursory*16)+(downblx*16) + 16
+	)
 end
 
 function displayalphatile(leftblx, upblx, forx, fory, customsize)
