@@ -98,26 +98,39 @@ return function()
 			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
 		end
 
-		-- Now display bounds! Enemies first...
+		-- Now display bounds!
 		if showepbounds or editingbounds ~= 0 then
+			-- Enemies first...
 			if not (levelmetadata_get(roomx, roomy).enemyx1 == 0 and levelmetadata_get(roomx, roomy).enemyy1 == 0 and levelmetadata_get(roomx, roomy).enemyx2 == 320 and levelmetadata_get(roomx, roomy).enemyy2 == 240) then
-				love.graphics.setColor(255,0,0,255)
-				love.graphics.rectangle("line",
-					screenoffset+(levelmetadata_get(roomx, roomy).enemyx1*2),
-					levelmetadata_get(roomx, roomy).enemyy1*2,
-					((levelmetadata_get(roomx, roomy).enemyx2-levelmetadata_get(roomx, roomy).enemyx1)*2),
-					(levelmetadata_get(roomx, roomy).enemyy2-levelmetadata_get(roomx, roomy).enemyy1)*2
+				local editing = (editingbounds == 1)
+				local x1 = screenoffset + levelmetadata_get(roomx, roomy).enemyx1 * 2
+				local y1 = levelmetadata_get(roomx, roomy).enemyy1 * 2
+				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
+				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
+
+				theming:draw_nineslice(
+					editing and "ui/placing_enemy_bounds" or "ui/enemy_bounds",
+					math.min(x1, x2),
+					math.min(y1, y2),
+					math.max(x1, x2) + (editing and 16 or 0),
+					math.max(y1, y2) + (editing and 16 or 0)
 				)
 			end
 
 			-- Then platforms.
 			if not (levelmetadata_get(roomx, roomy).platx1 == 0 and levelmetadata_get(roomx, roomy).platy1 == 0 and levelmetadata_get(roomx, roomy).platx2 == 320 and levelmetadata_get(roomx, roomy).platy2 == 240) then
-				love.graphics.setColor(0,0,255,255)
-				love.graphics.rectangle("line",
-					screenoffset+(levelmetadata_get(roomx, roomy).platx1*2),
-					levelmetadata_get(roomx, roomy).platy1*2,
-					((levelmetadata_get(roomx, roomy).platx2-levelmetadata_get(roomx, roomy).platx1)*2),
-					(levelmetadata_get(roomx, roomy).platy2-levelmetadata_get(roomx, roomy).platy1)*2
+				local editing = (editingbounds == 2)
+				local x1 = screenoffset + levelmetadata_get(roomx, roomy).platx1 * 2
+				local y1 = levelmetadata_get(roomx, roomy).platy1 * 2
+				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
+				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
+
+				theming:draw_nineslice(
+					editing and "ui/placing_platform_bounds" or "ui/platform_bounds",
+					math.min(x1, x2),
+					math.min(y1, y2),
+					math.max(x1, x2) + (editing and 16 or 0),
+					math.max(y1, y2) + (editing and 16 or 0)
 				)
 			end
 		end
@@ -248,7 +261,11 @@ return function()
 			and cursory < ts.tiles_height_picker
 			and tile < ts.total_tiles then
 				-- Just one tile, but only in manual/direct mode.
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
+				theming:draw_nineslice(
+					"ui/cursor",
+					(cursorx*16)+screenoffset, (cursory*16),
+					(cursorx*16)+screenoffset+16, (cursory*16)+16
+				)
 			end
 		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
 			displayentity(
@@ -271,7 +288,7 @@ return function()
 			if selectedsubtool[selectedtool] == 1 or selectedsubtool[selectedtool] == 9 then
 				-- Just a regular cursor
 				displayalphatile(0, 0, 0, 0)
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
+				displayshapedcursor(0, 0, 0, 0)
 			elseif selectedsubtool[selectedtool] == 2 then
 				-- 3x3
 				displayalphatile(1, 1, 2, 2)
@@ -291,17 +308,23 @@ return function()
 			elseif selectedsubtool[selectedtool] == 6 then
 				-- horizontal fill
 				displayalphatile_hor()
-				love.graphics.draw(cursorimg[1], screenoffset, (cursory*16))
-				love.graphics.draw(cursorimg[2], screenoffset+(39*16), (cursory*16))
-				love.graphics.draw(cursorimg[3], screenoffset, (cursory*16))
-				love.graphics.draw(cursorimg[4], screenoffset+(39*16), (cursory*16))
+				theming:draw_nineslice(
+					"ui/cursor",
+					screenoffset,
+					(cursory*16),
+					screenoffset + (40 * 16),
+					(cursory*16) + 16
+				)
 			elseif selectedsubtool[selectedtool] == 7 then
 				-- vertical fill
 				displayalphatile_ver()
-				love.graphics.draw(cursorimg[1], screenoffset+(cursorx*16), 0)
-				love.graphics.draw(cursorimg[2], screenoffset+(cursorx*16), 0)
-				love.graphics.draw(cursorimg[3], screenoffset+(cursorx*16), (29*16))
-				love.graphics.draw(cursorimg[4], screenoffset+(cursorx*16), (29*16))
+				theming:draw_nineslice(
+					"ui/cursor",
+					screenoffset + (cursorx*16),
+					0,
+					screenoffset + (cursorx*16) + 16,
+					30 * 16
+				)
 			elseif selectedsubtool[selectedtool] == 8 then
 				-- Custom size
 				if customsizemode == 1 then
@@ -330,10 +353,10 @@ return function()
 				displayalphatile(1, 0, 0, 0)
 				displayalphatile(0, -1, 0, 0)
 				displayalphatile(0, 1, 0, 0)
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset-16, (cursory*16))
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset+16, (cursory*16))
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16)-16)
-				love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16)+16)
+				displayshapedcursor(-1, 0, 0, 0)
+				displayshapedcursor(1, 0, 0, 0)
+				displayshapedcursor(0, -1, 0, 0)
+				displayshapedcursor(0, 1, 0, 0)
 			end
 
 			-- If direct mode is on, we want to know what tile number we're about to place!
@@ -343,7 +366,7 @@ return function()
 		elseif selectedtool == 3 then
 			-- Spike
 			displayalphatile(0, 0, 0, 0)
-			love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
+			displayshapedcursor(0, 0, 0, 0)
 		elseif selectedtool == 4 then
 			-- Trinket
 			displayshapedcursor(0, 0, 1, 1)
@@ -379,7 +402,7 @@ return function()
 			-- Start point
 			displayshapedcursor(0, 0, 1, 2)
 		elseif not (selectedtool == 13 and selectedsubtool[13] == 2) then
-			love.graphics.draw(cursorimg[0], (cursorx*16)+screenoffset, (cursory*16))
+			displayshapedcursor(0, 0, 0, 0)
 		end
 	else
 		cursorx = "--"
