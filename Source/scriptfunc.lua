@@ -204,17 +204,26 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 		end
 
 		-- `say` and `reply` are exceptions - they still work when they're capitalized even with no argument separators
+		-- Also, the default number of lines for `say` and `reply` is 1.
+		-- But if the argument is empty (and not a trailing argument!) then it's 0!
+		-- So:
+		-- say    -> 1
+		-- say(   -> 1
+		-- say()  -> 0
+		-- We check for this with partss[3] == nil
 		if partss_parsed[1] == "say" then
-			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
+			if partss[2] == nil or (partss_parsed[2] == "" and partss[3] == nil) then
 				return 1, normalize_simplified_color(partss_parsed[3])
 			else
-				return parse_textbox_line_count(partss_parsed[2]), normalize_simplified_color(partss_parsed[3])
+				local lines = math.max(0, anythingbutnil0(parse_textbox_line_count(partss_parsed[2])))
+				return lines, normalize_simplified_color(partss_parsed[3])
 			end
 		elseif partss_parsed[1] == "reply" then
-			if partss[2] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[2])) <= 1 then
+			if partss[2] == nil or (partss_parsed[2] == "" and partss[3] == nil) then
 				return 1, "player"
 			else
-				return parse_textbox_line_count(partss_parsed[2]), "player"
+				local lines = math.max(0, anythingbutnil0(parse_textbox_line_count(partss_parsed[2])))
+				return lines, "player"
 			end
 		elseif partss_parsed[1] == "text" then
 			if partss[5] == nil or anythingbutnil0(parse_textbox_line_count(partss_parsed[5])) <= 0 then
