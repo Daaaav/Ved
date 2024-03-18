@@ -390,7 +390,7 @@ function loadtilesets(levelassetsfolder)
 	loadwarpbgs()
 end
 
-function loadtileset(file, res, levelassetsfolder)
+local function read_vvvvvv_imagedata(file, levelassetsfolder)
 	local readsuccess, contents
 	if levelassetsfolder == nil then
 		-- Just loading global assets, either custom or built-in
@@ -405,7 +405,7 @@ function loadtileset(file, res, levelassetsfolder)
 
 		-- Not interested in another copy of the assets we already had
 		if not readsuccess then
-			return
+			return nil
 		end
 
 		-- This level-specific file definitely exists
@@ -413,23 +413,62 @@ function loadtileset(file, res, levelassetsfolder)
 		tilesets[file].level_specific = true
 	end
 
-	local asimgdata, asimgdata_white
+	local imgdata
 	if readsuccess then
 		-- Custom image!
 		cons("Custom image: " .. file)
-		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
-		-- Too bad Data:clone() is LÖVE 11+ only
-		asimgdata_white = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
+		imgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
 	else
 		cons("No custom image for " .. file .. ", " .. contents)
-		asimgdata = love.image.newImageData("vgraphics/" .. file)
-		-- Too bad Data:clone() is LÖVE 11+ only
-		asimgdata_white = love.image.newImageData("vgraphics/" .. file)
+		imgdata = love.image.newImageData("vgraphics/" .. file)
+	end
+	return imgdata
+end
+
+function load_vvvvvv_image(file, levelassetsfolder, colored, white)
+	-- Load an image from the game into tilesets[file].
+	-- Like loadimage() and loadsprites(), but without making a tile grid
+	local imgdata = read_vvvvvv_imagedata(file, levelassetsfolder)
+	if imgdata == nil then
+		return false
 	end
 
-	tilesets[file].img = love.graphics.newImage(asimgdata)
-	tilesets[file].width = tilesets[file].img:getWidth()
-	tilesets[file].height = tilesets[file].img:getHeight()
+	local w, h = imgdata:getDimensions()
+	if colored then
+		tilesets[file].img = love.graphics.newImage(imgdata)
+	end
+	tilesets[file].width = w
+	tilesets[file].height = h
+
+	local imgdata_white
+	if white then
+		if colored then
+			-- Both white and colored...
+			imgdata_white = love.image.newImageData(w, h)
+			imgdata_white:paste(imgdata, 0, 0, 0, 0, w, h)
+		else
+			-- Simply make a reference, we weren't using the colored one
+			imgdata_white = imgdata
+		end
+
+		imgdata_white:mapPixel(function(x, y, r, g, b, a)
+			return 255, 255, 255, a
+		end)
+
+		tilesets[file].white_img = love.graphics.newImage(imgdata_white)
+	end
+
+	return true
+end
+
+function loadtileset(file, res, levelassetsfolder)
+	-- Load a tiles*.png into tilesets[file].
+	-- Some tiles need to show up in any color we choose, so load both a colored
+	-- and a white version so we can color-correct it.
+	if not load_vvvvvv_image(file, levelassetsfolder, true, true) then
+		return
+	end
+
 	tilesets[file].tiles_width = math.floor(tilesets[file].width/res)
 	tilesets[file].tiles_height = math.floor(tilesets[file].height/res)
 
@@ -446,12 +485,6 @@ function loadtileset(file, res, levelassetsfolder)
 		.. tilesets[file].width .. "x" .. tilesets[file].height .. ", "
 		.. tilesets[file].tiles_width .. "x" .. tilesets[file].tiles_height
 	)
-
-	-- Some tiles need to show up in any color we choose, so make another version where everything is white so we can color-correct it.
-	asimgdata_white:mapPixel(function(x, y, r, g, b, a)
-		return 255, 255, 255, a
-	end)
-	tilesets[file].white_img = love.graphics.newImage(asimgdata_white)
 
 	tilesets[file].tiles = {}
 
@@ -470,38 +503,11 @@ function loadtileset(file, res, levelassetsfolder)
 end
 
 function loadsprites(file, res, levelassetsfolder)
-	local readsuccess, contents
-	if levelassetsfolder == nil then
-		-- Just loading global assets, either custom or built-in
-		tilesets[file] = {}
-
-		-- Try loading custom assets first
-		readsuccess, contents = readfile(graphicsfolder .. dirsep .. file)
-	else
-		-- Level-specific file
-		readsuccess, contents = readfile(levelassetsfolder .. dirsep .. "graphics" .. dirsep .. file)
-
-		-- Not interested in another copy of the assets we already had
-		if not readsuccess then
-			return
-		end
-
-		-- This level-specific file definitely exists
-		tilesets[file] = {}
+	-- Load a sprites file into tilesets[file].
+	if not load_vvvvvv_image(file, levelassetsfolder, false, true) then
+		return
 	end
 
-	local asimgdata
-	if readsuccess then
-		-- Custom image!
-		cons("Custom image: " .. file)
-		asimgdata = love.image.newImageData(love.filesystem.newFileData(contents, file, "file"))
-	else
-		cons("No custom image for " .. file .. ", " .. contents)
-		asimgdata = love.image.newImageData("vgraphics/" .. file)
-	end
-	tilesets[file].img = love.graphics.newImage(asimgdata)
-	tilesets[file].width = tilesets[file].img:getWidth()
-	tilesets[file].height = tilesets[file].img:getHeight()
 	tilesets[file].tiles_width = math.floor(tilesets[file].width/res)
 	tilesets[file].tiles_height = math.floor(tilesets[file].height/res)
 
@@ -509,12 +515,6 @@ function loadsprites(file, res, levelassetsfolder)
 		.. tilesets[file].width .. "x" .. tilesets[file].height .. ", "
 		.. tilesets[file].tiles_width .. "x" .. tilesets[file].tiles_height
 	)
-
-	-- Now make everything white so we can color-correct it!
-	asimgdata:mapPixel(function(x, y, r, g, b, a)
-		return 255, 255, 255, a
-	end)
-	tilesets[file].img = love.graphics.newImage(asimgdata)
 
 	tilesets[file].tiles = {}
 

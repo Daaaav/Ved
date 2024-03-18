@@ -839,7 +839,7 @@ function drawentitysprite(tile, atx, aty, small)
 	local image = "sprites.png"
 
 	if tilesets[image].tiles[tile] ~= nil then
-		love.graphics.draw(tilesets[image].img, tilesets[image].tiles[tile], atx, aty, 0, small and 1 or 2)
+		love.graphics.draw(tilesets[image].white_img, tilesets[image].tiles[tile], atx, aty, 0, small and 1 or 2)
 	else
 		love.graphics.draw(cursorimg[5], atx, aty)
 	end
@@ -858,9 +858,9 @@ end
 
 function drawtele(atx, aty, small)
 	love.graphics.setColor(16,16,16)
-	love.graphics.draw(tilesets["teleporter.png"].img, tilesets["teleporter.png"].tiles[0], atx, aty, 0, small and 1 or 2)
+	love.graphics.draw(tilesets["teleporter.png"].white_img, tilesets["teleporter.png"].tiles[0], atx, aty, 0, small and 1 or 2)
 	v6_setcol(100)
-	love.graphics.draw(tilesets["teleporter.png"].img, tilesets["teleporter.png"].tiles[1], atx, aty, 0, small and 1 or 2)
+	love.graphics.draw(tilesets["teleporter.png"].white_img, tilesets["teleporter.png"].tiles[1], atx, aty, 0, small and 1 or 2)
 	love.graphics.setColor(255,255,255)
 end
 
