@@ -366,6 +366,11 @@ function loadtilesets(levelassetsfolder)
 	loadtileset("vtools_tiles2.png", 1, levelassetsfolder)
 	loadsprites("sprites.png", 32, levelassetsfolder)
 	loadsprites("teleporter.png", 96, levelassetsfolder)
+	load_vvvvvv_image("covered.png", levelassetsfolder, true, false)
+	load_vvvvvv_image("elephant.png", levelassetsfolder, false, true)
+	load_vvvvvv_image("gamecomplete.png", levelassetsfolder, true, false)
+	load_vvvvvv_image("levelcomplete.png", levelassetsfolder, true, false)
+	load_vvvvvv_image("minimap.png", levelassetsfolder, true, false)
 
 
 	if levelassetsfolder ~= nil then
