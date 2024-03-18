@@ -203,14 +203,14 @@ function self:init()
 	self:register_tilecol(self.tilesets.SPACE_STATION, 30, basic, 507, basic, 689)
 	self:register_tilecol(self.tilesets.SPACE_STATION, 31, basic, 510, basic, 698)
 
-	self:register_tilecol(self.tilesets.OUTSIDE, 0, basic, 480, outside, 680)
-	self:register_tilecol(self.tilesets.OUTSIDE, 1, basic, 483, outside, 683)
-	self:register_tilecol(self.tilesets.OUTSIDE, 2, basic, 486, outside, 686)
-	self:register_tilecol(self.tilesets.OUTSIDE, 3, basic, 489, outside, 689)
-	self:register_tilecol(self.tilesets.OUTSIDE, 4, basic, 492, outside, 692)
-	self:register_tilecol(self.tilesets.OUTSIDE, 5, basic, 495, outside, 695)
-	self:register_tilecol(self.tilesets.OUTSIDE, 6, basic, 498, outside, 698)
-	self:register_tilecol(self.tilesets.OUTSIDE, 7, basic, 501, outside, 701)
+	self:register_tilecol(self.tilesets.OUTSIDE, 0, basic, 480, outside, 680, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 1, basic, 483, outside, 683, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 2, basic, 486, outside, 686, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 3, basic, 489, outside, 689, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 4, basic, 492, outside, 692, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 5, basic, 495, outside, 695, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 6, basic, 498, outside, 698, false, true)
+	self:register_tilecol(self.tilesets.OUTSIDE, 7, basic, 501, outside, 701, false, true)
 
 	self:register_tilecol(self.tilesets.LAB, 0, lab_cyan, 280, none, 713)
 	self:register_tilecol(self.tilesets.LAB, 1, lab_red, 283, none, 713)
@@ -250,13 +250,14 @@ function self:register_tileset(id, name)
 	self.tilesets[id] = name
 end
 
-function self:register_tilecol(tileset, index, foreground_type, foreground_base, background_type, background_base, direct)
+function self:register_tilecol(tileset, index, foreground_type, foreground_base, background_type, background_base, direct, bg_ignores_walls)
 	local info = {}
 	info.foreground_type = foreground_type
 	info.foreground_base = foreground_base
 	info.background_type = background_type
 	info.background_base = background_base
 	info.direct_mode = (direct == true)
+	info.bg_ignores_walls = (bg_ignores_walls == true)
 
 	self.tileset_colours[tileset] = self.tileset_colours[tileset] or {}
 	self.tileset_colours[tileset][index] = info
@@ -415,11 +416,18 @@ function self:autotile_connector(x, y, original_type)
 		return false
 	end
 
+	if (original_type == self.tiletypes.NONSOLID) then
+		if (self.tileset_colours[self.tileset][self.tilecol].bg_ignores_walls) then
+			return new_type == self.tiletypes.NONSOLID or self:in_background(tile)
+		end
+		return true
+	end
+
 	if (new_type == self.tiletypes.SOLID and not self:in_background(tile)) then
 		return true
 	end
 
-	return original_type == self.tiletypes.NONSOLID
+	return false
 end
 
 function self:in_tileset(tile)
