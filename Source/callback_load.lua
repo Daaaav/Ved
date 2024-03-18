@@ -445,7 +445,7 @@ function love.load()
 
 	-- Load the levels folder and tilesets
 	loadlevelsfolder()
-	loadtilesets()
+	load_vvvvvv_tilesets()
 
 	-- Music! Note that we're not yet loading the music in memory here.
 	initvvvvvvmusic()

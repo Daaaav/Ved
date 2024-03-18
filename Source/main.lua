@@ -79,7 +79,7 @@ function dodisplaysettings(reload)
 		-- (I am a rhyming legend)
 		-- (If you're going to sing the above, "tiles will be white" and
 		-- "that's not really right" should be 4 sixteenth notes and 1 eighth note)
-		loadtilesets()
+		load_vvvvvv_tilesets()
 		tile_batch_texture_needs_update = true
 
 		-- Also do this or we'll have a blank map (no clever rhymes here)

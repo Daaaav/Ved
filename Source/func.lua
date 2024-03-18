@@ -354,18 +354,18 @@ function getlevelassetsfolder()
 	return nil
 end
 
-function loadtilesets(levelassetsfolder)
+function load_vvvvvv_tilesets(levelassetsfolder)
 	-- Normally called without argument. This function may call itself once more with it filled.
 	-- levelassetsfolder may be a path to a level-specific assets folder, which overrides any existing assets
 
-	loadtileset("tiles.png", 8, levelassetsfolder)
-	loadtileset("tiles2.png", 8, levelassetsfolder)
-	loadtileset("tiles3.png", 8, levelassetsfolder)
-	loadtileset("entcolours.png", 8, levelassetsfolder)
-	loadtileset("vtools_tiles.png", 1, levelassetsfolder)
-	loadtileset("vtools_tiles2.png", 1, levelassetsfolder)
-	loadsprites("sprites.png", 32, levelassetsfolder)
-	loadsprites("teleporter.png", 96, levelassetsfolder)
+	load_vvvvvv_tileset("tiles.png", 8, levelassetsfolder)
+	load_vvvvvv_tileset("tiles2.png", 8, levelassetsfolder)
+	load_vvvvvv_tileset("tiles3.png", 8, levelassetsfolder)
+	load_vvvvvv_tileset("entcolours.png", 8, levelassetsfolder)
+	load_vvvvvv_tileset("vtools_tiles.png", 1, levelassetsfolder)
+	load_vvvvvv_tileset("vtools_tiles2.png", 1, levelassetsfolder)
+	load_vvvvvv_sprites("sprites.png", 32, levelassetsfolder)
+	load_vvvvvv_sprites("teleporter.png", 96, levelassetsfolder)
 	load_vvvvvv_image("covered.png", levelassetsfolder, true, false)
 	load_vvvvvv_image("elephant.png", levelassetsfolder, false, true)
 	load_vvvvvv_image("gamecomplete.png", levelassetsfolder, true, false)
@@ -387,7 +387,7 @@ function loadtilesets(levelassetsfolder)
 		local levelassets = getlevelassetsfolder()
 		if levelassets ~= nil then
 			cons("Loading level-specific assets from " .. levelassets)
-			loadtilesets(levelassets)
+			load_vvvvvv_tilesets(levelassets)
 		end
 	end
 
@@ -432,7 +432,7 @@ end
 
 function load_vvvvvv_image(file, levelassetsfolder, colored, white)
 	-- Load an image from the game into tilesets[file].
-	-- Like loadimage() and loadsprites(), but without making a tile grid
+	-- Like load_vvvvvv_tileset() and load_vvvvvv_sprites(), but without making a tile grid
 	local imgdata = read_vvvvvv_imagedata(file, levelassetsfolder)
 	if imgdata == nil then
 		return false
@@ -466,7 +466,7 @@ function load_vvvvvv_image(file, levelassetsfolder, colored, white)
 	return true
 end
 
-function loadtileset(file, res, levelassetsfolder)
+function load_vvvvvv_tileset(file, res, levelassetsfolder)
 	-- Load a tiles*.png into tilesets[file].
 	-- Some tiles need to show up in any color we choose, so load both a colored
 	-- and a white version so we can color-correct it.
@@ -507,7 +507,7 @@ function loadtileset(file, res, levelassetsfolder)
 	end
 end
 
-function loadsprites(file, res, levelassetsfolder)
+function load_vvvvvv_sprites(file, res, levelassetsfolder)
 	-- Load a sprites file into tilesets[file].
 	if not load_vvvvvv_image(file, levelassetsfolder, false, true) then
 		return
@@ -560,7 +560,7 @@ end
 
 function user_reload_tilesets()
 	-- User pressed F11 to reload tilesets
-	loadtilesets()
+	load_vvvvvv_tilesets()
 	loadfonts_custom()
 	tile_batch_texture_needs_update = true
 	map_init()
@@ -1400,7 +1400,7 @@ function state6load(levelname)
 			unloadvvvvvvmusics_level()
 			if level_assets_loaded or getlevelassetsfolder() ~= nil then
 				-- Either previous or new level has level-specific assets, so reload.
-				loadtilesets()
+				load_vvvvvv_tilesets()
 				loadfonts_custom()
 				tile_batch_texture_needs_update = true
 			end
@@ -1880,7 +1880,7 @@ function triggernewlevel(width, height)
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
 	if level_assets_loaded then
-		loadtilesets()
+		load_vvvvvv_tilesets()
 		loadfonts_custom()
 		tile_batch_texture_needs_update = true
 	end
