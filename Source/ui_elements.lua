@@ -480,7 +480,7 @@ end
 
 function ImageButton(image, scale, action, hotkey_text, hotkey_func, status_func, action_r, hotkey_r_func)
 	return elButton:new{
-		pw = image:getWidth()*scale, ph = image:getHeight()*scale,
+		pw = theming:get_width(image)*scale, ph = theming:get_height(image)*scale,
 		image = image,
 		imagescale = scale,
 		action = action,
@@ -532,7 +532,7 @@ function elButton:draw(x, y, maxw, maxh)
 		if self.image ~= nil then
 			if not enabled then
 				love.graphics.setColor(64,64,64)
-				love.graphics.draw(self.image, x, y, 0, self.imagescale)
+				theming:draw(self.image, x, y, 0, self.imagescale)
 				love.graphics.setColor(255,255,255)
 			else
 				hoverdraw(self.image, x, y, self.pw, self.ph, self.imagescale)
@@ -820,9 +820,9 @@ function elColorPicker:draw(x, y, maxw, maxh)
 	)
 
 	-- The arrows
-	love.graphics.draw(image.colorsel, x-4, y+291-r)
-	love.graphics.draw(image.colorsel, x+51, y+291-g)
-	love.graphics.draw(image.colorsel, x+106, y+291-b)
+	theming:draw(image.colorsel, x-4, y+291-r)
+	theming:draw(image.colorsel, x+51, y+291-g)
+	theming:draw(image.colorsel, x+106, y+291-b)
 
 	-- Are we clicking?
 	if love.mouse.isDown("l") and nodialog and not mousepressed then

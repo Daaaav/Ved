@@ -530,7 +530,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 
 			font:print(anythingbutnil(label), real_x, real_y-3+2)
-			love.graphics.draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
+			theming:draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
 		end
 	elseif mode == DF.CHECKBOX then
 		-- Checkbox
@@ -679,7 +679,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				if v.isdir then
 					self:setColor(255,255,255,255)
-					love.graphics.draw(image.smallfolder, real_x+2, row_y+2)
+					theming:draw(image.smallfolder, real_x+2, row_y+2)
 					if active and selected then
 						showhotkey(" ", real_x+real_w-20, row_y-1, ALIGN.RIGHT, topmost, self)
 					end
@@ -723,10 +723,10 @@ function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
 		s = 1
 	end
 	if topmost and mouseon(x, y, w*s, h*s) and not RCMactive and window_active() then
-		love.graphics.draw(img, x, y, 0, s)
+		theming:draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)
-		love.graphics.draw(img, x, y, 0, s)
+		theming:draw(img, x, y, 0, s)
 		self:setColor(255,255,255,255)
 	end
 end
