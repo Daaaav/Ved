@@ -595,10 +595,10 @@ end
 
 function hoverdraw(img, x, y, w, h, s)
 	if nodialog and mouseon(x, y, w, h) and window_active() then
-		love.graphics.draw(img, x, y, 0, s)
+		theming:draw(img, x, y, 0, s)
 	else
 		love.graphics.setColor(255,255,255,128)
-		love.graphics.draw(img, x, y, 0, s)
+		theming:draw(img, x, y, 0, s)
 		love.graphics.setColor(255,255,255,255)
 	end
 end
@@ -2325,8 +2325,7 @@ function unique_note_name(newname, oldname)
 end
 
 function updatewindowicon()
-	theming:setIcon(toolimgicon[selectedtool])
-	--love.window.setIcon(toolimgicon[selectedtool])
+	theming:set_icon(toolimgicon[selectedtool])
 end
 
 function roomtext_extralines(text)
@@ -3433,7 +3432,7 @@ function tooltip_box_dimensions(title, explanation, icon)
 	)
 	local icon_w, icon_h = 0, 0
 	if icon ~= nil then
-		icon_w, icon_h = icon:getWidth()+8, icon:getHeight()
+		icon_w, icon_h = theming:get_width(icon)+8, theming:get_height(icon)
 	end
 	local expl_w = box_w - 16 - icon_w
 	local _, lines = font_ui:getWrap(explanation, expl_w)
@@ -3452,7 +3451,7 @@ end
 function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, title_r, title_g, title_b)
 	local icon_w = 0
 	if icon ~= nil then
-		icon_w = icon:getWidth()+8
+		icon_w = theming:get_width(icon)+8
 	end
 	local expl_w = box_w - 16 - icon_w
 
@@ -3461,7 +3460,7 @@ function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, 
 	love.graphics.setColor(title_r, title_g, title_b, 255)
 	font_ui:print(title, box_x+8, box_y+8)
 	if icon ~= nil then
-		love.graphics.draw(icon, box_x+8, box_y+24)
+		theming:draw(icon, box_x+8, box_y+24)
 	end
 	love.graphics.setColor(255,255,255,255)
 	font_ui:printf(
@@ -3478,7 +3477,7 @@ function draw_script_warn_light(id, x, y, active)
 	local active_hovering = false
 
 	if active then
-		active_hovering = mouseon(x, y, light.img:getDimensions())
+		active_hovering = mouseon(x, y, theming:get_dimensions(light.img))
 		local red
 		if active_hovering or love.timer.getTime() % 1 < .5 then
 			red = 255
@@ -3490,11 +3489,11 @@ function draw_script_warn_light(id, x, y, active)
 		love.graphics.setColor(12,12,12,255)
 	end
 
-	love.graphics.draw(light.img, x, y)
+	theming:draw(light.img, x, y)
 
 	if active_hovering then
 		local box_w, box_h = tooltip_box_dimensions(L[light.lang_title], L[light.lang_expl], light.img_hq)
-		local box_x, box_y = x+light.img:getWidth()-box_w, y+light.img:getHeight()+1
+		local box_x, box_y = x+theming:get_width(light.img)-box_w, y+theming:get_height(light.img)+1
 
 		tooltip_box_draw(
 			L[light.lang_title],

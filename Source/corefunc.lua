@@ -212,7 +212,7 @@ end
 function init_window_properties()
 	-- Again, compatibility for every LÖVE version under the sun
 	local title = "Ved " .. ved_ver_human()
-	local icon = love.image.newImageData("themes/default/ui/tools/prepared/1.png")
+	local icon = love.image.newImageData("images/icon.png")
 
 	if love_version_meets(9) then
 		love.window.setTitle(title)
