@@ -66,7 +66,7 @@ return function()
 			love.graphics.setColor(255,255,255,92)
 		end
 
-		love.graphics.draw(image.bggrid, screenoffset, 0)
+		theming:draw(image.bggrid, screenoffset, 0)
 
 		love.graphics.setColor(255,255,255,255)
 
@@ -440,9 +440,9 @@ return function()
 			end
 
 			if selectedtool == t then
-				love.graphics.draw(image.selectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
+				theming:draw(image.selectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			else
-				love.graphics.draw(image.unselectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
+				theming:draw(image.unselectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			end
 
 			coorx = 16+2
@@ -492,9 +492,9 @@ return function()
 			end
 
 			if selectedsubtool[selectedtool] == k then
-				love.graphics.draw(image.selectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				theming:draw(image.selectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			else
-				love.graphics.draw(image.unselectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				theming:draw(image.unselectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			end
 
 			coorx = 16+64+2
@@ -596,7 +596,7 @@ return function()
 		tinyfont:print(L.TINY_CTRL, 0, 0)
 
 		-- Also display the current (sub)tool!
-		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
+		theming:draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if subtoolimgs[selectedtool][selectedsubtool[selectedtool]] ~= nil then
 			-- We have a subtool to display!
 			theming:draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
@@ -640,14 +640,14 @@ return function()
 		hoverdraw(image.undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
 	else
 		love.graphics.setColor(64,64,64)
-		love.graphics.draw(image.undobtn, love.graphics.getWidth()-120, 40)
+		theming:draw(image.undobtn, love.graphics.getWidth()-120, 40)
 		love.graphics.setColor(255,255,255)
 	end
 	if #redobuffer >= 1 then
 		hoverdraw(image.redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
 	else
 		love.graphics.setColor(64,64,64)
-		love.graphics.draw(image.redobtn, love.graphics.getWidth()-120+16, 40)
+		theming:draw(image.redobtn, love.graphics.getWidth()-120+16, 40)
 		love.graphics.setColor(255,255,255)
 	end
 
@@ -1263,9 +1263,9 @@ return function()
 		end
 	else
 		-- Some text below the small tiles picker-- how many trinkets and crewmates do we have?
-		love.graphics.draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
-		love.graphics.draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
-		love.graphics.draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
+		theming:draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
+		theming:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
+		theming:draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
 		font_8x8:printf(
 			fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
 			.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"

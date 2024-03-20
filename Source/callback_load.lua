@@ -218,102 +218,102 @@ function love.load()
 	special_cursor = false
 
 	image = {
-		selectedtool = love.graphics.newImage("images/selectedtool.png"),
-		unselectedtool = love.graphics.newImage("images/unselectedtool.png"),
+		selectedtool = "ui/images/selectedtool",
+		unselectedtool = "ui/images/unselectedtool",
 
-		savebtn_hq = love.graphics.newImage("images/save_hq.png"),
-		loadbtn = love.graphics.newImage("images/load.png"),
-		loadbtn_hq = love.graphics.newImage("images/load_hq.png"),
-		newbtn = love.graphics.newImage("images/new.png"),
-		newbtn_hq = love.graphics.newImage("images/new_hq.png"),
-		helpbtn = love.graphics.newImage("images/help.png"),
-		retbtn_hq = love.graphics.newImage("images/ret_hq.png"),
-		infobtn = love.graphics.newImage("images/info.png"),
-		infograybtn = love.graphics.newImage("images/infogray.png"),
+		savebtn_hq = "ui/images/save_hq",
+		loadbtn = "ui/images/load",
+		loadbtn_hq = "ui/images/load_hq",
+		newbtn = "ui/images/new",
+		newbtn_hq = "ui/images/new_hq",
+		helpbtn = "ui/images/help",
+		retbtn_hq = "ui/images/ret_hq",
+		infobtn = "ui/images/info",
+		infograybtn = "ui/images/infogray",
 
-		undobtn = love.graphics.newImage("images/undo.png"),
-		redobtn = love.graphics.newImage("images/redo.png"),
-		cutbtn = love.graphics.newImage("images/cut.png"),
-		copybtn = love.graphics.newImage("images/copy.png"),
-		pastebtn = love.graphics.newImage("images/paste.png"),
-		refreshbtn = love.graphics.newImage("images/refresh.png"),
+		undobtn = "ui/images/undo",
+		redobtn = "ui/images/redo",
+		cutbtn = "ui/images/cut",
+		copybtn = "ui/images/copy",
+		pastebtn = "ui/images/paste",
+		refreshbtn = "ui/images/refresh",
 
-		playbtn_hq = love.graphics.newImage("images/play_hq.png"),
-		playgraybtn_hq = love.graphics.newImage("images/playgray_hq.png"),
-		playstopbtn_hq = love.graphics.newImage("images/playstop_hq.png"),
+		playbtn_hq = "ui/images/play_hq",
+		playgraybtn_hq = "ui/images/playgray_hq",
+		playstopbtn_hq = "ui/images/playstop_hq",
 
-		eraseron = love.graphics.newImage("images/eraseron.png"),
-		eraseroff = love.graphics.newImage("images/eraseroff.png"),
-		eraser = love.graphics.newImage("images/eraser.png"),
+		eraseron = "ui/images/eraseron",
+		eraseroff = "ui/images/eraseroff",
+		eraser = "ui/images/eraser",
 
-		checkon = love.graphics.newImage("images/checkon.png"),
-		checkoff = love.graphics.newImage("images/checkoff.png"),
-		checkon_hq = love.graphics.newImage("images/checkon_hq.png"),
-		checkoff_hq = love.graphics.newImage("images/checkoff_hq.png"),
+		checkon = "ui/images/checkon",
+		checkoff = "ui/images/checkoff",
+		checkon_hq = "ui/images/checkon_hq",
+		checkoff_hq = "ui/images/checkoff_hq",
 
-		radioon = love.graphics.newImage("images/radioon.png"),
-		radiooff = love.graphics.newImage("images/radiooff.png"),
-		radioon_hq = love.graphics.newImage("images/radioon_hq.png"),
-		radiooff_hq = love.graphics.newImage("images/radiooff_hq.png"),
+		radioon = "ui/images/radioon",
+		radiooff = "ui/images/radiooff",
+		radioon_hq = "ui/images/radioon_hq",
+		radiooff_hq = "ui/images/radiooff_hq",
 
-		dropdownarrow = love.graphics.newImage("images/dropdownarrow.png"),
-		colorsel = love.graphics.newImage("images/colorsel.png"),
+		dropdownarrow = "ui/images/dropdownarrow",
+		colorsel = "ui/images/colorsel",
 
-		smallfolder = love.graphics.newImage("images/smallfolder.png"),
-		smalllevel = love.graphics.newImage("images/smalllevel.png"),
-		smallunknown = love.graphics.newImage("images/smallunknown.png"),
+		smallfolder = "ui/images/smallfolder",
+		smalllevel = "ui/images/smalllevel",
+		smallunknown = "ui/images/smallunknown",
 
-		asset_pppppp = love.graphics.newImage("images/asset_pppppp.png"),
-		asset_mmmmmm = love.graphics.newImage("images/asset_mmmmmm.png"),
-		asset_musiceditor = love.graphics.newImage("images/asset_musiceditor.png"),
-		asset_sounds = love.graphics.newImage("images/asset_sounds.png"),
-		asset_graphics = love.graphics.newImage("images/asset_graphics.png"),
+		asset_pppppp = "ui/images/asset_pppppp",
+		asset_mmmmmm = "ui/images/asset_mmmmmm",
+		asset_musiceditor = "ui/images/asset_musiceditor",
+		asset_sounds = "ui/images/asset_sounds",
+		asset_graphics = "ui/images/asset_graphics",
 
-		sound_play = love.graphics.newImage("images/sound_play.png"),
-		sound_play_current = love.graphics.newImage("images/sound_play_current.png"),
-		sound_pause = love.graphics.newImage("images/sound_pause.png"),
-		sound_stop = love.graphics.newImage("images/sound_stop.png"),
-		sound_rewind = love.graphics.newImage("images/sound_rewind.png"),
+		sound_play = "ui/images/sound_play",
+		sound_play_current = "ui/images/sound_play_current",
+		sound_pause = "ui/images/sound_pause",
+		sound_stop = "ui/images/sound_stop",
+		sound_rewind = "ui/images/sound_rewind",
 
-		folder_parent = love.graphics.newImage("images/folder_parent.png"),
+		folder_parent = "ui/images/folder_parent",
 
-		bggrid = love.graphics.newImage("images/bggrid.png"),
+		bggrid = "ui/images/bggrid",
 
-		solid = love.graphics.newImage("images/solid.png"),
-		solidhalf = love.graphics.newImage("images/solidhalf.png"),
-		covered_full = love.graphics.newImage("images/covered_full.png"),
-		covered_80x60 = love.graphics.newImage("images/covered_80x60.png"),
+		solid = "ui/images/solid",
+		solidhalf = "ui/images/solidhalf",
+		covered_full = "ui/images/covered_full",
+		covered_80x60 = "ui/images/covered_80x60",
 
-		scrollup = love.graphics.newImage("images/scrollup.png"),
-		scrolldn = love.graphics.newImage("images/scrolldn.png"),
+		scrollup = "ui/images/scrollup",
+		scrolldn = "ui/images/scrolldn",
 
-		stat_trinkets = love.graphics.newImage("images/stat_trinkets.png"),
-		stat_crewmates = love.graphics.newImage("images/stat_crewmates.png"),
-		stat_entities = love.graphics.newImage("images/stat_entities.png"),
+		stat_trinkets = "ui/images/stat_trinkets",
+		stat_crewmates = "ui/images/stat_crewmates",
+		stat_entities = "ui/images/stat_entities",
 
-		intsc_off = love.graphics.newImage("images/intsc_off.png"),
-		intsc_on = love.graphics.newImage("images/intsc_on.png"),
+		intsc_off = "ui/images/intsc_off",
+		intsc_on = "ui/images/intsc_on",
 
-		crosshair_mini = love.graphics.newImage("images/crosshair_mini.png"),
-		crosshair_gigantic = love.graphics.newImage("images/crosshair_gigantic.png"),
+		crosshair_mini = "ui/images/crosshair_mini",
+		crosshair_gigantic = "ui/images/crosshair_gigantic",
 	}
 
 	script_warn_lights = {
 		loadscript_required = {
-			img = love.graphics.newImage("images/warn_loadscript_required.png"),
-			img_hq = love.graphics.newImage("images/warn_loadscript_required_hq.png"),
+			img = "ui/images/warn_loadscript_required",
+			img_hq = "ui/images/warn_loadscript_required_hq",
 			lang_title = "INTSCRWARNING_NOLOADSCRIPT",
 			lang_expl = "INTSCRWARNING_NOLOADSCRIPT_EXPL",
 		},
 		direct_reference = {
-			img = love.graphics.newImage("images/warn_direct_reference.png"),
-			img_hq = love.graphics.newImage("images/warn_direct_reference_hq.png"),
+			img = "ui/images/warn_direct_reference",
+			img_hq = "ui/images/warn_direct_reference_hq",
 			lang_title = "INTSCRWARNING_BOXED",
 			lang_expl = "INTSCRWARNING_BOXED_EXPL",
 		},
 		name = {
-			img = love.graphics.newImage("images/warn_name.png"),
-			img_hq = love.graphics.newImage("images/warn_name_hq.png"),
+			img = "ui/images/warn_name",
+			img_hq = "ui/images/warn_name_hq",
 			lang_title = "INTSCRWARNING_NAME",
 			lang_expl = "INTSCRWARNING_NAME_EXPL",
 		},
@@ -325,11 +325,9 @@ function love.load()
 	v6_sounds = {} -- can be used in the sound script context
 
 	scaleimgs = {
-		[false] = love.graphics.newImage("images/scale_normal.png"),
-		[true] = love.graphics.newImage("images/scale_small.png")
+		[false] = "ui/images/scale_normal",
+		[true] = "ui/images/scale_small"
 	}
-	scaleimgs[false]:setFilter("linear", "nearest")
-	scaleimgs[true]:setFilter("linear", "nearest")
 
 	toolimg = {}
 	toolimgicon = {}

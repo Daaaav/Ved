@@ -76,6 +76,8 @@ function self:load_theme_folder(base_path, path, theme)
 				print("LOADING ASSET AT " .. image_path)
 				local imagedata = love.image.newImageData(image_path)
 				local image = love.graphics.newImage(imagedata)
+				image:setFilter("linear", "nearest")
+				image:setFilter("linear", "nearest")
 				print(image)
 				theme.assets[rel_path] = {
 					image = image,
@@ -113,6 +115,9 @@ function self:get_asset(name)
 		if asset then
 			return asset
 		end
+	end
+	if allowdebug then
+		error("Asset " .. name .. " not found: " .. debug.traceback())
 	end
 end
 
@@ -202,7 +207,7 @@ function self:call(event, ...)
 	return false
 end
 
-function self:setIcon(asset)
+function self:set_icon(asset)
 	if type(asset) == "string" then
 		asset = self:get_asset(asset)
 	end
@@ -210,6 +215,42 @@ function self:setIcon(asset)
 	if asset then
 		love.window.setIcon(asset.imagedata)
 	end
+end
+
+function self:get_width(asset)
+	if type(asset) == "string" then
+		asset = self:get_asset(asset)
+	end
+
+	if asset then
+		return asset.width
+	end
+
+	return 0
+end
+
+function self:get_height(asset)
+	if type(asset) == "string" then
+		asset = self:get_asset(asset)
+	end
+
+	if asset then
+		return asset.height
+	end
+
+	return 0
+end
+
+function self:get_dimensions(asset)
+	if type(asset) == "string" then
+		asset = self:get_asset(asset)
+	end
+
+	if asset then
+		return asset.width, asset.height
+	end
+
+	return 0, 0
 end
 
 return self
