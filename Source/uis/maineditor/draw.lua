@@ -448,7 +448,7 @@ return function()
 			coorx = 16+2
 			coory = (16+2+(48*(t-1)))+lefttoolscroll
 
-			love.graphics.draw(toolimg[t], coorx, coory)
+			theming:draw(toolimg[t], coorx, coory)
 			love.graphics.setColor(255,255,255,255)
 
 			-- Put the shortcut next to it.
@@ -501,7 +501,7 @@ return function()
 			coory = (16+2+(subtoolheight*(k-1)))+leftsubtoolscroll
 
 			-- v = subtoolimgs[selectedtool][k]
-			love.graphics.draw(v, coorx, coory)
+			theming:draw(v, coorx, coory)
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
@@ -599,10 +599,10 @@ return function()
 		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if subtoolimgs[selectedtool][selectedsubtool[selectedtool]] ~= nil then
 			-- We have a subtool to display!
-			love.graphics.draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
+			theming:draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
 		else
 			-- Just display the tool itself.
-			love.graphics.draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
+			theming:draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
 		end
 	end
 

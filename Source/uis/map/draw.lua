@@ -276,7 +276,7 @@ return function()
 			end
 			if t ~= 1 then
 				local cx, cy = 16+2, (16+2+(48*(t-1)))
-				love.graphics.draw(toolimg[actual_t], cx, cy)
+				theming:draw(toolimg[actual_t], cx, cy)
 				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and window_active() then
 					love.graphics.setColor(128,128,128,192)
 					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font8:getWidth(pluraltoolnames[actual_t]), 8)
@@ -301,7 +301,7 @@ return function()
 
 		love.graphics.draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if toolanyofthese then
-			love.graphics.draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
+			theming:draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
 		end
 	end
 end

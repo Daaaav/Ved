@@ -775,7 +775,7 @@ function insertrowcolor(rowcolors, yourarray)
 end
 
 function st(name)
-	return love.graphics.newImage("tools/sub/" .. name .. ".png")
+	return "ui/tools/sub/" .. name
 end
 
 function updatecountdelete(thet, id, undoing)
@@ -2326,7 +2326,8 @@ function unique_note_name(newname, oldname)
 end
 
 function updatewindowicon()
-	love.window.setIcon(toolimgicon[selectedtool])
+	theming:setIcon(toolimgicon[selectedtool])
+	--love.window.setIcon(toolimgicon[selectedtool])
 end
 
 function roomtext_extralines(text)

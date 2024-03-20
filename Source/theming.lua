@@ -74,9 +74,12 @@ function self:load_theme_folder(base_path, path, theme)
 				-- snip off file ext
 				rel_path = rel_path:sub(1, -5)
 				print("LOADING ASSET AT " .. image_path)
-				local image = love.graphics.newImage(image_path)
+				local imagedata = love.image.newImageData(image_path)
+				local image = love.graphics.newImage(imagedata)
+				print(image)
 				theme.assets[rel_path] = {
 					image = image,
+					imagedata = imagedata,
 					width = image:getWidth(),
 					height = image:getHeight(),
 					name = rel_path
@@ -197,6 +200,16 @@ function self:call(event, ...)
 		end
 	end
 	return false
+end
+
+function self:setIcon(asset)
+	if type(asset) == "string" then
+		asset = self:get_asset(asset)
+	end
+
+	if asset then
+		love.window.setIcon(asset.imagedata)
+	end
 end
 
 return self
