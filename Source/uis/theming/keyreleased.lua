@@ -1,4 +1,4 @@
--- displayoptions/keyreleased
+-- theming/keyreleased
 
 return function(key)
 	if key == "escape" then

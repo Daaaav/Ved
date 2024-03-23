@@ -1,4 +1,4 @@
--- displayoptions/load
+-- theming/load
 
 return function()
 	oldforcescale = s.forcescale
