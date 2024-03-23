@@ -2,3 +2,8 @@
 -- This file gets loaded after the language files do, so keys can overwrite existing ones, and will show up in all languages.
 
 --L. = ""
+
+L.THEMING = "Theming"
+L.THEMINGTITLE = "Theme settings"
+L.ACTIVETHEMES = "Active themes"
+L.INACTIVETHEMES = "Inactive themes"
