@@ -239,7 +239,12 @@ configs = {
 	volume = {
 		default = 1,
 		["type"] = "number"
-	}
+	},
+	active_themes = {
+		default = {},
+		["type"] = "stringsarray",
+		comment = "The themes that are currently active"
+	},
 }
 
 function saveconfig()

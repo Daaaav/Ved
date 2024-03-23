@@ -3,13 +3,81 @@ local self = {}
 function self:init()
 	self.themes = {}
 	self.active_themes = {
-		"default",
-		"vvvvvv"
+		"default"
 	}
 
 	self.quads = {}
 
 	self:load_themes()
+	self:load_active_themes()
+end
+
+function self:load_active_themes()
+	self.active_themes = {
+		"default"
+	}
+
+	for i, name in ipairs(s.active_themes) do
+		if name ~= "default" then
+			table.insert(self.active_themes, name)
+		end
+	end
+end
+
+function self:save_active_themes()
+	s.active_themes = {}
+	for i, name in ipairs(self.active_themes) do
+		if name ~= "default" then
+			table.insert(s.active_themes, name)
+		end
+	end
+	saveconfig()
+end
+
+function self:disable_theme(name)
+	for i = #self.active_themes, 1, -1 do
+		if self.active_themes[i] == name then
+			table.remove(self.active_themes, i)
+			self:save_active_themes()
+			return
+		end
+	end
+	self:save_active_themes()
+end
+
+function self:enable_theme(name)
+	table.insert(self.active_themes, name)
+	self:save_active_themes()
+end
+
+function self:shift_theme_up(name)
+	for i = 1, #self.active_themes do
+		if self.active_themes[i] == name then
+			if i < #self.active_themes then
+				local temp = self.active_themes[i + 1]
+				self.active_themes[i + 1] = name
+				self.active_themes[i] = temp
+			end
+			self:save_active_themes()
+			return
+		end
+	end
+	self:save_active_themes()
+end
+
+function self:shift_theme_down(name)
+	for i = 1, #self.active_themes do
+		if self.active_themes[i] == name then
+			if i > 1 then
+				local temp = self.active_themes[i - 1]
+				self.active_themes[i - 1] = name
+				self.active_themes[i] = temp
+			end
+			self:save_active_themes()
+			return
+		end
+	end
+	self:save_active_themes()
 end
 
 function self:load_themes()
