@@ -275,24 +275,24 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			if displaysolid then
 				if issolid(t, ts, false, true) then
 					-- Wall
-					theming:draw(image.solid, x, y)
+					theme:draw(image.solid, x, y)
 				-- Spikes
 				elseif istophalfspike(t, ts) then
 					love.graphics.setColor(255,0,0)
-					theming:draw(image.solidhalf, x, y)
+					theme:draw(image.solidhalf, x, y)
 					love.graphics.setColor(255,255,255)
 				elseif isbottomhalfspike(t, ts) then
 					love.graphics.setColor(255,0,0)
-					theming:draw(image.solidhalf, x, y+8)
+					theme:draw(image.solidhalf, x, y+8)
 					love.graphics.setColor(255,255,255)
 				elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
 					love.graphics.setColor(255,0,0)
-					theming:draw(image.solid, x, y)
+					theme:draw(image.solid, x, y)
 					love.graphics.setColor(255,255,255)
 				elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
 					-- Not a spike but solid in invincibility mode
 					love.graphics.setColor(255,255,0)
-					theming:draw(image.solid, x, y)
+					theme:draw(image.solid, x, y)
 					love.graphics.setColor(255,255,255)
 				end
 			end
@@ -304,7 +304,7 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			if displayminimapgrid then
 				love.graphics.setColor(96, 96, 96)
 				local function draw()
-					theming:draw(image.solid, x, y)
+					theme:draw(image.solid, x, y)
 				end
 				if zoom == 1 then
 					if atx >= 3 and atx <= 36 and atx % 3 == 0 and aty <= 24 and aty % 3 == 0 then
@@ -471,7 +471,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
-		theming:draw("ui/entity", x, y)
+		theme:draw("ui/entity", x, y)
 	elseif v.t == 1 then
 		-- Enemy
 		v6_setcol(tilesetblocks[lmd.tileset].colors[lmd.tilecol].v6col)
@@ -655,9 +655,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Where is it, though?
 		if (v.t == 11) then
-			theming:draw("ui/grav_line_origin", x, y)
+			theme:draw("ui/grav_line_origin", x, y)
 		else
-			theming:draw("ui/warp_line_origin", x, y)
+			theme:draw("ui/warp_line_origin", x, y)
 		end
 
 		if interact then
@@ -768,9 +768,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			local low_y = math.min(y, cur_y)
 			local high_y = math.max(y, cur_y)
 
-			theming:draw_nineslice("ui/placing_script", low_x, low_y, high_x + 16, high_y + 16)
+			theme:draw_nineslice("ui/placing_script", low_x, low_y, high_x + 16, high_y + 16)
 		else
-			theming:draw_nineslice("ui/script", x, y, x + 16*v.p1, y + 16*v.p2)
+			theme:draw_nineslice("ui/script", x, y, x + 16*v.p1, y + 16*v.p2)
 
 			if interact then
 				entity_highlight(x, y, v.p1, v.p2)
@@ -788,7 +788,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	-- 50 (warp line) handled above with gravity line (11)
 	else
 		-- We don't know what this is, actually!
-		theming:draw("ui/entity", x, y)
+		theme:draw("ui/entity", x, y)
 		showtooltip = true
 		if v.t ~= nil and interact then
 			entity_highlight(x, y, 1, 1)
@@ -804,7 +804,7 @@ function drawentitysprite(tile, atx, aty, small)
 	if tilesets[image].tiles[tile] ~= nil then
 		love.graphics.draw(tilesets[image].white_img, tilesets[image].tiles[tile], atx, aty, 0, small and 1 or 2)
 	else
-		theming:draw("ui/entity", atx, aty)
+		theme:draw("ui/entity", atx, aty)
 	end
 end
 
@@ -979,24 +979,24 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 				if displaysolid then
 					if issolid(t, ts, false, true) then
 						-- Wall
-						theming:draw(image.solid, x, y)
+						theme:draw(image.solid, x, y)
 					-- Spikes
 					elseif istophalfspike(t, ts) then
 						love.graphics.setColor(255,0,0)
-						theming:draw(image.solidhalf, x, y)
+						theme:draw(image.solidhalf, x, y)
 						love.graphics.setColor(255,255,255)
 					elseif isbottomhalfspike(t, ts) then
 						love.graphics.setColor(255,0,0)
-						theming:draw(image.solidhalf, x, y+8)
+						theme:draw(image.solidhalf, x, y+8)
 						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) ~= issolid(t, ts, true, true) then
 						love.graphics.setColor(255,0,0)
-						theming:draw(image.solid, x, y)
+						theme:draw(image.solid, x, y)
 						love.graphics.setColor(255,255,255)
 					elseif issolid(t, ts, false, true) == issolid(t, ts, true, true) and issolid(t, ts, true, true, false) ~= issolid(t, ts, true, true, true) then
 						-- Not a spike but solid in invincibility mode
 						love.graphics.setColor(255,255,0)
-						theming:draw(image.solid, x, y)
+						theme:draw(image.solid, x, y)
 						love.graphics.setColor(255,255,255)
 					end
 				end
@@ -1033,7 +1033,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 			local selectedx = selectedtile % tiles_width_picker
 			local selectedy = ((selectedtile-selectedx) / tiles_width_picker) - page*30
 
-			theming:draw("ui/selected_tile", 16*selectedx+offsetx-2, 16*selectedy+offsety-2)
+			theme:draw("ui/selected_tile", 16*selectedx+offsetx-2, 16*selectedy+offsety-2)
 		end
 	end
 end
@@ -1073,9 +1073,9 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 				local cur_x = offsetx + (scale*8*lx)
 				local cur_y = offsety + (scale*8*ly)
 				if small then
-					theming:draw("ui/cursor_small", cur_x, cur_y)
+					theme:draw("ui/cursor_small", cur_x, cur_y)
 				else
-					theming:draw_nineslice("ui/cursor", cur_x, cur_y, cur_x + 16, cur_y + 16)
+					theme:draw_nineslice("ui/cursor", cur_x, cur_y, cur_x + 16, cur_y + 16)
 				end
 
 				-- Heck, maybe we're even clicking this.
@@ -1096,14 +1096,14 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 
 	-- Were we highlighting a tile?
 	if levelmetadata_get(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
-		theming:draw("ui/selected_tile" .. (small and "_small" or ""), offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
+		theme:draw("ui/selected_tile" .. (small and "_small" or ""), offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
 	end
 end
 
 function toolfinish(what)
 	if love.keyboard.isDown("v") and what[3] == 4 then
-		theming:draw("ui/special_entity", what[1]+9, what[2]+4)
-		theming:draw("ui/special_entity", what[1]+13, what[2]+4)
+		theme:draw("ui/special_entity", what[1]+9, what[2]+4)
+		theme:draw("ui/special_entity", what[1]+13, what[2]+4)
 	end
 end
 
@@ -1338,7 +1338,7 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 end
 
 function displayshapedcursor(leftblx, upblx, rightblx, downblx)
-	theming:draw_nineslice(
+	theme:draw_nineslice(
 		"ui/cursor",
 		(cursorx*16)+screenoffset-(leftblx*16),
 		(cursory*16)-(upblx*16),

@@ -40,7 +40,7 @@ return function()
 			local audio = music_get_audio(musicplayerfile, m)
 			if audio == nil then
 				love.graphics.setColor(64,64,64)
-				theming:draw(image.sound_play, musicx, 32+24*my)
+				theme:draw(image.sound_play, musicx, 32+24*my)
 				love.graphics.setColor(255,255,255)
 			elseif currentmusic_file == musicplayerfile and currentmusic == m then
 				hoverdraw(image.sound_play_current, musicx, 32+24*my, 16, 16)
@@ -52,7 +52,7 @@ return function()
 				song_metadata, song_metadata_anyset = music_get_song_vvv_metadata(musicplayerfile, m)
 				if not musiceditor and not song_metadata_anyset then
 					love.graphics.setColor(64,64,64)
-					theming:draw(image.infograybtn, musicx+16, 32+24*my)
+					theme:draw(image.infograybtn, musicx+16, 32+24*my)
 					love.graphics.setColor(255,255,255)
 				else
 					local notes_set = song_metadata_anyset and song_metadata.notes ~= ""
@@ -66,7 +66,7 @@ return function()
 				hoverdraw(image.loadbtn, musicx+32, 32+24*my, 16, 16)
 				if not can_remove then
 					love.graphics.setColor(64,64,64)
-					theming:draw(image.eraser, musicx+48, 32+24*my)
+					theme:draw(image.eraser, musicx+48, 32+24*my)
 					love.graphics.setColor(255,255,255)
 				else
 					hoverdraw(image.eraser, musicx+48, 32+24*my, 16, 16)
@@ -205,9 +205,9 @@ return function()
 	end
 	if current_audio == nil then
 		love.graphics.setColor(64,64,64)
-		theming:draw(image.sound_play, 16, cura_y)
-		theming:draw(image.sound_stop, 32, cura_y)
-		theming:draw(image.sound_rewind, 48, cura_y)
+		theme:draw(image.sound_play, 16, cura_y)
+		theme:draw(image.sound_stop, 32, cura_y)
+		theme:draw(image.sound_rewind, 48, cura_y)
 		font_8x8:print("\u{200e}[--] -:--", 72, cura_y+4)
 		love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
 		font_8x8:print("\u{200e}-:--", width+160, cura_y+4)

@@ -521,7 +521,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 
 			font:print(anythingbutnil(label), real_x, real_y-3+2)
-			theming:draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
+			theme:draw(image.dropdownarrow, real_x+real_w-8, (real_y-3)+4)
 		end
 	elseif mode == DF.CHECKBOX then
 		-- Checkbox
@@ -612,7 +612,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				if v.isdir then
 					self:setColor(255,255,255,255)
-					theming:draw(image.smallfolder, real_x, row_y+2)
+					theme:draw(image.smallfolder, real_x, row_y+2)
 					if active and selected then
 						showhotkey(" ", real_x+real_w-20, row_y-1, ALIGN.RIGHT, topmost, self)
 					end
@@ -644,10 +644,10 @@ end
 
 function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
 	if topmost and mouseon(x, y, w, h) and not RCMactive and window_active() then
-		theming:draw(img, x, y, 0, s)
+		theme:draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)
-		theming:draw(img, x, y, 0, s)
+		theme:draw(img, x, y, 0, s)
 		self:setColor(255,255,255,255)
 	end
 end

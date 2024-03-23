@@ -66,7 +66,7 @@ return function()
 			love.graphics.setColor(255,255,255,92)
 		end
 
-		theming:draw(image.bggrid, screenoffset, 0)
+		theme:draw(image.bggrid, screenoffset, 0)
 
 		love.graphics.setColor(255,255,255,255)
 
@@ -108,7 +108,7 @@ return function()
 				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
 				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
 
-				theming:draw_nineslice(
+				theme:draw_nineslice(
 					editing and "ui/placing_enemy_bounds" or "ui/enemy_bounds",
 					math.min(x1, x2),
 					math.min(y1, y2),
@@ -125,7 +125,7 @@ return function()
 				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
 				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
 
-				theming:draw_nineslice(
+				theme:draw_nineslice(
 					editing and "ui/placing_platform_bounds" or "ui/platform_bounds",
 					math.min(x1, x2),
 					math.min(y1, y2),
@@ -261,7 +261,7 @@ return function()
 			and cursory < ts.tiles_height_picker
 			and tile < ts.total_tiles then
 				-- Just one tile, but only in manual/direct mode.
-				theming:draw_nineslice(
+				theme:draw_nineslice(
 					"ui/cursor",
 					(cursorx*16)+screenoffset, (cursory*16),
 					(cursorx*16)+screenoffset+16, (cursory*16)+16
@@ -308,7 +308,7 @@ return function()
 			elseif selectedsubtool[selectedtool] == 6 then
 				-- horizontal fill
 				displayalphatile_hor()
-				theming:draw_nineslice(
+				theme:draw_nineslice(
 					"ui/cursor",
 					screenoffset,
 					(cursory*16),
@@ -318,7 +318,7 @@ return function()
 			elseif selectedsubtool[selectedtool] == 7 then
 				-- vertical fill
 				displayalphatile_ver()
-				theming:draw_nineslice(
+				theme:draw_nineslice(
 					"ui/cursor",
 					screenoffset + (cursorx*16),
 					0,
@@ -440,15 +440,15 @@ return function()
 			end
 
 			if selectedtool == t then
-				theming:draw(image.selectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
+				theme:draw(image.selectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			else
-				theming:draw(image.unselectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
+				theme:draw(image.unselectedtool,  16, (16+(48*(t-1)))+lefttoolscroll)
 			end
 
 			coorx = 16+2
 			coory = (16+2+(48*(t-1)))+lefttoolscroll
 
-			theming:draw(toolimg[t], coorx, coory)
+			theme:draw(toolimg[t], coorx, coory)
 			love.graphics.setColor(255,255,255,255)
 
 			-- Put the shortcut next to it.
@@ -492,16 +492,16 @@ return function()
 			end
 
 			if selectedsubtool[selectedtool] == k then
-				theming:draw(image.selectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				theme:draw(image.selectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			else
-				theming:draw(image.unselectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
+				theme:draw(image.unselectedtool,  16+64, (16+(subtoolheight*(k-1)))+leftsubtoolscroll)
 			end
 
 			coorx = 16+64+2
 			coory = (16+2+(subtoolheight*(k-1)))+leftsubtoolscroll
 
 			-- v = subtoolimgs[selectedtool][k]
-			theming:draw(v, coorx, coory)
+			theme:draw(v, coorx, coory)
 			love.graphics.setColor(255,255,255,255)
 
 			-- Shortcut text, but only for ZXCV
@@ -596,13 +596,13 @@ return function()
 		tinyfont:print(L.TINY_CTRL, 0, 0)
 
 		-- Also display the current (sub)tool!
-		theming:draw(image.selectedtool, 0, love.graphics.getHeight()-32)
+		theme:draw(image.selectedtool, 0, love.graphics.getHeight()-32)
 		if subtoolimgs[selectedtool][selectedsubtool[selectedtool]] ~= nil then
 			-- We have a subtool to display!
-			theming:draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
+			theme:draw(subtoolimgs[selectedtool][selectedsubtool[selectedtool]], 2, love.graphics.getHeight()-30)
 		else
 			-- Just display the tool itself.
-			theming:draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
+			theme:draw(toolimg[selectedtool], 2, love.graphics.getHeight()-30)
 		end
 	end
 
@@ -640,14 +640,14 @@ return function()
 		hoverdraw(image.undobtn, love.graphics.getWidth()-120, 40, 16, 16, 1)     -- 128-8 => 120
 	else
 		love.graphics.setColor(64,64,64)
-		theming:draw(image.undobtn, love.graphics.getWidth()-120, 40)
+		theme:draw(image.undobtn, love.graphics.getWidth()-120, 40)
 		love.graphics.setColor(255,255,255)
 	end
 	if #redobuffer >= 1 then
 		hoverdraw(image.redobtn, love.graphics.getWidth()-120+16, 40, 16, 16, 1)
 	else
 		love.graphics.setColor(64,64,64)
-		theming:draw(image.redobtn, love.graphics.getWidth()-120+16, 40)
+		theme:draw(image.redobtn, love.graphics.getWidth()-120+16, 40)
 		love.graphics.setColor(255,255,255)
 	end
 
@@ -1263,9 +1263,9 @@ return function()
 		end
 	else
 		-- Some text below the small tiles picker-- how many trinkets and crewmates do we have?
-		theming:draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
-		theming:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
-		theming:draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
+		theme:draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
+		theme:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
+		theme:draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
 		font_8x8:printf(
 			fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
 			.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
