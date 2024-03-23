@@ -40,7 +40,7 @@ return {
 					tostate(27)
 				end
 			),
-			LabelButton(L.THEMING,
+			LabelButton(L.THEMES,
 				function()
 					olderstate = oldstate
 					tostate(37)

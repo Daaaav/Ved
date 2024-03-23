@@ -229,9 +229,9 @@ return function()
 		ic_r, ic_g, ic_b = 0, 160, 0
 	end
 	love.graphics.setColor(ic_r, ic_g, ic_b, 255)
-	theming:draw(ic, 8, 4)
+	theme:draw(ic, 8, 4)
 
-	if mouseon(8, 4, theming:get_dimensions(script_warn_lights.direct_reference.img)) then
+	if mouseon(8, 4, theme:get_dimensions(script_warn_lights.direct_reference.img)) then
 		local box_w, box_h = tooltip_box_dimensions(ic_explanation, "", nil)
 		tooltip_box_draw(
 			ic_explanation,
@@ -470,7 +470,7 @@ return function()
 				end
 				love.graphics.draw(rooms_map[ry][rx].map, map_x, map_y, 0, room_scale/4)
 				if context == "roomcoords" and cx ~= nil and cy ~= nil then
-					theming:draw(image.crosshair_mini, map_x+round(cx/4)-2, map_y+round(cy/4)-2)
+					theme:draw(image.crosshair_mini, map_x+round(cx/4)-2, map_y+round(cy/4)-2)
 				end
 
 				if nodialog and mouseon(map_x, map_y, 80, 60) then
@@ -483,7 +483,7 @@ return function()
 					love.graphics.draw(rooms_map[ry][rx].map, hover_x, hover_y, 0, room_scale)
 
 					if context == "roomcoords" and cx ~= nil and cy ~= nil then
-						theming:draw(image.crosshair_gigantic, hover_x+cx-3, hover_y+cy-3)
+						theme:draw(image.crosshair_gigantic, hover_x+cx-3, hover_y+cy-3)
 					end
 
 					if carg3 ~= nil and not mousepressed and love.mouse.isDown("l") then
@@ -517,7 +517,7 @@ return function()
 					end
 				end
 			else
-				theming:draw(image.covered_80x60, map_x, map_y)
+				theme:draw(image.covered_80x60, map_x, map_y)
 			end
 
 			local disp_rx, disp_ry
