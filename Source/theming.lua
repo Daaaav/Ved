@@ -272,7 +272,7 @@ function self:call(event, ...)
 			end
 		end
 	end
-	return false
+	return nil
 end
 
 function self:set_icon(asset)

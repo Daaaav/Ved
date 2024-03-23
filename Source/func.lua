@@ -593,6 +593,7 @@ function lefttoolscrollbounds()
 end
 
 function hoverdraw(img, x, y, w, h, s)
+	local callret = theming:call("hover_draw_asset", img, x, y, w, h, s)
 	if nodialog and mouseon(x, y, w, h) and window_active() then
 		theming:draw(img, x, y, 0, s)
 	else
@@ -603,6 +604,10 @@ function hoverdraw(img, x, y, w, h, s)
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
+	local callret = theming:call("draw_button", r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
+	if callret ~= nil then
+		return callret
+	end
 	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
 	if hovering then
 		love.graphics.setColor(r, g, b, 255)
