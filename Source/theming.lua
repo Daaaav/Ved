@@ -142,12 +142,9 @@ function self:load_theme_folder(base_path, path, theme)
 			if ext == "png" then
 				-- snip off file ext
 				rel_path = rel_path:sub(1, -5)
-				print("LOADING ASSET AT " .. image_path)
 				local imagedata = love.image.newImageData(image_path)
 				local image = love.graphics.newImage(imagedata)
 				image:setFilter("linear", "nearest")
-				image:setFilter("linear", "nearest")
-				print(image)
 				theme.assets[rel_path] = {
 					image = image,
 					imagedata = imagedata,
