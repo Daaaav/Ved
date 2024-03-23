@@ -52,7 +52,9 @@ return function()
 			end
 		end
 
-		ved_print(name, x + 48 + 16, y)
+		local theme_info = theming:get_themes()[name].info
+
+		ved_print(theme_info.name .. " by " .. theme_info.author, x + 48 + 16, y)
 		y = y + 24
 	end
 
@@ -73,9 +75,10 @@ return function()
 	y = y + 24
 
 	for i, name in ipairs(inactive_themes) do
+		local theme_info = theming:get_themes()[name].info
 		hoverrectangle(128,128,128,128, x, y, 16, 16)
 		ved_printf(arrow_up, x, y+4, 16, "center")
-		ved_print(name, x + 24, y)
+		ved_print(theme_info.name .. " by " .. theme_info.author, x + 24, y)
 		if (not mousepressed) and nodialog and mouseon(x, y, 16, 16) and love.mouse.isDown("l") then
 			mousepressed = true
 			table.insert(should_enable, name)

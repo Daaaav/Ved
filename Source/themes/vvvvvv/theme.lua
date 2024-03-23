@@ -1,5 +1,6 @@
 
 info = {
+    name = "VVVVVV",
     author = "NyakoFox",
     description = "A theme which tries to make Ved look like VVVVVV's editor."
 }

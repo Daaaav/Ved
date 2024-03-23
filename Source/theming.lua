@@ -104,6 +104,7 @@ function self:load_theme(name)
 		assets = {},
 		events = {},
 		info = {
+			name = name,
 			author = "Unknown",
 			description = "No description provided."
 		}
