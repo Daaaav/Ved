@@ -97,7 +97,7 @@ return function()
 		love.graphics.rectangle("fill", dispx, dispy, monw*pixelscale, monh*pixelscale)
 		love.graphics.setColor(255, 255, 255)
 		love.graphics.setScissor(dispx, dispy, monw*pixelscale+1, monh*pixelscale+1)
-		theming:draw(
+		theme:draw(
 			scaleimgs[s.smallerscreen],                         -- compensate for window borders in this image
 			dispx + ((monw*pixelscale)/2 - (ved_w*pixelscale)/2) - 9*pixelscale*num_scale,
 			dispy + ((monh*pixelscale)/2 - (ved_h*pixelscale)/2) - 30*pixelscale*num_scale,
