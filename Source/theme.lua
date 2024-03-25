@@ -31,7 +31,6 @@ function self:save_active_themes()
 			table.insert(s.active_themes, name)
 		end
 	end
-	saveconfig()
 end
 
 function self:disable_theme(name)
@@ -42,7 +41,6 @@ function self:disable_theme(name)
 			return
 		end
 	end
-	self:save_active_themes()
 end
 
 function self:enable_theme(name)
@@ -62,7 +60,6 @@ function self:shift_theme_up(name)
 			return
 		end
 	end
-	self:save_active_themes()
 end
 
 function self:shift_theme_down(name)
@@ -77,7 +74,6 @@ function self:shift_theme_down(name)
 			return
 		end
 	end
-	self:save_active_themes()
 end
 
 function self:load_themes()

@@ -594,6 +594,10 @@ end
 
 function hoverdraw(img, x, y, w, h, s)
 	local callret = theme:call("hover_draw_asset", img, x, y, w, h, s)
+	if callret ~= nil then
+		return callret
+	end
+
 	if nodialog and mouseon(x, y, w, h) and window_active() then
 		theme:draw(img, x, y, 0, s)
 	else

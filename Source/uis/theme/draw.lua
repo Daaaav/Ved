@@ -66,6 +66,7 @@ return function()
 	love.graphics.setLineStyle("rough")
 	love.graphics.line(x, y, x + 160, y)
 	love.graphics.setLineWidth(1)
+	love.graphics.setLineStyle("smooth")
 
 	y = y + 24
 
