@@ -11,10 +11,9 @@ opt_loadlevel = nil
 opt_newlevel = false
 opt_forcelanguagescreen = false
 
-vergroups = {11,2}
+ved_ver_groups = {2,0}
 
-ver = "1." .. vergroups[1] .. "." .. vergroups[2] -- Displayed in title and used in plugin minimum version check (egrep [^aotepk]ver[^socmdygwt] *.lua -i)
-checkver = ver -- update check, displayed in crash (used to have a or b as opposed to ver)
+ved_ver_string = ved_ver_groups[1] .. "." .. ved_ver_groups[2]
 
 intermediate_version = true -- If true, this is a WIP version
 

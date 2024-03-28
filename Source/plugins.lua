@@ -140,14 +140,15 @@ function loadplugins()
 					end
 
 					-- Is this plugin supported?
-					local pver1, pver2 = plugins[pluginname].info.minimumved:match("^1%.([0-9]+)%.([0-9]+)$")
+					local pver1, pver2 = plugins[pluginname].info.minimumved:match("^([0-9]+)%.([0-9]+)$")
 					if (
 						plugins[pluginname].info.minimumved:sub(1,1) == "a" or
-						plugins[pluginname].info.minimumved:sub(1,1) == "b"
+						plugins[pluginname].info.minimumved:sub(1,1) == "b" or
+						plugins[pluginname].info.minimumved:sub(1,2) == "1."
 					) or (
 						pver1 ~= nil and pver2 ~= nil and not (
-							tonumber(pver1) > vergroups[1] or
-							(tonumber(pver1) == vergroups[1] and tonumber(pver2) > vergroups[2])
+							tonumber(pver1) > ved_ver_groups[1] or
+							(tonumber(pver1) == ved_ver_groups[1] and tonumber(pver2) > ved_ver_groups[2])
 						)
 					) then
 						-- It is!

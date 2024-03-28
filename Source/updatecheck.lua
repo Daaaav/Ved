@@ -40,7 +40,7 @@ function updatecheck.start_check()
 		updatecheck.dist_method = "rawfiles"
 	end
 
-	updatecheck.check_thread:start(checkver, commitversion, updatecheck.dist_method)
+	updatecheck.check_thread:start(ved_ver_string, commitversion, updatecheck.dist_method)
 end
 
 function updatecheck.await_response()
