@@ -6,6 +6,8 @@ info = {
 }
 
 function draw_nineslice(asset, x, y, x2, y2)
+	if asset_priority_higher(asset) then return false end
+
 	local low_x = math.min(x, x2)
 	local low_y = math.min(y, y2)
 	local high_x = math.max(x, x2)

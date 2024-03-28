@@ -115,6 +115,34 @@ function self:load_theme(name)
 		local chunk = love.filesystem.load("themes/" .. name .. "/theme.lua")
 		if chunk then
 			local env = {}
+			function env.asset_priority_higher(asset)
+				local met = false
+				for i = #self.active_themes, 1, -1 do
+					local curr = self.active_themes[i]
+					if curr == theme.name then
+						met = true
+					end
+					if curr == asset.theme.name then
+						return not met
+					end
+				end
+				-- This should never happen
+				return nil
+			end
+			function env.asset_priority_lower(asset)
+				local met = false
+				for i = #self.active_themes, 1, -1 do
+					local curr = self.active_themes[i]
+					if curr == asset.theme.name then
+						return met
+					end
+					if curr == theme.name then
+						met = true
+					end
+				end
+				-- This should never happen
+				return nil
+			end
 			setmetatable(env, {__index = _G})
 			setfenv(chunk, env)
 			chunk()
@@ -146,7 +174,8 @@ function self:load_theme_folder(base_path, path, theme)
 					imagedata = imagedata,
 					width = image:getWidth(),
 					height = image:getHeight(),
-					name = rel_path
+					name = rel_path,
+					theme = theme
 				}
 			end
 		end
