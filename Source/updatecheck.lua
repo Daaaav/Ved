@@ -29,8 +29,10 @@ function updatecheck.start_check()
 			updatecheck.dist_method = "fused_win"
 		elseif opsys == "OS X" then
 			updatecheck.dist_method = "fused_mac"
+		elseif opsys == "Linux" then
+			updatecheck.dist_method = "fused_lin"
 		else
-			updatecheck.dist_method = "fused_other"
+			updatecheck.dist_method = "fused_unknown"
 		end
 	elseif love.filesystem.getSource():sub(-5,-1) == ".love" then
 		updatecheck.dist_method = "love"
