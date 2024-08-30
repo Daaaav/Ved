@@ -132,6 +132,7 @@ function love.load()
 	tilenumberbatch:init()
 	ved_require("zipwriter")
 	ved_require("ziplevel")
+	ved_require("autoupdate")
 
 
 	math.randomseed(os.time())
@@ -474,6 +475,8 @@ function love.load()
 	playtestthread = love.thread.newThread("playtestthread.lua")
 	playtestthread_inchannel = love.thread.getChannel("playtestthread_in")
 	playtestthread_outchannel = love.thread.getChannel("playtestthread_out")
+
+	autoupdate_outchannel = love.thread.getChannel("autoupdate_out")
 
 	-- If I add layers, I should probably increase the max number of sprites and just add them after each other.
 	-- A room with one layer would be 1200 tiles as usual, but a room with two layers would be 2400, etc.

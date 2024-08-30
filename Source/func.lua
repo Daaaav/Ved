@@ -3230,6 +3230,7 @@ function load_uis()
 	uis[34] = load_ui("inputtest")
 	uis[35] = load_ui("vvvvvvsetupoptions")
 	uis[36] = load_ui("textboxcolors")
+	uis[37] = load_ui("autoupdate")
 	-- Don't forget states.txt
 
 	for k,v in pairs(plugin_uis) do

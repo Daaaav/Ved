@@ -440,6 +440,18 @@ function dialog.callback.sureopenlevel(button, fields)
 	end
 end
 
+function dialog.callback.sureautoupdate(button)
+	if button == DB.SAVE then
+		dialog.create(
+			L.ENTERNAMESAVE, DBS.OKCANCEL,
+			dialog.callback.saveautoupdate, nil, dialog.form.save_make(false), nil
+		)
+	elseif button == DB.DISCARD then
+		no_more_quit_dialog = true
+		autoupdate_start_nowayback()
+	end
+end
+
 function dialog.callback.save(button, fields)
 	if button == DB.OK then
 		-- Save the level with this name. But first apply the title/creator!
@@ -563,6 +575,15 @@ function dialog.callback.saveopenlevel(button, fields)
 	if button == DB.OK and not has_unsaved_changes() then
 		dialogs[#dialogs]:press_button(0)
 		state6load(fields.levelname)
+	end
+end
+
+function dialog.callback.saveautoupdate(button, fields)
+	dialog.callback.save(button, fields)
+
+	if button == DB.OK and not has_unsaved_changes() then
+		dialogs[#dialogs]:press_button(0)
+		autoupdate_start_nowayback()
 	end
 end
 

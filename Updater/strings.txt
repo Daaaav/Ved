@@ -1,0 +1,15 @@
+[en]
+CANNOT_BEGIN=Cannot start update:\n%s
+CANNOT_REPLACE=Cannot (yet) replace "%s":\n%s
+CANNOT_ADD=Cannot (yet) add "%s":\n%s
+CANNOT_ROLLBACK=Cannot rollback "%s":\n%s
+CANNOT_DELETE=Cannot delete "%s":\n%s
+UPDATE_NOT_APPLIED=Update not applied
+UPDATE_PAUSED=Update paused
+ROLLBACK_ERROR=Rollback error
+ROLLBACK_FAILED=Rollback failed
+ANTIVIRUS_BROKE=Your antivirus broke the update process :/
+GOOD_ROLLBACK=The update has been rolled back.
+BAD_ROLLBACK=The update failed, and then the rollback encountered errors too. If it's not clear why this happened, please report this to Dav.\n\nYou may need to download Ved manually.
+CANNOT_LAUNCH_VED_TITLE=Cannot restart Ved
+CANNOT_LAUNCH_VED_DESC=The update went successfully (from the update program's point of view...) but Ved could not be restarted for the following reason:\n%s

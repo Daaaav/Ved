@@ -3,3 +3,7 @@
 
 --L. = ""
 
+L.SUREAUTOUPDATE = "You have unsaved changes. Do you want to save these changes before updating Ved?"
+
+L.AUTOUPDATE_ABORTED = "Update aborted"
+L.AUTOUPDATE_OSNYI = "This distribution of Ved cannot update itself."
