@@ -1,6 +1,9 @@
 po/ved/*
 po/ved_help/*
+po/ved_updater/*
 !po/ved/templates/
 !po/ved_help/templates/
+!po/ved_updater/templates/
 *.lua
+updater.txt
 !Template.lua

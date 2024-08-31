@@ -1,0 +1,56 @@
+
+msgctxt "CANNOT_BEGIN"
+msgid "Cannot start update:\n%s"
+msgstr ""
+
+msgctxt "CANNOT_REPLACE"
+msgid "Cannot (yet) replace \"%s\":\n%s"
+msgstr ""
+
+msgctxt "CANNOT_ADD"
+msgid "Cannot (yet) add \"%s\":\n%s"
+msgstr ""
+
+msgctxt "CANNOT_ROLLBACK"
+msgid "Cannot rollback \"%s\":\n%s"
+msgstr ""
+
+msgctxt "CANNOT_DELETE"
+msgid "Cannot delete \"%s\":\n%s"
+msgstr ""
+
+msgctxt "UPDATE_NOT_APPLIED"
+msgid "Update not applied"
+msgstr ""
+
+msgctxt "UPDATE_PAUSED"
+msgid "Update paused"
+msgstr ""
+
+msgctxt "ROLLBACK_ERROR"
+msgid "Rollback error"
+msgstr ""
+
+msgctxt "ROLLBACK_FAILED"
+msgid "Rollback failed"
+msgstr ""
+
+msgctxt "ANTIVIRUS_BROKE"
+msgid "Your antivirus broke the update process :/"
+msgstr ""
+
+msgctxt "GOOD_ROLLBACK"
+msgid "The update has been rolled back."
+msgstr ""
+
+msgctxt "BAD_ROLLBACK"
+msgid "The update failed, and then the rollback encountered errors too. If it's not clear why this happened, please report this to Dav.\n\nYou may need to download Ved manually."
+msgstr ""
+
+msgctxt "CANNOT_LAUNCH_VED_TITLE"
+msgid "Cannot restart Ved"
+msgstr ""
+
+msgctxt "CANNOT_LAUNCH_VED_DESC"
+msgid "The update went successfully (from the update program's point of view...) but Ved could not be restarted for the following reason:\n%s"
+msgstr ""

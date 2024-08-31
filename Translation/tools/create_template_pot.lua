@@ -458,3 +458,33 @@ msgstr ""
 ]])
 	fh:close()
 end
+
+
+-- Updater strings are not in Lua at all!
+fh, everr = io.open("out/po/ved_updater/templates/ved_updater.pot", "w")
+if fh == nil then
+	print("ERROR: Cannot open new updater pot file for writing")
+	print(everr)
+else
+	for line in io.lines(updater_path .. "/strings.txt") do
+		local in_english = false
+		if line == "[en]" then
+			in_english = true
+		elseif line:sub(1,1) == "[" and line:sub(-1,-1) == "]" then
+			if in_english then
+				break
+			end
+			in_english = false
+		else
+			local line_key, line_value = line:match("^([A-Za-z0-9_]+)=(.*)$")
+			if line_key ~= nil and line_value ~= nil then
+				fh:write(
+					"\nmsgctxt \"" .. line_key ..
+					"\"\nmsgid \"" .. escape_po_str(line_value:gsub("\\n", "\n")) ..
+					"\"\nmsgstr \"\"\n"
+				)
+			end
+		end
+	end
+	fh:close()
+end

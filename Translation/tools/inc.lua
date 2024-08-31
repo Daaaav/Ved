@@ -10,6 +10,7 @@ languages = {
 }
 
 langdir_path = "../../Source/lang" -- must not include a trailing /
+updater_path = "../../Updater"
 
 
 function assert_lang_arg(argnum, allownone)

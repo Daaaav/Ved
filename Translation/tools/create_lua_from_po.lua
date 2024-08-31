@@ -17,19 +17,23 @@
 
 require("inc")
 
-local create_languages
+local do_updater = true
+local all_languages
 if assert_lang_arg(1, true) then
 	-- A valid language argument is given
 	all_languages = {[arg[1]] = languages[arg[1]]}
+	do_updater = false
 else
 	-- No language is given, so do all!
 	all_languages = languages
 end
 
 pofiles = {
+	-- {pofile, project, splithelp}
 	{"ved_main", "ved", false},
 	{"ved_help", "ved_help", false},
-	{"ved_lua_func", "ved", false}
+	{"ved_lua_func", "ved", false},
+	{"ved_updater", "ved_updater", false}
 }
 
 load_lua_lang("templates")
@@ -40,6 +44,9 @@ for k,v in pairs(LH) do
 		index_splithelp[v.splitid] = k
 	end
 end
+
+-- All the updater strings, [en] -> {{"KEY", "Value"}, ...} (and all other languages)
+local updater_strings = {en={}}
 
 for lang_code, lang_name in pairs(all_languages) do
 	if lang_code ~= "templates" then
@@ -149,14 +156,23 @@ for lang_code, lang_name in pairs(all_languages) do
 							-- It's actually supposed to be empty.
 							current_translated = ""
 						end
-						local fillin
-						if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
-							-- This is a multiline string
-							fillin = escape_lua_blockstr(current_translated)
-						else
-							fillin = escape_lua_str(current_translated)
-						end
-						if current_key == "fontpng_ascii" then
+						if project == "ved_updater" then
+							-- Updater strings are not saved in the lua template!
+							if updater_strings[lang_name] == nil then
+								updater_strings[lang_name] = {}
+							end
+							if lang_name == "nl" then
+								-- Also fill in English, we're skipping templates so get it from another lang...
+								table.insert(
+									updater_strings.en,
+									{current_key, current_english}
+								)
+							end
+							table.insert(
+								updater_strings[lang_name],
+								{current_key, current_translated}
+							)
+						elseif current_key == "fontpng_ascii" then
 							template = template:gsub(
 								"%-%-%- fontpng_ascii: N%.A%.",
 								"function fontpng_ascii(c)\n"
@@ -164,6 +180,13 @@ for lang_code, lang_name in pairs(all_languages) do
 								.. "\nend"
 							)
 						else
+							local fillin
+							if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
+								-- This is a multiline string
+								fillin = escape_lua_blockstr(current_translated)
+							else
+								fillin = escape_lua_str(current_translated)
+							end
 							fillin = fillin:gsub("%%", "%%%%")
 							template = template:gsub(
 								"<" .. current_key:gsub("%.", "%%%.") .. ">",
@@ -367,5 +390,30 @@ for lang_code, lang_name in pairs(all_languages) do
 				.. " (" .. (count_translated/count_total*100) .. "%)"
 			)
 		end
+	end
+end
+
+if do_updater then
+	-- The updater has all the languages in a single file, we can write that out now!
+	-- As a recap, updater_strings[en] -> {{"KEY", "Value"}, ...}
+
+	local fh, everr = io.open("out/updater.txt", "w")
+	if fh == nil then
+		print("ERROR: Cannot open updater.txt for writing")
+		print(everr)
+	else
+		local all_languages_sorted = {}
+		for lang,_ in pairs(updater_strings) do
+			table.insert(all_languages_sorted, lang)
+		end
+		table.sort(all_languages_sorted)
+		for _,lang in pairs(all_languages_sorted) do
+			fh:write("[" .. lang .. "]\n")
+			for _,tuple in pairs(updater_strings[lang]) do
+				fh:write(tuple[1] .. "=" .. tuple[2]:gsub("\n", "\\n") .. "\n")
+			end
+			fh:write("\n")
+		end
+		fh:close()
 	end
 end
