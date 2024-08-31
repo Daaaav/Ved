@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2024-03-19 00:41:39 (CET)
+--- Last converted: 2024-12-11 04:39:20 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -363,12 +363,12 @@ SYNTAXCOLOR_GENERIC = "Algemeen",
 SYNTAXCOLOR_SEPARATOR = "Scheidingsteken",
 SYNTAXCOLOR_NUMBER = "Getal",
 SYNTAXCOLOR_TEXTBOX = "Tekst",
-SYNTAXCOLOR_ERRORTEXT = "Niet-herkend commando",
+SYNTAXCOLOR_ERRORTEXT = "Onbekend commando",
 SYNTAXCOLOR_CURSOR = "Cursor",
 SYNTAXCOLOR_FLAGNAME = "Vlagnaam",
 SYNTAXCOLOR_NEWFLAGNAME = "Nieuwe vlagnaam",
 SYNTAXCOLOR_COMMENT = "Commentaar",
-SYNTAXCOLOR_WRONGLANG = "Vereenvoudigd commando in int.sc-modus of vice versa",
+SYNTAXCOLOR_WRONGLANG = "Vereenvoudigd commando in int.sc-modus of andersom",
 RESETCOLORS = "Kleuren resetten",
 STRINGNOTFOUND = "\"$1\" kan niet worden gevonden",
 
@@ -2592,15 +2592,15 @@ Entiteiten\h#
 14 - De ronde teleporter
      Metadata: Checkpoint-ID(?)
 15 - Verdigris
-     Metadata: KI-status
+     Metadata: AI-status
 16 - Vitellary (ondersteboven)
-     Metadata: KI-status
+     Metadata: AI-status
 17 - Victoria
-     Metadata: KI-status
+     Metadata: AI-status
 18 - Bemanningslid
      Metadata: Kleur (gebruikt kleurenlijst, niet bemanningslidkleuren), stemming
 19 - Vermilion
-     Metadata: KI-status
+     Metadata: AI-status
 20 - Terminal
      Metadata: Sprite, Script-ID(?)
 21 - Zelfde als hierboven maar wanneer aangeraakt zal de terminal geen licht geven

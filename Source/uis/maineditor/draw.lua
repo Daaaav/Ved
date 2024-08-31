@@ -1243,7 +1243,7 @@ return function()
 		love.graphics.draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
 		love.graphics.draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
 		love.graphics.draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
-		ved_printf(
+		font_8x8:printf(
 			fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
 			.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
 			.. fixdig(anythingbutnil(count.entities), 5, ""),

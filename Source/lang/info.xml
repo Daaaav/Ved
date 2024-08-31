@@ -2,6 +2,7 @@
 <!-- If you would like to help translate Ved, please get in touch with Dav999! -->
 <langinfo>
 	<languages>
+		<language code="ar" name="العربية" font="font_ar" rtl="1" />
 		<language code="de" name="Deutsch" />
 		<language code="en" name="English" />
 		<language code="eo" name="Esperanto" />

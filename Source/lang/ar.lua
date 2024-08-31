@@ -1,5 +1,5 @@
 -- Language file for Ved
---- Language: es_AR (es_AR)
+--- Language: ar (ar)
 --- Last converted: 2024-12-11 04:39:21 (CET)
 
 --[[
@@ -11,765 +11,809 @@
 
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
-function lang_plurals(n) return (n ~= 1) end
+function lang_plurals(n) return n==0 and 0 or n==1 and 1 or n==2 and 2 or n%100>=3 and n%100<=10 and 3 or n%100>=11 and 4 or 5 end
 
 function fontpng_ascii(c)
-	if c == "ñ" then
-		return "n"
-	elseif c == "á" then
-		return "a"
-	elseif c == "é" then
-		return "e"
-	elseif c == "í" then
-		return "i"
-	elseif c == "ó" then
-		return "o"
-	elseif c == "ú" then
-		return "u"
-	end
+
 end
 
 L = {
 
-TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Arabic localization by Eternal Dream Arabization", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Su versión de LÖVE esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ahora no soporta LÖVE 0.9.0. Con suerte, LÖVE 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
+OUTDATEDLOVE = "إصدارك من LÖVE قديم. يرجى استخدام الإصدار 0.9.1 أو أحدث.\nيمكنك تحميل آخر إصدار من LÖVE على موقع https://love2d.org/.",
+OUTDATEDLOVE090 = "المحرر Ved لم يعد يدعم LÖVE 0.9.0، لكن لحسن الحظ أن LÖVE 0.9.1 والإصدارات الأحدث ستظل تعمل.\nيمكنك تحميل آخر إصدار من LÖVE على موقع https://love2d.org/.",
 
-OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
-MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",
-MAXCREWMATES = "La cantidad maxima de compañeros ($1) ha sido alcanzada en este nivel.",
-UNSUPPORTEDTOOL = "Herramienta no soportada! Herramienta: ",
-COULDNOTGETCONTENTSLEVELFOLDER = "No se pudo obtener contenidos de la carpeta de niveles. Porfavor fijese si $1 existe y intente de nuevo.",
-MAPSAVEDAS = "Imagen de mapa guardada como $1!",
-RAWENTITYPROPERTIES = "Puedes cambiar las propiedades crudas de esta entidad aqui.",
-UNKNOWNENTITYTYPE = "Tipo de entidad desconocida $1",
-WARPTOKENENT404 = "La entidad de warp token no existe!",
-SPLITFAILED = "Division fallada miserablemente! Tienes muchas lineas en medio de un comando de texto y un speak/speak_active?", -- Command names are best left untranslated
-NOFLAGSLEFT = "No quedan mas flags, asi que una o mas flags con nombres en este script no se puede asociar con cualquier numero de flag. Intentar ejecutar este script en VVVVVV podria romperlo. Considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
-NOFLAGSLEFT_LOADSCRIPT = "No quedan mas flags, asi que un script de carga usando un flag nuevo no se puede crear. En vez de eso, un script de carga que se ha creado que siempre carga el script tarjeta con iftrinkets(0,$1). considere remover todas las referencias a flags que no necesites mas y intente otra vez.",
-LEVELOPENFAIL = "No se puede abrir $1.vvvvvv.",
-SIZELIMIT = "El tamaño maximo de un nivel es de $1 por $2.\n\nEl tamaño del nivel se cambiara a $3 por $4.",
-SCRIPTALREADYEXISTS = "El script \"$1\" ya existe!",
-FLAGNAMENUMBERS = "Los nombres de flags no puede ser solo numeros.",
-FLAGNAMECHARS = "Los nombres de flags no pueden contener parentesis, comas, o espacios.",
-FLAGNAMEINUSE = "El nombre del flag $1 ya esta en uso por el flag $2",
-DIFFSELECT = "Seleccione el nivel al que quieres compararlo. Ese nivel se tratara como una version mas vieja.",
-SUREQUITNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de salir?",
-SURENEWLEVELNEW = "Tienes cambios sin guardar. Quieres guardar esos cambios antes de crear un nuevo nivel?",
-SUREOPENLEVEL = "You have unsaved changes. Do you want to save these changes before opening this level?",
-NAMEFORFLAG = "Nombre para flag $1:",
-SCRIPT404 = "El script \"$1\" no existe!",
-ENTITY404 = "La entidad #$1 no existe!",
-GRAPHICSCARDCANVAS = "Lo siento, parece que tu carta grafica o driver no soporta esta caracteristica!",
-MAXTEXTURESIZE = "Lo siento, crear una imagen de $1x$2 no parece ser soportada por tu carta grafica o driver.\n\nEl limite de tamaño en este sistema es $3x$3",
-SUREDELETESCRIPT = "Estas seguro de que quieres borrar el script \"$1\"?",
-SUREDELETENOTE = "Estas seguro de que quieres borrar esta nota?",
-THREADERROR = "Error de cadena!",
-WHATDIDYOUDO = "Que hiciste?!",
-UNDOFAULTY = "Que estas haciendo?",
-SOURCEDESTROOMSSAME = "Las habitaciones de entrada y salida son las mismas!",
-COORDS_OUT_OF_RANGE = "Huh? These coordinates aren't even in this dimension!",
-UNKNOWNUNDOTYPE = "Tipo de deshacer desconocido \"$1\"!",
-MDEVERSIONWARNING = "Parece que este nivel se ha hecho en una version mas reciente de Ved, y podria contener unos datos que se perderan cuando guardes este nivel.",
-FORGOTPATH = "Te olvidaste de especificar un camino!",
-LIB_LOAD_ERRMSG = "Failed to load an essential library. Please tell Dav999 about this problem.\n\n$1",
-LIB_LOAD_ERRMSG_GCC = "\n\nTry installing GCC to solve this problem, if it isn't already installed.",
+OSNOTRECOGNIZED = "لم نتعرف على نظام تشغيلك ($1)! سنعود للدوال الأصلية لأنظمة الملفات. المستويات مخزنة تحت: \n\n$2",
+MAXTRINKETS = "بلغت العدد الأقصى من المقتنيات ($1) في هذا المستوى.",
+MAXCREWMATES = "بلغت العدد الأقصى من الزملاء ($1) في هذا المستوى.",
+UNSUPPORTEDTOOL = "أداة غير مدعومة! الأداة:  ",
+COULDNOTGETCONTENTSLEVELFOLDER = "فشل الحصول على محتويات مجلد المستويات. يرجى التحقق من وجود $1 ثم إعادة المحاولة.",
+MAPSAVEDAS = "حفظت صورة الخريطة تحت $1!",
+RAWENTITYPROPERTIES = "يمكنك تغيير القيم الخام لخصائص هذا الكيان من هنا.",
+UNKNOWNENTITYTYPE = "نوع كيان مجهول $1",
+WARPTOKENENT404 = "كيان تذكرة التنقيلة لم يعد له وجود!",
+SPLITFAILED = "فشل الشطر شر فشل! هل عدد أسطرك التي بين تعليمة أمر نصية و speak/speak_active كبير؟", -- Command names are best left untranslated
+NOFLAGSLEFT = "لم تتبق أي رايات، لذلك فإن إحدى أسماء الرايات الجديدة على الأقل لا يمكن ربطها بأي رقم راية. يترتب على ذلك أن محاولة تشغيل هذا الاسكربت في لعبة VVVVVV قد تتعطل. يرجى إعادة النظر في أي إشارات إلى رايات لم تعد تحتاجها، وحذفها وإعادة المحاولة.",
+NOFLAGSLEFT_LOADSCRIPT = "لم تتبق أي رايات، لذلك تعذر إنشاء اسكربت تحميل يستخدم راية جديدة. وعوض ذلك أنشئ اسكربت تحميل يقوم دوما بتحميل الاسكربت المستهدف بواسطة iftrinkets(0,$1) . يرجى إعادة النظر في أي إشارات إلى رايات لم تعد تحتاجها، وحذفها وإعادة المحاولة.",
+LEVELOPENFAIL = "فشل فتح $1.vvvvvv.",
+SIZELIMIT = "الحجم الأقصى للمستويات هو $1 في $2.\n\nسنغير حجم المستوى إلى $3 في $4 نتيجة لذلك.",
+SCRIPTALREADYEXISTS = "الاسكربت \"$1\" موجود بالفعل!",
+FLAGNAMENUMBERS = "لا يمكن أن تحتوي أسماء الرايات الأرقام فحسب.",
+FLAGNAMECHARS = "لا يمكن استعمال الأقواس أو الفواصل أو المسافات عند تسمية الرايات.",
+FLAGNAMEINUSE = "اسم الراية $1 مستعمل سلفًا من الراية $2",
+DIFFSELECT = "حدد المستوى الذي ستقارن به. المستوى الذي ستختاره الآن يعامل على أنه إصدار قديم.",
+SUREQUITNEW = "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل الخروج؟",
+SURENEWLEVELNEW = "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل إنشاء مستوى جديد؟",
+SUREOPENLEVEL = "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل فتح هذا المستوى؟",
+NAMEFORFLAG = "اسم الراية $1:",
+SCRIPT404 = "الاسكربت \"$1\" غير موجود!",
+ENTITY404 = "الكيان عدد $1 لم يعد له وجود!",
+GRAPHICSCARDCANVAS = "عذرا، لا يبدو أن بطاقة الرسوميات عندك أو برنامج تعريفها يدعمان هذه الميزة!",
+MAXTEXTURESIZE = "عذرا، لا يبدو أن بطاقة الرسوميات عندك أو برنامج تعريفها يسمحان لك بإنشاء صورة بالأبعاد $1x$2. \n\nالحد الأقصى الذي يسمح به نظامك هو صورة بالأبعاد $3x$3.",
+SUREDELETESCRIPT = "هل أنت واثق أنك تريد حذف الاسكربت \"$1\"؟",
+SUREDELETENOTE = "هل أنت واثق أنك تريد حذف هذه الملحوظة؟",
+THREADERROR = "خطأ في العملية البرمجية الجزئية!",
+WHATDIDYOUDO = "ماذا فعلت؟!",
+UNDOFAULTY = "ماذا تفعل؟",
+SOURCEDESTROOMSSAME = "غرفة الوجهة وغرفة المصدر نفس الغرفة!",
+COORDS_OUT_OF_RANGE = "ماذا؟ هذه الإحداثيات ليست في هذا البعد حتى!",
+UNKNOWNUNDOTYPE = "نوع تراجع مجهول \"$1\"!",
+MDEVERSIONWARNING = "يبدو أن نسخة أحدث من محرر Ved أنشأت هذا المستوى، لهذا قد يتضمن بيانات ستضيع لو حفظت هذا المستوى.",
+FORGOTPATH = "نسيت أن تحدد مسار الملف!",
+LIB_LOAD_ERRMSG = "فشل تحميل مكتبة برمجية ضرورية. يرجى إعلام المطور Dav999 بالمشكلة.\n\n$1",
+LIB_LOAD_ERRMSG_GCC = "\n\nجرب تنصيب GCC لحل هذه المشكلة، إن لم تكن منصبة عندك سلفا.",
 
-SELECTCOPY1 = "Seleccione la habitacion para copiar",
-SELECTCOPY2 = "Seleccione donde copiar la habitacion",
-SELECTSWAP1 = "Seleccion la primera habitacion para intercambiar",
-SELECTSWAP2 = "Seleccione la segunda habitacion para intercambiar",
+SELECTCOPY1 = "اختر الغرفة التي تريد نسخها",
+SELECTCOPY2 = "اختر المكان الذي تريد أن تنسخ إليه هذه الغرفة",
+SELECTSWAP1 = "اختر الغرفة الأولى التي تريد تبديلها",
+SELECTSWAP2 = "اختر الغرفة الثانية التي تريد تبديلها",
 
-TILESETCHANGEDTO = "Set cambiado a $1",
-TILESETCOLORCHANGEDTO = "Color del set cambiado a $1",
-ENEMYTYPECHANGED = "Tipo de enemigos cambiado",
+TILESETCHANGEDTO = "مجموعة الخلايا غيرت إلى $1",
+TILESETCOLORCHANGEDTO = "لون مجموعة الخلايا غيرت إلى $1",
+ENEMYTYPECHANGED = "نوع الأعداء غير",
 
 -- These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
-CHANGEDTOMODE = "Cambiado a colocación de teja $1",
-CHANGEDTOMODEAUTO = "automatico",
-CHANGEDTOMODEMANUAL = "manual",
-CHANGEDTOMODEMULTI = "multi-set",
+CHANGEDTOMODE = "غير إلى $1 تموضع الخلايا",
+CHANGEDTOMODEAUTO = "تلقائي",
+CHANGEDTOMODEMANUAL = "يدوي",
+CHANGEDTOMODEMULTI = "متعدد مجموعات الخلايا",
 
-BUSYSAVING = "Guardando...",
-SAVEDLEVELAS = "Nivel guardado como $1.vvvvvv",
+BUSYSAVING = "جار الحفظ...",
+SAVEDLEVELAS = "حفظ المستوى تحت $1.vvvvvv",
 
-ROOMCUT = "Habitacion cortada al portapapeles",
-ROOMCOPIED = "Habitacion copiada al portapapeles",
-ROOMPASTED = "Habitacion pegada",
+ROOMCUT = "تم قص الغرفة إلى الحافظة",
+ROOMCOPIED = "تم نسخ الغرفة إلى الحافظة",
+ROOMPASTED = "تم لصق الغرفة",
 
-METADATAUNDONE = "Opcion de niveles deshecha",
-METADATAREDONE = "Opcion de niveles rehecha",
+METADATAUNDONE = "تم التراجع عن خيارات المستوى",
+METADATAREDONE = "تمت إعادة خيارات المستوى",
 
-BOUNDSFIRST = "Click the first corner of the bounds", -- Old string: Click the top left corner of the bounds
-BOUNDSLAST = "Click the last corner", -- Old string: Click the bottom right corner
+BOUNDSFIRST = "انقر الزاوية الأولى لمستطيل الحدود", -- Old string: Click the top left corner of the bounds
+BOUNDSLAST = "انقر الزاوية الأخيرة لمستطيل الحدود", -- Old string: Click the bottom right corner
 
-TILE = "Teja $1",
-HIDEALL = "Ocultar todo",
-SHOWALL = "Mostar todo",
-SCRIPTEDITOR = "Editor de scripts",
-FILE = "Archivo",
-NEW = "Nuevo",
-OPEN = "Abrir",
-SAVE = "Guardar",
-UNDO = "Deshacer",
-REDO = "Rehacer",
-COMPARE = "Comparar",
-STATS = "Estadisticas",
-SCRIPTUSAGES = "Usos",
-EDITTAB = "Editar",
-COPYSCRIPT = "Copiar script",
-SEARCHSCRIPT = "Buscar",
-GOTOLINE = "Ir a linea",
-GOTOLINE2 = "Ir a linea:",
-INTERNALON = "Sc.Interno activado",
-INTERNALOFF = "Sc.Interno desactivado",
-INTERNALON_LONG = "Sc.Interno activado",
-INTERNALOFF_LONG = "Sc.Interno desactivado",
-INTERNALYESBARS = "Sc.Interno say(-1)",
-INTERNALNOBARS = "Sc.Interno Loadscript",
-VIEW = "Ver",
-SYNTAXHLOFF = "Hl de sintaxis: SI",
-SYNTAXHLON = "Hl de sintaxis: NO",
-TEXTSIZEN = "Tamaño de texto: N",
-TEXTSIZEL = "Tamaño de texto: L",
-INSERT = "Insertar",
-HELP = "Ayuda",
-INTSCRWARNING_NOLOADSCRIPT = "Se requiere script de carga!",
-INTSCRWARNING_NOLOADSCRIPT_EXPL = "Un script que carga este script no fue detectado. Este tipo de script interno probablemente no funcionara como lo esperes si no es cargado via otro script.",
-INTSCRWARNING_BOXED = "Referencia de terminal!",
-INTSCRWARNING_BOXED_EXPL = "Hay una terminal o caja de script que carga este script directamente. Activar esa terminal o caja de script probablemente no funcionara como esperado; este tipo de script interno tiene que ser cargado via un script de carga.",
-INTSCRWARNING_NAME = "Nombre de script inadecuado!",
-INTSCRWARNING_NAME_EXPL = "El nombre de este script tiene una letra mayuscula, un espacio, un paréntesis o una coma. Este script solo puede ser cargado directamente desde una terminal o caja de script.",
-COLUMN = "Columna: ",
+TILE = "الخلية $1",
+HIDEALL = "إخفاء الكل",
+SHOWALL = "إظهار الكل",
+SCRIPTEDITOR = "محرر الاسكربت",
+FILE = "ملف",
+NEW = "جديد",
+OPEN = "فتح",
+SAVE = "حفظ",
+UNDO = "تراجع",
+REDO = "إعادة",
+COMPARE = "مقارنة",
+STATS = "إحصائيات",
+SCRIPTUSAGES = "استخدامات",
+EDITTAB = "تحرير",
+COPYSCRIPT = "نسخ اسكربت",
+SEARCHSCRIPT = "بحث",
+GOTOLINE = "الذهاب للسطر",
+GOTOLINE2 = "الذهاب للسطر:",
+INTERNALON = "Int.sc يعمل",
+INTERNALOFF = "Int.sc لا يعمل",
+INTERNALON_LONG = "وضع الاسكربت الداخلي مفعل",
+INTERNALOFF_LONG = "وضع الاسكربت الداخلي معطل",
+INTERNALYESBARS = "say(-1) int.sc",
+INTERNALNOBARS = "تحميل الاسكربت int.sc",
+VIEW = "عرض",
+SYNTAXHLOFF = "ألوان الصياغة: نعم",
+SYNTAXHLON = "ألوان الصياغة: لا",
+TEXTSIZEN = "حجم النص: ض",
+TEXTSIZEL = "حجم النص: ع",
+INSERT = "إدراج",
+HELP = "مساعدة",
+INTSCRWARNING_NOLOADSCRIPT = "يلزم اسكربت تحميل!",
+INTSCRWARNING_NOLOADSCRIPT_EXPL = "لم يكتشف اسكربت يفتح هذا الاسكربت. هذا النوع من الاسكربت الداخلي لن يعمل بالطريقة التي ترجوها على الأرجح، لو لم تفتحه عن طريق اسكربت آخر.",
+INTSCRWARNING_BOXED = "مرجع مباشر إلى صندوق اسكربت أو حاسب!",
+INTSCRWARNING_BOXED_EXPL = "هناك حاسب أو صندوق اسكربت يفتح هذا الاسكربت مباشرة. لن يؤدي تفعيل ذلك الحاسب أو صندوق الاسكربت لعمله بالطريقة التي ترجوها على الأرجح. يحتاج هذا النوع من الاسكربت الداخلي لفتحه من اسكربت تحميل.",
+INTSCRWARNING_NAME = "اسم اسكربت غير لائق!",
+INTSCRWARNING_NAME_EXPL = "اسم هذا الاسكربت يتضمن حرفا لاتينيا كبيرا أو مسافة أو قوسا أو فاصلة. لا يمكن فتح هذا الاسكربت مباشرة من غير حاسب أو صندوق اسكربت.",
+COLUMN = "العمود: ",
 
-BTN_OK = "OK",
-BTN_CANCEL = "Cancelar",
-BTN_YES = "Si",
-BTN_NO = "No",
-BTN_APPLY = "Aplicar",
-BTN_QUIT = "Salir",
-BTN_DISCARD = "Descartar",
-BTN_SAVE = "Guardar",
-BTN_CLOSE = "Cerrar",
-BTN_LOAD = "Cargar",
-BTN_ADVANCED = "Advanced",
+BTN_OK = "موافق",
+BTN_CANCEL = "إلغاء",
+BTN_YES = "نعم",
+BTN_NO = "لا",
+BTN_APPLY = "تطبيق",
+BTN_QUIT = "خروج",
+BTN_DISCARD = "عدم حفظ",
+BTN_SAVE = "حفظ",
+BTN_CLOSE = "إغلاق",
+BTN_LOAD = "فتح",
+BTN_ADVANCED = "متقدم",
 
-BTN_AUTODETECT = "Detect",
-BTN_MANUALLY = "Override", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
-BTN_RETRY = "Retry",
+BTN_AUTODETECT = "اكتشاف",
+BTN_MANUALLY = "تجاوز النفوذ", -- choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+BTN_RETRY = "إعادة",
 
-COMPARINGTHESE = "Comparando $1.vvvvvv con $2.vvvvvv",
-COMPARINGTHESENEW = "Comparando (nivel sin guardar) con $1.vvvvvv",
+COMPARINGTHESE = "جار مقارنة $1.vvvvvv و $2.vvvvvv",
+COMPARINGTHESENEW = "جار مقارنة (مستوى لم يحفظ) و $1.vvvvvv",
 
-RETURN = "Regresar",
-CREATE = "Crear",
-GOTO = "Ir a",
-DELETE = "Borrar",
-RENAME = "Renombrar",
-CHANGEDIRECTION = "Cambiar direccion",
-TESTFROMHERE = "Probar desde aqui",
-FLIP = "Voltear",
-CYCLETYPE = "Cambiar tipo",
-GOTODESTINATION = "Ir a destino",
-GOTOENTRANCE = "Ir a entrada",
-CHANGECOLOR = "Cambiar color",
-EDITTEXT = "Editar texto",
-COPYTEXT = "Copiar texto",
-EDITSCRIPT = "Editar script",
-OTHERSCRIPT = "Cambiar nombre de script",
-PROPERTIES = "Propiedades",
-CHANGETOHOR = "Cambiar a horizontal",
-CHANGETOVER = "Cambiar a vertical",
-RESIZE = "Mover/Redimensionar",
-CHANGEENTRANCE = "Mover entrada",
-CHANGEEXIT = "Mover salida",
-COPYENTRANCE = "Copiar entrada",
-LOCK = "Bloquear",
-UNLOCK = "Desbloquear",
+RETURN = "عودة",
+CREATE = "إنشاء",
+GOTO = "الذهاب إلى",
+DELETE = "حذف",
+RENAME = "تسمية",
+CHANGEDIRECTION = "تغيير اتجاه",
+TESTFROMHERE = "الاختبار من هنا",
+FLIP = "عكس",
+CYCLETYPE = "تغيير النوع",
+GOTODESTINATION = "الذهاب للوجهة",
+GOTOENTRANCE = "الذهاب للمدخل",
+CHANGECOLOR = "تغيير اللون",
+EDITTEXT = "تحرير النص",
+COPYTEXT = "نسخ النص",
+EDITSCRIPT = "تحرير الاسكربت",
+OTHERSCRIPT = "تبديل اسم الاسكربت",
+PROPERTIES = "الخاصيات",
+CHANGETOHOR = "التغيير إلى الأفقي",
+CHANGETOVER = "التغيير إلى العمودي",
+RESIZE = "تحريك/تحجيم",
+CHANGEENTRANCE = "تحريك المدخل",
+CHANGEEXIT = "تحريك المخرج",
+COPYENTRANCE = "نسخ المدخل",
+LOCK = "قفل",
+UNLOCK = "فتح القفل",
 
-VEDOPTIONS = "Opciones de Ved",
-LEVELOPTIONS = "Opciones de nivel",
-MAP = "Mapa",
-SCRIPTS = "Scripts",
-SEARCH = "Buscar",
-SENDFEEDBACK = "Enviar Feedback",
-LEVELNOTEPAD = "Bloc de notas del nivel",
-PLUGINS = "Plugins",
+VEDOPTIONS = "خيارات Ved",
+LEVELOPTIONS = "خيارات المستوى",
+MAP = "الخريطة",
+SCRIPTS = "الاسكربتات",
+SEARCH = "بحث",
+SENDFEEDBACK = "الإبلاغات",
+LEVELNOTEPAD = "مدونة المستوى",
+PLUGINS = "الإضافات",
 
-BACKB = "Atras <<",
-MOREB = "Mas >>",
-AUTOMODE = "Modo: auto",
-AUTO2MODE = "Modo: multi",
-MANUALMODE = "Modo: manual",
-ENEMYTYPE = "Tipo de Enemigo: $1",
-PLATFORMBOUNDS = "Limites de Platf.",
-WARPDIR = "Dir de warp: $1",
-ENEMYBOUNDS = "Limites de enemigo",
-ROOMNAME = "Nombre de habitacion",
-ROOMOPTIONS = "Opciones de habitacion",
-ROTATE180 = "Girar 180grados",
-ROTATE180UNI = "Girar 180°",
-HIDEBOUNDS = "Ocultar limites",
-SHOWBOUNDS = "Mostrar limites",
+BACKB = "رجوع >>",
+MOREB = "<< المزيد",
+AUTOMODE = "الوضع: تلقائي",
+AUTO2MODE = "الوضع: متعدد",
+MANUALMODE = "الوضع: يدوي",
+ENEMYTYPE = "نوع عدو: $1",
+PLATFORMBOUNDS = "نطاقات منصة",
+WARPDIR = "اتجاه تنقيل: $1",
+ENEMYBOUNDS = "نطاق الأعداء",
+ROOMNAME = "اسم الغرفة",
+ROOMOPTIONS = "خيارات الغرفة",
+ROTATE180 = "تدوير 180 درجة",
+ROTATE180UNI = "تدوير 180 درجة",
+HIDEBOUNDS = "إخفاء النطاقات",
+SHOWBOUNDS = "إظهار النطاقات",
 
-ROOMPLATFORMS = "Plataformas de habitacion", -- basically, platforms/enemies in/for this room
-ROOMENEMIES = "Enemigos de habitacion",
+ROOMPLATFORMS = "منصات الغرفة", -- basically, platforms/enemies in/for this room
+ROOMENEMIES = "أعداء الغرفة",
 
-OPTNAME = "Nombre",
-OPTBY = "Por",
-OPTWEBSITE = "Sitio",
-OPTDESC = "Desc.", -- If necessary, you can span multiple lines
-OPTSIZE = "Tamaño",
-OPTMUSIC = "Musica",
-CAPNONE = "NINGUNO",
-ENTERLONGOPTNAME = "Nombre del nivel:",
+OPTNAME = "الاسم",
+OPTBY = "من",
+OPTWEBSITE = "الموقع",
+OPTDESC = "الوصف", -- If necessary, you can span multiple lines
+OPTSIZE = "الحجم",
+OPTMUSIC = "الموسيقى",
+CAPNONE = "(بدون)",
+ENTERLONGOPTNAME = "اسم المستوى:",
 
 X = "x", -- Used for level size: 20x20
 
-SOLID = "Solido",
-NOTSOLID = "No solido",
+SOLID = "ملموس",
+NOTSOLID = "لا ملموس",
 
-TSCOLOR = "Color $1",
+TSCOLOR = "اللون $1",
 
-LEVELSLIST = "Niveles",
-LOADTHISLEVEL = "Cargar este nivel: ",
-ENTERNAMESAVE = "Introduce nombre para guardar: ",
-SEARCHFOR = "Buscar a: ",
+LEVELSLIST = "المستويات",
+LOADTHISLEVEL = "فتح هذا المستوى: ",
+ENTERNAMESAVE = "يحفظ بهذا الاسم: ",
+SEARCHFOR = "البحث عن: ",
 
-VERSIONERROR = "No se puede comprobar version.",
-VERSIONUPTODATE = "Su version de Ved esta actualizada.",
-VERSIONOLD = "Actualizacion disponible! Version mas reciente: $1",
-VERSIONCHECKING = "Buscando actualizaciones...",
-VERSIONDISABLED = "Comprobacion de actualizacion desactivada",
-VERSIONCHECKNOW = "Check now", -- Check for updates now
+VERSIONERROR = "فشل التحقق من الإصدار.",
+VERSIONUPTODATE = "إصدار محرر Ved عندك هو الأحدث توفرا.",
+VERSIONOLD = "يتوفر تحديث! الإصدار الأخير هو: $1",
+VERSIONCHECKING = "جار التحقق من التحديثات...",
+VERSIONDISABLED = "عطل التحقق من التحديثات",
+VERSIONCHECKNOW = "التحقق الآن", -- Check for updates now
 
-SAVENOSUCCESS = "Guardado sin exito! Error: ",
-INVALIDFILESIZE = "Tamaño de archivo invalido.",
+SAVENOSUCCESS = "لم ينجح الحفظ! الخطأ: ",
+INVALIDFILESIZE = "حجم الملف غير مقبول.",
 
-EDIT = "Editar",
-EDITWOBUMPING = "Editar sin chocar",
-EDITWBUMPING = "Edit and bump",
-COPYNAME = "Copiar nombre",
-COPYCONTENTS = "Copiar contenidos",
-DUPLICATE = "Duplicar",
+EDIT = "تحرير",
+EDITWOBUMPING = "تحرير بدون رفع",
+EDITWBUMPING = "تحرير مع الرفع",
+COPYNAME = "نسخ الاسم",
+COPYCONTENTS = "نسخ المضمون",
+DUPLICATE = "تكرار",
 
-NEWSCRIPTNAME = "Nombre:",
-CREATENEWSCRIPT = "Crear nuevo script",
+NEWSCRIPTNAME = "الاسم:",
+CREATENEWSCRIPT = "إنشاء اسكربت",
 
-NEWNOTENAME = "Nombre:",
-CREATENEWNOTE = "Crear nueva nota",
+NEWNOTENAME = "الاسم:",
+CREATENEWNOTE = "إنشاء ملاحظة جديدة",
 
-ADDNEWBTN = "[Añadir nuevo]",
-IMAGEERROR = "[ERROR DE IMAGEN]",
+ADDNEWBTN = "[إضافة جديد]",
+IMAGEERROR = "[خطأ صورة]",
 
-NEWNAME = "Nuevo nombre:",
-RENAMENOTE = "Renombrar nota",
-RENAMESCRIPT = "Renombrar script",
+NEWNAME = "الاسم الجديد:",
+RENAMENOTE = "تسمية الملاحظة",
+RENAMESCRIPT = "تسمية الاسكربت",
 
-LINE = "linea ",
+LINE = "السطر ",
 
-SAVEMAP = "Guardar mapa",
-COPYROOMS = "Copiar habitacion",
-SWAPROOMS = "Intercambiar habitaciones",
+SAVEMAP = "حفظ الخريطة",
+COPYROOMS = "نسخ الغرفة",
+SWAPROOMS = "تبديل الغرفة",
 
-MAP_STYLE = "Map style",
-MAP_STYLE_FULL = "Full", -- Max 12*2 characters
-MAP_STYLE_MINIMAP = "Minimap", -- Max 12*2 characters
-MAP_STYLE_VTOOLS = "VTools", -- Max 12*2 characters
+MAP_STYLE = "نمط الخريطة",
+MAP_STYLE_FULL = "كامل", -- Max 12*2 characters
+MAP_STYLE_MINIMAP = "خريطة مصغرة", -- Max 12*2 characters
+MAP_STYLE_VTOOLS = "أدوات Vtools", -- Max 12*2 characters
 
-FLAGS = "Flags",
-ROOM = "habitacion",
-CONTENTFILLER = "Contenido",
+FLAGS = "الرايات",
+ROOM = "غرفة",
+CONTENTFILLER = "المضمون",
 
-FLAGUSED = "Usado", -- preferably same length as L.FLAGNOTUSED
-FLAGNOTUSED = "No usado",
-FLAGNONAME = "Sin nombre",
-USEDOUTOFRANGEFLAGS = "Flags usados fuera de rango:",
+FLAGUSED = "مستخدم", -- preferably same length as L.FLAGNOTUSED
+FLAGNOTUSED = "غير مستخدم",
+FLAGNONAME = "بلا اسم",
+USEDOUTOFRANGEFLAGS = "استخدمت الرايات خارج النطاق:",
 
-VVVVVVSETUP = "VVVVVV setup",
-CUSTOMVVVVVVDIRECTORY = "Archivo de VVVVVV",
-CUSTOMVVVVVVDIRECTORYEXPL = "El directorio de VVVVVV por defecto que Ved espera es:\n$1\n\nEste camino no deberia ser puesto a el directiorio de \"levels\".",
-CUSTOMVVVVVVDIRECTORY_NOTSET = "No tienes un directorio de VVVVVV personalizado.\n\n",
-CUSTOMVVVVVVDIRECTORY_SET = "Su directorio de VVVVVV es un camino personalizado:\n$1\n\n",
-LANGUAGE = "Idioma",
-DIALOGANIMATIONS = "Animaciones de dialogo",
-FLIPSUBTOOLSCROLL = "Voltear direccion de desplazo de subherramienta",
-ADJACENTROOMLINES = "Indicadores de teja en habitaciones adjuntas",
-NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin guardar",
-COORDS0 = "Mostrar coordenadas comenzando en 0 (como en scripting interno)",
-ALLOWDEBUG = "Habilitar modo debug",
-SHOWFPS = "Mostrar contador de FPS",
-CHECKFORUPDATES = "Buscar actualizaciones",
-PAUSEDRAWUNFOCUSED = "No mostrar cuando la ventana esta desenfocada",
-ENABLEOVERWRITEBACKUPS = "Hacer respaldos de archivos de niveles que estan sobreescribidos",
-AMOUNTOVERWRITEBACKUPS = "Numeros de respaldos para mantener por nivel",
-SCALE = "Escala",
-LOADALLMETADATA = "Cargar metadatos (como el titulo, autor y descripcion) para todos los archivos en la lista de niveles",
-COLORED_TEXTBOXES = "Usar color verdaderos de dialogos",
-MOUSESCROLLINGSPEED = "Mouse scrolling speed",
-BUMPSCRIPTSBYDEFAULT = "Bump scripts to the top of the list when editing them by default",
+VVVVVVSETUP = "تجهيز VVVVVV",
+CUSTOMVVVVVVDIRECTORY = "مجلد VVVVVV",
+CUSTOMVVVVVVDIRECTORYEXPL = "يتوقع المحرر Ved أن المسار الافتراضي للعبة VVVVVV هو:\n$1\n\nلا يجب تحديد هذا المسار إلى مجلد \"levels\".",
+CUSTOMVVVVVVDIRECTORY_NOTSET = "لم تحدد مسارا مخصصا للعبة VVVVVV \n\n",
+CUSTOMVVVVVVDIRECTORY_SET = "عين مسار VVVVVV عندك إلى مسار مخصص: \n$1\n\n",
+LANGUAGE = "اللغة",
+DIALOGANIMATIONS = "تحريك الحوارات",
+FLIPSUBTOOLSCROLL = "قلب اتجاه تصفح الأداة",
+ADJACENTROOMLINES = "توضيحات الخلايا في الغرف المجاورة",
+NEVERASKBEFOREQUIT = "لا تسأل أبدا قبل المغادرة، حتى لو توجد تغييرات لم تحفظ.",
+COORDS0 = "إظهار الإحداثيات بدءا من الصفر (مثلما الحال مع الاسكربت الداخلي)",
+ALLOWDEBUG = "تفعيل وضع تتبع الأخطاء",
+SHOWFPS = "إظهار عداد الإطارات/ث",
+CHECKFORUPDATES = "التحقق من التحديثات",
+PAUSEDRAWUNFOCUSED = "عدم رسم الشاشة عندما لا يركز على النافذة",
+ENABLEOVERWRITEBACKUPS = "إنشاء نسخ احتياطية من ملفات المستويات عندما تستبدل",
+AMOUNTOVERWRITEBACKUPS = "عدد النسخ الاحتياطية التي يحتفظ بها للمستوى الواحد",
+SCALE = "مقياس الصورة",
+LOADALLMETADATA = "فتح بيانات التعريف (مثل العنوان والمؤلف والوصف) لجميع الملفات في لائحة المستويات",
+COLORED_TEXTBOXES = "استخدام ألوان حقيقية لصندوق النص",
+MOUSESCROLLINGSPEED = "سرعة تمرير الفأرة",
+BUMPSCRIPTSBYDEFAULT = "يرفع الاسكربتات لقمة اللائحة عند تغييرها، بحيث يكون ذلك السلوك الأصلي.",
 
-SCRIPTSPLIT = "Dividir",
-SPLITSCRIPT = "Dividir scripts",
-COUNT = "Cuenta: ",
-SMALLENTITYDATA = "datos",
+SCRIPTSPLIT = "شطر",
+SPLITSCRIPT = "شطر الاسكربتات",
+COUNT = "العدد: ",
+SMALLENTITYDATA = "بيانات",
 
 -- Stats screen
-AMOUNTSCRIPTS = "Scripts:",
-AMOUNTUSEDFLAGS = "Flags:",
-AMOUNTENTITIES = "Entidades:",
-AMOUNTTRINKETS = "Trinkets:",
-AMOUNTCREWMATES = "Compañeros:",
-AMOUNTINTERNALSCRIPTS = "Scripts internos:",
-TILESETUSSAGE = "Uso de set de teja",
-TILESETSONLYUSED = "(solo las habitaciones con tejas se cuentan)",
-AMOUNTROOMSWITHNAMES = "Habitaciones con nombre:",
-PLACINGMODEUSAGE = "Modos de colocación de teja:",
-AMOUNTLEVELNOTES = "Notas de niveles:",
-AMOUNTFLAGNAMES = "Nombres de flags:",
-TILESUSAGE = "Uso de teja",
-AMOUNTTILES = "Tejas:",
-AMOUNTSOLIDTILES = "Tejas solidas:",
-AMOUNTSPIKES = "Espinas:",
+AMOUNTSCRIPTS = "الاسكربتات:",
+AMOUNTUSEDFLAGS = "الرايات:",
+AMOUNTENTITIES = "الكيانات:",
+AMOUNTTRINKETS = "المقتنيات:",
+AMOUNTCREWMATES = "الزملاء:",
+AMOUNTINTERNALSCRIPTS = "الاسكربتات الداخلية:",
+TILESETUSSAGE = "استخدام مجموعات الخلايا",
+TILESETSONLYUSED = "(فقط الغرف ذات الخلايا تحتسب)",
+AMOUNTROOMSWITHNAMES = "الغرف ذات الاسم:",
+PLACINGMODEUSAGE = "أوضاع تموضع الخلايا:",
+AMOUNTLEVELNOTES = "ملحوظات المستوى:",
+AMOUNTFLAGNAMES = "أسماء الرايات:",
+TILESUSAGE = "استخدام الخلايا",
+AMOUNTTILES = "الخلايا:",
+AMOUNTSOLIDTILES = "الخلايا الملموسة:",
+AMOUNTSPIKES = "الإبر:",
 
 
-UNEXPECTEDSCRIPTLINE = "Linea de script no esperada sin script: $1",
-DUPLICATESCRIPT = "Script $1 esta duplicado! Solo uno se puede cargar.",
-MAPWIDTHINVALID = "Anchura de mapa invalida: $1",
-MAPHEIGHTINVALID = "Altura de mapa invalida: $1",
-LEVMUSICEMPTY = "La musica de nivel esta vacia!",
-NOT400ROOMS = "El numero de entradas en levelMetaData no es 400!",
-MOREERRORS = "$1 mas",
+UNEXPECTEDSCRIPTLINE = "سطر اسكربت غير متوقع جاء بدون اسكربت: $1",
+DUPLICATESCRIPT = "الاسكربت $1 مكرر! لا يمكن فتح أكثر من واحد.",
+MAPWIDTHINVALID = "عرض الخريطة غير صالح: $1",
+MAPHEIGHTINVALID = "ارتفاع الخريطة غير صالح: $1",
+LEVMUSICEMPTY = "موسيقى المستوى فارغة!",
+NOT400ROOMS = "عدد المدخلات في بيانات levelMetaData ليس 400 !",
+MOREERRORS = "$1 زيادة",
 
-DEBUGMODEON = "Modo debug activado",
-FPS = "FPS",
-STATE = "Estado",
-MOUSE = "Mouse",
+DEBUGMODEON = "وضع تتبع الأخطاء يعمل",
+FPS = "إطار/ث",
+STATE = "الحالة",
+MOUSE = "الفأرة",
 
-BLUE = "Azul",
-RED = "Rojo",
-CYAN = "Azul claro",
-PURPLE = "Purpura",
-YELLOW = "Amarillo",
-GREEN = "Verde",
-GRAY = "Gris",
-PINK = "Rosa",
-BROWN = "Marron",
-RAINBOWBG = "Arcoiris",
+BLUE = "أزرق",
+RED = "أحمر",
+CYAN = "سماوي",
+PURPLE = "أرجواني",
+YELLOW = "أصفر",
+GREEN = "أخضر",
+GRAY = "رمادي",
+PINK = "وردي",
+BROWN = "بني",
+RAINBOWBG = "خلفية قزحية",
 
-SYNTAXCOLORS = "Colores de sintaxis",
-SYNTAXCOLORSETTINGSTITLE = "Configuracion de color de desacando de sintaxis de scripting",
-SYNTAXCOLOR_COMMAND = "Comando",
-SYNTAXCOLOR_GENERIC = "Generico",
-SYNTAXCOLOR_SEPARATOR = "Separador",
-SYNTAXCOLOR_NUMBER = "Numero",
-SYNTAXCOLOR_TEXTBOX = "Dialogo",
-SYNTAXCOLOR_ERRORTEXT = "Comando no reconozido",
-SYNTAXCOLOR_CURSOR = "Cursor",
-SYNTAXCOLOR_FLAGNAME = "Nombre de flag",
-SYNTAXCOLOR_NEWFLAGNAME = "Nuevo nombre de flag",
-SYNTAXCOLOR_COMMENT = "Comentario",
-SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa",
-RESETCOLORS = "Reiniciar colores",
-STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
+SYNTAXCOLORS = "ألوان الصياغة",
+SYNTAXCOLORSETTINGSTITLE = "إعدادات ألوان إبراز الصيغة في الاسكربتات",
+SYNTAXCOLOR_COMMAND = "الأمر",
+SYNTAXCOLOR_GENERIC = "معياري",
+SYNTAXCOLOR_SEPARATOR = "رمز فاصل",
+SYNTAXCOLOR_NUMBER = "رقم",
+SYNTAXCOLOR_TEXTBOX = "صندوق نص",
+SYNTAXCOLOR_ERRORTEXT = "أمر غير معروف",
+SYNTAXCOLOR_CURSOR = "مؤشر السهم",
+SYNTAXCOLOR_FLAGNAME = "اسم الراية",
+SYNTAXCOLOR_NEWFLAGNAME = "اسم راية جديد",
+SYNTAXCOLOR_COMMENT = "التعليق",
+SYNTAXCOLOR_WRONGLANG = "الأوامر المبسطة في وضع int.sc أو العكس",
+RESETCOLORS = "ألوان الأصل",
+STRINGNOTFOUND = "لم يعثر على \"$1\"",
 
 -- L.MAL is concatenated with L.[...]CORRUPT
-MAL = "El archivo del nivel esta malformado: ",
-METADATACORRUPT = "Faltan metadatos o estan corruptos.",
-METADATAITEMCORRUPT = "Faltan metadatos para $1 o estan corruptos.",
-TILESCORRUPT = "Faltan tejas o estan corruptas.",
-ENTITIESCORRUPT = "Faltan entidades o estan corruptas.",
-LEVELMETADATACORRUPT = "Faltan metadatos de habitacion o estan corruptos.",
-SCRIPTCORRUPT = "Faltan scripts o estan corruptos.",
+MAL = "ملف المستوى مشوه: ",
+METADATACORRUPT = "بيانات التعريف ناقصة أو خربانة.",
+METADATAITEMCORRUPT = "بيانات التعريف التي تخص $1 ناقصة أو خربانة.",
+TILESCORRUPT = "الخلايا ناقصة أو خربانة.",
+ENTITIESCORRUPT = "الكيانات ناقصة أو خربانة.",
+LEVELMETADATACORRUPT = "بيانات تعريف الغرف ناقصة أو خربانة.",
+SCRIPTCORRUPT = "الاسكربتات ناقصة أو خربانة.",
 
-LOADSCRIPTMADE = "Script de carga creado",
-COPY = "Copiar",
-CUSTOMSIZE = "Tamaño de brocha personalizado: $1x$2",
-SELECTINGA = "Seleccionando - haz click en superior izquierda",
-SELECTINGB = "Seleccionando: $1x$2",
-TILESETSRELOADED = "Sets y sprites recargados",
+LOADSCRIPTMADE = "تم إنشاء اسكربت تحميل",
+COPY = "نسخ",
+CUSTOMSIZE = "حجم الفرشاة المخصصة: $1x$2",
+SELECTINGA = "جار التحديد - انقر أعلى اليسار",
+SELECTINGB = "جار اختيار: $1x$2",
+TILESETSRELOADED = "أعيد تحميل مجموعات الخلايا والسبرايتات",
 
-BACKUPS = "Respaldos",
-BACKUPSOFLEVEL = "Respaldos del nivel $1",
-LASTMODIFIEDTIME = "Ultima modificacion original", -- List header
-OVERWRITTENTIME = "Sobreescribido", -- List header
-SAVEBACKUP = "Guardar al archivo VVVVVV",
-DATEFORMAT = "Formato de fecha",
-TIMEFORMAT = "Formato de tiempo",
-SAVEBACKUPNOBACKUP = "Asegurate de elegir un nombre unico para esto si no quieres sobreescribir algo, porque NO se haran respaldos en este caso!",
+BACKUPS = "نسخ إحتياطية",
+BACKUPSOFLEVEL = "نسخ إحتياطية للملف $1",
+LASTMODIFIEDTIME = "آخر تغيير في الأصل", -- List header
+OVERWRITTENTIME = "مستبدل", -- List header
+SAVEBACKUP = "الحفظ إلى مجلد VVVVVV",
+DATEFORMAT = "تنسيق التاريخ",
+TIMEFORMAT = "تنسيق التوقيت",
+SAVEBACKUPNOBACKUP = "احرص على اختيار اسم فريد لهذا لو لا تريد استبدال أي شيء، لأنه لن تنشئ أي نسخة احتياطية في هذه الحالة!",
 
-AUTOSAVECRASHLOGS = "Guardar logs de crasheo automaticamente",
-MOREINFO = "Ultima informacion",
-COPYLINK = "Copiar link",
-SCRIPTDISPLAY = "Mostrar",
-SCRIPTDISPLAY_USED = "Usado",
-SCRIPTDISPLAY_UNUSED = "No usado",
+AUTOSAVECRASHLOGS = "حفظ تلقائي لتقارير الأعطال",
+MOREINFO = "آخر المعلومات",
+COPYLINK = "نسخ الرابط",
+SCRIPTDISPLAY = "إظهار",
+SCRIPTDISPLAY_USED = "مستخدم",
+SCRIPTDISPLAY_UNUSED = "غير مستخدم",
 
-RECENTLYOPENED = "Niveles abierto recientemente",
-REMOVERECENT = "Quieres borrarlo de la lista de niveles abiertos recientemente?",
-RESETCUSTOMBRUSH = "(Click derecho para nuevo tamaño)",
+RECENTLYOPENED = "مستويات فتحت مؤخرا",
+REMOVERECENT = "هل تريد نزعه من قائمة المستويات التي فتحت مؤخرا؟",
+RESETCUSTOMBRUSH = "(لتعيين حجم جديد، انقر بأيمن الفأرة)",
 
-DISPLAYSETTINGS = "Monitor/Escala",
-DISPLAYSETTINGSTITLE = "Opciones de Monitor/Escala",
-SMALLERSCREEN = "Anchura de ventana mas pequeña (800px en vez de 896px)",
-FORCESCALE = "Forzar opciones de escala",
-SCALENOFIT = "Las opciones de escala hazen la ventana muy larga como para entrar.",
-SCALENONUM = "Las opciones de escala son invalidas.",
-MONITORSIZE = "Monitor $1x$2",
-VEDRES = "Resolucion de Ved: $1x$2",
-NONINTSCALE = "Escala no-entera",
+DISPLAYSETTINGS = "الإظهار/المقياس",
+DISPLAYSETTINGSTITLE = "إعدادات الإظهار/مقياس الصورة",
+SMALLERSCREEN = "عرض نافذة أصغر (800 بكسل عوض 896)",
+FORCESCALE = "الإجبار على إعدادات مقياس الصورة",
+SCALENOFIT = "الإعدادات الحالية لمقياس الصورة تجعل من النافذة أكبر من أن تسعها الشاشة.",
+SCALENONUM = "إعدادات مقياس الصورة الحالية غير صالحة.",
+MONITORSIZE = "شاشة $1x$2",
+VEDRES = "دقة صورة Ved : $1x$2",
+NONINTSCALE = "مقياس صورة بقيمة بفاصلة",
 
-USEFONTPNG = "Usar font.png de las graficas de VVVVVV como fuente",
-USELEVELFONTPNG = "Use per-level custom font.png as font",
-REQUIRESHIGHERLOVE = " (requiere LÖVE $1 o mejor)",
-FPSLIMIT = "Limite de FPS",
+USEFONTPNG = "استخدام الخط font.png من مجلد graphics للعبة VVVVV",
+USELEVELFONTPNG = "استخدام خط font.png مخصص حسب المستوى",
+REQUIRESHIGHERLOVE = " (يتطلب  LÖVE $1 أو أحدث)",
+FPSLIMIT = "حد الإطارات/ث",
 
-MAPRESOLUTION = "Resolucion", -- Map export size
-MAPRES_ASSHOWN = "Como mostrado (max. 640x480)", -- $1x$2 is resolution, max 640x480
-MAPRES_PERCENT = "$1% ($2x$3 por habitacion)", -- Example: 50% (160x120 per room)
-MAPRES_RATIO = "$1:$2 ($3x$4 por habitacion)", -- Example: 1:8 (40x30 per room)
-TOPLEFT = "Super. izqrd.",
-WIDTHHEIGHT = "Anch. & altur.",
-BOTTOMRIGHT = "Inferior derecha",
-RENDERERINFO = "Informacion de renderizador:",
-MAPINCOMPLETE = "El mapa todavia no esta listo (en el momento que presionaste Guardar), porfavor intente de nuevo cuando este listo.",
-KEEPDIALOGOPEN = "Mantener dialogo abierto",
-TRANSPARENTMAPBG = "Fondo transparente",
-MAPEXPORTERROR = "Error al crear mapa.",
-VIEWIMAGE = "Ver", -- Verb, view image
-INVALIDLINENUMBER = "Porfavor introduce un numero de linea valido.",
-OPENLEVELSFOLDER = "Abrir direc. nivel", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
-MOVEENTITY = "Mover",
-GOTOROOM = "Ir a habitacion",
-ESCTOCANCEL = "[Presione ESC para cancelar]",
+MAPRESOLUTION = "دقة الشاشة", -- Map export size
+MAPRES_ASSHOWN = "كما يظهر (الأقصى 640x480)", -- $1x$2 is resolution, max 640x480
+MAPRES_PERCENT = "$1% ($2x$3 للغرفة)", -- Example: 50% (160x120 per room)
+MAPRES_RATIO = "$1:$2 ($3x$4 للغرفة)", -- Example: 1:8 (40x30 per room)
+TOPLEFT = "أعلى اليسار",
+WIDTHHEIGHT = "العرض والارتفاع",
+BOTTOMRIGHT = "أسفل اليمين",
+RENDERERINFO = "معلومات التظهير:",
+MAPINCOMPLETE = "الخريطة ليست جاهزة بعد (في اللحظة التي ضغطت فيها الحفظ)، يرجى المحاولة مرة أخرى عندما تجهز.",
+KEEPDIALOGOPEN = "يترك نافذة الحوار مفتوحة",
+TRANSPARENTMAPBG = "خلفية شفافة",
+MAPEXPORTERROR = "طرأ خطأ أثناء إنشاء خريطة.",
+VIEWIMAGE = "عرض", -- Verb, view image
+INVALIDLINENUMBER = "يرجى إدخال رقم سطر صالح.",
+OPENLEVELSFOLDER = "فتح مسار مست.", -- Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+MOVEENTITY = "تحريك",
+GOTOROOM = "الذهاب للغرفة",
+ESCTOCANCEL = "[اضغط ESC للتراجع]",
 
-INVALIDFILENAME_WIN = "Windows no permite los caracteres siguientes en los nombres de archivo:\n\n: * ? \" < > |\n\n(| es una linea vertical)",
-INVALIDFILENAME_MAC = "macOS no permite el caracter : en los nombres de archivo.",
+INVALIDFILENAME_WIN = "لا يسمح نظام ويندوز بالرموز التالية في أسماء الملفات:\n\n: * ? \" < > | \n\n (الرمز الأخير سطر عمودي)",
+INVALIDFILENAME_MAC = "نظام macOS لا يسمح بالرمز : في أسماء الملفات.",
 
 -- Keyboard key. Please use CAPITAL LETTERS ONLY
 TINY_CTRL = "CTRL",
 TINY_SHIFT = "SHIFT",
-TINY_ALT = "ALT",
-TINY_ESC = "ESC",
-TINY_TAB = "TAB",
-TINY_HOME = "INICIO",
-TINY_END = "FIN",
-TINY_INSERT = "INS",
-TINY_DEL = "SUPR",
+TINY_ALT = "البديل ALT",
+TINY_ESC = "الخروج ESC",
+TINY_TAB = "جدول TAB",
+TINY_HOME = "المنزل HOME",
+TINY_END = "النهاية END",
+TINY_INSERT = "الإدراج INS",
+TINY_DEL = "الحذف DEL",
 
 -- Header for search results
-SEARCHRESULTS_SCRIPTS = "Scripts [$1]",
-SEARCHRESULTS_ROOMS = "Habitaciones [$1]",
-SEARCHRESULTS_NOTES = "Notas [$1]",
+SEARCHRESULTS_SCRIPTS = "الاسكربتات [$1]",
+SEARCHRESULTS_ROOMS = "الغرف [$1]",
+SEARCHRESULTS_NOTES = "ملاحظات [$1]",
 
-ASSETS = "Assets", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
-MUSICPLAYERROR = "No se pudo reproducir la cancion. Quiza no existe o sea de un tipo no soportado.",
-SOUNDPLAYERROR = "No se pudo reproducir este sonido. Quiza no existe o sea de un tipo no soportado.",
-MUSICLOADERROR = "No se puede cargar $1: ",
-MUSICLOADERROR_TOOSMALL = "El archivo de musica es muy pequeño para ser valido.",
-MUSICEXISTSYES = "Existe",
-MUSICEXISTSNO = "No existe",
-ASSETS_FOLDER_EXISTS_NO = "Does not exist - click to create",
-ASSETS_FOLDER_EXISTS_YES = "Exists - click to open",
-NO_ASSETS_SUBFOLDER = "No \"$1\" folder",
-LOAD = "Cargar",
-RELOAD = "Recargar",
-UNLOAD = "Descargar",
-MUSICEDITOR = "Editor de musica",
-LOADMUSICNAME = "Cargar .vvv",
-SAVEMUSICNAME = "Save .vvv",
-INSERTSONG = "Insertar cancion en pista $1",
-SUREDELETESONG = "Estas seguro que quieres remover cancion $1?",
-SONGOPENFAIL = "No se puede abrir $1, cancion no reemplazada.",
-SONGREPLACEFAIL = "Algo salio mar al reemplazar la cancion.",
+ASSETS = "الموارد", -- If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+MUSICPLAYERROR = "لا يمكن فتح هذه الموسيقى. إما أن الملف لا وجود له، وإما أن النوع غير مدعوم.",
+SOUNDPLAYERROR = "لا يمكن فتح هذا الصوت. إما أن الملف لا وجود له، وإما أن النوع غير مدعوم.",
+MUSICLOADERROR = "لا يمكن تحميل$1: ",
+MUSICLOADERROR_TOOSMALL = "ملف الموسيقى أصغر من أن يعد صالحا.",
+MUSICEXISTSYES = "موجود",
+MUSICEXISTSNO = "لا وجود له",
+ASSETS_FOLDER_EXISTS_NO = "لا وجود له - اضغط للإنشاء",
+ASSETS_FOLDER_EXISTS_YES = "موجود - اضغط للفتح",
+NO_ASSETS_SUBFOLDER = "لا مجلد \"$1\"",
+LOAD = "فتح",
+RELOAD = "إعادة تحميل",
+UNLOAD = "إلغاء تحميل",
+MUSICEDITOR = "محرر الموسيقى",
+LOADMUSICNAME = "فتح .vvv",
+SAVEMUSICNAME = "حفظ .vvv",
+INSERTSONG = "إدراج أغنية في المسار $1",
+SUREDELETESONG = "هل أنت واثق من إزالة الأغنية $1؟",
+SONGOPENFAIL = "عجزت عن فتح $1، الأغنية لم تستبدل.",
+SONGREPLACEFAIL = "طرأ خطأ أثناء استبدال الأغنية.",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
-CANNOTUSENEWLINES = "No se puede usar el caracter \"$1\" en nombres de scripts!",
-MUSICTITLE = "Titulo: ",
-MUSICARTIST = "Artista: ",
-MUSICFILENAME = "Nombre de archivo: ",
-MUSICNOTES = "Notas:",
-SONGMETADATA = "Metadatos para cancion $1",
-MUSICFILEMETADATA = "Metadatos de archivo",
-MUSICEXPORTEDON = "Exportado: ", -- Followed by date and time
-SAVEMETADATA = "Guardar metadatos",
-SOUNDS = "Sonidos",
-GRAPHICS = "Graficos",
-FILEOPENERNAME = "Nombre: ",
-PATHINVALID = "El camino es invalido.",
-DRIVES = "Drives", -- like C: or F: on Windows
-DOFILTER = "Solo mostrar *$1", -- "*.txt" for example
-DOFILTERDIR = "Solo mostrar directorios",
-FILEDIALOGLUV = "Lo siento, su sistema operativo no es reconocido, asi que el dialogo de archivo no funciona.",
-RESET = "Reiniciar",
-CHANGEVERB = "Cambiar", -- verb
-LOADIMAGE = "Cargar imagen",
-GRID = "Red",
+CANNOTUSENEWLINES = "لا يجوز استخدام الرمز \" $1 \" في أسماء الاسكربتات!",
+MUSICTITLE = "العنوان: ",
+MUSICARTIST = "الفنان: ",
+MUSICFILENAME = "اسم الملف: ",
+MUSICNOTES = "ملاحظات:",
+SONGMETADATA = "بيانات التعريف للأغنية $1",
+MUSICFILEMETADATA = "بيانات تعريف الملف",
+MUSICEXPORTEDON = "تم تصديره: ", -- Followed by date and time
+SAVEMETADATA = "حفظ بيانات التعريف",
+SOUNDS = "الأصوات",
+GRAPHICS = "الرسوميات",
+FILEOPENERNAME = "الاسم: ",
+PATHINVALID = "المسار غير صالح.",
+DRIVES = "الأقراص", -- like C: or F: on Windows
+DOFILTER = "إظهار * $1 فقط", -- "*.txt" for example
+DOFILTERDIR = "إظهار المجلدات فقط",
+FILEDIALOGLUV = "عذرا، لم نتعرف على نظام تشغيلك، لذا لن تعمل نافذة حوار الملفات.",
+RESET = "الإعدادات الأصلية",
+CHANGEVERB = "تغيير", -- verb
+LOADIMAGE = "فتح صورة",
+GRID = "شبكة",
 NOTALPHAONLY = "RGB",
 
-UNSAVED_LEVEL_ASSETS_FOLDER = "The level needs to be saved before it can use custom assets.",
-CREATE_ASSETS_FOLDER = "Would you like to create a custom assets folder for this level?\n\n$1", -- $1: path
-CREATE_VVVVVV_FOLDER = "It seems like the VVVVVV folder doesn't exist. Would you like to create it?",
-CREATE_LEVELS_FOLDER = "It seems like the levels folder doesn't exist. Would you like to create it?",
-CREATE_FOLDER_FAIL = "Unable to create folder.\n\n$1",
-ASSETS_FOLDER_FOR_LEVEL = "Assets folder for $1",
+UNSAVED_LEVEL_ASSETS_FOLDER = "يجب حفظ المستوى قبل أن يمكن استخدام الموارد المخصصة.",
+CREATE_ASSETS_FOLDER = "هل تريد إنشاء مجلد للموارد المخصصة لأجل هذا المستوى؟\n\n$1", -- $1: path
+CREATE_VVVVVV_FOLDER = "يبدو أن مجلد اللعبة VVVVVV غير موجود. هل تود إنشاءه؟",
+CREATE_LEVELS_FOLDER = "يبدو أن مجلد المستويات غير موجود. هل تود إنشاءه؟",
+CREATE_FOLDER_FAIL = "فشل إنشاء المجلد.\n\n$1",
+ASSETS_FOLDER_FOR_LEVEL = "مجلد الموارد لأجل $1",
 
-OPAQUEROOMNAMEBACKGROUND = "Hacer el fondo del nombre de habitacion negro opaco",
-PLATVCHANGE_TITLE = "Cambiar velocidad de plataforma",
-PLATVCHANGE_MSG = "Velocidad:",
-PLATVCHANGE_INVALID = "Tienes que poner un numero.",
-RENAMESCRIPTREFERENCES = "Renombrar preferencias",
-PLATFORMSPEEDSLIDER = "Vel.:",
+OPAQUEROOMNAMEBACKGROUND = "جعل الخلفيات السوداء لأسماء المستويات غير شفافة",
+PLATVCHANGE_TITLE = "تغيير سرعة المنصة",
+PLATVCHANGE_MSG = "السرعة:",
+PLATVCHANGE_INVALID = "عليك كتابة قيمة عددية.",
+RENAMESCRIPTREFERENCES = "إعادة تسمية المراجع",
+PLATFORMSPEEDSLIDER = "سرعة:",
 
-TRINKETS = "Trinkets",
-LISTALLTRINKETS = "Enlistar todos los trinkets", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
-LISTOFALLTRINKETS = "Lista de todos los trinkets",
-NOTRINKETSINLEVEL = "No hay trinkets en este nivel.",
-CREWMATES = "Compañeros",
-LISTALLCREWMATES = "Enlistar todos los compañeros", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
-LISTOFALLCREWMATES = "Lista de compañeros rescatables",
-NOCREWMATESINLEVEL = "No hay compañeros rescatables en este nivel.",
-SHIFTROOMS = "Cambiar habitacion", -- In the map. Move all rooms in the entire level in any direction
+TRINKETS = "المقتنيات",
+LISTALLTRINKETS = "كل المقتنيات", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+LISTOFALLTRINKETS = "كل المقتنيات",
+NOTRINKETSINLEVEL = "لا مقتنيات في هذا المستوى.",
+CREWMATES = "الزملاء",
+LISTALLCREWMATES = "كل الزملاء", -- "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+LISTOFALLCREWMATES = "قائمة كل زميل يمكن إنقاذه",
+NOCREWMATESINLEVEL = "لا زميل يمكن إنقاذه في هذا المستوى",
+SHIFTROOMS = "إزاحة الغرف", -- In the map. Move all rooms in the entire level in any direction
 
-FRAMESTOSECONDS = "$1 = $2 seg.",
-ROOMNUM = "Habitacion $1",
-SOUNDNUM = "Sound $1",
-TRACKNUM = "Pista $1",
-STOPSMUSIC = "Para la musica",
-PLAYSOUND = "Play sound",
-EDITSCRIPTWOBUMPING = "Editar script sin chocar",
-EDITSCRIPTWBUMPING = "Edit script and bump",
-CLICKONTHING = "Haz click en $1",
-ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
-MORETHANONESTARTPOINT = "Hay mas de un punto de inicio en este nivel!",
-STARTPOINTNOTFOUND = "No hay punto de inicio!",
+FRAMESTOSECONDS = "$1 = $2 ثا",
+ROOMNUM = "الغرفة $1",
+SOUNDNUM = "الصوت $1",
+TRACKNUM = "الموسيقى $1",
+STOPSMUSIC = "إيقاف الموسيقى",
+PLAYSOUND = "تشغيل الصوت",
+EDITSCRIPTWOBUMPING = "تحرير الاسكربت دون الرفع",
+EDITSCRIPTWBUMPING = "تحرير الاسكربت مع الرفع",
+CLICKONTHING = "اضغط على $1",
+ORDRAGDROP = "أو اسحب وضع هنا", -- follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+MORETHANONESTARTPOINT = "في هذا المستوى أكثر من نقطة بدء واحدة!",
+STARTPOINTNOTFOUND = "لا توجد نقطة بدء!",
 
-CONFIRMBIGGERSIZE = "Estas seleccionando $1 por $2, lo cual es un tamaño de mapa mas grande que $3 por $4. Afuera del $3 por $4 normal, las habitaciones y sus propiedades se envuelven, pero están distorsionadas. Usted no tiene habitaciones completas del todo, tampoco las propiedades.\n\nPresiona Si si sabes lo que estas haciendo y quieres este tamaño de mapa mas grande. Presiona No para poner el tamaño del mapa a $5 por $6.\n\nSi no estas seguro, presiona No.",
-MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4! (No se habilito el soporte de mapas mas grandes que $3 por $4)",
-BTNOVERRIDE = "Anular",
-TARGETPLATFORM = "Plataforma objetivo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+CONFIRMBIGGERSIZE = "أنت تهم باختيار $1 في $2، وهو حجم خريطة أكبر من $3 في $4. في الهامش خارج الحجم العادي لخريطة $3 في $4، فإن الغرف وخصائصها ستلتف وتتكرر من أطراف الحدود الخارجية، إلا أنها بتشوه. لن تحصل على غرف جديدة فريدة تماما، ولن تحصل على المزيد من خصائص الغرف. \n\n اضغط نعم في حال ما تأكدت أنك تريد هذا الحجم الأكبر للخريطة وتعرف ماذا تفعل. اضغط لا في حال ما تريد تعيين حجم الخريطة إلى $5 في $6. \nفي حال ما لست متأكدا ماذا تختار، اضغط لا.",
+MAPBIGGERTHANSIZELIMIT = "حجم الخريطة $1 في $2 أكبر من $3 في $4! (لا ندعم بعد ما أكبر من $3 في $4)",
+BTNOVERRIDE = "تجاوز النفوذ",
+TARGETPLATFORM = "المنصة المستهدفة", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
-TIMETRIALS = "Contrarelojes",
-TIMETRIALTRINKETS = "Numero de trinkets",
-TIMETRIALTIME = "Tiempo",
-SUREDELETETRIAL = "Estas seguro de que quieres borrar el contrareloj \"$1\"?",
+TIMETRIALS = "الاختبارات ضد الساعة",
+TIMETRIALTRINKETS = "عداد المقتنيات",
+TIMETRIALTIME = "الوقت الأمثل",
+SUREDELETETRIAL = "هل أنت واثق أنك تريد حذف اختبار ضد الساعة \"$1\"؟",
 
-CUT = "Cortar",
-PASTE = "Pegar",
-SELECTWORD = "Seleccionar palabra",
-SELECTLINE = "Seleccionar linea",
-SELECTALL = "Seleccionar todo",
-INSERTRAWHEX = "Insertar carácter Unicode",
-MOVELINEUP = "Mover línea hacia arriba",
-MOVELINEDOWN = "Mover línea hacia abajo",
-DUPLICATELINE = "Duplicar linea",
+CUT = "قص",
+PASTE = "لصق",
+SELECTWORD = "اختيار كلمة",
+SELECTLINE = "اختيار سطر",
+SELECTALL = "اختيار الكل",
+INSERTRAWHEX = "إدراج رمز يونيكود",
+MOVELINEUP = "تحريك السطر لأعلى",
+MOVELINEDOWN = "تحريك السطر لأسفل",
+DUPLICATELINE = "تكرار السطر",
 
-WHEREPLACEPLAYER = "Donde desea comenzar?",
-YOUAREPLAYTESTING = "Estas probando justo ahora.",
-LOCATEVVVVVV = "Seleccione su ejecutable de $1", -- application (example: Select your VVVVVV executable)
-ALREADYPLAYTESTING = "Ya estas probando!",
-PLAYTESTINGFAILED = "Something went wrong when opening VVVVVV:\n$1\n\nIf you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button.",
-VVVVVV_EXITCODE_FAILURE = "VVVVVV exited with code $1", -- for example, code 1, indicating failure
-VVVVVV_22_OR_OLDER = "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later.",
-VVVVVV_SOMETHING_HAPPENED = "Something seems to have gone wrong with VVVVVV.",
-PLAYTESTUNAVAILABLE = "Lo sentimos, no se puede probar en $1.", -- you cannot playtest on <operating system>
-VVVVVVFILE = "Porfavor seleccione el archivo '$1'.",
+WHEREPLACEPLAYER = "أين تريد البدء؟",
+YOUAREPLAYTESTING = "أنت حاليا تجرب اللعبة",
+LOCATEVVVVVV = "اختر تطبيقك $1", -- application (example: Select your VVVVVV executable)
+ALREADYPLAYTESTING = "أنت تختبر اللعبة حاليا فعلا!",
+PLAYTESTINGFAILED = "طرأ مشكل أثناء فتح VVVVVV : \n$1\n\n لو احتجت لتغيير تطبيق VVVVVV المستخدم أثناء الاختبار، اضغط مطولا زر العالي Shift أثناء ضغط زر الاختبار.",
+VVVVVV_EXITCODE_FAILURE = "أغلقت VVVVVV مع رمز الإغلاق $1", -- for example, code 1, indicating failure
+VVVVVV_22_OR_OLDER = "يبدو أنك تستخدم VVVVVV بالإصدار 2.2 أو أقدم منه. يرجى الترقية إلى VVVVVV بالإصدار 2.3 أو أي إصدار أحدث منه.",
+VVVVVV_SOMETHING_HAPPENED = "يبدو أن خللا طرأ مع لعبة VVVVVV",
+PLAYTESTUNAVAILABLE = "عذرا، لا يمكنك الاختبار في $1.", -- you cannot playtest on <operating system>
+VVVVVVFILE = "رجاء اختر الملف الذي اسمه '$1'.",
 
-PLAYTESTINGOPTIONS = "Playtesting",
-PLAYTESTING_EXECUTABLE_NOTSET = "You did not yet set a $1 executable to use for playtesting.\nVed will ask for it when playtesting a $2 level for the first time.", -- $1: VVVVVV 2.3, $2: VVVVVV
-PLAYTESTING_EXECUTABLE_SET = "The $1 executable to use for playtesting is set to:\n$2", -- $1: VVVVVV 2.3
+PLAYTESTINGOPTIONS = "اختبار اللعبة",
+PLAYTESTING_EXECUTABLE_NOTSET = "لم تحدد تطبيقا $1 للاختبار. \nسيطلبها Ved أثناء اختبار لعب $2 مستوى لأول مرة.", -- $1: VVVVVV 2.3, $2: VVVVVV
+PLAYTESTING_EXECUTABLE_SET = "التطبيق $1 المستخدم في الاختبار حدد إلى: \n$2", -- $1: VVVVVV 2.3
 
-FIND_V_EXE_ERROR = "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually.",
-FIND_V_EXE_FOUNDERROR = "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually.",
-FIND_V_EXE_NOTFOUND = "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again.",
-FIND_V_EXE_MULTI = "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again.",
+FIND_V_EXE_ERROR = "عذرا، طرأت مشكلة أثناء محاولة إيجاد VVVVVV . يرجى محاولة تحديد المسار إلى التطبيق يدويا.",
+FIND_V_EXE_FOUNDERROR = "وجدنا شيئا يبدو كأنه VVVVVV، لكن فشلنا في الحصول على مسار نحو التطبيق صالح للاستخدام. تأكد أنك لا تستخدم إصدارا قديما من اللعبة (يشترط إصدار 2.3 أو ما أحدث) وإلا حاول أن تحدد المسار نحو التطبيق يدويا.",
+FIND_V_EXE_NOTFOUND = "يبدو أن VVVVVV لا تعمل حاليا. يرجى الحرص أن VVVVVV تعمل، ثم أعد المحاولة.",
+FIND_V_EXE_MULTI = "وجدت أكثر من مثيل للتطبيق VVVVVV قيد التشغيل. احرص أن عندك فقط إصدار واحد من اللعبة مفتوحا، وحاول مرة أخرى.",
 
-FIND_V_EXE_EXPLANATION = "Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n\n\nTo autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\".",
+FIND_V_EXE_EXPLANATION = "محرر Ved يحتاج VVVVVV لأجل الاختبار، والمسار نحو VVVVVV يحتاج أولا لتعيين.\n\n\nللاكتشاف التلقائي للعبة VVVVVV يكفي تشغيل اللعبة (لو لم تشغلها بعد) واضغط \"اكتشاف\".",
 
-VCE_REMOVED = "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/",
+VCE_REMOVED = "نسخة VVVVVV: Community Edition لم تعد قيد الدعم، ودعم مستويات VVVVVV-CE نزع من Ved. هذا المستوى يعامل على أنه مستوى VVVVVV عادي. لمزيد من المعلومات، يرجى الاطلاع على https://vsix.dev/vce/status/",
 
-VVVVVV_VERSION = "VVVVVV version", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
-VVVVVV_VERSION_AUTO = "Auto",
+VVVVVV_VERSION = "إصدار VVVVVV", -- Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+VVVVVV_VERSION_AUTO = "تلقائي",
 VVVVVV_VERSION_23PLUS = "2.3+",
 VVVVVV_VERSION_24PLUS = "2.4+",
 
-ALL_PLUGINS = "All plugins",
-ALL_PLUGINS_MOREINFO = "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl",
-ALL_PLUGINS_FOLDER = "Your plugins folder is:",
-ALL_PLUGINS_NOPLUGINS = "You do not have any plugins yet.",
+ALL_PLUGINS = "كل المكونات الإضافية",
+ALL_PLUGINS_MOREINFO = "للمزيد من المعلومات عن المكونات الإضافية يرجى زيارة ¤https://tolp.nl/ved/plugins.php¤هذه الصفحة¤.\\nLCl",
+ALL_PLUGINS_FOLDER = "مجلدك للمكونات الإضافية:",
+ALL_PLUGINS_NOPLUGINS = "ليس عندك بعد أي مكون إضافي.",
 
-PLUGIN_NOT_SUPPORTED = "[This plugin is not supported because it requires Ved $1 or higher!]\\r",
-PLUGIN_AUTHOR_VERSION = "by $1, version $2", -- by Person, version 1.0.0
+PLUGIN_NOT_SUPPORTED = "[هذا المكون الإضافي غير مدعوم لأنه يتطلب Ved $1 على الأقل!]\\r",
+PLUGIN_AUTHOR_VERSION = "من $1، الإصدار $2", -- by Person, version 1.0.0
 
-CREATE_LOAD_SCRIPT = "Create load script",
+CREATE_LOAD_SCRIPT = "إنشاء اسكربت تحميل",
 
 -- These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
-CREATE_LOAD_SCRIPT_NO = "No",
-CREATE_LOAD_SCRIPT_RUNONCE = "Run once",
-CREATE_LOAD_SCRIPT_REPEATING = "Repeating",
+CREATE_LOAD_SCRIPT_NO = "لا",
+CREATE_LOAD_SCRIPT_RUNONCE = "التشغيل مرة",
+CREATE_LOAD_SCRIPT_REPEATING = "التكرار",
 
 -- Explanation for "No"
-CREATE_LOAD_SCRIPT_TITLE_NO = "Don't create load script",
-CREATE_LOAD_SCRIPT_EXPL_T_NO = "This terminal will directly point to the script.",
-CREATE_LOAD_SCRIPT_EXPL_S_NO = "This script box will directly point to the script.",
+CREATE_LOAD_SCRIPT_TITLE_NO = "عدم إنشاء اسكربت تحميل",
+CREATE_LOAD_SCRIPT_EXPL_T_NO = "هذا الحاسب سيشير مباشرة إلى الاسكربت.",
+CREATE_LOAD_SCRIPT_EXPL_S_NO = "هذا صندوق اسكربت سيشير مباشرة إلى الاسكربت.",
 
 -- Explanation for "Run once"
-CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "Create load script to run once",
-CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag.",
-CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag.",
+CREATE_LOAD_SCRIPT_TITLE_RUNONCE = "إنشاء اسكربت تحميل يشغل مرة واحدة",
+CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE = "هذا الحاسب سيشير إلى تحميل اسكربت جديد، بدوره يفتح الاسكربت الفعلي مرة واحدة في جلسة اللعب. سيختار المحرر Ved راية غير مستخدمة.",
+CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE = "هذا صندوق اسكربت سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي مرة واحدة في جلسة اللعب. سيختار المحرر Ved راية غير مستخدمة.",
 
 -- Explanation for "Repeating"
-CREATE_LOAD_SCRIPT_TITLE_REPEATING = "Create repeating load script",
-CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "This terminal will point to a new load script, which unconditionally loads the real script.",
-CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "This script box will point to a new load script, which unconditionally loads the real script.",
+CREATE_LOAD_SCRIPT_TITLE_REPEATING = "إنشاء اسكربت تحميل متكرر",
+CREATE_LOAD_SCRIPT_EXPL_T_REPEATING = "هذا الحاسب سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي بدون شروط.",
+CREATE_LOAD_SCRIPT_EXPL_S_REPEATING = "هذا صندوق اسكربت سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي بدون شروط.",
 
-CUSTOM_SIZED_BRUSH = "Custom brush",
+CUSTOM_SIZED_BRUSH = "فرشاة مخصصة",
 
 -- These are limited to 12*2 characters
-CUSTOM_SIZED_BRUSH_BRUSH = "Brush",
-CUSTOM_SIZED_BRUSH_STAMP = "Stamp",
-CUSTOM_SIZED_BRUSH_TILESET = "Tileset",
+CUSTOM_SIZED_BRUSH_BRUSH = "فرشاة",
+CUSTOM_SIZED_BRUSH_STAMP = "طابع",
+CUSTOM_SIZED_BRUSH_TILESET = "مجموعة الخلايا",
 
 -- Explanation for "Brush"
-CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "Custom brush size",
-CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "Choose the size of the brush you need.",
+CUSTOM_SIZED_BRUSH_TITLE_BRUSH = "حجم الفرشاة المخصصة",
+CUSTOM_SIZED_BRUSH_EXPL_BRUSH = "اختر حجم الفرشاة التي تحتاجها.",
 
 -- Explanation for "Stamp"
-CUSTOM_SIZED_BRUSH_TITLE_STAMP = "Stamp from room",
-CUSTOM_SIZED_BRUSH_EXPL_STAMP = "Select tiles from the room to create a stamp.",
+CUSTOM_SIZED_BRUSH_TITLE_STAMP = "الطابع من الغرفة",
+CUSTOM_SIZED_BRUSH_EXPL_STAMP = "اختر خلايا من الغرفة تنشئ بها طابعا.",
 
 -- Explanation for "Tileset"
-CUSTOM_SIZED_BRUSH_TITLE_TILESET = "Stamp from tileset",
-CUSTOM_SIZED_BRUSH_EXPL_TILESET = "Select tiles from the tileset to create a stamp. Only works in manual mode.",
+CUSTOM_SIZED_BRUSH_TITLE_TILESET = "الطابع من مجموعة الخلايا",
+CUSTOM_SIZED_BRUSH_EXPL_TILESET = "اختر خلايا من مجموعة الخلايا تنشئ بها طابعا. لا يعمل إلا في الوضع اليدوي.",
 
-ADVANCED_LEVEL_OPTIONS = "Advanced level options",
-ONEWAYCOL_OVERRIDE = "Recolor one-way tiles in custom assets as well (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+ADVANCED_LEVEL_OPTIONS = "إعدادات متقدمة للمستوى",
+ONEWAYCOL_OVERRIDE = "إعادة تلوين الخلايا ذات الاتجاه الواحد حتى في الموارد المخصصة (onewaycol_override)", -- Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
 
-ZIP_SAVE_AS = "Create ZIP of this version for sharing", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
-ZIP_CREATE_TITLE = "Save ZIP",
-ZIP_BUSY_TITLE = "Creating ZIP...",
-ZIP_LOVE11_ONLY = "Creating a ZIP file requires LÖVE $1 or higher", -- $1: version number
-ZIP_SAVING_SUCCESS = "ZIP saved!",
-ZIP_SAVING_FAIL = "Could not save ZIP file!",
+ZIP_SAVE_AS = "إنشاء مجلد مضغوط ZIP من هذا الإصدار بغرض المشاركة", -- .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+ZIP_CREATE_TITLE = "حفظ مجلد مضغوط ZIP",
+ZIP_BUSY_TITLE = "جار إنشاء مجلد ZIP الآن...",
+ZIP_LOVE11_ONLY = "إنشاء مجلد مضغوط ZIP يتطلب  LÖVE $1 أو أحدث", -- $1: version number
+ZIP_SAVING_SUCCESS = "تم حفظ مجلد ZIP بنجاح!",
+ZIP_SAVING_FAIL = "عملية حفظ مجلد ZIP فشلت!",
 
-OPENFOLDER = "Open folder", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
+OPENFOLDER = "فتح مجلد", -- Button, open a directory/folder in Explorer, Finder or another system file manager.
 
-LEVELFONT = "Level font",
+LEVELFONT = "خط المستوى",
 
-TEXTBOXCOLORS_BUTTON = "Text colors",
-TEXTBOXCOLORS_TITLE = "Textbox colors",
-TEXTBOXCOLORS_RENAME = "Rename color \"$1\"",
-TEXTBOXCOLORS_DUPLICATE = "Duplicate color \"$1\"",
-TEXTBOXCOLORS_CREATE = "Add new color",
+TEXTBOXCOLORS_BUTTON = "ألوان النص",
+TEXTBOXCOLORS_TITLE = "ألوان صندوق النص",
+TEXTBOXCOLORS_RENAME = "تسمية اللون \"$1\"",
+TEXTBOXCOLORS_DUPLICATE = "تكرار اللون \"$1\"",
+TEXTBOXCOLORS_CREATE = "إضافة لون جديد",
 
-LIB_LOAD_ERRMSG_BIDI = "Failed to load the library for right-to-left text support.\n\n$1",
-LIB_LOAD_ERRMSG_AV = "\n\nYour antivirus may be breaking it.",
+LIB_LOAD_ERRMSG_BIDI = "فشل تحميل المكتبة التي تدعم إظهار النص من اليمين إلى اليسار. \n\n$1",
+LIB_LOAD_ERRMSG_AV = "\n\nقد يكون السبب أن برنامجك لمكافحة الفايروسات يوقفها.",
 
 }
 
 -- Please check the reference for plural forms
 L_PLU = {
 	NUMUNSUPPORTEDPLUGINS = {
-		[0] = "Tienes $1 plugin que no se soporta en esta version.",
-		[1] = "Tienes $1 plugins que no se soportan en esta version.",
+		[0] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
+		[1] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
+		[2] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
+		[3] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
+		[4] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
+		[5] = "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار.",
 	},
 	LEVELFAILEDCHECKS = {
-		[0] = "Este nivel fallo $1 check. El problema se pudo haber arreglado automaticamente, pero es posible que esto resulte en crasheos y inconsistencias.",
-		[1] = "Este nivel fallo $1 checks. El problema se pudo haber arreglado automaticamente, pero es posible que esto resulte en crasheos y inconsistencias.",
+		[0] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
+		[1] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
+		[2] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
+		[3] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
+		[4] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
+		[5] = "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات.",
 	},
 	SCRIPTUSAGESROOMS = {
-		[0] = "$1 uso en habitaciones: $2",
-		[1] = "$1 usos en habitaciones: $2",
+		[0] = "$1 من الاستخدامات في الغرف: $2",
+		[1] = "$1 من الاستخدامات في الغرف: $2",
+		[2] = "$1 من الاستخدامات في الغرف: $2",
+		[3] = "$1 من الاستخدامات في الغرف: $2",
+		[4] = "$1 من الاستخدامات في الغرف: $2",
+		[5] = "$1 من الاستخدامات في الغرف: $2",
 	},
 	SCRIPTUSAGESSCRIPTS = {
-		[0] = "$1 uso en scripts: $2",
-		[1] = "$1 usos en scripts: $2",
+		[0] = "$1 من الاستخدامات في الاسكربتات: $2",
+		[1] = "$1 من الاستخدامات في الاسكربتات: $2",
+		[2] = "$1 من الاستخدامات في الاسكربتات: $2",
+		[3] = "$1 من الاستخدامات في الاسكربتات: $2",
+		[4] = "$1 من الاستخدامات في الاسكربتات: $2",
+		[5] = "$1 من الاستخدامات في الاسكربتات: $2",
 	},
 	ENTITYINVALIDPROPERTIES = {
-		[0] = "La entidad en [$1 $2] tiene $3 propiedad invalida!",
-		[1] = "La entidad en [$1 $1] tiene $3 propiedades invalidas!",
+		[0] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
+		[1] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
+		[2] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
+		[3] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
+		[4] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
+		[5] = "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!",
 	},
 	ROOMINVALIDPROPERTIES = {
-		[0] = "LevelMetadata para la habitacion $1,$2 tiene $3 propiedad invalida!",
-		[1] = "LevelMetadata para la habitacion $1,$2 tiene $3 propiedades invalidas!",
+		[0] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
+		[1] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
+		[2] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
+		[3] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
+		[4] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
+		[5] = "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!",
 	},
 	SCRIPTDISPLAY_SHOWING = {
-		[0] = "Mostrando $1",
-		[1] = "Mostrando $1",
+		[0] = "يظهر $1",
+		[1] = "يظهر $1",
+		[2] = "يظهر $1",
+		[3] = "يظهر $1",
+		[4] = "يظهر $1",
+		[5] = "يظهر $1",
 	},
 	FLAGUSAGES = {
-		[0] = "Usado $1 vez en scripts: $2",
-		[1] = "Usado $1 veces en scripts: $2",
+		[0] = "استخدم $1 من مرات في الاسكربتات: $2",
+		[1] = "استخدم $1 من مرات في الاسكربتات: $2",
+		[2] = "استخدم $1 من مرات في الاسكربتات: $2",
+		[3] = "استخدم $1 من مرات في الاسكربتات: $2",
+		[4] = "استخدم $1 من مرات في الاسكربتات: $2",
+		[5] = "استخدم $1 من مرات في الاسكربتات: $2",
 	},
 	NOTALLTILESVALID = {
-		[-1] = "$1 tile is not a valid whole number greater than or equal to 0",
-		[-2] = "$1 tiles are not a valid whole number greater than or equal to 0",
+		[0] = "الخلية $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
+		[1] = "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
+		[2] = "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
+		[3] = "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
+		[4] = "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
+		[5] = "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر.",
 	},
 	BYTES = {
-		[0] = "$1 byte",
-		[1] = "$1 bytes",
+		[0] = "$1 بايت",
+		[1] = "$1 بايتات",
+		[2] = "$1 بايتات",
+		[3] = "$1 بايتات",
+		[4] = "$1 بايتات",
+		[5] = "$1 بايتات",
 	},
 	LITERALNULLS = {
-		[0] = "Hay $1 byte nulo!",
-		[1] = "Hay $1 bytes nulos!",
+		[0] = "يوجد $1 بايت مصفر!",
+		[1] = "يوجد $1 من البايتات المصفرة!",
+		[2] = "يوجد $1 من البايتات المصفرة!",
+		[3] = "يوجد $1 من البايتات المصفرة!",
+		[4] = "يوجد $1 من البايتات المصفرة!",
+		[5] = "يوجد $1 من البايتات المصفرة!",
 	},
 	XMLNULLS = {
-		[0] = "Hay $1 caracter XML nulo!",
-		[1] = "Hay $1 caracteres XML nulos!",
+		[0] = "يوجد $1 رمز XML مصفر!",
+		[1] = "يوجد $1 من رموز XML المصفرة!",
+		[2] = "يوجد $1 من رموز XML المصفرة!",
+		[3] = "يوجد $1 من رموز XML المصفرة!",
+		[4] = "يوجد $1 من رموز XML المصفرة!",
+		[5] = "يوجد $1 من رموز XML المصفرة!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
-		[-1] = "$1 image customized",
-		[-2] = "$1 images customized",
+		[0] = "$1 صورة خصصت",
+		[1] = "$1 من الصور خصصت",
+		[2] = "$1 من الصور خصصت",
+		[3] = "$1 من الصور خصصت",
+		[4] = "$1 من الصور خصصت",
+		[5] = "$1 من الصور خصصت",
 	},
 	NUM_SOUNDS_CUSTOMIZED = {
-		[-1] = "$1 sound effect customized",
-		[-2] = "$1 sound effects customized",
+		[0] = "$1 مؤثرات صوتية خصصت",
+		[1] = "$1 من المؤثرات الصوتية خصصت",
+		[2] = "$1 من المؤثرات الصوتية خصصت",
+		[3] = "$1 من المؤثرات الصوتية خصصت",
+		[4] = "$1 من المؤثرات الصوتية خصصت",
+		[5] = "$1 من المؤثرات الصوتية خصصت",
 	},
 }
 
 toolnames = {
 
-"Pared",
-"Fondo",
-"Espina",
-"Trinket",
-"Checkpoint",
-"Plataforma desapareciendo",
-"Transportador",
-"Plataforma moviendose",
-"Enemigo",
-"Linea de gravedad",
-"Texto de habitacion",
-"Terminal",
-"Caja de scripts",
-"Token de warp",
-"Linea de warp",
-"Compañero",
-"Punto de inicio",
+"حائط",
+"خلفية",
+"إبرة",
+"مقتنى",
+"نقطة حفظ",
+"منصة متلاشية",
+"بساط متحرك",
+"منصة متحركة",
+"عدو",
+"خط جاذبية",
+"نص الغرفة",
+"حاسب",
+"صندوق اسكربت",
+"تذكرة تنقيلة",
+"خط تنقيلة",
+"زميل",
+"نقطة البدء",
 
 }
 
 subtoolnames = {
 
-[1] = {"Brocha 1x1", "Brocha 3x3", "Brocha 5x5", "Brocha 7x7", "Brocha 9x9", "Llenar horizontalmente", "Llenar verticalmente", "Tamaño de bocha personalizado", "Cubeta de llenar", "Patata para Hacer Cosas que son Magicas"},
+[1] = {"فرشاة 1×1", "فرشاة 3×3", "فرشاة 5×5", "فرشاة 7×7", "فرشاة 9×9", "تعبئة أفقية", "تعبئة عمودية", "تخصيص حجم الفرشاة", "تعبئة علبة الدهان", "بطاطس تنجز أمورا سحرية"},
 [2] = {},
-[3] = {"Auto 1", "Expandir auto. I+D", "Expandir auto. I", "Expandir auto. D"},
+[3] = {"تلقائي 1", "توسيع تلقائي يمين+يسار", "توسيع تلقائي يسار", "توسيع تلقائي يمين"},
 [4] = {},
-[5] = {"Vertical", "Volteado"},
+[5] = {"مستقيم", "معكوس"},
 [6] = {},
-[7] = {"D Pequeño", "I Pequeño", "D Grande", "I Grande"},
-[8] = {"Abajo", "Arriba", "Izquierda", "Derecha"},
+[7] = {"يمين صغير", "يسار صغير", "يمين عريض", "يسار عريض"},
+[8] = {"تحت", "فوق", "يسار", "يمين"},
 [9] = {},
-[10] = {"Horizontal", "Vertical"},
+[10] = {"أفقي", "عمودي"},
 [11] = {},
 [12] = {},
 [13] = {},
-[14] = {"Entrada", "Salida"},
+[14] = {"مدخل", "مخرج"},
 [15] = {},
-[16] = {"Rosa", "Amarillo", "Rojo", "Verde", "Azul", "Azul claro", "Al azar"},
-[17] = {"Mirar derecha", "Mirar izquierda"},
+[16] = {"وردي", "أصفر", "أحمر", "أخضر", "أزرق", "سماوي", "عشوائي"},
+[17] = {"ملتفت لليمين", "ملتفت لليسار"},
 
 }
 
@@ -778,140 +822,140 @@ warpdirs = {
 [0] = "x",
 [1] = "H",
 [2] = "V",
-[3] = "T",
+[3] = "A",
 
 }
 
 warpdirchangedtext = {
 
-[0] = "Warp de habitacion desactivado",
-[1] = "Direccion de warp horizontal",
-[2] = "Direccion de warp vertical",
-[3] = "Direccion de warp son todas las direcciones",
+[0] = "تنقيل حواف الغرفة معطل",
+[1] = "تنقيل حواف الغرفة حدد للأفقي",
+[2] = "تنقيل حواف الغرفة حدد للعمودي",
+[3] = "تنقيل حواف الغرفة حدد لكل الاتجاهات",
 
 }
 
 langtilesetnames = {
 
-short0 = "Estc. Espac.",
-long0 = "Estacion Espacial",
-short1 = "Afuera",
-long1 = "Afuera",
-short2 = "Laboratorio",
-long2 = "Laboratorio",
-short3 = "Zona Warp",
-long3 = "Zona Warp",
-short4 = "Nave",
-long4 = "Nave",
-short5 = "Torre",
-long5 = "Torre",
+short0 = "محطة الفضاء",
+long0 = "المحطة الفضائية",
+short1 = "فضاء خارجي",
+long1 = "الفضاء الخارجي",
+short2 = "المخبر",
+long2 = "المخبر",
+short3 = "نطاق التنقيل",
+long3 = "منطقة التنقيل",
+short4 = "السفينة",
+long4 = "السفينة",
+short5 = "البرج",
+long5 = "البرج",
 
 }
 
-ERR_VEDHASCRASHED = "Ved ha crasheado!"
-ERR_VEDVERSION = "Version de Ved:"
-ERR_LOVEVERSION = "Version de LÖVE:"
-ERR_STATE = "Estado:"
-ERR_OS = "SO:"
-ERR_TIMESINCESTART = "Tiempo desde el inicio:"
-ERR_PLUGINS = "Plugins:"
-ERR_PLUGINSNOTLOADED = "(no cargado)"
-ERR_PLUGINSNONE = "(ninguno)"
-ERR_PLEASETELLDAV = "Porfavor dile a Dav999 sobre este problema.\n\n\nDetalles: (presione CTRL/CMD+C para copiarlo al portapapeles)\n\n"
-ERR_INTERMEDIATE = " (version intermedia)" -- pre-release version, so a version in between officially released versions
-ERR_TOONEW = " (muy nueva)"
+ERR_VEDHASCRASHED = "تعطل محرر Ved !"
+ERR_VEDVERSION = "إصدار Ved :"
+ERR_LOVEVERSION = "إصدار LÖVE :"
+ERR_STATE = "الحالة:"
+ERR_OS = "نظام التشغيل:"
+ERR_TIMESINCESTART = "الوقت منذ البدء:"
+ERR_PLUGINS = "المكونات الإضافية:"
+ERR_PLUGINSNOTLOADED = "(غير محمل)"
+ERR_PLUGINSNONE = "(بدون)"
+ERR_PLEASETELLDAV = "يرجى إبلاغ المطور Dav999 عن المشكلة.\n\n\nالتفاصيل: (اضغط زر الأوامر Ctrl/Cmd + زر C للنسخ إلى الحافظة)\n\n"
+ERR_INTERMEDIATE = " (نسخة انتقالية)" -- pre-release version, so a version in between officially released versions
+ERR_TOONEW = " (جديدة أكثر من اللازم)"
 
-ERR_PLUGINERROR = "Error de plugin!"
-ERR_FILE = "Archivo para editar:"
-ERR_FILEEDITORS = "Plugins que editan el archivo:"
-ERR_CURRENTPLUGIN = "Plugin que causo el error:"
-ERR_PLEASETELLAUTHOR = "Se suponia que un plugin haga una editacion para codificar en Ved, pero el codigo para editar no se encontro.\nEs posible que esto se haya causado por un conflicto entre dos plugins, o una actualizacion de Ved ha roto este plugin.\nDetalles: (presione CTRL/CMD+C para copiar al portapapeles)\n\n"
-ERR_CONTINUE = "Puedes continuar al presionar ESC o enter, pero esta editacion fallida podria causar problemas."
-ERR_OPENPLUGINSFOLDER = "Puedes abrir la carpeta de plugins al presionar F, para arrelar o remover el plugin que ofende. O si no, puedes reiniciar Ved."
-ERR_REPLACECODE = "No se pudo encontrar esto en %s.lua:"
-ERR_REPLACECODEPATTERN = "No se pudo encontrar esto en %s.lua (como patron):"
-ERR_LINESTOTAL = "%i lineas en total"
+ERR_PLUGINERROR = "خطأ في المكون الإضافي!"
+ERR_FILE = "الملف الذي سيحرر:"
+ERR_FILEEDITORS = "المكون الإضافي الذي يحرر هذا الملف:"
+ERR_CURRENTPLUGIN = "المكون الإضافي الذي سبب هذا الخطأ:"
+ERR_PLEASETELLAUTHOR = "كان يفترض بمكون إضافي أن يطبق تعديلا على برمجة في محرر Ved، إلا أننا لم نجد البرمجة الأصلية التي كان سيقع استبدالها.\nمن الوارد أن تضاربا بين مكونين إضافيين سبب هذا، أو أن تحديثا لمحرر Ved أفسد التوافق مع هذا المكون الإضافي.\n\nالتفاصيل: (يرجى ضغط زر الأوامر (Ctrl/Cmd) + الزر C لنسخ التفاصيل إلى الحافظة)\n\n"
+ERR_CONTINUE = "يمكنك المواصلة بضغط ESC أو Enter ، لكن انتبه لكون هذا التعديل الفاشل قد يتسبب بمشاكل أخرى."
+ERR_OPENPLUGINSFOLDER = "يمكنك فتح مجلد المكونات الإضافية بضغط F ، وهكذا يمكنك إصلاح أو نزع المكون الإضافي الذي يسبب المشكلة. بعد ذلك، أعد تشغيل Ved ."
+ERR_REPLACECODE = "فشل إيجاد هذا في %s.lua :"
+ERR_REPLACECODEPATTERN = "فشل إيجاد هذا في %s.lua (بمثابة نمط) :"
+ERR_LINESTOTAL = "%i سطر إجمالا"
 
-ERR_SAVELEVEL = "Para guardar una copia de tu nivel, presione S"
-ERR_SAVESUCC = "Nivel guardado con exito como %s!"
-ERR_SAVEERROR = "Error de guardado! %s"
-ERR_LOGSAVED = "Mas informacion se puede encontrar en el log:\n%s"
+ERR_SAVELEVEL = "لحفظ نسخة من المستوى، اضغط S"
+ERR_SAVESUCC = "نجح حفظ المستوى تحت %s !"
+ERR_SAVEERROR = "خطأ حفظ!  %s"
+ERR_LOGSAVED = "يمكن العثور على المزيد من المعلومات في سجل الأعطال:\n%s"
 
 
 diffmessages = {
 	pages = {
-		levelproperties = "Propiedades del nivel",
-		changedrooms = "Habitaciones cambiadas",
-		changedroommetadata = "Metadatos de la habitacion cambiada",
-		entities = "Entidades",
-		scripts = "Scripts",
-		flagnames = "Nombres de flags",
-		levelnotes = "Notas del nivel",
+		levelproperties = "خاصيات المستوى",
+		changedrooms = "الغرف المغيرة",
+		changedroommetadata = "معلومات الغرف المغيرة",
+		entities = "الكيانات",
+		scripts = "الاسكربتات",
+		flagnames = "أسماء الرايات",
+		levelnotes = "ملحوظات المستوى",
 	},
 	levelpropertiesdiff = {
-		Title = "El nombre se cambia de \"$1\" a \"$2",
-		Creator = "El autor se cambio de \"$1\" a \"$2\"",
-		website = "El sitio web se cambio de \"$1\" a \"$2\"",
-		Desc1 = "La desc. 1 se cambio de \"$1\" a \"$2\"",
-		Desc2 = "La desc. 2 se cambio de \"$1\" a \"$2\"",
-		Desc3 = "La desc. 3 se cambio de \"$1\" a \"$2\"",
-		mapsize = "El tamaño del mapa se cambio de $1x$2 a $3x$4",
-		mapsizenote = "NOTA: El tamaño del mapa se cambio de $1x$2 a $3x$4.\\o\nLas habitaciones fuera de $5x$6 no se enlistaran.\\o",
-		levmusic = "La musica del nivel se cambio de $1 a $2",
+		Title = "تغير الاسم من \"$1\" إلى \"$2\"",
+		Creator = "تغير المؤلف من \"$1\" إلى \"$2\"",
+		website = "تغير موقع الويب من \"$1\" إلى \"$2\"",
+		Desc1 = "تغير الوصف Desc1 من \"$1\" إلى \"$2\"",
+		Desc2 = "تغير الوصف Desc2 من \"$1\" إلى \"$2\"",
+		Desc3 = "تغير الوصف Desc3 من \"$1\" إلى \"$2\"",
+		mapsize = "تغير حجم الخريطة من $1x$2 إلى $3x$4",
+		mapsizenote = "ملاحظة: تغير حجم الخريطة من $1x$2 إلى $3x$4.\\o\nالغرف خارج $5x$6 لم تدرج في القائمة.\\o",
+		levmusic = "تغيرت موسيقى المستوى من $1 إلى $2",
 	},
 	rooms = {
-		added1 = "Se añadio ($1,$2) ($3)\\G",
-		added2 = "Se añadio ($1,$2) ($3 -> $4)\\G",
-		changed1 = "Se cambio ($1,$2) ($3)\\Y",
-		changed2 = "Se cambio ($1,$2) ($3 -> $4)\\Y",
-		cleared1 = "Se borraron todas las tejas en ($1,$2) ($3)\\R",
-		cleared2 = "Se borraron todas las tejas en ($1,$2) ($3 -> $4)\\R",
+		added1 = "تمت إضافة ($1,$2) ($3)\\G",
+		added2 = "تمت إضافة ($1,$2) ($3 -> $4)\\G",
+		changed1 = "تم تغيير ($1,$2) ($3)\\Y",
+		changed2 = "تم تغيير ($1,$2) ($3 -> $4)\\Y",
+		cleared1 = "تم مسح كل الخلايا في ($1,$2) ($3)\\R",
+		cleared2 = "تم مسح كل الخلايا في ($1,$2) ($3 -> $4)\\R",
 	},
 	roommetadata = {
-		changed0 = "Habitacion $1,$2:",
-		changed1 = "Habitacion $1,$2 ($3):",
-		roomname = "El nombre de la habitacion se cambio de \"$1\" a \"$2\"\\Y",
-		roomnameremoved = "El nombre de la habitacion \"$1\" se removio\\R",
-		roomnameadded = "Se llamo la habitacion \"$1\"\\G",
-		tileset = "El set y color de tejas $1 y $2 se cambio a $3 y $4\\Y",
-		platv = "La velocidad de plataforma se cambio de $1 a $2\\Y",
-		enemytype = "El tipo de enemigo se cambio de $1 a $2\\Y",
-		platbounds = "Los limites de plataformas se cambiaron de $1,$2,$3,$4 a $5,$6,$7,$8\\Y",
-		enemybounds = "Los limites de enemigos se cambiaron de $1,$2,$3,$4 a $5,$6,$7,$8\\Y",
-		directmode01 = "Modo directo habilitado\\G",
-		directmode10 = "Modo directo desactivado\\R",
-		warpdir = "Direccion de warp se cambio de $1 a $2\\Y",
+		changed0 = "الغرفة $1,$2:",
+		changed1 = "الغرفة $1,$2 ($3):",
+		roomname = "اسم الغرفة \"$1\" غير إلى \"$2\"\\Y",
+		roomnameremoved = "اسم الغرفة \"$1\" حذف\\R",
+		roomnameadded = "الغرفة سميت \"$1\"\\G",
+		tileset = "مجموعة خ $1 بلون $2 غيرت إلى مجموعة خ $3 بلون $4\\Y",
+		platv = "سرعة المنصة غيرت من $1 إلى $2\\Y",
+		enemytype = "نوع الأعداء غير من $1 إلى $2\\Y",
+		platbounds = "نطاق المنصات غير من $1,$2,$3,$4 إلى $5,$6,$7,$8\\Y",
+		enemybounds = "نطاق الأعداء غير من $1,$2,$3,$4 إلى $5,$6,$7,$8\\Y",
+		directmode01 = "الوضع المباشر مفعل\\G",
+		directmode10 = "الوضع المباشر معطل\\G",
+		warpdir = "اتجاه التنقيل تغير من $1 إلى $2\\Y",
 	},
 	entities = {
-		added = "Se añadio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\G",
-		removed = "Se removio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\R",
-		changed = "Se cambio el tipo de entidad $1 en la posicion $2,$3 en la habitacion ($4,$5)\\Y",
-		changedtype = "Se cambio el tipo de entidad $1 a tipo $2 en la posicion $3,$4 en la habitacion ($5,$6)\\Y",
-		multiple1 = "Se cambiaron las entidades en la posicion $1,$2 en la habitacion ($3,$4):\\Y",
-		multiple2 = "a:",
-		addedmultiple = "Se añadieron entidades en la posicion $1,$2 en la habitacion ($3,$4):\\G",
-		removedmultiple = "Se removieron entidades en la posicion $1,$2 en la habitacion ($3,$4):\\R",
-		entity = "Tipo $1",
-		incomplete = "No se aguantaron todas las entidades! Porfavor reportale esto a Dav.\\r",
+		added = "أضفت نوع الكيان $1 في الموضع $2,$3 في الغرفة ($4,$5)\\G",
+		removed = "نزعت نوع الكيان $1 من الموضع $2,$3 في الغرفة ($4,$5)\\R",
+		changed = "غيرت نوع الكيان $1 في الموضع $2,$3 في الغرفة ($4,$5)\\Y",
+		changedtype = "غيرت نوع الكيان $1 إلى النوع $2 في الموضع $3,$4 في الغرفة ($5,$6)\\Y",
+		multiple1 = "غيرت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\Y",
+		multiple2 = "إلى:",
+		addedmultiple = "أضفت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\G",
+		removedmultiple = "نزعت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\R",
+		entity = "النوع $1",
+		incomplete = "لم يتم التعامل مع كل الكيانات! يرجى إبلاغ المطور Dav بهذا.\\r",
 	},
 	scripts = {
-		added = "Se añadio el script \"$1\"\\G",
-		removed = "Se removio el script \"$1\"\\R",
-		edited = "Se edito el script \"$1\"\\Y",
+		added = "أضفت الاسكربت \"$1\"\\G",
+		removed = "نزع الاسكربت \"$1\"\\R",
+		edited = "حررت الاسكربت \"$1\"\\Y",
 	},
 	flagnames = {
-		added = "Se nombro el flag $1 como \"$2\"\\G",
-		removed = "Se le removio el nombre \"$1\" al flag $2\\R",
-		edited = "Se cambio el nombre al flag $1 de \"$2\" a \"$3\"\\Y",
+		added = "عينت للراية $1 الاسم \"$2\"\\G",
+		removed = "أزلت الاسم \"$1\" من الراية $2\\R",
+		edited = "غيرت اسم الراية $1 من \"$2\" إلى \"$3\"\\Y",
 	},
 	levelnotes = {
-		added = "Se añadio una nota del nivel \"$1\"\\G",
-		removed = "Se removio una nota del nivel \"$1\"\\R",
-		edited = "Se edito una nota del nivel \"$1\"\\Y",
+		added = "أضفت ملحوظة المستوى \"$1\"\\G",
+		removed = "نزعت ملحوظة على الخريطة \"$1\"\\R",
+		edited = "حررت ملحوظة المستوى \"$1\"\\Y",
 	},
 	mde = {
-		added = "Se añadio una entidad de metadatos.\\G",
-		removed = "Se removio una entidad de metadatos.\\R",
+		added = "وحدة بيانات التعريف أضيفت.\\G",
+		removed = "وحدة بيانات التعريف حذفت.\\R",
 	},
 }
 
@@ -987,237 +1031,231 @@ Room for 82 characters on a line (85, but the last three characters will have a 
 
 {
 splitid = "010_Getting_started",
-subj = "Comenzando",
+subj = "Getting started",
 imgs = {},
 cont = [[
-Comenzando\wh#
+Getting started\wh#
 \C=
 
-Este articulo te ayudara a comenzar a usar Ved. Para comenzar con usar el
-editor, deberás cargar un nivel, o crear uno nuevo.
+This article will help you get started with using Ved. To get started with using
+the editor, you need to load a level, or create a new one.
 
 
-El editor\h#
+The editor\h#
 
-En el lado izquierdo, encontraras la selección de herramientas. La mayoría de las
-herramientas tienen sub-herramientas que se listaran a su derecha. Para cambiar la
-herramienta, use su atajo respectivo o desplace con Shift o Ctrl presionado. Para
-cambiar a sub-herramienta, puede desplazar adonde sea. Para mas información
-sobre las herramientas, referir a la pagina de ayuda ¤Tools\nwl.
-Las entidades se pueden clickear con el boton derecho para un menu de acciones
-para esa entidad. Para borrar las entidades sin usar el menú de contexto, presione
-el boton derecho al presionar Shift en ellas.
-En el lado derecho de la pantalla, encontraras muchos botones y opciones. Los
-botones superiores se relacionan a el nivel entero, los botones inferiores (debajo
-de opciones de habitación) son específicos a la habitación actual. Para mas
-información sobre esos botones, referir a las paginas de ayuda respectivas, si
-disponibles.
+On the left side, you will find the tools selection. Most tools have subtools that
+will be listed to the right of it. To switch between tools, use their respective
+shortcut or scroll with Shift or Ctrl held down. To switch between subtools, you
+can scroll anywhere. For more information about the tools, refer to the ¤Tools\nwl
+help page.
+Entities can be right clicked for a menu of actions for that entity. To delete
+entities without having to use the context menu, Shift-right click on them.
+On the right side of the screen, you will find many buttons and options. The upper
+buttons are related to the entire level, the lower buttons (under Room options)
+are specific to the current room. For more information about those buttons, refer
+to the respective help pages, where available.
 
-Carpeta de niveles\h#
+Levels folder\h#
 
-Ved normalmente usara la misma carpeta para almacenar niveles que usa
-VVVVVV, así que es fácil cambiar el editor de niveles de VVVVVV al de Ved
-y viceversa. Si Ved no detecta su carpeta de VVVVVV correctamente, puede
-entrar un camino personalizado en las opciones de Ved.
+Ved will normally use the same folder for storing levels as VVVVVV does, so it is
+easy to switch from VVVVVV's level editor to Ved and vice versa. If Ved does not
+detect your VVVVVV folder correctly, you can enter a custom path in the Ved
+options.
 ]]
 },
 
 {
 splitid = "020_Tile_placement_modes",
-subj = "Modos de poner tejas",
+subj = "Tile placement modes",
 imgs = {"images/demo_auto.png", "images/demo_auto2.png", "images/demo_manual.png"},
 cont = [[
-Modos de poner tejas\wh#
+Tile placement modes\wh#
 \C=
 
-Ved soporta tres modos diferentes para dibujar tejas.
+Ved supports three different modes to draw tiles.
 
-     Modo automático\h#0
+     Automatic mode\h#0
 
-          Este modo es al mas fácil de usar. En este modo, puedes dibujar
-          paredes y fondos y los bordes se ajustaran automáticamente
-          correctamente. Pero al editar en este modo, todas las paredes y
-          fondos en la habitación deben usar el mismo set y color de tejas.
+          This is the mode that is easiest to use. In this mode, you can draw
+          walls and backgrounds and the edges will automatically get placed
+          correctly. However, while editing in this mode, all walls and
+          backgrounds in the room must use the same tileset and color.
 
-     Modo de multi-set\h#1
+     Multi-tileset mode\h#1
 
-          Este es muy similar al modo automático. excepto que puedes tener
-          múltiples sets en la misma habitación. Eso es, cambiar el set no
-          afectara paredes y fondos ya puestos, y puedes dibujar en multiples
-          diferentes tipos de tejas en la misma habitaciones.
+          This is similar to automatic mode, except that you can have multiple
+          different tilesets in the same room. That is, changing the tileset will
+          not affect already-placed walls and backgrounds, and you can draw in
+          multiple different types of tiles in the same room.
 
-     Modo manual\h#2
+     Manual mode\h#2
 
-          También llamado Modo Directo, en este modo puedes poner cualquier
-          teja manualmente, asi que no estas encadenado a las combinaciones de
-          sets predefinidos y bordes no se ajustaran solas, dándote control
-          completo de como se vera la habitación. Pero este modo es muy lento de
-          usar.
+          Also called Direct Mode, in this mode you can place down any tile
+          manually, so you are not bound to the pre-defined tileset combinations
+          and edges will not automatically get added to walls, giving you complete
+          control over how the room will look. However, this editing mode is often
+          slower to use.
 ]]
 },
 
 {
 splitid = "030_Tools",
-subj = "Herramientas",
+subj = "Tools",
 imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
 cont = [[
-Herramientas\wh#
+Tools\wh#
 \C=
 
-Puedes usar estas herramientas para llenar habitaciónes en tu nivel:
+You can use the following tools to fill rooms in your level:
 
 \0
-   Pared\h#
+   Wall\h#
 
 
-La herramienta de pared se usa para poner paredes.
+The wall tool can be used to place walls.
 
 \1
-   Fondo\h#
+   Background\h#
 
 
-La herramienta de fondo se usa para poner fondos.
+The background tool can be used to place backgrounds.
 
 \2
-   Espina\h#
+   Spike\h#
 
 
-La herramienta de espina se usa para poner espinas. Puedes usar la subherramienta
-de expander para poner espinas en una superficie en un click (o tambien deslizar).
+The spike tool can be used to place spikes. You can use the expand subtool to
+place spikes on a surface with one click (or slide).
 
 \3
    Trinket\h#
 
 
-La herramienta de trinket se usa para poner trinkets. Porfavor note que hay un
-limite de veinte trinkets en un nivel.
+The trinket tool can be used to place trinkets. Please note that there is a limit
+of twenty trinkets in a level.
 
 \4
    Checkpoint\h#
 
 
-La herramienta de checkpoint se usa para poner checkpoints.
+The checkpoint tool can be used to place checkpoints.
 
 \5
-   Plataforma desvaneciente\h#
+   Disappearing platform\h#
 
 
-La herramienta de plataforma desvaneciente se usa para poner plataformas
-que desaparecen.
+The disappearing platform tool can be used to place disappearing platforms.
 
 \6
-   Transportador\h#
+   Conveyor\h#
 
 
-La herramienta de transportador se usa para poner transportadores.
+The conveyor tool can be used to place conveyors.
 
 \7
-   Plataforma moviendose\h#
+   Moving platform\h#
 
 
-La herramienda de plataforma moviendose se usa para poner plataformas que se
-mueven.
+The moving platform tool can be used to place moving platforms.
 
 \8
-   Enemigo\h#
+   Enemy\h#
 
 
-La herramienta de enemigos se usa para poner enemigos. El color y forma del
-enemigo es determinado por el tipo de enemigo y el color del set respectivamente.
+The enemy tool can be used to place enemies. The shape and color of the enemy are
+determined by the enemy type setting and the tileset (color) respectively.
 
 \9
-   Linea de gravedad\h#
+   Gravity line\h#
 
 
-La herramienta de linea de gravedad se usa para poner lineas de gravedad.
+The gravity line tool can be used to place gravity lines.
 
 \^0
-   Texto de habitacion\h#
+   Roomtext\h#
 
 
-La herramienta de texto de habitación se usa para poner texto.
+The roomtext tool can be used to place text.
 
 \^1
    Terminal\h#
 
 
-La herramienta de terminal se usa para poner terminales. Primero pon la
-terminal, luego pon un nombre para el script. Para mas información sobre scripts,
-porfavor referir a las referencias de scripts.
+The terminal tool can be used to place terminals. First place the terminal, then
+type a name for the script. For more information about scripting, please refer to
+the scripting references.
 
 \^2
-   Caja de script\h#
+   Script box\h#
 
 
-La herramienta de caja de scripts se usa para poner cajas de scripts. Primero
-haz click en el borde superior izquierdo, luego en el borde inferior derecho,
-luego escribe un nombre para el script. Para mas información sobre scripts,
-porfavor referir a las referancias de scripts.
+The script box tool can be used to place script boxes. First click on the top left
+corner, then on the bottom right corner, then type a name for the script. For more
+information about scripting, please refer to the scripting references.
 
 \^3
-   Token de warp\h#
+   Warp token\h#
 
 
-La herramienta del token de warp se usa para poner tokens de warp. Primero
-haz click donde la entrada deberia estar, luego donde la salida deberia estar.
+The warp token tool can be used to place warp tokens. First click where the
+entrance should be, then where the exit should be.
 
 \^4
-   Linea de warp\h#
+   Warp line\h#
 
 
-La herramienta de linea de warp se usa para poner lineas de warp. Porfavor note
-que las lineas de warp solo se pueden poner en los bordes de una habitación.
+The warp line tool can be used to place warp lines. Please note that warp lines
+can only be placed on the edges of a room.
 
 \^5
-   Compañero\h#
+   Crewmate\h#
 
 
-La herramienta de compañeros se usa para poner compañeros desaparecidos que
-pueden ser rescatados. Si todos los compañeros son rescatados, el nivel terminara.
-Porfavor note que hay un limite de veinte compañeros desaparecidos en un nivel.
+The crewmate tool can be used to place missing crewmates that can be rescued. If
+all crewmates are rescued, the level will be finished. Please note that there is
+a limit of twenty missing crewmates in a level.
 
 \^6
-   Punto de comienzo\h#
+   Start point\h#
 
 
-La herramienta de punto de comienzo se usa para poner el punto de comienzo.
+The start point tool can be used to place the start point.
 ]]
 },
 {
 splitid = "040_Script_editor",
-subj = "Editor de scripts",
+subj = "Script editor",
 imgs = {},
 cont = [[
-Editor de scripts\wh#
+Script editor\wh#
 \C=
 
-Con el editor de scripts, puedes gestionar y editar scripts en tu nivel.
+With the script editor, you can manage and edit scripts in your level.
 
 
-Nombres de flags\h#
+Flag names\h#
 
-Por conveniencia y legibilidad de los scripts, es posible usar nombres de flags
-en vez de números. Cuando use un nombre en vez de un número, un número se
-asociara automaticamente con ese nombre, en el fondo. Tambien es posible elegir
-que número usar para cual nombre de flag.
+For convenience and script readability, it is possible to use flag names instead
+of numbers. When you use a name instead of a number, a number will automatically
+be associated with that name, in the background. It is also possible to choose
+which number to use for which flag name.
 
-Modo de script interno\h#
+Internal scripting mode\h#
 
-Para usar scripts internos en Ved, puedes habilitar el modo de scripting interno
-en el editor, para encargarse de todos los comandos en ese script como
-internos. Mire Int.sc mode¤ para mas informació sobre el modo de scripting\w|
-interno. Para mas información sobre scripting interno, mire la referencia de
-scripting interno.
+To use internal scripting in Ved, you can enable internal scripting mode in the
+editor, to handle all commands in that script as internal scripting. See
+Int.sc mode¤ for more information about internal scripting mode. For more\wl
+information about internal scripting, check the internal scripting reference.
 
-Dividiendo scripts\h#
+Splitting scripts\h#
 
-Es posible dividir un script en dos con el editor. Despues de poner el cursor
-de texto en la primera linea que quieres que este en el nuevo script, clickee
-el boton de Dividir y entre el nombre del nuevo script. Las lineas antes del cursor
-permaneceran en el script original, las lineas despues del cursor seran movidas
-al nuevo script.
+It is possible to split a script in two scripts with the script editor. After
+putting the text cursor on the first line you want to be in the new script, click
+the Split button and enter the name of the new script. The lines before the cursor
+will remain in the original script, the lines from the cursor onward will be moved
+to the new script.
 
-Saltar a scripts\h#
+Jumping to scripts\h#
 
 On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
 is possible to jump to the given script by clicking the "Go to" button when the

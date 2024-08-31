@@ -7,6 +7,7 @@ languages = {
 	fr = "fr",
 	es_AR = "es_AR",
 	id = "id",
+	ar = "ar"
 }
 
 langdir_path = "../../Source/lang" -- must not include a trailing /
