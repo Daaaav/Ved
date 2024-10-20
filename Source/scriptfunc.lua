@@ -792,6 +792,8 @@ function script_compile(readable_script)
 
 		if partss_scriptcasing[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
 			textlinestogo = anythingbutnil0(partss[5])
+		elseif partss_scriptcasing[1] == "setroomname" or partss_scriptcasing[1] == "setactivitytext" then
+			textlinestogo = 1
 		end
 
 		-- Would be a good idea to stop accidental script splits from happening... People could much better use the actual split button
