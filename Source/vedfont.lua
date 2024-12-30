@@ -647,6 +647,55 @@ function cVedFont:buf_wordwrap(max_width)
 	-- Returns the total number of lines.
 	-- max_width can be nil to indicate no limit (and is thus only useful for
 	-- getting the number of lines that are already in the text)
+
+	-- First, a special case:
+	-- If, after bidi, the whole thing fits on one line, then don't wordwrap at all.
+	-- This matters where Arabic ligatures are smaller than their regular forms,
+	-- causing lines to be split when they visibly didn't need to be split.
+	-- While it doesn't fix every case, it at least fixes all the prominent ones.
+	-- (and 1 line becoming 2 is a problem in many more places than 2 lines becoming 3)
+	local rtl = self:is_rtl()
+	if bidi ~= nil and bidi.bidi_should_transform_utf32(rtl, print_buf) then
+		-- If there are any newline characters, then forget about it *here*.
+		-- The bidi functions don't expect text with newlines.
+		local any_newlines = false
+		local i = 0
+		while i < print_buf_n-1 do
+			if print_buf[i] == 0 then
+				break
+			elseif print_buf[i] == 0x0A then
+				any_newlines = true
+				break
+			end
+
+			i = i + 1
+		end
+
+		if not any_newlines then
+			if max_width == nil then
+				-- Then it's gonna fit on one line too, right?
+				return 1
+			end
+
+			local buf = bidi.bidi_transform_utf32(rtl, print_buf, nil, 0)
+			local line_width = 0
+			i = 0
+
+			-- While the line fits, go through every character
+			while line_width <= max_width do
+				if buf[i] == 0 then
+					-- That's the end! So it fits! Skip the wordwrapping!
+					return 1
+				end
+				line_width = line_width + self:get_glyph_advance(buf[i])
+
+				i = i + 1
+			end
+		end
+
+		-- If we're here, then it didn't fit or there were multiple lines...
+	end
+
 	local lines = 1
 
 	local last_split, last_space = -1, -1
