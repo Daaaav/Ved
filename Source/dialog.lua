@@ -145,9 +145,20 @@ function cDialog:draw(topmost)
 	self:setColor(192,192,192,239)
 	love.graphics.rectangle("fill", self.x, self.y+self.windowani, self.width, self.height)
 	-- Text
+	local textalign = "left"
+	if font_ui:is_rtl() then
+		-- Only right-align if there are no (visible) fields
+		textalign = "right"
+		for k,v in pairs(self.fields) do
+			if v[DFP.T] ~= DF.HIDDEN then
+				textalign = "left"
+				break
+			end
+		end
+	end
 	self:setColor(0,0,0,255)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
-	ved_printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, "left")
+	ved_printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, textalign)
 	love.graphics.setScissor()
 
 	-- Text boxes

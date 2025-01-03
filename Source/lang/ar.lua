@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2024-12-11 04:39:21 (CET)
+--- Last converted: 2025-01-03 03:21:57 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -221,9 +221,9 @@ NOTSOLID = "لا ملموس",
 TSCOLOR = "اللون $1",
 
 LEVELSLIST = "المستويات",
-LOADTHISLEVEL = "فتح هذا المستوى: ",
-ENTERNAMESAVE = "يحفظ بهذا الاسم: ",
-SEARCHFOR = "البحث عن: ",
+LOADTHISLEVEL = "فتح هذا المستوى:",
+ENTERNAMESAVE = "يحفظ بهذا الاسم:",
+SEARCHFOR = "البحث عن:",
 
 VERSIONERROR = "فشل التحقق من الإصدار.",
 VERSIONUPTODATE = "إصدار محرر Ved عندك هو الأحدث توفرا.",
@@ -478,14 +478,14 @@ CANNOTUSENEWLINES = "لا يجوز استخدام الرمز \" $1 \" في أس�
 MUSICTITLE = "العنوان: ",
 MUSICARTIST = "الفنان: ",
 MUSICFILENAME = "اسم الملف: ",
-MUSICNOTES = "ملاحظات:",
+MUSICNOTES = "ملاحظات: ",
 SONGMETADATA = "بيانات التعريف للأغنية $1",
 MUSICFILEMETADATA = "بيانات تعريف الملف",
 MUSICEXPORTEDON = "تم تصديره: ", -- Followed by date and time
 SAVEMETADATA = "حفظ بيانات التعريف",
 SOUNDS = "الأصوات",
 GRAPHICS = "الرسوميات",
-FILEOPENERNAME = "الاسم: ",
+FILEOPENERNAME = "الاسم",
 PATHINVALID = "المسار غير صالح.",
 DRIVES = "الأقراص", -- like C: or F: on Windows
 DOFILTER = "إظهار * $1 فقط", -- "*.txt" for example
@@ -509,7 +509,7 @@ PLATVCHANGE_TITLE = "تغيير سرعة المنصة",
 PLATVCHANGE_MSG = "السرعة:",
 PLATVCHANGE_INVALID = "عليك كتابة قيمة عددية.",
 RENAMESCRIPTREFERENCES = "إعادة تسمية المراجع",
-PLATFORMSPEEDSLIDER = "سرعة:",
+PLATFORMSPEEDSLIDER = "سرعة",
 
 TRINKETS = "المقتنيات",
 LISTALLTRINKETS = "كل المقتنيات", -- "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
