@@ -102,24 +102,28 @@ function searchtext(this)
 end
 
 function highlightresult(text, result, x, y)
-	offsetchars = 1
+	local offsetchars = 1
 
 	result = escapegsub(result)
 
 	-- Well then, this changed into some awkward code
 	if result == "" or text:lower():find(result, 1) == nil then
-		ved_print(text, x+(offsetchars-1)*8, y)
+		font_level:print(text, x, y)
 	else
+		local pos, endpos
+		local offsetwidth = 0
 		repeat
 			pos, endpos = text:lower():find(result, offsetchars)
-			ved_print(text:sub(offsetchars, pos-1), x+(offsetchars-1)*8, y)
+			font_level:print(text:sub(offsetchars, pos-1), x+offsetwidth, y)
 			love.graphics.setColor(255,255,0,255)
-			ved_print(text:sub(pos, endpos), x+(pos-1)*8, y)
+			offsetwidth = font_level:getWidth(text:sub(1, pos-1))
+			font_level:print(text:sub(pos, endpos), x+offsetwidth, y)
 			love.graphics.setColor(255,255,255,255)
 			offsetchars = endpos + 1
+			offsetwidth = font_level:getWidth(text:sub(1, endpos))
 		until text:lower():find(result, offsetchars) == nil
 
-		ved_print(text:sub(endpos+1, -1), x+endpos*8, y)
+		font_level:print(text:sub(endpos+1, -1), x+offsetwidth, y)
 	end
 end
 
