@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2025-01-03 03:21:57 (CET)
+--- Last converted: 2025-01-03 03:37:49 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -270,7 +270,7 @@ FLAGS = "الرايات",
 ROOM = "غرفة",
 CONTENTFILLER = "المضمون",
 
-FLAGUSED = "مستخدم", -- preferably same length as L.FLAGNOTUSED
+FLAGUSED = "    مستخدم", -- preferably same length as L.FLAGNOTUSED
 FLAGNOTUSED = "غير مستخدم",
 FLAGNONAME = "بلا اسم",
 USEDOUTOFRANGEFLAGS = "استخدمت الرايات خارج النطاق:",

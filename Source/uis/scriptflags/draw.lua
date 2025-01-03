@@ -84,7 +84,11 @@ return function()
 					or L.FLAGNONAME
 				)
 			end
-			ved_print(text, ax+2, ay)
+			if font_ui:is_rtl() then
+				font_ui:printf(text, ax+2, ay, w, "right")
+			else
+				font_ui:print(text, ax+2, ay)
+			end
 		end
 	end
 
