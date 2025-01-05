@@ -349,8 +349,18 @@ return function()
 	end
 
 	if not backupscreen then
-		ved_print(L.LOADTHISLEVEL, 10, love.graphics.getHeight()-20)
-		newinputsys.print("levelname", font8:getWidth(L.LOADTHISLEVEL)+18, love.graphics.getHeight()-20)
+		local x_label, x_input = 10, 10
+		if font_ui:is_rtl() then
+			x_label = font_ui:getWidth(inputs.levelname) + 18 + 5
+			if inputs.levelname ~= "" then
+				love.graphics.setColor(255,255,255,48)
+			end
+		else
+			x_input = font_ui:getWidth(L.LOADTHISLEVEL) + 18
+		end
+		font_ui:print(L.LOADTHISLEVEL, x_label, love.graphics.getHeight()-20)
+		love.graphics.setColor(255,255,255,255)
+		newinputsys.print("levelname", x_input, love.graphics.getHeight()-20)
 	end
 
 	if not secondlevel then

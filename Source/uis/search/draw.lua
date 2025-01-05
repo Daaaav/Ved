@@ -1,8 +1,18 @@
 -- search/draw
 
 return function()
-	font_ui:print(L.SEARCHFOR, 12, 10)
-	newinputsys.print("search", font8:getWidth(L.SEARCHFOR)+20, 10, font_level)
+	local x_label, x_input = 12, 12
+	if font_ui:is_rtl() then
+		x_label = font_level:getWidth(inputs.search) + 20 + 5
+		if inputs.search ~= "" then
+			love.graphics.setColor(255,255,255,48)
+		end
+	else
+		x_input = font_ui:getWidth(L.SEARCHFOR) + 20
+	end
+	font_ui:print(L.SEARCHFOR, x_label, 10)
+	love.graphics.setColor(255,255,255,255)
+	newinputsys.print("search", x_input, 10, font_level)
 
 	font_ui:printf(langkeys(L.SEARCHRESULTS_SCRIPTS, {#searchscripts}), 8, 32+4, 284, "center")
 	font_ui:printf(langkeys(L.SEARCHRESULTS_ROOMS, {#searchrooms}), 8+284+4, 32+4, 284, "center")
