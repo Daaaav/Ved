@@ -3,16 +3,16 @@
 return function()
 	if musiceditor then
 		if musiceditorfile == "" then
-			ved_print(L.MUSICEDITOR, 16, 12)
+			font_ui:print(L.MUSICEDITOR, 16, 12)
 		else
-			ved_print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 12)
+			font_ui:print(L.MUSICEDITOR .. " - " .. musiceditorfile, 16, 12)
 		end
 	elseif soundviewer then
-		ved_print(L.SOUNDS, 16, 12)
+		font_ui:print(L.SOUNDS, 16, 12)
 	elseif musicplayerfile:sub(1, 6) == "level/" then
-		ved_print(musicplayerfile:sub(7), 16, 12)
+		font_ui:print(musicplayerfile:sub(7), 16, 12)
 	else
-		ved_print(musicplayerfile, 16, 12)
+		font_ui:print(musicplayerfile, 16, 12)
 	end
 	file_metadata, file_metadata_anyset = music_get_file_vvv_metadata(musicplayerfile)
 	local musicnamex_offset
@@ -125,7 +125,7 @@ return function()
 				love.graphics.setColor(255,0,0)
 			end
 			if soundviewer then
-				ved_print(
+				font_8x8:print(
 					"[" .. fixdig(m, 2) .. "] " .. list_sound_ids[m]:sub(1, -5),
 					musicnamex, 36+24*my
 				)
@@ -140,7 +140,7 @@ return function()
 				if num < 10 then
 					num = fixdig(num, 2)
 				end
-				ved_print(
+				font_8x8:print(
 					"[" .. num .. "] " .. normal_name,
 					musicnamex, 36+24*my
 				)
@@ -153,18 +153,18 @@ return function()
 					shown_name = song_metadata.name
 				end
 				love.graphics.setScissor(musicnamex+248, 36+24*my, 256, 8)
-				ved_print(shown_name, musicnamex+248, 36+24*my)
+				font_ui:print(shown_name, musicnamex+248, 36+24*my)
 				love.graphics.setScissor()
 			end
 			if audio == nil then
-				ved_print("-:--", musicdurationx, 36+24*my)
+				font_8x8:print("\u{200e}-:--", musicdurationx, 36+24*my)
 			else
-				ved_print(mmss_duration(audio:getDuration()), musicdurationx, 36+24*my)
+				font_8x8:print(mmss_duration(audio:getDuration()), musicdurationx, 36+24*my)
 			end
 			if filedata ~= nil then
 				local readable_size = bytes_notation(filedata:getSize())
 				love.graphics.setColor(128,128,128)
-				ved_print(readable_size, musicsizerx-font8:getWidth(readable_size), 36+24*my)
+				font_8x8:print(readable_size, musicsizerx-font8:getWidth(readable_size), 36+24*my)
 			end
 			love.graphics.setColor(255,255,255)
 		end
@@ -188,7 +188,7 @@ return function()
 			if music_page == page then
 				love.graphics.setColor(255,255,128)
 			end
-			ved_printf(page*16 .. "-" .. math.min(page*16+15, 126), btn_x+1, btn_y+4, 64, "center")
+			font_8x8:printf(page*16 .. "-" .. math.min(page*16+15, 126), btn_x+1, btn_y+4, 64, "center")
 			love.graphics.setColor(255,255,255,255)
 
 			if nodialog and love.mouse.isDown("l") and mouseon(btn_x, btn_y, 64, 16) then
@@ -208,9 +208,9 @@ return function()
 		love.graphics.draw(image.sound_play, 16, cura_y)
 		love.graphics.draw(image.sound_stop, 32, cura_y)
 		love.graphics.draw(image.sound_rewind, 48, cura_y)
-		ved_print("[--] -:--", 72, cura_y+4)
+		font_8x8:print("\u{200e}[--] -:--", 72, cura_y+4)
 		love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
-		ved_print("-:--", width+160, cura_y+4)
+		font_8x8:print("\u{200e}-:--", width+160, cura_y+4)
 		love.graphics.setColor(255,255,255)
 	else
 		hoverdraw(currentmusic_paused and image.sound_play or image.sound_pause, 16, cura_y, 16, 16)
@@ -222,7 +222,7 @@ return function()
 			-- LÖVE can sometimes fail to reset the time to 0 when looping if we started playing close to the end
 			elapsed = elapsed % duration
 		end
-		ved_print("[" .. fixdig(currentmusic%100, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
+		font_8x8:print("\u{200e}[" .. fixdig(currentmusic%100, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(16, cura_y, 16, 16) then
 				-- Play/pause
@@ -249,14 +249,14 @@ return function()
 			love.graphics.rectangle("fill", 152, cura_y+4, (elapsed/duration)*width, 8)
 			if nodialog and not mousepressed and mouseon(152, cura_y+4, width, 8) then
 				local mouse_elapsed = ((love.mouse.getX()-152)/width)*duration
-				ved_print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-10)
+				font_8x8:print(mmss_duration(mouse_elapsed), love.mouse.getX()-16, cura_y-10)
 				if love.mouse.isDown("l") then
 					current_audio:seek(mouse_elapsed)
 					mousepressed = true
 				end
 			end
 		end
-		ved_print(mmss_duration(duration), width+160, cura_y+4)
+		font_8x8:print(mmss_duration(duration), width+160, cura_y+4)
 		showhotkey(" ", 16+16, cura_y-2, ALIGN.RIGHT)
 		showhotkey("h", 48+16, cura_y-2, ALIGN.RIGHT)
 	end

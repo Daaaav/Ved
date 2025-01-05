@@ -2501,6 +2501,12 @@ function windowfits(w, h, monitorres)
 end
 
 function format_date(timestamp)
+	local prefix = ""
+	if font_ui:is_rtl() then
+		-- Left-to-right mark, so the format doesn't get messed up by bidi
+		prefix = "\u{200e}"
+	end
+
 	if timestamp == nil then
 		return ""
 	elseif type(timestamp) == "table" then
@@ -2527,18 +2533,18 @@ function format_date(timestamp)
 			)
 		end
 		if s.new_dateformat == "DMY" then
-			return string.format("%02d-%02d-%d %s",
+			return prefix .. string.format("%02d-%02d-%d %s",
 				timestamp[3], timestamp[2], timestamp[1],
 				timestring
 			)
 		elseif s.new_dateformat == "MDY" then
-			return string.format("%02d/%02d/%d %s",
+			return prefix .. string.format("%02d/%02d/%d %s",
 				timestamp[2], timestamp[3], timestamp[1],
 				timestring
 			)
 		end
 		-- YMD
-		return string.format("%d-%02d-%02d %s",
+		return prefix .. string.format("%d-%02d-%02d %s",
 			timestamp[1], timestamp[2], timestamp[3],
 			timestring
 		)
@@ -2557,7 +2563,7 @@ function format_date(timestamp)
 	else
 		datetimeformat = datetimeformat .. " %H:%M"
 	end
-	return os.date(datetimeformat, timestamp):lower()
+	return prefix .. os.date(datetimeformat, timestamp):lower()
 end
 
 function drawlink(link)
