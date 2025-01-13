@@ -75,7 +75,9 @@ function loadfonts_main()
 		end
 	end
 
-	font_ui = {}
+	font_ui = {
+		context = "ui"
+	}
 	font_ui_metatable = {
 		__index = function(table, index)
 			local f
@@ -89,13 +91,14 @@ function loadfonts_main()
 				f = font_8x8
 			end
 
-			f:set_context(index, "ui")
 			return f[index]
 		end
 	}
 	setmetatable(font_ui, font_ui_metatable)
 
-	font_level = {}
+	font_level = {
+		context = "level"
+	}
 	font_level_metatable = {
 		__index = function(table, index)
 			local font = "font"
@@ -114,13 +117,14 @@ function loadfonts_main()
 				f = font_8x8
 			end
 
-			f:set_context(index, "level")
 			return f[index]
 		end
 	}
 	setmetatable(font_level, font_level_metatable)
 
-	font_8x8 = {}
+	font_8x8 = {
+		context = "8x8"
+	}
 	font_8x8_metatable = {
 		__index = function(table, index)
 			assert(fonts_main["font"] ~= nil, "Main font is missing!")
@@ -130,7 +134,9 @@ function loadfonts_main()
 	setmetatable(font_8x8, font_8x8_metatable)
 
 	-- font8 is deprecated
-	font8 = {}
+	font8 = {
+		context = "8x8"
+	}
 	setmetatable(font8, font_8x8_metatable)
 end
 

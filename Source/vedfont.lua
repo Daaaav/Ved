@@ -71,7 +71,7 @@ cVedFont =
 	fallback_glyph_w = nil,
 	fallback_glyph_h = nil,
 
-	context = nil, -- "ui" or "level", set when using font_ui or font_level
+	context = nil, -- "ui", "level" or "8x8", only when using font_ui, font_level or font_8x8
 
 	image = nil,
 	chars = {},
@@ -638,8 +638,6 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 			offset + newline_continue
 		)
 	end
-
-	self.context = nil
 end
 
 function cVedFont:buf_wordwrap(max_width)
@@ -792,7 +790,6 @@ function cVedFont:getWrap(text, max_width)
 	end
 	if text == "" then
 		-- Only LÖVE 11.4 and up returns 1 line, and I needed 0...
-		self.context = nil
 		return 0, 0
 	end
 
@@ -854,8 +851,6 @@ function cVedFont:getWrap(text, max_width)
 		end
 	end
 
-	self.context = nil
-
 	return total_width, lines
 end
 
@@ -881,7 +876,6 @@ function cVedFont:get_bidi_layout(text)
 			bidi_layout[i].in_rtl_run = false
 		end
 		bidi_layout[codepoints].out_codepoint = 0
-		self.context = nil
 		return bidi_layout, codepoints-1
 	end
 
@@ -914,12 +908,10 @@ function cVedFont:get_bidi_layout(text)
 		end
 	end
 
-	self.context = nil
 	return bidi_layout, last
 end
 
 function cVedFont:is_rtl()
-	-- This function should only be used in functions listed below in :set_context
 	-- This function may never return nil! (cannot convert it to C bool)
 	if self.context == "ui" then
 		if langinfo ~= nil
@@ -935,21 +927,6 @@ function cVedFont:is_rtl()
 		return false
 	end
 	return false
-end
-
-function cVedFont:set_context(index, context)
-	-- Set the context (whether this font is accessed through font_ui/font_level or not),
-	-- but only for some functions which actually use it, and can unset it...
-	-- This is annoying, but it seems the least hacky way to determine whether you're here
-	-- by doing font_ui:print() versus font_level:print(), while also not getting misled
-	-- by doing something like font_level.glyph_w; fonts_main["font"]:print()...
-	if index == "print"
-	or index == "printf"
-	or index == "getWrap"
-	or index == "getWidth"
-	or index == "get_bidi_layout" then
-		self.context = context
-	end
 end
 
 function utf8_to_utf32(str, buf, buf_n)
