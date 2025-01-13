@@ -14,7 +14,12 @@ return function()
 
 	if not lsuccess and not backupscreen then
 		love.graphics.setColor(255,128,0)
-		ved_printf(langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}), 8, 24, love.graphics.getWidth()-136, "left")
+		font_ui:printf(
+			langkeys(L.COULDNOTGETCONTENTSLEVELFOLDER, {levelsfolder}),
+			8, 24,
+			love.graphics.getWidth()-136,
+			font_ui:align_start()
+		)
 		love.graphics.setColor(255,255,255)
 	else
 		hoveringlevel = nil
@@ -431,7 +436,12 @@ return function()
 			love.graphics.setColor(255,128,0)
 		end
 
-		ved_printf(updatecheck.get_status(), love.graphics.getWidth()-(128-8), 215, 128-16, "left")
+		font_ui:printf(
+			updatecheck.get_status(),
+			love.graphics.getWidth()-(128-8), 215,
+			128-16,
+			font_ui:align_start()
+		)
 		if intermediate_version then
 			love.graphics.setColor(255,255,255)
 		end

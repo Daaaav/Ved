@@ -199,28 +199,31 @@ return function()
 		love.graphics.setColor(255,255,255)
 	end
 
+	local bar_w = love.graphics.getWidth()-screenoffset-640
 	if (hoverx ~= nil) and (hovery ~= nil) then
+		local coordtext
 		if s.coords0 then
-			ved_print("(" .. hoverx .. "," .. hovery .. ")", screenoffset+640, 1)
+			coordtext = "(" .. hoverx .. "," .. hovery .. ")"
 		else
-			ved_print("(" .. (hoverx+1) .. "," .. (hovery+1) .. ")", screenoffset+640, 1)
+			coordtext = "(" .. (hoverx+1) .. "," .. (hovery+1) .. ")"
 		end
+		font_8x8:printf(coordtext, screenoffset+640, 1, bar_w, font_level:align_start())
 	end
 	if (hovername ~= nil) then
-		ved_printf(hovername, screenoffset+640, 9, love.graphics.getWidth()-screenoffset-640, "left")
+		font_level:printf(hovername, screenoffset+640, 12, bar_w, font_level:align_start())
 	end
 	if selectingrooms == 1 and selected1x == -1 then
 		-- Copy 1
-		ved_printf(L.SELECTCOPY1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		font_ui:printf(L.SELECTCOPY1, screenoffset+640, 80, bar_w, font_ui:align_start())
 	elseif selectingrooms == 1 then
 		-- Copy 2
-		ved_printf(L.SELECTCOPY2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		font_ui:printf(L.SELECTCOPY2, screenoffset+640, 80, bar_w, font_ui:align_start())
 	elseif selectingrooms == 2 and selected1x == -1 then
 		-- Swap 1
-		ved_printf(L.SELECTSWAP1, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		font_ui:printf(L.SELECTSWAP1, screenoffset+640, 80, bar_w, font_ui:align_start())
 	elseif selectingrooms == 2 then
 		-- Swap 2
-		ved_printf(L.SELECTSWAP2, screenoffset+640, 80, love.graphics.getWidth()-(screenoffset+640), "left")
+		font_ui:printf(L.SELECTSWAP2, screenoffset+640, 80, bar_w, font_ui:align_start())
 	end
 
 	local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17

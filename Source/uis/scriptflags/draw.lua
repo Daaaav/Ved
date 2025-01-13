@@ -84,11 +84,7 @@ return function()
 					or L.FLAGNONAME
 				)
 			end
-			if font_ui:is_rtl() then
-				font_ui:printf(text, ax+2, ay, w, "right")
-			else
-				font_ui:print(text, ax+2, ay)
-			end
+			font_ui:printf(text, ax+2, ay, w, font_ui:align_start())
 		end
 	end
 
