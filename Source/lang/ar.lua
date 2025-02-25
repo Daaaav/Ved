@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2025-01-03 03:37:49 (CET)
+--- Last converted: 2025-01-21 16:25:06 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -378,8 +378,8 @@ SELECTINGA = "جار التحديد - انقر أعلى اليسار",
 SELECTINGB = "جار اختيار: $1x$2",
 TILESETSRELOADED = "أعيد تحميل مجموعات الخلايا والسبرايتات",
 
-BACKUPS = "نسخ إحتياطية",
-BACKUPSOFLEVEL = "نسخ إحتياطية للملف $1",
+BACKUPS = "نسخ احتياطية",
+BACKUPSOFLEVEL = "نسخ احتياطية للملف $1",
 LASTMODIFIEDTIME = "آخر تغيير في الأصل", -- List header
 OVERWRITTENTIME = "مستبدل", -- List header
 SAVEBACKUP = "الحفظ إلى مجلد VVVVVV",
@@ -584,12 +584,12 @@ VVVVVV_VERSION_23PLUS = "2.3+",
 VVVVVV_VERSION_24PLUS = "2.4+",
 
 ALL_PLUGINS = "كل المكونات الإضافية",
-ALL_PLUGINS_MOREINFO = "للمزيد من المعلومات عن المكونات الإضافية يرجى زيارة ¤https://tolp.nl/ved/plugins.php¤هذه الصفحة¤.\\nLCl",
+ALL_PLUGINS_MOREINFO = ".¤https://tolp.nl/ved/plugins.php¤ هذه الصفحة¤ للمزيد من المعلومات عن المكونات الإضافية يرجى زيارة\\nLCl",
 ALL_PLUGINS_FOLDER = "مجلدك للمكونات الإضافية:",
 ALL_PLUGINS_NOPLUGINS = "ليس عندك بعد أي مكون إضافي.",
 
 PLUGIN_NOT_SUPPORTED = "[هذا المكون الإضافي غير مدعوم لأنه يتطلب Ved $1 على الأقل!]\\r",
-PLUGIN_AUTHOR_VERSION = "من $1، الإصدار $2", -- by Person, version 1.0.0
+PLUGIN_AUTHOR_VERSION = "من $1، الإصدار $2 ", -- by Person, version 1.0.0
 
 CREATE_LOAD_SCRIPT = "إنشاء اسكربت تحميل",
 

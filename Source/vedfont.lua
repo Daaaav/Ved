@@ -938,7 +938,7 @@ end
 
 function utf8_to_utf32(str, buf, buf_n)
 	-- Decodes an UTF-8 Lua string into a UTF-32 (uint32_t) buffer.
-	-- Will null-terminate the bufer.
+	-- Will null-terminate the buffer.
 	-- Returns the number of codepoints written (excluding null)
 	if str == nil or buf == nil then
 		error("attempt to decode UTF-8 with a nil value")
