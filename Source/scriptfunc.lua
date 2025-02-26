@@ -682,9 +682,9 @@ function script_compile(readable_script)
 
 			cons("Blocks:" .. #blocks)
 
-			for k,v in pairs(blocks) do
-				cons("Block: " .. v)
-			end
+			--for k,v in pairs(blocks) do
+			--	cons("Block: " .. v)
+			--end
 
 			if #blocks == 1 then
 				-- We actually need to check for this unfortunately
@@ -705,11 +705,11 @@ function script_compile(readable_script)
 					local blockstartsat = 0
 
 					for blu = k-1, 1, -1 do
-						cons("Adding block " .. blu)
+						--cons("Adding block " .. blu)
 						blockstartsat = blockstartsat + blocks[blu]
 					end
 
-					cons("Final start of block " .. k .. " with length " .. (blocks[k]) .. ": " .. (blockstartsat+1))
+					--cons("Final start of block " .. k .. " with length " .. (blocks[k]) .. ": " .. (blockstartsat+1))
 
 					if k == #blocks then
 						-- This is the last one so this also behaves slightly differently because it's observed to do so.
