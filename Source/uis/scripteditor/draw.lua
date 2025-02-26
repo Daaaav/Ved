@@ -71,31 +71,42 @@ return function()
 				love.graphics.setColor(128,128,128,255)
 			end
 
+			local line_x, line_y, line_scale
 			if s.scripteditor_largefont then
-				font_8x8:print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k)-8, nil, 2)
-				textq, textc = syntax_hl(
-					v,
-					104,
-					scriptscroll+24+(font_height_sc*k)-8,
-					textlinestogo > 0,
-					editing_line == k,
-					syntaxhlon,
-					lasttextcolor,
-					alttextcolor
+				line_x = 104
+				line_y = scriptscroll+24+(font_height_sc*k)-8
+				line_scale = 2
+			else
+				line_x = 56
+				line_y = scriptscroll+24+(font_height_sc*k)
+				line_scale = 1
+			end
+
+			local number_right_x = line_x - 16 * line_scale
+
+			if k > 9999 then
+				tinyfont:printf(
+					fixdig(k, 8, ""),
+					0, line_y + 1*line_scale,
+					number_right_x - 1*line_scale,
+					"right",
+					nil, line_scale
 				)
 			else
-				font_8x8:print(fixdig(k, 4, " "), 8, scriptscroll+24+(font_height_sc*k))
-				textq, textc = syntax_hl(
-					v,
-					56,
-					scriptscroll+24+(font_height_sc*k),
-					textlinestogo > 0,
-					editing_line == k,
-					syntaxhlon,
-					lasttextcolor,
-					alttextcolor
+				font_8x8:printf(
+					fixdig(k, 4, ""),
+					0, line_y,
+					number_right_x,
+					"right",
+					nil, line_scale
 				)
 			end
+			textq, textc = syntax_hl(
+				v, line_x, line_y,
+				textlinestogo > 0,
+				editing_line == k,
+				syntaxhlon, lasttextcolor, alttextcolor
+			)
 		elseif (scriptscroll+24+(8*k) < 16) then
 			-- Ok, we could still impact performance if we have TOO MANY say/reply/text commands laying around above this point
 			textq, textc = just_text(v, textlinestogo > 0)
