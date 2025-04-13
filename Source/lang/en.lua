@@ -1043,7 +1043,7 @@ Ved supports three different modes to draw tiles.
 {
 splitid = "030_Tools",
 subj = "Tools",
-imgs = {"tools/prepared/1.png", "tools/prepared/2.png", "tools/prepared/3.png", "tools/prepared/4.png", "tools/prepared/5.png", "tools/prepared/6.png", "tools/prepared/7.png", "tools/prepared/8.png", "tools/prepared/9.png", "tools/prepared/10.png", "tools/prepared/11.png", "tools/prepared/12.png", "tools/prepared/13.png", "tools/prepared/14.png", "tools/prepared/15.png", "tools/prepared/16.png", "tools/prepared/17.png", },
+imgs = {"images/tools/1.png", "images/tools/2.png", "images/tools/3.png", "images/tools/4.png", "images/tools/5.png", "images/tools/6.png", "images/tools/7.png", "images/tools/8.png", "images/tools/9.png", "images/tools/10.png", "images/tools/11.png", "images/tools/12.png", "images/tools/13.png", "images/tools/14.png", "images/tools/15.png", "images/tools/16.png", "images/tools/17.png", },
 cont = [[
 Tools\wh#
 \C=

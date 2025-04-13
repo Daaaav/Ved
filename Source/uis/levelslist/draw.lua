@@ -97,7 +97,7 @@ return function()
 				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
 					local md = files[currentdir][actualfile].metadata
 					if not md.success then
-						love.graphics.draw(image.smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
+						theme:draw(image.smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
 					else
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
@@ -184,12 +184,12 @@ return function()
 						end
 
 						if v.isdir then
-							love.graphics.draw(image.smallfolder, 8, 10+12*k2+levellistscroll+2)
+							theme:draw(image.smallfolder, 8, 10+12*k2+levellistscroll+2)
 						end
 						if backupscreen and not v.isdir then
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
-								love.graphics.draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
+								theme:draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
 								ved_print(displayable_filename(v.name), 18, 10+12*k2+levellistscroll+2)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
@@ -206,7 +206,7 @@ return function()
 
 							if v.metadata ~= nil then
 								if not v.metadata.success then
-									love.graphics.draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
+									theme:draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
 								else
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)

@@ -3,3 +3,7 @@
 
 --L. = ""
 
+L.THEMES = "Themes"
+L.THEMESTITLE = "Theme settings"
+L.ACTIVETHEMES = "Active themes"
+L.INACTIVETHEMES = "Inactive themes"

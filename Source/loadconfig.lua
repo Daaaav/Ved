@@ -235,7 +235,12 @@ configs = {
 		default = false,
 		["type"] = "bool",
 		comment = "The default RTL setting to use for new levels"
-	}
+	},
+	active_themes = {
+		default = {},
+		["type"] = "stringsarray",
+		comment = "The themes that are currently active"
+	},
 }
 
 function saveconfig()

@@ -40,6 +40,12 @@ return {
 					tostate(27)
 				end
 			),
+			LabelButton(L.THEMES,
+				function()
+					olderstate = oldstate
+					tostate(37)
+				end
+			),
 			LabelButtonSpacer(),
 			LabelButton(L.SENDFEEDBACK,
 				function()
