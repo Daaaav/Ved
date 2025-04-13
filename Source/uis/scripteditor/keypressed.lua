@@ -48,8 +48,6 @@ return function(key)
 			dirty()
 		end
 	elseif key == "tab" then
-		local matching = {}
-
 		local line_x, editing_line = newinputsys.getpos("script_lines")
 		local command_part = utf8.sub(inputs.script_lines[editing_line], 1, line_x)
 
@@ -57,29 +55,13 @@ return function(key)
 			return
 		end
 
-		for k,v in pairs(knowncommands) do
-			if k:sub(1, command_part:len()) == command_part then
-				table.insert(matching, k)
-			end
-		end
-		for k,v in pairs(knowninternalcommands) do
-			if k:sub(1, command_part:len()) == command_part and not table.contains(matching, k) then
-				table.insert(matching, k)
-			end
-		end
-
-		local shortest_match = nil
-		for k,v in pairs(matching) do
-			if v ~= command_part and (shortest_match == nil or v:len() < shortest_match:len()) then
-				shortest_match = v
-			end
-		end
-		if shortest_match == nil then
+		local commands = get_autocomplete_commands(command_part)
+		if #commands == 0 then
 			return
 		end
 
 		local oldstate = {newinputsys.getstate("script_lines")}
-		newinputsys.insertchars("script_lines", shortest_match:sub(command_part:len()+1))
+		newinputsys.insertchars("script_lines", commands[1]:sub(command_part:len()+1))
 		newinputsys.unre("script_lines", UNRE.INSERT, unpack(oldstate))
 	elseif key == "escape" then
 		local success, raw_script = script_compile(inputs.script_lines)

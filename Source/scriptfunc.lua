@@ -1309,3 +1309,33 @@ function delete_script(script_i)
 	-- We might have removed a script reference, so update usages
 	usedscripts, n_usedscripts = find_used_scripts()
 end
+
+function get_valid_commands()
+	-- Get the commands for this context.
+	local commands = {}
+
+	local internal = (internalscript or cutscenebarsinternalscript)
+
+	for command, _ in pairs(internal and knowninternalcommands or knowncommands) do
+		table.insert(commands, command)
+	end
+
+	return commands
+end
+
+function get_autocomplete_commands(command_part)
+	-- Return a sorted list of commands that start with command_part
+	local commands = {}
+	for _, command in pairs(get_valid_commands()) do
+		if command:sub(1, #command_part) == command_part then
+			table.insert(commands, command)
+		end
+	end
+
+	-- Sort the commands by their length
+	table.sort(commands, function(a, b)
+		return utf8.len(a) < utf8.len(b)
+	end)
+
+	return commands
+end
