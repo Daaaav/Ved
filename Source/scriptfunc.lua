@@ -1326,8 +1326,9 @@ end
 function get_autocomplete_commands(command_part)
 	-- Return a sorted list of commands that start with command_part
 	local commands = {}
+	local part_len = command_part:len()
 	for _, command in pairs(get_valid_commands()) do
-		if command:sub(1, #command_part) == command_part then
+		if command:sub(1, part_len) == command_part then
 			table.insert(commands, command)
 		end
 	end
