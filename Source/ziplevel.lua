@@ -17,6 +17,10 @@ local function add_files_from_folder(zip, path, relative_dir)
 				real_path,
 				zip_path .. "/" 
 			)
+		elseif file.name:sub(-7) == ".vvvvvv" then
+			-- Don't add level files from within the assets folder,
+			-- it's gonna be duplicate or confusing
+			cons("Skipping " .. real_path)
 		else
 			cons("Adding file " .. real_path .. " as " .. zip_path)
 			local file_success, file_contents = readfile(real_path)

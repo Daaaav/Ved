@@ -106,6 +106,7 @@ cZipwriter =
 	cur_size = 0,
 
 	central_dir_headers = {},
+	unique_filenames = {},
 }
 
 function cZipwriter:new(o)
@@ -114,6 +115,7 @@ function cZipwriter:new(o)
 	self.__index = self
 
 	o.central_dir_headers = {}
+	o.unique_filenames = {}
 
 	local success, os_fh = multiwritefile_open(o.filename)
 	if not success then
@@ -198,6 +200,11 @@ function cZipwriter:add_file(filename, contents, size, do_compress, lastmodified
 		-- ZIP64 is a thing, but no way we'll need 4 GiB+ files for VVVVVV levels
 		error(L.INVALIDFILESIZE, 0)
 	end
+
+	if self.unique_filenames[filename] then
+		error("Duplicate file \"" .. filename .. "\"");
+	end
+	self.unique_filenames[filename] = true
 
 	local filename_len = filename:len()
 	local crc32, compressed_size, contents_compressed = crunch_data(contents, size, do_compress)
