@@ -394,6 +394,7 @@ return function()
 		love.graphics.setScissor(16, 16, 32 + 4 + 10, love.graphics.getHeight()-32)
 
 		local thistooltip = ""
+		local coorx, coory
 
 		for t = 1, 17 do
 			-- love.graphics.rectangle("fill", 16, (16+(48*(t-1)))+lefttoolscroll, 32, 32)

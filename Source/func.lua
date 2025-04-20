@@ -167,7 +167,7 @@ end
 -- https://love2d.org/wiki/String_exploding
 function explode(div, str)
 	--cons("Explode is being used on string " .. str)
-	assert(type(str) == "string" and type(div) == "string", "invalid arguments for string explosion (div is " .. type(div) .. " [" .. anythingbutnil(div) .. "], str is " .. type(str) .. " [" .. anythingbutnil(str) .. "])")
+	assert(type(str) == "string" and type(div) == "string", "invalid arguments for string explosion")
 	local o = {}
 	while true do
 		local pos1,pos2 = str:find(div)

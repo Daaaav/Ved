@@ -28,7 +28,7 @@ return function()
 	local last_arg4 = 0
 
 	for k = 1, table.maxn(inputs.script_lines) do
-		v = anythingbutnil(inputs.script_lines[k])
+		local v = anythingbutnil(inputs.script_lines[k])
 
 		local text2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 		local partss = explode(",", text2)
