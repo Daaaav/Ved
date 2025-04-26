@@ -1,5 +1,5 @@
 /*
-Version 06
+Version 07
 
 Typical usage (in C):
 
@@ -34,7 +34,7 @@ ved_closedir(&diriter);
 
 typedef struct _ved_filedata
 {
-	char name[256];
+	char name[1024];
 	bool isdir;
 	long long lastmodified;
 	long long filesize;
@@ -43,12 +43,19 @@ typedef struct _ved_filedata
 typedef struct _ved_directoryiter
 {
 	DIR* dir;
-	char path[256];
+	char path[1024];
 	size_t len_prefix;
 	bool filter_active;
-	char filter[8];
+	char filter[32];
 	bool show_hidden;
 } ved_directoryiter;
+
+typedef struct _ved_c_err
+{
+	const char* msg;
+	int code;
+	int line;
+} ved_c_err;
 
 
 const char* (*ved_L)(char* key);
@@ -67,20 +74,46 @@ void init_lang(const char* (*l)(char* key))
 /*
  * Sets an error out parameter to the specified message except when NULL was passed.
  */
-static void set_error(const char** out_err, const char* message)
+static void f_set_error(ved_c_err* out_err, const char* message, int code, int line)
 {
 	if (out_err != NULL)
 	{
-		*out_err = message;
+		out_err->msg = message;
+		out_err->code = code;
+		out_err->line = line;
 	}
 }
 
 /*
- * See set_error
+ * See f_set_error
  */
-static void set_error_strerror(const char** out_err)
+static void f_set_error_strerror(ved_c_err* out_err, int line)
 {
-	set_error(out_err, strerror(errno));
+	f_set_error(out_err, strerror(errno), errno, line);
+}
+
+/*
+ * These should be actually called from callsites
+ */
+#define set_error(out_err, message) f_set_error(out_err, message, 0, __LINE__)
+#define set_error_strerror(out_err) f_set_error_strerror(out_err, __LINE__)
+
+/*
+ * Because strncpy sucks and strlcpy is not portable
+ */
+static void ved_strlcpy(char* dst, const char* src, size_t dst_size)
+{
+	const size_t max_i = dst_size-1;
+	size_t i;
+	for (i = 0; i < max_i; i++)
+	{
+		if ((dst[i] = src[i]) == '\0')
+		{
+			return;
+		}
+	}
+
+	dst[max_i] = '\0';
 }
 
 /*
@@ -127,23 +160,22 @@ bool is_listable(ved_directoryiter* diriter, struct dirent* dirent, bool isdir)
  * The filter is either an extension including '.', or an empty string to not
  * filter any files. For example, it can be ".vvvvvv" to only list VVVVVV
  * levels and directories. If the filter is "/", only matches directories.
- * Returns true if successful. If unsuccessful, and errmsg is not NULL, errmsg
- * will point to an error string.
+ * Returns true if successful. If unsuccessful, and errmsg is not NULL,
+ * errmsg->msg will point to an error string.
  */
-bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filter, bool show_hidden, const char** errmsg)
+bool ved_opendir(ved_directoryiter* diriter, const char* path, const char* filter, bool show_hidden, ved_c_err* errmsg)
 {
 	diriter->filter_active = filter != NULL && filter[0] != '\0';
-	strncpy(diriter->filter, filter, 7);
-	diriter->filter[7] = '\0';
+	ved_strlcpy(diriter->filter, filter, sizeof(diriter->filter));
 	diriter->show_hidden = show_hidden;
 	diriter->len_prefix = strlen(path);
-	if (diriter->len_prefix > 247 || path[diriter->len_prefix-1] != '/')
+	if (diriter->len_prefix > sizeof(diriter->path)-2 || path[diriter->len_prefix-1] != '/')
 	{
+		/* There needs to be room for 1) at least a 1-char filename 2) a null terminator */
 		set_error(errmsg, ved_L("PATHINVALID"));
 		return false;
 	}
-	strcpy(diriter->path, path);
-	diriter->path[255] = '\0';
+	memcpy(diriter->path, path, diriter->len_prefix+1);
 	diriter->dir = opendir(path);
 	if (!(bool)diriter->dir)
 	{
@@ -169,7 +201,12 @@ bool ved_nextfile(ved_directoryiter* diriter, ved_filedata* filedata)
 		{
 			return false;
 		}
-		strncpy(diriter->path+diriter->len_prefix, dirent->d_name, 255-diriter->len_prefix);
+		/* Add the current filename at the end of the path */
+		ved_strlcpy(
+			diriter->path + diriter->len_prefix,
+			dirent->d_name,
+			sizeof(diriter->path) - diriter->len_prefix
+		);
 		if (stat(diriter->path, &dstat) == -1)
 		{
 			/* stat failed */
@@ -183,8 +220,7 @@ bool ved_nextfile(ved_directoryiter* diriter, ved_filedata* filedata)
 		}
 	} while (!is_listable(diriter, dirent, isdir));
 
-	strncpy(filedata->name, dirent->d_name, 255);
-	filedata->name[255] = '\0';
+	ved_strlcpy(filedata->name, dirent->d_name, sizeof(filedata->name));
 	filedata->isdir = isdir;
 	filedata->lastmodified = dstat.st_mtime;
 	filedata->filesize = (long long) dstat.st_size;
@@ -247,7 +283,7 @@ long long ved_getmodtime(const char* path)
 /*
  * Create a directory
  */
-bool ved_mkdir(const char* pathname, const char** errmsg)
+bool ved_mkdir(const char* pathname, ved_c_err* errmsg)
 {
 	if (mkdir(pathname, 0775) < 0)
 	{
@@ -265,7 +301,7 @@ bool ved_mkdir(const char* pathname, const char** errmsg)
  * A false return value indicates error or ambiguity.
  * You may pass NULL for errkey. errkey is meaningless upon success.
  */
-bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** errkey)
+bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, ved_c_err* errkey)
 {
 	/* Get IDs of processes named VVVVVV */
 	FILE* f_procid = popen("pgrep -x VVVVVV", "r");
@@ -326,8 +362,7 @@ bool ved_find_vvvvvv_exe_linux(char* buffer, size_t buffer_size, const char** er
 			break;
 		}
 
-		strncpy(buffer, real_exe, buffer_size-1);
-		buffer[buffer_size-1] = '\0';
+		ved_strlcpy(buffer, real_exe, buffer_size);
 
 		success = true;
 	}
@@ -373,7 +408,7 @@ int64_t start_process(
 	int* stdin_write_end,    /* out, nullable */
 	int* stdout_read_end,    /* out, nullable */
 	int* stderr_read_end,    /* out, nullable */
-	const char** errmsg      /* out, nullable */
+	ved_c_err* errmsg        /* out, nullable */
 )
 {
 	int p_stdin[2], p_stdout[2], p_stderr[2];
@@ -422,8 +457,8 @@ int64_t start_process(
 
 		/* execv only returns if an error occurred... So if we're here, it did!
 		 * We can't really set_error anymore... */
-		fprintf(stderr, "%s", strerror(errno));
-		exit(EXIT_CHILD_EXEC_FAIL);
+		fprintf(stderr, "L%d-E%d: %s", __LINE__, errno, strerror(errno));
+		_exit(EXIT_CHILD_EXEC_FAIL);
 	}
 
 	/* Parent code */
@@ -443,7 +478,7 @@ int64_t start_process(
  * Returns false if error, true if successful.
  * You can only use this once for a pipe. After calling this function, the pipe is closed.
  */
-bool write_to_pipe(int write_end, const char* data, size_t data_size, const char** errmsg)
+bool write_to_pipe(int write_end, const char* data, size_t data_size, ved_c_err* errmsg)
 {
 	/* Avoid getting SIGPIPE'd if starting VVVVVV failed (only happens on macOS?) */
 	struct sigaction new, old;
@@ -483,7 +518,7 @@ bool write_to_pipe(int write_end, const char* data, size_t data_size, const char
  * Returns malloc'ed pointer on success, NULL on error (and sets errmsg).
  * You should free the returned pointer with pipedata_free.
  */
-char* read_from_pipe(int read_end, size_t* out_bytes_read, const char** errmsg)
+char* read_from_pipe(int read_end, size_t* out_bytes_read, ved_c_err* errmsg)
 {
 	if (out_bytes_read != NULL)
 	{
@@ -562,7 +597,7 @@ bool await_process(
 	int64_t pid,          /* in */
 	int* stderr_read_end, /* in, nullable */
 	int* out_exitcode,    /* out, nullable */
-	const char** errmsg   /* out, nullable */
+	ved_c_err* errmsg     /* out, nullable */
 )
 {
 	int wstatus;
@@ -647,4 +682,22 @@ void process_cleanup(int* stdin_write_end, int* stdout_read_end, int* stderr_rea
 
 	pipedata_free(last_process_errmsg);
 	last_process_errmsg = NULL;
+}
+
+/*
+ * Basically a wrapper around kill(). I was kinda tempted to call
+ * this function "murder", for fun. But that wouldn't have made sense.
+ *
+ * "You should be able to kill the VVVVVV that's already running,
+ * preferably with a polite simulation of clicking the X,
+ * instead of MURDERING the process"
+ */
+bool send_signal(int64_t pid, int sig, ved_c_err* errmsg)
+{
+	if (kill(pid, sig) == -1)
+	{
+		set_error_strerror(errmsg);
+		return false;
+	}
+	return true;
 }

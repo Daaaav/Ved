@@ -39,7 +39,7 @@ function love.load()
 		newline = "\n"
 		hook("love_load_mac")
 		loaded_filefunc = "linmac"
-		local lib_ok, errmsg = prepare_library("vedlib_filefunc_mac06.so")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_mac07.so")
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end
@@ -66,7 +66,7 @@ function love.load()
 		macscrolling = false
 		newline = "\n"
 		hook("love_load_lin")
-		local lib_ok, errmsg = prepare_library("vedlib_filefunc_lin06.so", "vedlib_filefunc_linmac.c")
+		local lib_ok, errmsg = prepare_library("vedlib_filefunc_lin07.so", "vedlib_filefunc_linmac.c")
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end

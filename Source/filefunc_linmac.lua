@@ -16,11 +16,11 @@ ffi.cdef((love.filesystem.read("libs/universal.h")))
 if love.system.getOS() == "Linux" then
 	standardvvvvvvfolder = "/.local/share/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_lin06.so")
+	libC = load_library(ffi, "vedlib_filefunc_lin07.so")
 elseif love.system.getOS() == "OS X" then
 	standardvvvvvvfolder = "/Library/Application Support/VVVVVV"
 
-	libC = load_library(ffi, "vedlib_filefunc_mac06.so")
+	libC = load_library(ffi, "vedlib_filefunc_mac07.so")
 	findv6_mac = load_library(ffi, "vedlib_findv6_mac01.so")
 
 	ffi.cdef((love.filesystem.read("libs/vedlib_findv6_mac.h")))
@@ -37,14 +37,9 @@ if libC ~= nil then
 end
 
 
-local function new_filedata()
-	return ffi.new("ved_filedata")
+local function errmsg_to_string(errmsg)
+	return "L" .. errmsg.line .. "-E" .. errmsg.code .. ": " .. ffi.string(errmsg.msg)
 end
-
-local function new_diriter()
-	return ffi.new("ved_directoryiter")
-end
-
 
 
 function listlevelfiles(directory)
@@ -61,10 +56,10 @@ function listlevelfiles(directory)
 		else
 			prefix = dirs[currentdir_i] .. "/"
 		end
-		local buffer_diriter = new_diriter()
+		local buffer_diriter = ffi.new("ved_directoryiter")
 		if libC.ved_opendir(buffer_diriter, directory .. "/".. prefix, ".vvvvvv", false, nil) then
 			t[dirs[currentdir_i]] = {}
-			local buffer_filedata = new_filedata()
+			local buffer_filedata = ffi.new("ved_filedata")
 			while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 				current_name = ffi.string(buffer_filedata.name)
 				if buffer_filedata.isdir then
@@ -100,10 +95,10 @@ function listfiles_generic(directory, filter, show_hidden)
 	-- If not, returns: false, {}, message.
 	local files = {}
 
-	local errmsg = ffi.new("const char*[1]")
-	local buffer_diriter = new_diriter()
+	local errmsg = ffi.new("ved_c_err")
+	local buffer_diriter = ffi.new("ved_directoryiter")
 	if libC.ved_opendir(buffer_diriter, directory .. "/", filter, show_hidden, errmsg) then
-		local buffer_filedata = new_filedata()
+		local buffer_filedata = ffi.new("ved_filedata")
 		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
 			table.insert(files,
 				{
@@ -116,7 +111,7 @@ function listfiles_generic(directory, filter, show_hidden)
 		libC.ved_closedir(buffer_diriter)
 	else
 		-- The dir is invalid?
-		return false, {}, ffi.string(errmsg[0])
+		return false, {}, ffi.string(errmsg.msg)
 	end
 
 	sort_files(files)
@@ -186,9 +181,9 @@ end
 
 function create_directory(path)
 	-- returns success, errmsg
-	local errmsg = ffi.new("const char*[1]")
+	local errmsg = ffi.new("ved_c_err")
 	if not libC.ved_mkdir(path, errmsg) then
-		return false, ffi.string(errmsg[0])
+		return false, ffi.string(errmsg.msg)
 	end
 	return true
 end
@@ -292,10 +287,10 @@ function find_vvvvvv_exe()
 	end
 
 	local buffer_path = ffi.new("char[?]", 4096)
-	local errkey = ffi.new("const char*[1]")
+	local errkey = ffi.new("ved_c_err")
 
 	if not ffi_find_vvvvvv_exe(buffer_path, 4096, errkey) then
-		return false, L[ffi.string(errkey[0])]
+		return false, L[ffi.string(errkey.msg)]
 	end
 
 	return true, ffi.string(buffer_path)
@@ -351,7 +346,7 @@ function cProcess:start()
 	self.stdout_read_end = ffi.new("int[1]")
 	self.stderr_read_end = ffi.new("int[1]")
 
-	local errmsg = ffi.new("const char*[1]")
+	local errmsg = ffi.new("ved_c_err")
 
 	local pid = libC.start_process(
 		cmd,
@@ -362,7 +357,7 @@ function cProcess:start()
 		errmsg
 	)
 	if tonumber(pid) < 0 then
-		return false, ffi.string(errmsg[0])
+		return false, errmsg_to_string(errmsg)
 	end
 
 	self.pid = pid
@@ -374,10 +369,10 @@ function cProcess:write_stdin(data)
 	-- Returns success, err
 	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
 
-	local errmsg = ffi.new("const char*[1]")
+	local errmsg = ffi.new("ved_c_err")
 	local success = libC.write_to_pipe(self.stdin_write_end[0], data, data:len(), errmsg)
 	if not success then
-		return false, ffi.string(errmsg[0])
+		return false, errmsg_to_string(errmsg)
 	end
 	return true
 end
@@ -386,10 +381,10 @@ function cProcess:read_from_pipe(read_end)
 	-- Internal function
 
 	local bytes_read = ffi.new("size_t[1]")
-	local errmsg = ffi.new("const char*[1]")
+	local errmsg = ffi.new("ved_c_err")
 	local data_alloc = libC.read_from_pipe(read_end[0], bytes_read, errmsg)
 	if data_alloc == nil then
-		return nil, ffi.string(errmsg[0])
+		return nil, errmsg_to_string(errmsg)
 	end
 	local data = ffi.string(data_alloc, bytes_read[0])
 	libC.pipedata_free(data_alloc)
@@ -416,10 +411,10 @@ function cProcess:await_completion()
 	-- Returns `exitcode` if process started and exited cleanly, `nil, err` otherwise
 
 	local exitcode = ffi.new("int[1]")
-	local errmsg = ffi.new("const char*[1]")
+	local errmsg = ffi.new("ved_c_err")
 	local success = libC.await_process(self.pid, self.stderr_read_end, exitcode, errmsg)
 	if not success then
-		return nil, ffi.string(errmsg[0])
+		return nil, errmsg_to_string(errmsg)
 	end
 	return exitcode[0]
 end
