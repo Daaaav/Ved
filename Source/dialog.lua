@@ -622,8 +622,8 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 		end
 		if folder_error ~= "" then
-			self:setColor(192,0,0,255)
-			ved_printf(folder_error, real_x, real_y+9, real_w-16, "left")
+			self:setColor(160,0,0,255)
+			font_ui:printf(folder_error, real_x+16, real_y+9+12, real_w-16-32, "center")
 		end
 		love.graphics.setScissor()
 
