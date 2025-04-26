@@ -157,7 +157,7 @@ return function()
 				love.graphics.setScissor()
 			end
 			if audio == nil then
-				font_8x8:print("\u{200e}-:--", musicdurationx, 36+24*my)
+				font_8x8:print(U_200E .. "-:--", musicdurationx, 36+24*my)
 			else
 				font_8x8:print(mmss_duration(audio:getDuration()), musicdurationx, 36+24*my)
 			end
@@ -208,9 +208,9 @@ return function()
 		love.graphics.draw(image.sound_play, 16, cura_y)
 		love.graphics.draw(image.sound_stop, 32, cura_y)
 		love.graphics.draw(image.sound_rewind, 48, cura_y)
-		font_8x8:print("\u{200e}[--] -:--", 72, cura_y+4)
+		font_8x8:print(U_200E .. "[--] -:--", 72, cura_y+4)
 		love.graphics.rectangle("fill", 152, cura_y+4, width, 8)
-		font_8x8:print("\u{200e}-:--", width+160, cura_y+4)
+		font_8x8:print(U_200E .. "-:--", width+160, cura_y+4)
 		love.graphics.setColor(255,255,255)
 	else
 		hoverdraw(currentmusic_paused and image.sound_play or image.sound_pause, 16, cura_y, 16, 16)
@@ -222,7 +222,7 @@ return function()
 			-- LÖVE can sometimes fail to reset the time to 0 when looping if we started playing close to the end
 			elapsed = elapsed % duration
 		end
-		font_8x8:print("\u{200e}[" .. fixdig(currentmusic%100, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
+		font_8x8:print(U_200E .. "[" .. fixdig(currentmusic%100, 2) .. "] " .. mmss_duration(elapsed), 72, cura_y+4)
 		if nodialog and not mousepressed and love.mouse.isDown("l") then
 			if mouseon(16, cura_y, 16, 16) then
 				-- Play/pause

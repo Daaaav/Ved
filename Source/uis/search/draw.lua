@@ -25,7 +25,7 @@ return function()
 			highlightresult(v.name, previous_search, 12, 32*k+16+searchscroll+5)
 			if v.foundline ~= 0 then
 				local namewidth = font_level:getWidth(v.name)
-				font_ui:print("\u{200e} - " .. L.LINE .. v.foundline, 12+namewidth, 32*k+16+searchscroll+5)
+				font_ui:print(U_200E .. " - " .. L.LINE .. v.foundline, 12+namewidth, 32*k+16+searchscroll+5)
 				highlightresult(v.foundlinecontent, previous_search, 12, 32*k+16+searchscroll+8+5)
 			end
 
@@ -75,7 +75,7 @@ return function()
 				highlightresult(v.name, previous_search, 12+284+4+284+8, 32*k+16+searchscroll+5)
 				if v.foundline ~= 0 then
 					local namewidth = font_level:getWidth(v.name)
-					font_ui:print("\u{200e} - " .. L.LINE .. v.foundline, 12+284+4+284+4+namewidth, 32*k+16+searchscroll+5)
+					font_ui:print(U_200E .. " - " .. L.LINE .. v.foundline, 12+284+4+284+4+namewidth, 32*k+16+searchscroll+5)
 					highlightresult(v.foundlinecontent, previous_search, 12+284+4+284+4, 32*k+16+searchscroll+8+5)
 				end
 

@@ -2503,8 +2503,8 @@ end
 function format_date(timestamp)
 	local prefix = ""
 	if font_ui:is_rtl() then
-		-- Left-to-right mark, so the format doesn't get messed up by bidi
-		prefix = "\u{200e}"
+		-- Left-to-right mark (U+200E), so the format doesn't get messed up by bidi
+		prefix = U_200E
 	end
 
 	if timestamp == nil then

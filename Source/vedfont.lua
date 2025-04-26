@@ -1,3 +1,5 @@
+U_200E = "\xE2\x80\x8E" -- Left-to-right mark (U+200E)
+
 local ffi_success, ffi = pcall(require, "ffi")
 if not ffi_success then
 	-- Just so we can still render text on the "your LÖVE is old" screen. It's fast enough anyway
