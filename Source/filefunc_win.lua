@@ -510,6 +510,24 @@ function find_vvvvvv_exe()
 	return true, path
 end
 
+function close_process(pid)
+	-- Request a process to close, by PID
+
+	local window_pid = ffi.new("DWORD[1]")
+	local window_callback = ffi.cast("WNDENUMPROC",
+		function(hwnd, lparam)
+			if ffi.C.GetWindowThreadProcessId(hwnd, window_pid) and window_pid[0] == pid then
+				ffi.C.SendNotifyMessageW(hwnd, WM_CLOSE, 0, 0)
+				return false
+			end
+			return true
+		end
+	)
+
+	ffi.C.EnumWindows(window_callback, 0)
+	window_callback:free()
+end
+
 cProcess =
 {
 	path = nil,
@@ -689,6 +707,12 @@ function cProcess:start()
 	return true
 end
 
+function cProcess:get_pid()
+	-- get the (OS-dependent) PID to the process, as a number
+
+	return tonumber(self.processinfo.dwProcessId)
+end
+
 function cProcess:write_stdin(data)
 	-- Returns success, err
 	-- You can only use this once for a pipe. After calling this function, the pipe is closed.
@@ -741,12 +765,16 @@ function cProcess:async_read_from_pipe(res, buf, read_end, overlapped, event_han
 	-- Start an async read from a pipe into a buffer.
 	-- We make sure the "overlapped completion routine" is ALWAYS called after calling this function.
 
-	local function completion_routine(error_code, bytes_read, void_overlapped)
-		res.error_code = error_code
-		res.bytes_read = bytes_read
+	local completion_routine
+	completion_routine = ffi.cast("LPOVERLAPPED_COMPLETION_ROUTINE",
+		function(error_code, bytes_read, void_overlapped)
+			res.error_code = error_code
+			res.bytes_read = bytes_read
 
-		ffi.C.SetEvent(ffi.cast("LPOVERLAPPED", void_overlapped).hEvent)
-	end
+			ffi.C.SetEvent(ffi.cast("LPOVERLAPPED", void_overlapped).hEvent)
+			completion_routine:free()
+		end
+	)
 
 	ffi.fill(overlapped, ffi.sizeof("OVERLAPPED"))
 	overlapped.hEvent = event_handle

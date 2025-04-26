@@ -127,7 +127,11 @@ function playtesting_start(force_ask_path)
 
 	if playtesting_engstate == PT_ENGSTATE.PLAYTESTING
 	or playtesting_engstate == PT_ENGSTATE.CANCELING then
-		dialog.create(L.ALREADYPLAYTESTING)
+		if playtesting_pid == nil then
+			dialog.create(L.ALREADYPLAYTESTING)
+		else
+			close_process(playtesting_pid)
+		end
 		return
 	end
 
@@ -157,6 +161,7 @@ function playtesting_start(force_ask_path)
 	-- Time to start the thread
 	playtesting_engstate = PT_ENGSTATE.IDLE
 	playtesting_uistate = PT_UISTATE.ASKING
+	playtesting_pid = nil
 
 	cons("RUNNING VVVVVV AT THIS PATH:\n" .. path)
 	playtestthread_inchannel:clear()
@@ -218,6 +223,7 @@ function playtesting_cancelask()
 
 	playtesting_engstate = PT_ENGSTATE.CANCELING
 	playtesting_uistate = PT_UISTATE.OFF
+	playtesting_pid = nil
 
 	playtestthread_inchannel:push(PT_CMD.CANCEL)
 end

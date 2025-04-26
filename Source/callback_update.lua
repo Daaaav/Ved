@@ -43,11 +43,15 @@ function love.update(dt)
 			if chanmessage == PT_RESULT.DONE then
 				playtesting_engstate = PT_ENGSTATE.OFF
 				playtesting_uistate = PT_UISTATE.OFF
+				playtesting_pid = nil
 			elseif chanmessage == PT_RESULT.ERROR then
 				playtesting_engstate = PT_ENGSTATE.OFF
 				playtesting_uistate = PT_UISTATE.OFF
 				local err = playtestthread_outchannel:demand(0.2)
 				dialog.create(langkeys(L.PLAYTESTINGFAILED, {err}))
+				playtesting_pid = nil
+			elseif chanmessage == PT_RESULT.STARTED_PID then
+				playtesting_pid = playtestthread_outchannel:demand(0.2)
 			end
 		end
 	end

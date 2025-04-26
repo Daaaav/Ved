@@ -216,6 +216,9 @@ if success then
 		table.insert(errs, write_err)
 	end
 
+	outchannel:push(PT_RESULT.STARTED_PID)
+	outchannel:push(process:get_pid())
+
 	local exitcode, await_err = process:await_completion()
 	if exitcode == nil then
 		table.insert(errs, await_err)

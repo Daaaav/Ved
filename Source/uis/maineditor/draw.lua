@@ -590,7 +590,8 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 	local usethisbtn
 	if playtesting_available then
-		if playtesting_uistate == PT_UISTATE.ASKING then
+		if playtesting_uistate == PT_UISTATE.ASKING
+		or playtesting_uistate == PT_UISTATE.PLAYTESTING then
 			usethisbtn = image.playstopbtn_hq
 		else
 			usethisbtn = image.playbtn_hq

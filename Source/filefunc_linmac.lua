@@ -296,6 +296,12 @@ function find_vvvvvv_exe()
 	return true, ffi.string(buffer_path)
 end
 
+function close_process(pid)
+	-- Request a process to close, by PID
+
+	libC.send_signal(pid, 15, nil)
+end
+
 cProcess =
 {
 	path = nil,
@@ -363,6 +369,12 @@ function cProcess:start()
 	self.pid = pid
 
 	return true
+end
+
+function cProcess:get_pid()
+	-- get the (OS-dependent) PID to the process, as a number
+
+	return tonumber(self.pid)
 end
 
 function cProcess:write_stdin(data)

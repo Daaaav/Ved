@@ -472,6 +472,7 @@ SHIFT = {
 PT_RESULT = {
 	DONE = 1, -- thread finished with success result
 	ERROR = 2, -- followed by the message. Thread finished with error result
+	STARTED_PID = 3, -- followed by the (OS-dependent) PID/handle to the process.
 }
 
 -- Messages from main thread to playtesting thread

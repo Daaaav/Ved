@@ -401,6 +401,7 @@ function love.load()
 
 	playtesting_engstate = PT_ENGSTATE.OFF
 	playtesting_uistate = PT_UISTATE.OFF
+	playtesting_pid = nil
 
 	if loaded_filefunc == "luv" then
 		dialog.create(

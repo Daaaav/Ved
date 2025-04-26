@@ -339,6 +339,23 @@ DWORD GetModuleFileNameExW(
   DWORD   nSize
 );
 
+BOOL EnumWindows(
+  WNDENUMPROC lpEnumFunc,
+  LPARAM      lParam
+);
+
+DWORD GetWindowThreadProcessId(
+  HWND    hWnd,
+  LPDWORD lpdwProcessId
+);
+
+BOOL SendNotifyMessageW(
+  HWND   hWnd,
+  UINT   Msg,
+  WPARAM wParam,
+  LPARAM lParam
+);
+
 /* UTF-8 -> UTF-16 */
 int MultiByteToWideChar(
   UINT   CodePage,

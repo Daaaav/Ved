@@ -18,6 +18,13 @@ typedef const wchar_t* LPCWSTR;
 typedef void* DWORD_PTR;
 typedef void* ULONG_PTR;
 
+/* Weird ifdeffed types actually but I checked both 32 and 64 bit */
+typedef uintptr_t UINT_PTR;
+typedef intptr_t LONG_PTR;
+
+typedef UINT_PTR WPARAM;
+typedef LONG_PTR LPARAM;
+
 typedef LPCSTR LPCCH;
 typedef LPCWSTR LPCWCH;
 
@@ -34,4 +41,9 @@ typedef VOID (__stdcall *LPOVERLAPPED_COMPLETION_ROUTINE) (
   DWORD  dwErrorCode,
   DWORD  dwNumberOfBytesTransfered,
   LPVOID lpOverlapped
+);
+
+typedef BOOL (__stdcall *WNDENUMPROC) (
+  HWND   hwnd,
+  LPARAM lParam
 );
