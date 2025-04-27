@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2025-01-21 16:25:05 (CET)
+--- Last converted: 2025-04-27 04:44:47 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -979,7 +979,7 @@ Invalid flags will be ignored
 
 1234567890123456789012
 
-Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
+Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed.
 ----------------------------------------------------------------------------------[]-
 ]]
 

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2025-01-21 16:25:06 (CET)
+--- Last converted: 2025-04-27 04:44:48 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -993,7 +993,7 @@ Invalid flags will be ignored
 
 1234567890123456789012
 
-Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
+Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed.
 ----------------------------------------------------------------------------------[]-
 ]]
 
@@ -2224,7 +2224,7 @@ taken as the name (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl
 This name is not persistent and will go back to the default room name when the
 room is reloaded (e.g. by leaving and coming back).
 
-This name overrides any special changing room name, if the room has one. 
+This name overrides any special changing room name, if the room has one.
 
 This command was added in 2.4.\g
 
@@ -2934,29 +2934,29 @@ Tio ĉi ¤funkcias¤ ankaŭ por kolorigi unu si¤g§¤non sole\n P n n&r (
 Se vi volas, vi povas ankaŭ krei grafikojn pere de fonaj koloroj:
 
 \-
- ¤¤        \n n&C\ 
-          \&C\ 
-   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\ 
-   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\ 
-          \&C\ 
-          \&C\ 
-   ¤¤      ¤¤ \&C n n&C\ 
-    ¤¤    ¤¤  \&C n n&C\ 
- ¤¤        \n n&C\ 
-   ¤¤    \n n&C\ 
- 
- ¤        \n n&C 
-          \&C 
-   ¤  ¤  ¤  ¤ \&C n n&C n n&C 
-   ¤  ¤  ¤  ¤ \&C n n&C n n&C 
-          \&C 
-          \&C 
-   ¤      ¤ \&C n n&C 
-    ¤    ¤  \&C n n&C 
- ¤        \n n&C 
-   ¤    \n n&C 
-\- 
-          \&o\ 
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
@@ -2965,18 +2965,18 @@ Se vi volas, vi povas ankaŭ krei grafikojn pere de fonaj koloroj:
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
  ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
-          \&o\ 
- 
-          \&o 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o( 
- ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o( 
-          \&o 
+          \&o\
+
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
 \-
 
 Ligiloj\h#

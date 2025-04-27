@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2025-01-21 16:25:06 (CET)
+--- Last converted: 2025-04-27 04:44:49 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -1025,7 +1025,7 @@ Invalid flags will be ignored
 
 1234567890123456789012
 
-Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
+Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed.
 ----------------------------------------------------------------------------------[]-
 ]]
 
@@ -2253,7 +2253,7 @@ taken as the name (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl
 This name is not persistent and will go back to the default room name when the
 room is reloaded (e.g. by leaving and coming back).
 
-This name overrides any special changing room name, if the room has one. 
+This name overrides any special changing room name, if the room has one.
 
 This command was added in 2.4.\g
 

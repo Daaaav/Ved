@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2025-01-21 16:25:05 (CET)
+--- Last converted: 2025-04-27 04:44:47 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -985,7 +985,7 @@ Invalid flags will be ignored
 
 1234567890123456789012
 
-Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
+Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed.
 ----------------------------------------------------------------------------------[]-
 ]]
 
@@ -1020,7 +1020,7 @@ si elles sont disponibles.
 
 Dossiers de niveau\h#
 
-Ved utilise normalement le même dossier que VVVVVV utilise pour stocker ses 
+Ved utilise normalement le même dossier que VVVVVV utilise pour stocker ses
 niveaux, donc il est facile de passer de l'éditeur de niveau de VVVVVV à Ved et
 vice versa. So Ved ne détecte pas votre dossier de VVVVVV correctement, vous
 pouvez entrer un chemin personnalisé dans les options de Ved.
@@ -1055,7 +1055,7 @@ Ved supporte trois modes différents pour placer des tuiles.
 
      Mode manuel\h#2
 
-          Aussi appelé Mode Direct, dans ce mode vous pouvez placer n'importe 
+          Aussi appelé Mode Direct, dans ce mode vous pouvez placer n'importe
           quel tuile manuellement, donc vous n'êtes pas limité par les différents
           groupes dans les jeux de tuiles, et les bords ne seront pas ajoutés
           automatiquement aux murs, vous donnant un contrôle complet sur l'aspect
@@ -1170,7 +1170,7 @@ référer aux références de programmation de script.
    Jeton de téléportation\h#
 
 
-L'outil de jeton de téléportation peut être utilisé pour placer des jetons de 
+L'outil de jeton de téléportation peut être utilisé pour placer des jetons de
 téléportation. Tout d'abord cliquez à l'endroit où l'entrée doit être, puis à
 l'endroit où la sortie doit être.
 
@@ -2185,7 +2185,7 @@ Termine la musique en fondu.
 nocontrol¤()\w#h
 
 Met game.hascontrol à false, ce qui enlève le contrôle du joueur.
-game.hascontrol est automatiquement changé pendant "- Press ACTION to 
+game.hascontrol est automatiquement changé pendant "- Press ACTION to
 advance text -" et lors de la fermeture des boîtes de dialogue, donc cet appel
 est défait après l'une de ces actions.
 
@@ -2888,7 +2888,7 @@ Les états 120-128 marchent un peu comme 102-112, comme une suite, mais avec moi
 3000-3005 - "Level Complete! You've rescued" l'équipier appliqué à companion(),
             avec Verdigris comme valeur par défaut. 6=Verdigris, 7=Vitellary,
             8=Victoria, 9=Vermilion, 10=Viridian (oui, pour de vrai), 11=Violet
-            (États de jeu: 3006-3011=Verdigris, 3020-3026=Vitellary, 
+            (États de jeu: 3006-3011=Verdigris, 3020-3026=Vitellary,
             3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
             3050-3056=Violet)
 3070-3072 - Applique des actions après rescousse, dans la plupart des cas, vous
@@ -3088,11 +3088,11 @@ couleurs d'arrière-plan :
 
 Liens\h#
 
-Les liens ont deux utilités : lier autre part dans les articles/notes, ou lier 
-vers un site Internet. Les liens utilisent le demi-couleur code¤ l¤. Ce code ne\nY 
-change pas vers le prochain "bloc coloré" mais s'applique au bloc courant, 
-contrairement aux codes couleurs normaux (pas d'arrière-plan). Il ne change pas 
-non plus la couleur, donc vous pouvez changer le style du lien tel que vous le 
+Les liens ont deux utilités : lier autre part dans les articles/notes, ou lier
+vers un site Internet. Les liens utilisent le demi-couleur code¤ l¤. Ce code ne\nY
+change pas vers le prochain "bloc coloré" mais s'applique au bloc courant,
+contrairement aux codes couleurs normaux (pas d'arrière-plan). Il ne change pas
+non plus la couleur, donc vous pouvez changer le style du lien tel que vous le
 voulez.
 
 Vous pouvez lier à des articles en utilisant simplement le même
@@ -3162,15 +3162,15 @@ Images (seulement disponible dans la\h#
 description des greffons) :\h
 
 0..9 - Affiche l'image 0..9 sur cette ligne (l'index de la table des images
-       commence à 0, et n'oubliez pas de garder des lignes vides pour vous 
+       commence à 0, et n'oubliez pas de garder des lignes vides pour vous
        accommoder à la hauteur de l'image)
 ^ - Mettez ceci avant le nombre de l'image pour augmenter le nombre de l'image
-    de 10. Donc ^4 donne l'image 14, ^^4 donne l'image 24, et 3^1^56 donne les 
+    de 10. Donc ^4 donne l'image 14, ^^4 donne l'image 24, et 3^1^56 donne les
     images 3, 11, 25 et 26.
-_ - Mettez ceci avant le nombre de l'image pour réduire le nombre de l'image 
+_ - Mettez ceci avant le nombre de l'image pour réduire le nombre de l'image
     de 10.
 > - Mettez ceci avant le nombre de l'image pour décaler les prochaines images de
-    8 pixels vers la droite. Ceci peut être répété, ainsi 0>>>>1 met l'image 0 à 
+    8 pixels vers la droite. Ceci peut être répété, ainsi 0>>>>1 met l'image 0 à
     x = 0 et l'image 1 à x = 32.
 < - Pareil, mais décale les images vers la gauche.
 ]]

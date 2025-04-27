@@ -789,7 +789,7 @@ msgstr ""
 msgid "This name is not persistent and will go back to the default room name when the\nroom is reloaded (e.g. by leaving and coming back)."
 msgstr ""
 
-msgid "This name overrides any special changing room name, if the room has one. "
+msgid "This name overrides any special changing room name, if the room has one."
 msgstr ""
 
 msgid "setrtl¤(on/off)\\w#h"

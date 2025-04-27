@@ -953,7 +953,7 @@ Invalid flags will be ignored
 
 1234567890123456789012
 
-Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed. 
+Room for 82 characters on a line (85, but the last three characters will have a scrollbar if it is needed.
 ----------------------------------------------------------------------------------[]-
 ]]
 
