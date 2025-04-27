@@ -355,6 +355,9 @@ return function()
 			drawlink(hoveringlink)
 			if not special_cursor or hoveringlink ~= cachedlink then
 				matching_url = hoveringlink:match("^https?://[A-Za-z0-9%-%._~:/%?#%[%]@!%$&'%(%)%*%+,;=%%]+$") ~= nil
+				if not matching_url and helpallowfileprot and hoveringlink:sub(1,7) == "file://" then
+					matching_url = true
+				end
 				matching_article = false
 				matching_anchor = false
 				if not matching_url then

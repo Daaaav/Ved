@@ -359,7 +359,18 @@ function rightclickmenu.handler(RCMreturn)
 		end
 	elseif RCMid:sub(1, 4) == "lnk_" then
 		if RCMreturn == L.COPYLINK then
-			love.system.setClipboardText(RCMid:sub(5, -1))
+			local link_offset = 5
+			if RCMid:sub(5, 11) == "file://" then
+				-- start after "lnk_file://"
+				link_offset = 12
+			end
+			local link
+			if dirsep ~= "/" then
+				link = RCMid:sub(link_offset):gsub("/", dirsep)
+			else
+				link = RCMid:sub(link_offset)
+			end
+			love.system.setClipboardText(link)
 		end
 	elseif RCMid:sub(1, 4) == "dia_" then
 		-- New-style dialog dropdown

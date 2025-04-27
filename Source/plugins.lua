@@ -309,6 +309,13 @@ function loadpluginpages()
 		table.insert(short_list, L.ALL_PLUGINS_NOPLUGINS)
 	end
 
+	local plugins_path = love.filesystem.getSaveDirectory() .. "/plugins"
+	local plugins_path_disp
+	if dirsep ~= "/" then
+		plugins_path_disp = plugins_path:gsub("/", dirsep)
+	else
+		plugins_path_disp = plugins_path
+	end
 	table.insert(helppages, 1, {
 		subj = L.ALL_PLUGINS,
 		imgs = {},
@@ -318,7 +325,7 @@ function loadpluginpages()
 			.. "\\-\n\n"
 			.. L.ALL_PLUGINS_MOREINFO .. "\n\n"
 			.. L.ALL_PLUGINS_FOLDER .. "\n"
-			.. love.filesystem.getSaveDirectory() .. "/plugins\\Y"
+			.. "file://" .. plugins_path .. "¤" .. plugins_path_disp .. "\\LCl"
 	})
 end
 

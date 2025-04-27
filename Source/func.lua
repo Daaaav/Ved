@@ -2567,10 +2567,18 @@ function format_date(timestamp)
 end
 
 function drawlink(link)
+	if link:sub(1,7) == "file://" then
+		if dirsep ~= "/" then
+			link = link:sub(8):gsub("/", dirsep)
+		else
+			link = link:sub(8)
+		end
+	end
+
 	love.graphics.setColor(255,255,255,192)
 	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-10, font8:getWidth(link)+8, 10)
 	love.graphics.setColor(0,0,0)
-	ved_print(link, 4, love.graphics.getHeight()-9)
+	font_ui:print(link, 4, love.graphics.getHeight()-9)
 	love.graphics.setColor(255,255,255)
 end
 

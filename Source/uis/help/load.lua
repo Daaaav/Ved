@@ -6,6 +6,7 @@ return function(mode)
 	helparticlescroll = 0
 	helpeditingline = 0
 	helprefreshable = false
+	helpallowfileprot = false
 	onlefthelpbuttons = false
 	part1parts_cache = {}
 	cachedlink = nil
@@ -25,6 +26,7 @@ return function(mode)
 		--helppages = {}
 		loadpluginpages()
 		helpeditable = false
+		helpallowfileprot = true
 		helparticlecontent = explode("\n", helppages[helparticle].cont)
 	else
 		-- Level notes (or something else because extradata is an array here!)
