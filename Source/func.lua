@@ -1221,92 +1221,90 @@ function end_editing_roomtext()
 	end
 
 	-- We were typing a text!
-	if inputs.roomtext ~= "" then
-		local olddata = entitydata[editingroomtext].data
-		entitydata[editingroomtext].data = inputs.roomtext
-		if editingroomtext_make_script then
-			if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
-				local warnloadscriptexists = false
-				local loadscriptname = langkeys(s.loadscriptname, {inputs.roomtext})
-				local create_mode = get_load_script_creation_mode()
-				if create_mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then -- flag
-					if scripts[loadscriptname] ~= nil then
-						warnloadscriptexists = true
-					else
-						-- What flag is available?
-						usedflags = {}
-						outofrangeflags = {}
+	local olddata = entitydata[editingroomtext].data
+	entitydata[editingroomtext].data = inputs.roomtext
+	-- Only make a script if this is a terminal/script box, and the name is not empty
+	if editingroomtext_make_script and inputs.roomtext ~= "" then
+		if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
+			local warnloadscriptexists = false
+			local loadscriptname = langkeys(s.loadscriptname, {inputs.roomtext})
+			local create_mode = get_load_script_creation_mode()
+			if create_mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then -- flag
+				if scripts[loadscriptname] ~= nil then
+					warnloadscriptexists = true
+				else
+					-- What flag is available?
+					usedflags = {}
+					outofrangeflags = {}
 
-						-- See which flags have been used in this level.
-						return_used_flags(usedflags, outofrangeflags)
+					-- See which flags have been used in this level.
+					return_used_flags(usedflags, outofrangeflags)
 
-						local useflag = -1
-						for flag = 0, limit.flags-1 do
-							if not usedflags[flag] then
-								useflag = flag
-								usedflags[flag] = true
-								--vedmetadata.flaglabel[flag] = partss[2]
-								break
-							end
+					local useflag = -1
+					for flag = 0, limit.flags-1 do
+						if not usedflags[flag] then
+							useflag = flag
+							usedflags[flag] = true
+							--vedmetadata.flaglabel[flag] = partss[2]
+							break
 						end
-
-						if useflag == -1 then
-							-- No flags left?
-							dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {inputs.roomtext}))
-							scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
-						else
-							scripts[loadscriptname] = {
-								"ifflag(" .. useflag .. ",stop)",
-								"flag(" .. useflag .. ",on)",
-								"iftrinkets(0," .. inputs.roomtext .. ")"
-							}
-						end
-						table.insert(scriptnames, loadscriptname)
-
-						temporaryroomname = L.LOADSCRIPTMADE
-						temporaryroomnametimer = 90
 					end
-					entitydata[editingroomtext].data = loadscriptname
-				elseif create_mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then -- trinkets
-					if scripts[loadscriptname] ~= nil then
-						warnloadscriptexists = true
-					else
+
+					if useflag == -1 then
+						-- No flags left?
+						dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {inputs.roomtext}))
 						scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
-						table.insert(scriptnames, loadscriptname)
-
-						temporaryroomname = L.LOADSCRIPTMADE
-						temporaryroomnametimer = 90
+					else
+						scripts[loadscriptname] = {
+							"ifflag(" .. useflag .. ",stop)",
+							"flag(" .. useflag .. ",on)",
+							"iftrinkets(0," .. inputs.roomtext .. ")"
+						}
 					end
-					entitydata[editingroomtext].data = loadscriptname
-				end
-				if warnloadscriptexists then
-					dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}))
-				end
-			end
+					table.insert(scriptnames, loadscriptname)
 
-			if scripts[inputs.roomtext] == nil then
-				scripts[inputs.roomtext] = {""}
-				table.insert(scriptnames, inputs.roomtext)
+					temporaryroomname = L.LOADSCRIPTMADE
+					temporaryroomnametimer = 90
+				end
+				entitydata[editingroomtext].data = loadscriptname
+			elseif create_mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then -- trinkets
+				if scripts[loadscriptname] ~= nil then
+					warnloadscriptexists = true
+				else
+					scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
+					table.insert(scriptnames, loadscriptname)
+
+					temporaryroomname = L.LOADSCRIPTMADE
+					temporaryroomnametimer = 90
+				end
+				entitydata[editingroomtext].data = loadscriptname
+			end
+			if warnloadscriptexists then
+				dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}))
 			end
 		end
-		if editingroomtext_is_new then
-			entityplaced(editingroomtext)
-			editingroomtext_is_new = false
-		else
-			table.insert(undobuffer,
-				{
-					undotype = "changeentity",
-					rx = roomx, ry = roomy,
-					entid = editingroomtext,
-					changedentitydata = {
-						{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}
-					}
-				}
-			)
+
+		if scripts[inputs.roomtext] == nil then
+			scripts[inputs.roomtext] = {""}
+			table.insert(scriptnames, inputs.roomtext)
 		end
-	else
-		removeentity(editingroomtext, nil, true)
 	end
+	if editingroomtext_is_new then
+		entityplaced(editingroomtext)
+		editingroomtext_is_new = false
+	else
+		table.insert(undobuffer,
+			{
+				undotype = "changeentity",
+				rx = roomx, ry = roomy,
+				entid = editingroomtext,
+				changedentitydata = {
+					{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}
+				}
+			}
+		)
+	end
+
 	editingroomtext = 0
 	newinputsys.close("roomtext")
 end
