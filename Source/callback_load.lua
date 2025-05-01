@@ -295,6 +295,9 @@ function love.load()
 		sound_stop = love.graphics.newImage("images/sound_stop.png"),
 		sound_rewind = love.graphics.newImage("images/sound_rewind.png"),
 
+		volume = love.graphics.newImage("images/volume.png"),
+		volumemute = love.graphics.newImage("images/volumemute.png"),
+
 		folder_parent = love.graphics.newImage("images/folder_parent.png"),
 
 		bggrid = love.graphics.newImage("images/bggrid.png"),
@@ -454,6 +457,10 @@ function love.load()
 	musiceditorfile_forcevvvvvvfolder = false
 	musiceditorfolder = vvvvvvfolder
 	musiceditorfolder_set = false
+
+	if s.volume ~= 1 then
+		love.audio.setVolume(math.min(1, math.max(0, s.volume)))
+	end
 
 	if not love.filesystem.exists("maps") then
 		love.filesystem.createDirectory("maps")

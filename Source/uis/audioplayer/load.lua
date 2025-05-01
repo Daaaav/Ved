@@ -18,4 +18,7 @@ return function(mode)
 	end
 
 	music_page = 0
+
+	volume_before_mute = 0.5
+	volume_pressed = false
 end

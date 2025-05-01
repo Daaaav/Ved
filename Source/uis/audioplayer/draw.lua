@@ -261,6 +261,41 @@ return function()
 		showhotkey("h", 48+16, cura_y-2, ALIGN.RIGHT)
 	end
 
+	local volume = love.audio.getVolume()
+	hoverdraw(volume == 0 and image.volumemute or image.volume, 16, cura_y-22, 16, 16)
+	love.graphics.setColor(128,128,128)
+	love.graphics.rectangle("fill", 38, cura_y-17, 64, 6)
+	love.graphics.setColor(255,255,255)
+	if volume ~= 0 then
+		love.graphics.rectangle("fill", 38, cura_y-17, 64*volume, 6)
+	end
+	if not love.mouse.isDown("l") and volume_pressed then
+		volume_pressed = false
+		s.volume = volume
+		saveconfig()
+	end
+	if nodialog then
+		if love.mouse.isDown("l") and not volume_pressed and not mousepressed and mouseon(16, cura_y-22, 16, 16) then
+			-- Mute button
+			if volume == 0 then
+				love.audio.setVolume(volume_before_mute)
+			else
+				volume_before_mute = volume
+				love.audio.setVolume(0)
+			end
+			mousepressed = true
+		elseif volume_pressed or mouseon(38, cura_y-18, 64, 8) then
+			-- Volume bar
+			local mouse_perone = math.min(1, math.max(0, (love.mouse.getX()-38)/64))
+			font_8x8:print(math.floor(mouse_perone*100) .. "%", love.mouse.getX()-16, cura_y-32)
+			if love.mouse.isDown("l") then
+				love.audio.setVolume(mouse_perone)
+				volume_pressed = true
+				mousepressed = true
+			end
+		end
+	end
+
 	rbutton({L.RETURN, "b"}, 0, nil, true)
 	rbutton({musiceditor and L.LOAD or (musicfileexists(musicplayerfile) and L.RELOAD or L.LOAD), "L"}, 2, nil, true, nil, generictimer_mode == 1 and generictimer > 0)
 	if musiceditor then

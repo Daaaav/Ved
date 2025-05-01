@@ -235,6 +235,10 @@ configs = {
 		default = false,
 		["type"] = "bool",
 		comment = "The default RTL setting to use for new levels"
+	},
+	volume = {
+		default = 1,
+		["type"] = "number"
 	}
 }
 
