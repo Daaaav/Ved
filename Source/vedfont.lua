@@ -938,6 +938,13 @@ function cVedFont:align_start()
 	return "left"
 end
 
+function cVedFont:align_end()
+	if self:is_rtl() then
+		return "left"
+	end
+	return "right"
+end
+
 function utf8_to_utf32(str, buf, buf_n)
 	-- Decodes an UTF-8 Lua string into a UTF-32 (uint32_t) buffer.
 	-- Will null-terminate the buffer.

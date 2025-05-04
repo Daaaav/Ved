@@ -1,14 +1,16 @@
 -- scriptflags/draw
 
 return function()
-	-- Columns 1 and 2
-	for flcol = 8, love.graphics.getWidth()/2 + 8, love.graphics.getWidth()/2 do -- this was maybe not practical
-		for flk = 0, 49 do
-			local flag = flk + (flcol == 8 and 0 or 50) + flags_page*100
-			if flag >= limit.flags then
+	-- We have 3 columns
+	local btn_width = (love.graphics.getWidth()-8)/3
+	for flcol = 0, 2 do
+		local pos_x = 8 + flcol*btn_width
+		for flk = 0, 33 do
+			local flag = flk + (flcol*34) + flags_page*100
+			if flag >= flags_page*100 + 100 or flag >= limit.flags then
 				break
 			end
-			local ax, ay, w, h = flcol-2, 24+flk*8, love.graphics.getWidth()/2 - 16, 8
+			local ax, ay, w, h = pos_x, 24+flk*12, btn_width - 8, 12
 
 			if nodialog and mouseon(ax, ay, w, h) then
 				love.graphics.setColor(128,128,128,255)
@@ -77,14 +79,14 @@ return function()
 			love.graphics.setColor(255,255,255,255)
 
 			local text = fixdig(flag, flags_digits, " ") .. " - " .. (usedflags[flag] and L.FLAGUSED or L.FLAGNOTUSED)
+			font_ui:printf(text, ax+2, ay+2, w-4, font_ui:align_start())
 			if vedmetadata ~= false then
-				text = text .. " - " .. (
-					vedmetadata.flaglabel[flag] ~= ""
-					and anythingbutnil(vedmetadata.flaglabel[flag])
-					or L.FLAGNONAME
-				)
+				if anythingbutnil(vedmetadata.flaglabel[flag]) == "" then
+					font_ui:printf(L.FLAGNONAME, ax+2, ay+2, w-4, font_ui:align_end())
+				else
+					font_level:printf(vedmetadata.flaglabel[flag], ax+2, ay+2, w-4, font_ui:align_end())
+				end
 			end
-			font_ui:printf(text, ax+2, ay, w, font_ui:align_start())
 		end
 	end
 
@@ -99,15 +101,19 @@ return function()
 
 	love.graphics.setColor(255,255,255,255)
 
-	ved_print(L.FLAGS, 8, 8)
-	ved_print(flags_outofrangeflagstext, 8, 432)
+	font_ui:print(L.FLAGS, 8, 8)
+	font_ui:print(flags_outofrangeflagstext, 8, 440)
 
 	if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
 		local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
 		love.graphics.setColor(128,128,128,128)
-		love.graphics.rectangle("fill", love.mouse.getX() + 8, love.mouse.getY(), 8*#t, 8)
+		love.graphics.rectangle(
+			"fill",
+			love.mouse.getX() + 8, love.mouse.getY(),
+			font_level:getWidth(t), font_level:getHeight()
+		)
 		love.graphics.setColor(255,255,255,255)
-		ved_print(t, love.mouse.getX() + 8, love.mouse.getY())
+		font_level:print(t, love.mouse.getX() + 8, love.mouse.getY())
 	end
 
 	if limit.flags > 100 then
@@ -120,7 +126,7 @@ return function()
 			else
 				hoverrectangle(128,128,128,128, btn_x, btn_y, 64, 16)
 			end
-			ved_printf(page*100 .. "-" .. page*100+99, btn_x+1, btn_y+4, 64, "center")
+			font_8x8:printf(page*100 .. "-" .. page*100+99, btn_x+1, btn_y+4, 64, "center")
 			love.graphics.setColor(255,255,255,255)
 
 			if nodialog and love.mouse.isDown("l") and mouseon(btn_x, btn_y, 64, 16) then
