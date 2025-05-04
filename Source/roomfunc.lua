@@ -959,6 +959,69 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 			end
 			nodialog = false
 			return success
+		elseif love.mouse.isDown("l") and selectedtool > 3 and not mousepressed then
+			-- Clicking on the entity, main-game editor style!
+			-- Ideally, now we'd simply call entity:left_click() or something,
+			-- which then calls self:change_direction(), self:flip()... depending on
+			-- which class it is... But we don't have that luxury yet.
+			-- Instead, let's just simulate clicking the specific menu option.
+			cancel_placing_scriptbox()
+			mousepressed = true
+
+			local action = nil
+			local t = entitydata[k].t
+			if t == 1 then
+				-- Enemy
+				action = L.CHANGEDIRECTION
+			elseif t == 2 then
+				-- Platform (moving or conveyor)
+				action = L.CYCLETYPE
+			elseif t == 10 then
+				-- Checkpoint
+				action = L.FLIP
+			elseif t == 11 then
+				-- Gravity line
+				action = (entitydata[k].p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR)
+			elseif t == 13 then
+				-- Warp token
+				-- Go to the other end
+				for k2,v2 in pairs(menuitems) do
+					if v2 == L.GOTODESTINATION or v2 == L.GOTOENTRANCE then
+						action = v2
+						break
+					end
+				end
+			elseif t == 15 then
+				-- Rescuable crewmate
+				action = L.CHANGECOLOR
+			elseif t == 16 then
+				-- Start point
+				action = L.CHANGEDIRECTION
+			elseif t == 17 then
+				-- Roomtext
+				action = L.EDITTEXT
+				newinputsys.ignoremousepressed = true
+			elseif t == 18 then
+				-- Terminal
+				-- This one is special, since both flipping and changing the name seem important.
+				-- (And the main editor does both at the same time, which feels wrong)
+				-- I think, ideally, you'd want a click to edit the script name, and then while
+				-- editing the script name, you can freely click to flip the terminal however many
+				-- times you want (and then just press Esc or Enter to cancel editing the name).
+				-- This is hard because editing a roomtext/script name prevents clicking on entities.
+				-- So for now you can always use the right click menu option.
+				action = L.OTHERSCRIPT
+				newinputsys.ignoremousepressed = true
+			elseif t == 19 then
+				-- Script box
+				action = L.OTHERSCRIPT
+				newinputsys.ignoremousepressed = true
+			end
+			if action ~= nil then
+				RCMid = newmenuid
+				rightclickmenu.handler(action)
+				return true
+			end
 		end
 	end
 

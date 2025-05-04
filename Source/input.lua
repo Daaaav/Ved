@@ -77,7 +77,7 @@ When you're done, close it by doing `input.close(<id>)`.
 -- temporarily renamed to `newinputsys` to ease transition from old input system to new
 local input = {
 	active = false,
-	ignoremousepressed = false,
+	ignoremousepressed = false, -- until the next mouse release
 
 	stateof = {},
 	focused = {},

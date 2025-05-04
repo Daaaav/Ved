@@ -1,6 +1,6 @@
 function handle_entity_mousedown()
-	-- Handles (right) clicking on entities and creating right click menus.
-	-- Returns true if right clicking was caught - this stops handle_tool_mousedown() from also drawing or so.
+	-- Handles (left/right) clicking on entities and creating right click menus.
+	-- Returns true if clicking was caught - this stops handle_tool_mousedown() from also drawing or so.
 
 	if editingroomname or editingroomtext > 0 then
 		return false
