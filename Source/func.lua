@@ -964,7 +964,7 @@ end
 ]]
 
 function changeenemybounds()
-	if selectedtool == 13 and selectedsubtool[13] ~= 1 then return end
+	cancel_placing_scriptbox()
 
 	selectedtool = 9
 	updatewindowicon()
@@ -1006,7 +1006,7 @@ function changeenemybounds()
 end
 
 function changeplatformbounds()
-	if selectedtool == 13 and selectedsubtool[13] ~= 1 then return end
+	cancel_placing_scriptbox()
 
 	selectedtool = 8
 	updatewindowicon()

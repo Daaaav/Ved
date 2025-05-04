@@ -2330,6 +2330,7 @@ function gotoroom_d()
 end
 
 function gotoroom_finish()
+	cancel_placing_scriptbox()
 	selectedtileset = levelmetadata_get(roomx, roomy).tileset
 	selectedcolor = levelmetadata_get(roomx, roomy).tilecol
 end
@@ -3084,4 +3085,22 @@ function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 	end
 	count.entities = count.entities + 1
 	count.entity_ai = count.entity_ai + 1
+end
+
+function cancel_placing_scriptbox()
+	if selectedtool == 13 and selectedsubtool[13] ~= 1 then
+		if sboxdontaskname then
+			-- Restore the old position
+			entitydata[editingsboxid].x = oldscriptx
+			entitydata[editingsboxid].y = oldscripty
+			entitydata[editingsboxid].p1 = oldscriptp1
+			entitydata[editingsboxid].p2 = oldscriptp2
+			sboxdontaskname = nil
+		elseif selectedsubtool[13] == 2 then
+			-- We were placing a completely new one
+			removeentity(editingsboxid, nil, true)
+		end
+		editingsboxid = nil
+		selectedsubtool[13] = 1
+	end
 end

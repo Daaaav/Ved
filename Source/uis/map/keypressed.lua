@@ -50,10 +50,9 @@ return function(key)
 	else
 		for k,v in pairs(toolshortcuts) do
 			if key == v:lower() then
-				if not (selectedtool == 13 and selectedsubtool[13] ~= 1) then
-					selectedtool = k
-					updatewindowicon()
-				end
+				cancel_placing_scriptbox()
+				selectedtool = k
+				updatewindowicon()
 				toolscroll()
 			end
 		end

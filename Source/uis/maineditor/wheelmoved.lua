@@ -33,7 +33,7 @@ return function(xm, ym)
 		end
 		updatewindowicon()
 		toolscroll()
-	elseif (pos_x >= 64 or s.psmallerscreen) and selectedtool ~= 14 then
+	elseif (pos_x >= 64 or s.psmallerscreen) and selectedtool ~= 13 and selectedtool ~= 14 then
 		if flipscrollmore(macscrolling and -ym or ym) > 0 then
 			if selectedsubtool[selectedtool] > 1 then
 				selectedsubtool[selectedtool] = selectedsubtool[selectedtool] - 1
