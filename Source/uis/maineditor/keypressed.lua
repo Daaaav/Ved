@@ -66,7 +66,7 @@ return function(key)
 	elseif tilespicker and key == "pagedown" then
 		tilespicker_next_page()
 	elseif key == "," then
-		cancel_placing_scriptbox()
+		cancel_placing_entity()
 		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] > 1 then
@@ -85,7 +85,7 @@ return function(key)
 			toolscroll()
 		end
 	elseif key == "." then
-		cancel_placing_scriptbox()
+		cancel_placing_entity()
 		if keyboard_eitherIsDown(ctrl) or keyboard_eitherIsDown("shift") then
 			if selectedtool ~= 14 then
 				if selectedsubtool[selectedtool] < #subtoolimgs[selectedtool] then
@@ -224,11 +224,10 @@ return function(key)
 		end
 		movingentity = 0
 		movingentity_copying = false
-	elseif table.contains({3, 4}, selectedsubtool[14]) and key == "escape" then
-		selectedsubtool[14] = 1
-		warpid = nil
+	elseif warpid ~= nil and key == "escape" then
+		cancel_placing_entity()
 	elseif selectedtool == 13 and selectedsubtool[13] ~= 1 and key == "escape" then
-		cancel_placing_scriptbox()
+		cancel_placing_entity()
 	elseif sp_t ~= 0 and key == "escape" then
 		sp_t = 0
 		sp_go = true

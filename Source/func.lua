@@ -964,7 +964,7 @@ end
 ]]
 
 function changeenemybounds()
-	cancel_placing_scriptbox()
+	cancel_placing_entity()
 
 	selectedtool = 9
 	updatewindowicon()
@@ -1006,7 +1006,7 @@ function changeenemybounds()
 end
 
 function changeplatformbounds()
-	cancel_placing_scriptbox()
+	cancel_placing_entity()
 
 	selectedtool = 8
 	updatewindowicon()

@@ -965,7 +965,7 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 			-- which then calls self:change_direction(), self:flip()... depending on
 			-- which class it is... But we don't have that luxury yet.
 			-- Instead, let's just simulate clicking the specific menu option.
-			cancel_placing_scriptbox()
+			cancel_placing_entity()
 			mousepressed = true
 
 			local action = nil
@@ -3165,5 +3165,18 @@ function cancel_placing_scriptbox()
 		end
 		editingsboxid = nil
 		selectedsubtool[13] = 1
+	end
+end
+
+function cancel_placing_entity()
+	cancel_placing_scriptbox()
+	if warpid ~= nil then
+		-- Placing a warp token
+		if selectedsubtool[14] == 2 then
+			-- We were placing a completely new one
+			removeentity(warpid, nil, true)
+		end
+		selectedsubtool[14] = 1
+		warpid = nil
 	end
 end

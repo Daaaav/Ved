@@ -406,7 +406,7 @@ return function()
 			end
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(16, (16+(48*(t-1)))+lefttoolscroll, 32, 32) and not mouseon(16, 0, 32, 16) and not mouseon(16, love.graphics.getHeight()-16, 32, 16) then
-				cancel_placing_scriptbox()
+				cancel_placing_entity()
 				selectedtool = t
 				updatewindowicon()
 			end

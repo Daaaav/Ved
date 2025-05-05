@@ -50,7 +50,7 @@ return function(key)
 	else
 		for k,v in pairs(toolshortcuts) do
 			if key == v:lower() then
-				cancel_placing_scriptbox()
+				cancel_placing_entity()
 				selectedtool = k
 				updatewindowicon()
 				toolscroll()
