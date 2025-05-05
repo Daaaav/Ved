@@ -441,7 +441,7 @@ return function()
 		elseif context == "roomcoords" then
 			rx, ry = roomx, roomy
 			cx, cy = carg1, carg2
-			valid = cx ~= nil and cy ~= nil
+			valid = true
 		end
 		if valid then
 			local map_x, map_y = love.graphics.getWidth()-(128-8)+16, 8+(24*12)+4
@@ -463,9 +463,8 @@ return function()
 					room_scale = 1
 				end
 				love.graphics.draw(rooms_map[ry][rx].map, map_x, map_y, 0, room_scale/4)
-				if context == "roomcoords" then
+				if context == "roomcoords" and cx ~= nil and cy ~= nil then
 					love.graphics.draw(image.crosshair_mini, map_x+round(cx/4)-2, map_y+round(cy/4)-2)
-					love.graphics.setColor(255,255,255)
 				end
 
 				if nodialog and mouseon(map_x, map_y, 80, 60) then
@@ -477,9 +476,8 @@ return function()
 					love.graphics.setColor(255,255,255)
 					love.graphics.draw(rooms_map[ry][rx].map, hover_x, hover_y, 0, room_scale)
 
-					if context == "roomcoords" then
+					if context == "roomcoords" and cx ~= nil and cy ~= nil then
 						love.graphics.draw(image.crosshair_gigantic, hover_x+cx-3, hover_y+cy-3)
-						love.graphics.setColor(255,255,255)
 					end
 
 					if carg3 ~= nil and not mousepressed and love.mouse.isDown("l") then
@@ -492,14 +490,23 @@ return function()
 						local first_coord_arg = carg3
 						local pattern
 						if first_coord_arg == 2 then
-							pattern = "^([^%(,%)]-[%(,%)])[0-9]+([%(,%)])[0-9]+"
+							pattern = "^([^%(,%)]-[%(,%)])[%-0-9]+([%(,%)])[%-0-9]+"
 						elseif first_coord_arg == 3 then
-							pattern = "^([^%(,%)]*[%(,%)][^%(,%)]*[%(,%)])[0-9]+([%(,%)])[0-9]+"
+							pattern = "^([^%(,%)]*[%(,%)][^%(,%)]*[%(,%)])[%-0-9]+([%(,%)])[%-0-9]+"
 						end
-						inputs.script_lines[editing_line] = inputs.script_lines[editing_line]:gsub(
+						local new_line, changes = inputs.script_lines[editing_line]:gsub(
 							pattern,
 							"%1" .. click_x .. "%2" .. click_y
 						)
+						if changes == 0 and first_coord_arg == 2 then
+							-- We don't have both numbers yet - so fill them in!
+							-- We don't have to worry about what comes after.
+							new_line = inputs.script_lines[editing_line]:gsub(
+								"^([^%(,%)]-[%(,%)]).*",
+								"%1" .. click_x .. "," .. click_y
+							)
+						end
+						inputs.script_lines[editing_line] = new_line
 						dirty()
 					end
 				end
@@ -518,7 +525,7 @@ return function()
 			if context == "room" then
 				ved_printf(disp_rx .. "," .. disp_ry, map_x, map_y+62, 80, "center")
 			elseif context == "roomcoords" then
-				ved_printf(cx .. "," .. cy, map_x, map_y+62, 80, "center")
+				ved_printf(anythingbutnil(cx) .. "," .. anythingbutnil(cy), map_x, map_y+62, 80, "center")
 			end
 		end
 	elseif context == "frames" then
