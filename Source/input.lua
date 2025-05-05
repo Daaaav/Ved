@@ -190,6 +190,7 @@ function input.close(id, updatemappings)
 
 	if #input.nth_input == 0 then
 		input.active = false
+		reset_special_cursor()
 	end
 
 	cursorflashtime = 0
