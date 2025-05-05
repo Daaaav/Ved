@@ -1,8 +1,14 @@
-function love.keypressed(key)
+function love.keypressed(key, scancode, isrepeat)
 	if focus_regained_timer < .1 then
 		if not table.contains(skip_next_keys, key) then
 			table.insert(skip_next_keys, key)
 		end
+		return
+	end
+
+	if isrepeat and table.contains({"lctrl", "rctrl", "lshift", "rshift", "lalt", "ralt", "lgui", "rgui"}, key) then
+		-- These only repeat on Windows - which breaks the tile picker stamp when holding down ctrl+shift,
+		-- and could cause other unexpected behavior differences - so just ignore them to make it consistent
 		return
 	end
 
