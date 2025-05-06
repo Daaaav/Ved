@@ -627,7 +627,8 @@ function script_compile(readable_script)
 
 		local splitpoints = {}
 		local marksafe = true
-		for k = #raw_script, 1, -1 do
+		local n_raw_script = #raw_script
+		for k = n_raw_script, 1, -1 do
 			local v = raw_script[k]:gsub(" ", "")
 			v = scriptlinecasing(v)
 
@@ -641,6 +642,13 @@ function script_compile(readable_script)
 				if sepcount >= 4 then
 					marksafe = true
 				end
+			elseif marksafe and k < n_raw_script and (
+				v:match("^setactivitytext$")
+				or v:match("^setactivitytext[%(,%)]")
+				or v:match("^setroomname$")
+				or v:match("^setroomname[%(,%)]")
+			) then
+				splitpoints[k+1] = false
 			end
 
 			splitpoints[k] = marksafe
