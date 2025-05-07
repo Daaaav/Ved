@@ -14,7 +14,7 @@ return function(key)
 			imageviewer_zoomin()
 		elseif key == "-" or key == "kp-" then
 			imageviewer_zoomout()
-		elseif key == "r" then
+		elseif key == "c" then
 			imageviewer_showwhite = not imageviewer_showwhite
 		elseif key == "`" then
 			imageviewer_grid = 0
@@ -24,6 +24,8 @@ return function(key)
 			imageviewer_grid = 8
 		elseif key == "3" then
 			imageviewer_grid = 32
+		elseif key == "r" then
+			assets_graphicsreload()
 		end
 	end
 end

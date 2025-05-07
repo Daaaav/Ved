@@ -3105,8 +3105,8 @@ function assets_musicloaddialog()
 end
 
 function assets_musicreload()
-	setgenerictimer(1, .25)
 	loadvvvvvvmusic(musicplayerfile)
+	setgenerictimer(1, .25)
 end
 
 function assets_graphicsloaddialog()
@@ -3117,6 +3117,11 @@ function assets_graphicsloaddialog()
 		L.LOADIMAGE,
 		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 8)
 	)
+end
+
+function assets_graphicsreload()
+	assets_openimage(imageviewer_filepath, imageviewer_filename, true)
+	setgenerictimer(1, .25)
 end
 
 function assets_create_or_explore_folder()
@@ -3272,7 +3277,7 @@ function inplacescroll(key)
 	handle_scrolling(false, usethisinput, usethisdistance)
 end
 
-function assets_openimage(filepath, filename)
+function assets_openimage(filepath, filename, is_reload)
 	local readsuccess, contents = readfile(filepath)
 	if not readsuccess then
 		dialog.create(contents)
@@ -3301,27 +3306,31 @@ function assets_openimage(filepath, filename)
 		end
 	)
 	imageviewer_image_white = love.graphics.newImage(imgdata)
-	imageviewer_filepath, imageviewer_filename = filepath, filename
-
-	imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
 	imageviewer_w, imageviewer_h = imageviewer_image_color:getDimensions()
-	fix_imageviewer_position()
 	imageviewer_moving = false
 	imageviewer_moved_from_x, imageviewer_moved_from_y = 0, 0
 	imageviewer_moved_from_mx, imageviewer_moved_from_my = 0, 0
-	imageviewer_grid, imageviewer_showwhite = 0, false
 
-	-- Guess the grid setting
-	if filename:sub(1,10) == "entcolours"
-	or filename:sub(1,4) == "font"
-	or filename:sub(1,5) == "tiles" then
-		imageviewer_grid = 8
-	elseif filename:sub(1,7) == "sprites"
-	or filename:sub(1,11) == "flipsprites" then
-		imageviewer_grid = 32
-	elseif filename:sub(1,12) == "vtools_tiles" then
-		imageviewer_grid = 1
+	-- Some initialization we only need to do if the image actually changed!
+	if not is_reload then
+		imageviewer_filepath, imageviewer_filename = filepath, filename
+
+		imageviewer_x, imageviewer_y, imageviewer_s = 0, 0, 1
+		imageviewer_grid, imageviewer_showwhite = 0, false
+
+		-- Guess the grid setting
+		if filename:sub(1,10) == "entcolours"
+		or filename:sub(1,4) == "font"
+		or filename:sub(1,5) == "tiles" then
+			imageviewer_grid = 8
+		elseif filename:sub(1,7) == "sprites"
+		or filename:sub(1,11) == "flipsprites" then
+			imageviewer_grid = 32
+		elseif filename:sub(1,12) == "vtools_tiles" then
+			imageviewer_grid = 1
+		end
 	end
+	fix_imageviewer_position()
 end
 
 function isclear(key)

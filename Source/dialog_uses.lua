@@ -1257,7 +1257,7 @@ function dialog.callback.openimage(button, fields)
 
 	local filepath, filename = filepath_from_dialog(fields.folder, fields.name)
 
-	assets_openimage(filepath, filename)
+	assets_openimage(filepath, filename, false)
 end
 
 function dialog.callback.platv_validate(button, fields)

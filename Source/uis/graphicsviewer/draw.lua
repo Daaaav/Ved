@@ -41,23 +41,23 @@ return function()
 			end
 		end
 		love.graphics.setScissor()
-		ved_print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 4)
+		font_ui:print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 4)
 
 		local check_w = font8:getWidth(L.NOTALPHAONLY)+24
 		local check_x = love.graphics.getWidth()-64-check_w/2
-		checkbox(not imageviewer_showwhite, check_x, love.graphics.getHeight()-288, nil, L.NOTALPHAONLY,
+		checkbox(not imageviewer_showwhite, check_x, love.graphics.getHeight()-336, nil, L.NOTALPHAONLY,
 			function(key, newvalue)
 				imageviewer_showwhite = not newvalue
 			end
 		)
-		showhotkey("R", check_x+16, love.graphics.getHeight()-288-2, ALIGN.RIGHT)
+		showhotkey("C", check_x+16, love.graphics.getHeight()-336-2, ALIGN.RIGHT)
 
-		ved_printf(
+		font_ui:printf(
 			L.GRID,
-			love.graphics.getWidth()-128, love.graphics.getHeight()-236, 128, "center"
+			love.graphics.getWidth()-128, love.graphics.getHeight()-284, 128, "center"
 		)
 		custom_int_control(
-			love.graphics.getWidth()-100, love.graphics.getHeight()-216,
+			love.graphics.getWidth()-100, love.graphics.getHeight()-264,
 			imageviewer_gridout, imageviewer_gridin, nil,
 			function()
 				if imageviewer_grid == 0 then
@@ -72,28 +72,30 @@ return function()
 			if imageviewer_w/imageviewer_grid ~= math.ceil(imageviewer_w/imageviewer_grid) then
 				grid_tile = "(" .. grid_tile .. ")"
 			end
-			ved_printf(
+			font_ui:printf(
 				grid_tile,
-				love.graphics.getWidth()-128, love.graphics.getHeight()-188, 128, "center"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-236, 128, "center"
 			)
 			love.graphics.setColor(255,255,255,255)
 		end
 
 		custom_int_control(
-			love.graphics.getWidth()-100, love.graphics.getHeight()-144,
+			love.graphics.getWidth()-100, love.graphics.getHeight()-192,
 			imageviewer_zoomout, imageviewer_zoomin, nil,
 			function()
 				return (imageviewer_s*100) .. "%"
 			end, 32
 		)
-		showhotkey("-", love.graphics.getWidth()-100+16, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
-		showhotkey("+", love.graphics.getWidth()-100+64+8, love.graphics.getHeight()-144-2, ALIGN.RIGHT)
-		ved_printf(
+		showhotkey("-", love.graphics.getWidth()-100+16, love.graphics.getHeight()-192-2, ALIGN.RIGHT)
+		showhotkey("+", love.graphics.getWidth()-100+64+8, love.graphics.getHeight()-192-2, ALIGN.RIGHT)
+		font_ui:printf(
 			imageviewer_w .. L.X .. imageviewer_h,
-			love.graphics.getWidth()-128, love.graphics.getHeight()-116, 128, "center"
+			love.graphics.getWidth()-128, love.graphics.getHeight()-164, 128, "center"
 		)
+
+		rbutton({L.RELOAD, "R"}, 3, nil, true, nil, generictimer_mode == 1 and generictimer > 0)
 	else
-		ved_print(L.GRAPHICS, 8, 4)
+		font_ui:print(L.GRAPHICS, 8, 4)
 
 		local infostring = langkeys(L.CLICKONTHING, {L.LOAD})
 		if love_version_meets(10) then
@@ -104,7 +106,7 @@ return function()
 
 		local centery = (love.graphics.getHeight() - 8*lines) / 2
 
-		ved_printf(infostring, 0, centery, love.graphics.getWidth()-136, "center")
+		font_ui:printf(infostring, 0, centery, love.graphics.getWidth()-136, "center")
 	end
 
 	rbutton({L.RETURN, "b"}, 0, nil, true)
@@ -119,6 +121,10 @@ return function()
 		elseif onrbutton(2, nil, true) then
 			-- Load
 			assets_graphicsloaddialog()
+			mousepressed = true
+		elseif onrbutton(3, nil, true) and imageviewer_image_color ~= nil then
+			-- Reload
+			assets_graphicsreload()
 			mousepressed = true
 		end
 	end

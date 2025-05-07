@@ -30,6 +30,6 @@ function love.filedropped(file)
 		else
 			filename = path:sub(-last_dirsep+1, -1)
 		end
-		assets_openimage(path, filename)
+		assets_openimage(path, filename, false)
 	end
 end
