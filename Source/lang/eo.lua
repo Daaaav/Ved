@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2025-04-27 04:44:48 (CEST)
+--- Last converted: 2025-05-09 23:32:07 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -3114,7 +3114,7 @@ Terry Cavanagh pro krei la ludon VVVVVV
 
 Permesilo\h#
 \
-Copyright 2015-2024  Dav999
+Copyright 2015-2025  Dav999
 \
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
