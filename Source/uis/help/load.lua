@@ -7,6 +7,7 @@ return function(mode)
 	helpeditingline = 0
 	helprefreshable = false
 	helpallowfileprot = false
+	help_font = font_ui
 	onlefthelpbuttons = false
 	part1parts_cache = {}
 	cachedlink = nil
@@ -32,7 +33,8 @@ return function(mode)
 		-- Level notes (or something else because extradata is an array here!)
 		helppages = mode[1]
 		helpeditable = mode[2]
-		helprefreshable = mode[3]
+		help_font = mode[3]
+		helprefreshable = mode[4]
 		if helppages[1] ~= nil then
 			helparticlecontent = explode("\n", helppages[helparticle].cont)
 		end

@@ -2,17 +2,15 @@
 
 return function()
 	local language_x = love.graphics.getWidth()/2-64-widestlang
-	ved_print(L.LANGUAGE, language_x, 32+4)
+	font_ui:print(L.LANGUAGE, language_x, 32+4)
 
 	for k,v in pairs(all_languages) do
 		local langname, font
 		if langinfo[v] ~= nil then
 			langname = langinfo[v].name
+			font = fonts_main[langinfo[v].font]
 		else
 			langname = v
-		end
-		if langinfo[v] ~= nil then
-			font = fonts_main[langinfo[v].font]
 		end
 		if font == nil then
 			font = font_8x8
@@ -28,7 +26,7 @@ return function()
 
 	local dateformat_x = love.graphics.getWidth()/2+64
 	local year = os.date("%Y")
-	ved_print(L.DATEFORMAT, dateformat_x, 32+4)
+	font_ui:print(L.DATEFORMAT, dateformat_x, 32+4)
 
 	for k,v in pairs({
 		{"YMD", year .. "-12-31"},
@@ -42,7 +40,7 @@ return function()
 		)
 	end
 
-	ved_print(L.TIMEFORMAT, dateformat_x, 32+96+24+4)
+	font_ui:print(L.TIMEFORMAT, dateformat_x, 32+96+24+4)
 
 	for k,v in pairs({
 		{24, "23:59"},
@@ -61,7 +59,7 @@ return function()
 		bottomleft_text = "Want to help translate Ved? Please contact Dav999!"
 	end
 
-	ved_printf(bottomleft_text, 64, love.graphics.getHeight()-40, love.graphics.getWidth()-128, "center")
+	font_ui:printf(bottomleft_text, 64, love.graphics.getHeight()-40, love.graphics.getWidth()-128, "center")
 
 
 	rbutton({L.BTN_OK, "b"}, 0)

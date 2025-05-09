@@ -9,7 +9,7 @@ return function()
 			unlimited = true
 		end
 
-		ved_print(v.name .. " " .. v.value .. "/" .. v.max, 16, 16*k)
+		font_ui:print(v.name .. " " .. v.value .. "/" .. v.max, 16, 16*k)
 
 		-- Background
 		love.graphics.setColor(32, 32, 32)

@@ -296,7 +296,7 @@ function ved_showerror(msg)
 
 		-- Title
 		love.graphics.setColor(255,255,255,255)
-		ved_shadowprint(ERR_VEDHASCRASHED, pos, pos, 2)
+		font_ui:shadowprint(ERR_VEDHASCRASHED, pos, pos, nil, 2)
 
 		-- Draw a box for the important details
 		love.graphics.setColor(255,92,92,208) -- 225 is gebruikt
@@ -304,12 +304,12 @@ function ved_showerror(msg)
 
 		-- Main text
 		love.graphics.setColor(255,255,255,255)
-		ved_shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos)
+		font_ui:shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos)
 
 		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
-			ved_shadowprintf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
+			font_ui:shadowprintf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
 			love.graphics.setColor(255,255,255,255)
 		end
 
@@ -319,7 +319,7 @@ function ved_showerror(msg)
 				text = text:gsub("/", "\\")
 			end
 			love.graphics.setColor(255,255,255,255)
-			ved_shadowprint(text, pos, love.graphics.getHeight()-24)
+			font_ui:shadowprint(text, pos, love.graphics.getHeight()-24)
 		end
 
 		love.graphics.present()
@@ -358,10 +358,8 @@ function ved_showerror(msg)
 					debug.debug()
 				end
 			elseif e == "touchpressed" then
-				local name = love.window.getTitle()
-				if #name == 0 or name == "Untitled" then name = "Game" end
 				local buttons = {"OK", "Cancel"}
-				local pressed = love.window.showMessageBox("Quit "..name.."?", "", buttons)
+				local pressed = love.window.showMessageBox("Quit Ved?", "", buttons)
 				if pressed == 1 then
 					return
 				end
@@ -483,9 +481,9 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 		-- Title
 		--love.graphics.setColor(0,0,0,255)
-		--ved_print(ERR_PLUGINERROR, pos+4, pos+4, 2)
+		--font_ui:print(ERR_PLUGINERROR, pos+4, pos+4, nil, 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_shadowprint(ERR_PLUGINERROR, pos, pos, 2)
+		font_ui:shadowprint(ERR_PLUGINERROR, pos, pos, nil, 2)
 
 		-- Draw boxes for the important details
 		love.graphics.setColor(255,174,92,208) -- 225 is gebruikt
@@ -495,9 +493,9 @@ function pluginerror(fileerror, currentplugin, fileeditors, findthis, aspattern)
 
 		-- Main text
 		--love.graphics.setColor(0,0,0,255)
-		--ved_printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
+		--font_ui:printf(p, pos+2, pos+40+2, love.graphics.getWidth() - pos + 2)
 		love.graphics.setColor(255,255,255,255)
-		ved_shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
+		font_ui:shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos*2)
 
 		--dialog.draw()
 		love.graphics.setColor(255,255,255,255)

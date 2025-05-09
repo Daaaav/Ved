@@ -164,7 +164,7 @@ return function()
 			if filedata ~= nil then
 				local readable_size = bytes_notation(filedata:getSize())
 				love.graphics.setColor(128,128,128)
-				font_8x8:print(readable_size, musicsizerx-font8:getWidth(readable_size), 36+24*my)
+				font_8x8:print(readable_size, musicsizerx-font_8x8:getWidth(readable_size), 36+24*my)
 			end
 			love.graphics.setColor(255,255,255)
 		end

@@ -236,7 +236,7 @@ function loadlanguage()
 						return
 					end
 
-					if font8:has_glyphs(c, true) then
+					if font_ui:has_glyphs(c, true) then
 						-- The font supports it, no need to replace it!
 						-- (this already fully accounts for UTF-8, by the way)
 						return
@@ -300,38 +300,22 @@ end
 
 function ved_print(text, x, y, sx, sy)
 	-- Deprecated
-	if s.lang == "ar" then
-		font_ui:print(text, x, y, nil, sx, sy)
-	else
-		font_8x8:print(text, x, y, nil, sx, sy)
-	end
+	font_8x8:print(text, x, y, nil, sx, sy)
 end
 
 function ved_printf(text, x, y, max_width, align, sx, sy)
 	-- Deprecated
-	if s.lang == "ar" then
-		font_ui:printf(text, x, y, max_width, align, nil, sx, sy)
-	else
-		font_8x8:printf(text, x, y, max_width, align, nil, sx, sy)
-	end
+	font_8x8:printf(text, x, y, max_width, align, nil, sx, sy)
 end
 
 function ved_shadowprint(text, x, y, sx, sy)
 	-- Deprecated
-	if s.lang == "ar" then
-		font_ui:shadowprint(text, x, y, nil, sx, sy)
-	else
-		font_8x8:shadowprint(text, x, y, nil, sx, sy)
-	end
+	font_8x8:shadowprint(text, x, y, nil, sx, sy)
 end
 
 function ved_shadowprintf(text, x, y, limit, align, sx, sy)
 	-- Deprecated
-	if s.lang == "ar" then
-		font_ui:shadowprintf(text, x, y, limit, align, nil, sx, sy)
-	else
-		font_8x8:shadowprintf(text, x, y, limit, align, nil, sx, sy)
-	end
+	font_8x8:shadowprintf(text, x, y, limit, align, nil, sx, sy)
 end
 
 function ved_shadowprint_tiny(text, x, y, sx, sy)

@@ -58,37 +58,37 @@ return function()
 		if a == 0 then
 			love.graphics.draw(image.smallfolder, x+5, y+5)
 			if assetsmenu_show_level_assets then
-				ved_print(langkeys(L.ASSETS_FOLDER_FOR_LEVEL, {editingmap}), x+17, y+5)
+				font_ui:print(langkeys(L.ASSETS_FOLDER_FOR_LEVEL, {editingmap}), x+17, y+5)
 			else
-				ved_print(L.CUSTOMVVVVVVDIRECTORY, x+17, y+5)
+				font_ui:print(L.CUSTOMVVVVVVDIRECTORY, x+17, y+5)
 			end
-			ved_print(assetsmenu_vvvvvvfolder_exists and L.ASSETS_FOLDER_EXISTS_YES or L.ASSETS_FOLDER_EXISTS_NO, x+17, y+21)
+			font_ui:print(assetsmenu_vvvvvvfolder_exists and L.ASSETS_FOLDER_EXISTS_YES or L.ASSETS_FOLDER_EXISTS_NO, x+17, y+21)
 		elseif a == 1 then
 			love.graphics.draw(image.asset_pppppp, x+5, y+5)
-			ved_print("vvvvvvmusic.vvv", x+17, y+5)
-			ved_print(exists and L.MUSICEXISTSYES or L.MUSICEXISTSNO, x+17, y+21)
+			font_ui:print("vvvvvvmusic.vvv", x+17, y+5)
+			font_ui:print(exists and L.MUSICEXISTSYES or L.MUSICEXISTSNO, x+17, y+21)
 		elseif a == 2 then
 			love.graphics.draw(image.asset_mmmmmm, x+5, y+5)
-			ved_print("mmmmmm.vvv", x+17, y+5)
-			ved_print(exists and L.MUSICEXISTSYES or L.MUSICEXISTSNO, x+17, y+21)
+			font_ui:print("mmmmmm.vvv", x+17, y+5)
+			font_ui:print(exists and L.MUSICEXISTSYES or L.MUSICEXISTSNO, x+17, y+21)
 		elseif a == 3 then
 			love.graphics.draw(image.asset_musiceditor, x+5, y+5)
-			ved_print(L.MUSICEDITOR, x+17, y+5)
+			font_ui:print(L.MUSICEDITOR, x+17, y+5)
 		elseif a == 4 then
 			love.graphics.draw(image.asset_sounds, x+5, y+5)
-			ved_print(L.SOUNDS, x+17, y+5)
+			font_ui:print(L.SOUNDS, x+17, y+5)
 			if exists then
-				ved_print(langkeys(L_PLU.NUM_SOUNDS_CUSTOMIZED, {assetsmenu_soundsfolder_num}), x+17, y+21)
+				font_ui:print(langkeys(L_PLU.NUM_SOUNDS_CUSTOMIZED, {assetsmenu_soundsfolder_num}), x+17, y+21)
 			else
-				ved_print(langkeys(L.NO_ASSETS_SUBFOLDER, {"sounds"}), x+17, y+21)
+				font_ui:print(langkeys(L.NO_ASSETS_SUBFOLDER, {"sounds"}), x+17, y+21)
 			end
 		elseif a == 5 then
 			love.graphics.draw(image.asset_graphics, x+5, y+5)
-			ved_print(L.GRAPHICS, x+17, y+5)
+			font_ui:print(L.GRAPHICS, x+17, y+5)
 			if exists then
-				ved_print(langkeys(L_PLU.NUM_GRAPHICS_CUSTOMIZED, {assetsmenu_graphicsfolder_num}), x+17, y+21)
+				font_ui:print(langkeys(L_PLU.NUM_GRAPHICS_CUSTOMIZED, {assetsmenu_graphicsfolder_num}), x+17, y+21)
 			else
-				ved_print(langkeys(L.NO_ASSETS_SUBFOLDER, {"graphics"}), x+17, y+21)
+				font_ui:print(langkeys(L.NO_ASSETS_SUBFOLDER, {"graphics"}), x+17, y+21)
 			end
 		end
 

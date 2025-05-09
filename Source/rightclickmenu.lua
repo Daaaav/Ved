@@ -343,7 +343,7 @@ function rightclickmenu.handler(RCMreturn)
 				dialog.callback.renamescript, L.RENAMESCRIPT,
 				{
 					{"name", 0, 1, 40, scriptnames[script_i], DF.TEXT},
-					{"references", 0, 3, 2+font8:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
+					{"references", 0, 3, 2+font_ui:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
 					{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
 					{"script_i", 0, 0, 0, script_i, DF.HIDDEN},
 				},

@@ -43,7 +43,7 @@ function dialog.form.save_make(show_zip)
 	}
 
 	if show_zip then
-		table.insert(form, {"zip", 0, 9, 2+math.min(font8:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX})
+		table.insert(form, {"zip", 0, 9, 2+math.min(font_ui:getWidth(L.ZIP_SAVE_AS)/8, 46), false, DF.CHECKBOX})
 		table.insert(form, {"", 2, 9, 46, L.ZIP_SAVE_AS, DF.LABEL})
 	end
 
@@ -61,9 +61,9 @@ function dialog.form.exportmap_make()
 
 	-- Top left / width & height / bottom right is three things on one line,
 	-- calculate how we should space it.
-	local spacing = (47 - font8:getWidth(L.TOPLEFT)/8 - font8:getWidth(L.WIDTHHEIGHT)/8 - font8:getWidth(L.BOTTOMRIGHT)/8) / 2
-	local wh_pos = font8:getWidth(L.TOPLEFT)/8 + round(spacing)
-	local br_pos = 46 - font8:getWidth(L.BOTTOMRIGHT)/8
+	local spacing = (47 - font_ui:getWidth(L.TOPLEFT)/8 - font_ui:getWidth(L.WIDTHHEIGHT)/8 - font_ui:getWidth(L.BOTTOMRIGHT)/8) / 2
+	local wh_pos = font_ui:getWidth(L.TOPLEFT)/8 + round(spacing)
+	local br_pos = 46 - font_ui:getWidth(L.BOTTOMRIGHT)/8
 
 	local map_resolutions, room_w, room_h
 	if s.mapstyle == "minimap" then
@@ -126,9 +126,9 @@ function dialog.form.exportmap_make()
 				return x2 .. "," .. y2
 			end, DF.LABEL
 		},
-		{"transparentbg", 0, 6, 2+font8:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},
+		{"transparentbg", 0, 6, 2+font_ui:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},
 		{"", 2, 6, 40, L.TRANSPARENTMAPBG, DF.LABEL},
-		{"keepdialogopen", 0, 11, 2+font8:getWidth(L.KEEPDIALOGOPEN)/8, false, DF.CHECKBOX},
+		{"keepdialogopen", 0, 11, 2+font_ui:getWidth(L.KEEPDIALOGOPEN)/8, false, DF.CHECKBOX},
 		{"", 2, 11, 40, L.KEEPDIALOGOPEN, DF.LABEL},
 	}
 end
@@ -152,7 +152,7 @@ function dialog.form.rawentityproperties_make()
 	end
 	row = row+1
 
-	local labelwidth = font8:getWidth(L.SMALLENTITYDATA)/8 + 1
+	local labelwidth = font_ui:getWidth(L.SMALLENTITYDATA)/8 + 1
 	table.insert(form, {"", 0, row, labelwidth, L.SMALLENTITYDATA, DF.LABEL})
 	table.insert(form, {"data", labelwidth, row, 47-labelwidth, thisentity.data, DF.TEXT})
 
@@ -260,7 +260,7 @@ function dialog.form.advancedleveloptions_make()
 		{"font", 0, 1, 30, metadata.font, DF.DROPDOWN, generate_dropdown_tables(fonts_kv)},
 
 		{"", 2, 3, 46, L.ONEWAYCOL_OVERRIDE, DF.LABEL},
-		{"onewaycol_override", 0, 3, 2+math.min(font8:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
+		{"onewaycol_override", 0, 3, 2+math.min(font_ui:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
 	}
 end
 
@@ -305,7 +305,7 @@ end
 
 function dialog.form.savevvvvvvmusic_make(startfolder, defaultname)
 	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 8)
-	table.insert(form, {"savemetadata", 0, 10, 2+font8:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
+	table.insert(form, {"savemetadata", 0, 10, 2+font_ui:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
 	table.insert(form, {"", 2, 10, 40, L.SAVEMETADATA, DF.LABEL})
 	return form
 end
@@ -318,7 +318,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	if yoff == nil then
 		yoff = 0
 	end
-	local len_namelabel = font8:getWidth(L.FILEOPENERNAME)/8
+	local len_namelabel = font_ui:getWidth(L.FILEOPENERNAME)/8
 	local success, files, everr = listfiles_generic(startfolder, filter, true)
 	if success then
 		everr = ""
@@ -343,7 +343,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		else
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
-		table.insert(form, {"dofilter", 0, 11, 2+font8:getWidth(filtertext)/8, true, DF.CHECKBOX,
+		table.insert(form, {"dofilter", 0, 11, 2+font_ui:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
 						if v[DFP.KEY] == "folder" then

@@ -2,7 +2,13 @@
 
 return function()
 	love.graphics.setColor(255,255,255,255)
-	ved_print(L.SCRIPTEDITOR .. " - " .. scriptname, 28, 8)
+
+	-- Can't merge L.SCRIPTEDITOR and " - " due to bidi...
+	local se_width = font_ui:getWidth(L.SCRIPTEDITOR)
+	local dash_width = font_ui:getWidth(" - ")
+	font_ui:print(L.SCRIPTEDITOR, 28, 8)
+	font_ui:print(" - ", 28+se_width, 8)
+	font_level:print(scriptname, 28+se_width+dash_width, 8)
 
 	-- This can roll over, prevent that!
 	local textlinestogo = 0
@@ -255,9 +261,9 @@ return function()
 	-- Now put some buttons on the right!
 	hoverdraw(image.helpbtn, love.graphics.getWidth()-24, 8, 16, 16, 1)
 	showhotkey("q", love.graphics.getWidth()-24+8-2, 8-2)
-	ved_printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4, 128-16, "center")
+	font_ui:printf(L.FILE, love.graphics.getWidth()-(128-8), 8+(24*0)+4, 128-16, "center")
 	rbutton(L.SCRIPTUSAGES, 1)
-	ved_printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4, 128-16, "center")
+	font_ui:printf(L.EDITTAB, love.graphics.getWidth()-(128-8), 8+(24*2)+4, 128-16, "center")
 	rbutton({L.COPYSCRIPT, "cA"}, 3, nil, nil, nil, generictimer_mode == 1 and generictimer > 0)
 	rbutton(L.SCRIPTSPLIT, 4)
 	rbutton({L.SEARCHSCRIPT, "cF"}, 5)
@@ -278,13 +284,13 @@ return function()
 			cutscenebarsinternalscript
 		)
 	end
-	ved_printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
+	font_ui:printf(L.VIEW, love.graphics.getWidth()-(128-8), 8+(24*9)+4, 128-16, "center")
 	rbutton(syntaxhlon and L.SYNTAXHLOFF or L.SYNTAXHLON, 10)
 	rbutton(s.scripteditor_largefont and L.TEXTSIZEL or L.TEXTSIZEN, 11)
 
 	-- Column
 	local x = newinputsys.getpos("script_lines")
-	ved_printf(
+	font_ui:printf(
 		L.COLUMN .. (x+1),
 		love.graphics.getWidth()-(128-8),
 		(love.graphics.getHeight()-(24*2))+4,
@@ -396,9 +402,9 @@ return function()
 
 	if table.contains({"syntaxcolor_wronglang", "syntaxcolor_errortext"}, context) then
 		setColorArr(s[context])
-		ved_printf(L[context:upper()], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		font_ui:printf(L[context:upper()], love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 	elseif context == "script" then
-		ved_printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+		font_level:printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		if not scriptinstack(carg1) then
 			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
@@ -409,7 +415,7 @@ return function()
 		end
 	elseif context == "flagscript" then
 		if carg2 ~= nil and carg2 ~= "" then
-			ved_printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			font_level:printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg2) then
 				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
@@ -421,7 +427,7 @@ return function()
 		end
 	elseif context == "roomscript" then
 		if carg3 ~= nil and carg3 ~= "" then
-			ved_printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
+			font_level:printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg3) then
 				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
@@ -523,9 +529,9 @@ return function()
 				disp_ry = ry+1
 			end
 			if context == "room" then
-				ved_printf(disp_rx .. "," .. disp_ry, map_x, map_y+62, 80, "center")
+				font_8x8:printf(disp_rx .. "," .. disp_ry, map_x, map_y+62, 80, "center")
 			elseif context == "roomcoords" then
-				ved_printf(anythingbutnil(cx) .. "," .. anythingbutnil(cy), map_x, map_y+62, 80, "center")
+				font_8x8:printf(anythingbutnil(cx) .. "," .. anythingbutnil(cy), map_x, map_y+62, 80, "center")
 			end
 		end
 	elseif context == "frames" then
@@ -533,7 +539,7 @@ return function()
 		if carg1 ~= nil then
 			local seconds = carg1 * 34 / 1000
 			seconds = round(seconds, 2)
-			ved_printf(
+			font_ui:printf(
 				langkeys(L.FRAMESTOSECONDS, {carg1, seconds}),
 				love.graphics.getWidth()-(128-8),
 				8+(24*12)+4,
@@ -545,13 +551,15 @@ return function()
 		carg1 = tonumber(carg1)
 		local ef_name = list_sound_ids[carg1]
 		local ef_name_displayed = ef_name
+		local ef_font = font_8x8
 		if ef_name_displayed == nil then
 			ef_name_displayed = langkeys(L.SOUNDNUM, {carg1})
+			ef_font = font_ui
 		elseif carg1 == 3 then
 			-- This single one is too long to fit (even without .wav), so make it have a newline :I
 			ef_name_displayed = "souleyemini\njingle.wav"
 		end
-		ved_printf(
+		ef_font:printf(
 			ef_name_displayed,
 			love.graphics.getWidth()-(128-8),
 			8+(24*12)+4,
@@ -594,7 +602,7 @@ return function()
 		carg1 = tonumber(carg1)
 		if carg1 ~= nil then
 			if carg1 == -1 then
-				ved_printf(
+				font_ui:printf(
 					L.STOPSMUSIC,
 					love.graphics.getWidth()-(128-8),
 					8+(24*12)+4,
@@ -606,7 +614,7 @@ return function()
 				if list_music_commands_ids[carg1] ~= nil then
 					trackname = "\n\n" .. list_music_commands_ids[carg1]
 				end
-				ved_printf(
+				font_ui:printf(
 					langkeys(L.TRACKNUM, {carg1}) .. trackname,
 					love.graphics.getWidth()-(128-8),
 					8+(24*12)+4,

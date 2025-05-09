@@ -9,7 +9,7 @@ return function()
 	end
 
 	if not backupscreen then
-		ved_print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
+		font_ui:print(secondlevel and L.DIFFSELECT or L.LEVELSLIST, 8, 8)
 	end
 
 	if not lsuccess and not backupscreen then
@@ -39,12 +39,12 @@ return function()
 
 		if backupscreen then
 			if currentbackupdir == "" then
-				ved_print(L.BACKUPS, 8, 2)
+				font_ui:print(L.BACKUPS, 8, 2)
 				currentdir = ".ved-sys" .. dirsep .. "backups"
 			else
-				ved_print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 2)
-				ved_print(L.LASTMODIFIEDTIME, 66, 13)
-				ved_print(L.OVERWRITTENTIME, 408, 13)
+				font_ui:print(langkeys(L.BACKUPSOFLEVEL, {currentbackupdir:sub((".ved-sys/backups"):len()+2, -1)}), 8, 2)
+				font_ui:print(L.LASTMODIFIEDTIME, 66, 13)
+				font_ui:print(L.OVERWRITTENTIME, 408, 13)
 				currentdir = currentbackupdir
 			end
 		else
@@ -69,10 +69,10 @@ return function()
 				7.5, love.graphics.getHeight()-24.5,
 				8.5+hoverarea, love.graphics.getHeight()-24.5,
 				8.5+hoverarea, love.graphics.getHeight()-lessheight+34.5,
-				20.5+font8:getWidth(L.RECENTLYOPENED), love.graphics.getHeight()-lessheight+34.5
+				20.5+font_ui:getWidth(L.RECENTLYOPENED), love.graphics.getHeight()-lessheight+34.5
 			)
 			love.graphics.setColor(255,255,255)
-			ved_print(L.RECENTLYOPENED, 18, love.graphics.getHeight()-(lessheight-23)+8)
+			font_ui:print(L.RECENTLYOPENED, 18, love.graphics.getHeight()-(lessheight-23)+8)
 			love.graphics.setScissor(8, love.graphics.getHeight()-(lessheight-23)+12, hoverarea, lessheight-48-12)
 
 			local removerecent
@@ -90,7 +90,9 @@ return function()
 				display_levels_list_string(
 					displayable_filename(v) .. ".vvvvvv",
 					18, love.graphics.getHeight()-(lessheight-23)+4+12*k+2,
-					(-#s.recentfiles)+(k-1), width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
+					(-#s.recentfiles)+(k-1), width,
+					current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos,
+					font_ui
 				)
 
 				local actualfile = recentmetadata_files[v]
@@ -102,10 +104,18 @@ return function()
 						if not (mouseishovering or tabselected == (-#s.recentfiles)+(k-1)) then
 							love.graphics.setColor(128,128,128)
 						end
+
+						local md_font = fonts_main[md.font]
+						if md_font == nil then
+							md_font = font_8x8
+						end
+
 						display_levels_list_string(
 							md.Title,
 							metadatax, love.graphics.getHeight()-(lessheight-23)+4+12*k+2,
-							(-#s.recentfiles)+(k-1), 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
+							(-#s.recentfiles)+(k-1), 21,
+							current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos,
+							md_font
 						)
 					end
 				end
@@ -115,7 +125,7 @@ return function()
 					if not (mouseishovering or tabselected == k2) then
 						love.graphics.setColor(128,128,128)
 					end
-					ved_print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-23)+4+12*k+2)
+					font_8x8:print(format_date(lastmodified), lastmodifiedx, love.graphics.getHeight()-(lessheight-23)+4+12*k+2)
 				end
 
 				love.graphics.setColor(255,255,255)
@@ -190,18 +200,20 @@ return function()
 							if v.bu_overwritten == 0 then
 								-- This is kind of a weird place for that file.
 								love.graphics.draw(image.smallunknown, 8, 10+12*k2+levellistscroll+2)
-								ved_print(displayable_filename(v.name), 18, 10+12*k2+levellistscroll+2)
+								font_ui:print(displayable_filename(v.name), 18, 10+12*k2+levellistscroll+2)
 							else
 								-- Display the dates, we already know what the level is we're looking at.
-								ved_print("[" .. k .. "]", 18, 10+12*k2+levellistscroll+2)
-								ved_print(format_date(v.bu_lastmodified), 66, 10+12*k2+levellistscroll+2)
-								ved_print(format_date(v.bu_overwritten), 408, 10+12*k2+levellistscroll+2)
+								font_8x8:print("[" .. k .. "]", 18, 10+12*k2+levellistscroll+2)
+								font_8x8:print(format_date(v.bu_lastmodified), 66, 10+12*k2+levellistscroll+2)
+								font_8x8:print(format_date(v.bu_overwritten), 408, 10+12*k2+levellistscroll+2)
 							end
 						else
 							display_levels_list_string(
 								displayable_filename(v.name),
 								18, 10+12*k2+levellistscroll+2,
-								k, width, current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos
+								k, width,
+								current_scrolling_levelfilename_k, current_scrolling_levelfilename_pos,
+								font_ui
 							)
 
 							if v.metadata ~= nil then
@@ -211,10 +223,18 @@ return function()
 									if not (mouseishovering or tabselected == k2) then
 										love.graphics.setColor(128,128,128)
 									end
+
+									local md_font = fonts_main[v.metadata.font]
+									if md_font == nil then
+										md_font = font_8x8
+									end
+
 									display_levels_list_string(
 										v.metadata.Title,
 										metadatax, 10+12*k2+levellistscroll+2,
-										k, 21, current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos
+										k, 21,
+										current_scrolling_leveltitle_k, current_scrolling_leveltitle_pos,
+										md_font
 									)
 								end
 							end
@@ -222,7 +242,7 @@ return function()
 							if not (mouseishovering or tabselected == k2) then
 								love.graphics.setColor(128,128,128)
 							end
-							ved_print(format_date(v.lastmodified), lastmodifiedx, 10+12*k2+levellistscroll+2)
+							font_8x8:print(format_date(v.lastmodified), lastmodifiedx, 10+12*k2+levellistscroll+2)
 						end
 
 
@@ -283,7 +303,7 @@ return function()
 					filename = anythingbutnil(anythingbutnil(files[currentdir][preferred_k]).name)
 				end
 				if preferred_k ~= current_scrolling_levelfilename_k then
-					if font8:getWidth(displayable_filename(filename)) > width*8 then
+					if font_ui:getWidth(displayable_filename(filename)) > width*8 then
 						current_scrolling_levelfilename_k = preferred_k
 						current_scrolling_levelfilename_filename = displayable_filename(filename)
 					else
@@ -299,24 +319,34 @@ return function()
 					love.graphics.rectangle("fill", metadatax, topy, 40*8, 6*8)
 					love.graphics.setColor(255,255,255,255)
 					if md.success then
+						-- TODO:
+						-- - "By" should be replaced with Viridian head
+						-- - More space needs to be given for bigger fonts
+						-- - Desc3 is not shown depending on font
+						local md_font = fonts_main[md.font]
+						if md_font == nil then
+							md_font = font_8x8
+						end
+
 						if preferred_k ~= current_scrolling_leveltitle_k then
-							if font8:getWidth(anythingbutnil(md.Title)) > 21*8 then
+							if md_font:getWidth(anythingbutnil(md.Title)) > 21*8 then
 								current_scrolling_leveltitle_k = preferred_k
 								current_scrolling_leveltitle_title = md.Title
+								current_scrolling_leveltitle_font = md_font
 							else
 								-- Reposition whatever was scrolling
 								current_scrolling_leveltitle_k = nil
 							end
 							current_scrolling_leveltitle_pos= 168
 						end
-						ved_print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
-						ved_printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
-						ved_print(anythingbutnil(md.website), metadatax, topy+8)
-						ved_print(anythingbutnil(md.Desc1), metadatax, topy+24)
-						ved_print(anythingbutnil(md.Desc2), metadatax, topy+32)
-						ved_print(anythingbutnil(md.Desc3), metadatax, topy+40)
+						md_font:print(L.OPTBY .. " " .. anythingbutnil(md.Creator), metadatax, topy)
+						font_ui:printf(anythingbutnil(md.mapwidth) .. L.X .. anythingbutnil(md.mapheight), metadatax, topy, 40*8, "right")
+						md_font:print(anythingbutnil(md.website), metadatax, topy+8)
+						md_font:print(anythingbutnil(md.Desc1), metadatax, topy+24)
+						md_font:print(anythingbutnil(md.Desc2), metadatax, topy+32)
+						md_font:print(anythingbutnil(md.Desc3), metadatax, topy+40)
 					else
-						ved_printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
+						font_ui:printf(anythingbutnil(md.errmsg), metadatax, topy, 40*8, "left")
 					end
 				end
 			else
@@ -421,7 +451,7 @@ return function()
 		end
 		if updatecheck.scrolling_text ~= nil then
 			love.graphics.setScissor(love.graphics.getWidth()-120, 288, 112, 16)
-			ved_print(updatecheck.scrolling_text, love.graphics.getWidth()-8-math.floor(updatecheck.scrolling_text_pos), 288+4)
+			font_8x8:print(updatecheck.scrolling_text, love.graphics.getWidth()-8-math.floor(updatecheck.scrolling_text_pos), 288+4)
 			love.graphics.setScissor()
 		end
 		if backupscreen then
@@ -466,7 +496,7 @@ return function()
 			elseif not mousepressed and onrbutton(11, 40, false, 20) then
 				-- Update notes and such
 				if updatecheck.notes_available then
-					tostate(15, nil, {updatecheck.notes, false, updatecheck.notes_refreshable})
+					tostate(15, nil, {updatecheck.notes, false, font_8x8, updatecheck.notes_refreshable})
 				elseif not s.pcheckforupdates or updatecheck.check_error then
 					s.pcheckforupdates = true
 					updatecheck.start_check()

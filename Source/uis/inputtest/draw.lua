@@ -14,6 +14,6 @@ return function()
 	local youhaveselected = "You have selected: "
 	local tmp = newinputsys.getseltext(newinputsys.input_ids[#newinputsys.nth_input])
 	if tmp ~= nil then
-		ved_print(youhaveselected .. tmp, 580, 112)
+		font_8x8:print(youhaveselected .. tmp, 580, 112)
 	end
 end

@@ -108,13 +108,13 @@ function love.draw()
 	end
 
 	if generictimer_mode == 3 and generictimer > 0 then
-		local width, lines = font8:getWrap(notification_text, 80*8)
+		local width, lines = font_ui:getWrap(notification_text, 80*8)
 
 		local boxy = love.graphics.getHeight()-16-lines*8
 		love.graphics.setColor(128,128,128,192)
 		love.graphics.rectangle("fill", 8, boxy, width+16, lines*8+8)
 		love.graphics.setColor(0,0,0,255)
-		ved_printf(notification_text, 16, boxy+4, 80*8, "left")
+		font_ui:printf(notification_text, 16, boxy+4, 80*8, "left")
 	end
 
 	-- Middle click cursor
@@ -153,11 +153,11 @@ function love.draw()
 	if allowdebug and s.fpslimit_ix ~= 4 then
 		love.graphics.setColor(255,0,0)
 		if s.fpslimit_ix == 3 then
-			ved_print("120", love.graphics.getWidth()-48, love.graphics.getHeight()-16, 2)
+			font_8x8:print("120", love.graphics.getWidth()-48, love.graphics.getHeight()-16, nil, 2)
 		elseif s.fpslimit_ix == 2 then
-			ved_print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16, 2)
+			font_8x8:print("60", love.graphics.getWidth()-32, love.graphics.getHeight()-16, nil, 2)
 		elseif s.fpslimit_ix == 1 then
-			ved_print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16, 2)
+			font_8x8:print("30", love.graphics.getWidth()-32, love.graphics.getHeight()-16, nil, 2)
 		end
 		love.graphics.setColor(255,255,255)
 	end
@@ -167,7 +167,7 @@ function love.draw()
 		love.graphics.setColor(255,160,0,192)
 		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-16, 128, 16)
 		love.graphics.setColor(255,255,255,255)
-		ved_printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
+		font_ui:printf(L.FPS .. ": " .. love.timer.getFPS(), 0, love.graphics.getHeight()-12, 128, "center")
 	end
 
 	if allowdebug then
@@ -176,21 +176,21 @@ function love.draw()
 			love.graphics.setColor(255,160,0,192)
 			love.graphics.rectangle("fill", 128, love.graphics.getHeight()-16, 128, 16)
 			love.graphics.setColor(255,255,255,255)
-			ved_printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
+			font_8x8:printf("TAKING INPUT", 128, love.graphics.getHeight()-12, 128, "center")
 		end
 		if not nodialog then
 			-- Dialog open warning
 			love.graphics.setColor(160, 255, 0, 192)
 			love.graphics.rectangle("fill", 2*128, love.graphics.getHeight()-16, 128, 16)
 			love.graphics.setColor(255, 255, 255, 255)
-			ved_printf("DIALOG OPEN", 2*128, love.graphics.getHeight()-12, 128, "center")
+			font_8x8:printf("DIALOG OPEN", 2*128, love.graphics.getHeight()-12, 128, "center")
 		end
 		if mousepressed then
 			-- Mouse pressed warning
 			love.graphics.setColor(0, 255, 160, 192)
 			love.graphics.rectangle("fill", 3*128, love.graphics.getHeight()-16, 128, 16)
 			love.graphics.setColor(255, 255, 255, 255)
-			ved_printf("MOUSE PRESSED", 3*128, love.graphics.getHeight()-12, 128, "center")
+			font_8x8:printf("MOUSE PRESSED", 3*128, love.graphics.getHeight()-12, 128, "center")
 		end
 	end
 

@@ -520,10 +520,10 @@ return function()
 			love.graphics.setColor(128,128,128,192)
 			love.graphics.rectangle("fill",
 				love.mouse.getX()+15, love.mouse.getY()-10,
-				font8:getWidth(thistooltip), 8+(thistooltip:find("\n") ~= nil and 8 or 0)
+				font_ui:getWidth(thistooltip), 8+(thistooltip:find("\n") ~= nil and 8 or 0)
 			)
 			love.graphics.setColor(255,255,255,255)
-			ved_print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-10)
+			font_ui:print(thistooltip, love.mouse.getX()+16, love.mouse.getY()-10)
 			love.graphics.setScissor(16, 16, 32+4, love.graphics.getHeight()-32)
 		end
 
@@ -673,7 +673,7 @@ return function()
 		rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
 	end
 
-	ved_printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
+	font_ui:printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
 	-- Well make them actually do something!
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -856,8 +856,8 @@ return function()
 		elseif selectedtool == 9 then
 			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
 		else
-			ved_print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4)
-			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(roomsettings.platv) + 8, 16)
+			font_ui:print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4)
+			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font_8x8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()+24-160, font_8x8:getWidth(roomsettings.platv) + 8, 16)
 			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()+24-160, "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
 			local oldplatv = levelmetadata_get(roomx, roomy).platv
 			if roomsettings.platv ~= oldplatv then
@@ -876,7 +876,7 @@ return function()
 			end
 		end
 
-		ved_printf(
+		font_ui:printf(
 			selectedtool == 4 and L.TRINKETS or
 			selectedtool == 8 and L.ROOMPLATFORMS or
 			selectedtool == 9 and L.ROOMENEMIES or
@@ -950,7 +950,7 @@ return function()
 				-- Enemy type
 				switchenemies()
 				mousepressed = true
-			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(levelmetadata_get(roomx, roomy).platv))/2 - 4, love.graphics.getHeight()+24-160, font8:getWidth(levelmetadata_get(roomx, roomy).platv) + 8, 16) and selectedtool == 8 then
+			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font_8x8:getWidth(levelmetadata_get(roomx, roomy).platv))/2 - 4, love.graphics.getHeight()+24-160, font_8x8:getWidth(levelmetadata_get(roomx, roomy).platv) + 8, 16) and selectedtool == 8 then
 				-- Platform speed
 				dialog.create(
 					L.PLATVCHANGE_MSG,
@@ -989,7 +989,7 @@ return function()
 	-- If we're placing a terminal or script box, display some radio buttons
 	if (selectedtool == 12 or selectedtool == 13) then
 		local y = (love.graphics.getHeight()-156)+1
-		ved_printf(
+		font_ui:printf(
 			L.CREATE_LOAD_SCRIPT,
 			love.graphics.getWidth()-(128-4),
 			y,
@@ -1037,11 +1037,11 @@ return function()
 	if s.coords0 then
 		tinyfont:print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
-		ved_printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
+		font_8x8:printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	else
 		tinyfont:print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
 		love.graphics.setColor(255,255,255)
-		ved_printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
+		font_8x8:printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	end
 
 	-- But if we're in the tiles picker instead display the tile we're hovering on!
@@ -1057,23 +1057,23 @@ return function()
 		if cursor_not_dashes
 		and cursorx < tiles_width_picker
 		and tile < total_tiles then
-			ved_printf(
+			font_ui:printf(
 				langkeys(L.TILE, {tile}),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
-			ved_printf(
+			font_ui:printf(
 				(issolid(tile, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
-			ved_printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right")
+			font_ui:printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right")
 		end
 	else
-		ved_printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
+		font_8x8:printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
 		if (cursorx ~= "--") and (cursory ~= "--") then
-			ved_printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right") -- 56+16=72
+			font_8x8:printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right") -- 56+16=72
 		else
-			ved_printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
+			font_8x8:printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
 		end
 	end
 
@@ -1093,11 +1093,11 @@ return function()
 		-- The custom brush needs radio buttons as well...
 		local y = (love.graphics.getHeight()-156)+1
 		local title_y = y
-		if font8:getWidth(L.CUSTOM_SIZED_BRUSH) < 128-8 then
+		if font_ui:getWidth(L.CUSTOM_SIZED_BRUSH) < 128-8 then
 			title_y = title_y + 4
 			y = y - 4
 		end
-		ved_printf(
+		font_ui:printf(
 			L.CUSTOM_SIZED_BRUSH,
 			love.graphics.getWidth()-(128-4),
 			title_y,
@@ -1180,13 +1180,13 @@ return function()
 
 	if not voided_metadata then
 		hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-70, (6*16), 8+4) -- -16-32-2-12-8 => -70
-		ved_printf(
+		font_ui:printf(
 			tilesetblocks[selectedtileset].name ~= nil and tilesetblocks[selectedtileset].name or selectedtileset,
 			love.graphics.getWidth()-(7*16), love.graphics.getHeight()-16-32-12-8, 6*16, "center"
 		)
 
 		hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-16-24-2-8-8, (6*16), 8+4)
-		ved_printf(
+		font_ui:printf(
 			tilesetblocks[selectedtileset].colors[selectedcolor].name ~= nil
 			and tilesetblocks[selectedtileset].colors[selectedcolor].name
 			or langkeys(L.TSCOLOR, {selectedcolor}),
@@ -1205,7 +1205,7 @@ return function()
 	end
 
 	hoverrectangle(128,128,128,128, love.graphics.getWidth()-(7*16)-1, love.graphics.getHeight()-46, (6*16), 8+4) -- -16-16-2-4-8 => -46
-	ved_printf(
+	font_ui:printf(
 		tilespicker and L.HIDEALL or L.SHOWALL,
 		love.graphics.getWidth()-(7*16), love.graphics.getHeight()-44, 6*16, "center"
 	) -- -16-16-4-8 => -44
@@ -1220,16 +1220,16 @@ return function()
 		if tilespicker_last_page_number() ~= 0 then
 			-- Display page switcher for big tiles picker
 			local label = tilespicker_page+1 .. "/" .. tilespicker_last_page_number()+1
-			ved_print(
+			font_8x8:print(
 				label,
 				640+screenoffset+3, love.graphics.getHeight()-8-10
 			)
 
-			local label_w = font8:getWidth(label)
+			local label_w = font_8x8:getWidth(label)
 			hoverrectangle(128,128,128,128, 640+screenoffset+1, love.graphics.getHeight()-19-10, label_w+4, 10)
 			hoverrectangle(128,128,128,128, 640+screenoffset+1, love.graphics.getHeight()-10, label_w+4, 10)
-			ved_printf(arrow_up, 640+screenoffset+1, love.graphics.getHeight()-19-10+1, label_w+4, "center")
-			ved_printf(arrow_down, 640+screenoffset+1, love.graphics.getHeight()-10+1, label_w+4, "center")
+			font_8x8:printf(arrow_up, 640+screenoffset+1, love.graphics.getHeight()-19-10+1, label_w+4, "center")
+			font_8x8:printf(arrow_down, 640+screenoffset+1, love.graphics.getHeight()-10+1, label_w+4, "center")
 
 			if love.mouse.isDown("l") and not mousepressed then
 				if mouseon(640+screenoffset+1, love.graphics.getHeight()-19-10, label_w+4, 10) then
@@ -1319,13 +1319,13 @@ return function()
 	end
 
 	if bottomwidemsg ~= nil then
-		local _, lines = font8:getWrap(bottomwidemsg, love.graphics.getWidth())
+		local _, lines = font_ui:getWrap(bottomwidemsg, love.graphics.getWidth())
 		local yoff = 16 * (lines-1)
 
 		love.graphics.setColor(255, 255, 127, 63)
 		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-40-yoff-2, love.graphics.getWidth(), 16+yoff+4)
 		love.graphics.setColor(255, 255, 255, 255)
-		ved_shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
+		font_ui:shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
 	end
 
 	if playtesting_uistate == PT_UISTATE.ASKING then

@@ -658,9 +658,9 @@ function EditorIconBar()
 end
 
 
--- Plain text (via ved_print) or wrapped text (via ved_printf)
+-- Plain text (via font:print) or wrapped text (via font:printf)
 -- text can be a string (for static text), or a function that returns a string (for dynamic text)
--- Shadowed text (via ved_shadowprint and ved_shadowprintf) not yet supported
+-- Shadowed text (via font:shadowprint and font:shadowprintf) not yet supported
 elText =
 {
 	px = 0, py = 0,
@@ -810,10 +810,10 @@ function elColorPicker:draw(x, y, maxw, maxh)
 
 	-- The numbers
 	love.graphics.setColor(255,255,255)
-	ved_printf(r, x, y+30, 50, "center")
-	ved_printf(g, x+55, y+30, 50, "center")
-	ved_printf(b, x+110, y+30, 50, "center")
-	ved_printf(
+	font_8x8:printf(r, x, y+30, 50, "center")
+	font_8x8:printf(g, x+55, y+30, 50, "center")
+	font_8x8:printf(b, x+110, y+30, 50, "center")
+	font_8x8:printf(
 		string.format("#%02x%02x%02x", r, g, b),
 		x, y,
 		160, "center"

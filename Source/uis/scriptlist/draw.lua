@@ -15,18 +15,18 @@ return function()
 			elseif y >= -16 and y <= love.graphics.getHeight() then
 				local used = usedscripts[scriptnames[script_i]]
 				hoverrectangle(128,128,128, used and 128 or 64, 8, y, screenoffset+640-8-24 -36, 16)
-				ved_printf(scriptnames[script_i], 8, y+4, screenoffset+640-8-36, "center")
+				font_level:printf(scriptnames[script_i], 8, y+4, screenoffset+640-8-36, "center")
 				if script_i == #scriptnames then
 					showhotkey("/", 8+screenoffset+640-8-24 -36, y-2, ALIGN.RIGHT)
 				end
 
 				if script_i ~= #scriptnames then
 					hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4, y, 16, 16)
-					ved_printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4, 16, "center")
+					font_8x8:printf(arrow_up, 8+screenoffset+640-8-24 -36 +4, y+4, 16, "center")
 				end
 				if script_i ~= 1 then
 					hoverrectangle(128,128,128,128, 8+screenoffset+640-8-24 -36 +4 +16 +4, y, 16, 16)
-					ved_printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4, 16, "center")
+					font_8x8:printf(arrow_down, 8+screenoffset+640-8-24 -36 +4 +16 +4, y+4, 16, "center")
 				end
 			end
 
@@ -95,7 +95,7 @@ return function()
 	rbutton({L.FLAGS, "F"}, 1)
 	rbutton({L.TEXTBOXCOLORS_BUTTON, "C"}, 2)
 
-	ved_printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 108, 112, "center")
+	font_ui:printf(L.SCRIPTDISPLAY, love.graphics.getWidth()-120, 108, 112, "center")
 	checkbox(scriptdisplay_used, love.graphics.getWidth()-120, 128, nil, L.SCRIPTDISPLAY_USED,
 		function(key, newvalue)
 			scriptdisplay_used = newvalue
@@ -116,11 +116,11 @@ return function()
 	)
 
 	if not (scriptdisplay_used and scriptdisplay_unused) then
-		ved_printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 204, 112, "center")
+		font_ui:printf(langkeys(L_PLU.SCRIPTDISPLAY_SHOWING, {j+1}), love.graphics.getWidth()-120, 204, 112, "center")
 	end
 
 	-- Script count
-	ved_printf(
+	font_ui:printf(
 		L.COUNT .. #scriptnames,
 		love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-(24*2))+4, 128-16, "left"
 	)

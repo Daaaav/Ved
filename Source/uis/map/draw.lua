@@ -89,7 +89,7 @@ return function()
 						)
 					end
 				else
-					ved_printf(amount, mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 4, mapscale*640, "center")
+					font_8x8:printf(amount, mapxoffset + screenoffset + mrx*mapscale*640, mapyoffset + mry*mapscale*480 + mapscale*480/2 - 4, mapscale*640, "center")
 				end
 			end
 		end
@@ -279,9 +279,9 @@ return function()
 				love.graphics.draw(toolimg[actual_t], cx, cy)
 				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and window_active() then
 					love.graphics.setColor(128,128,128,192)
-					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font8:getWidth(pluraltoolnames[actual_t]), 8)
+					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font_ui:getWidth(pluraltoolnames[actual_t]), 8)
 					love.graphics.setColor(255,255,255,255)
-					ved_print(pluraltoolnames[actual_t], love.mouse.getX()+16, love.mouse.getY()-8)
+					font_ui:print(pluraltoolnames[actual_t], love.mouse.getX()+16, love.mouse.getY()-8)
 				end
 			end
 		end

@@ -158,7 +158,7 @@ function cDialog:draw(topmost)
 	end
 	self:setColor(0,0,0,255)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
-	ved_printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, textalign)
+	font_ui:printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, textalign)
 	love.graphics.setScissor()
 
 	-- Text boxes
@@ -226,7 +226,7 @@ function cDialog:draw(topmost)
 		else
 			btn_text = v
 		end
-		button_widths[k] = math.max(72, (font8:getWrap(btn_text, 72))+4)
+		button_widths[k] = math.max(72, (font_ui:getWrap(btn_text, 72))+4)
 	end
 	local returnalreadyshown = false
 	for k,v in pairs(self.buttons) do
@@ -263,10 +263,10 @@ function cDialog:draw(topmost)
 			btn_text = v
 		end
 		local textyoffset = 8
-		if font8:getWidth(btn_text) > btnwidth or btn_text:find("\n") ~= nil then
+		if font_ui:getWidth(btn_text) > btnwidth or btn_text:find("\n") ~= nil then
 			textyoffset = 4
 		end
-		ved_printf(btn_text, btn_x, btn_y+textyoffset, btnwidth, "center")
+		font_ui:printf(btn_text, btn_x, btn_y+textyoffset, btnwidth, "center")
 		local args = {btn_x+btnwidth, btn_y-2, ALIGN.RIGHT, topmost, self}
 		if topmost and not self.closing then
 			-- For the Enter key, make sure to put the most prioritized buttons on the left,
@@ -294,9 +294,9 @@ function cDialog:draw(topmost)
 
 	-- Also display the title text (if not empty). Shadow first
 	self:setColor(0,0,0,255, not topmost)
-	ved_print(self.title, self.x+4, self.y+self.windowani-12)
+	font_ui:print(self.title, self.x+4, self.y+self.windowani-12)
 	self:setColor(255,255,255,255, not topmost)
-	ved_print(self.title, self.x+3, self.y+self.windowani-13)
+	font_ui:print(self.title, self.x+3, self.y+self.windowani-13)
 
 	if canvas ~= nil then
 		love.graphics.setCanvas()
@@ -453,7 +453,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		else
 			textcontent = content
 		end
-		ved_printf(anythingbutnil(textcontent), real_x, real_y-1-2+2, real_w, "left")
+		font_ui:printf(anythingbutnil(textcontent), real_x, real_y-1-2+2, real_w, "left")
 		self:setColor(255,255,255,255)
 		return
 	end
@@ -581,7 +581,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			toppath = displayable_filename(content)
 		end
 		love.graphics.setScissor(real_x+12, real_y-1, real_w-12, 8)
-		ved_print(toppath, real_x+real_w-font8:getWidth(toppath), real_y-1)
+		font_ui:print(toppath, real_x+real_w-font_ui:getWidth(toppath), real_y-1)
 		love.graphics.setScissor(real_x, real_y+9, real_w-16, 12*list_height)
 		self:setColor(100,100,100,192)
 		--self:setColor(160,160,160,192)
@@ -618,7 +618,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 					end
 					self:setColor(0,0,0,255)
 				end
-				ved_print(displayable_filename(v.name), real_x+8, row_y+2)
+				font_ui:print(displayable_filename(v.name), real_x+8, row_y+2)
 			end
 		end
 		if folder_error ~= "" then

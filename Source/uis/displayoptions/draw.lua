@@ -1,13 +1,13 @@
 -- displayoptions/draw
 
 return function()
-	ved_print(L.DISPLAYSETTINGSTITLE, 8, 8+4)
+	font_ui:print(L.DISPLAYSETTINGSTITLE, 8, 8+4)
 
-	ved_print(L.SCALE, 8, 8+(24*1)+4)
+	font_ui:print(L.SCALE, 8, 8+(24*1)+4)
 	if nonintscale then
-		newinputsys.print("scale", 16+font8:getWidth(L.SCALE), 8+(24*1)+4)
+		newinputsys.print("scale", 16+font_ui:getWidth(L.SCALE), 8+(24*1)+4)
 	else
-		int_control(16+font8:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
+		int_control(16+font_ui:getWidth(L.SCALE), 8+(24*1), "scale", 1, 9,
 			function(value)
 				local swidth = 896
 				if s.psmallerscreen then
@@ -104,7 +104,7 @@ return function()
 			0, pixelscale*num_scale
 		)
 		love.graphics.setScissor()
-		ved_printf(
+		font_ui:printf(
 			(love.window.getDisplayName ~= nil and love.window.getDisplayName(k) .. "\n" or "")
 			.. langkeys(L.MONITORSIZE, {monw, monh}),
 			dispx, 135 + (164 + (monh*pixelscale)/2), monw*pixelscale, "center"
@@ -112,16 +112,16 @@ return function()
 		currentmon_x = currentmon_x + monw*pixelscale + 16
 	end
 
-	ved_printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 129, love.graphics.getWidth(), "center")
+	font_ui:printf(langkeys(L.VEDRES, {ved_w, ved_h}), 0, 129, love.graphics.getWidth(), "center")
 
 
 	if num_scale ~= tonumber(num_scale) or num_scale == nil or num_scale <= 0 then
 		love.graphics.setColor(255,0,0)
-		ved_print(L.SCALENONUM, 8, love.graphics.getHeight()-17)
+		font_ui:print(L.SCALENONUM, 8, love.graphics.getHeight()-17)
 		love.graphics.setColor(255,255,255)
 	elseif not fits then
 		love.graphics.setColor(255,0,0)
-		ved_print(L.SCALENOFIT, 8, love.graphics.getHeight()-17)
+		font_ui:print(L.SCALENOFIT, 8, love.graphics.getHeight()-17)
 		love.graphics.setColor(255,255,255)
 	end
 

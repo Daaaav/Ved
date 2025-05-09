@@ -298,6 +298,7 @@ function loadlevelsfolder()
 	end
 	current_scrolling_leveltitle_k = nil
 	current_scrolling_leveltitle_title = nil
+	current_scrolling_leveltitle_font = font_8x8
 	current_scrolling_leveltitle_pos = 168
 	current_scrolling_levelfilename_k = nil
 	current_scrolling_levelfilename_filename = nil
@@ -629,7 +630,7 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 
 	-- Text too long to fit?
 	local textyoffset = 4
-	if (font8:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
+	if (font_ui:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
 		textyoffset = 0
 	end
 
@@ -640,7 +641,7 @@ function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
 		y = yoffset+(buttonspacing*pos)
 	end
 	hoverrectangle(yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128, love.graphics.getWidth()-(128-8), y, 128-16, 16)
-	ved_printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
+	font_ui:printf(label, love.graphics.getWidth()-(128-8)+1, y+textyoffset, 128-16, "center")
 	if hotkey ~= nil then
 		showhotkey(hotkey, love.graphics.getWidth()-9, y-2, ALIGN.RIGHT)
 	end
@@ -1840,7 +1841,7 @@ function compare_level_differences(second_level_name)
 	end
 
 
-	tostate(15, nil, {differencesn, false})
+	tostate(15, nil, {differencesn, false, font_level, false})
 end
 
 function getentityname(id, p1)
@@ -2125,7 +2126,7 @@ function to_notepad()
 	if vedmetadata == false then
 		vedmetadata = createmde()
 	end
-	tostate(15, nil, {vedmetadata.notes, true})
+	tostate(15, nil, {vedmetadata.notes, true, font_level, false})
 end
 
 function s_nieuw(t)
@@ -2261,7 +2262,7 @@ function sp_teken(v, offx, offy, myroomx, myroomy)
 			if s_ge2ten > 99 then
 				tinyfont:print(s_ge2ten, ox+4, oy+4)
 			else
-				ved_print(s_ge2ten, ox+3, oy+3)
+				font_8x8:print(s_ge2ten, ox+3, oy+3)
 			end
 		else
 			for y = 0, 6 do
@@ -2328,7 +2329,7 @@ function updatewindowicon()
 end
 
 function roomtext_extralines(text)
-	local _, lines = font8:getWrap(text, 40*8)
+	local _, lines = font_ui:getWrap(text, 40*8)
 
 	return lines - 1
 end
@@ -2574,7 +2575,7 @@ function drawlink(link)
 	end
 
 	love.graphics.setColor(255,255,255,192)
-	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-10, font8:getWidth(link)+8, 10)
+	love.graphics.rectangle("fill", 0, love.graphics.getHeight()-10, font_ui:getWidth(link)+8, 10)
 	love.graphics.setColor(0,0,0)
 	font_ui:print(link, 4, love.graphics.getHeight()-9)
 	love.graphics.setColor(255,255,255)
@@ -2846,8 +2847,8 @@ function displayable_filename(name)
 	return name:gsub("[\r\n]", "?")
 end
 
-function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos)
-	local stringtoolong = font8:getWidth(string) > len*8
+function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos, font)
+	local stringtoolong = font:getWidth(string) > len*8
 	local sx, sy, sw, sh
 	if stringtoolong then
 		sx, sy, sw, sh = love.graphics.getScissor()
@@ -2858,17 +2859,17 @@ function display_levels_list_string(string, x, y, k, len, scroll_k, scroll_pos)
 	end
 	if scroll_k == k then
 		love.graphics.setScissor(x, sy, len*8, sh)
-		ved_print(string, x+len*8-math.floor(scroll_pos), y)
+		font:print(string, x+len*8-math.floor(scroll_pos), y)
 	else
 		if stringtoolong then
 			love.graphics.setScissor(x, sy, (len-1)*8, sh)
 		end
-		ved_print(string, x, y)
+		font:print(string, x, y)
 	end
 	if stringtoolong then
 		love.graphics.setScissor(sx, sy, sw, sh)
 		if scroll_k ~= k then
-			ved_print(arrow_right, x+(len-1)*8, y)
+			font:print(arrow_right, x+(len-1)*8, y)
 		end
 	end
 end
@@ -3341,17 +3342,17 @@ end
 function tooltip_box_dimensions(title, explanation, icon)
 	local box_w = math.max(
 		256,
-		font8:getWidth(title) + 16
+		font_ui:getWidth(title) + 16
 	)
 	local icon_w, icon_h = 0, 0
 	if icon ~= nil then
 		icon_w, icon_h = icon:getWidth()+8, icon:getHeight()
 	end
 	local expl_w = box_w - 16 - icon_w
-	local _, lines = font8:getWrap(explanation, expl_w)
+	local _, lines = font_ui:getWrap(explanation, expl_w)
 	local box_h = 32+math.max(
 		icon_h,
-		lines*font8:getHeight()
+		lines*font_ui:getHeight()
 	)
 
 	if lines == 0 then
@@ -3371,12 +3372,12 @@ function tooltip_box_draw(title, explanation, icon, box_x, box_y, box_w, box_h, 
 	love.graphics.setColor(40,40,40,192)
 	love.graphics.rectangle("fill", box_x, box_y, box_w, box_h)
 	love.graphics.setColor(title_r, title_g, title_b, 255)
-	ved_print(title, box_x+8, box_y+8)
+	font_ui:print(title, box_x+8, box_y+8)
 	if icon ~= nil then
 		love.graphics.draw(icon, box_x+8, box_y+24)
 	end
 	love.graphics.setColor(255,255,255,255)
-	ved_printf(
+	font_ui:printf(
 		explanation,
 		box_x + 8 + icon_w,
 		box_y + 24,
@@ -3445,7 +3446,7 @@ function print_tile_number(t, x, y)
 
 		love.graphics.setColor(col, col, col)
 
-		ved_shadowprint_tiny(
+		tinyfont:shadowprint(
 			st:sub(i+1,i+1),
 			x+(i%4)*4, y+print_y*7
 		)

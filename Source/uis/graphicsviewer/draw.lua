@@ -43,7 +43,7 @@ return function()
 		love.graphics.setScissor()
 		font_ui:print(L.GRAPHICS .. " - " .. imageviewer_filepath, 8, 4)
 
-		local check_w = font8:getWidth(L.NOTALPHAONLY)+24
+		local check_w = font_ui:getWidth(L.NOTALPHAONLY)+24
 		local check_x = love.graphics.getWidth()-64-check_w/2
 		checkbox(not imageviewer_showwhite, check_x, love.graphics.getHeight()-336, nil, L.NOTALPHAONLY,
 			function(key, newvalue)
@@ -102,7 +102,7 @@ return function()
 			infostring = infostring .. "\n" .. L.ORDRAGDROP
 		end
 
-		local _, lines = font8:getWrap(infostring, love.graphics.getWidth()-136)
+		local _, lines = font_ui:getWrap(infostring, love.graphics.getWidth()-136)
 
 		local centery = (love.graphics.getHeight() - 8*lines) / 2
 

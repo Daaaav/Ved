@@ -24,7 +24,7 @@ return function()
 	basic_stats_max_text_width = 0
 	limitglow_enabled = false
 	for k,v in pairs(basic_stats) do
-		local width = font8:getWidth(v.name .. " /" .. v.value .. v.max)
+		local width = font_ui:getWidth(v.name .. " /" .. v.value .. v.max)
 
 		if width > basic_stats_max_text_width then
 			basic_stats_max_text_width = width

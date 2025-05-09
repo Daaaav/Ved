@@ -430,7 +430,7 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 
 	-- Here so that other entities won't cover the tooltip
 	if showtooltipof ~= nil then
-		ved_print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
+		font_ui:print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
 	end
 
 	if scriptname_editingshown then
@@ -479,7 +479,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
-		ved_print(anythingbutnil(({"V", "^", "<", ">"})[v.p1+1]), x + 8, y + 8, 2)
+		font_8x8:print(anythingbutnil(({arrow_down, arrow_up, arrow_left, arrow_right})[v.p1+1]), x + 8, y + 8, nil, 2)
 
 		if interact then
 			entity_highlight(x, y, 2, 2)
@@ -539,14 +539,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		-- Now indicate what this actually is.
 		if platform_labels[v.p1] ~= nil then
 			if v.p1 < 5 or v.p1 > 8 or lockablemouseon(x, y, 16, 16) then
-				ved_print(platform_labels[v.p1], x, y, 2)
+				font_8x8:print(platform_labels[v.p1], x, y, nil, 2)
 			end
 		elseif v.p1 < 0 then
 			-- It stays still
-			ved_print(" []", x, y, 2)
+			font_8x8:print(" []", x, y, nil, 2)
 		else
 			-- What
-			ved_print("...?", x, y, 2)
+			font_8x8:print("...?", x, y, nil, 2)
 		end
 
 		if interact then
@@ -567,7 +567,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			drawentcolour(usethisentcolour, eachx, y, gray_warpzone)
 		end
 		-- This is a disappearing platform.
-		ved_print("////", x, y, 2)
+		font_8x8:print("////", x, y, nil, 2)
 		if interact then
 			entity_highlight(x, y, 4, 1)
 		end
@@ -1895,7 +1895,7 @@ function rotateroom180(rx, ry, undoing)
 				end
 			elseif v.t == 17 then
 				-- Roomtext, the new placement of x depends on the length of the string!
-				entitydata[k].x = ((rx*40)+39 - v.x - (math.floor(font8:getWidth(v.data)/8)-1))+(rx*40)
+				entitydata[k].x = ((rx*40)+39 - v.x - (math.floor(font_level:getWidth(v.data)/8)-1))+(rx*40)
 				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
 			elseif v.t == 19 then
 				-- Script box.

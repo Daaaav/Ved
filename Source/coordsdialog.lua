@@ -7,9 +7,9 @@ function coordsdialog.draw()
 	love.graphics.setColor(64,64,64,128)
 	love.graphics.rectangle("fill", (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2, 7*16, 3*16)
 	love.graphics.setColor(255,255,255,255)
-	ved_print(" " .. coordsdialog.print(), (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2+16, 2)
-	ved_printf(L.GOTOROOM, 0, (love.graphics.getHeight()-3*16)/2-32-3, love.graphics.getWidth(), "center", 2)
-	ved_printf(L.ESCTOCANCEL, 0, (love.graphics.getHeight()+3*16)/2+48-2, love.graphics.getWidth(), "center")
+	font_8x8:print(" " .. coordsdialog.print(), (love.graphics.getWidth()-7*16)/2, (love.graphics.getHeight()-3*16)/2+16, nil, 2)
+	font_ui:printf(L.GOTOROOM, 0, (love.graphics.getHeight()-3*16)/2-32-3, love.graphics.getWidth(), "center", nil, 2)
+	font_ui:printf(L.ESCTOCANCEL, 0, (love.graphics.getHeight()+3*16)/2+48-2, love.graphics.getWidth(), "center")
 end
 
 function coordsdialog.activate()

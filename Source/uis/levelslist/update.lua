@@ -3,19 +3,21 @@
 return function(dt)
 	if updatecheck.scrolling_text ~= nil then
 		updatecheck.scrolling_text_pos = updatecheck.scrolling_text_pos + 55*dt
-		if updatecheck.scrolling_text_pos > font8:getWidth(updatecheck.scrolling_text) + 112 then
+		if updatecheck.scrolling_text_pos > font_8x8:getWidth(updatecheck.scrolling_text) + 112 then
 			updatecheck.scrolling_text_pos = 0
 		end
 	end
 	if current_scrolling_leveltitle_k ~= nil then
 		current_scrolling_leveltitle_pos = current_scrolling_leveltitle_pos + 55*dt
-		if current_scrolling_leveltitle_pos > font8:getWidth(anythingbutnil(current_scrolling_leveltitle_title)) + 168 then
+		if current_scrolling_leveltitle_pos > current_scrolling_leveltitle_font:getWidth(
+			anythingbutnil(current_scrolling_leveltitle_title)
+		) + 168 then
 			current_scrolling_leveltitle_pos = 0
 		end
 	end
 	if current_scrolling_levelfilename_k ~= nil then
 		current_scrolling_levelfilename_pos = current_scrolling_levelfilename_pos + 55*dt
-		if current_scrolling_levelfilename_pos > font8:getWidth(current_scrolling_levelfilename_filename) + (s.psmallerscreen and 50-12 or 50)*8 then
+		if current_scrolling_levelfilename_pos > font_ui:getWidth(current_scrolling_levelfilename_filename) + (s.psmallerscreen and 50-12 or 50)*8 then
 			current_scrolling_levelfilename_pos = 0
 		end
 	end
