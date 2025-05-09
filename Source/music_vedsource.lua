@@ -136,7 +136,7 @@ end
 function cVedQueueableSource:load_sounddata()
 	local success, maybe_sounddata = pcall(love.sound.newSoundData, self.love_decoder)
 	if not success then
-		cons("Could not load sounddata for song " .. song .. " from " .. file .. " because " .. maybe_sounddata)
+		cons("Could not load sounddata because " .. maybe_sounddata)
 		return false
 	end
 
