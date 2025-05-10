@@ -1325,7 +1325,7 @@ return function()
 		love.graphics.setColor(255, 255, 127, 63)
 		love.graphics.rectangle("fill", 0, love.graphics.getHeight()-40-yoff-2, love.graphics.getWidth(), 16+yoff+4)
 		love.graphics.setColor(255, 255, 255, 255)
-		font_ui:shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", 2)
+		font_ui:shadowprintf(bottomwidemsg, 0, love.graphics.getHeight()-40-yoff, love.graphics.getWidth(), "center", nil, 2)
 	end
 
 	if playtesting_uistate == PT_UISTATE.ASKING then
