@@ -959,7 +959,8 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 			end
 			nodialog = false
 			return success
-		elseif love.mouse.isDown("l") and selectedtool > 3 and not mousepressed then
+		elseif love.mouse.isDown("l") and selectedtool > 3 and not mousepressed
+		and editingsboxid == nil and warpid == nil and movingentity == 0 then
 			-- Clicking on the entity, main-game editor style!
 			-- Ideally, now we'd simply call entity:left_click() or something,
 			-- which then calls self:change_direction(), self:flip()... depending on
