@@ -93,8 +93,9 @@ function loadplugins()
 				else
 
 					if v:sub(-4, -1) == ".zip" then
-						assert(love.filesystem.mount("plugins/" .. v, "plugins-zip/" .. v:sub(1, -5)), "Failed to mount plugin " .. v)
-						pluginpath = "plugins-zip/" .. v:sub(1, -5)
+						local mount_point = "plugins-zip/" .. v:sub(1, -5):gsub("%.", "_")
+						assert(love.filesystem.mount("plugins/" .. v, mount_point), "Failed to mount plugin " .. v)
+						pluginpath = mount_point
 						pluginname = v:sub(1, -5)
 					else
 						pluginpath = "plugins/" .. v
