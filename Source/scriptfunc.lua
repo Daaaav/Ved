@@ -771,13 +771,7 @@ function script_compile(readable_script)
 		local usev = v -- TODO scriptlines2021 simplify - and why sometimes usev and sometimes v down here?
 
 		-- Okay, we'll have to split this. What's on this line?
-		local partss
-		if textlinestogo <= 0 then
-			local text2 = usev:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
-			partss = explode(",", text2)
-		else
-			partss = {""}
-		end
+		local partss = explode(",", (usev:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")))
 		local partss_scriptcasing = {}
 		for k, v in pairs(partss) do
 			if k < #partss then
@@ -787,17 +781,17 @@ function script_compile(readable_script)
 			end
 		end
 
+		local in_textbox = textlinestogo > 0
+
 		-- Are we using internal scripting mode? If this line is blank it's not going to be taken well by VVVVVV itself unless we put something here..
-		if (internalscript or cutscenebarsinternalscript) and v == "" and textlinestogo <= 0 then
+		if (internalscript or cutscenebarsinternalscript) and v == "" and not in_textbox then
 			raw_script[k] = "#"
 			usev = "#"
 		end
 
-		if textlinestogo > 0 then
+		if in_textbox then
 			textlinestogo = textlinestogo - 1
-		end
-
-		if partss_scriptcasing[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
+		elseif partss_scriptcasing[1] == "text" and partss[5] ~= nil and usev ~= "text(1,0,0,4) #v" and usev ~= "text(1,0,0,3) #v" then
 			textlinestogo = parse_textbox_line_count(partss[5])
 			if textlinestogo == nil then
 				textlinestogo = 0
