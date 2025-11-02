@@ -1002,20 +1002,18 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 				-- Roomtext
 				action = L.EDITTEXT
 				newinputsys.ignoremousepressed = true
-			elseif t == 18 then
-				-- Terminal
-				-- This one is special, since both flipping and changing the name seem important.
-				-- (And the main editor does both at the same time, which feels wrong)
-				-- I think, ideally, you'd want a click to edit the script name, and then while
-				-- editing the script name, you can freely click to flip the terminal however many
-				-- times you want (and then just press Esc or Enter to cancel editing the name).
-				-- This is hard because editing a roomtext/script name prevents clicking on entities.
-				-- So for now you can always use the right click menu option.
-				action = L.OTHERSCRIPT
-				newinputsys.ignoremousepressed = true
-			elseif t == 19 then
-				-- Script box
-				action = L.OTHERSCRIPT
+			elseif t == 18 or t == 19 then
+				-- Terminal or script box
+				-- The main editor does changing the script name, which is kinda important.
+				-- (And flipping a terminal, which is also important but feels wrong to do simultaneously)
+				-- But better idea: going to the script in the script editor!
+				-- Once a terminal/script box and its script name is decided upon, you probably don't want to
+				-- change it anymore, but you may still want to keep checking out this specific script.
+				if s.bumpscriptsbydefault then
+					action = L.EDITSCRIPTWOBUMPING
+				else
+					action = L.EDITSCRIPTWBUMPING
+				end
 				newinputsys.ignoremousepressed = true
 			end
 			if action ~= nil then
