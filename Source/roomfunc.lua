@@ -1009,11 +1009,7 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 				-- But better idea: going to the script in the script editor!
 				-- Once a terminal/script box and its script name is decided upon, you probably don't want to
 				-- change it anymore, but you may still want to keep checking out this specific script.
-				if s.bumpscriptsbydefault then
-					action = L.EDITSCRIPTWOBUMPING
-				else
-					action = L.EDITSCRIPTWBUMPING
-				end
+				action = L.EDITSCRIPT
 				newinputsys.ignoremousepressed = true
 			end
 			if action ~= nil then
