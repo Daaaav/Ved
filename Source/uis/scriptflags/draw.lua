@@ -1,16 +1,16 @@
 -- scriptflags/draw
 
 return function()
-	-- We have 3 columns
-	local btn_width = (love.graphics.getWidth()-8)/3
-	for flcol = 0, 2 do
+	-- We have 4 columns
+	local btn_width = (love.graphics.getWidth()-8)/4
+	for flcol = 0, 3 do
 		local pos_x = 8 + flcol*btn_width
-		for flk = 0, 33 do
-			local flag = flk + (flcol*34) + flags_page*100
+		for flk = 0, 24 do
+			local flag = flk + (flcol*25) + flags_page*100
 			if flag >= flags_page*100 + 100 or flag >= limit.flags then
 				break
 			end
-			local ax, ay, w, h = pos_x, 24+flk*12, btn_width - 8, 12
+			local ax, ay, w, h = pos_x, 24+flk*16, btn_width - 8, 16
 
 			if nodialog and mouseon(ax, ay, w, h) then
 				love.graphics.setColor(128,128,128,255)
@@ -78,13 +78,13 @@ return function()
 			love.graphics.rectangle("fill", ax, ay, w, h)
 			love.graphics.setColor(255,255,255,255)
 
-			local text = fixdig(flag, flags_digits, " ") .. " - " .. (usedflags[flag] and L.FLAGUSED or L.FLAGNOTUSED)
-			font_ui:printf(text, ax+2, ay+2, w-4, font_ui:align_start())
+			local text = fixdig(flag, flags_digits, " ")
+			font_ui:printf(text, ax+2, ay+4, w-4, font_ui:align_start())
 			if vedmetadata ~= false then
 				if anythingbutnil(vedmetadata.flaglabel[flag]) == "" then
-					font_ui:printf(L.FLAGNONAME, ax+2, ay+2, w-4, font_ui:align_end())
+					font_ui:printf(L.FLAGNONAME, ax+2, ay+4, w-4, font_ui:align_end())
 				else
-					font_level:printf(vedmetadata.flaglabel[flag], ax+2, ay+2, w-4, font_ui:align_end())
+					font_level:printf(vedmetadata.flaglabel[flag], ax+2, ay+4, w-4, font_ui:align_end())
 				end
 			end
 		end
@@ -102,6 +102,7 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 
 	font_ui:print(L.FLAGS, 8, 8)
+	font_ui:printf(flags_usedtext, 8, 8, love.graphics.getWidth()-16, "right")
 	font_ui:print(flags_outofrangeflagstext, 8, 440)
 
 	if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then

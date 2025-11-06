@@ -1294,6 +1294,15 @@ function loadflagslist()
 	-- See which flags have been used in this level.
 	return_used_flags(usedflags, outofrangeflags)
 
+	local n_usedflags = 0
+	for fl = 0, limit.flags-1 do
+		if usedflags[fl] then
+			n_usedflags = n_usedflags + 1
+		end
+	end
+
+	flags_usedtext = n_usedflags .. "/" .. limit.flags
+
 	flags_outofrangeflagstext = ""
 
 	for k,v in pairs(outofrangeflags) do
