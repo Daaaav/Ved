@@ -2889,17 +2889,56 @@ function mmss_duration(seconds)
 end
 
 function bytes_notation(bytes)
+	-- We want 3 significant digits - aka: 3.22 MB, 33.2 MB or 333 MB
+	-- (333.2 MB is too precise and an extra digit in 3.2 MB couldn't hurt)
+	-- If you think 1024 should be used instead of 1000, you can go and
+	-- verify whether 1.81 TB and 1862 GB are the same number or something :P
+
 	if bytes == nil then
 		bytes = 0
 	end
-	if bytes < 10^3 then
-		return langkeys(L_PLU.BYTES, {bytes})
-	elseif bytes < 10^6 then
-		return langkeys(L.KILOBYTES, {round(bytes/10^3, 1)})
-	elseif bytes < 10^9 then
-		return langkeys(L.MEGABYTES, {round(bytes/10^6, 1)})
+
+	if bytes < 1000 then
+		return langkeys(L.BYTES, {bytes})
 	end
-	return langkeys(L.GIGABYTES, {round(bytes/10^9, 1)})
+
+	local n_prefixes = 4 -- k, M, G, T
+
+	-- n//3 is the unit (0 => kB, 1 => MB, 2 => GB, etc)
+	-- n%3 gives us the number of pre-decimal digits in this unit:
+	-- 0 => 3.22, 1 => 33.2, 2 => 333
+	-- If we run out of prefixes, we just max out on the last prefix with
+	-- no decimals mode (showing 1000 TB instead of 1 PB is fine)
+	local n = 0
+	while bytes >= 9995 * 10^n and (n+1)/3 < n_prefixes do
+		n = n + 1
+	end
+
+	-- Round off appropriately - then make it 3 digits (still integer)
+	local digits = bytes + 5*10^n
+	digits = math.floor(digits / 10^(n+1))
+
+	local unit = "$1 ?B"
+	if n < 3 then
+		unit = L.KILOBYTES
+	elseif n < 6 then
+		unit = L.MEGABYTES
+	elseif n < 9 then
+		unit = L.GIGABYTES
+	elseif n < 12 then
+		unit = L.TERABYTES
+	end
+
+	if n % 3 == 0 then
+		-- 3.22
+		return langkeys(unit, {string.format("%d%s%02d", digits/100, L.DECIMAL_SEP, digits%100)})
+	elseif n % 3 == 1 then
+		-- 33.2
+		return langkeys(unit, {string.format("%d%s%d", digits/10, L.DECIMAL_SEP, digits%10)})
+	else
+		-- 333
+		return langkeys(unit, {string.format("%d", digits)})
+	end
 end
 
 function sort_files(files)
