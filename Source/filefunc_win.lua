@@ -109,6 +109,14 @@ function listlevelfiles(directory)
 						buffer_st_loc.wYear, buffer_st_loc.wMonth, buffer_st_loc.wDay,
 						buffer_st_loc.wHour, buffer_st_loc.wMinute, buffer_st_loc.wSecond
 					},
+					lastmodified_sort =
+						buffer_st_utc.wSecond
+						+ buffer_st_utc.wMinute*60
+						+ buffer_st_utc.wHour*3600
+						+ (buffer_st_utc.wDay-1)*86400
+						+ (buffer_st_utc.wMonth-1)*(86400*31)
+						+ (buffer_st_utc.wYear-1601)*(86400*31*12),
+					filesize = buffer_filedata.nFileSizeHigh*0x100000000 + buffer_filedata.nFileSizeLow,
 				}
 
 				if isdir then
@@ -158,6 +166,8 @@ function listfiles_generic(directory, filter, show_hidden)
 						name = string.char(0x41+d) .. ":",
 						isdir = true,
 						lastmodified = 0,
+						lastmodified_sort = 0,
+						filesize = 0,
 					}
 				)
 			end
@@ -189,6 +199,14 @@ function listfiles_generic(directory, filter, show_hidden)
 						buffer_st_loc.wYear, buffer_st_loc.wMonth, buffer_st_loc.wDay,
 						buffer_st_loc.wHour, buffer_st_loc.wMinute, buffer_st_loc.wSecond
 					},
+					lastmodified_sort =
+						buffer_st_utc.wSecond
+						+ buffer_st_utc.wMinute*60
+						+ buffer_st_utc.wHour*3600
+						+ (buffer_st_utc.wDay-1)*86400
+						+ (buffer_st_utc.wMonth-1)*(86400*31)
+						+ (buffer_st_utc.wYear-1601)*(86400*31*12),
+					filesize = buffer_filedata.nFileSizeHigh*0x100000000 + buffer_filedata.nFileSizeLow,
 				}
 			)
 		end

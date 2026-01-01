@@ -304,14 +304,14 @@ function dialog.form.musicfilemetadata_make(file_metadata)
 end
 
 function dialog.form.savevvvvvvmusic_make(startfolder, defaultname)
-	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 8)
-	table.insert(form, {"savemetadata", 0, 10, 2+font_ui:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
-	table.insert(form, {"", 2, 10, 40, L.SAVEMETADATA, DF.LABEL})
+	local form = dialog.form.files_make(startfolder, defaultname, ".vvv", true, 18)
+	table.insert(form, {"savemetadata", 0, 22, 2+font_ui:getWidth(L.SAVEMETADATA)/8, true, DF.CHECKBOX})
+	table.insert(form, {"", 2, 22, 40, L.SAVEMETADATA, DF.LABEL})
 	return form
 end
 
 function dialog.form.zip_level_make(startfolder, defaultname)
-	return dialog.form.files_make(startfolder, defaultname, ".zip", true, 8)
+	return dialog.form.files_make(startfolder, defaultname, ".zip", true, 18)
 end
 
 function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, list_height, yoff)
@@ -325,15 +325,15 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	end
 	local form = {
 		--{"folder", 0, yoff, 47, startfolder, DF.TEXT},
-		{"folder", 0, yoff, 47, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
+		{"folder", 0, yoff, 72, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
 	}
 
 	if filter ~= dirsep then
 		table.insert(form,
-			{"", 0, yoff+1+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
+			{"", 0, yoff+3+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
 		)
 		table.insert(form,
-			{"name", len_namelabel, yoff+1+list_height, 47-len_namelabel, defaultname, DF.TEXT}
+			{"name", len_namelabel, yoff+3+list_height, 72-len_namelabel, defaultname, DF.TEXT}
 		)
 	end
 	if filter ~= "" then
@@ -343,7 +343,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		else
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
-		table.insert(form, {"dofilter", 0, 11, 2+font_ui:getWidth(filtertext)/8, true, DF.CHECKBOX,
+		table.insert(form, {"dofilter", 0, 23, 2+font_ui:getWidth(filtertext)/8, true, DF.CHECKBOX,
 				function(value, dialog)
 					for k,v in pairs(dialog.fields) do
 						if v[DFP.KEY] == "folder" then
@@ -365,7 +365,7 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 				end
 			}
 		)
-		table.insert(form, {"", 2, 11, 40, filtertext, DF.LABEL})
+		table.insert(form, {"", 2, 23, 40, filtertext, DF.LABEL})
 	end
 
 	return form

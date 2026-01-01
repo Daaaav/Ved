@@ -65,6 +65,7 @@ function listlevelfiles(directory)
 				if buffer_filedata.isdir then
 					table.insert(dirs, prefix .. current_name)
 				end
+				local lastmodified = tonumber(buffer_filedata.lastmodified)
 				table.insert(t[dirs[currentdir_i]],
 					{
 						name = current_name,
@@ -72,7 +73,9 @@ function listlevelfiles(directory)
 						result_shown = true,
 						bu_lastmodified = 0,
 						bu_overwritten = 0,
-						lastmodified = tonumber(buffer_filedata.lastmodified),
+						lastmodified = lastmodified,
+						lastmodified_sort = lastmodified,
+						filesize = tonumber(buffer_filedata.filesize),
 					}
 				)
 			end
@@ -100,11 +103,14 @@ function listfiles_generic(directory, filter, show_hidden)
 	if libC.ved_opendir(buffer_diriter, directory .. "/", filter, show_hidden, errmsg) then
 		local buffer_filedata = ffi.new("ved_filedata")
 		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
+			local lastmodified = tonumber(buffer_filedata.lastmodified)
 			table.insert(files,
 				{
 					name = ffi.string(buffer_filedata.name),
 					isdir = buffer_filedata.isdir,
-					lastmodified = tonumber(buffer_filedata.lastmodified),
+					lastmodified = lastmodified,
+					lastmodified_sort = lastmodified,
+					filesize = tonumber(buffer_filedata.filesize),
 				}
 			)
 		end

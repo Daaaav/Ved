@@ -3140,7 +3140,7 @@ function assets_musicloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.loadvvvvvvmusic,
 		L.LOADMUSICNAME,
-		dialog.form.files_make(musiceditorfolder, "", ".vvv", true, 8)
+		dialog.form.files_make(musiceditorfolder, "", ".vvv", true, 18)
 	)
 end
 
@@ -3155,7 +3155,7 @@ function assets_graphicsloaddialog()
 		DBS.LOADCANCEL,
 		dialog.callback.openimage,
 		L.LOADIMAGE,
-		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 8)
+		dialog.form.files_make(assetsmenu_graphicsfolder, "", ".png", true, 18)
 	)
 end
 

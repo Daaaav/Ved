@@ -111,8 +111,16 @@ function cDialog:new(o)
 		o.buttons_present[v] = true
 	end
 
-	o.x = (love.graphics.getWidth()-400)/2
-	o.y = (love.graphics.getHeight()-150)/2
+	-- Do we have a files picker? If so, make the dialog bigger...
+	for k,v in pairs(o.fields) do
+		if v[DFP.T] == DF.FILES then
+			o.width = 600
+			o.height = 306
+		end
+	end
+
+	o.x = (love.graphics.getWidth()-o.width)/2
+	o.y = (love.graphics.getHeight()-o.height)/2
 
 	-- Offset x and y based on length of dialogs stack
 	local cascade_offset = #dialogs * 14
@@ -189,7 +197,7 @@ function cDialog:draw(topmost)
 			active_w = math.max(unpack(tmp)) + 2
 			active_h = #active_dropdowns * 12
 		elseif active_type == DF.FILES then
-			active_h = active_listheight*12 + 8 + 4
+			active_h = active_listheight*12 + 3*12
 		else
 			active_h = 12
 		end
@@ -203,13 +211,13 @@ function cDialog:draw(topmost)
 		if active_type == DF.CHECKBOX then
 			showhotkey(" ", active_x+2, active_y, ALIGN.CENTER, topmost, self)
 		elseif active_type == DF.FILES then
-			showhotkey("d", active_x+12, active_y-6, ALIGN.RIGHT, topmost, self)
+			showhotkey("d", active_x+24, active_y-6, ALIGN.RIGHT, topmost, self)
 		end
 	end
 
 	-- Window border
 	self:setColor(255,255,255,239)
-	love.graphics.rectangle("line", self.x, self.y+self.windowani, self.width, self.height)
+	love.graphics.rectangle("line", self.x-.5, self.y+self.windowani-.5, self.width+1, self.height+1)
 
 	-- Buttons
 	-- The Enter key can press different buttons depending on their priority
@@ -566,8 +574,8 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		end
 	elseif mode == DF.FILES then
 		self:setColor(255,255,255,255)
-		self:hoverdraw(topmost, image.folder_parent, real_x, real_y-3, 12, 12)
-		if mouseon(real_x, real_y-3, 12, 12) and love.mouse.isDown("l") and not mousepressed then
+		self:hoverdraw(topmost, image.folder_parent, real_x, real_y-3, 12, 12, 2)
+		if mouseon(real_x, real_y-3, 24, 24) and love.mouse.isDown("l") and not mousepressed then
 			self.currentfield = n
 
 			self:cd_to_parent(n, content, ...)
@@ -580,20 +588,60 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		else
 			toppath = displayable_filename(content)
 		end
-		love.graphics.setScissor(real_x+12, real_y-1, real_w-12, 8)
-		font_ui:print(toppath, real_x+real_w-font_ui:getWidth(toppath), real_y-1)
-		love.graphics.setScissor(real_x, real_y+9, real_w-16, 12*list_height)
+		love.graphics.setScissor(real_x+48, real_y-3, real_w-48, 24)
+		font_ui:print(toppath, real_x+real_w-font_ui:getWidth(toppath), real_y+5)
+
+		love.graphics.setScissor()
+
+		local glyph_w = font_ui:get_glyph_advance(0x39)
+		local colwidth_filesize = 9*glyph_w -- "99.9 MB" is 7, plus 2 chars
+		local colwidth_lastmodified
+		if s.new_timeformat == 12 then
+			-- 16 chars + 2 for am/pm + 2 chars
+			colwidth_lastmodified = 20*glyph_w
+		else
+			-- 16 + 2
+			colwidth_lastmodified = 18*glyph_w
+		end
+		local colwidth_name = real_w - 16 - colwidth_filesize - colwidth_lastmodified
+
+		local colx_name = real_x
+		local colx_lastmodified = colx_name + colwidth_name
+		local colx_filesize = colx_lastmodified + colwidth_lastmodified
+
+		local cols = {
+			{key="name", x=colx_name, width=colwidth_name},
+			{key="lastmodified", x=colx_lastmodified, width=colwidth_lastmodified},
+			{key="filesize", x=colx_filesize, width=colwidth_filesize}
+		}
+
+		for k,col in pairs(cols) do
+			local moused = mouseon(col.x, real_y+21, col.width, 12)
+			if moused then
+				self:setColor(62, 62, 62, 128)
+
+				if self.windowani == 0 and love.mouse.isDown("l") and not mousepressed then
+					-- TODO apply sort
+					mousepressed = true
+				end
+			else
+				self:setColor(32, 32, 32, 128)
+			end
+			love.graphics.rectangle("fill", col.x, real_y+21, col.width-1, 11)
+		end
+
+		love.graphics.setScissor(real_x, real_y+33, real_w-16, 12*list_height)
 		self:setColor(100,100,100,192)
 		--self:setColor(160,160,160,192)
 		--self:setColor(223,223,223,255)
-		love.graphics.rectangle("fill", real_x, real_y+9, real_w-16, 12*list_height)
+		love.graphics.rectangle("fill", real_x, real_y+33, real_w-16, 12*list_height)
 		self:setColor(0,0,0,255)
 		for k,v in pairs(menuitems) do
 			-- Only display this item if it will be visible
 			if k*12+listscroll-4 <= 8+12*list_height and k*12+listscroll-4 >= 0 then
-				local row_y = real_y+1+k*12+listscroll-4
+				local row_y = real_y+25+k*12+listscroll-4
 				local selected = self:return_fields().name == v.name
-				local moused = (mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+9, real_w-16, 12*list_height) and window_active())
+				local moused = (mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+33, real_w-16, 12*list_height) and window_active())
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, row_y, real_w-16, 12)
@@ -612,24 +660,33 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				end
 				if v.isdir then
 					self:setColor(255,255,255,255)
-					love.graphics.draw(image.smallfolder, real_x, row_y+2)
+					love.graphics.draw(image.smallfolder, real_x+2, row_y+2)
 					if active and selected then
 						showhotkey(" ", real_x+real_w-20, row_y-1, ALIGN.RIGHT, topmost, self)
 					end
 					self:setColor(0,0,0,255)
 				end
-				font_ui:print(displayable_filename(v.name), real_x+8, row_y+2)
+
+				-- Make sure the name doesn't overlap the other columns
+				love.graphics.setScissor(colx_name, real_y+33, colwidth_name, 12*list_height)
+				font_ui:print(displayable_filename(v.name), real_x+12, row_y+2)
+				-- Back to entire list
+				love.graphics.setScissor(real_x, real_y+33, real_w-16, 12*list_height)
+				if not v.isdir then
+					font_ui:printf(bytes_notation(v.filesize), colx_filesize, row_y+2, colwidth_filesize-glyph_w, "right")
+				end
+				font_ui:print(format_date(v.lastmodified), colx_lastmodified+glyph_w, row_y+2)
 			end
 		end
 		if folder_error ~= "" then
 			self:setColor(160,0,0,255)
-			font_ui:printf(folder_error, real_x+16, real_y+9+12, real_w-16-32, "center")
+			font_ui:printf(folder_error, real_x+16, real_y+33+12, real_w-16-32, "center")
 		end
 		love.graphics.setScissor()
 
 		-- Scrollbar
 		local newfraction = scrollbar(
-			real_x+real_w-16, real_y+9, 12*list_height, #menuitems*12,
+			real_x+real_w-16, real_y+33, 12*list_height, #menuitems*12,
 			(-listscroll)/((#menuitems*12)-(12*list_height)),
 			self
 		)
@@ -643,7 +700,10 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 end
 
 function cDialog:hoverdraw(topmost, img, x, y, w, h, s)
-	if topmost and mouseon(x, y, w, h) and not RCMactive and window_active() then
+	if s == nil then
+		s = 1
+	end
+	if topmost and mouseon(x, y, w*s, h*s) and not RCMactive and window_active() then
 		love.graphics.draw(img, x, y, 0, s)
 	else
 		self:setColor(255,255,255,128)
@@ -728,7 +788,7 @@ function cDialog:get_on_scrollable_field(x, y, viakeyboard)
 	local scrollable_types = {DF.FILES}
 	local scrollable_fields = {}
 	for k,v in pairs(self.fields) do
-		local v_x, v_y = self.x+10+v[DFP.X]*8, self.y+self.windowani+10+v[DFP.Y]*12+10
+		local v_x, v_y = self.x+10+v[DFP.X]*8, self.y+self.windowani+10+v[DFP.Y]*12+10+24
 		if table.contains(scrollable_types, v[DFP.T]) then
 			if (x >= v_x and x < v_x+v[DFP.W]*8
 			and y >= v_y and y < v_y+12*v[DFP.FILES_LIST_HEIGHT])

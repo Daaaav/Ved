@@ -14,6 +14,8 @@ function listlevelfiles(directory)
 					bu_lastmodified = 0,
 					bu_overwritten = 0,
 					lastmodified = nil,
+					lastmodified_sort = 0,
+					filesize = 0,
 				}
 			)
 		end
