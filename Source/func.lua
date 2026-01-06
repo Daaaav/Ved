@@ -278,7 +278,7 @@ function loadlevelsfolder()
 	end
 	lsuccess = directory_exists(levelsfolder)
 	if lsuccess then
-		files = listlevelfiles(levelsfolder)
+		files = listlevelfiles(levelsfolder, "name")
 	else
 		files = {}
 	end
@@ -2941,14 +2941,61 @@ function bytes_notation(bytes)
 	end
 end
 
-function sort_files(files)
+function sort_files(files, sort_by, sort_asc)
+	-- Valid values for sort_by:
+	--  * "name" - filename
+	--  * "lastmodified" - last modified, if equal: by filename
+	--  * "filesize" - file size, if equal: by filename
+	--  * nil - do not sort
+
+	if sort_by == nil then
+		return
+	end
+	if sort_asc == nil then
+		sort_asc = true
+	end
+
 	-- In place
 	table.sort(files,
 		function(a,b)
+			-- Always sort directories above files
 			if a.isdir and not b.isdir then return true end
 			if b.isdir and not a.isdir then return false end
 
-			return a.name:lower() < b.name:lower()
+			local result = nil
+			if sort_by == "lastmodified" then
+				if a.lastmodified_sort < b.lastmodified_sort then
+					result = true
+				elseif a.lastmodified_sort > b.lastmodified_sort then
+					result = false
+				end
+			elseif sort_by == "filesize" then
+				if a.filesize < b.filesize then
+					result = true
+				elseif a.filesize > b.filesize then
+					result = false
+				end
+			end
+
+			if result ~= nil then
+				if not sort_asc then
+					return not result
+				else
+					return result
+				end
+			end
+
+			-- We have a nil result either because two files compared equal (in timestamp/size)
+			-- or because we're not sorting by timestamp/size in the first place.
+			-- So sort by name.
+			-- Interesting case is that lua does call our function to compare files to themselves.
+			-- In that case - always false - they're expecting behavior of <, and "not <" is >=
+
+			if sort_asc then
+				return a.name_sort < b.name_sort
+			else
+				return a.name_sort > b.name_sort
+			end
 		end
 	)
 end

@@ -67,7 +67,7 @@ userprofile = path_utf16_to_utf8(buffer_path_utf16)
 
 
 
-function listlevelfiles(directory)
+function listlevelfiles(directory, sort_by, sort_asc)
 	local t = {[""] = {}}
 
 	-- We really can't have slashes here instead of backslashes, this is Windows.
@@ -101,6 +101,7 @@ function listlevelfiles(directory)
 
 				current_data = {
 					name = current_name,
+					name_sort = current_name:lower(),
 					isdir = isdir,
 					result_shown = true,
 					bu_lastmodified = 0,
@@ -147,10 +148,14 @@ function listlevelfiles(directory)
 		end
 	end
 	ffi.C.FindClose(search_handle)
+
+	for k,v in pairs(t) do
+		sort_files(t[k], sort_by, sort_asc)
+	end
 	return t
 end
 
-function listfiles_generic(directory, filter, show_hidden)
+function listfiles_generic(directory, filter, show_hidden, sort_by, sort_asc)
 	-- If successful, returns: true, files.
 	-- If not, returns: false, {}, message.
 	local files = {}
@@ -164,6 +169,7 @@ function listfiles_generic(directory, filter, show_hidden)
 				table.insert(files,
 					{
 						name = string.char(0x41+d) .. ":",
+						name_sort = d,
 						isdir = true,
 						lastmodified = 0,
 						lastmodified_sort = 0,
@@ -194,6 +200,7 @@ function listfiles_generic(directory, filter, show_hidden)
 			table.insert(files,
 				{
 					name = current_name,
+					name_sort = current_name:lower(),
 					isdir = isdir,
 					lastmodified = {
 						buffer_st_loc.wYear, buffer_st_loc.wMonth, buffer_st_loc.wDay,
@@ -214,7 +221,7 @@ function listfiles_generic(directory, filter, show_hidden)
 	end
 	ffi.C.FindClose(search_handle)
 
-	sort_files(files)
+	sort_files(files, sort_by, sort_asc)
 	return true, files
 end
 

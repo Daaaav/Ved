@@ -319,7 +319,10 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 		yoff = 0
 	end
 	local len_namelabel = font_ui:getWidth(L.FILEOPENERNAME)/8
-	local success, files, everr = listfiles_generic(startfolder, filter, true)
+	local success, files, everr = listfiles_generic(
+		startfolder, filter, true,
+		dialog.filepicker_sort_by, dialog.filepicker_sort_asc
+	)
 	if success then
 		everr = ""
 	end
@@ -344,21 +347,23 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 			filtertext = langkeys(L.DOFILTER, {filter})
 		end
 		table.insert(form, {"dofilter", 0, 23, 2+font_ui:getWidth(filtertext)/8, true, DF.CHECKBOX,
-				function(value, dialog)
-					for k,v in pairs(dialog.fields) do
+				function(value, d)
+					for k,v in pairs(d.fields) do
 						if v[DFP.KEY] == "folder" then
 							local success, everr
-							success, dialog.fields[k][DFP.FILES_MENUITEMS], everr = listfiles_generic(
-								dialog.fields[k][DFP.VALUE],
-								value and dialog.fields[k][DFP.FILES_FOLDER_FILTER] or "",
-								dialog.fields[k][DFP.FILES_FOLDER_SHOW_HIDDEN]
+							success, d.fields[k][DFP.FILES_MENUITEMS], everr = listfiles_generic(
+								d.fields[k][DFP.VALUE],
+								value and d.fields[k][DFP.FILES_FOLDER_FILTER] or "",
+								d.fields[k][DFP.FILES_FOLDER_SHOW_HIDDEN],
+								dialog.filepicker_sort_by,
+								dialog.filepicker_sort_asc
 							)
 							if success then
 								everr = ""
 							end
-							dialog.fields[k][DFP.FILES_LISTSCROLL] = 0
-							dialog.fields[k][DFP.FILES_FOLDER_ERROR] = everr
-							dialog.fields[k][DFP.FILES_FILTER_ON] = value
+							d.fields[k][DFP.FILES_LISTSCROLL] = 0
+							d.fields[k][DFP.FILES_FOLDER_ERROR] = everr
+							d.fields[k][DFP.FILES_FILTER_ON] = value
 							break
 						end
 					end

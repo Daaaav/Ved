@@ -42,7 +42,7 @@ local function errmsg_to_string(errmsg)
 end
 
 
-function listlevelfiles(directory)
+function listlevelfiles(directory, sort_by, sort_asc)
 	local t = {}
 
 	local currentdir = ""
@@ -69,6 +69,7 @@ function listlevelfiles(directory)
 				table.insert(t[dirs[currentdir_i]],
 					{
 						name = current_name,
+						name_sort = current_name:lower(),
 						isdir = buffer_filedata.isdir,
 						result_shown = true,
 						bu_lastmodified = 0,
@@ -88,12 +89,12 @@ function listlevelfiles(directory)
 	end
 
 	for k,v in pairs(t) do
-		sort_files(t[k])
+		sort_files(t[k], sort_by, sort_asc)
 	end
 	return t
 end
 
-function listfiles_generic(directory, filter, show_hidden)
+function listfiles_generic(directory, filter, show_hidden, sort_by, sort_asc)
 	-- If successful, returns: true, files.
 	-- If not, returns: false, {}, message.
 	local files = {}
@@ -103,10 +104,12 @@ function listfiles_generic(directory, filter, show_hidden)
 	if libC.ved_opendir(buffer_diriter, directory .. "/", filter, show_hidden, errmsg) then
 		local buffer_filedata = ffi.new("ved_filedata")
 		while libC.ved_nextfile(buffer_diriter, buffer_filedata) do
+			local name = ffi.string(buffer_filedata.name)
 			local lastmodified = tonumber(buffer_filedata.lastmodified)
 			table.insert(files,
 				{
-					name = ffi.string(buffer_filedata.name),
+					name = name,
+					name_sort = name:lower(),
 					isdir = buffer_filedata.isdir,
 					lastmodified = lastmodified,
 					lastmodified_sort = lastmodified,
@@ -120,7 +123,7 @@ function listfiles_generic(directory, filter, show_hidden)
 		return false, {}, ffi.string(errmsg.msg)
 	end
 
-	sort_files(files)
+	sort_files(files, sort_by, sort_asc)
 	return true, files
 end
 

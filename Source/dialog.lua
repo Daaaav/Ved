@@ -621,13 +621,31 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				self:setColor(62, 62, 62, 128)
 
 				if self.windowani == 0 and love.mouse.isDown("l") and not mousepressed then
-					-- TODO apply sort
+					if dialog.filepicker_sort_by == col.key then
+						dialog.filepicker_sort_asc = not dialog.filepicker_sort_asc
+					else
+						dialog.filepicker_sort_by = col.key
+						dialog.filepicker_sort_asc = true
+					end
+					sort_files(menuitems, dialog.filepicker_sort_by, dialog.filepicker_sort_asc)
 					mousepressed = true
 				end
 			else
 				self:setColor(32, 32, 32, 128)
 			end
 			love.graphics.rectangle("fill", col.x, real_y+21, col.width-1, 11)
+
+			if dialog.filepicker_sort_by == col.key then
+				-- Sorting by this, so display an arrow!
+				self:setColor(192, 192, 192, 255)
+
+				local img = dialog.filepicker_sort_asc and image.sort_asc or image.sort_desc
+				love.graphics.draw(
+					img,
+					math.floor(col.x + col.width/2 - img:getWidth()/2),
+					real_y + 23
+				)
+			end
 		end
 
 		love.graphics.setScissor(real_x, real_y+33, real_w-16, 12*list_height)
@@ -827,7 +845,9 @@ function cDialog:cd(dir, cf, currentdir, ...)
 	success, self.fields[cf][DFP.FILES_MENUITEMS], everr = listfiles_generic(
 		newfolder,
 		filter_on and folder_filter or "",
-		folder_show_hidden
+		folder_show_hidden,
+		dialog.filepicker_sort_by,
+		dialog.filepicker_sort_asc
 	)
 	if success then
 		everr = ""
@@ -842,6 +862,9 @@ end
 dialogs = {}
 
 dialog = {}
+
+dialog.filepicker_sort_by = "name"
+dialog.filepicker_sort_asc = true
 
 function dialog.draw()
 	-- Now come the dialogs!

@@ -279,6 +279,9 @@ function love.load()
 		dropdownarrow = love.graphics.newImage("images/dropdownarrow.png"),
 		colorsel = love.graphics.newImage("images/colorsel.png"),
 
+		sort_asc = love.graphics.newImage("images/sort_asc.png"),
+		sort_desc = love.graphics.newImage("images/sort_desc.png"),
+
 		smallfolder = love.graphics.newImage("images/smallfolder.png"),
 		smalllevel = love.graphics.newImage("images/smalllevel.png"),
 		smallunknown = love.graphics.newImage("images/smallunknown.png"),

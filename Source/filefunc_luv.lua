@@ -2,13 +2,14 @@
 
 userprofile = ""
 
-function listlevelfiles(directory)
+function listlevelfiles(directory, sort_by, sort_asc)
 	-- Preferably, only do files.
 	files = {[""] = {}}
 	for _,f in pairs(love.filesystem.getDirectoryItems(directory)) do
 		if not love.filesystem.isDirectory(f) then
 			table.insert(files[""], {
 					name = f,
+					name_sort = f:lower(),
 					isdir = false,
 					result_shown = true,
 					bu_lastmodified = 0,
@@ -20,10 +21,14 @@ function listlevelfiles(directory)
 			)
 		end
 	end
+
+	for k,v in pairs(t) do
+		sort_files(t[k], sort_by, sort_asc)
+	end
 	return files
 end
 
-function listfiles_generic(directory, filter, show_hidden)
+function listfiles_generic(directory, filter, show_hidden, sort_by, sort_asc)
 	-- If successful, returns: true, files.
 	-- If not, returns: false, {}, message.
 	-- Kinda TODO, but realize you'll also list all files from the .love
@@ -40,7 +45,7 @@ function listfiles_generic(directory, filter, show_hidden)
 		)
 	end
 
-	sort_files(files)
+	sort_files(files, sort_by, sort_asc)
 	return true, files
 	]]
 

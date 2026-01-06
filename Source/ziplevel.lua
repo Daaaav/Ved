@@ -1,5 +1,5 @@
 local function add_files_from_folder(zip, path, relative_dir)
-	local success, files, err = listfiles_generic(path, "", true)
+	local success, files, err = listfiles_generic(path, "", true, "name")
 	if not success then
 		cons("Cannot add files from " .. path .. ": " .. err)
 		return
