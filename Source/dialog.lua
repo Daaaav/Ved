@@ -66,6 +66,7 @@ DFP = {
 	FILES_FOLDER_ERROR = 11,
 	FILES_LIST_HEIGHT = 12,
 	FILES_FILTER_ON = 13,
+	FILES_STARTFOLDER = 14,
 }
 
 -- Dialog class
@@ -851,6 +852,7 @@ function cDialog:cd(dir, cf, currentdir, ...)
 	)
 	if success then
 		everr = ""
+		dialog.filepicker_lastfolder[self.fields[cf][DFP.FILES_STARTFOLDER]] = newfolder
 	end
 	self.fields[cf][DFP.FILES_LISTSCROLL] = 0
 	self.fields[cf][DFP.FILES_FOLDER_ERROR] = everr
@@ -865,6 +867,9 @@ dialog = {}
 
 dialog.filepicker_sort_by = "name"
 dialog.filepicker_sort_asc = true
+
+-- Mapping from (rigid) startfolder to last viewed folder
+dialog.filepicker_lastfolder = {}
 
 function dialog.draw()
 	-- Now come the dialogs!

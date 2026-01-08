@@ -318,20 +318,24 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	if yoff == nil then
 		yoff = 0
 	end
-	local len_namelabel = font_ui:getWidth(L.FILEOPENERNAME)/8
+	local user_startfolder = dialog.filepicker_lastfolder[startfolder]
+	if user_startfolder == nil then
+		dialog.filepicker_lastfolder[startfolder] = startfolder
+		user_startfolder = startfolder
+	end
 	local success, files, everr = listfiles_generic(
-		startfolder, filter, true,
+		user_startfolder, filter, true,
 		dialog.filepicker_sort_by, dialog.filepicker_sort_asc
 	)
 	if success then
 		everr = ""
 	end
 	local form = {
-		--{"folder", 0, yoff, 47, startfolder, DF.TEXT},
-		{"folder", 0, yoff, 72, startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true},
+		{"folder", 0, yoff, 72, user_startfolder, DF.FILES, files, filter, show_hidden, 0, everr, list_height, true, startfolder},
 	}
 
 	if filter ~= dirsep then
+		local len_namelabel = font_ui:getWidth(L.FILEOPENERNAME)/8
 		table.insert(form,
 			{"", 0, yoff+3+list_height, 6, L.FILEOPENERNAME, DF.LABEL}
 		)
