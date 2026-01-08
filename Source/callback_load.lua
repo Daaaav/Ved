@@ -301,7 +301,7 @@ function love.load()
 		volume = love.graphics.newImage("images/volume.png"),
 		volumemute = love.graphics.newImage("images/volumemute.png"),
 
-		folder_parent = love.graphics.newImage("images/folder_parent.png"),
+		folder_parent = love.graphics.newImage("images/folder_parent_16.png"),
 
 		bggrid = love.graphics.newImage("images/bggrid.png"),
 

@@ -212,7 +212,7 @@ function cDialog:draw(topmost)
 		if active_type == DF.CHECKBOX then
 			showhotkey(" ", active_x+2, active_y, ALIGN.CENTER, topmost, self)
 		elseif active_type == DF.FILES then
-			showhotkey("d", active_x+24, active_y-6, ALIGN.RIGHT, topmost, self)
+			showhotkey("d", active_x+16, active_y-6, ALIGN.RIGHT, topmost, self)
 		end
 	end
 
@@ -575,8 +575,8 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		end
 	elseif mode == DF.FILES then
 		self:setColor(255,255,255,255)
-		self:hoverdraw(topmost, image.folder_parent, real_x, real_y-3, 12, 12, 2)
-		if topmost and mouseon(real_x, real_y-3, 24, 24) and love.mouse.isDown("l") and not mousepressed then
+		self:hoverdraw(topmost, image.folder_parent, real_x, real_y+1, 16, 16)
+		if topmost and mouseon(real_x, real_y+1, 16, 16) and love.mouse.isDown("l") and not mousepressed then
 			self.currentfield = n
 
 			self:cd_to_parent(n, content, ...)
@@ -589,7 +589,7 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 		else
 			toppath = displayable_filename(content)
 		end
-		love.graphics.setScissor(real_x+48, real_y-3, real_w-48, 24)
+		love.graphics.setScissor(real_x+16, real_y-3, real_w-16, 24)
 		font_ui:print(toppath, real_x+real_w-font_ui:getWidth(toppath), real_y+5)
 
 		love.graphics.setScissor()
