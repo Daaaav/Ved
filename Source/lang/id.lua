@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2025-05-09 23:32:06 (CEST)
+--- Last converted: 2026-01-09 03:02:44 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -471,9 +471,12 @@ INSERTSONG = "Sisipkan lagu di trek $1",
 SUREDELETESONG = "Anda yakin ingin menghapus lagu $1?",
 SONGOPENFAIL = "Tidak dapat membuka $1, lagu tidak diganti.",
 SONGREPLACEFAIL = "Terjadi masalah saat mengganti lagu.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "Anda tidak dapat menggunakan karakter \"$1\" dalam nama skrip!",
 MUSICTITLE = "Judul: ",
 MUSICARTIST = "Artis: ",

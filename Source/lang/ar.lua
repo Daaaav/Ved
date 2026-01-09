@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2025-05-09 23:32:07 (CEST)
+--- Last converted: 2026-01-09 03:02:46 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -471,9 +471,12 @@ INSERTSONG = "إدراج أغنية في المسار $1",
 SUREDELETESONG = "هل أنت واثق من إزالة الأغنية $1؟",
 SONGOPENFAIL = "عجزت عن فتح $1، الأغنية لم تستبدل.",
 SONGREPLACEFAIL = "طرأ خطأ أثناء استبدال الأغنية.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "لا يجوز استخدام الرمز \" $1 \" في أسماء الاسكربتات!",
 MUSICTITLE = "العنوان: ",
 MUSICARTIST = "الفنان: ",

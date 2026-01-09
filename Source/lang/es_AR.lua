@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2025-05-09 23:32:07 (CEST)
+--- Last converted: 2026-01-09 03:02:46 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -483,9 +483,12 @@ INSERTSONG = "Insertar cancion en pista $1",
 SUREDELETESONG = "Estas seguro que quieres remover cancion $1?",
 SONGOPENFAIL = "No se puede abrir $1, cancion no reemplazada.",
 SONGREPLACEFAIL = "Algo salio mar al reemplazar la cancion.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ".", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "No se puede usar el caracter \"$1\" en nombres de scripts!",
 MUSICTITLE = "Titulo: ",
 MUSICARTIST = "Artista: ",

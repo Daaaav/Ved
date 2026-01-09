@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2025-05-09 23:32:06 (CEST)
+--- Last converted: 2026-01-09 03:02:45 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -471,9 +471,12 @@ INSERTSONG = "Вставить аудио как трек $1",
 SUREDELETESONG = "Вы уверены, что хотите удалить песню $1?",
 SONGOPENFAIL = "Невозможно открыть $1, трек не заменён.",
 SONGREPLACEFAIL = "Что-то пошло не так в процессе замены трека.",
+BYTES = "$1 Б",
 KILOBYTES = "$1 КБ",
 MEGABYTES = "$1 МБ",
 GIGABYTES = "$1 ГБ",
+TERABYTES = "$1 ТБ",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "Нельзя использовать символ \"$1\" в названиях скриптов!",
 MUSICTITLE = "Название: ",
 MUSICARTIST = "Автор: ",

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2025-05-09 23:32:06 (CEST)
+--- Last converted: 2026-01-09 03:02:44 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -481,9 +481,12 @@ INSERTSONG = "Nummer invoegen op positie $1",
 SUREDELETESONG = "Weet je zeker dat je nummer $1 wilt verwijderen?",
 SONGOPENFAIL = "Kon $1 niet openen, nummer is niet vervangen.",
 SONGREPLACEFAIL = "Er ging iets fout bij het vervangen van het nummer.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "Je kunt niet het \"$1\"-teken in scriptnamen gebruiken!",
 MUSICTITLE = "Titel: ",
 MUSICARTIST = "Artiest: ",

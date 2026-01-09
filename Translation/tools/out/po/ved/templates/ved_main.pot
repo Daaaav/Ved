@@ -1632,6 +1632,10 @@ msgctxt "L.SONGREPLACEFAIL"
 msgid "Something went wrong while replacing the song."
 msgstr ""
 
+msgctxt "L.BYTES"
+msgid "$1 B"
+msgstr ""
+
 msgctxt "L.KILOBYTES"
 msgid "$1 kB"
 msgstr ""
@@ -1642,6 +1646,15 @@ msgstr ""
 
 msgctxt "L.GIGABYTES"
 msgid "$1 GB"
+msgstr ""
+
+msgctxt "L.TERABYTES"
+msgid "$1 TB"
+msgstr ""
+
+#. The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
+msgctxt "L.DECIMAL_SEP"
+msgid "."
 msgstr ""
 
 msgctxt "L.CANNOTUSENEWLINES"

@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2025-05-09 23:32:07 (CEST)
+--- Last converted: 2026-01-09 03:02:45 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -483,9 +483,12 @@ INSERTSONG = "Füge Song ein bei Spur $1",
 SUREDELETESONG = "Bist du sicher, dass du Song $1 entfernen willst?",
 SONGOPENFAIL = "$1 kann nicht geöffnet werden, Song wurde nicht ersetzt.",
 SONGREPLACEFAIL = "Irgendwas ist schief gegangen während der Song ersetzt wurde.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "Du kannst das \"$1\" Zeichen nicht in Skriptnamen benutzen!",
 MUSICTITLE = "Titel: ",
 MUSICARTIST = "Künstler: ",

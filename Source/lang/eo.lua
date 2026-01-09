@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2025-05-09 23:32:07 (CEST)
+--- Last converted: 2026-01-09 03:02:45 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -495,9 +495,12 @@ INSERTSONG = "Enmeti muzikaĵon en trakon $1",
 SUREDELETESONG = "Ĉu vi certas, ke vi volas forigi la muzikaĵon $1?",
 SONGOPENFAIL = "Ne eblis malfermi $1, muzikaĵo ne anstataŭiĝis.",
 SONGREPLACEFAIL = "Eraro okazis dum anstataŭigi la muzikaĵon.",
+BYTES = "$1 B",
 KILOBYTES = "$1 kB",
 MEGABYTES = "$1 MB",
 GIGABYTES = "$1 GB",
+TERABYTES = "$1 TB",
+DECIMAL_SEP = ",", -- The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
 CANNOTUSENEWLINES = "Vi ne povas uzi la signon \"$1\" en skriptnomoj!",
 MUSICTITLE = "Titolo: ",
 MUSICARTIST = "Artisto: ",
