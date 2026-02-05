@@ -641,9 +641,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 				self:setColor(192, 192, 192, 255)
 
 				local img = dialog.filepicker_sort_asc and image.sort_asc or image.sort_desc
-				love.graphics.draw(
+				theme:draw(
 					img,
-					math.floor(col.x + col.width/2 - img:getWidth()/2),
+					math.floor(col.x + col.width/2 - theme:get_width(img)/2),
 					real_y + 23
 				)
 			end
