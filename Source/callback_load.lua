@@ -278,10 +278,10 @@ function love.load()
 		sound_stop = "ui/images/sound_stop",
 		sound_rewind = "ui/images/sound_rewind",
 
-		volume = "ui/images/volume.png",
-		volumemute = "ui/images/volumemute.png",
+		volume = "ui/images/volume",
+		volumemute = "ui/images/volumemute",
 
-		folder_parent = "ui/images/folder_parent_16.png",
+		folder_parent = "ui/images/folder_parent_16",
 
 		bggrid = "ui/images/bggrid",
 
