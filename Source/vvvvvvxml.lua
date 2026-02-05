@@ -1,3 +1,5 @@
+local vedxml = require("vedxml")
+
 -- First some things that could as well have gone in const.lua but are here for easy reference.
 metadataitems = {
 	"Creator", -- name
@@ -26,46 +28,46 @@ function loadlevelmetadata(path)
 	thismetadata.target = "V"
 	thislimit = limit_v
 
-	-- First do the metadata.
-	cons("Loading metadata...")
-	local xmetadata = contents:match("<MetaData>(.*)</MetaData>")
-	if xmetadata == nil then
-		return false, L.MAL .. L.METADATACORRUPT
-	end
-	for _,v in pairs(metadataitems) do
-		local m = xmetadata:match("<" .. v .. ">(.*)</" .. v .. ">")
-		if m == nil then
-			cons("mdcorr for "..v)
-			return false, L.MAL .. langkeys(L.METADATAITEMCORRUPT, {v})
-		end
-		thismetadata[v] = unxmlspecialchars(m)
-	end
+	local errmsg
+	success, errmsg = pcall(function()
+		local xml = vedxml.VedXML:new{string=contents, root="MapData"}
 
-	-- These ones are optional.
-	thismetadata.onewaycol_override = false
-	thismetadata.font = "font"
-	thismetadata.rtl = false
-	local m = xmetadata:match("<onewaycol_override>(.*)</onewaycol_override>")
-	if m ~= nil then
-		thismetadata.onewaycol_override = m ~= "0"
-	end
-	m = xmetadata:match("<font>(.*)</font>")
-	if m ~= nil then
-		thismetadata.font = m
-	end
-	m = xmetadata:match("<rtl>(.*)</rtl>")
-	if m ~= nil then
-		thismetadata.rtl = m ~= "0"
-	end
-
-	-- But we'll have room size and music also move in with the metadata.
-	cons("Loading room size and music...")
-	for _,v in pairs({"mapwidth", "mapheight", "levmusic"}) do
-		local m = contents:match("<" .. v .. ">(.*)</" .. v .. ">")
-		if m == nil then
-			return false, L.MAL .. langkeys(L.METADATAITEMCORRUPT, {v})
+		-- First do the metadata.
+		cons("Loading metadata...")
+		local xdata = xml:find(nil, "Data")
+		local xmetadata = xml:find(xdata, "MetaData")
+		for _,v in pairs(metadataitems) do
+			local m = xml:find(xmetadata, v)
+			thismetadata[v] = xml:get_text(m)
 		end
-		thismetadata[v] = tonumber(m)
+
+		-- These ones are optional.
+		thismetadata.onewaycol_override = false
+		thismetadata.font = "font"
+		thismetadata.rtl = false
+		local m = xml:find_or_nil(xmetadata, "onewaycol_override")
+		if m ~= nil then
+			thismetadata.onewaycol_override = xml:get_text(m) ~= "0"
+		end
+		m = xml:find_or_nil(xmetadata, "font")
+		if m ~= nil then
+			thismetadata.font = xml:get_text(m)
+		end
+		m = xml:find_or_nil(xmetadata, "rtl")
+		if m ~= nil then
+			thismetadata.rtl = xml:get_text(m) ~= "0"
+		end
+
+		-- But we'll have room size and music also move in with the metadata.
+		cons("Loading room size and music...")
+		for _,v in pairs({"mapwidth", "mapheight", "levmusic"}) do
+			local m = xml:find(xdata, v)
+			thismetadata[v] = tonumber(xml:get_text(m))
+		end
+	end)
+
+	if not success then
+		return false, L.MAL .. errmsg
 	end
 
 	return true, thismetadata, thislimit, contents

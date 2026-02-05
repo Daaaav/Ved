@@ -126,6 +126,8 @@ else
 	end
 	require("errorhandler")
 
+	require("vedxml_defaults")
+
 	require("plugins")
 	loadplugins()
 

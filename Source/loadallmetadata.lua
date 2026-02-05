@@ -15,6 +15,7 @@ function hook() end
 
 require("corefunc")
 utf8 = require("utf8lib_wrapper")
+require("vedxml_defaults")
 require("func")
 require("vvvvvvxml")
 require("filefunc_" .. loaded_filefunc)
