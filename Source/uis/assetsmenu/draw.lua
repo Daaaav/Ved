@@ -16,13 +16,9 @@ return function()
 		love.graphics.setColor(128,128,128)
 		love.graphics.rectangle("line", x+.5, y+.5, w, 33)
 
-		if mouseon(x+1, y+1, w-1, 32) and not mousepressed and nodialog then
-			love.graphics.setColor(48,48,48)
-			love.graphics.rectangle("fill", x+1, y+1, w-1, 32)
-			if love.mouse.isDown("l") then
-				selecting = a
-				mousepressed = true
-			end
+		if not mousepressed and hoverrectangle(48, 48, 48, 0, x+1, y+1, w-1, 32) and love.mouse.isDown("l") then
+			selecting = a
+			mousepressed = true
 		end
 
 		if a ~= 0 then

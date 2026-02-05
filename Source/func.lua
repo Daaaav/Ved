@@ -626,9 +626,13 @@ function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	if callret ~= nil then
 		return callret
 	end
+	local darkfactor
 	if thisbelongstoarightclickmenu then
-		return hoverrectangle_noshine(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
+		darkfactor = 0.9
+	else
+		darkfactor = 0.75
 	end
+
 	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
 	local half_height = math.floor(h/2)
 	if hovering then
@@ -636,7 +640,7 @@ function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	end
 	love.graphics.setColor(r, g, b, a)
 	love.graphics.rectangle("fill", x, y, w, half_height)
-	love.graphics.setColor(math.max(0, r-32), math.max(0, g-32), math.max(0, b-32), a)
+	love.graphics.setColor(r*darkfactor, g*darkfactor, b*darkfactor, a)
 	love.graphics.rectangle("fill", x, y+half_height, w, h-half_height)
 
 	love.graphics.setColor(255,255,255,255)
