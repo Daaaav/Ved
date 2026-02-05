@@ -608,19 +608,36 @@ function hoverdraw(img, x, y, w, h, s)
 	end
 end
 
+function hoverrectangle_noshine(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
+	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
+	if hovering then
+		a = 255
+	end
+	love.graphics.setColor(r, g, b, a)
+	love.graphics.rectangle("fill", x, y, w, h)
+
+	love.graphics.setColor(255,255,255,255)
+
+	return hovering
+end
+
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	local callret = theme:call("draw_button", r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	if callret ~= nil then
 		return callret
 	end
-	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
-	if hovering then
-		love.graphics.setColor(r, g, b, 255)
-		love.graphics.rectangle("fill", x, y, w, h)
-	else
-		love.graphics.setColor(r, g, b, a)
-		love.graphics.rectangle("fill", x, y, w, h)
+	if thisbelongstoarightclickmenu then
+		return hoverrectangle_noshine(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
 	end
+	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()
+	local half_height = math.floor(h/2)
+	if hovering then
+		a = 255
+	end
+	love.graphics.setColor(r, g, b, a)
+	love.graphics.rectangle("fill", x, y, w, half_height)
+	love.graphics.setColor(math.max(0, r-32), math.max(0, g-32), math.max(0, b-32), a)
+	love.graphics.rectangle("fill", x, y+half_height, w, h-half_height)
 
 	love.graphics.setColor(255,255,255,255)
 

@@ -290,7 +290,7 @@ function self:call(event, ...)
 		local theme = self.active_themes[i]
 		if self.themes[theme].events and self.themes[theme].events[event] then
 			local result = self.themes[theme].events[event](...)
-			if result then
+			if result ~= nil then
 				return result
 			end
 		end
