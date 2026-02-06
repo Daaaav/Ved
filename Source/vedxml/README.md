@@ -61,7 +61,7 @@ VedXML aims to be as compliant with the [XML 1.0](https://www.w3.org/TR/2008/REC
 
 Unless you need strict whitespace preservation, you're encouraged to set `VedXMLDefault.preserve_all_whitespace = false` to avoid creating text nodes if they contain just whitespace. In that case, only the amount of newlines before each node is preserved, and newly added nodes will be added in a pretty-printed way by default.
 
-Note that the difference between a selfclosing tag (`<tag/>`) and empty opening and closing tags (`<tag></tag>`) is distinguished in the API by treating the text value of selfclosing tags as `nil` and of opening+closing tags as an empty string. This applies both to getting and setting the text content (and being able to open+close a selfclosing tag and vice versa). I wouldn't recommend relying on this behavior as data storage, since the XML specification treats them as completely equivalent and other parsers may automatically change one to the other when loading and saving the document.
+Note that you can distinguish between a selfclosing tag (`<tag/>`) and empty opening and closing tags (`<tag></tag>`) in the API by treating the text value of selfclosing tags as `nil` and of opening+closing tags as an empty string. This applies to getting the text content with `:get_text_or_nil` (rather than `:get_text`) and setting it with `:set_text` always behaves this way (plus you're able to open+close a selfclosing tag and vice versa). I wouldn't recommend relying on this behavior as data storage, since the XML specification treats them as completely equivalent and other parsers may automatically change one to the other when loading and saving the document.
 
 # Options
 
@@ -226,7 +226,18 @@ These are all functions for the `VedXML` class (aka the document object).
 :get_text(cur, allow_nested)
 	-- Get text content within element, processed/unescaped.
 	-- cur must point to opening/selfclosing tag. Or to a text.
+	-- If given a selfclosing tag, returns an empty string.
+	-- If allow_nested is true, ignore child elements ("some <b>more</b> text" -> "some more text")
+	-- If allow_nested is false or unspecified, the presence of child elements is unexpected and raises an error.
+	-- cur: TEXT, CDATA, TAG_OPENING, TAG_SELFCLOSING
+```
+
+```lua
+:get_text_or_nil(cur, allow_nested)
+	-- Get text content within element, processed/unescaped.
+	-- cur must point to opening/selfclosing tag. Or to a text.
 	-- <a></a> and <a/> are distinguished: the former gives an empty string, the latter gives nil.
+	-- To get an empty string rather than nil, use :get_text instead.
 	-- If allow_nested is true, ignore child elements ("some <b>more</b> text" -> "some more text")
 	-- If allow_nested is false or unspecified, the presence of child elements is unexpected and raises an error.
 	-- cur: TEXT, CDATA, TAG_OPENING, TAG_SELFCLOSING

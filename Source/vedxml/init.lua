@@ -1809,10 +1809,11 @@ function VedXML:uncr(text)
 	)
 end
 
-function VedXML:get_text(cur, allow_nested)
+function VedXML:get_text_or_nil(cur, allow_nested)
 	-- Get text content within element, processed/unescaped.
 	-- cur must point to opening/selfclosing tag. Or to a text.
 	-- <a></a> and <a/> are distinguished: the former gives an empty string, the latter gives nil.
+	-- To get an empty string rather than nil, use :get_text instead.
 	-- If allow_nested is true, ignore child elements ("some <b>more</b> text" -> "some more text")
 	-- If allow_nested is false or unspecified, the presence of child elements is unexpected and raises an error.
 	-- cur: TEXT, CDATA, TAG_OPENING, TAG_SELFCLOSING
@@ -1869,7 +1870,21 @@ function VedXML:get_text(cur, allow_nested)
 		return table.concat(text_table)
 	end
 
-	self:raise_error("Trying to call :get_text on type " .. self:get_type_name(cur))
+	self:raise_error("Trying to call :get_text or :get_text_or_nil on type " .. self:get_type_name(cur))
+end
+
+function VedXML:get_text(cur, allow_nested)
+	-- Get text content within element, processed/unescaped.
+	-- cur must point to opening/selfclosing tag. Or to a text.
+	-- If given a selfclosing tag, returns an empty string.
+	-- If allow_nested is true, ignore child elements ("some <b>more</b> text" -> "some more text")
+	-- If allow_nested is false or unspecified, the presence of child elements is unexpected and raises an error.
+	-- cur: TEXT, CDATA, TAG_OPENING, TAG_SELFCLOSING
+	local text = self:get_text_or_nil(cur, allow_nested)
+	if text == nil then
+		return ""
+	end
+	return text
 end
 
 function VedXML:set_text(cur, text)
