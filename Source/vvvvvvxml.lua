@@ -23,14 +23,13 @@ function loadlevelmetadata(path)
 	end
 
 	local thismetadata = {}
-	local thislimit
 
 	thismetadata.target = "V"
-	thislimit = limit_v
 
+	local xml
 	local errmsg
 	success, errmsg = pcall(function()
-		local xml = vedxml.VedXML:new{string=contents, root="MapData"}
+		xml = vedxml.VedXML:new{string=contents, root="MapData"}
 
 		-- First do the metadata.
 		cons("Loading metadata...")
@@ -70,7 +69,7 @@ function loadlevelmetadata(path)
 		return false, L.MAL .. errmsg
 	end
 
-	return true, thismetadata, thislimit, contents
+	return true, thismetadata, xml
 end
 
 function loadlevel(path)
@@ -85,7 +84,7 @@ function loadlevel(path)
 	-- vedmetadata has flag names (.flaglabel)
 	-- If loading isn't successful, metadata will be an error string.
 
-	local success, thismetadata, thislimit, contents = loadlevelmetadata(path)
+	local success, thismetadata, xml = loadlevelmetadata(path)
 
 	if not success then
 		return false, thismetadata
@@ -96,114 +95,105 @@ function loadlevel(path)
 		cons("[CHECK] " .. text)
 	end
 
-	local x = {}
+	local x = nil -- TODO was table, RM
 	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
 	local FClist = {}
 
+	local thislimit = limit_v
+	local theserooms = {}
+	local allentities = {}
+	local theselevelmetadata = {}
+	local allscripts = {}
+	local myscriptnames = {}
+	local myvedmetadata = false
 	local thisextra = {}
 
-	-- This isn't a VCE level, right?
-	local vce_m = contents:match("<MapData version=\"2\" vceversion=\"([0-9]+)\">")
-	if vce_m ~= nil then
-		mycount.FC = mycount.FC + 1
-		cons_fc(FClist, L.VCE_REMOVED)
-	end
+	local n_levelmetadata = 0
 
-	-- Now, the contents!
-	cons("Loading all the contents...")
-	--x.alltiles = explode(",", contents:match("<contents>(.*)</contents>"))
+	local errmsg
+	success, errmsg = pcall(function()
+		-- Get any well-formedness problems out of the way
+		xml:tokenize_to_end()
 
-	-- Remove all literal '\0's, we'll remove '&#0;'s or '&#x0's later
-	local numliteralnullbytes = 0
-	if contents:match("%z") then
-		contents, numliteralnullbytes = contents:gsub("%z", "")
-	end
+		-- This isn't a VCE level, right?
+		if xml:get_attribute(nil, "vceversion") ~= nil then
+			mycount.FC = mycount.FC + 1
+			cons_fc(FClist, L.VCE_REMOVED)
+		end
 
-	-- Ok, explode() is far too inefficient, what else have we got?
-	x.alltiles = {}
-	local m = contents:match("<contents>(.*)</contents>")
-	if m == nil then
-		return false, L.MAL .. L.TILESCORRUPT
-	end
-	for num in m:gmatch("([^,]*),") do
-		table.insert(x.alltiles, num)
-	end
+		local xdata = xml:find(nil, "Data")
 
-	cons("Contents split (setting all rooms now)")
+		-- Now, the contents!
+		cons("Loading all the contents...")
 
-	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
-	local theserooms = {}
-	local failedtiles = 0
-	local t
-	for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
-		--print("Y: " .. yk)
-		theserooms[yk] = {}
-		for xk = 0, math.min(thismetadata.mapwidth, thislimit.mapwidth)-1 do
-			theserooms[yk][xk] = {}
-			for yt = 0, 29 do
-				for xt = 0, 39 do
-					t = tonumber(x.alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
-					if t == nil or t < 0 then
-						t = 0
-						failedtiles = failedtiles + 1
-					elseif math.floor(t) ~= t then
-						t = math.floor(t)
-						failedtiles = failedtiles + 1
+		-- Ok, explode() is far too inefficient, what else have we got?
+		local alltiles = {}
+		local csv = xml:get_text(xml:find(xdata, "contents"))
+		for num in csv:gmatch("([^,]*),") do
+			table.insert(alltiles, num)
+		end
+
+		cons("Contents split (setting all rooms now)")
+
+		-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
+		local failedtiles = 0
+		local t
+		for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
+			--print("Y: " .. yk)
+			theserooms[yk] = {}
+			for xk = 0, math.min(thismetadata.mapwidth, thislimit.mapwidth)-1 do
+				theserooms[yk][xk] = {}
+				for yt = 0, 29 do
+					for xt = 0, 39 do
+						t = tonumber(alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
+						if t == nil or t < 0 then
+							t = 0
+							failedtiles = failedtiles + 1
+						elseif math.floor(t) ~= t then
+							t = math.floor(t)
+							failedtiles = failedtiles + 1
+						end
+
+						theserooms[yk][xk][(40*yt) + xt + 1] = t
 					end
-
-					theserooms[yk][xk][(40*yt) + xt + 1] = t
 				end
 			end
 		end
-	end
 
-	if failedtiles > 0 then
-		mycount.FC = mycount.FC + 1
-		cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
-	end
-
-	-- Entities.
-	local allentities = {}
-	local myvedmetadata = false
-
-	local numxmlnullbytes = 0
-
-	cons("Loading entities...")
-	if contents:find("<edEntities ?/>") == nil then
-		-- We have entities!
-		x.entities = contents:match("<edEntities>(.*)</edEntities>")
-		if x.entities == nil then
-			return false, L.MAL .. L.ENTITIESCORRUPT
+		if failedtiles > 0 then
+			mycount.FC = mycount.FC + 1
+			cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 		end
 
-		-- Get all entities
-		--.
-		entityid = 0
+		-- Entities.
+		cons("Loading entities...")
+
+		local entityid = 0
 		local morethanonestartpoint = false
-		local duplicatestartpoints = {}
-		for entity in x.entities:gmatch("<edentity (.-)</edentity>") do
+
+		local xentities = xml:find(xdata, "edEntities")
+		for entity in xml:each_child_element(xentities, "edentity") do
 			entityid = entityid + 1
 			allentities[entityid] = {}
 
-			-- We now got x="x" ... p6="x">Data... Attributes to the left of the >, data to the right of it.
-			local metaparts = explode(">", entity)
-
-			-- Explode more
-			local attributes = parsexmlattributes(metaparts[1])
-
+			local attributes = xml:get_attributes(entity)
 			for k,v in pairs(attributes) do
 				allentities[entityid][k] = tonumber(v)
 			end
 
 			-- Now we only need the data...
-			allentities[entityid].data = unxmlspecialchars(metaparts[2]:match("^[ \r\n]*(.-)[ \r\n]*$"))
-			if allentities[entityid].data:match("%z") then
-				local tmp
-				allentities[entityid].data, tmp = allentities[entityid].data:gsub("%z", "")
-				numxmlnullbytes = numxmlnullbytes + tmp
+			-- In VVVVVV 2.2 and below, there used to be a newline
+			-- and 12 spaces at the end of every edentity tag.
+			-- Nowadays we just chop that off if present.
+			local data = xml:get_text(entity)
+			if data ~= "" and data:match("\n            $") ~= nil then
+				data = data:sub(1,-14)
 			end
+			allentities[entityid].data = data
 
-			-- Now before we go to the next one, if it's a trinket or crewmate, add it up, because we can only have 20 in a level. Officially. Also, parse the special data entity here if we found it.
+			-- Now before we go to the next one, if it's a trinket or crewmate,
+			-- add it up, because we can only have 100 in a level. Officially.
+			-- Also, parse the special data entity here if we found it.
 			if allentities[entityid].t == 9 then
 				mycount.trinkets = mycount.trinkets + 1
 			elseif allentities[entityid].t == 15 then
@@ -219,7 +209,8 @@ function loadlevel(path)
 						mycount.FC = mycount.FC + 1
 						cons_fc(FClist, L.MORETHANONESTARTPOINT)
 					end
-					table.insert(duplicatestartpoints, entityid)
+					allentities[entityid] = nil
+					mycount.entities = mycount.entities - 1
 				end
 			elseif ((allentities[entityid].x == 800 and allentities[entityid].y == 600)
 			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
@@ -342,253 +333,234 @@ function loadlevel(path)
 			end
 
 			if oldFCcount < mycount.FC then
-				cons_fc(FClist, langkeys(L_PLU.ENTITYINVALIDPROPERTIES, {anythingbutnil(allentities[entityid].x), anythingbutnil(allentities[entityid].y), (mycount.FC-oldFCcount)}, 3))
+				cons_fc(
+					FClist,
+					langkeys(
+						L_PLU.ENTITYINVALIDPROPERTIES,
+						{
+							anythingbutnil(allentities[entityid].x),
+							anythingbutnil(allentities[entityid].y),
+							(mycount.FC-oldFCcount)
+						},
+						3
+					)
+				)
 			end
-		end
-
-		for idx = #duplicatestartpoints, 1, -1 do
-			-- This table.remove() gets inefficient really quickly if we have a lot of start points
-			-- Please no one ever make a level with 1,000 start points
-			table.remove(allentities, duplicatestartpoints[idx])
-			entityid = entityid - 1
-			mycount.entities = mycount.entities - 1
 		end
 
 		-- See this as MySQL's AUTO_INCREMENT
 		mycount.entity_ai = entityid + 1
-	end
 
-	-- Level meta data
-	cons("Loading room metadata...")
-	x.levelmetadata = contents:match("<levelMetaData>(.*)</levelMetaData>")
-	if x.levelmetadata == nil then
-		return false, L.MAL .. L.LEVELMETADATACORRUPT
-	end
+		-- Level meta data - get every room now.
+		cons("Loading room metadata...")
 
-	-- Get every room now.
-	local theselevelmetadata = {}
-	local all_platvs = {}
-	local lmd_width = 20
-	local rx, ry = lmd_width-1, -1
-	local n_levelmetadata = 0
-	local inboundsroom = 0
-	local inbounds
-	for room in x.levelmetadata:gmatch("<edLevelClass (.-)</edLevelClass>") do
-		n_levelmetadata = n_levelmetadata + 1
-		rx = rx + 1
-		if rx >= lmd_width then
-			rx = 0
-			ry = ry + 1
-			theselevelmetadata[ry] = {}
-		end
-		if rx < thismetadata.mapwidth and ry < thismetadata.mapheight then
-			inbounds = true
-			inboundsroom = inboundsroom + 1
-		else
-			inbounds = false
-		end
-		theselevelmetadata[ry][rx] = {}
+		local all_platvs = {}
+		local lmd_width = 20
+		local rx, ry = lmd_width-1, -1
+		local inboundsroom = 0
+		local inbounds
 
-		-- We now got tileset="x" ... warpdir="x">Roomname... Attributes to the left of the >, roomname to the right of it.
-		local metaparts = explode(">", room)
-
-		-- Explode more
-		local attributes = parsexmlattributes(metaparts[1])
-
-		for k,v in pairs(attributes) do
-			if k == "platv" then
-				-- Unfortunately platv is very special.
-				table.insert(all_platvs, tonumber(v))
-				if inbounds then
-					theselevelmetadata[ry][rx].platv = all_platvs[inboundsroom]
-				else
-					theselevelmetadata[ry][rx].platv = 4
-				end
+		local xlevelmetadata = xml:find(xdata, "levelMetaData")
+		for room in xml:each_child_element(xlevelmetadata, "edLevelClass") do
+			n_levelmetadata = n_levelmetadata + 1
+			rx = rx + 1
+			if rx >= lmd_width then
+				rx = 0
+				ry = ry + 1
+				theselevelmetadata[ry] = {}
+			end
+			if rx < thismetadata.mapwidth and ry < thismetadata.mapheight then
+				inbounds = true
+				inboundsroom = inboundsroom + 1
 			else
-				theselevelmetadata[ry][rx][k] = tonumber(v)
+				inbounds = false
 			end
-		end
+			theselevelmetadata[ry][rx] = {}
 
-		-- Now we only need the room name...
-		theselevelmetadata[ry][rx].roomname = unxmlspecialchars(metaparts[2])
-		if theselevelmetadata[ry][rx].roomname:match("%z") then
-			local tmp
-			theselevelmetadata[ry][rx].roomname, tmp = theselevelmetadata[ry][rx].roomname:gsub("%z", "")
-			numxmlnullbytes = numxmlnullbytes + tmp
-		end
-
-		-- And make sure directmode isn't nil for 2.0 levels
-		if theselevelmetadata[ry][rx].directmode == nil then
-			theselevelmetadata[ry][rx].directmode = 0
-		end
-
-		local oldFCcount = mycount.FC
-
-		if theselevelmetadata[ry][rx].tileset == nil
-		or type(theselevelmetadata[ry][rx].tileset) ~= "number"
-		or (theselevelmetadata[ry][rx].tileset > 4) then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].tileset = 0
-		end
-		if theselevelmetadata[ry][rx].tilecol == nil
-		or type(theselevelmetadata[ry][rx].tilecol) ~= "number"
-		or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1)
-		or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
-		or theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol > 31
-		or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
-		or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
-		or theselevelmetadata[ry][rx].tileset == 3 and theselevelmetadata[ry][rx].tilecol > 6
-		or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5
-		or theselevelmetadata[ry][rx].tileset == 5 and theselevelmetadata[ry][rx].tilecol > 29 then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].tilecol = 0
-		end
-		if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].platx1 = 0
-		end
-		if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].platy1 = 0
-		end
-		if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].platx2 = 0
-		end
-		if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].platy2 = 0
-		end
-		if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].platv = 0
-		end
-		if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].enemyx1 = 0
-		end
-		if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].enemyy1 = 0
-		end
-		if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].enemyx2 = 0
-		end
-		if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].enemyy2 = 0
-		end
-		if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number" or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].enemytype = 0
-		end
-		if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number" or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
-			mycount.FC = mycount.FC + 1
-			theselevelmetadata[ry][rx].warpdir = 0
-		end
-
-		theselevelmetadata[ry][rx].auto2mode = 0
-
-		if oldFCcount < mycount.FC then
-			local co = not s.coords0 and 1 or 0
-			cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
-		end
-
-		-- If you select a higher tilecol in space station and then go to another tileset, VVVVVV will still save the out-of-range tilecol.
-		if tilesetblocks[theselevelmetadata[ry][rx].tileset].colors[theselevelmetadata[ry][rx].tilecol] == nil then
-			theselevelmetadata[ry][rx].tilecol = 0
-		end
-	end
-
-	-- Scripts
-	cons("Loading scripts...")
-	x.allscripts = {}
-	local m = contents:match("<script>(.*)</script>")
-	if m == nil then
-		return false, L.MAL .. L.SCRIPTCORRUPT
-	end
-	if m:sub(-1,-1) ~= "|" then
-		m = m .. "|"
-	end
-	for ln in unxmlspecialchars(m):gmatch("([^|]*)|") do
-		--print(num)
-		if ln:match("%z") then
-			local tmp
-			ln, tmp = ln:gsub("%z", "")
-			numxmlnullbytes = numxmlnullbytes + tmp
-		end
-		table.insert(x.allscripts, ln)
-	end
-	cons("There are " .. (#x.allscripts) .. " lines of scripting! Loading all of that...")
-
-	local allscripts = {}
-	local myscriptnames = {}
-
-	if #x.allscripts > 1 then
-		-- We don't want a crash now do we?
-		currentscript = ""; sline = 1
-
-		for k,v in pairs(x.allscripts) do
-			if v:sub(-1, -1) == ":" then
-				-- This is a script name!
-				currentscript = v:sub(1, -2)
-				if allscripts[currentscript] == nil then
-					table.insert(myscriptnames, currentscript)
+			local attributes = xml:get_attributes(room)
+			for k,v in pairs(attributes) do
+				if k == "platv" then
+					-- Unfortunately platv is very special.
+					table.insert(all_platvs, tonumber(v))
+					if inbounds then
+						theselevelmetadata[ry][rx].platv = all_platvs[inboundsroom]
+					else
+						theselevelmetadata[ry][rx].platv = 4
+					end
 				else
-					-- We've seen this script before, that's not good
-					mycount.FC = mycount.FC + 1
-					cons_fc(FClist, langkeys(L.DUPLICATESCRIPT, {currentscript}))
+					theselevelmetadata[ry][rx][k] = tonumber(v)
 				end
-				allscripts[currentscript] = {}
-				sline = 1
-			else
-				-- This is just a line. But have we encountered a script name before?
-				if allscripts[currentscript] ~= nil then
-					allscripts[currentscript][sline] = v
-					sline = sline + 1
+			end
+
+			-- Now we only need the room name...
+			theselevelmetadata[ry][rx].roomname = xml:get_text(room)
+
+			-- And make sure directmode isn't nil for 2.0 levels
+			if theselevelmetadata[ry][rx].directmode == nil then
+				theselevelmetadata[ry][rx].directmode = 0
+			end
+
+			local oldFCcount = mycount.FC
+
+			if theselevelmetadata[ry][rx].tileset == nil
+			or type(theselevelmetadata[ry][rx].tileset) ~= "number"
+			or (theselevelmetadata[ry][rx].tileset > 4) then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].tileset = 0
+			end
+			if theselevelmetadata[ry][rx].tilecol == nil
+			or type(theselevelmetadata[ry][rx].tilecol) ~= "number"
+			or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1)
+			or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
+			or theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol > 31
+			or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
+			or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
+			or theselevelmetadata[ry][rx].tileset == 3 and theselevelmetadata[ry][rx].tilecol > 6
+			or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5
+			or theselevelmetadata[ry][rx].tileset == 5 and theselevelmetadata[ry][rx].tilecol > 29 then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].tilecol = 0
+			end
+			if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].platx1 = 0
+			end
+			if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].platy1 = 0
+			end
+			if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].platx2 = 0
+			end
+			if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].platy2 = 0
+			end
+			if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].platv = 0
+			end
+			if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].enemyx1 = 0
+			end
+			if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].enemyy1 = 0
+			end
+			if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].enemyx2 = 0
+			end
+			if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].enemyy2 = 0
+			end
+			if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number"
+			or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].enemytype = 0
+			end
+			if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number"
+			or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
+				mycount.FC = mycount.FC + 1
+				theselevelmetadata[ry][rx].warpdir = 0
+			end
+
+			theselevelmetadata[ry][rx].auto2mode = 0
+
+			if oldFCcount < mycount.FC then
+				local co = not s.coords0 and 1 or 0
+				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
+			end
+
+			-- If you select a higher tilecol in space station and then go to another tileset,
+			-- VVVVVV will still save the out-of-range tilecol.
+			if tilesetblocks[theselevelmetadata[ry][rx].tileset].colors[theselevelmetadata[ry][rx].tilecol] == nil then
+				theselevelmetadata[ry][rx].tilecol = 0
+			end
+		end
+
+		-- Scripts
+		cons("Loading scripts...")
+		local scriptdata = xml:get_text(xml:find(xdata, "script"))
+		if scriptdata:sub(-1,-1) ~= "|" then
+			scriptdata = scriptdata .. "|"
+		end
+		local scriptlines = {}
+		for ln in scriptdata:gmatch("([^|]*)|") do
+			table.insert(scriptlines, ln)
+		end
+		cons("There are " .. (#scriptlines) .. " lines of scripting! Loading all of that...")
+
+		if #scriptlines > 1 then
+			-- We don't want a crash now do we?
+			local currentscript, sline = "", 1
+
+			for k,v in pairs(scriptlines) do
+				if v:sub(-1, -1) == ":" then
+					-- This is a script name!
+					currentscript = v:sub(1, -2)
+					if allscripts[currentscript] == nil then
+						table.insert(myscriptnames, currentscript)
+					else
+						-- We've seen this script before, that's not good
+						mycount.FC = mycount.FC + 1
+						cons_fc(FClist, langkeys(L.DUPLICATESCRIPT, {currentscript}))
+					end
+					allscripts[currentscript] = {}
+					sline = 1
 				else
-					mycount.FC = mycount.FC + 1
-					cons_fc(FClist, langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
+					-- This is just a line. But have we encountered a script name before?
+					if allscripts[currentscript] ~= nil then
+						allscripts[currentscript][sline] = v
+						sline = sline + 1
+					else
+						mycount.FC = mycount.FC + 1
+						cons_fc(FClist, langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
+					end
 				end
 			end
 		end
-	end
 
-	-- Some things that for now we'll have to hardcode carrying over...
-	-- If not found, they'll be nil, and we won't insert them later.
-	cons("Loading possible TextboxColours and SpecialRoomnames...")
+		-- Some things that for now we'll have to hardcode carrying over...
+		-- If not found, they'll be nil, and we won't insert them later.
+		cons("Loading possible TextboxColours and SpecialRoomnames...")
 
-	x.textboxcolors = contents:match("<TextboxColours>(.*)</TextboxColours>")
-	thisextra.textboxcolors = {}
-	thisextra.textboxcolors_order = {}
+		thisextra.textboxcolors = {}
+		thisextra.textboxcolors_order = {}
 
-	-- <colour> has already appeared in both self-closing form and not, so...
-	-- Temporary Lua pattern moment
-	if x.textboxcolors ~= nil then
-		for color in x.textboxcolors:gmatch("<colour (.-)>?<?/c?o?l?o?u?r?>") do
-			local attr = parsexmlattributes(color)
-			if attr.name ~= nil then
-				local r, g, b = 255, 255, 255
-				if attr.r ~= nil then
-					r = tonumber(attr.r)
-				end
-				if attr.g ~= nil then
-					g = tonumber(attr.g)
-				end
-				if attr.b ~= nil then
-					b = tonumber(attr.b)
-				end
+		xtextboxcolors = xml:find_or_nil(xdata, "TextboxColours")
+		if xtextboxcolors ~= nil then
+			for color in xml:each_child_element(xtextboxcolors, "colour") do
+				local attr = xml:get_attributes(color)
+				if attr.name ~= nil then
+					local r, g, b = 255, 255, 255
+					if attr.r ~= nil then
+						r = tonumber(attr.r)
+					end
+					if attr.g ~= nil then
+						g = tonumber(attr.g)
+					end
+					if attr.b ~= nil then
+						b = tonumber(attr.b)
+					end
 
-				if thisextra.textboxcolors[attr.name] == nil then
-					table.insert(thisextra.textboxcolors_order, attr.name)
+					if thisextra.textboxcolors[attr.name] == nil then
+						table.insert(thisextra.textboxcolors_order, attr.name)
+					end
+					thisextra.textboxcolors[attr.name] = {r, g, b}
 				end
-				thisextra.textboxcolors[attr.name] = {r, g, b}
 			end
 		end
-	end
 
-	thisextra.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
+		--thisextra.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
+	end)
+
+	if not success then
+		return false, L.MAL .. errmsg
+	end
 
 	cons("Done loading!")
 
@@ -605,7 +577,17 @@ function loadlevel(path)
 	end
 	if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
 		mycount.FC = mycount.FC + 1
-		cons_fc(FClist, langkeys(L.MAPBIGGERTHANSIZELIMIT, {anythingbutnil(thismetadata.mapwidth), anythingbutnil(thismetadata.mapheight), thislimit.mapwidth, thislimit.mapheight}))
+		cons_fc(
+			FClist,
+			langkeys(L.MAPBIGGERTHANSIZELIMIT,
+				{
+					anythingbutnil(thismetadata.mapwidth),
+					anythingbutnil(thismetadata.mapheight),
+					thislimit.mapwidth,
+					thislimit.mapheight
+				}
+			)
+		)
 		thismetadata.mapwidth = math.min(thismetadata.mapwidth, thislimit.mapwidth)
 		thismetadata.mapheight = math.min(thismetadata.mapheight, thislimit.mapheight)
 	end
@@ -643,18 +625,9 @@ function loadlevel(path)
 		end
 		]]
 	end
-	if numliteralnullbytes > 0 then
-		mycount.FC = mycount.FC + 1
-		cons_fc(FClist, langkeys(L_PLU.LITERALNULLS, {numliteralnullbytes}))
-	end
-	if numxmlnullbytes > 0 then
-		mycount.FC = mycount.FC + 1
-		cons_fc(FClist, langkeys(L_PLU.XMLNULLS, {numxmlnullbytes}))
-	end
 
 	if mycount.FC ~= 0 then
 		local FClisttext = ""
-
 
 		for k,v in pairs(FClist) do
 			if k > 5 then
@@ -668,7 +641,6 @@ function loadlevel(path)
 		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
 	end
 
-	-- No longer x.alltiles
 	return true, thismetadata, thislimit, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata, thisextra
 end
 

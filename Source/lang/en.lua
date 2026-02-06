@@ -360,14 +360,8 @@ SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa",
 RESETCOLORS = "Reset colors",
 STRINGNOTFOUND = "\"$1\" was not found",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "The level file is malformed: ",
-METADATACORRUPT = "Metadata is missing or corrupt.",
-METADATAITEMCORRUPT = "Metadata for $1 is missing or corrupt.",
-TILESCORRUPT = "Tiles missing or corrupt.",
-ENTITIESCORRUPT = "Entities missing or corrupt.",
-LEVELMETADATACORRUPT = "Room metadata missing or corrupt.",
-SCRIPTCORRUPT = "Scripts missing or corrupt.",
 
 LOADSCRIPTMADE = "Load script created",
 COPY = "Copy",
@@ -699,14 +693,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
-	},
-	LITERALNULLS = {
-		[0] = "There is $1 null byte!",
-		[1] = "There are $1 null bytes!",
-	},
-	XMLNULLS = {
-		[0] = "There is $1 XML null character!",
-		[1] = "There are $1 XML null characters!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 image customized",
