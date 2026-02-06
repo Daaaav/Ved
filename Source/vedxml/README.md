@@ -88,6 +88,35 @@ By default, the options are set to strict conformance with the XML spec, but cer
 
 # API reference
 
+## Types
+
+A **cursor** refers to a certain node in the XML document, such as an opening tag (commonly representing the element as a whole), a closing tag, a comment, etc.
+
+The documentation for each function that takes a cursor shows which types that cursor can be. Passing `nil` as a cursor signifies the root element (more precisely, its opening tag).
+
+> [!IMPORTANT]
+> Cursors are basically just a numeric index in an array of tokens, which means if you delete a node you have a cursor to, there is no protection against using that stale cursor. That position in memory could later get reassigned to a new node.
+> 
+> However, the tokens array is a doubly linked list, so inserting or removing stuff does _not_ shift anything else around.
+
+These are all the possible token types in `vedxml.TOKEN_TYPE` (e.g. `vedxml.TOKEN_TYPE.TEXT`):
+
+| ID | Name             | Explanation |
+| -- | ---------------- | ----------- |
+| 0  | EMPTY            | Uninitialized/Deleted |
+| 1  | ERROR            | Not well-formed characters |
+| 2  | FILE\_START      | The start of the file |
+| 3  | FILE\_END        | The end of the file |
+| 4  | TAG\_OPENING     | An opening tag (including attributes if any) |
+| 5  | TAG\_CLOSING     | A closing tag |
+| 6  | TAG\_SELFCLOSING | A selfclosing tag (including attributes if any) |
+| 7  | TEXT             | A block of character data |
+| 8  | CDATA            | A \<\!\[CDATA\[\]\]\> block |
+| 9  | COMMENT          | A comment |
+| 10 | PI               | A processing instruction |
+
+## Methods
+
 These are all functions for the `VedXML` class (aka the document object).
 
 <details>
@@ -262,6 +291,7 @@ These are all functions for the `VedXML` class (aka the document object).
 ```lua
 :get_attribute(cur, key)
 	-- Get attribute value of element (unescaped).
+	-- Returns nil if the specified attribute isn't found.
 	-- cur: TAG_OPENING, TAG_SELFCLOSING
 ```
 
@@ -358,6 +388,14 @@ These are all functions for the `VedXML` class (aka the document object).
 	-- Delete the current element or node, and all of its children.
 	-- Does not work on the root element.
 	-- cur: TAG_OPENING, TAG_SELFCLOSING, TEXT, CDATA, COMMENT, PI
+```
+
+```lua
+:delete_each_child_element(cur, name)
+	-- Delete each direct child element that is called <name>,
+	-- as found by calls of :find(cur, name).
+	-- Returns true if any element has been found and deleted, false if nothing changed.
+	-- cur: TAG_OPENING, TAG_SELFCLOSING
 ```
 
 ```lua

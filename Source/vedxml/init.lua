@@ -1978,6 +1978,7 @@ end
 
 function VedXML:get_attribute(cur, key)
 	-- Get attribute value of element (unescaped).
+	-- Returns nil if the specified attribute isn't found.
 	-- cur: TAG_OPENING, TAG_SELFCLOSING
 
 	if key == nil then
@@ -2176,6 +2177,22 @@ function VedXML:delete(cur)
 
 	-- This can't point to an opening tag anymore - self:clear(cur) makes it self-closing
 	self:ll_unlink(cur)
+end
+
+function VedXML:delete_each_child_element(cur, name)
+	-- Delete each direct child element that is called <name>,
+	-- as found by calls of :find(cur, name).
+	-- Returns true if any element has been found and deleted, false if nothing changed.
+	-- cur: TAG_OPENING, TAG_SELFCLOSING
+	local any = false
+	while true do
+		local cur2 = self:find_or_nil(cur, name)
+		if cur2 == nil then
+			return any
+		end
+		any = true
+		self:delete(cur2)
+	end
 end
 
 function VedXML:get_newlines_before(cur)
