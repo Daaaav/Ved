@@ -336,7 +336,7 @@ return function(key)
 			love.graphics.clear(); love.draw(); love.graphics.present()
 
 			-- Save now
-			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
+			savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, level, false)
 
 			if not savedsuccess then
 				-- Why not :c

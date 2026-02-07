@@ -481,7 +481,7 @@ function dialog.callback.save(button, fields)
 			finish_undo("TITLE/CREATOR WHEN SAVING")
 		end
 
-		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, extra, false)
+		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, level, false)
 
 		if not savedsuccess then
 			-- Why not :c
@@ -1419,25 +1419,25 @@ function dialog.callback.create_textboxcolor(button, fields)
 		return
 	end
 
-	local existed = extra.textboxcolors[fields.name] ~= nil
+	local existed = level.textboxcolors[fields.name] ~= nil
 	if not existed then
-		extra.textboxcolors[fields.name] = {}
-		table.insert(extra.textboxcolors_order, fields.name)
+		level.textboxcolors[fields.name] = {}
+		table.insert(level.textboxcolors_order, fields.name)
 	end
 	local r, g, b = 255, 255, 255
 	if textboxcolors_editingcolor ~= nil then
 		r, g, b = get_textbox_color(textboxcolors_editingcolor)
 	end
-	extra.textboxcolors[fields.name][1] = r
-	extra.textboxcolors[fields.name][2] = g
-	extra.textboxcolors[fields.name][3] = b
+	level.textboxcolors[fields.name][1] = r
+	level.textboxcolors[fields.name][2] = g
+	level.textboxcolors[fields.name][3] = b
 
 	if fields.rename then
 		-- After copying, remove the old one
-		extra.textboxcolors[textboxcolors_editingcolor] = nil
-		for k,v in pairs(extra.textboxcolors_order) do
+		level.textboxcolors[textboxcolors_editingcolor] = nil
+		for k,v in pairs(level.textboxcolors_order) do
 			if v == textboxcolors_editingcolor then
-				table.remove(extra.textboxcolors_order, k)
+				table.remove(level.textboxcolors_order, k)
 				break
 			end
 		end

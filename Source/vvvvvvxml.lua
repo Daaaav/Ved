@@ -73,7 +73,7 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata, (table)extra
+	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata, level
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -95,18 +95,9 @@ function loadlevel(path)
 		cons("[CHECK] " .. text)
 	end
 
-	local x = nil -- TODO was table, RM
-	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
-	local FClist = {}
+	local lvl = Level:new()
 
-	local thislimit = limit_v
-	local theserooms = {}
-	local allentities = {}
-	local theselevelmetadata = {}
-	local allscripts = {}
-	local myscriptnames = {}
-	local myvedmetadata = false
-	local thisextra = {}
+	local FClist = {}
 
 	local n_levelmetadata = 0
 
@@ -117,7 +108,7 @@ function loadlevel(path)
 
 		-- This isn't a VCE level, right?
 		if xml:get_attribute(nil, "vceversion") ~= nil then
-			mycount.FC = mycount.FC + 1
+			lvl.count.FC = lvl.count.FC + 1
 			cons_fc(FClist, L.VCE_REMOVED)
 		end
 
@@ -138,11 +129,11 @@ function loadlevel(path)
 		-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
 		local failedtiles = 0
 		local t
-		for yk = 0, math.min(thismetadata.mapheight, thislimit.mapheight)-1 do
+		for yk = 0, math.min(thismetadata.mapheight, lvl.limit.mapheight)-1 do
 			--print("Y: " .. yk)
-			theserooms[yk] = {}
-			for xk = 0, math.min(thismetadata.mapwidth, thislimit.mapwidth)-1 do
-				theserooms[yk][xk] = {}
+			lvl.roomdata[yk] = {}
+			for xk = 0, math.min(thismetadata.mapwidth, lvl.limit.mapwidth)-1 do
+				lvl.roomdata[yk][xk] = {}
 				for yt = 0, 29 do
 					for xt = 0, 39 do
 						t = tonumber(alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
@@ -154,14 +145,14 @@ function loadlevel(path)
 							failedtiles = failedtiles + 1
 						end
 
-						theserooms[yk][xk][(40*yt) + xt + 1] = t
+						lvl.roomdata[yk][xk][(40*yt) + xt + 1] = t
 					end
 				end
 			end
 		end
 
 		if failedtiles > 0 then
-			mycount.FC = mycount.FC + 1
+			lvl.count.FC = lvl.count.FC + 1
 			cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 		end
 
@@ -174,11 +165,11 @@ function loadlevel(path)
 		local xentities = xml:find(xdata, "edEntities")
 		for entity in xml:each_child_element(xentities, "edentity") do
 			entityid = entityid + 1
-			allentities[entityid] = {}
+			lvl.entitydata[entityid] = {}
 
 			local attributes = xml:get_attributes(entity)
 			for k,v in pairs(attributes) do
-				allentities[entityid][k] = tonumber(v)
+				lvl.entitydata[entityid][k] = tonumber(v)
 			end
 
 			-- Now we only need the data...
@@ -189,61 +180,61 @@ function loadlevel(path)
 			if data ~= "" and data:match("\n            $") ~= nil then
 				data = data:sub(1,-14)
 			end
-			allentities[entityid].data = data
+			lvl.entitydata[entityid].data = data
 
 			-- Now before we go to the next one, if it's a trinket or crewmate,
 			-- add it up, because we can only have 100 in a level. Officially.
 			-- Also, parse the special data entity here if we found it.
-			if allentities[entityid].t == 9 then
-				mycount.trinkets = mycount.trinkets + 1
-			elseif allentities[entityid].t == 15 then
-				mycount.crewmates = mycount.crewmates + 1
-			elseif allentities[entityid].t == 16 then
-				if mycount.startpoint == nil then
-					mycount.startpoint = entityid
+			if lvl.entitydata[entityid].t == 9 then
+				lvl.count.trinkets = lvl.count.trinkets + 1
+			elseif lvl.entitydata[entityid].t == 15 then
+				lvl.count.crewmates = lvl.count.crewmates + 1
+			elseif lvl.entitydata[entityid].t == 16 then
+				if lvl.count.startpoint == nil then
+					lvl.count.startpoint = entityid
 				else
 					-- Multiple start points in a level is weird
 					-- VVVVVV will pick the first one anyway, and we've already picked the first one, so no need to change it
 					if not morethanonestartpoint then
 						morethanonestartpoint = true
-						mycount.FC = mycount.FC + 1
+						lvl.count.FC = lvl.count.FC + 1
 						cons_fc(FClist, L.MORETHANONESTARTPOINT)
 					end
-					allentities[entityid] = nil
-					mycount.entities = mycount.entities - 1
+					lvl.entitydata[entityid] = nil
+					lvl.count.entities = lvl.count.entities - 1
 				end
-			elseif ((allentities[entityid].x == 800 and allentities[entityid].y == 600)
-			or (allentities[entityid].x == 4000 and allentities[entityid].y == 3000))
-			and allentities[entityid].t == 17 then
+			elseif ((lvl.entitydata[entityid].x == 800 and lvl.entitydata[entityid].y == 600)
+			or (lvl.entitydata[entityid].x == 4000 and lvl.entitydata[entityid].y == 3000))
+			and lvl.entitydata[entityid].t == 17 then
 				-- This is the metadata entity!
-				local explodedmetadata = explode("|", allentities[entityid].data:gsub("\n", ""))
+				local explodedmetadata = explode("|", lvl.entitydata[entityid].data:gsub("\n", ""))
 
-				myvedmetadata = createmde(thislimit)
+				lvl.vedmetadata = createmde(lvl.limit)
 
-				myvedmetadata.mdeversion = anythingbutnil0(explodedmetadata[1])
+				lvl.vedmetadata.mdeversion = anythingbutnil0(explodedmetadata[1])
 
-				if myvedmetadata.mdeversion > thismdeversion then
+				if lvl.vedmetadata.mdeversion > thismdeversion then
 					dialog.create(L.MDEVERSIONWARNING)
 				end
 
-				if myvedmetadata.mdeversion >= 2 and explodedmetadata[2] ~= nil then
+				if lvl.vedmetadata.mdeversion >= 2 and explodedmetadata[2] ~= nil then
 					local explodedflags = explode("%$", explodedmetadata[2])
 					local f = -1
 					for k,v in pairs(explodedflags) do
 						-- Make sure the numbers start with 0
 						f = k-1
-						myvedmetadata.flaglabel[f] = undespecialchars(v)
+						lvl.vedmetadata.flaglabel[f] = undespecialchars(v)
 					end
-					for i = f+1, thislimit.flags-1 do
-						myvedmetadata.flaglabel[i] = ""
+					for i = f+1, lvl.limit.flags-1 do
+						lvl.vedmetadata.flaglabel[i] = ""
 					end
 				else
-					for f = 0, thislimit.flags-1 do
-						myvedmetadata.flaglabel[f] = ""
+					for f = 0, lvl.limit.flags-1 do
+						lvl.vedmetadata.flaglabel[f] = ""
 					end
 				end
 
-				if myvedmetadata.mdeversion >= 3 and explodedmetadata[4] ~= "" and explodedmetadata[4] ~= nil then
+				if lvl.vedmetadata.mdeversion >= 3 and explodedmetadata[4] ~= "" and explodedmetadata[4] ~= nil then
 					local explodedvars = explode("%$", explodedmetadata[4])
 					for k,v in pairs(explodedvars) do
 						local explodedvar = explode("@", v)
@@ -255,12 +246,12 @@ function loadlevel(path)
 									explodedvar[k2] = undespecialchars(v2)
 								end
 							end
-							myvedmetadata.vars[key] = {
+							lvl.vedmetadata.vars[key] = {
 								["type"] = "t",
 								value = explodedvar
 							}
 						elseif (#explodedvar) >= 3 then
-							myvedmetadata.vars[key] = {
+							lvl.vedmetadata.vars[key] = {
 								["type"] = explodedvar[2],
 								value = undespecialchars(explodedvar[3])
 							}
@@ -272,8 +263,8 @@ function loadlevel(path)
 					local explodednotes = explode("%$", explodedmetadata[5])
 					for k,v in pairs(explodednotes) do
 						local explodednote = explode("@", v)
-						--myvedmetadata.notes[undespecialchars(explodednote[1])] = undespecialchars(explodednote[2])
-						table.insert(myvedmetadata.notes,
+						--lvl.vedmetadata.notes[undespecialchars(explodednote[1])] = undespecialchars(explodednote[2])
+						table.insert(lvl.vedmetadata.notes,
 							{
 								subj = undespecialchars(explodednote[1]),
 								imgs = {},
@@ -284,63 +275,63 @@ function loadlevel(path)
 				end
 
 				-- Nil this entity now so we don't store multiple ones when saving
-				allentities[entityid] = nil
+				lvl.entitydata[entityid] = nil
 			end
 
 			-- It's an entity, that's for sure!
-			mycount.entities = mycount.entities + 1
+			lvl.count.entities = lvl.count.entities + 1
 
-			local oldFCcount = mycount.FC
+			local oldFCcount = lvl.count.FC
 
 			-- We might have just nil'd this entity because it was the data entity.
-			if allentities[entityid] ~= nil then
-				if allentities[entityid].x == nil or type(allentities[entityid].x) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].x = 0
+			if lvl.entitydata[entityid] ~= nil then
+				if lvl.entitydata[entityid].x == nil or type(lvl.entitydata[entityid].x) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].x = 0
 				end
-				if allentities[entityid].y == nil or type(allentities[entityid].y) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].y = 0
+				if lvl.entitydata[entityid].y == nil or type(lvl.entitydata[entityid].y) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].y = 0
 				end
-				if allentities[entityid].t == nil or type(allentities[entityid].t) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].t = 0
+				if lvl.entitydata[entityid].t == nil or type(lvl.entitydata[entityid].t) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].t = 0
 				end
-				if allentities[entityid].p1 == nil or type(allentities[entityid].p1) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p1 = 0
+				if lvl.entitydata[entityid].p1 == nil or type(lvl.entitydata[entityid].p1) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p1 = 0
 				end
-				if allentities[entityid].p2 == nil or type(allentities[entityid].p2) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p2 = 0
+				if lvl.entitydata[entityid].p2 == nil or type(lvl.entitydata[entityid].p2) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p2 = 0
 				end
-				if allentities[entityid].p3 == nil or type(allentities[entityid].p3) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p3 = 0
+				if lvl.entitydata[entityid].p3 == nil or type(lvl.entitydata[entityid].p3) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p3 = 0
 				end
-				if allentities[entityid].p4 == nil or type(allentities[entityid].p4) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p4 = 0
+				if lvl.entitydata[entityid].p4 == nil or type(lvl.entitydata[entityid].p4) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p4 = 0
 				end
-				if allentities[entityid].p5 == nil or type(allentities[entityid].p5) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p5 = 0
+				if lvl.entitydata[entityid].p5 == nil or type(lvl.entitydata[entityid].p5) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p5 = 0
 				end
-				if allentities[entityid].p6 == nil or type(allentities[entityid].p6) ~= "number" then
-					mycount.FC = mycount.FC + 1
-					allentities[entityid].p6 = 0
+				if lvl.entitydata[entityid].p6 == nil or type(lvl.entitydata[entityid].p6) ~= "number" then
+					lvl.count.FC = lvl.count.FC + 1
+					lvl.entitydata[entityid].p6 = 0
 				end
 			end
 
-			if oldFCcount < mycount.FC then
+			if oldFCcount < lvl.count.FC then
 				cons_fc(
 					FClist,
 					langkeys(
 						L_PLU.ENTITYINVALIDPROPERTIES,
 						{
-							anythingbutnil(allentities[entityid].x),
-							anythingbutnil(allentities[entityid].y),
-							(mycount.FC-oldFCcount)
+							anythingbutnil(lvl.entitydata[entityid].x),
+							anythingbutnil(lvl.entitydata[entityid].y),
+							(lvl.count.FC-oldFCcount)
 						},
 						3
 					)
@@ -349,7 +340,7 @@ function loadlevel(path)
 		end
 
 		-- See this as MySQL's AUTO_INCREMENT
-		mycount.entity_ai = entityid + 1
+		lvl.count.entity_ai = entityid + 1
 
 		-- Level meta data - get every room now.
 		cons("Loading room metadata...")
@@ -367,7 +358,7 @@ function loadlevel(path)
 			if rx >= lmd_width then
 				rx = 0
 				ry = ry + 1
-				theselevelmetadata[ry] = {}
+				lvl.levelmetadata[ry] = {}
 			end
 			if rx < thismetadata.mapwidth and ry < thismetadata.mapheight then
 				inbounds = true
@@ -375,7 +366,7 @@ function loadlevel(path)
 			else
 				inbounds = false
 			end
-			theselevelmetadata[ry][rx] = {}
+			lvl.levelmetadata[ry][rx] = {}
 
 			local attributes = xml:get_attributes(room)
 			for k,v in pairs(attributes) do
@@ -383,102 +374,102 @@ function loadlevel(path)
 					-- Unfortunately platv is very special.
 					table.insert(all_platvs, tonumber(v))
 					if inbounds then
-						theselevelmetadata[ry][rx].platv = all_platvs[inboundsroom]
+						lvl.levelmetadata[ry][rx].platv = all_platvs[inboundsroom]
 					else
-						theselevelmetadata[ry][rx].platv = 4
+						lvl.levelmetadata[ry][rx].platv = 4
 					end
 				else
-					theselevelmetadata[ry][rx][k] = tonumber(v)
+					lvl.levelmetadata[ry][rx][k] = tonumber(v)
 				end
 			end
 
 			-- Now we only need the room name...
-			theselevelmetadata[ry][rx].roomname = xml:get_text(room)
+			lvl.levelmetadata[ry][rx].roomname = xml:get_text(room)
 
 			-- And make sure directmode isn't nil for 2.0 levels
-			if theselevelmetadata[ry][rx].directmode == nil then
-				theselevelmetadata[ry][rx].directmode = 0
+			if lvl.levelmetadata[ry][rx].directmode == nil then
+				lvl.levelmetadata[ry][rx].directmode = 0
 			end
 
-			local oldFCcount = mycount.FC
+			local oldFCcount = lvl.count.FC
 
-			if theselevelmetadata[ry][rx].tileset == nil
-			or type(theselevelmetadata[ry][rx].tileset) ~= "number"
-			or (theselevelmetadata[ry][rx].tileset > 4) then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].tileset = 0
+			if lvl.levelmetadata[ry][rx].tileset == nil
+			or type(lvl.levelmetadata[ry][rx].tileset) ~= "number"
+			or (lvl.levelmetadata[ry][rx].tileset > 4) then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].tileset = 0
 			end
-			if theselevelmetadata[ry][rx].tilecol == nil
-			or type(theselevelmetadata[ry][rx].tilecol) ~= "number"
-			or ((theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol < -1)
-			or (theselevelmetadata[ry][rx].tileset ~= 0 and theselevelmetadata[ry][rx].tilecol < 0))
-			or theselevelmetadata[ry][rx].tileset == 0 and theselevelmetadata[ry][rx].tilecol > 31
-			or theselevelmetadata[ry][rx].tileset == 1 and theselevelmetadata[ry][rx].tilecol > 7
-			or theselevelmetadata[ry][rx].tileset == 2 and theselevelmetadata[ry][rx].tilecol > 6
-			or theselevelmetadata[ry][rx].tileset == 3 and theselevelmetadata[ry][rx].tilecol > 6
-			or theselevelmetadata[ry][rx].tileset == 4 and theselevelmetadata[ry][rx].tilecol > 5
-			or theselevelmetadata[ry][rx].tileset == 5 and theselevelmetadata[ry][rx].tilecol > 29 then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].tilecol = 0
+			if lvl.levelmetadata[ry][rx].tilecol == nil
+			or type(lvl.levelmetadata[ry][rx].tilecol) ~= "number"
+			or ((lvl.levelmetadata[ry][rx].tileset == 0 and lvl.levelmetadata[ry][rx].tilecol < -1)
+			or (lvl.levelmetadata[ry][rx].tileset ~= 0 and lvl.levelmetadata[ry][rx].tilecol < 0))
+			or lvl.levelmetadata[ry][rx].tileset == 0 and lvl.levelmetadata[ry][rx].tilecol > 31
+			or lvl.levelmetadata[ry][rx].tileset == 1 and lvl.levelmetadata[ry][rx].tilecol > 7
+			or lvl.levelmetadata[ry][rx].tileset == 2 and lvl.levelmetadata[ry][rx].tilecol > 6
+			or lvl.levelmetadata[ry][rx].tileset == 3 and lvl.levelmetadata[ry][rx].tilecol > 6
+			or lvl.levelmetadata[ry][rx].tileset == 4 and lvl.levelmetadata[ry][rx].tilecol > 5
+			or lvl.levelmetadata[ry][rx].tileset == 5 and lvl.levelmetadata[ry][rx].tilecol > 29 then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].tilecol = 0
 			end
-			if theselevelmetadata[ry][rx].platx1 == nil or type(theselevelmetadata[ry][rx].platx1) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].platx1 = 0
+			if lvl.levelmetadata[ry][rx].platx1 == nil or type(lvl.levelmetadata[ry][rx].platx1) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].platx1 = 0
 			end
-			if theselevelmetadata[ry][rx].platy1 == nil or type(theselevelmetadata[ry][rx].platy1) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].platy1 = 0
+			if lvl.levelmetadata[ry][rx].platy1 == nil or type(lvl.levelmetadata[ry][rx].platy1) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].platy1 = 0
 			end
-			if theselevelmetadata[ry][rx].platx2 == nil or type(theselevelmetadata[ry][rx].platx2) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].platx2 = 0
+			if lvl.levelmetadata[ry][rx].platx2 == nil or type(lvl.levelmetadata[ry][rx].platx2) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].platx2 = 0
 			end
-			if theselevelmetadata[ry][rx].platy2 == nil or type(theselevelmetadata[ry][rx].platy2) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].platy2 = 0
+			if lvl.levelmetadata[ry][rx].platy2 == nil or type(lvl.levelmetadata[ry][rx].platy2) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].platy2 = 0
 			end
-			if theselevelmetadata[ry][rx].platv == nil or type(theselevelmetadata[ry][rx].platv) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].platv = 0
+			if lvl.levelmetadata[ry][rx].platv == nil or type(lvl.levelmetadata[ry][rx].platv) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].platv = 0
 			end
-			if theselevelmetadata[ry][rx].enemyx1 == nil or type(theselevelmetadata[ry][rx].enemyx1) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].enemyx1 = 0
+			if lvl.levelmetadata[ry][rx].enemyx1 == nil or type(lvl.levelmetadata[ry][rx].enemyx1) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].enemyx1 = 0
 			end
-			if theselevelmetadata[ry][rx].enemyy1 == nil or type(theselevelmetadata[ry][rx].enemyy1) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].enemyy1 = 0
+			if lvl.levelmetadata[ry][rx].enemyy1 == nil or type(lvl.levelmetadata[ry][rx].enemyy1) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].enemyy1 = 0
 			end
-			if theselevelmetadata[ry][rx].enemyx2 == nil or type(theselevelmetadata[ry][rx].enemyx2) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].enemyx2 = 0
+			if lvl.levelmetadata[ry][rx].enemyx2 == nil or type(lvl.levelmetadata[ry][rx].enemyx2) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].enemyx2 = 0
 			end
-			if theselevelmetadata[ry][rx].enemyy2 == nil or type(theselevelmetadata[ry][rx].enemyy2) ~= "number" then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].enemyy2 = 0
+			if lvl.levelmetadata[ry][rx].enemyy2 == nil or type(lvl.levelmetadata[ry][rx].enemyy2) ~= "number" then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].enemyy2 = 0
 			end
-			if theselevelmetadata[ry][rx].enemytype == nil or type(theselevelmetadata[ry][rx].enemytype) ~= "number"
-			or theselevelmetadata[ry][rx].enemytype < 0 or theselevelmetadata[ry][rx].enemytype > 9 then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].enemytype = 0
+			if lvl.levelmetadata[ry][rx].enemytype == nil or type(lvl.levelmetadata[ry][rx].enemytype) ~= "number"
+			or lvl.levelmetadata[ry][rx].enemytype < 0 or lvl.levelmetadata[ry][rx].enemytype > 9 then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].enemytype = 0
 			end
-			if theselevelmetadata[ry][rx].warpdir == nil or type(theselevelmetadata[ry][rx].warpdir) ~= "number"
-			or theselevelmetadata[ry][rx].warpdir < 0 or theselevelmetadata[ry][rx].warpdir > 3 then
-				mycount.FC = mycount.FC + 1
-				theselevelmetadata[ry][rx].warpdir = 0
+			if lvl.levelmetadata[ry][rx].warpdir == nil or type(lvl.levelmetadata[ry][rx].warpdir) ~= "number"
+			or lvl.levelmetadata[ry][rx].warpdir < 0 or lvl.levelmetadata[ry][rx].warpdir > 3 then
+				lvl.count.FC = lvl.count.FC + 1
+				lvl.levelmetadata[ry][rx].warpdir = 0
 			end
 
-			theselevelmetadata[ry][rx].auto2mode = 0
+			lvl.levelmetadata[ry][rx].auto2mode = 0
 
-			if oldFCcount < mycount.FC then
+			if oldFCcount < lvl.count.FC then
 				local co = not s.coords0 and 1 or 0
-				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (mycount.FC-oldFCcount)}, 3))
+				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (lvl.count.FC-oldFCcount)}, 3))
 			end
 
 			-- If you select a higher tilecol in space station and then go to another tileset,
 			-- VVVVVV will still save the out-of-range tilecol.
-			if tilesetblocks[theselevelmetadata[ry][rx].tileset].colors[theselevelmetadata[ry][rx].tilecol] == nil then
-				theselevelmetadata[ry][rx].tilecol = 0
+			if tilesetblocks[lvl.levelmetadata[ry][rx].tileset].colors[lvl.levelmetadata[ry][rx].tilecol] == nil then
+				lvl.levelmetadata[ry][rx].tilecol = 0
 			end
 		end
 
@@ -502,22 +493,22 @@ function loadlevel(path)
 				if v:sub(-1, -1) == ":" then
 					-- This is a script name!
 					currentscript = v:sub(1, -2)
-					if allscripts[currentscript] == nil then
-						table.insert(myscriptnames, currentscript)
+					if lvl.scripts[currentscript] == nil then
+						table.insert(lvl.scriptnames, currentscript)
 					else
 						-- We've seen this script before, that's not good
-						mycount.FC = mycount.FC + 1
+						lvl.count.FC = lvl.count.FC + 1
 						cons_fc(FClist, langkeys(L.DUPLICATESCRIPT, {currentscript}))
 					end
-					allscripts[currentscript] = {}
+					lvl.scripts[currentscript] = {}
 					sline = 1
 				else
 					-- This is just a line. But have we encountered a script name before?
-					if allscripts[currentscript] ~= nil then
-						allscripts[currentscript][sline] = v
+					if lvl.scripts[currentscript] ~= nil then
+						lvl.scripts[currentscript][sline] = v
 						sline = sline + 1
 					else
-						mycount.FC = mycount.FC + 1
+						lvl.count.FC = lvl.count.FC + 1
 						cons_fc(FClist, langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
 					end
 				end
@@ -527,9 +518,6 @@ function loadlevel(path)
 		-- Some things that for now we'll have to hardcode carrying over...
 		-- If not found, they'll be nil, and we won't insert them later.
 		cons("Loading possible TextboxColours and SpecialRoomnames...")
-
-		thisextra.textboxcolors = {}
-		thisextra.textboxcolors_order = {}
 
 		xtextboxcolors = xml:find_or_nil(xdata, "TextboxColours")
 		if xtextboxcolors ~= nil then
@@ -547,15 +535,15 @@ function loadlevel(path)
 						b = tonumber(attr.b)
 					end
 
-					if thisextra.textboxcolors[attr.name] == nil then
-						table.insert(thisextra.textboxcolors_order, attr.name)
+					if lvl.textboxcolors[attr.name] == nil then
+						table.insert(lvl.textboxcolors_order, attr.name)
 					end
-					thisextra.textboxcolors[attr.name] = {r, g, b}
+					lvl.textboxcolors[attr.name] = {r, g, b}
 				end
 			end
 		end
 
-		--thisextra.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
+		--lvl.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
 	end)
 
 	if not success then
@@ -566,44 +554,44 @@ function loadlevel(path)
 
 	-- As many of the integrity checks as possible here
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
-		mycount.FC = mycount.FC + 1
+		lvl.count.FC = lvl.count.FC + 1
 		cons_fc(FClist, langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
 		thismetadata.mapwidth = 1
 	end
 	if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
-		mycount.FC = mycount.FC + 1
+		lvl.count.FC = lvl.count.FC + 1
 		cons_fc(FClist, langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
 	end
-	if ((thismetadata.mapwidth > thislimit.mapwidth) or (thismetadata.mapheight > thislimit.mapheight)) and not s.allowbiggerthansizelimit then
-		mycount.FC = mycount.FC + 1
+	if ((thismetadata.mapwidth > lvl.limit.mapwidth) or (thismetadata.mapheight > lvl.limit.mapheight)) and not s.allowbiggerthansizelimit then
+		lvl.count.FC = lvl.count.FC + 1
 		cons_fc(
 			FClist,
 			langkeys(L.MAPBIGGERTHANSIZELIMIT,
 				{
 					anythingbutnil(thismetadata.mapwidth),
 					anythingbutnil(thismetadata.mapheight),
-					thislimit.mapwidth,
-					thislimit.mapheight
+					lvl.limit.mapwidth,
+					lvl.limit.mapheight
 				}
 			)
 		)
-		thismetadata.mapwidth = math.min(thismetadata.mapwidth, thislimit.mapwidth)
-		thismetadata.mapheight = math.min(thismetadata.mapheight, thislimit.mapheight)
+		thismetadata.mapwidth = math.min(thismetadata.mapwidth, lvl.limit.mapwidth)
+		thismetadata.mapheight = math.min(thismetadata.mapheight, lvl.limit.mapheight)
 	end
 	if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
-		mycount.FC = mycount.FC + 1
+		lvl.count.FC = lvl.count.FC + 1
 		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
 	end
 	if n_levelmetadata ~= 400 then
-		mycount.FC = mycount.FC + 1
+		lvl.count.FC = lvl.count.FC + 1
 		cons_fc(FClist, L.NOT400ROOMS)
 
 		--[[ TODO: Think about readding this later, after converting it to the 3D table
-		if #theselevelmetadata < 400 then
-			for croom = #theselevelmetadata+1, 400 do
-				theselevelmetadata[croom] = {
+		if #lvl.levelmetadata < 400 then
+			for croom = #lvl.levelmetadata+1, 400 do
+				lvl.levelmetadata[croom] = {
 					tileset = 0,
 					tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
 					platx1 = 0,
@@ -626,7 +614,7 @@ function loadlevel(path)
 		]]
 	end
 
-	if mycount.FC ~= 0 then
+	if lvl.count.FC ~= 0 then
 		local FClisttext = ""
 
 		for k,v in pairs(FClist) do
@@ -638,17 +626,19 @@ function loadlevel(path)
 			FClisttext = FClisttext .. arrow_right .. " " .. v .. "\n"
 		end
 
-		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {mycount.FC}) .. "\n\n" .. FClisttext)
+		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {lvl.count.FC}) .. "\n\n" .. FClisttext)
 	end
 
-	return true, thismetadata, thislimit, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata, thisextra
+	lvl.xml = xml
+
+	return true, thismetadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl.vedmetadata, lvl
 end
 
 
 -- Load a template that we'll need for saving...
 level_template = love.filesystem.read("template.vvvvvv") -- updated 1.11.0
 
-function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, thisextra, crashed, invvvvvvfolder)
+function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, lvl, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
 	if (path == "") then
@@ -897,8 +887,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 
 	local any_color_tag = false
 	local all_color_tags = {}
-	for k,v in pairs(thisextra.textboxcolors_order) do
-		local color = thisextra.textboxcolors[v]
+	for k,v in pairs(lvl.textboxcolors_order) do
+		local color = lvl.textboxcolors[v]
 		table.insert(all_color_tags,
 			"\n            <colour r=\"" .. color[1] .. "\" g=\"" .. color[2] .. "\" b=\"" .. color[3] .. "\" name=\"" .. v .. "\"/>"
 		)
@@ -910,8 +900,8 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			.. "\n        </TextboxColours>\n"
 	end
 
-	if thisextra.specialroomnames_xml ~= nil then
-		replace_specialroomnames = "        <SpecialRoomnames>" .. thisextra.specialroomnames_xml .. "</SpecialRoomnames>\n"
+	if lvl.specialroomnames_xml ~= nil then
+		replace_specialroomnames = "        <SpecialRoomnames>" .. lvl.specialroomnames_xml .. "</SpecialRoomnames>\n"
 	end
 	savethis = savethis:gsub("%$TEXTBOXCOLOURS%$", (replace_textboxcolors:gsub("%%", "%%%%")))
 	savethis = savethis:gsub("%$SPECIALROOMNAMES%$", (replace_specialroomnames:gsub("%%", "%%%%")))
@@ -967,12 +957,10 @@ function createblanklevel(lvwidth, lvheight)
 	-- - Random from tileset: X
 	-- - All: X X
 
-	local mycount = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil}
+	local lvl = Level:new()
 
 	-- First do the metadata.
-	cons("Loading metadata...")
-
-	thismetadata = {
+	lvl.metadata = {
 		Creator = "Unknown",
 		Title = "Untitled Level",
 		Created = "2",
@@ -990,56 +978,32 @@ function createblanklevel(lvwidth, lvheight)
 	}
 
 	-- Now, the contents!
-	cons("Loading all the contents...")
-
 	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
-	theserooms = {}
-	for yk = 0, thismetadata.mapheight-1 do
+	for yk = 0, lvl.metadata.mapheight-1 do
 		--print("Y: " .. yk)
-		theserooms[yk] = {}
-		for xk = 0, thismetadata.mapwidth-1 do
-			theserooms[yk][xk] = {}
+		lvl.roomdata[yk] = {}
+		for xk = 0, lvl.metadata.mapwidth-1 do
+			lvl.roomdata[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
-					theserooms[yk][xk][(40*yt) + xt + 1] = 0
+					lvl.roomdata[yk][xk][(40*yt) + xt + 1] = 0
 				end
 			end
 		end
 	end
 
-	-- Entities.
-	cons("Loading entities...")
-	allentities = {}
-
 	-- Level meta data, get every room now.
-	cons("Loading room metadata...")
-	theselevelmetadata = {}
 	for ry = 0, 19 do
-		theselevelmetadata[ry] = {}
+		lvl.levelmetadata[ry] = {}
 		for rx = 0, 19 do
-			theselevelmetadata[ry][rx] = default_levelmetadata(rx, ry)
+			lvl.levelmetadata[ry][rx] = default_levelmetadata(rx, ry)
 		end
 	end
-
-	-- Scripts
-	cons("Loading scripts...")
-
-	allscripts = {}
-	myscriptnames = {}
-
-	local myvedmetadata = false
-
-	-- Extra. Since we start with a VVVVVV level, this is empty.
-	thisextra = {}
-	-- Except... now that we have 2.4, just for completeness...
-	thisextra.textboxcolors = {}
-	thisextra.textboxcolors_order = {}
-	thisextra.specialroomnames_xml = nil
 
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, thismetadata, limit_v, theserooms, allentities, theselevelmetadata, allscripts, mycount, myscriptnames, myvedmetadata, thisextra
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl.vedmetadata, lvl
 end
 
 function default_levelmetadata(rx, ry)

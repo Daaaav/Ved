@@ -11,11 +11,11 @@ function textboxcolors_update_elements()
 		table.insert(color_names, {
 				name = k,
 				builtin = true,
-				custom = extra.textboxcolors[k] ~= nil
+				custom = level.textboxcolors[k] ~= nil
 			}
 		)
 	end
-	for _,k in pairs(extra.textboxcolors_order) do
+	for _,k in pairs(level.textboxcolors_order) do
 		if textboxcolors[k] == nil then
 			table.insert(color_names, {
 					name = k,
@@ -53,7 +53,7 @@ function textboxcolors_update_elements()
 					),
 					Text(
 						function()
-							if v.builtin and extra.textboxcolors[v.name] ~= nil then
+							if v.builtin and level.textboxcolors[v.name] ~= nil then
 								return " *"
 							end
 							return ""
@@ -177,7 +177,7 @@ return {
 						if textboxcolors_editingcolor == nil then
 							return false, false
 						end
-						return true, extra.textboxcolors[textboxcolors_editingcolor] ~= nil
+						return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
 					end
 				),
 				LabelButton(
@@ -188,10 +188,10 @@ return {
 						return L.DELETE
 					end,
 					function()
-						extra.textboxcolors[textboxcolors_editingcolor] = nil
-						for k,v in pairs(extra.textboxcolors_order) do
+						level.textboxcolors[textboxcolors_editingcolor] = nil
+						for k,v in pairs(level.textboxcolors_order) do
 							if v == textboxcolors_editingcolor then
-								table.remove(extra.textboxcolors_order, k)
+								table.remove(level.textboxcolors_order, k)
 								break
 							end
 						end
@@ -208,7 +208,7 @@ return {
 						if textboxcolors_editingcolor == nil then
 							return false, false
 						end
-						return true, extra.textboxcolors[textboxcolors_editingcolor] ~= nil
+						return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
 					end
 				),
 				LabelButtonSpacer(),
@@ -219,14 +219,14 @@ return {
 						end
 					end,
 					function(r, g, b)
-						if extra.textboxcolors[textboxcolors_editingcolor] == nil then
+						if level.textboxcolors[textboxcolors_editingcolor] == nil then
 							-- Color didn't exist yet...
-							extra.textboxcolors[textboxcolors_editingcolor] = {}
-							table.insert(extra.textboxcolors_order, textboxcolors_editingcolor)
+							level.textboxcolors[textboxcolors_editingcolor] = {}
+							table.insert(level.textboxcolors_order, textboxcolors_editingcolor)
 						end
-						extra.textboxcolors[textboxcolors_editingcolor][1] = r
-						extra.textboxcolors[textboxcolors_editingcolor][2] = g
-						extra.textboxcolors[textboxcolors_editingcolor][3] = b
+						level.textboxcolors[textboxcolors_editingcolor][1] = r
+						level.textboxcolors[textboxcolors_editingcolor][2] = g
+						level.textboxcolors[textboxcolors_editingcolor][3] = b
 						dirty()
 					end
 				),
