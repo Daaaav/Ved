@@ -97,6 +97,8 @@ function loadlevel(path)
 
 	local lvl = Level:new()
 
+	-- FC = Failed Checks
+	local FC = 0
 	local FClist = {}
 
 	local n_levelmetadata = 0
@@ -108,7 +110,7 @@ function loadlevel(path)
 
 		-- This isn't a VCE level, right?
 		if xml:get_attribute(nil, "vceversion") ~= nil then
-			lvl.count.FC = lvl.count.FC + 1
+			FC = FC + 1
 			cons_fc(FClist, L.VCE_REMOVED)
 		end
 
@@ -152,7 +154,7 @@ function loadlevel(path)
 		end
 
 		if failedtiles > 0 then
-			lvl.count.FC = lvl.count.FC + 1
+			FC = FC + 1
 			cons_fc(FClist, langkeys(L_PLU.NOTALLTILESVALID, {failedtiles}))
 		end
 
@@ -197,7 +199,7 @@ function loadlevel(path)
 					-- VVVVVV will pick the first one anyway, and we've already picked the first one, so no need to change it
 					if not morethanonestartpoint then
 						morethanonestartpoint = true
-						lvl.count.FC = lvl.count.FC + 1
+						FC = FC + 1
 						cons_fc(FClist, L.MORETHANONESTARTPOINT)
 					end
 					lvl.entitydata[entityid] = nil
@@ -281,49 +283,49 @@ function loadlevel(path)
 			-- It's an entity, that's for sure!
 			lvl.count.entities = lvl.count.entities + 1
 
-			local oldFCcount = lvl.count.FC
+			local oldFCcount = FC
 
 			-- We might have just nil'd this entity because it was the data entity.
 			if lvl.entitydata[entityid] ~= nil then
 				if lvl.entitydata[entityid].x == nil or type(lvl.entitydata[entityid].x) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].x = 0
 				end
 				if lvl.entitydata[entityid].y == nil or type(lvl.entitydata[entityid].y) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].y = 0
 				end
 				if lvl.entitydata[entityid].t == nil or type(lvl.entitydata[entityid].t) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].t = 0
 				end
 				if lvl.entitydata[entityid].p1 == nil or type(lvl.entitydata[entityid].p1) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p1 = 0
 				end
 				if lvl.entitydata[entityid].p2 == nil or type(lvl.entitydata[entityid].p2) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p2 = 0
 				end
 				if lvl.entitydata[entityid].p3 == nil or type(lvl.entitydata[entityid].p3) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p3 = 0
 				end
 				if lvl.entitydata[entityid].p4 == nil or type(lvl.entitydata[entityid].p4) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p4 = 0
 				end
 				if lvl.entitydata[entityid].p5 == nil or type(lvl.entitydata[entityid].p5) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p5 = 0
 				end
 				if lvl.entitydata[entityid].p6 == nil or type(lvl.entitydata[entityid].p6) ~= "number" then
-					lvl.count.FC = lvl.count.FC + 1
+					FC = FC + 1
 					lvl.entitydata[entityid].p6 = 0
 				end
 			end
 
-			if oldFCcount < lvl.count.FC then
+			if oldFCcount < FC then
 				cons_fc(
 					FClist,
 					langkeys(
@@ -331,7 +333,7 @@ function loadlevel(path)
 						{
 							anythingbutnil(lvl.entitydata[entityid].x),
 							anythingbutnil(lvl.entitydata[entityid].y),
-							(lvl.count.FC-oldFCcount)
+							(FC-oldFCcount)
 						},
 						3
 					)
@@ -391,12 +393,12 @@ function loadlevel(path)
 				lvl.levelmetadata[ry][rx].directmode = 0
 			end
 
-			local oldFCcount = lvl.count.FC
+			local oldFCcount = FC
 
 			if lvl.levelmetadata[ry][rx].tileset == nil
 			or type(lvl.levelmetadata[ry][rx].tileset) ~= "number"
 			or (lvl.levelmetadata[ry][rx].tileset > 4) then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].tileset = 0
 			end
 			if lvl.levelmetadata[ry][rx].tilecol == nil
@@ -409,61 +411,61 @@ function loadlevel(path)
 			or lvl.levelmetadata[ry][rx].tileset == 3 and lvl.levelmetadata[ry][rx].tilecol > 6
 			or lvl.levelmetadata[ry][rx].tileset == 4 and lvl.levelmetadata[ry][rx].tilecol > 5
 			or lvl.levelmetadata[ry][rx].tileset == 5 and lvl.levelmetadata[ry][rx].tilecol > 29 then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].tilecol = 0
 			end
 			if lvl.levelmetadata[ry][rx].platx1 == nil or type(lvl.levelmetadata[ry][rx].platx1) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].platx1 = 0
 			end
 			if lvl.levelmetadata[ry][rx].platy1 == nil or type(lvl.levelmetadata[ry][rx].platy1) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].platy1 = 0
 			end
 			if lvl.levelmetadata[ry][rx].platx2 == nil or type(lvl.levelmetadata[ry][rx].platx2) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].platx2 = 0
 			end
 			if lvl.levelmetadata[ry][rx].platy2 == nil or type(lvl.levelmetadata[ry][rx].platy2) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].platy2 = 0
 			end
 			if lvl.levelmetadata[ry][rx].platv == nil or type(lvl.levelmetadata[ry][rx].platv) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].platv = 0
 			end
 			if lvl.levelmetadata[ry][rx].enemyx1 == nil or type(lvl.levelmetadata[ry][rx].enemyx1) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].enemyx1 = 0
 			end
 			if lvl.levelmetadata[ry][rx].enemyy1 == nil or type(lvl.levelmetadata[ry][rx].enemyy1) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].enemyy1 = 0
 			end
 			if lvl.levelmetadata[ry][rx].enemyx2 == nil or type(lvl.levelmetadata[ry][rx].enemyx2) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].enemyx2 = 0
 			end
 			if lvl.levelmetadata[ry][rx].enemyy2 == nil or type(lvl.levelmetadata[ry][rx].enemyy2) ~= "number" then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].enemyy2 = 0
 			end
 			if lvl.levelmetadata[ry][rx].enemytype == nil or type(lvl.levelmetadata[ry][rx].enemytype) ~= "number"
 			or lvl.levelmetadata[ry][rx].enemytype < 0 or lvl.levelmetadata[ry][rx].enemytype > 9 then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].enemytype = 0
 			end
 			if lvl.levelmetadata[ry][rx].warpdir == nil or type(lvl.levelmetadata[ry][rx].warpdir) ~= "number"
 			or lvl.levelmetadata[ry][rx].warpdir < 0 or lvl.levelmetadata[ry][rx].warpdir > 3 then
-				lvl.count.FC = lvl.count.FC + 1
+				FC = FC + 1
 				lvl.levelmetadata[ry][rx].warpdir = 0
 			end
 
 			lvl.levelmetadata[ry][rx].auto2mode = 0
 
-			if oldFCcount < lvl.count.FC then
+			if oldFCcount < FC then
 				local co = not s.coords0 and 1 or 0
-				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (lvl.count.FC-oldFCcount)}, 3))
+				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (FC-oldFCcount)}, 3))
 			end
 
 			-- If you select a higher tilecol in space station and then go to another tileset,
@@ -497,7 +499,7 @@ function loadlevel(path)
 						table.insert(lvl.scriptnames, currentscript)
 					else
 						-- We've seen this script before, that's not good
-						lvl.count.FC = lvl.count.FC + 1
+						FC = FC + 1
 						cons_fc(FClist, langkeys(L.DUPLICATESCRIPT, {currentscript}))
 					end
 					lvl.scripts[currentscript] = {}
@@ -508,7 +510,7 @@ function loadlevel(path)
 						lvl.scripts[currentscript][sline] = v
 						sline = sline + 1
 					else
-						lvl.count.FC = lvl.count.FC + 1
+						FC = FC + 1
 						cons_fc(FClist, langkeys(L.UNEXPECTEDSCRIPTLINE, {anythingbutnil(v)}))
 					end
 				end
@@ -554,17 +556,17 @@ function loadlevel(path)
 
 	-- As many of the integrity checks as possible here
 	if (type(thismetadata.mapwidth) ~= "number") or (thismetadata.mapwidth < 1) then
-		lvl.count.FC = lvl.count.FC + 1
+		FC = FC + 1
 		cons_fc(FClist, langkeys(L.MAPWIDTHINVALID, {anythingbutnil(thismetadata.mapwidth)}))
 		thismetadata.mapwidth = 1
 	end
 	if (type(thismetadata.mapheight) ~= "number") or (thismetadata.mapheight < 1) then
-		lvl.count.FC = lvl.count.FC + 1
+		FC = FC + 1
 		cons_fc(FClist, langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
 	end
 	if ((thismetadata.mapwidth > lvl.limit.mapwidth) or (thismetadata.mapheight > lvl.limit.mapheight)) and not s.allowbiggerthansizelimit then
-		lvl.count.FC = lvl.count.FC + 1
+		FC = FC + 1
 		cons_fc(
 			FClist,
 			langkeys(L.MAPBIGGERTHANSIZELIMIT,
@@ -580,12 +582,12 @@ function loadlevel(path)
 		thismetadata.mapheight = math.min(thismetadata.mapheight, lvl.limit.mapheight)
 	end
 	if (thismetadata.levmusic == nil) or (thismetadata.levmusic == "") then
-		lvl.count.FC = lvl.count.FC + 1
+		FC = FC + 1
 		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
 	end
 	if n_levelmetadata ~= 400 then
-		lvl.count.FC = lvl.count.FC + 1
+		FC = FC + 1
 		cons_fc(FClist, L.NOT400ROOMS)
 
 		--[[ TODO: Think about readding this later, after converting it to the 3D table
@@ -614,7 +616,7 @@ function loadlevel(path)
 		]]
 	end
 
-	if lvl.count.FC ~= 0 then
+	if FC ~= 0 then
 		local FClisttext = ""
 
 		for k,v in pairs(FClist) do
@@ -626,7 +628,7 @@ function loadlevel(path)
 			FClisttext = FClisttext .. arrow_right .. " " .. v .. "\n"
 		end
 
-		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {lvl.count.FC}) .. "\n\n" .. FClisttext)
+		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {FC}) .. "\n\n" .. FClisttext)
 	end
 
 	lvl.xml = xml

@@ -14,7 +14,13 @@ function Level:new()
 	o.levelmetadata = {}
 	o.scripts = {}
 	o.scriptnames = {}
-	o.count = {trinkets = 0, crewmates = 0, entities = 0, entity_ai = 1, startpoint = nil, FC = 0} -- FC = Failed Checks
+	o.count = {
+		trinkets = 0,
+		crewmates = 0,
+		entities = 0,
+		entity_ai = 1,
+		startpoint = nil
+	}
 	o.vedmetadata = false
 	o.textboxcolors = {}
 	o.textboxcolors_order = {}
