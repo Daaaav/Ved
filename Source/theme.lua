@@ -110,6 +110,11 @@ function self:load_theme(name)
 	-- basically: if it's a png, save it as an image.
 	self:load_theme_folder("themes/" .. name .. "/", "", theme)
 
+	-- okay, let's crawl all plugins too for their themes folders
+	for k, plugin in pairs(plugins) do
+		self:load_theme_folder(plugin.info.internal_pluginpath .. "/themes/" .. name .. "/", "", theme)
+	end
+
 	-- NOW: is there a theme.lua file? if so, load it.
 	if love.filesystem.getInfo("themes/" .. name .. "/theme.lua") then
 		local chunk = love.filesystem.load("themes/" .. name .. "/theme.lua")
