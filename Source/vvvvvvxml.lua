@@ -629,13 +629,14 @@ function loadlevel(path)
 		dialog.create(langkeys(L_PLU.LEVELFAILEDCHECKS, {FC}) .. "\n\n" .. FClisttext)
 	end
 
+	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, thismetadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl.vedmetadata, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl
 end
 
 
-function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, lvl, crashed, invvvvvvfolder)
+function savelevel(path, lvl, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
 	if (path == "") then
@@ -660,23 +661,23 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	for k,v in pairs(metadataitems) do
 		cons("Doing " .. v)
 		local el = lvl.xml:find_or_add(xmetadata, v)
-		lvl.xml:set_text(el, anythingbutnil(thismetadata[v]))
+		lvl.xml:set_text(el, anythingbutnil(lvl.metadata[v]))
 	end
 
 	-- Special cases of metadata that may or may not be stored...
-	if thismetadata.onewaycol_override then
+	if lvl.metadata.onewaycol_override then
 		local el = lvl.xml:find_or_add(xmetadata, "onewaycol_override")
 		lvl.xml:set_text(el, 1)
 	else
 		lvl.xml:delete_each_child_element(xmetadata, "onewaycol_override")
 	end
-	if thismetadata.font ~= "" and thismetadata.font ~= "font" then
+	if lvl.metadata.font ~= "" and lvl.metadata.font ~= "font" then
 		local el = lvl.xml:find_or_add(xmetadata, "font")
-		lvl.xml:set_text(el, thismetadata.font)
+		lvl.xml:set_text(el, lvl.metadata.font)
 	else
 		lvl.xml:delete_each_child_element(xmetadata, "font")
 	end
-	if thismetadata.rtl then
+	if lvl.metadata.rtl then
 		local el = lvl.xml:find_or_add(xmetadata, "rtl")
 		lvl.xml:set_text(el, 1)
 	else
@@ -684,26 +685,26 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	end
 
 	-- Hold on for a second, we need the map size and music too!
-	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapwidth"), thismetadata.mapwidth)
-	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapheight"), thismetadata.mapheight)
-	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "levmusic"), thismetadata.levmusic)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapwidth"), lvl.metadata.mapwidth)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapheight"), lvl.metadata.mapheight)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "levmusic"), lvl.metadata.levmusic)
 
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")
 	local thenewcontents = {}
 	local nested_break = false
-	for lroomy = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
-		yv = theserooms[lroomy]
+	for lroomy = 0, math.min(lvl.metadata.mapheight, limit.mapheight)-1 do
+		yv = lvl.roomdata[lroomy]
 		-- We now have each y.....
 		cons("Y: " .. lroomy)
 		for line = 0, 29 do
 			-- (each line)
 			--for roomx, xv in pairs(yv) do
-			for lroomx = 0, (thismetadata.mapwidth-1) do
+			for lroomx = 0, (lvl.metadata.mapwidth-1) do
 				xv = yv[lroomx]
 				-- .....And each x for each line
-				table.insert(thenewcontents, table.concat({unpack(theserooms[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
-				if lroomy == math.min(thismetadata.mapheight, limit.mapheight)-1 and lroomx == limit.mapwidth-1 and line == 29 then
+				table.insert(thenewcontents, table.concat({unpack(lvl.roomdata[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
+				if lroomy == math.min(lvl.metadata.mapheight, limit.mapheight)-1 and lroomx == limit.mapwidth-1 and line == 29 then
 					nested_break = true
 					break
 				end
@@ -726,10 +727,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	lvl.xml:clear(xentities)
 
 	local entitydatasaved = 0
-	-- No pairs(allentities) here, that might end iterating at a nil
+	-- No pairs(lvl.entitydata) here, that might end iterating at a nil
 	for k = 1, count.entity_ai-1 do
-		if allentities[k] ~= nil then
-			local v = allentities[k]
+		if lvl.entitydata[k] ~= nil then
+			local v = lvl.entitydata[k]
 			local data = v.data
 			if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and data:len() > 40 then
 				-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
@@ -753,29 +754,28 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 				and ak ~= "p4" and ak ~= "p5" and ak ~= "p6"
 				and ak ~= "data" then
 					lvl.xml:set_attribute(entity, ak, av)
-cons("Unknown entity attribute " .. ak)
 				end
 			end
 			lvl.xml:set_text(entity, data)
 		end
 	end
 
-	if vedmetadata ~= false and vedmetadata ~= nil then
+	if lvl.vedmetadata ~= false and lvl.vedmetadata ~= nil then
 		-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
 		local mdedata = thismdeversion .. "|"
 
 		local max_labeled_flag = -1
 		for f = limit.flags-1, 0, -1 do
-			if vedmetadata.flaglabel[f] ~= "" then
+			if lvl.vedmetadata.flaglabel[f] ~= "" then
 				max_labeled_flag = f
 				break
 			end
 		end
 		if max_labeled_flag ~= -1 then
-			mdedata = mdedata .. despecialchars(vedmetadata.flaglabel[0])
+			mdedata = mdedata .. despecialchars(lvl.vedmetadata.flaglabel[0])
 
 			for k = 1, max_labeled_flag do -- 0 added above
-				mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k])
+				mdedata = mdedata .. "$" .. despecialchars(lvl.vedmetadata.flaglabel[k])
 			end
 		end
 
@@ -784,7 +784,7 @@ cons("Unknown entity attribute " .. ak)
 		-- Vars
 		local varsdata = {}
 
-		for k,v in pairs(vedmetadata.vars) do
+		for k,v in pairs(lvl.vedmetadata.vars) do
 			if v["type"] == "t" then
 				local values = ""
 				for k2,v2 in pairs(v.value) do
@@ -804,7 +804,7 @@ cons("Unknown entity attribute " .. ak)
 		-- Now add the notes to it!
 		local notesdata = {}
 
-		for k,v in pairs(vedmetadata.notes) do
+		for k,v in pairs(lvl.vedmetadata.notes) do
 			table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
 		end
 
@@ -836,23 +836,23 @@ cons("Unknown entity attribute " .. ak)
 	lvl.xml:clear_open(xlevelmetadata)
 
 	local all_platvs = {}
-	for y = 0, thismetadata.mapheight-1 do
+	for y = 0, lvl.metadata.mapheight-1 do
 		if y >= limit.mapheight then
 			break
 		end
-		for x = 0, thismetadata.mapwidth-1 do
+		for x = 0, lvl.metadata.mapwidth-1 do
 			if x >= limit.mapwidth then
 				break
 			end
 			-- platv needs special handling, unfortunately.
-			table.insert(all_platvs, theselevelmetadata[y][x].platv)
+			table.insert(all_platvs, lvl.levelmetadata[y][x].platv)
 		end
 	end
 	local i = 1
 	local lmd_w, lmd_h = 20, 20
 	for y = 0, lmd_h-1 do
 		for x = 0, lmd_w-1 do
-			local v = theselevelmetadata[y][x]
+			local v = lvl.levelmetadata[y][x]
 			local my_platv
 			my_platv = all_platvs[i]
 			if my_platv == nil then
@@ -880,7 +880,6 @@ cons("Unknown entity attribute " .. ak)
 				and ak ~= "enemytype" and ak ~= "directmode" and ak ~= "warpdir"
 				and ak ~= "auto2mode" and ak ~= "roomname" then
 					lvl.xml:set_attribute(room, ak, av)
-cons("Unknown room attribute " .. ak)
 				end
 			end
 			lvl.xml:set_text(room, v.roomname)
@@ -892,9 +891,9 @@ cons("Unknown room attribute " .. ak)
 	-- Now all the scripts!
 	cons("Assembling scripts...")
 	local allallscripts = {}
-	--for k,v in pairs(allscripts) do
+	--for k,v in pairs(lvl.scripts) do
 	for script_i = 1, #scriptnames do
-		local k, v = scriptnames[script_i], allscripts[scriptnames[script_i]]
+		local k, v = scriptnames[script_i], lvl.scripts[scriptnames[script_i]]
 		table.insert(allallscripts, k .. ":|" .. table.concat(v, "|") .. "|")
 	end
 
@@ -938,10 +937,6 @@ cons("Unknown room attribute " .. ak)
 	else
 		success = true
 		iferrmsg = lvl.xml:export()
-	end
-
-	if vedmetadata == nil then
-		cons("Caution: metadata entity not passed to savelevel()!")
 	end
 
 	if success and path ~= nil then
@@ -1024,7 +1019,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl.vedmetadata, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl
 end
 
 function default_levelmetadata(rx, ry)

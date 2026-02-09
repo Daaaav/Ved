@@ -481,7 +481,7 @@ function dialog.callback.save(button, fields)
 			finish_undo("TITLE/CREATOR WHEN SAVING")
 		end
 
-		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, level, false)
+		savedsuccess, savederror = savelevel(fields.filename .. ".vvvvvv", level, false)
 
 		if not savedsuccess then
 			-- Why not :c
@@ -680,11 +680,11 @@ function dialog.callback.changeflagname(button, fields, _, notclosed)
 
 	if button == DB.OK then
 		-- Give a name to this flag, but first check if we actually have vedmetadata
-		if vedmetadata == false then
-			vedmetadata = createmde()
+		if level.vedmetadata == false then
+			level.vedmetadata = createmde()
 		end
 
-		vedmetadata.flaglabel[flgnum] = fields.name
+		level.vedmetadata.flaglabel[flgnum] = fields.name
 
 		-- This is a change!
 		dirty()

@@ -54,11 +54,6 @@ return function(dt)
 		warpbganimation = (warpbganimation + 180*dt) % 32
 	end
 
-	if vedmetadata == nil then
-		cons("vedmetadata == nil! Setting to false.")
-		vedmetadata = false
-	end
-
 	if keyboardmode and love.timer.getTime() % 0.02 < 0.007 then
 		--[[ Experimental and still very annoying.
 		You want to be able to:

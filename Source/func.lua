@@ -1276,7 +1276,7 @@ function end_editing_roomtext()
 						if not usedflags[flag] then
 							useflag = flag
 							usedflags[flag] = true
-							--vedmetadata.flaglabel[flag] = partss[2]
+							--level.vedmetadata.flaglabel[flag] = partss[2]
 							break
 						end
 					end
@@ -1408,11 +1408,11 @@ function state6load(levelname)
 		local oldlevel
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1420,8 +1420,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    vedmetadata,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldvedmetadata, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1440,7 +1440,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, vedmetadata2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1457,8 +1457,8 @@ function levelslist_close_input()
 end
 
 function compare_level_differences(second_level_name)
-	-- Assuming we have both metadata till vedmetadata and metadata2 till vedmetadata2
-	-- Where xx2 is the older version, xx is the newer version. Also, second_level_name is the older version
+	-- Assuming we have both level and level2
+	-- Where level2 is the older version, level is the newer version. Also, second_level_name is the older version
 
 	differencesn = {}
 	local pagetext
@@ -1773,40 +1773,40 @@ function compare_level_differences(second_level_name)
 
 	table.insert(differencesn, {subj = diffmessages.pages.scripts, imgs = {}, cont = pagetext})
 
-	if vedmetadata ~= false or vedmetadata2 ~= false then
+	if level.vedmetadata ~= false or level2.vedmetadata ~= false then
 		-- F L A G   N A M E S
 		pagetext = diffmessages.pages.flagnames .. "\\wh#\n\n"
 
-		if vedmetadata2 == false then
+		if level2.vedmetadata == false then
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
 
 			for i = 0, limit.flags-1 do
-				if vedmetadata.flaglabel[i] ~= "" then
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
+				if level.vedmetadata.flaglabel[i] ~= "" then
+					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, level.vedmetadata.flaglabel[i]}) .. "\n"
 				end
 			end
-		elseif vedmetadata == false then
+		elseif level.vedmetadata == false then
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
 
 			for i = 0, limit2.flags-1 do
-				if vedmetadata2.flaglabel[i] ~= "" then
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {vedmetadata2.flaglabel[i], i}) .. "\n"
+				if level2.vedmetadata.flaglabel[i] ~= "" then
+					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {level2.vedmetadata.flaglabel[i], i}) .. "\n"
 				end
 			end
 		else
 			-- This one is simple, just cycle through the numbers!
 			for i = 0, math.min(limit.flags, limit2.flags)-1 do
-				if vedmetadata2.flaglabel[i] == "" and vedmetadata.flaglabel[i] ~= "" then
+				if level2.vedmetadata.flaglabel[i] == "" and level.vedmetadata.flaglabel[i] ~= "" then
 					-- Added name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, vedmetadata.flaglabel[i]}) .. "\n"
-				elseif vedmetadata2.flaglabel[i] ~= "" and vedmetadata.flaglabel[i] == "" then
+					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, level.vedmetadata.flaglabel[i]}) .. "\n"
+				elseif level2.vedmetadata.flaglabel[i] ~= "" and level.vedmetadata.flaglabel[i] == "" then
 					-- Removed name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {vedmetadata2.flaglabel[i], i}) .. "\n"
-				elseif vedmetadata2.flaglabel[i] ~= vedmetadata.flaglabel[i] then
+					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {level2.vedmetadata.flaglabel[i], i}) .. "\n"
+				elseif level2.vedmetadata.flaglabel[i] ~= level.vedmetadata.flaglabel[i] then
 					-- Changed name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.edited, {i, vedmetadata2.flaglabel[i], vedmetadata.flaglabel[i]}) .. "\n"
+					pagetext = pagetext .. langkeys(diffmessages.flagnames.edited, {i, level2.vedmetadata.flaglabel[i], level.vedmetadata.flaglabel[i]}) .. "\n"
 				end
 			end
 		end
@@ -1816,26 +1816,26 @@ function compare_level_differences(second_level_name)
 		-- L E V E L   N O T E S
 		pagetext = diffmessages.pages.levelnotes .. "\\wh#\n\n"
 
-		if vedmetadata2 == false then
+		if level2.vedmetadata == false then
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
 
-			for k,v in pairs(vedmetadata.notes) do
+			for k,v in pairs(level.vedmetadata.notes) do
 				pagetext = pagetext .. langkeys(diffmessages.levelnotes.added, {v.subj}) .. "\n"
 			end
-		elseif vedmetadata == false then
+		elseif level.vedmetadata == false then
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
 
-			for k,v in pairs(vedmetadata2.notes) do
+			for k,v in pairs(level2.vedmetadata.notes) do
 				pagetext = pagetext .. langkeys(diffmessages.levelnotes.removed, {v.subj}) .. "\n"
 			end
 		else
 			-- Were any notes added or changed?
-			for k,v in pairs(vedmetadata.notes) do
+			for k,v in pairs(level.vedmetadata.notes) do
 				local found = false
 
-				for k2, v2 in pairs(vedmetadata2.notes) do
+				for k2, v2 in pairs(level2.vedmetadata.notes) do
 					if v.subj == v2.subj then
 						-- Maybe it has been edited?
 						if v.cont ~= v2.cont then
@@ -1853,10 +1853,10 @@ function compare_level_differences(second_level_name)
 			end
 
 			-- Any level notes that were removed?
-			for k,v in pairs(vedmetadata2.notes) do
+			for k,v in pairs(level2.vedmetadata.notes) do
 				local found = false
 
-				for k2, v2 in pairs(vedmetadata.notes) do
+				for k2, v2 in pairs(level.vedmetadata.notes) do
 					if v.subj == v2.subj then
 						found = true
 						break
@@ -1905,7 +1905,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, vedmetadata, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
@@ -2154,10 +2154,10 @@ function get_all_languages()
 end
 
 function to_notepad()
-	if vedmetadata == false then
-		vedmetadata = createmde()
+	if level.vedmetadata == false then
+		level.vedmetadata = createmde()
 	end
-	tostate(15, nil, {vedmetadata.notes, true, font_level, false})
+	tostate(15, nil, {level.vedmetadata.notes, true, font_level, false})
 end
 
 function s_nieuw(t)
@@ -2778,27 +2778,27 @@ end
 -- Functions for level-specific vars in the metadata entity
 function get_level_var(key)
 	-- Might look excessive, but we don't want "falsy" stuff, and returning nil is clear
-	if vedmetadata == false or vedmetadata == nil then
+	if level == nil or level.vedmetadata == false then
 		return nil
 	end
 
-	if vedmetadata.vars[key] == nil then
+	if level.vedmetadata.vars[key] == nil then
 		return nil
 	end
 
-	return cast_level_var_type(vedmetadata.vars[key]["type"], vedmetadata.vars[key].value)
+	return cast_level_var_type(level.vedmetadata.vars[key]["type"], level.vedmetadata.vars[key].value)
 end
 
 function get_all_level_vars()
 	-- Get all vars as an array.
 
-	if vedmetadata == false or vedmetadata == nil then
+	if level == nil or level.vedmetadata == false then
 		return {}
 	end
 
 	local vars = {}
 
-	for k,v in pairs(vedmetadata.vars) do
+	for k,v in pairs(level.vedmetadata.vars) do
 		vars[k] = cast_level_var_type(v["type"], v.value)
 	end
 
@@ -2808,8 +2808,12 @@ end
 function set_level_var(key, value)
 	-- Returns false in case of invalid value type, true if valid.
 
-	if vedmetadata == false then
-		vedmetadata = createmde()
+	if level == nil then
+		return false
+	end
+
+	if level.vedmetadata == false then
+		level.vedmetadata = createmde()
 	end
 
 	local t, v = serialize_level_var_type(value)
@@ -2818,7 +2822,7 @@ function set_level_var(key, value)
 		return false
 	end
 
-	vedmetadata.vars[key] = {
+	level.vedmetadata.vars[key] = {
 		["type"] = t,
 		value = v
 	}
@@ -2827,11 +2831,11 @@ function set_level_var(key, value)
 end
 
 function remove_level_var(key)
-	if vedmetadata == false or vedmetadata == nil then
+	if level == nil or level.vedmetadata == false then
 		return
 	end
 
-	vedmetadata.vars[key] = nil
+	level.vedmetadata.vars[key] = nil
 end
 
 function clear_canvas(canvas)

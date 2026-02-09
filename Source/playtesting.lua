@@ -177,7 +177,7 @@ function playtesting_start(force_ask_path)
 	-- Only problem is: savelevel() has TONS of dependencies, so do this later
 
 	-- Note: thissavederror will contain level contents if not an error
-	local thissavedsuccess, thissavederror = savelevel(nil, metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, level, false, false)
+	local thissavedsuccess, thissavederror = savelevel(nil, level, false, false)
 
 	if not thissavedsuccess then
 		dialog.create(L.SAVENOSUCCESS .. anythingbutnil(thissavederror))

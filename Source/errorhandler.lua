@@ -306,7 +306,7 @@ function ved_showerror(msg)
 		love.graphics.setColor(255,255,255,255)
 		font_ui:shadowprintf(p, pos, pos+40, love.graphics.getWidth() - pos)
 
-		if metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
+		if level ~= nil then
 			-- Show something so you can save your level
 			love.graphics.setColor(255,255,0,255)
 			font_ui:shadowprintf(anythingbutnil(levelsavemsg), pos, pos+40+(17*8), love.graphics.getWidth() - pos)
@@ -335,15 +335,14 @@ function ved_showerror(msg)
 				return
 			elseif e == "keypressed" and a == "c" and (love.keyboard.isDown(lctrl) or love.keyboard.isDown(rctrl)) then
 				love.system.setClipboardText(mainmessage:gsub("\n    ", "\n"))
-			elseif e == "keypressed" and a == "s" and not alreadysaved
-			and metadata ~= nil and roomdata ~= nil and entitydata ~= nil and levelmetadata ~= nil and scripts ~= nil and scriptnames ~= nil and vedmetadata ~= nil then
+			elseif e == "keypressed" and a == "s" and not alreadysaved and level ~= nil then
 				if editingmap == "untitled\n" or editingmap == nil then
 					editingmap = "untitled"
 				end
 
 				editingmap = editingmap .. "_" .. os.time()
 
-				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", metadata, roomdata, entitydata, levelmetadata, scripts, vedmetadata, level, true)
+				savedsuccess, savederror = savelevel(editingmap .. ".vvvvvv", level, true)
 
 				if not savedsuccess then
 					levelsavemsg = string.format(ERR_SAVEERROR, anythingbutnil(savederror))

@@ -77,8 +77,8 @@ function searchtext(this)
 		end
 
 		-- Notes
-		if vedmetadata ~= false then
-			for k,v in pairs(vedmetadata.notes) do
+		if level.vedmetadata ~= false then
+			for k,v in pairs(level.vedmetadata.notes) do
 				if v.subj:lower():find(this) ~= nil then
 					table.insert(searchnotes, {name=v.subj, foundline=0, foundlinecontent=""})
 				end

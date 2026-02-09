@@ -35,8 +35,8 @@ return function()
 						mousepressed_flag_name = ""
 
 						local field_default = ""
-						if vedmetadata ~= false then
-							field_default = vedmetadata.flaglabel[flgnum]
+						if level.vedmetadata ~= false then
+							field_default = level.vedmetadata.flaglabel[flgnum]
 						end
 
 						-- We also want to know where this was used.
@@ -61,8 +61,8 @@ return function()
 					mousepressed_flag_x = love.mouse.getX()
 					mousepressed_flag_y = love.mouse.getY()
 					mousepressed_flag_num = flag
-					if vedmetadata then
-						mousepressed_flag_name = vedmetadata.flaglabel[mousepressed_flag_num]
+					if level.vedmetadata then
+						mousepressed_flag_name = level.vedmetadata.flaglabel[mousepressed_flag_num]
 					end
 				end
 			else
@@ -80,11 +80,11 @@ return function()
 
 			local text = fixdig(flag, flags_digits, " ")
 			font_ui:printf(text, ax+2, ay+4, w-4, font_ui:align_start())
-			if vedmetadata ~= false then
-				if anythingbutnil(vedmetadata.flaglabel[flag]) == "" then
+			if level.vedmetadata ~= false then
+				if anythingbutnil(level.vedmetadata.flaglabel[flag]) == "" then
 					font_ui:printf(L.FLAGNONAME, ax+2, ay+4, w-4, font_ui:align_end())
 				else
-					font_level:printf(vedmetadata.flaglabel[flag], ax+2, ay+4, w-4, font_ui:align_end())
+					font_level:printf(level.vedmetadata.flaglabel[flag], ax+2, ay+4, w-4, font_ui:align_end())
 				end
 			end
 		end

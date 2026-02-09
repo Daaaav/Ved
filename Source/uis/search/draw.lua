@@ -67,7 +67,7 @@ return function()
 		end
 	end
 
-	if vedmetadata ~= false then
+	if level.vedmetadata ~= false then
 		for k,v in pairs(searchnotes) do
 			if k <= showresults and 32*k+16+searchscroll+30 >= 48 and 32*k+16+searchscroll <= love.graphics.getHeight() then
 				love.graphics.setScissor(8+284+4+284+4, math.max(48, 32*k+16+searchscroll), 284, 30)
@@ -81,7 +81,7 @@ return function()
 
 				if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8+284+4+284+4, 32*k+16+searchscroll, 284, 30) then
 					newinputsys.close("search")
-					tostate(15, nil, {vedmetadata.notes, true, font_level, false})
+					tostate(15, nil, {level.vedmetadata.notes, true, font_level, false})
 				end
 			end
 		end

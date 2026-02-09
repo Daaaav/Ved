@@ -167,7 +167,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 				) and tostring(tonumber(v)) ~= tostring(v) then
 					-- if flag name is not used yet, newflagname
 					for fl = 0, limit.flags-1 do
-						if vedmetadata ~= false and vedmetadata.flaglabel[fl] == v then
+						if level.vedmetadata ~= false and level.vedmetadata.flaglabel[fl] == v then
 							setColorArr(s.syntaxcolor_flagname)
 							break
 						end
@@ -493,14 +493,14 @@ function script_decompile(raw_script)
 			-- We need to explode it anyways.
 			local partss = explode(",", text2)
 
-			if vedmetadata ~= false
-			and vedmetadata.flaglabel[tonumber(partss[2])] ~= nil
-			and vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
+			if level.vedmetadata ~= false
+			and level.vedmetadata.flaglabel[tonumber(partss[2])] ~= nil
+			and level.vedmetadata.flaglabel[tonumber(partss[2])] ~= "" then
 				-- This flag has a name
 				readable_script[k] = readable_script[k]:gsub(" ", "")
 				readable_script[k] = readable_script[k]:gsub(
 					partss[2],
-					vedmetadata.flaglabel[tonumber(partss[2])],
+					level.vedmetadata.flaglabel[tonumber(partss[2])],
 					1
 				)
 			end
@@ -813,12 +813,12 @@ function script_compile(readable_script)
 		if partss_scriptcasing[1] == "flag" or partss_scriptcasing[1] == "ifflag" or partss_scriptcasing[1] == "customifflag" then
 			cons(partss[1] .. " found at line " .. k)
 
-			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
+			if tostring(tonumber(partss[2])) ~= tostring(partss[2]) then --level.vedmetadata.flaglabel[tonumber(partss[2])] ~= nil then
 				-- This is not a flag number, check if this label already exists
 
 				-- But first check if vedmetadata is enabled
-				if vedmetadata == false then
-					vedmetadata = createmde()
+				if level.vedmetadata == false then
+					level.vedmetadata = createmde()
 				end
 
 				local useflag = -1
@@ -830,7 +830,7 @@ function script_compile(readable_script)
 				end
 
 				for flag = 0, limit.flags-1 do
-					if vedmetadata.flaglabel[flag] == partss[2] then
+					if level.vedmetadata.flaglabel[flag] == partss[2] then
 						useflag = flag
 						usedflags[flag] = true
 						cons("Flag name for " .. partss[2] .. " already exists and found at flag number " .. flag)
@@ -846,7 +846,7 @@ function script_compile(readable_script)
 							-- Ah, here we got one!
 							useflag = flag
 							usedflags[flag] = true
-							vedmetadata.flaglabel[flag] = partss[2]
+							level.vedmetadata.flaglabel[flag] = partss[2]
 							cons("Associated flag #" .. flag .. " with this")
 							break
 						end
@@ -1160,10 +1160,10 @@ function flagname_check_problem(name, number)
 	elseif flagname_illegal_chars(name) then
 		-- This contains illegal characters
 		return L.FLAGNAMECHARS
-	elseif vedmetadata ~= false then
+	elseif level.vedmetadata ~= false then
 		-- Final check: check if this flag hasn't been used already.
 		for kd = 0, limit.flags-1 do
-			if kd ~= number and vedmetadata.flaglabel[kd] == name then
+			if kd ~= number and level.vedmetadata.flaglabel[kd] == name then
 				-- This flag already exists!
 				return langkeys(L.FLAGNAMEINUSE, {name, kd})
 			end
@@ -1190,8 +1190,8 @@ function normalize_simplified_color(c)
 end
 
 function swapflags(flag1, flag2)
-	if vedmetadata then
-		vedmetadata.flaglabel[flag2], vedmetadata.flaglabel[flag1] = vedmetadata.flaglabel[flag1], vedmetadata.flaglabel[flag2]
+	if level.vedmetadata then
+		level.vedmetadata.flaglabel[flag2], level.vedmetadata.flaglabel[flag1] = level.vedmetadata.flaglabel[flag1], level.vedmetadata.flaglabel[flag2]
 	end
 
 	local commands = {"flag", "ifflag", "customifflag"}
