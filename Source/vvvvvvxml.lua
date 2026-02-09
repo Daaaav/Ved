@@ -521,7 +521,7 @@ function loadlevel(path)
 		-- If not found, they'll be nil, and we won't insert them later.
 		cons("Loading possible TextboxColours and SpecialRoomnames...")
 
-		xtextboxcolors = xml:find_or_nil(xdata, "TextboxColours")
+		local xtextboxcolors = xml:find_or_nil(xdata, "TextboxColours")
 		if xtextboxcolors ~= nil then
 			for color in xml:each_child_element(xtextboxcolors, "colour") do
 				local attr = xml:get_attributes(color)
@@ -544,8 +544,6 @@ function loadlevel(path)
 				end
 			end
 		end
-
-		--lvl.specialroomnames_xml = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
 	end)
 
 	if not success then
@@ -637,9 +635,6 @@ function loadlevel(path)
 end
 
 
--- Load a template that we'll need for saving...
-level_template = love.filesystem.read("template.vvvvvv") -- updated 1.11.0
-
 function savelevel(path, thismetadata, theserooms, allentities, theselevelmetadata, allscripts, vedmetadata, lvl, crashed, invvvvvvfolder)
 	-- Assumes we've already checked whether the file already exists and whatnot, immediately saves!
 	-- Returns success, (if not) error message
@@ -656,37 +651,46 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		backup_level(levelsfolder, path:sub(1, -8))
 	end
 
-	local savethis = level_template
+	lvl.xml:set_attribute(nil, "version", 2)
+	local xdata = lvl.xml:find_or_add(nil, "Data")
 
 	cons("Placing metadata...")
+
+	local xmetadata = lvl.xml:find_or_add(xdata, "MetaData")
 	for k,v in pairs(metadataitems) do
 		cons("Doing " .. v)
-		newthis = xmlspecialchars(anythingbutnil(thismetadata[v]))
-		savethis = savethis:gsub("%$" .. v:upper() .. "%$", newthis)
+		local el = lvl.xml:find_or_add(xmetadata, v)
+		lvl.xml:set_text(el, anythingbutnil(thismetadata[v]))
 	end
 
 	-- Special cases of metadata that may or may not be stored...
-	local optional_metadata = ""
 	if thismetadata.onewaycol_override then
-		optional_metadata = optional_metadata .. "            <onewaycol_override>1</onewaycol_override>\n"
+		local el = lvl.xml:find_or_add(xmetadata, "onewaycol_override")
+		lvl.xml:set_text(el, 1)
+	else
+		lvl.xml:delete_each_child_element(xmetadata, "onewaycol_override")
 	end
 	if thismetadata.font ~= "" and thismetadata.font ~= "font" then
-		optional_metadata = optional_metadata .. "            <font>" .. xmlspecialchars(thismetadata.font) .. "</font>\n"
+		local el = lvl.xml:find_or_add(xmetadata, "font")
+		lvl.xml:set_text(el, thismetadata.font)
+	else
+		lvl.xml:delete_each_child_element(xmetadata, "font")
 	end
 	if thismetadata.rtl then
-		optional_metadata = optional_metadata .. "            <rtl>1</rtl>\n"
+		local el = lvl.xml:find_or_add(xmetadata, "rtl")
+		lvl.xml:set_text(el, 1)
+	else
+		lvl.xml:delete_each_child_element(xmetadata, "rtl")
 	end
-	savethis = savethis:gsub("%$OPTIONAL_METADATA%$", (optional_metadata:gsub("%%", "%%%%")))
 
 	-- Hold on for a second, we need the map size and music too!
-	savethis = savethis
-		:gsub("%$MAPWIDTH%$", thismetadata.mapwidth)
-		:gsub("%$MAPHEIGHT%$", thismetadata.mapheight)
-		:gsub("%$LEVMUSIC%$", thismetadata.levmusic)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapwidth"), thismetadata.mapwidth)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "mapheight"), thismetadata.mapheight)
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "levmusic"), thismetadata.levmusic)
 
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")
-	thenewcontents = {}
+	local thenewcontents = {}
 	local nested_break = false
 	for lroomy = 0, math.min(thismetadata.mapheight, limit.mapheight)-1 do
 		yv = theserooms[lroomy]
@@ -712,117 +716,125 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			break
 		end
 	end
-	savethis = savethis:gsub("%$CONTENTS%$", table.concat(thenewcontents, ",") .. ",")
-
-	-- Slightly cleaning up
-	thenewcontents = nil
+	local xcontents = lvl.xml:find_or_add(xdata, "contents")
+	lvl.xml:set_text(xcontents, table.concat(thenewcontents, ",") .. ",")
 
 	-- Now do all entities, if we have any!
 	cons("Saving entities...")
-	if (count.entities > 0) or (vedmetadata ~= false and vedmetadata ~= nil) then
-		-- We do!
-		local entitydatasaved = 0
-		local thenewentities = {"        <edEntities>\n"}
-		-- No pairs(allentities) here, that might end iterating at a nil
-		for k = 1, count.entity_ai-1 do
-			if allentities[k] ~= nil then
-				local v = allentities[k]
-				local data = v.data
-				if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and data:len() > 40 then
-					-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
-					entitydatasaved = entitydatasaved + data:len()
-					data = ""
-				end
-				table.insert(thenewentities,
-					"            <edentity x=\"" .. v.x
-					.. "\" y=\"" .. v.y
-					.. "\" t=\"" .. v.t
-					.. "\" p1=\"" .. v.p1
-					.. "\" p2=\"" .. v.p2
-					.. "\" p3=\"" .. v.p3
-					.. "\" p4=\"" .. v.p4
-					.. "\" p5=\"" .. v.p5
-					.. "\" p6=\"" .. v.p6 .. "\">"
-					.. xmlspecialchars(data)
-					.. "</edentity>\n"
-				)
+
+	local xentities = lvl.xml:find_or_add(xdata, "edEntities")
+	lvl.xml:clear(xentities)
+
+	local entitydatasaved = 0
+	-- No pairs(allentities) here, that might end iterating at a nil
+	for k = 1, count.entity_ai-1 do
+		if allentities[k] ~= nil then
+			local v = allentities[k]
+			local data = v.data
+			if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and data:len() > 40 then
+				-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
+				entitydatasaved = entitydatasaved + data:len()
+				data = ""
 			end
+			local entity = lvl.xml:add_element_in_last(xentities, "edentity")
+			-- I do wanna keep the attribute order the same, but also preserve any additional ones...
+			lvl.xml:set_attribute(entity, "x", v.x)
+			lvl.xml:set_attribute(entity, "y", v.y)
+			lvl.xml:set_attribute(entity, "t", v.t)
+			lvl.xml:set_attribute(entity, "p1", v.p1)
+			lvl.xml:set_attribute(entity, "p2", v.p2)
+			lvl.xml:set_attribute(entity, "p3", v.p3)
+			lvl.xml:set_attribute(entity, "p4", v.p4)
+			lvl.xml:set_attribute(entity, "p5", v.p5)
+			lvl.xml:set_attribute(entity, "p6", v.p6)
+			for ak,av in pairs(v) do
+				if ak ~= "x" and ak ~= "y" and ak ~= "t"
+				and ak ~= "p1" and ak ~= "p2" and ak ~= "p3"
+				and ak ~= "p4" and ak ~= "p5" and ak ~= "p6"
+				and ak ~= "data" then
+					lvl.xml:set_attribute(entity, ak, av)
+cons("Unknown entity attribute " .. ak)
+				end
+			end
+			lvl.xml:set_text(entity, data)
 		end
-
-		if vedmetadata ~= false and vedmetadata ~= nil then
-			-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
-			local mdedata = thismdeversion .. "|"
-
-			local max_labeled_flag = -1
-			for f = limit.flags-1, 0, -1 do
-				if vedmetadata.flaglabel[f] ~= "" then
-					max_labeled_flag = f
-					break
-				end
-			end
-			if max_labeled_flag ~= -1 then
-				mdedata = mdedata .. despecialchars(vedmetadata.flaglabel[0])
-
-				for k = 1, max_labeled_flag do -- 0 added above
-					mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k])
-				end
-			end
-
-			mdedata = mdedata .. "||"
-
-			-- Vars
-			local varsdata = {}
-
-			for k,v in pairs(vedmetadata.vars) do
-				if v["type"] == "t" then
-					local values = ""
-					for k2,v2 in pairs(v.value) do
-						if k2 % 2 == 0 then
-							v2 = despecialchars(v2)
-						end
-						values = values .. "@" .. v2
-					end
-					table.insert(varsdata, despecialchars(k) .. "@t" .. values)
-				else
-					table.insert(varsdata, despecialchars(k) .. "@" .. v["type"] .. "@" .. despecialchars(v.value))
-				end
-			end
-
-			mdedata = mdedata .. table.concat(varsdata, "$") .. "|"
-
-			-- Now add the notes to it!
-			local notesdata = {}
-
-			for k,v in pairs(vedmetadata.notes) do
-				table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
-			end
-
-			mdedata = mdedata .. table.concat(notesdata, "$")
-
-			table.insert(thenewentities,
-				"            <edentity"
-				.. " x=\"4000\" y=\"3000\""
-				.. " t=\"17\""
-				.. " p1=\"0\" p2=\"0\" p3=\"0\" p4=\"0\" p5=\"320\" p6=\"240\">"
-				.. xmlspecialchars(mdedata)
-				.. "</edentity>\n"
-			)
-		end
-
-		savethis = savethis:gsub("%$EDENTITIES%$", table.concat(thenewentities, ""):gsub("%%", "%%%%") .. "        </edEntities>")
-
-		if entitydatasaved > 0 then
-			cons("Done with entities, " .. entitydatasaved .. " bytes were saved from unnecessary entity data.")
-		else
-			cons("Done with entities.")
-		end
-	else
-		-- We don't!
-		savethis = savethis:gsub("%$EDENTITIES%$", "        <edEntities/>")
 	end
 
-	cons("Saving room metadata...")
+	if vedmetadata ~= false and vedmetadata ~= nil then
+		-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
+		local mdedata = thismdeversion .. "|"
+
+		local max_labeled_flag = -1
+		for f = limit.flags-1, 0, -1 do
+			if vedmetadata.flaglabel[f] ~= "" then
+				max_labeled_flag = f
+				break
+			end
+		end
+		if max_labeled_flag ~= -1 then
+			mdedata = mdedata .. despecialchars(vedmetadata.flaglabel[0])
+
+			for k = 1, max_labeled_flag do -- 0 added above
+				mdedata = mdedata .. "$" .. despecialchars(vedmetadata.flaglabel[k])
+			end
+		end
+
+		mdedata = mdedata .. "||"
+
+		-- Vars
+		local varsdata = {}
+
+		for k,v in pairs(vedmetadata.vars) do
+			if v["type"] == "t" then
+				local values = ""
+				for k2,v2 in pairs(v.value) do
+					if k2 % 2 == 0 then
+						v2 = despecialchars(v2)
+					end
+					values = values .. "@" .. v2
+				end
+				table.insert(varsdata, despecialchars(k) .. "@t" .. values)
+			else
+				table.insert(varsdata, despecialchars(k) .. "@" .. v["type"] .. "@" .. despecialchars(v.value))
+			end
+		end
+
+		mdedata = mdedata .. table.concat(varsdata, "$") .. "|"
+
+		-- Now add the notes to it!
+		local notesdata = {}
+
+		for k,v in pairs(vedmetadata.notes) do
+			table.insert(notesdata, despecialchars(v.subj) .. "@" .. despecialchars(v.cont))
+		end
+
+		mdedata = mdedata .. table.concat(notesdata, "$")
+
+		local entity = lvl.xml:add_element_in_last(xentities, "edentity")
+		lvl.xml:set_attribute(entity, "x", 4000)
+		lvl.xml:set_attribute(entity, "y", 3000)
+		lvl.xml:set_attribute(entity, "t", 17)
+		lvl.xml:set_attribute(entity, "p1", 0)
+		lvl.xml:set_attribute(entity, "p2", 0)
+		lvl.xml:set_attribute(entity, "p3", 0)
+		lvl.xml:set_attribute(entity, "p4", 0)
+		lvl.xml:set_attribute(entity, "p5", 320)
+		lvl.xml:set_attribute(entity, "p6", 240)
+		lvl.xml:set_text(entity, mdedata)
+	end
+
+	if entitydatasaved > 0 then
+		cons("Done with entities, " .. entitydatasaved .. " bytes were saved from unnecessary entity data.")
+	else
+		cons("Done with entities.")
+	end
+
 	-- Now all room metadata, aka levelclass
+	cons("Saving room metadata...")
+
+	local xlevelmetadata = lvl.xml:find_or_add(xdata, "levelMetaData")
+	lvl.xml:clear_open(xlevelmetadata)
+
 	local all_platvs = {}
 	for y = 0, thismetadata.mapheight-1 do
 		if y >= limit.mapheight then
@@ -836,7 +848,6 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			table.insert(all_platvs, theselevelmetadata[y][x].platv)
 		end
 	end
-	local alllevelmetadata = {}
 	local i = 1
 	local lmd_w, lmd_h = 20, 20
 	for y = 0, lmd_h-1 do
@@ -847,29 +858,36 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 			if my_platv == nil then
 				my_platv = 4
 			end
-			table.insert(alllevelmetadata,
-				"            <edLevelClass tileset=\"" .. v.tileset
-				.. "\" tilecol=\"" .. v.tilecol
-				.. "\" platx1=\"" .. v.platx1
-				.. "\" platy1=\"" .. v.platy1
-				.. "\" platx2=\"" .. v.platx2
-				.. "\" platy2=\"" .. v.platy2
-				.. "\" platv=\"" .. my_platv
-				.. "\" enemyx1=\"" .. v.enemyx1
-				.. "\" enemyy1=\"" .. v.enemyy1
-				.. "\" enemyx2=\"" .. v.enemyx2
-				.. "\" enemyy2=\"" .. v.enemyy2
-				.. "\" enemytype=\"" .. v.enemytype
-				.. "\" directmode=\"" .. (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1)
-				.. "\" warpdir=\"" .. v.warpdir
-				.. "\">" .. xmlspecialchars(v.roomname) .. "</edLevelClass>\n"
-			)
+			local room = lvl.xml:add_element_in_last(xlevelmetadata, "edLevelClass")
+			lvl.xml:set_attribute(room, "tileset", v.tileset)
+			lvl.xml:set_attribute(room, "tilecol", v.tilecol)
+			lvl.xml:set_attribute(room, "platx1", v.platx1)
+			lvl.xml:set_attribute(room, "platy1", v.platy1)
+			lvl.xml:set_attribute(room, "platx2", v.platx2)
+			lvl.xml:set_attribute(room, "platy2", v.platy2)
+			lvl.xml:set_attribute(room, "platv", my_platv)
+			lvl.xml:set_attribute(room, "enemyx1", v.enemyx1)
+			lvl.xml:set_attribute(room, "enemyy1", v.enemyy1)
+			lvl.xml:set_attribute(room, "enemyx2", v.enemyx2)
+			lvl.xml:set_attribute(room, "enemyy2", v.enemyy2)
+			lvl.xml:set_attribute(room, "enemytype", v.enemytype)
+			lvl.xml:set_attribute(room, "directmode", (v.auto2mode == 0 and anythingbutnil0(v.directmode) or 1))
+			lvl.xml:set_attribute(room, "warpdir", v.warpdir)
+			for ak,av in pairs(v) do
+				if ak ~= "tileset" and ak ~= "tilecol"
+				and ak ~= "platx1" and ak ~= "platy1" and ak ~= "platx2" and ak ~= "platy2" and ak ~= "platv"
+				and ak ~= "enemyx1" and ak ~= "enemyy1" and ak ~= "enemyx2" and ak ~= "enemyy2"
+				and ak ~= "enemytype" and ak ~= "directmode" and ak ~= "warpdir"
+				and ak ~= "auto2mode" and ak ~= "roomname" then
+					lvl.xml:set_attribute(room, ak, av)
+cons("Unknown room attribute " .. ak)
+				end
+			end
+			lvl.xml:set_text(room, v.roomname)
 
 			i = i+1
 		end
 	end
-
-	savethis = savethis:gsub("%$EDLEVELCLASSES%$", (table.concat(alllevelmetadata, ""):gsub("%%", "%%%%")))
 
 	-- Now all the scripts!
 	cons("Assembling scripts...")
@@ -877,36 +895,34 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 	--for k,v in pairs(allscripts) do
 	for script_i = 1, #scriptnames do
 		local k, v = scriptnames[script_i], allscripts[scriptnames[script_i]]
-		table.insert(allallscripts, xmlspecialchars(k) .. ":|" .. xmlspecialchars(table.concat(v, "|")) .. "|")
+		table.insert(allallscripts, k .. ":|" .. table.concat(v, "|") .. "|")
 	end
 
-	savethis = savethis:gsub("%$SCRIPT%$", (table.concat(allallscripts, ""):gsub("%%", "%%%%")))
+	lvl.xml:set_text(lvl.xml:find_or_add(xdata, "script"), table.concat(allallscripts, ""))
 
 	-- Now all the 2.4 stuff...
 	cons("Assembling possible TextboxColours and SpecialRoomnames...")
-	local replace_textboxcolors = ""
 	local replace_specialroomnames = ""
 
 	local any_color_tag = false
-	local all_color_tags = {}
+	local xtextboxcolors = nil
 	for k,v in pairs(lvl.textboxcolors_order) do
 		local color = lvl.textboxcolors[v]
-		table.insert(all_color_tags,
-			"\n            <colour r=\"" .. color[1] .. "\" g=\"" .. color[2] .. "\" b=\"" .. color[3] .. "\" name=\"" .. v .. "\"/>"
-		)
-		any_color_tag = true
+		if not any_color_tag then
+			-- This is the first <colour> tag - so we need a <TextboxColours> to contain it and any more!
+			xtextboxcolors = lvl.xml:find_or_add(xdata, "TextboxColours")
+			lvl.xml:clear_open(xtextboxcolors)
+			any_color_tag = true
+		end
+		local xcolor = lvl.xml:add_element_in_last(xtextboxcolors, "colour")
+		lvl.xml:set_attribute(xcolor, "r", color[1])
+		lvl.xml:set_attribute(xcolor, "g", color[2])
+		lvl.xml:set_attribute(xcolor, "b", color[3])
+		lvl.xml:set_attribute(xcolor, "name", v)
 	end
-	if any_color_tag then
-		replace_textboxcolors = "        <TextboxColours>"
-			.. table.concat(all_color_tags, "")
-			.. "\n        </TextboxColours>\n"
+	if not any_color_tag then
+		lvl.xml:delete_each_child_element(xdata, "TextboxColours")
 	end
-
-	if lvl.specialroomnames_xml ~= nil then
-		replace_specialroomnames = "        <SpecialRoomnames>" .. lvl.specialroomnames_xml .. "</SpecialRoomnames>\n"
-	end
-	savethis = savethis:gsub("%$TEXTBOXCOLOURS%$", (replace_textboxcolors:gsub("%%", "%%%%")))
-	savethis = savethis:gsub("%$SPECIALROOMNAMES%$", (replace_specialroomnames:gsub("%%", "%%%%")))
 
 	-- Alright, let's save!
 	cons("Saving file...")
@@ -918,10 +934,10 @@ function savelevel(path, thismetadata, theserooms, allentities, theselevelmetada
 		else
 			usethispath = path
 		end
-		success, iferrmsg = writelevelfile(usethispath, savethis)
+		success, iferrmsg = writelevelfile(usethispath, lvl.xml:export())
 	else
 		success = true
-		iferrmsg = savethis
+		iferrmsg = lvl.xml:export()
 	end
 
 	if vedmetadata == nil then
@@ -1001,6 +1017,9 @@ function createblanklevel(lvwidth, lvheight)
 			lvl.levelmetadata[ry][rx] = default_levelmetadata(rx, ry)
 		end
 	end
+
+	-- Make a blank XML document - it'll be filled in properly when saving!
+	lvl.xml = vedxml.VedXML:new{root="MapData"}
 
 	cons("Done loading!")
 
