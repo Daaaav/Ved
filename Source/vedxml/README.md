@@ -86,6 +86,47 @@ By default, the options are set to strict conformance with the XML spec, but cer
 }
 ```
 
+# Error handling
+
+When reading a document, any well-formedness errors will be raised as Lua errors. Therefore, you'll likely want a `pcall` around the block of code that loads everything from your document. This also makes it convenient to use `:find` for tags that are required to exist since you don't have to have special error checking code for every separate tag you're looking for:
+
+```lua
+	local thismetadata = {}
+	local success, errmsg = pcall(function()
+		xml = vedxml.VedXML:new{string=contents, root="MapData"}
+
+		local xmetadata = xml:find(nil, "Data", "MetaData")
+
+		-- These ones are required.
+		for _,v in pairs(metadataitems) do -- {"Creator", "Title", ...}
+			local m = xml:find(xmetadata, v)
+			thismetadata[v] = xml:get_text(m)
+		end
+
+		-- These ones are optional.
+		thismetadata.font = "font"
+		thismetadata.rtl = false
+		local m = xml:find_or_nil(xmetadata, "font")
+		if m ~= nil then
+			thismetadata.font = xml:get_text(m)
+		end
+		m = xml:find_or_nil(xmetadata, "rtl")
+		if m ~= nil then
+			thismetadata.rtl = xml:get_text(m) ~= "0"
+		end
+	end)
+
+	if not success then
+		-- Well-formedness error, root element was not <MapData> as expected,
+		-- <Data><MetaData> wasn't found, one of the required metadata items wasn't found...
+		return false, errmsg
+	end
+
+	return true
+```
+
+When making changes to the document, there's not much that can go wrong, but causing non-well-formedness still raises an error (e.g. writing illegal characters, setting illegal element/attribute names, etc).
+
 # API reference
 
 ## Types
@@ -143,7 +184,10 @@ These are all functions for the `VedXML` class (aka the document object).
 
 ```lua
 :tokenize_to_end()
-	-- Tokenize the entire document now (rather than lazy-loading when used)
+	-- Tokenize the entire document now (rather than lazy-loading when used).
+	-- This can be used to find any well-formedness problems late in the document immediately,
+	-- so it's a good idea to do this if you'll be reading the entire document anyway.
+	-- Making any modifications will also automatically cause the document to be fully tokenized first.
 ```
 
 </details>

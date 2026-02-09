@@ -1048,7 +1048,10 @@ function VedXML:advance_reference(new_cur)
 end
 
 function VedXML:tokenize_to_end()
-	-- Tokenize the entire document now (rather than lazy-loading when used)
+	-- Tokenize the entire document now (rather than lazy-loading when used).
+	-- This can be used to find any well-formedness problems late in the document immediately,
+	-- so it's a good idea to do this if you'll be reading the entire document anyway.
+	-- Making any modifications will also automatically cause the document to be fully tokenized first.
 	while not self.at_eof do
 		self:tokenize_one()
 	end
@@ -1496,6 +1499,8 @@ function VedXML:patch(cur)
 		return
 	end
 
+	self:tokenize_to_end()
+
 	local tok_type = self.token_list[cur].type
 	if tok_type == TOKEN_TYPE.TAG_OPENING or tok_type == TOKEN_TYPE.TAG_SELFCLOSING then
 		self.patches[cur] = patch_for_tag_opening(self:get_name(cur), self:get_attributes(cur), self:get_attributes_order(cur))
@@ -1523,6 +1528,8 @@ function VedXML:insert_new_patched(cur, tok_type, ...)
 	-- You still need to fill in the parent (and maybe spouse etc) correctly!!!
 	-- cur: any
 	cur = self:ci(cur)
+
+	self:tokenize_to_end()
 
 	local patch_for
 	if tok_type == TOKEN_TYPE.TAG_OPENING or tok_type == TOKEN_TYPE.TAG_SELFCLOSING then
@@ -2128,6 +2135,8 @@ function VedXML:clear_open(cur)
 		self:raise_error_type(cur, 1)
 	end
 
+	self:tokenize_to_end()
+
 	-- Now we know we have an opening tag!
 	-- Delete everything from its first child, up to but not including its closing tag.
 	local cur_closing = self:get_closing_token(cur)
@@ -2163,6 +2172,8 @@ function VedXML:delete(cur)
 	if self.root_element_seen and cur == self.root_element then
 		self:raise_error("Attempt to delete root element")
 	end
+
+	self:tokenize_to_end()
 
 	local tok_type = self.token_list[cur].type
 	if tok_type == TOKEN_TYPE.TAG_OPENING then
@@ -2209,6 +2220,10 @@ function VedXML:set_newlines_before(cur, newlines_before)
 	if newlines_before < 0 or newlines_before >= 255 then
 		self:raise_error("newlines_before must be between 0-255")
 	end
+
+	-- Not really needed in this case, but let's stick to the promise...
+	self:tokenize_to_end()
+
 	self.token_list[self:ci(cur)].newlines_before = newlines_before
 end
 
