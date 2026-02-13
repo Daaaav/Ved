@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2026-01-09 03:02:44 (CET)
+--- Last converted: 2026-02-13 22:53:33 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -378,14 +378,8 @@ SYNTAXCOLOR_WRONGLANG = "Commande simplifiée en mode int.sc ou vice-versa",
 RESETCOLORS = "Remise à zéro des couleurs",
 STRINGNOTFOUND = "\"$1\" n'a pas été trouvé",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "Le fichier de niveau est mal formaté : ",
-METADATACORRUPT = "Les métadonnées sont manquantes ou corrompues.",
-METADATAITEMCORRUPT = "Les métadonnées pour $1 sont manquantes ou corrompues.",
-TILESCORRUPT = "Les tuiles sont manquantes ou corrompues.",
-ENTITIESCORRUPT = "Les entités sont manquantes ou corrompues.",
-LEVELMETADATACORRUPT = "Les métadonnées des salles sont manquantes ou corrompues.",
-SCRIPTCORRUPT = "Les scripts sont manquants ou corrompus.",
 
 LOADSCRIPTMADE = "Script de chargement créé",
 COPY = "Copier",
@@ -553,8 +547,7 @@ ORDRAGDROP = "ou glisse et pose ici", -- follows after "Click on Load". You can 
 MORETHANONESTARTPOINT = "Il y a plus qu'un point de départ dans ce niveau !",
 STARTPOINTNOTFOUND = "Il n'y a pas de point de départ !",
 
-CONFIRMBIGGERSIZE = "Vous avez sélectionné $1 par $2, qui est une taille de carte plus grande que $3 par $4. En dehors de la carte normale de taille $3 par $4, les salles et les propriétés des salles reviennent au début de la liste, mais sont déformées. Vous n'aurez aucune nouvelle salle, ni aucune propriété de salle supplémentaire.\n\nAppuyez sur Oui seulement si vous êtes sûrs de ce que vous faites et si vous voulez cette taille de carte plus grande. Appuyez sur Non pour mettre la taille de la carte à $5 par $6.\n\nSi vous n'êtes pas sûrs, appuyez sur Non.",
-MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4! (Le support d'une taille plus grande que $3 par $4 n'est pas activé)",
+MAPBIGGERTHANSIZELIMIT = "La taille de la carte $1 par $2 est plus grande que $3 par $4!",
 BTNOVERRIDE = "Mettre à jour",
 TARGETPLATFORM = "Plateforme cible", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -717,14 +710,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 octet",
 		[1] = "$1 octets",
-	},
-	LITERALNULLS = {
-		[0] = "Il y a $1 octet null !",
-		[1] = "Il y a $1 octets null !",
-	},
-	XMLNULLS = {
-		[0] = "Il y a $1 caractère XML null !",
-		[1] = "Il y a $1 caractères XML null !",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 image personnalisée",

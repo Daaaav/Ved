@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2026-01-09 03:02:44 (CET)
+--- Last converted: 2026-02-13 22:53:33 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -362,14 +362,8 @@ SYNTAXCOLOR_WRONGLANG = "Perintah sederhana dalam mode sk.int atau sebaliknya",
 RESETCOLORS = "Setel ulang warna",
 STRINGNOTFOUND = "\"$1\" tidak ditemukan",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "File level salah format: ",
-METADATACORRUPT = "Metadata hilang atau rusak.",
-METADATAITEMCORRUPT = "Metadata untuk $1 hilang atau rusak.",
-TILESCORRUPT = "Ubin hilang atau rusak.",
-ENTITIESCORRUPT = "Entitas hilang atau rusak.",
-LEVELMETADATACORRUPT = "Ruang metadata hilang atau rusak.",
-SCRIPTCORRUPT = "Skrip hilang atau rusak.",
 
 LOADSCRIPTMADE = "Muat skrip dibuat",
 COPY = "Salin",
@@ -537,8 +531,7 @@ ORDRAGDROP = "atau seret dan lepas ke sini", -- follows after "Click on Load". Y
 MORETHANONESTARTPOINT = "Ada lebih dari satu titik awal di level ini!",
 STARTPOINTNOTFOUND = "Tidak ada titik awal!",
 
-CONFIRMBIGGERSIZE = "Anda memilih $1x$2, yg merupakan ukuran peta yg lebih besar daripada $3x$4. Di luar peta normal $3x$4, ruang dan properti ruang membungkus, tetapi terdistorsi. Anda tdk mendapatkan ruang yg sama sekali baru, Anda jg tdk mendapatkan lebih banyak properti ruang.\n\nTekan Ya jika Anda tau apa yg Anda lakukan dan menginginkan ukuran peta yang lebih besar ini. Tekan Tidak utk menyetel ukuran peta menjadi $5x$6.\n\nJika tidak yakin, tekan Tidak.",
-MAPBIGGERTHANSIZELIMIT = "Ukuran peta $1x$2 lebih besar dari $3x$4! (Lebih besar dari $3x$4 dukungan tidak diaktifkan)",
+MAPBIGGERTHANSIZELIMIT = "Ukuran peta $1x$2 lebih besar dari $3x$4!",
 BTNOVERRIDE = "Mengesampingkn.",
 TARGETPLATFORM = "Platform sasaran", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -691,12 +684,6 @@ L_PLU = {
 	},
 	BYTES = {
 		[0] = "$1 bita",
-	},
-	LITERALNULLS = {
-		[0] = "Ada $1 null byte!",
-	},
-	XMLNULLS = {
-		[0] = "Ada $1 karakter null XML!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 gambar disesuaikan",

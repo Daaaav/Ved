@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2026-01-09 03:02:44 (CET)
+--- Last converted: 2026-02-13 22:53:33 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -372,14 +372,8 @@ SYNTAXCOLOR_WRONGLANG = "Vereenvoudigd commando in int.sc-modus of andersom",
 RESETCOLORS = "Kleuren resetten",
 STRINGNOTFOUND = "\"$1\" kan niet worden gevonden",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "Het levelbestand is niet in orde: ",
-METADATACORRUPT = "Metadata ontbreekt of is corrupt.",
-METADATAITEMCORRUPT = "Metadata voor $1 ontbreekt of is corrupt.",
-TILESCORRUPT = "Data voor blokken ontbreekt of is corrupt.",
-ENTITIESCORRUPT = "Data voor entiteiten ontbreekt of is corrupt.",
-LEVELMETADATACORRUPT = "Kamermetadata ontbreekt of is corrupt.",
-SCRIPTCORRUPT = "Scripts ontbreken of zijn corrupt.",
 
 LOADSCRIPTMADE = "Laadscript gemaakt",
 COPY = "Kopiëren",
@@ -547,8 +541,7 @@ ORDRAGDROP = "of sleep bestand hierheen", -- follows after "Click on Load". You 
 MORETHANONESTARTPOINT = "Er is meer dan één startpunt in dit level!",
 STARTPOINTNOTFOUND = "Er is geen startpunt!",
 
-CONFIRMBIGGERSIZE = "Je hebt $1 bij $2 gekozen, wat groter is dan $3 bij $4. Buiten de normale kaart van $3 bij $4 zullen kamers en eigenschappen daarvan zich om de kaart wikkelen, maar verstoord. Je krijgt geen nieuwe kamers en ook geen nieuwe kamereigenschappen.\n\nDruk op Ja als je weet wat je doet en deze grotere grootte wil. Druk op Nee om de kaartgrootte in te stellen op $5 bij $6.\n\nAls je het niet zeker weet, druk op Nee.",
-MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bij $2 is groter dan $3 bij $4! (Ondersteuning voor groter dan $3 bij $4 niet ingeschakeld)",
+MAPBIGGERTHANSIZELIMIT = "Kaartgrootte $1 bij $2 is groter dan $3 bij $4!",
 BTNOVERRIDE = "Omzeilen",
 TARGETPLATFORM = "Doelplatform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -711,14 +704,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
-	},
-	LITERALNULLS = {
-		[0] = "Er is $1 nulbyte!",
-		[1] = "Er zijn $1 nulbytes!",
-	},
-	XMLNULLS = {
-		[0] = "Er is $1 XML-nulteken!",
-		[1] = "Er zijn $1 XML-nultekens!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 afbeelding aangepast",

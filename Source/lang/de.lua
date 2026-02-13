@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2026-01-09 03:02:45 (CET)
+--- Last converted: 2026-02-13 22:53:34 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -374,14 +374,8 @@ SYNTAXCOLOR_WRONGLANG = "Vereinfachtes Kommando in Int.sc-Modus oder andersherum
 RESETCOLORS = "Farben zurücksetzen",
 STRINGNOTFOUND = "\"$1\" wurde nicht gefunden",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "Das Level ist beschädigt: ",
-METADATACORRUPT = "Metadaten fehlen oder sind beschädigt.",
-METADATAITEMCORRUPT = "Metadaten für $1 fehlt oder ist beschädigt.",
-TILESCORRUPT = "Tiles fehlen oder sind beschädigt.",
-ENTITIESCORRUPT = "Objekte fehlen oder sind beschädigt.",
-LEVELMETADATACORRUPT = "Raummetadaten fehlen oder sind beschädigt.",
-SCRIPTCORRUPT = "Skripte fehlen oder sind beschädigt.",
 
 LOADSCRIPTMADE = "Ladeskript erstellt",
 COPY = "Kopieren",
@@ -549,8 +543,7 @@ ORDRAGDROP = "oder ziehe und lege es hier ab", -- follows after "Click on Load".
 MORETHANONESTARTPOINT = "Es gibt mehr als einen Startpunkt in diesem Level!",
 STARTPOINTNOTFOUND = "Es gibt keinen Startpunkt!",
 
-CONFIRMBIGGERSIZE = "Du hast $1 mal $2 ausgewählt, was eine Größere Karte als $3 mal $4 ist. Außerhalb der normalen $3 mal $4 Karte, Räume und Raumeigenschaften passen sich an, sind aber verzerrt. Du kriegst nicht komplett neue Räume, und auch nicht mehr Raumeigenschaften.\n\nDrücke Ja wenn du weißt was du tust und willst diese Größere Karte. Drücke Nein um die Kartengröße zu $5 mal $6 zu setzen.\n\nWenn unsicher, drücke Nein.",
-MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4! (Größer-als-$3-mal-$4-Unterstützung nicht aktiviert)",
+MAPBIGGERTHANSIZELIMIT = "Kartengröße $1 mal $2 ist größer als $3 mal $4!",
 BTNOVERRIDE = "Überschreiben",
 TARGETPLATFORM = "Zielplattform", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -713,14 +706,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
-	},
-	LITERALNULLS = {
-		[0] = "Es gibt $1 Nullbyte!",
-		[1] = "Es gibt $1 Nullbytes!",
-	},
-	XMLNULLS = {
-		[0] = "Es gibt $1 XML Nullcharakter!",
-		[1] = "Es gibt $1 XML Nullcharakter!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 Abbildung angepasst",

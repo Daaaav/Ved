@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2026-01-09 03:02:46 (CET)
+--- Last converted: 2026-02-13 22:53:35 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -374,14 +374,8 @@ SYNTAXCOLOR_WRONGLANG = "Simplified command in int.sc mode or vice versa",
 RESETCOLORS = "Reiniciar colores",
 STRINGNOTFOUND = "\"$1\" no ha sido encontrado.",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "El archivo del nivel esta malformado: ",
-METADATACORRUPT = "Faltan metadatos o estan corruptos.",
-METADATAITEMCORRUPT = "Faltan metadatos para $1 o estan corruptos.",
-TILESCORRUPT = "Faltan tejas o estan corruptas.",
-ENTITIESCORRUPT = "Faltan entidades o estan corruptas.",
-LEVELMETADATACORRUPT = "Faltan metadatos de habitacion o estan corruptos.",
-SCRIPTCORRUPT = "Faltan scripts o estan corruptos.",
 
 LOADSCRIPTMADE = "Script de carga creado",
 COPY = "Copiar",
@@ -549,8 +543,7 @@ ORDRAGDROP = "o arrastra y tira aqui", -- follows after "Click on Load". You can
 MORETHANONESTARTPOINT = "Hay mas de un punto de inicio en este nivel!",
 STARTPOINTNOTFOUND = "No hay punto de inicio!",
 
-CONFIRMBIGGERSIZE = "Estas seleccionando $1 por $2, lo cual es un tamaño de mapa mas grande que $3 por $4. Afuera del $3 por $4 normal, las habitaciones y sus propiedades se envuelven, pero están distorsionadas. Usted no tiene habitaciones completas del todo, tampoco las propiedades.\n\nPresiona Si si sabes lo que estas haciendo y quieres este tamaño de mapa mas grande. Presiona No para poner el tamaño del mapa a $5 por $6.\n\nSi no estas seguro, presiona No.",
-MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4! (No se habilito el soporte de mapas mas grandes que $3 por $4)",
+MAPBIGGERTHANSIZELIMIT = "El tamaño del mapa $1 por $2 es mas grande que $3 por $4!",
 BTNOVERRIDE = "Anular",
 TARGETPLATFORM = "Plataforma objetivo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -713,14 +706,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 byte",
 		[1] = "$1 bytes",
-	},
-	LITERALNULLS = {
-		[0] = "Hay $1 byte nulo!",
-		[1] = "Hay $1 bytes nulos!",
-	},
-	XMLNULLS = {
-		[0] = "Hay $1 caracter XML nulo!",
-		[1] = "Hay $1 caracteres XML nulos!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[-1] = "$1 image customized",

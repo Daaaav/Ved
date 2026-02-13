@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2026-01-09 03:02:45 (CET)
+--- Last converted: 2026-02-13 22:53:34 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -386,14 +386,8 @@ SYNTAXCOLOR_WRONGLANG = "Simpligita komando en reĝimo int.sk aŭ male",
 RESETCOLORS = "Defaŭltigi kolorojn",
 STRINGNOTFOUND = "\"$1\" ne troviĝis",
 
--- L.MAL is concatenated with L.[...]CORRUPT
+-- L.MAL is concatenated with an error message
 MAL = "La nivelo-dosiero estas misformigita: ",
-METADATACORRUPT = "Metadatumoj estas mankantaj aŭ difektitaj.",
-METADATAITEMCORRUPT = "Metadatumoj por $1 estas mankantaj aŭ difektitaj.",
-TILESCORRUPT = "Kaheloj mankas aŭ estas difektitaj.",
-ENTITIESCORRUPT = "Entoj mankas aŭ estas difektitaj.",
-LEVELMETADATACORRUPT = "Ĉambraj metadatumoj mankas aŭ estas difektitaj.",
-SCRIPTCORRUPT = "Skriptoj mankas aŭ estas difektitaj.",
 
 LOADSCRIPTMADE = "Ŝargskripto kreiĝis",
 COPY = "Kopii",
@@ -561,8 +555,7 @@ ORDRAGDROP = "aŭ ŝovmetu ĉi tien", -- follows after "Click on Load". You can 
 MORETHANONESTARTPOINT = "Estas pli ol unu komencejo en tiu ĉi nivelo!",
 STARTPOINTNOTFOUND = "Ne estas komencejo!",
 
-CONFIRMBIGGERSIZE = "Vi elektas $1 oble $2. Tio estas pli granda mapgrando ol $3 oble $4. Ekster la normala mapo $3 oble $4, ĉambroj kaj ĉambrotrajtoj ĉirkaŭfluas, sed estas distorditaj. Vi ne havos tute novajn ĉambrojn, nek pli da ĉambraj ecoj.\n\nPremu Jes se vi scias, kion vi faras, kaj volas tiun ĉi pli grandan mapograndon. Premu Ne por agordi la grandon al $5 oble $6.\n\nSe vi ne certas, premu Ne.",
-MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4! (Subteno por pli ol $3 oble $4 ne estas ebligita)",
+MAPBIGGERTHANSIZELIMIT = "Mapogrando $1 oble $2 estas pli granda ol $3 oble $4!",
 BTNOVERRIDE = "Transpasi",
 TARGETPLATFORM = "Celata platformo", -- What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
 PLATFORM_V = "VVVVVV",
@@ -725,14 +718,6 @@ L_PLU = {
 	BYTES = {
 		[0] = "$1 bajto",
 		[1] = "$1 bajtoj",
-	},
-	LITERALNULLS = {
-		[0] = "Estas $1 nula bajto!",
-		[1] = "Estas $1 nulaj bajtoj!",
-	},
-	XMLNULLS = {
-		[0] = "Estas $1 nula signo de XML!",
-		[1] = "Estas $1 nulaj signoj de XML!",
 	},
 	NUM_GRAPHICS_CUSTOMIZED = {
 		[0] = "$1 bildo estas alproprigita",
