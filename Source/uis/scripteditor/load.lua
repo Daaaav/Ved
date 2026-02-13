@@ -3,7 +3,7 @@
 return function()
 	scriptscroll = 0
 
-	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(scripts[scriptname]))
+	newinputsys.create(INPUT.MULTILINE, "script_lines", script_decompile(level.scripts[scriptname]))
 	newinputsys.setnewlinechars("script_lines", "[|\r\n]")
 	newinputsys.setwordseps("script_lines", "[ %(%),]")
 	newinputsys.setcallback("script_lines", "text_changed",

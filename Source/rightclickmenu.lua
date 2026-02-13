@@ -243,7 +243,7 @@ function rightclickmenu.handler(RCMreturn)
 					if RCMreturn == L.EDITSCRIPTWOBUMPING or RCMreturn == L.EDITSCRIPTWBUMPING then
 						invert_bump_preference = true
 					end
-					if scripts[entitydata[tonumber(entdetails[3])].data] == nil then
+					if level.scripts[entitydata[tonumber(entdetails[3])].data] == nil then
 						dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
 					else
 						scriptineditor(entitydata[tonumber(entdetails[3])].data, nil, invert_bump_preference)
@@ -321,7 +321,12 @@ function rightclickmenu.handler(RCMreturn)
 		elseif RCMreturn == L.COPYNAME then
 			love.system.setClipboardText(level.scriptnames[script_i])
 		elseif RCMreturn == L.COPYCONTENTS then
-			love.system.setClipboardText(table.concat(scripts[level.scriptnames[script_i]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+			love.system.setClipboardText(
+				table.concat(
+					level.scripts[level.scriptnames[script_i]],
+					(love.system.getOS() == "Windows" and "\r\n" or "\n")
+				)
+			)
 		elseif RCMreturn == L.DUPLICATE then
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,

@@ -632,7 +632,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl
 end
 
 
@@ -1018,7 +1018,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl
 end
 
 function default_levelmetadata(rx, ry)

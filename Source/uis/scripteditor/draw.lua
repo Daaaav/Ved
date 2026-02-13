@@ -386,7 +386,7 @@ return function()
 			-- Return
 			local success, raw_script = script_compile(inputs.script_lines)
 			if success then
-				scripts[scriptname] = raw_script
+				level.scripts[scriptname] = raw_script
 				newinputsys.close("script_lines")
 				if scriptfromsearch then
 					resume_search = true
@@ -406,7 +406,7 @@ return function()
 	elseif context == "script" then
 		font_level:printf(carg1, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 		if not scriptinstack(carg1) then
-			rbutton({(scripts[carg1] == nil and L.CREATE or L.GOTO), "ax"}, 13)
+			rbutton({(level.scripts[carg1] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 			if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 				editorjumpscript(carg1)
@@ -417,7 +417,7 @@ return function()
 		if carg2 ~= nil and carg2 ~= "" then
 			font_level:printf(carg2, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg2) then
-				rbutton({(scripts[carg2] == nil and L.CREATE or L.GOTO), "ax"}, 13)
+				rbutton({(level.scripts[carg2] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 					editorjumpscript(carg2)
@@ -429,7 +429,7 @@ return function()
 		if carg3 ~= nil and carg3 ~= "" then
 			font_level:printf(carg3, love.graphics.getWidth()-(128-8), 8+(24*12)+4, 128-16, "center")
 			if not scriptinstack(carg3) then
-				rbutton({(scripts[carg3] == nil and L.CREATE or L.GOTO), "ax"}, 13)
+				rbutton({(level.scripts[carg3] == nil and L.CREATE or L.GOTO), "ax"}, 13)
 
 				if not mousepressed and nodialog and love.mouse.isDown("l") and onrbutton(13) then
 					editorjumpscript(carg3)

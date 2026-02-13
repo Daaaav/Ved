@@ -60,7 +60,7 @@ function searchtext(this)
 				table.insert(searchscripts, {name=level.scriptnames[script_i], foundline=0, foundlinecontent=""})
 			end
 
-			for k,v in pairs(scripts[level.scriptnames[script_i]]) do
+			for k,v in pairs(level.scripts[level.scriptnames[script_i]]) do
 				if v:lower():find(this) ~= nil then
 					table.insert(searchscripts, {name=level.scriptnames[script_i], foundline=k, foundlinecontent=v})
 				end

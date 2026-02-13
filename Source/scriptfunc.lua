@@ -5,7 +5,7 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 	local specificflag_n_real_usages = 0
 	for script_i = #level.scriptnames, 1, -1 do
 		local script_inserted = false
-		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
+		for k,v in pairs(level.scripts[level.scriptnames[script_i]]) do
 			v = scriptlinecasing(v)
 			local explcommaline = explode(",", v:gsub("%(", ","):gsub("%)", ","):gsub(" ", ""))
 
@@ -876,10 +876,6 @@ end
 
 function bumpscript(scriptid)
 	-- Puts a script at the end of the array, making it appear at the top.
-	--local temp = scripts[script]
-	--table.remove(scripts, script)
-	--scripts[script] = temp
-
 	-- id is the index of the script in level.scriptnames!
 	local temp = level.scriptnames[scriptid]
 	table.remove(level.scriptnames, scriptid)
@@ -947,7 +943,7 @@ function find_script_references(argscriptname)
 	end
 
 	for script_i = #level.scriptnames, 1, -1 do
-		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
+		for k,v in pairs(level.scripts[level.scriptnames[script_i]]) do
 			local v2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -997,13 +993,13 @@ function find_used_scripts()
 	local count = 0
 
 	for k,v in pairs(entitydata) do
-		if (v.t == 18 or v.t == 19) and scripts[v.data] ~= nil then
+		if (v.t == 18 or v.t == 19) and level.scripts[v.data] ~= nil then
 			usedscripts[v.data] = true
 		end
 	end
 
 	for script_i = #level.scriptnames, 1, -1 do
-		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
+		for k,v in pairs(level.scripts[level.scriptnames[script_i]]) do
 			local v2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -1034,7 +1030,7 @@ function find_used_scripts()
 				add = partss[4]:sub(("custom_"):len()+1, partss[4]:len())
 			end
 
-			if add ~= nil and scripts[add] ~= nil then
+			if add ~= nil and level.scripts[add] ~= nil then
 				usedscripts[add] = true
 			end
 		end
@@ -1049,9 +1045,9 @@ function find_used_scripts()
 end
 
 function editorjumpscript(argscriptname, goingback, toline)
-	if scripts[argscriptname] == nil then
+	if level.scripts[argscriptname] == nil then
 		-- Create script (but do not immediately go to it as we can just easily click again)
-		scripts[argscriptname] = {""}
+		level.scripts[argscriptname] = {""}
 		table.insert(level.scriptnames, argscriptname)
 		dirty()
 	else
@@ -1065,7 +1061,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 				table.insert(scripthistorystack, {scriptname, editing_line})
 			end
 
-			scripts[scriptname] = raw_script
+			level.scripts[scriptname] = raw_script
 			newinputsys.close("script_lines")
 
 			scriptineditor(argscriptname)
@@ -1196,20 +1192,20 @@ function swapflags(flag1, flag2)
 
 	local commands = {"flag", "ifflag", "customifflag"}
 	for script_i = #level.scriptnames, 1, -1 do
-		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
+		for k,v in pairs(level.scripts[level.scriptnames[script_i]]) do
 			v = v:gsub(" ", "")
 			v = scriptlinecasing(v)
 			for _,command in pairs(commands) do
 				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
 					if v:match(pattern .. flag1 .. "([%(,%)].*)$") then
-						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						level.scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag1 .. "$") then
-						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						level.scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag2 .. "([%(,%)].*)$") then
-						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						level.scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					elseif v:match(pattern .. flag2 .. "$") then
-						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						level.scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					end
 				end
 			end
@@ -1315,7 +1311,7 @@ function loadflagslist()
 end
 
 function delete_script(script_i)
-	scripts[level.scriptnames[script_i]] = nil
+	level.scripts[level.scriptnames[script_i]] = nil
 	table.remove(level.scriptnames, script_i)
 	dirty()
 

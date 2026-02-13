@@ -66,7 +66,7 @@ return function(key)
 	elseif key == "escape" then
 		local success, raw_script = script_compile(inputs.script_lines)
 		if success then
-			scripts[scriptname] = raw_script
+			level.scripts[scriptname] = raw_script
 			newinputsys.close("script_lines")
 			if scriptfromsearch then
 				resume_search = true

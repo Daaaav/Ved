@@ -1261,7 +1261,7 @@ function end_editing_roomtext()
 			local loadscriptname = langkeys(s.loadscriptname, {inputs.roomtext})
 			local create_mode = get_load_script_creation_mode()
 			if create_mode == LOAD_SCRIPT_CREATION_MODE.RUNONCE then -- flag
-				if scripts[loadscriptname] ~= nil then
+				if level.scripts[loadscriptname] ~= nil then
 					warnloadscriptexists = true
 				else
 					-- What flag is available?
@@ -1284,9 +1284,9 @@ function end_editing_roomtext()
 					if useflag == -1 then
 						-- No flags left?
 						dialog.create(langkeys(L.NOFLAGSLEFT_LOADSCRIPT, {inputs.roomtext}))
-						scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
+						level.scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
 					else
-						scripts[loadscriptname] = {
+						level.scripts[loadscriptname] = {
 							"ifflag(" .. useflag .. ",stop)",
 							"flag(" .. useflag .. ",on)",
 							"iftrinkets(0," .. inputs.roomtext .. ")"
@@ -1299,10 +1299,10 @@ function end_editing_roomtext()
 				end
 				entitydata[editingroomtext].data = loadscriptname
 			elseif create_mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then -- trinkets
-				if scripts[loadscriptname] ~= nil then
+				if level.scripts[loadscriptname] ~= nil then
 					warnloadscriptexists = true
 				else
-					scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
+					level.scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
 					table.insert(level.scriptnames, loadscriptname)
 
 					temporaryroomname = L.LOADSCRIPTMADE
@@ -1315,8 +1315,8 @@ function end_editing_roomtext()
 			end
 		end
 
-		if scripts[inputs.roomtext] == nil then
-			scripts[inputs.roomtext] = {""}
+		if level.scripts[inputs.roomtext] == nil then
+			level.scripts[inputs.roomtext] = {""}
 			table.insert(level.scriptnames, inputs.roomtext)
 		end
 	end
@@ -1408,11 +1408,11 @@ function state6load(levelname)
 		local oldlevel
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1420,8 +1420,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1440,7 +1440,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1752,21 +1752,21 @@ function compare_level_differences(second_level_name)
 	pagetext = diffmessages.pages.scripts .. "\\wh#\n\n"
 
 	-- Were any scripts added or changed?
-	for k,v in pairs(scripts) do
-		if scripts2[k] == nil then
+	for k,v in pairs(level.scripts) do
+		if level2.scripts[k] == nil then
 			-- This script didn't exist in the older version, so it was added!
 			pagetext = pagetext .. langkeys(diffmessages.scripts.added, {k}) .. "\n"
 		else
 			-- Was it edited?
-			if table.concat(scripts2[k], "\n") ~= table.concat(v, "\n") then
+			if table.concat(level2.scripts[k], "\n") ~= table.concat(v, "\n") then
 				pagetext = pagetext .. langkeys(diffmessages.scripts.edited, {k}) .. "\n"
 			end
 		end
 	end
 
 	-- Any scripts that were removed?
-	for k,v in pairs(scripts2) do
-		if scripts[k] == nil then
+	for k,v in pairs(level2.scripts) do
+		if level.scripts[k] == nil then
 			pagetext = pagetext .. langkeys(diffmessages.scripts.removed, {k}) .. "\n"
 		end
 	end
@@ -1905,7 +1905,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
