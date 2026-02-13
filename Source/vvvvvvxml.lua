@@ -632,7 +632,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl
 end
 
 
@@ -891,9 +891,8 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	-- Now all the scripts!
 	cons("Assembling scripts...")
 	local allallscripts = {}
-	--for k,v in pairs(lvl.scripts) do
-	for script_i = 1, #scriptnames do
-		local k, v = scriptnames[script_i], lvl.scripts[scriptnames[script_i]]
+	for script_i = 1, #lvl.scriptnames do
+		local k, v = lvl.scriptnames[script_i], lvl.scripts[lvl.scriptnames[script_i]]
 		table.insert(allallscripts, k .. ":|" .. table.concat(v, "|") .. "|")
 	end
 
@@ -1019,7 +1018,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl.scriptnames, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl
 end
 
 function default_levelmetadata(rx, ry)

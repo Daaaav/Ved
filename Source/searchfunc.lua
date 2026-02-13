@@ -52,17 +52,17 @@ function searchtext(this)
 		this = escapegsub(this)
 
 		-- Scripts
-		for script_i = #scriptnames, 1, -1 do
+		for script_i = #level.scriptnames, 1, -1 do
 			-- Do this in order of last edited script first.
 			-- Or maybe the opposite because an oldest script might be what's harder to recall/find?
 			-- Ah well, be specific for now.
-			if scriptnames[script_i]:lower():find(this) ~= nil then
-				table.insert(searchscripts, {name=scriptnames[script_i], foundline=0, foundlinecontent=""})
+			if level.scriptnames[script_i]:lower():find(this) ~= nil then
+				table.insert(searchscripts, {name=level.scriptnames[script_i], foundline=0, foundlinecontent=""})
 			end
 
-			for k,v in pairs(scripts[scriptnames[script_i]]) do
+			for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 				if v:lower():find(this) ~= nil then
-					table.insert(searchscripts, {name=scriptnames[script_i], foundline=k, foundlinecontent=v})
+					table.insert(searchscripts, {name=level.scriptnames[script_i], foundline=k, foundlinecontent=v})
 				end
 			end
 		end

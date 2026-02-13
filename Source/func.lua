@@ -1292,7 +1292,7 @@ function end_editing_roomtext()
 							"iftrinkets(0," .. inputs.roomtext .. ")"
 						}
 					end
-					table.insert(scriptnames, loadscriptname)
+					table.insert(level.scriptnames, loadscriptname)
 
 					temporaryroomname = L.LOADSCRIPTMADE
 					temporaryroomnametimer = 90
@@ -1303,7 +1303,7 @@ function end_editing_roomtext()
 					warnloadscriptexists = true
 				else
 					scripts[loadscriptname] = {"iftrinkets(0," .. inputs.roomtext .. ")"}
-					table.insert(scriptnames, loadscriptname)
+					table.insert(level.scriptnames, loadscriptname)
 
 					temporaryroomname = L.LOADSCRIPTMADE
 					temporaryroomnametimer = 90
@@ -1317,7 +1317,7 @@ function end_editing_roomtext()
 
 		if scripts[inputs.roomtext] == nil then
 			scripts[inputs.roomtext] = {""}
-			table.insert(scriptnames, inputs.roomtext)
+			table.insert(level.scriptnames, inputs.roomtext)
 		end
 	end
 	if editingroomtext_is_new then
@@ -1408,11 +1408,11 @@ function state6load(levelname)
 		local oldlevel
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1420,8 +1420,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    scriptnames,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldscriptnames, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1440,7 +1440,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, scriptnames2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1905,7 +1905,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, scriptnames, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
@@ -2031,11 +2031,11 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 		elseif direction == "d" then
 			local ndisplayedscripts = 0
 			if scriptdisplay_used and scriptdisplay_unused then
-				ndisplayedscripts = #scriptnames
+				ndisplayedscripts = #level.scriptnames
 			elseif scriptdisplay_used then
 				ndisplayedscripts = n_usedscripts
 			elseif scriptdisplay_unused then
-				ndisplayedscripts = #scriptnames - n_usedscripts
+				ndisplayedscripts = #level.scriptnames - n_usedscripts
 			end
 			local upperbound = ((ndisplayedscripts*24)-(love.graphics.getHeight()-8)) -- scrollableHeight - visiblePart
 			if mkinput == "end" then

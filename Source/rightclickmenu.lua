@@ -315,13 +315,13 @@ function rightclickmenu.handler(RCMreturn)
 		local script_i = tonumber(RCMid:sub(5, -1))
 
 		if RCMreturn == L.EDIT then
-			scriptineditor(scriptnames[script_i], script_i)
+			scriptineditor(level.scriptnames[script_i], script_i)
 		elseif RCMreturn == L.EDITWOBUMPING or RCMreturn == L.EDITWBUMPING then
-			scriptineditor(scriptnames[script_i], script_i, true)
+			scriptineditor(level.scriptnames[script_i], script_i, true)
 		elseif RCMreturn == L.COPYNAME then
-			love.system.setClipboardText(scriptnames[script_i])
+			love.system.setClipboardText(level.scriptnames[script_i])
 		elseif RCMreturn == L.COPYCONTENTS then
-			love.system.setClipboardText(table.concat(scripts[scriptnames[script_i]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
+			love.system.setClipboardText(table.concat(scripts[level.scriptnames[script_i]], (love.system.getOS() == "Windows" and "\r\n" or "\n")))
 		elseif RCMreturn == L.DUPLICATE then
 			dialog.create(
 				L.NEWSCRIPTNAME, DBS.OKCANCEL,
@@ -333,7 +333,7 @@ function rightclickmenu.handler(RCMreturn)
 				delete_script(script_i)
 			else
 				dialog.create(
-					langkeys(L.SUREDELETESCRIPT, {scriptnames[script_i]}), DBS.YESNO,
+					langkeys(L.SUREDELETESCRIPT, {level.scriptnames[script_i]}), DBS.YESNO,
 					dialog.callback.suredeletescript, nil, dialog.form.hidden_make({script_i=script_i})
 				)
 			end
@@ -342,7 +342,7 @@ function rightclickmenu.handler(RCMreturn)
 				L.NEWNAME, DBS.OKCANCEL,
 				dialog.callback.renamescript, L.RENAMESCRIPT,
 				{
-					{"name", 0, 1, 40, scriptnames[script_i], DF.TEXT},
+					{"name", 0, 1, 40, level.scriptnames[script_i], DF.TEXT},
 					{"references", 0, 3, 2+font_ui:getWidth(L.RENAMESCRIPTREFERENCES)/8, true, DF.CHECKBOX},
 					{"", 2, 3, 40, L.RENAMESCRIPTREFERENCES, DF.LABEL},
 					{"script_i", 0, 0, 0, script_i, DF.HIDDEN},

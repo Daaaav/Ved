@@ -16,8 +16,8 @@ return function(key)
 	elseif key == "c" then
 		tostate(36)
 	elseif key == "/" then
-		if #scriptnames >= 1 then
-			scriptineditor(scriptnames[#scriptnames], #scriptnames)
+		if #level.scriptnames >= 1 then
+			scriptineditor(level.scriptnames[#level.scriptnames], #level.scriptnames)
 			nodialog = false -- Terrible
 		end
 	elseif key == "escape" then

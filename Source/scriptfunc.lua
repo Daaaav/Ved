@@ -3,9 +3,9 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 	-- else, a list of script names is put in specificflag_usages, which is all usages of that flag,
 	-- and the number of usages is returned (including multiple usages in the same script).
 	local specificflag_n_real_usages = 0
-	for script_i = #scriptnames, 1, -1 do
+	for script_i = #level.scriptnames, 1, -1 do
 		local script_inserted = false
-		for k,v in pairs(scripts[scriptnames[script_i]]) do
+		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 			v = scriptlinecasing(v)
 			local explcommaline = explode(",", v:gsub("%(", ","):gsub("%)", ","):gsub(" ", ""))
 
@@ -24,7 +24,7 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 					specificflag_n_real_usages = specificflag_n_real_usages + 1
 
 					if not script_inserted then
-						table.insert(specificflag_usages, scriptnames[script_i])
+						table.insert(specificflag_usages, level.scriptnames[script_i])
 						script_inserted = true
 					end
 				end
@@ -880,24 +880,24 @@ function bumpscript(scriptid)
 	--table.remove(scripts, script)
 	--scripts[script] = temp
 
-	-- id is the index of the script in scriptnames!
-	local temp = scriptnames[scriptid]
-	table.remove(scriptnames, scriptid)
-	table.insert(scriptnames, temp)
+	-- id is the index of the script in level.scriptnames!
+	local temp = level.scriptnames[scriptid]
+	table.remove(level.scriptnames, scriptid)
+	table.insert(level.scriptnames, temp)
 end
 
 function movescriptup(scriptid)
 	-- Since Ved displays scripts descending, it will actually appear to move down
-	local temp = scriptnames[scriptid]
-	table.remove(scriptnames, scriptid)
-	table.insert(scriptnames, scriptid-1, temp)
+	local temp = level.scriptnames[scriptid]
+	table.remove(level.scriptnames, scriptid)
+	table.insert(level.scriptnames, scriptid-1, temp)
 end
 
 function movescriptdown(scriptid)
 	-- Scripts in the script list are shown in reverse order, so it'll look like it's moving up
-	local temp = scriptnames[scriptid]
-	table.remove(scriptnames, scriptid)
-	table.insert(scriptnames, scriptid+1, temp)
+	local temp = level.scriptnames[scriptid]
+	table.remove(level.scriptnames, scriptid)
+	table.insert(level.scriptnames, scriptid+1, temp)
 end
 
 function scriptineditor(scriptnamearg, script_i, invert_bump_preference)
@@ -908,7 +908,7 @@ function scriptineditor(scriptnamearg, script_i, invert_bump_preference)
 	if should_bump then
 		if script_i == nil then
 			-- Find out which script it is
-			for k,v in pairs(scriptnames) do
+			for k,v in pairs(level.scriptnames) do
 				if v == scriptnamearg then
 					bumpscript(k)
 				end
@@ -946,8 +946,8 @@ function find_script_references(argscriptname)
 		end
 	end
 
-	for script_i = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[script_i]]) do
+	for script_i = #level.scriptnames, 1, -1 do
+		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 			local v2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -981,9 +981,9 @@ function find_script_references(argscriptname)
 			if loadscriptcond or scriptcond then
 				-- argscriptname is referred to in this script
 				if loadscriptcond then
-					table.insert(loadscriptuses, {scriptnames[script_i], k})
+					table.insert(loadscriptuses, {level.scriptnames[script_i], k})
 				end
-				table.insert(scriptuses, {scriptnames[script_i], k})
+				table.insert(scriptuses, {level.scriptnames[script_i], k})
 				break
 			end
 		end
@@ -1002,8 +1002,8 @@ function find_used_scripts()
 		end
 	end
 
-	for script_i = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[script_i]]) do
+	for script_i = #level.scriptnames, 1, -1 do
+		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 			local v2 = v:gsub("%(", ","):gsub("%)", ","):gsub(" ", "")
 			v2 = scriptlinecasing(v2)
 
@@ -1052,7 +1052,7 @@ function editorjumpscript(argscriptname, goingback, toline)
 	if scripts[argscriptname] == nil then
 		-- Create script (but do not immediately go to it as we can just easily click again)
 		scripts[argscriptname] = {""}
-		table.insert(scriptnames, argscriptname)
+		table.insert(level.scriptnames, argscriptname)
 		dirty()
 	else
 		-- Go to script- but save the current script first!
@@ -1195,21 +1195,21 @@ function swapflags(flag1, flag2)
 	end
 
 	local commands = {"flag", "ifflag", "customifflag"}
-	for script_i = #scriptnames, 1, -1 do
-		for k,v in pairs(scripts[scriptnames[script_i]]) do
+	for script_i = #level.scriptnames, 1, -1 do
+		for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 			v = v:gsub(" ", "")
 			v = scriptlinecasing(v)
 			for _,command in pairs(commands) do
 				local pattern = "^(" .. command .. "[%(,%)])0-"
 				if #v > #command then
 					if v:match(pattern .. flag1 .. "([%(,%)].*)$") then
-						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag1 .. "$") then
-						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
+						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag1, "%1" .. flag2)
 					elseif v:match(pattern .. flag2 .. "([%(,%)].*)$") then
-						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					elseif v:match(pattern .. flag2 .. "$") then
-						scripts[scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
+						scripts[level.scriptnames[script_i]][k] = v:gsub(pattern .. flag2, "%1" .. flag1)
 					end
 				end
 			end
@@ -1315,8 +1315,8 @@ function loadflagslist()
 end
 
 function delete_script(script_i)
-	scripts[scriptnames[script_i]] = nil
-	table.remove(scriptnames, script_i)
+	scripts[level.scriptnames[script_i]] = nil
+	table.remove(level.scriptnames, script_i)
 	dirty()
 
 	-- We might have removed a script reference, so update usages

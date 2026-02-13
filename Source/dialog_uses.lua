@@ -632,7 +632,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 	end
 
 	if scripts[fields.name] == nil then
-		table.insert(scriptnames, fields.name)
+		table.insert(level.scriptnames, fields.name)
 		if identifier ~= "split_editor" and identifier ~= "duplicate_list" then
 			-- Creating an empty script
 			scripts[fields.name] = {""}
@@ -652,7 +652,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 				end
 			else
 				-- Duplicating, meaning in menu
-				scripts[fields.name] = table.copy(scripts[scriptnames[fields.script_i]])
+				scripts[fields.name] = table.copy(scripts[level.scriptnames[fields.script_i]])
 			end
 		end
 		scriptname = fields.name
@@ -846,7 +846,7 @@ end
 
 function dialog.callback.renamescript_validate(button, fields)
 	if button == DB.OK then
-		if scripts[fields.name] ~= nil and fields.name ~= scriptnames[fields.script_i] then
+		if scripts[fields.name] ~= nil and fields.name ~= level.scriptnames[fields.script_i] then
 			-- Script already exists
 			dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {fields.name}))
 			return true
@@ -869,14 +869,14 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 	-- because then we'd end up *removing* the script (just read the code)
 	-- And of course, as long as a script with that name doesn't already exist.
 	-- fields.script_i is the 'number' of the script
-	if fields.name ~= scriptnames[fields.script_i] then
-		local oldname = scriptnames[fields.script_i]
+	if fields.name ~= level.scriptnames[fields.script_i] then
+		local oldname = level.scriptnames[fields.script_i]
 		local newname = fields.name
 
-		scripts[fields.name] = scripts[scriptnames[fields.script_i]] -- Copy script from old to new name
-		scripts[scriptnames[fields.script_i]] = nil -- Remove old name
+		scripts[fields.name] = scripts[level.scriptnames[fields.script_i]] -- Copy script from old to new name
+		scripts[level.scriptnames[fields.script_i]] = nil -- Remove old name
 
-		scriptnames[fields.script_i] = fields.name -- Administrative rename
+		level.scriptnames[fields.script_i] = fields.name -- Administrative rename
 
 		dirty()
 
@@ -894,15 +894,15 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 			oldname = escapegsub(oldname, true)
 
 			local tmp
-			for script_i = #scriptnames, 1, -1 do
-				for k,v in pairs(scripts[scriptnames[script_i]]) do
+			for script_i = #level.scriptnames, 1, -1 do
+				for k,v in pairs(scripts[level.scriptnames[script_i]]) do
 					v = v:gsub(" ", "")
 					for _,command in pairs(field3cmds) do
 						if #v > #command then
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)])" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
-								scripts[scriptnames[script_i]][k] = tmp
+								scripts[level.scriptnames[script_i]][k] = tmp
 							end
 						end
 					end
@@ -911,7 +911,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
-								scripts[scriptnames[script_i]][k] = tmp
+								scripts[level.scriptnames[script_i]][k] = tmp
 							end
 						end
 					end
@@ -920,7 +920,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 							local pattern = "^(" .. command .. "[%(,%)]custom_)" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
-								scripts[scriptnames[script_i]][k] = tmp
+								scripts[level.scriptnames[script_i]][k] = tmp
 							end
 						end
 					end
@@ -929,7 +929,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)]custom_)" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
-								scripts[scriptnames[script_i]][k] = tmp
+								scripts[level.scriptnames[script_i]][k] = tmp
 							end
 						end
 					end
@@ -938,7 +938,7 @@ function dialog.callback.renamescript(button, fields, _, notclosed)
 							local pattern = "^(" .. command .. "[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)][^%(,%)]-[%(,%)])" .. oldname
 							tmp = renamescriptline(v, pattern, newname)
 							if tmp ~= nil then
-								scripts[scriptnames[script_i]][k] = tmp
+								scripts[level.scriptnames[script_i]][k] = tmp
 							end
 						end
 					end

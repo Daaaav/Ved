@@ -14,7 +14,7 @@ return function()
 	end
 
 	basic_stats = {
-		{name=L.AMOUNTSCRIPTS, value=#scriptnames, max=limit.scripts, alt_max=500},
+		{name=L.AMOUNTSCRIPTS, value=#level.scriptnames, max=limit.scripts, alt_max=500},
 		{name=L.AMOUNTUSEDFLAGS, value=n_usedflags, max=limit.flags, alt_max=100},
 		{name=L.AMOUNTENTITIES, value=anythingbutnil0(count.entities), max=limit.entities, alt_max=3000},
 		{name=L.AMOUNTTRINKETS, value=anythingbutnil0(count.trinkets), max=limit.trinkets, alt_max=100},
