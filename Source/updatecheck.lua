@@ -1,3 +1,5 @@
+local vedxml = require("vedxml")
+
 updatecheck = {
 	check_running = false,
 	check_channel = love.thread.getChannel("version")
@@ -86,7 +88,7 @@ function updatecheck.await_response()
 			elseif current_article_name == "_SHOWREFRESH" and v == "1" then
 				updatecheck.notes_refreshable = true
 			elseif current_article_name == "_SCROLLINGTEXT" then
-				updatecheck.scrolling_text = unxmlspecialchars(v)
+				updatecheck.scrolling_text = vedxml.VedXML:unxmlspecialchars(v)
 			end
 			if current_article ~= nil and (current_article_name:sub(1,1) ~= "_" or allowdebug) then
 				table.insert(current_article_contents, v)

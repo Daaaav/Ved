@@ -1,4 +1,5 @@
 -- help/draw
+local vedxml = require("vedxml")
 
 return function()
 	-- Leaving room for a 16 px wide scrollbar. 4+16+8
@@ -133,7 +134,7 @@ return function()
 					elseif part2:sub(fl,fl) == "+" then
 						bgexpandmode = true
 					elseif part2:sub(fl,fl) == "X" then
-						part1 = unxmlspecialchars(part1)
+						part1 = vedxml.VedXML:unxmlspecialchars(part1)
 					elseif part2:sub(fl,fl) == "(" then
 						-- This basically allows single characters to colored between ¤s, as long as you put § after that character, and the § will not be shown.
 						singlecharmode = true

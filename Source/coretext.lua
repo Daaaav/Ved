@@ -1,4 +1,5 @@
 require("vedfont")
+local vedxml = require("vedxml")
 
 function read_font_file(custom_folder, font_name, ext)
 	-- custom_folder can be the path to a level-specific
@@ -25,16 +26,25 @@ function load_font_filename(fonts, custom_folder, font_name)
 		local txt_contents = read_font_file(custom_folder, font_name, ".txt")
 		local fontmeta_contents = read_font_file(custom_folder, font_name, ".fontmeta")
 
-		local fallback, fallback_imgdata, fallback_fontmeta_contents
+		local fallback, fallback_imgdata, fallback_fontmeta_xml
+		local fontmeta_xml
 		if fontmeta_contents ~= nil then
-			fallback = fontmeta_contents:match("<fallback>(.-)</fallback>")
+			pcall(function()
+				fontmeta_xml = vedxml.VedXML:new{string=fontmeta_contents, root="font_metadata"}
+
+				-- Fallback is optional and error is fine
+				fallback = fontmeta_xml:get_text(fontmeta_xml:find(nil, "fallback"))
+			end)
 		end
 		if fallback ~= nil then
 			-- Fallback fonts can only be main fonts, so we can cut corners a liiitle bit...
 			fallback_png_contents = read_font_file(nil, fallback, ".png")
-			fallback_fontmeta_contents = read_font_file(nil, fallback, ".fontmeta")
-
+			local fallback_fontmeta_contents = read_font_file(nil, fallback, ".fontmeta")
 			if fallback_png_contents ~= nil and fallback_fontmeta_contents ~= nil then
+				pcall(function()
+					fallback_fontmeta_xml = vedxml.VedXML:new{string=fallback_fontmeta_contents, root="font_metadata"}
+				end)
+
 				fallback_imgdata = love.image.newImageData(
 					love.filesystem.newFileData(fallback_png_contents, fallback.. ".png", "file")
 				)
@@ -49,10 +59,10 @@ function load_font_filename(fonts, custom_folder, font_name)
 		fonts[font_name]:init(
 			imgdata,
 			txt_contents,
-			fontmeta_contents,
+			fontmeta_xml,
 			fallback_imgdata,
 			nil,
-			fallback_fontmeta_contents
+			fallback_fontmeta_xml
 		)
 	end
 end
@@ -171,14 +181,14 @@ function loadlanginfo()
 	if contents == nil then
 		return
 	end
-	local xlanguages = contents:match("<languages>(.*)</languages>")
-	if xlanguages == nil then
-		return
-	end
-	for language in xlanguages:gmatch("<language (.-) />") do
-		local attributes = parsexmlattributes(language)
-		langinfo[attributes.code] = table.copy(attributes)
-	end
+	pcall(function()
+		local xml = vedxml.VedXML:new{string=contents, root="langinfo"}
+		local xlanguages = xml:find(nil, "languages")
+		for language in xml:each_child_element(xlanguages, "language") do
+			local attributes = xml:get_attributes(language)
+			langinfo[attributes.code] = table.copy(attributes)
+		end
+	end)
 end
 
 function unloadlanguage()
@@ -278,11 +288,13 @@ function loadlanguage()
 end
 
 function loadtinyfont()
-	local xml, err = love.filesystem.read("fonts/tinyfont.fontmeta")
-	if xml == nil then
+	local fontmeta_contents, err = love.filesystem.read("fonts/tinyfont.fontmeta")
+	if fontmeta_contents == nil then
 		-- I don't want to hardcode a "default" width for tinyfont, and this HAS to exist...
 		error(err)
 	end
+
+	local xml = vedxml.VedXML:new{string=fontmeta_contents, root="font_metadata"}
 
 	tinyfont = cVedFont:new()
 	tinyfont:init(love.image.newImageData("fonts/tinyfont.png"), (love.filesystem.read("fonts/tinyfont.txt")), xml)

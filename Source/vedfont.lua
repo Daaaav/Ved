@@ -100,7 +100,7 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 	-- Initialize the font with all necessary configuration.
 	-- imgdata is an ImageData with the font image, loaded from a .png.
 	-- txt is a string with the characters, loaded from a .txt (may be nil if missing)
-	-- fontmeta is a string with the XML loaded from a .fontmeta (may be nil if missing)
+	-- fontmeta is a VedXML loaded from a .fontmeta (may be nil if missing or broken)
 	-- imgdata_fallback, txt_fallback and fontmeta_fallback are optional
 	-- and represent a fallback font. (The fallback font must have the same glyph width and height)
 
@@ -121,35 +121,45 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 	local white_teeth_fallback = false
 
 	if fontmeta ~= nil then
-		local font_type = fontmeta:match("<type>(.-)</type>")
-		if font_type ~= nil then
-			self.font_type = font_type
-		end
-		local display_name = fontmeta:match("<display_name>(.-)</display_name>")
-		if display_name ~= nil then
-			self.display_name = display_name
-		end
-		local w = tonumber(fontmeta:match("<width>(.-)</width>"))
-		local h = tonumber(fontmeta:match("<height>(.-)</height>"))
-		if w ~= nil then
-			self.glyph_w = w
-		end
-		if h ~= nil then
-			self.glyph_h = h
-		end
-		white_teeth = fontmeta:match("<white_teeth>(.-)</white_teeth>") == "1"
+		pcall(function()
+			self.font_type = fontmeta:get_text(fontmeta:find(nil, "type"))
+		end)
+		pcall(function()
+			self.display_name = fontmeta:get_text(fontmeta:find(nil, "display_name"))
+		end)
+		pcall(function()
+			local w = tonumber(fontmeta:get_text(fontmeta:find(nil, "width")))
+			if w ~= nil then
+				self.glyph_w = w
+			end
+		end)
+		pcall(function()
+			local h = tonumber(fontmeta:get_text(fontmeta:find(nil, "height")))
+			if h ~= nil then
+				self.glyph_h = h
+			end
+		end)
+		pcall(function()
+			white_teeth = fontmeta:get_text(fontmeta:find(nil, "white_teeth")) == "1"
+		end)
 	end
 	if fontmeta_fallback ~= nil then
-		local w = tonumber(fontmeta_fallback:match("<width>(.-)</width>"))
-		local h = tonumber(fontmeta_fallback:match("<height>(.-)</height>"))
-		if w ~= nil then
-			self.fallback_glyph_w = w
-		end
-		if h ~= nil then
-			self.fallback_glyph_h = h
-		end
+		pcall(function()
+			local w = tonumber(fontmeta_fallback:get_text(fontmeta_fallback:find(nil, "width")))
+			if w ~= nil then
+				self.fallback_glyph_w = w
+			end
+		end)
+		pcall(function()
+			local h = tonumber(fontmeta_fallback:get_text(fontmeta_fallback:find(nil, "height")))
+			if h ~= nil then
+				self.fallback_glyph_h = h
+			end
+		end)
 
-		white_teeth_fallback = fontmeta_fallback:match("<white_teeth>(.-)</white_teeth>") == "1"
+		pcall(function()
+			white_teeth_fallback = fontmeta_fallback:get_text(fontmeta_fallback:find(nil, "white_teeth")) == "1"
+		end)
 	end
 
 	local imgA_w, imgA_h = imgdata:getWidth(), imgdata:getHeight()
@@ -271,14 +281,14 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 		end
 
 		if subfont_fontmeta ~= nil and not charset_loaded then
-			local xchars = subfont_fontmeta:match("<chars>(.*)</chars>")
-			if xchars ~= nil then
-				for range in xchars:gmatch("<range (.-)/>") do
-					local attr = parsexmlattributes(range)
+			pcall(function()
+				local xchars = subfont_fontmeta:find(nil, "chars")
+				for range in subfont_fontmeta:each_child_element(xchars, "range") do
+					local attr = subfont_fontmeta:get_attributes(range)
 					table.insert(char_ranges, {tonumber(attr.start), tonumber(attr["end"])})
 				end
 				charset_loaded = true
-			end
+			end)
 		end
 
 		if not charset_loaded then
@@ -347,10 +357,10 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 
 		local special_loaded = false
 		if subfont_fontmeta ~= nil then
-			local xspecial = subfont_fontmeta:match("<special>(.*)</special>")
-			if xspecial ~= nil then
-				for range in xspecial:gmatch("<range (.-)/>") do
-					local attr = parsexmlattributes(range)
+			pcall(function()
+				local xspecial = subfont_fontmeta:find(nil, "special")
+				for range in subfont_fontmeta:each_child_element(xspecial, "range") do
+					local attr = subfont_fontmeta:get_attributes(range)
 					if subfont == 0 and attr.advance ~= nil then
 						self:set_glyph_advance(tonumber(attr.advance), tonumber(attr.start), tonumber(attr["end"]))
 					end
@@ -359,7 +369,7 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 					end
 				end
 				special_loaded = true
-			end
+			end)
 		end
 
 		if not special_loaded and subfont_glyph_w == 8 and subfont_glyph_h == 8 then
