@@ -1270,9 +1270,9 @@ return function()
 		theme:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
 		theme:draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
 		font_8x8:printf(
-			fixdig(anythingbutnil(count.trinkets), 3, "") .. "\n"
-			.. fixdig(anythingbutnil(count.crewmates), 3, "") .. "\n"
-			.. fixdig(anythingbutnil(count.entities), 5, ""),
+			fixdig(anythingbutnil(level.count.trinkets), 3, "") .. "\n"
+			.. fixdig(anythingbutnil(level.count.crewmates), 3, "") .. "\n"
+			.. fixdig(anythingbutnil(level.count.entities), 5, ""),
 			640+screenoffset+11, love.graphics.getHeight()-16-10, 128, "left"
 		)
 	end

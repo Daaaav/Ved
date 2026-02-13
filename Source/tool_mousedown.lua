@@ -487,7 +487,7 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
-			if count.trinkets >= limit.trinkets then
+			if level.count.trinkets >= limit.trinkets then
 				dialog.create(langkeys(L.MAXTRINKETS, {limit.trinkets}))
 			else
 				insert_entity(atx, aty, 9)
@@ -800,7 +800,7 @@ function handle_tool_mousedown()
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate
-			if count.crewmates >= limit.crewmates then
+			if level.count.crewmates >= limit.crewmates then
 				dialog.create(langkeys(L.MAXCREWMATES, {limit.crewmates}))
 				mousepressed = true
 			else
@@ -812,7 +812,8 @@ function handle_tool_mousedown()
 			cons("Start point: " .. atx .. " " .. aty)
 
 			-- First remove the old one, but check first
-			if (count.startpoint ~= nil) and ( (entitydata[count.startpoint] == nil) or (entitydata[count.startpoint].t ~= 16) ) then
+			if (level.count.startpoint ~= nil)
+			and ( (entitydata[level.count.startpoint] == nil) or (entitydata[level.count.startpoint].t ~= 16) ) then
 				cons("Whoops, old start point not found! At least find out if even exists anywhere anymore (probably not)")
 
 				local found = false
@@ -820,7 +821,7 @@ function handle_tool_mousedown()
 				for ke,ve in pairs(entitydata) do
 					if ve.t == 16 then
 						-- Found it!
-						count.startpoint = ke
+						level.count.startpoint = ke
 						found = true
 						break
 					end
@@ -828,29 +829,36 @@ function handle_tool_mousedown()
 
 				if not found then
 					-- Ok, then it's simply gone and we thought it isn't.
-					count.startpoint = nil
+					level.count.startpoint = nil
 				end
 			end
 
 			local x, y, p1 = 40*roomx + atx, 30*roomy + aty, selectedsubtool[17]-1
 
-			if count.startpoint ~= nil then
-				cons("Old start point at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " will be changed")
+			if level.count.startpoint ~= nil then
+				cons("Old start point at "
+					.. entitydata[level.count.startpoint].x .. " "
+					.. entitydata[level.count.startpoint].y .. " will be changed"
+				)
 
-				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = count.startpoint, changedentitydata = {
+				table.insert(undobuffer, {
+						undotype = "changeentity",
+						rx = roomx, ry = roomy,
+						entid = level.count.startpoint,
+						changedentitydata = {
 							{
 								key = "x",
-								oldvalue = entitydata[count.startpoint].x,
+								oldvalue = entitydata[level.count.startpoint].x,
 								newvalue = x,
 							},
 							{
 								key = "y",
-								oldvalue = entitydata[count.startpoint].y,
+								oldvalue = entitydata[level.count.startpoint].y,
 								newvalue = y,
 							},
 							{
 								key = "p1",
-								oldvalue = entitydata[count.startpoint].p1,
+								oldvalue = entitydata[level.count.startpoint].p1,
 								newvalue = p1,
 							}
 						}
@@ -858,9 +866,9 @@ function handle_tool_mousedown()
 				)
 				finish_undo("CHANGED ENTITY (START POINT)")
 
-				entitydata[count.startpoint].x = x
-				entitydata[count.startpoint].y = y
-				entitydata[count.startpoint].p1 = p1
+				entitydata[level.count.startpoint].x = x
+				entitydata[level.count.startpoint].y = y
+				entitydata[level.count.startpoint].p1 = p1
 			else
 				cons("Inserting new start point")
 				insert_entity(atx, aty, 16, p1)

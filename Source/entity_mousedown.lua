@@ -42,7 +42,7 @@ function handle_entity_mousedown()
 					menu = {"#" .. toolnames[6], L.DELETE, L.MOVEENTITY, L.COPY, L.PROPERTIES}
 				elseif v.t == 9 then
 					-- Trinket
-					menu = {"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (count.trinkets >= limit.trinkets and "#" or "") .. L.COPY, L.PROPERTIES}
+					menu = {"#" .. toolnames[4], L.DELETE, L.MOVEENTITY, (level.count.trinkets >= limit.trinkets and "#" or "") .. L.COPY, L.PROPERTIES}
 				elseif v.t == 10 then
 					-- Checkpoint
 					menu = {"#" .. toolnames[5], L.DELETE, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}
@@ -79,7 +79,7 @@ function handle_entity_mousedown()
 					end
 				elseif v.t == 15 then
 					-- Rescuable crewmate
-					menu = {"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (count.crewmates >= limit.crewmates and "#" or "") .. L.COPY, L.PROPERTIES}
+					menu = {"#" .. toolnames[16], L.DELETE, L.CHANGECOLOR, L.MOVEENTITY, (level.count.crewmates >= limit.crewmates and "#" or "") .. L.COPY, L.PROPERTIES}
 				elseif v.t == 16 then
 					-- Start point
 					menu = {"#" .. toolnames[17], L.DELETE, L.CHANGEDIRECTION, L.MOVEENTITY, L.PROPERTIES}

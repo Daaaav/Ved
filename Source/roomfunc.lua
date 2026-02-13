@@ -1369,24 +1369,26 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 				entitydata[k].x = entitydata[k].x + (40*roomxdiff)
 				entitydata[k].y = entitydata[k].y + (30*roomydiff)
 			else
-				if v.t == 16 or (v.t == 9 and count.trinkets >= limit.trinkets) or (v.t == 15 and count.crewmates >= limit.crewmates) then
+				if v.t == 16
+				or (v.t == 9 and level.count.trinkets >= limit.trinkets)
+				or (v.t == 15 and level.count.crewmates >= limit.crewmates) then
 					-- Nope. Can't copy this.
 				else
 					if v.t == 9 then
-						count.trinkets = count.trinkets + 1
+						level.count.trinkets = level.count.trinkets + 1
 					elseif v.t == 15 then
-						count.crewmates = count.crewmates + 1
+						level.count.crewmates = level.count.crewmates + 1
 					end
 
 					-- I could have been busy debugging this for a long time.
 					local localcopy = table.copy(v)
 					localcopy.x = localcopy.x + (40*roomxdiff)
 					localcopy.y = localcopy.y + (30*roomydiff)
-					table.insert(entitydata, count.entity_ai, localcopy)
+					table.insert(entitydata, level.count.entity_ai, localcopy)
 					localcopy = nil
 
-					count.entities = count.entities + 1
-					count.entity_ai = count.entity_ai + 1
+					level.count.entities = level.count.entities + 1
+					level.count.entity_ai = level.count.entity_ai + 1
 				end
 			end
 		end
@@ -1606,9 +1608,18 @@ function spikes_rightwall_down(tilex, tiley, ts)
 end
 
 function gotostartpointroom()
-	if count.startpoint ~= nil then
-		cons("Start point is at " .. entitydata[count.startpoint].x .. " " .. entitydata[count.startpoint].y .. " so in room " .. math.floor(entitydata[count.startpoint].x / 40) .. "," .. math.floor(entitydata[count.startpoint].y / 30))
-		gotoroom(math.floor(entitydata[count.startpoint].x / 40), math.floor(entitydata[count.startpoint].y / 30))
+	if level.count.startpoint ~= nil then
+		cons("Start point is at "
+			.. entitydata[level.count.startpoint].x .. " "
+			.. entitydata[level.count.startpoint].y
+			.. " so in room "
+			.. math.floor(entitydata[level.count.startpoint].x / 40) .. ","
+			.. math.floor(entitydata[level.count.startpoint].y / 30)
+		)
+		gotoroom(
+			math.floor(entitydata[level.count.startpoint].x / 40),
+			math.floor(entitydata[level.count.startpoint].y / 30)
+		)
 	else
 		temporaryroomname = L.STARTPOINTNOTFOUND
 		temporaryroomnametimer = 90
@@ -2127,7 +2138,7 @@ function redo()
 		updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
 		if redobuffer[#redobuffer].addedentitydata.t == 16 then
 			-- Don't forget to set the start point ID!
-			count.startpoint = redobuffer[#redobuffer].entid
+			level.count.startpoint = redobuffer[#redobuffer].entid
 		end
 	elseif redobuffer[#redobuffer].undotype == "removeentity" then
 		-- Redo the removing!
@@ -2199,7 +2210,7 @@ end
 
 function entityplaced(id)
 	if id == nil then
-		id = count.entity_ai
+		id = level.count.entity_ai
 	end
 
 	table.insert(undobuffer, {undotype = "addentity", rx = roomx, ry = roomy, entid = id, addedentitydata = table.copy(entitydata[id])})
@@ -2224,17 +2235,17 @@ function removeentity(id, thetype, undoing)
 end
 
 function setcopyingentity(id)
-	table.insert(entitydata, count.entity_ai, table.copy(entitydata[id]))
-	if entitydata[count.entity_ai].t == 9 then
-		count.trinkets = count.trinkets + 1
-	elseif entitydata[count.entity_ai].t == 15 then
-		count.crewmates = count.crewmates + 1
+	table.insert(entitydata, level.count.entity_ai, table.copy(entitydata[id]))
+	if entitydata[level.count.entity_ai].t == 9 then
+		level.count.trinkets = level.count.trinkets + 1
+	elseif entitydata[level.count.entity_ai].t == 15 then
+		level.count.crewmates = level.count.crewmates + 1
 	end
-	count.entities = count.entities + 1
+	level.count.entities = level.count.entities + 1
 
-	movingentity = count.entity_ai
+	movingentity = level.count.entity_ai
 	movingentity_copying = true
-	count.entity_ai = count.entity_ai + 1
+	level.count.entity_ai = level.count.entity_ai + 1
 end
 
 function rcm_changingentity(entdetails, changes)
@@ -3078,7 +3089,7 @@ function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 	if p4 == nil then p4 = 0 end
 	if data == nil then data = "" end
 
-	table.insert(entitydata, count.entity_ai,
+	table.insert(entitydata, level.count.entity_ai,
 		{
 			x = 40*rx + atx,
 			y = 30*ry + aty,
@@ -3092,25 +3103,25 @@ function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 		autocorrectlines()
 	end
 	if t == 13 then
-		warpid = count.entity_ai
+		warpid = level.count.entity_ai
 		selectedsubtool[14] = 2
 	elseif t == 17 or t == 18 then
-		start_editing_roomtext(count.entity_ai, true, t == 18)
+		start_editing_roomtext(level.count.entity_ai, true, t == 18)
 	elseif t == 19 then
-		editingsboxid = count.entity_ai
+		editingsboxid = level.count.entity_ai
 		selectedsubtool[13] = 2
 	else
 		entityplaced()
 	end
 	if t == 9 then
-		count.trinkets = count.trinkets + 1
+		level.count.trinkets = level.count.trinkets + 1
 	elseif t == 15 then
-		count.crewmates = count.crewmates + 1
+		level.count.crewmates = level.count.crewmates + 1
 	elseif t == 16 then
-		count.startpoint = count.entity_ai
+		level.count.startpoint = level.count.entity_ai
 	end
-	count.entities = count.entities + 1
-	count.entity_ai = count.entity_ai + 1
+	level.count.entities = level.count.entities + 1
+	level.count.entity_ai = level.count.entity_ai + 1
 end
 
 function cancel_placing_scriptbox()

@@ -632,7 +632,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl
 end
 
 
@@ -728,7 +728,7 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 
 	local entitydatasaved = 0
 	-- No pairs(lvl.entitydata) here, that might end iterating at a nil
-	for k = 1, count.entity_ai-1 do
+	for k = 1, lvl.count.entity_ai-1 do
 		if lvl.entitydata[k] ~= nil then
 			local v = lvl.entitydata[k]
 			local data = v.data
@@ -1018,7 +1018,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl.count, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl.scripts, lvl
 end
 
 function default_levelmetadata(rx, ry)

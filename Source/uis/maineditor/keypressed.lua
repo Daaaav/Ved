@@ -213,13 +213,13 @@ return function(key)
 	elseif movingentity ~= 0 and key == "escape" then
 		if movingentity_copying then
 			movingentity_copying = false
-			count.entities = count.entities - 1
+			level.count.entities = level.count.entities - 1
 			if entitydata[movingentity].t == 9 then
-				count.trinkets = count.trinkets - 1
+				level.count.trinkets = level.count.trinkets - 1
 			elseif entitydata[movingentity].t == 15 then
-				count.crewmates = count.crewmates - 1
+				level.count.crewmates = level.count.crewmates - 1
 			end
-			count.entity_ai = count.entity_ai - 1
+			level.count.entity_ai = level.count.entity_ai - 1
 			table.remove(entitydata, movingentity)
 		end
 		movingentity = 0

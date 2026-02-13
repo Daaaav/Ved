@@ -9,9 +9,9 @@ return function()
 	love.graphics.setScissor()
 
 	local startx, starty
-	if entitydata[count.startpoint] ~= nil then
-		startx = math.floor(entitydata[count.startpoint].x/40)
-		starty = math.floor(entitydata[count.startpoint].y/30)
+	if entitydata[level.count.startpoint] ~= nil then
+		startx = math.floor(entitydata[level.count.startpoint].x/40)
+		starty = math.floor(entitydata[level.count.startpoint].y/30)
 		startx = math.max(startx, 0)
 		starty = math.max(starty, 0)
 	end
@@ -66,7 +66,7 @@ return function()
 					end
 				else
 					amount = 1
-					spritefunc = function() return 3*entitydata[count.startpoint].p1 end
+					spritefunc = function() return 3*entitydata[level.count.startpoint].p1 end
 					width = 10
 					widthb = 12
 					extray = -2

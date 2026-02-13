@@ -812,11 +812,11 @@ end
 function updatecountdelete(thet, id, undoing)
 	-- So what are we removing?
 	if thet == 9 then
-		count.trinkets = count.trinkets - 1
+		level.count.trinkets = level.count.trinkets - 1
 	elseif thet == 15 then
-		count.crewmates = count.crewmates - 1
+		level.count.crewmates = level.count.crewmates - 1
 	elseif thet == 16 then
-		count.startpoint = nil
+		level.count.startpoint = nil
 	end
 
 	-- Make sure we can undo this! If we're not already removing an entity by undoing
@@ -825,18 +825,18 @@ function updatecountdelete(thet, id, undoing)
 		finish_undo("REMOVED ENTITY")
 	end
 
-	count.entities = count.entities - 1
+	level.count.entities = level.count.entities - 1
 end
 
 function updatecountadd(thet)
 	if thet == 9 then
-		count.trinkets = count.trinkets + 1
+		level.count.trinkets = level.count.trinkets + 1
 	elseif thet == 15 then
-		count.crewmates = count.crewmates + 1
+		level.count.crewmates = level.count.crewmates + 1
 	-- Startpoint (16) should not be handled with this function
 	end
 
-	count.entities = count.entities + 1
+	level.count.entities = level.count.entities + 1
 end
 
 function namefound(obj)
@@ -1357,8 +1357,8 @@ function createmde(thislimit)
 		thislimit = limit
 	end
 	cons("Creating metadata entity...")
-	if count ~= nil then
-		count.entities = count.entities + 1
+	if level ~= nil and level.count ~= nil then
+		level.count.entities = level.count.entities + 1
 	end
 	local emptyflaglabel = {}
 	for i = 0, thislimit.flags-1 do
@@ -1408,11 +1408,11 @@ function state6load(levelname)
 		local oldlevel
 		if levelmetadata ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1420,8 +1420,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevelmetadata ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    count,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldcount, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    scripts,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldscripts, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1440,7 +1440,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, count2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, scripts2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1905,7 +1905,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, count, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, levelmetadata, scripts, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
