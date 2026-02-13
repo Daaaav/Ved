@@ -297,28 +297,3 @@ function loadtinyfont()
 		tinyfont:copy_glyph(0x63, 0x6D) -- c [CTRL] <- m [cmd]
 	end
 end
-
-function ved_print(text, x, y, sx, sy)
-	-- Deprecated
-	font_8x8:print(text, x, y, nil, sx, sy)
-end
-
-function ved_printf(text, x, y, max_width, align, sx, sy)
-	-- Deprecated
-	font_8x8:printf(text, x, y, max_width, align, nil, sx, sy)
-end
-
-function ved_shadowprint(text, x, y, sx, sy)
-	-- Deprecated
-	font_8x8:shadowprint(text, x, y, nil, sx, sy)
-end
-
-function ved_shadowprintf(text, x, y, limit, align, sx, sy)
-	-- Deprecated
-	font_8x8:shadowprintf(text, x, y, limit, align, nil, sx, sy)
-end
-
-function ved_shadowprint_tiny(text, x, y, sx, sy)
-	-- Deprecated
-	tinyfont:shadowprint(text, x, y, nil, sx, sy)
-end
