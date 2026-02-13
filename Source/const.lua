@@ -497,13 +497,6 @@ PT_UISTATE = {
 	PLAYTESTING = 2,
 }
 
--- For map_correspondreset()
-DIRTY = {
-	ROW = 1,
-	PROPERTY = 3,
-	ENTITY = 4,
-}
-
 -- For input
 INPUT = {
 	ONELINE = 1,

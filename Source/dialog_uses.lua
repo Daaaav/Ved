@@ -1090,24 +1090,15 @@ function dialog.callback.leveloptions(button, fields)
 
 		if metadata.mapwidth <= limit.mapwidth and metadata.mapheight <= limit.mapheight
 		and (w > limit.mapwidth or h > limit.mapheight) then
-			local newbuttons
-			if s.allowbiggerthansizelimit then
-				newbuttons = {L.BTNOVERRIDE, DB.OK}
-			end
-
 			dialog.create(
 				langkeys(
 					L.SIZELIMIT,
 					{limit.mapwidth, limit.mapheight, math.min(w, limit.mapwidth), math.min(h, limit.mapheight)}
-				),
-				newbuttons,
-				dialog.callback.leveloptions_maxlevelsize,
-				"",
-				dialog.form.hidden_make({mapwidth=w, mapheight=h})
+				)
 			)
-		else
-			resize_level(w, h)
 		end
+
+		resize_level(math.min(w, limit.mapwidth), math.min(h, limit.mapheight))
 	end
 
 	--What are the new properties again?
@@ -1349,53 +1340,6 @@ function dialog.callback.locatevvvvvvchoice(button, fields)
 	elseif button == L.BTN_MANUALLY then
 		playtesting_ask_path_manual(fields.target, fields.start)
 	end
-end
-
-function dialog.callback.leveloptions_maxlevelsize(button, fields)
-	if button == L.BTNOVERRIDE then
-		dialog.create(
-			langkeys(
-				L.CONFIRMBIGGERSIZE,
-				{
-					fields.mapwidth, fields.mapheight,
-					limit.mapwidth, limit.mapheight,
-					math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight)
-				}
-			),
-			DBS.YESNO,
-			dialog.callback.leveloptions_biggersize,
-			"",
-			dialog.form.hidden_make({mapwidth=fields.mapwidth, mapheight=fields.mapheight})
-		)
-	elseif button == DB.OK then
-		resize_level(math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight))
-
-		-- Uh, yeah, this is kind of an ugly hack and kind of relies on the
-		-- assumptions that (1) the user can't undo, redo, or make any other
-		-- changes while a dialog is open, and (2) the order of the changed
-		-- metadata in the undo buffer won't change in the future
-		if #undobuffer == 0 then
-			return
-		end
-		undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
-		undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
-		finish_undo("CHANGED METADATA (max level size, also ugly hack)")
-	end
-end
-
-function dialog.callback.leveloptions_biggersize(button, fields)
-	if button == DB.NO then
-		resize_level(math.min(fields.mapwidth, limit.mapwidth), math.min(fields.mapheight, limit.mapheight))
-	elseif button == DB.YES then
-		resize_level(fields.mapwidth, fields.mapheight)
-	end
-
-	if #undobuffer == 0 then
-		return
-	end
-	undobuffer[#undobuffer].changedmetadata[7].newvalue = metadata.mapwidth
-	undobuffer[#undobuffer].changedmetadata[8].newvalue = metadata.mapheight
-	finish_undo("CHANGED METADATA (bigger than " .. limit.mapwidth .. "x" .. limit.mapheight .. " size, also ugly hack)")
 end
 
 function dialog.callback.create_assets_folder(button, fields)

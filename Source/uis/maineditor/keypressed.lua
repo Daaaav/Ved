@@ -30,8 +30,6 @@ return function(key)
 		return
 	end
 
-	local voided_metadata = levelmetadata_get(roomx, roomy).voided
-
 	if keyboard_eitherIsDown("shift") and keyboard_eitherIsDown(ctrl) then
 		tilespicker = true
 		if not love.keyboard.isDown("rshift") and not love.keyboard.isDown(rctrl) then
@@ -264,7 +262,7 @@ return function(key)
 			end
 		end
 	-- Now come some more of VVVVVV's keybindings!
-	elseif key == "f1" and not voided_metadata then
+	elseif key == "f1" then
 		-- Change tileset
 		switchtileset()
 		local t, tilesetname = tilesetblocks[selectedtileset]
@@ -277,7 +275,7 @@ return function(key)
 		end
 		temporaryroomname = langkeys(L.TILESETCHANGEDTO, {tilesetname})
 		temporaryroomnametimer = 90
-	elseif key == "f2" and not voided_metadata then
+	elseif key == "f2" then
 		-- Change tilecol
 		switchtilecol()
 		local c, colorname = tilesetblocks[selectedtileset].colors[selectedcolor]
@@ -288,18 +286,18 @@ return function(key)
 		end
 		temporaryroomname = langkeys(L.TILESETCOLORCHANGEDTO, {colorname})
 		temporaryroomnametimer = 90
-	elseif key == "f3" and not voided_metadata then
+	elseif key == "f3" then
 		-- Change enemy type
 		switchenemies()
 		temporaryroomname = L.ENEMYTYPECHANGED
 		temporaryroomnametimer = 90
-	elseif key == "f4" and not voided_metadata then
+	elseif key == "f4" then
 		-- Enemy bounds
 		changeenemybounds()
-	elseif key == "f5" and not voided_metadata then
+	elseif key == "f5" then
 		-- Platform bounds
 		changeplatformbounds()
-	elseif key == "f10" and not voided_metadata then
+	elseif key == "f10" then
 		-- Auto/manual mode
 		changedmode()
 		local modename
@@ -312,12 +310,12 @@ return function(key)
 		end
 		temporaryroomname = langkeys(L.CHANGEDTOMODE, {modename})
 		temporaryroomnametimer = 90
-	elseif key == "w" and not voided_metadata then
+	elseif key == "w" then
 		-- Change warp dir
 		changewarpdir()
 		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
-	elseif key == "e" and not voided_metadata then
+	elseif key == "e" then
 		-- Edit room name
 		toggleeditroomname()
 

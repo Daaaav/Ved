@@ -337,9 +337,10 @@ function resize_level(new_w, new_h)
 end
 
 function add_rooms(new_w, new_h)
-	-- Will add rooms in case we increase the map size. Or in case we create a new level, this prepares empty rooms. (not used for that)
+	-- Will add rooms in case we increase the map size.
 	-- I'm gonna do this in a very simple way, just loop through all rooms and add a room wherever it's nil.
-	-- This is because we can have decreased one side and increased another, then increase the other side and still have room data there we don't want to lose in case resizing was an accident
+	-- This is because we can have decreased one side and increased another, then increase the other side
+	-- and still have room data there we don't want to lose in case resizing was an accident
 	cons("Maybe adding rooms: new map size is " .. new_w .. " " .. new_h)
 
 	for y = 0, new_h-1 do
@@ -351,34 +352,13 @@ function add_rooms(new_w, new_h)
 		end
 
 		for x = 0, new_w-1 do
-			if x < ( y < math.min(new_h, limit.mapheight) and new_w or limit.mapwidth ) and y < limit.mapheight then
-				if levelmetadata[y][x] == nil then
-					levelmetadata[y][x] = default_levelmetadata(x, y)
-				end
-				if roomdata[y][x] == nil then
-					roomdata[y][x] = {}
-					for t = 1, 1200 do
-						roomdata[y][x][t] = 0
-					end
-				end
+			if levelmetadata[y][x] == nil then
+				levelmetadata[y][x] = default_levelmetadata(x, y)
 			end
-		end
-	end
-
-	if new_w > limit.mapwidth then
-		local max_tiles_rows_outside_20xHEIGHT = math.floor( (new_w-1) / limit.mapwidth )
-		local max_rooms_rows_outside_20xHEIGHT = math.ceil(max_tiles_rows_outside_20xHEIGHT/30)
-		local capped_height = math.min(new_h, limit.mapheight)
-		for yk = capped_height, capped_height+max_rooms_rows_outside_20xHEIGHT-1 do
-			roomdata[yk] = roomdata[yk] or {}
-
-			for xk = 0, limit.mapwidth-1 do
-				roomdata[yk][xk] = roomdata[yk][xk] or {}
-
-				for yt = 0, ( yk-capped_height+1 < max_rooms_rows_outside_20xHEIGHT and 30 or xk < new_w%limit.mapwidth and max_tiles_rows_outside_20xHEIGHT%30 or max_tiles_rows_outside_20xHEIGHT%30 - 1 ) - 1 do
-					for xt = 0, 39 do
-						roomdata[yk][xk][yt*40 + xt+1] = roomdata[yk][xk][yt*40 + xt+1] or 0
-					end
+			if roomdata[y][x] == nil then
+				roomdata[y][x] = {}
+				for t = 1, 1200 do
+					roomdata[y][x][t] = 0
 				end
 			end
 		end
@@ -2375,14 +2355,6 @@ end
 function levelmetadata_get(x, y, uselevel2)
 	-- NOTE: Never set uselevel2 manually.
 	-- Instead, use levelmetadata2_get()
-	--
-	-- For the rooms after the first 20 rows, they essentially have default properties that can't be changed
-	-- (Unless you're willing to risk segfaulting upon loading the level by adding more room properties, which can be done, but the more you add the more you will overwrite and segfault)
-	-- But apparently some of them (sometimes?) have tileset 0 instead? Not really sure why
-	-- VVVVVV doesn't have direct mode on for these but manual mode would make it easier for these rooms to be edited in Ved
-	-- Also since plat bounds and enemy bounds are basically null, they fly off if they're not stuck in a tile
-	-- If you go further down enough script names from the script list will appear as roomnames, but I don't quite feel like emulating that in Ved
-	-- And if you keep going further down still the game will segfault
 	local usethislevelmetadata
 	if uselevel2 then
 		usethislevelmetadata = levelmetadata2
@@ -2390,39 +2362,11 @@ function levelmetadata_get(x, y, uselevel2)
 		usethislevelmetadata = levelmetadata
 	end
 
-	local voided_metadata = {
-		tileset = 1,
-		tilecol = 0,
-		platx1 = 0,
-		platy1 = 0,
-		platx2 = 320,
-		platy2 = 240,
-		platv = 4,
-		enemyx1 = 0,
-		enemyy1 = 0,
-		enemyx2 = 320,
-		enemyy2 = 240,
-		enemytype = 0,
-		directmode = 1,
-		warpdir = 0,
-		roomname = "",
-		auto2mode = 0,
-		voided = true,
-	}
-
-	if y >= limit.mapheight then
-		return voided_metadata
+	if usethislevelmetadata[y] == nil or usethislevelmetadata[y][x] == nil then
+		error("Attempt to levelmetadata_get for out-of-bounds room " .. x .. "," .. y)
 	end
 
-	local distortion = math.floor(x/limit.mapwidth)
-	x = x % limit.mapwidth
-	y = y + distortion
-
-	if y < limit.mapheight and usethislevelmetadata[y] ~= nil and usethislevelmetadata[y][x] ~= nil then
-		return usethislevelmetadata[y][x]
-	end
-
-	return voided_metadata
+	return usethislevelmetadata[y][x]
 end
 
 function levelmetadata_set(x, y, param1, param2)
@@ -2432,18 +2376,6 @@ function levelmetadata_set(x, y, param1, param2)
 		value = param2
 	else
 		value = param1
-	end
-
-	if y >= limit.mapheight then
-		return
-	end
-
-	local distortion = math.floor(x/limit.mapwidth)
-	x = x % limit.mapwidth
-	y = y + distortion
-
-	if y >= limit.mapheight then
-		return
 	end
 
 	if levelmetadata[y] == nil or levelmetadata[y][x] == nil then
@@ -2456,7 +2388,7 @@ function levelmetadata_set(x, y, param1, param2)
 		levelmetadata[y][x] = value
 	end
 
-	map_correspondreset(x, y, {DIRTY.PROPERTY})
+	map_resetroom(x, y)
 end
 
 function levelmetadata2_get(x, y)
@@ -2466,6 +2398,10 @@ end
 function roomdata_get(rx, ry, tx, ty, uselevel2)
 	-- NOTE: Never set uselevel2 manually.
 	-- Instead, use roomdata2_get()
+	if rx < 0 or ry < 0 or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+		error("Attempt to roomdata_get tile in out-of-bounds room " .. rx .. "," .. ry)
+	end
+
 	local usethisroomdata
 	if uselevel2 then
 		usethisroomdata = roomdata2
@@ -2474,68 +2410,22 @@ function roomdata_get(rx, ry, tx, ty, uselevel2)
 	end
 
 	local just_one_tile = tx ~= nil
-
-	local distortion = math.floor(rx/limit.mapwidth)
-
-	local repeated_rows = false
-	if ry >= limit.mapheight then
-		repeated_rows = true
-		ry = 0
-		ty = 0
-	end
-
-	local function tile_get(thery, therx, thetileidx)
-		if thery < limit.mapheight then
-			return usethisroomdata[thery][therx][thetileidx]
-		end
-		return 0
-	end
-
 	if just_one_tile then
 		if tx < 0 or tx > 39 or ty < 0 or ty > 29 then
 			error("Attempt to roomdata_get tile " .. tx .. "," .. ty .. ", which is out of room bounds")
 		end
 
-		rx = rx % limit.mapwidth
-		ry = ry + math.floor( (ty+distortion) / 30 )
-		ty = (ty+distortion) % 30
-
-		return tile_get(ry, rx, ty*40 + tx+1)
+		return usethisroomdata[ry][rx][ty*40 + tx+1]
 	end
 
-	if rx < limit.mapwidth and ry < limit.mapheight then
-		-- Fast path - don't create new tables for this if we don't need to
-		return usethisroomdata[ry][rx]
-	end
-
-	rx = rx % limit.mapwidth
-	ry = ry + math.floor(distortion/30)
-
-	distortion = distortion % 30
-
-	if repeated_rows then
-		local repeated_roomdata = {}
-		for ity = 1, 30 do
-			for itx = 1, 40 do
-				table.insert(repeated_roomdata, tile_get(ry, rx, distortion*40 + itx))
-			end
-		end
-		return repeated_roomdata
-	end
-
-	local distorted_roomdata = table.copy(usethisroomdata[ry][rx])
-
-	for ity = 1, distortion do
-		for itx = 1, 40 do
-			table.remove(distorted_roomdata, 1)
-			table.insert(distorted_roomdata, tile_get(ry+1, rx, (ity-1)*40 + itx))
-		end
-	end
-
-	return distorted_roomdata
+	return usethisroomdata[ry][rx]
 end
 
 function roomdata_set(rx, ry, param1, param2, param3)
+	if rx < 0 or ry < 0 or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+		return
+	end
+
 	local tx, ty, value
 	if param2 ~= nil then
 		tx = param1
@@ -2546,65 +2436,23 @@ function roomdata_set(rx, ry, param1, param2, param3)
 	end
 
 	local just_one_tile = tx ~= nil
-
-	local distortion = math.floor(rx/limit.mapwidth)
-
-	local repeated_rows = false
-	if ry >= limit.mapheight then
-		repeated_rows = true
-		ry = 0
-		ty = 0
-	end
-
 	if just_one_tile then
-		rx = rx % limit.mapwidth
-		ry = ry + math.floor( (ty+distortion) / 30 )
-		ty = (ty+distortion) % 30
-
-		if ry < limit.mapheight then
-			roomdata[ry][rx][ty*40 + tx+1] = value
-			map_correspondreset(rx, ry, {DIRTY.ROW}, {ty})
+		if tx < 0 or ty < 0 or tx >= 40 or ty >= 30 then
+			return
 		end
+
+		roomdata[ry][rx][ty*40 + tx+1] = value
+		map_resetroom(rx, ry)
 		return
 	end
 
-	rx = rx % limit.mapwidth
-
-	distortion = distortion % 30
-
-	if repeated_rows then
-		for itx = 1, 40 do
-			roomdata[ry][rx][distortion*40 + itx] = value[itx]
-		end
-
-		map_correspondreset(rx, ry, {DIRTY.ROW}, {distortion})
-		return
-	end
-
-	local topsectrows = {}
-	local bottomsectrows = {}
 	for ity = 0, 29 do
 		for itx = 0, 39 do
-			if ity < 30-distortion then
-				if ry < limit.mapheight then
-					roomdata[ry][rx][(ity+distortion)*40 + itx+1] = value[ity*40 + itx+1]
-					table.insert(topsectrows, ity+distortion)
-				end
-			else
-				if ry+1 < limit.mapheight then
-					roomdata[ry+1][rx][( (ity+distortion) % 30 )*40 + itx+1] = value[ity*40 + itx+1]
-					table.insert(bottomsectrows, (ity+distortion) % 30)
-				end
-			end
+			roomdata[ry][rx][ity*40 + itx+1] = value[ity*40 + itx+1]
 		end
 	end
 
-	if ry < limit.mapheight then
-		map_correspondreset(rx, ry, {DIRTY.ROW}, topsectrows)
-	end
-	if ry+1 < limit.mapheight then
-		map_correspondreset(rx, ry+1, {DIRTY.ROW}, bottomsectrows)
-	end
+	map_resetroom(rx, ry)
 end
 
 function roomdata2_get(rx, ry, tx, ty)
@@ -2614,9 +2462,7 @@ end
 function shiftrooms(direction, updatescripts)
 	dirty()
 
-	local width, height
-	width = math.min(metadata.mapwidth, limit.mapwidth)
-	height = math.min(metadata.mapheight, limit.mapwidth)
+	local width, height = metadata.mapwidth, metadata.mapheight
 
 	-- Copy the rooms that are on the edge
 	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
@@ -2810,9 +2656,7 @@ function shiftrooms(direction, updatescripts)
 	local transform = {}
 	transform[1] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
-		local width, height
-		width = math.min(metadata.mapwidth, limit.mapwidth)
-		height = math.min(metadata.mapheight, limit.mapheight)
+		local width, height = metadata.mapwidth, metadata.mapheight
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= width
 			local y_outofbounds = y < 0 or y >= width
@@ -2851,9 +2695,7 @@ function shiftrooms(direction, updatescripts)
 	end)
 	transform[2] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
-		local width, height
-		width = math.min(metadata.mapwidth, limit.mapwidth)
-		height = math.min(metadata.mapheight, limit.mapheight)
+		local width, height = metadata.mapwidth, metadata.mapheight
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= metadata.mapwidth
 			local y_outofbounds = y < 0 or y >= metadata.mapheight

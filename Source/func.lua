@@ -1492,15 +1492,15 @@ function compare_level_differences(second_level_name)
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
-			local firstlevelroomdatathisroom = roomdata_get(rx, ry)
+			local roomdata1 = roomdata_get(rx, ry)
 			for k,v in pairs(roomdata2_get(rx, ry)) do
 				if leftblank and v ~= 0 then
 					leftblank = false
 				end
-				if rightblank and firstlevelroomdatathisroom[k] ~= 0 then
+				if rightblank and roomdata1[k] ~= 0 then
 					rightblank = false
 				end
-				if not changed and v ~= firstlevelroomdatathisroom[k] then
+				if not changed and v ~= roomdata1[k] then
 					changed = true
 				end
 			end

@@ -563,7 +563,7 @@ function loadlevel(path)
 		cons_fc(FClist, langkeys(L.MAPHEIGHTINVALID, {anythingbutnil(thismetadata.mapheight)}))
 		thismetadata.mapheight = 1
 	end
-	if ((thismetadata.mapwidth > lvl.limit.mapwidth) or (thismetadata.mapheight > lvl.limit.mapheight)) and not s.allowbiggerthansizelimit then
+	if ((thismetadata.mapwidth > lvl.limit.mapwidth) or (thismetadata.mapheight > lvl.limit.mapheight)) then
 		FC = FC + 1
 		cons_fc(
 			FClist,
@@ -692,29 +692,15 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	-- The contents are gonna be the hardest!
 	cons("Assembling contents......")
 	local thenewcontents = {}
-	local nested_break = false
-	for lroomy = 0, math.min(lvl.metadata.mapheight, limit.mapheight)-1 do
-		yv = lvl.roomdata[lroomy]
+	for lroomy = 0, lvl.metadata.mapheight-1 do
 		-- We now have each y.....
 		cons("Y: " .. lroomy)
 		for line = 0, 29 do
 			-- (each line)
-			--for roomx, xv in pairs(yv) do
-			for lroomx = 0, (lvl.metadata.mapwidth-1) do
-				xv = yv[lroomx]
+			for lroomx = 0, lvl.metadata.mapwidth-1 do
 				-- .....And each x for each line
 				table.insert(thenewcontents, table.concat({unpack(lvl.roomdata[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
-				if lroomy == math.min(lvl.metadata.mapheight, limit.mapheight)-1 and lroomx == limit.mapwidth-1 and line == 29 then
-					nested_break = true
-					break
-				end
 			end
-			if nested_break then
-				break
-			end
-		end
-		if nested_break then
-			break
 		end
 	end
 	local xcontents = lvl.xml:find_or_add(xdata, "contents")
@@ -837,13 +823,7 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 
 	local all_platvs = {}
 	for y = 0, lvl.metadata.mapheight-1 do
-		if y >= limit.mapheight then
-			break
-		end
 		for x = 0, lvl.metadata.mapwidth-1 do
-			if x >= limit.mapwidth then
-				break
-			end
 			-- platv needs special handling, unfortunately.
 			table.insert(all_platvs, lvl.levelmetadata[y][x].platv)
 		end
