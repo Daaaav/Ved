@@ -624,6 +624,7 @@ end
 function VedXML:each_child_element(cur, name)
 	-- Iterate over each child instance that is called <name>.
 	-- If `name` is missing, match elements with any name (but not comments).
+	-- We do not get children OF child elements - only direct children.
 	-- cur: TAG_OPENING, TAG_SELFCLOSING
 	local iter = self:each_child_node(cur)
 
@@ -683,10 +684,10 @@ function VedXML:each_child_token(cur, nodes_only)
 			next_token_of = cur
 		end
 
-		if cur == self.last_token then
+		if next_token_of == self.last_token then
 			self:tokenize_one()
 		end
-		cur = self.token_list[cur].next
+		cur = self.token_list[next_token_of].next
 
 		-- The start token's spouse might still be 0 if it's not tokenized yet,
 		-- but as soon as we tokenize its spouse, we'll find out we reached it here.
@@ -885,13 +886,13 @@ function VedXML:ch_decode(str, byte_cursor, ch_offset)
 			codepoint = first
 		elseif starts_10(first) then
 			-- 10xx xxxx - unexpected continuation byte
-			self:raise_error("Invalid UTF-8")
+			self:raise_error("Invalid UTF-8 at byte " .. byte_cursor)
 		elseif starts_110(first) then
 			-- 110x xxxx - 2-byte sequence
 			nbytes = 2
 			local second = str:byte(byte_cursor + 1)
 			if second == nil or not starts_10(second) then
-				self:raise_error("Invalid UTF-8")
+				self:raise_error("Invalid UTF-8 at byte " .. byte_cursor)
 			end
 			codepoint = (first-0xC0)*64 + (second-0x80)
 		elseif starts_1110(first) then
@@ -901,7 +902,7 @@ function VedXML:ch_decode(str, byte_cursor, ch_offset)
 			local third = str:byte(byte_cursor + 2)
 			if second == nil or third == nil
 			or not starts_10(second) or not starts_10(third) then
-				self:raise_error("Invalid UTF-8")
+				self:raise_error("Invalid UTF-8 at byte " .. byte_cursor)
 			end
 			codepoint = (first-0xE0)*4096 + (second-0x80)*64 + (third-0x80)
 		elseif starts_11110(first) then
@@ -912,12 +913,12 @@ function VedXML:ch_decode(str, byte_cursor, ch_offset)
 			local fourth = str:byte(byte_cursor  + 3)
 			if second == nil or third == nil or fourth == nil
 			or not starts_10(second) or not starts_10(third) or not starts_10(fourth) then
-				self:raise_error("Invalid UTF-8")
+				self:raise_error("Invalid UTF-8 at byte " .. byte_cursor)
 			end
 			codepoint = (first-0xF0)*262144 + (second-0x80)*4096 + (third-0x80)*64 + (fourth-0x80)
 		else
 			-- 1111 1xxx - invalid
-			self:raise_error("Invalid UTF-8")
+			self:raise_error("Invalid UTF-8 at byte " .. byte_cursor)
 		end
 
 		-- Overlong sequence?

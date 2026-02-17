@@ -221,6 +221,7 @@ These are all functions for the `VedXML` class (aka the document object).
 :each_child_element(cur, name)
 	-- Iterate over each child instance that is called <name>.
 	-- If `name` is missing, match elements with any name (but not comments).
+	-- We do not get children OF child elements - only direct children.
 	-- cur: TAG_OPENING, TAG_SELFCLOSING
 ```
 
