@@ -19,6 +19,8 @@ return function(key)
 			saveroomname()
 		elseif key == "escape" then
 			cancel_editing_roomname()
+		elseif key == "e" and keyboard_eitherIsDown(ctrl) then
+			edit_special_roomnames()
 		end
 		return
 	end
@@ -317,10 +319,14 @@ return function(key)
 		temporaryroomnametimer = 90
 	elseif key == "e" then
 		-- Edit room name
-		toggleeditroomname()
+		if keyboard_eitherIsDown(ctrl) then
+			edit_special_roomnames()
+		else
+			toggleeditroomname()
 
-		-- Stop that extra e from getting into the roomname...
-		nodialog = false
+			-- Stop that extra e from getting into the roomname...
+			nodialog = false
+		end
 	elseif key == "s" then
 		-- Save
 		--tostate(8)

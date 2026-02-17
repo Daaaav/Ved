@@ -1148,10 +1148,22 @@ function toggleeditroomname()
 	if editingroomname then
 		saveroomname()
 	else
-		editingroomname = true
-		tilespicker = false
-		newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
+		-- If we have any special roomnames in this room, go to the special editor immediately!
+		if level.specialroomnames[roomy] ~= nil
+		and level.specialroomnames[roomy][roomx] ~= nil
+		and #level.specialroomnames[roomy][roomx] >= 1 then
+			edit_special_roomnames()
+		else
+			editingroomname = true
+			tilespicker = false
+			newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
+		end
 	end
+end
+
+function edit_special_roomnames()
+	cancel_editing_roomname()
+	tostate(38)
 end
 
 function tilespicker_last_page_number()
@@ -3414,6 +3426,7 @@ function load_uis()
 	uis[35] = load_ui("vvvvvvsetupoptions")
 	uis[36] = load_ui("textboxcolors")
 	uis[37] = load_ui("theme")
+	uis[38] = load_ui("specialroomnames")
 	-- Don't forget states.txt
 
 	for k,v in pairs(plugin_uis) do

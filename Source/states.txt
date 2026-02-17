@@ -40,3 +40,4 @@ States:
 35	"VVVVVV setup" options
 36	Textbox colors
 37	Theme selection
+38	Special roomnames

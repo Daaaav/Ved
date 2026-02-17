@@ -380,6 +380,20 @@ function dialog.form.files_make(startfolder, defaultname, filter, show_hidden, l
 	return form
 end
 
+function dialog.form.create_specialroomname_make()
+	return {
+		{"mode", 0, 0, 0, "static", DF.RADIOS,
+			generate_dropdown_tables(
+				{
+					{"static", L.SPECIALROOMNAME_STATIC},
+					{"glitch", L.SPECIALROOMNAME_GLITCH},
+					{"transform", L.SPECIALROOMNAME_TRANSFORM},
+				}
+			)
+		},
+	}
+end
+
 function dialog.form.hidden_make(values, existing_form)
 	local form
 	if existing_form == nil then
@@ -1390,5 +1404,44 @@ function dialog.callback.create_textboxcolor(button, fields)
 	textboxcolors_editingcolor = fields.name
 
 	textboxcolors_update_elements()
+	dirty()
+end
+
+function dialog.callback.create_specialroomname(button, fields)
+	if button ~= DB.OK then
+		return
+	end
+
+	if level.specialroomnames[roomy] == nil then
+		level.specialroomnames[roomy] = {}
+	end
+	if level.specialroomnames[roomy][roomx] == nil then
+		level.specialroomnames[roomy][roomx] = {}
+		table.insert(level.specialroomnames_order, {x=roomx, y=roomy})
+	end
+
+	local standard = levelmetadata_get(roomx, roomy).roomname
+	local name
+	if fields.mode == "static" then
+		name = standard
+	elseif fields.mode == "transform" then
+		name = {standard}
+	else
+		name = {standard, standard}
+	end
+
+	table.insert(level.specialroomnames[roomy][roomx],
+		{
+			mode = fields.mode,
+			flag = -1,
+			loop = false,
+			name = name,
+			progress = 0
+		}
+	)
+
+	start_editing_specialroomname(#level.specialroomnames[roomy][roomx])
+
+	specialroomnames_update_elements()
 	dirty()
 end

@@ -689,18 +689,35 @@ return function()
 	local additionalbutton_yoffset = additionalbutton and 166 or 164
 	local additionalbutton_spacing = additionalbutton and 20 or 24
 
-	if additionalbutton then
-		rbutton("...", 0, 166, true, 20)
+	if not editingroomname then
+		if additionalbutton then
+			rbutton("...", 0, 166, true, 20)
+		end
+
+		rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+		rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+
+		rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+		rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	else
+		rbutton({L.BTN_ADVANCED, "cE"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	end
 
-	rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+	rbutton(
+		{not editingroomname and L.ROOMNAME or L.SAVE, not editingroomname and "E" or "n"},
+		4+additionalbutton_np,
+		additionalbutton_yoffset,
+		true,
+		additionalbutton_spacing
+	) -- (6*16)+16+24+12+16
 
-	rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-	rbutton({L.ROOMNAME, not editingroomname and "E" or "n"}, 4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing, editingroomname) -- (6*16)+16+24+12+16
-
-	font_ui:printf(L.ROOMOPTIONS, love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-300)+8, 128-16, "center") -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
+	font_ui:printf(
+		editingroomname and L.ROOMNAME or L.ROOMOPTIONS,
+		love.graphics.getWidth()-(128-8),
+		(love.graphics.getHeight()-300)+8,
+		128-16,
+		"center"
+	) -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
 
 	-- Well make them actually do something!
 	if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -826,6 +843,18 @@ return function()
 			mousepressed = true
 
 		-- Room options now
+		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+			-- Roomname
+			toggleeditroomname()
+
+			mousepressed = true
+		elseif editingroomname then
+			-- If we're editing the roomname, all other buttons are taken over by the roomname buttons
+			if onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
+				edit_special_roomnames()
+				mousepressed = true
+			end
+
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
 			-- ...
 
@@ -849,11 +878,6 @@ return function()
 		elseif onrbutton(3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Warp dir
 			changewarpdir()
-
-			mousepressed = true
-		elseif onrbutton(4+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
-			-- Roomname
-			toggleeditroomname()
 
 			mousepressed = true
 		end
