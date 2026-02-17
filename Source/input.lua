@@ -104,6 +104,7 @@ local input = {
 	newlinechars = {},
 
 	areas = {},
+	ibeam_set = {}
 }; newinputsys = input
 
 inputs = {}
@@ -206,6 +207,7 @@ function input.close(id, updatemappings)
 	input.newlinechars[id] = nil
 
 	input.areas[id] = nil
+	input.ibeam_set[id] = false
 
 	local thestate = input.stateof[id]
 	input.stateof[id] = nil
@@ -376,14 +378,18 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 	end
 
 	if mouseoninput and not RCMactive then
-		love.mouse.setCursor(text_cursor)
-		special_cursor = true
+		if not input.ibeam_set[id] then
+			love.mouse.setCursor(text_cursor)
+			special_cursor = true
+			input.ibeam_set[id] = true
+		end
 
 		if (love.mouse.isDown("l") or love.mouse.isDown("r")) and not input.ignoremousepressed then
 			input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 		end
-	else
+	elseif input.ibeam_set[id] then
 		reset_special_cursor()
+		input.ibeam_set[id] = false
 	end
 
 	-- Selection
