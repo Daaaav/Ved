@@ -30,7 +30,10 @@ local function save_current_roomname()
 end
 
 function start_editing_specialroomname(k)
-	local roomnames = level.specialroomnames[roomy][roomx]
+	local roomnames
+	if k ~= 0 then
+		roomnames = level.specialroomnames[roomy][roomx]
+	end
 	if k == 0 then
 		newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
 	elseif roomnames[k].mode == "static" then
@@ -95,7 +98,7 @@ function specialroomnames_update_elements()
 					local button_a = 128
 					if specialroomnames_editing == k then
 						button_rgb = 192
-						button_a = 255
+						button_a = 192
 					end
 					local hovering = hoverrectangle(button_rgb,button_rgb,button_rgb,button_a, x, y, 324, 32)
 					love.graphics.setColor(0, 0, 0)
@@ -126,7 +129,11 @@ function specialroomnames_update_elements()
 					else
 						if roomnames[k].flag ~= -1 then
 							font_8x8:print("⚑", x+4, y+4)
-							font_level:print(roomnames[k].flag, x+16, y+4)
+							local flagname = roomnames[k].flag
+							if level.vedmetadata and level.vedmetadata.flaglabel[flagname] ~= "" then
+								flagname = level.vedmetadata.flaglabel[flagname]
+							end
+							font_level:print(flagname, x+16, y+4)
 						end
 						if roomnames[k].mode == "static" then
 							if specialroomnames_editing ~= k then
@@ -205,7 +212,7 @@ function specialroomnames_update_elements()
 
 	table.insert(
 		roomname_elements,
-		Text(L.HINT_LAST_ROOMNAME, function() return 64, 64, 64 end)
+		WrappedText(L.HINT_LAST_ROOMNAME, 324, nil, function() return 64, 64, 64 end)
 	)
 
 	uis[state].drawn = false
@@ -398,7 +405,7 @@ return {
 						{}, nil, 16, VALIGN.TOP, 0, 4
 					),
 					Spacer(0, 12),
-					WrappedText(L.SPECIALROOMNAME_THIS_FLAG),
+					Text(L.SPECIALROOMNAME_THIS_FLAG),
 					Spacer(0, 6),
 					LabelButton(
 						function()
@@ -409,9 +416,19 @@ return {
 							if flag == -1 then
 								return L.SPECIALROOMNAME_NO_FLAG
 							end
-							return tostring(flag)
+							local flagname = L.FLAGNONAME
+							if level.vedmetadata and level.vedmetadata.flaglabel[flag] ~= "" then
+								flagname = level.vedmetadata.flaglabel[flag]
+							end
+							return tostring(flag) .. " - " .. flagname
 						end,
-						function() end, -- don't forget dirty
+						function()
+							mousepressed = true
+							tostate(
+								19, false, "specialroomname",
+								level.specialroomnames[roomy][roomx][specialroomnames_editing].flag
+							)
+						end,
 						nil, nil,
 						function()
 							if specialroomnames_editing == 0 then
@@ -419,7 +436,7 @@ return {
 							end
 							return true, true
 						end,
-						nil, nil, 230
+						nil, nil, 232
 					),
 					Spacer(0, 18),
 
@@ -499,7 +516,7 @@ return {
 			LabelButton(L.RETURN,
 				function()
 					save_current_roomname()
-					tostate(oldstate, true)
+					tostate(1, true)
 				end,
 				"b", hotkey("escape")
 			),

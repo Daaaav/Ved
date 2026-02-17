@@ -12,9 +12,20 @@ return function()
 			end
 			local ax, ay, w, h = pos_x, 24+flk*16, btn_width - 8, 16
 
-			if nodialog and mouseon(ax, ay, w, h) then
-				love.graphics.setColor(128,128,128,255)
+			local btn_r, btn_g, btn_b, btn_a = 128, 128, 128, 128
+			if not usedflags[flag] then
+				btn_a = 64
+			end
+			if flags_picker ~= nil and flags_picker_current == flag then
+				btn_r, btn_g, btn_b = 160, 160, 0
+				if btn_a < 80 then
+					btn_a = 80
+				end
+			end
 
+			local hovering = hoverrectangle(btn_r, btn_g, btn_b, btn_a, ax, ay, w, h, false, 0.9)
+
+			if hovering then
 				if not mousepressed and nodialog and mousereleased_flag then
 					flgnum = flag -- not local, is used in dialog, TODO make it just passed to the dialog in a way
 
@@ -57,26 +68,22 @@ return function()
 					mousereleased_flag = false
 				elseif not mousepressed and nodialog and love.mouse.isDown("l") then
 					mousepressed = true
-					mousepressed_flag = true
-					mousepressed_flag_x = love.mouse.getX()
-					mousepressed_flag_y = love.mouse.getY()
-					mousepressed_flag_num = flag
-					if level.vedmetadata then
-						mousepressed_flag_name = level.vedmetadata.flaglabel[mousepressed_flag_num]
+					if flags_picker == nil then
+						mousepressed_flag = true
+						mousepressed_flag_x = love.mouse.getX()
+						mousepressed_flag_y = love.mouse.getY()
+						mousepressed_flag_num = flag
+						if level.vedmetadata then
+							mousepressed_flag_name = level.vedmetadata.flaglabel[mousepressed_flag_num]
+						end
+					elseif flags_picker == "specialroomname" then
+						dirty()
+						level.specialroomnames[roomy][roomx][specialroomnames_editing].flag = flag
+						specialroomnames_update_elements()
+						tostate(oldstate, true)
 					end
 				end
-			else
-				love.graphics.setColor(64,64,64,128)
-
-				local flgnum2 = flag
-				local used = usedflags[flgnum2]
-				if used then
-					love.graphics.setColor(128,128,128,128)
-				end
 			end
-
-			love.graphics.rectangle("fill", ax, ay, w, h)
-			love.graphics.setColor(255,255,255,255)
 
 			local text = fixdig(flag, flags_digits, " ")
 			font_ui:printf(text, ax+2, ay+4, w-4, font_ui:align_start())
@@ -101,12 +108,33 @@ return function()
 
 	love.graphics.setColor(255,255,255,255)
 
-	font_ui:print(L.FLAGS, 8, 8)
-	font_ui:printf(flags_usedtext, 8, 8, love.graphics.getWidth()-16, "right")
-	font_ui:print(flags_outofrangeflagstext, 8, 440)
+	if flags_picker == nil then
+		font_ui:print(L.FLAGS, 8, 8)
+		font_ui:printf(flags_usedtext, 8, 8, love.graphics.getWidth()-16, "right")
+		font_ui:print(flags_outofrangeflagstext, 8, 440)
+	elseif flags_picker == "specialroomname" then
+		font_ui:print(L.FLAGS_SPECIALROOMNAME, 8, 8)
 
-	if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1 and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
-		local t = mousepressed_flag_num .. " - " .. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
+		local yellow = flags_picker_current == -1
+		local btn_w = 232
+		local btn_x, btn_y = (love.graphics.getWidth()-btn_w)/2, 432
+		local hovering = hoverrectangle(
+			yellow and 160 or 128,yellow and 160 or 128,yellow and 0 or 128,128,
+			btn_x, btn_y, btn_w, 16
+		)
+		font_ui:printf(L.SPECIALROOMNAME_NO_FLAG, btn_x, btn_y+4, btn_w, "center")
+		if hovering and not mousepressed and nodialog and love.mouse.isDown("l") then
+			dirty()
+			level.specialroomnames[roomy][roomx][specialroomnames_editing].flag = -1
+			specialroomnames_update_elements()
+			tostate(oldstate, true)
+		end
+	end
+
+	if nodialog and mousepressed_flag_x ~= -1 and mousepressed_flag_y ~= -1
+	and (mousepressed_flag_x ~= love.mouse.getX() or mousepressed_flag_y ~= love.mouse.getY()) then
+		local t = mousepressed_flag_num .. " - "
+			.. (anythingbutnil(mousepressed_flag_name) ~= "" and anythingbutnil(mousepressed_flag_name) or L.FLAGNONAME)
 		love.graphics.setColor(128,128,128,128)
 		love.graphics.rectangle(
 			"fill",
@@ -136,7 +164,7 @@ return function()
 		end
 	end
 
-	rbutton({L.RETURN, "b"}, 0, nil, true)
+	rbutton({flags_picker ~= nil and L.BTN_CANCEL or L.RETURN, "b"}, 0, nil, true)
 
 	if nodialog and love.mouse.isDown("l") then
 		if onrbutton(0, nil, true) then

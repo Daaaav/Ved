@@ -621,16 +621,17 @@ function hoverrectangle_noshine(r, g, b, a, x, y, w, h, thisbelongstoarightclick
 	return hovering
 end
 
-function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
-	local callret = theme:call("draw_button", r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu)
+function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu, darkfactor)
+	local callret = theme:call("draw_button", r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu, darkfactor)
 	if callret ~= nil then
 		return callret
 	end
-	local darkfactor
-	if thisbelongstoarightclickmenu then
-		darkfactor = 0.9
-	else
-		darkfactor = 0.75
+	if darkfactor == nil then
+		if thisbelongstoarightclickmenu then
+			darkfactor = 0.9
+		else
+			darkfactor = 0.75
+		end
 	end
 
 	local hovering = (nodialog or thisbelongstoarightclickmenu) and mouseon(x, y, w, h) and window_active()

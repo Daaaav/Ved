@@ -1,8 +1,12 @@
 -- scriptflags/load
 
-return function()
+return function(picker_mode, picked)
 	flags_digits = tostring(limit.flags-1):len()
 	flags_page = 0
+
+	-- nil for regular flags list, or a string for a picker
+	flags_picker = picker_mode
+	flags_picker_current = picked
 
 	mousepressed_flag = false
 	mousepressed_flag_x = -1
