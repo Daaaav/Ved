@@ -231,13 +231,13 @@ return function()
 	love.graphics.setColor(ic_r, ic_g, ic_b, 255)
 	theme:draw(ic, 8, 4)
 
-	if mouseon(8, 4, theme:get_dimensions(script_warn_lights.direct_reference.img)) then
+	if mouseon(8, 4, theme:get_dimensions(ic)) then
 		local box_w, box_h = tooltip_box_dimensions(ic_explanation, "", nil)
 		tooltip_box_draw(
 			ic_explanation,
 			"",
 			nil,
-			8, 4+script_warn_lights.direct_reference.img:getHeight()+1,
+			8, 4+theme:get_height(ic)+1,
 			box_w, box_h,
 			ic_r, ic_g, ic_b
 		)
