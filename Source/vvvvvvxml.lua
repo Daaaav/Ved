@@ -544,6 +544,56 @@ function loadlevel(path)
 				end
 			end
 		end
+
+		local xspecialroomnames = xml:find_or_nil(xdata, "SpecialRoomnames")
+		if xspecialroomnames ~= nil then
+			for roomname in xml:each_child_element(xspecialroomnames) do
+				local mode = xml:get_name(roomname)
+				local attr = xml:get_attributes(roomname)
+				local rx, ry, flag = tonumber(attr.x), tonumber(attr.y), tonumber(attr.flag)
+				if rx == nil then rx = 0 end
+				if ry == nil then ry = 0 end
+				if flag == nil then flag = -1 end
+				local loop = attr.loop == "1"
+
+				local name
+				if mode == "transform" or mode == "glitch" then
+					name = {}
+					for child in xml:each_child_element(roomname, "text") do
+						table.insert(name, xml:get_text(child))
+					end
+					if mode == "transform" then
+						if #name < 1 then
+							table.insert(name, "")
+						end
+					else
+						while #name < 2 do
+							table.insert(name, "")
+						end
+					end
+				else
+					mode = "static"
+					name = xml:get_text(roomname)
+				end
+
+				if lvl.specialroomnames[ry] == nil then
+					lvl.specialroomnames[ry] = {}
+				end
+				if lvl.specialroomnames[ry][rx] == nil then
+					lvl.specialroomnames[ry][rx] = {}
+					table.insert(lvl.specialroomnames_order, {x=rx, y=ry})
+				end
+				table.insert(lvl.specialroomnames[ry][rx],
+					{
+						mode = mode,
+						flag = flag,
+						loop = loop,
+						name = name,
+						progress = 0
+					}
+				)
+			end
+		end
 	end)
 
 	if not success then
@@ -900,6 +950,49 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	end
 	if not any_color_tag then
 		lvl.xml:delete_each_child_element(xdata, "TextboxColours")
+	end
+
+	local any_roomname_tag = false
+	local xspecialroomnames
+	for _,room in pairs(lvl.specialroomnames_order) do
+		for k,roomname in pairs(lvl.specialroomnames[room.y][room.x]) do
+			if not any_roomname_tag then
+				-- Like <colour> above - this is the first special roomname tag!
+				xspecialroomnames = lvl.xml:find_or_add(xdata, "SpecialRoomnames")
+				lvl.xml:clear_open(xspecialroomnames)
+				any_roomname_tag = true
+			end
+			local xroomname = lvl.xml:add_element_in_last(xspecialroomnames, roomname.mode)
+			lvl.xml:set_attribute(xroomname, "x", room.x)
+			lvl.xml:set_attribute(xroomname, "y", room.y)
+			if roomname.flag ~= -1 then
+				lvl.xml:set_attribute(xroomname, "flag", roomname.flag)
+			end
+			if roomname.mode == "transform" then
+				lvl.xml:set_attribute(xroomname, "loop", roomname.loop and "1" or "0")
+			end
+			if roomname.mode == "transform" or roomname.mode == "glitch" then
+				for k2,item in pairs(roomname.name) do
+					local item_tag = lvl.xml:add_element_in_last(xroomname, "text")
+					if item:gsub(" ", "") == "" then
+						-- Workaround TinyXML gotcha with a CDATA...
+						lvl.xml:add_text_in_first(item_tag, item, true)
+					else
+						lvl.xml:set_text(item_tag, item)
+					end
+				end
+			else
+				if roomname.name:gsub(" ", "") == "" then
+					-- Workaround TinyXML gotcha with a CDATA...
+					lvl.xml:add_text_in_first(xroomname, roomname.name, true)
+				else
+					lvl.xml:set_text(xroomname, roomname.name)
+				end
+			end
+		end
+	end
+	if not any_roomname_tag then
+		lvl.xml:delete_each_child_element(xdata, "SpecialRoomnames")
 	end
 
 	-- Alright, let's save!

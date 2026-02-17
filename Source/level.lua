@@ -24,6 +24,8 @@ function Level:new()
 	o.vedmetadata = false
 	o.textboxcolors = {}
 	o.textboxcolors_order = {}
+	o.specialroomnames = {}
+	o.specialroomnames_order = {}
 
 	return o
 end
