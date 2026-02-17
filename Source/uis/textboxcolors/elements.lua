@@ -138,105 +138,91 @@ return {
 			),
 		}, {}, nil, nil, VALIGN.TOP
 	),
-	FloatContainer(
-		ListContainer(
-			{
-				DrawingFunction(
-					function(x, y, maxw, maxh)
-						if textboxcolors_editingcolor == nil then
+	IfContainer(
+		function()
+			return textboxcolors_editingcolor ~= nil
+		end,
+		FloatContainer(
+			ListContainer(
+				{
+					DrawingFunction(
+						function(x, y, maxw, maxh)
+							local center = x + maxw/2
+							local textbox_x = center - font_level:getWidth(textboxcolors_editingcolor) - 16
+							local textbox_y = (86 - 32 - font_level:getHeight()*2) / 2
+
+							vvvvvv_textbox(
+								textboxcolors_editingcolor,
+								textbox_x,
+								textbox_y,
+								{textboxcolors_editingcolor},
+								true
+							)
+
 							return 160, 0
 						end
-
-						local center = x + maxw/2
-						local textbox_x = center - font_level:getWidth(textboxcolors_editingcolor) - 16
-						local textbox_y = (86 - 32 - font_level:getHeight()*2) / 2
-
-						vvvvvv_textbox(
-							textboxcolors_editingcolor,
-							textbox_x,
-							textbox_y,
-							{textboxcolors_editingcolor},
-							true
-						)
-
-						return 160, 0
-					end
-				)
-			},
-			{
-				LabelButton(L.DUPLICATE, create_textboxcolor_dialog(false, false), nil, nil,
-					function()
-						if textboxcolors_editingcolor == nil then
-							return false, false
+					)
+				},
+				{
+					LabelButton(L.DUPLICATE, create_textboxcolor_dialog(false, false), nil, nil),
+					LabelButton(L.RENAME, create_textboxcolor_dialog(false, true), nil, nil,
+						function()
+							return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
 						end
-						return true, true
-					end
-				),
-				LabelButton(L.RENAME, create_textboxcolor_dialog(false, true), nil, nil,
-					function()
-						if textboxcolors_editingcolor == nil then
-							return false, false
-						end
-						return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
-					end
-				),
-				LabelButton(
-					function()
-						if textboxcolors[textboxcolors_editingcolor] ~= nil then
-							return L.RESET
-						end
-						return L.DELETE
-					end,
-					function()
-						level.textboxcolors[textboxcolors_editingcolor] = nil
-						for k,v in pairs(level.textboxcolors_order) do
-							if v == textboxcolors_editingcolor then
-								table.remove(level.textboxcolors_order, k)
-								break
+					),
+					LabelButton(
+						function()
+							if textboxcolors[textboxcolors_editingcolor] ~= nil then
+								return L.RESET
 							end
+							return L.DELETE
+						end,
+						function()
+							level.textboxcolors[textboxcolors_editingcolor] = nil
+							for k,v in pairs(level.textboxcolors_order) do
+								if v == textboxcolors_editingcolor then
+									table.remove(level.textboxcolors_order, k)
+									break
+								end
+							end
+							if textboxcolors[textboxcolors_editingcolor] == nil then
+								-- Only "deselect" if this isn't a built-in color
+								textboxcolors_editingcolor = nil
+							end
+							textboxcolors_update_elements()
+							dirty()
+						end,
+						"DEL",
+						hotkey("delete"),
+						function()
+							return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
 						end
-						if textboxcolors[textboxcolors_editingcolor] == nil then
-							-- Only "deselect" if this isn't a built-in color
-							textboxcolors_editingcolor = nil
-						end
-						textboxcolors_update_elements()
-						dirty()
-					end,
-					"DEL",
-					hotkey("delete"),
-					function()
-						if textboxcolors_editingcolor == nil then
-							return false, false
-						end
-						return true, level.textboxcolors[textboxcolors_editingcolor] ~= nil
-					end
-				),
-				LabelButtonSpacer(),
-				ColorPicker(
-					function()
-						if textboxcolors_editingcolor ~= nil then
+					),
+					LabelButtonSpacer(),
+					ColorPicker(
+						function()
 							return get_textbox_color(textboxcolors_editingcolor)
+						end,
+						function(r, g, b)
+							if level.textboxcolors[textboxcolors_editingcolor] == nil then
+								-- Color didn't exist yet...
+								level.textboxcolors[textboxcolors_editingcolor] = {}
+								table.insert(level.textboxcolors_order, textboxcolors_editingcolor)
+							end
+							level.textboxcolors[textboxcolors_editingcolor][1] = r
+							level.textboxcolors[textboxcolors_editingcolor][2] = g
+							level.textboxcolors[textboxcolors_editingcolor][3] = b
+							dirty()
 						end
-					end,
-					function(r, g, b)
-						if level.textboxcolors[textboxcolors_editingcolor] == nil then
-							-- Color didn't exist yet...
-							level.textboxcolors[textboxcolors_editingcolor] = {}
-							table.insert(level.textboxcolors_order, textboxcolors_editingcolor)
-						end
-						level.textboxcolors[textboxcolors_editingcolor][1] = r
-						level.textboxcolors[textboxcolors_editingcolor][2] = g
-						level.textboxcolors[textboxcolors_editingcolor][3] = b
-						dirty()
-					end
-				),
-			},
-			nil, nil, ALIGN.CENTER, 0, 8
-		),
-		love.graphics.getWidth()-128-176,
-		0,
-		160,
-		love.graphics.getHeight()
+					),
+				},
+				nil, nil, ALIGN.CENTER, 0, 8
+			),
+			love.graphics.getWidth()-128-176,
+			0,
+			160,
+			love.graphics.getHeight()
+		)
 	),
 	RightBar(
 		{

@@ -169,6 +169,7 @@ function cDialog:draw(topmost)
 	love.graphics.setScissor(self.x, self.y+self.windowani, self.width, self.height)
 	font_ui:printf(self.text, self.x+10, self.y+self.windowani+10, self.width-20, textalign)
 	love.graphics.setScissor()
+	self:setColor(255,255,255,255)
 
 	-- Text boxes
 	local fieldactive = false

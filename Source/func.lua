@@ -2123,6 +2123,24 @@ function handle_scrolling(viakeyboard, mkinput, customdistance, x, y)
 				input = anythingbutnil(helparticlecontent[helpeditingline])
 			end
 		end
+	else
+		local el = get_scrollable_element(x, y)
+		if el == nil then
+			return
+		end
+
+		if direction == "u" then
+			el.scroll = el.scroll + distance
+			if el.scroll > 0 then
+				el.scroll = 0
+			end
+		elseif direction == "d" then
+			el.scroll = el.scroll - distance
+			local upperbound = (el.child_ph - el.ph) -- scrollableHeight - visiblePart
+			if -el.scroll > upperbound then
+				el.scroll = math.min(-upperbound, 0)
+			end
+		end
 	end
 end
 
@@ -2136,7 +2154,33 @@ function is_scrollable(x, y)
 	if state == 6 and x < love.graphics.getWidth()-128 then
 		return true
 	end
+	if get_scrollable_element(x, y) ~= nil then
+		return true
+	end
 	return false
+end
+
+function get_scrollable_element(x, y)
+	if uis[state] == nil or uis[state].elements == nil then
+		return nil
+	end
+
+	local found = nil
+
+	local function caller(e)
+		if e.is_scrollable and found == nil
+		and x >= e.px and x < e.px+e.pw and y >= e.py and y < e.py+e.ph then
+			found = e
+		end
+	end
+	for k,v in elements_iter(uis[state].elements) do
+		caller(v)
+		if v.recurse ~= nil then
+			v:recurse("is_scrollable", caller)
+		end
+	end
+
+	return found
 end
 
 function get_all_languages()

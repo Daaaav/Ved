@@ -219,6 +219,213 @@ function elScreenContainer:recurse(name, func, ...)
 end
 
 
+-- Like a ScreenContainer, but can scroll vertically when the contents are too high.
+-- This has a static width and height, or nil to fill the remaining parent w/h.
+-- The scrollbar will take away some available width from the children (even when hidden):
+-- it's 16px wide, and you probably want 4px of space to the left of it, so 20px in total
+elScrollContainer =
+{
+	px = 0, py = 0,
+	pw = 0, ph = 0,
+	cw = nil, ch = nil,
+	is_scrollable = true,
+	always_show_scrollbar = true,
+	scroll = 0,
+	child_ph = 0,
+	el = nil
+}
+
+function elScrollContainer:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function ScrollContainer(el, cw, ch, always_show_scrollbar)
+	if always_show_scrollbar == nil then always_show_scrollbar = true end
+
+	return elScrollContainer:new{
+		cw = cw, ch = ch,
+		always_show_scrollbar = always_show_scrollbar,
+		scroll = 0,
+		el = el
+	}
+end
+
+function elScrollContainer:draw(x, y, maxw, maxh)
+	self.px, self.py = x, y
+	local cw, ch = self.cw, self.ch
+	if cw == nil then cw = maxw end
+	if ch == nil then ch = maxh end
+	self.pw, self.ph = cw, ch
+
+	local oldsc_x, oldsc_y, oldsc_w, oldsc_h = love.graphics.getScissor()
+
+	love.graphics.setScissor(x, y, cw, ch)
+
+	local child_pw, child_ph = self.el:draw(x, y+self.scroll, cw - 20, ch)
+	self.child_ph = child_ph
+
+	if self.always_show_scrollbar or allowdebug or child_ph > ch then
+		local newfraction = scrollbar(
+			x + cw - 16, y, ch, child_ph,
+			(-self.scroll)/(child_ph - ch)
+		)
+
+		if newfraction ~= nil then
+			self.scroll = -(newfraction*(child_ph - ch))
+		end
+	end
+
+	love.graphics.setScissor(oldsc_x, oldsc_y, oldsc_w, oldsc_h)
+
+	return self.pw, self.ph
+end
+
+function elScrollContainer:recurse(name, func, ...)
+	func(self.el, ...)
+	if self.el.recurse ~= nil then
+		self.el:recurse(name, func, ...)
+	end
+end
+
+
+-- Adds padding so the child element has a little less space.
+-- This has a static width and height, or nil to fill the remaining parent w/h.
+elPaddingContainer =
+{
+	px = 0, py = 0,
+	pw = 0, ph = 0,
+	cw = nil, ch = nil,
+	padding_l = 0, padding_r = 0,
+	padding_t = 0, padding_b = 0,
+	el = nil
+}
+
+function elPaddingContainer:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function PaddingContainer(el, cw, ch, padding_t, padding_l, padding_b, padding_r)
+	-- The four padding arguments are all optional -
+	-- if only part of them are supplied the following
+	-- happens (almost like in CSS):
+	-- 4: T L B R
+	-- 3: T LR B
+	-- 2: TB LR
+	-- 1: all sides
+	if padding_t == nil then padding_t = 0 end
+	if padding_l == nil then padding_l = padding_t end
+	if padding_b == nil then padding_b = padding_t end
+	if padding_r == nil then padding_r = padding_l end
+
+	return elPaddingContainer:new{
+		cw = cw, ch = ch,
+		padding_l = padding_l, padding_r = padding_r,
+		padding_t = padding_t, padding_b = padding_b,
+		el = el
+	}
+end
+
+function elPaddingContainer:draw(x, y, maxw, maxh)
+	self.px, self.py = x, y
+	local cw, ch = self.cw, self.ch
+	if cw == nil then cw = maxw end
+	if ch == nil then ch = maxh end
+	self.pw, self.ph = cw, ch
+
+	self.el:draw(
+		x + self.padding_l,
+		y + self.padding_t,
+		maxw - (self.padding_l + self.padding_r),
+		maxh - (self.padding_t + self.padding_b)
+	)
+
+	return self.pw, self.ph
+end
+
+function elPaddingContainer:recurse(name, func, ...)
+	func(self.el, ...)
+	if self.el.recurse ~= nil then
+		self.el:recurse(name, func, ...)
+	end
+end
+
+
+-- Checks whether a certain condition is true, and only if it is, the child element exists.
+-- This has a static width and height, or nil to fill the remaining parent w/h.
+elIfContainer =
+{
+	px = 0, py = 0,
+	pw = 0, ph = 0,
+	cw = nil, ch = nil,
+	condition_func = nil,
+	ever_drawn = false,
+	el = nil
+}
+
+function elIfContainer:new(o)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+
+	return o
+end
+
+function IfContainer(condition_func, el, cw, ch)
+	return elIfContainer:new{
+		cw = cw, ch = ch,
+		condition_func = condition_func,
+		el = el
+	}
+end
+
+function elIfContainer:draw(x, y, maxw, maxh)
+	self.px, self.py = x, y
+	local cw, ch = self.cw, self.ch
+	if cw == nil then cw = maxw end
+	if ch == nil then ch = maxh end
+
+	if self.condition_func() then
+		self.pw, self.ph = cw, ch
+		if not self.ever_drawn then
+			-- Just like in the main love.draw callback if not uis[state].draw,
+			-- we need to throw away some frames to avoid stuff flashing...
+			love.graphics.setColorMask(false,false,false,false)
+			for i = 1, 2 do
+				self.el:draw(x, y, maxw, maxh)
+			end
+			love.graphics.setColorMask(true,true,true,true)
+			self.ever_drawn = true
+		end
+
+		self.el:draw(x, y, maxw, maxh)
+	else
+		self.pw, self.ph = 0, 0
+	end
+
+	return self.pw, self.ph
+end
+
+function elIfContainer:recurse(name, func, ...)
+	if not self.condition_func() then
+		-- No elements here!
+		return
+	end
+
+	func(self.el, ...)
+	if self.el.recurse ~= nil then
+		self.el:recurse(name, func, ...)
+	end
+end
+
+
 -- Vertical list (except if `horizontal`). Elements from the top are displayed at start,
 -- elements from the bottom are start_bot pixels away from maxh given in the draw function.
 -- If the maxh given to the draw function is infinite (nil), then bottom elements are not shown.
@@ -465,9 +672,11 @@ function elButton:new(o)
 	return o
 end
 
-function LabelButton(label, action, hotkey_text, hotkey_func, status_func, action_r, hotkey_r_func)
+function LabelButton(label, action, hotkey_text, hotkey_func, status_func, action_r, hotkey_r_func, w)
+	if w == nil then w = 128-16 end
+
 	return elButton:new{
-		pw = 128-16, ph = 16,
+		pw = w, ph = 16,
 		label = label,
 		action = action,
 		hotkey_text = hotkey_text,
@@ -547,7 +756,7 @@ function elButton:draw(x, y, maxw, maxh)
 
 			-- Text too long to fit?
 			local textyoffset = 4
-			if (font_ui:getWidth(label) > 128-16 or label:find("\n") ~= nil) then
+			if (font_ui:getWidth(label) > self.pw or label:find("\n") ~= nil) then
 				textyoffset = 0
 			end
 
@@ -559,12 +768,12 @@ function elButton:draw(x, y, maxw, maxh)
 				r,g,b = r/4, g/4, b/4
 
 				love.graphics.setColor(r, g, b)
-				love.graphics.rectangle("fill", x, y, 128-16, 16)
+				love.graphics.rectangle("fill", x, y, self.pw, 16)
 				love.graphics.setColor(64,64,64)
 			else
-				hoverrectangle(r,g,b,128, x, y, 128-16, 16)
+				hoverrectangle(r,g,b,128, x, y, self.pw, 16)
 			end
-			font_ui:printf(label, x+1, y+textyoffset, 128-16, "center")
+			font_ui:printf(label, x+1, y+textyoffset, self.pw, "center")
 			love.graphics.setColor(255,255,255)
 		elseif self.color_func ~= nil then
 			local hovering = mouseon(x, y, self.pw, self.ph)
@@ -641,17 +850,17 @@ end
 function EditorIconBar()
 	return HorizontalListContainer(
 		{
-			ImageButton(image.undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", "ctrl"),
+			ImageButton(image.undobtn, 1, undo, {"cZ", 6, -4, ALIGN.CENTER}, hotkey("z", ctrl),
 				function() return true, #undobuffer >= 1 end
 			),
-			ImageButton(image.redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", "ctrl"),
+			ImageButton(image.redobtn, 1, redo, {"cY", 6, 8, ALIGN.CENTER}, hotkey("y", ctrl),
 				function() return true, #redobuffer >= 1 end
 			),
 		},
 		{
-			ImageButton(image.cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", "ctrl")),
-			ImageButton(image.copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", "ctrl")),
-			ImageButton(image.pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", "ctrl")),
+			ImageButton(image.cutbtn, 1, cutroom, {"cX", 6, -4, ALIGN.CENTER}, hotkey("x", ctrl)),
+			ImageButton(image.copybtn, 1, copyroom, {"cC", 6, 8, ALIGN.CENTER}, hotkey("c", ctrl)),
+			ImageButton(image.pastebtn, 1, pasteroom, {"cV", 6, -4, ALIGN.CENTER}, hotkey("v", ctrl)),
 		},
 		16*7, 16
 	)
