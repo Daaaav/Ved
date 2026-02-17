@@ -244,7 +244,7 @@ local function roomname_inputfield(is_second)
 				height = height * #inputs[input_id]
 			end
 			height = height + 2 -- inner padding so the text doesn't touch the border
-			if clickable and specialroomnames_currentinput ~= input_id and mouseon(x, y, 324, height+2) then
+			if clickable and specialroomnames_currentinput ~= input_id and mouseon(x, y, 348, height+2) then
 				if love.mouse.isDown("l") then
 					if input_id == "roomname" then
 						specialroomnames_currentinput = "roomname"
@@ -262,23 +262,53 @@ local function roomname_inputfield(is_second)
 				reset_special_cursor()
 				switch_ibeam_set = false
 			end
+			local box_x = x+24
 			love.graphics.setColor(64, 64, 64)
-			love.graphics.rectangle("line", x+.5, y+.5, 323, height+1)
+			love.graphics.rectangle("line", box_x+.5, y+.5, 323, height+1)
 			love.graphics.setColor(16, 16, 16)
-			love.graphics.rectangle("fill", x+1, y+1, 322, height)
+			love.graphics.rectangle("fill", box_x+1, y+1, 322, height)
 			love.graphics.setColor(255, 255, 255)
-			local oldsc_x, oldsc_y, oldsc_w, oldsc_h = love.graphics.getScissor()
+			local sc_x, sc_y, sc_w, sc_h = love.graphics.getScissor()
 			if multiline then
+				-- Line numbers
+				love.graphics.setColor(96, 96, 96)
+				local font_height = font_level:getHeight()
+				for ln = 1, #inputs.roomname do
+					local ln_y = y+2 + font_height*(ln-1) + (font_height-8)/2
+					if ln_y >= sc_y or ln_y <= sc_y+sc_h then
+						local ln_x = x
+						if ln > 99 and ln <= 999 then
+							-- Align the tinyfont with the 8x8 font
+							-- but give room when we hit 1000
+							ln_x = x - 1
+						end
+						if ln > 99 then
+							tinyfont:printf(
+								fixdig(ln, 4, ""),
+								ln_x, ln_y+1,
+								16, "right"
+							)
+						else
+							font_8x8:printf(
+								fixdig(ln, 2, ""),
+								ln_x, ln_y,
+								16, "right"
+							)
+						end
+					end
+				end
+				love.graphics.setColor(255, 255, 255)
+
 				-- Make sure we can still click the scrollbar...
-				newinputsys.setmousearea(input_id, oldsc_x, oldsc_y, oldsc_w-16, oldsc_h)
+				newinputsys.setmousearea(input_id, sc_x, sc_y, sc_w-16, sc_h)
 			else
-				love.graphics.setScissor(x, y, 344, height+2)
+				love.graphics.setScissor(x, y, 368, height+2)
 			end
-			newinputsys.print(input_id, x+2, y+2, font_level, "cjk_low")
+			newinputsys.print(input_id, box_x+2, y+2, font_level, "cjk_low")
 			if not multiline then
-				love.graphics.setScissor(oldsc_x, oldsc_y, oldsc_w, oldsc_h)
+				love.graphics.setScissor(sc_x, sc_y, sc_w, sc_h)
 			end
-			return 324, height+2
+			return 348, height+2
 		end
 	)
 end
@@ -451,7 +481,7 @@ return {
 								Text(L.SPECIALROOMNAME_FRAMES),
 								ScrollContainer(
 									roomname_inputfield(false),
-									344, nil, false
+									368, nil, false
 								),
 							},
 							{}, nil, nil, ALIGN.LEFT, 0, 6

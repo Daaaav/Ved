@@ -21,4 +21,4 @@ L.SPECIALROOMNAME_ROOMNAME = "Roomname:" -- Followed by input field
 L.SPECIALROOMNAME_FRAME1 = "Frame 1:" -- Followed by input field. Like frames in an animation, but with text
 L.SPECIALROOMNAME_FRAME2 = "Frame 2:" -- Followed by input field. Like frames in an animation, but with text
 L.SPECIALROOMNAME_FRAMES = "Frames (one per line):" -- Followed by multiline input field. Like frames in an animation, but with text
-L.SPECIALROOMNAME_LOOP = "Loop" -- Checkbox: this animation loops
+L.SPECIALROOMNAME_LOOP = "Loop" -- Checkbox: this animation keeps repeating
