@@ -320,6 +320,14 @@ local function roomname_inputfield(is_second)
 	)
 end
 
+local function swap_names(i, j)
+	local this_name = table.copy(level.specialroomnames[roomy][roomx][i])
+	level.specialroomnames[roomy][roomx][i] = table.copy(level.specialroomnames[roomy][roomx][j])
+	level.specialroomnames[roomy][roomx][j] = this_name
+	dirty()
+	specialroomnames_update_elements()
+end
+
 return {
 	PaddingContainer(
 		ListContainer(
@@ -365,7 +373,10 @@ return {
 						{
 							LabelButton(
 								arrow_up,
-								function() dialog.create("up") end, -- and dirty
+								function()
+									swap_names(specialroomnames_editing, specialroomnames_editing-1)
+									specialroomnames_editing = specialroomnames_editing-1
+								end,
 								nil, nil,
 								function()
 									if specialroomnames_editing <= 1 then
@@ -377,7 +388,10 @@ return {
 							),
 							LabelButton(
 								arrow_down,
-								function() dialog.create("down") end, -- and dirty
+								function()
+									swap_names(specialroomnames_editing, specialroomnames_editing+1)
+									specialroomnames_editing = specialroomnames_editing+1
+								end,
 								nil, nil,
 								function()
 									if specialroomnames_editing == 0
@@ -392,7 +406,13 @@ return {
 								function()
 									return L.DELETE
 								end,
-								function() dialog.create("delete?") end, -- and dirty
+								function()
+									dialog.create(
+										L.SUREDELETESPECIALROOMNAME,
+										DBS.YESNO,
+										dialog.callback.suredelete_specialroomname
+									)
+								end,
 								nil, nil,
 								function()
 									if specialroomnames_editing == 0 then

@@ -1445,3 +1445,20 @@ function dialog.callback.create_specialroomname(button, fields)
 	specialroomnames_update_elements()
 	dirty()
 end
+
+function dialog.callback.suredelete_specialroomname(button)
+	if button == DB.YES then
+		-- Yes, delete this special roomname
+
+		-- Close the inputs
+		newinputsys.close("roomname")
+		if level.specialroomnames[roomy][roomx][specialroomnames_editing].mode == "glitch" then
+			newinputsys.close("roomname2")
+		end
+
+		table.remove(level.specialroomnames[roomy][roomx], specialroomnames_editing)
+		dirty()
+		specialroomnames_editing = nil
+		specialroomnames_update_elements()
+	end
+end
