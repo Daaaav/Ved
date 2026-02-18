@@ -1211,6 +1211,16 @@ function swapflags(flag1, flag2)
 			end
 		end
 	end
+
+	for _,room in pairs(level.specialroomnames_order) do
+		for k,roomname in pairs(level.specialroomnames[room.y][room.x]) do
+			if roomname.flag == flag1 then
+				roomname.flag = flag2
+			elseif roomname.flag == flag2 then
+				roomname.flag = flag1
+			end
+		end
+	end
 end
 
 function copyscript()
