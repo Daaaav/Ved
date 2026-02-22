@@ -40,11 +40,10 @@ function love.mousereleased(x, y, button)
 		newinputsys.ignoremousepressed = false
 
 		local id = newinputsys.getfocused()
-		local multiline = type(inputs[id]) == "table"
 
 		if newinputsys.selpos[id] ~= nil then
 			local whichfirst
-			if multiline then
+			if newinputsys.ismultiline(id) then
 				local curx, cury = unpack(newinputsys.pos[id])
 				local selx, sely = unpack(newinputsys.selpos[id])
 				local lines = inputs[id]

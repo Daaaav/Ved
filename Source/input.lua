@@ -301,16 +301,18 @@ function input.bump(id)
 	input.focused[thestate] = id
 end
 
-function input.print(id, x, y, font, cjk_align, sx, sy, lineh)
-	local multiline = type(inputs[id]) == "table"
+function input.ismultiline(id)
+	return type(inputs[id]) == "table"
+end
 
+function input.print(id, x, y, font, cjk_align, sx, sy, lineh)
 	font = font or font_ui
 	lineh = lineh or font:getHeight()
 
 	sx = sx or 1
 	sy = sy or sx
 
-	if multiline then
+	if input.ismultiline(id) then
 		for n, line in pairs(inputs[id]) do
 			font:print(line, x, y + (n-1) * lineh * sy, cjk_align, sx, sy)
 		end
@@ -334,7 +336,7 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	sx = sx or 1
 	sy = sy or sx
@@ -600,7 +602,7 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 end
 
 function input.movex(id, chars)
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local x, y, line = input.getpos(id)
 
@@ -639,9 +641,7 @@ function input.movex(id, chars)
 end
 
 function input.movey(id, chars)
-	local multiline = type(inputs[id]) == "table"
-
-	if not multiline then
+	if not input.ismultiline(id) then
 		if chars < 0 then
 			input.leftmost(id)
 		elseif chars > 0 then
@@ -677,8 +677,6 @@ function input.movey(id, chars)
 end
 
 function input.leftmost(id)
-	local multiline = type(inputs[id]) == "table"
-
 	input.setpos(id, 0)
 
 	cursorflashtime = 0
@@ -688,7 +686,7 @@ function input.leftmost(id)
 
 	if input.selpos[id] ~= nil then
 		local conditional
-		if multiline then
+		if input.ismultiline(id) then
 			conditional = input.pos[id][1] == input.selpos[id][1] and input.pos[id][2] == input.selpos[id][2]
 		else
 			conditional = input.pos[id] == input.selpos[id]
@@ -700,8 +698,6 @@ function input.leftmost(id)
 end
 
 function input.rightmost(id)
-	local multiline = type(inputs[id]) == "table"
-
 	input.rightmosts[id] = true
 
 	input.event(id, "pos_changed")
@@ -713,7 +709,7 @@ function input.rightmost(id)
 
 	if input.selpos[id] ~= nil then
 		local conditional
-		if multiline then
+		if input.ismultiline(id) then
 			conditional = x == input.selpos[id][1] and y == input.selpos[id][2]
 		else
 			conditional = x == input.selpos[id]
@@ -729,7 +725,7 @@ function input.deletechars(id, chars)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local x, y, line
 	for _ = 1, math.abs(chars) do
@@ -812,8 +808,6 @@ function input.actualinsertchars(id, text)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
-
 	local x, y, line = input.getpos(id)
 
 	line = utf8.sub(line, 1, x) .. text .. utf8.sub(line, x+1, utf8.len(line))
@@ -823,7 +817,7 @@ function input.actualinsertchars(id, text)
 		x = math.min(x, utf8.len(line))
 	end
 
-	if multiline then
+	if input.ismultiline(id) then
 		input.pos[id] = {x, y}
 		inputs[id][y] = line
 	else
@@ -839,9 +833,7 @@ function input.actualinsertchars(id, text)
 end
 
 function input.newline(id)
-	local multiline = type(inputs[id]) == "table"
-
-	if not multiline then
+	if not input.ismultiline(id) then
 		return
 	end
 
@@ -864,11 +856,9 @@ function input.newline(id)
 end
 
 function input.setselpos(id)
-	local multiline = type(inputs[id]) == "table"
-
 	local x, y, line = input.getpos(id)
 
-	if multiline then
+	if input.ismultiline(id) then
 		input.selpos[id] = {x, y}
 	else
 		input.selpos[id] = x
@@ -884,14 +874,12 @@ function input.getseltext(id)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
-
 	local whichfirst -- 1 = caret pos, 2 = selection pos
 	local startx, starty, endx, endy
 
 	local rope = {}
 
-	if multiline then
+	if input.ismultiline(id) then
 		local curx, cury = unpack(input.pos[id])
 		local selx, sely = unpack(input.selpos[id])
 		local lines = inputs[id]
@@ -982,14 +970,12 @@ function input.delseltext(id)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
-
 	local whichfirst -- 1 = caret pos, 2 = selection pos
 	local startx, starty, endx, endy
 
 	local deletethismanychars = 0
 
-	if multiline then
+	if input.ismultiline(id) then
 		local curx, cury = unpack(input.pos[id])
 		local selx, sely = unpack(input.selpos[id])
 		local lines = inputs[id]
@@ -1078,7 +1064,7 @@ function input.delseltext(id)
 end
 
 function input.getpos(id, virtual)
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local x, y, line
 	if multiline then
@@ -1107,7 +1093,7 @@ function input.getpos(id, virtual)
 end
 
 function input.setpos(id, x, ...)
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local y, rightmost
 	if multiline then
@@ -1136,9 +1122,7 @@ function input.setpos(id, x, ...)
 end
 
 function input.selallright(id)
-	local multiline = type(inputs[id]) == "table"
-
-	if multiline then
+	if input.ismultiline(id) then
 		input.setpos(id, 0, 1)
 		input.setselpos(id)
 		input.pos[id][2] = #inputs[id]
@@ -1154,9 +1138,7 @@ function input.selallright(id)
 end
 
 function input.selallleft(id)
-	local multiline = type(inputs[id]) == "table"
-
-	if multiline then
+	if input.ismultiline(id) then
 		input.setpos(id, 0, #inputs[id])
 		input.rightmosts[id] = true
 		input.setselpos(id)
@@ -1172,8 +1154,6 @@ function input.selallleft(id)
 end
 
 function input.deltoleftmost(id)
-	local multiline = type(inputs[id]) == "table"
-
 	local x, y, line = input.getpos(id)
 
 	if x == 0 then
@@ -1188,8 +1168,6 @@ function input.deltoleftmost(id)
 end
 
 function input.deltorightmost(id)
-	local multiline = type(inputs[id]) == "table"
-
 	local x, y, line = input.getpos(id)
 
 	if input.rightmosts[id] then
@@ -1213,9 +1191,7 @@ function input.removelines(id, lines)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
-
-	if not multiline then
+	if not input.ismultiline(id) then
 		inputs[id] = ""
 		cursorflashtime = 0
 		inputcopiedtimer = 0
@@ -1264,7 +1240,7 @@ function input.unre(id, group, oldinput, oldpos, oldrightmost, oldselpos)
 	-- Insert an undoable action into the input's undo buffer
 	input.redostack[id] = {}
 
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local old
 	if multiline then
@@ -1312,9 +1288,7 @@ end
 function input.getstate(id)
 	-- Not really a pure getstate, selpos will have to be "" because tables and nil don't mix
 	-- (and it can't be -1 because numbers are already used for oneline positions)
-	local multiline = type(inputs[id]) == "table"
-
-	if multiline then
+	if input.ismultiline(id) then
 		local stateinput = table.copy(inputs[id])
 		local statepos = table.copy(input.pos[id])
 		local stateselpos
@@ -1336,9 +1310,7 @@ function input.getstate(id)
 end
 
 function input.tothisstate(id, state)
-	local multiline = type(inputs[id]) == "table"
-
-	if multiline then
+	if input.ismultiline(id) then
 		inputs[id] = table.copy(state[1])
 		input.pos[id] = table.copy(state[2])
 		input.rightmosts[id] = state[3]
@@ -1461,7 +1433,7 @@ function input.movexwords(id, words)
 		return
 	end
 
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 
 	local x, y, line = input.getpos(id)
 
@@ -1494,8 +1466,6 @@ function input.deletewords(id, words)
 	if words == 0 then
 		return
 	end
-
-	local multiline = type(inputs[id]) == "table"
 
 	local x, y, line = input.getpos(id)
 
@@ -1610,7 +1580,7 @@ function input.mousepressed(id, x, y, font, cjk_align, sx, sy, lineh)
 	-- This is not a love.mousepressed event!
 	-- This can be called every frame as long as the mouse is held!
 
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 	local fontheight = lineh or font:getHeight()
 
 	y = font:y_align(y, cjk_align, sy)
@@ -1936,9 +1906,7 @@ function input.atomicdelete(id)
 end
 
 function input.atomicmovevertical(id, lines)
-	local multiline = type(inputs[id]) == "table"
-
-	if not multiline or lines == 0 then
+	if not input.ismultiline(id) or lines == 0 then
 		return
 	end
 
@@ -1988,7 +1956,7 @@ function input.atomicdupeline(id, move_cursor)
 end
 
 function input.selectword(id, posx)
-	local multiline = type(inputs[id]) == "table"
+	local multiline = input.ismultiline(id)
 	local _, _, line = input.getpos(id)
 
 	local wordsep = input.wordseps[id]

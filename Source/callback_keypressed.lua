@@ -34,7 +34,7 @@ function love.keypressed(key, scancode, isrepeat)
 
 	if newinputsys.active and newinputsys.getfocused() ~= nil then
 		local id = newinputsys.getfocused()
-		local multiline = type(inputs[id]) == "table"
+		local multiline = newinputsys.ismultiline(id)
 
 		if table.contains({"left", "right", "up", "down", "home", "end", "pageup", "pagedown", "delete"}, key) or keyboard_eitherIsDown(ctrl, modifier) or isclear(key) then
 			newinputsys.stophex(id)
@@ -105,7 +105,7 @@ function love.keypressed(key, scancode, isrepeat)
 				newinputsys.deletechars(id, 1)
 			end
 			newinputsys.unre(id, UNRE.DELETE, unpack(oldstate))
-		elseif table.contains({"return", "kpenter"}, key) then
+		elseif table.contains({"return", "kpenter"}, key) and multiline then
 			local oldstate = {newinputsys.getstate(id)}
 			if newinputsys.hex[id] ~= nil then
 				newinputsys.finishhex(id)
