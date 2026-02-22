@@ -265,8 +265,30 @@ function elScrollContainer:draw(x, y, maxw, maxh)
 
 	love.graphics.setScissor(x, y, cw, ch)
 
+	scrollbar_before_contents()
+
 	local child_pw, child_ph = self.el:draw(x, y+self.scroll, cw - 20, ch)
 	self.child_ph = child_ph
+
+	local req_y, req_h = scrollbar_after_contents()
+	if req_y ~= nil and req_h ~= nil then
+		-- The drawing code requests that a rectangle
+		-- with given y and h be scrolled into view!
+		-- For this math, see a drawing I made on 22 feb 2026
+		local iy = req_y - (y + self.scroll) -- inner y (relative to child)
+		self.scroll = math.max(self.scroll, -iy)
+		self.scroll = math.min(self.scroll, -(iy + req_h - ch))
+	end
+
+	-- Never scroll further than we can!
+	if self.scroll > 0 then
+		self.scroll = 0
+	elseif self.scroll < 0 then
+		local upperbound = child_ph - ch
+		if -self.scroll > upperbound then
+			self.scroll = math.min(-upperbound, 0)
+		end
+	end
 
 	if self.always_show_scrollbar or allowdebug or child_ph > ch then
 		local newfraction = scrollbar(

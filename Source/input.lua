@@ -104,7 +104,8 @@ local input = {
 	newlinechars = {},
 
 	areas = {},
-	ibeam_set = {}
+	ibeam_set = {},
+	pos_just_changed = {}
 }; newinputsys = input
 
 inputs = {}
@@ -170,6 +171,9 @@ function input.create(type_, id, initial, ix, iy)
 
 	input.stateof[id] = thestate
 	input.focused[thestate] = id
+
+	input.ibeam_set[id] = false
+	input.pos_just_changed[id] = false
 end
 
 function input.close(id, updatemappings)
@@ -207,7 +211,8 @@ function input.close(id, updatemappings)
 	input.newlinechars[id] = nil
 
 	input.areas[id] = nil
-	input.ibeam_set[id] = false
+	input.ibeam_set[id] = nil
+	input.pos_just_changed[id] = nil
 
 	local thestate = input.stateof[id]
 	input.stateof[id] = nil
@@ -494,7 +499,8 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 	-- Caret
 
-	if cursorflashtime > .5 and input.hex[id] == nil and ime_textedited == "" then
+	if cursorflashtime > .5 and input.hex[id] == nil and ime_textedited == ""
+	and not input.pos_just_changed[id] then
 		return
 	end
 
@@ -531,6 +537,13 @@ function input.drawcas(id, x, y, font, cjk_align, sx, sy, lineh)
 
 	caretx = caretx * sx
 	carety = carety * sy
+
+	if input.pos_just_changed[id] then
+		-- Request a parent scrollable container that the caret will be onscreen...
+		-- (plus 4px on both sides)
+		scrollbar_request_visible(y + carety - 4, fontheight*sy + 8)
+		input.pos_just_changed[id] = false
+	end
 
 	-- Hex input, before the caret is actually drawn so it doesn't get in the way
 
@@ -2014,6 +2027,12 @@ function input.setcallback(id, event, callback)
 end
 
 function input.event(id, event)
+	if event == "pos_changed" then
+		-- Buffer this for the next drawcas to
+		-- signal to a possible scrollable area
+		input.pos_just_changed[id] = true
+	end
+
 	if input.callback[id][event] ~= nil then
 		input.callback[id][event](id, event)
 	elseif input.callback[id].any ~= nil then

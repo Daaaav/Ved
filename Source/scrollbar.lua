@@ -1,4 +1,7 @@
 -- Scroll bars!
+local scrollclickstart, savedfraction
+local dragging_x, dragging_y, dragging_h
+
 function scrollbar(x, y, height, scrollableheight, fraction, indialog)
 	-- Returns nil if untouched, returns scroll value if moved
 	-- New fraction maybe?
@@ -23,7 +26,8 @@ function scrollbar(x, y, height, scrollableheight, fraction, indialog)
 		local buttonheight = (height/scrollableheight)*height
 
 		local scrollclickoffset = 0
-		if scrollclickstart ~= nil then
+		if scrollclickstart ~= nil and dragging_x == x and dragging_y == y and dragging_h == height
+		and love.mouse.isDown("l") then
 			scrollclickoffset = love.mouse.getY()-scrollclickstart
 		end
 
@@ -31,48 +35,45 @@ function scrollbar(x, y, height, scrollableheight, fraction, indialog)
 			setColor(224,224,224,255)
 		else
 			setColor(192,192,192,255)
-			--[[
-			if not mousepressed and love.mouse.isDown("l") then
-				if scrollclickstart == nil then
-					scrollclickstart = love.mouse.getY()
-				end
-			elseif scrollclickstart ~= nil then
-				scrollclickstart = nil
-			end
-			]]
-			--[[
-			if not (not mousepressed and love.mouse.isDown("l")) then
-				scrollclickstart = love.mouse.getY()
-			end
-			]]
 		end
 
-		if mouseon(x, y+(height-buttonheight)*fraction+scrollclickoffset, 16, buttonheight) and not mousepressed and (nodialog or indialog) and love.mouse.isDown("l") then
+		if mouseon(x, y+(height-buttonheight)*fraction+scrollclickoffset, 16, buttonheight)
+		and not mousepressed and (nodialog or indialog) and love.mouse.isDown("l") then
 			if scrollclickstart == nil then
 				scrollclickstart = love.mouse.getY()
 				savedfraction = fraction
+				dragging_x, dragging_y, dragging_h = x, y, height
 			end
 
 			mousepressed = true
 		elseif not love.mouse.isDown("l") and scrollclickstart ~= nil then
 			scrollclickstart = nil
 			savedfraction = nil
+			dragging_x, dragging_y, dragging_h = nil, nil, nil
 		end
 
-		if scrollclickstart ~= nil then
+		local dispfraction = fraction
+		if scrollclickstart ~= nil and dragging_x == x and dragging_y == y and dragging_h == height then
 			newfraction = savedfraction + (scrollclickoffset/(height-buttonheight))
+			dispfraction = savedfraction
 		end
 
-		love.graphics.rectangle("fill", x, math.min(math.max(y+(height-buttonheight)*(savedfraction == nil and fraction or savedfraction)+scrollclickoffset, y), (y+height)-buttonheight), 16, buttonheight)
+		love.graphics.rectangle(
+			"fill",
+			x,
+			math.min(
+				math.max(
+					y+(height-buttonheight)*dispfraction+scrollclickoffset,
+					y
+				),
+				(y+height)-buttonheight
+			),
+			16,
+			buttonheight
+		)
 	end
 
 	setColor(255,255,255,255)
-
-	--[[
-	if newfraction ~= nil then
-		cons("Returning " .. newfraction)
-	end
-	]]
 
 	if newfraction ~= nil then
 		return math.min(math.max(newfraction,0),1)
@@ -458,4 +459,43 @@ function inplacescroll(key)
 		usethisdistance = 10*46
 	end
 	handle_scrolling(false, usethisinput, usethisdistance)
+end
+
+
+local container_is_listening = false
+local req_y, req_h
+
+function scrollbar_before_contents()
+	-- Prepare for the drawing code (inside a scrollable area)
+	-- possibly calling scrollbar_request_visible.
+	-- A scrollable container should call this right before
+	-- calling its "child" drawing code.
+	container_is_listening = true
+	req_y, req_h = nil, nil
+end
+
+function scrollbar_request_visible(y, h)
+	-- If you're inside a scrollable container,
+	-- request that a certain segment gets scrolled onscreen.
+	-- y and h signify the Y position and height of a rectangle
+	-- at its current (possibly offscreen/scissored out) position.
+	-- Has no effect if not in a (compatible) scrollable container.
+	if not container_is_listening then
+		return
+	end
+	req_y, req_h = y, h
+end
+
+function scrollbar_after_contents()
+	-- Check whether the drawing code (inside a scrollable area)
+	-- has called scrollbar_request_visible.
+	-- If so, returns y and h, otherwise returns nil.
+	-- A scrollable container should call this right after
+	-- calling its "child" drawing code, and can use the returned
+	-- y and h to change the scroll position.
+	if not container_is_listening then
+		return nil, nil
+	end
+	container_is_listening = false
+	return req_y, req_h
 end

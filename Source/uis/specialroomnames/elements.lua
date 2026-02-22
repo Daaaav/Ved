@@ -49,11 +49,6 @@ function start_editing_specialroomname(k)
 		specialroomnames_currentinput = "roomname"
 	else
 		newinputsys.create(INPUT.MULTILINE, "roomname", roomnames[k].name)
-		newinputsys.setcallback("roomname", "pos_changed",
-			function(id, event)
-				-- TODO ensure the scroll stays onscreen
-			end
-		)
 	end
 	if k ~= 0 then
 		newinputsys.setcallback("roomname", "text_changed",
