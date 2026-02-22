@@ -609,7 +609,8 @@ function hoverrectangle_noshine(r, g, b, a, x, y, w, h, thisbelongstoarightclick
 
 	love.graphics.setColor(255,255,255,255)
 
-	return hovering
+	-- Avoid a nil return
+	return hovering == true
 end
 
 function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu, darkfactor)
@@ -637,7 +638,8 @@ function hoverrectangle(r, g, b, a, x, y, w, h, thisbelongstoarightclickmenu, da
 
 	love.graphics.setColor(255,255,255,255)
 
-	return hovering
+	-- Avoid a nil return
+	return hovering == true
 end
 
 function rbutton(label, pos, yoffset, bottom, buttonspacing, yellow)
