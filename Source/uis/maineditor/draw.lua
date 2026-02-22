@@ -711,10 +711,16 @@ return function()
 		additionalbutton_spacing
 	) -- (6*16)+16+24+12+16
 
+	local room_options_string = editingroomname and L.ROOMNAME or L.ROOMOPTIONS
+	local room_options_y = (love.graphics.getHeight()-300)+8
+	if font_ui:getWidth(room_options_string) > 128-16 then
+		room_options_y = room_options_y - 4
+	end
+
 	font_ui:printf(
-		editingroomname and L.ROOMNAME or L.ROOMOPTIONS,
+		room_options_string,
 		love.graphics.getWidth()-(128-8),
-		(love.graphics.getHeight()-300)+8,
+		room_options_y,
 		128-16,
 		"center"
 	) -- -(6*16)-16-24-12-8-(24*6))+4+2+4 => -300)+10
