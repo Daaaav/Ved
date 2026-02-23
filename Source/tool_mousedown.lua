@@ -11,21 +11,12 @@ function handle_tool_mousedown()
 	and (not keyboard_eitherIsDown("shift") or tilespicker) then
 		local atx, aty = maineditor_get_cursor()
 
-		-- If we're holding both [ and ] down, then let the cursor move only in the plus-shape created by those two lines
-		if mouselockx ~= -1 and mouselocky ~= -1 then
-			if mouselockhorizontalline then
-				aty = math.floor(love.mouse.getY() / 16)
-			end
-
-			if mouselockverticalline then
-				atx = math.floor((love.mouse.getX()-screenoffset) / 16)
-			end
-		end
-
 		last_atx = (last_atx == -1) and atx or last_atx
 		last_aty = (last_aty == -1) and aty or last_aty
 
-		-- Try to prevent entities of the same type from being placed on top of each other, because it can happen accidentally and go unnoticed. You can always place them on top of each other by editing their properties.
+		-- Try to prevent entities of the same type from being placed on top of each other,
+		-- because it can happen accidentally and go unnoticed. You can always place them
+		-- on top of each other by editing their properties.
 		local entityalreadyhere = false
 		if love.mouse.isDown("l") and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
 			for k,v in pairs(entitydata) do

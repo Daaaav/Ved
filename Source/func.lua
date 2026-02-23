@@ -2205,8 +2205,39 @@ function getlockablemouseY()
 	return mouselocky
 end
 
-function maineditor_get_cursor()
-	return math.floor((getlockablemouseX()-screenoffset) / 16), math.floor(getlockablemouseY() / 16)
+do
+	local mouselockhorizontalline, mouselockverticalline
+
+	function maineditor_get_cursor()
+		local cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
+		local cursory = math.floor(getlockablemouseY() / 16)
+
+		-- If we're holding [ and ] down, display the cursor inside the plus-shape created by those two lines
+		if mouselockx ~= -1 and mouselocky ~= -1 then
+			if math.floor((getlockablemouseX()-screenoffset) / 16) <= (love.mouse.getX()-screenoffset) / 16
+			and (love.mouse.getX()-screenoffset) / 16 <= math.ceil((getlockablemouseX()-screenoffset) / 16) then
+				mouselockhorizontalline = true
+				mouselockverticalline = false
+			end
+
+			if math.floor(getlockablemouseY() / 16) <= love.mouse.getY() / 16
+			and love.mouse.getY() / 16 <= math.ceil(getlockablemouseY() / 16) then
+				mouselockhorizontalline = false
+				mouselockverticalline = true
+			end
+
+
+			if mouselockhorizontalline then
+				cursory = math.floor(love.mouse.getY() / 16)
+			end
+
+			if mouselockverticalline then
+				cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
+			end
+		end
+
+		return cursorx, cursory
+	end
 end
 
 function backup_level(levelsfolder, levelname)

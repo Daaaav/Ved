@@ -109,18 +109,17 @@ return function()
 
 		-- Now display bounds!
 		if showepbounds or editingbounds ~= 0 then
-			local num_cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
-			local num_cursory = math.floor(getlockablemouseY() / 16)
-			num_cursorx = math.max(0, math.min(39, num_cursorx))
-			num_cursory = math.max(0, math.min(29, num_cursory))
+			local cursorx, cursory = maineditor_get_cursor()
+			cursorx = math.max(0, math.min(39, cursorx))
+			cursory = math.max(0, math.min(29, cursory))
 
 			-- Enemies first...
 			if not (levelmetadata_get(roomx, roomy).enemyx1 == 0 and levelmetadata_get(roomx, roomy).enemyy1 == 0 and levelmetadata_get(roomx, roomy).enemyx2 == 320 and levelmetadata_get(roomx, roomy).enemyy2 == 240) then
 				local editing = (editingbounds == 1)
 				local x1 = screenoffset + levelmetadata_get(roomx, roomy).enemyx1 * 2
 				local y1 = levelmetadata_get(roomx, roomy).enemyy1 * 2
-				local x2 = screenoffset + (editing and (num_cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
-				local y2 = editing and (num_cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
+				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
+				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_enemy_bounds" or "ui/enemy_bounds",
@@ -136,8 +135,8 @@ return function()
 				local editing = (editingbounds == 2)
 				local x1 = screenoffset + levelmetadata_get(roomx, roomy).platx1 * 2
 				local y1 = levelmetadata_get(roomx, roomy).platy1 * 2
-				local x2 = screenoffset + (editing and (num_cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
-				local y2 = editing and (num_cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
+				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
+				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_platform_bounds" or "ui/platform_bounds",
@@ -238,32 +237,7 @@ return function()
 
 	-- Now display the cursor. If it's on the level
 	if nodialog and mouseon(screenoffset, 0, 639, 480) and not editingroomname and editingroomtext == 0 then
-		cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
-		cursory = math.floor(getlockablemouseY() / 16)
-
-		-- If we're holding [ and ] down, display the cursor inside the plus-shape created by those two lines
-		if mouselockx ~= -1 and mouselocky ~= -1 then
-			if math.floor((getlockablemouseX()-screenoffset) / 16) <= (love.mouse.getX()-screenoffset) / 16
-			and (love.mouse.getX()-screenoffset) / 16 <= math.ceil((getlockablemouseX()-screenoffset) / 16) then
-				mouselockhorizontalline = true
-				mouselockverticalline = false
-			end
-
-			if math.floor(getlockablemouseY() / 16) <= love.mouse.getY() / 16
-			and love.mouse.getY() / 16 <= math.ceil(getlockablemouseY() / 16) then
-				mouselockhorizontalline = false
-				mouselockverticalline = true
-			end
-
-
-			if mouselockhorizontalline then
-				cursory = math.floor(love.mouse.getY() / 16)
-			end
-
-			if mouselockverticalline then
-				cursorx = math.floor((love.mouse.getX()-screenoffset) / 16)
-			end
-		end
+		local cursorx, cursory = maineditor_get_cursor()
 
 		-- Are we supposed to display a special cursor shape?
 		if tilespicker then
@@ -418,9 +392,6 @@ return function()
 		elseif not (selectedtool == 13 and selectedsubtool[13] == 2) then
 			displayshapedcursor(0, 0, 0, 0)
 		end
-	else
-		cursorx = "--"
-		cursory = "--"
 	end
 
 	if (not s.psmallerscreen) or (keyboard_eitherIsDown(ctrl) and not love.keyboard.isDown("lshift")) then
@@ -1106,17 +1077,18 @@ return function()
 		font_8x8:printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
 	end
 
-	-- But if we're in the tiles picker instead display the tile we're hovering on!
+	local cursorx, cursory = maineditor_get_cursor()
+	local cursor_is_onscreen = cursorx >= 0 and cursorx <= 39 and cursory >= 0 and cursory <= 29
 	if tilespicker then
+		-- If we're in the tiles picker, display the tile we're hovering on instead of tile coordinates!
 		local tiles_width_picker = tilesets[tileset_names[selectedtileset]].tiles_width_picker
 		local tiles_height_picker = tilesets[tileset_names[selectedtileset]].tiles_height_picker
 		local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
-		local cursor_not_dashes = cursorx ~= "--" and cursory ~= "--"
 		local tile
-		if cursor_not_dashes then
+		if cursor_is_onscreen and nodialog then
 			tile = ((tilespicker_page*30+cursory)*tiles_width_picker)+cursorx
 		end
-		if cursor_not_dashes
+		if tile ~= nil
 		and cursorx < tiles_width_picker
 		and tile < total_tiles then
 			font_ui:printf(
@@ -1131,12 +1103,14 @@ return function()
 			font_ui:printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right")
 		end
 	else
-		font_8x8:printf("[" .. cursorx .. "," .. cursory .. "]", love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
-		if (cursorx ~= "--") and (cursory ~= "--") then
-			font_8x8:printf("<" .. (cursorx*8) .. "," .. (cursory*8) .. ">", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right") -- 56+16=72
-		else
-			font_8x8:printf("<---,--->", love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
+		local tile_coord = "[--,--]"
+		local pixel_coord = "<---,--->"
+		if cursor_is_onscreen then
+			tile_coord = "[" .. cursorx .. "," .. cursory .. "]"
+			pixel_coord = "<" .. (cursorx*8) .. "," .. (cursory*8) .. ">"
 		end
+		font_8x8:printf(tile_coord, love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
+		font_8x8:printf(pixel_coord, love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
 	end
 
 	-- Also display a smaller tiles picker for semi-undirect mode

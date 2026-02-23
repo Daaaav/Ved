@@ -1378,6 +1378,8 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 end
 
 function displayshapedcursor(leftblx, upblx, rightblx, downblx)
+	local cursorx, cursory = maineditor_get_cursor()
+
 	theme:draw_nineslice(
 		"ui/cursor",
 		(cursorx*16)+screenoffset-(leftblx*16),
@@ -1392,6 +1394,8 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 	or (customsize and customsizemode == 0 and customsizetile ~= nil) then
 		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		love.graphics.setColor(255,255,255,128)
+
+		local cursorx, cursory = maineditor_get_cursor()
 
 		for forfory = 0, fory do
 			for forforx = 0, forx do
@@ -1465,6 +1469,8 @@ end
 
 function displayalphatile_ver()
 	if levelmetadata_get(roomx, roomy).directmode == 1 then
+		local cursorx, cursory = maineditor_get_cursor()
+
 		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
 		if tilesets[tsimage].tiles[selectedtile] == nil then
 			return
