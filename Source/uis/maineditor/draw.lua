@@ -109,13 +109,18 @@ return function()
 
 		-- Now display bounds!
 		if showepbounds or editingbounds ~= 0 then
+			local num_cursorx = math.floor((getlockablemouseX()-screenoffset) / 16)
+			local num_cursory = math.floor(getlockablemouseY() / 16)
+			num_cursorx = math.max(0, math.min(39, num_cursorx))
+			num_cursory = math.max(0, math.min(29, num_cursory))
+
 			-- Enemies first...
 			if not (levelmetadata_get(roomx, roomy).enemyx1 == 0 and levelmetadata_get(roomx, roomy).enemyy1 == 0 and levelmetadata_get(roomx, roomy).enemyx2 == 320 and levelmetadata_get(roomx, roomy).enemyy2 == 240) then
 				local editing = (editingbounds == 1)
 				local x1 = screenoffset + levelmetadata_get(roomx, roomy).enemyx1 * 2
 				local y1 = levelmetadata_get(roomx, roomy).enemyy1 * 2
-				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
-				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
+				local x2 = screenoffset + (editing and (num_cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
+				local y2 = editing and (num_cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_enemy_bounds" or "ui/enemy_bounds",
@@ -131,8 +136,8 @@ return function()
 				local editing = (editingbounds == 2)
 				local x1 = screenoffset + levelmetadata_get(roomx, roomy).platx1 * 2
 				local y1 = levelmetadata_get(roomx, roomy).platy1 * 2
-				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
-				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
+				local x2 = screenoffset + (editing and (num_cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
+				local y2 = editing and (num_cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_platform_bounds" or "ui/platform_bounds",
