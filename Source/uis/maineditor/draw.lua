@@ -341,10 +341,10 @@ return function()
 				displayalphatile(1, 0, 0, 0)
 				displayalphatile(0, -1, 0, 0)
 				displayalphatile(0, 1, 0, 0)
-				displayshapedcursor(-1, 0, 0, 0)
-				displayshapedcursor(1, 0, 0, 0)
-				displayshapedcursor(0, -1, 0, 0)
-				displayshapedcursor(0, 1, 0, 0)
+				displayshapedcursor(1, 0, -1, 0)
+				displayshapedcursor(-1, 0, 1, 0)
+				displayshapedcursor(0, 1, 0, -1)
+				displayshapedcursor(0, -1, 0, 1)
 			end
 
 			-- If direct mode is on, we want to know what tile number we're about to place!
