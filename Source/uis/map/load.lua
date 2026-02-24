@@ -21,11 +21,11 @@ return function()
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("ENEMY BOUNDS (map canceled)")
 		elseif editingbounds == 2 then
 			local changeddata = {}
@@ -34,11 +34,11 @@ return function()
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("PLATFORM BOUNDS (map canceled)")
 		end
 

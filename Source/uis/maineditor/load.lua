@@ -16,7 +16,7 @@ return function()
 	roomy = 0
 	updatewindowicon()
 
-	if levelmetadata ~= nil and levelmetadata_get(roomx, roomy) ~= nil then
+	if level ~= nil and level:get_roommetadata(roomx, roomy) ~= nil then
 		gotoroom_finish()
 	end
 

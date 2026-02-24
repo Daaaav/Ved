@@ -128,9 +128,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 		end
 
 		-- Up
+		local other_rmd = level:get_roommetadata(roomx, roomup)
 		for t = 0, 39 do
 			-- Wall
-			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset]) then
+			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[other_rmd.tileset]) then
 				if roomupW then
 					love.graphics.setColor(0, 192, 255)
 				end
@@ -140,12 +141,13 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				if roomupW then
 					love.graphics.setColor(255, 255, 255)
 				end
-			elseif not roomupW and ( (levelmetadata_get(roomx, roomup).warpdir == 2) or (levelmetadata_get(roomx, roomup).warpdir == 3) ) and not warplinesinroom(roomx, roomup) then
+			elseif not roomupW and (other_rmd.warpdir == 2 or other_rmd.warpdir == 3) and not warplinesinroom(roomx, roomup) then
 				love.graphics.rectangle("fill", screenoffset+(t*16), 0, 16, 1)
 			end
 
 			-- Spikes
-			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], false) ~= issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[levelmetadata_get(roomx, roomup).tileset], true) then
+			if issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[other_rmd.tileset], false)
+			~= issolid(roomdata_get(roomx, roomup, t, 29), usedtilesets[other_rmd.tileset], true) then
 				love.graphics.setColor(255, 0, 0)
 
 				if roomupW then
@@ -158,9 +160,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 		end
 		-- Left
+		other_rmd = level:get_roommetadata(roomleft, roomy)
 		for t = 0, 29 do
 			-- Wall
-			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset]) then
+			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[other_rmd.tileset]) then
 				if roomleftW then
 					love.graphics.setColor(0, 192, 255)
 				end
@@ -170,12 +173,13 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				if roomleftW then
 					love.graphics.setColor(255, 255, 255)
 				end
-			elseif not roomleftW and ( (levelmetadata_get(roomleft, roomy).warpdir == 1) or (levelmetadata_get(roomleft, roomy).warpdir == 3) ) and not warplinesinroom(roomleft, roomy) then
+			elseif not roomleftW and (other_rmd.warpdir == 1 or other_rmd.warpdir == 3) and not warplinesinroom(roomleft, roomy) then
 				love.graphics.rectangle("fill", screenoffset, t*16, 1, 16)
 			end
 
 			-- Spikes
-			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], false) ~= issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[levelmetadata_get(roomleft, roomy).tileset], true) then
+			if issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[other_rmd.tileset], false)
+			~= issolid(roomdata_get(roomleft, roomy, 39, t), usedtilesets[other_rmd.tileset], true) then
 				love.graphics.setColor(255, 0, 0)
 
 				if roomleftW then
@@ -188,10 +192,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 		end
 		-- Right
+		other_rmd = level:get_roommetadata(roomright, roomy)
 		for t = 0, 29 do
 			-- Wall
-			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset]) then
-
+			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[other_rmd.tileset]) then
 				if roomrightW then
 					love.graphics.setColor(0, 192, 255)
 				end
@@ -201,13 +205,13 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				if roomrightW then
 					love.graphics.setColor(255, 255, 255)
 				end
-
-			elseif not roomrightW and ( (levelmetadata_get(roomright, roomy).warpdir == 1) or (levelmetadata_get(roomright, roomy).warpdir == 3) ) and not warplinesinroom(roomright, roomy) then
+			elseif not roomrightW and (other_rmd.warpdir == 1 or other_rmd.warpdir == 3) and not warplinesinroom(roomright, roomy) then
 				love.graphics.rectangle("fill", screenoffset+(39*16)+16-1, t*16, 1, 16)
 			end
 
 			-- Spikes
-			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], false) ~= issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[levelmetadata_get(roomright, roomy).tileset], true) then
+			if issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[other_rmd.tileset], false)
+			~= issolid(roomdata_get(roomright, roomy, 0, t), usedtilesets[other_rmd.tileset], true) then
 				love.graphics.setColor(255, 0, 0)
 
 				if roomrightW then
@@ -220,10 +224,10 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 			end
 		end
 		-- Down
+		other_rmd = level:get_roommetadata(roomx, roomdown)
 		for t = 0, 39 do
 			-- Wall
-			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset]) then
-
+			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[other_rmd.tileset]) then
 				if roomdownW then
 					love.graphics.setColor(0, 192, 255)
 				end
@@ -233,13 +237,13 @@ function displayroom(offsetx, offsety, theroomdata, themetadata, zoomscale2, dis
 				if roomdownW then
 					love.graphics.setColor(255, 255, 255)
 				end
-
-			elseif not roomdownW and ( (levelmetadata_get(roomx, roomdown).warpdir == 2) or (levelmetadata_get(roomx, roomdown).warpdir == 3) ) and not warplinesinroom(roomx, roomdown) then
+			elseif not roomdownW and (other_rmd.warpdir == 2 or other_rmd.warpdir == 3) and not warplinesinroom(roomx, roomdown) then
 				love.graphics.rectangle("fill", screenoffset+(t*16), 29*16+16-1, 16, 1)
 			end
 
 			-- Spikes
-			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], false) ~= issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[levelmetadata_get(roomx, roomdown).tileset], true) then
+			if issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[other_rmd.tileset], false)
+			~= issolid(roomdata_get(roomx, roomdown, t, 0), usedtilesets[other_rmd.tileset], true) then
 				love.graphics.setColor(255, 0, 0)
 
 				if roomdownW then
@@ -347,13 +351,13 @@ function add_rooms(new_w, new_h)
 		if roomdata[y] == nil then
 			roomdata[y] = {}
 		end
-		if levelmetadata[y] == nil then
-			levelmetadata[y] = {}
+		if level.roommetadata[y] == nil then
+			level.roommetadata[y] = {}
 		end
 
 		for x = 0, new_w-1 do
-			if levelmetadata[y][x] == nil then
-				levelmetadata[y][x] = default_levelmetadata(x, y)
+			if level.roommetadata[y][x] == nil then
+				level.roommetadata[y][x] = default_roommetadata(x, y)
 			end
 			if roomdata[y][x] == nil then
 				roomdata[y][x] = {}
@@ -446,16 +450,16 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		y = offsety+(v.y-myroomy*30)*16
 	end
 
-	local lmd = levelmetadata_get(myroomx, myroomy)
-	local gray_warpzone = lmd.tileset == 3 and lmd.tilecol == 6
+	local rmd = level:get_roommetadata(myroomx, myroomy)
+	local gray_warpzone = rmd.tileset == 3 and rmd.tilecol == 6
 
 	-- What kind of entity is this?
 	if allowdebug and love.keyboard.isDown("/") then
 		theme:draw("ui/entity", x, y)
 	elseif v.t == 1 then
 		-- Enemy
-		v6_setcol(tilesetblocks[lmd.tileset].colors[lmd.tilecol].v6col)
-		drawentitysprite(enemysprites[lmd.enemytype], x, y)
+		v6_setcol(tilesetblocks[rmd.tileset].colors[rmd.tilecol].v6col)
+		drawentitysprite(enemysprites[rmd.enemytype], x, y)
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
@@ -467,14 +471,14 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 2 then
 		-- Platform, it's either a moving one or a conveyor!
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[lmd.tileset].colors[lmd.tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[rmd.tileset].colors[rmd.tilecol].entcolourrow
 		if v.p1 <= 4 then
 			-- Moving platform
 			local usethisentcolour
 			if entcolourrow ~= nil then
 				usethisentcolour = entcolourrow*12
 			end
-			if lmd.tileset == 0 and lmd.tilecol == -1 then
+			if rmd.tileset == 0 and rmd.tilecol == -1 then
 				usethisentcolour = 1
 			end
 			for eachx = x, x+48, 16 do
@@ -493,7 +497,7 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 				thiscycle = 3 - conveyorrightcycle
 			end
 			local usethisentcolour
-			if lmd.tileset == 0 and lmd.tilecol == -1 then
+			if rmd.tileset == 0 and rmd.tilecol == -1 then
 				-- This one's the weirdest of all the entcolour sprites for Space Station tilecol -1
 				local tmp
 				if table.contains({5, 7}, v.p1) then
@@ -535,12 +539,12 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 	elseif v.t == 3 then
 		-- Disappearing platform
 		love.graphics.setColor(255,255,255,255)
-		local entcolourrow = tilesetblocks[lmd.tileset].colors[lmd.tilecol].entcolourrow
+		local entcolourrow = tilesetblocks[rmd.tileset].colors[rmd.tilecol].entcolourrow
 		local usethisentcolour
 		if entcolourrow ~= nil then
 			usethisentcolour = entcolourrow*12
 		end
-		if lmd.tileset == 0 and lmd.tilecol == -1 then
+		if rmd.tileset == 0 and rmd.tilecol == -1 then
 			usethisentcolour = 2
 		end
 		for eachx = x, x+48, 16 do
@@ -1050,7 +1054,7 @@ function displaytilespicker(offsetx, offsety, tilesetname, page, displaytilenumb
 		end
 	end
 
-	if levelmetadata_get(roomx, roomy).directmode == 1 then
+	if level:get_roommetadata(roomx, roomy).directmode == 1 then
 		if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and customsizemode == 2 then
 			-- We're currently creating a stamp from the tileset
 			local cursorx = math.floor((love.mouse.getX()-offsetx) / 16)
@@ -1107,7 +1111,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 			end
 
 			-- Are we hovering on this tile? And are we in manual mode?
-			if levelmetadata_get(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(scale*8*lx), offsety+(scale*8*ly), scale*8, scale*8) then
+			if level:get_roommetadata(roomx, roomy).directmode == 1 and nodialog and mouseon(offsetx+(scale*8*lx), offsety+(scale*8*ly), scale*8, scale*8) then
 				local cur_x = offsetx + (scale*8*lx)
 				local cur_y = offsety + (scale*8*ly)
 				if small then
@@ -1133,7 +1137,7 @@ function displaysmalltilespicker(offsetx, offsety, chosentileset, chosencolor, s
 	end
 
 	-- Were we highlighting a tile?
-	if levelmetadata_get(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
+	if level:get_roommetadata(roomx, roomy).directmode == 1 and selectedx ~= -1 then  -- and selectedy, but if just one of them is -1 then we have a much more serious bug to worry about
 		theme:draw("ui/selected_tile" .. (small and "_small" or ""), offsetx+(scale*8*selectedx)-2, offsety+(scale*8*selectedy)-2)
 	end
 end
@@ -1146,11 +1150,12 @@ function toolfinish(what)
 end
 
 function autocorrectroom()
-	if levelmetadata_get(roomx, roomy).directmode == 0 then
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if rmd.directmode == 0 then
 		autotiling:cache_data()
 		for thisy = 0, 29 do
 			for thisx = 0, 39 do
-				if levelmetadata_get(roomx, roomy).auto2mode == 0 or autotiling:in_tileset(roomdata_get(roomx, roomy, thisx, thisy)) then
+				if rmd.auto2mode == 0 or autotiling:in_tileset(roomdata_get(roomx, roomy, thisx, thisy)) then
 					local new_tile = autotiling:autotile(thisx, thisy)
 					if roomdata_get(roomx, roomy, thisx, thisy) ~= new_tile then
 						roomdata_set(roomx, roomy, thisx, thisy, new_tile)
@@ -1189,7 +1194,7 @@ function issolid(tilenum, tileset, spikessolid, ignoremultimode, invincibilitymo
 		invincibilitymode = false
 	end
 
-	if not ignoremultimode and levelmetadata_get(roomx, roomy).auto2mode == 1 and not tileincurrenttileset(tilenum) then
+	if not ignoremultimode and level:get_roommetadata(roomx, roomy).auto2mode == 1 and not tileincurrenttileset(tilenum) then
 		return false
 	end
 
@@ -1390,9 +1395,10 @@ function displayshapedcursor(leftblx, upblx, rightblx, downblx)
 end
 
 function displayalphatile(leftblx, upblx, forx, fory, customsize)
-	if (levelmetadata_get(roomx, roomy).directmode == 1 and not (customsize and customsizemode ~= 0))
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if (rmd.directmode == 1 and not (customsize and customsizemode ~= 0))
 	or (customsize and customsizemode == 0 and customsizetile ~= nil) then
-		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+		local tsimage = tileset_image(rmd)
 		love.graphics.setColor(255,255,255,128)
 
 		local cursorx, cursory = maineditor_get_cursor()
@@ -1447,8 +1453,11 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 end
 
 function displayalphatile_hor()
-	if levelmetadata_get(roomx, roomy).directmode == 1 then
-		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if rmd.directmode == 1 then
+		local cursorx, cursory = maineditor_get_cursor()
+
+		local tsimage = tileset_image(rmd)
 		if tilesets[tsimage].tiles[selectedtile] == nil then
 			return
 		end
@@ -1468,10 +1477,11 @@ function displayalphatile_hor()
 end
 
 function displayalphatile_ver()
-	if levelmetadata_get(roomx, roomy).directmode == 1 then
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if rmd.directmode == 1 then
 		local cursorx, cursory = maineditor_get_cursor()
 
-		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+		local tsimage = tileset_image(rmd)
 		if tilesets[tsimage].tiles[selectedtile] == nil then
 			return
 		end
@@ -1491,8 +1501,9 @@ function displayalphatile_ver()
 end
 
 function displayalphatile_all()
-	if levelmetadata_get(roomx, roomy).directmode == 1 then
-		local tsimage = tileset_image(levelmetadata_get(roomx, roomy))
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if rmd.directmode == 1 then
+		local tsimage = tileset_image(rmd)
 		if tilesets[tsimage].tiles[selectedtile] == nil then
 			return
 		end
@@ -1621,22 +1632,23 @@ function getroomcopydata(rx, ry)
 		datatable[k] = v
 	end
 
-	table.insert(datatable, 1, levelmetadata_get(rx, ry).tileset)
-	table.insert(datatable, 2, levelmetadata_get(rx, ry).tilecol)
-	table.insert(datatable, 3, levelmetadata_get(rx, ry).platx1)
-	table.insert(datatable, 4, levelmetadata_get(rx, ry).platy1)
-	table.insert(datatable, 5, levelmetadata_get(rx, ry).platx2)
-	table.insert(datatable, 6, levelmetadata_get(rx, ry).platy2)
-	table.insert(datatable, 7, levelmetadata_get(rx, ry).platv)
-	table.insert(datatable, 8, levelmetadata_get(rx, ry).enemyx1)
-	table.insert(datatable, 9, levelmetadata_get(rx, ry).enemyy1)
-	table.insert(datatable, 10, levelmetadata_get(rx, ry).enemyx2)
-	table.insert(datatable, 11, levelmetadata_get(rx, ry).enemyy2)
-	table.insert(datatable, 12, levelmetadata_get(rx, ry).enemytype)
-	table.insert(datatable, 13, levelmetadata_get(rx, ry).directmode)
-	table.insert(datatable, 14, levelmetadata_get(rx, ry).warpdir)
+	local rmd = level:get_roommetadata(rx, ry)
+	table.insert(datatable, 1, rmd.tileset)
+	table.insert(datatable, 2, rmd.tilecol)
+	table.insert(datatable, 3, rmd.platx1)
+	table.insert(datatable, 4, rmd.platy1)
+	table.insert(datatable, 5, rmd.platx2)
+	table.insert(datatable, 6, rmd.platy2)
+	table.insert(datatable, 7, rmd.platv)
+	table.insert(datatable, 8, rmd.enemyx1)
+	table.insert(datatable, 9, rmd.enemyy1)
+	table.insert(datatable, 10, rmd.enemyx2)
+	table.insert(datatable, 11, rmd.enemyy2)
+	table.insert(datatable, 12, rmd.enemytype)
+	table.insert(datatable, 13, rmd.directmode)
+	table.insert(datatable, 14, rmd.warpdir)
 	-- Inserting it directly is causing trouble, even with [1]
-	local aiguroomtext = levelmetadata_get(rx, ry).roomname:gsub(",", "´")
+	local aiguroomtext = rmd.roomname:gsub(",", "´")
 	table.insert(datatable, 15, aiguroomtext)
 
 	return table.concat(datatable, ",")
@@ -1702,23 +1714,23 @@ function setroomfromcopy(data, rx, ry, skip_undo)
 	end
 
 	-- Everything appears to be well and safe to paste!
-	levelmetadata_set(rx, ry, "tileset", explodeddata[1])
+	level:set_roommetadata(rx, ry, "tileset", explodeddata[1])
 	selectedtileset = explodeddata[1]
-	levelmetadata_set(rx, ry, "tilecol", explodeddata[2])
+	level:set_roommetadata(rx, ry, "tilecol", explodeddata[2])
 	selectedcolor = explodeddata[2]
-	levelmetadata_set(rx, ry, "platx1", explodeddata[3])
-	levelmetadata_set(rx, ry, "platy1", explodeddata[4])
-	levelmetadata_set(rx, ry, "platx2", explodeddata[5])
-	levelmetadata_set(rx, ry, "platy2", explodeddata[6])
-	levelmetadata_set(rx, ry, "platv", explodeddata[7])
-	levelmetadata_set(rx, ry, "enemyx1", explodeddata[8])
-	levelmetadata_set(rx, ry, "enemyy1", explodeddata[9])
-	levelmetadata_set(rx, ry, "enemyx2", explodeddata[10])
-	levelmetadata_set(rx, ry, "enemyy2", explodeddata[11])
-	levelmetadata_set(rx, ry, "enemytype", explodeddata[12])
-	levelmetadata_set(rx, ry, "directmode", explodeddata[13])
-	levelmetadata_set(rx, ry, "warpdir", explodeddata[14])
-	levelmetadata_set(rx, ry, "roomname", explodeddata[15]:gsub("´", ","))
+	level:set_roommetadata(rx, ry, "platx1", explodeddata[3])
+	level:set_roommetadata(rx, ry, "platy1", explodeddata[4])
+	level:set_roommetadata(rx, ry, "platx2", explodeddata[5])
+	level:set_roommetadata(rx, ry, "platy2", explodeddata[6])
+	level:set_roommetadata(rx, ry, "platv", explodeddata[7])
+	level:set_roommetadata(rx, ry, "enemyx1", explodeddata[8])
+	level:set_roommetadata(rx, ry, "enemyy1", explodeddata[9])
+	level:set_roommetadata(rx, ry, "enemyx2", explodeddata[10])
+	level:set_roommetadata(rx, ry, "enemyy2", explodeddata[11])
+	level:set_roommetadata(rx, ry, "enemytype", explodeddata[12])
+	level:set_roommetadata(rx, ry, "directmode", explodeddata[13])
+	level:set_roommetadata(rx, ry, "warpdir", explodeddata[14])
+	level:set_roommetadata(rx, ry, "roomname", explodeddata[15]:gsub("´", ","))
 
 	for i=1,15 do
 		table.remove(explodeddata, 1)
@@ -2035,15 +2047,16 @@ function undo()
 		end
 		temporaryroomname = L.METADATAUNDONE
 		temporaryroomnametimer = 90
-	elseif undobuffer[#undobuffer].undotype == "levelmetadata" then
+	elseif undobuffer[#undobuffer].undotype == "roommetadata" then
 		for k,v in pairs(undobuffer[#undobuffer].changedmetadata) do
-			levelmetadata_set(roomx, roomy, v.key, v.oldvalue)
+			level:set_roommetadata(roomx, roomy, v.key, v.oldvalue)
 		end
 		if undobuffer[#undobuffer].changetiles then
 			roomdata_set(roomx, roomy, table.copy(undobuffer[#undobuffer].toundotiles))
 			autocorrectlines()
-			selectedtileset = levelmetadata_get(roomx, roomy).tileset
-			selectedcolor = levelmetadata_get(roomx, roomy).tilecol
+			local rmd = level:get_roommetadata(roomx, roomy)
+			selectedtileset = rmd.tileset
+			selectedcolor = rmd.tilecol
 		end
 	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
 		rotateroom180(roomx, roomy, true)
@@ -2149,13 +2162,14 @@ function redo()
 		end
 		temporaryroomname = L.METADATAREDONE
 		temporaryroomnametimer = 90
-	elseif redobuffer[#redobuffer].undotype == "levelmetadata" then
+	elseif redobuffer[#redobuffer].undotype == "roommetadata" then
 		for k,v in pairs(redobuffer[#redobuffer].changedmetadata) do
-			levelmetadata_set(roomx, roomy, v.key, v.newvalue)
+			level:set_roommetadata(roomx, roomy, v.key, v.newvalue)
 		end
 		if redobuffer[#redobuffer].changetiles then
-			selectedtileset = levelmetadata_get(roomx, roomy).tileset
-			selectedcolor = levelmetadata_get(roomx, roomy).tilecol
+			local rmd = level:get_roommetadata(roomx, roomy)
+			selectedtileset = rmd.tileset
+			selectedcolor = rmd.tilecol
 			autocorrectroom()
 		end
 	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
@@ -2264,7 +2278,8 @@ function cutroom()
 	love.system.setClipboardText(getroomcopydata(roomx, roomy))
 
 	-- That's only a copy, now reset the room except for the tileset/col
-	setroomfromcopy(levelmetadata_get(roomx, roomy).tileset .. "," .. levelmetadata_get(roomx, roomy).tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
+	local rmd = level:get_roommetadata(roomx, roomy)
+	setroomfromcopy(rmd.tileset .. "," .. rmd.tilecol .. ",0,0,320,240,4,0,0,320,240,0,0,0," .. (",0"):rep(1200), roomx, roomy)
 
 	temporaryroomname = L.ROOMCUT
 	temporaryroomnametimer = 90
@@ -2354,51 +2369,9 @@ end
 
 function gotoroom_finish()
 	cancel_placing_scriptbox()
-	selectedtileset = levelmetadata_get(roomx, roomy).tileset
-	selectedcolor = levelmetadata_get(roomx, roomy).tilecol
-end
-
-function levelmetadata_get(x, y, uselevel2)
-	-- NOTE: Never set uselevel2 manually.
-	-- Instead, use levelmetadata2_get()
-	local usethislevelmetadata
-	if uselevel2 then
-		usethislevelmetadata = levelmetadata2
-	else
-		usethislevelmetadata = levelmetadata
-	end
-
-	if usethislevelmetadata[y] == nil or usethislevelmetadata[y][x] == nil then
-		error("Attempt to levelmetadata_get for out-of-bounds room " .. x .. "," .. y)
-	end
-
-	return usethislevelmetadata[y][x]
-end
-
-function levelmetadata_set(x, y, param1, param2)
-	local attribute, value
-	if param2 ~= nil then
-		attribute = param1
-		value = param2
-	else
-		value = param1
-	end
-
-	if levelmetadata[y] == nil or levelmetadata[y][x] == nil then
-		return
-	end
-
-	if attribute ~= nil then
-		levelmetadata[y][x][attribute] = value
-	else
-		levelmetadata[y][x] = value
-	end
-
-	map_resetroom(x, y)
-end
-
-function levelmetadata2_get(x, y)
-	return levelmetadata_get(x, y, true)
+	local rmd = level:get_roommetadata(roomx, roomy)
+	selectedtileset = rmd.tileset
+	selectedcolor = rmd.tilecol
 end
 
 function roomdata_get(rx, ry, tx, ty, uselevel2)
@@ -2471,11 +2444,11 @@ function shiftrooms(direction, updatescripts)
 	local width, height = metadata.mapwidth, metadata.mapheight
 
 	-- Copy the rooms that are on the edge
-	local edgeroomdata, edgelevelmetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
+	local edgeroomdata, edgeroommetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
 	if direction == SHIFT.LEFT then
 		for y = 0, height-1 do
 			edgeroomdata[y] = table.copy(roomdata_get(0, y))
-			edgelevelmetadata[y] = table.copy(levelmetadata_get(0, y))
+			edgeroommetadata[y] = table.copy(level:get_roommetadata(0, y))
 			edgemapdata[y] = table.copy(rooms_map[y][0])
 			edgetrinketsdata[y] = map_trinkets[y][0]
 			edgecrewmatesdata[y] = table.copy(map_crewmates[y][0])
@@ -2483,7 +2456,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.RIGHT then
 		for y = 0, height-1 do
 			edgeroomdata[y] = table.copy(roomdata_get(width-1, y))
-			edgelevelmetadata[y] = table.copy(levelmetadata_get(width-1, y))
+			edgeroommetadata[y] = table.copy(level:get_roommetadata(width-1, y))
 			edgemapdata[y] = table.copy(rooms_map[y][width-1])
 			edgetrinketsdata[y] = map_trinkets[y][width-1]
 			edgecrewmatesdata[y] = table.copy(map_crewmates[y][width-1])
@@ -2491,7 +2464,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.UP then
 		for x = 0, width-1 do
 			edgeroomdata[x] = table.copy(roomdata_get(x, 0))
-			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, 0))
+			edgeroommetadata[x] = table.copy(level:get_roommetadata(x, 0))
 			edgemapdata[x] = table.copy(rooms_map[0][x])
 			edgetrinketsdata[x] = map_trinkets[0][x]
 			edgecrewmatesdata[x] = table.copy(map_crewmates[0][x])
@@ -2499,7 +2472,7 @@ function shiftrooms(direction, updatescripts)
 	elseif direction == SHIFT.DOWN then
 		for x = 0, width-1 do
 			edgeroomdata[x] = table.copy(roomdata_get(x, height-1))
-			edgelevelmetadata[x] = table.copy(levelmetadata_get(x, height-1))
+			edgeroommetadata[x] = table.copy(level:get_roommetadata(x, height-1))
 			edgemapdata[x] = table.copy(rooms_map[height-1][x])
 			edgetrinketsdata[x] = map_trinkets[height-1][x]
 			edgecrewmatesdata[x] = table.copy(map_crewmates[height-1][x])
@@ -2513,7 +2486,7 @@ function shiftrooms(direction, updatescripts)
 		for y = 0, height-1 do
 			for x = 0, width-2 do
 				roomdata_set(x, y, table.copy(roomdata_get(x+1, y)))
-				levelmetadata_set(x, y, table.copy(levelmetadata_get(x+1, y)))
+				level:set_roommetadata(x, y, table.copy(level:get_roommetadata(x+1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x+1])
 				map_trinkets[y][x] = map_trinkets[y][x+1]
 				map_crewmates[y][x] = table.copy(map_crewmates[y][x+1])
@@ -2521,7 +2494,7 @@ function shiftrooms(direction, updatescripts)
 		end
 		for y = 0, height-1 do
 			roomdata_set(width-1, y, table.copy(edgeroomdata[y]))
-			levelmetadata_set(width-1, y, table.copy(edgelevelmetadata[y]))
+			level:set_roommetadata(width-1, y, table.copy(edgeroommetadata[y]))
 			rooms_map[y][width-1] = table.copy(edgemapdata[y])
 			map_trinkets[y][width-1] = edgetrinketsdata[y]
 			map_crewmates[y][width-1] = table.copy(edgecrewmatesdata[y])
@@ -2530,7 +2503,7 @@ function shiftrooms(direction, updatescripts)
 		for y = 0, height-1 do
 			for x = width-1, 1, -1 do
 				roomdata_set(x, y, table.copy(roomdata_get(x-1, y)))
-				levelmetadata_set(x, y, table.copy(levelmetadata_get(x-1, y)))
+				level:set_roommetadata(x, y, table.copy(level:get_roommetadata(x-1, y)))
 				rooms_map[y][x] = table.copy(rooms_map[y][x-1])
 				map_trinkets[y][x] = map_trinkets[y][x-1]
 				map_crewmates[y][x] = table.copy(map_crewmates[y][x-1])
@@ -2538,7 +2511,7 @@ function shiftrooms(direction, updatescripts)
 		end
 		for y = 0, height-1 do
 			roomdata_set(0, y, table.copy(edgeroomdata[y]))
-			levelmetadata_set(0, y, table.copy(edgelevelmetadata[y]))
+			level:set_roommetadata(0, y, table.copy(edgeroommetadata[y]))
 			rooms_map[y][0] = table.copy(edgemapdata[y])
 			map_trinkets[y][0] = edgetrinketsdata[y]
 			map_crewmates[y][0] = table.copy(edgecrewmatesdata[y])
@@ -2547,7 +2520,7 @@ function shiftrooms(direction, updatescripts)
 		for y = 0, height-2 do
 			for x = 0, width-1 do
 				roomdata_set(x, y, table.copy(roomdata_get(x, y+1)))
-				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y+1)))
+				level:set_roommetadata(x, y, table.copy(level:get_roommetadata(x, y+1)))
 				rooms_map[y][x] = table.copy(rooms_map[y+1][x])
 				map_trinkets[y][x] = map_trinkets[y+1][x]
 				map_crewmates[y][x] = table.copy(map_crewmates[y+1][x])
@@ -2555,7 +2528,7 @@ function shiftrooms(direction, updatescripts)
 		end
 		for x = 0, width-1 do
 			roomdata_set(x, height-1, table.copy(edgeroomdata[x]))
-			levelmetadata_set(x, height-1, table.copy(edgelevelmetadata[x]))
+			level:set_roommetadata(x, height-1, table.copy(edgeroommetadata[x]))
 			rooms_map[height-1][x] = table.copy(edgemapdata[x])
 			map_trinkets[height-1][x] = edgetrinketsdata[x]
 			map_crewmates[height-1][x] = table.copy(edgecrewmatesdata[x])
@@ -2564,7 +2537,7 @@ function shiftrooms(direction, updatescripts)
 		for y = height-1, 1, -1 do
 			for x = 0, width-1 do
 				roomdata_set(x, y, table.copy(roomdata_get(x, y-1)))
-				levelmetadata_set(x, y, table.copy(levelmetadata_get(x, y-1)))
+				level:set_roommetadata(x, y, table.copy(level:get_roommetadata(x, y-1)))
 				rooms_map[y][x] = table.copy(rooms_map[y-1][x])
 				map_trinkets[y][x] = map_trinkets[y-1][x]
 				map_crewmates[y][x] = table.copy(map_crewmates[y-1][x])
@@ -2572,7 +2545,7 @@ function shiftrooms(direction, updatescripts)
 		end
 		for x = 0, width-1 do
 			roomdata_set(x, 0, table.copy(edgeroomdata[x]))
-			levelmetadata_set(x, 0, table.copy(edgelevelmetadata[x]))
+			level:set_roommetadata(x, 0, table.copy(edgeroommetadata[x]))
 			rooms_map[0][x] = table.copy(edgemapdata[x])
 			map_trinkets[0][x] = edgetrinketsdata[x]
 			map_crewmates[0][x] = table.copy(edgecrewmatesdata[x])

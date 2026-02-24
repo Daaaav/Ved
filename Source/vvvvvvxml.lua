@@ -73,7 +73,7 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (table)levelmetadata, (table)scripts, (table)count, (table)scriptnames, (table)vedmetadata, level
+	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (Level)level
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -101,7 +101,7 @@ function loadlevel(path)
 	local FC = 0
 	local FClist = {}
 
-	local n_levelmetadata = 0
+	local n_roommetadata = 0
 
 	local errmsg
 	success, errmsg = pcall(function()
@@ -355,12 +355,12 @@ function loadlevel(path)
 
 		local xlevelmetadata = xml:find(xdata, "levelMetaData")
 		for room in xml:each_child_element(xlevelmetadata, "edLevelClass") do
-			n_levelmetadata = n_levelmetadata + 1
+			n_roommetadata = n_roommetadata + 1
 			rx = rx + 1
 			if rx >= lmd_width then
 				rx = 0
 				ry = ry + 1
-				lvl.levelmetadata[ry] = {}
+				lvl.roommetadata[ry] = {}
 			end
 			if rx < thismetadata.mapwidth and ry < thismetadata.mapheight then
 				inbounds = true
@@ -368,7 +368,7 @@ function loadlevel(path)
 			else
 				inbounds = false
 			end
-			lvl.levelmetadata[ry][rx] = {}
+			lvl.roommetadata[ry][rx] = {}
 
 			local attributes = xml:get_attributes(room)
 			for k,v in pairs(attributes) do
@@ -376,92 +376,92 @@ function loadlevel(path)
 					-- Unfortunately platv is very special.
 					table.insert(all_platvs, tonumber(v))
 					if inbounds then
-						lvl.levelmetadata[ry][rx].platv = all_platvs[inboundsroom]
+						lvl.roommetadata[ry][rx].platv = all_platvs[inboundsroom]
 					else
-						lvl.levelmetadata[ry][rx].platv = 4
+						lvl.roommetadata[ry][rx].platv = 4
 					end
 				else
-					lvl.levelmetadata[ry][rx][k] = tonumber(v)
+					lvl.roommetadata[ry][rx][k] = tonumber(v)
 				end
 			end
 
 			-- Now we only need the room name...
-			lvl.levelmetadata[ry][rx].roomname = xml:get_text(room)
+			lvl.roommetadata[ry][rx].roomname = xml:get_text(room)
 
 			-- And make sure directmode isn't nil for 2.0 levels
-			if lvl.levelmetadata[ry][rx].directmode == nil then
-				lvl.levelmetadata[ry][rx].directmode = 0
+			if lvl.roommetadata[ry][rx].directmode == nil then
+				lvl.roommetadata[ry][rx].directmode = 0
 			end
 
 			local oldFCcount = FC
 
-			if lvl.levelmetadata[ry][rx].tileset == nil
-			or type(lvl.levelmetadata[ry][rx].tileset) ~= "number"
-			or (lvl.levelmetadata[ry][rx].tileset > 4) then
+			if lvl.roommetadata[ry][rx].tileset == nil
+			or type(lvl.roommetadata[ry][rx].tileset) ~= "number"
+			or (lvl.roommetadata[ry][rx].tileset > 4) then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].tileset = 0
+				lvl.roommetadata[ry][rx].tileset = 0
 			end
-			if lvl.levelmetadata[ry][rx].tilecol == nil
-			or type(lvl.levelmetadata[ry][rx].tilecol) ~= "number"
-			or ((lvl.levelmetadata[ry][rx].tileset == 0 and lvl.levelmetadata[ry][rx].tilecol < -1)
-			or (lvl.levelmetadata[ry][rx].tileset ~= 0 and lvl.levelmetadata[ry][rx].tilecol < 0))
-			or lvl.levelmetadata[ry][rx].tileset == 0 and lvl.levelmetadata[ry][rx].tilecol > 31
-			or lvl.levelmetadata[ry][rx].tileset == 1 and lvl.levelmetadata[ry][rx].tilecol > 7
-			or lvl.levelmetadata[ry][rx].tileset == 2 and lvl.levelmetadata[ry][rx].tilecol > 6
-			or lvl.levelmetadata[ry][rx].tileset == 3 and lvl.levelmetadata[ry][rx].tilecol > 6
-			or lvl.levelmetadata[ry][rx].tileset == 4 and lvl.levelmetadata[ry][rx].tilecol > 5
-			or lvl.levelmetadata[ry][rx].tileset == 5 and lvl.levelmetadata[ry][rx].tilecol > 29 then
+			if lvl.roommetadata[ry][rx].tilecol == nil
+			or type(lvl.roommetadata[ry][rx].tilecol) ~= "number"
+			or ((lvl.roommetadata[ry][rx].tileset == 0 and lvl.roommetadata[ry][rx].tilecol < -1)
+			or (lvl.roommetadata[ry][rx].tileset ~= 0 and lvl.roommetadata[ry][rx].tilecol < 0))
+			or lvl.roommetadata[ry][rx].tileset == 0 and lvl.roommetadata[ry][rx].tilecol > 31
+			or lvl.roommetadata[ry][rx].tileset == 1 and lvl.roommetadata[ry][rx].tilecol > 7
+			or lvl.roommetadata[ry][rx].tileset == 2 and lvl.roommetadata[ry][rx].tilecol > 6
+			or lvl.roommetadata[ry][rx].tileset == 3 and lvl.roommetadata[ry][rx].tilecol > 6
+			or lvl.roommetadata[ry][rx].tileset == 4 and lvl.roommetadata[ry][rx].tilecol > 5
+			or lvl.roommetadata[ry][rx].tileset == 5 and lvl.roommetadata[ry][rx].tilecol > 29 then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].tilecol = 0
+				lvl.roommetadata[ry][rx].tilecol = 0
 			end
-			if lvl.levelmetadata[ry][rx].platx1 == nil or type(lvl.levelmetadata[ry][rx].platx1) ~= "number" then
+			if lvl.roommetadata[ry][rx].platx1 == nil or type(lvl.roommetadata[ry][rx].platx1) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].platx1 = 0
+				lvl.roommetadata[ry][rx].platx1 = 0
 			end
-			if lvl.levelmetadata[ry][rx].platy1 == nil or type(lvl.levelmetadata[ry][rx].platy1) ~= "number" then
+			if lvl.roommetadata[ry][rx].platy1 == nil or type(lvl.roommetadata[ry][rx].platy1) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].platy1 = 0
+				lvl.roommetadata[ry][rx].platy1 = 0
 			end
-			if lvl.levelmetadata[ry][rx].platx2 == nil or type(lvl.levelmetadata[ry][rx].platx2) ~= "number" then
+			if lvl.roommetadata[ry][rx].platx2 == nil or type(lvl.roommetadata[ry][rx].platx2) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].platx2 = 0
+				lvl.roommetadata[ry][rx].platx2 = 0
 			end
-			if lvl.levelmetadata[ry][rx].platy2 == nil or type(lvl.levelmetadata[ry][rx].platy2) ~= "number" then
+			if lvl.roommetadata[ry][rx].platy2 == nil or type(lvl.roommetadata[ry][rx].platy2) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].platy2 = 0
+				lvl.roommetadata[ry][rx].platy2 = 0
 			end
-			if lvl.levelmetadata[ry][rx].platv == nil or type(lvl.levelmetadata[ry][rx].platv) ~= "number" then
+			if lvl.roommetadata[ry][rx].platv == nil or type(lvl.roommetadata[ry][rx].platv) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].platv = 0
+				lvl.roommetadata[ry][rx].platv = 0
 			end
-			if lvl.levelmetadata[ry][rx].enemyx1 == nil or type(lvl.levelmetadata[ry][rx].enemyx1) ~= "number" then
+			if lvl.roommetadata[ry][rx].enemyx1 == nil or type(lvl.roommetadata[ry][rx].enemyx1) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].enemyx1 = 0
+				lvl.roommetadata[ry][rx].enemyx1 = 0
 			end
-			if lvl.levelmetadata[ry][rx].enemyy1 == nil or type(lvl.levelmetadata[ry][rx].enemyy1) ~= "number" then
+			if lvl.roommetadata[ry][rx].enemyy1 == nil or type(lvl.roommetadata[ry][rx].enemyy1) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].enemyy1 = 0
+				lvl.roommetadata[ry][rx].enemyy1 = 0
 			end
-			if lvl.levelmetadata[ry][rx].enemyx2 == nil or type(lvl.levelmetadata[ry][rx].enemyx2) ~= "number" then
+			if lvl.roommetadata[ry][rx].enemyx2 == nil or type(lvl.roommetadata[ry][rx].enemyx2) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].enemyx2 = 0
+				lvl.roommetadata[ry][rx].enemyx2 = 0
 			end
-			if lvl.levelmetadata[ry][rx].enemyy2 == nil or type(lvl.levelmetadata[ry][rx].enemyy2) ~= "number" then
+			if lvl.roommetadata[ry][rx].enemyy2 == nil or type(lvl.roommetadata[ry][rx].enemyy2) ~= "number" then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].enemyy2 = 0
+				lvl.roommetadata[ry][rx].enemyy2 = 0
 			end
-			if lvl.levelmetadata[ry][rx].enemytype == nil or type(lvl.levelmetadata[ry][rx].enemytype) ~= "number"
-			or lvl.levelmetadata[ry][rx].enemytype < 0 or lvl.levelmetadata[ry][rx].enemytype > 9 then
+			if lvl.roommetadata[ry][rx].enemytype == nil or type(lvl.roommetadata[ry][rx].enemytype) ~= "number"
+			or lvl.roommetadata[ry][rx].enemytype < 0 or lvl.roommetadata[ry][rx].enemytype > 9 then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].enemytype = 0
+				lvl.roommetadata[ry][rx].enemytype = 0
 			end
-			if lvl.levelmetadata[ry][rx].warpdir == nil or type(lvl.levelmetadata[ry][rx].warpdir) ~= "number"
-			or lvl.levelmetadata[ry][rx].warpdir < 0 or lvl.levelmetadata[ry][rx].warpdir > 3 then
+			if lvl.roommetadata[ry][rx].warpdir == nil or type(lvl.roommetadata[ry][rx].warpdir) ~= "number"
+			or lvl.roommetadata[ry][rx].warpdir < 0 or lvl.roommetadata[ry][rx].warpdir > 3 then
 				FC = FC + 1
-				lvl.levelmetadata[ry][rx].warpdir = 0
+				lvl.roommetadata[ry][rx].warpdir = 0
 			end
 
-			lvl.levelmetadata[ry][rx].auto2mode = 0
+			lvl.roommetadata[ry][rx].auto2mode = 0
 
 			if oldFCcount < FC then
 				local co = not s.coords0 and 1 or 0
@@ -470,8 +470,8 @@ function loadlevel(path)
 
 			-- If you select a higher tilecol in space station and then go to another tileset,
 			-- VVVVVV will still save the out-of-range tilecol.
-			if tilesetblocks[lvl.levelmetadata[ry][rx].tileset].colors[lvl.levelmetadata[ry][rx].tilecol] == nil then
-				lvl.levelmetadata[ry][rx].tilecol = 0
+			if tilesetblocks[lvl.roommetadata[ry][rx].tileset].colors[lvl.roommetadata[ry][rx].tilecol] == nil then
+				lvl.roommetadata[ry][rx].tilecol = 0
 			end
 		end
 
@@ -634,14 +634,14 @@ function loadlevel(path)
 		cons_fc(FClist, L.LEVMUSICEMPTY)
 		thismetadata.levmusic = 0
 	end
-	if n_levelmetadata ~= 400 then
+	if n_roommetadata ~= 400 then
 		FC = FC + 1
 		cons_fc(FClist, L.NOT400ROOMS)
 
 		--[[ TODO: Think about readding this later, after converting it to the 3D table
-		if #lvl.levelmetadata < 400 then
-			for croom = #lvl.levelmetadata+1, 400 do
-				lvl.levelmetadata[croom] = {
+		if #lvl.roommetadata < 400 then
+			for croom = #lvl.roommetadata+1, 400 do
+				lvl.roommetadata[croom] = {
 					tileset = 0,
 					tilecol = ((croom-1) % 20 + (math.floor((croom-1)/20))) % 32,
 					platx1 = 0,
@@ -682,7 +682,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl
 end
 
 
@@ -875,14 +875,14 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	for y = 0, lvl.metadata.mapheight-1 do
 		for x = 0, lvl.metadata.mapwidth-1 do
 			-- platv needs special handling, unfortunately.
-			table.insert(all_platvs, lvl.levelmetadata[y][x].platv)
+			table.insert(all_platvs, lvl.roommetadata[y][x].platv)
 		end
 	end
 	local i = 1
 	local lmd_w, lmd_h = 20, 20
 	for y = 0, lmd_h-1 do
 		for x = 0, lmd_w-1 do
-			local v = lvl.levelmetadata[y][x]
+			local v = lvl.roommetadata[y][x]
 			local my_platv
 			my_platv = all_platvs[i]
 			if my_platv == nil then
@@ -1079,9 +1079,9 @@ function createblanklevel(lvwidth, lvheight)
 
 	-- Level meta data, get every room now.
 	for ry = 0, 19 do
-		lvl.levelmetadata[ry] = {}
+		lvl.roommetadata[ry] = {}
 		for rx = 0, 19 do
-			lvl.levelmetadata[ry][rx] = default_levelmetadata(rx, ry)
+			lvl.roommetadata[ry][rx] = default_roommetadata(rx, ry)
 		end
 	end
 
@@ -1091,10 +1091,10 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl.levelmetadata, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl
 end
 
-function default_levelmetadata(rx, ry)
+function default_roommetadata(rx, ry)
 	return {
 		tileset = 0,
 		tilecol = (rx + ry) % 32,

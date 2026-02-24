@@ -117,7 +117,7 @@ return function()
 
 					hoverx = mrx
 					hovery = mry
-					hovername = levelmetadata_get(mrx, mry).roomname
+					hovername = level:get_roommetadata(mrx, mry).roomname
 
 					-- But maybe we're clicking this room!
 					if love.mouse.isDown("l") then

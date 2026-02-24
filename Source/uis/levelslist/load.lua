@@ -1,7 +1,9 @@
 -- levelslist/load
 
 return function(special_mode)
-	if oldstate == 1 and levelmetadata ~= nil then -- if levelmetadata is nil, it's clear we don't have a level loaded so going "back" to the editor will be a small disaster
+	-- If level is nil, it's clear we don't have a level loaded
+	-- so going "back" to the editor will be a small disaster...
+	if oldstate == 1 and level ~= nil then
 		-- We'll be able to go back. Show this by making a screenshot
 		if love_version_meets(11) then
 			love.graphics.captureScreenshot(

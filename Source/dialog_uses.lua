@@ -1286,13 +1286,13 @@ function dialog.callback.platv(button, fields, _, notclosed)
 		return
 	end
 
-	local oldplatv = levelmetadata_get(roomx, roomy).platv
-	levelmetadata_set(roomx, roomy, "platv", tonumber(fields.name))
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	local oldplatv = level:get_roommetadata(roomx, roomy).platv
+	level:set_roommetadata(roomx, roomy, "platv", tonumber(fields.name))
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "platv",
 					oldvalue = oldplatv,
-					newvalue = levelmetadata_get(roomx, roomy).platv
+					newvalue = level:get_roommetadata(roomx, roomy).platv
 				}
 			},
 			switchtool = 8
@@ -1420,7 +1420,7 @@ function dialog.callback.create_specialroomname(button, fields)
 		table.insert(level.specialroomnames_order, {x=roomx, y=roomy})
 	end
 
-	local standard = levelmetadata_get(roomx, roomy).roomname
+	local standard = level:get_roommetadata(roomx, roomy).roomname
 	local name
 	if fields.mode == "static" then
 		name = standard

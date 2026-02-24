@@ -118,11 +118,11 @@ function map_doroom(x, y)
 		--love.graphics.rectangle("fill", 0, 0, 320, 240)
 		love.graphics.setColor(255,255,255,255)
 		if s.mapstyle == "minimap" then
-			displayminimaproom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y))
+			displayminimaproom(0, 0, roomdata_get(x, y), level:get_roommetadata(x, y))
 		elseif s.mapstyle == "vtools" then
-			displayvtoolsroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y))
+			displayvtoolsroom(0, 0, roomdata_get(x, y), level:get_roommetadata(x, y))
 		else
-			displayroom(0, 0, roomdata_get(x, y), levelmetadata_get(x, y), 0.5)
+			displayroom(0, 0, roomdata_get(x, y), level:get_roommetadata(x, y), 0.5)
 		end
 		love.graphics.setCanvas()
 

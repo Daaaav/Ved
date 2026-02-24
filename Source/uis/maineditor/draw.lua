@@ -16,25 +16,27 @@ return function()
 			end
 		end
 
-		local ts_name = tileset_names[levelmetadata_get(roomx, roomy).tileset]
+		local ts_name = tileset_names[level:get_roommetadata(roomx, roomy).tileset]
 
 		displaytilespicker(screenoffset, 0, ts_name, tilespicker_page, displaytilenumbers, displaysolid)
 	else
 		-- If we have gravity lines and such, make sure they don't go offscreen
 		love.graphics.setScissor(screenoffset, 0, 640, 480)
 		-- If we have room warping, then display that!
-		if levelmetadata_get(roomx, roomy).warpdir == 1 or levelmetadata_get(roomx, roomy).warpdir == 2 then
+		local rmd = level:get_roommetadata(roomx, roomy)
+		local warpdir = rmd.warpdir
+		if warpdir == 1 or warpdir == 2 then
 			-- Horizontal/vertical warp direction.
 
-			local tils = levelmetadata_get(roomx, roomy).tileset
-			local tilc = levelmetadata_get(roomx, roomy).tilecol
+			local tils = rmd.tileset
+			local tilc = rmd.tilecol
 
-			if levelmetadata_get(roomx, roomy).warpdir == 1 then
+			if warpdir == 1 then
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][1],
 					screenoffset + (32-math.floor(warpbganimation)), 0
 				)
-			elseif levelmetadata_get(roomx, roomy).warpdir == 2 then
+			else
 				love.graphics.draw(
 					warpbgs[tilesetblocks[tils].colors[tilc].warpbg][2],
 					screenoffset, 32-math.floor(warpbganimation)
@@ -42,11 +44,11 @@ return function()
 			end
 
 			love.graphics.setColor(255,255,255,92)
-		elseif levelmetadata_get(roomx, roomy).warpdir == 3 then
+		elseif warpdir == 3 then
 			-- Warping in all directions.
 
-			local tils = levelmetadata_get(roomx, roomy).tileset
-			local tilc = levelmetadata_get(roomx, roomy).tilecol
+			local tils = rmd.tileset
+			local tilc = rmd.tilecol
 
 			for squarel = 11, 0, -1 do
 				-- Centerx: 128+320 = 448
@@ -92,7 +94,7 @@ return function()
 				screenoffset,
 				0,
 				roomdata_get(roomx, roomy),
-				levelmetadata_get(roomx, roomy),
+				level:get_roommetadata(roomx, roomy),
 				nil,
 				displaytilenumbers,
 				displaysolid,
@@ -101,7 +103,7 @@ return function()
 			)
 		end
 
-		local hasroomname = levelmetadata_get(roomx, roomy).roomname:gsub(" ", "") ~= ""
+		local hasroomname = level:get_roommetadata(roomx, roomy).roomname:gsub(" ", "") ~= ""
 		local overwritename = temporaryroomnametimer > 0 or editingbounds ~= 0 or editingcustomsize
 		if showroom then
 			displayentities(screenoffset, 0, roomx, roomy, overwritename or not hasroomname)
@@ -113,13 +115,15 @@ return function()
 			cursorx = math.max(0, math.min(39, cursorx))
 			cursory = math.max(0, math.min(29, cursory))
 
+			local rmd = level:get_roommetadata(roomx, roomy)
+
 			-- Enemies first...
-			if not (levelmetadata_get(roomx, roomy).enemyx1 == 0 and levelmetadata_get(roomx, roomy).enemyy1 == 0 and levelmetadata_get(roomx, roomy).enemyx2 == 320 and levelmetadata_get(roomx, roomy).enemyy2 == 240) then
+			if not (rmd.enemyx1 == 0 and rmd.enemyy1 == 0 and rmd.enemyx2 == 320 and rmd.enemyy2 == 240) then
 				local editing = (editingbounds == 1)
-				local x1 = screenoffset + levelmetadata_get(roomx, roomy).enemyx1 * 2
-				local y1 = levelmetadata_get(roomx, roomy).enemyy1 * 2
-				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).enemyx2 * 2))
-				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).enemyy2 * 2)
+				local x1 = screenoffset + rmd.enemyx1 * 2
+				local y1 = rmd.enemyy1 * 2
+				local x2 = screenoffset + (editing and (cursorx * 16) or (rmd.enemyx2 * 2))
+				local y2 = editing and (cursory * 16) or (rmd.enemyy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_enemy_bounds" or "ui/enemy_bounds",
@@ -131,12 +135,12 @@ return function()
 			end
 
 			-- Then platforms.
-			if not (levelmetadata_get(roomx, roomy).platx1 == 0 and levelmetadata_get(roomx, roomy).platy1 == 0 and levelmetadata_get(roomx, roomy).platx2 == 320 and levelmetadata_get(roomx, roomy).platy2 == 240) then
+			if not (rmd.platx1 == 0 and rmd.platy1 == 0 and rmd.platx2 == 320 and rmd.platy2 == 240) then
 				local editing = (editingbounds == 2)
-				local x1 = screenoffset + levelmetadata_get(roomx, roomy).platx1 * 2
-				local y1 = levelmetadata_get(roomx, roomy).platy1 * 2
-				local x2 = screenoffset + (editing and (cursorx * 16) or (levelmetadata_get(roomx, roomy).platx2 * 2))
-				local y2 = editing and (cursory * 16) or (levelmetadata_get(roomx, roomy).platy2 * 2)
+				local x1 = screenoffset + rmd.platx1 * 2
+				local y1 = rmd.platy1 * 2
+				local x2 = screenoffset + (editing and (cursorx * 16) or (rmd.platx2 * 2))
+				local y2 = editing and (cursory * 16) or (rmd.platy2 * 2)
 
 				theme:draw_nineslice(
 					editing and "ui/placing_platform_bounds" or "ui/platform_bounds",
@@ -200,7 +204,7 @@ return function()
 				text = inputs.roomname
 				bg_color = 128
 			else
-				text = levelmetadata_get(roomx, roomy).roomname
+				text = level:get_roommetadata(roomx, roomy).roomname
 				bg_color = 0
 			end
 			if s.opaqueroomnamebackground then
@@ -244,7 +248,7 @@ return function()
 			local ts = tilesets[tileset_names[selectedtileset]]
 			local tile = ((tilespicker_page*30+cursory)*ts.tiles_width_picker)+cursorx
 
-			if levelmetadata_get(roomx, roomy).directmode ~= 0
+			if level:get_roommetadata(roomx, roomy).directmode ~= 0
 			and cursorx < ts.tiles_width_picker
 			and cursory < ts.tiles_height_picker
 			and tile < ts.total_tiles then
@@ -348,7 +352,7 @@ return function()
 			end
 
 			-- If direct mode is on, we want to know what tile number we're about to place!
-			if levelmetadata_get(roomx, roomy).directmode == 1 then
+			if level:get_roommetadata(roomx, roomy).directmode == 1 then
 				print_tile_number(selectedtile, screenoffset+(16*cursorx), (16*cursory))
 			end
 		elseif selectedtool == 3 then
@@ -518,7 +522,7 @@ return function()
 			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
 			love.graphics.setColor(0, 0, 0, 255)
 			love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
-			displayminimaproom(72, love.graphics.getHeight()-37, roomdata_get(roomx, roomy), levelmetadata_get(roomx, roomy), 4/zoom, atx, aty)
+			displayminimaproom(72, love.graphics.getHeight()-37, roomdata_get(roomx, roomy), level:get_roommetadata(roomx, roomy), 4/zoom, atx, aty)
 			love.graphics.setColor(255, 255, 255, 255)
 		end
 
@@ -670,11 +674,13 @@ return function()
 			rbutton("...", 0, 166, true, 20)
 		end
 
+		local rmd = level:get_roommetadata(roomx, roomy)
+
 		rbutton(fontpng_works and L.ROTATE180 or L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-		rbutton({(levelmetadata_get(roomx, roomy).directmode == 1 and L.MANUALMODE or (levelmetadata_get(roomx, roomy).auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+		rbutton({(rmd.directmode == 1 and L.MANUALMODE or (rmd.auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 		rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
-		rbutton({langkeys(L.WARPDIR, {warpdirs[levelmetadata_get(roomx, roomy).warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+		rbutton({langkeys(L.WARPDIR, {warpdirs[rmd.warpdir]}), "W"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	else
 		rbutton({L.BTN_ADVANCED, "cE"}, 3+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 	end
@@ -843,7 +849,7 @@ return function()
 		elseif onrbutton(0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Rotate
 			rotateroom180(roomx, roomy)
-			if levelmetadata_get(roomx, roomy).directmode == 0 then
+			if level:get_roommetadata(roomx, roomy).directmode == 0 then
 				autocorrectroom()
 			end
 			mousepressed = true
@@ -871,7 +877,7 @@ return function()
 	-- We also have buttons for trinkets, enemy and platform settings, and crewmates!
 	-- FIXME: This code is in dire need of refactoring
 	if selectedtool == 4 or selectedtool == 8 or selectedtool == 9 or selectedtool == 16 or selectedtool == 17 then
-		local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv}
+		local roomsettings = {platv = level:get_roommetadata(roomx, roomy).platv}
 		if selectedtool ~= 4 and selectedtool ~= 16 and selectedtool ~= 17 then
 			rbutton((selectedtool == 8 and {L.PLATFORMBOUNDS, "t"} or {L.ENEMYBOUNDS, "r"}), -3, 164+4, true, nil, editingbounds ~= 0)
 		end
@@ -886,19 +892,23 @@ return function()
 			end
 			rbutton(label, -2, 164+4, true)
 		elseif selectedtool == 9 then
-			rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
+			rbutton({langkeys(L.ENEMYTYPE, {level:get_roommetadata(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
 		else
 			font_ui:print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4)
 			hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font_8x8:getWidth(roomsettings.platv))/2 - 4, love.graphics.getHeight()+24-160, font_8x8:getWidth(roomsettings.platv) + 8, 16)
 			int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()+24-160, "platv", 0, 8, nil, roomsettings, function() return roomsettings.platv end, 8*3)
-			local oldplatv = levelmetadata_get(roomx, roomy).platv
+			local oldplatv = level:get_roommetadata(roomx, roomy).platv
 			if roomsettings.platv ~= oldplatv then
-				levelmetadata_set(roomx, roomy, "platv", roomsettings.platv)
-				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+				level:set_roommetadata(roomx, roomy, "platv", roomsettings.platv)
+				table.insert(undobuffer,
+					{
+						undotype = "roommetadata",
+						rx = roomx, ry = roomy,
+						changedmetadata = {
 							{
 								key = "platv",
 								oldvalue = oldplatv,
-								newvalue = levelmetadata_get(roomx, roomy).platv
+								newvalue = level:get_roommetadata(roomx, roomy).platv
 							}
 						},
 						switchtool = 8
@@ -916,7 +926,7 @@ return function()
 			love.graphics.getWidth()-(128-8), (love.graphics.getHeight()-156)+4, 128-16, "center"
 		)
 
-		local changedplatv, oldplatv = false, levelmetadata_get(roomx, roomy).platv
+		local changedplatv, oldplatv = false, level:get_roommetadata(roomx, roomy).platv
 
 		-- They should work
 		if not mousepressed and nodialog and love.mouse.isDown("l") then
@@ -982,34 +992,46 @@ return function()
 				-- Enemy type
 				switchenemies()
 				mousepressed = true
-			elseif mouseon(love.graphics.getWidth()-(128-8)+(6*8) + (64 - font_8x8:getWidth(levelmetadata_get(roomx, roomy).platv))/2 - 4, love.graphics.getHeight()+24-160, font_8x8:getWidth(levelmetadata_get(roomx, roomy).platv) + 8, 16) and selectedtool == 8 then
-				-- Platform speed
-				dialog.create(
-					L.PLATVCHANGE_MSG,
-					DBS.OKCANCEL,
-					dialog.callback.platv,
-					L.PLATVCHANGE_TITLE,
-					{{"name", 0, 1, 5, ""}},
-					dialog.callback.platv_validate
-				)
+			else
+				local text_w = font_8x8:getWidth(level:get_roommetadata(roomx, roomy).platv)
+				if mouseon(
+					love.graphics.getWidth()-(128-8)+(6*8) + (64 - text_w)/2 - 4,
+					love.graphics.getHeight()+24-160,
+					text_w + 8,
+					16
+				) and selectedtool == 8 then
+					-- Platform speed
+					dialog.create(
+						L.PLATVCHANGE_MSG,
+						DBS.OKCANCEL,
+						dialog.callback.platv,
+						L.PLATVCHANGE_TITLE,
+						{{"name", 0, 1, 5, ""}},
+						dialog.callback.platv_validate
+					)
 
-				mousepressed = true
+					mousepressed = true
+				end
 			end
 		end
 
 		if selectedtool == 8 and nodialog and love.mouse.isDown("r") and not mousepressed
 		and mouseon(love.graphics.getWidth()-(128-8), love.graphics.getHeight()-136, 128-16, 16) then
 			changedplatv = true
-			levelmetadata_set(roomx, roomy, "platv", 4)
+			level:set_roommetadata(roomx, roomy, "platv", 4)
 			mousepressed = true
 		end
 
 		if changedplatv then
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+			table.insert(undobuffer,
+				{
+					undotype = "roommetadata",
+					rx = roomx, ry = roomy,
+					changedmetadata = {
 						{
 							key = "platv",
 							oldvalue = oldplatv,
-							newvalue = levelmetadata_get(roomx, roomy).platv
+							newvalue = level:get_roommetadata(roomx, roomy).platv
 						}
 					},
 					switchtool = 8
@@ -1096,7 +1118,7 @@ return function()
 				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
 			)
 			font_ui:printf(
-				(issolid(tile, usedtilesets[levelmetadata_get(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
+				(issolid(tile, usedtilesets[level:get_roommetadata(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else

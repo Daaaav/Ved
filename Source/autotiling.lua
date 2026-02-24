@@ -272,7 +272,8 @@ function self:register_tilecol(tileset, index, foreground_type, foreground_base,
 end
 
 function self:make_autotiling_base()
-	if levelmetadata_get(roomx, roomy).directmode == 1 or levelmetadata_get(roomx, roomy).auto2mode == 1 then
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if rmd.directmode == 1 or rmd.auto2mode == 1 then
 		return
 	end
 
@@ -364,11 +365,11 @@ function self:get_tile(x, y)
 end
 
 function self:get_tileset()
-	return levelmetadata_get(roomx, roomy).tileset
+	return level:get_roommetadata(roomx, roomy).tileset
 end
 
 function self:get_tilecol()
-	return levelmetadata_get(roomx, roomy).tilecol
+	return level:get_roommetadata(roomx, roomy).tilecol
 end
 
 function self:get_tile_type(tile)
@@ -498,7 +499,7 @@ function self:in_background(tile)
 end
 
 function self:is_multi_tileset_mode()
-	return levelmetadata_get(roomx, roomy).auto2mode == 1
+	return level:get_roommetadata(roomx, roomy).auto2mode == 1
 end
 
 return self

@@ -68,7 +68,7 @@ function searchtext(this)
 		end
 
 		-- Room names
-		for ky,vy in pairs(levelmetadata) do
+		for ky,vy in pairs(level.roommetadata) do
 			for kx,vx in pairs(vy) do
 				if vx.roomname:lower():find(this) ~= nil then
 					table.insert(searchrooms, {x=kx, y=ky, name=vx.roomname})

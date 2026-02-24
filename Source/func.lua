@@ -875,18 +875,19 @@ function switchtileset()
 	else
 		selectedtileset = cycle(selectedtileset, maxtileset, 0)
 	end
+	local rmd = level:get_roommetadata(roomx, roomy)
 	if tilesetblocks[selectedtileset].colors[selectedcolor] == nil
-	or (selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0) then
+	or (selectedtileset == 2 and selectedcolor == 6 and rmd.directmode == 0 and rmd.auto2mode == 0) then
 		selectedcolor = 0
 	end
 
-	local oldtileset = levelmetadata_get(roomx, roomy).tileset
-	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
+	local oldtileset = rmd.tileset
+	local oldtilecol = rmd.tilecol
 
-	levelmetadata_set(roomx, roomy, "tileset", selectedtileset)
-	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
+	level:set_roommetadata(roomx, roomy, "tileset", selectedtileset)
+	level:set_roommetadata(roomx, roomy, "tilecol", selectedcolor)
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "tileset",
 					oldvalue = oldtileset,
@@ -912,12 +913,15 @@ function switchtileset()
 end
 
 function switchtilecol()
+	local max = #tilesetblocks[selectedtileset].colors
+	local min = selectedtileset == 0 and -1 or 0
 	if keyboard_eitherIsDown("shift") then
-		selectedcolor = revcycle(selectedcolor, #tilesetblocks[selectedtileset].colors, selectedtileset == 0 and -1 or 0)
+		selectedcolor = revcycle(selectedcolor, max, min)
 	else
-		selectedcolor = cycle(selectedcolor, #tilesetblocks[selectedtileset].colors, selectedtileset == 0 and -1 or 0)
+		selectedcolor = cycle(selectedcolor, max, min)
 	end
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+	local rmd = level:get_roommetadata(roomx, roomy)
+	if selectedtileset == 2 and selectedcolor == 6 and rmd.directmode == 0 and rmd.auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		if keyboard_eitherIsDown("shift") then
 			selectedcolor = 5
@@ -926,11 +930,11 @@ function switchtilecol()
 		end
 	end
 
-	local oldtilecol = levelmetadata_get(roomx, roomy).tilecol
+	local oldtilecol = rmd.tilecol
 
-	levelmetadata_set(roomx, roomy, "tilecol", selectedcolor)
+	level:set_roommetadata(roomx, roomy, "tilecol", selectedcolor)
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "tilecol",
 					oldvalue = oldtilecol,
@@ -949,19 +953,21 @@ function switchtilecol()
 end
 
 function switchenemies()
-	local oldtype = levelmetadata_get(roomx, roomy).enemytype
+	local oldtype = level:get_roommetadata(roomx, roomy).enemytype
 	local maxenemy = 9
+	local newtype
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata_set(roomx, roomy, "enemytype", revcycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
+		newtype = revcycle(oldtype, maxenemy, 0)
 	else
-		levelmetadata_set(roomx, roomy, "enemytype", cycle(levelmetadata_get(roomx, roomy).enemytype, maxenemy, 0))
+		newtype = cycle(oldtype, maxenemy, 0)
 	end
+	level:set_roommetadata(roomx, roomy, "enemytype", newtype)
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "enemytype",
 					oldvalue = oldtype,
-					newvalue = levelmetadata_get(roomx, roomy).enemytype
+					newvalue = newtype
 				}
 			},
 			switchtool = 9
@@ -993,11 +999,11 @@ function changeenemybounds()
 				{
 					key = "enemy" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+					newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 				}
 			)
 		end
-		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 		finish_undo("ENEMY BOUNDS (canceled)")
 	else
 		if editingbounds == 2 then
@@ -1007,11 +1013,11 @@ function changeenemybounds()
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("PLATFORM BOUNDS (canceled by enemy bounds)")
 		end
 		editingbounds = -1
@@ -1035,11 +1041,11 @@ function changeplatformbounds()
 				{
 					key = "plat" .. v,
 					oldvalue = oldbounds[k],
-					newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+					newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 				}
 			)
 		end
-		table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+		table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 		finish_undo("PLATFORM BOUNDS (canceled)")
 	else
 		if editingbounds == 1 then
@@ -1049,11 +1055,11 @@ function changeplatformbounds()
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("ENEMY BOUNDS (canceled by platform bounds)")
 		end
 		editingbounds = -2
@@ -1061,44 +1067,47 @@ function changeplatformbounds()
 end
 
 function changedmode()
-	local olddirect = levelmetadata_get(roomx, roomy).directmode
-	local oldauto2 = levelmetadata_get(roomx, roomy).auto2mode
+	local rmd = level:get_roommetadata(roomx, roomy)
+	local olddirect = rmd.directmode
+	local oldauto2 = rmd.auto2mode
 
 	if keyboard_eitherIsDown("shift") then
-		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
-			levelmetadata_set(roomx, roomy, "directmode", 1)
-		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
-			levelmetadata_set(roomx, roomy, "auto2mode", 0)
+		if olddirect == 0 and oldauto2 == 0 then
+			level:set_roommetadata(roomx, roomy, "directmode", 1)
+		elseif oldauto2 == 1 then
+			level:set_roommetadata(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata_set(roomx, roomy, "directmode", 0)
-			levelmetadata_set(roomx, roomy, "auto2mode", 1)
+			level:set_roommetadata(roomx, roomy, "directmode", 0)
+			level:set_roommetadata(roomx, roomy, "auto2mode", 1)
 		end
 	else
-		if levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
-			levelmetadata_set(roomx, roomy, "auto2mode", 1)
-		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
-			levelmetadata_set(roomx, roomy, "directmode", 1)
-			levelmetadata_set(roomx, roomy, "auto2mode", 0)
+		if olddirect == 0 and oldauto2 == 0 then
+			level:set_roommetadata(roomx, roomy, "auto2mode", 1)
+		elseif oldauto2 == 1 then
+			level:set_roommetadata(roomx, roomy, "directmode", 1)
+			level:set_roommetadata(roomx, roomy, "auto2mode", 0)
 		else
-			levelmetadata_set(roomx, roomy, "directmode", 0)
+			level:set_roommetadata(roomx, roomy, "directmode", 0)
 		end
 	end
 
-	if selectedtileset == 2 and selectedcolor == 6 and levelmetadata_get(roomx, roomy).directmode == 0 and levelmetadata_get(roomx, roomy).auto2mode == 0 then
+	rmd = level:get_roommetadata(roomx, roomy)
+
+	if selectedtileset == 2 and selectedcolor == 6 and rmd.directmode == 0 and rmd.auto2mode == 0 then
 		-- lab rainbow background isn't available in auto-mode
 		selectedcolor = 0
 	end
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "directmode",
 					oldvalue = olddirect,
-					newvalue = levelmetadata_get(roomx, roomy).directmode
+					newvalue = rmd.directmode
 				},
 				{
 					key = "auto2mode",
 					oldvalue = oldauto2,
-					newvalue = levelmetadata_get(roomx, roomy).auto2mode
+					newvalue = rmd.auto2mode
 				}
 			}
 		}
@@ -1107,18 +1116,20 @@ function changedmode()
 end
 
 function changewarpdir()
-	local oldwarpdir = levelmetadata_get(roomx, roomy).warpdir
+	local oldwarpdir = level:get_roommetadata(roomx, roomy).warpdir
+	local newwarpdir
 	if keyboard_eitherIsDown("shift") then
-		levelmetadata_set(roomx, roomy, "warpdir", revcycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
+		newwarpdir = revcycle(oldwarpdir, 3, 0)
 	else
-		levelmetadata_set(roomx, roomy, "warpdir", cycle(levelmetadata_get(roomx, roomy).warpdir, 3, 0))
+		newwarpdir = cycle(oldwarpdir, 3, 0)
 	end
+	level:set_roommetadata(roomx, roomy, "warpdir", newwarpdir)
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "warpdir",
 					oldvalue = oldwarpdir,
-					newvalue = levelmetadata_get(roomx, roomy).warpdir
+					newvalue = newwarpdir
 				}
 			}
 		}
@@ -1138,7 +1149,7 @@ function toggleeditroomname()
 		else
 			editingroomname = true
 			tilespicker = false
-			newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
+			newinputsys.create(INPUT.ONELINE, "roomname", level:get_roommetadata(roomx, roomy).roomname)
 		end
 	end
 end
@@ -1150,7 +1161,7 @@ end
 
 function tilespicker_last_page_number()
 	-- Return the number of the last tilespicker page
-	return math.ceil(tilesets[tileset_names[levelmetadata_get(roomx, roomy).tileset]].tiles_height_picker/30)-1
+	return math.ceil(tilesets[tileset_names[level:get_roommetadata(roomx, roomy).tileset]].tiles_height_picker/30)-1
 end
 
 function tilespicker_prev_page()
@@ -1169,7 +1180,7 @@ end
 
 function tilespicker_selectedtile_page()
 	-- Ensure the current page is set so that selectedtile is on screen
-	local ts = tilesets[tileset_names[levelmetadata_get(roomx, roomy).tileset]]
+	local ts = tilesets[tileset_names[level:get_roommetadata(roomx, roomy).tileset]]
 	tilespicker_page = math.floor(selectedtile/(ts.tiles_width_picker*30))
 end
 
@@ -1178,12 +1189,12 @@ function saveroomname()
 		return
 	end
 	editingroomname = false
-	local old_roomname = anythingbutnil(levelmetadata_get(roomx, roomy).roomname)
+	local old_roomname = anythingbutnil(level:get_roommetadata(roomx, roomy).roomname)
 	local new_roomname = inputs.roomname
 	newinputsys.close("roomname")
-	levelmetadata_set(roomx, roomy, "roomname", new_roomname)
+	level:set_roommetadata(roomx, roomy, "roomname", new_roomname)
 
-	table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+	table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = {
 				{
 					key = "roomname",
 					oldvalue = old_roomname,
@@ -1398,24 +1409,26 @@ function state6load(levelname)
 		levelname = levelname:gsub("/", "\\")
 	end
 
+	local success
+
 	if not secondlevel then
 		local oldlevel
-		if levelmetadata ~= nil then
+		if level ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, levelmetadata, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, entitydata, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
 
 			-- Did we have a previous level open?
-			if oldlevelmetadata ~= nil then
+			if oldlevel ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    levelmetadata,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevelmetadata, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    entitydata,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1434,7 +1447,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, levelmetadata2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, entitydata2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1458,18 +1471,32 @@ function compare_level_differences(second_level_name)
 	local pagetext
 
 	-- L E V E L   P R O P E R T I E S
-	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n" .. (editingmap == "untitled\n" and langkeys(L.COMPARINGTHESENEW, {second_level_name}) or langkeys(L.COMPARINGTHESE, {editingmap, second_level_name})) .. "\\\n\n"
+	pagetext = diffmessages.pages.levelproperties .. "\\wh#\n\n"
+		.. (editingmap == "untitled\n"
+			and langkeys(L.COMPARINGTHESENEW, {second_level_name})
+			or langkeys(L.COMPARINGTHESE, {editingmap, second_level_name})
+		) .. "\\\n\n"
 	for _,v in pairs(metadataitems) do
 		if metadata2[v] ~= metadata[v] then
-			pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff[v], {metadata2[v], metadata[v]}) .. "\\\n"
+			pagetext = pagetext .. langkeys(
+				diffmessages.levelpropertiesdiff[v],
+				{metadata2[v], metadata[v]}
+			) .. "\\\n"
 		end
 	end
 
-	if metadata2.mapwidth ~= metadata.mapwidth or metadata2.mapheight ~= metadata.mapheight then
-		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsize, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}) .. "\\\n"
+	if metadata2.mapwidth ~= metadata.mapwidth
+	or metadata2.mapheight ~= metadata.mapheight then
+		pagetext = pagetext .. langkeys(
+			diffmessages.levelpropertiesdiff.mapsize,
+			{metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}
+		) .. "\\\n"
 	end
 	if metadata2.levmusic ~= metadata.levmusic then
-		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.levmusic, {metadata2.levmusic, metadata.levmusic}) .. "\\\n"
+		pagetext = pagetext .. langkeys(
+			diffmessages.levelpropertiesdiff.levmusic,
+			{metadata2.levmusic, metadata.levmusic}
+		) .. "\\\n"
 	end
 
 	table.insert(differencesn, {subj = diffmessages.pages.levelproperties, imgs = {}, cont = pagetext})
@@ -1478,8 +1505,17 @@ function compare_level_differences(second_level_name)
 	pagetext = diffmessages.pages.changedrooms .. "\\wh#\n\n"
 	local co = not s.coords0 and 1 or 0 -- coordoffset
 
-	if metadata2.mapwidth ~= metadata.mapwidth or metadata2.mapheight ~= metadata.mapheight then
-		pagetext = pagetext .. langkeys(diffmessages.levelpropertiesdiff.mapsizenote, {metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight, math.min(metadata2.mapwidth, metadata.mapwidth), math.min(metadata2.mapheight, metadata.mapheight)}) .. "\n\n"
+	if metadata2.mapwidth ~= metadata.mapwidth
+	or metadata2.mapheight ~= metadata.mapheight then
+		pagetext = pagetext .. langkeys(
+			diffmessages.levelpropertiesdiff.mapsizenote,
+			{
+				metadata2.mapwidth, metadata2.mapheight,
+				metadata.mapwidth, metadata.mapheight,
+				math.min(metadata2.mapwidth, metadata.mapwidth),
+				math.min(metadata2.mapheight, metadata.mapheight)
+			}
+		) .. "\n\n"
 	end
 
 	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
@@ -1499,21 +1535,51 @@ function compare_level_differences(second_level_name)
 				end
 			end
 
-			if changed and levelmetadata2_get(rx, ry).roomname == levelmetadata_get(rx, ry).roomname then
+			if changed and level2:get_roommetadata(rx, ry).roomname == level:get_roommetadata(rx, ry).roomname then
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.added1,
+						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+					) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.cleared1,
+						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+					) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed1, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.changed1,
+						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+					) .. "\n"
 				end
 			elseif changed then -- room names not the same
 				if leftblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.added2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.added2,
+						{
+							rx+co, ry+co,
+							level2:get_roommetadata(rx, ry).roomname,
+							level:get_roommetadata(rx, ry).roomname
+						}
+					) .. "\n"
 				elseif rightblank then
-					pagetext = pagetext .. langkeys(diffmessages.rooms.cleared2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.cleared2,
+						{
+							rx+co, ry+co,
+							level2:get_roommetadata(rx, ry).roomname,
+							level:get_roommetadata(rx, ry).roomname
+						}
+					) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.rooms.changed2, {rx+co, ry+co, levelmetadata2_get(rx, ry).roomname, levelmetadata_get(rx, ry).roomname}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.rooms.changed2,
+						{
+							rx+co, ry+co,
+							level2:get_roommetadata(rx, ry).roomname,
+							level:get_roommetadata(rx, ry).roomname
+						}
+					) .. "\n"
 				end
 			end
 		end
@@ -1526,12 +1592,12 @@ function compare_level_differences(second_level_name)
 
 	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
-			local lmd1, lmd2 = levelmetadata_get(rx, ry), levelmetadata2_get(rx, ry)
+			local rmd1, rmd2 = level:get_roommetadata(rx, ry), level2:get_roommetadata(rx, ry)
 			local changed = false
 
 			-- Is anything different?
-			for k,v in pairs(lmd2) do
-				if v ~= lmd1[k] then
+			for k,v in pairs(rmd2) do
+				if v ~= rmd1[k] then
 					changed = true
 				end
 			end
@@ -1543,47 +1609,88 @@ function compare_level_differences(second_level_name)
 				lrmy = lrmy + 1
 			end
 
-			if changed and lmd2.roomname ~= lmd1.roomname then
+			if changed and rmd2.roomname ~= rmd1.roomname then
 				-- We're already going to show that the room name has changed
-				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed0, {lrmx, lrmy}) .. "\n"
+				pagetext = pagetext .. langkeys(
+					diffmessages.roommetadata.changed0,
+					{lrmx, lrmy}
+				) .. "\n"
 			elseif changed then
 				-- We're not, so label this
-				pagetext = pagetext .. langkeys(diffmessages.roommetadata.changed1, {lrmx, lrmy, lmd2.roomname}) .. "\\\n"
+				pagetext = pagetext .. langkeys(
+					diffmessages.roommetadata.changed1,
+					{lrmx, lrmy, rmd2.roomname}
+				) .. "\\\n"
 			end
 
 			if changed then
 				-- So what has changed?
-				if lmd2.roomname ~= lmd1.roomname then
-					if lmd2.roomname == "" then
-						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameadded, {lmd1.roomname}) .. "\n"
-					elseif lmd1.roomname == "" then
-						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomnameremoved, {lmd2.roomname}) .. "\n"
+				if rmd2.roomname ~= rmd1.roomname then
+					if rmd2.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(
+							diffmessages.roommetadata.roomnameadded,
+							{rmd1.roomname}
+						) .. "\n"
+					elseif rmd1.roomname == "" then
+						pagetext = pagetext .. "  " .. langkeys(
+							diffmessages.roommetadata.roomnameremoved,
+							{rmd2.roomname}
+						) .. "\n"
 					else
-						pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.roomname, {lmd2.roomname, lmd1.roomname}) .. "\n"
+						pagetext = pagetext .. "  " .. langkeys(
+							diffmessages.roommetadata.roomname,
+							{rmd2.roomname, rmd1.roomname}
+						) .. "\n"
 					end
 				end
-				if lmd2.tileset ~= lmd1.tileset or lmd2.tilecol ~= lmd1.tilecol then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.tileset, {lmd2.tileset, lmd2.tilecol, lmd1.tileset, lmd1.tilecol}) .. "\n"
+				if rmd2.tileset ~= rmd1.tileset or rmd2.tilecol ~= rmd1.tilecol then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.tileset,
+						{rmd2.tileset, rmd2.tilecol, rmd1.tileset, rmd1.tilecol}
+					) .. "\n"
 				end
-				if lmd2.platv ~= lmd1.platv then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platv, {lmd2.platv, lmd1.platv}) .. "\n"
+				if rmd2.platv ~= rmd1.platv then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.platv,
+						{rmd2.platv, rmd1.platv}
+					) .. "\n"
 				end
-				if lmd2.enemytype ~= lmd1.enemytype then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemytype, {lmd2.enemytype, lmd1.enemytype}) .. "\n"
+				if rmd2.enemytype ~= rmd1.enemytype then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.enemytype,
+						{rmd2.enemytype, rmd1.enemytype}
+					) .. "\n"
 				end
-				if lmd2.platx1 ~= lmd1.platx1 or lmd2.platy1 ~= lmd1.platy1 or lmd2.platx2 ~= lmd1.platx2 or lmd2.platy2 ~= lmd1.platy2 then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.platbounds, {lmd2.platx1, lmd2.platy1, lmd2.platx2, lmd2.platy2, lmd1.platx1, lmd1.platy1, lmd1.platx2, lmd1.platy2}) .. "\n"
+				if rmd2.platx1 ~= rmd1.platx1 or rmd2.platy1 ~= rmd1.platy1
+				or rmd2.platx2 ~= rmd1.platx2 or rmd2.platy2 ~= rmd1.platy2 then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.platbounds,
+						{
+							rmd2.platx1, rmd2.platy1, rmd2.platx2, rmd2.platy2,
+							rmd1.platx1, rmd1.platy1, rmd1.platx2, rmd1.platy2
+						}
+					) .. "\n"
 				end
-				if lmd2.enemyx1 ~= lmd1.enemyx1 or lmd2.enemyy1 ~= lmd1.enemyy1 or lmd2.enemyx2 ~= lmd1.enemyx2 or lmd2.enemyy2 ~= lmd1.enemyy2 then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.enemybounds, {lmd2.enemyx1, lmd2.enemyy1, lmd2.enemyx2, lmd2.enemyy2, lmd1.enemyx1, lmd1.enemyy1, lmd1.enemyx2, lmd1.enemyy2}) .. "\n"
+				if rmd2.enemyx1 ~= rmd1.enemyx1 or rmd2.enemyy1 ~= rmd1.enemyy1
+				or rmd2.enemyx2 ~= rmd1.enemyx2 or rmd2.enemyy2 ~= rmd1.enemyy2 then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.enemybounds,
+						{
+							rmd2.enemyx1, rmd2.enemyy1, rmd2.enemyx2, rmd2.enemyy2,
+							rmd1.enemyx1, rmd1.enemyy1, rmd1.enemyx2, rmd1.enemyy2
+						}
+					) .. "\n"
 				end
-				if lmd2.directmode == 0 and lmd1.directmode == 1 then
+				if rmd2.directmode == 0 and rmd1.directmode == 1 then
 					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode01 .. "\n"
-				elseif lmd2.directmode == 1 and lmd1.directmode == 0 then
+				elseif rmd2.directmode == 1 and rmd1.directmode == 0 then
 					pagetext = pagetext .. "  " .. diffmessages.roommetadata.directmode10 .. "\n"
 				end
-				if lmd2.warpdir ~= lmd1.warpdir then
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.roommetadata.warpdir, {warpdirs[lmd2.warpdir], warpdirs[lmd1.warpdir]}) .. "\n"
+				if rmd2.warpdir ~= rmd1.warpdir then
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.roommetadata.warpdir,
+						{warpdirs[rmd2.warpdir], warpdirs[rmd1.warpdir]}
+					) .. "\n"
 				end
 			end
 		end
@@ -1621,9 +1728,15 @@ function compare_level_differences(second_level_name)
 
 			if locentities2[k] == nil then
 				-- Easy, everything was added.
-				pagetext = pagetext .. langkeys(diffmessages.entities.addedmultiple, {bkx, bky, eroomx, eroomy}) .. "\n"
+				pagetext = pagetext .. langkeys(
+					diffmessages.entities.addedmultiple,
+					{bkx, bky, eroomx, eroomy}
+				) .. "\n"
 				for k2,v2 in pairs(v) do
-					pagetext = pagetext .. "  " .. langkeys(diffmessages.entities.entity, {getentityname(v2.t, v2.p1)}) .. "\n"
+					pagetext = pagetext .. "  " .. langkeys(
+						diffmessages.entities.entity,
+						{getentityname(v2.t, v2.p1)}
+					) .. "\n"
 				end
 			else
 				-- Say the situation changed, IF not all entities are the same.
@@ -1655,15 +1768,24 @@ function compare_level_differences(second_level_name)
 
 				if not thesame then
 					-- Different situation
-					pagetext = pagetext .. langkeys(diffmessages.entities.multiple1, {bkx, bky, eroomx, eroomy}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.entities.multiple1,
+						{bkx, bky, eroomx, eroomy}
+					) .. "\n"
 					-- List all entities at this spot from original level
 					for k2,v2 in pairs(locentities2[k]) do
-						pagetext = pagetext .. "  " .. langkeys(diffmessages.entities.entity, {getentityname(v2.t, v2.p1)}) .. "\n"
+						pagetext = pagetext .. "  " .. langkeys(
+							diffmessages.entities.entity,
+							{getentityname(v2.t, v2.p1)}
+						) .. "\n"
 					end
 					pagetext = pagetext .. diffmessages.entities.multiple2 .. "\n"
 					-- List all entities at this spot from newer level
 					for k2,v2 in pairs(v) do
-						pagetext = pagetext .. "  " .. langkeys(diffmessages.entities.entity, {getentityname(v2.t, v2.p1)}) .. "\n"
+						pagetext = pagetext .. "  " .. langkeys(
+							diffmessages.entities.entity,
+							{getentityname(v2.t, v2.p1)}
+						) .. "\n"
 					end
 				end
 			end
@@ -1682,9 +1804,15 @@ function compare_level_differences(second_level_name)
 			local bkx, bky = v[1].x % 40, v[1].y % 30
 			local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
 
-			pagetext = pagetext .. langkeys(diffmessages.entities.removedmultiple, {bkx, bky, eroomx, eroomy}) .. "\n"
+			pagetext = pagetext .. langkeys(
+				diffmessages.entities.removedmultiple,
+				{bkx, bky, eroomx, eroomy}
+			) .. "\n"
 			for k2,v2 in pairs(v) do
-				pagetext = pagetext .. "  " .. langkeys(diffmessages.entities.entity, {getentityname(v2.t, v2.p1)}) .. "\n"
+				pagetext = pagetext .. "  " .. langkeys(
+					diffmessages.entities.entity,
+					{getentityname(v2.t, v2.p1)}
+				) .. "\n"
 			end
 
 			-- Get rid of this too
@@ -1698,7 +1826,10 @@ function compare_level_differences(second_level_name)
 		local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
 		if locentities2[k] == nil then
 			-- Added
-			pagetext = pagetext .. langkeys(diffmessages.entities.added, {getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}) .. "\n"
+			pagetext = pagetext .. langkeys(
+				diffmessages.entities.added,
+				{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+			) .. "\n"
 		else
 			-- Maybe changed?
 			local thisisanexactmatch = true
@@ -1713,9 +1844,19 @@ function compare_level_differences(second_level_name)
 			if not thisisanexactmatch then
 				if v[1].t ~= locentities2[k][1].t then
 					-- The type was changed as well...
-					pagetext = pagetext .. langkeys(diffmessages.entities.changedtype, {getentityname(locentities2[k][1].t, locentities2[k][1].p1), getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.entities.changedtype,
+						{
+							getentityname(locentities2[k][1].t, locentities2[k][1].p1),
+							getentityname(v[1].t, v[1].p1),
+							bkx, bky, eroomx, eroomy
+						}
+					) .. "\n"
 				else
-					pagetext = pagetext .. langkeys(diffmessages.entities.changed, {getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.entities.changed,
+						{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+					) .. "\n"
 				end
 			end
 		end
@@ -1730,7 +1871,10 @@ function compare_level_differences(second_level_name)
 		local bkx, bky = v[1].x % 40, v[1].y % 30
 		local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
 
-		pagetext = pagetext .. langkeys(diffmessages.entities.removed, {getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}) .. "\n"
+		pagetext = pagetext .. langkeys(
+			diffmessages.entities.removed,
+			{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+		) .. "\n"
 
 		-- Just so we can check if everything was handled.
 		locentities2[k] = nil
@@ -1777,7 +1921,10 @@ function compare_level_differences(second_level_name)
 
 			for i = 0, limit.flags-1 do
 				if level.vedmetadata.flaglabel[i] ~= "" then
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, level.vedmetadata.flaglabel[i]}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.flagnames.added,
+						{i, level.vedmetadata.flaglabel[i]}
+					) .. "\n"
 				end
 			end
 		elseif level.vedmetadata == false then
@@ -1786,21 +1933,35 @@ function compare_level_differences(second_level_name)
 
 			for i = 0, limit2.flags-1 do
 				if level2.vedmetadata.flaglabel[i] ~= "" then
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {level2.vedmetadata.flaglabel[i], i}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.flagnames.removed,
+						{level2.vedmetadata.flaglabel[i], i}
+					) .. "\n"
 				end
 			end
 		else
 			-- This one is simple, just cycle through the numbers!
 			for i = 0, math.min(limit.flags, limit2.flags)-1 do
-				if level2.vedmetadata.flaglabel[i] == "" and level.vedmetadata.flaglabel[i] ~= "" then
+				if level2.vedmetadata.flaglabel[i] == ""
+				and level.vedmetadata.flaglabel[i] ~= "" then
 					-- Added name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.added, {i, level.vedmetadata.flaglabel[i]}) .. "\n"
-				elseif level2.vedmetadata.flaglabel[i] ~= "" and level.vedmetadata.flaglabel[i] == "" then
+					pagetext = pagetext .. langkeys(
+						diffmessages.flagnames.added,
+						{i, level.vedmetadata.flaglabel[i]}
+					) .. "\n"
+				elseif level2.vedmetadata.flaglabel[i] ~= ""
+				and level.vedmetadata.flaglabel[i] == "" then
 					-- Removed name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.removed, {level2.vedmetadata.flaglabel[i], i}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.flagnames.removed,
+						{level2.vedmetadata.flaglabel[i], i}
+					) .. "\n"
 				elseif level2.vedmetadata.flaglabel[i] ~= level.vedmetadata.flaglabel[i] then
 					-- Changed name
-					pagetext = pagetext .. langkeys(diffmessages.flagnames.edited, {i, level2.vedmetadata.flaglabel[i], level.vedmetadata.flaglabel[i]}) .. "\n"
+					pagetext = pagetext .. langkeys(
+						diffmessages.flagnames.edited,
+						{i, level2.vedmetadata.flaglabel[i], level.vedmetadata.flaglabel[i]}
+					) .. "\n"
 				end
 			end
 		end
@@ -1894,7 +2055,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, levelmetadata, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, entitydata, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()

@@ -40,7 +40,7 @@ return function(key)
 	end
 
 	if tilespicker and table.contains({"left", "right", "up", "down", "a", "d", "w", "s"}, key) then
-		if levelmetadata_get(roomx, roomy).directmode == 1 then
+		if level:get_roommetadata(roomx, roomy).directmode == 1 then
 			local tsw = tilesets[tileset_names[selectedtileset]].tiles_width_picker
 			local tsh = tilesets[tileset_names[selectedtileset]].tiles_height_picker
 			local total_tiles = tilesets[tileset_names[selectedtileset]].total_tiles
@@ -140,11 +140,11 @@ return function(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("ENEMY BOUNDS (esc canceled)")
 		elseif editingbounds == 2 then
 			local changeddata = {}
@@ -153,11 +153,11 @@ return function(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("PLATFORM BOUNDS (esc canceled)")
 		end
 
@@ -165,13 +165,13 @@ return function(key)
 	elseif editingbounds ~= 0 and key == "delete" then
 		if editingbounds == -1 or editingbounds == 1 then
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata_get(roomx, roomy)["enemy" .. v]
+				oldbounds[k] = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 			end
 
-			levelmetadata_set(roomx, roomy, "enemyx1", 0)
-			levelmetadata_set(roomx, roomy, "enemyy1", 0)
-			levelmetadata_set(roomx, roomy, "enemyx2", 320)
-			levelmetadata_set(roomx, roomy, "enemyy2", 240)
+			level:set_roommetadata(roomx, roomy, "enemyx1", 0)
+			level:set_roommetadata(roomx, roomy, "enemyy1", 0)
+			level:set_roommetadata(roomx, roomy, "enemyx2", 320)
+			level:set_roommetadata(roomx, roomy, "enemyy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -179,21 +179,21 @@ return function(key)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("ENEMY BOUNDS (deleted)")
 		else
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-				oldbounds[k] = levelmetadata_get(roomx, roomy)["plat" .. v]
+				oldbounds[k] = level:get_roommetadata(roomx, roomy)["plat" .. v]
 			end
 
-			levelmetadata_set(roomx, roomy, "platx1", 0)
-			levelmetadata_set(roomx, roomy, "platy1", 0)
-			levelmetadata_set(roomx, roomy, "platx2", 320)
-			levelmetadata_set(roomx, roomy, "platy2", 240)
+			level:set_roommetadata(roomx, roomy, "platx1", 0)
+			level:set_roommetadata(roomx, roomy, "platy1", 0)
+			level:set_roommetadata(roomx, roomy, "platx2", 320)
+			level:set_roommetadata(roomx, roomy, "platy2", 240)
 
 			local changeddata = {}
 			for k,v in pairs({"x1", "x2", "y1", "y2"}) do
@@ -201,11 +201,11 @@ return function(key)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("PLATFORM BOUNDS (deleted)")
 		end
 
@@ -303,9 +303,10 @@ return function(key)
 		-- Auto/manual mode
 		changedmode()
 		local modename
-		if levelmetadata_get(roomx, roomy).directmode == 1 then
+		local rmd = level:get_roommetadata(roomx, roomy)
+		if rmd.directmode == 1 then
 			modename = L.CHANGEDTOMODEMANUAL
-		elseif levelmetadata_get(roomx, roomy).auto2mode == 1 then
+		elseif rmd.auto2mode == 1 then
 			modename = L.CHANGEDTOMODEMULTI
 		else
 			modename = L.CHANGEDTOMODEAUTO
@@ -315,7 +316,7 @@ return function(key)
 	elseif key == "w" then
 		-- Change warp dir
 		changewarpdir()
-		temporaryroomname = warpdirchangedtext[levelmetadata_get(roomx, roomy).warpdir]
+		temporaryroomname = warpdirchangedtext[level:get_roommetadata(roomx, roomy).warpdir]
 		temporaryroomnametimer = 90
 	elseif key == "e" then
 		-- Edit room name

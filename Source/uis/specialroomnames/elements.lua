@@ -6,7 +6,7 @@ local function save_current_roomname()
 		return
 	elseif specialroomnames_editing == 0 then
 		editingroomname = true
-		if levelmetadata_get(roomx, roomy).roomname ~= inputs.roomname then
+		if level:get_roommetadata(roomx, roomy).roomname ~= inputs.roomname then
 			saveroomname()
 		else
 			cancel_editing_roomname()
@@ -35,7 +35,7 @@ function start_editing_specialroomname(k)
 		roomnames = level.specialroomnames[roomy][roomx]
 	end
 	if k == 0 then
-		newinputsys.create(INPUT.ONELINE, "roomname", levelmetadata_get(roomx, roomy).roomname)
+		newinputsys.create(INPUT.ONELINE, "roomname", level:get_roommetadata(roomx, roomy).roomname)
 	elseif roomnames[k].mode == "static" then
 		newinputsys.create(INPUT.ONELINE, "roomname", roomnames[k].name)
 	elseif roomnames[k].mode == "glitch" then
@@ -117,7 +117,7 @@ function specialroomnames_update_elements()
 					if k == 0 then
 						font_ui:print(L.STANDARD_ROOMNAME, x+4, y+4)
 						if specialroomnames_editing ~= k then
-							name = levelmetadata_get(roomx, roomy).roomname
+							name = level:get_roommetadata(roomx, roomy).roomname
 						else
 							name = inputs.roomname
 						end

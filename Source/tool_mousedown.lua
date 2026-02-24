@@ -46,7 +46,7 @@ function handle_tool_mousedown()
 			-- The tiles picker page changes the Y position, of course
 			local aty_paged = aty + tilespicker_page*30
 
-			if levelmetadata_get(roomx, roomy).directmode == 1 then
+			if level:get_roommetadata(roomx, roomy).directmode == 1 then
 				if selectedtool <= 2 and selectedsubtool[selectedtool] == 8 and not mousepressed and customsizemode ~= 0 then
 					-- You can also make a stamp from the tileset
 					if customsizemode ~= 0 and customsizemode ~= 2 then
@@ -158,7 +158,14 @@ function handle_tool_mousedown()
 			end
 		elseif selectedtool <= 3 then
 			if undosaved == 0 then
-				table.insert(undobuffer, {undotype = "tiles", rx = roomx, ry = roomy, toundotiles = table.copy(roomdata_get(roomx, roomy)), toredotiles = {}})
+				table.insert(undobuffer,
+					{
+						undotype = "tiles",
+						rx = roomx, ry = roomy,
+						toundotiles = table.copy(roomdata_get(roomx, roomy)),
+						toredotiles = {}
+					}
+				)
 				undosaved = #undobuffer
 				finish_undo("SAVED BEGIN RESULT FOR UNDO")
 			end
@@ -167,12 +174,12 @@ function handle_tool_mousedown()
 				if love.mouse.isDown("r") then
 					useselectedtile = 0
 				else
-					if levelmetadata_get(roomx, roomy).directmode == 0 then
+					if level:get_roommetadata(roomx, roomy).directmode == 0 then
 						-- Auto mode
 						useselectedtile = selectedtool
 
 						-- Tower doesn't have 1 as a solid tile
-						if levelmetadata_get(roomx, roomy).tileset == 5 and useselectedtile == 1 then
+						if level:get_roommetadata(roomx, roomy).tileset == 5 and useselectedtile == 1 then
 							useselectedtile = 12
 						end
 					else
@@ -387,7 +394,7 @@ function handle_tool_mousedown()
 				if love.mouse.isDown("r") then
 					useselectedtile = 0
 				else
-					if levelmetadata_get(roomx, roomy).directmode == 0 then
+					if level:get_roommetadata(roomx, roomy).directmode == 0 then
 						-- Auto mode
 						useselectedtile = tilesetblocks[selectedtileset].colors[selectedcolor].spikes[9]
 					else
@@ -506,28 +513,28 @@ function handle_tool_mousedown()
 			-- Moving platform
 			if editingbounds == -2 then
 				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					oldbounds[k] = levelmetadata_get(roomx, roomy)["plat" .. v]
+					oldbounds[k] = level:get_roommetadata(roomx, roomy)["plat" .. v]
 				end
 
-				levelmetadata_set(roomx, roomy, "platx1", atx*8)
-				levelmetadata_set(roomx, roomy, "platy1", aty*8)
-				levelmetadata_set(roomx, roomy, "platx2", 320)
-				levelmetadata_set(roomx, roomy, "platy2", 240)
+				level:set_roommetadata(roomx, roomy, "platx1", atx*8)
+				level:set_roommetadata(roomx, roomy, "platy1", aty*8)
+				level:set_roommetadata(roomx, roomy, "platx2", 320)
+				level:set_roommetadata(roomx, roomy, "platy2", 240)
 				editingbounds = 2
 			elseif editingbounds == 2 then
-				local lmd = levelmetadata_get(roomx, roomy)
-				local old_x, old_y = lmd.platx1, lmd.platy1
+				local rmd = level:get_roommetadata(roomx, roomy)
+				local old_x, old_y = rmd.platx1, rmd.platy1
 				local new_x, new_y = atx*8, aty*8
 				if old_x > atx*8 then
-					levelmetadata_set(roomx, roomy, "platx1", atx*8)
+					level:set_roommetadata(roomx, roomy, "platx1", atx*8)
 					new_x = old_x
 				end
 				if old_y > aty*8 then
-					levelmetadata_set(roomx, roomy, "platy1", aty*8)
+					level:set_roommetadata(roomx, roomy, "platy1", aty*8)
 					new_y = old_y
 				end
-				levelmetadata_set(roomx, roomy, "platx2", new_x+8)
-				levelmetadata_set(roomx, roomy, "platy2", new_y+8)
+				level:set_roommetadata(roomx, roomy, "platx2", new_x+8)
+				level:set_roommetadata(roomx, roomy, "platy2", new_y+8)
 				editingbounds = 0
 
 				local changeddata = {}
@@ -536,11 +543,11 @@ function handle_tool_mousedown()
 						{
 							key = "plat" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+							newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 						}
 					)
 				end
-				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("PLATFORM BOUNDS")
 			else
 				insert_entity(atx, aty, 2, -1+selectedsubtool[8])
@@ -550,28 +557,28 @@ function handle_tool_mousedown()
 			-- Enemy
 			if editingbounds == -1 then
 				for k,v in pairs({"x1", "x2", "y1", "y2"}) do
-					oldbounds[k] = levelmetadata_get(roomx, roomy)["enemy" .. v]
+					oldbounds[k] = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 				end
 
-				levelmetadata_set(roomx, roomy, "enemyx1", atx*8)
-				levelmetadata_set(roomx, roomy, "enemyy1", aty*8)
-				levelmetadata_set(roomx, roomy, "enemyx2", 320)
-				levelmetadata_set(roomx, roomy, "enemyy2", 240)
+				level:set_roommetadata(roomx, roomy, "enemyx1", atx*8)
+				level:set_roommetadata(roomx, roomy, "enemyy1", aty*8)
+				level:set_roommetadata(roomx, roomy, "enemyx2", 320)
+				level:set_roommetadata(roomx, roomy, "enemyy2", 240)
 				editingbounds = 1
 			elseif editingbounds == 1 then
-				local lmd = levelmetadata_get(roomx, roomy)
-				local old_x, old_y = lmd.enemyx1, lmd.enemyy1
+				local rmd = level:get_roommetadata(roomx, roomy)
+				local old_x, old_y = rmd.enemyx1, rmd.enemyy1
 				local new_x, new_y = atx*8, aty*8
 				if old_x > atx*8 then
-					levelmetadata_set(roomx, roomy, "enemyx1", atx*8)
+					level:set_roommetadata(roomx, roomy, "enemyx1", atx*8)
 					new_x = old_x
 				end
 				if old_y > aty*8 then
-					levelmetadata_set(roomx, roomy, "enemyy1", aty*8)
+					level:set_roommetadata(roomx, roomy, "enemyy1", aty*8)
 					new_y = old_y
 				end
-				levelmetadata_set(roomx, roomy, "enemyx2", new_x+8)
-				levelmetadata_set(roomx, roomy, "enemyy2", new_y+8)
+				level:set_roommetadata(roomx, roomy, "enemyx2", new_x+8)
+				level:set_roommetadata(roomx, roomy, "enemyy2", new_y+8)
 				editingbounds = 0
 
 				local changeddata = {}
@@ -580,11 +587,11 @@ function handle_tool_mousedown()
 						{
 							key = "enemy" .. v,
 							oldvalue = oldbounds[k],
-							newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+							newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 						}
 					)
 				end
-				table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+				table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 				finish_undo("ENEMY BOUNDS")
 			else
 				insert_entity(atx, aty, 1, -1+selectedsubtool[9])
@@ -592,7 +599,11 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 10 then
 			-- Gravity line
-			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
+			if not issolid(
+				roomdata_get(roomx, roomy, atx, aty),
+				usedtilesets[level:get_roommetadata(roomx, roomy).tileset],
+				true, true
+			) then
 				local p1, p2
 				if selectedsubtool[10] == 1 then
 					-- Horizontal
@@ -645,7 +656,12 @@ function handle_tool_mousedown()
 					start_editing_roomtext(editingsboxid, true, true)
 				else
 					-- Register entity change for undo/redo
-					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = editingsboxid, changedentitydata = {
+					table.insert(undobuffer, 
+						{
+							undotype = "changeentity",
+							rx = roomx, ry = roomy,
+							entid = editingsboxid,
+							changedentitydata = {
 								{
 									key = "x",
 									oldvalue = oldscriptx,
@@ -707,7 +723,12 @@ function handle_tool_mousedown()
 					local new_p2 = 30*roomy + aty
 					-- We're moving the exit, which is an entity change
 					if selectedsubtool[14] == 4 then
-						table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = warpid, changedentitydata = {
+						table.insert(undobuffer,
+							{
+								undotype = "changeentity",
+								rx = roomx, ry = roomy,
+								entid = warpid,
+								changedentitydata = {
 									{
 										key = "p1",
 										oldvalue = entitydata[warpid].p1,
@@ -745,7 +766,12 @@ function handle_tool_mousedown()
 					local new_x = 40*roomx + atx
 					local new_y = 30*roomy + aty
 
-					table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = warpid, changedentitydata = {
+					table.insert(undobuffer,
+						{
+							undotype = "changeentity",
+							rx = roomx, ry = roomy,
+							entid = warpid,
+							changedentitydata = {
 								{
 									key = "x",
 									oldvalue = entitydata[warpid].x,
@@ -778,7 +804,11 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 15 then
 			-- Warp line
-			if not issolid(roomdata_get(roomx, roomy, atx, aty), usedtilesets[levelmetadata_get(roomx, roomy).tileset], true, true) then
+			if not issolid(
+				roomdata_get(roomx, roomy, atx, aty),
+				usedtilesets[level:get_roommetadata(roomx, roomy).tileset],
+				true, true
+			) then
 				if atx == 0 or atx == 39 then
 					-- Vertical left or right, type 0 or 1
 					insert_entity(atx, aty, 50, (atx == 0 and 0 or 1), aty, 8)
@@ -874,7 +904,9 @@ function handle_tool_mousedown()
 		last_atx = atx
 		last_aty = aty
 
-	elseif love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480) and selectedtool <= 3 and not tilespicker and levelmetadata_get(roomx, roomy).directmode == 1 then
+	elseif love.mouse.isDown("m") and mouseon(screenoffset, 0, 639, 480)
+	and selectedtool <= 3 and not tilespicker
+	and level:get_roommetadata(roomx, roomy).directmode == 1 then
 		local atx, aty = maineditor_get_cursor()
 
 		selectedtile = roomdata_get(roomx, roomy, atx, aty)

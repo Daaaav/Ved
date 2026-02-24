@@ -9,11 +9,11 @@ return function(dt)
 					{
 						key = "enemy" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["enemy" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["enemy" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("ENEMY BOUNDS (tool canceled)")
 		end
 
@@ -26,11 +26,11 @@ return function(dt)
 					{
 						key = "plat" .. v,
 						oldvalue = oldbounds[k],
-						newvalue = levelmetadata_get(roomx, roomy)["plat" .. v]
+						newvalue = level:get_roommetadata(roomx, roomy)["plat" .. v]
 					}
 				)
 			end
-			table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
+			table.insert(undobuffer, {undotype = "roommetadata", rx = roomx, ry = roomy, changedmetadata = changeddata})
 			finish_undo("PLATFORM BOUNDS (tool canceled)")
 		end
 
@@ -48,9 +48,10 @@ return function(dt)
 		sp_got = sp_got - dt
 	end
 
-	if levelmetadata_get(roomx, roomy).warpdir == 3 then
+	local warpdir = level:get_roommetadata(roomx, roomy).warpdir
+	if warpdir == 3 then
 		warpbganimation = (warpbganimation + 120*dt) % 64
-	elseif levelmetadata_get(roomx, roomy).warpdir ~= 0 then
+	elseif warpdir ~= 0 then
 		warpbganimation = (warpbganimation + 180*dt) % 32
 	end
 
