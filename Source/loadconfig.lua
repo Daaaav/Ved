@@ -1,246 +1,249 @@
 -- This will load the config when loading Ved, or create it if it doesn't exist yet.
 
+local vedxml = require("vedxml")
+
+local sxml
+
 configs = {
-	customvvvvvvdir = {
+	{
+		key = "customvvvvvvdir",
 		default = "",
 		["type"] = "string",
-		comment = "do not include the directory called \"levels\" here, nor a trailing (back)slash"
+		comment = "Do not include the directory called \"levels\" here,\nnor a trailing (back)slash"
 	},
-	lang = {
+	{
+		key = "vvvvvv23",
+		default = "",
+		["type"] = "string",
+		comment = "Do not put a trailing (back)slash.\nOn Windows, point this to the executable 'VVVVVV.exe'.\nOn Linux and macOS, point this to the executable 'VVVVVV'.",
+	},
+	{
+		key = "default_save_folder_zip",
+		default = "",
+		["type"] = "string",
+		comment = "The default folder to offer saving level ZIPs to.\nIf blank, uses the levels folder.",
+	},
+	{
+		key = "lang",
 		default = "en",
 		["type"] = "string",
 	},
-	langchosen = {
+	{
+		key = "langchosen",
 		default = false,
 		["type"] = "bool",
 	},
-	dateformat = {
-		default = "%Y-%m-%d %H:%M:%S",
-		["type"] = "string",
-		comment = "Obsolete, no longer used for technical reasons."
-	},
-	new_dateformat = {
+	{
+		key = "new_dateformat",
 		default = "YMD",
 		["type"] = "string",
 	},
-	new_timeformat = {
+	{
+		key = "new_timeformat",
 		default = 24,
 		["type"] = "number",
 	},
-	dialoganimations = {
+	{
+		key = "dialoganimations",
 		default = true,
 		["type"] = "bool",
 	},
-	flipsubtoolscroll = {
+	{
+		key = "flipsubtoolscroll",
 		default = false,
 		["type"] = "bool",
 	},
-	mousescrollingspeed = {
+	{
+		key = "mousescrollingspeed",
 		default = 16,
 		["type"] = "number",
 	},
-	adjacentroomlines = {
-		default = true,
-		["type"] = "bool",
-	},
-	askbeforequit = {
-		default = true,
-		["type"] = "bool",
-		comment = "Obsolete, remains in order to not automatically make old versions of Ved annoying after running 1.3+"
-	},
-	neveraskbeforequit = {
+	{
+		key = "neveraskbeforequit",
 		default = false,
 		["type"] = "bool",
 	},
-	scale = {
+	{
+		key = "scale",
 		default = 1,
 		["type"] = "number",
 	},
-	coords0 = {
+	{
+		key = "smallerscreen",
+		default = false,
+		["type"] = "bool",
+		comment = "Make the resolution smaller by collapsing the\ntools menu on the left and adjusting other things"
+	},
+	{
+		key = "forcescale",
 		default = false,
 		["type"] = "bool",
 	},
-	acceptutf8 = {
-		default = false,
-		["type"] = "bool",
-		comment = "Obsolete, controlled whether non-ASCII characters were typable in custom levels. Now always true."
-	},
-	smallerscreen = {
-		default = false,
-		["type"] = "bool",
-		comment = "Make the resolution smaller by collapsing the tools menu on the left and adjusting other things"
-	},
-	dontpreventscriptsplits = {
-		default = false,
-		["type"] = "bool",
-		comment = "Enable to not let the editor add a space if a colon is the last character on a line in a script"
-	},
-	loadscriptname = {
-		default = "$1_load",
-		["type"] = "string",
-	},
-	showfps = {
+	{
+		key = "showfps",
 		default = false,
 		["type"] = "bool",
 	},
-	lowfpswarning = {
+	{
+		key = "lowfpswarning",
 		default = -1,
 		["type"] = "number",
 	},
-	fpslimit_ix = {
+	{
+		key = "fpslimit_ix",
 		default = 4,
 		["type"] = "number",
 	},
-	pausedrawunfocused = {
+	{
+		key = "pausedrawunfocused",
 		default = true,
 		["type"] = "bool",
 	},
-	autosavecrashlogs = {
+	{
+		key = "autosavecrashlogs",
 		default = true,
 		["type"] = "bool",
 	},
-	checkforupdates = {
+	{
+		key = "checkforupdates",
 		default = true,
 		["type"] = "bool",
 	},
-	loadallmetadata = {
+	{
+		key = "loadallmetadata",
 		default = true,
 		["type"] = "bool",
 	},
-	enableoverwritebackups = {
+	{
+		key = "enableoverwritebackups",
 		default = true,
 		["type"] = "bool",
 	},
-	amountoverwritebackups = {
+	{
+		key = "amountoverwritebackups",
 		default = 10,
 		["type"] = "number",
 	},
-	forcescale = {
-		default = false,
-		["type"] = "bool",
-	},
-	recentfiles = {
+	{
+		key = "recentfiles",
 		default = {},
 		["type"] = "stringsarray",
 	},
-	usefontpng = {
+	{
+		key = "dontpreventscriptsplits",
 		default = false,
 		["type"] = "bool",
-		comment = "Use graphics folder font.png. No longer used as of Ved 1.11.1, now always considered false"
+		comment = "Enable to not let the editor add a space if\na colon is the last character on a line in a script"
 	},
-	uselevelfontpng = {
+	{
+		key = "loadscriptname",
+		default = "$1_load",
+		["type"] = "string",
+	},
+	{
+		key = "colored_textboxes",
 		default = true,
 		["type"] = "bool",
-		comment = "Use level-specific font. No longer used as of Ved 1.11.1, now always considered true"
 	},
-	colored_textboxes = {
-		default = true,
-		["type"] = "bool",
-	},
-	scripteditor_largefont = {
+	{
+		key = "scripteditor_largefont",
 		default = false,
 		["type"] = "bool",
 	},
-	visload_seen = {
-		default = false,
-		["type"] = "bool",
-	},
-	vis_firstseen = {
-		default = false,
-		["type"] = "bool",
-	},
-	syntaxcolor_command = {
-		default = {124, 112, 218},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_generic = {
-		default = {156, 158, 159},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_separator = {
-		default = {124, 43, 124},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_number = {
-		default = {250, 250, 88},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_textbox = {
-		default = {156, 158, 159},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_errortext = {
-		default = {255, 0, 0},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_wronglang = {
-		default = {160, 0, 0},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_cursor = {
-		default = {255, 255, 255},
-		["type"] = "numbersarray",
-		comment = "Obsolete since new input system"
-	},
-	syntaxcolor_flagname = {
-		default = {255, 128, 0},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_newflagname = {
-		default = {255, 192, 64},
-		["type"] = "numbersarray",
-	},
-	syntaxcolor_comment = {
-		default = {0, 128, 0},
-		["type"] = "numbersarray",
-	},
-	allowbiggerthansizelimit = {
-		default = false,
-		["type"] = "bool",
-		comment = "Obsolete, used to simulate broken behavior for maps bigger than the size limit",
-	},
-	opaqueroomnamebackground = {
-		default = false,
-		["type"] = "bool",
-	},
-	vvvvvv23 = {
-		default = "",
-		["type"] = "string",
-		comment = "Do not put a trailing (back)slash. On Windows, point this to the file 'VVVVVV.exe'. On Linux and macOS, point this to the file 'VVVVVV'.",
-	},
-	vvvvvvce = {
-		default = "",
-		["type"] = "string",
-		comment = "VVVVVV-CE equivalent of vvvvvv23 option, now obsolete.",
-	},
-	default_save_folder_zip = {
-		default = "",
-		["type"] = "string",
-		comment = "The default folder to offer saving level ZIPs to. If blank, uses the levels folder.",
-	},
-	mapstyle = {
-		default = "full",
-		["type"] = "string"
-	},
-	bumpscriptsbydefault = {
+	{
+		key = "bumpscriptsbydefault",
 		default = true,
 		["type"] = "bool"
 	},
-	new_level_font = {
+	{
+		key = "syntaxcolor_command",
+		default = {124, 112, 218},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_generic",
+		default = {156, 158, 159},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_separator",
+		default = {124, 43, 124},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_number",
+		default = {250, 250, 88},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_textbox",
+		default = {156, 158, 159},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_errortext",
+		default = {255, 0, 0},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_wronglang",
+		default = {160, 0, 0},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_flagname",
+		default = {255, 128, 0},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_newflagname",
+		default = {255, 192, 64},
+		["type"] = "rgb",
+	},
+	{
+		key = "syntaxcolor_comment",
+		default = {0, 128, 0},
+		["type"] = "rgb",
+	},
+	{
+		key = "adjacentroomlines",
+		default = true,
+		["type"] = "bool",
+	},
+	{
+		key = "coords0",
+		default = false,
+		["type"] = "bool",
+	},
+	{
+		key = "opaqueroomnamebackground",
+		default = false,
+		["type"] = "bool",
+	},
+	{
+		key = "mapstyle",
+		default = "full",
+		["type"] = "string"
+	},
+	{
+		key = "new_level_font",
 		default = "font",
 		["type"] = "string",
 		comment = "The default font to use for new levels"
 	},
-	new_level_rtl = {
+	{
+		key = "new_level_rtl",
 		default = false,
 		["type"] = "bool",
 		comment = "The default RTL setting to use for new levels"
 	},
-	volume = {
+	{
+		key = "volume",
 		default = 1,
 		["type"] = "number"
 	},
-	active_themes = {
+	{
+		key = "active_themes",
 		default = {},
 		["type"] = "stringsarray",
 		comment = "The themes that are currently active"
@@ -248,86 +251,139 @@ configs = {
 }
 
 function saveconfig()
-	local writagearr = {}
+	sxml:set_attribute(nil, "version", ved_ver_human())
+	local xmain = sxml:find_or_add(nil, "main")
+	local xlastsetting = nil -- cursor to last setting
 	for k,v in pairs(configs) do
-		local value
-		if v.type == "string" then
-			value = encodestring(s[k])
-		elseif v.type == "bool" then
-			value = boolstring(s[k])
-		elseif v.type == "numbersarray" then
-			value = "{" .. table.concat(s[k], ", ") .. "}"
-		elseif v.type == "stringsarray" then
-			value = "{"
-			local first = true
-			for k2,v2 in pairs(s[k]) do
-				if not first then
-					value = value .. ", "
-				else
-					first = false
-				end
-				value = value .. encodestring(v2)
+		local xsetting = sxml:find_or_nil(xmain, v.key)
+		if xsetting == nil then
+			-- Add a new one, but where?
+			if xlastsetting == nil then
+				-- It's the first one!
+				xsetting = sxml:add_element_in_first(xmain, v.key)
+			else
+				-- Add it right after the previous one to keep the determined order
+				xsetting = sxml:add_element_after(xlastsetting, v.key, 2)
 			end
-			value = value .. "}"
 		else
-			value = s[k]
+			sxml:clear_open(xsetting)
 		end
-		table.insert(writagearr, "s." .. k .. " = " .. value .. (v.comment ~= nil and " -- " .. v.comment or ""))
-	end
-	love.filesystem.write("settings.lua", table.concat(writagearr, "\r\n"))
-end
 
-function boolstring(thebool)
-	if thebool == nil then
-		return "nil"
-	elseif thebool then
-		return "true"
-	else
-		return "false"
-	end
-end
+		if v.comment ~= nil then
+			local comment = v.comment:gsub("\n", "\n\t\t\t")
+			sxml:add_comment_in_first(xsetting, " " .. comment .. " ")
+		end
 
-function encodestring(thestring)
-	if thestring == nil then
-		return "nil"
-	else
-		return "\"" .. ((thestring):gsub("\\", "\\\\"):gsub("\"", "\\\""):gsub("\r", "\\r"):gsub("\n", "\\n")) .. "\""
+		if v.type == "rgb" then
+			sxml:set_text(sxml:add_element_in_last(xsetting, "r", 1), s[v.key][1])
+			sxml:set_text(sxml:add_element_in_last(xsetting, "g", 0), s[v.key][2])
+			sxml:set_text(sxml:add_element_in_last(xsetting, "b", 0), s[v.key][3])
+		elseif v.type == "numbersarray" or v.type == "stringsarray" then
+			for k2,v2 in pairs(s[v.key]) do
+				sxml:set_text(sxml:add_element_in_last(xsetting, "item"), v2)
+			end
+		else
+			local value = s[v.key]
+			if v.type == "bool" then
+				value = (value and "true" or "false")
+			end
+			sxml:set_text(sxml:add_element_in_last(xsetting, "value"), value)
+		end
+
+		xlastsetting = xsetting
 	end
+	love.filesystem.write("ved_settings.xml", sxml:export())
 end
 
 function loaddefaultsettings()
 	s = {}
 	for k,v in pairs(configs) do
 		if type(v.default) == "table" then
-			s[k] = table.copy(v.default)
+			s[v.key] = table.copy(v.default)
 		else
-			s[k] = v.default
+			s[v.key] = v.default
 		end
 	end
 end
 
 loaddefaultsettings()
 
-if love.filesystem.exists("settings.lua") then
-	-- It exists
-	local settings_chunk
-	settings_ok, settings_chunk = pcall(love.filesystem.load, "settings.lua")
-	if settings_ok then
-		settings_ok, settings_err = pcall(settings_chunk)
-	else
-		settings_err = settings_chunk
-	end
+if love.filesystem.exists("ved_settings.xml") then
+	-- Load the new settings file
+	settings_ok, settings_err = pcall(function()
+		sxml = vedxml.VedXML:new{string=(love.filesystem.read("ved_settings.xml")), root="ved_settings", indent="\t"}
+
+		local xmain = sxml:find(nil, "main")
+		for k,v in pairs(configs) do
+			local xsetting = sxml:find_or_nil(xmain, v.key)
+			if xsetting ~= nil then
+				if v.type == "rgb" then
+					s[v.key] = {
+						anythingbutnil0(sxml:get_text(sxml:find(xsetting, "r"))),
+						anythingbutnil0(sxml:get_text(sxml:find(xsetting, "g"))),
+						anythingbutnil0(sxml:get_text(sxml:find(xsetting, "b"))),
+					}
+				elseif v.type == "numbersarray" or v.type == "stringsarray" then
+					s[v.key] = {}
+					for xitem in sxml:each_child_element(xsetting, "item") do
+						local value = sxml:get_text(xitem)
+						if v.type == "numbersarray" then
+							value = anythingbutnil0(value)
+						end
+						table.insert(s[v.key], value)
+					end
+				else
+					local value = sxml:get_text(sxml:find(xsetting, "value"))
+					if v.type == "bool" then
+						value = (value == "true" or value == "1")
+					elseif v.type == "number" then
+						value = anythingbutnil0(value)
+					end
+					s[v.key] = value
+				end
+			end
+		end
+
+		sxml:tokenize_to_end()
+	end)
+
 	if not settings_ok then
 		love.filesystem.write("crash_logs/" .. os.time() .. "_" .. ved_ver_human() .. "_SETTINGS.txt",
-			"Error in settings.lua: " .. anythingbutnil(settings_err) .. "\r\n\r\nFull file contents:\r\n"
-			.. love.filesystem.read("settings.lua") .. "\r\n\r\nEOF"
+			"Error in ved_settings.xml: " .. anythingbutnil(settings_err) .. "\r\n\r\nFull file contents:\r\n"
+			.. love.filesystem.read("ved_settings.xml") .. "\r\n\r\nEOF"
 		)
+		sxml = nil
 	end
 else
-	-- It doesn't exist, create it.
-	print("Making new config file")
-	saveconfig()
-	settings_ok = true
+	if love.filesystem.exists("settings.lua") then
+		-- An old settings.lua exists, load it so we can save XML next time
+		local settings_chunk
+		settings_ok, settings_chunk = pcall(love.filesystem.load, "settings.lua")
+		if settings_ok then
+			settings_ok, settings_err = pcall(settings_chunk)
+		else
+			settings_err = settings_chunk
+		end
+		if not settings_ok then
+			love.filesystem.write("crash_logs/" .. os.time() .. "_" .. ved_ver_human() .. "_SETTINGS.txt",
+				"Error in settings.lua: " .. anythingbutnil(settings_err) .. "\r\n\r\nFull file contents:\r\n"
+				.. love.filesystem.read("settings.lua") .. "\r\n\r\nEOF"
+			)
+		end
+	else
+		-- That doesn't exist either, we'll create a new one below.
+		print("Making new config file")
+		settings_ok = true
+	end
+end
+
+if sxml == nil then
+	-- Make an XML document from scratch
+	sxml = vedxml.VedXML:new{root="ved_settings", indent="\t"}
+	sxml:add_comment_before(nil, " Settings file used by Ved 2.0 and above ")
+	if settings_ok then
+		saveconfig()
+	end
 end
 
 

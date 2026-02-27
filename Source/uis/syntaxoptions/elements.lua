@@ -94,9 +94,9 @@ return {
 			LabelButtonSpacer(),
 			LabelButton(L.RESETCOLORS,
 				function()
-					for k,v in pairs(s) do
-						if k:sub(1,12) == "syntaxcolor_" then
-							s[k] = table.copy(configs[k].default)
+					for k,v in pairs(configs) do
+						if v.key:sub(1,12) == "syntaxcolor_" then
+							s[v.key] = table.copy(v.default)
 						end
 					end
 					syntaxoptions_editingcolor = nil
