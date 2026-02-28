@@ -5,7 +5,7 @@ return function(key)
 		if table.contains({"return", "kpenter"}, key) then
 			end_editing_roomtext()
 		elseif key == "escape" then
-			if entitydata[editingroomtext].data == "" then
+			if level.entities[editingroomtext].data == "" then
 				removeentity(editingroomtext, nil, true)
 			end
 			editingroomtext = 0
@@ -214,13 +214,13 @@ return function(key)
 		if movingentity_copying then
 			movingentity_copying = false
 			level.count.entities = level.count.entities - 1
-			if entitydata[movingentity].t == 9 then
+			if level.entities[movingentity].t == 9 then
 				level.count.trinkets = level.count.trinkets - 1
-			elseif entitydata[movingentity].t == 15 then
+			elseif level.entities[movingentity].t == 15 then
 				level.count.crewmates = level.count.crewmates - 1
 			end
 			level.count.entity_ai = level.count.entity_ai - 1
-			table.remove(entitydata, movingentity)
+			table.remove(level.entities, movingentity)
 		end
 		movingentity = 0
 		movingentity_copying = false

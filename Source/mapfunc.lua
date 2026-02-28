@@ -292,7 +292,7 @@ function locatetrinketscrewmates()
 		end
 	end
 
-	for _,ent in pairs(entitydata) do
+	for _,ent in pairs(level.entities) do
 		if ent.t == 9 or ent.t == 15 then
 			local rx, ry = math.floor(ent.x/40), math.floor(ent.y/30)
 			rx = math.max(rx, 0)

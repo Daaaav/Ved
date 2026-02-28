@@ -247,7 +247,7 @@ function playtesting_snap_position(posx, posy, flipped)
 
 	local entities = {}
 	-- Get all checkpoints in the room, and the start point too, if it's in the room
-	for _, ent in pairs(entitydata) do
+	for _, ent in pairs(level.entities) do
 		if ent.x >= 40 * roomx and ent.x < 40 * (roomx+1)
 		and ent.y >= 30 * roomy and ent.y < 30 * (roomy+1)
 		and table.contains({10, 16}, ent.t) then
@@ -309,7 +309,7 @@ function playtesting_find_first_checkpoint()
 
 	local first_checkpoint = nil
 
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if (v.t == 16 or v.t == 10)
 		and v.x >= roomx*40 and v.x <= roomx*40+39
 		and v.y >= roomy*30 and v.y <= roomy*30+29 then

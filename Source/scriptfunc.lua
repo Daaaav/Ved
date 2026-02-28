@@ -936,7 +936,7 @@ function find_script_references(argscriptname)
 	local loadscriptuses = {} -- Contains: {argscriptname, line}
 	local scriptuses = {} -- Also contains: {argscriptname, line}
 
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if (v.t == 18 or v.t == 19) and v.data == argscriptname then
 			table.insert(entityuses, k)
 		end
@@ -992,7 +992,7 @@ function find_used_scripts()
 	local usedscripts = {} -- the keys are the script names here, for an easier and more efficient (O(1)) lookup
 	local count = 0
 
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if (v.t == 18 or v.t == 19) and level.scripts[v.data] ~= nil then
 			usedscripts[v.data] = true
 		end

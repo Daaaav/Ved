@@ -259,13 +259,13 @@ return function()
 					(cursorx*16)+screenoffset+16, (cursory*16)+16
 				)
 			end
-		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
+		elseif movingentity > 0 and level.entities[movingentity] ~= nil then
 			displayentity(
-				screenoffset, 0, roomx, roomy, movingentity, entitydata[movingentity],
+				screenoffset, 0, roomx, roomy, movingentity, level.entities[movingentity],
 				cursorx, cursory,
 				false, false, {}, false, false, true
 			)
-		elseif table.contains({3, 4}, selectedsubtool[14]) and entitydata[warpid] ~= nil then
+		elseif table.contains({3, 4}, selectedsubtool[14]) and level.entities[warpid] ~= nil then
 			if selectedsubtool[14] == 4 then
 				love.graphics.setColor(255, 255, 255, 64)
 			end
@@ -565,8 +565,8 @@ return function()
 			tinyfont:print(L.TINY_SHIFT, 128-tinywidth, love.graphics.getHeight()-7)
 			love.graphics.setColor(255,255,255,255)
 		elseif editingroomtext > 0
-		and entitydata[editingroomtext] ~= nil
-		and (entitydata[editingroomtext].t == 18 or entitydata[editingroomtext].t == 19) then
+		and level.entities[editingroomtext] ~= nil
+		and (level.entities[editingroomtext].t == 18 or level.entities[editingroomtext].t == 19) then
 			-- Name for script box
 			local tinywidth = math.max(tinyfont:getWidth("{" .. L.TINY_SHIFT), tinyfont:getWidth("}" .. L.TINY_CTRL))
 			love.graphics.setColor(0, 0, 0, 224)
@@ -933,7 +933,7 @@ return function()
 			if onrbutton(-2, 164+4, true) and selectedtool == 4 then
 				-- List all trinkets
 				local trinkets = {}
-				for _,ent in pairs(entitydata) do
+				for _,ent in pairs(level.entities) do
 					if ent.t == 9 then
 						local x, y = math.floor(ent.x/40), math.floor(ent.y/30)
 						if x < 0 then x = 0 end
@@ -954,7 +954,7 @@ return function()
 			elseif onrbutton(-2, 164+4, true) and selectedtool == 16 then
 				-- List all crewmates
 				local crewmates = {}
-				for _, ent in pairs(entitydata) do
+				for _, ent in pairs(level.entities) do
 					if ent.t == 15 then
 						local x, y = math.floor(ent.x/40), math.floor(ent.y/30)
 						if x < 0 then x = 0 end

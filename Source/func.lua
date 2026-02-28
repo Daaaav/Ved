@@ -815,7 +815,14 @@ function updatecountdelete(thet, id, undoing)
 
 	-- Make sure we can undo this! If we're not already removing an entity by undoing
 	if not undoing then
-		table.insert(undobuffer, {undotype = "removeentity", rx = roomx, ry = roomy, entid = id, removedentitydata = table.copy(entitydata[id])})
+		table.insert(undobuffer,
+			{
+				undotype = "removeentity",
+				rx = roomx, ry = roomy,
+				entid = id,
+				removedentitydata = table.copy(level.entities[id])
+			}
+		)
 		finish_undo("REMOVED ENTITY")
 	end
 
@@ -1239,26 +1246,26 @@ function start_editing_roomtext(ent_id, is_new, make_script)
 	editingroomtext_is_new = is_new
 	editingroomtext_make_script = make_script
 	local init = ""
-	if entitydata[ent_id] ~= nil then
-		init = entitydata[ent_id].data
+	if level.entities[ent_id] ~= nil then
+		init = level.entities[ent_id].data
 	end
 	newinputsys.create(INPUT.ONELINE, "roomtext", init)
 end
 
 function end_editing_roomtext()
-	if entitydata[editingroomtext] == nil then
+	if level.entities[editingroomtext] == nil then
 		cons("Existing room text we were editing is nil!")
 		editingroomtext = 0
 		return
 	end
-	if entitydata[editingroomtext].t ~= 17 and inputs.roomtext:find("|") then
+	if level.entities[editingroomtext].t ~= 17 and inputs.roomtext:find("|") then
 		dialog.create(langkeys(L.CANNOTUSENEWLINES, {"|"}))
 		return
 	end
 
 	-- We were typing a text!
-	local olddata = entitydata[editingroomtext].data
-	entitydata[editingroomtext].data = inputs.roomtext
+	local olddata = level.entities[editingroomtext].data
+	level.entities[editingroomtext].data = inputs.roomtext
 	-- Only make a script if this is a terminal/script box, and the name is not empty
 	if editingroomtext_make_script and inputs.roomtext ~= "" then
 		if s.loadscriptname ~= "" and s.loadscriptname ~= "$1" then
@@ -1302,7 +1309,7 @@ function end_editing_roomtext()
 					temporaryroomname = L.LOADSCRIPTMADE
 					temporaryroomnametimer = 90
 				end
-				entitydata[editingroomtext].data = loadscriptname
+				level.entities[editingroomtext].data = loadscriptname
 			elseif create_mode == LOAD_SCRIPT_CREATION_MODE.REPEATING then -- trinkets
 				if level.scripts[loadscriptname] ~= nil then
 					warnloadscriptexists = true
@@ -1313,7 +1320,7 @@ function end_editing_roomtext()
 					temporaryroomname = L.LOADSCRIPTMADE
 					temporaryroomnametimer = 90
 				end
-				entitydata[editingroomtext].data = loadscriptname
+				level.entities[editingroomtext].data = loadscriptname
 			end
 			if warnloadscriptexists then
 				dialog.create(langkeys(L.SCRIPTALREADYEXISTS, {loadscriptname}))
@@ -1335,7 +1342,7 @@ function end_editing_roomtext()
 				rx = roomx, ry = roomy,
 				entid = editingroomtext,
 				changedentitydata = {
-					{key = "data", oldvalue = olddata, newvalue = entitydata[editingroomtext].data}
+					{key = "data", oldvalue = olddata, newvalue = level.entities[editingroomtext].data}
 				}
 			}
 		)
@@ -1415,11 +1422,11 @@ function state6load(levelname)
 		local oldlevel
 		if level ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    entitydata,    level
+			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldlevel
+			=  editingmap,    metadata,    limit,    roomdata,    level
 		end
 
-		success, metadata, limit, roomdata, entitydata, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, roomdata, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1427,8 +1434,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevel ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    entitydata,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldentitydata, oldlevel
+				   editingmap,    metadata,    limit,    roomdata,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1447,7 +1454,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, entitydata2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, roomdata2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1704,18 +1711,18 @@ function compare_level_differences(second_level_name)
 	-- Locations are identifying here.
 	locentities2 = {}
 	locentities = {}
-	for k,v in pairs(entitydata2) do
+	for k,v in pairs(level2.entities) do
 		if locentities2[(v.x*1000)+v.y] == nil then
-			locentities2[(v.x*1000)+v.y] = {entitydata2[k]}
+			locentities2[(v.x*1000)+v.y] = {level2.entities[k]}
 		else
-			table.insert(locentities2[(v.x*1000)+v.y], entitydata2[k])
+			table.insert(locentities2[(v.x*1000)+v.y], level2.entities[k])
 		end
 	end
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if locentities[(v.x*1000)+v.y] == nil then
-			locentities[(v.x*1000)+v.y] = {entitydata[k]}
+			locentities[(v.x*1000)+v.y] = {level.entities[k]}
 		else
-			table.insert(locentities[(v.x*1000)+v.y], entitydata[k])
+			table.insert(locentities[(v.x*1000)+v.y], level.entities[k])
 		end
 	end
 
@@ -2055,7 +2062,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, entitydata, level = createblanklevel(width, height)
+	success, metadata, limit, roomdata, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()

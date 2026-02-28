@@ -19,16 +19,16 @@ function handle_tool_mousedown()
 		-- on top of each other by editing their properties.
 		local entityalreadyhere = false
 		if love.mouse.isDown("l") and (selectedtool >= 4 or movingentity > 0) and editingbounds == 0 then
-			for k,v in pairs(entitydata) do
+			for k,v in pairs(level.entities) do
 				-- Exceptions related to whatever entity we're clicking on!
-				if selectedtool == 13 and selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
+				if selectedtool == 13 and selectedsubtool[13] == 2 and (level.entities[editingsboxid] ~= nil) then
 					-- We're trying to place a script box bottom right corner?
 				elseif selectedtool == 13 and selectedsubtool[13] == 3 and k == editingsboxid then
 					-- This is actually the script box we're editing at the moment, we might want to keep the top left...
 				elseif v.x == 40*roomx + atx and v.y == 30*roomy + aty then
 					if movingentity == k then
 						-- Okay, we're moving an entity where it already is
-					elseif movingentity > 0 and entitydata[movingentity] ~= nil and v.t == entitydata[movingentity].t then
+					elseif movingentity > 0 and level.entities[movingentity] ~= nil and v.t == level.entities[movingentity].t then
 						-- Moving an entity on top of another one, eh?
 						mousepressed = true
 					elseif selectedtool >= 4 and v.t == entitytooltoid[selectedtool] then
@@ -80,40 +80,40 @@ function handle_tool_mousedown()
 					end
 				end
 			end
-		elseif movingentity > 0 and entitydata[movingentity] ~= nil then
+		elseif movingentity > 0 and level.entities[movingentity] ~= nil then
 			if love.mouse.isDown("l") and not mousepressed
 			-- Prevent warp lines' control points from being placed not on borders, in order to prevent confusion
 			-- (you can always manually place their control points away from borders by manually editing the properties.
 			-- It doesn't really do anything, though, their part of the border still warps)
-			and (entitydata[movingentity].t ~= 50
-			or (entitydata[movingentity].p1 == 0 and atx == 0)
-			or (entitydata[movingentity].p1 == 1 and atx == 39)
-			or (entitydata[movingentity].p1 == 2 and aty == 0)
-			or (entitydata[movingentity].p1 == 3 and aty == 29)) then
-				local old_roomx = math.floor(entitydata[movingentity].x/40)
-				local old_roomy = math.floor(entitydata[movingentity].y/30)
+			and (level.entities[movingentity].t ~= 50
+			or (level.entities[movingentity].p1 == 0 and atx == 0)
+			or (level.entities[movingentity].p1 == 1 and atx == 39)
+			or (level.entities[movingentity].p1 == 2 and aty == 0)
+			or (level.entities[movingentity].p1 == 3 and aty == 29)) then
+				local old_roomx = math.floor(level.entities[movingentity].x/40)
+				local old_roomy = math.floor(level.entities[movingentity].y/30)
 				local new_x, new_y = 40*roomx + atx, 30*roomy + aty
-				local new_p2 = entitydata[movingentity].p2
-				if table.contains({11, 50}, entitydata[movingentity].t) then
+				local new_p2 = level.entities[movingentity].p2
+				if table.contains({11, 50}, level.entities[movingentity].t) then
 					local use_x, use_y = false, false
-					if entitydata[movingentity].t == 11 then
-						if entitydata[movingentity].p1 <= 0 then
+					if level.entities[movingentity].t == 11 then
+						if level.entities[movingentity].p1 <= 0 then
 							use_x = true
 						else
 							use_y = true
 						end
-					elseif entitydata[movingentity].t == 50 then
-						if table.contains({2, 3}, entitydata[movingentity].p1) then
+					elseif level.entities[movingentity].t == 50 then
+						if table.contains({2, 3}, level.entities[movingentity].p1) then
 							use_x = true
-						elseif table.contains({0, 1}, entitydata[movingentity].p1) then
+						elseif table.contains({0, 1}, level.entities[movingentity].p1) then
 							use_y = true
 						end
 					end
 					if use_x then
-						local offset = entitydata[movingentity].p2 - entitydata[movingentity].x%40
+						local offset = level.entities[movingentity].p2 - level.entities[movingentity].x%40
 						new_p2 = new_x%40 + offset
 					elseif use_y then
-						local offset = entitydata[movingentity].p2 - entitydata[movingentity].y%30
+						local offset = level.entities[movingentity].p2 - level.entities[movingentity].y%30
 						new_p2 = new_y%30 + offset
 					end
 				end
@@ -126,17 +126,17 @@ function handle_tool_mousedown()
 							changedentitydata = {
 								{
 									key = "x",
-									oldvalue = entitydata[movingentity].x,
+									oldvalue = level.entities[movingentity].x,
 									newvalue = new_x
 								},
 								{
 									key = "y",
-									oldvalue = entitydata[movingentity].y,
+									oldvalue = level.entities[movingentity].y,
 									newvalue = new_y
 								},
 								{
 									key = "p2",
-									oldvalue = entitydata[movingentity].p2,
+									oldvalue = level.entities[movingentity].p2,
 									newvalue = new_p2
 								}
 							}
@@ -144,9 +144,9 @@ function handle_tool_mousedown()
 					)
 					finish_undo("CHANGED ENTITY (X AND Y)")
 				end
-				entitydata[movingentity].x = new_x
-				entitydata[movingentity].y = new_y
-				entitydata[movingentity].p2 = new_p2
+				level.entities[movingentity].x = new_x
+				level.entities[movingentity].y = new_y
+				level.entities[movingentity].p2 = new_p2
 				if movingentity_copying then
 					entityplaced(movingentity)
 				end
@@ -635,22 +635,22 @@ function handle_tool_mousedown()
 			if selectedsubtool[13] == 1 then
 				-- Placing first corner. Refactoring multi-step entities is definitely on my todo list.
 				insert_entity(atx, aty, 19)
-			elseif selectedsubtool[13] == 2 and (entitydata[editingsboxid] ~= nil) then
+			elseif selectedsubtool[13] == 2 and (level.entities[editingsboxid] ~= nil) then
 				-- Placing second corner
-				local old_x = entitydata[editingsboxid].x % 40
-				local old_y = entitydata[editingsboxid].y % 30
+				local old_x = level.entities[editingsboxid].x % 40
+				local old_y = level.entities[editingsboxid].y % 30
 				if atx < old_x then
-					entitydata[editingsboxid].x = 40*roomx + atx
+					level.entities[editingsboxid].x = 40*roomx + atx
 					atx = old_x
 				end
 				if aty < old_y then
-					entitydata[editingsboxid].y = 30*roomy + aty
+					level.entities[editingsboxid].y = 30*roomy + aty
 					aty = old_y
 				end
-				local new_p1 = (40*roomx + atx) - entitydata[editingsboxid].x + 1
-				local new_p2 = (30*roomy + aty) - entitydata[editingsboxid].y + 1
-				entitydata[editingsboxid].p1 = new_p1
-				entitydata[editingsboxid].p2 = new_p2
+				local new_p1 = (40*roomx + atx) - level.entities[editingsboxid].x + 1
+				local new_p2 = (30*roomy + aty) - level.entities[editingsboxid].y + 1
+				level.entities[editingsboxid].p1 = new_p1
+				level.entities[editingsboxid].p2 = new_p2
 
 				if not sboxdontaskname then
 					start_editing_roomtext(editingsboxid, true, true)
@@ -665,12 +665,12 @@ function handle_tool_mousedown()
 								{
 									key = "x",
 									oldvalue = oldscriptx,
-									newvalue = entitydata[editingsboxid].x
+									newvalue = level.entities[editingsboxid].x
 								},
 								{
 									key = "y",
 									oldvalue = oldscripty,
-									newvalue = entitydata[editingsboxid].y
+									newvalue = level.entities[editingsboxid].y
 								},
 								{
 									key = "p1",
@@ -692,14 +692,14 @@ function handle_tool_mousedown()
 				selectedsubtool[13] = 1
 
 				sboxdontaskname = nil
-			elseif selectedsubtool[13] == 3 and (entitydata[editingsboxid] ~= nil) then
+			elseif selectedsubtool[13] == 3 and (level.entities[editingsboxid] ~= nil) then
 				-- We were editing this box
-				oldscriptx, oldscripty = entitydata[editingsboxid].x, entitydata[editingsboxid].y
-				oldscriptp1, oldscriptp2 = entitydata[editingsboxid].p1, entitydata[editingsboxid].p2
-				entitydata[editingsboxid].x = 40*roomx + atx
-				entitydata[editingsboxid].y = 30*roomy + aty
-				entitydata[editingsboxid].p1 = 0
-				entitydata[editingsboxid].p2 = 0
+				oldscriptx, oldscripty = level.entities[editingsboxid].x, level.entities[editingsboxid].y
+				oldscriptp1, oldscriptp2 = level.entities[editingsboxid].p1, level.entities[editingsboxid].p2
+				level.entities[editingsboxid].x = 40*roomx + atx
+				level.entities[editingsboxid].y = 30*roomy + aty
+				level.entities[editingsboxid].p1 = 0
+				level.entities[editingsboxid].p2 = 0
 
 				selectedsubtool[13] = 2
 				sboxdontaskname = true
@@ -713,12 +713,12 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 14 then
 			-- Warp token
-			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and entitydata[warpid] == nil) then
+			if selectedsubtool[14] == 1 or (selectedsubtool[14] == 2 and level.entities[warpid] == nil) then
 				-- Placing entrance.
 				insert_entity(atx, aty, 13)
 			elseif selectedsubtool[14] == 2 or selectedsubtool[14] == 4 then
 				-- Placing exit, or moving exit
-				if entitydata[warpid] ~= nil then
+				if level.entities[warpid] ~= nil then
 					local new_p1 = 40*roomx + atx
 					local new_p2 = 30*roomy + aty
 					-- We're moving the exit, which is an entity change
@@ -731,12 +731,12 @@ function handle_tool_mousedown()
 								changedentitydata = {
 									{
 										key = "p1",
-										oldvalue = entitydata[warpid].p1,
+										oldvalue = level.entities[warpid].p1,
 										newvalue = new_p1
 									},
 									{
 										key = "p2",
-										oldvalue = entitydata[warpid].p2,
+										oldvalue = level.entities[warpid].p2,
 										newvalue = new_p2
 									}
 								}
@@ -744,8 +744,8 @@ function handle_tool_mousedown()
 						)
 						finish_undo("MOVED WARP EXIT")
 					end
-					entitydata[warpid].p1 = new_p1
-					entitydata[warpid].p2 = new_p2
+					level.entities[warpid].p1 = new_p1
+					level.entities[warpid].p2 = new_p2
 
 					-- We're not adding a new entity if we're moving it!
 					if selectedsubtool[14] == 2 then
@@ -760,9 +760,9 @@ function handle_tool_mousedown()
 				end
 				warpid = nil
 				selectedsubtool[14] = 1
-			elseif selectedsubtool[14] == 3 and entitydata[warpid] ~= nil then
+			elseif selectedsubtool[14] == 3 and level.entities[warpid] ~= nil then
 				-- Moving entrance
-				if entitydata[warpid] ~= nil then
+				if level.entities[warpid] ~= nil then
 					local new_x = 40*roomx + atx
 					local new_y = 30*roomy + aty
 
@@ -774,12 +774,12 @@ function handle_tool_mousedown()
 							changedentitydata = {
 								{
 									key = "x",
-									oldvalue = entitydata[warpid].x,
+									oldvalue = level.entities[warpid].x,
 									newvalue = new_x
 								},
 								{
 									key = "y",
-									oldvalue = entitydata[warpid].y,
+									oldvalue = level.entities[warpid].y,
 									newvalue = new_y
 								}
 							}
@@ -787,8 +787,8 @@ function handle_tool_mousedown()
 					)
 					finish_undo("MOVED WARP ENTRANCE")
 
-					entitydata[warpid].x = new_x
-					entitydata[warpid].y = new_y
+					level.entities[warpid].x = new_x
+					level.entities[warpid].y = new_y
 
 					nodialog = false
 				else
@@ -834,12 +834,12 @@ function handle_tool_mousedown()
 
 			-- First remove the old one, but check first
 			if (level.count.startpoint ~= nil)
-			and ( (entitydata[level.count.startpoint] == nil) or (entitydata[level.count.startpoint].t ~= 16) ) then
+			and ( (level.entities[level.count.startpoint] == nil) or (level.entities[level.count.startpoint].t ~= 16) ) then
 				cons("Whoops, old start point not found! At least find out if even exists anywhere anymore (probably not)")
 
 				local found = false
 
-				for ke,ve in pairs(entitydata) do
+				for ke,ve in pairs(level.entities) do
 					if ve.t == 16 then
 						-- Found it!
 						level.count.startpoint = ke
@@ -858,8 +858,8 @@ function handle_tool_mousedown()
 
 			if level.count.startpoint ~= nil then
 				cons("Old start point at "
-					.. entitydata[level.count.startpoint].x .. " "
-					.. entitydata[level.count.startpoint].y .. " will be changed"
+					.. level.entities[level.count.startpoint].x .. " "
+					.. level.entities[level.count.startpoint].y .. " will be changed"
 				)
 
 				table.insert(undobuffer, {
@@ -869,17 +869,17 @@ function handle_tool_mousedown()
 						changedentitydata = {
 							{
 								key = "x",
-								oldvalue = entitydata[level.count.startpoint].x,
+								oldvalue = level.entities[level.count.startpoint].x,
 								newvalue = x,
 							},
 							{
 								key = "y",
-								oldvalue = entitydata[level.count.startpoint].y,
+								oldvalue = level.entities[level.count.startpoint].y,
 								newvalue = y,
 							},
 							{
 								key = "p1",
-								oldvalue = entitydata[level.count.startpoint].p1,
+								oldvalue = level.entities[level.count.startpoint].p1,
 								newvalue = p1,
 							}
 						}
@@ -887,9 +887,9 @@ function handle_tool_mousedown()
 				)
 				finish_undo("CHANGED ENTITY (START POINT)")
 
-				entitydata[level.count.startpoint].x = x
-				entitydata[level.count.startpoint].y = y
-				entitydata[level.count.startpoint].p1 = p1
+				level.entities[level.count.startpoint].x = x
+				level.entities[level.count.startpoint].y = y
+				level.entities[level.count.startpoint].p1 = p1
 			else
 				cons("Inserting new start point")
 				insert_entity(atx, aty, 16, p1)

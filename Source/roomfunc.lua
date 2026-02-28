@@ -370,7 +370,7 @@ function add_rooms(new_w, new_h)
 end
 
 function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
-	-- This assumes the entities for this room are already loaded in entitydata. It just displays all entities.
+	-- This assumes the entities for this room are already loaded in level.entities. It just displays all entities.
 	if bottom2rowstext == nil then
 		bottom2rowstext = true
 	end
@@ -387,19 +387,36 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 	local scriptname_editingshown = false -- is the script name that's being edited in this room? We have its key
 
 	local nthscriptbox = 0
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		local shown = false
 
-		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+		if (v.x >= myroomx*40)
+		and (v.x <= (myroomx*40)+39)
+		and (v.y >= myroomy*30)
+		and (v.y <= (myroomy*30)+29) then
 			shown = true
 		end
-		if (v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
+		if (v.t == 13)
+		and (v.p1 >= myroomx*40)
+		and (v.p1 <= (myroomx*40)+39)
+		and (v.p2 >= myroomy*30)
+		and (v.p2 <= (myroomy*30)+29) then
 			shown = true
 		end
 
 		if shown then
 			showtooltip, scriptname_shown, scriptname_editingshown = displayentity(
-				offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, bottom2rowstext, nthscriptbox
+				offsetx, offsety,
+				myroomx, myroomy,
+				k, v,
+				nil, nil,
+				showtooltip,
+				scriptname_shown,
+				scriptname_args,
+				scriptname_editingshown,
+				true,
+				bottom2rowstext,
+				nthscriptbox
 			)
 
 			if showtooltip and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
@@ -414,14 +431,33 @@ function displayentities(offsetx, offsety, myroomx, myroomy, bottom2rowstext)
 
 	-- Here so that other entities won't cover the tooltip
 	if showtooltipof ~= nil then
-		font_ui:print("x=" .. anythingbutnil(showtooltipof.x) .. "\ny=" .. anythingbutnil(showtooltipof.y) .. "\nt=" .. anythingbutnil(showtooltipof.t) .. "\np1=" .. anythingbutnil(showtooltipof.p1) .. "\np2=" .. anythingbutnil(showtooltipof.p2) .. "\np3=" .. anythingbutnil(showtooltipof.p3) .. "\np4=" .. anythingbutnil(showtooltipof.p4) .. "\np5=" .. anythingbutnil(showtooltipof.p5) .. "\np6=" .. anythingbutnil(showtooltipof.p6) .. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data), love.mouse.getX()+24, love.mouse.getY()+24)
+		font_ui:print(
+			"x=" .. anythingbutnil(showtooltipof.x)
+			.. "\ny=" .. anythingbutnil(showtooltipof.y)
+			.. "\nt=" .. anythingbutnil(showtooltipof.t)
+			.. "\np1=" .. anythingbutnil(showtooltipof.p1)
+			.. "\np2=" .. anythingbutnil(showtooltipof.p2)
+			.. "\np3=" .. anythingbutnil(showtooltipof.p3)
+			.. "\np4=" .. anythingbutnil(showtooltipof.p4)
+			.. "\np5=" .. anythingbutnil(showtooltipof.p5)
+			.. "\np6=" .. anythingbutnil(showtooltipof.p6)
+			.. "\n" .. L.SMALLENTITYDATA .. "=" .. anythingbutnil(showtooltipof.data),
+			love.mouse.getX()+24, love.mouse.getY()+24
+		)
 	end
 
 	if scriptname_editingshown then
-		displayscriptname(entitydata[editingroomtext].t == 19, editingroomtext, entitydata[editingroomtext], offsetx, offsety, myroomx, myroomy)
+		displayscriptname(
+			level.entities[editingroomtext].t == 19,
+			editingroomtext, level.entities[editingroomtext],
+			offsetx, offsety, myroomx, myroomy
+		)
 	end
 	if scriptname_shown and nodialog then
-		displayscriptname(scriptname_args[1], scriptname_args[2], scriptname_args[3], offsetx, offsety, myroomx, myroomy, scriptname_args[4])
+		displayscriptname(
+			scriptname_args[1], scriptname_args[2], scriptname_args[3],
+			offsetx, offsety, myroomx, myroomy, scriptname_args[4]
+		)
 	end
 end
 
@@ -430,14 +466,41 @@ function displaybottom2rowstexts(offsetx, offsety, myroomx, myroomy)
 	local scriptname_shown = false
 	local scriptname_args = {}
 	local scriptname_editingshown = false
-	for k,v in pairs(entitydata) do
-		if (v.t == 17) and (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= (myroomy*30)+28) and (v.y <= (myroomy*30)+29) then
-			displayentity(offsetx, offsety, myroomx, myroomy, k, v, nil, nil, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, true, true)
+	for k,v in pairs(level.entities) do
+		if (v.t == 17)
+		and (v.x >= myroomx*40)
+		and (v.x <= (myroomx*40)+39)
+		and (v.y >= (myroomy*30)+28)
+		and (v.y <= (myroomy*30)+29) then
+			displayentity(
+				offsetx, offsety,
+				myroomx, myroomy,
+				k, v,
+				nil, nil,
+				showtooltip,
+				scriptname_shown,
+				scriptname_args,
+				scriptname_editingshown,
+				true,
+				true
+			)
 		end
 	end
 end
 
-function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, forcetiley, showtooltip, scriptname_shown, scriptname_args, scriptname_editingshown, interact, bottom2rowstext, nthscriptbox)
+function displayentity(
+	offsetx, offsety,
+	myroomx, myroomy,
+	k, v,
+	forcetilex, forcetiley,
+	showtooltip,
+	scriptname_shown,
+	scriptname_args,
+	scriptname_editingshown,
+	interact,
+	bottom2rowstext,
+	nthscriptbox
+)
 	local x, y
 	if forcetilex ~= nil then
 		x = offsetx+forcetilex*16
@@ -463,7 +526,10 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 
 		-- Where is it going?
 		love.graphics.setColor(255,255,255,255)
-		font_8x8:print(anythingbutnil(({arrow_down, arrow_up, arrow_left, arrow_right})[v.p1+1]), x + 8, y + 8, nil, 2)
+		font_8x8:print(
+			anythingbutnil(({arrow_down, arrow_up, arrow_left, arrow_right})[v.p1+1]),
+			x + 8, y + 8, nil, 2
+		)
 
 		if interact then
 			entity_highlight(x, y, 2, 2)
@@ -572,7 +638,9 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			entity_highlight(x, y, 2, 2)
 		end
 	elseif v.t == 11 or v.t == 50 then
-		local showhitbox = state == 1 and nodialog and editingroomtext == 0 and not editingroomname and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
+		local showhitbox = state == 1 and nodialog
+			and editingroomtext == 0 and not editingroomname
+			and not keyboard_eitherIsDown(ctrl) and love.keyboard.isDown("j")
 		-- Gravity line or warp line. This is kind of a special story.
 		if v.t == 50 then
 			-- Warp line
@@ -649,7 +717,10 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 		end
 	elseif v.t == 13 then
 		-- Warp token. But are we currently displaying the entrance or the destination? Or both?
-		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
+		if (v.x >= myroomx*40)
+		and (v.x <= (myroomx*40)+39)
+		and (v.y >= myroomy*30)
+		and (v.y <= (myroomy*30)+29) then
 			-- Entrance
 			v6_setcol(10)
 			drawentitysprite(18, x, y)
@@ -659,7 +730,11 @@ function displayentity(offsetx, offsety, myroomx, myroomy, k, v, forcetilex, for
 			end
 		end
 		-- warpid = what warp token destination we're placing.
-		if (warpid ~= k or selectedsubtool[14] >= 3) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29) then
+		if (warpid ~= k or selectedsubtool[14] >= 3)
+		and (v.p1 >= myroomx*40)
+		and (v.p1 <= (myroomx*40)+39)
+		and (v.p2 >= myroomy*30)
+		and (v.p2 <= (myroomy*30)+29) then
 			-- Destination
 			love.graphics.setColor(255,255,255,64)
 			drawentitysprite(18, offsetx+(v.p1-myroomx*40)*16, offsety+(v.p2-myroomy*30)*16)
@@ -917,7 +992,7 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 			mousepressed = true
 
 			local action = nil
-			local t = entitydata[k].t
+			local t = level.entities[k].t
 			if t == 1 then
 				-- Enemy
 				action = L.CHANGEDIRECTION
@@ -929,7 +1004,7 @@ function entity_interactable(k, x, y, menuitems, newmenuid)
 				action = L.FLIP
 			elseif t == 11 then
 				-- Gravity line
-				action = (entitydata[k].p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR)
+				action = (level.entities[k].p1 == 0 and L.CHANGETOVER or L.CHANGETOHOR)
 			elseif t == 13 then
 				-- Warp token
 				-- Go to the other end
@@ -1336,8 +1411,11 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 		removedentities = {}
 		local removedentityids = {}
 
-		for k,v in pairs(entitydata) do
-			if ((v.x >= newroomx*40) and (v.x <= (newroomx*40)+39) and (v.y >= newroomy*30) and (v.y <= (newroomy*30)+29)) then
+		for k,v in pairs(level.entities) do
+			if (v.x >= newroomx*40)
+			and (v.x <= (newroomx*40)+39)
+			and (v.y >= newroomy*30)
+			and (v.y <= (newroomy*30)+29) then
 				table.insert(removedentities, {k, table.copy(v)})
 				table.insert(removedentityids, k)
 			end
@@ -1348,11 +1426,14 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 		end
 	end
 
-	for k,v in pairs(entitydata) do
-		if ((v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29)) then -----------or ((v.t == 13) and (v.p1 >= myroomx*40) and (v.p1 <= (myroomx*40)+39) and (v.p2 >= myroomy*30) and (v.p2 <= (myroomy*30)+29)) then
+	for k,v in pairs(level.entities) do
+		if (v.x >= myroomx*40)
+		and (v.x <= (myroomx*40)+39)
+		and (v.y >= myroomy*30)
+		and (v.y <= (myroomy*30)+29) then
 			if moving then
-				entitydata[k].x = entitydata[k].x + (40*roomxdiff)
-				entitydata[k].y = entitydata[k].y + (30*roomydiff)
+				level.entities[k].x = level.entities[k].x + (40*roomxdiff)
+				level.entities[k].y = level.entities[k].y + (30*roomydiff)
 			else
 				if v.t == 16
 				or (v.t == 9 and level.count.trinkets >= limit.trinkets)
@@ -1369,7 +1450,7 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 					local localcopy = table.copy(v)
 					localcopy.x = localcopy.x + (40*roomxdiff)
 					localcopy.y = localcopy.y + (30*roomydiff)
-					table.insert(entitydata, level.count.entity_ai, localcopy)
+					table.insert(level.entities, level.count.entity_ai, localcopy)
 					localcopy = nil
 
 					level.count.entities = level.count.entities + 1
@@ -1430,21 +1511,63 @@ function displayalphatile(leftblx, upblx, forx, fory, customsize)
 
 		-- Are we holding both down?
 		if love.keyboard.isDown("[") and love.keyboard.isDown("]") then
-			love.graphics.rectangle("fill", screenoffset, 0, (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), (16*(math.floor(mouselocky / 16)-upblx)))
-			love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 0, 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), (16*(math.floor(mouselocky / 16)-upblx)))
-			love.graphics.rectangle("fill", screenoffset, (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
-			love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
+			love.graphics.rectangle(
+				"fill",
+				screenoffset,
+				0,
+				(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)),
+				(16*(math.floor(mouselocky / 16)-upblx))
+			)
+			love.graphics.rectangle(
+				"fill",
+				screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+				0,
+				640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+				(16*(math.floor(mouselocky / 16)-upblx))
+			)
+			love.graphics.rectangle(
+				"fill",
+				screenoffset,
+				(16*(math.floor(mouselocky / 16)-upblx+(fory+1))),
+				(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)),
+				480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1)))
+			)
+			love.graphics.rectangle(
+				"fill",
+				screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+				(16*(math.floor(mouselocky / 16)-upblx+(fory+1))),
+				640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+				480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1)))
+			)
 		else
 			-- Only one of the two, then.
 			if love.keyboard.isDown("[") then
 				-- Horizontal
 				love.graphics.rectangle("fill", screenoffset, 0, 640, (16*(math.floor(mouselocky / 16)-upblx)))
-				love.graphics.rectangle("fill", screenoffset, (16*(math.floor(mouselocky / 16)-upblx+(fory+1))), 640, 480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1))))
+				love.graphics.rectangle(
+					"fill",
+					screenoffset,
+					(16*(math.floor(mouselocky / 16)-upblx+(fory+1))),
+					640,
+					480-(16*(math.floor(mouselocky / 16)-upblx+(fory+1)))
+				)
 			end
 			if love.keyboard.isDown("]") then
 				-- Vertical
-				love.graphics.rectangle("fill", screenoffset, 0, (16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)), 480)
-				love.graphics.rectangle("fill", screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 0, 640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))), 480)
+				love.graphics.rectangle(
+					"fill",
+					screenoffset,
+					0,
+					(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx)),
+					480
+				)
+				love.graphics.rectangle(
+					"fill",
+					screenoffset+(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+					0,
+					640-(16*(math.floor((mouselockx-screenoffset) / 16)-leftblx+(forx+1))),
+					480
+				)
 			end
 		end
 
@@ -1607,15 +1730,15 @@ end
 function gotostartpointroom()
 	if level.count.startpoint ~= nil then
 		cons("Start point is at "
-			.. entitydata[level.count.startpoint].x .. " "
-			.. entitydata[level.count.startpoint].y
+			.. level.entities[level.count.startpoint].x .. " "
+			.. level.entities[level.count.startpoint].y
 			.. " so in room "
-			.. math.floor(entitydata[level.count.startpoint].x / 40) .. ","
-			.. math.floor(entitydata[level.count.startpoint].y / 30)
+			.. math.floor(level.entities[level.count.startpoint].x / 40) .. ","
+			.. math.floor(level.entities[level.count.startpoint].y / 30)
 		)
 		gotoroom(
-			math.floor(entitydata[level.count.startpoint].x / 40),
-			math.floor(entitydata[level.count.startpoint].y / 30)
+			math.floor(level.entities[level.count.startpoint].x / 40),
+			math.floor(level.entities[level.count.startpoint].y / 30)
 		)
 	else
 		temporaryroomname = L.STARTPOINTNOTFOUND
@@ -1801,89 +1924,89 @@ function rotateroom180(rx, ry, undoing)
 	roomdata_set(rx, ry, newroomdata)
 
 	-- Now for the entities!
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
 			--cons(rx .. " " .. ry .. "  en " .. ((rx*40)+39 - v.x - 1)+(rx*40))
 
 			if v.t == 9 or v.t == 13 then
 				-- Trinket or warp token entrance, 2x2 block
-				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
 			elseif v.t == 1 then
 				-- Enemy- change the direction as well!
-				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
 
 				-- v^<>
 				if v.p1 == 0 or v.p1 == 2 then
-					entitydata[k].p1 = v.p1+1
+					level.entities[k].p1 = v.p1+1
 				else
-					entitydata[k].p1 = v.p1-1
+					level.entities[k].p1 = v.p1-1
 				end
 			elseif v.t == 10 then
 				-- Checkpoint, 2x2 block that can be flipped.
-				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
 
-				if v.p1 == 1 then entitydata[k].p1 = 0 else entitydata[k].p1 = 1 end
+				if v.p1 == 1 then level.entities[k].p1 = 0 else level.entities[k].p1 = 1 end
 			elseif v.t == 15 or v.t == 16 or v.t == 18 then
 				-- Rescuable crewmate, start point and terminal, all 2x3 blocks.
 				-- I won't let myself be stopped from making room rotation/flip functions because you can't rotate crewmates!
-				entitydata[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
 
 				if v.t == 16 then
 					-- Well at least we can flip the start point horizontally, that's something, right?
-					entitydata[k].p1 = (v.p1 == 0) and 1 or 0
+					level.entities[k].p1 = (v.p1 == 0) and 1 or 0
 				elseif v.t == 18 then
 					-- Terminals can be flipped in 2.3 and up! Well... They can have any sprite, let's only flip terminals.
 					if v.p1 == 1 then
-						entitydata[k].p1 = 0
+						level.entities[k].p1 = 0
 					elseif v.p1 == 0 then
-						entitydata[k].p1 = 1
+						level.entities[k].p1 = 1
 					end
 				end
 			elseif v.t == 3 or (v.t == 2 and v.p1 <= 6) then
 				-- Disappearing platform, moving platform, or a 4-block conveyor
-				entitydata[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
 
 				-- Change the direction as well!
 				if v.p1 == 0 or v.p1 == 2 or v.p1 == 5 then
-					entitydata[k].p1 = v.p1+1
+					level.entities[k].p1 = v.p1+1
 				else
-					entitydata[k].p1 = v.p1-1
+					level.entities[k].p1 = v.p1-1
 				end
 			elseif v.t == 2 then
 				-- An 8 block conveyor then!
-				entitydata[k].x = ((rx*40)+39 - v.x - 7)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - 7)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
 
 				-- Flip it
 				if v.p1 == 7 then
-					entitydata[k].p1 = 8
+					level.entities[k].p1 = 8
 				else
-					entitydata[k].p1 = 7.
+					level.entities[k].p1 = 7
 				end
 			elseif v.t == 17 then
 				-- Roomtext, the new placement of x depends on the length of the string!
-				entitydata[k].x = ((rx*40)+39 - v.x - (math.floor(font_level:getWidth(v.data)/8)-1))+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - (math.floor(font_level:getWidth(v.data)/8)-1))+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
 			elseif v.t == 19 then
 				-- Script box.
-				entitydata[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
 			elseif v.t == 11 or v.t == 50 then
 				-- Gravity line or warp line
-				entitydata[k].x = ((rx*40)+39 - v.x)+(rx*40)
-				entitydata[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				level.entities[k].x = ((rx*40)+39 - v.x)+(rx*40)
+				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
 
 				if v.t == 50 then
 					-- Same code as for enemy/moving platform directions, but it works here as well (<>^v now I think)
 					if v.p1 == 0 or v.p1 == 2 then
-						entitydata[k].p1 = v.p1+1
+						level.entities[k].p1 = v.p1+1
 					else
-						entitydata[k].p1 = v.p1-1
+						level.entities[k].p1 = v.p1-1
 					end
 				end
 			else
@@ -1892,8 +2015,8 @@ function rotateroom180(rx, ry, undoing)
 		end
 		if ((v.t == 13) and (v.p1 >= rx*40) and (v.p1 <= (rx*40)+39) and (v.p2 >= ry*30) and (v.p2 <= (ry*30)+29)) then
 			-- Warp token exit here!
-			entitydata[k].p1 = ((rx*40)+39 - v.p1 - 1)+(rx*40)
-			entitydata[k].p2 = ((ry*30)+29 - v.p2 - 1)+(ry*30)
+			level.entities[k].p1 = ((rx*40)+39 - v.p1 - 1)+(rx*40)
+			level.entities[k].p2 = ((ry*30)+29 - v.p2 - 1)+(ry*30)
 		end
 	end
 
@@ -1904,7 +2027,7 @@ function rotateroom180(rx, ry, undoing)
 end
 
 function autocorrectlines()
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		if (v.t == 11 or v.t == 50) and (v.p4 ~= 1)
 		and (v.x >= roomx*40) and (v.x <= (roomx*40)+39)
 		and (v.y >= roomy*30) and (v.y <= (roomy*30)+29) then
@@ -1944,11 +2067,11 @@ function autocorrectlines()
 					end
 				end
 
-				if entitydata[k].p2 ~= startat then
-					entitydata[k].p2 = startat
+				if level.entities[k].p2 ~= startat then
+					level.entities[k].p2 = startat
 				end
-				if entitydata[k].p3 ~= linelength then
-					entitydata[k].p3 = linelength
+				if level.entities[k].p3 ~= linelength then
+					level.entities[k].p3 = linelength
 				end
 			else
 				-- Vertical
@@ -1985,11 +2108,11 @@ function autocorrectlines()
 					end
 				end
 
-				if entitydata[k].p2 ~= startat then
-					entitydata[k].p2 = startat
+				if level.entities[k].p2 ~= startat then
+					level.entities[k].p2 = startat
 				end
-				if entitydata[k].p3 ~= linelength then
-					entitydata[k].p3 = linelength
+				if level.entities[k].p3 ~= linelength then
+					level.entities[k].p3 = linelength
 				end
 			end
 		end
@@ -2025,11 +2148,11 @@ function undo()
 		removeentity(undobuffer[#undobuffer].entid, nil, true)
 	elseif undobuffer[#undobuffer].undotype == "removeentity" then
 		-- Hmm... Re-add it in this case!
-		entitydata[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
+		level.entities[undobuffer[#undobuffer].entid] = undobuffer[#undobuffer].removedentitydata
 		updatecountadd(undobuffer[#undobuffer].removedentitydata.t)
 	elseif undobuffer[#undobuffer].undotype == "changeentity" then
 		for k,v in pairs(undobuffer[#undobuffer].changedentitydata) do
-			entitydata[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
+			level.entities[undobuffer[#undobuffer].entid][v.key] = v.oldvalue
 		end
 	elseif undobuffer[#undobuffer].undotype == "metadata" then
 		local new_width, new_height
@@ -2076,7 +2199,7 @@ function undo()
 		local removedentityids = {}
 		local nrx, nry = undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry
 
-		for k,v in pairs(entitydata) do
+		for k,v in pairs(level.entities) do
 			if ((v.x >= nrx*40) and (v.x <= (nrx*40)+39) and (v.y >= nry*30) and (v.y <= (nry*30)+29)) then
 				table.insert(removedentityids, k)
 			end
@@ -2089,7 +2212,7 @@ function undo()
 		setroomfromcopy(undobuffer[#undobuffer].olddata, nrx, nry, true)
 		temporaryroomnametimer = 0
 		for k,v in pairs(undobuffer[#undobuffer].oldentities) do
-			entitydata[v[1]] = table.copy(v[2])
+			level.entities[v[1]] = table.copy(v[2])
 			updatecountadd(v[2].t)
 		end
 	else
@@ -2133,7 +2256,7 @@ function redo()
 		end
 	elseif redobuffer[#redobuffer].undotype == "addentity" then
 		-- Re-add it again
-		entitydata[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
+		level.entities[redobuffer[#redobuffer].entid] = redobuffer[#redobuffer].addedentitydata
 		updatecountadd(redobuffer[#redobuffer].addedentitydata.t)
 		if redobuffer[#redobuffer].addedentitydata.t == 16 then
 			-- Don't forget to set the start point ID!
@@ -2144,7 +2267,7 @@ function redo()
 		removeentity(redobuffer[#redobuffer].entid, nil, true)
 	elseif redobuffer[#redobuffer].undotype == "changeentity" then
 		for k,v in pairs(redobuffer[#redobuffer].changedentitydata) do
-			entitydata[redobuffer[#redobuffer].entid][v.key] = v.newvalue
+			level.entities[redobuffer[#redobuffer].entid][v.key] = v.newvalue
 		end
 	elseif redobuffer[#redobuffer].undotype == "metadata" then
 		local new_width, new_height
@@ -2213,7 +2336,14 @@ function entityplaced(id)
 		id = level.count.entity_ai
 	end
 
-	table.insert(undobuffer, {undotype = "addentity", rx = roomx, ry = roomy, entid = id, addedentitydata = table.copy(entitydata[id])})
+	table.insert(undobuffer,
+		{
+			undotype = "addentity",
+			rx = roomx, ry = roomy,
+			entid = id,
+			addedentitydata = table.copy(level.entities[id])
+		}
+	)
 	finish_undo("ADDED ENTITY")
 end
 
@@ -2221,24 +2351,24 @@ function removeentity(id, thetype, undoing)
 	if id == nil then
 		cons("###\nremoveentity: trying to remove nil entity ID: " .. id .. "!\n###")
 		return
-	elseif entitydata[id] == nil then
-		cons("###\nremoveentity: trying to remove nil entity: entitydata[" .. id .. "]!\n###")
+	elseif level.entities[id] == nil then
+		cons("###\nremoveentity: trying to remove nil entity: level.entities[" .. id .. "]!\n###")
 		return
 	end
 
 	if thetype == nil then
-		thetype = entitydata[id].t
+		thetype = level.entities[id].t
 	end
 
 	updatecountdelete(thetype, id, undoing)
-	entitydata[id] = nil
+	level.entities[id] = nil
 end
 
 function setcopyingentity(id)
-	table.insert(entitydata, level.count.entity_ai, table.copy(entitydata[id]))
-	if entitydata[level.count.entity_ai].t == 9 then
+	table.insert(level.entities, level.count.entity_ai, table.copy(level.entities[id]))
+	if level.entities[level.count.entity_ai].t == 9 then
 		level.count.trinkets = level.count.trinkets + 1
-	elseif entitydata[level.count.entity_ai].t == 15 then
+	elseif level.entities[level.count.entity_ai].t == 15 then
 		level.count.crewmates = level.count.crewmates + 1
 	end
 	level.count.entities = level.count.entities + 1
@@ -2254,7 +2384,7 @@ function rcm_changingentity(entdetails, changes)
 	for k,v in pairs(changes) do
 		table.insert(changeddata, {
 				key = k,
-				oldvalue = entitydata[tonumber(entdetails[3])][k],
+				oldvalue = level.entities[tonumber(entdetails[3])][k],
 				newvalue = v
 			}
 		)
@@ -2554,59 +2684,59 @@ function shiftrooms(direction, updatescripts)
 
 	-- Entities, making sure to take care of warp token destinations as well
 	local newx, newy, newp1, newp2
-	for idx, ent in pairs(entitydata) do
+	for idx, ent in pairs(level.entities) do
 		if ent.x < 0 or ent.y < 0 or ent.x >= 40*width or ent.y >= 30*height then
 		elseif direction == SHIFT.LEFT then
 			newx = ent.x - 40
 			if newx < 0 then
 				newx = newx + 40*width
 			end
-			entitydata[idx].x = newx
+			level.entities[idx].x = newx
 			if ent.t == 13 then
 				newp1 = ent.p1 - 40
 				if newp1 < 0 then
 					newp1 = newp1 + 40*width
 				end
-				entitydata[idx].p1 = newp1
+				level.entities[idx].p1 = newp1
 			end
 		elseif direction == SHIFT.RIGHT then
 			newx = ent.x + 40
 			if newx >= 40*width then
 				newx = newx - 40*width
 			end
-			entitydata[idx].x = newx
+			level.entities[idx].x = newx
 			if ent.t == 13 then
 				newp1 = ent.p1 + 40
 				if newp1 >= 40*width then
 					newp1 = newp1 - 40*width
 				end
-				entitydata[idx].p1 = newp1
+				level.entities[idx].p1 = newp1
 			end
 		elseif direction == SHIFT.UP then
 			newy = ent.y - 30
 			if newy < 0 then
 				newy = newy + 30*height
 			end
-			entitydata[idx].y = newy
+			level.entities[idx].y = newy
 			if ent.t == 13 then
 				newp2 = ent.p2 - 30
 				if newp2 < 0 then
 					newp2 = newp2 + 30*height
 				end
-				entitydata[idx].p2 = newp2
+				level.entities[idx].p2 = newp2
 			end
 		elseif direction == SHIFT.DOWN then
 			newy = ent.y + 30
 			if newy >= 30*height then
 				newy = newy - 30*height
 			end
-			entitydata[idx].y = newy
+			level.entities[idx].y = newy
 			if ent.t == 13 then
 				newp2 = ent.p2 + 30
 				if newp2 >= 30*height then
 					newp2 = newp2 - 30*height
 				end
-				entitydata[idx].p2 = newp2
+				level.entities[idx].p2 = newp2
 			end
 		end
 	end
@@ -2891,7 +3021,7 @@ function displayvtoolsroom(offsetx, offsety, theroomdata, themetadata)
 end
 
 function warplinesinroom(theroomx, theroomy)
-	for _, ent in pairs(entitydata) do
+	for _, ent in pairs(level.entities) do
 		if ent.t == 50 and math.floor(ent.x/40) == theroomx and math.floor(ent.y/30) == theroomy then
 			return true
 		end
@@ -2910,7 +3040,7 @@ function insert_entity_full(rx, ry, atx, aty, t, p1, p2, p3, p4, data)
 	if p4 == nil then p4 = 0 end
 	if data == nil then data = "" end
 
-	table.insert(entitydata, level.count.entity_ai,
+	table.insert(level.entities, level.count.entity_ai,
 		{
 			x = 40*rx + atx,
 			y = 30*ry + aty,
@@ -2949,10 +3079,10 @@ function cancel_placing_scriptbox()
 	if selectedtool == 13 and selectedsubtool[13] ~= 1 then
 		if sboxdontaskname then
 			-- Restore the old position
-			entitydata[editingsboxid].x = oldscriptx
-			entitydata[editingsboxid].y = oldscripty
-			entitydata[editingsboxid].p1 = oldscriptp1
-			entitydata[editingsboxid].p2 = oldscriptp2
+			level.entities[editingsboxid].x = oldscriptx
+			level.entities[editingsboxid].y = oldscripty
+			level.entities[editingsboxid].p1 = oldscriptp1
+			level.entities[editingsboxid].p2 = oldscriptp2
 			sboxdontaskname = nil
 		elseif selectedsubtool[13] == 2 then
 			-- We were placing a completely new one

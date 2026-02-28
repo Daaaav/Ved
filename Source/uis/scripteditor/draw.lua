@@ -314,8 +314,8 @@ return function()
 
 			for k,v in pairs(uentityuses) do
 				roomsstr = roomsstr .. (roomsstr == "" and "" or ", ") .. "("
-					.. (math.floor(entitydata[v].x/40)+co) .. ","
-					.. (math.floor(entitydata[v].y/30)+co) .. ")"
+					.. (math.floor(level.entities[v].x/40)+co) .. ","
+					.. (math.floor(level.entities[v].y/30)+co) .. ")"
 			end
 
 			for k,v in pairs(uscriptuses) do

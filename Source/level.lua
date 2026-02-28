@@ -10,7 +10,7 @@ function Level:new()
 	o.metadata = {}
 	o.limit = limit_v
 	o.roomdata = {}
-	o.entitydata = {}
+	o.entities = {}
 	o.roommetadata = {}
 	o.scripts = {}
 	o.scriptnames = {}

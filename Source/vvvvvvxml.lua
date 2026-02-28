@@ -73,7 +73,7 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (table)entities, (Level)level
+	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (Level)level
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -167,11 +167,11 @@ function loadlevel(path)
 		local xentities = xml:find(xdata, "edEntities")
 		for entity in xml:each_child_element(xentities, "edentity") do
 			entityid = entityid + 1
-			lvl.entitydata[entityid] = {}
+			lvl.entities[entityid] = {}
 
 			local attributes = xml:get_attributes(entity)
 			for k,v in pairs(attributes) do
-				lvl.entitydata[entityid][k] = tonumber(v)
+				lvl.entities[entityid][k] = tonumber(v)
 			end
 
 			-- Now we only need the data...
@@ -182,16 +182,16 @@ function loadlevel(path)
 			if data ~= "" and data:match("\n            $") ~= nil then
 				data = data:sub(1,-14)
 			end
-			lvl.entitydata[entityid].data = data
+			lvl.entities[entityid].data = data
 
 			-- Now before we go to the next one, if it's a trinket or crewmate,
 			-- add it up, because we can only have 100 in a level. Officially.
 			-- Also, parse the special data entity here if we found it.
-			if lvl.entitydata[entityid].t == 9 then
+			if lvl.entities[entityid].t == 9 then
 				lvl.count.trinkets = lvl.count.trinkets + 1
-			elseif lvl.entitydata[entityid].t == 15 then
+			elseif lvl.entities[entityid].t == 15 then
 				lvl.count.crewmates = lvl.count.crewmates + 1
-			elseif lvl.entitydata[entityid].t == 16 then
+			elseif lvl.entities[entityid].t == 16 then
 				if lvl.count.startpoint == nil then
 					lvl.count.startpoint = entityid
 				else
@@ -202,14 +202,14 @@ function loadlevel(path)
 						FC = FC + 1
 						cons_fc(FClist, L.MORETHANONESTARTPOINT)
 					end
-					lvl.entitydata[entityid] = nil
+					lvl.entities[entityid] = nil
 					lvl.count.entities = lvl.count.entities - 1
 				end
-			elseif ((lvl.entitydata[entityid].x == 800 and lvl.entitydata[entityid].y == 600)
-			or (lvl.entitydata[entityid].x == 4000 and lvl.entitydata[entityid].y == 3000))
-			and lvl.entitydata[entityid].t == 17 then
+			elseif ((lvl.entities[entityid].x == 800 and lvl.entities[entityid].y == 600)
+			or (lvl.entities[entityid].x == 4000 and lvl.entities[entityid].y == 3000))
+			and lvl.entities[entityid].t == 17 then
 				-- This is the metadata entity!
-				local explodedmetadata = explode("|", lvl.entitydata[entityid].data:gsub("\n", ""))
+				local explodedmetadata = explode("|", lvl.entities[entityid].data:gsub("\n", ""))
 
 				lvl.vedmetadata = createmde(lvl.limit)
 
@@ -277,7 +277,7 @@ function loadlevel(path)
 				end
 
 				-- Nil this entity now so we don't store multiple ones when saving
-				lvl.entitydata[entityid] = nil
+				lvl.entities[entityid] = nil
 			end
 
 			-- It's an entity, that's for sure!
@@ -286,42 +286,42 @@ function loadlevel(path)
 			local oldFCcount = FC
 
 			-- We might have just nil'd this entity because it was the data entity.
-			if lvl.entitydata[entityid] ~= nil then
-				if lvl.entitydata[entityid].x == nil or type(lvl.entitydata[entityid].x) ~= "number" then
+			if lvl.entities[entityid] ~= nil then
+				if lvl.entities[entityid].x == nil or type(lvl.entities[entityid].x) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].x = 0
+					lvl.entities[entityid].x = 0
 				end
-				if lvl.entitydata[entityid].y == nil or type(lvl.entitydata[entityid].y) ~= "number" then
+				if lvl.entities[entityid].y == nil or type(lvl.entities[entityid].y) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].y = 0
+					lvl.entities[entityid].y = 0
 				end
-				if lvl.entitydata[entityid].t == nil or type(lvl.entitydata[entityid].t) ~= "number" then
+				if lvl.entities[entityid].t == nil or type(lvl.entities[entityid].t) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].t = 0
+					lvl.entities[entityid].t = 0
 				end
-				if lvl.entitydata[entityid].p1 == nil or type(lvl.entitydata[entityid].p1) ~= "number" then
+				if lvl.entities[entityid].p1 == nil or type(lvl.entities[entityid].p1) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p1 = 0
+					lvl.entities[entityid].p1 = 0
 				end
-				if lvl.entitydata[entityid].p2 == nil or type(lvl.entitydata[entityid].p2) ~= "number" then
+				if lvl.entities[entityid].p2 == nil or type(lvl.entities[entityid].p2) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p2 = 0
+					lvl.entities[entityid].p2 = 0
 				end
-				if lvl.entitydata[entityid].p3 == nil or type(lvl.entitydata[entityid].p3) ~= "number" then
+				if lvl.entities[entityid].p3 == nil or type(lvl.entities[entityid].p3) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p3 = 0
+					lvl.entities[entityid].p3 = 0
 				end
-				if lvl.entitydata[entityid].p4 == nil or type(lvl.entitydata[entityid].p4) ~= "number" then
+				if lvl.entities[entityid].p4 == nil or type(lvl.entities[entityid].p4) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p4 = 0
+					lvl.entities[entityid].p4 = 0
 				end
-				if lvl.entitydata[entityid].p5 == nil or type(lvl.entitydata[entityid].p5) ~= "number" then
+				if lvl.entities[entityid].p5 == nil or type(lvl.entities[entityid].p5) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p5 = 0
+					lvl.entities[entityid].p5 = 0
 				end
-				if lvl.entitydata[entityid].p6 == nil or type(lvl.entitydata[entityid].p6) ~= "number" then
+				if lvl.entities[entityid].p6 == nil or type(lvl.entities[entityid].p6) ~= "number" then
 					FC = FC + 1
-					lvl.entitydata[entityid].p6 = 0
+					lvl.entities[entityid].p6 = 0
 				end
 			end
 
@@ -331,8 +331,8 @@ function loadlevel(path)
 					langkeys(
 						L_PLU.ENTITYINVALIDPROPERTIES,
 						{
-							anythingbutnil(lvl.entitydata[entityid].x),
-							anythingbutnil(lvl.entitydata[entityid].y),
+							anythingbutnil(lvl.entities[entityid].x),
+							anythingbutnil(lvl.entities[entityid].y),
 							(FC-oldFCcount)
 						},
 						3
@@ -682,7 +682,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl.entitydata, lvl
+	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl
 end
 
 
@@ -762,15 +762,15 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	local xentities = lvl.xml:find_or_add(xdata, "edEntities")
 	lvl.xml:clear(xentities)
 
-	local entitydatasaved = 0
-	-- No pairs(lvl.entitydata) here, that might end iterating at a nil
+	local entitiessaved = 0
+	-- No pairs(lvl.entities) here, that might end iterating at a nil
 	for k = 1, lvl.count.entity_ai-1 do
-		if lvl.entitydata[k] ~= nil then
-			local v = lvl.entitydata[k]
+		if lvl.entities[k] ~= nil then
+			local v = lvl.entities[k]
 			local data = v.data
 			if v.t ~= 17 and v.t ~= 18 and v.t ~= 19 and data:len() > 40 then
 				-- VVVVVV has saved a lot of data to this entity, which shouldn't even have data - let's save some space.
-				entitydatasaved = entitydatasaved + data:len()
+				entitiessaved = entitiessaved + data:len()
 				data = ""
 			end
 			local entity = lvl.xml:add_element_in_last(xentities, "edentity")
@@ -859,8 +859,8 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 		lvl.xml:set_text(entity, mdedata)
 	end
 
-	if entitydatasaved > 0 then
-		cons("Done with entities, " .. entitydatasaved .. " bytes were saved from unnecessary entity data.")
+	if entitiessaved > 0 then
+		cons("Done with entities, " .. entitiessaved .. " bytes were saved from unnecessary entity data.")
 	else
 		cons("Done with entities.")
 	end
@@ -1091,7 +1091,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl.entitydata, lvl
+	return true, lvl.metadata, limit_v, lvl.roomdata, lvl
 end
 
 function default_roommetadata(rx, ry)

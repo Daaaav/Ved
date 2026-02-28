@@ -81,10 +81,10 @@ function boxupdate()
 		end
 
 		if box_type == 1 then
-			entitydata[box_meta].x = math.floor(((box_x+8) - 128) / 16) + roomx*40
-			entitydata[box_meta].y = math.floor((box_y+8) / 16) + roomy*30
-			entitydata[box_meta].p1 = math.floor((box_w+8) / 16)
-			entitydata[box_meta].p2 = math.floor((box_h+8) / 16)
+			level.entities[box_meta].x = math.floor(((box_x+8) - 128) / 16) + roomx*40
+			level.entities[box_meta].y = math.floor((box_y+8) / 16) + roomy*30
+			level.entities[box_meta].p1 = math.floor((box_w+8) / 16)
+			level.entities[box_meta].p2 = math.floor((box_h+8) / 16)
 		end
 
 		--[[
@@ -146,7 +146,7 @@ function boxmouserelease()
 			box_x, box_y, box_w, box_h = box_x+8, box_y+8, box_w+8, box_h+8
 			box_x, box_y, box_w, box_h = box_x-(box_x%16), box_y-(box_y%16), box_w-(box_w%16), box_h-(box_h%16)
 		elseif box_type == 1 then
-			box_x, box_y, box_w, box_h = 128+(entitydata[box_meta].x-roomx*40)*16, (entitydata[box_meta].x-roomy*30)*16, (entitydata[box_meta].p1-1)*16, (entitydata[box_meta].p2-1)*16
+			box_x, box_y, box_w, box_h = 128+(level.entities[box_meta].x-roomx*40)*16, (level.entities[box_meta].x-roomy*30)*16, (level.entities[box_meta].p1-1)*16, (level.entities[box_meta].p2-1)*16
 		end
 	end
 end

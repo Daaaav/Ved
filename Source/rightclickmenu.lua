@@ -94,7 +94,7 @@ function rightclickmenu.handler(RCMreturn)
 	if RCMid:sub(1, 4) == "ent_" then
 		-- Something to do with an entity.
 		entdetails = explode("_", RCMid)
-		if entitydata[tonumber(entdetails[3])] ~= nil then
+		if level.entities[tonumber(entdetails[3])] ~= nil then
 			if RCMreturn == L.DELETE then
 				removeentity(tonumber(entdetails[3]), tonumber(entdetails[2]))
 			elseif RCMreturn == L.MOVEENTITY then
@@ -103,7 +103,7 @@ function rightclickmenu.handler(RCMreturn)
 				setcopyingentity(tonumber(entdetails[3]))
 			elseif RCMreturn == L.PROPERTIES then
 				-- Edit properties of this entity, whatever it is.
-				thisentity = entitydata[tonumber(entdetails[3])]
+				thisentity = level.entities[tonumber(entdetails[3])]
 				dialog.create(
 					L.RAWENTITYPROPERTIES,
 					DBS.OKCANCELAPPLY,
@@ -115,37 +115,37 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 1 then
 				-- Enemy
 				if RCMreturn == L.CHANGEDIRECTION then
-					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
+					local new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 3, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				end
 			elseif tonumber(entdetails[2]) == 2 then
 				-- Platform, moving/conveyor
 				if RCMreturn == L.CYCLETYPE then
 					local new_p1
-					if entitydata[tonumber(entdetails[3])].p1 <= 4 then
+					if level.entities[tonumber(entdetails[3])].p1 <= 4 then
 						-- Moving platform
-						new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 3, 0)
+						new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 3, 0)
 					else
 						-- Conveyor
-						new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 8, 5)
+						new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 8, 5)
 					end
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				end
 			elseif tonumber(entdetails[2]) == 10 then
 				-- Checkpoint
 				if RCMreturn == L.FLIP then
-					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+					local new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 1, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				end
 			elseif tonumber(entdetails[2]) == 11 then
 				-- Gravity line
-				local old_p1 = entitydata[tonumber(entdetails[3])].p1
-				local old_p2 = entitydata[tonumber(entdetails[3])].p2
-				local old_p3 = entitydata[tonumber(entdetails[3])].p3
-				local old_p4 = entitydata[tonumber(entdetails[3])].p4
+				local old_p1 = level.entities[tonumber(entdetails[3])].p1
+				local old_p2 = level.entities[tonumber(entdetails[3])].p2
+				local old_p3 = level.entities[tonumber(entdetails[3])].p3
+				local old_p4 = level.entities[tonumber(entdetails[3])].p4
 				local new_p1, new_p4
 				if RCMreturn == L.CHANGETOHOR then
 					new_p1 = 0
@@ -160,10 +160,15 @@ function rightclickmenu.handler(RCMreturn)
 					new_p1 = old_p1
 					new_p4 = 1
 				end
-				entitydata[tonumber(entdetails[3])].p1 = new_p1
-				entitydata[tonumber(entdetails[3])].p4 = new_p4
+				level.entities[tonumber(entdetails[3])].p1 = new_p1
+				level.entities[tonumber(entdetails[3])].p4 = new_p4
 				autocorrectlines()
-				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
+				table.insert(undobuffer,
+					{
+						undotype = "changeentity",
+						rx = roomx, ry = roomy,
+						entid = tonumber(entdetails[3]),
+						changedentitydata = {
 							{
 								key = "p1",
 								oldvalue = old_p1,
@@ -172,17 +177,17 @@ function rightclickmenu.handler(RCMreturn)
 							{
 								key = "p2",
 								oldvalue = old_p2,
-								newvalue = entitydata[tonumber(entdetails[3])].p2
+								newvalue = level.entities[tonumber(entdetails[3])].p2
 							},
 							{
 								key = "p3",
 								oldvalue = old_p3,
-								newvalue = entitydata[tonumber(entdetails[3])].p3
+								newvalue = level.entities[tonumber(entdetails[3])].p3
 							},
 							{
 								key = "p4",
 								oldvalue = old_p4,
-								newvalue = entitydata[tonumber(entdetails[3])].p4
+								newvalue = level.entities[tonumber(entdetails[3])].p4
 							}
 						}
 					}
@@ -191,7 +196,7 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 13 then
 				-- Warp token
 				if RCMreturn == L.GOTODESTINATION or RCMreturn == L.GOTOENTRANCE then
-					local ent = entitydata[tonumber(entdetails[3])]
+					local ent = level.entities[tonumber(entdetails[3])]
 					local dest_px, dest_py
 					if RCMreturn == L.GOTODESTINATION then
 						dest_px = ent.p1
@@ -218,23 +223,23 @@ function rightclickmenu.handler(RCMreturn)
 			elseif tonumber(entdetails[2]) == 15 then
 				-- Rescuable crewmate
 				if RCMreturn == L.CHANGECOLOR then
-					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 5, 0)
+					local new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 5, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				end
 			elseif tonumber(entdetails[2]) == 16 then
 				-- Start point
 				if RCMreturn == L.CHANGEDIRECTION then
-					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+					local new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 1, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				end
 			elseif tonumber(entdetails[2]) == 17 then
 				-- Roomtext
 				if RCMreturn == L.EDITTEXT then
 					start_editing_roomtext(tonumber(entdetails[3]), false, false)
 				elseif RCMreturn == L.COPYTEXT then
-					love.system.setClipboardText(entitydata[tonumber(entdetails[3])].data)
+					love.system.setClipboardText(level.entities[tonumber(entdetails[3])].data)
 				end
 			elseif tonumber(entdetails[2]) == 18 or tonumber(entdetails[2]) == 19 then
 				-- Terminal or script box
@@ -243,10 +248,10 @@ function rightclickmenu.handler(RCMreturn)
 					if RCMreturn == L.EDITSCRIPTWOBUMPING or RCMreturn == L.EDITSCRIPTWBUMPING then
 						invert_bump_preference = true
 					end
-					if level.scripts[entitydata[tonumber(entdetails[3])].data] == nil then
-						dialog.create(langkeys(L.SCRIPT404, {entitydata[tonumber(entdetails[3])].data}))
+					if level.scripts[level.entities[tonumber(entdetails[3])].data] == nil then
+						dialog.create(langkeys(L.SCRIPT404, {level.entities[tonumber(entdetails[3])].data}))
 					else
-						scriptineditor(entitydata[tonumber(entdetails[3])].data, nil, invert_bump_preference)
+						scriptineditor(level.entities[tonumber(entdetails[3])].data, nil, invert_bump_preference)
 					end
 				elseif RCMreturn == L.OTHERSCRIPT then
 					start_editing_roomtext(tonumber(entdetails[3]), false, true)
@@ -255,11 +260,11 @@ function rightclickmenu.handler(RCMreturn)
 					selectedsubtool[13] = 3
 					selectedtool = 13
 				elseif RCMreturn == L.FLIP then -- only for terminals obviously
-					local new_p1 = cycle(entitydata[tonumber(entdetails[3])].p1, 1, 0)
+					local new_p1 = cycle(level.entities[tonumber(entdetails[3])].p1, 1, 0)
 					rcm_changingentity(entdetails, {p1 = new_p1})
-					entitydata[tonumber(entdetails[3])].p1 = new_p1
+					level.entities[tonumber(entdetails[3])].p1 = new_p1
 				elseif RCMreturn == toolnames[12] then
-					local ret = namefound(entitydata[tonumber(entdetails[3])])
+					local ret = namefound(level.entities[tonumber(entdetails[3])])
 					if ret == 1 then
 						s_nieuw(tonumber(entdetails[3]))
 					elseif ret == -1 then
@@ -268,19 +273,24 @@ function rightclickmenu.handler(RCMreturn)
 				end
 			elseif tonumber(entdetails[2]) == 50 then
 				-- Warp line
-				local old_p1 = entitydata[tonumber(entdetails[3])].p1
-				local old_p2 = entitydata[tonumber(entdetails[3])].p2
-				local old_p3 = entitydata[tonumber(entdetails[3])].p3
-				local old_p4 = entitydata[tonumber(entdetails[3])].p4
+				local old_p1 = level.entities[tonumber(entdetails[3])].p1
+				local old_p2 = level.entities[tonumber(entdetails[3])].p2
+				local old_p3 = level.entities[tonumber(entdetails[3])].p3
+				local old_p4 = level.entities[tonumber(entdetails[3])].p4
 				local new_p4
 				if RCMreturn == L.UNLOCK then
 					new_p4 = 0
 				elseif RCMreturn == L.LOCK then
 					new_p4 = 1
 				end
-				entitydata[tonumber(entdetails[3])].p4 = new_p4
+				level.entities[tonumber(entdetails[3])].p4 = new_p4
 				autocorrectlines()
-				table.insert(undobuffer, {undotype = "changeentity", rx = roomx, ry = roomy, entid = tonumber(entdetails[3]), changedentitydata = {
+				table.insert(undobuffer,
+					{
+						undotype = "changeentity",
+						rx = roomx, ry = roomy,
+						entid = tonumber(entdetails[3]),
+						changedentitydata = {
 							{
 								key = "p1",
 								oldvalue = old_p1,
@@ -289,17 +299,17 @@ function rightclickmenu.handler(RCMreturn)
 							{
 								key = "p2",
 								oldvalue = old_p2,
-								newvalue = entitydata[tonumber(entdetails[3])].p2
+								newvalue = level.entities[tonumber(entdetails[3])].p2
 							},
 							{
 								key = "p3",
 								oldvalue = old_p3,
-								newvalue = entitydata[tonumber(entdetails[3])].p3
+								newvalue = level.entities[tonumber(entdetails[3])].p3
 							},
 							{
 								key = "p4",
 								oldvalue = old_p4,
-								newvalue = entitydata[tonumber(entdetails[3])].p4
+								newvalue = level.entities[tonumber(entdetails[3])].p4
 							}
 						}
 					}

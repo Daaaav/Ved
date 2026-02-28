@@ -9,7 +9,7 @@ function handle_entity_mousedown()
 	local offsetx, offsety = screenoffset, 0
 	local myroomx, myroomy = roomx, roomy
 
-	for k,v in pairs(entitydata) do
+	for k,v in pairs(level.entities) do
 		local shown = false
 
 		if (v.x >= myroomx*40) and (v.x <= (myroomx*40)+39) and (v.y >= myroomy*30) and (v.y <= (myroomy*30)+29) then
@@ -25,7 +25,7 @@ function handle_entity_mousedown()
 			-- First of all, we can remove an entity by shift-right clicking
 			if keyboard_eitherIsDown("shift") and love.mouse.isDown("r")
 			and mouseon(offsetx+(v.x-myroomx*40)*16, offsety+(v.y-myroomy*30)*16, 16, 16) then
-				removeentity(k, entitydata[k].t)
+				removeentity(k, level.entities[k].t)
 			else
 				local x = offsetx+(v.x-myroomx*40)*16
 				local y = offsety+(v.y-myroomy*30)*16
