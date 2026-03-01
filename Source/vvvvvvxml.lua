@@ -73,7 +73,7 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (table)limit, (table)roomdata, (Level)level
+	-- Returns (bool)success, (table)metadata, (table)limit, (Level)level
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -133,9 +133,9 @@ function loadlevel(path)
 		local t
 		for yk = 0, math.min(thismetadata.mapheight, lvl.limit.mapheight)-1 do
 			--print("Y: " .. yk)
-			lvl.roomdata[yk] = {}
+			lvl.tiles[yk] = {}
 			for xk = 0, math.min(thismetadata.mapwidth, lvl.limit.mapwidth)-1 do
-				lvl.roomdata[yk][xk] = {}
+				lvl.tiles[yk][xk] = {}
 				for yt = 0, 29 do
 					for xt = 0, 39 do
 						t = tonumber(alltiles[(yk*1200*thismetadata.mapwidth) + (xk*40) + (yt*thismetadata.mapwidth*40) + xt + 1])
@@ -147,7 +147,7 @@ function loadlevel(path)
 							failedtiles = failedtiles + 1
 						end
 
-						lvl.roomdata[yk][xk][(40*yt) + xt + 1] = t
+						lvl.tiles[yk][xk][(40*yt) + xt + 1] = t
 					end
 				end
 			end
@@ -682,7 +682,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl.limit, lvl.roomdata, lvl
+	return true, lvl.metadata, lvl.limit, lvl
 end
 
 
@@ -749,7 +749,7 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 			-- (each line)
 			for lroomx = 0, lvl.metadata.mapwidth-1 do
 				-- .....And each x for each line
-				table.insert(thenewcontents, table.concat({unpack(lvl.roomdata[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
+				table.insert(thenewcontents, table.concat({unpack(lvl.tiles[lroomy][lroomx], (line*40)+1, (line*40)+40)}, ","))
 			end
 		end
 	end
@@ -1066,12 +1066,12 @@ function createblanklevel(lvwidth, lvheight)
 	-- Ok we need to correctly set all rooms... Rooms have 1200 tiles
 	for yk = 0, lvl.metadata.mapheight-1 do
 		--print("Y: " .. yk)
-		lvl.roomdata[yk] = {}
+		lvl.tiles[yk] = {}
 		for xk = 0, lvl.metadata.mapwidth-1 do
-			lvl.roomdata[yk][xk] = {}
+			lvl.tiles[yk][xk] = {}
 			for yt = 0, 29 do
 				for xt = 0, 39 do
-					lvl.roomdata[yk][xk][(40*yt) + xt + 1] = 0
+					lvl.tiles[yk][xk][(40*yt) + xt + 1] = 0
 				end
 			end
 		end
@@ -1091,7 +1091,7 @@ function createblanklevel(lvwidth, lvheight)
 	cons("Done loading!")
 
 	-- No longer x.alltiles
-	return true, lvl.metadata, limit_v, lvl.roomdata, lvl
+	return true, lvl.metadata, limit_v, lvl
 end
 
 function default_roommetadata(rx, ry)

@@ -907,7 +907,7 @@ function switchtileset()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata_get(roomx, roomy))
+			toundotiles = table.copy(level:get_tiles(roomx, roomy))
 		}
 	)
 	finish_undo("TILESET")
@@ -949,7 +949,7 @@ function switchtilecol()
 				}
 			},
 			changetiles = true,
-			toundotiles = table.copy(roomdata_get(roomx, roomy))
+			toundotiles = table.copy(level:get_tiles(roomx, roomy))
 		}
 	)
 	finish_undo("TILECOL")
@@ -1422,11 +1422,11 @@ function state6load(levelname)
 		local oldlevel
 		if level ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldlevel
-			=  editingmap,    metadata,    limit,    roomdata,    level
+			oldeditingmap, oldmetadata, oldlimit, oldlevel
+			=  editingmap,    metadata,    limit,    level
 		end
 
-		success, metadata, limit, roomdata, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, limit, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1434,8 +1434,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevel ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    roomdata,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldroomdata, oldlevel
+				   editingmap,    metadata,    limit,    level =
+				oldeditingmap, oldmetadata, oldlimit, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1454,7 +1454,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, roomdata2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, limit2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1529,15 +1529,15 @@ function compare_level_differences(second_level_name)
 		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
-			local roomdata1 = roomdata_get(rx, ry)
-			for k,v in pairs(roomdata2_get(rx, ry)) do
+			local tiles1 = level:get_tiles(rx, ry)
+			for k,v in pairs(level2:get_tiles(rx, ry)) do
 				if leftblank and v ~= 0 then
 					leftblank = false
 				end
-				if rightblank and roomdata1[k] ~= 0 then
+				if rightblank and tiles1[k] ~= 0 then
 					rightblank = false
 				end
-				if not changed and v ~= roomdata1[k] then
+				if not changed and v ~= tiles1[k] then
 					changed = true
 				end
 			end
@@ -2062,7 +2062,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, roomdata, level = createblanklevel(width, height)
+	success, metadata, limit, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()

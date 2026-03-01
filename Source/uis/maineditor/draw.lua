@@ -93,7 +93,7 @@ return function()
 			displayroom(
 				screenoffset,
 				0,
-				roomdata_get(roomx, roomy),
+				level:get_tiles(roomx, roomy),
 				level:get_roommetadata(roomx, roomy),
 				nil,
 				displaytilenumbers,
@@ -522,12 +522,19 @@ return function()
 			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
 			love.graphics.setColor(0, 0, 0, 255)
 			love.graphics.rectangle("fill", 72, love.graphics.getHeight()-37, 48, 36)
-			displayminimaproom(72, love.graphics.getHeight()-37, roomdata_get(roomx, roomy), level:get_roommetadata(roomx, roomy), 4/zoom, atx, aty)
+			displayminimaproom(
+				72, love.graphics.getHeight()-37,
+				level:get_tiles(roomx, roomy),
+				level:get_roommetadata(roomx, roomy),
+				4/zoom,
+				atx, aty
+			)
 			love.graphics.setColor(255, 255, 255, 255)
 		end
 
 		if thistooltip ~= "" and window_active() then
-			-- Ugh this code but we're hovering over it. So display a tooltip, but don't let it get snipped away by the scissors.
+			-- We're hovering over it. So display a tooltip,
+			-- but don't let it get snipped away by the scissors.
 			love.graphics.setScissor()
 			love.graphics.setColor(128,128,128,192)
 			love.graphics.rectangle("fill",

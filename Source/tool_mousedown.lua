@@ -162,7 +162,7 @@ function handle_tool_mousedown()
 					{
 						undotype = "tiles",
 						rx = roomx, ry = roomy,
-						toundotiles = table.copy(roomdata_get(roomx, roomy)),
+						toundotiles = table.copy(level:get_tiles(roomx, roomy)),
 						toredotiles = {}
 					}
 				)
@@ -191,7 +191,7 @@ function handle_tool_mousedown()
 					-- 1x1
 					draw_tile_line(last_atx, atx, last_aty, aty, function(x, y)
 						if x >= 0 and x <= 39 and y >= 0 and y <= 29 then
-							roomdata_set(roomx, roomy, x, y, useselectedtile)
+							level:set_tile(roomx, roomy, x, y, useselectedtile)
 						end
 					end)
 				elseif selectedsubtool[selectedtool] == 2 then
@@ -202,7 +202,7 @@ function handle_tool_mousedown()
 								local use_x = x + stx
 								local use_y = y + sty
 								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
-									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+									level:set_tile(roomx, roomy, use_x, use_y, useselectedtile)
 								end
 							end
 						end
@@ -215,7 +215,7 @@ function handle_tool_mousedown()
 								local use_x = x + stx
 								local use_y = y + sty
 								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
-									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+									level:set_tile(roomx, roomy, use_x, use_y, useselectedtile)
 								end
 							end
 						end
@@ -228,7 +228,7 @@ function handle_tool_mousedown()
 								local use_x = x + stx
 								local use_y = y + sty
 								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
-									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+									level:set_tile(roomx, roomy, use_x, use_y, useselectedtile)
 								end
 							end
 						end
@@ -241,7 +241,7 @@ function handle_tool_mousedown()
 								local use_x = x + stx
 								local use_y = y + sty
 								if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
-									roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+									level:set_tile(roomx, roomy, use_x, use_y, useselectedtile)
 								end
 							end
 						end
@@ -251,14 +251,14 @@ function handle_tool_mousedown()
 					if minsmear == -1 and maxsmear == -1 then
 						minsmear = aty; maxsmear = aty
 						for stx = 0, 39 do
-							roomdata_set(roomx, roomy, stx, aty, useselectedtile)
+							level:set_tile(roomx, roomy, stx, aty, useselectedtile)
 						end
 					end
 
 					if aty < minsmear or aty > maxsmear then
 						for sty = math.min(aty, minsmear), math.max(aty, maxsmear) do
 							for stx = 0, 39 do
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+								level:set_tile(roomx, roomy, stx, sty, useselectedtile)
 							end
 						end
 					end
@@ -273,14 +273,14 @@ function handle_tool_mousedown()
 					if minsmear == -1 and maxsmear == -1 then
 						minsmear = atx; maxsmear = atx
 						for sty = 0, 29 do
-							roomdata_set(roomx, roomy, atx, sty, useselectedtile)
+							level:set_tile(roomx, roomy, atx, sty, useselectedtile)
 						end
 					end
 
 					if atx < minsmear or atx > maxsmear then
 						for stx = math.min(atx, minsmear), math.max(atx, maxsmear) do
 							for sty = 0, 29 do
-								roomdata_set(roomx, roomy, stx, sty, useselectedtile)
+								level:set_tile(roomx, roomy, stx, sty, useselectedtile)
 							end
 						end
 					end
@@ -303,9 +303,9 @@ function handle_tool_mousedown()
 									if use_x >= 0 and use_x <= 39 and use_y >= 0 and use_y <= 29 then
 										if customsizetile ~= nil and customsizetile[iy][ix] ~= 0 and not love.mouse.isDown("r") then
 											-- Stamp
-											roomdata_set(roomx, roomy, use_x, use_y, customsizetile[iy][ix])
+											level:set_tile(roomx, roomy, use_x, use_y, customsizetile[iy][ix])
 										elseif not (customsizetile ~= nil and customsizetile[iy][ix] == 0) then -- We don't want this when this tile in a stamp is 0!
-											roomdata_set(roomx, roomy, use_x, use_y, useselectedtile)
+											level:set_tile(roomx, roomy, use_x, use_y, useselectedtile)
 										end
 									end
 									ix = ix + 1
@@ -335,7 +335,7 @@ function handle_tool_mousedown()
 						for sty = customsizecoory, aty do
 							table.insert(customsizetile, {})
 							for stx = customsizecoorx, atx do
-								local tnum = roomdata_get(roomx, roomy, stx, sty)
+								local tnum = level:get_tile(roomx, roomy, stx, sty)
 								table.insert(customsizetile[#customsizetile], tnum)
 								if tnum ~= 0 then
 									foundnonzero = true
@@ -353,8 +353,8 @@ function handle_tool_mousedown()
 				elseif selectedsubtool[selectedtool] == 9 then
 					-- Fill bucket
 					-- What "color" is the tile we're clicking on?
-					local oldtile = roomdata_get(roomx, roomy, atx, aty)
-					roomdata_set(roomx, roomy, atx, aty, useselectedtile)
+					local oldtile = level:get_tile(roomx, roomy, atx, aty)
+					level:set_tile(roomx, roomy, atx, aty, useselectedtile)
 
 					-- It's only useful to fill if we're not filling an area with exactly the same tile.
 					if oldtile ~= useselectedtile then
@@ -366,8 +366,8 @@ function handle_tool_mousedown()
 							for _,dir in pairs({{-1,0}, {0,-1}, {1,0}, {0,1}}) do
 								if  f_x+dir[1] >= 0 and f_x+dir[1] <= 39
 								and f_y+dir[2] >= 0 and f_y+dir[2] <= 29
-								and roomdata_get(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
-									roomdata_set(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
+								and level:get_tile(roomx, roomy, f_x+dir[1], f_y+dir[2]) == oldtile then
+									level:set_tile(roomx, roomy, f_x+dir[1], f_y+dir[2], useselectedtile)
 
 									table.insert(tilesarea, {f_x+dir[1], f_y+dir[2]})
 								end
@@ -382,10 +382,10 @@ function handle_tool_mousedown()
 
 					for rot = 0, anythingbutnil0(toout)-1 do
 						local tooutnow = toout - rot
-						roomdata_set(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
-						roomdata_set(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
-						roomdata_set(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
-						roomdata_set(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
+						level:set_tile(roomx, roomy, atx+rot, aty-tooutnow, useselectedtile) -- top to right
+						level:set_tile(roomx, roomy, atx+tooutnow, aty+rot, useselectedtile) -- right to bottom
+						level:set_tile(roomx, roomy, atx-rot, aty+tooutnow, useselectedtile) -- bottom to left
+						level:set_tile(roomx, roomy, atx-tooutnow, aty-rot, useselectedtile) -- left to top
 					end
 
 					toout = anythingbutnil0(toout) + 1
@@ -414,7 +414,7 @@ function handle_tool_mousedown()
 					local last_aty_modified = (last_aty == -1) and aty or last_aty
 
 					draw_tile_line(last_atx_modified, atx, last_aty_modified, aty, function(x, y)
-						roomdata_set(roomx, roomy, x, y, useselectedtile)
+						level:set_tile(roomx, roomy, x, y, useselectedtile)
 					end)
 				elseif selectedsubtool[3] == 2 then
 					-- <-->
@@ -600,7 +600,7 @@ function handle_tool_mousedown()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 10 then
 			-- Gravity line
 			if not issolid(
-				roomdata_get(roomx, roomy, atx, aty),
+				level:get_tile(roomx, roomy, atx, aty),
 				usedtilesets[level:get_roommetadata(roomx, roomy).tileset],
 				true, true
 			) then
@@ -805,7 +805,7 @@ function handle_tool_mousedown()
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 15 then
 			-- Warp line
 			if not issolid(
-				roomdata_get(roomx, roomy, atx, aty),
+				level:get_tile(roomx, roomy, atx, aty),
 				usedtilesets[level:get_roommetadata(roomx, roomy).tileset],
 				true, true
 			) then
@@ -909,6 +909,6 @@ function handle_tool_mousedown()
 	and level:get_roommetadata(roomx, roomy).directmode == 1 then
 		local atx, aty = maineditor_get_cursor()
 
-		selectedtile = roomdata_get(roomx, roomy, atx, aty)
+		selectedtile = level:get_tile(roomx, roomy, atx, aty)
 	end
 end
