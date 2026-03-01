@@ -1436,8 +1436,8 @@ function copymoveentities(myroomx, myroomy, newroomx, newroomy, moving)
 				level.entities[k].y = level.entities[k].y + (30*roomydiff)
 			else
 				if v.t == 16
-				or (v.t == 9 and level.count.trinkets >= limit.trinkets)
-				or (v.t == 15 and level.count.crewmates >= limit.crewmates) then
+				or (v.t == 9 and level.count.trinkets >= level.limit.trinkets)
+				or (v.t == 15 and level.count.crewmates >= level.limit.crewmates) then
 					-- Nope. Can't copy this.
 				else
 					if v.t == 9 then

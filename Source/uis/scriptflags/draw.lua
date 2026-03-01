@@ -7,7 +7,7 @@ return function()
 		local pos_x = 8 + flcol*btn_width
 		for flk = 0, 24 do
 			local flag = flk + (flcol*25) + flags_page*100
-			if flag >= flags_page*100 + 100 or flag >= limit.flags then
+			if flag >= flags_page*100 + 100 or flag >= level.limit.flags then
 				break
 			end
 			local ax, ay, w, h = pos_x, 24+flk*16, btn_width - 8, 16
@@ -145,8 +145,8 @@ return function()
 		font_level:print(t, love.mouse.getX() + 8, love.mouse.getY())
 	end
 
-	if limit.flags > 100 then
-		for page = 0, (limit.flags-1)/100 do
+	if level.limit.flags > 100 then
+		for page = 0, (level.limit.flags-1)/100 do
 			local btn_x, btn_y = 8+72*page, love.graphics.getHeight()-24
 			if flags_page == page then
 				love.graphics.setColor(32,32,32)

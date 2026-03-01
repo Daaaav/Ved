@@ -1102,17 +1102,20 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if metadata.mapwidth <= limit.mapwidth and metadata.mapheight <= limit.mapheight
-		and (w > limit.mapwidth or h > limit.mapheight) then
+		if metadata.mapwidth <= level.limit.mapwidth and metadata.mapheight <= level.limit.mapheight
+		and (w > level.limit.mapwidth or h > level.limit.mapheight) then
 			dialog.create(
 				langkeys(
 					L.SIZELIMIT,
-					{limit.mapwidth, limit.mapheight, math.min(w, limit.mapwidth), math.min(h, limit.mapheight)}
+					{
+						level.limit.mapwidth, level.limit.mapheight,
+						math.min(w, level.limit.mapwidth), math.min(h, level.limit.mapheight)
+					}
 				)
 			)
 		end
 
-		resize_level(math.min(w, limit.mapwidth), math.min(h, limit.mapheight))
+		resize_level(math.min(w, level.limit.mapwidth), math.min(h, level.limit.mapheight))
 	end
 
 	--What are the new properties again?

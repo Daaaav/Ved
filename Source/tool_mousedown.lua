@@ -485,8 +485,8 @@ function handle_tool_mousedown()
 			mousepressed = true
 		elseif love.mouse.isDown("l") and (not mousepressed or (love.keyboard.isDown("v") and not entityalreadyhere)) and selectedtool == 4 then
 			-- Trinket
-			if level.count.trinkets >= limit.trinkets then
-				dialog.create(langkeys(L.MAXTRINKETS, {limit.trinkets}))
+			if level.count.trinkets >= level.limit.trinkets then
+				dialog.create(langkeys(L.MAXTRINKETS, {level.limit.trinkets}))
 			else
 				insert_entity(atx, aty, 9)
 			end
@@ -821,8 +821,8 @@ function handle_tool_mousedown()
 
 		elseif love.mouse.isDown("l") and not mousepressed and selectedtool == 16 then
 			-- Rescuable crewmate
-			if level.count.crewmates >= limit.crewmates then
-				dialog.create(langkeys(L.MAXCREWMATES, {limit.crewmates}))
+			if level.count.crewmates >= level.limit.crewmates then
+				dialog.create(langkeys(L.MAXCREWMATES, {level.limit.crewmates}))
 				mousepressed = true
 			else
 				insert_entity(atx, aty, 15, ({1, 2, 3, 4, 5, 0, math.random(0,5)})[selectedsubtool[selectedtool]])

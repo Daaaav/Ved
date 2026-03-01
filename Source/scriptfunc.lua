@@ -17,7 +17,7 @@ function return_used_flags(usedflagsA, outofrangeflagsA, specificflag, specificf
 				if specificflag == nil then
 					usedflagsA[tonumber(explcommaline[2])] = true
 
-					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) >= limit.flags then
+					if tonumber(explcommaline[2]) < 0 or tonumber(explcommaline[2]) >= level.limit.flags then
 						outofrangeflagsA[tonumber(explcommaline[2])] = true
 					end
 				elseif specificflag == tonumber(explcommaline[2]) then
@@ -166,7 +166,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 					or partss_parsed[1] == "customifflag"
 				) and tostring(tonumber(v)) ~= tostring(v) then
 					-- if flag name is not used yet, newflagname
-					for fl = 0, limit.flags-1 do
+					for fl = 0, level.limit.flags-1 do
 						if level.vedmetadata ~= false and level.vedmetadata.flaglabel[fl] == v then
 							setColorArr(s.syntaxcolor_flagname)
 							break
@@ -303,12 +303,12 @@ function script_context(text, textlinestogo)
 	parts = explode(",", text2)
 
 	local function get_wrapped_coords(thex, they)
-		local roomnum = thex + they*limit.mapwidth
-		if roomnum < 0 or roomnum >= limit.mapwidth * limit.mapheight then
+		local roomnum = thex + they*level.limit.mapwidth
+		if roomnum < 0 or roomnum >= level.limit.mapwidth * level.limit.mapheight then
 			return nil
 		end
-		they = math.floor(roomnum/limit.mapwidth)
-		thex = roomnum % limit.mapwidth
+		they = math.floor(roomnum/level.limit.mapwidth)
+		thex = roomnum % level.limit.mapwidth
 		return thex, they
 	end
 
@@ -829,7 +829,7 @@ function script_compile(readable_script)
 					break
 				end
 
-				for flag = 0, limit.flags-1 do
+				for flag = 0, level.limit.flags-1 do
 					if level.vedmetadata.flaglabel[flag] == partss[2] then
 						useflag = flag
 						usedflags[flag] = true
@@ -841,7 +841,7 @@ function script_compile(readable_script)
 				if useflag == -1 then
 					-- This flag name is new! Find a flag number to assign it to.
 					cons("Flag name " .. partss[2] .. " is new!")
-					for flag = 0, limit.flags-1 do
+					for flag = 0, level.limit.flags-1 do
 						if not usedflags[flag] then
 							-- Ah, here we got one!
 							useflag = flag
@@ -1158,7 +1158,7 @@ function flagname_check_problem(name, number)
 		return L.FLAGNAMECHARS
 	elseif level.vedmetadata ~= false then
 		-- Final check: check if this flag hasn't been used already.
-		for kd = 0, limit.flags-1 do
+		for kd = 0, level.limit.flags-1 do
 			if kd ~= number and level.vedmetadata.flaglabel[kd] == name then
 				-- This flag already exists!
 				return langkeys(L.FLAGNAMEINUSE, {name, kd})
@@ -1301,13 +1301,13 @@ function loadflagslist()
 	return_used_flags(usedflags, outofrangeflags)
 
 	local n_usedflags = 0
-	for fl = 0, limit.flags-1 do
+	for fl = 0, level.limit.flags-1 do
 		if usedflags[fl] then
 			n_usedflags = n_usedflags + 1
 		end
 	end
 
-	flags_usedtext = n_usedflags .. "/" .. limit.flags
+	flags_usedtext = n_usedflags .. "/" .. level.limit.flags
 
 	flags_outofrangeflagstext = ""
 

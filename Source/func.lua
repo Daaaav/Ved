@@ -1284,7 +1284,7 @@ function end_editing_roomtext()
 					return_used_flags(usedflags, outofrangeflags)
 
 					local useflag = -1
-					for flag = 0, limit.flags-1 do
+					for flag = 0, level.limit.flags-1 do
 						if not usedflags[flag] then
 							useflag = flag
 							usedflags[flag] = true
@@ -1366,7 +1366,7 @@ end
 
 function createmde(thislimit)
 	if thislimit == nil then
-		thislimit = limit
+		thislimit = level.limit
 	end
 	cons("Creating metadata entity...")
 	if level ~= nil and level.count ~= nil then
@@ -1422,11 +1422,11 @@ function state6load(levelname)
 		local oldlevel
 		if level ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlimit, oldlevel
-			=  editingmap,    metadata,    limit,    level
+			oldeditingmap, oldmetadata, oldlevel
+			=  editingmap,    metadata,    level
 		end
 
-		success, metadata, limit, level = loadlevel(levelname .. ".vvvvvv")
+		success, metadata, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
@@ -1434,8 +1434,8 @@ function state6load(levelname)
 			-- Did we have a previous level open?
 			if oldlevel ~= nil then
 				-- We did!
-				   editingmap,    metadata,    limit,    level =
-				oldeditingmap, oldmetadata, oldlimit, oldlevel
+				   editingmap,    metadata,    level =
+				oldeditingmap, oldmetadata, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1454,7 +1454,7 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, limit2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, metadata2, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
 			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
@@ -1926,7 +1926,7 @@ function compare_level_differences(second_level_name)
 			-- It was added in the new version
 			pagetext = pagetext .. diffmessages.mde.added .. "\n\n"
 
-			for i = 0, limit.flags-1 do
+			for i = 0, level.limit.flags-1 do
 				if level.vedmetadata.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(
 						diffmessages.flagnames.added,
@@ -1938,7 +1938,7 @@ function compare_level_differences(second_level_name)
 			-- It was removed in the new version
 			pagetext = pagetext .. diffmessages.mde.removed .. "\n\n"
 
-			for i = 0, limit2.flags-1 do
+			for i = 0, level2.limit.flags-1 do
 				if level2.vedmetadata.flaglabel[i] ~= "" then
 					pagetext = pagetext .. langkeys(
 						diffmessages.flagnames.removed,
@@ -1948,7 +1948,7 @@ function compare_level_differences(second_level_name)
 			end
 		else
 			-- This one is simple, just cycle through the numbers!
-			for i = 0, math.min(limit.flags, limit2.flags)-1 do
+			for i = 0, math.min(level.limit.flags, level2.limit.flags)-1 do
 				if level2.vedmetadata.flaglabel[i] == ""
 				and level.vedmetadata.flaglabel[i] ~= "" then
 					-- Added name
@@ -2062,7 +2062,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, limit, level = createblanklevel(width, height)
+	success, metadata, level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()

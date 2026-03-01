@@ -7,18 +7,18 @@ return function()
 	return_used_flags(usedflags, {})
 
 	local n_usedflags = 0
-	for fl = 0, limit.flags-1 do
+	for fl = 0, level.limit.flags-1 do
 		if usedflags[fl] then
 			n_usedflags = n_usedflags + 1
 		end
 	end
 
 	basic_stats = {
-		{name=L.AMOUNTSCRIPTS, value=#level.scriptnames, max=limit.scripts, alt_max=500},
-		{name=L.AMOUNTUSEDFLAGS, value=n_usedflags, max=limit.flags, alt_max=100},
-		{name=L.AMOUNTENTITIES, value=anythingbutnil0(level.count.entities), max=limit.entities, alt_max=3000},
-		{name=L.AMOUNTTRINKETS, value=anythingbutnil0(level.count.trinkets), max=limit.trinkets, alt_max=100},
-		{name=L.AMOUNTCREWMATES, value=anythingbutnil0(level.count.crewmates), max=limit.crewmates, alt_max=100},
+		{name=L.AMOUNTSCRIPTS, value=#level.scriptnames, max=level.limit.scripts, alt_max=500},
+		{name=L.AMOUNTUSEDFLAGS, value=n_usedflags, max=level.limit.flags, alt_max=100},
+		{name=L.AMOUNTENTITIES, value=anythingbutnil0(level.count.entities), max=level.limit.entities, alt_max=3000},
+		{name=L.AMOUNTTRINKETS, value=anythingbutnil0(level.count.trinkets), max=level.limit.trinkets, alt_max=100},
+		{name=L.AMOUNTCREWMATES, value=anythingbutnil0(level.count.crewmates), max=level.limit.crewmates, alt_max=100},
 	}
 
 	basic_stats_max_text_width = 0

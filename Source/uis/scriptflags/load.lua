@@ -1,7 +1,7 @@
 -- scriptflags/load
 
 return function(picker_mode, picked)
-	flags_digits = tostring(limit.flags-1):len()
+	flags_digits = tostring(level.limit.flags-1):len()
 	flags_page = 0
 
 	-- nil for regular flags list, or a string for a picker
