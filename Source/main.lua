@@ -82,7 +82,7 @@ function dodisplaysettings(reload)
 		tile_batch_texture_needs_update = true
 
 		-- Also do this or we'll have a blank map (no clever rhymes here)
-		if metadata ~= nil then
+		if level ~= nil then
 			map_init()
 		end
 	else

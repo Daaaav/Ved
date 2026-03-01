@@ -112,8 +112,8 @@ function loadfonts_main()
 	font_level_metatable = {
 		__index = function(table, index)
 			local font = "font"
-			if metadata ~= nil and metadata.font ~= nil then
-				font = metadata.font
+			if level.metadata ~= nil and level.metadata.font ~= nil then
+				font = level.metadata.font
 			end
 
 			local f

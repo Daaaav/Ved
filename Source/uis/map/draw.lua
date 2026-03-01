@@ -2,9 +2,20 @@
 
 return function()
 	love.graphics.setColor(128,128,128)
-	love.graphics.rectangle("line", mapxoffset+screenoffset-0.5, mapyoffset-0.5, 640*mapscale*metadata.mapwidth+1, 480*mapscale*metadata.mapheight+1)
+	love.graphics.rectangle(
+		"line",
+		mapxoffset + screenoffset - 0.5,
+		mapyoffset - 0.5,
+		640 * mapscale * level.metadata.mapwidth + 1,
+		480 * mapscale * level.metadata.mapheight + 1
+	)
 	love.graphics.setColor(255,255,255,255)
-	love.graphics.setScissor(mapxoffset+screenoffset, mapyoffset, 640*mapscale*metadata.mapwidth, 480*mapscale*metadata.mapheight)
+	love.graphics.setScissor(
+		mapxoffset + screenoffset,
+		mapyoffset,
+		640 * mapscale * level.metadata.mapwidth,
+		480 * mapscale * level.metadata.mapheight
+	)
 	theme:draw(image.covered_full, mapxoffset+screenoffset, mapyoffset)
 	love.graphics.setScissor()
 
@@ -16,22 +27,45 @@ return function()
 		starty = math.max(starty, 0)
 	end
 
-	for mry = 0, metadata.mapheight-1 do
-		for mrx = 0, metadata.mapwidth-1 do
+	for mry = 0, level.metadata.mapheight-1 do
+		for mrx = 0, level.metadata.mapwidth-1 do
 			love.graphics.setScissor()
 			if rooms_map[mry][mrx].map ~= nil then
 				-- First draw a black background
 				love.graphics.setColor(0,0,0,255)
-				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+				love.graphics.rectangle(
+					"fill",
+					mapxoffset + screenoffset + (mrx * mapscale * 640),
+					mapyoffset + mry * mapscale * 480,
+					mapscale * 640,
+					mapscale * 480
+				)
 				love.graphics.setColor(255,255,255,255)
 
-				love.graphics.draw(rooms_map[mry][mrx].map, mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, 0, maproomscale)
+				love.graphics.draw(
+					rooms_map[mry][mrx].map,
+					mapxoffset + screenoffset + (mrx * mapscale * 640),
+					mapyoffset + mry * mapscale * 480,
+					0,
+					maproomscale
+				)
 			end
 
 			if selectedtool == 4 or selectedtool == 16 or selectedtool == 17 then
-				love.graphics.setScissor(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+				love.graphics.setScissor(
+					mapxoffset + screenoffset + (mrx * mapscale * 640),
+					mapyoffset + mry * mapscale * 480,
+					mapscale * 640,
+					mapscale * 480
+				)
 				love.graphics.setColor(0,0,0,128)
-				love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)
+				love.graphics.rectangle(
+					"fill",
+					mapxoffset + screenoffset + (mrx * mapscale * 640),
+					mapyoffset + mry * mapscale * 480,
+					mapscale * 640,
+					mapscale * 480
+				)
 				love.graphics.setColor(255,255,255,255)
 			end
 
@@ -108,8 +142,8 @@ return function()
 	local mouseontools = keyboard_eitherIsDown(ctrl) and love.mouse.getX() <= 64
 
 	if nodialog then
-		for mry = 0, metadata.mapheight-1 do
-			for mrx = 0, metadata.mapwidth-1 do
+		for mry = 0, level.metadata.mapheight-1 do
+			for mrx = 0, level.metadata.mapwidth-1 do
 				if mouseon(mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480) and not mouseontools then
 					love.graphics.setColor(255,255,255,64)
 					love.graphics.rectangle("fill", mapxoffset+screenoffset+(mrx*mapscale*640), mapyoffset+mry*mapscale*480, mapscale*640, mapscale*480)

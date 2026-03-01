@@ -1419,23 +1419,21 @@ function state6load(levelname)
 	local success
 
 	if not secondlevel then
-		local oldlevel
+		local oldeditingmap, oldlevel
 		if level ~= nil then
 			-- We already had a level loaded, but this one might fail to load! Most of these will be pointers to tables, so it won't hurt much to do this.
-			oldeditingmap, oldmetadata, oldlevel
-			=  editingmap,    metadata,    level
+			oldeditingmap, oldlevel = editingmap, level
 		end
 
-		success, metadata, level = loadlevel(levelname .. ".vvvvvv")
+		success, level = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
-			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata)
+			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. level)
 
 			-- Did we have a previous level open?
 			if oldlevel ~= nil then
 				-- We did!
-				   editingmap,    metadata,    level =
-				oldeditingmap, oldmetadata, oldlevel
+				editingmap, level = oldeditingmap, oldlevel
 			end
 		else
 			editingmap = levelname
@@ -1454,10 +1452,10 @@ function state6load(levelname)
 			tostate(1)
 		end
 	else
-		success, metadata2, level2 = loadlevel(levelname .. ".vvvvvv")
+		success, level2 = loadlevel(levelname .. ".vvvvvv")
 
 		if not success then
-			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. metadata2)
+			dialog.create(langkeys(L.LEVELOPENFAIL, {anythingbutnil(levelname)}) .. "\n\n" .. level2)
 		else
 			-- Compare differences now!
 			compare_level_differences(levelname)
@@ -1484,25 +1482,28 @@ function compare_level_differences(second_level_name)
 			or langkeys(L.COMPARINGTHESE, {editingmap, second_level_name})
 		) .. "\\\n\n"
 	for _,v in pairs(metadataitems) do
-		if metadata2[v] ~= metadata[v] then
+		if level2.metadata[v] ~= level.metadata[v] then
 			pagetext = pagetext .. langkeys(
 				diffmessages.levelpropertiesdiff[v],
-				{metadata2[v], metadata[v]}
+				{level2.metadata[v], level.metadata[v]}
 			) .. "\\\n"
 		end
 	end
 
-	if metadata2.mapwidth ~= metadata.mapwidth
-	or metadata2.mapheight ~= metadata.mapheight then
+	if level2.metadata.mapwidth ~= level.metadata.mapwidth
+	or level2.metadata.mapheight ~= level.metadata.mapheight then
 		pagetext = pagetext .. langkeys(
 			diffmessages.levelpropertiesdiff.mapsize,
-			{metadata2.mapwidth, metadata2.mapheight, metadata.mapwidth, metadata.mapheight}
+			{
+				level2.metadata.mapwidth, level2.metadata.mapheight,
+				level.metadata.mapwidth, level.metadata.mapheight
+			}
 		) .. "\\\n"
 	end
-	if metadata2.levmusic ~= metadata.levmusic then
+	if level2.metadata.levmusic ~= level.metadata.levmusic then
 		pagetext = pagetext .. langkeys(
 			diffmessages.levelpropertiesdiff.levmusic,
-			{metadata2.levmusic, metadata.levmusic}
+			{level2.metadata.levmusic, level.metadata.levmusic}
 		) .. "\\\n"
 	end
 
@@ -1512,21 +1513,21 @@ function compare_level_differences(second_level_name)
 	pagetext = diffmessages.pages.changedrooms .. "\\wh#\n\n"
 	local co = not s.coords0 and 1 or 0 -- coordoffset
 
-	if metadata2.mapwidth ~= metadata.mapwidth
-	or metadata2.mapheight ~= metadata.mapheight then
+	if level2.metadata.mapwidth ~= level.metadata.mapwidth
+	or level2.metadata.mapheight ~= level.metadata.mapheight then
 		pagetext = pagetext .. langkeys(
 			diffmessages.levelpropertiesdiff.mapsizenote,
 			{
-				metadata2.mapwidth, metadata2.mapheight,
-				metadata.mapwidth, metadata.mapheight,
-				math.min(metadata2.mapwidth, metadata.mapwidth),
-				math.min(metadata2.mapheight, metadata.mapheight)
+				level2.metadata.mapwidth, level2.metadata.mapheight,
+				level.metadata.mapwidth, level.metadata.mapheight,
+				math.min(level2.metadata.mapwidth, level.metadata.mapwidth),
+				math.min(level2.metadata.mapheight, level.metadata.mapheight)
 			}
 		) .. "\n\n"
 	end
 
-	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
-		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
+	for ry = 0, math.min(level2.metadata.mapheight-1, level.metadata.mapheight-1) do
+		for rx = 0, math.min(level2.metadata.mapwidth-1, level.metadata.mapwidth-1) do
 			local leftblank, rightblank, changed = true, true, false
 
 			local tiles1 = level:get_tiles(rx, ry)
@@ -1597,8 +1598,8 @@ function compare_level_differences(second_level_name)
 	-- R O O M   M E T A D A T A
 	pagetext = diffmessages.pages.changedroommetadata .. "\\wh#\n\n"
 
-	for ry = 0, math.min(metadata2.mapheight-1, metadata.mapheight-1) do
-		for rx = 0, math.min(metadata2.mapwidth-1, metadata.mapwidth-1) do
+	for ry = 0, math.min(level2.metadata.mapheight-1, level.metadata.mapheight-1) do
+		for rx = 0, math.min(level2.metadata.mapwidth-1, level.metadata.mapwidth-1) do
 			local rmd1, rmd2 = level:get_roommetadata(rx, ry), level2:get_roommetadata(rx, ry)
 			local changed = false
 
@@ -2062,7 +2063,7 @@ function triggernewlevel(width, height)
 	if width == nil or height == nil then
 		width, height = 5, 5
 	end
-	success, metadata, level = createblanklevel(width, height)
+	level = createblanklevel(width, height)
 	map_init()
 	editingmap = "untitled\n"
 	unloadvvvvvvmusics_level()
@@ -2580,7 +2581,7 @@ end
 
 -- Returns true if there are unsaved changes.
 function has_unsaved_changes()
-	if metadata == nil or no_more_quit_dialog then
+	if level == nil or no_more_quit_dialog then
 		return false
 	end
 	if unsavedchanges then

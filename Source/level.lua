@@ -31,7 +31,7 @@ function Level:new()
 end
 
 function Level:get_tiles(rx, ry)
-	if rx < 0 or ry < 0 or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+	if rx < 0 or ry < 0 or rx >= self.metadata.mapwidth or ry >= self.metadata.mapheight then
 		error("Attempt to Level:get_tiles in out-of-bounds room " .. rx .. "," .. ry)
 	end
 
@@ -47,7 +47,7 @@ function Level:get_tile(rx, ry, tx, ty)
 end
 
 function Level:set_tiles(rx, ry, values)
-	if rx < 0 or ry < 0 or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+	if rx < 0 or ry < 0 or rx >= self.metadata.mapwidth or ry >= self.metadata.mapheight then
 		return
 	end
 
@@ -61,7 +61,7 @@ function Level:set_tiles(rx, ry, values)
 end
 
 function Level:set_tile(rx, ry, tx, ty, value)
-	if rx < 0 or ry < 0 or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+	if rx < 0 or ry < 0 or rx >= self.metadata.mapwidth or ry >= self.metadata.mapheight then
 		return
 	end
 

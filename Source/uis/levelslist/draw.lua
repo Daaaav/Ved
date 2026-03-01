@@ -96,7 +96,9 @@ return function()
 				)
 
 				local actualfile = recentmetadata_files[v]
-				if actualfile ~= nil and files[currentdir][actualfile] ~= nil and files[currentdir][actualfile].metadata ~= nil then
+				if actualfile ~= nil
+				and files[currentdir][actualfile] ~= nil
+				and files[currentdir][actualfile].metadata ~= nil then
 					local md = files[currentdir][actualfile].metadata
 					if not md.success then
 						theme:draw(image.smallunknown, 8, love.graphics.getHeight()-(lessheight-25)+4+12*k+2)
@@ -162,7 +164,8 @@ return function()
 				if v.isdir then
 					barename = v.name
 				end
-				if s.loadallmetadata and not metadataloaded_folders[currentdir] and not v.isdir and not backupscreen then
+				if s.loadallmetadata and not metadataloaded_folders[currentdir]
+				and not v.isdir and not backupscreen then
 					-- Request all the metadata for this level (It's not disabled if we're here)
 					allmetadata_inchannel:push(
 						{
@@ -174,8 +177,13 @@ return function()
 					)
 				end
 				if backupscreen or v.result_shown then
-					if 16+12*k2+levellistscroll > -64 and 16+12*k2+levellistscroll < love.graphics.getHeight()+64 then
-						local mouseishovering = nodialog and not mousepressed and mouseon(8, 10+12*k2+levellistscroll, hoverarea, 12) and mousein(0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21) and window_active()
+					if 16+12*k2+levellistscroll > -64
+					and 16+12*k2+levellistscroll < love.graphics.getHeight()+64 then
+						local mouseishovering = nodialog and not mousepressed and mouseon(
+							8, 10+12*k2+levellistscroll, hoverarea, 12
+						) and mousein(
+							0, 22, love.graphics.getWidth(), love.graphics.getHeight()-lessheight+21
+						) and window_active()
 
 						if mouseishovering then
 							local trailingdirsep = ""

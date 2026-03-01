@@ -37,9 +37,9 @@ function dialog.form.save_make(show_zip)
 		{"filename", 0, 1, 40, (editingmap ~= "untitled\n" and editingmap or ""), DF.TEXT, "", font_level},
 		{"", 40, 1, 7, ".vvvvvv", DF.LABEL},
 		{"", 0, 3, 46, L.ENTERLONGOPTNAME, DF.LABEL},
-		{"title", 0, 4, 20, metadata.Title, DF.TEXT, "", font_level},
+		{"title", 0, 4, 20, level.metadata.Title, DF.TEXT, "", font_level},
 		{"", 0, 5, 46, L.OPTBY, DF.LABEL},
-		{"creator", 0, 6, 37, metadata.Creator, DF.TEXT, "", font_level},
+		{"creator", 0, 6, 37, level.metadata.Creator, DF.TEXT, "", font_level},
 	}
 
 	if show_zip then
@@ -67,7 +67,7 @@ function dialog.form.exportmap_make()
 
 	local map_resolutions, room_w, room_h
 	if s.mapstyle == "minimap" then
-		local zoom = getminimapzoom(metadata)
+		local zoom = getminimapzoom(level.metadata)
 		room_w, room_h = 12*zoom, 9*zoom
 		map_resolutions = {
 			{1, langkeys(L.MAPRES_PERCENT, {100, room_w, room_h})},
@@ -116,8 +116,8 @@ function dialog.form.exportmap_make()
 		{"x1", 0, 4, 4, co},
 		{"", 4, 4, 1, ",", DF.LABEL},
 		{"y1", 5, 4, 4, co},
-		{"w", wh_pos, 4, 4, metadata.mapwidth},
-		{"h", wh_pos+5, 4, 4, metadata.mapheight},
+		{"w", wh_pos, 4, 4, level.metadata.mapwidth},
+		{"h", wh_pos+5, 4, 4, level.metadata.mapheight},
 		{"", br_pos, 3, 40, L.BOTTOMRIGHT, DF.LABEL},
 		{
 			"bottomright_label", br_pos, 4, 40,
@@ -185,7 +185,7 @@ function dialog.form.leveloptions_make()
 		music_page_kv[music_page] = label
 		music_page_vk[label] = music_page
 
-		local levmusic = anythingbutnil0(metadata.levmusic)
+		local levmusic = anythingbutnil0(level.metadata.levmusic)
 		if levmusic >= music_page and levmusic <= music_page+15 then
 			selected_page = music_page
 		end
@@ -197,15 +197,15 @@ function dialog.form.leveloptions_make()
 
 	return {
 		{"", 0, 0, 8, L.OPTNAME, DF.LABEL},
-		{"Title", 8, 0, 20, metadata.Title, DF.TEXT, "", font_level},
+		{"Title", 8, 0, 20, level.metadata.Title, DF.TEXT, "", font_level},
 		{"", 0, 1, 8, L.OPTBY, DF.LABEL},
-		{"Creator", 8, 1, 37, metadata.Creator, DF.TEXT, "", font_level},
+		{"Creator", 8, 1, 37, level.metadata.Creator, DF.TEXT, "", font_level},
 		{"", 0, 2, 8, L.OPTWEBSITE, DF.LABEL},
-		{"website", 8, 2, 40, metadata.website, DF.TEXT, "", font_level},
+		{"website", 8, 2, 40, level.metadata.website, DF.TEXT, "", font_level},
 		{"", 0, 4, 8, L.OPTDESC, DF.LABEL},
-		{"Desc1", 8, 4, 40, metadata.Desc1, DF.TEXT, "", font_level},
-		{"Desc2", 8, 5, 40, metadata.Desc2, DF.TEXT, "", font_level},
-		{"Desc3", 8, 6, 40, metadata.Desc3, desc3_type, "", font_level},
+		{"Desc1", 8, 4, 40, level.metadata.Desc1, DF.TEXT, "", font_level},
+		{"Desc2", 8, 5, 40, level.metadata.Desc2, DF.TEXT, "", font_level},
+		{"Desc3", 8, 6, 40, level.metadata.Desc3, desc3_type, "", font_level},
 		{"", 0, 8, 8, L.OPTMUSIC, DF.LABEL},
 		{
 			"levmusic_page", 8, 8, 8, selected_page, DF.DROPDOWN, music_page_list, music_page_kv,
@@ -224,7 +224,7 @@ function dialog.form.leveloptions_make()
 			end
 		},
 		{
-			"levmusic", 17, 8, 30, metadata.levmusic, DF.DROPDOWN, main_music_list, main_music_kv,
+			"levmusic", 17, 8, 30, level.metadata.levmusic, DF.DROPDOWN, main_music_list, main_music_kv,
 			function(picked, _, menuitemslabel)
 				for k,v in pairs(menuitemslabel) do
 					if picked == v then
@@ -235,8 +235,8 @@ function dialog.form.leveloptions_make()
 			end
 		},
 		{"", 0, 10, 8, L.OPTSIZE, DF.LABEL},
-		{"mapwidth", 8, 10, 4, metadata.mapwidth, DF.TEXT},
-		{"mapheight", 13, 10, 4, metadata.mapheight, DF.TEXT},
+		{"mapwidth", 8, 10, 4, level.metadata.mapwidth, DF.TEXT},
+		{"mapheight", 13, 10, 4, level.metadata.mapheight, DF.TEXT},
 	}
 end
 
@@ -257,10 +257,10 @@ function dialog.form.advancedleveloptions_make()
 
 	return {
 		{"", 0, 0, 40, L.LEVELFONT, DF.LABEL},
-		{"font", 0, 1, 30, metadata.font, DF.DROPDOWN, generate_dropdown_tables(fonts_kv)},
+		{"font", 0, 1, 30, level.metadata.font, DF.DROPDOWN, generate_dropdown_tables(fonts_kv)},
 
 		{"", 2, 3, 46, L.ONEWAYCOL_OVERRIDE, DF.LABEL},
-		{"onewaycol_override", 0, 3, 2+math.min(font_ui:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), metadata.onewaycol_override, DF.CHECKBOX},
+		{"onewaycol_override", 0, 3, 2+math.min(font_ui:getWidth(L.ONEWAYCOL_OVERRIDE)/8, 46), level.metadata.onewaycol_override, DF.CHECKBOX},
 	}
 end
 
@@ -466,26 +466,26 @@ end
 function dialog.callback.save(button, fields)
 	if button == DB.OK then
 		-- Save the level with this name. But first apply the title/creator!
-		local old_title = metadata.Title
-		metadata.Title = fields.title
-		local old_creator = metadata.Creator
-		metadata.Creator = fields.creator
+		local old_title = level.metadata.Title
+		level.metadata.Title = fields.title
+		local old_creator = level.metadata.Creator
+		level.metadata.Creator = fields.creator
 
 		local changed = {}
 
-		if metadata.Title ~= old_title then
+		if level.metadata.Title ~= old_title then
 			table.insert(changed, {
 					key = "Title",
 					oldvalue = old_title,
-					newvalue = metadata.Title
+					newvalue = level.metadata.Title
 				}
 			)
 		end
-		if metadata.Creator ~= old_creator then
+		if level.metadata.Creator ~= old_creator then
 			table.insert(changed, {
 					key = "Creator",
 					oldvalue = old_creator,
-					newvalue = metadata.Creator
+					newvalue = level.metadata.Creator
 				}
 			)
 		end
@@ -721,7 +721,7 @@ function dialog.callback.mapexport_validate(button, fields, identifier)
 		else
 			local room_w, room_h
 			if s.mapstyle == "minimap" then
-				local zoom = getminimapzoom(metadata)
+				local zoom = getminimapzoom(level.metadata)
 				room_w, room_h = 12*zoom, 9*zoom
 			elseif s.mapstyle == "vtools" then
 				room_w, room_h = 40, 30
@@ -1080,18 +1080,18 @@ function dialog.callback.leveloptions(button, fields)
 	for k,v in pairs(undo_propertynames) do
 		undo_properties[k] = {
 			key = v,
-			oldvalue = metadata[v]
+			oldvalue = level.metadata[v]
 		}
 	end
 
 	-- Level properties
-	metadata.Title = fields.Title
-	metadata.Creator = fields.Creator
-	metadata.website = fields.website
-	metadata.Desc1 = fields.Desc1
-	metadata.Desc2 = fields.Desc2
-	metadata.Desc3 = fields.Desc3
-	metadata.levmusic = fields.levmusic
+	level.metadata.Title = fields.Title
+	level.metadata.Creator = fields.Creator
+	level.metadata.website = fields.website
+	level.metadata.Desc1 = fields.Desc1
+	level.metadata.Desc2 = fields.Desc2
+	level.metadata.Desc3 = fields.Desc3
+	level.metadata.levmusic = fields.levmusic
 
 	if (tonumber(fields.mapwidth) ~= nil and tonumber(fields.mapheight) ~= nil) then
 		-- Make sure we have a dimension, and that it isn't too interesting
@@ -1102,7 +1102,7 @@ function dialog.callback.leveloptions(button, fields)
 		-- Make sure our dimension has a precise width and height
 		w, h = math.floor(w), math.floor(h)
 
-		if metadata.mapwidth <= level.limit.mapwidth and metadata.mapheight <= level.limit.mapheight
+		if level.metadata.mapwidth <= level.limit.mapwidth and level.metadata.mapheight <= level.limit.mapheight
 		and (w > level.limit.mapwidth or h > level.limit.mapheight) then
 			dialog.create(
 				langkeys(
@@ -1120,7 +1120,7 @@ function dialog.callback.leveloptions(button, fields)
 
 	--What are the new properties again?
 	for k,v in pairs(undo_propertynames) do
-		undo_properties[k].newvalue = metadata[v]
+		undo_properties[k].newvalue = level.metadata[v]
 	end
 
 	-- Make sure we can undo and redo it
@@ -1139,23 +1139,23 @@ function dialog.callback.advancedleveloptions(button, fields)
 	for k,v in pairs(undo_propertynames) do
 		undo_properties[k] = {
 			key = v,
-			oldvalue = metadata[v]
+			oldvalue = level.metadata[v]
 		}
 	end
 
 	-- Level properties
-	metadata.font = fields.font
-	metadata.rtl = fields.font == "font_ar" -- same hardcoded check that VVVVVV has right now...
-	if s.new_level_font ~= metadata.font or s.new_level_rtl ~= metadata.rtl then
-		s.new_level_font = metadata.font
-		s.new_level_rtl = metadata.rtl
+	level.metadata.font = fields.font
+	level.metadata.rtl = fields.font == "font_ar" -- same hardcoded check that VVVVVV has right now...
+	if s.new_level_font ~= level.metadata.font or s.new_level_rtl ~= level.metadata.rtl then
+		s.new_level_font = level.metadata.font
+		s.new_level_rtl = level.metadata.rtl
 		saveconfig()
 	end
-	metadata.onewaycol_override = fields.onewaycol_override
+	level.metadata.onewaycol_override = fields.onewaycol_override
 
 	--What are the new properties again?
 	for k,v in pairs(undo_propertynames) do
-		undo_properties[k].newvalue = metadata[v]
+		undo_properties[k].newvalue = level.metadata[v]
 	end
 
 	-- Make sure we can undo and redo it

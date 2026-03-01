@@ -58,7 +58,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 	end
 	love.graphics.draw(tile_batch, offsetx, offsety, 0, zoomscale2/tile_batch_zoomscale2)
 	if tile_batch_has_oneway then
-		local use_tint = (not tilesets[tsimage].level_specific) or metadata.onewaycol_override
+		local use_tint = (not tilesets[tsimage].level_specific) or level.metadata.onewaycol_override
 		if use_tint then
 			love.graphics.setColor(tilesetblocks[themetadata.tileset].colors[themetadata.tilecol].entcolor)
 			love.graphics.setShader(shader_tint)
@@ -85,7 +85,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 			roomupW = true
 		else
 			if roomy+1 <= 1 then
-				roomup = metadata.mapheight-1
+				roomup = level.metadata.mapheight-1
 			else
 				roomup = roomy - 1
 			end
@@ -97,7 +97,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 			roomleftW = true
 		else
 			if roomx+1 <= 1 then
-				roomleft = metadata.mapwidth-1
+				roomleft = level.metadata.mapwidth-1
 			else
 				roomleft = roomx - 1
 			end
@@ -108,7 +108,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 			roomright = roomx
 			roomrightW = true
 		else
-			if roomx+1 >= metadata.mapwidth then
+			if roomx+1 >= level.metadata.mapwidth then
 				roomright = 0
 			else
 				roomright = roomx + 1
@@ -120,7 +120,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 			roomdown = roomy
 			roomdownW = true
 		else
-			if roomy+1 >= metadata.mapheight then
+			if roomy+1 >= level.metadata.mapheight then
 				roomdown = 0
 			else
 				roomdown = roomy + 1
@@ -264,7 +264,7 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 
 	local zoom
 	if displayminimapgrid then
-		zoom = getminimapzoom(metadata)
+		zoom = getminimapzoom(level.metadata)
 	end
 
 	if displaytilenumbers then
@@ -332,9 +332,9 @@ function displayroom(offsetx, offsety, tiles, themetadata, zoomscale2, displayti
 end
 
 function resize_level(new_w, new_h)
-	-- Should be used instead of simply assigning to metadata.mapwidth or metadata.mapheight
-	metadata.mapwidth = new_w
-	metadata.mapheight = new_h
+	-- Should be used instead of simply assigning to level.metadata.mapwidth or level.metadata.mapheight
+	level.metadata.mapwidth = new_w
+	level.metadata.mapheight = new_h
 	add_rooms(new_w, new_h)
 	map_init()
 	gotoroom(math.min(roomx, new_w-1), math.min(roomy, new_h-1))
@@ -2164,7 +2164,7 @@ function undo()
 			elseif v.key == "mapheight" then
 				new_height = v.oldvalue
 			else
-				metadata[v.key] = v.oldvalue
+				level.metadata[v.key] = v.oldvalue
 			end
 		end
 		if new_width ~= nil and new_height ~= nil then
@@ -2279,7 +2279,7 @@ function redo()
 			elseif v.key == "mapheight" then
 				new_height = v.newvalue
 			else
-				metadata[v.key] = v.newvalue
+				level.metadata[v.key] = v.newvalue
 			end
 		end
 		if new_width ~= nil and new_height ~= nil then
@@ -2442,7 +2442,7 @@ end
 
 function gotoroom(rx, ry)
 	if rx < 0 or ry < 0
-	or rx >= metadata.mapwidth or ry >= metadata.mapheight then
+	or rx >= level.metadata.mapwidth or ry >= level.metadata.mapheight then
 		local disp_rx, disp_ry = rx, ry
 		if not s.coords0 then
 			disp_rx = disp_rx + 1
@@ -2462,7 +2462,7 @@ end
 function gotoroom_l()
 	--<
 	if roomx+1 <= 1 then
-		roomx = metadata.mapwidth-1
+		roomx = level.metadata.mapwidth-1
 	else
 		roomx = roomx - 1
 	end
@@ -2471,7 +2471,7 @@ end
 
 function gotoroom_r()
 	-->
-	if roomx+1 >= metadata.mapwidth then
+	if roomx+1 >= level.metadata.mapwidth then
 		roomx = 0
 	else
 		roomx = roomx + 1
@@ -2482,7 +2482,7 @@ end
 function gotoroom_u()
 	--^
 	if roomy+1 <= 1 then
-		roomy = metadata.mapheight-1
+		roomy = level.metadata.mapheight-1
 	else
 		roomy = roomy - 1
 	end
@@ -2491,7 +2491,7 @@ end
 
 function gotoroom_d()
 	--v
-	if roomy+1 >= metadata.mapheight then
+	if roomy+1 >= level.metadata.mapheight then
 		roomy = 0
 	else
 		roomy = roomy + 1
@@ -2509,7 +2509,7 @@ end
 function shiftrooms(direction, updatescripts)
 	dirty()
 
-	local width, height = metadata.mapwidth, metadata.mapheight
+	local width, height = level.metadata.mapwidth, level.metadata.mapheight
 
 	-- Copy the rooms that are on the edge
 	local edgetiles, edgeroommetadata, edgemapdata, edgetrinketsdata, edgecrewmatesdata = {}, {}, {}, {}, {}
@@ -2703,38 +2703,38 @@ function shiftrooms(direction, updatescripts)
 	local transform = {}
 	transform[1] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
-		local width, height = metadata.mapwidth, metadata.mapheight
+		local width, height = level.metadata.mapwidth, level.metadata.mapheight
 		if x ~= nil and y ~= nil then
 			local x_outofbounds = x < 0 or x >= width
 			local y_outofbounds = y < 0 or y >= width
-			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			if (x >= width or y >= height) and (x < level.metadata.mapwidth or y < level.metadata.mapheight) then
 			elseif direction == SHIFT.LEFT then
 				x = x - 1
 				if x < 0 and not x_outofbounds and not y_outofbounds then
-					x = x + metadata.mapwidth
-				elseif x_outofbounds and x < metadata.mapwidth and not y_outofbounds then
-					x = x - metadata.mapwidth
+					x = x + level.metadata.mapwidth
+				elseif x_outofbounds and x < level.metadata.mapwidth and not y_outofbounds then
+					x = x - level.metadata.mapwidth
 				end
 			elseif direction == SHIFT.RIGHT then
 				x = x + 1
-				if x >= metadata.mapwidth and not x_outofbounds and not y_outofbounds then
-					x = x - metadata.mapwidth
+				if x >= level.metadata.mapwidth and not x_outofbounds and not y_outofbounds then
+					x = x - level.metadata.mapwidth
 				elseif x_outofbounds and x >= 0 and not y_outofbounds then
-					x = x + metadata.mapwidth
+					x = x + level.metadata.mapwidth
 				end
 			elseif direction == SHIFT.UP then
 				y = y - 1
 				if y < 0 and not y_outofbounds and not x_outofbounds then
-					y = y + metadata.mapheight
-				elseif y_outofbounds and y < metadata.mapheight and not x_outofbounds then
-					y = y - metadata.mapheight
+					y = y + level.metadata.mapheight
+				elseif y_outofbounds and y < level.metadata.mapheight and not x_outofbounds then
+					y = y - level.metadata.mapheight
 				end
 			elseif direction == SHIFT.DOWN then
 				y = y + 1
-				if y >= metadata.mapheight and not x_outofbounds and not y_outofbounds then
-					y = y - metadata.mapheight
+				if y >= level.metadata.mapheight and not x_outofbounds and not y_outofbounds then
+					y = y - level.metadata.mapheight
 				elseif y_outofbounds and y >= 0 and not x_outofbounds then
-					y = y + metadata.mapheight
+					y = y + level.metadata.mapheight
 				end
 			end
 		end
@@ -2742,11 +2742,11 @@ function shiftrooms(direction, updatescripts)
 	end)
 	transform[2] = (function(x, y, direction)
 		x, y = tonumber(x), tonumber(y)
-		local width, height = metadata.mapwidth, metadata.mapheight
+		local width, height = level.metadata.mapwidth, level.metadata.mapheight
 		if x ~= nil and y ~= nil then
-			local x_outofbounds = x < 0 or x >= metadata.mapwidth
-			local y_outofbounds = y < 0 or y >= metadata.mapheight
-			if (x >= width or y >= height) and (x < metadata.mapwidth or y < metadata.mapheight) then
+			local x_outofbounds = x < 0 or x >= level.metadata.mapwidth
+			local y_outofbounds = y < 0 or y >= level.metadata.mapheight
+			if (x >= width or y >= height) and (x < level.metadata.mapwidth or y < level.metadata.mapheight) then
 			elseif not x_outofbounds and not y_outofbounds then
 				if direction == SHIFT.LEFT then
 					x = x - 1
@@ -2757,8 +2757,8 @@ function shiftrooms(direction, updatescripts)
 				elseif direction == SHIFT.DOWN then
 					y = y + 1
 				end
-				x = x % metadata.mapwidth
-				y = y % metadata.mapheight
+				x = x % level.metadata.mapwidth
+				y = y % level.metadata.mapheight
 			end
 		end
 		return x, y
@@ -2833,7 +2833,7 @@ function displayminimaproom(offsetx, offsety, tiles, themetadata, zoomscale2, at
 
 	local actualtileset = themetadata.tileset
 	local ts = usedtilesets[actualtileset]
-	local zoom = getminimapzoom(metadata)
+	local zoom = getminimapzoom(level.metadata)
 
 	local function setcolor()
 		if actualtileset == 1 then -- Outside tileset

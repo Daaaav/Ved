@@ -24,8 +24,20 @@ function coordsdialog.type(what)
 
 	if coordsdialog.input:len() == 4 then
 		gotoroom(
-			math.min(math.max(tonumber(coordsdialog.input:sub(1,2))-(not s.coords0 and 1 or 0), 0), metadata.mapwidth-1),
-			math.min(math.max(tonumber(coordsdialog.input:sub(3,4))-(not s.coords0 and 1 or 0), 0), metadata.mapheight-1)
+			math.min(
+				math.max(
+					tonumber(coordsdialog.input:sub(1,2))-(not s.coords0 and 1 or 0),
+					0
+				),
+				level.metadata.mapwidth-1
+			),
+			math.min(
+				math.max(
+					tonumber(coordsdialog.input:sub(3,4))-(not s.coords0 and 1 or 0),
+					0
+				),
+				level.metadata.mapheight-1
+			)
 		)
 
 		coordsdialog.active = false

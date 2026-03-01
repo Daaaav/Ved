@@ -454,14 +454,14 @@ return function()
 			love.graphics.setColor(128,128,128)
 			love.graphics.rectangle("line", map_x-.5, map_y-.5, 81, 61)
 			love.graphics.setColor(255,255,255)
-			if rx >= 0 and rx < metadata.mapwidth
-			and ry >= 0 and ry < metadata.mapheight
+			if rx >= 0 and rx < level.metadata.mapwidth
+			and ry >= 0 and ry < level.metadata.mapheight
 			and rooms_map[ry] ~= nil
 			and rooms_map[ry][rx] ~= nil
 			and rooms_map[ry][rx].map ~= nil then
 				local room_scale
 				if s.mapstyle == "minimap" then
-					local zoom = getminimapzoom(metadata)
+					local zoom = getminimapzoom(level.metadata)
 					room_scale = 320/(12*zoom)
 				elseif s.mapstyle == "vtools" then
 					room_scale = 8

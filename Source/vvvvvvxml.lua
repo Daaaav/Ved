@@ -73,7 +73,7 @@ function loadlevelmetadata(path)
 end
 
 function loadlevel(path)
-	-- Returns (bool)success, (table)metadata, (Level)level
+	-- Returns (bool)success, (Level)level
 	-- Map size and music is gonna move in with the metadata here.
 	-- Roomdata is the tiles, and is a 3D table indexed [roomy][roomx][1-1200]
 	-- Entities consists of tables (entity contents are table item data)
@@ -82,7 +82,7 @@ function loadlevel(path)
 	-- count will return the count of trinkets, crewmates and entities to keep everything within limits. It also contains the ID of the start point so it can be removed in case we place a new one.
 	-- scriptnames is used to keep the names in order of opening scripts
 	-- vedmetadata has flag names (.flaglabel)
-	-- If loading isn't successful, metadata will be an error string.
+	-- If loading isn't successful, we return false and an error string.
 
 	local success, thismetadata, xml = loadlevelmetadata(path)
 
@@ -682,7 +682,7 @@ function loadlevel(path)
 	lvl.metadata = thismetadata
 	lvl.xml = xml
 
-	return true, lvl.metadata, lvl
+	return true, lvl
 end
 
 
@@ -797,7 +797,8 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	end
 
 	if lvl.vedmetadata ~= false and lvl.vedmetadata ~= nil then
-		-- We have a metadata entity to save! As for flag names concatenation, table.concat expects all tables to start at index 1.
+		-- We have a metadata entity to save!
+		-- As for flag names concatenation, table.concat expects all tables to start at index 1.
 		local mdedata = thismdeversion .. "|"
 
 		local max_labeled_flag = -1
@@ -1034,8 +1035,6 @@ end
 
 
 function createblanklevel(lvwidth, lvheight)
-	-- Returns same variables as loadlevel
-
 	-- There should be a list of tileset options and such
 	-- - Same as in VVVVVV
 	-- - Completely random
@@ -1090,8 +1089,7 @@ function createblanklevel(lvwidth, lvheight)
 
 	cons("Done loading!")
 
-	-- No longer x.alltiles
-	return true, lvl.metadata, lvl
+	return lvl
 end
 
 function default_roommetadata(rx, ry)

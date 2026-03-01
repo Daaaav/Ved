@@ -1,6 +1,6 @@
 function map_init()
 	-- Initialize/reset the map
-	if metadata == nil then
+	if level == nil then
 		return
 	end
 
@@ -16,10 +16,10 @@ function map_init()
 		collectgarbage("collect")
 	end
 
-	for y = 0, metadata.mapheight-1 do
+	for y = 0, level.metadata.mapheight-1 do
 		rooms_map[y] = {}
 
-		for x = 0, metadata.mapwidth-1 do
+		for x = 0, level.metadata.mapwidth-1 do
 			map_initroom(x, y)
 		end
 	end
@@ -47,12 +47,12 @@ function map_work(timelimit)
 			curr_x, curr_y = rooms_map_current_x, rooms_map_current_y
 			rooms_map_current_x = rooms_map_current_x + 1
 
-			if rooms_map_current_x >= metadata.mapwidth then
+			if rooms_map_current_x >= level.metadata.mapwidth then
 				rooms_map_current_x = 0
 				rooms_map_current_y = rooms_map_current_y + 1
 			end
 
-			if rooms_map_current_y >= metadata.mapheight then
+			if rooms_map_current_y >= level.metadata.mapheight then
 				rooms_map_done = true
 			end
 		elseif #rooms_map_dirty_rooms > 0 then
@@ -104,7 +104,7 @@ function map_doroom(x, y)
 	if love.graphics.isSupported("canvas") then
 		local canvas
 		if s.mapstyle == "minimap" then
-			local zoom = getminimapzoom(metadata)
+			local zoom = getminimapzoom(level.metadata)
 			canvas = love.graphics.newCanvas(canvas_size(12*zoom, 9*zoom))
 		elseif s.mapstyle == "vtools" then
 			canvas = love.graphics.newCanvas(canvas_size(40, 30))
@@ -146,7 +146,7 @@ function map_export(x1, y1, w, h, resolution, transparentbg)
 		room_w, room_h = 640*mapscale, 480*mapscale
 		used_resolution = mapscale*2
 	elseif s.mapstyle == "minimap" then
-		local zoom = getminimapzoom(metadata)
+		local zoom = getminimapzoom(level.metadata)
 		room_w, room_h = 12*zoom*resolution, 9*zoom*resolution
 	elseif s.mapstyle == "vtools" then
 		room_w, room_h = 40*resolution, 30*resolution
@@ -230,7 +230,9 @@ function fix_map_export_input(fields, output0)
 	local co = not s.coords0 and 1 or 0 -- coordoffset
 
 	-- We get the values from the fields, as numbers.
-	local x1, y1, w, h, x2, y2 = tonumber(fields.x1), tonumber(fields.y1), tonumber(fields.w), tonumber(fields.h)
+	local x1, y1 = tonumber(fields.x1), tonumber(fields.y1)
+	local w, h = tonumber(fields.w), tonumber(fields.h)
+	local x2, y2
 
 	-- Anything not a valid number? Also make it 0-indexed.
 	if x1 == nil then x1 = 0 else x1 = x1-co end
@@ -244,18 +246,20 @@ function fix_map_export_input(fields, output0)
 	-- Make sure we're not splitting rooms in parts, that'd suck.
 	x1, y1, w, h = math.floor(x1), math.floor(y1), math.ceil(w), math.ceil(h)
 
-	-- Make sure we're in bounds. First our x and y, those are simple, should be at least 0, and at most mapwidth-1/mapheight-1.
-	x1, y1 = math.min(metadata.mapwidth-1, math.max(0, x1)), math.min(metadata.mapheight-1, math.max(0, y1))
+	-- Make sure we're in bounds. First our x and y, those are simple,
+	-- should be at least 0, and at most mapwidth-1/mapheight-1.
+	x1 = math.min(level.metadata.mapwidth-1, math.max(0, x1))
+	y1 = math.min(level.metadata.mapheight-1, math.max(0, y1))
 
 	-- Width and height must also not be less than 1.
 	w, h = math.max(1, w), math.max(1, h)
 
 	-- Now make sure the map size isn't going off the map.
-	if x1+w > metadata.mapwidth then
-		w = metadata.mapwidth-x1
+	if x1+w > level.metadata.mapwidth then
+		w = level.metadata.mapwidth-x1
 	end
-	if y1+h > metadata.mapheight then
-		h = metadata.mapheight-y1
+	if y1+h > level.metadata.mapheight then
+		h = level.metadata.mapheight-y1
 	end
 
 	return x1+co, y1+co, w, h, x1+w+co-1, y1+h+co-1
@@ -283,10 +287,10 @@ function locatetrinketscrewmates()
 	-- For each room in crewmates, we'll also store the color of each crewmate.
 
 	-- Instantiation
-	for mry = 0, metadata.mapheight-1 do
+	for mry = 0, level.metadata.mapheight-1 do
 		map_trinkets[mry] = {}
 		map_crewmates[mry] = {}
-		for mrx = 0, metadata.mapwidth-1 do
+		for mrx = 0, level.metadata.mapwidth-1 do
 			map_trinkets[mry][mrx] = 0
 			map_crewmates[mry][mrx] = {0, {}}
 		end
@@ -297,7 +301,7 @@ function locatetrinketscrewmates()
 			local rx, ry = math.floor(ent.x/40), math.floor(ent.y/30)
 			rx = math.max(rx, 0)
 			ry = math.max(ry, 0)
-			if rx < metadata.mapwidth and ry < metadata.mapheight then
+			if rx < level.metadata.mapwidth and ry < level.metadata.mapheight then
 				if ent.t == 9 then
 					map_trinkets[ry][rx] = map_trinkets[ry][rx] + 1
 				elseif ent.t == 15 then
@@ -310,7 +314,7 @@ function locatetrinketscrewmates()
 end
 
 -- Either use this like 'getminimapzoom(mapwidth, mapheight)'
--- or 'getminimapzoom(metadata)'!
+-- or 'getminimapzoom(level.metadata)'!
 function getminimapzoom(...)
 	local mapwidth, mapheight
 	if type(...) == "table" then
@@ -330,15 +334,15 @@ function getminimapzoom(...)
 end
 
 function map_screen_init()
-	mapscale = math.min(1/metadata.mapwidth, 1/metadata.mapheight)
+	mapscale = math.min(1/level.metadata.mapwidth, 1/level.metadata.mapheight)
 	if s.mapstyle == "minimap" then
-		local zoom = getminimapzoom(metadata)
+		local zoom = getminimapzoom(level.metadata)
 		maproomscale = (mapscale*640)/(12*zoom)
 	elseif s.mapstyle == "vtools" then
 		maproomscale = (mapscale*640)/40
 	else
 		maproomscale = mapscale*2
 	end
-	mapxoffset = (((1/mapscale)-metadata.mapwidth)*mapscale*640)/2
-	mapyoffset = (((1/mapscale)-metadata.mapheight)*mapscale*480)/2
+	mapxoffset = (((1/mapscale)-level.metadata.mapwidth)*mapscale*640)/2
+	mapyoffset = (((1/mapscale)-level.metadata.mapheight)*mapscale*480)/2
 end

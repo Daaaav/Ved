@@ -393,17 +393,17 @@ function script_context(text, textlinestogo)
 			return "room", x, y, nil
 		end
 		if parts[1] == "gotoroom" then
-			if x > metadata.mapwidth - 1 then
+			if x > level.metadata.mapwidth - 1 then
 				x = 0
 			end
-			if y > metadata.mapheight - 1 then
+			if y > level.metadata.mapheight - 1 then
 				y = 0
 			end
 			if x < 0 then
-				x = metadata.mapwidth - 1
+				x = level.metadata.mapwidth - 1
 			end
 			if y < 0 then
-				y = metadata.mapheight - 1
+				y = level.metadata.mapheight - 1
 			end
 		elseif table.contains({"hidecoordinates", "showcoordinates"}, parts[1]) then
 			x, y = get_wrapped_coords(x, y)
@@ -861,7 +861,8 @@ function script_compile(readable_script)
 						success = false
 					end
 				else
-					-- When replacing, make sure a flag named "flag" or similar won't replace the command itself. Also don't change the style of brackets/commas by imploding as x(y,z)
+					-- When replacing, make sure a flag named "flag" or similar won't replace the command itself.
+					-- Also don't change the style of brackets/commas by imploding as x(y,z)
 					-- And also, just remove all the spaces from the line if there are any
 					usev = usev:gsub(" ", "")
 					raw_script[k] = partss[1] .. usev:sub(partss[1]:len()+1, -1):gsub(escapegsub(partss[2], true), useflag, 1)

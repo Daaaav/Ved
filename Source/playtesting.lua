@@ -40,7 +40,7 @@ function playtesting_execute(thisroomx, thisroomy, posx, posy, gravitycontrol)
 	posx = posx - 6
 	posy = posy - 2
 
-	local music = metadata.levmusic
+	local music = level.metadata.levmusic
 	if music == 0 then
 		music = -1
 	end
@@ -64,7 +64,7 @@ function playtesting_execute(thisroomx, thisroomy, posx, posy, gravitycontrol)
 end
 
 function playtesting_locate_path()
-	if metadata.target == "V" then
+	if level.metadata.target == "V" then
 		return s.vvvvvv23
 	end
 end
@@ -154,7 +154,7 @@ function playtesting_start(force_ask_path)
 	end
 
 	if path == nil or path == "" then
-		playtesting_ask_path(metadata.target, true)
+		playtesting_ask_path(level.metadata.target, true)
 		return
 	end
 

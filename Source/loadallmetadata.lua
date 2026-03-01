@@ -24,27 +24,27 @@ require("filefunc_" .. loaded_filefunc)
 cons = function() end
 
 while true do
-	local level = inchannel:demand()
+	local file = inchannel:demand()
 
-	local success, metadata = loadlevelmetadata(level.path)
+	local success, metadata = loadlevelmetadata(file.path)
 
 	if not success then
 		outchannel:push(
 			{
-				dir = level.dir,
-				id = level.id,
-				path = level.path,
+				dir = file.dir,
+				id = file.id,
+				path = file.path,
 				success = false,
 				errmsg = metadata,
-				refresh = level.refresh
+				refresh = file.refresh
 			}
 		)
 	else
-		metadata.dir = level.dir
-		metadata.id = level.id
-		metadata.path = level.path
+		metadata.dir = file.dir
+		metadata.id = file.id
+		metadata.path = file.path
 		metadata.success = true
-		metadata.refresh = level.refresh
+		metadata.refresh = file.refresh
 		outchannel:push(metadata)
 	end
 end

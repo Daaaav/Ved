@@ -517,7 +517,7 @@ return function()
 			if nodialog then
 				atx, aty = maineditor_get_cursor()
 			end
-			local zoom = getminimapzoom(metadata)
+			local zoom = getminimapzoom(level.metadata)
 			love.graphics.setColor(255, 255, 255, 63)
 			love.graphics.rectangle("fill", 71, love.graphics.getHeight()-38, 50, 38)
 			love.graphics.setColor(0, 0, 0, 255)
@@ -1393,10 +1393,5 @@ return function()
 
 	if playtesting_uistate == PT_UISTATE.ASKING then
 		showhotkey("b", love.graphics.getWidth()-128, 32-8, nil, true)
-	end
-
-	-- Do we want to see room metadata?
-	if allowdebug and love.keyboard.isDown("f11") then
-
 	end
 end

@@ -933,7 +933,7 @@ function cVedFont:is_rtl()
 		end
 		return false
 	elseif self.context == "level" then
-		if metadata ~= nil and metadata.rtl then
+		if level ~= nil and level.metadata.rtl then
 			return true
 		end
 		return false
