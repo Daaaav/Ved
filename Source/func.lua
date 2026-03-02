@@ -1437,7 +1437,7 @@ function state6load(levelname)
 			end
 		else
 			editingmap = levelname
-			recentlyopened(editingmap)
+			update_recents(s.recentfiles, editingmap)
 			map_init()
 			unloadvvvvvvmusics_level()
 			if level_assets_loaded or getlevelassetsfolder() ~= nil then
@@ -2343,19 +2343,19 @@ function setgenerictimer(mode, sec)
 	generictimer_mode = mode
 end
 
-function recentlyopened(levelname)
-	if #s.recentfiles > 0 and s.recentfiles[#s.recentfiles] == levelname then
+function update_recents(list, item)
+	if #list > 0 and list[#list] == item then
 		return
 	end
-	for k,v in pairs(s.recentfiles) do
-		if v == levelname then
-			table.remove(s.recentfiles, k)
+	for k,v in pairs(list) do
+		if v == item then
+			table.remove(list, k)
 			break
 		end
 	end
-	table.insert(s.recentfiles, levelname)
-	while #s.recentfiles > 5 do
-		table.remove(s.recentfiles, 1)
+	table.insert(list, item)
+	while #list > 5 do
+		table.remove(list, 1)
 	end
 	saveconfig()
 end

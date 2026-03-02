@@ -26,3 +26,5 @@ L.SPECIALROOMNAME_LOOP = "Loop" -- Checkbox: this animation keeps repeating
 L.FLAGS_SPECIALROOMNAME = "Choose the flag that activates this special roomname"
 
 L.SUREDELETESPECIALROOMNAME = "Are you sure you want to delete this roomname?"
+
+L.RECENT_SEARCHES = "Recent searches" -- So you can search the same things again

@@ -130,6 +130,11 @@ configs = {
 		["type"] = "stringsarray",
 	},
 	{
+		key = "recentsearches",
+		default = {},
+		["type"] = "stringsarray",
+	},
+	{
 		key = "dontpreventscriptsplits",
 		default = false,
 		["type"] = "bool",

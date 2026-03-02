@@ -203,7 +203,7 @@ function elScreenContainer:draw(x, y, maxw, maxh)
 	self.pw, self.ph = cw, ch
 
 	for k,v in elements_iter(self.els, self) do
-		v:draw(x, y, maxw, maxh)
+		v:draw(x, y, cw, ch)
 	end
 
 	return self.pw, self.ph

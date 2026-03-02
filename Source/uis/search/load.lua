@@ -11,4 +11,5 @@ return function()
 		resume_search = false
 	end
 	newinputsys.create(INPUT.ONELINE, "search", previous_search)
+	recentsearches_update_elements()
 end

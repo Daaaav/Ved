@@ -127,6 +127,12 @@ function highlightresult(text, result, x, y)
 	end
 end
 
+function do_search()
+	searchscripts, searchrooms, searchnotes = searchtext(inputs.search)
+	previous_search = inputs.search
+	update_recents(s.recentsearches, previous_search)
+end
+
 function inscriptsearch(this)
 	-- Sets the text cursor to the first occurrence of the string after the cursor
 	if this ~= "" then

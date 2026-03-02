@@ -1013,7 +1013,7 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 	end
 
 	if success and path ~= nil then
-		recentlyopened(path:sub(1, -8))
+		update_recents(s.recentfiles, path:sub(1, -8))
 
 		if undobuffer ~= nil then
 			saved_at_undo = #undobuffer

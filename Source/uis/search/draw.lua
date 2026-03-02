@@ -14,9 +14,15 @@ return function()
 	love.graphics.setColor(255,255,255,255)
 	newinputsys.print("search", x_input, 10, font_level)
 
+	if previous_search == "" then
+		love.graphics.setColor(128, 128, 128)
+	end
 	font_ui:printf(langkeys(L.SEARCHRESULTS_SCRIPTS, {#searchscripts}), 8, 32+4, 284, "center")
 	font_ui:printf(langkeys(L.SEARCHRESULTS_ROOMS, {#searchrooms}), 8+284+4, 32+4, 284, "center")
 	font_ui:printf(langkeys(L.SEARCHRESULTS_NOTES, {#searchnotes}), 8+284+4+284+4, 32+4, 284, "center")
+	if previous_search == "" then
+		love.graphics.setColor(255, 255, 255)
+	end
 
 	for k,v in pairs(searchscripts) do
 		if k <= showresults and 32*k+16+searchscroll+30 >= 48 and 32*k+16+searchscroll <= love.graphics.getHeight() then
