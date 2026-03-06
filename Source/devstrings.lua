@@ -27,4 +27,18 @@ L.FLAGS_SPECIALROOMNAME = "Choose the flag that activates this special roomname"
 
 L.SUREDELETESPECIALROOMNAME = "Are you sure you want to delete this roomname?"
 
-L.RECENT_SEARCHES = "Recent searches" -- So you can search the same things again
+L.RECENT_SEARCHES = "Recent searches" -- You last searched for these 5 things, click one to search it again
+
+L.INTSC_LONG = "Internal scripting mode"
+
+L.INTSC_LOADSCRIPT24 = "Loadscript (2.4+)" -- A scripting mode that requires a loadscript, and only works in VVVVVV 2.4+
+L.INTSC_LOADSCRIPT23 = "Loadscript (compatible with 2.3-)" -- Like the other Loadscript option, but also works in earlier versions
+L.INTSC_SAYMIN1 = "say(-1)" -- The say(-1) method involves using the scripting command say(-1)
+
+L.INTSC_LOADSCRIPT24_SHORT = "Mode: 2.4+"
+L.INTSC_LOADSCRIPT23_SHORT = "Mode: 2.1+"
+L.INTSC_SAYMIN1_SHORT = "Mode: say(-1)"
+
+L.INTSC_LOADSCRIPT24_EXPL = "When making a level for VVVVVV 2.4 or above, this setting is all you need. This script needs to be loaded from another script."
+L.INTSC_LOADSCRIPT23_EXPL = "Like the 2.4+ method, but the script is (invisibly) split into blocks of less than 50 lines for compatibility with many VVVVVV versions. This might be a limitation for some specific usecases."
+L.INTSC_SAYMIN1_EXPL = "Like \"Loadscript (compatible with 2.3-)\", but it saves a loadscript, which helped when there was a limit of 500 scripts in total. The script forcibly starts with cutscene bars." -- the word 'saves' = 'economizes'/'removes the need for', NOT 'stores data to disk'!

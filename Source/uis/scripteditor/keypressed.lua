@@ -25,26 +25,7 @@ return function(key)
 		elseif key == "g" then
 			startscriptgotoline()
 		elseif key == "i" then
-			if keyboard_eitherIsDown("shift") then
-				if internalscript then
-					internalscript = false
-				elseif cutscenebarsinternalscript then
-					internalscript = true
-					cutscenebarsinternalscript = false
-				else
-					cutscenebarsinternalscript = true
-				end
-			else
-				if internalscript then
-					internalscript = false
-					cutscenebarsinternalscript = true
-				elseif cutscenebarsinternalscript then
-					internalscript = false
-					cutscenebarsinternalscript = false
-				else
-					internalscript = true
-				end
-			end
+			toggle_intsc()
 			dirty()
 		end
 	elseif key == "tab" then

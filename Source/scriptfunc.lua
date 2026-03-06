@@ -117,7 +117,7 @@ function syntax_hl(text, x, y, thisistext, current_line, docolor, lasttextcolor,
 		local offset_width = 0
 
 		-- Replace characters by one with which we will split.
-		text2 = text:gsub("%(", ","):gsub("%)", ",")
+		local text2 = text:gsub("%(", ","):gsub("%)", ",")
 
 		local partss = explode(",", text2)
 		local partss_parsed = {}
@@ -247,7 +247,7 @@ function just_text(text, thisistext)
 		text = text:gsub(" ", "")
 		text = scriptlinecasing(text)
 		if text:sub(1, 3) == "say" or text:sub(1, 5) == "reply" or text:sub(1, 4) == "text" then
-			text2 = text:gsub("%(", ","):gsub("%)", ",")
+			local text2 = text:gsub("%(", ","):gsub("%)", ",")
 
 			partss = explode(",", text2)
 			local partss_parsed = {}
@@ -464,6 +464,20 @@ function script_context(text, textlinestogo)
 	end
 end
 
+function say_breaks_limit(line)
+	-- Given a line like "say(50) #v" (assumes it is formatted like that),
+	-- returns true if the number is higher than 50.
+
+	local n_lines = tonumber(line:sub(5,-5))
+	if n_lines ~= nil and n_lines > 50 then
+		-- This breaks the limit! Might've been manually changed
+		-- or we used a modified Ved 1.xx with a high block limit.
+		-- Better save it back as unlimited
+		return true
+	end
+	return false
+end
+
 function script_decompile(raw_script)
 	-- Run when OPENING the script for display and editing
 	-- Takes the script as runnable by VVVVVV (raw_script) and returns "human-readable" conversion
@@ -471,6 +485,7 @@ function script_decompile(raw_script)
 	if keyboard_eitherIsDown("shift") then
 		internalscript = false
 		cutscenebarsinternalscript = false
+		internalscript_unlimited = false
 		return raw_script
 	end
 
@@ -488,7 +503,7 @@ function script_decompile(raw_script)
 		or v:lower():match("^ifflag[%(,%)]")
 		or v:lower():match("^customifflag[%(,%)]") then
 			-- Ok, how about now?
-			text2 = v:gsub("%(", ","):gsub("%)", ",")
+			local text2 = v:gsub("%(", ","):gsub("%)", ",")
 
 			-- We need to explode it anyways.
 			local partss = explode(",", text2)
@@ -509,13 +524,16 @@ function script_decompile(raw_script)
 
 	-- Is this an internal script?
 	if (
-		readable_script[1] ~= nil
-		and (
+		-- loadscript limited to blocks of 50 for 2.1+,
+		-- or unlimited blocks for 2.4+
+		(
 			(
-				readable_script[1]:sub(1,4) == "say("
+				readable_script[1] ~= nil
+				and readable_script[1]:sub(1,4) == "say("
 				and readable_script[1]:sub(-4,-1) == ") #v"
 			) or (
-				readable_script[1] == "squeak(off) #v"
+				(readable_script[1] == "squeak(off) #v" or readable_script[1] == "squeak(off) #w")
+				and readable_script[2] ~= nil
 				and readable_script[2]:sub(1,4) == "say("
 				and readable_script[2]:sub(-4,-1) == ") #v"
 			)
@@ -524,7 +542,8 @@ function script_decompile(raw_script)
 			or readable_script[#readable_script] == "text(1,0,0,3) #v"
 		)
 	) or (
-		readable_script[1] == "squeak(off) #v"
+		-- say(-1) method (also with an unlimited check for consistency)
+		(readable_script[1] == "squeak(off) #v" or readable_script[1] == "squeak(off) #w")
 		and readable_script[2] == "say(-1) #v"
 		and readable_script[3] == "text(1,0,0,3) #v"
 		and readable_script[4] ~= nil
@@ -532,6 +551,7 @@ function script_decompile(raw_script)
 		and readable_script[4]:sub(-4,-1) == ") #v"
 	) then
 		-- Quite so!
+		internalscript_unlimited = false
 		if readable_script[2] == "say(-1) #v" and readable_script[3] == "text(1,0,0,3) #v" then
 			internalscript = false
 			cutscenebarsinternalscript = true
@@ -540,15 +560,19 @@ function script_decompile(raw_script)
 			cutscenebarsinternalscript = false
 		end
 
+		if readable_script[1] == "squeak(off) #w" then
+			internalscript_unlimited = true
+		end
+
 		if internalscript then
 			if readable_script[#readable_script-1] == "loadscript(stop) #v" then
 				table.remove(readable_script, #readable_script)
 			end
 			table.remove(readable_script, #readable_script)
-			if readable_script[1] == "squeak(off) #v" then
+			if readable_script[1] == "squeak(off) #v"
+			or readable_script[1] == "squeak(off) #w" then
 				table.remove(readable_script, 1)
 			end
-			table.remove(readable_script, 1)
 		elseif cutscenebarsinternalscript then
 			if readable_script[#readable_script] == "loadscript(stop) #v" then
 				table.remove(readable_script, #readable_script)
@@ -556,18 +580,21 @@ function script_decompile(raw_script)
 			table.remove(readable_script, 1) -- squeak(off) #v
 			table.remove(readable_script, 1) -- say(-1) #v
 			table.remove(readable_script, 1) -- text(1,0,0,3) #v
-			table.remove(readable_script, 1) -- say(n) #v
 		end
 
+		-- We purposefully left the first "say(50) #v" in there - it'll be processed below
 		local removetheselines = {}
 
 		for k,v in pairs(readable_script) do
 			-- Remove any hashes we may have placed last time when replacing completely blank lines
 			if v == "#" then
 				readable_script[k] = ""
-			elseif (
-				v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v"
-			) or v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
+			elseif v:sub(1,4) == "say(" and v:sub(-4,-1) == ") #v" then
+				table.insert(removetheselines, k)
+				if not internalscript_unlimited and say_breaks_limit(v) then
+					internalscript_unlimited = true
+				end
+			elseif v == "text(1,0,0,4) #v" or v == "text(1,0,0,3) #v" then
 				table.insert(removetheselines, k)
 			end
 		end
@@ -580,6 +607,7 @@ function script_decompile(raw_script)
 	else
 		internalscript = false
 		cutscenebarsinternalscript = false
+		internalscript_unlimited = false
 	end
 
 	return readable_script
@@ -656,27 +684,29 @@ function script_compile(readable_script)
 
 		local blocks = {} -- array of nnumbers
 		local lineshad = 0
-		while (#raw_script - lineshad) > 48 do
-			local splitsuccessfully = false
+		if not internalscript_unlimited then
+			while (#raw_script - lineshad) > 48 do
+				local splitsuccessfully = false
 
-			local finalblockline = 0
+				local finalblockline = 0
 
-			for currentblockline = (lineshad+1)+48, lineshad+1, -1 do
-				if splitpoints[currentblockline] then
-					-- We can split here!
-					splitsuccessfully = true
-					finalblockline = currentblockline-lineshad
-					table.insert(blocks, finalblockline)
+				for currentblockline = (lineshad+1)+48, lineshad+1, -1 do
+					if splitpoints[currentblockline] then
+						-- We can split here!
+						splitsuccessfully = true
+						finalblockline = currentblockline-lineshad
+						table.insert(blocks, finalblockline)
+						break
+					end
+				end
+
+				if not splitsuccessfully then
+					splithasfailed = true
 					break
 				end
-			end
 
-			if not splitsuccessfully then
-				splithasfailed = true
-				break
+				lineshad = lineshad + finalblockline
 			end
-
-			lineshad = lineshad + finalblockline
 		end
 
 		if splithasfailed then
@@ -704,7 +734,11 @@ function script_compile(readable_script)
 					table.insert(raw_script, 1, "text(1,0,0,3) #v")
 					table.insert(raw_script, 1, "say(-1) #v")
 				end
-				table.insert(raw_script, 1, "squeak(off) #v")
+				if internalscript_unlimited then
+					table.insert(raw_script, 1, "squeak(off) #w")
+				else
+					table.insert(raw_script, 1, "squeak(off) #v")
+				end
 			else
 				-- ACTUALLY SPLIT EVERYTHING YAY
 				for k = #blocks, 1, -1 do
@@ -1122,6 +1156,28 @@ function startscriptgotoline()
 		},
 		dialog.callback.scriptgotoline_validate
 	)
+end
+
+function intsc_method_dialog()
+	dialog.create(
+		"",
+		DBS.OKCANCEL,
+		dialog.callback.intsc_method,
+		L.INTSC_LONG,
+		dialog.form.intsc_method_make()
+	)
+end
+
+function toggle_intsc()
+	if internalscript or cutscenebarsinternalscript then
+		internalscript = false
+		cutscenebarsinternalscript = false
+		internalscript_unlimited = false
+	else
+		internalscript = true
+		cutscenebarsinternalscript = false
+		internalscript_unlimited = level.metadata.intsc_default_unlimited
+	end
 end
 
 function scriptlineonscreen(ln)

@@ -41,10 +41,15 @@ function loadlevelmetadata(path)
 		end
 
 		-- These ones are optional.
+		thismetadata.intsc_default_unlimited = nil -- if nil: determine later
 		thismetadata.onewaycol_override = false
 		thismetadata.font = "font"
 		thismetadata.rtl = false
-		local m = xml:find_or_nil(xmetadata, "onewaycol_override")
+		local m = xml:find_or_nil(xmetadata, "intsc_default")
+		if m ~= nil then
+			thismetadata.intsc_default_unlimited = xml:get_text(m) ~= "0"
+		end
+		m = xml:find_or_nil(xmetadata, "onewaycol_override")
 		if m ~= nil then
 			thismetadata.onewaycol_override = xml:get_text(m) ~= "0"
 		end
@@ -515,6 +520,36 @@ function loadlevel(path)
 					end
 				end
 			end
+
+			if thismetadata.intsc_default_unlimited == nil then
+				-- Check existing scripts to see whether this level should use 2.4+ int.sc by default or not.
+				-- The initial default is 2.4+, aka unlimited blocks.
+				-- If we find any signatures of 2.3- int.sc (#v instead of #w): set default to 2.3- compatible
+				-- If we find any 2.4+ only int.sc in the level: force to 2.4 no matter what
+				thismetadata.intsc_default_unlimited = true
+				local found_23_scripting = false
+				local found_24_scripting = false
+
+				for k,v in pairs(lvl.scripts) do
+					for n_line,line in pairs(v) do
+						if line == "squeak(off) #v" then
+							found_23_scripting = true
+						elseif line:sub(1,4) == "say(" and line:sub(-4,-1) == ") #v" and say_breaks_limit(line) then
+							found_24_scripting = true
+							cons("Found a 2.4+ only int.sc block: " .. line)
+							break
+						end
+					end
+
+					if found_24_scripting then
+						break
+					end
+				end
+
+				if found_23_scripting and not found_24_scripting then
+					thismetadata.intsc_default_unlimited = false
+				end
+			end
 		end
 
 		-- Some things that for now we'll have to hardcode carrying over...
@@ -712,6 +747,12 @@ function savelevel(path, lvl, crashed, invvvvvvfolder)
 		cons("Doing " .. v)
 		local el = lvl.xml:find_or_add(xmetadata, v)
 		lvl.xml:set_text(el, anythingbutnil(lvl.metadata[v]))
+	end
+
+	-- Always saved by this Ved, but may not originally be present...
+	do
+		local el = lvl.xml:find_or_add(xmetadata, "intsc_default")
+		lvl.xml:set_text(el, lvl.metadata.intsc_default_unlimited and 1 or 0)
 	end
 
 	-- Special cases of metadata that may or may not be stored...
@@ -1052,6 +1093,7 @@ function createblanklevel(lvwidth, lvheight)
 		Modifiers = "2",
 		Desc1 = "", Desc2 = "", Desc3 = "",
 		website = "",
+		intsc_default_unlimited = true,
 		onewaycol_override = false,
 		font = s.new_level_font,
 		rtl = s.new_level_rtl,

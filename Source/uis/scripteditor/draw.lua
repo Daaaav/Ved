@@ -274,12 +274,16 @@ return function()
 		internalscript or cutscenebarsinternalscript
 	)
 	if internalscript or cutscenebarsinternalscript then
+		local current_method
+		if internalscript_unlimited then
+			current_method = L.INTSC_LOADSCRIPT24_SHORT
+		elseif internalscript then
+			current_method = L.INTSC_LOADSCRIPT23_SHORT
+		else
+			current_method = L.INTSC_SAYMIN1_SHORT
+		end
 		rbutton(
-			{
-				internalscript and L.INTERNALNOBARS
-				or cutscenebarsinternalscript and L.INTERNALYESBARS
-				or L.INTERNALOFF, "cI"
-			},
+			current_method,
 			8, nil, nil, nil,
 			cutscenebarsinternalscript
 		)
@@ -344,25 +348,13 @@ return function()
 			startscriptgotoline()
 		elseif not mousepressed and onrbutton(7) then
 			-- Internal scripting on/off
-			if internalscript or cutscenebarsinternalscript then
-				internalscript = false
-				cutscenebarsinternalscript = false
-			else
-				internalscript = true
-			end
+			toggle_intsc()
 			dirty()
 
 			mousepressed = true
 		elseif (internalscript or cutscenebarsinternalscript) and not mousepressed and onrbutton(8) then
 			-- Internal scripting method
-			if internalscript then
-				internalscript = false
-				cutscenebarsinternalscript = true
-			else
-				internalscript = true
-				cutscenebarsinternalscript = false
-			end
-			dirty()
+			intsc_method_dialog()
 
 			mousepressed = true
 		elseif not mousepressed and onrbutton(10) then

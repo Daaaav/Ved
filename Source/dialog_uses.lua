@@ -394,6 +394,56 @@ function dialog.form.create_specialroomname_make()
 	}
 end
 
+function dialog.form.intsc_method_make()
+	local current_method
+	if internalscript_unlimited then
+		current_method = L.INTSC_LOADSCRIPT24
+	elseif internalscript then
+		current_method = L.INTSC_LOADSCRIPT23
+	else
+		current_method = L.INTSC_SAYMIN1
+	end
+
+	return {
+		{"method", 0, 0, 0, current_method, DF.RADIOS,
+			{
+				L.INTSC_LOADSCRIPT24,
+				L.INTSC_LOADSCRIPT23,
+				L.INTSC_SAYMIN1,
+			},
+			false,
+			function(picked)
+				if picked == L.INTSC_LOADSCRIPT24 then
+					internalscript = true
+					cutscenebarsinternalscript = false
+					internalscript_unlimited = true
+				elseif picked == L.INTSC_LOADSCRIPT23 then
+					internalscript = true
+					cutscenebarsinternalscript = false
+					internalscript_unlimited = false
+				else
+					internalscript = false
+					cutscenebarsinternalscript = true
+					internalscript_unlimited = false
+				end
+			end
+		},
+		{"", 0, 5, 48,
+			function(key, fields)
+				if fields.method == L.INTSC_LOADSCRIPT24 then
+					return L.INTSC_LOADSCRIPT24_EXPL
+				elseif fields.method == L.INTSC_LOADSCRIPT23 then
+					return L.INTSC_LOADSCRIPT23_EXPL
+				end
+				return L.INTSC_SAYMIN1_EXPL
+			end, DF.LABEL
+		},
+		{"old_internalscript", 0, 0, 0, internalscript, DF.HIDDEN},
+		{"old_cutscenebarsinternalscript", 0, 0, 0, cutscenebarsinternalscript, DF.HIDDEN},
+		{"old_internalscript_unlimited", 0, 0, 0, internalscript_unlimited, DF.HIDDEN},
+	}
+end
+
 function dialog.form.hidden_make(values, existing_form)
 	local form
 	if existing_form == nil then
@@ -654,6 +704,7 @@ function dialog.callback.newscript(button, fields, identifier, notclosed)
 			-- Also make sure internal scripting mode doesn't stick
 			internalscript = false
 			cutscenebarsinternalscript = false
+			internalscript_unlimited = false
 		else
 			-- Splitting/duplicating the current script
 			if identifier == "split_editor" then
@@ -978,6 +1029,21 @@ function dialog.callback.suredeletescript(button, fields)
 		-- fields.script_i is the 'number' of the script
 		delete_script(fields.script_i)
 	end
+end
+
+function dialog.callback.intsc_method(button, fields)
+	if button == DB.OK then
+		-- No change, changes were instantly applied.
+		-- But do update the default for next time.
+		level.metadata.intsc_default_unlimited = internalscript_unlimited
+		dirty()
+		return
+	end
+
+	-- Cancel, which means revert!
+	internalscript = fields.old_internalscript
+	cutscenebarsinternalscript = fields.old_cutscenebarsinternalscript
+	internalscript_unlimited = fields.old_internalscript_unlimited
 end
 
 function dialog.callback.customvvvvvvdir(button, fields)
