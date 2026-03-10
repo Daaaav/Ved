@@ -428,7 +428,7 @@ function dialog.form.intsc_method_make()
 				end
 			end
 		},
-		{"", 0, 5, 48,
+		{"", 0, 4, 48,
 			function(key, fields)
 				if fields.method == L.INTSC_LOADSCRIPT24 then
 					return L.INTSC_LOADSCRIPT24_EXPL

@@ -372,7 +372,7 @@ function love.keypressed(key, scancode, isrepeat)
 			local dropdowns = dialogs[#dialogs].fields[cf][DFP.DROPDOWN_MENUITEMS]
 			local mapping = dialogs[#dialogs].fields[cf][DFP.DROPDOWN_MENUITEMSLABEL]
 			local usethisvalue
-			if mapping ~= nil then
+			if mapping ~= nil and mapping ~= false then
 				usethisvalue = mapping[cfinput]
 			else
 				usethisvalue = cfinput

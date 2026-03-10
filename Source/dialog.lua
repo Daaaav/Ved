@@ -173,7 +173,7 @@ function cDialog:draw(topmost)
 
 	-- Text boxes
 	local fieldactive = false
-	local active_x, active_y, active_w, active_h, active_type, active_dropdowns, active_listheight
+	local active_x, active_y, active_w, active_h, active_type, active_dropdowns, active_listheight, active_fonts
 	for k,v in pairs(self.fields) do
 		self:drawfield(topmost, k, unpack(v))
 		if self.currentfield == k then
@@ -185,6 +185,7 @@ function cDialog:draw(topmost)
 			-- FIXME now it gets weird. Why not active_field or something?
 			active_dropdowns = v[DFP.DROPDOWN_MENUITEMS]
 			active_listheight = v[DFP.FILES_LIST_HEIGHT]
+			active_fonts = v[DFP.DROPDOWN_MENUFONTS]
 		end
 	end
 
@@ -194,7 +195,11 @@ function cDialog:draw(topmost)
 		if active_type == DF.RADIOS then
 			local tmp = {}
 			for k,v in pairs(active_dropdowns) do
-				tmp[k] = #v
+				local font = font_ui
+				if active_fonts then
+					font = active_fonts[k]
+				end
+				tmp[k] = font:getWidth(v)/8
 			end
 			active_w = math.max(unpack(tmp)) + 2
 			active_h = #active_dropdowns * 12
@@ -562,12 +567,13 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			end
 			real_w = 16+font:getWidth(v)
 			-- FIXME same height 10 problem
-			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-11+k*12+2, real_w, 10)
+			self:hoverdraw(topmost, selected and image.radioon or image.radiooff, real_x, real_y-15+k*12+2, real_w, 10)
 			self:setColor(0,0,0,255)
-			font:print(v, real_x+16, real_y-10+k*12+2)
+			font:print(v, real_x+16, real_y-15+k*12+2)
 			self:setColor(255,255,255,255)
 
-			if topmost and mouseon(real_x, real_y-11+k*12, real_w, 12) and love.mouse.isDown("l") and not mousepressed and not RCMactive then
+			if topmost and mouseon(real_x, real_y-15+k*12, real_w, 12)
+			and love.mouse.isDown("l") and not mousepressed and not RCMactive then
 				self.currentfield = n
 
 				dialogs[#dialogs]:dropdown_onchange(key, v)
@@ -661,7 +667,9 @@ function cDialog:drawfield(topmost, n, key, x, y, w, content, mode, ...)
 			if k*12+listscroll-4 <= 8+12*list_height and k*12+listscroll-4 >= 0 then
 				local row_y = real_y+25+k*12+listscroll-4
 				local selected = self:return_fields().name == v.name
-				local moused = topmost and mouseon(real_x, row_y, real_w-16, 12) and mouseon(real_x, real_y+33, real_w-16, 12*list_height) and window_active()
+				local moused = topmost and window_active()
+					and mouseon(real_x, row_y, real_w-16, 12)
+					and mouseon(real_x, real_y+33, real_w-16, 12*list_height)
 				if selected or moused then
 					self:setColor(172,172,172,255)
 					love.graphics.rectangle("fill", real_x, row_y, real_w-16, 12)
