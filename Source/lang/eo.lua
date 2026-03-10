@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2026-02-13 22:53:34 (CET)
+--- Last converted: 2026-03-10 17:24:14 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -12,34 +12,6 @@
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
 function lang_plurals(n) return (n ~= 1) end
-
-function fontpng_ascii(c)
-	if c == "Ĉ" then
-		return "Cx"
-	elseif c == "Ĝ" then
-		return "Gx"
-	elseif c == "Ĥ" then
-		return "Hx"
-	elseif c == "Ĵ" then
-		return "Jx"
-	elseif c == "Ŝ" then
-		return "Sx"
-	elseif c == "Ŭ" then
-		return "Ux"
-	elseif c == "ĉ" then
-		return "cx"
-	elseif c == "ĝ" then
-		return "gx"
-	elseif c == "ĥ" then
-		return "hx"
-	elseif c == "ĵ" then
-		return "jx"
-	elseif c == "ŝ" then
-		return "sx"
-	elseif c == "ŭ" then
-		return "ux"
-	end
-end
 
 L = {
 

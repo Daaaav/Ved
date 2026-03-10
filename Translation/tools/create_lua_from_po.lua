@@ -28,8 +28,7 @@ end
 
 pofiles = {
 	{"ved_main", "ved", false},
-	{"ved_help", "ved_help", false},
-	{"ved_lua_func", "ved", false}
+	{"ved_help", "ved_help", false}
 }
 
 load_lua_lang("templates")
@@ -156,20 +155,11 @@ for lang_code, lang_name in pairs(all_languages) do
 						else
 							fillin = escape_lua_str(current_translated)
 						end
-						if current_key == "fontpng_ascii" then
-							template = template:gsub(
-								"%-%-%- fontpng_ascii: N%.A%.",
-								"function fontpng_ascii(c)\n"
-								.. current_translated:gsub("\\t", "\t"):gsub("%%", "%%%%")
-								.. "\nend"
-							)
-						else
-							fillin = fillin:gsub("%%", "%%%%")
-							template = template:gsub(
-								"<" .. current_key:gsub("%.", "%%%.") .. ">",
-								fillin
-							)
-						end
+						fillin = fillin:gsub("%%", "%%%%")
+						template = template:gsub(
+							"<" .. current_key:gsub("%.", "%%%.") .. ">",
+							fillin
+						)
 					end
 				elseif current_english == "" and pofile == "ved_main" then
 					-- current_translated should be the headers! We need the plural rules.

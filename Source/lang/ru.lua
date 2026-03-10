@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2026-02-13 22:53:33 (CET)
+--- Last converted: 2026-03-10 17:24:14 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -12,10 +12,6 @@
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
 function lang_plurals(n) return (n%10==1 and n%100~=11 and 0 or n%10>=2 and n%10<=4 and (n%100<10 or n%100>=20) and 1 or 2) end
-
-function fontpng_ascii(c)
-
-end
 
 L = {
 

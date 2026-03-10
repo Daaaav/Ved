@@ -5,7 +5,6 @@
 	The template .pot files must already exist.
 	It also assumes the .pot format is more simple than it can be
 	(no wrapped lines, since our own script made it)
-	NOTE: ved_lua_func.po is not filled in, that must be done by hand.
 
 	This script should only need to be run if there's a lua language file
 	that's translated, and no po file.
@@ -49,10 +48,10 @@ end
 -- Load the language
 load_lua_lang(arg[1])
 
-local count_translated = 1 -- count fontpng_ascii as translated
+local count_translated = 0
 local count_total = 0
 
-local pofiles = {"ved_main", "ved_help", "ved_lua_func"}
+local pofiles = {"ved_main", "ved_help"}
 
 for k,v in pairs(english_help) do
 	table.insert(pofiles, k)
@@ -144,8 +143,6 @@ for _, pofile in pairs(pofiles) do
 
 			if split_help_mode and key == "LHS." .. pofile .. ".subj" then
 				current_value = LH[help_ix].subj
-			elseif key == "fontpng_ascii" then
-				print("You'll need to change the value of fontpng_ascii by hand.")
 			else
 				-- Actually get the value from this
 				local _, count = key:gsub("%.", "")

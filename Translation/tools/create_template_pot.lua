@@ -116,15 +116,7 @@ for line in io.lines(langdir_path .. "/" .. languages["templates"] .. ".lua") do
 			handled = true
 		elseif line:match("^%-%-%- [^:]+:.*$") ~= nil then
 			-- --- directive
-			local directive_key, directive_val = line:match("^%-%-%- ([^:]+):(.*)$")
-
 			-- These directives are especially for converting po+template into a lua language file
-			--[[
-			if directive_key == "fontpng_ascii" then
-				key = "fontpng_ascii"
-				value = ""
-			end
-			]]
 			handled = true
 		elseif line == "function lang_plurals(n) return (n ~= 1) end" then
 			export_line = "function lang_plurals(n) return 0 end"
@@ -441,20 +433,4 @@ for k,v in pairs(po_list_help_articles) do
 		fh:write("\n" .. table.concat(v, "\n"))
 		fh:close()
 	end
-end
-
--- Also make a pot for fontpng, which shall not be defined in English
-fh, everr = io.open("out/po/ved/templates/ved_lua_func.pot", "w")
-if fh == nil then
-	print("ERROR: Cannot open new help pot file for writing")
-	print(everr)
-else
-	fh:write([[
-
-#. function fontpng_ascii(c) - see the special page for info
-msgctxt "fontpng_ascii"
-msgid "<empty>"
-msgstr ""
-]])
-	fh:close()
 end

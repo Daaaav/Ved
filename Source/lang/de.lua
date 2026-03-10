@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2026-02-13 22:53:34 (CET)
+--- Last converted: 2026-03-10 17:24:14 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -12,22 +12,6 @@
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
 function lang_plurals(n) return (n ~= 1) end
-
-function fontpng_ascii(c)
-	if c == "ä" then
-		return "|"
-	elseif c == "ö" or c == "Ö" then
-		return "{"
-	elseif c == "ü" then
-		return "ue"
-	elseif c == "Ä" then
-		return "Ae"
-	elseif c == "Ü" then
-		return "Ue"
-	elseif c == "ß" then
-		return "ss"
-	end
-end
 
 L = {
 

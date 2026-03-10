@@ -13,8 +13,6 @@
 -- (but then in Lua's syntax)
 function lang_plurals(n) return (n ~= 1) end
 
---- fontpng_ascii: N.A.
-
 L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".

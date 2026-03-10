@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2026-02-13 22:53:34 (CET)
+--- Last converted: 2026-03-10 17:24:14 (CET)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -12,10 +12,6 @@
 -- Plural equations for each language: http://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
 -- (but then in Lua's syntax)
 function lang_plurals(n) return n==0 and 0 or n==1 and 1 or n==2 and 2 or n%100>=3 and n%100<=10 and 3 or n%100>=11 and 4 or 5 end
-
-function fontpng_ascii(c)
-
-end
 
 L = {
 

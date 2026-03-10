@@ -26,8 +26,6 @@ thismdeversion = 3
 
 unsupportedplugins = 0
 
-fontpng_works = false
-
 if love.setDeprecationOutput ~= nil then
 	love.setDeprecationOutput(allowdebug or intermediate_version)
 end
