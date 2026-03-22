@@ -79,7 +79,7 @@ function playtesting_ask_path_manual(target, continue_playtesting)
 		playtesting_get_vvvvvv_message(target),
 		DBS.OKCANCEL,
 		dialog.callback.locatevvvvvv,
-		langkeys(L.LOCATEVVVVVV, {"VVVVVV 2.3"}),
+		langkeys(L.LOCATEVVVVVV, {"VVVVVV"}),
 		dialog.form.hidden_make({target=target, start=continue_playtesting}, files),
 		dialog.callback.locatevvvvvv_validate
 	)

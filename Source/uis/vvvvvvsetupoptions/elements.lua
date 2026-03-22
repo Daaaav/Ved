@@ -70,10 +70,10 @@ return {
 							end
 
 							if s.vvvvvv23 == nil or s.vvvvvv23 == "" then
-								return langkeys(L.PLAYTESTING_EXECUTABLE_NOTSET, {"VVVVVV 2.3", "VVVVVV"})
+								return langkeys(L.PLAYTESTING_EXECUTABLE_NOTSET, {"VVVVVV", "VVVVVV"})
 							end
 
-							return langkeys(L.PLAYTESTING_EXECUTABLE_SET, {"VVVVVV 2.3", s.vvvvvv23})
+							return langkeys(L.PLAYTESTING_EXECUTABLE_SET, {"VVVVVV", s.vvvvvv23})
 						end
 					),
 					Spacer(),
