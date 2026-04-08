@@ -1,0 +1,251 @@
+Opmaak
+
+Opmaak\wh#
+\C=
+
+In notities kun je opmaakcodes gebruiken om je tekst groter te maken, het een
+kleur te geven, en nog wat dingen. Om opmaak toe te voegen aan een regel, typ een
+backslash (\) aan het eind van de regel. Na de \ kun je elke hoeveelheid van de\
+volgende codes gebruiken, in welke volgorde dan ook:
+
+h - Dubbele lettergrootte\h
+
+# - Anker. Je kunt snel naar ankers springen met ¤#Links¤links¤.\nLCl
+- - Horizontale lijn:
+\-
+= - Horizontale lijn onder grote tekst
+
+Tekstkleuren:\h#
+
+n - Normaal\n
+r - Rood\r
+g - Grijs\g
+w - Wit\w
+b - Blauw\b
+o - Oranje\o
+v - Groen\v
+c - Cyaan\c
+y - Geel\y
+p - Paars\p
+V - Donkergroen\V
+z - Zwart¤ (exclusief achtergrondkleur)\z&Z
+Z - Donkergrijs\Z
+C - Cyaan (Viridian)\C
+P - Roze (Violet)\P
+Y - Geel (Vitellary)\Y
+R - Rood (Vermilion)\R
+G - Groen (Verdigris)\G
+B - Blauw (Victoria)\B
+
+
+Voorbeeld:\h#
+
+\-
+Grote oranje tekst ("oh" is hetzelfde)\ho\
+
+Grote oranje tekst ("oh" is hetzelfde)\ho
+
+\-
+Onderstreepte grote tekst\wh\
+\r=\
+
+Onderstreepte grote tekst\wh
+\r=
+\-
+
+Meerdere kleuren op een regel gebruiken\h#
+
+Het is mogelijk om meerdere kleuren op een regel te gebruiken door gekleurde delen
+te scheiden met het teken¤ ¤¤ ¤(dat je kunt typen door op ¤Insert¤ te drukken) en de\nYnw
+kleuren in de juiste volgorde na¤ \ ¤te zetten. Als de laatste kleur op de regel de\nC
+standaardkleur is (n), is het niet nodig om deze code op het eind neer te zetten.
+Als je het¤ ¤¤§¤-teken wilt gebruiken op een regel met¤ \¤, kun je in plaats daarvan¤ ¤¤¤¤\nYnCnY(
+typen. Het is om technische redenen ni¤e§¤t mogelijk om een enkel teken een kleur te\nR(
+geven door het tussen twee¤ ¤¤§¤'s te zetten, tenzij je ook een spatie of een ander\nY(
+teken meeneemt.
+
+\-
+Je kunt specifieke ¤¤woorden¤¤ een ¤¤kleur¤¤ geven!\nvnr\
+
+Je kunt specifieke ¤woorden¤ een ¤kleur¤ geven!\nvnr
+\-
+Een ¤¤paar ¤¤tek¤¤st¤¤kleu¤¤ren\RYGCBP\
+
+Een ¤paar ¤tek¤st¤kleu¤ren\RYGCBP
+\-
+
+Een enkel teken een kleur geven\h#
+
+Oké, ik loog, het is wel mogelijk om een enkel teken een kleur te geven zonder een
+spatie mee te nemen. Om dit te doen kun je het teken¤ § ¤(dat je kunt typen met\nY
+Shift+Insert¤) na het teken dat je wilt kleuren, en schakel het in met de\w
+opmaakcode¤ ( ¤na¤ \¤:\nCnC
+
+\-
+Je kunt zo een ¤¤enkel¤¤ teken een kl¤¤e§¤¤ur geven!\nynr(\
+
+Je kunt zo een ¤enkel¤ teken een kl¤e§¤ur geven!\nynr(
+\-
+
+Dit is niet nodig als het enkele teken het eerste of laatste is op een regel.
+
+Achtergrondkleuren\h#
+
+Niet alleen kan tekst een kleur hebben, het kan ook ¤gemarkeerd¤ worden in welke\nZ&y
+tekstkleur dan ook. Om dit te doen kun je¤ & ¤zetten na de kleurcode voor de tekst,\nY
+en dan een kleurcode voor de achtergrondkleur. Dit kan gedaan worden in combinatie
+met het systeem met ¤ zoals hierboven beschreven, maar bedenk dat gewone
+tekstkleuren wel het nieuwe "blok" starten, maar achtergrondkleuren niet. De
+volgende voorbeelden gebruiken spaties om alles leesbaarder te maken, maar dit
+hoeft niet. Je kunt de code¤ + ¤gebruiken om de (laatste) achtergrondkleur door te\nY
+trekken naar het einde van de regel.
+
+\-
+Zwarte tekst op witte achtergrond!\z&w\
+
+Zwarte tekst op witte achtergrond!\z&w
+\-
+Zwarte tekst op doorgetrokken witte achtergrond!\z&w+\
+
+Zwarte tekst op doorgetrokken witte achtergrond!\z&w+
+\-
+Rood op geel¤¤, ¤¤Zwart op wit¤¤ (spaties verbeteren de leesbaarheid)\r&y n z&w\
+
+Rood op geel¤, ¤Zwart op wit¤ (spaties verbeteren de leesbaarheid)\r&y n z&w
+\-
+Dit ¤¤werkt¤¤ nog steeds om enk¤¤e§¤¤le tekens kleuren te geven\n P n n&r (\
+
+Dit ¤werkt¤ nog steeds om enk¤e§¤le tekens kleuren te geven\n P n n&r (
+\-
+
+Als je wilt kun je ook grafische kunst maken met achtergrondkleuren:
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
+
+Links\h#
+
+Links kunnen voor twee dingen worden gebruikt: het linken naar ergens anders in de
+artikelen/notities, of het linken naar websites. Links gebruiken de semi-kleurcode
+l¤. Deze code schakelt niet naar het volgende "gekleurde blok", het is alleen van\Y
+toepassing op het huidige blok, in tegenstelling tot de normale kleuren (wanneer
+ze niet als achtergrondkleur gebruikt worden). Het verandert de kleur ook niet,
+dus je kunt zelf de stijl van de link bepalen.
+
+Je kunt naar artikelen linken door simpelweg de naam van het artikel te gebruiken:
+
+\-
+Gereedschap\bl\
+
+Gereedschap\bl
+\-
+
+Als je hierboven op "Gereedschap" klikt ga je naar het artikel genaamd
+"Gereedschap". Ik heb hier de kleurcode¤ b ¤gebruikt om de link blauw te maken, en\nb
+zoals je kunt zien is de¤ l ¤van toepassing op datzelfde gekleurde gedeelte.\nY
+
+Je kunt een koppeling maken naar een anker in hetzelfde artikel door een¤ # ¤te\nY
+gebruiken gevolgd door alle tekst op die regel. (Gevallen van¤ ¤¤ ¤worden daar\nY
+volledig genegeerd.) Je kunt naar de bovenkant van een artikel linken met alleen
+een hekje (¤#§¤).\nY(
+
+\-
+#Meerdere kleuren op een regel gebruiken\bl\
+
+#Meerdere kleuren op een regel gebruiken\bl
+\-
+
+Je kunt op een soortgelijke manier naar een anker in een ander artikel linken:
+
+\-
+Lijsten#Gamestates\bl\
+
+Lijsten#Gamestates\bl
+\-
+
+Linken naar websites is ook eenvoudig:
+
+\-
+https://example.com/\bl\
+
+https://example.com/\bl
+\-
+
+Je kunt een kleurblok met kleurcode¤ L ¤gebruiken dat de bestemming van de link\nY
+bevat vóór de tekst van de link, en zo de link een andere tekst laten zien:
+
+\-
+Gereedschap¤¤Ga naar een ander artikel\Lbl\
+
+Gereedschap¤Ga naar een ander artikel\Lbl
+\-
+Klik ¤¤Gereedschap¤¤hier¤¤ om naar een ander artikel te gaan\nLbl\
+
+Klik ¤Gereedschap¤hier¤ om naar een ander artikel te gaan\nLbl
+\-
+[¤¤#Links¤¤Like¤¤] [¤¤#Voorbeeld:¤¤Dislike¤¤]\n L vl n L rl\
+
+[¤#Links¤Like¤] [¤#Voorbeeld:¤Dislike¤]\n L vl n L rl
+\-
+#Links¤¤ Knop A ¤¤ §¤¤#Links¤¤ Knop B \L w&Zl n L w&Z l(\
+
+#Links¤ Knop A ¤ §¤#Links¤ Knop B \L w&Zl n L w&Z l(
+\-
+
+Afbeeldingen (alleen beschikbaar in\h#
+
+beschrijvingen van plugins):\h
+
+0..9 - Toon afbeelding 0..9 op deze regel (index van het imgs-array begint bij 0,
+       en onthoud om regels leeg te laten onder de afbeelding)
+^ - Typ dit voor het afbeeldingsnummer, verhoog afbeeldingsnummer met 10. Dus ^4
+    geeft afbeelding 14, ^^4 geeft afbeelding 24. En 3^1^56 geeft afbeeldingen 3,
+    11, 25 en 26.
+_ - Typ dit voor het afbeeldingsnummer om het nummer te verlagen met 10.
+> - Typ dit voor het afbeeldingsnummer om verdere afbeeldingen 8 pixels naar
+    rechts te schuiven. Dit kan worden herhaald, dus 0>>>>1 zet afbeelding 0 op
+    x=0 en afbeelding 1 op x=32.
+< - Zelfde, maar schuif naar links.

@@ -1,0 +1,119 @@
+Tools
+
+Tools\wh#
+\C=
+
+You can use the following tools to fill rooms in your level:
+
+\0
+   Wall\h#
+
+
+The wall tool can be used to place walls.
+
+\1
+   Background\h#
+
+
+The background tool can be used to place backgrounds.
+
+\2
+   Spike\h#
+
+
+The spike tool can be used to place spikes. You can use the expand subtool to
+place spikes on a surface with one click (or slide).
+
+\3
+   Trinket\h#
+
+
+The trinket tool can be used to place trinkets. Please note that there is a limit
+of twenty trinkets in a level.
+
+\4
+   Checkpoint\h#
+
+
+The checkpoint tool can be used to place checkpoints.
+
+\5
+   Disappearing platform\h#
+
+
+The disappearing platform tool can be used to place disappearing platforms.
+
+\6
+   Conveyor\h#
+
+
+The conveyor tool can be used to place conveyors.
+
+\7
+   Moving platform\h#
+
+
+The moving platform tool can be used to place moving platforms.
+
+\8
+   Enemy\h#
+
+
+The enemy tool can be used to place enemies. The shape and color of the enemy are
+determined by the enemy type setting and the tileset (color) respectively.
+
+\9
+   Gravity line\h#
+
+
+The gravity line tool can be used to place gravity lines.
+
+\^0
+   Roomtext\h#
+
+
+The roomtext tool can be used to place text.
+
+\^1
+   Terminal\h#
+
+
+The terminal tool can be used to place terminals. First place the terminal, then
+type a name for the script. For more information about scripting, please refer to
+the scripting references.
+
+\^2
+   Script box\h#
+
+
+The script box tool can be used to place script boxes. First click on the top left
+corner, then on the bottom right corner, then type a name for the script. For more
+information about scripting, please refer to the scripting references.
+
+\^3
+   Warp token\h#
+
+
+The warp token tool can be used to place warp tokens. First click where the
+entrance should be, then where the exit should be.
+
+\^4
+   Warp line\h#
+
+
+The warp line tool can be used to place warp lines. Please note that warp lines
+can only be placed on the edges of a room.
+
+\^5
+   Crewmate\h#
+
+
+The crewmate tool can be used to place missing crewmates that can be rescued. If
+all crewmates are rescued, the level will be finished. Please note that there is
+a limit of twenty missing crewmates in a level.
+
+\^6
+   Start point\h#
+
+
+The start point tool can be used to place the start point.

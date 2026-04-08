@@ -1,0 +1,30 @@
+Plaatsingsmodi
+
+Plaatsingsmodi\wh#
+\C=
+
+Ved ondersteunt drie verschillende modi om muren te tekenen.
+
+     Automatische modus\h#0
+
+          Dit is de modus die het makkelijkst te gebruiken is. In deze stand kun
+          je muren en achtergronden tekenen, en de hoekpunten en zijkanten zullen
+          automatisch goed afgewerkt worden. Het is in deze stand echter niet
+          mogelijk om meerdere verschillende tilesets of kleuren te gebruiken.
+
+
+     Multi-tileset-modus\h#1
+
+          Dit lijkt op de automatische modus, behalve dat je meerdere
+          verschillende tilesets in dezelfde kamer kunt gebruiken. Dat wil zeggen,
+          als je van tileset verandert zullen bestaande muren en achtergronden
+          niet veranderd worden, en je kunt in meerdere verschillende kleuren
+          tekenen in dezelfde kamer.
+
+     Handmatige modus\h#2
+
+          Ook wel bekend als Direct Mode, in deze modus kun je alles handmatig
+          plaatsen, dus je zit niet vast aan de ingebouwde tileset-combinaties en
+          hoekpunten en zijkanten zullen niet automatisch afgewerkt worden,
+          waardoor je de volledige controle hebt over hoe de kamer eruit zal zien.
+          Het kost meestal echter meer tijd om in deze modus te werken.

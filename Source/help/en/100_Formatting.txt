@@ -1,0 +1,244 @@
+Formatting
+
+Formatting\wh#
+\C=
+
+In notes you can use formatting codes to make your text larger, color it, and some
+other things. To add formatting to a line, add a backslash (\) at the end of it.\
+After the \, you can add any amount of the following characters, in any order:\
+
+h - Double font size\h
+
+# - Anchor. You can jump to anchors quickly with ¤#Links¤links¤.\nLCl
+- - Horizontal line:
+\-
+= - Horizontal line underneath large text
+
+Text colors:\h#
+
+n - Normal\n
+r - Red\r
+g - Gray\g
+w - White\w
+b - Blue\b
+o - Orange\o
+v - Green\v
+c - Cyan\c
+y - Yellow\y
+p - Purple\p
+V - Dark green\V
+z - Black¤ (background color is not included)\z&Z
+Z - Dark gray\Z
+C - Cyan (Viridian)\C
+P - Pink (Violet)\P
+Y - Yellow (Vitellary)\Y
+R - Red (Vermilion)\R
+G - Green (Verdigris)\G
+B - Blue (Victoria)\B
+
+
+Example:\h#
+
+\-
+Large orange text ("oh" has same result)\ho\
+\
+Large orange text ("oh" has same result)\ho
+
+\-
+Underlined large text\wh\
+\r=\
+\
+Underlined large text\wh
+\r=
+\-
+
+Using multiple colors on a line\h#
+
+It is possible to use multiple colors on a line by separating colored parts with
+the¤ ¤¤ ¤character (which you can type using the ¤Insert¤ key), and putting the color\nYnw
+codes in order after¤ \¤. If the last color on the line is the default color (n), it\nC
+is not necessary to list that at the end. If you want to use the¤ ¤¤ ¤character on a\nY
+line which uses¤ \¤, write¤ ¤¤¤¤ ¤instead. For technical reasons, it is n¤o§¤t possible to\nCnYnR(
+color a single character by enclosing it in two¤ ¤¤§¤s, unless you also include a\nY(
+space or another character.
+
+\-
+You can ¤¤color¤¤ specific ¤¤words¤¤ with this!\nrnv\
+\
+You can ¤color¤ specific ¤words¤ with this!\nrnv
+\-
+Some ¤¤te¤¤xt¤¤ co¤¤lo¤¤rs\RYGCBP\
+\
+Some ¤te¤xt¤ co¤lo¤rs\RYGCBP
+\-
+
+Coloring a single character\h#
+
+OK, I lied, it is possible to color a single character without including a space.
+To do this, put the character¤ § ¤(which you can type using ¤Shift+Insert¤), after\nYnw
+the character you want to color, and enable it with the formatting code¤ ( ¤after¤ \¤:\nCnC
+
+\-
+You can c¤¤o§¤¤lor a ¤¤single¤¤ character like this!\nrny(\
+\
+You can c¤o§¤lor a ¤single¤ character like this!\nrny(
+\-
+
+This is not necessary if the single character is the first or last on a line.
+
+Background colors\h#
+
+Not only can text be colored, it can also be ¤highlighted¤ in any of the text\nZ&y
+colors. To do this, you can put¤ & ¤after the regular text color code, and then a\nY
+color code for the background color. This can be done in combination with the ¤
+system described above, note that regular text colors start the next "block",
+but background colors do not. The following examples use spaces to make everything
+more readable, but this is completely optional. You can use the code¤ + ¤to expand\nY
+the (last) background color to the end of the line.
+
+\-
+Black text on white background!\z&w\
+\
+Black text on white background!\z&w
+\-
+Black text on expanded white background!\z&w+\
+\
+Black text on expanded white background!\z&w+
+\-
+Red on yellow¤¤, ¤¤Black on white¤¤ (optionally spaces improve readability)\r&y n z&w\
+\
+Red on yellow¤, ¤Black on white¤ (optionally spaces improve readability)\r&y n z&w
+\-
+This still ¤¤works¤¤ to color si¤¤n§¤¤gle characters\n P n n&r (\
+\
+This still ¤works¤ to color si¤n§¤gle characters\n P n n&r (
+\-
+
+If you like, you can also make graphics using background colors:
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+\
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+\
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
+
+Links\h#
+
+Links can be used for two things: linking to somewhere else in the articles/notes,
+or linking to websites. Links use the semi-color code¤ l¤. This code does not switch\nY
+to the next "colored block", it only applies to the current one, as opposed to
+regular (non-background) color codes. It also does not change color, so you can
+change the style of the link to anything you want.
+
+You can link to articles by simply using the name of the article:
+
+\-
+Tools\bl\
+\
+Tools\bl
+\-
+
+Clicking the "Tools" above will bring you to the Tools help article. I used the
+color code¤ b ¤here to make the link blue, and as you can see, the¤ l ¤applies to\nbnY
+that same colored part.
+
+You can link to anchors in the same article by linking to a¤ # ¤followed by all text\nY
+on that line. (Instances of¤ ¤¤ ¤are completely ignored there.) You can link to the\nY
+top of the article with just a hash character (¤#§¤).\nY(
+
+\-
+#Using multiple colors on a line\bl\
+\
+#Using multiple colors on a line\bl
+\-
+
+You can link to an anchor in a different article in a similar way:
+
+\-
+Lists reference#Gamestates\bl\
+\
+Lists reference#Gamestates\bl
+\-
+
+Linking to websites is straightforward too:
+
+\-
+https://example.com/\bl\
+\
+https://example.com/\bl
+\-
+
+You can use a color block with color code¤ L ¤that contains the actual destination\nY
+before the link text, and make the link show a different text that way:
+
+\-
+Tools¤¤Go to another article\Lbl\
+\
+Tools¤Go to another article\Lbl
+\-
+Click ¤¤Tools¤¤here¤¤ to go to another article\nLbl\
+\
+Click ¤Tools¤here¤ to go to another article\nLbl
+\-
+[¤¤#Links¤¤Like¤¤] [¤¤#Example:¤¤Dislike¤¤]\n L vl n L rl\
+\
+[¤#Links¤Like¤] [¤#Example:¤Dislike¤]\n L vl n L rl
+\-
+#Links¤¤ Button A ¤¤ §¤¤#Links¤¤ Button B \L w&Zl n L w&Z l(\
+\
+#Links¤ Button A ¤ §¤#Links¤ Button B \L w&Zl n L w&Z l(
+\-
+
+Images (only available in plugin\h#
+\
+descriptions):\h
+
+0..9 - display image 0..9 on this line (array index in the imgs array starts at 0,
+       and remember to keep lines blank to accommodate for the image height)
+^ - Put this before the image number, shift image number by 10. So ^4 makes image
+    14, ^^4 makes image 24. And 3^1^56 makes images 3, 11, 25 and 26.
+_ - Put this before the image number to decrease the image number by 10.
+> - Put this before the image number to shift further images to the right by 8
+    pixels. This can be repeated, so 0>>>>1 puts image 0 at x=0 and
+    image 1 at x=32.
+< - Same, but shift to the left.

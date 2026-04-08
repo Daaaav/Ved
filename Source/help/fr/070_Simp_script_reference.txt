@@ -1,0 +1,179 @@
+Référence script simple
+
+Référence de création de script simple\wh#
+\C=
+
+Le langage de création d'un script simplifié de VVVVVV est un langage basique
+qui peut être utilisé pour utiliser des scripts dans des niveaux VVVVVV.
+Note: quand quelque chose est entre des guillemets, ceux-ci doivent être enlevés.
+
+
+say¤([lignes[,couleur]])\h#w
+
+Affiche une boite de dialogue. Sans aucun argument, cette fonction créée une
+boite de dialogue avec une seule ligne, et ressemblera à une boite de dialogue
+centrée de terminal par défaut. L'argument couleur peut être une couleur ou le nom
+d'un équipier.
+Si vous utilisez une couleur et un équipier secourable de cette couleur est dans
+la salle, alors la boite de dialogue sera affichée au dessus de cet équipier.
+
+reply¤([lignes])\h#w
+
+Affiche une boite de dialogue pour Viridian. Sans aucun argument, cette
+fonction créée une boite de dialogue avec une seule ligne.
+
+delay¤(n)\h#w
+
+Retarde la prochaine action par n trames. 30 trames fait presque une seconde.
+
+happy¤([équipier])\h#w
+
+Rend un équipier heureux. Sans argument, cette fonction rendre Viridian heureux.
+Vous pouvez aussi utiliser "all", "everyone" ou "everybody" comme argument pour
+rendre tout le monde triste.
+
+sad¤([équipier])\h#w
+
+Rend un équipier triste. Sans argument, cette fonction rendre Viridian triste.
+Vous pouvez aussi utiliser "all", "everyone" ou "everybody" comme argument pour
+rendre tout le monde triste.
+
+Note : cette commande peut aussi être écrite tel que ¤cry¤ au lieu de ¤sad¤.\nwnw
+
+flag¤(drapeau,on/off)\h#w
+
+Allume ou éteint un drapeau donné. Par exemple, flag(4,on) allumera le drapeau 4.
+Il y a 100 drapeaux, numérotés de 0 à 99.
+Par défaut, tous les drapeaux sont éteints quand on démarre un niveau.
+Note: Dans Ved, vous pouvez aussi utiliser les noms de drapeaux au lieu de
+nombres.
+
+ifflag¤(drapeau,nom de script)\h#w
+
+Si un drapeau donné est ALLUMÉ, exécuter le script ayant comme nom nom de script.
+Si un drapeau donné est ÉTEINT, continuer dans ce script.
+Exemple :
+ifflag(20,cutscene) - Si le drapeau 20 est ALLUMÉ, exécuter le script "cutscene",
+                      sinon on continue dans ce script.
+Note: Dans Ved, vous pouvez aussi utiliser les noms de drapeaux au lieu de
+nombres.
+
+iftrinkets¤(nombre,nom de script)\h#w
+
+Si votre nombre de médailles >= nombre, exécuter le script ayant pour nom nom de
+script.
+Si votre nombre de médailles < nombre, continuer dans ce script.
+Exemple :
+iftrinkets(3,enoughtrinkets) - Si vous avez 3 médailles ou plus, le script
+                               "enoughtrinkets" sera exécuté, sinon ce script sera
+                               continué.
+Une pratique répandue est d'utiliser 0 comme nombre minimum de médailles afin de
+charger un script dans tous les cas.
+
+iftrinketsless¤(nombre,nom de script)\h#w
+
+Si votre nombre de médailles < nombre, exécuter le script ayant pour nom nom de
+script.
+Si votre nombre de médailles >= nombre, continuer dans ce script.
+
+destroy(objet)\h#w
+
+Enlève tous les objets d'un type donné, jusqu'à ce que le joueur re-rentre dans la
+salle.
+
+Les arguments valides sont :
+warptokens - Jetons de téléportation
+gravitylines - Lignes de gravité
+platforms - Ne fonctionne pas correctement
+moving - Plateformes mouvantes (ajouté dans la 2.4)
+disappear - Plateformes disparaissantes (ajouté dans la 2.4)
+
+music¤(index)\h#w
+
+Change la musique en une autre en utilisant l'index de la chanson.
+Pour une liste d'index des chansons, veuillez vous référer à l'article "Référence
+de listes".
+
+playremix\h#w
+
+Joue le remix de Predestined Fate en tant que chanson.
+
+flash\h#w
+
+Éclaire l'écran en blanc, émet un son de détonation et fait trembler l'écran pour
+un court moment.
+
+map¤(on/off)\h#w
+
+Active (on) ou désactive (off) la carte. Si la carte est désactivée, elle
+affichera "NO SIGNAL" jusqu'à ce qu'elle soit activée une nouvelle fois. Les
+salles seront toujours découvertes pendant que la carte est désactivée et seront
+visibles quand la carte sera activée.
+
+squeak¤(équipier/on/off)\h#w
+
+Fait couiner un équipier, ou active (on) / désactive (off) le couinement
+lorsqu'une boite de dialogue est affichée.
+
+speaker¤(couleur)\h#w
+
+Change la couleur et la position des prochaines boites de dialogue créées avec la
+commande "say". Cette commande peut être utilisée à la place de donner un second
+argument à "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Change la direction de téléportation de la salle x,y à la direction donnée, indexé
+à 1. Peut être vérifié avec ifwarp, ce qui peut être utilisé comme un système de
+drapeau/variable supplémentaire qui est relativement puissant.
+
+x - Coordonnée x de la salle, commence à 1
+y - Coordonnée y de la salle, commence à 1
+dir - Direction de la téléportation. Normalement 0-3, mais les valeurs en dehors
+de cette fourchette sont valides
+
+ifwarp¤(x,y,dir,script)\w#h
+
+Si la warpdir de la salle x,y (indexé à 1) est dir, lancer script (simplifié)
+
+x - Coordonnée x de la salle, commence à 1
+y - Coordonnée y de la salle, commence à 1
+dir - Direction de la téléportation. Normalement 0-3, mais les valeurs en dehors
+de cette fourchette sont valides
+
+loadtext¤(langage)\w#h
+
+Charge une traduction pour le niveau à travers un code. Utilisez une valeur
+vide pour à nouveau utiliser le langage de VVVVVV.
+
+langage - Un code de langage, tel que fr ou pt_BR
+
+iflang¤(langage,script)\w#h
+
+Si le langage de VVVVVV est égal au langage donné, lance le script donné.
+Ceci n'est pas affecté par le code de langage passé à travers loadtext(),
+seulement le langage sélectionné à travers le menu.
+
+setfont¤(font)\w#h
+
+Change la police utilisée pour le texte dans le niveau. Ceci peut être une
+police donnée par le jeu, tel que font_ja pour la police Japonaise,
+ou une police donnée par le niveau. Ne donnez pas d'argument
+si vous souhaitez utiliser la police par défaut pour ce niveau.
+
+setrtl¤(on/off)\w#h
+
+Dans les niveaux personnalisés, détermine si la police se lit de droite à gauche
+ou non. Par défaut, la police se lit de gauche à droite.
+
+Le mode de lecture droite à gauche aligne les boîtes de dialogues sur la droite,
+ce qui est surtout utilisé pour les langues telles que l'Arabe.
+
+textcase¤(case)\w#h
+
+Si votre niveau a des fichiers de traduction, et que vous avez plusieurs
+boîtes de dialogue avec le même text dans un même script, cette commande
+peut leur donner des traductions uniques.
+Placez la avant une boîte de dialogue.
+
+case - Un nombre entre 1 et 255

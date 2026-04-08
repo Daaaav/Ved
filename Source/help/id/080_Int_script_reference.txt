@@ -1,0 +1,861 @@
+Referensi sk.internal
+
+Referensi skrip internal\wh#
+\C=
+
+Scripting internal memberikan lebih banyak kekuatan untuk scripters, tetapi juga
+sedikit lebih kompleks daripada scripting yang disederhanakan.
+
+Untuk menggunakan skrip internal di Ved, Anda dapat mengaktifkan mode skrip
+internal di editor, untuk menangani semua perintah dalam skrip itu sebagai skrip
+internal.
+
+Kode warna:\w
+Normal - Seharusnya aman, skenario terburuknya adalah VVVVVV mogok karena Anda
+         melakukan kesalahan.
+Biru¤   - Beberapa di antaranya tidak berfungsi di level kustom, yang lain tidak\b
+         masuk akal di level kustom, atau hanya setengah berguna karena
+         benar-benar dirancang untuk permainan utama.
+Oranye¤ - Ini berfungsi dan tidak ada yang salah secara normal, kecuali jika Anda\o
+         memberikan beberapa argumen kustom kepada mereka yang akan menyebabkan
+         data simpanan Anda hilang.
+Merah¤  - Perintah merah tidak boleh digunakan di level kustom karena akan membuka\r
+         kunci bagian tertentu dari game utama (yang seharusnya tidak dilakukan
+         level kustom, bahkan jika Anda mengatakan semua orang telah menyelesaikan
+         game), atau merusak save data sama sekali.
+
+
+activateteleporter¤()\w#h
+
+Aktifkan teleporter pertama di ruangan itu, yang membuatnya memancarkan warna
+acak, dan menghidupkannya secara tidak menentu.
+
+tile¤ teleporter disetel ke 6, dan ¤color¤ disetel ke 102. Perintah ini membuat\n&Zgn&Zg
+teleporter tidak melakukan apa pun saat disentuh, karena ubin teleporter disetel\g
+ke sesuatu yang bukan 1.\gn&Zg(
+
+activeteleporter¤()\w#h
+
+Menjadikan teleporter pertama di ruangan itu berwarna putih alias warna ¤101¤.\nn&Z
+
+Perintah ini tidak mengubah ubin, sehingga tidak akan mempengaruhi fungsionalitas.\g
+
+alarmoff\w#h
+
+Menonatifkan alarm.
+
+alarmon\w#h
+
+Mengatifkan alarm.
+
+altstates¤(state)\b#h
+
+Mengubah tata letak beberapa ruangan, seperti ruang perhiasan di kapal sebelum
+dan sesudah ledakan, dan pintu masuk lab rahasia (level kustom tidak mendukung
+altstate sama sekali).
+
+Dalam kode, ini mengubah variabel ¤altstates¤ global.\gn&Zg
+
+audiopause¤(on/off)\w#h
+
+Aktifkan paksa atau nonaktifkan jeda audio tidak fokus, terlepas dari pengaturan
+jeda audio yang diatur pengguna. Default ke mati, yaitu menjeda audio selama jeda
+tidak fokus.
+
+Perintah ini ditambahkan di 2.3.\g
+
+backgroundtext\w#h
+
+Membuat textbox show selanjutnya tidak menunggu ACTION ditekan sebelum melanjutkan
+script. Penggunaan paling umum dari ini adalah untuk menampilkan beberapa kotak
+teks sekaligus.
+
+befadein¤()\w#h
+
+Menghapus memudar secara instan, seperti dari ¤#fadeout()¤fadeout¤ atau ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
+
+blackon¤()\w#h
+
+Lanjutkan rendering jika dijeda oleh ¤#blackout()¤blackout¤.\nLwl&Z
+
+blackout¤()\w#h
+
+Menjeda rendering.
+
+Untuk membuat layar menjadi hitam, gunakan ¤#shake(n)¤shake¤ secara bersamaan.\gLwl&Zg
+
+bluecontrol\b#h
+
+Mulailah percakapan dengan Victoria seperti saat Anda bertemu dengannya di game
+utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
+
+changeai¤(crewmate,ai1,ai2)\w#h
+
+Dapat mengubah arah wajah crewmate atau perilaku berjalan
+
+crewmate - cyan/player/blue/red/yellow/green/purple
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceleft/faceright/followposition,ai2
+ai2 - diperlukan jika followposition digunakan untuk ai1
+
+faceplayer¤ tidak ada, gunakan 18 saja. ¤panic¤ juga tidak berfungsi, memerlukan ¤20¤.\n&Zgn&Zgn&Zg
+
+changecolour¤(a,b)\w#h
+
+Mengubah warna crewmate. Perintah ini dapat digunakan dengan Manipulasi Entitas
+Sewenang-wenang.
+
+a - Warna crewmate untuk mengubah (cyan/player/blue/red/yellow/green/purple)
+b - Nama warna yang ingin diubah. Sejak 2.4, Anda juga dapat menggunakan ID warna
+
+changecustommood¤(warna,suasana)\w#h
+
+Mengubah suasana seorang crewmate yang dapat diselamatkan.
+
+warna - Warna crewmate untuk ubah (cyan/player/blue/red/yellow/green/purple)
+suasana - 0 untuk senang, 1 untuk sedih
+
+changedir¤(warna,arah)\w#h
+
+Sama seperti ¤#changeai(crewmate,ai1,ai2)¤changeai¤, ini mengubah arah wajah.\nLwl&Z
+
+warna - cyan/player/blue/red/yellow/green/purple
+arah - 0 = kiri, 1 = kanan
+
+changegravity¤(crewmate)\w#h
+
+Meningkatkan jumlah sprite dari crewmate yang diberikan sebanyak 12.
+
+crewmate - Warna crewmate untuk berubah cyan/player/blue/red/yellow/green/purple
+
+changemood¤(warna,suasana)\w#h
+
+Mengubah suasana pemain atau crewmate cutscene.
+
+warna - cyan/player/blue/red/yellow/green/purple
+suasana - 0 untuk senang, 1 untuk sedih
+
+Crewmate cutscene adalah rekan kru yang dibuat dengan ¤#createcrewman(x,y,warna,suasana,ai1,ai2)¤createcrewman¤.\gLwl&Zg
+
+changeplayercolour¤(warna)\w#h
+
+Mengubah warna pemain
+
+warna - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(warna)\w#h
+
+Mengubah warna pemain yang dibangkitkan kembali saat mati.
+
+warna - red/yellow/green/cyan/blue/purple/teleporter atau nomor
+
+Perintah ini ditambahkan di 2.4.\g
+
+changetile¤(warna,ubin)\w#h
+
+Mengubah ubin crewmate (Anda dapat mengubahnya ke sprite apa pun di sprite.png,
+dan itu hanya berfungsi untuk rekan crewmate yang dibuat dengan createcrewman)
+
+warna - cyan/player/blue/red/yellow/green/purple/gray
+ubin - Nomor ubin
+
+clearteleportscript¤()\b#h
+
+Menghapus skrip teleporter yang disetel dengan teleportscript(x)
+
+companion¤(x)\b#h
+
+Menjadikan crewmate yang ditentukan sebagai pendamping.
+
+x - 0 (tidak ada) atau 6/7/8/9/10/11
+
+createactivityzone¤(warna)\b#h
+
+Membuat zona aktivitas di crewmate yang ditentukan (atau pemain, jika crewmate
+tidak ada) yang mengatakan "Press ACTION to talk to (crewmate)/
+Tekan ACTION untuk berbicara dengan (crewmate)"
+
+createcrewman¤(x,y,warna,suasana,ai1,ai2)\w#h
+
+Membuat crewmate (tidak dapat diselamatkan)
+
+suasana - 0 untuk bahagia, 1 untuk sedih
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - diperlukan jika followposition digunakan untuk ai1
+
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
+
+Membuat entitas dengan ID ¤e§¤, dua nilai ¤meta¤, dan 4 nilai ¤p§¤.\nn&Znn&Znn&Z(
+
+e - ID entitas
+
+Daftar ID entitas dan nilai ¤meta¤/§¤p§¤ yang digunakan dapat ditemukan ¤https://vsix.dev/wiki/Createentity_list¤di sini¤.\gn&Zgn&ZgLClg(
+
+createlastrescued¤()\b#h
+
+Membuat crewmate terakhir yang diselamatkan pada posisi kode keras ¤(200,153)¤.\nn&Z
+Rekan crewmate terakhir yang diselamatkan didasarkan pada status game Level
+Complete.
+
+createrescuedcrew¤()\b#h
+
+Membuat semua rekan crewmate yang diselamatkan
+
+customifflag¤(n,skrip)\w#h
+
+Sama seperti ¤ifflag(n,skrip)¤ dalam skrip sederhana\nn&Z
+
+customiftrinkets¤(n,skrip)\w#h
+
+Sama seperti ¤iftrinkets(n,skrip)¤ dalam skrip sederhana\nn&Z
+
+customiftrinketsless¤(n,skrip)\w#h
+
+Sama seperti ¤iftrinketsless(n,skrip)¤ dalam skrip sederhana\nn&Z
+
+custommap¤(on/off)\w#h
+
+Varian internal dari perintah peta
+
+customposition¤(type,above/below)\w#h
+
+Mengganti x,y dari perintah teks dan dengan demikian menetapkan posisi kotak teks,
+tetapi untuk crewmate, rekan crewmate yang dapat diselamatkan digunakan untuk
+memposisikan, bukan rekan crewmate createcrewman.
+
+type - center/centerx/centery, atau nama warna cyan/player/blue/red/yellow/green/
+purple (yang dapat diselamatkan)
+above/below - Hanya digunakan jika tipe adalah nama warna
+
+cutscene¤()\w#h
+
+Membuat bilah cutscene muncul
+
+delay¤(frame)\w#h
+
+Menjeda skrip untuk jumlah frame yang ditentukan. Kontrol terpaksa tidak ditekan
+selama jeda ini.
+
+destroy¤(objek)\w#h
+
+Menghapus entitas. Ini sama dengan perintah scripting yang disederhanakan.
+
+objek - gravitylines/warptokens/platforms/moving/disappear
+
+moving¤ dan ¤disappear¤ ditambahkan di 2.4.\n&Zgn&Zg
+
+do¤(kali)\w#h
+
+Memulai blok perulangan yang akan berulang beberapa kali. Akhiri blok dengan
+perintah ¤#loop¤loop¤.\nLwl&Z
+
+kali - Berapa kali blok akan berputar.
+
+endcutscene¤()\w#h
+
+Membuat bilah cutscene menghilang
+
+endtext\w#h
+
+Membuat kotak teks menghilang (memudar)
+
+endtextfast\w#h
+
+Membuat kotak teks langsung menghilang (tanpa memudar)
+
+entersecretlab\r#h
+
+Mengaktifkan mode Secret Lab.
+
+2.2 DAN DI BAWAH: Sebenarnya membuka Rahasia Lab, yang mungkin merupakan efek
+yang tidak diinginkan untuk memiliki level kustom.
+
+everybodysad¤()\w#h
+
+Bikin sedih semua crewmate.
+
+Tidak berfungsi pada crewmate yang ditempatkan di editor.\g
+
+face¤(A,B)\w#h
+
+Membuat crewmate A melihat crewmate B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Tidak berfungsi pada crewmate yang ditempatkan di editor.\g
+
+fadein¤()\w#h
+
+Memudar kembali dari ¤#fadeout()¤fadeout¤.\nLwl&Z
+
+fadeout¤()\w#h
+
+Memudarkan layar menjadi hitam. Untuk membatalkan, gunakan ¤#fadein()¤fadein¤ or ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
+
+finalmode¤(x,y)\b#h
+
+Menteleportasimu ke Dimensi Luar VVVVVV, ¤(46,54)¤ adalah ruang awal Level Akhir\nn&Z
+
+flag¤(n,on/off)\w#h
+
+Perilaku yang sama seperti perintah yang disederhanakan
+
+flash¤(panjang)\w#h
+
+Membuat layar menjadi putih untuk ¤panjang¤ jumlah frame.\nn&Z
+
+durasi - Jumlah frame. 30 frame hampir satu detik.
+
+Ini berbeda dari perintah yang disederhanakan, yang sebenarnya memanggil ¤flash(5)¤,\gn&Zg
+playef(9)¤ dan ¤shake(20)¤ secara bersamaan. Lihat: ¤#playef(suara)¤playef¤ dan ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
+
+flip\w#h
+
+Buat pemain membalik dengan menekan ACTION.
+
+Jika pemain tidak berada di tanah, ini tidak akan berfungsi, karena ini\g
+menyimulasikan tekanan ACTION. Demikian pula, perintah ini tepat setelah kotak\g
+teks tidak akan berfungsi karena alasan yang sama karena dua penekanan ACTION\g
+berturut-turut dianggap sebagai menahan tombol, yang tidak membalik pemutar.\g
+
+flipgravity¤(warna)\w#h
+
+Membalikkan gravitasi crewmate tertentu, atau pemain.
+
+warna - cyan/player/blue/red/yellow/green/purple
+
+Sebelum versi 2.3, hal ini tidak akan membalikkan kembali crewmate, atau\g
+memengaruhi pemain.\g
+
+flipme\w#h
+
+Pemosisian vertikal yang benar dari beberapa kotak teks dalam mode flip
+
+foundlab\b#h
+
+Memutar efek suara 3, menunjukkan kotak teks dengan "Congratulations! You have
+found the secret lab!/Selamat! Anda telah menemukan lab rahasia!" Tidak endtext,
+juga tidak memiliki efek yang tidak diinginkan lebih lanjut.
+
+foundlab2\b#h
+
+Menampilkan kotak teks kedua yang Anda lihat setelah menemukan lab rahasia. Juga
+tidak endtext, dan juga tidak memiliki efek yang tidak diinginkan lebih lanjut.
+
+foundtrinket¤(x)\w#h
+
+Membuat trinket ditemukan
+
+x - Jumlah trinket
+
+gamemode¤(x)\b#h
+
+teleporter untuk menunjukkan peta, game untuk menyembunyikannya (menunjukkan
+teleporter dari game utama)
+
+x - teleporter/game
+
+gamestate¤(state)\b#h
+
+Ubah gamestate saat ini ke nomor status yang ditentukan.
+
+state - Keadaan permainan untuk melompat ke
+
+Daftar lengkap status permainan ada ¤https://vsix.dev/wiki/List_of_gamestates¤di sini¤.\gLClg
+
+gotoposition¤(x,y,gravitasi)\w#h
+
+Ubah posisi Viridian menjadi ¤(x,y)¤ di ruangan ini, dan mengubah gravitasinya juga.\nn&Z
+
+
+gravitasi - 1 untuk dibalik, 0 untuk tidak dibalik. Nilai lainnya mengakibatkan
+kesalahan gravitasi pemain.
+
+gotoroom¤(x,y)\w#h
+
+Ubah ruangan saat ini menjadi ¤(x,y)¤.\nn&Z
+
+x - koordinat x
+y - koordinat y
+
+Koordinat ruangan ini diindeks 0.\g
+
+greencontrol\b#h
+
+Mulai percakapan dengan Verdigris seperti saat Anda bertemu dengannya di game
+utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
+
+hascontrol¤()\w#h
+
+Membuat pemain memiliki kendali. Perhatikan bahwa Anda tidak dapat menggunakan ini
+untuk mendapatkan kembali kendali saat berada di tengah-tengah ¤#delay(frame)¤delay¤.\nLwl&Z
+
+hidecoordinates¤(x,y)\w#h
+
+Atur ruangan pada koordinat yang diberikan ke belum dijelajahi
+
+hideplayer¤()\w#h
+
+Membuat pemain tidak terlihat
+
+hidesecretlab\w#h
+
+Sembunyikan lab rahasia di peta
+
+hideship\w#h
+
+Sembunyikan kapal di peta
+
+hidetargets¤()\b#h
+
+Sembunyikan target di peta
+
+hideteleporters¤()\b#h
+
+Sembunyikan teleporter di peta
+
+hidetrinkets¤()\b#h
+
+Sembunyikan trinket di peta
+
+ifcrewlost¤(crewmate,skrip)\b#h
+
+Jika crewmate hilang, buka skrip
+
+ifexplored¤(x,y,skrip)\w#h
+
+Jika ¤(x,y)¤ dieksplorasi, buka skrip internal.\nn&Z
+
+Koordinat ruangan ini diindeks 0.\g
+
+ifflag¤(n,skrip)\b#h
+
+Sama seperti customifflag, tetapi memuat skrip internal (permainan utama)
+
+iflang¤(bahasa,skrip)\w#h
+
+Periksa apakah bahasa permainan saat ini adalah bahasa tertentu, dan jika ya,
+lompat ke skrip khusus yang diberikan. ¤#loadtext(bahasa)¤loadtext¤ tidak berpengaruh pada perintah\nLwl&Z
+ini; hanya apa bahasa yang dipilih pengguna di menu.
+
+bahasa - Bahasa yang akan diperiksa, biasanya berupa kode dua huruf, seperti ¤en\nn&Z
+untuk bahasa Inggris
+skrip - Skrip khusus untuk melompati, jika pemeriksaan berhasil
+
+Perintah ini ditambahkan di 2.4.\g
+
+iflast¤(crewmate,skrip)\b#h
+
+Jika crewmate x diselamatkan terakhir kali, buka skrip
+
+crewmate - Nomor digunakan di sini: 0: Viridian, 1: Violet, 2: Vitellary, 3:
+Vermilion, 4: Verdigris, 5 Victoria
+
+ifskip¤(x)\b#h
+
+Jika Anda melewatkan cutscene dalam No Death Mode/Mode Tampa Kematian, buka
+skrip x
+
+iftrinkets¤(n,skrip)\b#h
+
+Sama seperti skrip yang disederhanakan, tetapi memuat skrip internal
+(permainan utama)
+
+iftrinketsless¤(n,skrip)\b#h
+
+Memeriksa apakah nomor yang diberikan kurang dari jumlah yang terkait dengan
+trinket. Namun, itu memeriksa jumlah trinket terbesar yang pernah
+Anda dapatkan selama satu permainan utama, BUKAN jumlah trinket yang
+sebenarnya Anda miliki. Memuat skrip internal (permainan utama)
+
+ifwarp¤(x,y,dir,skrip)\w#h
+
+Jika warpdir untuk kamar ¤(x,y)¤, berindeks-1, diatur ke dir, buka skrip\nn&Z
+(yang disederhanakan)
+
+x - Ruang x koordinat, mulai dari 1
+y - Ruang y koordinat, mulai dari 1
+dir - Arah warp. Biasanya 0-3, tetapi nilai di luar batas diterima
+
+jukebox¤(n)\w#h
+
+Membuat terminal jukebox menjadi putih dan mematikan warna semua terminal lainnya.
+Jika n diberikan, zona aktivitas jukebox akan muncul pada posisi hardcode dan jika
+terminal berada pada posisi hardcode yang sama maka akan menyala.
+Nilai yang mungkin dari n dan posisi hardcode adalah sebagai berikut:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
+
+leavesecretlab¤()\b#h
+
+Nonatifkan "secret lab mode"
+
+loadscript¤(script)\b#h
+
+Muat skrip internal (permainan utama). Biasanya digunakan di level kustom sebagai
+loadscript(stop)
+
+loadtext¤(bahasa)\w#h
+
+Di level khusus, muat terjemahan untuk bahasa tertentu.
+
+bahasa - Bahasa yang akan dimuat, biasanya berupa kode dua huruf, seperti ¤en\nn&Z
+untuk bahasa Inggris. Berikan kode bahasa kosong untuk kembali ke perilaku default
+hanya menggunakan bahasa VVVVVV.
+
+Perintah ini ditambahkan di 2.4.\g
+
+loop\w#h
+
+Letakkan ini di akhir blok perulangan yang dimulai dengan perintah ¤#do(kali)¤do¤.\nLwl&Z
+
+missing¤(warna)\b#h
+
+Membuat seseorang hilang
+
+moveplayer¤(x,y)\w#h
+
+Memindahkan pemutar x piksel ke kanan dan y piksel ke bawah. Angka negatif juga
+diterima.
+
+musicfadein¤()\w#h
+
+Memudarkan musik yang masuk.
+
+Sebelum versi 2.3, perintah ini tidak melakukan apa pun.\g
+
+musicfadeout¤()\w#h
+
+Memudar musik.
+
+nocontrol¤()\w#h
+
+Menyetel game.hascontrol ke false, yang menghilangkan kontrol dari pemain.
+game.hascontrol secara otomatis diatur selama "- [Press ACTION to advance text/
+Tekan TINDAKAN untuk memajukan teks] -" dan menutup kotak teks, jadi ini akan
+dibatalkan setelah petunjuk itu
+
+play¤(n)\w#h
+
+Mulai mainkan lagu dengan nomor lagu internal.
+
+n - Nomor lagu internal
+
+playef¤(suara)\w#h
+
+Mainkan efek suara.
+
+suara - ID Suara
+
+Di VVVVVV 1.x, ada argumen kedua yang mengontrol offset dalam milidetik saat efek\g
+suara dimulai. Ini telah dihapus selama port C++.\g
+
+position¤(tipe,above/below)\w#h
+
+Mengganti x,y dari perintah teks dan dengan demikian mengatur posisi kotak teks.
+
+tipe - center/centerx/centery, atau nama warna cyan/player/blue/red/yellow/green/
+purple
+above/below - Hanya digunakan jika tipe adalah nama warna
+
+purplecontrol\b#h
+
+Mulailah percakapan dengan Violet seperti saat kamu bertemu dengannya di game
+utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
+
+redcontrol\b#h
+
+Mulai percakapan dengan Vermilion seperti saat Anda bertemu dengannya di game
+utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
+
+rescued¤(warna)\b#h
+
+Membuat seseorang diselamatkan
+
+resetgame\w#h
+
+Mengatur ulang semua trinket, mengumpulkan crewmate dan tanda, dan memindahkan
+pemain ke checkpoint terakhir.
+
+restoreplayercolour¤()\w#h
+
+Mengubah warna pemain kembali ke biru muda
+
+resumemusic¤()\w#h
+
+Melanjutkan musik setelah ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Sebelum versi 2.3, hal ini belum selesai dan menyebabkan berbagai gangguan,\g
+termasuk crash.\g
+
+rollcredits¤()\r#h
+
+Membuat kredit bergulir.
+
+2.2 DAN DI BAWAH: Ini menghancurkan simpanan Anda setelah kredit selesai!
+
+setactivitycolour¤(warna)\w#h
+
+Ubah warna zona aktivitas berikutnya yang muncul.
+
+warna - Warna apa pun yang digunakan ¤#text(warna,x,y,baris)¤text\nLwl&Z
+
+Perintah ini ditambahkan di 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Ubah posisi zona aktivitas berikutnya yang muncul.
+
+y - Posisi y
+
+Perintah ini ditambahkan di 2.4.\g
+
+setactivitytext\w#h
+
+Ubah teks zona aktivitas berikutnya yang muncul. Baris setelah perintah ini akan
+diambil sebagai teks (seperti ¤#text(warna,x,y,baris)¤text¤ dengan 1 baris).\nLwl&Z
+
+Perintah ini ditambahkan di 2.4.\g
+
+setcheckpoint¤()\w#h
+
+Setel pos pemeriksaan ke lokasi saat ini
+
+setfont¤(font,all)\w#h
+
+Di level khusus, atur font ke font yang diberikan.
+
+font - Font untuk mengatur font. Jika dibiarkan kosong, ini akan mengatur font ke
+font default level kustom.
+all - Jika ¤all¤ ditentukan (secara harafiah kata ¤semua¤), maka ini akan\nn&Znn&Z
+mempengaruhi semua kotak teks yang sudah ada di layar secara surut. Kalau tidak,
+tinggalkan saja ini.
+
+Perintah ini ditambahkan di 2.4. Argumen ¤all¤ ditambahkan di 2.4.1.\gn&Zg
+
+setroomname\w#h
+
+Ubah nama ruangan dari ruangan saat ini. Baris setelah perintah ini akan diambil
+sebagai namanya (seperti ¤#text(warna,x,y,baris)¤text¤ dengan 1 baris).\nLwl&Z
+
+Nama ini tidak bersifat persisten dan akan kembali ke nama ruangan default saat
+ruangan dimuat ulang (misalnya dengan keluar dan kembali).
+
+Nama ini menggantikan nama ruang ganti khusus apa pun, jika ruangan tersebut
+memilikinya.
+
+Perintah ini ditambahkan di 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+Di level kustom, alihkan apakah fontnya RTL (kanan ke kiri) atau tidak. Secara
+default, fontnya bukan RTL (melainkan LTR).
+
+Mode RTL terutama membuat kotak teks rata kanan, untuk bahasa seperti Arab.
+
+Perintah ini ditambahkan di 2.4.\g
+
+shake¤(n)\w#h
+
+Kocok layar untuk n kutu. Ini tidak akan membuat penundaan.
+
+showcoordinates¤(x,y)\w#h
+
+Atur ruangan pada koordinat yang diberikan untuk dijelajahi
+
+showplayer¤()\w#h
+
+Membuat pemain terlihat
+
+showsecretlab\w#h
+
+Tunjukkan lab rahasia di peta
+
+showship\w#h
+
+Tunjukkan kapal di peta
+
+showtargets¤()\b#h
+
+Tampilkan target di peta (teleporter tidak dikenal yang muncul sebagai [?])
+
+showteleporters¤()\b#h
+
+Tunjukkan teleporter di ruangan yang dijelajahi di peta
+
+showtrinkets¤()\w#h
+
+Tunjukkan trinket di peta
+
+Sejak 2.3, perintah ini diubah agar berfungsi di level khusus.\g
+
+speak\w#h
+
+Memperlihatkan kotak teks, tanpa menghapus kotak teks lama. Juga jeda skrip
+sampai Anda menekan action/tindakan (kecuali ada perintah backgroundtext di
+atasnya)
+
+speak_active\w#h
+
+Memperlihatkan kotak teks, dan menghapus kotak teks lama. Juga jeda skrip hingga
+Anda menekan tindakan (kecuali ada perintah teks latar di atasnya)
+
+specialline¤(x)\b#h
+
+Dialog spesial/kustom yang muncul di game utama
+
+squeak¤(warna)\w#h
+
+Membuat suara menciut dari crewmate, atau suara terminal
+
+warna - cyan/player/blue/red/yellow/green/purple/terminal
+
+startintermission2\b#h
+
+Alternate ¤finalmode(46,54)¤, membawa Anda ke level akhir tanpa menerima argumen.\nn&Z
+
+stopmusic¤()\w#h
+
+Menghentikan musik segera. Setara dengan ¤music(0)¤ dalam skrip yang disederhanakan.\nn&Z
+
+teleportscript¤(skrip)\b#h
+
+Digunakan untuk mengatur skrip yang dijalankan saat Anda menggunakan teleporter
+
+telesave¤()\r#h
+
+Tidak melakukan apa pun di level kustom.
+
+2.2 DAN DI BAWAH: Simpan game Anda di penyimpanan teleporter biasa, jadi jangan
+gunakan itu!
+
+text¤(warna,x,y,baris)\w#h
+
+Simpan kotak teks dalam memori dengan warna, posisi dan jumlah baris. Biasanya,
+perintah posisi digunakan setelah perintah teks (dan baris teksnya), yang akan
+menimpa koordinat yang diberikan di sini, jadi ini biasanya dibiarkan sebagai 0.
+
+warna - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
+x - Posisi x dari kotak teks
+y - Posisi y dari kotak teks
+baris - Jumlah baris
+
+Warna ¤transparent¤ ditambahkan di 2.4, bersama dengan kotak teks berwana\gn&Zg
+sewenang-wenang. Koordinatnya bisa -500 untuk memusatkan kotak teks pada sumbu\g
+masing-masing (jika Anda tidak ingin menggunakan ¤#position(type,above/below)¤position¤.\gLwl&Zg
+
+textboxactive\w#h
+
+Membuat semua kotak teks di layar menghilang kecuali yang terakhir dibuat
+
+textboxtimer¤(frame)\w#h
+
+Membuat kotak teks yang ditampilkan berikutnya menghilang setelah sejumlah frame
+tertentu, tanpa memajukan skrip.
+
+frame - Jumlah frame yang harus ditunggu sebelum memudar
+
+Perintah ini ditambahkan di 2.4.\g
+
+textbuttons¤()\w#h
+
+Untuk kotak teks di memori, ganti placeholder tombol tertentu dengan label tombol
+(seperti tombol keyboard atau mesin terbang pengontrol).
+
+Placeholder yang diganti adalah:
+- {b_act} - TINDAKAN/ACTION
+- {b_int} - Berinteraksi
+- {b_map} - Peta
+- {b_res} - Mulai ulang
+- {b_esc} - Esc/Menu
+
+Perintah ini ditambahkan di 2.4.\g
+
+textcase¤(kasus)\w#h
+
+Jika level Anda memiliki file terjemahan, dan Anda memiliki beberapa kotak teks
+dengan teks yang sama dalam satu skrip, perintah ini dapat membuatnya memiliki
+terjemahan unik. Tempatkan itu sebelum kotak teks.
+
+kasus - Nomor kasus, antara 1 dan 255.
+
+Perintah ini ditambahkan di 2.4.\g
+
+textimage¤(gambar)\w#h
+
+Untuk kotak teks di memori, gambarlah gambar yang diberikan. Hanya boleh ada satu
+gambar per kotak teks.
+
+gambar - levelcomplete/gamecomplete, atau nilai yang tidak diketahui untuk
+menghapus gambar
+
+Perintah ini ditambahkan di 2.4.\g
+
+textsprite¤(x,y,sprite,warna)\w#h
+
+Untuk kotak teks di memori, gambar sprite yang diberikan. Mungkin ada beberapa
+sprite per kotak teks.
+
+x - Koordinat x dari sprite. Ini relatif terhadap kotak teks.
+y - Koordinat y dari sprite. Ini relatif terhadap kotak teks.
+sprite - Jumlah sprite dari sprite, dari ¤sprites.png¤.\nn&Z
+color - ID warna sprite.
+
+Perintah ini ditambahkan di 2.4.\g
+
+tofloor\w#h
+
+Membuat pemain membalik ke lantai jika mereka belum berada di lantai.
+
+trinketbluecontrol¤()\b#h
+
+Dialog Victoria ketika dia memberi Anda perhiasan di game nyata
+
+trinketscriptmusic\w#h
+
+Memainkan Passion for Exploring.
+
+trinketyellowcontrol¤()\b#h
+
+Dialog Vitellary saat dia memberimu perhiasan di game yang sebenarnya
+
+undovvvvvvman¤()\w#h
+
+Menyetel ulang hitbox pemain ke ukuran normal, menyetel warnanya ke 0, dan
+menyetel posisi X ke 100.
+
+untilbars¤()\w#h
+
+Tunggu sampai ¤#cutscene()¤cutscene¤/§¤#endcutscene()¤endcutscene¤ selesai.\nLwl&ZnLwl&Z(
+
+untilfade¤()\w#h
+
+Tunggu sampai ¤#fadeout()¤fadeout¤/§¤#fadein()¤fadein¤ selesai.\nLwl&ZnLwl&Z(
+
+vvvvvvman¤()\w#h
+
+Memperbesar pemain 6x, mengatur posisinya menjadi ¤(30,46)¤ dan mengatur warnanya\nn&Z
+menjadi ¤23¤.\nn&Z
+
+walk¤(arah,x)\w#h
+
+Membuat pemain berjalan untuk jumlah kutu yang ditentukan
+
+arah - left/right
+
+warpdir¤(x,y,dir)\w#h
+
+Mengubah arah lengkung untuk ruang x,y, berindeks 1, ke arah yang ditentukan. Ini
+dapat diperiksa dengan ifwarp, menghasilkan sistem flag/variabel ekstra yang
+relatif kuat.
+
+x - Ruang x koordinat, mulai dari 1
+y - Ruang y koordinat, mulai dari 1
+dir - Arah warp. Biasanya 0-3, tetapi nilai di luar batas diterima
+
+yellowcontrol\b#h
+
+Mulai percakapan dengan Vitellary seperti saat Anda bertemu dengannya di game
+utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.

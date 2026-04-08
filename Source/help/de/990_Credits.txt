@@ -1,0 +1,76 @@
+Credits
+
+\0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Credits\wh#
+\C=
+
+Ved ist gemacht von Dav999
+
+Weitere Code-Beiträge: Info Teddy
+
+Manche der Grafiken und Schriftarten wurden von Reese Rivers gemacht
+
+Russische Übersetzung: CreepiX, Cheep, Omegaplex
+Esperanto Übersetzung: Reese Rivers
+Deutsche Übersetzung: r00ster
+Französische Übersetzung: RhenaudTheLukark
+Spanische Übersetzung: Valso22/naether
+Indonesische Übersetzung: _march31onne/Marchionne Evangelisti
+
+
+Besonderen Dank an:\h#
+
+
+Terry Cavanagh für das machen von VVVVVV
+
+Jeder der Fehler gemeldet hat, eine Idee hatte und mich motiviert hat dies zu
+machen!
+\
+\
+
+
+License\h#
+\
+Copyright 2015-2025  Dav999
+\
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+\
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other
+materials provided with the distribution.
+\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+VVVVVV-Assets\h#
+
+Ved includes some graphics assets from VVVVVV. VVVVVV and its assets are copyright
+of Terry Cavanagh. For more information about the license that applies to VVVVVV
+and its assets, see ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ and ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ in ¤https://github.com/TerryCavanagh/VVVVVV¤VVVVVV's GitHub\nLClnLClnLCl
+https://github.com/TerryCavanagh/VVVVVV¤repository¤.\LCl

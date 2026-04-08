@@ -1,0 +1,364 @@
+Lijsten
+
+Lijsten\wh#
+\C=
+
+Dit zijn lijsten van nummers die gebruikt worden in VVVVVV, vooral gekopieerd uit
+forumberichten. Bedankt aan iedereen die deze lijsten samengesteld heeft!
+
+
+Inhoud\w&Z+
+\&Z+
+#Muzieknummers (vereenvoudigde scripting)\C&Z+l
+#Muzieknummers (intern)\C&Z+l
+#Geluidseffecten\C&Z+l
+#Entiteiten\C&Z+l
+#Kleuren voor createentity()-¤Kleuren voor createentity()-bemanningsleden\LC&Z+l
+#Vijand-bewegingstypes\C&Z+l
+#Gamestates\C&Z+l
+
+
+Muzieknummers (vereenvoudigde scripting)\h#
+
+0 - Stilte (geen muziek)
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Presenting VVVVVV
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing the Sky
+
+Muzieknummers (intern)\h#
+
+0 - Path Complete
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Pause
+6 - Presenting VVVVVV
+7 - Plenary
+8 - Predestined Fate
+9 - ecroF evitisoP
+10 - Popular Potpourri
+11 - Pipe Dream
+12 - Pressure Cooker
+13 - Paced Energy
+14 - Piercing the Sky
+15 - Predestined Fate Remix
+
+Geluidseffecten\h#
+
+0 - Keer zwaartekracht om naar plafond
+1 - Keer zwaartekracht om naar vloer
+2 - Huil
+3 - Artefact verzameld
+4 - Muntje verzameld
+5 - Checkpoint aangeraakt
+6 - Sneller drijfzandblok aangeraakt
+7 - Normaal drijfzandblok aangeraakt
+8 - Zwaartekrachtlijn aangeraakt
+9 - Flits
+10 - Warp
+11 - Geluid van Viridian
+12 - Geluid van Verdigris
+13 - Geluid van Victoria
+14 - Geluid van Vitellary
+15 - Geluid van Violet
+16 - Geluid van Vermilion
+17 - Terminal aangeraakt
+18 - Teleporter aangeraakt
+19 - Alarm
+20 - Terminal-geluid
+21 - Aftelling in time trial "3", "2", "1"
+22 - Aftelling in time trial "Go!"
+23 - VVVVVV Man die muren breekt
+24 - Bemanningsleden die (de)combineren in VVVVVV Man
+25 - Nieuw record in Super Gravitron
+26 - Nieuwe trofee in Super Gravitron
+27 - Gered bemanningslid (in aangepaste levels)
+
+Entiteiten\h#
+
+0 - De speler
+1 - Vijand
+    Metadata: bewegingstype, bewegingssnelheid
+    Omdat de benodigde data ontbreekt krijg je alleen een paarse doos-vijand,
+    tenzij je in de polar dimension van VVVVVV bent wanneer je het commando
+    gebruikt
+2 - Bewegend platform
+    Metadata: bewegingstype, bewegingssnelheid
+    Opmerking: lopende banden zijn geïmplementeerd als bewegende platforms, zie
+    bewegingstype 8 en 9.
+3 - Een brekend platform
+4 - Een sneller drijfzandblok van 1x1
+5 - Een omgekeerde Viridian, je zwaartekracht zal omkeren wanneer je hem aanraakt
+6 - Raar rood flitsend dingetje dat snel verdwijnt
+7 - Zelfde als hierboven, maar flitst niet en is cyaan-gekleurd
+8 - Een munt uit het prototype
+    Metadata: Munt-ID
+9 - Artefact
+    Metadata: Artefact-ID
+    Opmerking: artefact-ID's beginnen bij 0, en alles boven 19 wordt niet
+    opgeslagen in het bestand wanneer je het level herstart
+10 - Checkpoint
+     Metadata: Checkpoint-status (0=ondersteboven, 1=normaal), Checkpoint-ID
+     (controleert of het checkpoint actief is of niet)
+11 - Horizontale zwaartekrachtlijn
+     Metadata: Lengte in pixels
+12 - Verticale zwaartekrachtlijn
+     Metadata: Lengte in pixels
+13 - Teleportatietoken
+     Metadata: Bestemming in blokken op X-as, bestemming in blokken op Y-as
+14 - De ronde teleporter
+     Metadata: Checkpoint-ID(?)
+15 - Verdigris
+     Metadata: AI-status
+16 - Vitellary (ondersteboven)
+     Metadata: AI-status
+17 - Victoria
+     Metadata: AI-status
+18 - Bemanningslid
+     Metadata: Kleur (gebruikt kleurenlijst, niet bemanningslidkleuren), stemming
+19 - Vermilion
+     Metadata: AI-status
+20 - Terminal
+     Metadata: Sprite, Script-ID(?)
+21 - Zelfde als hierboven maar wanneer aangeraakt zal de terminal geen licht geven
+     Metadata: Sprite, Script-ID(?)
+22 - Verzameld artefact
+     Metadata: Artefact-ID
+23 - Gravitron-vierkant
+     Metadata: Richting
+     Als je een negatieve X-coördinaat opgeeft (of te hoog) zal een pijltje
+     getoond worden, net zoals in de echte gravitron
+24 - Bemanningslid intermission 1
+     Metadata: "Rauwe" kleur, stemming
+     Lijkt niet getroffen te worden door gevaren, maar zou wel moeten.
+25 - Trofee
+     Metadata: Uitdagings-id, sprite
+     Als de uitdaging voltooid is zal de basis-sprite-ID (wat je krijgt als je
+     sprite=0 gebruikt) veranderen. Gebruik alleen 0 of 1 als je voorspelbare
+     resultaten wil (0=normaal, 1=ondersteboven)
+26 - Het teleportatietoken naar het Secret Lab
+     Houd in gedachten dat dit token alleen geïmplementeerd is als een
+     mooi-uitziende sprite. Je moet de functionaliteit zelf scripten
+55 - Bemanningslid dat gered kan worden
+     Metadata: Kleur van bemanningslid. Kleur >6 zal altijd een *blije* Viridian
+     tonen
+56 - Vijand voor aangepaste levels
+     Metadata: Bewegingstype, bewegingssnelheid
+     Houd in gedachten dat als er geen vijanden in de kamer zijn, de vijand-sprite
+     niet correct geüpdate wordt en de vijand die je de laatste keer zag zal
+     worden getoond, of een vierkante vijand
+Ongedefinieerde entiteiten (27-50, 57+) geven rare Viridians.
+
+Kleuren voor createentity()-\h#
+
+bemanningsleden\h
+
+0: Cyaan
+1: Flitsend rood (gebruikt voor dood)
+2: Donker-oranje
+3: Artefact-kleur
+4: Grijs
+5: Flitsend wit
+6: Rood (beetje donkerder dan Vermilion)
+7: Limoen-groen
+8: Felroze
+9: Briljant geel
+10: Flitsend wit
+11: Felcyaan
+12: Blauw, zelfde als Victoria
+13: Groen, zelfde als Verdigris
+14: Geel, zelfde als Vitellary
+15: Rood, zelfde als Vermilion
+16: Blauw, zelfde als Victoria
+17: Lichter oranje
+18: Grijs
+19: Donkerder groen
+20: Roze, zelfde als Violet
+21: Lichter grijs
+22: Wit
+23: Flitsend wit
+24-29: Wit
+30: Grijs
+31: Donker, beetje paarsig grijs?
+32: Donkercyaan/-groen
+33: Donkerblauw
+34: Donkergroen
+35: Donkerrood
+36: Saai oranje
+37: Flitsend grijs
+38: Grijs
+39: Donkerder cyaan/groen
+40: Flitsender grijs
+41-99: Wit
+100: Donkergrijs
+101: Flitsend wit
+102: Teleporter-kleur
+103 en verder: Wit
+
+Vijand-bewegingstypes\h#
+
+0 - Springt op en neer, begint beneden.
+1 - Springt op en neer, begint boven
+2 - Springt naar links en rechts, begint links.
+3 - Springt naar links en rechts, begint rechts.
+4, 7, 11 - Verplaatst naar rechts tot botsing.
+5 - Zelfde als hierboven, maar gedraagt zich vreemd wanneer het botst.
+    GIF hier: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Springt op en neer, maar bereikt een bepaalde y-positie voor terug te gaan
+    naar beneden. Gebruikt in "Trench warfare".
+8, 9 - Voor bewegende platforms zijn het lopende banden, en stilstaand voor de
+       rest
+14 - Kan geblokkeerd worden door brekende platforms
+15 - Stilstaand (?)
+10, 12 - Kloont naar rechts/op dezelfde plek, crasht VVVVVV als het te intens
+         wordt, en maakt je opgeslagen data corrupt als je opslaat.
+13 - Net zoals 4, maar beweegt naar beneden tot botsing.
+16 - Verschijnt en verdwijnt.
+17 - Gejaagde beweging naar links
+18 - Gejaagde beweging naar rechts, klein beetje sneller
+19+ - Stilstaand (?)
+
+Gamestates\h#
+
+0 - Breekt uit de meeste gamestates
+1 - Zet de gamestate op 0 (oftewel in de praktijk hetzelfde als hierboven)
+2 - "To do: write quick intro to story!"
+4 - "Druk op de pijltjestoetsen of WASD om te bewegen"
+5 - Voert het script "returntohub" uit (oftewel fadeout, teleporteer naar rechts
+    voor The Tower, fadein, speel Passion for Exploring)
+7 - Verwijdert tekstvakken
+8 - "Druk op ENTER voor kaart en opslaan"
+9 - Super Gravitron
+10 - Gravitron
+11 - "When you're NOT standing on stop and wait for you" (Probeert flipmode-check
+     te gebruiken om "the ceiling" of "the floor" te laten zien, maar omdat dit
+     fout gaat, wordt in plaats daarvan weergegeven wat hierboven staat)
+12 - "Je kunt niet naar de volgende kamer totdat de ander veilig aan de overkant
+     is."
+13 - Verwijdert tekstvakken snel
+14 - "When you're standing on the floor," (hetzelfde is hier van toepassing als
+     bij 11)
+15 - Maakt Viridian blij
+16 - Maakt Viridian verdrietig
+17 - "Je kunt ook op OMHOOG of OMLAAG drukken in plaats van ACTIE om je
+     zwaartekracht om te keren."
+20 - Als vlag 1 op 0 staat, zet vlag 1 op 1 en verwijder tekstvakken
+21 - Als vlag 2 op 0 staat, zet vlag 2 op 1 en verwijder tekstvakken
+22 - "Druk op ACTIE om je zwaartekracht om te keren"
+30 - "Waarom zou het schip mij hier in mijn eentje hebben geteleporteerd?"
+     "Ik hoop dat de rest in orde is..."
+31 - "Violet! Ben jij dat?"-cutscene (zolang vlag 6 op 0 staat)
+32 - Als vlag 7 op 0 staat: "Een teleport!" "Hiermee kan ik terug naar het schip!"
+33 - Als vlag 9 op 0 staat: Victoria-cutscene
+34 - Als vlag 10 op 0 staat: Vitellary-cutscene
+35 - Als vlag 11 op 0 staat: Verdigris-cutscene
+36 - Als vlag 8 op 0 staat: Vermilion-cutscene
+37 - Vitellary na gravitron
+38 - Vermilion na gravitron
+39 - Verdigris na gravitron
+40 - Victoria na gravitron
+41 - Als vlag 60 op 0 staat: draai het begin van de intermission 1-cutscene
+42 - Als vlag 62 op 0 staat: draai de 3e intermission 1-cutscene
+43 - Als vlag 63 op 0 staat: draai de 4e intermission 1-cutscene
+44 - Als vlag 64 op 0 staat: draai de 5e intermission 1-cutscene
+45 - Als vlag 65 op 0 staat: draai de 6e intermission 1-cutscene
+46 - Als vlag 66 op 0 staat: draai de 7e intermission 1-cutscene
+47 - Als vlag 69 op 0 staat: "Hé! Wat zou dat zijn?"-artefact-cutscene
+48 - Als vlag 70 op 0 staat: "Als ik buiten nog iets vind lijkt dit me wel een
+     goede plek om het te bewaren..." (Victoria nog niet gevonden)
+49 - Als vlag 71 op 0 staat: Speel Predestined Fate
+50 - "Help! Kan iemand dit horen?"
+51 - "Verdigris? Ben je daar ergens? Ben je in orde?"
+52 - "Help ons! We zijn neergestort en hebben assistentie nodig!"
+53 - "Hallo? Is er iemand in de buurt?"
+54 - "Dit is Doctor Violet van de D.S.S. Souleye! Antwoord alsjeblieft!"
+55 - "Alsjeblieft... Iemand..."
+56 - "Ik hoop dat jullie allemaal ongedeerd zijn..."
+Met gamestate 50-56 kun je kiezen waar te beginnen, want alles komt na elkaar
+80 - Dan en slechts dan als het beeld zwart is, ga door naar state 81 (Mijn gok is
+     dat dit wordt aangeroepen wanneer ESC wordt ingedrukt, voor het pauze-menu
+     wordt geopend)
+81 - Ga terug naar het hoofdmenu
+82 - Resultaten van race tegen de klok
+83 - Als beeld zwart is, ga door naar state 84
+84 - Resultaten van race tegen de klok (Ik denk dat 82 beter werkt dan 84)
+85 - De race tegen de klok-versie van gamestate 200 (Flits, speel Positive Force,
+     zet finalstretch-modus aan)
+States 90-95 zijn gerelateerd aan races tegen de klok, maar werken niet goed in
+     spelerlevels. De enige echte effecten die gebeuren in spelerlevels zijn een
+     teleportatie, en verandering van de muziek
+90 - Ruimtestation 1
+91 - Het Laboratorium
+92 - Wikkelzone
+93 - De Toren
+94 - Ruimtestation 2
+95 - Eindlevel
+96 - Als het beeld zwart is, ga door naar state 97
+97 - Verlaat Supergravitron (teleporteer en speel Pipe Dream)
+100 - Als vlag 4 op 0 staat: ga door naar state 101
+101 - Als je zwaartekracht omgekeerd is, ga terug naar de vloer, ga naar state 102
+De volgende states (102-112) proberen naar de huidige state te gaan + 1, net zoals
+      in 50-56 (maar vormt geen lus), maar kan problemen veroorzaken omdat de
+      helft van de states (103, 105, 107, 109, 111) niet bestaat.
+102 - Verdigris: "Captain! I've been so worried!"
+104 - "I'm glad you're ok!"
+106 - "I've been trying to find a way out, but I keep going around in circles..."
+108 - "Don't worry! I have a teleporter key!"
+110 - "Follow me!"
+112 - Verwijdert tekstvakken
+115 - In wezen niets, ga door naar state 116
+116 - Rood tekstvak onderin beeld met tekst "Sorry Eurogamers! Teleporting around
+      the map doesn't work in this version!", ga door naar state 117, wat niet
+      bestaat, dus dingen zouden fout kunnen gaan
+118 - Verwijdert tekstvakken
+State 120-128 werken een beetje zoals 102-112, d.w.z in serie, maar met minder
+      problemen
+120 - Als vlag 5 op 0 staat: ga door naar state 121
+121 - Als je op de vloer staat, keer zwaartekracht om
+122 - Vitellary: "Captain! You're ok!"
+124 - Vitellary: "I've found a teleporter, but I can't get it to go anywhere..."
+126 - "I can help with that!"
+128 - "I have the teleporter codex for our ship!"
+130 - "Yey! Let's go home!"
+132 - Verwijdert tekstvakken
+200 - Final mode
+1000 - Zet cutscenebalken aan, bevriest het spel, gaat door naar state 1001
+1001 - "Je hebt een glanzend artefact gevonden!" (maar je hebt er niet echt een
+       gekregen, dit wordt gewoon iedere keer dat je er een verzamelt
+       aangeroepen), ga door naar state 1003
+1003 - Herstel spel naar normale situatie
+1010 - Je hebt een bemanningslid gevonden! op dezelfde manier als voor artefacten
+1013 - Beëindig level met sterren
+2000 - Sla het spel op
+2500-2509 - Teleporteer naar een of andere vreemde niet-bestaande locatie,
+            vermoedelijk naar het Laboratorium denk ik, ga door naar state 2510
+2510 - Viridian: "Hello?", ga door naar state 2512
+2512 - Viridian: "Is anybody there?", ga door naar state 2514
+2514 - Verwijdert tekstvakken, speel Potential For Anything
+States 3000-3099:
+3000-3005 - "Level uitgespeeld! Je hebt gered..." het bemanningslid toegepast op
+            companion(), standaard Verdigris. 6=Verdigris, 7=Vitellary,
+            8=Victoria, 9=Vermilion, 10=Viridian (ja, echt), 11=Violet
+            (Gamestates: 3006-3011=Verdigris, 3020-3026=Vitellary,
+            3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
+            3050-3056=Violet)
+3070-3072 - Doe dingen na redding, normaal gesproken terug naar schip
+3501 - Spel uitgespeeld
+4010 - Flits + teleportatie
+4070 - Het Eindlevel, maar het spel zal crashen wanneer je Timeslip bereikt
+       (Door de manier waarop het spel entiteit-informatie krijgt, wat stuk is in
+       spelerlevels)
+4080 - Kapitein teruggeteleporteerd naar het schip:
+       "Hallo!" [K[K[K[K[Kapitein!]-cutscene + credits.
+       Het bovenstaande zal je opgeslagen data vernietigen dus doe het niet tenzij
+       je een backup hebt gemaakt!
+4090 - Cutscene nadat je ruimtestation 1 hebt afgemaakt

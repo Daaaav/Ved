@@ -1,0 +1,120 @@
+Iloj
+
+Iloj\wh#
+\C=
+
+Vi povas uzi la sekvajn ilojn por plenigi ĉambrojn en via nivelo:
+
+\0
+   Muro\h#
+
+
+Uzu ĉi tiun ilon por meti murojn.
+
+\1
+   Fono\h#
+
+
+Uzu ĉi tiun ilon por meti fonojn.
+
+\2
+   Pikaĵo\h#
+
+
+Uzu ĉi tiun ilon por meti pikaĵojn. Vi povas uzi la etendan ilidon por
+meti pikaĵojn sur surfacon per unu klako (aŭ deŝovo).
+
+\3
+   Kolektaĵo\h#
+
+
+Uzu ĉi tiun ilon por meti kolektaĵojn. Bonvole notu, ke estas limo
+de dudek kolektaĵoj en nivelo.
+
+\4
+   Konservejo\h#
+
+
+Uzu ĉi tiun ilon por meti konservejojn.
+
+\5
+   Malaperanta platformo\h#
+
+
+Uzu ĉi tiun ilon por meti malaperantajn platformojn.
+
+\6
+   Transportbendo\h#
+
+
+Uzu ĉi tiun ilon por meti transportbendojn.
+
+\7
+   Moviĝanta platformo\h#
+
+
+Uzu ĉi tiun ilon por meti moviĝantajn platformojn.
+
+\8
+   Malamiko\h#
+
+
+Uzu ĉi tiun ilon por meti malamikojn. La formo kaj koloro de la malamiko
+estas determinitaj de la agordo de la malamika tipo, kaj la (koloro de la)
+kahelaro, respektive.
+
+\9
+   Gravita linio\h#
+
+
+Uzu ĉi tiun ilon por meti gravitajn liniojn.
+
+\^0
+   Ĉambroteksto\h#
+
+
+Uzu ĉi tiun ilon por meti ĉambrotekston.
+
+\^1
+   Terminalo\h#
+
+
+Uzu ĉi tiun ilon por meti terminalojn. Unue metu ĝin, kaj tiam
+tajpu nomon por la skripto. Por pli da informoj pri skriptado, bonvolu legi
+la helpopaĝojn pri skriptado.
+
+\^2
+   Skriptkvadrato\h#
+
+
+Uzu ĉi tiun ilon por meti skriptkvadratojn. Unue alklaku la supran
+maldekstran angulon, kaj tiam la malsupran dekstran, kaj tiam tajpu nomon por la
+skripto. Por pli da informoj pri skriptado, bonvolu legi la helpopaĝojn de
+skriptado.
+
+\^3
+   Teleportĵetono\h#
+
+
+Uzu ĉi tiun ilon por meti teleportĵetonojn. Unue alklaku la lokon por la
+enirejo, kaj tiam alklaku la lokon por la elirejo.
+
+\^4
+   Teleportlinio\h#
+
+
+Uzu ĉi tiun ilon por meti teleportliniojn. Bonvole notu, ke ili estas
+meteblaj nur ĉe la randoj de ĉambro.
+
+\^5
+   Skipano\h#
+
+
+Uzu ĉi tiun ilon por meti saveblajn skipanojn. Se ĉiuj skipanoj estas savitaj,
+la nivelo finiĝos. Bonvolu noti, ke estas limo de dudek skipanoj en nivelo.
+
+\^6
+   Komencejo\h#
+
+
+Uzu ĉi tiun ilon por meti la komencejon.

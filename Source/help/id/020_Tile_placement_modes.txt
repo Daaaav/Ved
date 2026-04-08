@@ -1,0 +1,31 @@
+Mode penempatan ubin
+
+Mode penempatan ubin\wh#
+\C=
+
+Ved mendukung tiga mode berbeda untuk menggambar ubin.
+
+     Mode otomatis\h#0
+
+          Ini adalah mode yang paling mudah digunakan. Dalam mode ini, Anda dapat
+          menggambar dinding dan latar belakang dan ujung-ujungnya akan secara
+          otomatis ditempatkan dengan benar. Namun, saat mengedit dalam mode ini,
+          semua dinding dan latar belakang dalam ruangan harus tileset dan warna
+          yang sama.
+
+     Mode multi-tileset\h#1
+
+          Ini mirip dengan mode otomatis, kecuali bahwa Anda dapat memiliki
+          beberapa tileset berbeda di ruangan yang sama. Artinya, mengubah tileset
+          tidak akan memengaruhi dinding dan latar belakang yang sudah
+          ditempatkan, dan Anda dapat menggambar berbagai jenis tileset di ruangan
+          yang sama.
+
+     Mode manual\h#2
+
+          Juga disebut Mode Pengatur, dalam mode ini Anda dapat meletakkan tileset
+          apa pun secara manual, jadi Anda tidak terikat pada kombinasi tileset
+          yang telah ditentukan sebelumnya dan tepi tidak akan secara otomatis
+          ditambahkan ke dinding, memberi Anda kendali penuh atas bagaimana
+          ruangan akan terlihat. Namun, mode pengeditan ini seringkali lebih
+          lambat digunakan.

@@ -1,0 +1,171 @@
+Eenvoudige scripting
+
+Vereenvoudigde scripting\wh#
+\C=
+
+De vereenvoudigde scriptingtaal van VVVVVV is een soort taal die kan worden
+gebruikt om VVVVVV-levels mee te scripten.
+Let op: wanneer iets tussen aanhalingstekens staat, moet het zonder die
+aanhalingstekens getypt worden.
+
+
+say¤([regels[,kleur]])\h#w
+
+Toon een tekstvak. Zonder argumenten zal dit een tekstvak maken met één regel, en
+standaard resulteert dit in een terminal-tekstvak in het midden. Het kleur-
+argument kan een kleur zijn, of de naam van een bemanningslid.
+Als je een kleur gebruikt en er is een bemanningslid dat gered kan worden in de
+kamer, zal het tekstvak boven dat bemanningslid worden weergegeven.
+
+reply¤([regels])\h#w
+
+Toon een tekstvak voor Viridian. Zonder het regels-argument zal dit een tekstvak
+met één regel maken.
+
+delay¤(n)\h#w
+
+Pauzeer het script voor n ticks. 30 ticks is bijna een seconde.
+
+happy¤([bemanningslid])\h#w
+
+Maakt een bemanningslid blij. Zonder een argument zal dit Viridian blij maken. Je
+kunt ook "all", "everyone" of "everybody" gebruiken als een argument om iedereen
+blij te maken.
+
+sad¤([bemanningslid])\h#w
+
+Maakt een bemanningslid verdrietig. Zonder een argument zal dit Viridian
+verdrietig maken. Je kunt ook "all", "everyone" of "everybody" gebruiken als een
+argument om iedereen verdrietig te maken.
+
+Opmerking: dit commando kan ook worden geschreven als ¤cry¤ in plaats van ¤sad¤.\nwnw
+
+flag¤(vlag,on/off)\h#w
+
+Zet een bepaalde vlag aan of uit. flag(4,on) zal bijvoorbeeld vlag 4 aanzetten.
+Er zijn 100 vlaggen, genummerd van 0 tot 99.
+Standaard staan alle vlaggen wanneer als je een level begint te spelen.
+Opmerking: In Ved kun je ook vlagnamen gebruiken in plaats van de nummers.
+
+ifflag¤(vlag,scriptnaam)\h#w
+
+Als een bepaalde vlag AAN staat, ga naar script met naam scriptnaam.
+Als een bepaalde vlag UIT staat, ga dan verder in het huidige script.
+Voorbeeld:
+ifflag(20,cutscene) - Als vlag 20 AAN staat, ga naar script "cutscene", zo niet,
+                      ga dan verder in het huidige script.
+Opmerking: In Ved kun je ook vlagnamen gebruiken in plaats van de nummers.
+
+iftrinkets¤(aantal,scriptnaam)\h#w
+
+Als je aantal artefacten >= aantal, ga naar script met naam scriptnaam.
+Als je aantal artefacten < aantal, ga dan verder in het huidige script.
+Voorbeeld:
+iftrinkets(3,enoughtrinkets) - Als je 3 of meer artefacten hebt zal het script
+                               "enoughtrinkets" worden uitgevoerd, anders zal het
+                               huidige script verdergaan.
+Het is gebruikelijk om 0 als minimum aantal artefacten te gebruiken, om een script
+altijd te laden.
+
+iftrinketsless¤(aantal,scriptnaam)\h#w
+
+Als je aantal artefacten < aantal, ga naar script met naam scriptnaam.
+Als je aantal artefacten >= aantal, ga dan verder in het huidige script.
+
+destroy¤(iets)\h#w
+
+Verwijder alle objecten van het gegeven type, totdat je opnieuw de kamer
+binnenkomt.
+
+Geldige argumenten kunnen zijn:
+warptokens - Teleportatietokens
+gravitylines - Zwaartekrachtlijnen
+platforms - Werkt niet goed
+moving - Bewegende platformen (toegevoegd in 2.4)
+disappear - Brekende platformen (toegevoegd in 2.4)
+
+music¤(nummer)\h#w
+
+Verander de muziek naar een bepaald nummer.
+Kijk voor de lijst van muzieknummers naar het artikel "Lijsten".
+
+playremix\h#w
+
+Speelt de remix van Predestined Fate als muziek.
+
+flash\h#w
+
+Laat het scherm flitsen, maakt een geluid van een knal en schudt het scherm even.
+
+map¤(on/off)\h#w
+
+Zet de kaart aan of uit. Als je de kaart uitzet wordt er "NO SIGNAL" getoond tot
+je hem weer aanzet. Kamers zullen nog steeds onthuld worden terwijl de kaart
+uitstaat en zichtbaar worden wanneer je de kaart weer aanzet.
+
+squeak¤(bemanningslid/on/off)\h#w
+
+Zorgt dat een bemanningslid een geluid maakt, of zet het tekstvak-geluid aan of
+uit.
+
+speaker¤(color)\h#w
+
+Verandert de kleur en positie van de volgende tekstvakken gemaakt met het "say"-
+commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
+
+warpdir¤(x,y,richting)\w#h
+
+Verandert de warprichting voor kamer x,y, beginnend bij 1, naar de aangegeven
+richting. Dit kan worden gecontroleerd met ifwarp, wat zorgt voor een relatief
+krachtig extra vlaggen-/variabelesysteem.
+
+x - x-coördinaat van kamer, beginnend bij 1
+y - y-coördinaat van kamer, beginnend bij 1
+richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
+geaccepteerd
+
+ifwarp¤(x,y,richting,script)\w#h
+
+Als de warprichting voor kamer x,y, beginnend bij 1, is ingesteld op richting, ga
+naar (vereenvoudigd) script
+
+x - x-coördinaat van kamer, beginnend bij 1
+y - y-coördinaat van kamer, beginnend bij 1
+richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
+geaccepteerd
+
+loadtext¤(taal)\w#h
+
+Laad een vertaling voor het level aan de hand van een taalcode. Gebruik een lege
+waarde om de taal van VVVVVV weer te gebruiken.
+
+language - Een taalcode, zoals nl of pt_BR
+
+iflang¤(taal,script)\w#h
+
+Als de taal van VVVVVV is ingesteld op de gegeven taal, ga naar een script. Dit
+wordt niet beïnvloed door de taal die je aan loadtext() kunt geven, alleen welke
+taal de gebruiker heeft geselecteerd in het menu.
+
+setfont¤(lettertype)\w#h
+
+Wijzig het lettertype dat wordt gebruikt voor tekst in het level. Dit kan een
+lettertype zijn dat meegeleverd wordt met het spel, zoals font_ja voor Japans, of
+een lettertype dat meegeleverd is met het level. Laat leeg om terug te gaan naar
+het standaardlettertype van het level.
+
+setrtl¤(on/off)\w#h
+
+Schakel in spelerlevels of het lettertype RTL (rechts-naar-links) is of niet.
+Standaard is het lettertype niet RTL (het is dus links-naar-rechts).
+
+RTL-modus zorgt vooral dat tekstvakken rechts uitgelijnd zijn, voor talen zoals
+Arabisch.
+
+textcase¤(case)\w#h
+
+Als je level vertaalbestanden heeft, en je hebt meerdere tekstvakken met dezelfde
+tekst in een enkel script, kan dit commando ze unieke vertalingen laten hebben.
+Zet het voor een tekstvak.
+
+case - Een getal tussen 1 en 255

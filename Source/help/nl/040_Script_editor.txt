@@ -1,0 +1,40 @@
+Scriptbewerker
+
+Scriptbewerker\wh#
+\C=
+
+Met de scriptbewerker kun je scripts in je level beheren en bewerken.
+
+
+Vlagnamen\h#
+
+Voor het gemak en de leesbaarheid van scripts is het mogelijk om namen te
+gebruiken voor vlaggen in plaats van nummers. Als je een naam gebruikt in plaats
+van een nummer, zal automatisch op de achtergrond een nummer worden toegewezen aan
+die naam. Het is ook mogelijk om te kiezen welk vlagnummer gebruikt moet worden
+voor welke naam.
+
+Interne scripting-modus\h#
+
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Zie ¤Int.sc-modus¤ voor meer informatie over interne scripting-modus.\nwl
+Kijk voor meer informatie over interne scripting naar de lijst met interne
+scriptcommando's.
+
+Scripts splitsen\h#
+
+Het is mogelijk om een script in tweeën te splitsen met de scriptbewerker. Nadat
+je de tekstcursor op de eerste regel hebt gezet die je naar het nieuwe script wilt
+verplaatsen, klik op de "Splits"-knop en typ de naam van het nieuwe script. De
+regels voor de cursor blijven in het oorspronkelijke script, de regel waar de
+cursor staat en alle regels daarna zullen verplaatst worden naar het nieuwe
+script.
+
+Naar scripts springen\h#
+
+Op regels met een van de commando's iftrinkets, ifflag, customiftrinkets of
+customifflag, is het mogelijk om naar het gegeven script te springen door te
+klikken op de knop "Ga naar" wanneer de cursor op die regel staat. Je kunt
+hiervoor ook op ¤Alt+rechts¤ drukken, en je kunt met ¤Alt+links¤ één stap terug\nwnw
+nemen door de keten naar waar je vandaan kwam.

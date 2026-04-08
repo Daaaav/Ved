@@ -1,0 +1,249 @@
+Aranĝado
+
+Aranĝado\wh#
+\C=
+
+En notoj vi povas uzi aranĝokodojn por pligrandigi aŭ kolorigi vian tekston, inter
+aliaj aferoj. Por aldoni aranĝadon al linio, aldonu deklivon (\) ĉe la fino de ĝi.\
+Post la \, vi povas aldoni ajnan kvanton el la sekvaj signoj, en ajna ordo:\
+
+h - Duobla tipara grando\h
+
+# - Ankro. Vi povas rapide salti al ankroj per ¤#Ligiloj¤ligiloj¤.\nLCl
+- - Horizontala streko:
+\-
+= - Horizontala streko sub granda teksto
+
+Tekstaj koloroj:\h#
+
+n - Normala\n
+r - Ruĝa\r
+g - Griza\g
+w - Blanka\w
+b - Blua\b
+o - Oranĝkolora\o
+v - Verda\v
+c - Bluverda\c
+y - Flava\y
+p - Viola\p
+V - Malhel-verda\V
+z - Nigra¤ (fonkoloro ne estas inkluzivita)\z&Z
+Z - Malhel-griza\Z
+C - Bluverda (Viridiano)\C
+P - Rozkolora (Violeto)\P
+Y - Flava (Vitelario)\Y
+R - Ruĝa (Vermiljo)\R
+G - Verda (Verdigriso)\G
+B - Blua (Viktoria)\B
+
+
+Ekzemplo:\h#
+
+\-
+Granda oranĝkolora teksto ("oh" havas\ho\
+
+saman rezulton)\ho\
+
+Granda oranĝkolora teksto ("oh" havas\ho
+
+saman rezulton)\ho
+
+\-
+Substrekita granda teksto\wh\
+\r=\
+
+Substrekita granda teksto\wh
+\r=
+\-
+
+Uzi multajn kolorojn sur linio\h#
+
+Eblas uzi multajn kolorojn sur linio dividante koloritajn partojn per la
+signo¤ ¤¤ ¤(kiun vi povas tajpi uzante la klavon ¤Insert/Enigi¤), metante la\nYnw
+kolorkodojn en ordon post¤ \¤. Se la lasta koloro sur la linio estas la defaŭlta\nC
+koloro (n), ne necesas listigi tion ĉefine. Se vi volas uzi la signon¤ ¤¤ ¤sur\nY
+linio, kiu uzas¤ \¤, skribu¤ ¤¤¤¤ ¤anstataŭe. Pro teknikaj kaŭzoj, ne eb¤l§¤as\nCnYnR(
+kolorigi unu signon sole metante ĝin inter du¤ ¤¤§¤oj, krom se vi aldonas ankaŭ\nY(
+spaceton aŭ alian signon.
+
+\-
+Vi povas ¤¤kolorigi¤¤ specifajn ¤¤vortojn¤¤ per ĉi tio!\nrnv\
+
+Vi povas ¤kolorigi¤ specifajn ¤vortojn¤ per ĉi tio!\nrnv
+\-
+Kelkaj ¤¤te¤¤ks¤¤ta¤¤j ¤¤ko¤¤lo¤¤ro¤¤j\RYGCBPRYG\
+
+Kelkaj ¤te¤ks¤ta¤j ¤ko¤lo¤ro¤j\RYGCBPRYG
+\-
+
+Kolorigi sole unu signon\h#
+
+Bone, mi mensogis, ja eblas kolorigi sole unu signon sen aldoni spaceton.
+Por tiel fari, metu la signon¤ § ¤(tajpebla per ¤Ŝov+Insert¤), post\nYnw
+la signo, kiun vi volas kolorigi, kaj ebligu ĝin per la aranĝokodo¤ ( ¤post¤ \¤:\nCnC
+
+\-
+Vi povas k¤¤o§¤¤lorigi unu signon ¤¤sole¤¤ ĉi tiel!\nrny(\
+
+Vi povas k¤o§¤lorigi unu signon ¤sole¤ ĉi tiel!\nrny(
+\-
+
+Tio ĉi ne necesas se la sola signo estas la unua aŭ lasta sur linio.
+
+Fonaj koloroj\h#
+
+Ne nur eblas kolorigi tekston, ankaŭ eblas ¤marki ĝin¤ per ajne el la tekstkoloroj.\nZ&y
+Por tiel fari, vi povas meti¤ & ¤post la regulara teksta kolorkodo, kaj tiam\nY
+kolorkodon por la fona koloro. Tio ĉi estas farebla kombine kun la sistemo
+ĉi-supre priskribita; notu, ke kutimaj tekstkoloroj komencas la sekvan "blokon",
+sed fonkoloroj ne faras do. La jenaj ekzemploj uzas spacetojn por fari ĉion pli
+legeblan, sed tio estas tute nedeviga. Vi povas uzi la kodon¤ + ¤por etendi la\nY
+(lastan) fonkoloron al la fino de la linio.
+
+\-
+Nigra teksto sur blanka fono!\z&w\
+
+Nigra teksto sur blanka fono!\z&w
+\-
+Nigra teksto sur etendita blanka fono!\z&w+\
+
+Nigra teksto sur etendita blanka fono!\z&w+
+\-
+Ruĝe surflave¤¤, ¤¤Nigre surblanke¤¤ (nedevige, spacetoj pli legebligas)\r&y n z&w\
+
+Ruĝe surflave¤, ¤Nigre surblanke¤ (nedevige, spacetoj pli legebligas)\r&y n z&w
+\-
+Tio ĉi ¤¤funkcias¤¤ ankaŭ por kolorigi unu si¤¤g§¤¤non sole\n P n n&r (\
+
+Tio ĉi ¤funkcias¤ ankaŭ por kolorigi unu si¤g§¤non sole\n P n n&r (
+\-
+
+Se vi volas, vi povas ankaŭ krei grafikojn pere de fonaj koloroj:
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
+
+Ligiloj\h#
+
+Ligiloj estas uzeblaj por du aferoj: ligi aliloken en la artikoloj/notoj,
+aŭ ligi al retejoj. Ligiloj uzas la kvazaŭ-kolorkodon¤ l¤. Tiu ĉi kodo ne\nY
+ŝanĝas al la sekva "kolorbloko", ĝi nur aplikiĝas al la aktuala, kontraŭe
+al kutimaj (nefonaj) kolorkodoj. Ĝi ankaŭ ne ŝanĝas la koloron, do vi povas
+ŝanĝi la stilon de la ligilo kiel ajn vi deziras.
+
+Vi povas ligi al artikoloj simple uzante la nomon de la artikolo:
+
+\-
+Iloj\bl\
+
+Iloj\bl
+\-
+
+Alklaki la ligilon "Iloj" ĉi-supre prenos vin al la helpoartikolo "Iloj". Mi
+uzis la kolorkodon¤ b ¤ĉi tie por bluigi la ligilon, kaj kiel videblas,\nb
+la¤ l ¤aplikiĝas al tiu sama kolorigita parto.\nY
+
+Vi povas ligi al ankroj en la sama artikolo ligante al¤ # ¤sekvata de ĉiu teksto\nY
+sur tiu linio. (Aperoj de¤ ¤¤ ¤tute ignoriĝas tie.) Vi povas ligi al la supraĵo de la\nY
+artikolo per simpla krado (¤#§¤).\nY(
+
+\-
+#Uzi multajn kolorojn sur linio\bl\
+
+#Uzi multajn kolorojn sur linio\bl
+\-
+
+Vi povas ligi al ankro en malsama artikolo en simila maniero:
+
+\-
+Manlibreto de listoj#Ludstatoj\bl\
+
+Manlibreto de listoj#Ludstatoj\bl
+\-
+
+Ligi al retejo ankaŭ estas sufiĉe facile:
+
+\-
+https://example.com/\bl\
+
+https://example.com/\bl
+\-
+
+Vi povas uzi kolorblokon kun kolorkodo¤ L ¤kiu enhavas la veran celolokon\nY
+antaŭ la ligila teksto, kaj tiel montrigi la ligilon je malsama teksto:
+
+\-
+Iloj¤¤Iri al alia artikolo\Lbl\
+
+Iloj¤Iri al alia artikolo\Lbl
+\-
+Alklaku ¤¤Iloj¤¤ĉi tien¤¤ por iri al alia artikolo\nLbl\
+
+Alklaku ¤Iloj¤ĉi tien¤ por iri al alia artikolo\nLbl
+\-
+[¤¤#Ligiloj¤¤Ŝati¤¤] [¤¤#Ekzemplo:¤¤Malŝati¤¤]\n L vl n L rl\
+
+[¤#Ligiloj¤Ŝati¤] [¤#Ekzemplo:¤Malŝati¤]\n L vl n L rl
+\-
+#Ligiloj¤¤ Butono A ¤¤ §¤¤#Ligiloj¤¤ Butono B \L w&Zl n L w&Z l(\
+
+#Ligiloj¤ Butono A ¤ §¤#Ligiloj¤ Butono B \L w&Zl n L w&Z l(
+\-
+
+Bildoj (haveblaj nur en aldonaĵaj\h#
+
+priskriboj):\h
+
+0..9 - montras bildon 0..9 sur ĉi tiu linio (tabelindekso en la imgs-tabelo
+       ekas je 0, kaj memoru blankigi liniojn por akomodi la bildan alton)
+^ - Metite antaŭ la bildnumero, ŝovas bildnumeron je 10. Do ^4 faras
+    bildon 14, ^^4 faras bildon 24. Kaj 3^1^56 faras bildojn 3, 11, 25 kaj
+    26.
+_ - Metite antaŭ la bildnumero, malpliigas la bildnumeron je 10.
+> - Metite antaŭ la bildnumero, ŝovas pluajn bildojn dekstren je
+    8 bilderoj. Tio ĉi ripeteblas, do 0>>>>1 metas bildon 0 ĉe x=0 kaj
+    bildon 1 ĉe x=32.
+< - Same, sed ŝovas maldekstren.

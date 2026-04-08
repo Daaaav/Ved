@@ -1,0 +1,364 @@
+Daftar referensi
+
+Daftar referensi\wh#
+\C=
+
+Ini adalah daftar nomor yang digunakan di VVVVVV, sebagian besar disalin dari
+posting forum. Terima kasih kepada semua orang yang menyusun daftar ini!
+
+
+Indeks\w&Z+
+\&Z+
+#Nomor musik (skrip yang disederhanakan)\C&Z+l
+#Nomor musik (internal)\C&Z+l
+#Nomor suara efek\C&Z+l
+#Entitas\C&Z+l
+#Warna untuk crewmate createentity()\C&Z+l
+#Jenis gerakan musuh\C&Z+l
+#Gamestate\C&Z+l
+
+
+Nomor musik (skrip yang disederhanakan)\h#
+
+0 - Silence (tak ada musik)
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Presenting VVVVVV
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing the Sky
+
+Nomor musik (internal)\h#
+
+0 - Path Complete
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Pause
+6 - Presenting VVVVVV
+7 - Plenary
+8 - Predestined Fate
+9 - ecroF evitisoP
+10 - Popular Potpourri
+11 - Pipe Dream
+12 - Pressure Cooker
+13 - Paced Energy
+14 - Piercing the Sky
+15 - Predestined Fate Remix
+
+Nomor suara efek\h#
+
+0 - Balik ke langit-langit
+1 - Balik kembali ke lantai
+2 - Sedih
+3 - trinket dikumpulkan
+4 - Koin dikumpulkan
+5 - Checkpoint disentuh
+6 - Blok pasir hisap lebih cepat disentuh
+7 - Blok pasir hisap normal disentuh
+8 - Garis gravitasi disentuh
+9 - Flash
+10 - Warp
+11 - Viridian menciut
+12 - Verdigris menciut
+13 - Victoria menciut
+14 - Vitellary menciut
+15 - Violet menciut
+16 - Vermilion menciut
+17 - Terminal tersentuh
+18 - Teleporter tersentuh
+19 - Alarm
+20 - Terminal menciut
+21 - Hitung mundur uji waktu "3", "2", "1"
+22 - Hitung mundur uji waktu "{Go/Mulai}!"
+23 - VVVVVV Man menghancurkan tembok
+24 - Crewmates menggabungkan/menguraikan menjadi VVVVVVV Man
+25 - Rekor baru di Super Gravitron
+26 - Trofi baru di Super Gravitron
+27 - Crewmate yang diselamatkan (dalam level kustom)
+
+Entitas\h#
+
+0 - Pemain
+1 - Musuh
+     Metadata: jenis gerakan, kecepatan gerakan
+     Karena kurangnya data yang dibutuhkan, Anda hanya akan mendapatkan kotak
+     musuh berwarna ungu, kecuali jika Anda berada di Polar Dimension VVVVVV saat
+     melakukan perintah
+2 - Platform bergerak
+     Metadata: jenis gerakan, kecepatan gerakan
+     Perhatikan bahwa konveyor diimplementasikan sebagai platform bergerak,
+     lihat tipe gerakan 8 dan 9.
+3 - Platform yang menghilang
+4 - Blok pasir hisap 1x1 lebih cepat
+5 - Viridian yang terbalik, Anda akan membalik gravitasi saat disentuh
+6 - Benda aneh berwarna merah mencolok yang menghilang dengan cepat
+7 - Sama seperti di atas, tetapi tidak berkedip dan berwarna cyan
+8 - Koin dari prototipe
+    Metadata: ID Koin
+9 - Trinket
+     Metadata: ID trinket
+     Perhatikan bahwa ID trinket mulai dari 0, dan semua yang di atas 19
+     tidak akan disimpan di savefile setelah Anda memulai ulang level
+10 - Checkpoint
+     Metadata: Status Checkpoint (0=terbalik, 1=normal), Checkpoint ID (memeriksa
+     apakah checkpoint aktif atau tidak)
+11 - Garis gravitasi horizontal
+     Metadata: Panjang dalam piksel
+12 - Garis gravitasi vertikal
+     Metadata: Panjang dalam piksel
+13 - Token warp
+     Metadata: Tujuan di sumbu X ubin, tujuan di sumbu Y ubin
+14 - Teleporter bulat
+     Metadata: ID Pos Pemeriksaan(?)
+15 - Verdigris
+     Metadata: status AI
+16 - Vitellary (dibalik)
+     Metadata: status AI
+17 - Victoria
+     Metadata: status AI
+18 - Rekan crewmate
+     Metadata: Warna (menggunakan daftar warna mentah, bukan warna crewmate),
+     suasana
+19 - Vermilion
+     Metadata: status AI
+20 - Terminal
+     Metadata: Sprite, ID Skrip(?)
+21 - Sama seperti di atas tetapi ketika disentuh terminal tidak menyala
+     Metadata: Sprite, ID Skrip(?)
+22 - Koleksi perhiasan
+     Metadata: ID Perhiasan
+23 - Gravitron persegi
+     Metadata: Arah
+     Jika Anda memasukkan koordinat X negatif (atau terlalu tinggi), panah akan
+     muncul, seperti di Gravitron asli
+24 - Istirahat 1 crewmate
+     Metadata: Warna mentah, suasana hati
+     Tampaknya tidak terpengaruh oleh bahaya, tetapi seharusnya.
+25 - Piala
+     Metadata: Pengidentifikasi tantangan, sprite
+     Jika tantangan selesai, ID sprite dasar (yang Anda dapatkan jika menggunakan
+     sprite=0) akan berubah. Gunakan hanya 0 atau 1 jika Anda ingin hasil yang
+     dapat diprediksi
+     (0=normal, 1=terbalik)
+26 - Token warp ke Lab Rahasia
+     Perlu diingat bahwa warp hanya diimplementasikan sebagai sprite yang terlihat
+     bagus.
+     Anda harus membuat skrip fungsionalitas untuk diri Anda sendiri
+55 - Rekan crewmate yang bisa diselamatkan
+     Metadata: Warna crewmate. Warna >6 akan selalu menunjukkan *bahagia* Viridian
+56 - Musuh level kustom
+     Metadata: Jenis gerakan, kecepatan gerakan
+     Perlu diingat bahwa jika tidak ada musuh di dalam ruangan, data sprite musuh
+     tidak diperbarui dengan benar dan itu hanya akan menunjukkan musuh apa yang
+     Anda lihat terakhir kali, atau musuh persegi
+Entitas yang tidak ditentukan (27-50, 57+) memberikan Viridian yang glitchy/salah.
+
+Warna untuk crewmate createentity()\h#
+
+0: Cyan
+1: Merah mencolok (digunakan untuk kematian)
+2: Oranye gelap
+3: Warna perhiasan
+4: Abu-abu
+5: Putih mencolok
+6: Merah (sedikit lebih gelap dari Vermilion)
+7: hijau limau
+8: Merah muda panas
+9: Kuning cemerlang
+10: Putih mencolok
+11: cyan cerah
+12: Biru, sama seperti Victoria
+13: Hijau, sama seperti Verdigris
+14: Kuning, sama seperti Vitellary
+15: Merah, sama seperti Vermilion
+16: Biru, sama seperti Victoria
+17: Oranye lebih terang
+18: Abu-abu
+19: Abu-abu lebih gelap
+20: Pink, sama seperti Violet
+21: Abu-abu lebih terang
+22: Putih
+23: Putih mencolok
+24-29: Putih
+30: Abu-abu
+31: Gelap, abu-abu agak keunguan?
+32: Cyan gelap/hijau
+33: Biru tua
+34: Hijau tua
+35: Merah tua
+36: Oranye kusam
+37: Abu-abu mencolok
+38: Abu-abu
+39: Cyan/hijau yang lebih gelap
+40: Abu-abu lebih mencolok
+41-99: Putih
+100: Abu-abu gelap
+101: Putih mencolok
+102: Warna teleporter
+103 dan seterusnya: Putih
+
+Jenis gerakan musuh\h#
+
+0 - Memantul ke atas dan ke bawah, mulai turun.
+1 - Memantul ke atas dan ke bawah, dimulai.
+2 - Memantul ke kiri dan ke kanan, mulai dari kiri.
+3 - Memantul ke kiri dan ke kanan, mulai dari kanan.
+4, 7, 11 - Bergerak ke kanan hingga bertabrakan.
+5 - Sama seperti di atas, hanya bertingkah aneh saat bertabrakan.
+     GIF di sini: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Memantul ke atas dan ke bawah, tetapi hanya mencapai posisi y tertentu
+    sebelum kembali turun. Digunakan dalam "Trench warfare".
+8, 9 - Untuk platform bergerak mereka adalah konveyor, dan mereka masih untuk hal
+       lain
+14 - Dapat diblokir oleh platform yang menghilang
+15 - Masih (?)
+10, 12 - Mengkloning ke kanan/di tempat yang sama, membuat VVVVVV mogok jika
+         terlalu intens, dan akan merusak level Anda jika Anda menyimpan.
+13 - Seperti 4, tetapi bergerak ke bawah hingga bertabrakan.
+16 - Berkedip masuk dan keluar dari keberadaan. (Muncul dan menghilang)
+17 - Gerakan gelisah ke kiri
+18 - Gerakan gelisah benar, sedikit lebih cepat
+19+ - Masih (?)
+
+Gamestate\h#
+
+0 - Keluar dari sebagian besar status permainan
+1 - Setel gamestate ke 0 (yaitu sama seperti di atas dalam praktiknya)
+2 - "To do: write quick intro to story!"
+4 - "Press arrow keys or WASD to move"
+5 - Jalankan skrip "returntohub" (yaitu fadeout, teleport ke kanan sebelumnya
+    The Tower, fadein, mainkan Passion for Exploring)
+7 - Menghapus kotak teks
+8 - "Press enter to view map and quicksave"
+9 - Super Gravitron
+10 - Gravitron
+11 - "When you're NOT standing on stop and wait for you" (Mencoba mengakses
+     flipmode, periksa untuk menulis "ceiling" atau "floor", dan periksa
+     crewmate, tetapi karena ini gagal, cetakan di atas sebagai gantinya)
+12 - "You can't continue to the next room until he is safely accross."
+13 - Hapus kotak teks dengan cepat
+14 - "When you're standing on the floor," (hal yang sama berlaku di sini
+     seperti untuk 11)
+15 - Membuat Viridian bahagia
+16 - Membuat Viridian sedih
+17 - "If you prefer, you can press UP or DOWN instead of ACTION to flip."
+20 - Jika tanda 1 adalah 0, atur tanda 1 ke 1 dan hapus kotak teks
+21 - Jika tanda 2 adalah 0, atur tanda 2 ke 1 dan hapus kotak teks
+22 - "Press ACTION to flip"
+30 - "I wonder why the ship teleported me here alone?" "I hope everyone else got
+     out ok..."
+31 - adegan potong "Violet, is that you?" (selama flag 6 adalah 0)
+32 - Jika tanda 7 adalah 0: "A teleporter!" "I can get back to the ship with
+     this!"
+33 - Jika tanda 9 adalah 0: Victoria-cutscene
+34 - Jika tanda 10 adalah 0: Vitellary-cutscene
+35 - Jika tanda 11 adalah 0: Verdigris-cutscene
+36 - Jika tanda 8 adalah 0: Vermilion-cutscene
+37 - Vitellary setelah gravitron
+38 - Vermilion setelah gravitron
+39 - Verdigris setelah gravitron
+40 - Victoria setelah gravitron
+41 - Jika tanda 60 adalah 0: jalankan awal cutscene istirahat 1
+42 - Jika tanda 62 adalah 0: jalankan cutscene ke-3 istirahat 1
+43 - Jika tanda 63 adalah 0: jalankan cutscene ke-4 istirahat 1
+44 - Jika tanda 64 adalah 0: jalankan cutscene ke-5 istirahat 1
+45 - Jika tanda 65 adalah 0: jalankan cutscene ke-6 istirahat 1
+46 - Jika tanda 66 adalah 0: jalankan cutscene ke-7 istirahat 1
+47 - Jika tanda 69 adalah 0: "Ohh! I wonder what that is?" adegan potong trinket
+48 - Jika tanda 70 adalah 0: "This seems like a good place to store anything I
+     find out there..." (Victoria belum ditemukan)
+49 - Jika tanda 71 adalah 0: Mainkan Predestined Fate
+50 - "Help! Can anyone hear this message?"
+51 - "Verdigris? Are you out there? Are you ok?"
+52 - "Please help us! We've crashed and need assistance!"
+53 - "Hello? Anyone out there?"
+54 - "This is Doctor Violet from the D.S.S. Souleye! Please respond!"
+55 - "Please... Anyone..."
+56 - "Please be alright, everyone..."
+Dengan gamestate 50-56, Anda dapat memilih dari mana harus memulai, karena
+     semuanya akan muncul satu sama lain
+80 - Jika layar hitam (dan hanya jika), lanjutkan ke status 81 (Tebakan saya ini
+     dipanggil saat ESC ditekan, sebelum menu jeda terbuka)
+81 - Kembali ke menu utama
+82 - Hasil uji waktu (bug/disadap)
+83 - Jika layar kembali, lanjutkan ke status 84
+84 - Hasil time trial (saya pikir 82 bekerja lebih baik dari 84)
+85 - Versi Time Trial dari gamestate 200 (Flash, mainkan Positive Force, aktifkan
+     mode finalstretch)
+State 90-95 terkait dengan uji waktu, tetapi tidak berfungsi dengan baik di level
+      kustom. Satu-satunya efek nyata yang terjadi di level kustom adalah
+      lengkungan, perubahan musik
+90 - Statiun Luar Angkasa 1
+91 - Laboratorium
+92 - Zona Warp
+93 - Menara
+94 - Statiun Luar Angkasa 2
+95 - Level Akhir
+96 - Jika layarnya hitam, lanjutkan dengan state 97
+97 - Keluar dari Super Gravitron (teleport dan mainkan Pipe Dream)
+100 - Jika tanda 4 adalah 0: lanjutkan ke state 101
+101 - Jika Anda terbalik, balikkan kembali ke lantai, lanjutkan dengan state 102
+State berikut (102-112) mencoba menuju ke state saat ini + 1, seperti pada 50-56
+      tetapi tidak berputar), tetapi mungkin mengalami kesalahan sebagai setengah
+      dari state (103, 105, 107, 109, 111) tidak ada.
+102 - Verdigris: "Captain! I've been so worried!"
+104 - "I'm glad you're ok!"
+106 - "I've been trying to find a way out, but I keep going around in circles..."
+108 - "Don't worry! I have a teleporter key!"
+110 - "Follow me!"
+112 - Menghapus kotak teks
+115 - Pada dasarnya tidak ada, lanjutkan untuk state 116
+116 - Dialog merah di bagian bawah layar mengatakan "Sorry Eurogamers! Teleporting
+      around the map doesn't work in this version!", teruskan ke state 117, yang
+      tidak ada, jadi semuanya mungkin gagal
+118 - Menghapus kotak teks
+State 120-128 berfungsi seperti 102-112, yaitu dalam rangkaian, tetapi dengan
+      hal-hal yang lebih sedikit rusak
+120 - Jika tanda 5 adalah 0: lanjutkan ke state 121
+121 - Jika Anda di lantai, balikkan.
+122 - Vitellary: "Captain! You're ok!"
+124 - Vitellary: "I've found a teleporter, but I can't get it to go anywhere..."
+126 - "I can help with that!"
+128 - "I have the teleporter codex for our ship!"
+130 - "Yey! Let's go home!"
+132 - Menghapus kotak teks
+200 - Mode final
+1000 - Menyalakan cutscenebars, membekukan permainan, teruskan ke state 1001
+1001 - Dialog "You got a shiny trinket!" (tetapi Anda tidak benar-benar
+       mendapatkannya, ini hanya dipanggil setiap kali Anda mendapatkannya),
+       lanjutkan dengan state 1003
+1003 - Kembalikan permainan ke normal
+1010 - "You found a crewmate!" dengan cara yang sama seperti untuk trinket
+1013 - Akhiri level dengan bintang
+2000 - Simpan permainan
+2500-2509 - Lakukan teleportasi ke beberapa lokasi aneh yang tidak ada,
+            konon ke The Laboratory, saya kira, lanjutkan dengan state
+            2510
+2510 - Viridian: "Hello?", lanjutkan dengan state 2512
+2512 - Viridian: "Is anybody there?", lanjutkan dengan state 2514
+2514 - Menghapus kotak teks, mainkan Potential For Anything
+State 3000-3099:
+3000-3005 - "Level Complete! You've rescued the crewmate" diterapkan ke
+            companion(), default ke Verdigris. 6=Verdigris, 7=Vitellary,
+            8=Victoria, 9=Vermilion, 10=Viridian (ya, betulkah), 11=Violet
+            (Gamestate: 3006-3011=Verdigris, 3020-3026=Vitellary,
+            3040-3046=Victoria, 3060-3066=Vermilion, 3080-3086=Viridian,
+            3050-3056=Violet)
+3070-3072 - Lakukan hal-hal pasca penyelamatan, biasanya kembali ke kapal
+3501 - Game Complete
+4010 - Flash + warp
+4070 - The Final Level, tetapi game akan macet ketika Anda mencapai Timeslip
+       (Karena bagaimana game mendapatkan informasi entitas, yang rusak di level
+       kustom)
+4080 - Kapten teleport kembali ke kapal: potong adegan "Hello!" [C[C[C[C[Captain!]
+       + kredit.
+       Hal di atas akan mengacaukan penyimpanan data Anda, jadi jangan lakukan itu
+       kecuali Anda mencadangkan!
+4090 - Potongan adegan setelah Anda menyelesaikan stasiun luar angkasa 1

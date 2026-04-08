@@ -1,0 +1,96 @@
+Mode sk.int
+
+Mode skrip internal\wh#
+\C=
+
+Untuk menggunakan skrip internal di Ved, Anda dapat mengaktifkan mode skrip
+internal di editor, untuk menangani semua perintah dalam skrip itu sebagai skrip
+internal. Dengan fitur ini, Anda tidak perlu terlalu khawatir tentang menjalankan
+skrip internal; Anda tidak perlu menggunakan perintah ¤say¤, hitung baris, atau\nw
+ketik ¤text(1,0,0,4)¤ atau ¤text,,,,4¤ atau apa pun yang Anda inginkan - cukup\nwnw
+tulis skrip internal seperti yang dimaksudkan untuk game utama. Anda bahkan tidak
+perlu mengakhiri dengan perintah ¤loadscript¤ terakhir.\nw
+
+Ved mendukung berbagai metode skrip internal. Untuk menyoroti perbedaan teknisnya,
+kami akan menggunakan skrip contoh berikut:
+
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+
+Baris dari skrip internal ini adalah ¤hijau muda¤, baris yang ditambahkan secara\nG
+otomatis dan diperlukan untuk eksploitasi skrip untuk bekerja akan menjadi
+abu-abu¤. Perhatikan bahwa ini sedikit disederhanakan; Ved menambahkan ¤#v¤ di\gnw
+akhir garis abu-abu pada contoh untuk memastikan skrip yang ditulis secara manual
+tidak akan diubah, dan blok ¤say¤ yang terlalu besar harus dipecah menjadi yang\nw
+lebih kecil.
+
+Untuk informasi lebih lanjut tentang skrip internal, periksa referensi skrip
+internal.
+
+Sk.int Loadscript\h#
+
+Metode loadscript mungkin adalah metode yang paling umum digunakan saat ini.
+Ini adalah metode yang didukung Ved sejak versi alpha.
+
+Ini membutuhkan skrip tambahan, skrip beban, untuk memuat skrip internal.
+Loadscript akan, dalam bentuknya yang paling dasar, berisi perintah seperti
+iftrinkets(0,yourscript)¤, tetapi Anda juga dapat memiliki perintah sederhana\wn
+lainnya di dalamnya, dan Anda juga dapat menggunakan ¤ifflag¤ sebagai ganti\nw
+iftrinkets¤. Yang penting adalah skrip internal Anda dimuat dari skrip lain\wn
+agar bisa berfungsi.
+
+Skrip internal akan dikonversi kurang lebih sebagai berikut:
+
+  squeak(off)\g
+  say(11)\g
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+  text(1,0,0,3)\g
+
+text(1,0,0,3)¤ harus menjadi baris terakhir, atau di editor skrip VVVVVV, harus\w
+ada tepat satu baris kosong setelahnya.
+
+Dimungkinkan juga untuk tidak menggunakan ¤squeak(off)¤, dan menggunakan\nw
+text(1,0,0,4)¤ sebagai ganti ¤text(1,0,0,3)¤. Menggunakan ¤squeak(off)¤ menyimpan\wnwnw
+beberapa baris berharga dalam skrip yang lebih panjang.
+
+Sk.int say(-1)\h#
+
+Metode say(-1) lebih tua, dan memiliki kelemahan pada metode loadscript: metode
+ini selalu menampilkan bilah cutscene. Tetapi juga memiliki keuntungan yang dapat
+menjadi penting di level dengan banyak skrip: tidak memerlukan skrip beban. Kita
+dapat menghapus ¤cutscene()¤ dan ¤untilbars()¤ dari skrip kita, karena keduanya\nwnw
+sudah akan ditambahkan oleh VVVVVV saat menggunakan metode ini.
+
+  squeak(off)\g
+  say(-1)\g
+  text(1,0,0,3)\g
+  say(9)\g
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+
+Metode ini telah ditambahkan sebagai mode skrip internal tambahan di Ved 1.6.0.

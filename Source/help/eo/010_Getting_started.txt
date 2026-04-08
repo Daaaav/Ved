@@ -1,0 +1,28 @@
+Kiel komenci
+
+Kiel komenci\wh#
+\C=
+
+Tiu ĉi artikolo helpos vin komenci uzi Ved. Por komenci uzi la redaktilon, vi
+devas ŝargi nivelon, aŭ krei novan nivelon.
+
+
+La redaktilo\h#
+
+Ĉe la maldekstra flanko, vi trovos la ilaron. La plimulto da iloj havas ilidojn
+kiuj estas listigitaj dekstre. Por ŝanĝi la uzatan ilon, uzu la taŭgan klavaro-
+komandon aŭ rulumu detenante la ŝov- aŭ reg-klavon. Por interŝanĝi ilidojn, vi
+povas rulumi ie ajn. Por pli da informoj pri la iloj, legu la helpopaĝon ¤Iloj.\nwl
+Vi povas dekstre alklaki entojn por menuo de agoj por tiu ento. Por forigi entojn
+sen uzi la kuntekstan menuon, dekstre alklaku ilin detenante la ŝov-klavon.
+Ĉe la dekstra flanko de la ekrano, vi trovos multajn butonojn kaj agordojn. La
+supraj butonoj rilatas al la tuta nivelo, kaj la malsupraj (sub Ĉambraj agordoj)
+estas specifaj pri la aktuala ĉambro. Por pli da informoj pri tiuj butonoj, legu
+la respektivajn helpopaĝojn, kie haveblas.
+
+Dosierujo de niveloj\h#
+
+Ved normale uzos la saman dosierujon por konservi nivelojn kiel VVVVVV, por
+faciligi interuzadon de la niveloredaktilo de VVVVVV kaj Ved. Se Ved ne ĝuste
+detektas vian VVVVVV-dosierujon, vi povas enigi propran dosierindikon
+en la agordoj de Ved.

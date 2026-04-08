@@ -1,0 +1,360 @@
+Manlibreto de listoj
+
+Manlibreto de listoj\wh#
+\C=
+
+Jen listoj de numeroj uzataj en VVVVVV, plejparte kopiitaj de forumaj afiŝoj.
+Dankon al ĉiuj, kiuj faris ĉi tiujn listojn!
+
+
+Tabelo\w&Z+
+\&Z+
+#Muzikaj numeroj (simpligita skriptado)\C&Z+l
+#Muzikaj numeroj (internaj)\C&Z+l
+#Sonaj numeroj\C&Z+l
+#Entoj\C&Z+l
+#Koloroj por skipanoj de createentity()\C&Z+l
+#Moviĝaj tipoj de malamikoj\C&Z+l
+#Ludstatoj\C&Z+l
+
+
+Muzikaj numeroj (simpligita skriptado)\h#
+
+0 - silento (neniu muziko)
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Presenting VVVVVV
+6 - Predestined Fate
+7 - Popular Potpourri
+8 - Pipe Dream
+9 - Pressure Cooker
+10 - Paced Energy
+11 - Piercing the Sky
+
+Muzikaj numeroj (internaj)\h#
+
+0 - Path Complete
+1 - Pushing Onwards
+2 - Positive Force
+3 - Potential for Anything
+4 - Passion for Exploring
+5 - Pause
+6 - Presenting VVVVVV
+7 - Plenary
+8 - Predestined Fate
+9 - ecroF evitisoP
+10 - Popular Potpourri
+11 - Pipe Dream
+12 - Pressure Cooker
+13 - Paced Energy
+14 - Piercing the Sky
+15 - Predestined Fate (rearanĝo)
+
+Sonaj numeroj\h#
+
+0 - Renverso al plafono
+1 - Renverso al planko
+2 - Krio
+3 - Kolektaĵo kolektita
+4 - Monero kolektita
+5 - Konservejo tuŝita
+6 - Plirapida movsablo tuŝita
+7 - Normala movsablo tuŝita
+8 - Tuŝita gravita linio
+9 - Ekbrilo
+10 - Teleportado
+11 - Pepo de Viridiano
+12 - Pepo de Verdigriso
+13 - Pepo de Viktoria
+14 - Pepo de Vitelario
+15 - Pepo de Violeto
+16 - Pepo de Vermiljo
+17 - Terminalo tuŝita
+18 - Teleportilo tuŝita
+19 - Sonorilo
+20 - Pepo de terminalo
+21 - Tempoprova ĝisnombrado "3, 2, 1"
+22 - Tempoprova ĝisnombrado "EK!"
+23 - Rompado de muroj kiel gigantulo
+24 - Gigantula (mal)kombiniĝo
+25 - Nova rekordo en Supergravitrono
+26 - Nova trofeo en Supergravitrono
+27 - Savita skipano (en propraj niveloj)
+
+Entoj\h#
+
+\wh#
+
+Enhavo0 - La ludanto
+1 - Malamiko
+    Metadatumoj: moviĝa tipo, moviĝa rapido
+    Pro manko de bezonataj datumoj, vi nur iam ajn ricevos purpuran malamikan
+    skatolon, krom se vi estas en la polusa dimensio de VVVVVV farante tiun ĉi
+    komandon.
+2 - Moviĝanta platformo
+    Metadatumoj: moviĝa tipo, moviĝa rapido
+    Notu ke transportbendoj estas realigitaj kiel moviĝantaj platformoj,
+    vidu moviĝajn tipojn 8 kaj 9
+3 - Malaperanta platformo
+4 - 1x1 plirapida movsabla kahelo
+5 - Renversita Viridiano, vi renversiĝos se vi tuŝas ĝin
+6 - Stranga ruĝa brilanta aferaĵo, kiu rapide malaperas
+7 - Same kiel supre, sed ĝi estas bluverda kaj ne brilas
+8 - Monero de la prototipo
+    Metadatumo: Monera idento
+9 - Kolektaĵo
+    Metadatumo: Kolektaĵa idento
+    Notu ke kolektaĵa idento ekas je 0, kaj ĉio super 19 ne konserviĝos se vi
+    reŝargas la nivelon
+10 - Konservejo
+     Metadatumoj: Stato de konservejo (0=renversita, 1=normala)
+                  Idento de konservejo (kontrolas, ĉu la konservejo aktivas aŭ ne)
+11 - Horizontala gravita linio
+     Metadatumo: Longo per bilderoj
+12 - Vertikala gravita linio
+     Metadatumo: Longo per bilderoj
+13 - Teleportĵetonoo
+     Metadatumoj: Celloko per kaheloj (X-akso), celloko per kaheloj (Y-akso)
+14 - Teleportilo
+     Metadatumo: Konserveja idento(?)
+15 - Verdigriso
+     Metadatumo: Stato de AI
+16 - Vitelario (renversita)
+     Metadatumo: Stato de AI
+17 - Viktoria
+     Metadatumo: Stato de AI
+18 - Skipano
+     Metadatumoj: Koloro (uzante krudan kolorliston, ne la skipanajn kolorojn),
+     humoro
+19 - Vermiljo
+     Metadatumo: Stato de AI
+20 - Terminalo
+     Metadatumoj: Sprajto, skript-idento(?)
+21 - Same kiel supre, sed je tuŝiĝo la terminalo ne eklumas
+     Metadatumoj: Sprajto, skript-idento(?)
+22 - Kolektita kolektaĵo
+     Metadatumo: Idento de kolektaĵo
+23 - Kvadrata malamiko de la Gravitrono
+     Metadatumo: Direkto
+     Se vi enigas minusan aŭ tro altan X-koordinaton, sago montriĝas, ĝuste kiel
+     en la vera Gravitrono
+24 - Skipano de Interakto 1
+     Metadatumoj: Kruda koloro, humoro
+     Ŝajne ne influata de obstakloj, kvankam ĝi devus influiĝi
+25 - Trofeo
+     Metadatumoj: Identilo de defio, sprajto
+     Se la defio estas plenumita, la baza sprajtidento (kiun vi ekhavas se vi uzas
+     sprajto=0) ŝanĝiĝos. Nur uzu 0 aŭ 1 se vi volas predikteblajn rezultojn.
+26 - La teleportĵetonego al la sekreta laboratorio
+     Notu bone ke tio ĉi estas nur bela sprajto, kaj ke vi mem devos
+     skriptigi ĝian funkciadon.
+55 - Savebla skipano
+     Metadatumo: Koloro de la skipano. Koloroj super 6 ĉiam montros *feliĉan*
+     Viridianon
+56 - Malamiko de propra niveloj
+     Metadatumoj: Moviĝa tipo, moviĝa rapido
+     Notu bone, ke se ne estas malamikoj en la ĉambro, la malamikaj sprajt-
+     datumoj ne aktualiĝos ĝuste kaj simple montriĝos tia malamiko, kian vi
+     vidis lastatempe, aŭ kvadrata malamiko.
+Nedifinitaj entoj (27-50, 57+) aperigas misfunkciantajn Viridianojn.
+
+Koloroj por skipanoj de createentity()\h#
+
+0: Bluverdo
+1: Brilanta ruĝo (uzata por mortado)
+2: Malhela oranĝkoloro
+3: Koloro de kolektaĵo
+4: Grizo
+5: Brilanta blanko
+6: Ruĝo (iomete pli malhela ol Vermiljo)
+7: Limea verdo
+8: Brilega rozkoloro
+9: Brilega flavo
+10: Brilanta blanko
+11: Brila bluverdo
+12: Bluo, same kiel Viktoria
+13: Verdo, same kiel Verdigriso
+14: Flavo, same kiel Vitelario
+15: Ruĝo, same kiel Vermiljo
+16: Bluo, same kiel Viktoria
+17: Plihela oranĝkoloro
+18: Grizo
+19: Malplihela grizo
+20: Rozkoloro, same kiel Violeto
+21: Plihela grizo
+22: Blanko
+23: Brilanta blanko
+24-29: Blanko
+30: Grizo
+31: Hela, iome purpureca grizo?
+32: Malhela verdo/bluverdo
+33: Malhela bluo
+34: Malhela verdo
+35: Malhela ruĝo
+36: Malbrila oranĝkoloro
+37: Brilanta grizo
+38: Grizo
+39: Malplihela verdo/bluverdo
+40: Plibrilanta grizo
+41-99: Blanko
+100: Malhela grizo
+101: Brilanta blanko
+102: Koloro de teleportado
+103 kaj pluen: Blanko
+
+Moviĝaj tipoj de malamikoj\h#
+
+0 - Resaltadas supren kaj malsupren, ekas malsupren.
+1 - Resaltadas supren kaj malsupren, ekas supren.
+2 - Resaltadas maldekstren kaj dekstren, ekas maldekstren.
+3 - Resaltadas maldekstren kaj dekstren, ekas dekstren.
+4, 7, 11 - Moviĝas dekstren ĝis kolizio.
+5 - Same kiel supre, sed ĝi agas strange kiam ĝi kolizias.
+    GIF ĉi tie: ¤https://files.catbox.moe/c23ovl.gif\nCl
+6 - Resaltadas supren kaj malsupren, sed nur atingas certan y-pozicion antaŭ ol
+    reiri malsupren. Uzita en "Militado el la tranĉeoj".
+8, 9 - Transportbendoj (por moviĝantaj platformoj)
+       Ne moviĝas (por ĉio alia)
+14 - Blokebla de malaperantaj platformoj
+15 - Ne moviĝas (?)
+10, 12 - Multobliĝas dekstren en la sama loko, paneigas VVVVVV se ĝi troas,
+         difektos vian nivelon se vi konservas ĝin
+13 - Kiel 4, sed moviĝas malsupren ĝis kolizio.
+16 - Aperas kaj malaperas
+17 - Treme iras maldekstren
+18 - Treme iras dekstren, iom pli rapide
+19+ - Ne moviĝas (?)
+
+Ludstatoj\h#
+
+0 - Eliĝas de plej multe da ludstatoj
+1 - Agordas ludstaton al 0 (t.e. same kiel supre en praktiko)
+2 - "To do: write quick intro to story!"
+    (Farende: rapide skribi enkondukon al rakonto!)
+4 - "Premu ←/→ aŭ WASD por moviĝi"
+5 - Plenumas la skripton "returntohub" (t.e. fadeout, teleportiĝi al ĝuste
+    antaŭ La Turo, fadein, ludi Passion for Exploring)
+7 - Forigas dialog-skatolojn
+8 - "Premu ENTER por vidi mapon kaj rapidkonservi"
+9 - Supergravitrono
+10 - Gravitrono
+11 - "When you're NOT standing on stop and wait for you" (Provas aliri flipmode-
+     kontrolon por skribi "the ceiling" aŭ "the floor", kaj kontroli skipanon, sed
+     ĉar ĉi tio malsukcesas, la supra teksto montriĝas anstataŭe)
+12 - "Ne eblas pluiri al la sekva ĉambro, ĝis kiam li estas sekure transiĝinta."
+13 - Forigas dialog-skatolojn rapide
+14 - "When you're standing on the floor," (same aplikiĝas ĉi tie kiel 11)
+15 - Feliĉigas Viridian
+16 - Malfeliĉigas Viridian
+17 - "Se vi preferas, eblas premi ↑/↓ por renversiĝi."
+20 - Se flago 1 estas 0, agordas ĝin al 1 kaj forigas dialog-skatolojn
+21 - Se flago 2 estas 0, agordas ĝin al 1 kaj forigas dialog-skatolojn
+22 - "Premu AGBUTONON por renversiĝi"
+30 - "Kial la ŝipo teleportigis min ĉi tien sola?" "Mi esperas, ke la aliuloj
+     eskapis enordaj..."
+31 - Sekvenco: "Violeto! Ĉu estas vi?" (se flago 6 estas 0)
+32 - Se flago 7 estas 0: "Ho! Teleportilo!" "Mi povas reveni al la ŝipo per ĝi!"
+33 - Se flago 9 estas 0: Sekvenco de Viktoria
+34 - Se flago 10 estas 0: Sekvenco de Vitelario
+35 - Se flago 11 estas 0: Sekvenco de Verdigriso
+36 - Se flago 8 estas 0: Sekvenco de Vermiljo
+37 - Vitelario post Gravitrono
+38 - Vermiljo post Gravitrono
+39 - Verdigriso post Gravitrono
+40 - Viktoria post Gravitrono
+41 - Se flago 60 estas 0: plenumas komencon de sekvenco de Interakto 1
+42 - Se flago 62 estas 0: plenumas trian sekvencon de Interakto 1
+43 - Se flago 63 estas 0: plenumas kvaran sekvencon de Interakto 1
+44 - Se flago 64 estas 0: plenumas kvinan sekvencon de Interakto 1
+45 - Se flago 65 estas 0: plenumas sesan sekvencon de Interakto 1
+46 - Se flago 66 estas 0: plenumas sepan sekvencon de Interakto 1
+47 - Se flago 69 estas 0: Kolektaĵa sekvenco: "Ho! Kio estas tio, mi scivolas..."
+48 - Se flago 70 estas 0: "Tie ĉi ŝajnas bona loko por konservi la aferojn, kiujn
+     mi trovas en tiu ĉi dimensio." (Victoria ne jam troviĝis)
+49 - Se flago 71 estas 0: Ludas Predestined Fate
+50 - "Helpu! Ĉu iu ajn povas aŭdi ĉi tiun mesaĝon?"
+51 - "Verdigriso? Ĉu vi estas? Ĉu vi enordas?"
+52 - "Bonvole helpu nin! Ni estas kraŝinte kaj bezonas asiston!"
+53 - "Ha lo? Ĉu iu ajn estas?"
+54 - "Jen estas Doktoro Violeto de la kosmoŝipo Souleye! Bonvolu respondi!"
+55 - "Iu ajn... mi petas..."
+56 - "Estu enordaj, ĉiuj, mi petas..."
+En ludstatoj 50-56, vi povas elekti kie komenci, ĉar ĉio aperos post unu la alia
+80 - Se, kaj nur se la ekrano estas nigra, daŭras al stato 81 (mia supozo estas,
+ ke tio ĉi estas vokita je premo de ESK, antaŭ ol malfermiĝo de la paŭzmenuo)
+81 - Reiras al la ĉefmenuo
+82 - Rezultoj de tempoprovo (misfunkcia)
+83 - Se ekrano estas nigra, daŭras al stato 84
+84 - Rezultoj de tempoprovo (pli misfunkcia ol 82)
+85 - La tempoprova versio de ludstato 200 (brubrilas, ludas Positive Force, ŝaltas
+     reĝimon finalstretch)
+Statoj 90-95 rilatas al tempoprovoj, sed ne funkcias ĝuste en propraj niveloj.
+     La nuraj veraj efikoj, kiuj okazas en propraj niveloj estas teleporto, kaj
+     ŝanĝo de muziko
+90 - Kosmostacio 1
+91 - La laboratorio
+92 - Teleportejo
+93 - La turo
+94 - Kosmostacio 2
+95 - Fina nivelo
+96 - Se ekrano estas nigra, daŭras al stato 97
+97 - Eliras de Supergravitrono (teleportas vin kaj ludas Pipe Dream)
+100 - Se flago 4 estas 0: daŭras al stato 101
+101 - Se vi estas renversita, re-renversas vin al planko, daŭras al stato 102
+      La sekvantaj statoj (102-112) provas iri al la aktuala stato + 1, kiel en
+      50-56 (sed ne reiteracias) sed eble missignalos pro ke duono el la statoj
+      (103, 105, 107, 109, 111) ne ekzistas.
+102 - Verdigriso: "Captain! I've been so worried!" (neuzita dialogo)
+104 - "I'm glad you're ok!"
+106 - "I've been trying to find a way out, but I keep going around in circles..."
+108 - "Don't worry! I have a teleporter key!"
+110 - "Follow me!"
+112 - Forigas dialog-skatolojn
+115 - Esence nenio, daŭras al stato 116
+116 - Ruĝa dialog-skatolo ĉe la malsupro de la ekrano, kiu diras "Sorry
+      Eurogamers! Teleporting around the map doesn't work in this version!",
+      daŭras al stato 117, kiu ne ekzistas, do eraroj eble okazos
+118 - Forigas dialog-skatolojn
+Statoj 120-128 funkcias iome kiel 102-112, t.e. en serio, sed kun malpli da
+      rompitaj aferoj
+120 - Se flago 5 estas 0: daŭras al stato 121
+121 - Se vi estas sur planko, renversas vin.
+122 - Vitelario: "Captain! You're ok!" (neuzita dialogo)
+124 - Vitelario: "I've found a teleporter, but I can't get it to go anywhere..."
+126 - "I can help with that!"
+128 - "I have the teleporter codex for our ship!"
+130 - "Yey! Let's go home!"
+132 - Forigas dialog-skatolojn
+200 - Fina reĝimo
+1000 - Ŝaltas interscenajn striojn, haltigas la ludon, daŭras al stato 1001
+1001 - "Vi trovis brilan kolektaĵon!" (sed vi ne fakte akiris kolektaĵon,
+       tio ĉi estas vokita ĉiun fojon, kiam unu akiriĝas), daŭras al stato 1003
+1003 - Redaŭrigas la ludon
+1010 - "Vi trovis perditan skipanon!" same kiel kolektaĵoj
+1013 - Finas la nivelon kun steloj
+2000 - Konservas la ludon
+2500-2509 - Teleportas vin al iu stranga neekzistana loko, supozeble al la
+            laboratorio, mi supozas, daŭras al stato 2510
+2510 - Viridiano: "...Ha lo?", daŭras al stato 2512
+2512 - Viridiano: "Ĉu iu ajn estas?", daŭras al stato 2514
+2514 - Forigas dialog-skatolojn, ludas Potential for Anything
+Statoj 3000-3099:
+3000-3005: "Fino de nivelo! Vi savis..." kaj la skipano aplikita al
+           companion(), defaŭlte Verdigriso. 6=Verdigriso, 7=Vitelario,
+           8=Viktoria, 9=Vermiljo, 10=Viridiano (jes, vere), 11=Violeto
+           (Ludstatoj: 3006-3011=Verdigriso, 3020-3026=Vitelario, 3040-
+           3046=Viktoria, 3060-3066=Vermiljo, 3080-3086=Viridiano, 3050-
+           3056=Violeto)
+3070-3072 - Plenumas postsavajn aferojn, kutime revenas al ŝipo
+3501 - Fino de ludo (ludo estas kompletigita)
+4010 - Brubrilo + teleporto
+4070 - La fina nivelo, sed la ludo paneos kiam vi atingas Tempgliton (pro la
+       maniero en kiu la ludo akiras ento-informojn, kiu estas rompita en
+       propraj niveloj)
+4080 - Viridiano estas teleportita reen al la ŝipo: "Saluton!"
+       [K[K[K[K[Kapitano!], intersceno kaj agnoskoj.
+       La supra difektos viajn konservitajn datumojn, do ne uzu ĝin, krom se vi
+       havas savkopion!
+4090 - Intersceno post kompletigo de la unua kosmostacio

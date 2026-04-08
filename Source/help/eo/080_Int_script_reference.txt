@@ -1,0 +1,852 @@
+Interna skriptado
+
+Manlibreto de interna skriptado\wh#
+\C=
+
+Interna skriptado provizas pli da potenco al skriptantoj, sed ankaŭ estas iom pli
+kompleksa ol simpligita skriptado.
+
+Por uzi internan skriptadon en Ved, vi povas ebligi la reĝimon de interna
+skriptado en la redaktilo, por trakti ĉiujn komandojn en tiu skripto kiel
+internan skriptadon.
+
+Kolorkodoj:\w
+Blanka - Devus esti sekure, en plej malbona okazo VVVVVV paneos pro eraro via.
+Blua¤   - Kelkaj el ĉi tiuj ne funkcias en propraj niveloj, aliaj ne tre senc-\b
+         havas en propraj niveloj, aŭ nur duone utilas ĉar ili vere estis
+         destinitaj nur por la ĉefa ludo.
+Oranĝ-¤ - Ĉi tiuj funkcias kaj nenio malbona okazos, krom se vi donas al ili iujn\o
+kolora¤   specifajn argumentojn, kiuj forigos vian konservitajn datumojn.\o
+Ruĝa¤   - Ruĝaj komandoj ne estu uzataj en propraj niveloj ĉar ili aŭ malŝlosos\r
+         iujn partojn de la ĉefa ludo (funkcio nedezirinda por propra nivelo),
+         aŭ difektos viajn konservitajn datumojn entute.
+
+
+activateteleporter¤()\w#h
+
+Activate the first teleporter in the room, which makes it flash random colors, and
+animate erratically.
+
+The teleporter's ¤tile¤ is set to 6, and the ¤color¤ is set to 102. This command makes\gn&Zgn&Zg
+the teleporter do nothing when touched, as the teleporter's tile is set to\g
+something which isn't ¤1§¤.\gn&Zg(
+
+activeteleporter¤()\w#h
+
+Makes the first teleporter in the room white, aka color ¤101¤.\nn&Z
+
+This command does not change the tile, so it will not affect functionality.\g
+
+alarmoff\w#h
+
+Malŝaltas la sonorilon.
+
+alarmon\w#h
+
+Ŝaltas la sonorilon.
+
+altstates¤(stato)\b#h
+
+Ŝanĝas la aranĝon de iuj ĉambroj, ekzemple la kolektaĵan ĉambron en la ŝipo antaŭ
+kaj post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj
+tute ne subtenas ĉi tion).
+
+In the code, this changes the global ¤altstates¤ variable.\gn&Zg
+
+audiopause¤(on/off)\w#h
+
+Devige (mal)ebligi paŭzigon de sonoj je elfokusiĝo, senrigarde al ties agordo
+de la uzanto. La defaŭlto estas off (malŝalta), t.e. paŭzigu sonon dum elfokusiĝa
+paŭzo.
+
+This command was added in 2.3.\g
+
+backgroundtext\w#h
+
+Makes the next shown textbox not wait for ACTION to be pressed before continuing
+the script. The most common usage of this is to display multiple textboxes at
+once.
+
+befadein¤()\w#h
+
+Instantly remove a fade, such as from ¤#fadeout()¤fadeout¤ or ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
+
+blackon¤()\w#h
+
+Resume rendering if it was paused by ¤#blackout()¤blackout¤.\nLwl&Z
+
+blackout¤()\w#h
+
+Pauses rendering.
+
+To make the screen black, use ¤#shake(n)¤shake¤ at the same time.\gLwl&Zg
+
+bluecontrol\b#h
+
+Komencas konversacion kun Viktoria ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+changeai¤(skipano,ai1,ai2)\w#h
+
+Povas ŝanĝi la frontan direkton de skipano aŭ la marŝan agmanieron
+
+skipano - cyan/player/blue/red/yellow/green/purple
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceleft/faceright/followposition,ai2
+ai2 - deviga se followposition estas uzata por ai1
+
+faceplayer¤ is missing, use 18 instead. ¤panic¤ also does not work, requiring ¤20¤.\n&Zgn&Zgn&Zg
+
+changecolour¤(a,b)\w#h
+
+Changes the color of a crewmate. This command can be used with Arbitrary Entity
+Manipulation.
+
+a - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
+b - Color name to change to. Since 2.4, you can also use a color ID
+
+changecustommood¤(koloro,humoro)\w#h
+
+Changes the mood of a rescuable crewmate.
+
+color - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
+mood - 0 for happy, 1 for sad
+
+changedir¤(koloro,direkto)\w#h
+
+Ĝuste kiel ¤#changeai(skipano,ai1,ai2)¤changeai¤, tio ĉi ŝanĝas frontan direkton.\nLwl&Z
+
+koloro - cyan/player/blue/red/yellow/green/purple
+direkto - 0 estas maldekstren, 1 estas dekstren
+
+changegravity¤(skipano)\w#h
+
+Pliigi la grafikan numeron de la specifita skipano per 12.
+
+skipano - Koloro de la ŝanĝenda skipano cyan/player/blue/red/yellow/green/purple
+
+changemood¤(koloro,humoro)\w#h
+
+Changes the mood of the player or a cutscene crewmate.
+
+koloro - cyan/player/blue/red/yellow/green/purple
+humoro - 0 por feliĉa, 1 por malfeliĉa
+
+Cutscene crewmates are crewmates created with ¤#createcrewman(x,y,color,mood,ai1,ai2)¤createcrewman¤.\gLwl&Zg
+
+changeplayercolour¤(koloro)\w#h
+
+Ŝanĝas la koloron de la ludanto.
+
+koloro - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(koloro)\w#h
+
+Ŝanĝas la koloron de la ludanto post ties morto kaj reestiĝo.
+
+koloro - red/yellow/green/cyan/blue/purple/teleporter aŭ numero
+
+This command was added in 2.4.\g
+
+changetile¤(koloro,kahelo)\w#h
+
+Ŝanĝas la kahelon de skipano (nur por skipanoj de createcrewman; vi povas uzi iun
+ajn sprajton en sprites.png)
+
+koloro - cyan/player/blue/red/yellow/green/purple/gray
+kahelo - Kahela numero
+
+clearteleportscript¤()\b#h
+
+Viŝas la teleportilan skripton, kiu estas agordita per teleportscript(x)
+
+companion¤(x)\b#h
+
+Faras la specifitan skipanon akompananto.
+
+x - 0 (neniu) aŭ 6/7/8/9/10/11
+
+createactivityzone¤(koloro)\b#h
+
+Kreas agadan zonon ĉe la specifita skipano (aŭ ĉe la ludanto, se la skipano
+ne ekzistas) kiu diras "Premu AGBUTONON por paroli al (skipano)"
+
+createcrewman¤(x,y,koloro,humoro,ai1,ai2)\w#h
+
+Kreas skipanon (ne saveblan)
+
+humoro - 0 por feliĉa, 1 por malfeliĉa
+ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
+faceplayer/panic/faceleft/faceright/followposition,ai2
+ai2 - deviga se followposition estas uzata por ai1
+
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
+
+Creates the entity with the ID ¤e§¤, two ¤meta¤ values, and 4 ¤p§¤ values.\nn&Znn&Znn&Z(
+
+e - The entity ID
+
+A list of entity IDs and the ¤meta¤/§¤p§¤ values they use can be found ¤https://vsix.dev/wiki/Createentity_list¤here¤.\gn&Zgn&ZgLClg(
+
+createlastrescued¤()\b#h
+
+Kreas la laste savitan skipanon ĉe kodita pozicio ¤(200,153)¤. La laste savita\nn&Z
+skipano baziĝas de la ludstato de nivela kompletiĝo.
+
+createrescuedcrew¤()\b#h
+
+Kreas ĉiujn savitajn skipanojn
+
+customifflag¤(n,skripto)\w#h
+
+Same kiel ¤ifflag(n,skripto)¤ en simpligita skriptado\nn&Z
+
+customiftrinkets¤(n,skripto)\w#h
+
+Same kiel ¤iftrinkets(n,skripto)¤ en simpligita skriptado\nn&Z
+
+customiftrinketsless¤(n,skripto)\w#h
+
+Same kiel ¤iftrinketsless(n,skripto)¤ en simpligita skriptado\nn&Z
+
+custommap¤(on/off)\w#h
+
+Same kiel map() en simpligita skriptado
+
+customposition¤(tipo,above/below)\w#h
+
+Superskribas la x,y de la komando text kaj do agordas la pozicion de la dialog-
+skatolo (por saveblaj skipanoj anstataŭ skipanoj de createcrewman).
+
+tipo - center/centerx/centery, aŭ kolornomo
+cyan/player/blue/red/yellow/green/purple (savebla)
+above/below - Supere aŭ sube, nur uzata se tipo estas kolornomo
+
+cutscene¤()\w#h
+
+Aperigas striojn de intersceno
+
+delay¤(frames)\w#h
+
+Pauses the script for the specified number of frames. Controls are forced to be
+unpressed during this pause.
+
+destroy¤(objekto)\w#h
+
+Forigas enton, same kiel la komando de simpligita skriptado.
+
+objekto - gravitylines/warptokens/platforms/moving/disappear
+
+moving¤ and ¤disappear¤ were added in 2.4.\n&Zgn&Zg
+
+do¤(times)\w#h
+
+Starts a loop block which will repeat a specified number of times. End the block
+using ¤#loop¤loop¤.\nLwl&Z
+
+times - The amount of times the block will loop.
+
+endcutscene¤()\w#h
+
+Malaperigas la striojn de intersceno.
+
+endtext\w#h
+
+Forigas (fordissolvigas) dialog-skatolon.
+
+endtextfast\w#h
+
+Tuje forigas dialog-skatolon (sen fordissolvo).
+
+entersecretlab\r#h
+
+Ŝaltas reĝimon de sekreta laboratorio.
+
+2.2 KAJ SUBE: Vere malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne
+nevolata efiko por propra nivelo.
+
+everybodysad¤()\w#h
+
+Makes all crewmates sad.
+
+Does not work on crewmates placed in the editor.\g
+
+face¤(A,B)\w#h
+
+Makes crewmate A look at crewmate B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Does not work on crewmates placed in the editor.\g
+
+fadein¤()\w#h
+
+Fades back in from ¤#fadeout()¤fadeout¤.\nLwl&Z
+
+fadeout¤()\w#h
+
+Fades the screen to black. To undo, use ¤#fadein()¤fadein¤ or ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
+
+finalmode¤(x,y)\b#h
+
+Teleportigas vin al ekstere de Dimensio VVVVVV, ¤(46,54)¤ estas la unua ĉambro\nn&Z
+de la fina nivelo
+
+flag¤(n,on/off)\w#h
+
+Same kiel simpligita komando
+
+flash¤(length)\w#h
+
+Makes the screen white for ¤length¤ amount of frames.\nn&Z
+
+length - The amount of frames. 30 frames is almost one second.
+
+This is different from the simplified command, which actually calls ¤flash(5)¤,\gn&Zg
+playef(9)¤ and ¤shake(20)¤ at the same time. See: ¤#playef(sound)¤playef¤ and ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
+
+flip\w#h
+
+Make the player flip by pressing ACTION.
+
+If the player is not on the ground, this will not work, since it's simulating an\g
+ACTION press. Likewise, this command right after a textbox will not function for\g
+the same reason as two consecutive ACTION presses in a row is treated as holding\g
+the button down, which does not flip the player.\g
+
+flipgravity¤(koloro)\w#h
+
+Flips the gravity of a certain crewmate, or the player.
+
+koloro - cyan/player/blue/red/yellow/green/purple
+
+Before 2.3, this wouldn't unflip crewmates, or affect the player.\g
+
+flipme\w#h
+
+Korekti vertikalan poziciigadon de multaj dialog-skatoloj en renversita
+reĝimo
+
+foundlab\b#h
+
+Ludas sonon 3, montras dialog-skatolon kun "Gratulon! Vi trovis la
+sekretan labon!" Ne uzas endtext, ankaŭ ne havas pluajn nevolatajn efikojn.
+
+foundlab2\b#h
+
+Montras la duan dialog-skatolon, kiun vi vidas post malkovri la sekretan
+laboratorion. Ankaŭ ne uzas endtext, kaj ankaŭ ne havas pluajn nevolatajn efikojn.
+
+foundtrinket¤(x)\w#h
+
+Faras kolektaĵon trovita
+
+x - Numero de la kolektaĵo
+
+gamemode¤(x)\b#h
+
+teleporter por montri la mapon, game por kaŝi ĝin (montras teleportilojn de la
+ĉefa ludo)
+
+x - teleporter/game
+
+gamestate¤(state)\o#h
+
+Change the current gamestate to the specified state number.
+
+state - The gamestate to jump to
+
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤.\gLClg
+
+gotoposition¤(x,y,gravity)\w#h
+
+Change Viridian's position to ¤(x,y)¤ in this room, and change their gravity as\nn&Z
+well.
+
+gravity - 1 for flipped, 0 for not flipped. Any other values result in glitchy
+player gravity.
+
+gotoroom¤(x,y)\w#h
+
+Ŝanĝi la nuntempan ĉambron al ¤(x,y)¤.\nn&Z
+
+x - x coordinate
+y - y coordinate
+
+These room coordinates are 0-indexed.\g
+
+greencontrol\b#h
+
+Komencas konversacion kun Verdigriso ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+hascontrol¤()\w#h
+
+Makes the player have control. Note that you can't use this to regain control
+while in the middle of a ¤#delay(frames)¤delay¤.\nLwl&Z
+
+hidecoordinates¤(x,y)\w#h
+
+Set the room at the given coordinates to unexplored
+
+hideplayer¤()\w#h
+
+Malvidebligas la ludanton
+
+hidesecretlab\w#h
+
+Kaŝas la sekretan laboratorion sur la mapo
+
+hideship\w#h
+
+Kaŝas la ŝipon sur la mapo
+
+hidetargets¤()\b#h
+
+Kaŝas la celojn sur la mapo
+
+hideteleporters¤()\b#h
+
+Kaŝas la teleportilojn sur la mapo
+
+hidetrinkets¤()\b#h
+
+Kaŝas la kolektaĵojn sur la mapo
+
+ifcrewlost¤(skipano,skripto)\b#h
+
+Se skipano estas mankanta, saltas al skripto
+
+ifexplored¤(x,y,skripto)\w#h
+
+Se ¤(x,y)¤ estas esplorita, saltas al interna skripto.\nn&Z
+
+These room coordinates are 0-indexed.\g
+
+ifflag¤(n,skripto)\b#h
+
+Same kiel customifflag, sed ŝargas internan skripton (de la ĉefa ludo)
+
+iflang¤(language,script)\w#h
+
+Check if the current language of the game is a certain language, and if so, jump
+to the given custom script. ¤#loadtext(language)¤loadtext¤ has no influence on this command; only what\nLwl&Z
+language the user has selected in the menu.
+
+language - The language to check, usually a two-letter code, such as ¤en¤ for\nn&Z
+English
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.4.\g
+
+iflast¤(skipano,skripto)\b#h
+
+Se skipano x estas savita laste, saltas al skripto
+
+skipano - Numeroj uziĝas ĉi tie: 0: Viridiano, 1: Violeto, 2: Vitelario, 3:
+Vermiljo, 4: Verdigriso, 5: Viktoria
+
+ifskip¤(x)\b#h
+
+Se interscenoj estas preterpasataj en mortula reĝimo, saltas al skripto x
+
+iftrinkets¤(n,skripto)\b#h
+
+Same kiel simpligita skriptado, sed ŝargas internan skripton (de la ĉefa ludo)
+
+iftrinketsless¤(n,skripto)\b#h
+
+Kontrolas ĉu la specifita nombo estas malpli ol kvanto, kiu rilatas al kolektaĵoj.
+Tamen, ĝi kontrolas kontraŭ la pleja kvanto da kolektaĵoj, kiun vi iam ajn akiris
+dum individua ludado de la ĉefa ludo, kaj NE kontraŭ via aktuala fakta kvanto.
+Ŝargas internan (ĉefludan) skripton.
+
+ifwarp¤(x,y,dir,skripto)\w#h
+
+Se la warpdir por ĉambro ¤(x,y)¤ (1-indice) estas agordita al dir, iras al\nn&Z
+(simpligita) skripto
+
+x - Ĉambra x-koordinato, ekde 1
+y - Ĉambra y-koordinato, ekde 1
+dir - La ĉirkaŭflua direkto. Normale 0-3, sed ankaŭ ellimaj valutoj akceptiĝas
+
+jukebox¤(n)\w#h
+
+Blankigas muzikan terminalon kaj malkolorigas ĉiujn aliajn terminalojn.
+Se n estas specifita, muzikila agado-zono estiĝos ĉe kodita pozicio, kaj
+se terminalo estas ĉe la sama kodita pozicio, ĝi eklumos.
+La eblaj valutoj de n kaj la koditaj pozicioj jenas:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
+
+leavesecretlab¤()\b#h
+
+Malŝalti "reĝimon de sekreta labo"
+
+loadscript¤(skripto)\b#h
+
+Ŝargi internan skripton (de la ĉefa ludo). Komune uzata en propraj niveloj kiel
+loadscript(stop)
+
+loadtext¤(language)\w#h
+
+In custom levels, load the translation for the given language.
+
+language - The language to load, usually a two-letter code, such as ¤en¤ for\nn&Z
+English. Pass an empty language code to revert to the default behavior of simply
+using VVVVVV's language.
+
+This command was added in 2.4.\g
+
+loop\w#h
+
+Put this at the end of a loop block started with the ¤#do(times)¤do¤ command.\nLwl&Z
+
+missing¤(koloro)\b#h
+
+Faras iun mankanta
+
+moveplayer¤(x,y)\w#h
+
+Moves the player by x pixels to the right and y pixels down. Negative numbers are
+accepted as well.
+
+musicfadein¤()\w#h
+
+Fades the music in.
+
+Before 2.3, this command did nothing.\g
+
+musicfadeout¤()\w#h
+
+Dissolvigas la muzikon.
+
+nocontrol¤()\w#h
+
+Faras game.hascontrol falsa, forprenante regon de la ludanto.
+game.hascontrol estas aŭtomate agordita dum "- Premu AGBUTONON por daŭrigi -" kaj
+fermado de tekstoskatoloj, do tio ĉi estas malfarita post tiuj invitoj
+
+play¤(n)\w#h
+
+Ekludi muzikaĵon kun interna muzika numero.
+
+n - Interna muzika numero
+
+playef¤(sound)\w#h
+
+Ludas sonon.
+
+sound - Sound ID
+
+In VVVVVV 1.x, there was a second argument which controlled the offset in\g
+milliseconds at which the sound effect started. This was removed during the C++\g
+port.\g
+
+position¤(tipo,above/below)\w#h
+
+Superskribas la x,y de la komando text kaj tiel agordas la pozicion de la
+dialog-skatolo.
+
+tipo - center/centerx/centery, aŭ kolornomo
+cyan/player/blue/red/yellow/green/purple
+above/below - Supere/sube, nur uzata se tipo estas kolornomo
+
+purplecontrol\b#h
+
+Komencas konversacion kun Violeto ĝuste kiel kiam vi renkontas ŝin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+redcontrol\b#h
+
+Komencas konversacion kun Vermiljo ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+rescued¤(koloro)\b#h
+
+Faras iun savita
+
+resetgame\w#h
+
+Restarigas ĉiujn kolektaĵojn, kolektitajn skipanojn kaj flagojn, kaj teleportas
+la ludanton al la lasta konservejo.
+
+restoreplayercolour¤()\w#h
+
+Reŝanĝas la koloron de la ludanto al bluverda
+
+resumemusic¤()\w#h
+
+Resumes the music after ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Before 2.3, this was unfinished and caused various glitches, including crashes.\g
+
+rollcredits¤()\r#h
+
+Montras la agnoskojn.
+
+2.2 KAJ SUBE: Tio ĉi detruas viajn konservitajn datumojn
+post la fino de la agnoskoj!
+
+setactivitycolour¤(color)\w#h
+
+Change the color of the next activity zone that gets spawned.
+
+color - Any color that ¤#text(color,x,y,lines)¤text¤ takes\nLwl&Z
+
+This command was added in 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Change the position of the next activity zone that gets spawned.
+
+y - The y position
+
+This command was added in 2.4.\g
+
+setactivitytext\w#h
+
+Change the text of the next activity zone that gets spawned. The line after this
+command will be taken as the text (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This command was added in 2.4.\g
+
+setcheckpoint¤()\w#h
+
+Agordas la konservejon al via aktuala loko
+
+setfont¤(font,all)\w#h
+
+In custom levels, set the font to the given font.
+
+font - The font to set the font to. If left blank, this will set the font to the
+default font of the custom level.
+all - If ¤all¤ is specified (literally the word ¤all¤), then this retroactively\nn&Znn&Z
+affects all textboxes that are already on screen. Otherwise simply leave this out.
+
+This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\gn&Zg
+
+setroomname\w#h
+
+Change the room name of the current room. The line after this command will be
+taken as the name (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
+
+This name is not persistent and will go back to the default room name when the
+room is reloaded (e.g. by leaving and coming back).
+
+This name overrides any special changing room name, if the room has one.
+
+This command was added in 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+
+This command was added in 2.4.\g
+
+shake¤(n)\w#h
+
+Skuas la ekranon dum n kadroj. Tio ĉi ne kreas prokraston.
+
+showcoordinates¤(x,y)\w#h
+
+Set the room at the given coordinates to explored
+
+showplayer¤()\w#h
+
+Videbligas la ludanton
+
+showsecretlab\w#h
+
+Montras la sekretan labon sur la mapo
+
+showship\w#h
+
+Montras la ŝipon sur la mapo
+
+showtargets¤()\b#h
+
+Montras la celojn sur la mapo (nekonataj teleportiloj, kiuj montriĝas
+kiel demandosignoj)
+
+showteleporters¤()\b#h
+
+Show the teleporters in explored rooms on the map
+
+showtrinkets¤()\w#h
+
+Montras la kolektaĵojn sur la mapo
+
+Since 2.3, this command was changed to work in custom levels.\g
+
+speak\w#h
+
+Montras dialog-skatolon sen forigi malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas AGBUTONON (krom se estas komando backgroundtext supere).
+
+speak_active\w#h
+
+Montras dialog-skatolon kaj forigas malnovajn. Ankaŭ paŭzigas la skripton ĝis kiam
+vi premas AGBUTONON (krom se estas komando backgroundtext supere).
+
+specialline¤(x)\b#h
+
+Specialaj dialogoj, kiuj aperas en la ĉefa ludo
+
+squeak¤(koloro)\w#h
+
+Faras pepan sonon de skipano, aŭ sonon de terminalo.
+
+koloro - cyan/player/blue/red/yellow/green/purple/terminal
+
+startintermission2\b#h
+
+Alterna ¤finalmode(46,54)¤, prenas vin al la fina nivelo ne akceptante argumentojn.\nn&Z
+
+stopmusic¤()\w#h
+
+Tuj haltigas la muzikon. Samas kiel ¤music(0)¤ en simpligita skriptado.\nn&Z
+
+teleportscript¤(skripto)\b#h
+
+Iam agordis skripton, kiu estas rulata je uzo de teleportilo
+
+telesave¤()\r#h
+
+Faras nenion en propraj niveloj.
+
+2.2 KAJ SUBE: Konservas vian ludon per la teleportila konservaĵo de la ĉefa ludo,
+do ne uzu ĝin!
+
+text¤(koloro,x,y,linioj)\w#h
+
+Konservi dialog-skatolon en memoro kun koloro, pozicio kaj nombro da linioj.
+Kutime, la komando position estas uzita post la komando text (kaj ties tekst-
+linioj), kio superskribos la koordinatojn ĉi tie donitajn, do ĉi tiuj kutime
+estas lasitaj kiel 0.
+
+koloro - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
+x - La x-pozicio de la dialog-skatolo
+y - La y-pozicio de la dialog-skatolo
+linioj - La kvanto da linioj
+
+The ¤transparent¤ color was added in 2.4, along with arbitrary colored textboxes.\gn&Zg
+The coordinates can be -500 to center the textbox in the respective axis (if you\g
+don't want to use ¤#position(type,above/below)¤position¤).\gLwl&Zg
+
+textboxactive\w#h
+
+Forigas ĉiujn dialog-skatolojn sur la ekrano krom la laste kreita
+
+textboxtimer¤(frames)\w#h
+
+Makes the next shown textbox disappear after a certain amount of frames, without
+advancing the script.
+
+frames - The amount of frames to wait before fading out
+
+This command was added in 2.4.\g
+
+textbuttons¤()\w#h
+
+For the text box in memory, replace certain button placeholders by button labels
+(such as keyboard keys or controller glyphs).
+
+The replaced placeholders are:
+- {b_act} - ACTION
+- {b_int} - Interact
+- {b_map} - Map
+- {b_res} - Restart
+- {b_esc} - Esc/Menu
+
+This command was added in 2.4.\g
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - The case number, between 1 and 255.
+
+This command was added in 2.4.\g
+
+textimage¤(image)\w#h
+
+For the text box in memory, draw the given image. There can only be one image per
+text box.
+
+image - levelcomplete/gamecomplete, or an unknown value to remove the image
+
+This command was added in 2.4.\g
+
+textsprite¤(x,y,sprite,color)\w#h
+
+For the text box in memory, draw the given sprite. There can be multiple sprites
+per text box.
+
+x - The x-coordinate of the sprite. This is relative to the text box.
+y - The y-coordinate of the sprite. This is relative to the text box.
+sprite - The sprite number of the sprite, from ¤sprites.png¤.\nn&Z
+color - The color ID of the sprite.
+
+This command was added in 2.4.\g
+
+tofloor\w#h
+
+Se la ludanto ne jam estas sur la planko, tio ĉi renversigas rin al ĝi.
+
+trinketbluecontrol¤()\b#h
+
+Dialogo de Viktoria, kiam ŝi donas al vi kolektaĵon en la ĉefa ludo
+
+trinketscriptmusic\w#h
+
+Ludas Passion for Exploring.
+
+trinketyellowcontrol¤()\b#h
+
+Dialogo de Vitelario, kiam li donas al vi kolektaĵon en la ĉefa ludo
+
+undovvvvvvman¤()\w#h
+
+Resets the player's hitbox to the normal size, sets their color to 0, and sets
+their X position to 100.
+
+untilbars¤()\w#h
+
+Atendas, ĝis kiam ¤#cutscene()¤cutscene¤/§¤#endcutscene()¤endcutscene¤ finiĝas.\nLwl&ZnLwl&Z(
+
+untilfade¤()\w#h
+
+Atendas ĝis kiam ¤#fadeout()¤fadeout¤/§¤#fadein()¤fadein¤ finiĝas.\nLwl&ZnLwl&Z(
+
+vvvvvvman¤()\w#h
+
+Makes the player 6x larger, sets their position to ¤(30,46)¤ and sets their color to\nn&Z
+23¤.\n&Z
+
+walk¤(direkto,x)\w#h
+
+Marŝigas la ludanton dum la specifita nombro da kadroj
+
+direkto - left/right (maldekstren/dekstren)
+
+warpdir¤(x,y,dir)\w#h
+
+Ŝanĝas la ĉirkaŭfluan direkton por ĉambro x,y, 1-indice, al la specifita direkto.
+Tio estas kontrolebla per ifwarp, rezultante en relative potenca aldona sistemo de
+flagoj/variabloj.
+
+x - Ĉambra x-koordinato, ekde 1
+y - Ĉambra y-koordinato, ekde 1
+dir - La ĉirkaŭflua direkto. Normale 0-3, sed ankaŭ ellimaj valutoj akceptiĝas
+
+yellowcontrol\b#h
+
+Komencas konversacion kun Vitelario ĝuste kiel kiam vi renkontas lin en la ĉefa
+ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.

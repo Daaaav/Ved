@@ -1,0 +1,76 @@
+Авторы
+
+\0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Авторы\wh#
+\C=
+
+Создатель Ved: Dav999
+
+Другие программисты: Info Teddy
+
+Некоторая графика и шрифт: Reese Rivers
+
+Перевод на русский: CreepiX, Чип, Omegaplex
+Перевод на эсперанто: Reese Rivers
+Перевод на немецкий: r00ster
+Перевод на французский: RhenaudTheLukark
+Перевод на испанский: Valso22/naether
+Перевод на индонезийский: _march31onne/Marchionne Evangelisti
+
+
+Отдельная благодарность:\h#
+
+
+Терри Кавана - создателю VVVVVV
+
+Всем, кто оповещал об ошибках, помогал идеями и мотивировал меня создать это!
+\
+\
+
+
+
+License\h#
+\
+Copyright 2015-2025  Dav999
+\
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+\
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other
+materials provided with the distribution.
+\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+Ресурсы VVVVVV\h#
+
+Ved включает в себя некоторые графические ресурсы из VVVVVV. VVVVVV и её ресурсы
+защищены авторским правом. Для получения дополнительной информации о лицензии,
+которая распространяется на VVVVVV и её активы см. ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ и ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License\nLClnLCl
+https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤exceptions.md¤ в ¤https://github.com/TerryCavanagh/VVVVVV¤GitHub-репозитории VVVVVV¤.\LClnLCl

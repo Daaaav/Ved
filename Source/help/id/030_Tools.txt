@@ -1,0 +1,120 @@
+Alat
+
+Alat\wh#
+\C=
+
+Anda dapat menggunakan alat berikut untuk mengisi ruangan di level Anda:
+
+\0
+   Dinding\h#
+
+
+Alat dinding dapat digunakan untuk menempatkan dinding.
+
+\1
+   Latar Belakang\h#
+
+
+Alat latar belakang dapat digunakan untuk menempatkan latar belakang.
+
+\2
+   Paku\h#
+
+
+Alat paku dapat digunakan untuk menempatkan paku. Anda dapat menggunakan subalat
+perluasan untuk menempatkan paku pada permukaan dengan satu klik (atau geser).
+
+\3
+   Trinket/Perhiasan\h#
+
+
+Alat trinket dapat digunakan untuk meletakkan trinket. Harap dicatat bahwa ada
+batas dua puluh trinket dalam satu level.
+
+\4
+   Checkpoint\h#
+
+
+Alat checkpoint dapat digunakan untuk menempatkan checkpoint.
+
+\5
+   Penghilang platform\h#
+
+
+Alat penghilang platform dapat digunakan untuk menempatkan penghilang
+platform.
+
+\6
+   Konveyor\h#
+
+
+Alat konveyor dapat digunakan untuk menempatkan konveyor.
+
+\7
+   Menggerakan platform\h#
+
+
+Alat platform bergerak dapat digunakan untuk menempatkan platform bergerak.
+
+\8
+   Musuhan\h#
+
+
+Alat musuhan dapat digunakan untuk menempatkan musuhan. Bentuk dan warna musuhan
+ditentukan oleh pengaturan tipe musuhan dan tileset (warna) masing-masing.
+
+\9
+   Garis gravitasi\h#
+
+
+Alat garis gravitasi dapat digunakan untuk menempatkan garis gravitasi.
+
+\^0
+   Roomtext/Ruang teks\h#
+
+
+Alat roomtext dapat digunakan untuk menempatkan teks.
+
+\^1
+   Terminal\h#
+
+
+Alat terminal dapat digunakan untuk menempatkan terminal. Tempatkan terminal
+terlebih dahulu, lalu ketikkan nama untuk skrip. Untuk informasi lebih lanjut
+tentang skrip, silakan merujuk ke referensi skrip.
+
+\^2
+   Kotak skrip/naskah\h#
+
+
+Alat kotak skrip dapat digunakan untuk menempatkan kotak skrip. Pertama klik di
+pojok kiri atas, lalu di pojok kanan bawah, lalu ketikkan nama untuk skripnya.
+Untuk informasi lebih lanjut tentang skrip, silakan merujuk ke referensi skrip.
+
+\^3
+   Token warp/lusi\h#
+
+
+Alat token warp dapat digunakan untuk menempatkan token warp. Pertama klik di mana
+jalur masuk seharusnya, lalu di mana jalur keluar seharusnya.
+
+\^4
+   Garis warp/lusi\h#
+
+
+Alat garis warp dapat digunakan untuk menempatkan garis warp. Harap dicatat
+bahwa garis warp hanya dapat ditempatkan di tepi ruangan.
+
+\^5
+   Crewmate/Awak kru\h#
+
+
+Alat crewmate dapat digunakan untuk menempatkan crewmate yang hilang yang dapat
+diselamatkan. Jika semua crewmate diselamatkan, level akan selesai. Harap dicatat
+bahwa ada batas dua puluh crewmate yang hilang dalam satu level.
+
+\^6
+   Titik awal\h#
+
+
+Alat titik awal dapat digunakan untuk menempatkan titik awal.

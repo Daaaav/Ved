@@ -1,0 +1,37 @@
+Editor de scripts
+
+Editor de scripts\wh#
+\C=
+
+Con el editor de scripts, puedes gestionar y editar scripts en tu nivel.
+
+
+Nombres de flags\h#
+
+Por conveniencia y legibilidad de los scripts, es posible usar nombres de flags
+en vez de números. Cuando use un nombre en vez de un número, un número se
+asociara automaticamente con ese nombre, en el fondo. Tambien es posible elegir
+que número usar para cual nombre de flag.
+
+Modo de script interno\h#
+
+Para usar scripts internos en Ved, puedes habilitar el modo de scripting interno
+en el editor, para encargarse de todos los comandos en ese script como
+internos. Mire Int.sc mode¤ para mas informació sobre el modo de scripting\w|
+interno. Para mas información sobre scripting interno, mire la referencia de
+scripting interno.
+
+Dividiendo scripts\h#
+
+Es posible dividir un script en dos con el editor. Despues de poner el cursor
+de texto en la primera linea que quieres que este en el nuevo script, clickee
+el boton de Dividir y entre el nombre del nuevo script. Las lineas antes del cursor
+permaneceran en el script original, las lineas despues del cursor seran movidas
+al nuevo script.
+
+Saltar a scripts\h#
+
+On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
+is possible to jump to the given script by clicking the "Go to" button when the
+cursor is on that line. You can also press ¤Alt+right¤ to do this, and you can\nw
+use ¤Alt+left¤ to jump one step back through the chain to where you came from.\nw

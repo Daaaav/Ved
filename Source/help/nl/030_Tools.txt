@@ -1,0 +1,121 @@
+Gereedschap
+
+Gereedschap\wh#
+\C=
+
+Je kunt de volgende gereedschappen gebruiken om kamers te vullen in je level:
+
+\0
+   Muur\h#
+
+
+Hiermee kun je muren plaatsen.
+
+\1
+   Achtergrond\h#
+
+
+Hiermee kun je achtergronden plaatsen.
+
+\2
+   Spijker\h#
+
+
+Hiermee kun je spijkers plaatsen. Je kunt de sub-gereedschappen voor automatisch
+uitbreiden gebruiken om spijkers te plaatsen op een oppervlak met één klik (of
+verschuiving).
+
+\3
+   Artefact\h#
+
+
+Hiermee kun je artefacten plaatsen. Bedenk dat er maximaal honderd artefacten in
+een level geplaatst kunnen worden.
+
+\4
+   Checkpoint\h#
+
+
+Hiermee kun je checkpoints plaatsen.
+
+\5
+   Brekend platform\h#
+
+
+Hiermee kun je brekende platforms plaatsen.
+
+\6
+   Lopende band\h#
+
+
+Hiermee kun je lopende banden plaatsen.
+
+\7
+   Bewegend platform\h#
+
+
+Hiermee kun je verplaatsende platforms plaatsen.
+
+\8
+   Vijand\h#
+
+
+Hiermee kun je vijanden plaatsen. De vorm en kleur van de vijand wordt bepaald
+door respectievelijk de instellingen voor vijand-type en tileset(-kleur).
+
+\9
+   Zwaartekrachtlijn\h#
+
+
+Hiermee kun je zwaartekrachtlijnen plaatsen.
+
+\^0
+   Tekst\h#
+
+
+Hiermee kun je tekst plaatsen.
+
+
+\^1
+   Terminal\h#
+
+
+Hiermee kun je terminals plaatsen. Plaats eerst de terminal, typ vervolgens een
+naam voor het script. Kijk voor meer informatie over scripts naar de lijsten met
+scriptcommando's.
+
+\^2
+   Scriptvak\h#
+
+
+Hiermee kun je scriptvakken plaatsen. Klik eerst op de linkerbovenhoek, dan op de
+rechteronderhoek, en typ vervolgens een naam voor het script. Kijk voor meer
+informatie over scripts naar de lijsten met scriptcommando's.
+
+\^3
+   Teleportatietoken\h#
+
+
+Hiermee kun je teleportatietokens plaatsen. Klik eerst op de plek waar de ingang
+moet komen te staan, dan waar de uitgang moet komen te staan.
+
+\^4
+   Wikkellijn\h#
+
+
+Hiermee kun je wikkellijnen plaatsen. Bedenk dat wikkellijnen alleen aan de
+randen van een kamer geplaatst kunnen worden.
+
+\^5
+   Bemanningslid\h#
+
+
+Hiermee kun je bemanningsleden plaatsen die gered kunnen worden. Wanneer alle
+bemanningsleden worden gered, eindigt het level. Bedenk dat er maximaal honderd
+bemanningsleden in een level geplaatst kunnen worden.
+
+\^6
+   Startpunt\h#
+
+
+Hiermee kun je het startpunt plaatsen.

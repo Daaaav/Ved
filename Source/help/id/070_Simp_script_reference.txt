@@ -1,0 +1,167 @@
+Referensi sk.sederhana
+
+Referensi skrip sederhana\wh#
+\C=
+
+Bahasa scripting VVVVVV sederhana adalah bahasa dasar yang dapat digunakan
+untuk skrip level VVVVVV.
+Catatan: setiap kali ada sesuatu di antara tanda kutip, itu harus diketik tanpa
+tanda kutip.
+
+
+say¤([baris[,warna]])\h#w
+
+Menampilkan kotak teks. Tanpa argumen apa pun, ini akan membuat kotak teks dengan
+satu baris, dan secara default ini akan menghasilkan kotak teks terminal terpusat.
+Argumen warna bisa berupa warna, atau nama crewmate.
+Jika Anda menggunakan warna dan crewmate yang dapat diselamatkan dengan warna itu
+ada di dalam ruangan, maka kotak teks akan ditampilkan di atas crewmate itu.
+
+reply¤([baris])\h#w
+
+Menampilkan kotak teks untuk Viridian. Tanpa argumen garis, ini akan membuat
+kotak teks dengan satu baris.
+
+delay¤(n)\h#w
+
+Menunda tindakan lebih lanjut dengan n kutu. 30 kutu hampir satu detik.
+
+happy¤([crewmate])\h#w
+
+Membuat crewmate senang. Tanpa argumen, ini akan membuat Viridian senang.
+Anda juga dapat menggunakan "semua", "semua orang" atau "semua orang" sebagai
+argumen untuk membuat semua orang bahagia.
+
+sad¤([crewmate])\h#w
+
+Membuat crewmate sedih. Tanpa argumen, ini akan membuat Viridian sedih.
+Anda juga dapat menggunakan "all", "everyone" atau "everybody" sebagai
+argumen untuk membuat semua orang sedih.
+
+Catatan: perintah ini juga dapat ditulis sebagai ¤cry¤ daripada ¤sad¤.\nwnw
+
+flag¤(flag,on/off)\h#w
+
+Mengaktifkan atau menonaktifkan tanda tertentu. Misalnya, flag(4,on) akan
+mengaktifkan flag nomor 4.
+Ada 100 tanda, diberi nomor dari 0 hingga 99.
+Secara default, semua tanda dimatikan saat Anda mulai memainkan level.
+Catatan: Di Ved, Anda juga dapat menggunakan nama tanda alih-alih angka.
+
+ifflag¤(tanda,namaskrip)\h#w
+
+Jika bendera yang diberikan AKTIF, maka buka skrip dengan nama skrip nama.
+Jika tanda yang diberikan NONAKTIF, lanjutkan dalam skrip saat ini.
+Contoh:
+ifflag(20,cutscene) - Jika tanda 20 AKTIF, buka skrip "cutscene", jika tidak
+                      lanjutkan di skrip saat ini.
+Catatan: Di Ved, Anda juga dapat menggunakan nama bendera alih-alih angka.
+
+iftrinkets¤(angka,namaskrip)\h#w
+
+Jika jumlah trinket Anda >= angka, masuk ke script dengan nama namaskrip.
+Jika jumlah trinket Anda < jumlah, lanjutkan di skrip saat ini.
+Contoh:
+iftrinkets(3,enoughtrinkets) - Jika Anda memiliki 3 atau lebih trinket,
+                               skrip "enoughtrinkets" akan dijalankan, jika tidak,
+                               skrip saat ini akan dilanjutkan.
+Ini adalah praktik umum untuk menggunakan 0 sebagai jumlah minimum trinket,
+sebagai cara untuk memuat skrip dalam hal apa pun.
+
+iftrinketsless¤(angka,namaskrip)\h#w
+
+Jika jumlah trinket Anda < angka, masuk ke script dengan nama namaskrip.
+Jika jumlah trinket Anda >= jumlah, lanjutkan di skrip saat ini.
+
+destroy¤(apapun)\h#w
+
+Hapus semua benda dari jenis tertentu, sampai Anda masuk kembali ke ruangan.
+
+Argumen yang valid dapat berupa:
+warptokens - Token warp
+gravitylines - Garis gravitasi
+platforms - Tidak berfungsi dengan benar
+moving - Platform bergerak (ditambahkan di 2.4)
+dissapear - Platform yang menghilang (ditambahkan di 2.4)
+
+music¤(nomor)\h#w
+
+Ubah lagu ke nomor lagu tertentu.
+Untuk daftar nomor lagu, lihat artikel "Referensi daftar".
+
+playremix\h#w
+
+Memainkan remix dari Predestined Fate sebagai musik.
+
+flash\h#w
+
+Mengedipkan layar putih, membuat suara ledakan dan mengguncang layar sebentar.
+
+map¤(on/off)\h#w
+
+Mengaktifkan atau menonaktifkan peta. Jika Anda mematikan peta, itu akan
+menampilkan "NO SIGNAL/TIDAK ADA SINYAL" sampai Anda menghidupkannya kembali.
+Ruangan akan tetap terbuka saat peta mati agar terlihat saat peta dihidupkan.
+
+squeak¤(crewmate/on/off)\h#w
+
+Buat crewmate menciut, atau matikan suara menciut saat kotak teks aktif atau
+nonaktif.
+
+speaker¤(warna)\h#w
+
+Mengubah warna dan posisi kotak teks berikutnya yang dibuat dengan "say"
+memerintah. Ini dapat digunakan daripada memberikan argumen kedua untuk "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Mengubah arah lengkung untuk ruang x,y, berindeks-1, ke arah yang ditentukan.
+Ini dapat diperiksa dengan ifwarp, menghasilkan sistem tanda/variabel ekstra
+yang relatif kuat.
+
+x - Kamar x koordinat, mulai dari 1
+y - Kamar koordinat y, mulai dari 1
+dir - Arah warp. Biasanya 0-3, tetapi nilai di luar batas diterima
+
+ifwarp¤(x,y,dir,skrip)\w#h
+
+Jika warpdir untuk kamar x,y, 1-indexed, diatur ke dir, buka skrip
+(sederhana)
+
+x - Kamar x koordinat, mulai dari 1
+y - Kamar koordinat y, mulai dari 1
+dir - Arah warp. Biasanya 0-3, tetapi nilai di luar batas diterima
+
+loadtext¤(bahasa)\w#h
+
+Muat terjemahan untuk level berdasarkan kode bahasa. Gunakan nilai kosong
+untuk menggunakan bahasa VVVVVV lagi.
+
+bahasa - Kode bahasa, seperti fr atau pt_BR
+
+iflang¤(bahasa,skrip)\w#h
+
+Jika bahasa VVVVVV diatur ke bahasa tertentu, buka skrip. Hal ini tidak
+dipengaruhi oleh kode bahasa yang Anda berikan ke loadtext(), hanya dipengaruhi
+oleh bahasa yang dipilih pengguna di menu.
+
+setfont¤(font)\w#h
+
+Ubah font yang digunakan untuk teks di level. Ini bisa berupa font yang disertakan
+dengan game, seperti font_ja untuk bahasa Jepang, atau font yang disertakan dengan
+level. Biarkan kosong untuk kembali ke font default untuk level tersebut.
+
+setrtl¤(on/off)\w#h
+
+Di level kustom, alihkan apakah fontnya RTL (kanan ke kiri) atau tidak. Secara
+default, fontnya bukan RTL (melainkan LTR).
+
+Mode RTL terutama membuat kotak teks rata kanan, untuk bahasa seperti Arab.
+
+textcase¤(kasus)\w#h
+
+Jika level Anda memiliki file terjemahan, dan Anda memiliki beberapa kotak teks
+dengan teks yang sama dalam satu skrip, perintah ini dapat membuatnya memiliki
+terjemahan unik. Tempatkan itu sebelum kotak teks.
+
+kasus - Angka antara 1 dan 255

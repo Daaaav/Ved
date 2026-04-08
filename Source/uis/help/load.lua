@@ -22,21 +22,20 @@ return function(mode)
 		-- Just the Ved help
 		helppages = LH
 		helpeditable = false
-		helparticlecontent = explode("\n", helppages[helparticle].cont)
 	elseif mode == "plugins" then
 		--helppages = {}
 		loadpluginpages()
 		helpeditable = false
 		helpallowfileprot = true
-		helparticlecontent = explode("\n", helppages[helparticle].cont)
 	else
 		-- Level notes (or something else because extradata is an array here!)
 		helppages = mode[1]
 		helpeditable = mode[2]
 		help_font = mode[3]
 		helprefreshable = mode[4]
-		if helppages[1] ~= nil then
-			helparticlecontent = explode("\n", helppages[helparticle].cont)
-		end
+	end
+
+	if helppages[1] ~= nil then
+		helparticlecontent = explode("\n", helppages[helparticle].cont)
 	end
 end

@@ -1,0 +1,79 @@
+Pintasan
+
+Pintasan editor\wh#
+\C=
+
+Tip: Anda dapat menahan ¤F9¤ di mana saja di dalam Ved untuk melihat banyak\nC
+pintasan.
+
+Sebagian besar pintasan yang dapat digunakan di VVVVVV juga dapat digunakan di
+Ved.
+
+F1¤  Ubah tileset\C
+F2¤  Ubah warna\C
+F3¤  Ubah musuhan\C
+F4¤  Batasan musuhan\C
+F5¤  Batasan platform\C
+
+F10¤  Mode manual/otomatis (mode pengatur/mode non-pengatur)\C
+
+W¤  Ubah arah warp\C
+E¤  Ubah nama ruang\C
+
+L¤  Muat peta\C
+S¤  Simpan peta\C
+
+Z¤  kuas 3x3 (dinding dan latar belakang)\C
+X¤  kuas 5x5 (")\C
+
+< ¤dan¤ >¤  ubah alat\CnC
+Ctrl/Cmd+< ¤dan¤ Ctrl/Cmd+>¤  ubah sub-alat\CnC
+
+Lebih banyak jalan pintas\h#
+
+Ved juga memperkenalkan beberapa jalan pintas.
+
+Editor utama\gh#
+
+Ctrl+P¤  Lompat ke ruangan yang berisi titik awal\C
+Ctrl+S¤  Quicksave/Simpan cepat\C
+Ctrl+X¤  Memotong ruang ke papan klip\C
+Ctrl+C¤  Menyalin ruang ke papan klip\C
+Ctrl+V¤  Tempel ruang dari clipboard (jika valid)\C
+Ctrl+D¤  Bandingkan level ini dengan level lain\C
+Ctrl+Z¤  Urung\C
+Ctrl+Y¤  Ulang\C
+Ctrl+F¤  Cari\C
+Ctrl+/¤  Level nota/Cacatan level\C
+Ctrl+F1¤  Bantuan\C
+(CACATAN: Di Mac, ganti Ctrl dengan Cmd)
+N¤  tampilkan semua nomor ubin\C
+J¤  menampilkan soliditas ubin\C
+;¤  tampilkan ubin minimap\C
+Shift+;¤  tampilan latar belakang\C
+M¤ atau ¤Keypad 5¤  Perlihatkan peta\CnC
+G¤  Pergi ke ruang (ketik koordinat sebagai empat digit)\C
+/¤  Skrip\C
+[¤  kunci Y mouse sambil ditekan (untuk menggambar garis horizontal lebih mudah)\C
+]¤  kunci X mouse sambil ditekan (untuk menggambar garis vertikal lebih mudah)\C
+F11¤  muat ulang tileset dan sprite\C
+
+Entitas\gh#
+
+Shift+klik kanan¤  Hapus entitas\C
+Alt+klik¤          Pindahkan entitas\C
+Alt+Shift+klik¤    Salin entitas\C
+
+Editor skrip\gh#
+
+Ctrl+F¤  Temukan\C
+Ctrl+G¤  Pergi ke garis\C
+Ctrl+I¤  Alihkan mode skrip internal\C
+Alt+kiri¤  Lompat ke skrip dalam perintah bersyarat\C
+Alt+kanan¤  Lompat mundur satu langkah\C
+
+Daftar skrip\gh#
+
+N¤  Buat skrip baru\C
+F¤  Pergi ke daftar tanda\C
+/¤  Buka skrip paling atas/terbaru\C

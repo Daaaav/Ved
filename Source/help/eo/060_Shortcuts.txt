@@ -1,0 +1,77 @@
+Fulmoklavoj
+
+Fulmoklavoj de la redaktilo\wh#
+\C=
+
+Konsilo: vi povas deteni ¤F9¤ ie ajn en Ved por vidi multajn el la fulmoklavoj.\nC
+
+La plimulto da fulmoklavoj uzeblaj en VVVVVV ankaŭ uzeblas en Ved.
+
+F1¤  Ŝanĝi kahelaron\C
+F2¤  Ŝanĝi koloron\C
+F3¤  Ŝanĝi malamikojn\C
+F4¤  Limoj de malamikoj\C
+F5¤  Limoj de platformoj\C
+
+F10¤  Permana/aŭtomata reĝimo (rekta/nerekta reĝimo)\C
+
+W¤  Ŝanĝi ĉirkaŭfluan direkton\C
+E¤  Ŝanĝi ĉambronomon\C
+
+L¤  Ŝargi nivelon\C
+S¤  Konservi nivelon\C
+
+Z¤  Peniko 3x3 (muroj kaj fonoj)\C
+X¤  Peniko 5x5 (")\C
+
+< ¤kaj¤ >¤  ŝanĝi ilon\CnC
+Reg/Cmd+< ¤kaj¤ Reg/Cmd+>¤  ŝanĝi ilidon\CnC
+
+Pliaj fulmoklavoj\h#
+
+Ved ankaŭ havas kelkajn novajn fulmoklavojn.
+
+Ĉefa redaktilo\gh#
+
+Reg+P¤  Salti al la ĉambro enhavanta la komencejon\C
+Reg+S¤  Rapidkonservo\C
+Reg+X¤  Tondi ĉambron al tondejo\C
+Reg+C¤  Kopii ĉambron al tondejo\C
+Reg+V¤  Alglui ĉambron el tondejo (se eble)\C
+Reg+D¤  Kompari tiun ĉi nivelon al alia\C
+Reg+Z¤  Malfari\C
+Reg+Y¤  Refari\C
+Reg+F¤  Serĉi\C
+Reg+/¤  Nivela notbloko\C
+Reg+F1¤  Helpo\C
+(NOTU: En macOS, anstataŭigu Reg per Cmd)\C
+N¤  montri ĉiujn kahelnumerojn\C
+J¤  montri masivecon de kaheloj\C
+;¤  montri kahelojn de mapeto\C
+Ŝov+;¤  montri fonon\C
+M¤ aŭ ¤Nombroklavara 5¤  Montri mapon\CnC
+G¤  Salti al ĉambro (enigi koordinatojn kiel kvar ciferojn)\C
+/¤  Skriptoj\C
+[¤  Horizontale ŝlosi muson dum detenado (por facile fari rektajn strekojn)\C
+]¤  Vertikale ŝlosi muson dum detenado\C
+F11¤  reŝargi grafikajn dosierojn de VVVVVV\C
+
+Entoj\gh#
+
+Ŝov+dekstra klako¤  Forigi enton\C
+Alt+klako¤          Movi enton\C
+Alt+Ŝov+klako¤    Kopii enton\C
+
+Skripto-redaktilo\gh#
+
+Reg+F¤  Trovi\C
+Reg+G¤  Salti al linio\C
+Reg+I¤  Baskuligi reĝimon de interna skriptado\C
+Alt+dekstra sago¤  Salti al skripto en kondiĉa komando\C
+Alt+maldesktra sago¤  Retrosalti unu paŝon\C
+
+Skriptlisto\gh#
+
+N¤  Krei novan skripton\C
+F¤  Iri al flaglisto\C
+/¤  Iri al plej supra/lastatempa skripto\C

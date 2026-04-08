@@ -1,0 +1,260 @@
+Memformat
+
+Memformat\wh#
+\C=
+
+Dalam catatan Anda dapat menggunakan kode pemformatan untuk membuat teks Anda
+lebih besar, mewarnainya, dan beberapa hal lainnya. Untuk menambahkan pemformatan
+ke baris, tambahkan garis miring terbalik (\) di bagian akhir.\
+Setelah \, Anda dapat menambahkan jumlah karakter berikut, dalam urutan apa pun:\
+
+h - Ukuran font ganda\h
+
+# - Jangkar. Anda dapat melompat ke jangkar dengan cepat dengan tautan
+    ¤#Tautan¤tautan¤.\nLCl
+- - Garis horizontal:
+\-
+= - Garis horizontal di bawah teks besar
+
+Warna teks:\h#
+
+n - Normal\n
+r - Merah\r
+g - Abu-abu\g
+w - Putih\w
+b - Biru\b
+o - Oranye\o
+v - Hijau\v
+c - Biru muda\c
+y - Kuning\y
+p - Ungu\p
+V - Hijau gelap\V
+z - Hitam¤ (warna latar belakang tidak termasuk)\z&Z
+Z - Abu-abu gelap\Z
+C - Biru muda (Viridian)\C
+P - Pink (Violet)\P
+Y - Kuning (Vitellary)\Y
+R - Merah (Vermilion)\R
+G - Hijau (Verdigris)\G
+B - Biru (Victoria)\B
+
+
+Contoh:\h#
+
+\-
+Teks oranye bsr. ("oh" memiliki hsil yg\ho\
+
+sama)\ho\
+
+Teks oranye bsr. ("oh" memiliki hsil yg\ho
+
+sama)\ho
+
+\-
+Teks besar yang digarisbawahi\wh\
+\r=\
+\
+Teks besar yang digarisbawahi\wh
+\r=
+\-
+
+Menggunakan banyak warna dalam satu garis\h#
+
+Anda dapat menggunakan beberapa warna pada satu garis dengan memisahkan bagian
+berwarna dengan karakter¤ ¤¤ ¤(yang dapat Anda ketik menggunakan tombol ¤Insert¤),\nYnw
+dan mengurutkan kode warna setelah¤ \¤. Jika warna terakhir pada baris adalah warna\nC
+default (n), tidak perlu mencantumkannya di akhir. Jika Anda ingin menggunakan
+karakter¤ ¤¤ ¤pada baris yang menggunakan¤ \¤, tulis¤ ¤¤¤¤ ¤sebagai gantinya. Untuk\nYnCnY
+alasan teknis, ti¤d§¤ak mungkin mewarnai satu karakter dengan melampirkannya dalam\nR(
+dua ¤ ¤¤ ¤, kecuali jika Anda juga menyertakan spasi atau karakter lain.\nY
+
+\-
+Anda dapat ¤¤mewarnai¤¤ kata-kata¤¤ tertentu dengan ini!\nrv\
+\
+Anda dapat ¤mewarnai¤ kata-kata¤ tertentu dengan ini!\nrv
+\-
+Beb¤¤era¤¤pa ¤¤war¤¤na te¤¤ks\RYGCBP\
+\
+Beb¤era¤pa ¤war¤na te¤ks\RYGCBP
+\-
+
+Mewarnai satu karakter\h#
+
+Oke, saya berbohong, dimungkinkan untuk mewarnai satu karakter tanpa menyertakan
+spasi.
+Untuk melakukannya, letakkan karakter¤ § ¤(yang dapat Anda ketik menggunakan\nY
+Shift+Insert¤), setelah karakter yang ingin Anda warnai, dan aktifkan dengan kode\w
+pemformatan¤ ( ¤setelah¤ \¤:\nCnC
+
+\-
+Anda dapat mew¤¤a§¤¤rnai ¤¤satu¤¤ karakter seperti ini!\nrny(\
+\
+Anda dapat mew¤a§¤rnai ¤satu¤ karakter seperti ini!\nrny(
+\-
+
+Ini tidak diperlukan jika karakter tunggal adalah yang pertama atau terakhir pada
+sebuah baris.
+
+Warna latar belakang\h#
+
+Teks tidak hanya dapat diwarnai, tetapi juga dapat ¤disorot¤ dalam salah satu warna\nZ&y
+teks. Untuk melakukannya, Anda dapat meletakkan¤ & ¤setelah kode warna teks biasa,\nY
+lalu kode warna untuk warna latar belakang. Ini dapat dilakukan dalam kombinasi
+dengan sistem ¤ yang dijelaskan di atas, perhatikan bahwa warna teks biasa
+memulai "blok" berikutnya, tetapi warna latar tidak. Contoh berikut menggunakan
+spasi untuk membuat semuanya lebih mudah dibaca, tetapi ini sepenuhnya opsional.
+Anda dapat menggunakan kode¤ + ¤untuk memperluas warna latar belakang (terakhir) ke\nY
+akhir baris.
+
+\-
+Teks hitam dengan latar belakang putih!\z&w\
+\
+Teks hitam dengan latar belakang putih!\z&w
+\-
+Teks hitam pada latar belakang putih yang diperluas!\z&w+\
+\
+Teks hitam pada latar belakang putih yang diperluas!\z&w+
+\-
+Merah di atas kuning¤¤, ¤Hitam di atas putih¤¤ (spasi opsional meningkatkan\r&y n z&w\
+keterbacaan)
+\
+Merah di atas kuning¤, ¤Hitam di atas putih¤ (spasi opsional meningkatkan\r&y n z&w
+keterbacaan)
+\-
+Ini masih ¤¤berfungsi¤¤ untuk mewarnai karakter tun¤¤g§¤¤gal\n P n n&r (\
+\
+Ini masih ¤berfungsi¤ untuk mewarnai karakter tun¤g§¤gal\n P n n&r (
+\-
+
+Jika Anda suka, Anda juga dapat membuat grafik menggunakan warna latar belakang:
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+\
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+\
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
+
+Tautan\h#
+
+Tautan dapat digunakan untuk dua hal: menautkan ke tempat lain di artikel/catatan,
+atau menautkan ke situs web. Tautan menggunakan kode semi-warna¤ l¤. Kode ini\nY
+tidak beralih ke "blok berwarna" berikutnya, itu hanya berlaku untuk yang
+sekarang, sebagai lawan dari kode warna biasa (non-latar belakang). Itu juga tidak
+berubah warna, sehingga Anda dapat mengubah gaya tautan ke apa pun yang Anda
+inginkan.
+
+Anda dapat menautkan ke artikel hanya dengan menggunakan nama artikel:
+
+\-
+Alat\bl\
+\
+Alat\bl
+\-
+
+Mengklik "Alat" di atas akan membawa Anda ke artikel bantuan Alat. Saya
+menggunakan kode warna¤ b ¤di sini untuk membuat tautan menjadi biru, dan seperti\nb
+yang Anda lihat,¤ l ¤berlaku untuk bagian berwarna yang sama.\nY
+
+Anda dapat menautkan ke jangkar di artikel yang sama dengan menautkan ke¤ #\nY
+diikuti oleh semua teks pada baris itu. (Contoh¤ ¤¤ ¤benar-benar diabaikan di sana.)\nY
+Anda dapat menautkan ke bagian atas artikel hanya dengan karakter hash (¤#§¤).\nY(
+
+\-
+#Menggunakan banyak warna dalam satu garis\bl\
+\
+#Menggunakan banyak warna dalam satu garis\bl
+\-
+
+Anda dapat menautkan ke jangkar di artikel lain dengan cara yang sama:
+
+\-
+Daftar referensi#Gamestate\bl\
+\
+Daftar referensi#Gamestate\bl
+\-
+
+Menautkan ke situs web juga mudah:
+
+\-
+https://contoh.com/\bl\
+\
+https://contoh.com/\bl
+\-
+
+Anda dapat menggunakan blok warna dengan kode warna¤ L ¤yang berisi tujuan\nY
+sebenarnya sebelum teks tautan, dan membuat tautan menampilkan teks yang berbeda
+seperti itu:
+
+\-
+Alat¤¤Buka artikel lain\Lbl\
+\
+Alat¤Buka artikel lain\Lbl
+\-
+Klik ¤¤Alat¤¤di sini¤¤ untuk pergi ke artikel lain\nLbl\
+\
+Klik ¤Alat¤di sini¤ untuk pergi ke artikel lain\nLbl
+\-
+[¤¤#Tautan¤¤Suka¤¤] [¤¤#Contoh:¤¤Tidak suka¤¤]\n L vl n L rl\
+\
+[¤#Tautan¤Suka¤] [¤#Contoh:¤Tidak suka¤]\n L vl n L rl
+\-
+#Tautan¤¤ Tombol A ¤¤ §¤¤#Tautan¤¤ Tombol B \L w&Zl n L w&Z l(\
+\
+#Tautan¤ Tombol A ¤ §¤#Tautan¤ Tombol B \L w&Zl n L w&Z l(
+\-
+
+Gambar (hanya tersedia dalam\h#
+\
+deskripsi plugin):\h
+
+0..9 - tampilkan gambar 0..9 pada baris ini (indeks array dalam array imgs dimulai
+       dari 0, dan ingat untuk menjaga agar baris tetap kosong untuk mengakomodasi
+       tinggi gambar)
+^ - Letakkan ini sebelum nomor gambar, geser nomor gambar dengan 10. Jadi ^4
+    membuat gambar 14, ^^4 membuat gambar 24. Dan 3^1^56 membuat gambar 3, 11, 25
+    dan 26.
+_ - Letakkan ini sebelum nomor gambar untuk mengurangi nomor gambar sebanyak 10.
+> - Letakkan ini sebelum nomor gambar untuk menggeser gambar lebih jauh ke kanan
+    sebesar 8 piksel. Ini dapat diulang, jadi 0>>>>1 menempatkan gambar 0 pada x=0
+    dan gambar 1 pada x=32.
+< - Sama, tapi bergeser ke kiri.

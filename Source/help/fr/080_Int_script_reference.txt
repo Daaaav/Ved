@@ -1,0 +1,904 @@
+Référence script interne
+
+Référence de création de script interne\wh#
+\C=
+
+La création de script interne donne plus de pouvoir au scripteur, mais c'est
+aussi un peu plus compliqué que la création de script simplifié.
+
+Pour utiliser la création de script interne dans Ved, vous pouvez activer le
+mode de création de script interne dans l'éditeur afin de gérer toutes les
+commandes dans ce script en tant que commandes de script interne.
+
+Codage de couleurs: \w
+Normal - Devrait être sûr, dans le pire des cas VVVVVV va planter car vous avez
+         fait une erreur.
+Bleu¤   - Certaines de ces commandes ne marchent pas dans un niveau\b
+         personnalisé, d'autres ne font aucun sens dans un niveau personnalisé,
+         ou sont seulement à moitié utile car elles ont surtout été pensées pour
+         le jeu principal.
+Orange¤ - Celles-ci marchent et normalement rien ne devrait mal se passer, à\o
+         moins que vous leur donnez des arguments spécifiques qui peuvent
+         effacer votre sauvegarde.
+Rouge¤  - Les commandes rouges ne doivent pas être utilisées dans un niveau\r
+         personnalisé car elles vont soit débloquer certaines parties du jeu
+         principal (ce qui n'est pas le genre de chose que vous voulez qu'un
+         niveau personnalisé ne fasse, même si tout le monde a complété le
+         jeu) ou complètement corrompre votre sauvegarde.
+
+
+activateteleporter¤()\w#h
+
+Active le premier téléporteur dans la salle, ce qui le fait flasher avec des
+couleurs aléatoires, et l'anime frénétiquement.
+
+La ¤tuile¤ du téléporteur devient 6, et sa ¤couleur¤ devient 102. Cette commande\gn&Zgn&Zg
+nullifie l'animation du téléporteur, car la tuile du téléporteur est quelque chose\g
+qui n'est pas ¤1§¤.\gn&Zg(
+
+activeteleporter¤()\w#h
+
+Colorie le premier téléporteur de la salle en blanc, avec la couleur ¤101¤.\nn&Z
+
+Cette commande ne change pas la tuile, donc elle n'affectera pas sa
+fonctionnalité.\g
+
+alarmoff\w#h
+
+Désactive l'alarme.
+
+alarmon\w#h
+
+Active l'alarme.
+
+altstates¤(state)\b#h
+
+Change l'agencement de quelques salles, telles que la salle des médailles dans le
+vaisseau ou l'entrée du laboratoire (les niveaux personnalisés ne supportent pas
+du tout altstates).
+
+Dans le code, cela change la variable globale ¤altstates¤.\gn&Zg
+
+audiopause¤(on/off)\w#h
+
+Force l'activation ou la désactivation de la pause de l'audio lorsque la fenêtre
+n'est pas sélectionnée, peu importe les préférences de l'utilisateur sur la pause
+de l'audio. Désactivé par défaut, ce qui veut dire que l'audio est en pause
+lorsque la fenêtre n'est pas sélectionnée.
+
+Cette commande a été ajoutée dans la 2.3.\g
+
+backgroundtext\w#h
+
+Permet de continuer le script même si le joueur n'a pas appuyé sur ACTION pour
+la prochaine boîte de dialogue. L'utilisation la plus commune de cette fonction
+est pour afficher plusieurs boîtes de dialogue à la fois.
+
+befadein¤()\w#h
+
+Enlève un fondu instantanément, tel que ¤#fadeout()¤fadeout¤ ou ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
+
+blackon¤()\w#h
+
+Reprend le rendu s'il a été pausé avec la commande ¤#blackout()¤blackout¤.\nLwl&Z
+
+blackout¤()\w#h
+
+Pause le rendu.
+
+Pour que l'écran devienne noir, utilisez aussi la commande ¤#shake(n)¤shake¤ en même temps.\gLwl&Zg
+
+bluecontrol\b#h
+
+Commence une conversation avec Victoria comme si vous venez de la
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
+
+changeai¤(équipier,ia1,ia2)\w#h
+
+Change la direction dans laquelle l'équipier regarde ou son comportement
+de marche
+
+équipier - cyan/player/blue/red/yellow/green/purple
+ia1 - followplayer/followpurple/followyellow/followred/followgreen/followblue
+faceleft/faceright/followposition,ia2
+ia2 - Position X requise si followposition est utilisé pour ia1
+
+faceplayer¤ est manquant, utilisez 18 à la place. ¤panic¤ ne marche pas aussi, car il\n&Zgn&Zg
+a besoin de 20.\g
+
+changecolour¤(a,b)\w#h
+
+Change la couleur d'un équipier. Cette commande peut être utilisée avec
+la Manipulation d'Entité Arbitraire.
+
+a - Couleur de l'équipier à changer (cyan/player/blue/red/yellow/green/purple)
+b - Nouvelle couleur de l'équipier. Depuis la 2.4, vous pouvez aussi utiliser un
+ID de couleur
+
+changecustommood¤(couleur,humeur)\w#h
+
+Change l'humeur d'un équipier secourable
+
+couleur - Nouvelle couleur d'équipier (cyan/player/blue/red/yellow/green/purple)
+humeur - 0 pour heureux, 1 pour triste
+
+changedir¤(couleur,direction)\w#h
+
+Comme ¤#changeai(équipier,ia1,ia2)¤changeai¤, cette fonction change la direction du regard d'un équipier.\nLwl&Z
+
+couleur - cyan/player/blue/red/yellow/green/purple
+direction - 0 est gauche, 1 est droite
+
+changegravity¤(equipier)\w#h
+
+Augmente l'index d'image de l'équipier donné de 12.
+
+equipier - Couleur de l'équipier à changer
+           cyan/player/blue/red/yellow/green/purple
+
+changemood¤(couleur,humeur)\w#h
+
+Change l'humeur du joueur ou d'un équipier de cinématique.
+
+couleur - cyan/player/blue/red/yellow/green/purple
+humeur - 0 pour heureux, 1 pour triste
+
+Les équipiers de cinématique sont créés avec ¤#createcrewman(x,y,couleur,humeur,ia1,ia2)¤createcrewman¤.\gLwl&Zg
+
+changeplayercolour¤(couleur)\w#h
+
+Change la couleur du joueur
+
+couleur - cyan/player/blue/red/yellow/green/purple/teleporter
+
+changerespawncolour¤(couleur)\w#h
+
+Change la couleur du joueur après être réapparu après une mort.
+
+couleur - red(rouge) / yellow(jaune) / green(vert) / cyan / blue(bleu)
+          / purple(violet) / teleporter(téléorteur) ou number(nombre)
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+changetile¤(couleur,tuile)\w#h
+
+Change la tuile d'un équipier (vous pouvez la changer en n'importe quelle image
+dans sprites.png, et cette commande marche seulement sur les équipiers via
+avec la commande createcrewman)
+
+couleur - cyan/player/blue/red/yellow/green/purple/gray
+tuile - Index de la tuile
+
+clearteleportscript¤()\b#h
+
+Supprime le script de téléportation instauré précédemment avec
+teleportscript(x)
+
+companion¤(x)\b#h
+
+Force l'équipier spécifié en tant que compagnon.
+
+x - 0 (aucun) ou 6/7/8/9/10/11
+
+createactivityzone¤(couleur)\b#h
+
+Créée une zone d'activité à l'équipier spécifié (ou au joueur, si l'équipier
+n'existe pas) qui dit "Press ACTION to talk to (crewmate)"
+
+createcrewman¤(x,y,couleur,humeur,ia1,ia2)\w#h
+
+Créée un équipier (non secourable)
+
+humeur - 0 pour heureux, 1 pour triste
+ia1 - followplayer/followpurple/followyellow/followred/followgreen/followblue
+faceplayer/panic/faceleft/faceright/followposition,ia2
+ia2 - Position X requise si followposition est utilisé pour ia1
+
+createentity¤(x,y,e,meta,meta,p1,p2,p3,p4)\o#h
+
+Créée une entité avec l'ID ¤e§¤, deux valeurs ¤meta¤, et 4 valeurs ¤p§¤.\nn&Znn&Znn&Z(
+
+e - L'ID d'entité
+
+Une liste d'IDs d'entités et les valeurs ¤meta¤/§¤p§¤ qu'elles utilisent se trouve ¤https://vsix.dev/wiki/Createentity_list¤ici¤.\gn&Zgn&ZgLClg(
+
+createlastrescued¤()\b#h
+
+Créée le dernier équipier secouru à la position fixe ¤(200,153)¤. Le dernier\nn&Z
+équipier secouru est basé sur l'état de jeu Level Complete.
+
+createrescuedcrew¤()\b#h
+
+Créée tous les équipiers secourus
+
+customifflag¤(n,script)\w#h
+
+Même comportement que ¤ifflag(n,script)¤ dans un script simplifié\nn&Z
+
+customiftrinkets¤(n,script)\w#h
+
+Même comportement que ¤iftrinkets(n,script)¤ dans un script simplifié\nn&Z
+
+customiftrinketsless¤(n,script)\w#h
+
+Même comportement que ¤iftrinketsless(n,script)¤ dans un script simplifié\nn&Z
+
+custommap¤(on/off)\w#h
+
+La variante interne de la commande map
+
+customposition¤(type,above/below)\w#h
+
+Remplace les valeurs x,y d'une commande de texte et par conséquent change la
+position de la boite de dialogue, mais pour les équipiers, les équipiers à
+secourir sont utilisés pour positionner la boite de dialogue à la place des
+équipiers créés via la commande createcrewman.
+
+type - center(centré) / center(centré en x) / centery(centré en y), ou un nom de
+couleur cyan/ player(joueur) / blue(bleu) / red(rouge) / yellow(jaune) /
+green(vert) / purple(violet) (secourable)
+above(au-dessus) / below(au-dessous) - Seulement utilisé si type est un nom
+de couleur.
+
+cutscene¤()\w#h
+
+Affiche les barres de cinématique
+
+delay¤(trames)\w#h
+
+Pause le script pour un nombre de trames spécifié. Le contrôle ne peut pas être
+donné au joueur pendant cette pause.
+
+destroy¤(object)\w#h
+
+Enlève une entité. C'est la même chose que la fonction d'édition de script
+simplifié.
+
+object - gravitylines(lignes de gravité) / warptokens(jeton de téléportation)
+         / platforms(plateformes) / moving(plateforme mouvante)
+         / disappear(plateforme disparaissante)
+
+moving¤ et ¤disappear¤ sont apparues dans la 2.4.\n&Zgn&Zg
+
+do¤(times)\w#h
+
+Commence une boucle de code qui va s'effectuer times fois. Le bloc doit se
+terminer avec la commande ¤#loop¤loop¤.\nLwl&Z
+
+times - Le nombre de fois que ce bloc sera exécuté.
+
+endcutscene¤()\w#h
+
+Fais disparaître les barres de cinématique
+
+endtext\w#h
+
+Force une boite de dialogue à disparaître (en fondu)
+
+endtextfast\w#h
+
+Force une boite de dialogue à disparaître immédiatement (sans fondu)
+
+entersecretlab\r#h
+
+Active le mode Laboratoire Secret.
+
+2.2 ET ANTÉRIEUR: Débloque le Laboratoire Secret pour le jeu principal, ce qui
+n'est probablement pas quelque chose qu'un niveau personnalisé devrait
+faire.
+
+everybodysad¤()\w#h
+
+Rend tous les équipiers triste.
+
+Ne marche pas avec les équipiers placés à travers l'éditeur.\g
+
+face¤(A,B)\w#h
+
+Fait en sorte que l'équipier A regarde l'équipier B.
+
+A - cyan/player/blue/red/yellow/green/purple/gray
+B - cyan/player/blue/red/yellow/green/purple/gray
+
+Ne marche pas avec les équipiers placés à travers l'éditeur.\g
+
+fadein¤()\w#h
+
+Inverse le fondu d'une commande ¤#fadeout()¤fadeout¤.\nLwl&Z
+
+fadeout¤()\w#h
+
+Effectue un fondu en noir. Pour annuler, utilisez ¤#fadein()¤fadein¤ ou ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
+
+finalmode¤(x,y)\b#h
+
+Vous téléporte dans la Dimension Externe VVVVVV, ¤(46,54)¤ est la première\nn&Z
+salle du dernier niveau
+
+flag¤(n,on/off)\w#h
+
+Même comportement que la commande dans un script simplifié
+
+flash¤(durée)\w#h
+
+Rend l'écran blanc pendant ¤durée¤ trames.\nn&Z
+
+length - Le nombre de trames. 30 trames forment presque une seconde.
+
+C'est différent de la commande simplifiée, qui appelle ¤flash(5)¤,\gn&Zg
+playef(9)¤ et ¤shake(20)¤ en même temps. Voir ¤#playef(son)¤playef¤ et ¤#shake(n)¤shake¤.\n&Zgn&ZgLwl&ZgLwl&Zg
+
+flip\w#h
+
+Change la gravité du joueur comme s'il avait pressé la touche ACTION.
+
+Si le joueur n'est pas au sol, cela ne marchera pas, vu que ça simule un appui de\g
+la touche ACTION.\g
+De même, cette commande ne fonctionnera pas juste après une boîte de dialogue pour\g
+la même raison que deux appuis de la touche ACTION à la suite compte comme la\g
+touche étant tenue, ce qui n'inverse pas la gravité du joueur.\g
+
+flipgravity¤(couleur)\w#h
+
+Change la gravité d'un équipier donné, ou du joueur.
+
+couleur - cyan/player/blue/red/yellow/green/purple
+
+Avant la 2.3, cette commande ne pouvait ni rétablir la gravité normale d'un\g
+équipier, ni affecter le joueur.\g
+
+flipme\w#h
+
+Corrige la position verticale de plusieurs boites de dialogues en mode
+inversé
+
+foundlab\b#h
+
+Jour l'effet sonore 3, affiche la boite de dialogue "Congratulations! You
+have found the secret lab!" Cette commande ne finit pas le texte, et n'a
+aucun autre effet indésirable.
+
+foundlab2\b#h
+
+Affiche la seconde boite de dialogue que vous pouvez voir après avoir
+découvert le laboratoire secret. Cette commande ne finit pas non plus le
+texte, et n'a aucun autre effet indésirable.
+
+foundtrinket¤(x)\w#h
+
+Force la récupération d'une médaille
+
+x - Index de la médaille
+
+gamemode¤(x)\b#h
+
+teleporter pour afficher la carte, game pour la cacher (affiche les téléporteurs
+du jeu principal)
+
+x - teleporter/game
+
+gamestate¤(état)\b#h
+
+Change l'état de jeu courant à l'index d'état spécifié.
+
+état - L'état de jeu auquel passer
+
+Une liste des états de jeux se trouve ¤https://vsix.dev/wiki/List_of_gamestates¤ici¤.\gLClg
+
+gotoposition¤(x,y,gravité)\w#h
+
+Change la position de Viridian à ¤(x,y)¤ dans cette salle, et change aussi sa\nn&Z
+gravité.
+
+gravité - 1 si à l'envers, 0 si à l'endroit. D'autres valeurs causent une
+gravité de joueur boguée.
+
+gotoroom¤(x,y)\w#h
+
+Change la salle courante à ¤(x,y)¤.\nn&Z
+
+x - Coordonnée x
+y - Coordonnée y
+
+Les coordonnées d'une salle sont indexée en 0.\g
+
+greencontrol\b#h
+
+Commence une conversation avec Verdigris comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
+
+hascontrol¤()\w#h
+
+Redonne le contrôle au joueur. Veuillez noter que vous ne pouvez pas regagner
+le contrôle au milieu d'un ¤#delay(trames)¤delay¤.\nLwl&Z
+
+hidecoordinates¤(x,y)\w#h
+
+Marque la salle aux coordonnées données en tant que non explorée
+
+hideplayer¤()\w#h
+
+Rend le joueur invisible
+
+hidesecretlab\w#h
+
+Cache le laboratoire secret sur la carte
+
+hideship\w#h
+
+Cache le vaisseau sur la carte
+
+hidetargets¤()\b#h
+
+Cache les cibles sur la carte
+
+hideteleporters¤()\b#h
+
+Cache les téléporteurs sur la carte
+
+hidetrinkets¤()\b#h
+
+Cache les médailles sur la carte
+
+ifcrewlost¤(équipier,script)\b#h
+
+Si l'équipier est manquant, exécuter le script donné
+
+ifexplored¤(x,y,script)\w#h
+
+Si la salle ¤(x,y)¤ est explorée, exécuter le script interne.\nn&Z
+
+Les coordonnées d'une salle sont indexée en 0.\g
+
+ifflag¤(n,script)\b#h
+
+Même comportement que customifflag mais charge un script interne
+(du jeu principal)
+
+iflang¤(langage,script)\w#h
+
+Vérifie si le langage courant du jeu est un langage donné, et si c'est le cas,
+lance le script personnalisé donné.
+#loadtext(langage)¤loadtext¤ n'a aucune influence sur cette commande; seulement le langage que\Lwl&Z
+l'utilisateur a sélectionné dans le menu est pris en compte.
+
+langage - Le langage à vérifier, habituellement un code à deux lettres, tel que
+en¤ pour l'Anglais\n&Z
+script - Le script personnalisé à exécuter, si la vérification est un succès
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+iflast¤(équipier,script)\b#h
+
+Si le dernier équipier secouru est x, exécuter le script script
+
+équipier - Des index sont utilisés ici: 0: Viridian, 1: Violet, 2: Vitellary, 3:
+Vermilion, 4: Verdigris, 5: Victoria
+
+ifskip¤(x)\b#h
+
+Si vous passez les cinématiques en Mode Sans Mort, exécuter le script x
+
+iftrinkets¤(n,script)\b#h
+
+Même comportement que iftrinkets(n,script) dans un script simplifié,
+mais exécute un script interne (du jeu principal)
+
+iftrinketsless¤(n,script)\b#h
+
+Vérifie si le nombre donné est inférieur au nombre qui est lié aux médailles.
+Cependant, il vérifie le plus grand nombre de médailles que vous avez récupéré
+dans un seule instance du jeu principal, PAS le nombre de médailles que vous
+avez maintenant. Charge un script interne (du jeu principal)
+
+ifwarp¤(x,y,dir,script)\w#h
+
+Si la warpdir de la salle ¤(x,y)¤ (indexé à 1) est dir, lancer script (simplifié)\nn&Z
+
+x - Coordonnée x de la salle, commence à 1
+y - Coordonnée y de la salle, commence à 1
+dir - Direction de la téléportation. Normalement 0-3, mais les valeurs en dehors
+de cette fourchette sont valides
+
+jukebox¤(n)\w#h
+
+Rend un terminal jukebox blanc et désactive la couleur de tous les autres
+terminaux.
+Si n est donné, une zone d'activité de jukebox sera créée à une position fixe
+et si un terminal est à la même position, il sera allumé.
+Les valeurs possibles de n et les positions fixes sont:
+1: (88, 80), 2: (128, 80), 3: (176, 80), 4: (216, 80), 5: (88, 128), 6: (176,
+128), 7: (40, 40), 8: (216, 128), 9: (128, 128), 10: (264, 40)
+
+leavesecretlab¤()\b#h
+
+Désactive le "Mode laboratoire secret"
+
+loadscript¤(script)\b#h
+
+Charge un script interne (du jeu principal). Souvent utilisé dans des niveaux
+personnalisés en tant que loadscript(stop)
+
+loadtext¤(langage)\w#h
+
+Dans les niveaux personnalisés, charge une traduction pour un langage donné.
+
+langage - Un langage à charger, habituellement un code à deux lettres, tel que
+en¤ pour l'Anglais. Donnez un code de langage vide pour utiliser la langage de\n&Z
+VVVVVV.
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+loop\w#h
+
+Ajoutez cette commande à la fin d'une boucle de code commencée avec la commande
+#do(times)¤do¤.\Lwl&Z
+
+missing¤(couleur)\b#h
+
+Force la disparition d'un équipier
+
+moveplayer¤(x,y)\w#h
+
+Déplace le joueur x pixels à droite et y pixels en bas. Les nombres négatifs sont
+aussi acceptés.
+
+musicfadein¤()\w#h
+
+Introduit la musique en fondu.
+
+Avant la 2.3, cette commande ne faisait rien.\g
+
+musicfadeout¤()\w#h
+
+Termine la musique en fondu.
+
+nocontrol¤()\w#h
+
+Met game.hascontrol à false, ce qui enlève le contrôle du joueur.
+game.hascontrol est automatiquement changé pendant "- Press ACTION to
+advance text -" et lors de la fermeture des boîtes de dialogue, donc cet appel
+est défait après l'une de ces actions.
+
+play¤(n)\w#h
+
+Joue la chanson ayant l'identifiant de chanson interne donné.
+
+n - Index de chanson interne
+
+playef¤(son)\w#h
+
+Joue un effet sonore.
+
+son - ID de son
+
+Dans VVVVVV 1.x, il y avait un second argument qui contrôlait le décalage en\g
+millisecondes à partir duquel le son commençait.\g
+Ceci a été enlevé lors du portage vers C++.\g
+
+position¤(type,above/below)\w#h
+
+Écrase les valeurs x,y d'une commande de texte, fixant la position de la boite
+de dialogue.
+
+type - center(centré) / center(centré en x) / centery(centré en y), ou un nom de
+couleur cyan/ player(joueur) / blue(bleu) / red(rouge) / yellow(jaune) /
+green(vert) / purple(violet) (secourable)
+above(au-dessus) / below(au-dessous) - Seulement utilisé si type est un nom
+de couleur.
+
+purplecontrol\b#h
+
+Commence une conversation avec Violet comme si vous venez de la
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
+
+redcontrol\b#h
+
+Commence une conversation avec Vermilion comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.
+
+rescued¤(couleur)\b#h
+
+Force la rescousse d'un équipier
+
+resetgame\w#h
+
+Réinitialise toutes les médailles, les équipiers collectés et les drapeaux, et
+téléporte le joueur vers le dernier point de sauvegarde.
+
+restoreplayercolour¤()\w#h
+
+Restaure la couleur du joueur par défaut (cyan)
+
+resumemusic¤()\w#h
+
+Relance la musique après une commande ¤#musicfadeout()¤musicfadeout¤.\nLwl&Z
+
+Avant la 2.3, cette commande n'était pas terminée et causait plusieurs bogues,\g
+y compris des plantages.\g
+
+rollcredits¤()\r#h
+
+Affiche les crédits de fin.
+
+2.2 ET ANTÉRIEUR: Cette commande détruit votre sauvegarde après
+que les crédits de fin soient finis!
+
+setactivitycolour¤(couleur)\w#h
+
+Change la couleur de la prochaine zone d'activité qui apparaît.
+
+couleur - Toute couleur que prend la commande ¤#text(couleur,x,y,lignes)¤text¤.\nLwl&Z
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+setactivityposition¤(y)\w#h
+
+Change la position de la prochaine zone d'activité qui apparaît.
+
+y - La position y
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+setactivitytext\w#h
+
+Change le texte de la prochaine zone d'activité qui apparaît.
+La ligne après cette commande sera considérée comme son texte
+(tel que ¤#text(couleur,x,y,lignes)¤text¤ en 1 ligne).\nLwl&Z
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+setcheckpoint¤()\w#h
+
+Créée un point de sauvegarde à la position actuelle
+
+setfont¤(police,all)\w#h
+
+Dans les niveaux personnalisés, change la police par celle donnée.
+
+police - La nouvelle police à utiliser. Si aucune n'est donnée, la police par
+défaut du niveau personnalisée sera utilisée.
+all - Si le mot ¤all¤ est donné (littéralement le mot ¤all¤), alors cela affectera\nn&Znn&Z
+absolument toutes les boîtes de dialogue à l'écran.
+
+Cette commande a été ajoutée dans la 2.4. L'argument ¤all¤ a été ajouté dans la\gn&Zg
+2.4.1.\g
+
+setroomname\w#h
+
+Change le nom de la salle courante.
+La ligne après cette commande sera considérée comme son texte
+(tel que ¤#text(couleur,x,y,lignes)¤text¤ en 1 ligne).\nLwl&Z
+
+Ce nom n'est pas persistant et le nom par défaut de la salle sera affiché si elle
+est chargée à nouveau (par exemple en quittant et en ré-entrant dans la salle).
+
+Ce nom remplace aussi le nom de salle spécial qui change, si la salle en a un.
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+setrtl¤(on/off)\w#h
+
+Dans les niveaux personnalisés, détermine si la police se lit de droite à gauche
+ou non. Par défaut, la police se lit de gauche à droite.
+
+Le mode de lecture droite à gauche aligne les boîtes de dialogues sur la droite,
+ce qui est surtout utilisé pour les langues telles que l'Arabe.
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+shake¤(n)\w#h
+
+Fait trembler l'écran pour n trames. Cette commande ne délayera pas
+les commandes suivantes.
+
+showcoordinates¤(x,y)\w#h
+
+Marque la salle aux coordonnées données en tant qu'explorée
+
+showplayer¤()\w#h
+
+Rend le joueur visible
+
+showsecretlab\w#h
+
+Affiche le laboratoire secret sur la carte
+
+showship\w#h
+
+Affiche le vaisseau sur la carte
+
+showtargets¤()\b#h
+
+Affiche les cibles sur la carte (téléporteurs inconnus affichés en tant que ?s)
+
+showteleporters¤()\b#h
+
+Affiche les téléporteurs dans les salles explorées sur la carte
+
+showtrinkets¤()\w#h
+
+Affiche les médailles sur la carte
+
+Depuis la 2.3, cette commande a été changée pour qu'elle fonctionne avec les\g
+niveaux personnalisés.\g
+
+speak\w#h
+
+Affiche une boite de dialogue sans enlever les anciennes. Pause aussi le script
+jusqu'à ce que vous appuyez sur la touche d'action (à moins que la commande
+backgroundtext soit au-dessus de celle-ci)
+
+speak_active\w#h
+
+Affiche une boite de dialogue, et supprime toute autre boite de dialogue. Pause
+aussi le script jusqu'à ce que vous appuyez sur la touche d'action (à moins que
+la commande backgroundtext soit au-dessus de celle-ci)
+
+specialline¤(x)\b#h
+
+Dialogue spéciaux qui n'apparaissent que dans le jeu principal
+
+squeak¤(couleur)\w#h
+
+Émet un couinement depuis un équipier, ou un son de terminal.
+
+couleur - cyan/player/blue/red/yellow/green/purple/terminal
+
+startintermission2\b#h
+
+Fonctionne comme la commande ¤finalmode(46,54)¤, et téléporte le\nn&Z
+joueur dans le dernier niveau sans argument.
+
+stopmusic¤()\w#h
+
+Arrête la musique immédiatement. Équivalent de ¤music(0)¤ dans un script simplifié.\nn&Z
+
+teleportscript¤(script)\b#h
+
+Utilisé pour déterminer quel script est utilisé lorsqu'un téléporteur est
+utilisé
+
+telesave¤()\r#h
+
+Ne fait rien dans des niveaux personnalisés.
+
+2.2 ET ANTÉRIEUR: Sauvegarde votre partie dans la sauvegarde de téléporteur
+normale, donc ne l'utilisez pas!
+
+text¤(couleur,x,y,lignes)\w#h
+
+Sauvegarde une boite de dialogue en mémoire avec une couleur, une position
+et un nombre de lignes. Normalement, la commande de position est utilisée
+après la commande de texte (et ses lignes de texte), ce qui écrase les
+coordonnées données ici, donc elles sont usuellement laissées à 0.
+
+couleur - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
+x - La position x de la boite de dialogue
+y - La position y de la boite de dialogue
+lignes - Le nombre de lignes
+
+La couleur ¤transparente¤ a été ajoutée dans la 2.4, avec les boîtes de dialogues\gn&Zg
+ayant des couleurs arbitraires.\g
+Les coordonnées peuvent être -500 pour centrer la boîte de dialogue sur leur\g
+axe respectif (si vous ne voulez pas utiliser ¤#position(type,above/below)¤position¤).\gLwl&Zg
+
+textboxactive\w#h
+
+Supprime toutes les boites de dialogue à l'écran sauf la dernière que vous
+avez créée
+
+textboxtimer¤(trames)\w#h
+
+Fait disparaître la prochaine boîte de dialogue après un certain nombre de trames,
+sans avancer le script.
+
+trames - Le nombre de trames à attendre avant le fondu
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+textbuttons¤()\w#h
+
+Pour la boîte de texte en mémoire, remplace certains boutons de remplacement par
+des labels de boutons (tel que des touches de clavier ou des glyphes de manette).
+
+Les boutons de replacement sont :
+- {b_act} - ACTION
+- {b_int} - Intéraction
+- {b_map} - Carte
+- {b_res} - Réessayer
+- {b_esc} - Echap/Menu
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+textcase¤(casse)\w#h
+
+Si votre niveau a des fichiers de traduction, et que vous avez plusieurs
+boîtes de dialogue ayant le même texte dans un seul script, cette commande
+peut leur donner des traductions uniques.
+Placez-la avant une boîte de dialogue.
+
+casse - L'ID de casse, entre 1 et 255
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+textimage¤(image)\w#h
+
+Pour la boîte de dialogue en mémoire, affiche l'image donnée.
+Il ne peut y avoir qu'une image par boîte de dialogue.
+
+image - levelcomplete/gamecomplete, ou une autre valeur pour enlever l'image
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+textsprite¤(x,y,sprite,couleur)\w#h
+
+Pour la boîte de dialogue en mémoire, affiche l'image donnée.
+Il peut y avoir plusieurs images par boîte de dialogue.
+
+x - La coordonnée X de l'image. Elle est relative à la boîte de texte.
+y - La coordonnée Y de l'image. Elle est relative à la boîte de texte.
+sprite - L'ID de l'image, depuis ¤sprites.png¤.\nn&Z
+couleur - l'ID de couleur de l'image.
+
+Cette commande a été ajoutée dans la 2.4.\g
+
+tofloor\w#h
+
+Force le joueur à inverser sa gravité vers le sol s'il est inversé.
+
+trinketbluecontrol¤()\b#h
+
+Dialogue de Victoria quand elle vous donne une médaille dans le jeu de base
+
+trinketscriptmusic\w#h
+
+Jour Passion for Exploring.
+
+trinketyellowcontrol¤()\b#h
+
+Dialogue de Vitellary quand il vous donne une médaille dans le jeu de base
+
+undovvvvvvman¤()\w#h
+
+Réinitialise la taille de la boîte de collision du joueur, change sa couleur à 0,
+et change sa position X à 100.
+
+untilbars¤()\w#h
+
+Attend que ¤#cutscene()¤cutscene¤/§¤#endcutscene()¤endcutscene¤ soit terminé.\nLwl&ZnLwl&Z(
+
+untilfade¤()\w#h
+
+Attend que ¤#fadeout()¤fadeout¤/§¤#fadein()¤fadein¤ soit terminé.\nLwl&ZnLwl&Z(
+
+vvvvvvman¤()\w#h
+
+Rend le joueur 6x plus grand, le déplace à ¤(30,46)¤ et change leur couleur à ¤23\nn&Znn&Z
+
+walk¤(direction,x)\w#h
+
+Force le joueur à marcher pour un certain nombre de trames
+
+direction - left (gauche) / right (droite)
+
+warpdir¤(x,y,dir)\w#h
+
+Change la direction de téléportation de la salle x,y à la direction donnée, indexé
+à 1. Peut être vérifié avec ifwarp, ce qui peut être utilisé comme un système de
+drapeau/variable supplémentaire qui est relativement puissant.
+
+x - Coordonnée x de la salle, commence à 1
+y - Coordonnée y de la salle, commence à 1
+dir - Direction de la téléportation. Normalement 0-3, mais les valeurs en dehors
+de cette fourchette sont valides
+
+yellowcontrol\b#h
+
+Commence une conversation avec Vitellary comme si vous venez de le
+rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
+ENTREE. Créée aussi une zone d'activité après l'exécution.

@@ -1,0 +1,79 @@
+Snelkoppelingen
+
+Snelkoppelingen\wh#
+\C=
+
+Tip: je kunt overal in Ved ¤F9¤ ingedrukt houden om veel van de snelkoppelingen te\nC
+zien.
+
+De meeste snelkoppelingen die in VVVVVV gebruikt kunnen worden kunnen ook worden
+gebruikt in Ved.
+
+F1¤  Tileset veranderen\C
+F2¤  Kleur veranderen\C
+F3¤  Vijanden veranderen\C
+F4¤  Vijand-grenzen\C
+F5¤  Platform-grenzen\C
+
+F10¤  Handmatige/automatische modus (direct mode/niet-direct mode)\C
+
+W¤  Warprichting veranderen\C
+E¤  Kamernaam veranderen\C
+
+L¤  Level laden\C
+S¤  Level opslaan\C
+
+Z¤  3x3-kwast (muren en achtergronden)\C
+X¤  5x5-kwast (")\C
+
+< ¤en¤ >¤  tussen gereedschap schakelen\CnC
+Ctrl/Cmd+< ¤en¤ Ctrl/Cmd+>¤  tussen sub-gereedschap schakelen\CnC
+
+Meer snelkoppelingen\h#
+
+Ved introduceert ook een paar snelkoppelingen.
+
+Hoofd-editor\gh#
+
+Ctrl+P¤  Ga naar de kamer met het startpunt\C
+Ctrl+S¤  Snel opslaan\C
+Ctrl+X¤  Kamer naar het klembord knippen\C
+Ctrl+C¤  Kamer naar het klembord kopiëren\C
+Ctrl+V¤  Kamer van het klembord plakken (indien geldig)\C
+Ctrl+D¤  Dit level met een ander level vergelijken\C
+Ctrl+Z¤  Ongedaan maken\C
+Ctrl+Y¤  Herhalen\C
+Ctrl+F¤  Zoeken\C
+Ctrl+/¤  Level-kladblok\C
+Ctrl+F1¤  Help\C
+(LET OP: Gebruik op Mac Cmd in plaats van Ctrl)
+N¤  Nummers van alle blokken tonen\C
+J¤  Soliditeit van blokken tonen\C
+;¤  Minikaart-tegels tonen\C
+Shift+;¤  Achtergrond tonen\C
+M¤ of ¤Toetsenblok 5¤  Kaart tonen\CnC
+G¤  Naar kamer gaan (typ coördinaten in als vier cijfers)\C
+/¤  Scripts\C
+[¤  Y van muis vastzetten (om makkelijker horizontale lijnen te tekenen)\C
+]¤  X van muis vastzetten (om makkelijker verticale lijnen te tekenen)\C
+F11¤  tilesets en sprites opnieuw laden\C
+
+Entiteiten\gh#
+
+Shift+klik rechts¤  Entiteit verwijderen\C
+Alt+klik¤           Entiteit verplaatsen\C
+Alt+Shift+klik¤     Entiteit kopiëren\C
+
+Scriptbewerker\gh#
+
+Ctrl+F¤  Zoeken\C
+Ctrl+G¤  Ga naar regel\C
+Ctrl+I¤  Schakel internescriptmodus in/uit\C
+Alt+rechts¤  Spring naar script in voorwaardelijk commando\C
+Alt+links¤  Spring één stap terug\C
+
+Scriptlijst\gh#
+
+N¤  Nieuw script maken\C
+F¤  Ga naar vlaggenlijst\C
+/¤  Ga naar bovenste/laatste script\C

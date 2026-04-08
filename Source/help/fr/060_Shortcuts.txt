@@ -1,0 +1,81 @@
+Raccourcis clavier
+
+Raccourcis clavier de l'éditeur\wh#
+\C=
+
+Aide : vous pouvez laisser la touche ¤F9¤ enfoncée partout dans Ved pour voir\nC
+beaucoup de ces raccourcis.
+
+La majorité des raccourcis clavier utilisable dans VVVVVV peuvent être
+utilisés dans Ved.
+
+F1¤  Changer de jeu de tuiles\C
+F2¤  Changer de couleur\C
+F3¤  Changer d'ennemi\C
+F4¤  Limites des ennemis\C
+F5¤  Limites des plateformes\C
+
+F10¤  Mode manuel/automatique (mode direct/mode indirect)\C
+
+W¤  Changer la direction de la téléportation\C
+E¤  Changer le nom de la salle\C
+
+L¤  Charger carte\C
+S¤  Sauver carte\C
+
+Z¤  Pinceau 3x3 (murs et arrière-plans)\C
+X¤  Pinceau 5x5 (")\C
+
+< ¤et¤ >¤  Changer d'outil\CnC
+Ctrl/Cmd+< ¤et¤ Ctrl/Cmd+>¤  Changer d'outil secondaire\CnC
+
+Plus de raccourcis clavier\h#
+
+Ved introduit aussi quelques raccourcis clavier.
+
+Éditeur principal\gh#
+
+Ctrl+P¤  Aller à la salle contenant le point de départ\C
+Ctrl+S¤  Sauvegarde rapide\C
+Ctrl+X¤  Couper la salle dans le presse-papier\C
+Ctrl+C¤  Copier la salle dans le presse-papier\C
+Ctrl+V¤  Coller la salle depuis le presse-papier (si elle est valide)\C
+Ctrl+D¤  Comparer ce niveau avec un autre niveau\C
+Ctrl+Z¤  Défaire\C
+Ctrl+Y¤  Refaire\C
+Ctrl+F¤  Recherche\C
+Ctrl+/¤  Bloc-notes du niveau\C
+Ctrl+F1¤  Aide\C
+(NOTE: Sur Mac, replacer Ctrl par Cmd)
+N¤  Afficher tous les nombres de tuiles\C
+J¤  Afficher la solidité des tuiles\C
+;¤  Afficher les tuiles de la minimap\C
+Maj+;¤  Afficher le fond\C
+M¤ ou ¤Numpad 5¤  Afficher la carte\CnC
+G¤  Aller à la salle (entrer les coordonnées avec 4 chiffres)\C
+/¤  Scripts\C
+[¤  Bloquer la position Y de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes horizontales facilement)
+]¤  Bloquer la position X de la souris tant qu'elle est appuyée\C
+   (pour dessiner des lignes verticales facilement)
+F11¤  Recharger les jeux de tuiles et images\C
+
+Entités\gh#
+
+Maj+Clic droit¤  Supprimer l'entité\C
+Alt+Clic¤        Déplacer l'entité\C
+Alt+Maj+Clic¤    Copier l'entité\C
+
+Éditeur de script\gh#
+
+Ctrl+F¤  Chercher\C
+Ctrl+G¤  Aller à la ligne\C
+Ctrl+I¤  Activer/Désactiver le mode de création de script interne\C
+Alt+droite¤  Sauter dans le script de la commande conditionnelle\C
+Alt+gauche¤  Sauter dans le script précédent\C
+
+Liste de scripts\gh#
+
+N¤  Créer un nouveau script\C
+F¤  Aller dans la liste de drapeaux\C
+/¤  Aller dans le script tout en haut\C

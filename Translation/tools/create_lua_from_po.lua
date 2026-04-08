@@ -1,4 +1,4 @@
-#!/usr/bin/env lua
+#!/usr/bin/env luajit
 
 --[[
 	This fills in the template (out/Template.lua) to create a traditional
@@ -32,12 +32,9 @@ pofiles = {
 }
 
 load_lua_lang("templates")
-index_splithelp = {}
-for k,v in pairs(LH) do
-	if v.splitid ~= nil then
-		table.insert(pofiles, {v.splitid, "ved_help", true})
-		index_splithelp[v.splitid] = k
-	end
+local help_ids = get_help_ids()
+for _,id in pairs(help_ids) do
+	table.insert(pofiles, {id, "ved_help", true})
 end
 
 for lang_code, lang_name in pairs(all_languages) do
@@ -77,6 +74,9 @@ for lang_code, lang_name in pairs(all_languages) do
 
 			local keyless_strings = {}
 
+			local help_subj = "SUBJ"
+			local any_translated = false -- XXX only used for help strings since I'm getting rid of the lua-file code anyway
+
 			local current_key = nil
 			local current_english = nil
 			local current_english_plural = nil
@@ -105,13 +105,7 @@ for lang_code, lang_name in pairs(all_languages) do
 									-- It's actually supposed to be empty.
 									v = ""
 								end
-								local fillin
-								if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
-									-- This is a multiline string
-									fillin = escape_lua_blockstr(v)
-								else
-									fillin = escape_lua_str(v)
-								end
+								local fillin = escape_lua_str(v)
 								fillin = fillin:gsub("%%", "%%%%")
 								plurals_export[k+1] = "\t\t[" .. k .. "] = \"" .. fillin .. "\","
 							end
@@ -143,23 +137,23 @@ for lang_code, lang_name in pairs(all_languages) do
 							-- Just use the English string if it's untranslated
 							current_translated = current_english
 							count_translated = count_translated - 1 -- elegant
+						else
+							any_translated = true
 						end
 						if current_translated == "<empty>" then
 							-- It's actually supposed to be empty.
 							current_translated = ""
 						end
-						local fillin
-						if current_key:match("^LH%.[0-9]+%.cont$") ~= nil then
-							-- This is a multiline string
-							fillin = escape_lua_blockstr(current_translated)
+						if current_key == "LHS." .. pofile .. ".subj" then
+							help_subj = current_translated
 						else
-							fillin = escape_lua_str(current_translated)
+							local fillin = escape_lua_str(current_translated)
+							fillin = fillin:gsub("%%", "%%%%")
+							template = template:gsub(
+								"<" .. current_key:gsub("%.", "%%%.") .. ">",
+								fillin
+							)
 						end
-						fillin = fillin:gsub("%%", "%%%%")
-						template = template:gsub(
-							"<" .. current_key:gsub("%.", "%%%.") .. ">",
-							fillin
-						)
 					end
 				elseif current_english == "" and pofile == "ved_main" then
 					-- current_translated should be the headers! We need the plural rules.
@@ -194,6 +188,8 @@ for lang_code, lang_name in pairs(all_languages) do
 						-- Just use the English string if it's untranslated
 						current_translated = current_english
 						count_translated = count_translated - 1 -- elegant
+					else
+						any_translated = true
 					end
 					if current_translated == "<empty>" then
 						-- It's actually supposed to be empty.
@@ -321,23 +317,29 @@ for lang_code, lang_name in pairs(all_languages) do
 			end
 			save_translation()
 
-			if splithelp then
+			if splithelp and any_translated then
 				-- If this is a .po for one help article, we're not done yet!
-				local paragraphs, blanklines = split_help_page(LH[index_splithelp[pofile]].cont)
+				local subj, cont = load_help_page("templates", pofile)
 
-				for k,v in pairs(paragraphs) do
-					if keyless_strings[v] ~= nil then
-						paragraphs[k] = keyless_strings[v]
+				if subj ~= nil and cont ~= nil then
+					local paragraphs, blanklines = split_help_page(cont)
+
+					for k,v in pairs(paragraphs) do
+						if keyless_strings[v] ~= nil then
+							paragraphs[k] = keyless_strings[v]
+						end
+					end
+
+					os.execute("mkdir " .. ved_path .. "/help/" .. lang_name .. "/ -p")
+					local fh, everr = io.open(ved_path .. "/help/" .. lang_name .. "/" .. pofile .. ".txt", "w")
+					if fh == nil then
+						print("ERROR: Cannot open help file " .. lang_name .. "/" .. pofile .. " for writing")
+						print(everr)
+					else
+						fh:write(help_subj .. "\n\n" .. merge_help_page(paragraphs, blanklines))
+						fh:close()
 					end
 				end
-
-				-- This is a multiline string
-				local fillin = escape_lua_blockstr(merge_help_page(paragraphs, blanklines))
-				fillin = fillin:gsub("%%", "%%%%")
-				template = template:gsub(
-					"<LHS%." .. pofile:gsub("%.", "%%%.") .. "%.cont>",
-					fillin
-				)
 			end
 
 			fh, everr = io.open("out/" .. lang_name .. ".lua", "w")

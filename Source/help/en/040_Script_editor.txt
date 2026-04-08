@@ -1,0 +1,36 @@
+Script editor
+
+Script editor\wh#
+\C=
+
+With the script editor, you can manage and edit scripts in your level.
+
+
+Flag names\h#
+
+For convenience and script readability, it is possible to use flag names instead
+of numbers. When you use a name instead of a number, a number will automatically
+be associated with that name, in the background. It is also possible to choose
+which number to use for which flag name.
+
+Internal scripting mode\h#
+
+To use internal scripting in Ved, you can enable internal scripting mode in the
+editor, to handle all commands in that script as internal scripting. See
+Int.sc mode¤ for more information about internal scripting mode. For more\wl
+information about internal scripting, check the internal scripting reference.
+
+Splitting scripts\h#
+
+It is possible to split a script in two scripts with the script editor. After
+putting the text cursor on the first line you want to be in the new script, click
+the Split button and enter the name of the new script. The lines before the cursor
+will remain in the original script, the lines from the cursor onward will be moved
+to the new script.
+
+Jumping to scripts\h#
+
+On lines with an iftrinkets, ifflag, customiftrinkets or customifflag command, it
+is possible to jump to the given script by clicking the "Go to" button when the
+cursor is on that line. You can also press ¤Alt+right¤ to do this, and you can\nw
+use ¤Alt+left¤ to jump one step back through the chain to where you came from.\nw

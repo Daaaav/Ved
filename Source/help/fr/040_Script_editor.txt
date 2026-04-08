@@ -1,0 +1,39 @@
+Éditeur de script
+
+Éditeur de script\wh#
+\C=
+
+Avec l'éditeur de script, vous pouvez gérer et éditer les scripts de votre niveau.
+
+
+Noms de drapeaux\h#
+
+Pour un confort et une lisibilité de script, il est possible d'utiliser des noms
+de drapeaux plutôt que des nombres. Quand un nombre est utilisé à la place d'un
+drapeau, un nombre est automatiquement associé à ce nom en arrière-plan.
+Il est alors possible de choisir quel nombre utiliser avec chaque nom de drapeau.
+
+Mode de création de script interne\h#
+
+Pour utiliser un script interne dans Ved, vous pouvez activer le mode de création
+de script interne dans l'éditeur pour gérer toutes les commandes de ce script
+en tant que script interne. Voir ¤Mode sc.int¤ pour plus d'informations sur le\nwl
+mode de création de scripte interne. Pour plus d'informations sur la création de
+script interne, veuillez consulter la référence sur la création de script interne.
+
+Séparer les scripts\h#
+
+Il est possible de séparer un script en deux scripts avec l'éditeur de script.
+Après avoir placé le curseur de texte sur la première ligne qui doit faire partie
+du nouveau script, appuyez sur le bouton Séparer et entrez le nom du nouveau
+script. Les lignes avant le curseur resteront dans le script original, et toute
+ligne en dessous du curseur seront déplacées dans le nouveau script.
+
+Sauter dans les scripts\h#
+
+Dans les lignes avec les commandes iftrinkets, ifflag, customiftrinkets ou
+customifflag, il est possible de sauter dans un script donné en cliquant sur le
+bouton "Aller à" quand le curseur est sur cette ligne. Vous pouvez aussi entrer
+Alt+Droite¤ pour faire ceci, et vous pouvez utiliser ¤Alt+Gauche¤ pour revenir en\wnw
+arrière d'un pas dans la chaîne de scripts dans lesquels vous vous trouviez
+précédemment.

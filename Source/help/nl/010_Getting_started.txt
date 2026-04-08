@@ -1,0 +1,31 @@
+Aan de slag
+
+Aan de slag\wh#
+\C=
+
+Dit artikel zal je helpen om te beginnen met werken met Ved. Om naar de editor te
+gaan, moet je een level laden, of een nieuwe maken.
+
+
+De editor\h#
+
+Aan de linkerkant staan de verschillende gereedschappen. De meeste gereedschappen
+hebben sub-gereedschappen die rechts ervan worden weergegeven. Om tussen
+gereedschappen te schakelen kun je de bijbehorende snelkoppelingen gebruiken of
+scrollen met Shift of Ctrl ingedrukt. Om tussen sub-gereedschappen te schakelen
+kun je overal scrollen. Kijk voor meer informatie over de gereedschappen op de
+Gereedschap¤-helppagina.\wl
+Je kunt op entiteiten klikken met de rechtermuisknop voor een menu met acties voor
+die entiteit. Om entiteiten te verwijderen zonder dat menu te gebruiken kun je er
+rechts op klikken met Shift ingedrukt.
+Aan de rechterkant van het scherm staan veel knoppen en opties. De bovenste
+knoppen zijn voor het hele level, de onderste knoppen (onder Kamer-opties) zijn
+specifiek voor de huidige kamer. Kijk voor meer informatie over deze knoppen op de
+helppagina's ervoor, waar beschikbaar.
+
+Levels-map\h#
+
+Ved zal normaal gesproken dezelfde map gebruiken voor het opslaan van levels als
+VVVVVV, dus het is makkelijk om te wisselen tussen de level-editor in VVVVVV en
+Ved. Als Ved je levels-map niet juist herkent, kun je zelf een pad invullen in de
+Ved-opties.

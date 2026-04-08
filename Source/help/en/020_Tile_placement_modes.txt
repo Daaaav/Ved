@@ -1,0 +1,28 @@
+Tile placement modes
+
+Tile placement modes\wh#
+\C=
+
+Ved supports three different modes to draw tiles.
+
+     Automatic mode\h#0
+
+          This is the mode that is easiest to use. In this mode, you can draw
+          walls and backgrounds and the edges will automatically get placed
+          correctly. However, while editing in this mode, all walls and
+          backgrounds in the room must use the same tileset and color.
+
+     Multi-tileset mode\h#1
+
+          This is similar to automatic mode, except that you can have multiple
+          different tilesets in the same room. That is, changing the tileset will
+          not affect already-placed walls and backgrounds, and you can draw in
+          multiple different types of tiles in the same room.
+
+     Manual mode\h#2
+
+          Also called Direct Mode, in this mode you can place down any tile
+          manually, so you are not bound to the pre-defined tileset combinations
+          and edges will not automatically get added to walls, giving you complete
+          control over how the room will look. However, this editing mode is often
+          slower to use.

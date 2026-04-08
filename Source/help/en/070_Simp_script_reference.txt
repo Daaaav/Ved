@@ -1,0 +1,164 @@
+Simp.script reference
+
+Simplified scripting reference\wh#
+\C=
+
+VVVVVV's simplified scripting language is a basic language that can be used to
+script VVVVVV levels.
+Note: whenever something is between quotes, it needs to be typed without them.
+
+
+say¤([lines[,color]])\h#w
+
+Display a text box. Without any arguments, this will make a text box with one
+line, and by default this will result in a centered terminal text box. The color
+argument can be a color, or the name of a crewmate.
+If you use a color and a rescuable crewmate with that color is in the room, then
+the text box will be displayed above that crewmate.
+
+reply¤([lines])\h#w
+
+Display a text box for Viridian. Without the lines argument, this will make a text
+box with one line.
+
+delay¤(n)\h#w
+
+Delays further action by n ticks. 30 ticks is almost one second.
+
+happy¤([crewmate])\h#w
+
+Makes a crewmate happy. Without an argument, this will make Viridian happy. You
+can also use "all", "everyone" or "everybody" as an argument to make everybody
+happy.
+
+sad¤([crewmate])\h#w
+
+Makes a crewmate sad. Without an argument, this will make Viridian sad. You
+can also use "all", "everyone" or "everybody" as an argument to make everybody
+sad.
+
+Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\nwnw
+
+flag¤(flag,on/off)\h#w
+
+Turn a given flag on or off. For example, flag(4,on) will turn flag number 4 on.
+There are 100 flags, numbered from 0 to 99.
+By default, all flags are off when you start playing a level.
+Note: In Ved, you can also use flag names instead of the numbers.
+
+ifflag¤(flag,scriptname)\h#w
+
+If a given flag is ON, then go to script with name scriptname.
+If a given flag is OFF, continue in the current script.
+Example:
+ifflag(20,cutscene) - If flag 20 is ON, go to script "cutscene", else continue in
+                      the current script.
+Note: In Ved, you can also use flag names instead of the numbers.
+
+iftrinkets¤(number,scriptname)\h#w
+
+If your amount of trinkets >= number, go to script with name scriptname.
+If your amount of trinkets < number, continue in the current script.
+Example:
+iftrinkets(3,enoughtrinkets) - If you have 3 or more trinkets, the script
+                               "enoughtrinkets" will be run, else the current
+                               script will continue.
+It is common practise to use 0 as a minimum amount of trinkets, as a way to load
+a script in any case.
+
+iftrinketsless¤(number,scriptname)\h#w
+
+If your amount of trinkets < number, go to script with name scriptname.
+If your amount of trinkets >= number, continue in the current script.
+
+destroy¤(something)\h#w
+
+Remove all objects of the given type, until you re-enter the room.
+
+Valid arguments can be:
+warptokens - Warp tokens
+gravitylines - Gravity lines
+platforms - Doesn't work properly
+moving - Moving platforms (added in 2.4)
+disappear - Disappearing platforms (added in 2.4)
+
+music¤(number)\h#w
+
+Change the song to a certain song number.
+For the list of song numbers, refer to the "Lists reference" article.
+
+playremix\h#w
+
+Plays the remix of Predestined Fate as music.
+
+flash\h#w
+
+Flashes the screen white, makes a bang sound and shakes the screen for a bit.
+
+map¤(on/off)\h#w
+
+Turn the map on or off. If you turn the map off, it will display "NO SIGNAL" until
+you turn it on again. Rooms will still be uncovered while the map is off to be
+visible when the map is turned on.
+
+squeak¤(crewmate/on/off)\h#w
+
+Make a crewmate squeak, or turn the squeak sound when a text box is displayed on
+or off.
+
+speaker¤(color)\h#w
+
+Changes the color and position of the next text boxes created with the "say"
+command. This can be used instead of giving a second argument to "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Changes the warp direction for room x,y, 1-indexed, to the given direction. This
+could be checked with ifwarp, resulting in a relatively powerful extra
+flags/variable system.
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+ifwarp¤(x,y,dir,script)\w#h
+
+If the warpdir for room x,y, 1-indexed, is set to dir, go to (simplified) script
+
+x - Room x coordinate, starting at 1
+y - Room y coordinate, starting at 1
+dir - The warp direction. Normally 0-3, but out-of-bounds values are accepted
+
+loadtext¤(language)\w#h
+
+Load a translation for the level by language code. Use an empty value to use
+VVVVVV's language again.
+
+language - A language code, like fr or pt_BR
+
+iflang¤(language,script)\w#h
+
+If VVVVVV's language is set to the given language, go to a script. This is not
+affected by the language code you pass to loadtext(), only by what language the
+user has selected in the menu.
+
+setfont¤(font)\w#h
+
+Change the font used for text in the level. This can be a font supplied with the
+game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
+to revert to the default font for the level.
+
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - A number between 1 and 255

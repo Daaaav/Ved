@@ -1,0 +1,76 @@
+Agnoskoj
+
+\0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Agnoskoj\wh#
+\C=
+
+Ved estas farita de Dav999
+
+Pluaj kod-kontribuantoj: Info Teddy
+
+Kelkaj grafikoj kaj la tiparo estas faritaj de Reese Rivers
+
+Ruslingva traduko: CreepiX, Cheep, Omegaplex
+Esperanta traduko: Reese Rivers
+Germanlingva traduko: r00ster
+Franclingva traduko: RhenaudTheLukark
+Hispanlingva traduko: Valso22/naether
+Indonezilingva traduko: _march31onne/Marchionne Evangelisti
+
+
+Special-dank' al:\h#
+
+
+Terry Cavanagh pro krei la ludon VVVVVV
+
+Ĉiuj, kiuj raportis erarojn, elpensis ideojn kaj kuraĝigis min fari ĉi tion!
+\
+\
+
+
+
+Permesilo\h#
+\
+Copyright 2015-2025  Dav999
+\
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+\
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other
+materials provided with the distribution.
+\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+Havaĵoj de VVVVVV\h#
+
+Ved inkluzivas iujn grafikajn havaĵojn de VVVVVV. VVVVVV kaj ĝiaj havaĵoj estas
+kopirajtitaj de Terry Cavanagh. Por pliaj informoj pri la permesilo, kiu aplikiĝas
+al VVVVVV kaj ĝiaj havaĵoj, vidu ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ kaj ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ en\nLClnLCln
+la ¤https://github.com/TerryCavanagh/VVVVVV¤GitHub-deponejo de VVVVVV¤.\nLCl

@@ -1,0 +1,30 @@
+Memulai
+
+Memulai\wh#
+\C=
+
+Artikel ini akan membantu Anda memulai menggunakan Ved. Untuk mulai menggunakan
+editor, Anda perlu memuat level, atau membuat yang baru.
+
+
+Editor\h#
+
+Di sisi kiri, Anda akan menemukan pilihan alat. Sebagian besar alat memiliki
+subalat yang akan dicantumkan di sebelah kanannya. Untuk beralih antar alat,
+gunakan pintasan masing-masing atau gulir dengan Shift atau Ctrl ditekan. Untuk
+beralih di antara subalat, Anda dapat menggulir ke mana saja. Untuk informasi
+lebih lanjut tentang alat, lihat halaman bantuan ¤Alat¤.\nwl
+Entitas dapat diklik kanan untuk menu tindakan untuk entitas tersebut. Untuk
+menghapus entitas tanpa harus menggunakan menu konteks, Shift-klik kanan pada
+entitas tersebut.
+Di sisi kanan layar, Anda akan menemukan banyak tombol dan opsi. Tombol atas
+terkait dengan seluruh tingkat, tombol bawah (di bawah Opsi ruang) kustom untuk
+ruangan saat ini. Untuk informasi lebih lanjut tentang tombol-tombol itu, lihat
+halaman bantuan masing-masing, jika tersedia.
+
+Folder level\h#
+
+Ved biasanya akan menggunakan folder yang sama untuk menyimpan level seperti yang
+dilakukan VVVVVV, jadi mudah untuk beralih dari editor level VVVVVV ke Ved dan
+sebaliknya. Jika Ved tidak mendeteksi folder VVVVVV Anda dengan benar, Anda dapat
+memasukkan jalur kustom di Opsi Ved.

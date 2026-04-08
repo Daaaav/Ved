@@ -10,8 +10,14 @@ languages = {
 	ar = "ar"
 }
 
-langdir_path = "../../Source/lang" -- must not include a trailing /
+ved_path = "../../Source" -- must not include a trailing /
 
+orig_package_path = package.path
+package.path = orig_package_path .. ";" .. ved_path .. "/?.lua;" .. ved_path .. "/?/init.lua"
+
+utf8 = require("utf8lib_fallback9")
+utf8.char = require("utf8lib_092fixedchar")
+local vedxml = require("vedxml")
 
 function assert_lang_arg(argnum, allownone)
 	-- If allownone is false/nil: Require that a valid language argument is given
@@ -35,11 +41,9 @@ function assert_lang_arg(argnum, allownone)
 	return true
 end
 
-orig_package_path = package.path
 function load_lua_lang(lang)
 	-- Load the language file that is given by the first argument
-	package.path = orig_package_path .. ";" .. langdir_path .. "/" .. languages[lang] .. ".lua"
-	require(languages[lang] .. ".lua")
+	require("lang." .. languages[lang])
 end
 
 function escape_lua_str(str)
@@ -139,4 +143,51 @@ function merge_help_page(paragraphs_str, blanklines)
 	end
 
 	return table.concat(lines, "\n")
+end
+
+function load_help_page(lang, id)
+	local fh, everr = io.open(ved_path .. "/help/" .. languages[lang] .. "/" .. id .. ".txt")
+	if fh == nil then
+		print("ERROR: Cannot open " .. lang .. " help file " .. id)
+		print(everr)
+		return nil
+	end
+
+	local contents = fh:read("*a"):gsub("\r", "")
+	fh:close()
+
+	local first_nn = contents:find("\n\n", 1, true)
+	if first_nn == nil then
+		print("ERROR: Help page " .. id .. " in " .. lang .. " is bad")
+		return nil
+	end
+
+	local subj = contents:sub(1, first_nn-1)
+	local cont = contents:sub(first_nn+2)
+
+	return subj, cont
+end
+
+function get_help_ids()
+	local help_ids = {}
+
+	local success, everr = pcall(function()
+		local fh, everr2 = io.open(ved_path .. "/help/helpindex.xml")
+		if fh == nil then
+			error(everr2)
+		end
+		local contents = fh:read("*a")
+		fh:close()
+
+		local xml = vedxml.VedXML:new{string=contents, root="helpindex"}
+		for xpage in xml:each_child_element(nil, "page") do
+			table.insert(help_ids, xml:get_attribute(xpage, "id"))
+		end
+	end)
+	if not success then
+		print("ERROR: Error reading helpindex.xml")
+		print(everr)
+	end
+
+	return help_ids
 end

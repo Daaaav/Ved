@@ -1,0 +1,31 @@
+Comenzando
+
+Comenzando\wh#
+\C=
+
+Este articulo te ayudara a comenzar a usar Ved. Para comenzar con usar el
+editor, deberás cargar un nivel, o crear uno nuevo.
+
+
+El editor\h#
+
+En el lado izquierdo, encontraras la selección de herramientas. La mayoría de las
+herramientas tienen sub-herramientas que se listaran a su derecha. Para cambiar la
+herramienta, use su atajo respectivo o desplace con Shift o Ctrl presionado. Para
+cambiar a sub-herramienta, puede desplazar adonde sea. Para mas información
+sobre las herramientas, referir a la pagina de ayuda ¤Tools\nwl.
+Las entidades se pueden clickear con el boton derecho para un menu de acciones
+para esa entidad. Para borrar las entidades sin usar el menú de contexto, presione
+el boton derecho al presionar Shift en ellas.
+En el lado derecho de la pantalla, encontraras muchos botones y opciones. Los
+botones superiores se relacionan a el nivel entero, los botones inferiores (debajo
+de opciones de habitación) son específicos a la habitación actual. Para mas
+información sobre esos botones, referir a las paginas de ayuda respectivas, si
+disponibles.
+
+Carpeta de niveles\h#
+
+Ved normalmente usara la misma carpeta para almacenar niveles que usa
+VVVVVV, así que es fácil cambiar el editor de niveles de VVVVVV al de Ved
+y viceversa. Si Ved no detecta su carpeta de VVVVVV correctamente, puede
+entrar un camino personalizado en las opciones de Ved.

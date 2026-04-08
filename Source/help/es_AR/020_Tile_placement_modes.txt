@@ -1,0 +1,28 @@
+Modos de poner tejas
+
+Modos de poner tejas\wh#
+\C=
+
+Ved soporta tres modos diferentes para dibujar tejas.
+
+     Modo automático\h#0
+
+          Este modo es al mas fácil de usar. En este modo, puedes dibujar
+          paredes y fondos y los bordes se ajustaran automáticamente
+          correctamente. Pero al editar en este modo, todas las paredes y
+          fondos en la habitación deben usar el mismo set y color de tejas.
+
+     Modo de multi-set\h#1
+
+          Este es muy similar al modo automático. excepto que puedes tener
+          múltiples sets en la misma habitación. Eso es, cambiar el set no
+          afectara paredes y fondos ya puestos, y puedes dibujar en multiples
+          diferentes tipos de tejas en la misma habitaciones.
+
+     Modo manual\h#2
+
+          También llamado Modo Directo, en este modo puedes poner cualquier
+          teja manualmente, asi que no estas encadenado a las combinaciones de
+          sets predefinidos y bordes no se ajustaran solas, dándote control
+          completo de como se vera la habitación. Pero este modo es muy lento de
+          usar.

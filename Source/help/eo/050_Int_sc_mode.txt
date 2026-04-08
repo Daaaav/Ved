@@ -1,0 +1,94 @@
+Reĝimo Int.skr
+
+Reĝimo de interna skriptado\wh#
+\C=
+
+Por uzi internan skriptadon en Ved, vi povas ebligi ties reĝimon en la
+redaktilo por trakti ĉiujn komandojn en tiu skripto kiel internan skriptaĵon.
+Per tiu ĉi funkcio, estas pli facile funkciigi internan skriptadon; vi
+ne devas uzi komandojn ¤say¤, kalkuli liniojn aŭ tajpi ¤text(1,0,0,4)¤ aŭ kion\nwnw
+ajn estas via prefero - simple skribu internajn skriptojn, kvazaŭ ili estas
+destinitaj por la ĉefa ludo. Vi eĉ ne bezonas fini la skripton per komando
+loadscript¤.\wn
+
+Ved subtenas diversajn metodojn de interna skriptado. Por montri iliajn
+malsamecojn teknikajn, ni uzos la sekvan ekzemplan skripton:
+
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+
+Linioj de tiu interna skripto estas ¤helverdaj¤, kaj linioj kiuj estas aldonitaj\nG
+aŭtomate kaj estas necesaj por la skriptad-ekspluato estos ¤grizaj¤. Notu, ke tio\ng
+ĉi estas iome simpligita; Ved aldonas ¤#v¤ ĉe la fino de la grizaj linioj en la\nw
+ekzemploj por certigi ke permane skribitaj skriptoj ne ŝanĝiĝos, kaj blokoj
+de ¤say¤, kiuj estas tro grandaj devas esti enpecigitaj en pli malgrandajn.\nw
+
+Por pli da informoj pri interna skriptado, kontrolu la helpopaĝon de
+interna skriptado.
+
+Int.sk de ŝargskripto\h#
+
+La metodo loadscript estas probable la plej komune uzata metodo hodiaŭ. Ĝi estas
+la metodo, kiun subtenis Ved ekde alfa-versio.
+
+Por ĝi necesas plua skripto, la ŝargskripto, por ŝargi la internan skripton.
+La ŝargskripto, en ĝia plej baza formo, enhavus komandon kiel
+iftrinkets(0,viaskripto)¤, sed vi povas ankaŭ havi aliajn simpligitajn komandojn\w
+en ĝi, kaj ankaŭ vi povas uzi ¤ifflag¤ anstataŭ ¤iftrinkets¤. Kio gravas estas\nwnw
+ke via interna skripto estas ŝargita de alia skripto por ke ĝi funkciu.
+
+La interna skripto estus konvertita pli-malpli ĉi tiel:
+
+  squeak(off)\g
+  say(11)\g
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+  text(1,0,0,3)\g
+
+text(1,0,0,3)¤ devas esti la lasta linio, aŭ en la skriptredaktilo de VVVVVV,\w
+devas esti ekzakte unu blanka linio post ĝi.
+
+Ankaŭ eblas ne uzi ¤squeak(off)¤, kaj uzi ¤text(1,0,0,4)¤ anstataŭ\nwnw
+text(1,0,0,3)¤. Uzi ¤squeak(off)¤, tamen, konservas karajn liniojn en pli longaj\wnw
+skriptoj.
+
+Int.sk de say(-1)\h#
+
+La metodo say(-1) estas pli malnova, kaj havas malavantaĝon kompare al la
+metodo de ŝargskripto: ĝi ĉiam aperigas barojn de interscenoj. Sed ankaŭ ĝi
+havas avantaĝon kiu povas esti grava en niveloj kun multaj skriptoj: ĝi ne
+bezonas ŝargskripton. Ni povas forigi ¤cutscene()¤ kaj ¤untilbars()¤ el nia\nwnw
+skripto, pro ke tiuj jam aldoniĝos de VVVVVV uzante tiun ĉi metodon.
+
+  squeak(off)\g
+  say(-1)\g
+  text(1,0,0,3)\g
+  say(9)\g
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+
+Tiu ĉi metodo estas aldonita kiel aldona reĝimo de interna skriptado en Ved 1.6.0.

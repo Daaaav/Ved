@@ -1,0 +1,38 @@
+Skripto-redaktilo
+
+Skripto-redaktilo\wh#
+\C=
+
+Per la skripto-redaktilo, vi povas administri kaj redakti skriptojn en via
+nivelo.
+
+
+Flagnomoj\h#
+
+Por oportuneco kaj legebleco de skriptoj, eblas uzi flagnomojn anstataŭ uzi
+numerojn. Kiam vi uzas nomon anstataŭ numero, numero aŭtomate asociiĝos kun
+tiu nomo, en la fono. Ankaŭ eblas elekti la specifajn flagnumerojn por nomoj.
+
+Reĝimo de interna skriptado\h#
+
+Por uzi internan skriptadon en Ved, vi povas ebligi ties reĝimon en la
+redaktilo, por trakti ĉiujn komandojn en tiu skripto kiel internan skriptaĵon.
+Vidu ¤Reĝimo Int.skr¤ por pli da informoj pri la reĝimo de interna skriptado.\nwl
+Por pli da informoj pri interna skriptado, legu la helpopaĝojn de interna
+skriptado.
+
+Fendado de skriptoj\h#
+
+Eblas fendi skripton en du per la skripto-redaktilo. Post meti la tekst-
+kursoron sur la unuan linion, kiu estu en la nova skripto, alklaku la
+butonon Fendi kaj enigu la nomon de la nova skripto. La linioj antaŭ la kursoro
+restos en la originala skripto, kaj la linioj de la kursoro pluen moviĝos al la
+nova.
+
+Saltado al skriptoj\h#
+
+Sur linioj kun komando iftrinkets, ifflag, customiftrinkets aŭ customifflag,
+eblas salti al specifita skripto alklakante la butonon "Salti al" kiam la
+kursoro estas sur tiu linio. Ankaŭ eblas premi ¤Alt+dekstra sago¤ por fari tiel,\nw
+kaj vi povas uzi ¤Alt+maldekstra sago¤ por retrosalti unu paŝon tra la ĉeno, de\nw
+kie vi venis.

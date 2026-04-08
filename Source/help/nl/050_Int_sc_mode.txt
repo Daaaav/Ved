@@ -1,0 +1,95 @@
+Int.sc-modus
+
+Interne scripting-modus\wh#
+\C=
+
+Om interne scripting te gebruiken in Ved kun je interne scripting-modus
+inschakelen, om alle commando's in dat script te laten werken als interne
+commando's. Met deze functie hoef je je niet veel zorgen te maken om interne
+scripting aan de praat te krijgen; je hoeft geen ¤say¤-commando's te gebruiken,\nw
+regels te tellen, of ¤text(1,0,0,4)¤ of ¤text,,,,4¤ of waar je voorkeur ook naar uit\nwnw
+gaat te typen - je kunt gewoon interne scripts schrijven alsof ze bedoeld zijn
+voor het echte spel. Je hoeft niet eens te eindigen met een ¤loadscript¤-commando.\nw
+
+Ved ondersteunt verschillende methoden van interne scripting. Om hun technische
+verschillen te tonen gebruiken we het volgende voorbeeldscript:
+
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+
+Regels van dit interne script zijn ¤lichtgroen¤, regels die automatisch worden\nG
+toegevoegd en die nodig zijn om het script te laten werken zullen ¤grijs¤ zijn. Merk\ng
+op dat dit een beetje vereenvoudigd is; Ved voegt ¤#v¤ toe aan het einde van de\nw
+grijze regels in de voorbeelden om te zorgen dat handmatig geschreven scripts niet
+zomaar aangepast zullen worden, en ¤say¤-blokken die te groot zijn moeten worden\nw
+opgesplitst in kleinere stukjes.
+
+Kijk voor meer informatie over interne scripting naar de lijst met interne
+scriptcommando's.
+
+Laadscript-int.sc\h#
+
+De laadscript-methode is waarschijnlijk de meest gebruikte methode vandaag de dag.
+Het is de methode die Ved al ondersteunt sinds een alfa-versie.
+
+Dit heeft een extra script nodig, het laadscript, om het interne script te laden.
+Het laadscript zal, in de meest basale vorm, een commando bevatten zoals
+iftrinkets(0,jouwscript)¤, maar kan ook andere vereenvoudigde commando's bevatten,\w
+en je kunt ook ¤ifflag¤ gebruiken in plaats van ¤iftrinkets¤. Wat belangrijk is is dat\nwnw
+je interne script vanuit een ander script wordt geladen om het te laten werken.
+
+Het interne script zal min of meer als volgt geconverteerd worden:
+
+  squeak(off)\g
+  say(11)\g
+  cutscene()\G
+  untilbars()\G
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+  text(1,0,0,3)\g
+
+text(1,0,0,3)¤ moet de laatste regel zijn, of in de scriptbewerker van VVVVVV moet\w
+er precies één lege regel onder staan.
+
+Het is ook mogelijk om ¤squeak(off)¤ niet te gebruiken, en ¤text(1,0,0,4)¤ te\nwnw
+gebruiken in plaats van ¤text(1,0,0,3)¤. Met ¤squeak(off)¤ worden echter een paar\nwnw
+waardevolle regels bespaard in langere scripts.
+
+say(-1)-int.sc\h#
+
+De say(-1)-methode is ouder, en heeft een nadeel ten opzichte van de laadscript-
+methode: er zullen altijd cutscene-balken verschijnen. Maar het heeft ook een
+voordeel dat belangrijk kan zijn in levels met veel scripts: het heeft geen
+laadscript nodig. We kunnen ¤cutscene()¤ en ¤untilbars()¤ uit ons script weglaten,\nwnw
+omdat deze al worden toegevoegd door VVVVVV als je deze methode gebruikt.
+
+  squeak(off)\g
+  say(-1)\g
+  text(1,0,0,3)\g
+  say(9)\g
+  squeak(player)\G
+  text(cyan,0,0,1)\G
+  ...\G
+  position(player,above)\G
+  speak_active\G
+  endtext\G
+  endcutscene()\G
+  untilbars()\G
+  loadscript(stop)\g
+
+Deze methode is toegevoegd als een extra interne scripting-modus in Ved 1.6.0.

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<helpindex>
+	<page id="010_Getting_started"/>
+	<page id="020_Tile_placement_modes">
+		<img>images/demo_auto.png</img>
+		<img>images/demo_auto2.png</img>
+		<img>images/demo_manual.png</img>
+	</page>
+	<page id="030_Tools">
+		<img>images/tools/1.png</img>
+		<img>images/tools/2.png</img>
+		<img>images/tools/3.png</img>
+		<img>images/tools/4.png</img>
+		<img>images/tools/5.png</img>
+		<img>images/tools/6.png</img>
+		<img>images/tools/7.png</img>
+		<img>images/tools/8.png</img>
+		<img>images/tools/9.png</img>
+		<img>images/tools/10.png</img>
+		<img>images/tools/11.png</img>
+		<img>images/tools/12.png</img>
+		<img>images/tools/13.png</img>
+		<img>images/tools/14.png</img>
+		<img>images/tools/15.png</img>
+		<img>images/tools/16.png</img>
+		<img>images/tools/17.png</img>
+	</page>
+	<page id="040_Script_editor"/>
+	<page id="050_Int_sc_mode"/>
+	<page id="060_Shortcuts"/>
+	<page id="070_Simp_script_reference"/>
+	<page id="080_Int_script_reference"/>
+	<page id="090_Lists_reference"/>
+	<page id="100_Formatting"/>
+	<page id="990_Credits">
+		<img>images/credits.png</img>
+	</page>
+</helpindex>

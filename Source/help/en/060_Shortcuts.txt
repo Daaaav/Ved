@@ -1,0 +1,77 @@
+Shortcuts
+
+Editor shortcuts\wh#
+\C=
+
+Tip: you can hold ¤F9¤ anywhere within Ved to see many of the shortcuts.\nC
+
+Most shortcuts that can be used in VVVVVV can also be used in Ved.
+
+F1¤  Change tileset\C
+F2¤  Change color\C
+F3¤  Change enemies\C
+F4¤  Enemy bounds\C
+F5¤  Platform bounds\C
+
+F10¤  Manual/automatic mode (direct mode/undirect mode)\C
+
+W¤  Change warp direction\C
+E¤  Change roomname\C
+
+L¤  Load map\C
+S¤  Save map\C
+
+Z¤  3x3 brush (walls and backgrounds)\C
+X¤  5x5 brush (")\C
+
+< ¤and¤ >¤  change tool\CnC
+Ctrl/Cmd+< ¤and¤ Ctrl/Cmd+>¤  change subtool\CnC
+
+More shortcuts\h#
+
+Ved also introduces a few shortcuts.
+
+Main editor\gh#
+
+Ctrl+P¤  Jump to the room containing the startpoint\C
+Ctrl+S¤  Quicksave\C
+Ctrl+X¤  Cut room to the clipboard\C
+Ctrl+C¤  Copy room to the clipboard\C
+Ctrl+V¤  Paste room from clipboard (if valid)\C
+Ctrl+D¤  Compare this level to another level\C
+Ctrl+Z¤  Undo\C
+Ctrl+Y¤  Redo\C
+Ctrl+F¤  Search\C
+Ctrl+/¤  Level notepad\C
+Ctrl+F1¤  Help\C
+(NOTE: On Mac, replace Ctrl by Cmd)
+N¤  display all tile numbers\C
+J¤  display tile solidity\C
+;¤  display minimap tiles\C
+Shift+;¤  display background\C
+M¤ or ¤Keypad 5¤  Show map\CnC
+G¤  Go to room (type in coordinates as four digits)\C
+/¤  Scripts\C
+[¤  lock Y of mouse while held down (for drawing horizontal lines more easily)\C
+]¤  lock X of mouse while held down (for drawing vertical lines more easily)\C
+F11¤  reload tilesets and sprites\C
+
+Entities\gh#
+
+Shift+right click¤  Delete entity\C
+Alt+click¤          Move entity\C
+Alt+Shift+click¤    Copy entity\C
+
+Script editor\gh#
+
+Ctrl+F¤  Find\C
+Ctrl+G¤  Go to line\C
+Ctrl+I¤  Toggle internal scripting mode\C
+Alt+right¤  Jump to script in conditional command\C
+Alt+left¤  Jump one step back\C
+
+Script list\gh#
+
+N¤  Create new script\C
+F¤  Go to flags list\C
+/¤  Go to topmost/latest script\C

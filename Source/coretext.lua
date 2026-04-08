@@ -191,6 +191,32 @@ function loadlanginfo()
 	end)
 end
 
+local function loadhelpindex()
+	-- Loads helpindex.xml so LH is populated with everything
+	-- except subj and cont for each article
+	LH = {}
+	local contents = love.filesystem.read("help/helpindex.xml")
+	if contents == nil then
+		return
+	end
+	pcall(function()
+		local xml = vedxml.VedXML:new{string=contents, root="helpindex"}
+		for xpage in xml:each_child_element(nil, "page") do
+			local id = xml:get_attribute(xpage, "id")
+			local t = {
+				splitid = id,
+				subj = id,
+				imgs = {},
+				cont = ""
+			}
+			for ximg in xml:each_child_element(xpage, "img") do
+				table.insert(t.imgs, xml:get_text(ximg))
+			end
+			table.insert(LH, t)
+		end
+	end)
+end
+
 function unloadlanguage()
 	-- Prepare for language change
 	package.loaded["lang." .. s.lang] = false
@@ -216,6 +242,24 @@ function loadlanguage()
 		end
 		if not found then
 			ved_require("lang/en")
+		end
+	end
+
+	loadhelpindex()
+	for k,v in pairs(LH) do
+		local contents = love.filesystem.read("help/" .. s.lang .. "/" .. v.splitid .. ".txt")
+		if contents == nil then
+			contents = love.filesystem.read("help/en/" .. v.splitid .. ".txt")
+		end
+		if contents ~= nil then
+			contents = contents:gsub("\r", "")
+			local first_nn = contents:find("\n\n", 1, true)
+			if first_nn == nil then
+				LH[k].cont = contents
+			else
+				LH[k].subj = contents:sub(1, first_nn-1)
+				LH[k].cont = contents:sub(first_nn+2)
+			end
 		end
 	end
 

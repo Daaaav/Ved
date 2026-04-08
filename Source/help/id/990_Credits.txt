@@ -1,0 +1,76 @@
+Kredit
+
+\0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kredit\wh#
+\C=
+
+Ved dibuat oleh Dav999
+
+Kontributor kode lebih lanjut: Info Teddy
+
+Beberapa grafik dan font dibuat oleh Reese Rivers
+
+Terjemahan Rusia: CreepiX, Cheep, Omegaplex
+Terjemahan Esperanto: Reese Rivers
+Terjemahan Jerman: r00ster
+Terjemahan Perancis: RhenaudTheLukark
+Terjemahan Spanyol: Valso22/naether
+Terjemahan Indonesia: _march31onne/Marchionne Evangelisti
+
+
+Terima kasih khusus kepada:\h#
+
+
+Terry Cavanagh untuk membuat VVVVVV
+
+Setiap orang yang melaporkan bug, muncul dengan ide dan memotivasi saya
+untuk membuat ini!
+\
+\
+
+
+Lisensi\h#
+\
+Copyright 2015-2025  Dav999
+\
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+\
+1. Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or other
+materials provided with the distribution.
+\
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+Aset VVVVVV\h#
+
+Ved menyertakan beberapa aset grafis dari VVVVVV. VVVVVV dan asetnya adalah hak
+cipta Terry Cavanagh. Untuk informasi lebih lanjut tentang lisensi yang berlaku
+untuk VVVVVV dan asetnya, lihat ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/LICENSE.md¤LICENSE.md¤ dan ¤https://github.com/TerryCavanagh/VVVVVV/blob/master/License%20exceptions.md¤License exceptions.md¤ di dalam\nLClnLCl
+repositori ¤https://github.com/TerryCavanagh/VVVVVV¤GitHub VVVVVV¤ https://github.com/TerryCavanagh/VVVVVV¤.\nLClLCl

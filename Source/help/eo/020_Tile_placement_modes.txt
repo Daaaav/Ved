@@ -1,0 +1,28 @@
+Reĝimoj de kahel-metado
+
+Reĝimoj de kahel-metado\wh#
+\C=
+
+Ved subtenas tri malsamajn reĝimojn por meti kahelojn.
+
+     Aŭtomata reĝimo\h#0
+
+          Tiu ĉi estas la plej facile uzebla reĝimo. En tiu ĉi reĝimo, vi povas
+          meti murojn kaj fonojn, kaj la randoj aŭtomate ĝuste metiĝos. Tamen,
+          redaktante en tiu ĉi reĝimo, ĉiuj muroj kaj fonoj en la ĉambro devas
+          uzi la saman kahelaron kaj koloron.
+
+     Multkahelara reĝimo\h#1
+
+          Tiu ĉi similas al la aŭtomata, krom tio, ke vi povas havi multajn
+          malsamajn kahelarojn en la sama ĉambro. Tio estas, ke ŝanĝi la kahelaron
+          ne influos jame metitajn murojn kaj fonojn, kaj vi povas desegni per
+          multaj kahelaroj en la sama ĉambro.
+
+     Permana reĝimo\h#2
+
+          Alinome rekta reĝimo - en tiu ĉi reĝimo vi povas meti ian ajn
+          kahelon permane. Tiel vi ne devas uzi nur antaŭdifinitajn kombinojn
+          de kahelaroj, kaj randoj ne aŭtomate aldoniĝos al muroj, kio donas
+          tutan regon je la aspekto de la ĉambro. Tamen, ofte estas pli malrapide
+          uzi tiun ĉi reĝimon.

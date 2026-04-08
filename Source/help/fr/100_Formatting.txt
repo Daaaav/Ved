@@ -1,0 +1,264 @@
+Mise en forme
+
+Mise en forme\wh#
+\C=
+
+Dans les notes, vous pouvez utiliser des codes de mise en forme pour rendre
+votre texte plus grand, le colorer, et quelques autres choses. Pour ajouter de la
+mise en forme à une ligne, ajoutez un antislash (\) à la fin de celle-ci. Après\
+le \, vous pouvez ajouter n'importe quel nombre de caractères suivants, dans\
+n'importe quel ordre:
+
+h - Double la taille de la police\h
+
+# - Ancre. Vous pouvez sauter vers des ancres rapidement avec
+des ¤#Liens¤liens¤.\nLCl
+- - Ligne horizontale :
+\-
+= - Ligne horizontale sous un texte large
+
+Couleurs de texte :\h#
+
+n - Normal\n
+r - Rouge\r
+g - Gris\g
+w - Blanc\w
+b - Bleu\b
+o - Orange\o
+v - Vert\v
+c - Cyan\c
+y - Jaune\y
+p - Violet\p
+V - Vert foncé\V
+z - Noir¤ (couleur d'arrière-plan non incluse)\z&Z
+Z - Gris foncé\Z
+C - Cyan (Viridian)\C
+P - Rose (Violet)\P
+Y - Jaune (Vitellary)\Y
+R - Rouge (Vermilion)\R
+G - Vert (Verdigris)\G
+B - Bleu (Victoria)\B
+
+
+Exemple :\h#
+
+\-
+Large texte orange ("oh" a le même\ho\
+\
+résultat)\ho\
+\
+Large texte orange ("oh" a le même\ho
+\
+résultat)\ho
+
+\-
+Texte large souligné\wh\
+\r=\
+\
+Texte large souligné\wh
+\r=
+\-
+
+Utiliser plusieurs couleurs sur une ligne\h#
+
+Il est possible d'utiliser plusieurs couleurs sur une ligne en séparant les
+parties colorés avec le caractère¤ ¤¤ ¤(qui est normalement disponible en appuyant\nYn
+sur ¤Alt Gr + $¤), et ajoutez les codes couleurs dans l'ordre après¤ \¤. Si la\nwnC
+dernière couleur de la ligne est la couleur par défaut(n), il n'est pas nécessaire
+de l'ajouter à la fin. Si vous voulez utiliser le caractère¤ ¤¤ ¤sur une ligne\nY
+qui utilise¤ \¤, écrivez¤ ¤¤¤¤ ¤à la place. Pour des raisons techniques, il n'est p¤a§¤s\nCnYnR(
+possible de colorier un caractère simple en l'entourant avec deux¤ ¤¤§¤, à moins que\nY(
+vous n'incluez un espace ou un autre caractère.
+
+\-
+Vous pouvez ¤¤colorier¤¤ des ¤¤mots¤¤ spécifiques avec ça!\nrnv\
+\
+Vous pouvez ¤colorier¤ des ¤mots¤ spécifiques avec ça!\nrnv
+\-
+Quelques ¤¤cou¤¤leurs¤¤ de ¤¤tex¤¤te\RYGCBP\
+\
+Quelques ¤cou¤leurs¤ de ¤tex¤te\RYGCBP
+\-
+
+Colorier un seul caractère\h#
+
+D'accord, j'ai menti, il est possible de colorier un seul caractère sans ajouter
+un espace. Pour ce faire, ajoutez le caractère¤ § ¤(que vous pouvez entrer en\nY
+appuyant sur ¤Maj + !¤) après le caractère que vous voulez colorer, et activez\nC
+le avec le code de mise en forme¤ ( ¤après¤ \¤ :\nC
+
+\-
+Vous pouvez c¤¤o§¤¤lorer un ¤¤seul¤¤ caractère comme ça!\nrny(\
+\
+Vous pouvez c¤o§¤lorer un ¤seul¤ caractère comme ça!\nrny(
+\-
+
+Ceci n'est pas nécessaire si le caractère simple est le premier ou
+dernier de la ligne.
+
+Couleurs d'arrière-plan\h#
+
+Non seulement le texte peut être coloré, mais il peut être ¤mis en avant¤ avec\nZ&y
+n'importe quelle couleur de texte. Pour ce faire, vous pouvez mettre¤ & ¤après le\nY
+code couleur du texte normal, puis un code couleur pour l'arrière-plan. Cela peut
+être combiné avec le système de ¤ décrit plus tôt, veuillez noter que les couleurs
+de texte normales commencent le prochain "bloc", mais les couleurs d'arrière-plan
+ne le font pas. Les exemples suivants utilisent des espaces pour améliorer la
+lisibilité, mais c'est complètement optionnel. Vous pouvez utiliser le code¤ + ¤pour\nY
+étendre la (dernière) couleur d'arrière-plan jusqu'à la fin de la ligne.
+
+\-
+Texte noir sur arrière-plan blanc!\z&w\
+\
+Texte noir sur arrière-plan blanc!\z&w
+\-
+Texte noir sur arrière-plan blanc étendu!\z&w+\
+\
+Texte noir sur arrière-plan blanc étendu!\z&w+
+\-
+Rouge sur jaune¤¤, ¤¤Noir sur blanc¤¤ (les espaces optionnels augmentent la
+lisibilité)\r&y n z&w\
+\
+Rouge sur jaune¤, ¤Noir sur blanc¤ (les espaces optionnels augmentent la lisibilité)\r&y n z&w
+\-
+Ceci ¤¤marche¤¤ toujours pour colorer un s¤¤e§¤¤ul caractère\n P n n&r (\
+\
+Ceci ¤marche¤ toujours pour colorer un s¤e§¤ul caractère\n P n n&r (
+\-
+
+Si vous voulez, vous pouvez aussi créer des graphismes en utilisant les
+couleurs d'arrière-plan :
+
+\-
+ ¤¤        \n n&C\
+          \&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+   ¤¤  ¤¤  ¤¤  ¤¤ \&C n n&C n n&C\
+          \&C\
+          \&C\
+   ¤¤      ¤¤ \&C n n&C\
+    ¤¤    ¤¤  \&C n n&C\
+ ¤¤        \n n&C\
+   ¤¤    \n n&C\
+\
+ ¤        \n n&C
+          \&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+   ¤  ¤  ¤  ¤ \&C n n&C n n&C
+          \&C
+          \&C
+   ¤      ¤ \&C n n&C
+    ¤    ¤  \&C n n&C
+ ¤        \n n&C
+   ¤    \n n&C
+\-
+          \&o\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(\
+ ¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ §¤¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(\
+          \&o\
+\
+          \&o
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&z n&w n&z n&w n&z n&w n&z n&w n&o(
+ ¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ §¤ \&o n&w n&z n&w n&z n&w n&z n&w n&z n&o(
+          \&o
+\-
+
+Liens\h#
+
+Les liens ont deux utilités : lier autre part dans les articles/notes, ou lier
+vers un site Internet. Les liens utilisent le demi-couleur code¤ l¤. Ce code ne\nY
+change pas vers le prochain "bloc coloré" mais s'applique au bloc courant,
+contrairement aux codes couleurs normaux (pas d'arrière-plan). Il ne change pas
+non plus la couleur, donc vous pouvez changer le style du lien tel que vous le
+voulez.
+
+Vous pouvez lier à des articles en utilisant simplement le même
+nom que l'article :
+
+\-
+Outils\bl\
+\
+Outils\bl
+\-
+
+Cliquer sur "Outils" au-dessus vous renverra à la page d'aide sur les outils.
+J'ai ici utilisé le code couleur¤ b ¤pour rendre le lien bleu, et comme vous pouvez\nb
+le voir, le¤ l ¤s'applique sur la même partie colorée de ce texte.\nY
+
+Vous pouvez lier à des ancres dans le même article en liant à un¤ # ¤suivi de\nY
+tout le texte de cette ligne. (Les instances de¤ ¤¤ ¤sont complètement ignorées ici.)\nY
+Vous pouvez lier en haut de l'article juste avec un simple caractère dièse (¤#§¤).\nY(
+
+\-
+#Utiliser plusieurs couleurs sur une ligne\bl\
+\
+#Utiliser plusieurs couleurs sur une ligne\bl
+\-
+
+Vous pouvez lier à une ancre dans un article différent d'une façon
+similaire :
+
+\-
+Référence de listes#États de jeu\bl\
+\
+Référence de listes#États de jeu\bl
+\-
+
+Lier à des sites Internet est aussi simple :
+
+\-
+https://example.com/\bl\
+\
+https://example.com/\bl
+\-
+
+Vous pouvez utiliser un bloc de couleur ayant comme code couleur¤ L ¤qui contient\nY
+la vraie destination avec le texte du lien, et afficher un texte différent pour ce
+lien de cette façon :
+
+\-
+Outils¤¤Aller dans un autre article\Lbl\
+\
+Outils¤Aller dans un autre article\Lbl
+\-
+Cliquez ¤¤Outils¤¤ici¤¤ pour aller dans un autre article\nLbl\
+\
+Cliquez ¤Outils¤ici¤ pour aller dans un autre article\nLbl
+\-
+[¤¤#Liens¤¤Aimer¤¤] [¤¤#Exemple :¤¤Ne pas aimer¤¤]\n L vl n L rl\
+\
+[¤#Liens¤Aimer¤] [¤#Exemple :¤Ne pas aimer¤]\n L vl n L rl
+\-
+#Liens¤¤ Bouton A ¤¤ §¤¤#Liens¤¤ Bouton B \L w&Zl n L w&Z l(\
+\
+#Liens¤ Bouton A ¤ §¤#Liens¤ Bouton B \L w&Zl n L w&Z l(
+\-
+
+Images (seulement disponible dans la\h#
+\
+description des greffons) :\h
+
+0..9 - Affiche l'image 0..9 sur cette ligne (l'index de la table des images
+       commence à 0, et n'oubliez pas de garder des lignes vides pour vous
+       accommoder à la hauteur de l'image)
+^ - Mettez ceci avant le nombre de l'image pour augmenter le nombre de l'image
+    de 10. Donc ^4 donne l'image 14, ^^4 donne l'image 24, et 3^1^56 donne les
+    images 3, 11, 25 et 26.
+_ - Mettez ceci avant le nombre de l'image pour réduire le nombre de l'image
+    de 10.
+> - Mettez ceci avant le nombre de l'image pour décaler les prochaines images de
+    8 pixels vers la droite. Ceci peut être répété, ainsi 0>>>>1 met l'image 0 à
+    x = 0 et l'image 1 à x = 32.
+< - Pareil, mais décale les images vers la gauche.

@@ -1,0 +1,30 @@
+Modes de placement de tuiles
+
+Modes de placement de tuiles\wh#
+\C=
+
+Ved supporte trois modes différents pour placer des tuiles.
+
+     Mode automatique\h#0
+
+          Ce mode est le plus facile à utiliser. Dans ce mode, vous pouvez
+          ajouter des murs et arrière-plans et les bordures vont être placées
+          correctement. Cependant, en utilisant ce mode, tous les murs et
+          arrière-plans dans la salle doivent utiliser les mêmes couleurs et
+          jeux de tuiles.
+
+     Mode multi-jeu de tuiles\h#1
+
+          Très similaire au mode automatique, mis à part qu'il est possible
+          d'utiliser plusieurs jeux de tuiles dans la même salle. Cela veut dire
+          que changer un jeu de tuiles n'affectera pas les tuiles de mur et
+          d'arrière-plan déjà placées, et multiples types de tuiles peuvent être
+          ajoutés dans la même salle.
+
+     Mode manuel\h#2
+
+          Aussi appelé Mode Direct, dans ce mode vous pouvez placer n'importe
+          quel tuile manuellement, donc vous n'êtes pas limité par les différents
+          groupes dans les jeux de tuiles, et les bords ne seront pas ajoutés
+          automatiquement aux murs, vous donnant un contrôle complet sur l'aspect
+          de la salle. Cependant, ce mode d'édition est plus lent à utiliser.

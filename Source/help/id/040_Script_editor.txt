@@ -1,0 +1,37 @@
+Editor skrip
+
+Editor skrip\wh#
+\C=
+
+Dengan editor skrip, Anda dapat mengelola dan mengedit skrip di level Anda.
+
+
+Nama tanda\h#
+
+Untuk kenyamanan dan keterbacaan skrip, dimungkinkan untuk menggunakan nama
+tanda alih-alih angka. Saat Anda menggunakan nama alih-alih nomor, nomor akan
+secara otomatis dikaitkan dengan nama itu, di latar belakang. Dimungkinkan juga
+untuk memilih nomor mana yang akan digunakan untuk nama tanda.
+
+Mode skrip internal\h#
+
+Untuk menggunakan skrip internal di Ved, Anda dapat mengaktifkan mode skrip
+internal di editor, untuk menangani semua perintah dalam skrip itu sebagai skrip
+internal. Lihat ¤Mode sk.int¤ untuk informasi selengkapnya tentang mode skrip\nwl
+internal. Untuk informasi lebih lanjut tentang skrip internal, periksa referensi
+skrip internal.
+
+Memisahkan skrip\h#
+
+Dimungkinkan untuk membagi skrip menjadi dua skrip dengan editor skrip. Setelah
+meletakkan kursor teks pada baris pertama yang Anda inginkan di skrip baru,
+klik tombol Pisahkan dan masukkan nama skrip baru. Baris sebelum kursor akan tetap
+dalam skrip asli, baris dari kursor dan seterusnya akan dipindahkan ke skrip baru.
+
+Melompat ke skrip\h#
+
+Pada baris dengan perintah iftrinkets, ifflag, customiftrinkets atau customifflag,
+dimungkinkan untuk melompat ke skrip yang diberikan dengan mengklik tombol
+"Pergi ke" saat kursor berada di baris itu. Anda juga dapat menekan ¤Alt+kanan\nw
+untuk melakukan ini, dan Anda dapat menggunakan ¤Alt+kiri¤ untuk melompat mundur\nw
+satu langkah melalui rantai ke tempat asal Anda.

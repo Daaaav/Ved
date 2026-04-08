@@ -1,4 +1,4 @@
-#!/usr/bin/env lua
+#!/usr/bin/env luajit
 
 --[[
 	This loads a language file (from lang/), and displays all variables that are defined by it.

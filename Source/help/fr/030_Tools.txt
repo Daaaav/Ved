@@ -1,0 +1,129 @@
+Outils
+
+Outils\wh#
+\C=
+
+Vous pouvez utiliser ces différents outils pour remplir les salles de votre
+niveau :
+
+\0
+   Mur\h#
+
+
+L'outil de mur peut être utiliser pour placer des murs.
+
+\1
+   Arrière-plan\h#
+
+
+L'outil d'arrière-plan peut être utilisé pour placer des arrière-plans.
+
+\2
+   Pointes\h#
+
+
+L'outil de pointes peut être utiliser pour placer des pointes. Vous pouvez
+utiliser le sous-outil d'expansion pour placer des pointes sur un mur en un clic
+(ou glissement).
+
+\3
+   Médaille\h#
+
+
+L'outil de médaille peut être utiliser pour placer des médailles. Veuillez noter
+qu'il existe une limite de vingt médailles dans un niveau.
+
+\4
+   Point de sauvegarde\h#
+
+
+L'outil de point de sauvegarde peut être utilisé pour placer des points de
+sauvegarde.
+
+\5
+   Plateforme disparaissante\h#
+
+
+L'outil de plateforme disparaissante peut être utilisé pour places des plateformes
+disparaissantes.
+
+\6
+   Tapis roulant\h#
+
+
+L'outil de tapis roulant peut être utilisé pour placer des tapis roulants.
+
+\7
+   Plateforme mobile\h#
+
+
+L'outil de plateforme mobile peut être utilisé pour placer des plateformes
+mobiles.
+
+\8
+   Ennemi\h#
+
+
+L'outil d'ennemi permet de placer des ennemis. La forme et couleur de l'ennemi est
+déterminé respectivement par l'option de type d'ennemi et le jeu de tuiles
+(couleur).
+
+\9
+   Ligne de gravité\h#
+
+
+L'outil de ligne de gravité permet de placer des lignes de gravité.
+
+\^0
+   Texte de salle\h#
+
+
+L'outil de texte de salle permet de placer du texte.
+
+\^1
+   Terminal\h#
+
+
+L'outil de terminal permet de placer des terminaux. En premier, placer le
+terminal, ensuite entrer un nom pour son script. Pour plus d'informations sur la
+programmation de script, veuillez référer aux références de programmation de
+script.
+
+\^2
+   Boite de script\h#
+
+
+L'outil de boite de script permet de placer des boits de script. Tout d'abord
+cliquez sur le coin en haut à gauche, puis en bas à droite et enfin entrez le nom
+du script. Pour plus d'informations sur la programmation de script, veuillez
+référer aux références de programmation de script.
+
+\^3
+   Jeton de téléportation\h#
+
+
+L'outil de jeton de téléportation peut être utilisé pour placer des jetons de
+téléportation. Tout d'abord cliquez à l'endroit où l'entrée doit être, puis à
+l'endroit où la sortie doit être.
+
+\^4
+   Ligne de téléportation\h#
+
+
+L'outil de ligne de téléportation peut être utilisé pour placer des lignes de
+téléportation. Veuillez noter que les lignes de téléportation ne peuvent être
+placées que sur les bords d'une salle.
+
+\^5
+   Équipier\h#
+
+
+L'outil d'équipier peut être utilisé pour placer des équipiers disparus qui
+peuvent être secourus. Si tous les équipiers sont secourus, le niveau est terminé.
+Veuillez noter qu'il y a une limite de vingt équipiers dans un niveau.
+
+\^6
+   Point de départ\h#
+
+
+L'outil de point de départ peut être utilisé pour placer le point de départ.

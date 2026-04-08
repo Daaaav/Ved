@@ -1,0 +1,161 @@
+Simpla skriptado
+
+Manlibreto de simpla skriptado\wh#
+\C=
+
+La simpligita skriptlingvo de VVVVVV estas simpla lingvo uzebla por skripti nivelojn
+de VVVVVV.
+Notu: se io estas inter citiloj, ne tajpu la citilojn.
+
+
+say¤([linioj[,koloro]])\h#w
+
+Montras dialog-skatolon. Sen argumentoj, tio ĉi faros dialog-skatolon kun unu
+linio, kaj defaŭlte tio rezultos en centrigita terminala dialog-skatolo. La
+argumento de koloro povas esti koloro, aŭ nomo de skipano.
+Se vi uzas koloron kaj savebla skipano de tiu koloro estas en la ĉambro, la
+dialog-skatolo montriĝos do super tiu skipano.
+
+reply¤([linioj])\h#w
+
+Montras dialog-skatolon de Viridiano. Sen la linioj-argumento, tio ĉi faros
+dialog-skatolon kun unu linio.
+
+delay¤(n)\h#w
+
+Prokrastas pluan agadon ĝis n kadroj. 30 kadroj estas proksimume unu sekundo.
+
+happy¤([skipano])\h#w
+
+Feliĉigas skipanon. Sen argumento, tio ĉi feliĉigos Viridianon. Vi ankaŭ povas
+uzi "all", "everyone" aŭ "everybody" kiel argumenton por feliĉigi ĉiujn.
+
+sad¤([skipano])\h#w
+
+Malfeliĉigas skipanon. Sen argumento, tio ĉi malfeliĉigos Viridianon. Vi ankaŭ
+povas uzi "all", "everyone" aŭ "everybody" kiel argumenton por malfeliĉigi ĉiujn.
+
+Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\nwnw
+
+flag¤(flago,on/off)\h#w
+
+Ŝaltas aŭ malŝaltas la specifitan flagon. Ekzemple, flag(4,on) ŝaltos la flagon de
+numero 4. Estas 100 flagoj, numeritaj de 0 ĝis 99. Defaŭlte, ĉiuj flagoj estas
+malŝaltitaj kiam vi komencas ludi nivelon.
+Notu: En Ved, vi povas ankaŭ uzi flagnomojn anstataŭe de la numeroj.
+
+ifflag¤(flago,skriptnomo)\h#w
+
+Se la specifita flago estas ŜALTA, saltu al la skripto kun la nomo skriptnomo.
+Se ĝi estas MALŜALTA, daŭru en la nuntempa skripto.
+Ekzemplo:
+ifflag(20,cutscene) - Se flago 20 estas ŜALTA, saltu al skripto "cutscene",
+                      alie daŭru en la nuntempa skripto.
+Notu: En Ved, vi povas ankaŭ uzi flagnomojn anstataŭe de la numeroj.
+
+iftrinkets¤(nombro,skriptnomo)\h#w
+
+Se via kvanto da kolektaĵoj >= nombro, saltu al la skripto kun la nomo
+skriptnomo. Se ĝi estas < nombro, daŭru en la nuntempa skripto.
+Ekzemplo:
+iftrinkets(3,enoughtrinkets) - Se vi havas 3 aŭ pli da kolektaĵoj, la skripto
+"enoughtrinkets" ruliĝos, alie la nuntempa skripto daŭros.
+En praktiko, estas kutime uzi 0 por la nombro se vi volas ŝargi skripton en ĉiu
+okazo.
+
+iftrinketsless¤(nombro,skriptnomo)\h#w
+
+Se via kvanto da kolektaĵoj < nombro, saltu al la skripto kun la nomo
+skriptnomo. Se ĝi estas >= nombro, daŭru en la nuntempa skripto.
+
+destroy¤(forigotaĵo)\h#w
+
+Remove all objects of the given type, until you re-enter the room.
+
+Valid arguments can be:
+warptokens - Warp tokens
+gravitylines - Gravity lines
+platforms - Doesn't work properly
+moving - Moving platforms (added in 2.4)
+disappear - Disappearing platforms (added in 2.4)
+
+music¤(numero)\h#w
+
+Ŝanĝas la muzikon al iu numero de muzikaĵo.
+Por la listo de muzikaĵaj numeroj, legu la artikolon "Manlibreto de listoj".
+
+playremix\h#w
+
+Ludas la remiksaĵon de Predestined Fate kiel muzikon.
+
+flash\h#w
+
+Blankigas kaj skuas la ekranon dum momento, ludante ekbruan sonon.
+
+map¤(on/off)\h#w
+
+Ŝaltas aŭ malŝaltas la mapon. Se vi malŝaltas ĝin, ĝi montros "SENSIGNALE" ĝis
+kiam vi reŝaltas ĝin. Ĉambroj ankoraŭ malkovriĝos dum la mapo estas malŝaltita
+por esti videblaj kiam ĝi estas reŝaltita.
+
+squeak(skipano/on/off)\h#w
+
+Pepigas skipanon, aŭ (mal)ŝaltas la pep-sonon de kiam dialog-skatolo montriĝas.
+
+speaker¤(koloro)\h#w
+
+Ŝanĝas la koloron kaj pozicion de la sekvantaj dialog-skatoloj kreitaj per la
+komando "say". Tio ĉi uzeblas anstataŭ doni duan argumenton al "say".
+
+warpdir¤(x,y,dir)\w#h
+
+Ŝanĝas la ĉirkaŭfluan direkton por ĉambro x,y, 1-indice, al la specifita direkto.
+Tio estas kontrolebla per ifwarp, rezultante en relative potenca sistemo plua de
+flagoj/variabloj.
+
+x - Ĉambra x-koordinato, ekde 1
+y - Ĉambra y-koordinato, ekde 1
+dir - La ĉirkaŭflua direkto. Normale 0-3, sed ankaŭ ellimaj valutoj akceptiĝas
+
+ifwarp¤(x,y,dir,skripto)\w#h
+
+Se la warpdir por ĉambro x,y (1-indice) estas agordita al dir, iru al (simpligita)
+skripto
+
+x - Ĉambra x-koordinato, ekde 1
+y - Ĉambra y-koordinato, ekde 1
+dir - La ĉirkaŭflua direkto. Normale 0-3, sed ankaŭ ellimaj valutoj akceptiĝas
+
+loadtext¤(language)\w#h
+
+Load a translation for the level by language code. Use an empty value to use
+VVVVVV's language again.
+
+language - A language code, like fr or pt_BR
+
+iflang¤(language,script)\w#h
+
+If VVVVVV's language is set to the given language, go to a script. This is not
+affected by the language code you pass to loadtext(), only by what language the
+user has selected in the menu.
+
+setfont¤(font)\w#h
+
+Change the font used for text in the level. This can be a font supplied with the
+game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
+to revert to the default font for the level.
+
+setrtl¤(on/off)\w#h
+
+In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
+default, the font is not RTL (it is LTR).
+
+RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+
+textcase¤(case)\w#h
+
+If your level has translation files, and you have multiple text boxes with the
+same text in a single script, this command can make them have unique translations.
+Place it before a textbox.
+
+case - A number between 1 and 255

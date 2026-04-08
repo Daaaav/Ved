@@ -1,0 +1,122 @@
+Herramientas
+
+Herramientas\wh#
+\C=
+
+Puedes usar estas herramientas para llenar habitaciónes en tu nivel:
+
+\0
+   Pared\h#
+
+
+La herramienta de pared se usa para poner paredes.
+
+\1
+   Fondo\h#
+
+
+La herramienta de fondo se usa para poner fondos.
+
+\2
+   Espina\h#
+
+
+La herramienta de espina se usa para poner espinas. Puedes usar la subherramienta
+de expander para poner espinas en una superficie en un click (o tambien deslizar).
+
+\3
+   Trinket\h#
+
+
+La herramienta de trinket se usa para poner trinkets. Porfavor note que hay un
+limite de veinte trinkets en un nivel.
+
+\4
+   Checkpoint\h#
+
+
+La herramienta de checkpoint se usa para poner checkpoints.
+
+\5
+   Plataforma desvaneciente\h#
+
+
+La herramienta de plataforma desvaneciente se usa para poner plataformas
+que desaparecen.
+
+\6
+   Transportador\h#
+
+
+La herramienta de transportador se usa para poner transportadores.
+
+\7
+   Plataforma moviendose\h#
+
+
+La herramienda de plataforma moviendose se usa para poner plataformas que se
+mueven.
+
+\8
+   Enemigo\h#
+
+
+La herramienta de enemigos se usa para poner enemigos. El color y forma del
+enemigo es determinado por el tipo de enemigo y el color del set respectivamente.
+
+\9
+   Linea de gravedad\h#
+
+
+La herramienta de linea de gravedad se usa para poner lineas de gravedad.
+
+\^0
+   Texto de habitacion\h#
+
+
+La herramienta de texto de habitación se usa para poner texto.
+
+\^1
+   Terminal\h#
+
+
+La herramienta de terminal se usa para poner terminales. Primero pon la
+terminal, luego pon un nombre para el script. Para mas información sobre scripts,
+porfavor referir a las referencias de scripts.
+
+\^2
+   Caja de script\h#
+
+
+La herramienta de caja de scripts se usa para poner cajas de scripts. Primero
+haz click en el borde superior izquierdo, luego en el borde inferior derecho,
+luego escribe un nombre para el script. Para mas información sobre scripts,
+porfavor referir a las referancias de scripts.
+
+\^3
+   Token de warp\h#
+
+
+La herramienta del token de warp se usa para poner tokens de warp. Primero
+haz click donde la entrada deberia estar, luego donde la salida deberia estar.
+
+\^4
+   Linea de warp\h#
+
+
+La herramienta de linea de warp se usa para poner lineas de warp. Porfavor note
+que las lineas de warp solo se pueden poner en los bordes de una habitación.
+
+\^5
+   Compañero\h#
+
+
+La herramienta de compañeros se usa para poner compañeros desaparecidos que
+pueden ser rescatados. Si todos los compañeros son rescatados, el nivel terminara.
+Porfavor note que hay un limite de veinte compañeros desaparecidos en un nivel.
+
+\^6
+   Punto de comienzo\h#
+
+
+La herramienta de punto de comienzo se usa para poner el punto de comienzo.
