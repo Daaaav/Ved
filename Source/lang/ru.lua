@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2026-04-08 04:26:24 (CEST)
+--- Last converted: 2026-04-11 00:49:30 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -15,14 +15,14 @@ function lang_plurals(n) return (n%10==1 and n%100~=11 and 0 or n%10>=2 and n%10
 
 L = {
 
-TRANSLATIONCREDIT = "Перевод сделан CreepiX'ом, cheep the peanut'ом и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
+TRANSLATIONCREDIT = "Переведено CreepiX'ом, cheep the peanut'ом и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
 OUTDATEDLOVE = "Ваша версия LÖVE устарела. Пожалуйста, используйте версию 0.9.1 или выше.\nЗагрузите LÖVE на https://love2d.org/.",
 OUTDATEDLOVE090 = "Ved больше не поддерживает LÖVE 0.9.0. К счастью, LÖVE 0.9.1 и выше будут работать.\nВы можете скачать последнюю версию LÖVE с https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Ваша ОС ($1) не опознана! Идёт возврат к первичным настройкам файловой системы; ваши уровни находятся в:\n\n$2",
-MAXTRINKETS = "Было достигнуто максимальное количество штуковин ($1).",
-MAXCREWMATES = "Было достигнуто максимальное количество членов экипажа ($1).",
+MAXTRINKETS = "Достигнуто максимальное количество штуковин ($1).",
+MAXCREWMATES = "Достигнуто максимальное количество членов экипажа ($1).",
 UNSUPPORTEDTOOL = "Неподдерживаемый инструмент! Инструмент: ",
 COULDNOTGETCONTENTSLEVELFOLDER = "Папка с уровнями не найдена. Пожалуйста, убедитесь что $1 существует и попробуйте снова.",
 MAPSAVEDAS = "Снимок карты $1 сохранён!",
@@ -110,8 +110,8 @@ INTERNALON = "Вн. скриптинг включён",
 INTERNALOFF = "Вн. скриптинг отключён",
 INTERNALON_LONG = "Режим внутреннего скриптинга включён",
 INTERNALOFF_LONG = "Режим внутреннего скриптинга отключён",
-INTERNALYESBARS = "Вн. скрипт с say(-1)",
-INTERNALNOBARS = "Вн. скрипт с загруз. скр.",
+INTERNALYESBARS = "Внутр. скрипт через say(-1)",
+INTERNALNOBARS = "Внутр. скрипт ч. loadscript",
 VIEW = "Просмотр",
 SYNTAXHLOFF = "Подсветка включена",
 SYNTAXHLON = "Подсветка отключена",

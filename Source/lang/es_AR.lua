@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2026-04-08 04:26:23 (CEST)
+--- Last converted: 2026-04-11 00:49:30 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -278,7 +278,7 @@ CUSTOMVVVVVVDIRECTORY_NOTSET = "No tienes un directorio de VVVVVV personalizado.
 CUSTOMVVVVVVDIRECTORY_SET = "Su directorio de VVVVVV es un camino personalizado:\n$1\n\n",
 LANGUAGE = "Idioma",
 DIALOGANIMATIONS = "Animaciones de dialogo",
-FLIPSUBTOOLSCROLL = "Voltear direccion de desplazo de subherramienta",
+FLIPSUBTOOLSCROLL = "Voltear direccion de desplazo de herramienta",
 ADJACENTROOMLINES = "Indicadores de teja en habitaciones adjuntas",
 NEVERASKBEFOREQUIT = "Nunca preguntar antes de salir, hasta si hay cambios sin guardar",
 COORDS0 = "Mostrar coordenadas comenzando en 0 (como en scripting interno)",

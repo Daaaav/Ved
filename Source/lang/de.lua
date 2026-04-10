@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2026-04-08 04:26:25 (CEST)
+--- Last converted: 2026-04-11 00:49:31 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -548,7 +548,7 @@ DUPLICATELINE = "Linie duplizieren",
 
 WHEREPLACEPLAYER = "Wo willst du starten?",
 YOUAREPLAYTESTING = "Du Spieltestest momentan",
-LOCATEVVVVVV = "Wähle dein $1 Program aus", -- application (example: Select your VVVVVV executable)
+LOCATEVVVVVV = "Wähle dein $1-Programm aus", -- application (example: Select your VVVVVV executable)
 ALREADYPLAYTESTING = "Du Spieltestest schon!",
 PLAYTESTINGFAILED = "Etwas ist schief gelaufen beim Öffnen von VVVVVV:\n$1\n\nWenn du die ausführbare Datei die zum Spieltest für VVVVVV genutzt wird ändern musst, halte Shift während du den Spieltest-Knopf drückst.",
 VVVVVV_EXITCODE_FAILURE = "VVVVVVV hat sich mit Code $1 beendet", -- for example, code 1, indicating failure
