@@ -8,65 +8,15 @@ end
 function love.load()
 	create_fallback_window()
 
-	loadfonts_main()
+	love.graphics.setFont(love.graphics.newFont(20))
 
-	-- We want to get the strings from every language!
-	loadlanginfo()
-
-	-- They should be ordered in alphabetical order... While we're at it, put English first
-	langs = {}
-	for lang,info in pairs(langinfo) do
-		if lang ~= "en" then
-			table.insert(langs, lang)
-		end
-	end
-	table.sort(langs)
-	table.insert(langs, 1, "en")
-
-	messages = {}
-
-	local langkey
-	if not love_version_meets(9) then
-		langkey = "OUTDATEDLOVE"
-	else
-		langkey = "OUTDATEDLOVE090"
-	end
-
-	local y = 20
-	for k,lang in pairs(langs) do
-		require("lang/" .. lang)
-
-		local font = fonts_main[langinfo[lang].font]
-		if font == nil then
-			font = font_8x8
-		end
-
-		local text = L[langkey]
-
-		table.insert(messages, {
-				font = font,
-				text = text,
-				y = y
-			}
-		)
-
-		local _, lines = font:getWrap(text, love.graphics.getWidth()-20)
-		y = y + (lines * font:getHeight()) + 20
-	end
+	message = "Your version of LOVE (" .. love_ver_human() .. ") is outdated.\nPlease use version 0.9.1 or higher.\n\nYou can download the latest version of LOVE from:\nhttps://love2d.org/"
 end
 
 function love.draw()
-	for k,font in pairs(fonts_main) do
-		font:frame_start()
-	end
+	love.graphics.setColor(64,64,64)
+	love.graphics.rectangle("fill", 40, 140, love.graphics.getWidth()-80, 200)
+	love.graphics.setColor(255,255,255)
 
-	for k,v in pairs(messages) do
-		v.font:printf(v.text, 10, v.y, love.graphics.getWidth()-20, "center")
-	end
-
-	font_8x8:print(
-		"Ved version: " .. ved_ver_human() .. "\n"
-		.. "LÖVE version: " .. love_ver_human(),
-		8, love.graphics.getHeight()-21
-	)
+	love.graphics.printf(message, 10, 180, love.graphics.getWidth()-20, "center")
 end

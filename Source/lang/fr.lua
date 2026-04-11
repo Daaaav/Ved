@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: fr (fr)
---- Last converted: 2026-04-11 00:49:31 (CEST)
+--- Last converted: 2026-04-11 03:53:20 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n > 1) end
 L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Votre version de LÖVE est obsolète. Veuillez utiliser la version 0.9.1 ou ultérieure.\nVous pouvez télécharger la dernière version de LÖVE sur le site https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ne supporte plus LÖVE 0.9.0. Cependant, LÖVE 0.9.1 et toute version ultérieure seront supportées.\nVous pouvez télécharger la dernière version de LÖVE sur https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Votre système d'exploitation ($1) n'est pas reconnu! Utilisation des valeurs par défaut des fonctions du système de fichiers; les niveaux sont stockés dans:\n\n$2",
 MAXTRINKETS = "Le nombre maximum de médailles ($1) a été atteint dans ce niveau.",

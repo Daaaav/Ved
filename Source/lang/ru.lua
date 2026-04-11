@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ru (ru)
---- Last converted: 2026-04-11 00:49:30 (CEST)
+--- Last converted: 2026-04-11 03:53:20 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n%10==1 and n%100~=11 and 0 or n%10>=2 and n%10
 L = {
 
 TRANSLATIONCREDIT = "Переведено CreepiX'ом, cheep the peanut'ом и Omegaplex'ом", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Ваша версия LÖVE устарела. Пожалуйста, используйте версию 0.9.1 или выше.\nЗагрузите LÖVE на https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved больше не поддерживает LÖVE 0.9.0. К счастью, LÖVE 0.9.1 и выше будут работать.\nВы можете скачать последнюю версию LÖVE с https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Ваша ОС ($1) не опознана! Идёт возврат к первичным настройкам файловой системы; ваши уровни находятся в:\n\n$2",
 MAXTRINKETS = "Достигнуто максимальное количество штуковин ($1).",

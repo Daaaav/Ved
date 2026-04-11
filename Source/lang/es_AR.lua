@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: es_AR (es_AR)
---- Last converted: 2026-04-11 00:49:30 (CEST)
+--- Last converted: 2026-04-11 03:53:20 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n ~= 1) end
 L = {
 
 TRANSLATIONCREDIT = "Traduccion por Valso22 (XxTheProTx9999Xx, naether)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Su versión de LÖVE esta obsoleta. Porfavor use versión 0.9.1 o mejor.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ahora no soporta LÖVE 0.9.0. Con suerte, LÖVE 0.9.1 y mejores seguiran funcionando.\nPuedes descargar la versión mas reciente de LÖVE desde https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Su sistema operativo ($1) no es reconocido! De nuevo a las funciones filesystem por defecto; los niveles se guardan en:\n\n$2",
 MAXTRINKETS = "La cantidad maxima de trinkets ($1) ha sido alcanzada en este nivel.",

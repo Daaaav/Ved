@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: ar (ar)
---- Last converted: 2026-04-11 00:49:31 (CEST)
+--- Last converted: 2026-04-11 03:53:20 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return n==0 and 0 or n==1 and 1 or n==2 and 2 or n%100>
 L = {
 
 TRANSLATIONCREDIT = "Arabic localization by Eternal Dream Arabization", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "إصدارك من LÖVE قديم. يرجى استخدام الإصدار 0.9.1 أو أحدث.\nيمكنك تحميل آخر إصدار من LÖVE على موقع https://love2d.org/.",
-OUTDATEDLOVE090 = "المحرر Ved لم يعد يدعم LÖVE 0.9.0، لكن لحسن الحظ أن LÖVE 0.9.1 والإصدارات الأحدث ستظل تعمل.\nيمكنك تحميل آخر إصدار من LÖVE على موقع https://love2d.org/.",
 
 OSNOTRECOGNIZED = "لم نتعرف على نظام تشغيلك ($1)! سنعود للدوال الأصلية لأنظمة الملفات. المستويات مخزنة تحت: \n\n$2",
 MAXTRINKETS = "بلغت العدد الأقصى من المقتنيات ($1) في هذا المستوى.",

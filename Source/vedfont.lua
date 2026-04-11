@@ -1,39 +1,14 @@
 U_200E = "\xE2\x80\x8E" -- Left-to-right mark (U+200E)
 
-local ffi_success, ffi = pcall(require, "ffi")
-if not ffi_success then
-	-- Just so we can still render text on the "your LÖVE is old" screen. It's fast enough anyway
-	ffi = {}
+local ffi = require("ffi")
 
-	function ffi.new(ct, nelem)
-		local arr = {}
-		for i = 0, nelem-1 do
-			arr[i] = 0
-		end
-		return arr
-	end
-
-	function ffi.cast(ct, init)
-		local arr = {}
-		local i = 0
-		for c in tostring(init):gmatch(".") do
-			arr[i] = string.byte(c)
-			i = i + 1
-		end
-		arr[i] = 0
-		return arr
-	end
-end
+ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
 
 local bidi_layout_n = 2048
-local bidi_layout
+local bidi_layout = ffi.new("VisualLayoutGlyph[?]", bidi_layout_n)
 
 local bidi
 function init_font_libraries()
-	if not ffi_success then
-		return
-	end
-
 	if love.system.getOS() == "Windows" then
 		bidi = load_library(ffi, "vedlib_bidi_win00." .. ffi.arch .. ".dll")
 	elseif love.system.getOS() == "Linux" then
@@ -42,13 +17,9 @@ function init_font_libraries()
 		bidi = load_library(ffi, "vedlib_bidi_mac00.so")
 	end
 
-	ffi.cdef((love.filesystem.read("libs/vedlib_bidi.h")))
-
 	if bidi ~= nil then
 		bidi.bidi_init()
 	end
-
-	bidi_layout = ffi.new("VisualLayoutGlyph[?]", bidi_layout_n)
 end
 
 function cleanup_font_libraries()
@@ -210,7 +181,7 @@ function cVedFont:init(imgdata, txt, fontmeta, imgdata_fallback, txt_fallback, f
 		need_paste = true
 	end
 
-	if not love_version_meets(8) or not love.graphics.isSupported("npot") then
+	if not love.graphics.isSupported("npot") then
 		target_w = math.pow(2, math.ceil(math.log(target_w)/math.log(2)))
 		target_h = math.pow(2, math.ceil(math.log(target_h)/math.log(2)))
 		need_paste = true
@@ -606,11 +577,7 @@ function cVedFont:buf_print(x, y, cjk_align, sx, sy, max_width, align, offset)
 					offsety = offsety + math.floor((self.glyph_h - self.fallback_glyph_h) / 2)
 				end
 
-				if love_version_meets(9) then
-					batch.spritebatch:add(glyph.quad, cur_x+offsetx, offsety)
-				else
-					batch.spritebatch:addq(glyph.quad, cur_x+offsetx, offsety)
-				end
+				batch.spritebatch:add(glyph.quad, cur_x+offsetx, offsety)
 
 				if glyph.color then
 					spritebatch_set_color(batch.spritebatch, global_r, global_g, global_b, global_a)

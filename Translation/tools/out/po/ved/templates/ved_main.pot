@@ -4,14 +4,6 @@ msgctxt "L.TRANSLATIONCREDIT"
 msgid "<empty>"
 msgstr ""
 
-msgctxt "L.OUTDATEDLOVE"
-msgid "Your version of LÖVE is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of LÖVE from https://love2d.org/."
-msgstr ""
-
-msgctxt "L.OUTDATEDLOVE090"
-msgid "Ved no longer supports LÖVE 0.9.0. Luckily, LÖVE 0.9.1 and up will keep working.\nYou can download the latest version of LÖVE from https://love2d.org/."
-msgstr ""
-
 msgctxt "L.OSNOTRECOGNIZED"
 msgid "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2"
 msgstr ""

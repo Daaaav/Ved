@@ -17,9 +17,6 @@ L = {
 
 TRANSLATIONCREDIT = "<L.TRANSLATIONCREDIT>", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "<L.OUTDATEDLOVE>",
-OUTDATEDLOVE090 = "<L.OUTDATEDLOVE090>",
-
 OSNOTRECOGNIZED = "<L.OSNOTRECOGNIZED>",
 MAXTRINKETS = "<L.MAXTRINKETS>",
 MAXCREWMATES = "<L.MAXCREWMATES>",

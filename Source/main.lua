@@ -1,5 +1,4 @@
 require("corefunc")
-require("coretext")
 
 if love_version_meets(10) then
 	love.window.setDisplaySleepEnabled(true)
@@ -110,6 +109,9 @@ print("")
 if not love_version_meets(9,1) then
 	require("incompatmain")
 else
+	utf8 = require("utf8lib_wrapper")
+	require("coretext")
+
 	-- How recent is our love2d version?
 	if love_version_meets(10) then
 		require("love10compat")

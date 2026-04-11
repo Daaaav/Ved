@@ -17,9 +17,6 @@ L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
 
-OUTDATEDLOVE = "Your version of LÖVE is outdated. Please use version 0.9.1 or higher.\nYou can download the latest version of LÖVE from https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved no longer supports LÖVE 0.9.0. Luckily, LÖVE 0.9.1 and up will keep working.\nYou can download the latest version of LÖVE from https://love2d.org/.",
-
 OSNOTRECOGNIZED = "Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n\n$2",
 MAXTRINKETS = "The maximum amount of trinkets ($1) has been reached in this level.",
 MAXCREWMATES = "The maximum amount of crewmates ($1) has been reached in this level.",

@@ -116,7 +116,7 @@ function self:load_theme(name)
 	end
 
 	-- NOW: is there a theme.lua file? if so, load it.
-	if love.filesystem.getInfo("themes/" .. name .. "/theme.lua") then
+	if love.filesystem.exists("themes/" .. name .. "/theme.lua") then
 		local chunk = love.filesystem.load("themes/" .. name .. "/theme.lua")
 		if chunk then
 			local env = {}

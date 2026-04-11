@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: nl (nl)
---- Last converted: 2026-04-11 00:49:32 (CEST)
+--- Last converted: 2026-04-11 03:53:21 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n ~= 1) end
 L = {
 
 TRANSLATIONCREDIT = "", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Deze versie van LÖVE is verouderd. De minimale versie is 0.9.1.\nJe kunt de laatste versie van LÖVE downloaden op https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ondersteunt LÖVE 0.9.0 niet meer. Gelukkig blijft LÖVE 0.9.1 en hoger werken.\nJe kunt de laatste versie van LÖVE downloaden op https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n\n$2",
 MAXTRINKETS = "Het maximum aantal artefacten ($1) is bereikt in dit level.",

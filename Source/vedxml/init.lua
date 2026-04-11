@@ -1,4 +1,73 @@
-local ffi = require("ffi")
+local default_capacity, alloc_tokens, extend_tokens, clear_token
+
+local ffi_success, ffi = pcall(require, "ffi")
+if ffi_success then
+	default_capacity = 100000
+
+	ffi.cdef([[
+		typedef struct _token_list_item
+		{
+			uint32_t start;
+			uint32_t length;
+			uint8_t type;
+			uint8_t newlines_before;
+			bool is_patched;
+			uint32_t spouse;
+			uint32_t parent;
+			uint32_t next;
+			uint32_t prev;
+		} token_list_item;
+	]])
+	local sizeof_item = ffi.sizeof("token_list_item")
+
+	function clear_token(o, i)
+		ffi.fill(o.token_list[i], sizeof_item)
+	end
+
+	function alloc_tokens(o, capacity)
+		o.token_capacity = capacity
+		o.token_list = ffi.new("token_list_item[?]", capacity)
+	end
+
+	function extend_tokens(o, new_capacity)
+		o.token_capacity = new_capacity
+		local new_token_list = alloc_tokens(new_capacity)
+		ffi.copy(new_token_list, o.token_list, ffi.sizeof(o.token_list))
+		o.token_list = new_token_list
+	end
+else
+	-- FFI not available
+	default_capacity = 10
+
+	function clear_token(o, i)
+		o.token_list[i] = {
+			start = 0,
+			length = 0,
+			type = 0,
+			newlines_before = 0,
+			is_patched = false,
+			spouse = 0,
+			parent = 0,
+			next = 0,
+			prev = 0,
+		}
+	end
+
+	function alloc_tokens(o, capacity)
+		o.token_capacity = capacity
+		o.token_list = {}
+		for i = 0, capacity-1 do
+			clear_token(o, i)
+		end
+	end
+
+	function extend_tokens(o, new_capacity)
+		for i = o.token_capacity, new_capacity-1 do
+			clear_token(o, i)
+		end
+		o.token_capacity = new_capacity
+	end
+end
 
 local utf8 = utf8
 if utf8 == nil then
@@ -23,20 +92,6 @@ local VedXMLDefault = {
 	space_before_selfclosing = false,
 }
 
-ffi.cdef([[
-	typedef struct _token_list_item
-	{
-		uint32_t start;
-		uint32_t length;
-		uint8_t type;
-		uint8_t newlines_before;
-		bool is_patched;
-		uint32_t spouse;
-		uint32_t parent;
-		uint32_t next;
-		uint32_t prev;
-	} token_list_item;
-]])
 
 local CH = {
 	SP = string.byte(" "),
@@ -187,8 +242,7 @@ function VedXML:new(o)
 		o.string_cursor = 4
 	end
 
-	o.token_list = ffi.new("token_list_item[100000]")
-	o.token_capacity = 100000
+	alloc_tokens(o, default_capacity)
 	o.token_list[0].type = TOKEN_TYPE.FILE_START
 
 	-- The XML declaration shouldn't be tokenized, and it's in a pretty rigid order...
@@ -729,11 +783,8 @@ function VedXML:ll_insert(cur)
 		new_row = new_row + 1
 		if new_row >= self.token_capacity then
 			-- Double the capacity
-			self.token_capacity = self.token_capacity * 2
+			extend_tokens(self, self.token_capacity * 2)
 			--print("Doubling the capacity to " .. self.token_capacity)
-			local new_token_list = ffi.new("token_list_item[?]", self.token_capacity)
-			ffi.copy(new_token_list, self.token_list, ffi.sizeof(self.token_list))
-			self.token_list = new_token_list
 			break
 		end
 	end
@@ -777,7 +828,7 @@ function VedXML:ll_unlink(cur, till)
 			self.patches[cur] = nil
 		end
 
-		ffi.fill(self.token_list[cur], ffi.sizeof("token_list_item"))
+		clear_token(self, cur)
 	end
 
 	self.token_list[prev].next = till
@@ -2117,9 +2168,8 @@ function VedXML:clear_open(cur)
 		self.string_cursor_col = 1
 		self.at_eof = false
 		self.any_cr = false
-		local sizeof_item = ffi.sizeof("token_list_item")
 		for t = 0, self.last_token do
-			ffi.fill(self.token_list[t], sizeof_item)
+			clear_token(self, t)
 		end
 		self.token_list[0].type = TOKEN_TYPE.FILE_START
 		self.last_token = 0

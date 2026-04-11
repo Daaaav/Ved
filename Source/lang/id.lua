@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: id (id)
---- Last converted: 2026-04-11 00:49:30 (CEST)
+--- Last converted: 2026-04-11 03:53:20 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return 0 end
 L = {
 
 TRANSLATIONCREDIT = "Terjemahan dibuat oleh _march31onne (Marchionne Evangelisti)", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Versi LÖVE Anda sudah usang. Silakan gunakan versi 0.9.1 atau lebih tinggi.\nAnda dapat mengunduh LÖVE versi terbaru dari https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved tidak lagi mendukung LÖVE 0.9.0. Untungnya, LÖVE 0.9.1 dan yang lebih baru akan tetap berfungsi.\nAnda dapat mengunduh versi terbaru LÖVE dari https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Sistem operasi Anda ($1) tidak dikenali! Kembali ke fungsi sistem file default; level disimpan di:\n\n$2",
 MAXTRINKETS = "Jumlah maksimum trinket ($1) telah tercapai di level ini.",

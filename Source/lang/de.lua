@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: de (de)
---- Last converted: 2026-04-11 00:49:31 (CEST)
+--- Last converted: 2026-04-11 03:53:21 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n ~= 1) end
 L = {
 
 TRANSLATIONCREDIT = "Möchtest du bei der Übersetzung auf Deutsch helfen? Bitte nimm Kontakt mit Dav999 auf!", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Deine LÖVE-Version ist veraltet. Bitte benutze Version 0.9.1 oder höher.\nDu kannst die neuste LÖVE-Version von https://love2d.org downloaden.",
-OUTDATEDLOVE090 = "LÖVE 0.9.0 wird von Ved nicht mehr unterstützt. Glücklicherweise werden LÖVE 0.9.1 und alle darüber weiterhin funktionieren.\nDu kannst die neuste LÖVE-Version von https://love2d.org/ herunterladen.",
 
 OSNOTRECOGNIZED = "Dein Betriebssystem ($1) wurde nicht erkannt! Benutze Standard Dateisystemfunktionen; Level werden hier gespeichert:\n\n$2",
 MAXTRINKETS = "Die maximale Anzahl an Dingsdas ($1) wurde in diesem Level erreicht.",

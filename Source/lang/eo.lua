@@ -1,6 +1,6 @@
 -- Language file for Ved
 --- Language: eo (eo)
---- Last converted: 2026-04-11 00:49:31 (CEST)
+--- Last converted: 2026-04-11 03:53:21 (CEST)
 
 --[[
 	If you would like to help translate Ved, please get in touch with Dav999
@@ -16,9 +16,6 @@ function lang_plurals(n) return (n ~= 1) end
 L = {
 
 TRANSLATIONCREDIT = "Esperanta traduko de Reese Rivers", -- If you're making a translation, feel free to set this to something like "Translation made by (you)".
-
-OUTDATEDLOVE = "Via versio de LÖVE estas malaktuala. Bonvolu uzi version 0.9.1 aŭ pli altan.\nVi povas elŝuti la plej lastatempan version de LÖVE ĉe https://love2d.org/.",
-OUTDATEDLOVE090 = "Ved ne plu subtenas LÖVE 0.9.0, sed versioj 0.9.1 kaj pli altaj ankoraŭ funkcios.\nVi povas elŝuti la plej lastatempan version de LÖVE ĉe https://love2d.org/.",
 
 OSNOTRECOGNIZED = "Via operaciumo ($1) ne estas konata! Defaŭltaj dosiersistemaj funkcioj estas uzataj; niveloj estas konservitaj en:\n\n$2",
 MAXTRINKETS = "La maksimuma kvanto da kolektaĵoj ($1) estas atingita en ĉi tiu nivelo.",

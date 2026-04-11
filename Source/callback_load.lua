@@ -1,7 +1,6 @@
 function love.load()
 	hook("love_load_start")
 
-	utf8 = require("utf8lib_wrapper")
 	local table_clear_success = pcall(require, "table.clear")
 	if not table_clear_success then
 		function table.clear(t)
