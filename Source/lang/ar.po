@@ -1,0 +1,3121 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-11 03:51+0200\n"
+"PO-Revision-Date: 2026-02-22 21:04+0200\n"
+"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Pootle 2.8\n"
+"X-POOTLE-MTIME: 1771794269.388182\n"
+
+#. If you're making a translation, feel free to set this to something like "Translation made by (you)".
+msgctxt "L.TRANSLATIONCREDIT"
+msgid "English translation by Dav999"
+msgstr "Arabic localization by Eternal Dream Arabization"
+
+msgctxt "L.OSNOTRECOGNIZED"
+msgid ""
+"Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n"
+"\n"
+"$2"
+msgstr ""
+"لم نتعرف على نظام تشغيلك ($1)! سنعود للدوال الأصلية لأنظمة الملفات. المستويات مخزنة تحت: \n"
+"\n"
+"$2"
+
+msgctxt "L.MAXTRINKETS"
+msgid "The maximum amount of trinkets ($1) has been reached in this level."
+msgstr "بلغت العدد الأقصى من المقتنيات ($1) في هذا المستوى."
+
+msgctxt "L.MAXCREWMATES"
+msgid "The maximum amount of crewmates ($1) has been reached in this level."
+msgstr "بلغت العدد الأقصى من الزملاء ($1) في هذا المستوى."
+
+msgctxt "L.UNSUPPORTEDTOOL"
+msgid "Unsupported tool! Tool: "
+msgstr "أداة غير مدعومة! الأداة:  "
+
+msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
+msgid "Could not get contents of levels folder. Please check if $1 exists and try again."
+msgstr "فشل الحصول على محتويات مجلد المستويات. يرجى التحقق من وجود $1 ثم إعادة المحاولة."
+
+msgctxt "L.MAPSAVEDAS"
+msgid "Map image saved as $1!"
+msgstr "حفظت صورة الخريطة تحت $1!"
+
+msgctxt "L.RAWENTITYPROPERTIES"
+msgid "You can change the raw property values of this entity here."
+msgstr "يمكنك تغيير القيم الخام لخصائص هذا الكيان من هنا."
+
+msgctxt "L.UNKNOWNENTITYTYPE"
+msgid "Unknown entity type $1"
+msgstr "نوع كيان مجهول $1"
+
+msgctxt "L.WARPTOKENENT404"
+msgid "Warp token entity no longer exists!"
+msgstr "كيان تذكرة التنقيلة لم يعد له وجود!"
+
+#. Command names are best left untranslated
+msgctxt "L.SPLITFAILED"
+msgid "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?"
+msgstr "فشل الشطر شر فشل! هل عدد أسطرك التي بين تعليمة أمر نصية و speak/speak_active كبير؟"
+
+msgctxt "L.NOFLAGSLEFT"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again."
+msgstr "لم تتبق أي رايات، لذلك فإن إحدى أسماء الرايات الجديدة على الأقل لا يمكن ربطها بأي رقم راية. يترتب على ذلك أن محاولة تشغيل هذا الاسكربت في لعبة VVVVVV قد تتعطل. يرجى إعادة النظر في أي إشارات إلى رايات لم تعد تحتاجها، وحذفها وإعادة المحاولة."
+
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
+msgstr "لم تتبق أي رايات، لذلك تعذر إنشاء اسكربت تحميل يستخدم راية جديدة. وعوض ذلك أنشئ اسكربت تحميل يقوم دوما بتحميل الاسكربت المستهدف بواسطة iftrinkets(0,$1) . يرجى إعادة النظر في أي إشارات إلى رايات لم تعد تحتاجها، وحذفها وإعادة المحاولة."
+
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
+msgstr "فشل فتح $1.vvvvvv."
+
+msgctxt "L.SIZELIMIT"
+msgid ""
+"The maximum size of a level is $1 by $2.\n"
+"\n"
+"The level size will be changed to $3 by $4 instead."
+msgstr ""
+"الحجم الأقصى للمستويات هو $1 في $2.\n"
+"\n"
+"سنغير حجم المستوى إلى $3 في $4 نتيجة لذلك."
+
+msgctxt "L.SCRIPTALREADYEXISTS"
+msgid "Script \"$1\" already exists!"
+msgstr "الاسكربت \"$1\" موجود بالفعل!"
+
+msgctxt "L.FLAGNAMENUMBERS"
+msgid "Flag names cannot be only numbers."
+msgstr "لا يمكن أن تحتوي أسماء الرايات الأرقام فحسب."
+
+msgctxt "L.FLAGNAMECHARS"
+msgid "Flag names cannot contain parentheses, commas or spaces."
+msgstr "لا يمكن استعمال الأقواس أو الفواصل أو المسافات عند تسمية الرايات."
+
+msgctxt "L.FLAGNAMEINUSE"
+msgid "The flag name $1 is already in use by flag $2"
+msgstr "اسم الراية $1 مستعمل سلفًا من الراية $2"
+
+msgctxt "L.DIFFSELECT"
+msgid "Select the level to compare to. The level you select now will be treated as being an older version."
+msgstr "حدد المستوى الذي ستقارن به. المستوى الذي ستختاره الآن يعامل على أنه إصدار قديم."
+
+msgctxt "L.SUREQUITNEW"
+msgid "You have unsaved changes. Do you want to save these changes before quitting?"
+msgstr "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل الخروج؟"
+
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل إنشاء مستوى جديد؟"
+
+msgctxt "L.SUREOPENLEVEL"
+msgid "You have unsaved changes. Do you want to save these changes before opening this level?"
+msgstr "لديك تغييرات لم تحفظ بعد. هل تريد حفظ تلك التغييرات قبل فتح هذا المستوى؟"
+
+msgctxt "L.NAMEFORFLAG"
+msgid "Name for flag $1:"
+msgstr "اسم الراية $1:"
+
+msgctxt "L.SCRIPT404"
+msgid "Script \"$1\" does not exist!"
+msgstr "الاسكربت \"$1\" غير موجود!"
+
+msgctxt "L.ENTITY404"
+msgid "Entity #$1 no longer exists!"
+msgstr "الكيان عدد $1 لم يعد له وجود!"
+
+msgctxt "L.GRAPHICSCARDCANVAS"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr "عذرا، لا يبدو أن بطاقة الرسوميات عندك أو برنامج تعريفها يدعمان هذه الميزة!"
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid ""
+"Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n"
+"\n"
+"The size limit on this system is $3x$3."
+msgstr ""
+"عذرا، لا يبدو أن بطاقة الرسوميات عندك أو برنامج تعريفها يسمحان لك بإنشاء صورة بالأبعاد $1x$2. \n"
+"\n"
+"الحد الأقصى الذي يسمح به نظامك هو صورة بالأبعاد $3x$3."
+
+msgctxt "L.SUREDELETESCRIPT"
+msgid "Are you sure you want to delete the script \"$1\"?"
+msgstr "هل أنت واثق أنك تريد حذف الاسكربت \"$1\"؟"
+
+msgctxt "L.SUREDELETENOTE"
+msgid "Are you sure you want to delete this note?"
+msgstr "هل أنت واثق أنك تريد حذف هذه الملحوظة؟"
+
+msgctxt "L.THREADERROR"
+msgid "Thread error!"
+msgstr "خطأ في العملية البرمجية الجزئية!"
+
+msgctxt "L.WHATDIDYOUDO"
+msgid "What did you do?!"
+msgstr "ماذا فعلت؟!"
+
+msgctxt "L.UNDOFAULTY"
+msgid "What are you doing?"
+msgstr "ماذا تفعل؟"
+
+msgctxt "L.SOURCEDESTROOMSSAME"
+msgid "Source and destination rooms are the same!"
+msgstr "غرفة الوجهة وغرفة المصدر نفس الغرفة!"
+
+msgctxt "L.COORDS_OUT_OF_RANGE"
+msgid "Huh? These coordinates aren't even in this dimension!"
+msgstr "ماذا؟ هذه الإحداثيات ليست في هذا البعد حتى!"
+
+msgctxt "L.UNKNOWNUNDOTYPE"
+msgid "Unknown undo type \"$1\"!"
+msgstr "نوع تراجع مجهول \"$1\"!"
+
+msgctxt "L.MDEVERSIONWARNING"
+msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
+msgstr "يبدو أن نسخة أحدث من محرر Ved أنشأت هذا المستوى، لهذا قد يتضمن بيانات ستضيع لو حفظت هذا المستوى."
+
+msgctxt "L.FORGOTPATH"
+msgid "You forgot to specify a path!"
+msgstr "نسيت أن تحدد مسار الملف!"
+
+msgctxt "L.LIB_LOAD_ERRMSG"
+msgid ""
+"Failed to load an essential library. Please tell Dav999 about this problem.\n"
+"\n"
+"$1"
+msgstr ""
+"فشل تحميل مكتبة برمجية ضرورية. يرجى إعلام المطور Dav999 بالمشكلة.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_GCC"
+msgid ""
+"\n"
+"\n"
+"Try installing GCC to solve this problem, if it isn't already installed."
+msgstr ""
+"\n"
+"\n"
+"جرب تنصيب GCC لحل هذه المشكلة، إن لم تكن منصبة عندك سلفا."
+
+msgctxt "L.SELECTCOPY1"
+msgid "Select the room to copy"
+msgstr "اختر الغرفة التي تريد نسخها"
+
+msgctxt "L.SELECTCOPY2"
+msgid "Select the location to copy this room to"
+msgstr "اختر المكان الذي تريد أن تنسخ إليه هذه الغرفة"
+
+msgctxt "L.SELECTSWAP1"
+msgid "Select the first room to swap"
+msgstr "اختر الغرفة الأولى التي تريد تبديلها"
+
+msgctxt "L.SELECTSWAP2"
+msgid "Select the second room to swap"
+msgstr "اختر الغرفة الثانية التي تريد تبديلها"
+
+msgctxt "L.TILESETCHANGEDTO"
+msgid "Tileset changed to $1"
+msgstr "مجموعة الخلايا غيرت إلى $1"
+
+msgctxt "L.TILESETCOLORCHANGEDTO"
+msgid "Tileset color changed to $1"
+msgstr "لون مجموعة الخلايا غيرت إلى $1"
+
+msgctxt "L.ENEMYTYPECHANGED"
+msgid "Enemy type changed"
+msgstr "نوع الأعداء غير"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODE"
+msgid "Changed to $1 tile placement"
+msgstr "غير إلى $1 تموضع الخلايا"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEAUTO"
+msgid "automatic"
+msgstr "تلقائي"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMANUAL"
+msgid "manual"
+msgstr "يدوي"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMULTI"
+msgid "multi-tileset"
+msgstr "متعدد مجموعات الخلايا"
+
+msgctxt "L.BUSYSAVING"
+msgid "Saving..."
+msgstr "جار الحفظ..."
+
+msgctxt "L.SAVEDLEVELAS"
+msgid "Saved level as $1.vvvvvv"
+msgstr "حفظ المستوى تحت $1.vvvvvv"
+
+msgctxt "L.ROOMCUT"
+msgid "Room cut to clipboard"
+msgstr "تم قص الغرفة إلى الحافظة"
+
+msgctxt "L.ROOMCOPIED"
+msgid "Copied room to clipboard"
+msgstr "تم نسخ الغرفة إلى الحافظة"
+
+msgctxt "L.ROOMPASTED"
+msgid "Pasted room"
+msgstr "تم لصق الغرفة"
+
+msgctxt "L.METADATAUNDONE"
+msgid "Level options undone"
+msgstr "تم التراجع عن خيارات المستوى"
+
+msgctxt "L.METADATAREDONE"
+msgid "Level options redone"
+msgstr "تمت إعادة خيارات المستوى"
+
+#. Old string: Click the top left corner of the bounds
+msgctxt "L.BOUNDSFIRST"
+msgid "Click the first corner of the bounds"
+msgstr "انقر الزاوية الأولى لمستطيل الحدود"
+
+#. Old string: Click the bottom right corner
+msgctxt "L.BOUNDSLAST"
+msgid "Click the last corner"
+msgstr "انقر الزاوية الأخيرة لمستطيل الحدود"
+
+msgctxt "L.TILE"
+msgid "Tile $1"
+msgstr "الخلية $1"
+
+msgctxt "L.HIDEALL"
+msgid "Hide all"
+msgstr "إخفاء الكل"
+
+msgctxt "L.SHOWALL"
+msgid "Show all"
+msgstr "إظهار الكل"
+
+msgctxt "L.SCRIPTEDITOR"
+msgid "Script editor"
+msgstr "محرر الاسكربت"
+
+msgctxt "L.FILE"
+msgid "File"
+msgstr "ملف"
+
+msgctxt "L.NEW"
+msgid "New"
+msgstr "جديد"
+
+msgctxt "L.OPEN"
+msgid "Open"
+msgstr "فتح"
+
+msgctxt "L.SAVE"
+msgid "Save"
+msgstr "حفظ"
+
+msgctxt "L.UNDO"
+msgid "Undo"
+msgstr "تراجع"
+
+msgctxt "L.REDO"
+msgid "Redo"
+msgstr "إعادة"
+
+msgctxt "L.COMPARE"
+msgid "Compare"
+msgstr "مقارنة"
+
+msgctxt "L.STATS"
+msgid "Stats"
+msgstr "إحصائيات"
+
+msgctxt "L.SCRIPTUSAGES"
+msgid "Usages"
+msgstr "استخدامات"
+
+msgctxt "L.EDITTAB"
+msgid "Edit"
+msgstr "تحرير"
+
+msgctxt "L.COPYSCRIPT"
+msgid "Copy script"
+msgstr "نسخ اسكربت"
+
+msgctxt "L.SEARCHSCRIPT"
+msgid "Search"
+msgstr "بحث"
+
+msgctxt "L.GOTOLINE"
+msgid "Go to line"
+msgstr "الذهاب للسطر"
+
+msgctxt "L.GOTOLINE2"
+msgid "Go to line:"
+msgstr "الذهاب للسطر:"
+
+msgctxt "L.INTERNALON"
+msgid "Int.sc is on"
+msgstr "Int.sc يعمل"
+
+msgctxt "L.INTERNALOFF"
+msgid "Int.sc is off"
+msgstr "Int.sc لا يعمل"
+
+msgctxt "L.INTERNALON_LONG"
+msgid "Internal scripting mode is enabled"
+msgstr "وضع الاسكربت الداخلي مفعل"
+
+msgctxt "L.INTERNALOFF_LONG"
+msgid "Internal scripting mode is disabled"
+msgstr "وضع الاسكربت الداخلي معطل"
+
+msgctxt "L.INTERNALYESBARS"
+msgid "say(-1) int.sc"
+msgstr "say(-1) int.sc"
+
+msgctxt "L.INTERNALNOBARS"
+msgid "Loadscript int.sc"
+msgstr "تحميل الاسكربت int.sc"
+
+msgctxt "L.VIEW"
+msgid "View"
+msgstr "عرض"
+
+msgctxt "L.SYNTAXHLOFF"
+msgid "Syntax HL: on"
+msgstr "ألوان الصياغة: نعم"
+
+msgctxt "L.SYNTAXHLON"
+msgid "Syntax HL: off"
+msgstr "ألوان الصياغة: لا"
+
+msgctxt "L.TEXTSIZEN"
+msgid "Text size: N"
+msgstr "حجم النص: ض"
+
+msgctxt "L.TEXTSIZEL"
+msgid "Text size: L"
+msgstr "حجم النص: ع"
+
+msgctxt "L.INSERT"
+msgid "Insert"
+msgstr "إدراج"
+
+msgctxt "L.HELP"
+msgid "Help"
+msgstr "مساعدة"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
+msgid "Load script required!"
+msgstr "يلزم اسكربت تحميل!"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT_EXPL"
+msgid "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script."
+msgstr "لم يكتشف اسكربت يفتح هذا الاسكربت. هذا النوع من الاسكربت الداخلي لن يعمل بالطريقة التي ترجوها على الأرجح، لو لم تفتحه عن طريق اسكربت آخر."
+
+msgctxt "L.INTSCRWARNING_BOXED"
+msgid "Direct script box/terminal reference!"
+msgstr "مرجع مباشر إلى صندوق اسكربت أو حاسب!"
+
+msgctxt "L.INTSCRWARNING_BOXED_EXPL"
+msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
+msgstr "هناك حاسب أو صندوق اسكربت يفتح هذا الاسكربت مباشرة. لن يؤدي تفعيل ذلك الحاسب أو صندوق الاسكربت لعمله بالطريقة التي ترجوها على الأرجح. يحتاج هذا النوع من الاسكربت الداخلي لفتحه من اسكربت تحميل."
+
+msgctxt "L.INTSCRWARNING_NAME"
+msgid "Unsuitable script name!"
+msgstr "اسم اسكربت غير لائق!"
+
+msgctxt "L.INTSCRWARNING_NAME_EXPL"
+msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
+msgstr "اسم هذا الاسكربت يتضمن حرفا لاتينيا كبيرا أو مسافة أو قوسا أو فاصلة. لا يمكن فتح هذا الاسكربت مباشرة من غير حاسب أو صندوق اسكربت."
+
+msgctxt "L.COLUMN"
+msgid "Column: "
+msgstr "العمود: "
+
+msgctxt "L.BTN_OK"
+msgid "OK"
+msgstr "موافق"
+
+msgctxt "L.BTN_CANCEL"
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgctxt "L.BTN_YES"
+msgid "Yes"
+msgstr "نعم"
+
+msgctxt "L.BTN_NO"
+msgid "No"
+msgstr "لا"
+
+msgctxt "L.BTN_APPLY"
+msgid "Apply"
+msgstr "تطبيق"
+
+msgctxt "L.BTN_QUIT"
+msgid "Quit"
+msgstr "خروج"
+
+msgctxt "L.BTN_DISCARD"
+msgid "Discard"
+msgstr "عدم حفظ"
+
+msgctxt "L.BTN_SAVE"
+msgid "Save"
+msgstr "حفظ"
+
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr "إغلاق"
+
+msgctxt "L.BTN_LOAD"
+msgid "Load"
+msgstr "فتح"
+
+msgctxt "L.BTN_ADVANCED"
+msgid "Advanced"
+msgstr "متقدم"
+
+msgctxt "L.BTN_AUTODETECT"
+msgid "Detect"
+msgstr "اكتشاف"
+
+#. choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+msgctxt "L.BTN_MANUALLY"
+msgid "Override"
+msgstr "تجاوز النفوذ"
+
+msgctxt "L.BTN_RETRY"
+msgid "Retry"
+msgstr "إعادة"
+
+msgctxt "L.COMPARINGTHESE"
+msgid "Comparing $1.vvvvvv to $2.vvvvvv"
+msgstr "جار مقارنة $1.vvvvvv و $2.vvvvvv"
+
+msgctxt "L.COMPARINGTHESENEW"
+msgid "Comparing (unsaved level) to $1.vvvvvv"
+msgstr "جار مقارنة (مستوى لم يحفظ) و $1.vvvvvv"
+
+msgctxt "L.RETURN"
+msgid "Return"
+msgstr "عودة"
+
+msgctxt "L.CREATE"
+msgid "Create"
+msgstr "إنشاء"
+
+msgctxt "L.GOTO"
+msgid "Go to"
+msgstr "الذهاب إلى"
+
+msgctxt "L.DELETE"
+msgid "Delete"
+msgstr "حذف"
+
+msgctxt "L.RENAME"
+msgid "Rename"
+msgstr "تسمية"
+
+msgctxt "L.CHANGEDIRECTION"
+msgid "Change direction"
+msgstr "تغيير اتجاه"
+
+msgctxt "L.TESTFROMHERE"
+msgid "Test from here"
+msgstr "الاختبار من هنا"
+
+msgctxt "L.FLIP"
+msgid "Flip"
+msgstr "عكس"
+
+msgctxt "L.CYCLETYPE"
+msgid "Change type"
+msgstr "تغيير النوع"
+
+msgctxt "L.GOTODESTINATION"
+msgid "Go to destination"
+msgstr "الذهاب للوجهة"
+
+msgctxt "L.GOTOENTRANCE"
+msgid "Go to entrance"
+msgstr "الذهاب للمدخل"
+
+msgctxt "L.CHANGECOLOR"
+msgid "Change color"
+msgstr "تغيير اللون"
+
+msgctxt "L.EDITTEXT"
+msgid "Edit text"
+msgstr "تحرير النص"
+
+msgctxt "L.COPYTEXT"
+msgid "Copy text"
+msgstr "نسخ النص"
+
+msgctxt "L.EDITSCRIPT"
+msgid "Edit script"
+msgstr "تحرير الاسكربت"
+
+msgctxt "L.OTHERSCRIPT"
+msgid "Change script name"
+msgstr "تبديل اسم الاسكربت"
+
+msgctxt "L.PROPERTIES"
+msgid "Properties"
+msgstr "الخاصيات"
+
+msgctxt "L.CHANGETOHOR"
+msgid "Change to horizontal"
+msgstr "التغيير إلى الأفقي"
+
+msgctxt "L.CHANGETOVER"
+msgid "Change to vertical"
+msgstr "التغيير إلى العمودي"
+
+msgctxt "L.RESIZE"
+msgid "Move/Resize"
+msgstr "تحريك/تحجيم"
+
+msgctxt "L.CHANGEENTRANCE"
+msgid "Move entrance"
+msgstr "تحريك المدخل"
+
+msgctxt "L.CHANGEEXIT"
+msgid "Move exit"
+msgstr "تحريك المخرج"
+
+msgctxt "L.COPYENTRANCE"
+msgid "Copy entrance"
+msgstr "نسخ المدخل"
+
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr "قفل"
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr "فتح القفل"
+
+msgctxt "L.VEDOPTIONS"
+msgid "Ved options"
+msgstr "خيارات Ved"
+
+msgctxt "L.LEVELOPTIONS"
+msgid "Level options"
+msgstr "خيارات المستوى"
+
+msgctxt "L.MAP"
+msgid "Map"
+msgstr "الخريطة"
+
+msgctxt "L.SCRIPTS"
+msgid "Scripts"
+msgstr "الاسكربتات"
+
+msgctxt "L.SEARCH"
+msgid "Search"
+msgstr "بحث"
+
+msgctxt "L.SENDFEEDBACK"
+msgid "Send Feedback"
+msgstr "الإبلاغات"
+
+msgctxt "L.LEVELNOTEPAD"
+msgid "Level notepad"
+msgstr "مدونة المستوى"
+
+msgctxt "L.PLUGINS"
+msgid "Plugins"
+msgstr "الإضافات"
+
+msgctxt "L.BACKB"
+msgid "Back <<"
+msgstr "رجوع >>"
+
+msgctxt "L.MOREB"
+msgid "More >>"
+msgstr "<< المزيد"
+
+msgctxt "L.AUTOMODE"
+msgid "Mode: auto"
+msgstr "الوضع: تلقائي"
+
+msgctxt "L.AUTO2MODE"
+msgid "Mode: multi"
+msgstr "الوضع: متعدد"
+
+msgctxt "L.MANUALMODE"
+msgid "Mode: manual"
+msgstr "الوضع: يدوي"
+
+msgctxt "L.ENEMYTYPE"
+msgid "Enemy type: $1"
+msgstr "نوع عدو: $1"
+
+msgctxt "L.PLATFORMBOUNDS"
+msgid "Platf. bounds"
+msgstr "نطاقات منصة"
+
+msgctxt "L.WARPDIR"
+msgid "Warp dir: $1"
+msgstr "اتجاه تنقيل: $1"
+
+msgctxt "L.ENEMYBOUNDS"
+msgid "Enemy bounds"
+msgstr "نطاق الأعداء"
+
+msgctxt "L.ROOMNAME"
+msgid "Roomname"
+msgstr "اسم الغرفة"
+
+msgctxt "L.ROOMOPTIONS"
+msgid "Room options"
+msgstr "خيارات الغرفة"
+
+msgctxt "L.ROTATE180"
+msgid "Rotate 180deg"
+msgstr "تدوير 180 درجة"
+
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr "تدوير 180 درجة"
+
+msgctxt "L.HIDEBOUNDS"
+msgid "Hide bounds"
+msgstr "إخفاء النطاقات"
+
+msgctxt "L.SHOWBOUNDS"
+msgid "Show bounds"
+msgstr "إظهار النطاقات"
+
+#. basically, platforms/enemies in/for this room
+msgctxt "L.ROOMPLATFORMS"
+msgid "Room platforms"
+msgstr "منصات الغرفة"
+
+msgctxt "L.ROOMENEMIES"
+msgid "Room enemies"
+msgstr "أعداء الغرفة"
+
+msgctxt "L.OPTNAME"
+msgid "Name"
+msgstr "الاسم"
+
+msgctxt "L.OPTBY"
+msgid "By"
+msgstr "من"
+
+msgctxt "L.OPTWEBSITE"
+msgid "Website"
+msgstr "الموقع"
+
+#. If necessary, you can span multiple lines
+msgctxt "L.OPTDESC"
+msgid "Desc"
+msgstr "الوصف"
+
+msgctxt "L.OPTSIZE"
+msgid "Size"
+msgstr "الحجم"
+
+msgctxt "L.OPTMUSIC"
+msgid "Music"
+msgstr "الموسيقى"
+
+msgctxt "L.CAPNONE"
+msgid "NONE"
+msgstr "(بدون)"
+
+msgctxt "L.ENTERLONGOPTNAME"
+msgid "Level name:"
+msgstr "اسم المستوى:"
+
+#. Used for level size: 20x20
+msgctxt "L.X"
+msgid "x"
+msgstr "x"
+
+msgctxt "L.SOLID"
+msgid "Solid"
+msgstr "ملموس"
+
+msgctxt "L.NOTSOLID"
+msgid "Not solid"
+msgstr "لا ملموس"
+
+msgctxt "L.TSCOLOR"
+msgid "Color $1"
+msgstr "اللون $1"
+
+msgctxt "L.LEVELSLIST"
+msgid "Levels"
+msgstr "المستويات"
+
+msgctxt "L.LOADTHISLEVEL"
+msgid "Load this level: "
+msgstr "فتح هذا المستوى:"
+
+msgctxt "L.ENTERNAMESAVE"
+msgid "Enter name to save as: "
+msgstr "يحفظ بهذا الاسم:"
+
+msgctxt "L.SEARCHFOR"
+msgid "Search for: "
+msgstr "البحث عن:"
+
+msgctxt "L.VERSIONERROR"
+msgid "Unable to check version."
+msgstr "فشل التحقق من الإصدار."
+
+msgctxt "L.VERSIONUPTODATE"
+msgid "Your version of Ved is up-to-date."
+msgstr "إصدار محرر Ved عندك هو الأحدث توفرا."
+
+msgctxt "L.VERSIONOLD"
+msgid "Update available! Latest version: $1"
+msgstr "يتوفر تحديث! الإصدار الأخير هو: $1"
+
+msgctxt "L.VERSIONCHECKING"
+msgid "Checking for updates..."
+msgstr "جار التحقق من التحديثات..."
+
+msgctxt "L.VERSIONDISABLED"
+msgid "Update check disabled"
+msgstr "عطل التحقق من التحديثات"
+
+#. Check for updates now
+msgctxt "L.VERSIONCHECKNOW"
+msgid "Check now"
+msgstr "التحقق الآن"
+
+msgctxt "L.SAVENOSUCCESS"
+msgid "Saving not successful! Error: "
+msgstr "لم ينجح الحفظ! الخطأ: "
+
+msgctxt "L.INVALIDFILESIZE"
+msgid "Invalid file size."
+msgstr "حجم الملف غير مقبول."
+
+msgctxt "L.EDIT"
+msgid "Edit"
+msgstr "تحرير"
+
+msgctxt "L.EDITWOBUMPING"
+msgid "Edit without bumping"
+msgstr "تحرير بدون رفع"
+
+msgctxt "L.EDITWBUMPING"
+msgid "Edit and bump"
+msgstr "تحرير مع الرفع"
+
+msgctxt "L.COPYNAME"
+msgid "Copy name"
+msgstr "نسخ الاسم"
+
+msgctxt "L.COPYCONTENTS"
+msgid "Copy contents"
+msgstr "نسخ المضمون"
+
+msgctxt "L.DUPLICATE"
+msgid "Duplicate"
+msgstr "تكرار"
+
+msgctxt "L.NEWSCRIPTNAME"
+msgid "Name:"
+msgstr "الاسم:"
+
+msgctxt "L.CREATENEWSCRIPT"
+msgid "Create new script"
+msgstr "إنشاء اسكربت"
+
+msgctxt "L.NEWNOTENAME"
+msgid "Name:"
+msgstr "الاسم:"
+
+msgctxt "L.CREATENEWNOTE"
+msgid "Create new note"
+msgstr "إنشاء ملاحظة جديدة"
+
+msgctxt "L.ADDNEWBTN"
+msgid "[Add new]"
+msgstr "[إضافة جديد]"
+
+msgctxt "L.IMAGEERROR"
+msgid "[IMAGE ERROR]"
+msgstr "[خطأ صورة]"
+
+msgctxt "L.NEWNAME"
+msgid "New name:"
+msgstr "الاسم الجديد:"
+
+msgctxt "L.RENAMENOTE"
+msgid "Rename note"
+msgstr "تسمية الملاحظة"
+
+msgctxt "L.RENAMESCRIPT"
+msgid "Rename script"
+msgstr "تسمية الاسكربت"
+
+msgctxt "L.LINE"
+msgid "line "
+msgstr "السطر "
+
+msgctxt "L.SAVEMAP"
+msgid "Save map"
+msgstr "حفظ الخريطة"
+
+msgctxt "L.COPYROOMS"
+msgid "Copy room"
+msgstr "نسخ الغرفة"
+
+msgctxt "L.SWAPROOMS"
+msgid "Swap rooms"
+msgstr "تبديل الغرفة"
+
+msgctxt "L.MAP_STYLE"
+msgid "Map style"
+msgstr "نمط الخريطة"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_FULL"
+msgid "Full"
+msgstr "كامل"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_MINIMAP"
+msgid "Minimap"
+msgstr "خريطة مصغرة"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_VTOOLS"
+msgid "VTools"
+msgstr "أدوات Vtools"
+
+msgctxt "L.FLAGS"
+msgid "Flags"
+msgstr "الرايات"
+
+msgctxt "L.ROOM"
+msgid "room"
+msgstr "غرفة"
+
+msgctxt "L.CONTENTFILLER"
+msgid "Content"
+msgstr "المضمون"
+
+#. preferably same length as L.FLAGNOTUSED
+msgctxt "L.FLAGUSED"
+msgid "Used    "
+msgstr "    مستخدم"
+
+msgctxt "L.FLAGNOTUSED"
+msgid "Not used"
+msgstr "غير مستخدم"
+
+msgctxt "L.FLAGNONAME"
+msgid "No name"
+msgstr "بلا اسم"
+
+msgctxt "L.USEDOUTOFRANGEFLAGS"
+msgid "Used out of range flags:"
+msgstr "استخدمت الرايات خارج النطاق:"
+
+#. Settings to adapt Ved to how VVVVVV is installed/setup on this computer, like the location of the levels folder and selection of the executable for playtesting. Maybe "VVVVVV installation" or "VVVVVV configuration"
+msgctxt "L.VVVVVVSETUP"
+msgid "VVVVVV setup"
+msgstr "تجهيز VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY"
+msgid "VVVVVV folder"
+msgstr "مجلد VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
+msgid ""
+"The default VVVVVV directory Ved expects is:\n"
+"$1\n"
+"\n"
+"This path should not be set to the \"levels\" directory."
+msgstr ""
+"يتوقع المحرر Ved أن المسار الافتراضي للعبة VVVVVV هو:\n"
+"$1\n"
+"\n"
+"لا يجب تحديد هذا المسار إلى مجلد \"levels\"."
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_NOTSET"
+msgid ""
+"You do not have a custom VVVVVV directory set.\n"
+"\n"
+msgstr ""
+"لم تحدد مسارا مخصصا للعبة VVVVVV \n"
+"\n"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_SET"
+msgid ""
+"Your VVVVVV directory is set to a custom path:\n"
+"$1\n"
+"\n"
+msgstr ""
+"عين مسار VVVVVV عندك إلى مسار مخصص: \n"
+"$1\n"
+"\n"
+
+msgctxt "L.LANGUAGE"
+msgid "Language"
+msgstr "اللغة"
+
+msgctxt "L.DIALOGANIMATIONS"
+msgid "Dialog animations"
+msgstr "تحريك الحوارات"
+
+msgctxt "L.FLIPSUBTOOLSCROLL"
+msgid "Flip tool scrolling direction"
+msgstr "قلب اتجاه تصفح الأداة"
+
+msgctxt "L.ADJACENTROOMLINES"
+msgid "Indicators of tiles in adjacent rooms"
+msgstr "توضيحات الخلايا في الغرف المجاورة"
+
+msgctxt "L.NEVERASKBEFOREQUIT"
+msgid "Never ask before quitting, even if there are unsaved changes"
+msgstr "لا تسأل أبدا قبل المغادرة، حتى لو توجد تغييرات لم تحفظ."
+
+msgctxt "L.COORDS0"
+msgid "Display coordinates as starting at 0 (as in internal scripting)"
+msgstr "إظهار الإحداثيات بدءا من الصفر (مثلما الحال مع الاسكربت الداخلي)"
+
+msgctxt "L.ALLOWDEBUG"
+msgid "Enable debug mode"
+msgstr "تفعيل وضع تتبع الأخطاء"
+
+msgctxt "L.SHOWFPS"
+msgid "Show FPS counter"
+msgstr "إظهار عداد الإطارات/ث"
+
+msgctxt "L.CHECKFORUPDATES"
+msgid "Check for updates"
+msgstr "التحقق من التحديثات"
+
+msgctxt "L.PAUSEDRAWUNFOCUSED"
+msgid "Do not render when the window is unfocused"
+msgstr "عدم رسم الشاشة عندما لا يركز على النافذة"
+
+msgctxt "L.ENABLEOVERWRITEBACKUPS"
+msgid "Make backups of level files that are overwritten"
+msgstr "إنشاء نسخ احتياطية من ملفات المستويات عندما تستبدل"
+
+msgctxt "L.AMOUNTOVERWRITEBACKUPS"
+msgid "Number of backups to keep per level"
+msgstr "عدد النسخ الاحتياطية التي يحتفظ بها للمستوى الواحد"
+
+msgctxt "L.SCALE"
+msgid "Scale"
+msgstr "مقياس الصورة"
+
+msgctxt "L.LOADALLMETADATA"
+msgid "Load metadata (such as title, author and description) for all files in levels list"
+msgstr "فتح بيانات التعريف (مثل العنوان والمؤلف والوصف) لجميع الملفات في لائحة المستويات"
+
+msgctxt "L.COLORED_TEXTBOXES"
+msgid "Use true textbox colors"
+msgstr "استخدام ألوان حقيقية لصندوق النص"
+
+msgctxt "L.MOUSESCROLLINGSPEED"
+msgid "Mouse scrolling speed"
+msgstr "سرعة تمرير الفأرة"
+
+msgctxt "L.BUMPSCRIPTSBYDEFAULT"
+msgid "Bump scripts to the top of the list when editing them by default"
+msgstr "يرفع الاسكربتات لقمة اللائحة عند تغييرها، بحيث يكون ذلك السلوك الأصلي."
+
+msgctxt "L.SCRIPTSPLIT"
+msgid "Split"
+msgstr "شطر"
+
+msgctxt "L.SPLITSCRIPT"
+msgid "Split scripts"
+msgstr "شطر الاسكربتات"
+
+msgctxt "L.COUNT"
+msgid "Count: "
+msgstr "العدد: "
+
+msgctxt "L.SMALLENTITYDATA"
+msgid "data"
+msgstr "بيانات"
+
+#. Stats screen
+msgctxt "L.AMOUNTSCRIPTS"
+msgid "Scripts:"
+msgstr "الاسكربتات:"
+
+#. Stats screen
+msgctxt "L.AMOUNTUSEDFLAGS"
+msgid "Flags:"
+msgstr "الرايات:"
+
+#. Stats screen
+msgctxt "L.AMOUNTENTITIES"
+msgid "Entities:"
+msgstr "الكيانات:"
+
+#. Stats screen
+msgctxt "L.AMOUNTTRINKETS"
+msgid "Trinkets:"
+msgstr "المقتنيات:"
+
+#. Stats screen
+msgctxt "L.AMOUNTCREWMATES"
+msgid "Crewmates:"
+msgstr "الزملاء:"
+
+#. Stats screen
+msgctxt "L.AMOUNTINTERNALSCRIPTS"
+msgid "Internal scripts:"
+msgstr "الاسكربتات الداخلية:"
+
+#. Stats screen
+msgctxt "L.TILESETUSSAGE"
+msgid "Tileset usage"
+msgstr "استخدام مجموعات الخلايا"
+
+#. Stats screen
+msgctxt "L.TILESETSONLYUSED"
+msgid "(only rooms having tiles are counted)"
+msgstr "(فقط الغرف ذات الخلايا تحتسب)"
+
+#. Stats screen
+msgctxt "L.AMOUNTROOMSWITHNAMES"
+msgid "Rooms having a name:"
+msgstr "الغرف ذات الاسم:"
+
+#. Stats screen
+msgctxt "L.PLACINGMODEUSAGE"
+msgid "Tile placing modes:"
+msgstr "أوضاع تموضع الخلايا:"
+
+#. Stats screen
+msgctxt "L.AMOUNTLEVELNOTES"
+msgid "Level notes:"
+msgstr "ملحوظات المستوى:"
+
+#. Stats screen
+msgctxt "L.AMOUNTFLAGNAMES"
+msgid "Flag names:"
+msgstr "أسماء الرايات:"
+
+#. Stats screen
+msgctxt "L.TILESUSAGE"
+msgid "Tiles usage"
+msgstr "استخدام الخلايا"
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr "الخلايا:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr "الخلايا الملموسة:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
+msgstr "الإبر:"
+
+msgctxt "L.UNEXPECTEDSCRIPTLINE"
+msgid "Unexpected script line without script: $1"
+msgstr "سطر اسكربت غير متوقع جاء بدون اسكربت: $1"
+
+msgctxt "L.DUPLICATESCRIPT"
+msgid "Script $1 is duplicate! Only one can be loaded."
+msgstr "الاسكربت $1 مكرر! لا يمكن فتح أكثر من واحد."
+
+msgctxt "L.MAPWIDTHINVALID"
+msgid "Map width is invalid: $1"
+msgstr "عرض الخريطة غير صالح: $1"
+
+msgctxt "L.MAPHEIGHTINVALID"
+msgid "Map height is invalid: $1"
+msgstr "ارتفاع الخريطة غير صالح: $1"
+
+msgctxt "L.LEVMUSICEMPTY"
+msgid "Level music is empty!"
+msgstr "موسيقى المستوى فارغة!"
+
+msgctxt "L.NOT400ROOMS"
+msgid "The number of entries in levelMetaData is not 400!"
+msgstr "عدد المدخلات في بيانات levelMetaData ليس 400 !"
+
+msgctxt "L.MOREERRORS"
+msgid "$1 more"
+msgstr "$1 زيادة"
+
+msgctxt "L.DEBUGMODEON"
+msgid "Debug mode on"
+msgstr "وضع تتبع الأخطاء يعمل"
+
+msgctxt "L.FPS"
+msgid "FPS"
+msgstr "إطار/ث"
+
+msgctxt "L.STATE"
+msgid "State"
+msgstr "الحالة"
+
+msgctxt "L.MOUSE"
+msgid "Mouse"
+msgstr "الفأرة"
+
+msgctxt "L.BLUE"
+msgid "Blue"
+msgstr "أزرق"
+
+msgctxt "L.RED"
+msgid "Red"
+msgstr "أحمر"
+
+msgctxt "L.CYAN"
+msgid "Cyan"
+msgstr "سماوي"
+
+msgctxt "L.PURPLE"
+msgid "Purple"
+msgstr "أرجواني"
+
+msgctxt "L.YELLOW"
+msgid "Yellow"
+msgstr "أصفر"
+
+msgctxt "L.GREEN"
+msgid "Green"
+msgstr "أخضر"
+
+msgctxt "L.GRAY"
+msgid "Gray"
+msgstr "رمادي"
+
+msgctxt "L.PINK"
+msgid "Pink"
+msgstr "وردي"
+
+msgctxt "L.BROWN"
+msgid "Brown"
+msgstr "بني"
+
+msgctxt "L.RAINBOWBG"
+msgid "Rainbow BG"
+msgstr "خلفية قزحية"
+
+msgctxt "L.SYNTAXCOLORS"
+msgid "Syntax colors"
+msgstr "ألوان الصياغة"
+
+msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
+msgid "Scripting syntax highlighting color settings"
+msgstr "إعدادات ألوان إبراز الصيغة في الاسكربتات"
+
+msgctxt "L.SYNTAXCOLOR_COMMAND"
+msgid "Command"
+msgstr "الأمر"
+
+msgctxt "L.SYNTAXCOLOR_GENERIC"
+msgid "Generic"
+msgstr "معياري"
+
+msgctxt "L.SYNTAXCOLOR_SEPARATOR"
+msgid "Separator"
+msgstr "رمز فاصل"
+
+msgctxt "L.SYNTAXCOLOR_NUMBER"
+msgid "Number"
+msgstr "رقم"
+
+msgctxt "L.SYNTAXCOLOR_TEXTBOX"
+msgid "Textbox"
+msgstr "صندوق نص"
+
+msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
+msgid "Unrecognized command"
+msgstr "أمر غير معروف"
+
+msgctxt "L.SYNTAXCOLOR_CURSOR"
+msgid "Cursor"
+msgstr "مؤشر السهم"
+
+msgctxt "L.SYNTAXCOLOR_FLAGNAME"
+msgid "Flag name"
+msgstr "اسم الراية"
+
+msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
+msgid "New flag name"
+msgstr "اسم راية جديد"
+
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr "التعليق"
+
+msgctxt "L.SYNTAXCOLOR_WRONGLANG"
+msgid "Simplified command in int.sc mode or vice versa"
+msgstr "الأوامر المبسطة في وضع int.sc أو العكس"
+
+msgctxt "L.RESETCOLORS"
+msgid "Reset colors"
+msgstr "ألوان الأصل"
+
+msgctxt "L.STRINGNOTFOUND"
+msgid "\"$1\" was not found"
+msgstr "لم يعثر على \"$1\""
+
+#. L.MAL is concatenated with an error message
+msgctxt "L.MAL"
+msgid "The level file is malformed: "
+msgstr "ملف المستوى مشوه: "
+
+msgctxt "L.LOADSCRIPTMADE"
+msgid "Load script created"
+msgstr "تم إنشاء اسكربت تحميل"
+
+msgctxt "L.COPY"
+msgid "Copy"
+msgstr "نسخ"
+
+msgctxt "L.CUSTOMSIZE"
+msgid "Custom brush size: $1x$2"
+msgstr "حجم الفرشاة المخصصة: $1x$2"
+
+msgctxt "L.SELECTINGA"
+msgid "Selecting - click top left"
+msgstr "جار التحديد - انقر أعلى اليسار"
+
+msgctxt "L.SELECTINGB"
+msgid "Selecting: $1x$2"
+msgstr "جار اختيار: $1x$2"
+
+msgctxt "L.TILESETSRELOADED"
+msgid "Tilesets and sprites reloaded"
+msgstr "أعيد تحميل مجموعات الخلايا والسبرايتات"
+
+msgctxt "L.BACKUPS"
+msgid "Backups"
+msgstr "نسخ احتياطية"
+
+msgctxt "L.BACKUPSOFLEVEL"
+msgid "Backups of level $1"
+msgstr "نسخ احتياطية للملف $1"
+
+#. List header
+msgctxt "L.LASTMODIFIEDTIME"
+msgid "Originally last modified"
+msgstr "آخر تغيير في الأصل"
+
+#. List header
+msgctxt "L.OVERWRITTENTIME"
+msgid "Overwritten"
+msgstr "مستبدل"
+
+msgctxt "L.SAVEBACKUP"
+msgid "Save to VVVVVV folder"
+msgstr "الحفظ إلى مجلد VVVVVV"
+
+msgctxt "L.DATEFORMAT"
+msgid "Date format"
+msgstr "تنسيق التاريخ"
+
+msgctxt "L.TIMEFORMAT"
+msgid "Time format"
+msgstr "تنسيق التوقيت"
+
+msgctxt "L.SAVEBACKUPNOBACKUP"
+msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
+msgstr "احرص على اختيار اسم فريد لهذا لو لا تريد استبدال أي شيء، لأنه لن تنشئ أي نسخة احتياطية في هذه الحالة!"
+
+msgctxt "L.AUTOSAVECRASHLOGS"
+msgid "Automatically save crash logs"
+msgstr "حفظ تلقائي لتقارير الأعطال"
+
+msgctxt "L.MOREINFO"
+msgid "Latest info"
+msgstr "آخر المعلومات"
+
+msgctxt "L.COPYLINK"
+msgid "Copy link"
+msgstr "نسخ الرابط"
+
+msgctxt "L.SCRIPTDISPLAY"
+msgid "Show"
+msgstr "إظهار"
+
+msgctxt "L.SCRIPTDISPLAY_USED"
+msgid "Used"
+msgstr "مستخدم"
+
+msgctxt "L.SCRIPTDISPLAY_UNUSED"
+msgid "Unused"
+msgstr "غير مستخدم"
+
+msgctxt "L.RECENTLYOPENED"
+msgid "Recently opened levels"
+msgstr "مستويات فتحت مؤخرا"
+
+msgctxt "L.REMOVERECENT"
+msgid "Do you want to remove it from the list of recently opened levels?"
+msgstr "هل تريد نزعه من قائمة المستويات التي فتحت مؤخرا؟"
+
+msgctxt "L.RESETCUSTOMBRUSH"
+msgid "(Right click to set new size)"
+msgstr "(لتعيين حجم جديد، انقر بأيمن الفأرة)"
+
+msgctxt "L.DISPLAYSETTINGS"
+msgid "Display/Scale"
+msgstr "الإظهار/المقياس"
+
+msgctxt "L.DISPLAYSETTINGSTITLE"
+msgid "Display/Scale settings"
+msgstr "إعدادات الإظهار/مقياس الصورة"
+
+msgctxt "L.SMALLERSCREEN"
+msgid "Smaller window width (800px wide instead of 896px)"
+msgstr "عرض نافذة أصغر (800 بكسل عوض 896)"
+
+msgctxt "L.FORCESCALE"
+msgid "Force scale settings"
+msgstr "الإجبار على إعدادات مقياس الصورة"
+
+msgctxt "L.SCALENOFIT"
+msgid "The current scale settings make the window too large to fit."
+msgstr "الإعدادات الحالية لمقياس الصورة تجعل من النافذة أكبر من أن تسعها الشاشة."
+
+msgctxt "L.SCALENONUM"
+msgid "The current scale settings are invalid."
+msgstr "إعدادات مقياس الصورة الحالية غير صالحة."
+
+msgctxt "L.MONITORSIZE"
+msgid "$1x$2 monitor"
+msgstr "شاشة $1x$2"
+
+msgctxt "L.VEDRES"
+msgid "Ved resolution: $1x$2"
+msgstr "دقة صورة Ved : $1x$2"
+
+msgctxt "L.NONINTSCALE"
+msgid "Non-integer scaling"
+msgstr "مقياس صورة بقيمة بفاصلة"
+
+msgctxt "L.USEFONTPNG"
+msgid "Use font.png from VVVVVV graphics folder as font"
+msgstr "استخدام الخط font.png من مجلد graphics للعبة VVVVV"
+
+msgctxt "L.USELEVELFONTPNG"
+msgid "Use per-level custom font.png as font"
+msgstr "استخدام خط font.png مخصص حسب المستوى"
+
+msgctxt "L.REQUIRESHIGHERLOVE"
+msgid " (requires LÖVE $1 or higher)"
+msgstr " (يتطلب  LÖVE $1 أو أحدث)"
+
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
+msgstr "حد الإطارات/ث"
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr "دقة الشاشة"
+
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr "كما يظهر (الأقصى 640x480)"
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr "$1% ($2x$3 للغرفة)"
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr "$1:$2 ($3x$4 للغرفة)"
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr "أعلى اليسار"
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr "العرض والارتفاع"
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr "أسفل اليمين"
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr "معلومات التظهير:"
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr "الخريطة ليست جاهزة بعد (في اللحظة التي ضغطت فيها الحفظ)، يرجى المحاولة مرة أخرى عندما تجهز."
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr "يترك نافذة الحوار مفتوحة"
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr "خلفية شفافة"
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr "طرأ خطأ أثناء إنشاء خريطة."
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr "عرض"
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
+msgstr "يرجى إدخال رقم سطر صالح."
+
+#. Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+msgctxt "L.OPENLEVELSFOLDER"
+msgid "Open lvl dir"
+msgstr "فتح مسار مست."
+
+msgctxt "L.MOVEENTITY"
+msgid "Move"
+msgstr "تحريك"
+
+msgctxt "L.GOTOROOM"
+msgid "Go to room"
+msgstr "الذهاب للغرفة"
+
+msgctxt "L.ESCTOCANCEL"
+msgid "[Press ESC to cancel]"
+msgstr "[اضغط ESC للتراجع]"
+
+msgctxt "L.INVALIDFILENAME_WIN"
+msgid ""
+"Windows doesn't allow the following characters in filenames:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| being a vertical bar)"
+msgstr ""
+"لا يسمح نظام ويندوز بالرموز التالية في أسماء الملفات:\n"
+"\n"
+": * ? \" < > | \n"
+"\n"
+" (الرمز الأخير سطر عمودي)"
+
+msgctxt "L.INVALIDFILENAME_MAC"
+msgid "macOS doesn't allow the : character in filenames."
+msgstr "نظام macOS لا يسمح بالرمز : في أسماء الملفات."
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_CTRL"
+msgid "CTRL"
+msgstr "CTRL"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_SHIFT"
+msgid "SHIFT"
+msgstr "SHIFT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ALT"
+msgid "ALT"
+msgstr "البديل ALT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ESC"
+msgid "ESC"
+msgstr "الخروج ESC"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_TAB"
+msgid "TAB"
+msgstr "جدول TAB"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_HOME"
+msgid "HOME"
+msgstr "المنزل HOME"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_END"
+msgid "END"
+msgstr "النهاية END"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_INSERT"
+msgid "INS"
+msgstr "الإدراج INS"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_DEL"
+msgid "DEL"
+msgstr "الحذف DEL"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_SCRIPTS"
+msgid "Scripts [$1]"
+msgstr "الاسكربتات [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_ROOMS"
+msgid "Rooms [$1]"
+msgstr "الغرف [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_NOTES"
+msgid "Notes [$1]"
+msgstr "ملاحظات [$1]"
+
+#. If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+msgctxt "L.ASSETS"
+msgid "Assets"
+msgstr "الموارد"
+
+msgctxt "L.MUSICPLAYERROR"
+msgid "Can not play this song. It may not exist or be of an unsupported type."
+msgstr "لا يمكن فتح هذه الموسيقى. إما أن الملف لا وجود له، وإما أن النوع غير مدعوم."
+
+msgctxt "L.SOUNDPLAYERROR"
+msgid "Can not play this sound. It may not exist or be of an unsupported type."
+msgstr "لا يمكن فتح هذا الصوت. إما أن الملف لا وجود له، وإما أن النوع غير مدعوم."
+
+msgctxt "L.MUSICLOADERROR"
+msgid "Can not load $1: "
+msgstr "لا يمكن تحميل$1: "
+
+msgctxt "L.MUSICLOADERROR_TOOSMALL"
+msgid "The music file is too small to be valid."
+msgstr "ملف الموسيقى أصغر من أن يعد صالحا."
+
+msgctxt "L.MUSICEXISTSYES"
+msgid "Exists"
+msgstr "موجود"
+
+msgctxt "L.MUSICEXISTSNO"
+msgid "Does not exist"
+msgstr "لا وجود له"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_NO"
+msgid "Does not exist - click to create"
+msgstr "لا وجود له - اضغط للإنشاء"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_YES"
+msgid "Exists - click to open"
+msgstr "موجود - اضغط للفتح"
+
+msgctxt "L.NO_ASSETS_SUBFOLDER"
+msgid "No \"$1\" folder"
+msgstr "لا مجلد \"$1\""
+
+msgctxt "L.LOAD"
+msgid "Load"
+msgstr "فتح"
+
+msgctxt "L.RELOAD"
+msgid "Reload"
+msgstr "إعادة تحميل"
+
+msgctxt "L.UNLOAD"
+msgid "Unload"
+msgstr "إلغاء تحميل"
+
+msgctxt "L.MUSICEDITOR"
+msgid "Music editor"
+msgstr "محرر الموسيقى"
+
+msgctxt "L.LOADMUSICNAME"
+msgid "Load .vvv"
+msgstr "فتح .vvv"
+
+msgctxt "L.SAVEMUSICNAME"
+msgid "Save .vvv"
+msgstr "حفظ .vvv"
+
+msgctxt "L.INSERTSONG"
+msgid "Insert song at track $1"
+msgstr "إدراج أغنية في المسار $1"
+
+msgctxt "L.SUREDELETESONG"
+msgid "Are you sure you want to remove song $1?"
+msgstr "هل أنت واثق من إزالة الأغنية $1؟"
+
+msgctxt "L.SONGOPENFAIL"
+msgid "Unable to open $1, song not replaced."
+msgstr "عجزت عن فتح $1، الأغنية لم تستبدل."
+
+msgctxt "L.SONGREPLACEFAIL"
+msgid "Something went wrong while replacing the song."
+msgstr "طرأ خطأ أثناء استبدال الأغنية."
+
+msgctxt "L.BYTES"
+msgid "$1 B"
+msgstr "$1 B"
+
+msgctxt "L.KILOBYTES"
+msgid "$1 kB"
+msgstr "$1 kB"
+
+msgctxt "L.MEGABYTES"
+msgid "$1 MB"
+msgstr "$1 MB"
+
+msgctxt "L.GIGABYTES"
+msgid "$1 GB"
+msgstr "$1 GB"
+
+msgctxt "L.TERABYTES"
+msgid "$1 TB"
+msgstr "$1 TB"
+
+#. The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
+msgctxt "L.DECIMAL_SEP"
+msgid "."
+msgstr ","
+
+msgctxt "L.CANNOTUSENEWLINES"
+msgid "You cannot use the \"$1\" character in script names!"
+msgstr "لا يجوز استخدام الرمز \" $1 \" في أسماء الاسكربتات!"
+
+msgctxt "L.MUSICTITLE"
+msgid "Title: "
+msgstr "العنوان: "
+
+msgctxt "L.MUSICARTIST"
+msgid "Artist: "
+msgstr "الفنان: "
+
+msgctxt "L.MUSICFILENAME"
+msgid "Filename: "
+msgstr "اسم الملف: "
+
+msgctxt "L.MUSICNOTES"
+msgid "Notes:"
+msgstr "ملاحظات: "
+
+msgctxt "L.SONGMETADATA"
+msgid "Metadata for song $1"
+msgstr "بيانات التعريف للأغنية $1"
+
+msgctxt "L.MUSICFILEMETADATA"
+msgid "File metadata"
+msgstr "بيانات تعريف الملف"
+
+#. Followed by date and time
+msgctxt "L.MUSICEXPORTEDON"
+msgid "Exported: "
+msgstr "تم تصديره: "
+
+msgctxt "L.SAVEMETADATA"
+msgid "Save metadata"
+msgstr "حفظ بيانات التعريف"
+
+msgctxt "L.SOUNDS"
+msgid "Sounds"
+msgstr "الأصوات"
+
+msgctxt "L.GRAPHICS"
+msgid "Graphics"
+msgstr "الرسوميات"
+
+msgctxt "L.FILEOPENERNAME"
+msgid "Name: "
+msgstr "الاسم"
+
+msgctxt "L.PATHINVALID"
+msgid "The path is invalid."
+msgstr "المسار غير صالح."
+
+#. like C: or F: on Windows
+msgctxt "L.DRIVES"
+msgid "Drives"
+msgstr "الأقراص"
+
+#. "*.txt" for example
+msgctxt "L.DOFILTER"
+msgid "Only show *$1"
+msgstr "إظهار * $1 فقط"
+
+msgctxt "L.DOFILTERDIR"
+msgid "Only show directories"
+msgstr "إظهار المجلدات فقط"
+
+msgctxt "L.FILEDIALOGLUV"
+msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
+msgstr "عذرا، لم نتعرف على نظام تشغيلك، لذا لن تعمل نافذة حوار الملفات."
+
+msgctxt "L.RESET"
+msgid "Reset"
+msgstr "الإعدادات الأصلية"
+
+#. verb
+msgctxt "L.CHANGEVERB"
+msgid "Change"
+msgstr "تغيير"
+
+msgctxt "L.LOADIMAGE"
+msgid "Load image"
+msgstr "فتح صورة"
+
+msgctxt "L.GRID"
+msgid "Grid"
+msgstr "شبكة"
+
+msgctxt "L.NOTALPHAONLY"
+msgid "RGB"
+msgstr "RGB"
+
+msgctxt "L.UNSAVED_LEVEL_ASSETS_FOLDER"
+msgid "The level needs to be saved before it can use custom assets."
+msgstr "يجب حفظ المستوى قبل أن يمكن استخدام الموارد المخصصة."
+
+#. $1: path
+msgctxt "L.CREATE_ASSETS_FOLDER"
+msgid ""
+"Would you like to create a custom assets folder for this level?\n"
+"\n"
+"$1"
+msgstr ""
+"هل تريد إنشاء مجلد للموارد المخصصة لأجل هذا المستوى؟\n"
+"\n"
+"$1"
+
+msgctxt "L.CREATE_VVVVVV_FOLDER"
+msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+msgstr "يبدو أن مجلد اللعبة VVVVVV غير موجود. هل تود إنشاءه؟"
+
+msgctxt "L.CREATE_LEVELS_FOLDER"
+msgid "It seems like the levels folder doesn't exist. Would you like to create it?"
+msgstr "يبدو أن مجلد المستويات غير موجود. هل تود إنشاءه؟"
+
+msgctxt "L.CREATE_FOLDER_FAIL"
+msgid ""
+"Unable to create folder.\n"
+"\n"
+"$1"
+msgstr ""
+"فشل إنشاء المجلد.\n"
+"\n"
+"$1"
+
+msgctxt "L.ASSETS_FOLDER_FOR_LEVEL"
+msgid "Assets folder for $1"
+msgstr "مجلد الموارد لأجل $1"
+
+msgctxt "L.OPAQUEROOMNAMEBACKGROUND"
+msgid "Make the black roomname backgrounds opaque"
+msgstr "جعل الخلفيات السوداء لأسماء المستويات غير شفافة"
+
+msgctxt "L.PLATVCHANGE_TITLE"
+msgid "Change platform speed"
+msgstr "تغيير سرعة المنصة"
+
+msgctxt "L.PLATVCHANGE_MSG"
+msgid "Speed:"
+msgstr "السرعة:"
+
+msgctxt "L.PLATVCHANGE_INVALID"
+msgid "You have to type in a number."
+msgstr "عليك كتابة قيمة عددية."
+
+msgctxt "L.RENAMESCRIPTREFERENCES"
+msgid "Rename references"
+msgstr "إعادة تسمية المراجع"
+
+msgctxt "L.PLATFORMSPEEDSLIDER"
+msgid "Spd.:"
+msgstr "سرعة"
+
+msgctxt "L.TRINKETS"
+msgid "Trinkets"
+msgstr "المقتنيات"
+
+#. "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+msgctxt "L.LISTALLTRINKETS"
+msgid "List all trinkets"
+msgstr "كل المقتنيات"
+
+msgctxt "L.LISTOFALLTRINKETS"
+msgid "List of all trinkets"
+msgstr "كل المقتنيات"
+
+msgctxt "L.NOTRINKETSINLEVEL"
+msgid "There are no trinkets in this level."
+msgstr "لا مقتنيات في هذا المستوى."
+
+msgctxt "L.CREWMATES"
+msgid "Crewmates"
+msgstr "الزملاء"
+
+#. "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+msgctxt "L.LISTALLCREWMATES"
+msgid "List all crewmates"
+msgstr "كل الزملاء"
+
+msgctxt "L.LISTOFALLCREWMATES"
+msgid "List of all rescuable crewmates"
+msgstr "قائمة كل زميل يمكن إنقاذه"
+
+msgctxt "L.NOCREWMATESINLEVEL"
+msgid "There are no rescuable crewmates in this level."
+msgstr "لا زميل يمكن إنقاذه في هذا المستوى"
+
+#. In the map. Move all rooms in the entire level in any direction
+msgctxt "L.SHIFTROOMS"
+msgid "Shift rooms"
+msgstr "إزاحة الغرف"
+
+msgctxt "L.FRAMESTOSECONDS"
+msgid "$1 = $2 sec"
+msgstr "$1 = $2 ثا"
+
+msgctxt "L.ROOMNUM"
+msgid "Room $1"
+msgstr "الغرفة $1"
+
+msgctxt "L.SOUNDNUM"
+msgid "Sound $1"
+msgstr "الصوت $1"
+
+msgctxt "L.TRACKNUM"
+msgid "Track $1"
+msgstr "الموسيقى $1"
+
+msgctxt "L.STOPSMUSIC"
+msgid "Stops music"
+msgstr "إيقاف الموسيقى"
+
+msgctxt "L.PLAYSOUND"
+msgid "Play sound"
+msgstr "تشغيل الصوت"
+
+msgctxt "L.EDITSCRIPTWOBUMPING"
+msgid "Edit script without bumping"
+msgstr "تحرير الاسكربت دون الرفع"
+
+msgctxt "L.EDITSCRIPTWBUMPING"
+msgid "Edit script and bump"
+msgstr "تحرير الاسكربت مع الرفع"
+
+msgctxt "L.CLICKONTHING"
+msgid "Click on $1"
+msgstr "اضغط على $1"
+
+#. follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+msgctxt "L.ORDRAGDROP"
+msgid "or drag and drop onto here"
+msgstr "أو اسحب وضع هنا"
+
+msgctxt "L.MORETHANONESTARTPOINT"
+msgid "There is more than one start point in this level!"
+msgstr "في هذا المستوى أكثر من نقطة بدء واحدة!"
+
+msgctxt "L.STARTPOINTNOTFOUND"
+msgid "There is no start point!"
+msgstr "لا توجد نقطة بدء!"
+
+msgctxt "L.MAPBIGGERTHANSIZELIMIT"
+msgid "Map size $1 by $2 is bigger than $3 by $4!"
+msgstr "حجم الخريطة $1 في $2 أكبر من $3 في $4!"
+
+msgctxt "L.BTNOVERRIDE"
+msgid "Override"
+msgstr "تجاوز النفوذ"
+
+#. What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+msgctxt "L.TARGETPLATFORM"
+msgid "Target platform"
+msgstr "المنصة المستهدفة"
+
+msgctxt "L.PLATFORM_V"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.TIMETRIALS"
+msgid "Time trials"
+msgstr "الاختبارات ضد الساعة"
+
+msgctxt "L.TIMETRIALTRINKETS"
+msgid "Trinket count"
+msgstr "عداد المقتنيات"
+
+msgctxt "L.TIMETRIALTIME"
+msgid "Par time"
+msgstr "الوقت الأمثل"
+
+msgctxt "L.SUREDELETETRIAL"
+msgid "Are you sure you want to delete the time trial \"$1\"?"
+msgstr "هل أنت واثق أنك تريد حذف اختبار ضد الساعة \"$1\"؟"
+
+msgctxt "L.CUT"
+msgid "Cut"
+msgstr "قص"
+
+msgctxt "L.PASTE"
+msgid "Paste"
+msgstr "لصق"
+
+msgctxt "L.SELECTWORD"
+msgid "Select word"
+msgstr "اختيار كلمة"
+
+msgctxt "L.SELECTLINE"
+msgid "Select line"
+msgstr "اختيار سطر"
+
+msgctxt "L.SELECTALL"
+msgid "Select all"
+msgstr "اختيار الكل"
+
+msgctxt "L.INSERTRAWHEX"
+msgid "Insert Unicode character"
+msgstr "إدراج رمز يونيكود"
+
+msgctxt "L.MOVELINEUP"
+msgid "Move line upwards"
+msgstr "تحريك السطر لأعلى"
+
+msgctxt "L.MOVELINEDOWN"
+msgid "Move line downwards"
+msgstr "تحريك السطر لأسفل"
+
+msgctxt "L.DUPLICATELINE"
+msgid "Duplicate line"
+msgstr "تكرار السطر"
+
+msgctxt "L.WHEREPLACEPLAYER"
+msgid "Where do you want to start?"
+msgstr "أين تريد البدء؟"
+
+msgctxt "L.YOUAREPLAYTESTING"
+msgid "You are currently playtesting"
+msgstr "أنت حاليا تجرب اللعبة"
+
+#. application (example: Select your VVVVVV executable)
+msgctxt "L.LOCATEVVVVVV"
+msgid "Select your $1 executable"
+msgstr "اختر تطبيقك $1"
+
+msgctxt "L.ALREADYPLAYTESTING"
+msgid "You're already playtesting!"
+msgstr "أنت تختبر اللعبة حاليا فعلا!"
+
+msgctxt "L.PLAYTESTINGFAILED"
+msgid ""
+"Something went wrong when opening VVVVVV:\n"
+"$1\n"
+"\n"
+"If you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
+msgstr ""
+"طرأ مشكل أثناء فتح VVVVVV : \n"
+"$1\n"
+"\n"
+" لو احتجت لتغيير تطبيق VVVVVV المستخدم أثناء الاختبار، اضغط مطولا زر العالي Shift أثناء ضغط زر الاختبار."
+
+#. for example, code 1, indicating failure
+msgctxt "L.VVVVVV_EXITCODE_FAILURE"
+msgid "VVVVVV exited with code $1"
+msgstr "أغلقت VVVVVV مع رمز الإغلاق $1"
+
+msgctxt "L.VVVVVV_22_OR_OLDER"
+msgid "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
+msgstr "يبدو أنك تستخدم VVVVVV بالإصدار 2.2 أو أقدم منه. يرجى الترقية إلى VVVVVV بالإصدار 2.3 أو أي إصدار أحدث منه."
+
+msgctxt "L.VVVVVV_SOMETHING_HAPPENED"
+msgid "Something seems to have gone wrong with VVVVVV."
+msgstr "يبدو أن خللا طرأ مع لعبة VVVVVV"
+
+#. you cannot playtest on <operating system>
+msgctxt "L.PLAYTESTUNAVAILABLE"
+msgid "Sorry, you cannot playtest on $1."
+msgstr "عذرا، لا يمكنك الاختبار في $1."
+
+msgctxt "L.VVVVVVFILE"
+msgid "Please select the file named '$1'."
+msgstr "رجاء اختر الملف الذي اسمه '$1'."
+
+msgctxt "L.PLAYTESTINGOPTIONS"
+msgid "Playtesting"
+msgstr "اختبار اللعبة"
+
+#. $1: VVVVVV 2.3, $2: VVVVVV
+msgctxt "L.PLAYTESTING_EXECUTABLE_NOTSET"
+msgid ""
+"You did not yet set a $1 executable to use for playtesting.\n"
+"Ved will ask for it when playtesting a $2 level for the first time."
+msgstr ""
+"لم تحدد تطبيقا $1 للاختبار. \n"
+"سيطلبها Ved أثناء اختبار لعب $2 مستوى لأول مرة."
+
+#. $1: VVVVVV 2.3
+msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
+msgid ""
+"The $1 executable to use for playtesting is set to:\n"
+"$2"
+msgstr ""
+"التطبيق $1 المستخدم في الاختبار حدد إلى: \n"
+"$2"
+
+msgctxt "L.FIND_V_EXE_ERROR"
+msgid "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually."
+msgstr "عذرا، طرأت مشكلة أثناء محاولة إيجاد VVVVVV . يرجى محاولة تحديد المسار إلى التطبيق يدويا."
+
+msgctxt "L.FIND_V_EXE_FOUNDERROR"
+msgid "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually."
+msgstr "وجدنا شيئا يبدو كأنه VVVVVV، لكن فشلنا في الحصول على مسار نحو التطبيق صالح للاستخدام. تأكد أنك لا تستخدم إصدارا قديما من اللعبة (يشترط إصدار 2.3 أو ما أحدث) وإلا حاول أن تحدد المسار نحو التطبيق يدويا."
+
+msgctxt "L.FIND_V_EXE_NOTFOUND"
+msgid "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
+msgstr "يبدو أن VVVVVV لا تعمل حاليا. يرجى الحرص أن VVVVVV تعمل، ثم أعد المحاولة."
+
+msgctxt "L.FIND_V_EXE_MULTI"
+msgid "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
+msgstr "وجدت أكثر من مثيل للتطبيق VVVVVV قيد التشغيل. احرص أن عندك فقط إصدار واحد من اللعبة مفتوحا، وحاول مرة أخرى."
+
+msgctxt "L.FIND_V_EXE_EXPLANATION"
+msgid ""
+"Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n"
+"\n"
+"\n"
+"To autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
+msgstr ""
+"محرر Ved يحتاج VVVVVV لأجل الاختبار، والمسار نحو VVVVVV يحتاج أولا لتعيين.\n"
+"\n"
+"\n"
+"للاكتشاف التلقائي للعبة VVVVVV يكفي تشغيل اللعبة (لو لم تشغلها بعد) واضغط \"اكتشاف\"."
+
+msgctxt "L.VCE_REMOVED"
+msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
+msgstr "نسخة VVVVVV: Community Edition لم تعد قيد الدعم، ودعم مستويات VVVVVV-CE نزع من Ved. هذا المستوى يعامل على أنه مستوى VVVVVV عادي. لمزيد من المعلومات، يرجى الاطلاع على https://vsix.dev/vce/status/"
+
+#. Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+msgctxt "L.VVVVVV_VERSION"
+msgid "VVVVVV version"
+msgstr "إصدار VVVVVV"
+
+msgctxt "L.VVVVVV_VERSION_AUTO"
+msgid "Auto"
+msgstr "تلقائي"
+
+msgctxt "L.VVVVVV_VERSION_23PLUS"
+msgid "2.3+"
+msgstr "2.3+"
+
+msgctxt "L.VVVVVV_VERSION_24PLUS"
+msgid "2.4+"
+msgstr "2.4+"
+
+msgctxt "L.ALL_PLUGINS"
+msgid "All plugins"
+msgstr "كل المكونات الإضافية"
+
+msgctxt "L.ALL_PLUGINS_MOREINFO"
+msgid "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl"
+msgstr ".¤https://tolp.nl/ved/plugins.php¤ هذه الصفحة¤ للمزيد من المعلومات عن المكونات الإضافية يرجى زيارة\\nLCl"
+
+msgctxt "L.ALL_PLUGINS_FOLDER"
+msgid "Your plugins folder is:"
+msgstr "مجلدك للمكونات الإضافية:"
+
+msgctxt "L.ALL_PLUGINS_NOPLUGINS"
+msgid "You do not have any plugins yet."
+msgstr "ليس عندك بعد أي مكون إضافي."
+
+msgctxt "L.PLUGIN_NOT_SUPPORTED"
+msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
+msgstr "[هذا المكون الإضافي غير مدعوم لأنه يتطلب Ved $1 على الأقل!]\\r"
+
+#. by Person, version 1.0.0
+msgctxt "L.PLUGIN_AUTHOR_VERSION"
+msgid "by $1, version $2"
+msgstr "من $1، الإصدار $2 "
+
+msgctxt "L.CREATE_LOAD_SCRIPT"
+msgid "Create load script"
+msgstr "إنشاء اسكربت تحميل"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_NO"
+msgid "No"
+msgstr "لا"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_RUNONCE"
+msgid "Run once"
+msgstr "التشغيل مرة"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_REPEATING"
+msgid "Repeating"
+msgstr "التكرار"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_NO"
+msgid "Don't create load script"
+msgstr "عدم إنشاء اسكربت تحميل"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_NO"
+msgid "This terminal will directly point to the script."
+msgstr "هذا الحاسب سيشير مباشرة إلى الاسكربت."
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_NO"
+msgid "This script box will directly point to the script."
+msgstr "هذا صندوق اسكربت سيشير مباشرة إلى الاسكربت."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_RUNONCE"
+msgid "Create load script to run once"
+msgstr "إنشاء اسكربت تحميل يشغل مرة واحدة"
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE"
+msgid "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "هذا الحاسب سيشير إلى تحميل اسكربت جديد، بدوره يفتح الاسكربت الفعلي مرة واحدة في جلسة اللعب. سيختار المحرر Ved راية غير مستخدمة."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE"
+msgid "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "هذا صندوق اسكربت سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي مرة واحدة في جلسة اللعب. سيختار المحرر Ved راية غير مستخدمة."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_REPEATING"
+msgid "Create repeating load script"
+msgstr "إنشاء اسكربت تحميل متكرر"
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_REPEATING"
+msgid "This terminal will point to a new load script, which unconditionally loads the real script."
+msgstr "هذا الحاسب سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي بدون شروط."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_REPEATING"
+msgid "This script box will point to a new load script, which unconditionally loads the real script."
+msgstr "هذا صندوق اسكربت سيشير إلى اسكربت تحميل جديد، بدوره يفتح الاسكربت الفعلي بدون شروط."
+
+msgctxt "L.CUSTOM_SIZED_BRUSH"
+msgid "Custom brush"
+msgstr "فرشاة مخصصة"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_BRUSH"
+msgid "Brush"
+msgstr "فرشاة"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_STAMP"
+msgid "Stamp"
+msgstr "طابع"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_TILESET"
+msgid "Tileset"
+msgstr "مجموعة الخلايا"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH"
+msgid "Custom brush size"
+msgstr "حجم الفرشاة المخصصة"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH"
+msgid "Choose the size of the brush you need."
+msgstr "اختر حجم الفرشاة التي تحتاجها."
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_STAMP"
+msgid "Stamp from room"
+msgstr "الطابع من الغرفة"
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_STAMP"
+msgid "Select tiles from the room to create a stamp."
+msgstr "اختر خلايا من الغرفة تنشئ بها طابعا."
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_TILESET"
+msgid "Stamp from tileset"
+msgstr "الطابع من مجموعة الخلايا"
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_TILESET"
+msgid "Select tiles from the tileset to create a stamp. Only works in manual mode."
+msgstr "اختر خلايا من مجموعة الخلايا تنشئ بها طابعا. لا يعمل إلا في الوضع اليدوي."
+
+msgctxt "L.ADVANCED_LEVEL_OPTIONS"
+msgid "Advanced level options"
+msgstr "إعدادات متقدمة للمستوى"
+
+#. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+msgctxt "L.ONEWAYCOL_OVERRIDE"
+msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
+msgstr "إعادة تلوين الخلايا ذات الاتجاه الواحد حتى في الموارد المخصصة (onewaycol_override)"
+
+#. .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+msgctxt "L.ZIP_SAVE_AS"
+msgid "Create ZIP of this version for sharing"
+msgstr "إنشاء مجلد مضغوط ZIP من هذا الإصدار بغرض المشاركة"
+
+msgctxt "L.ZIP_CREATE_TITLE"
+msgid "Save ZIP"
+msgstr "حفظ مجلد مضغوط ZIP"
+
+msgctxt "L.ZIP_BUSY_TITLE"
+msgid "Creating ZIP..."
+msgstr "جار إنشاء مجلد ZIP الآن..."
+
+#. $1: version number
+msgctxt "L.ZIP_LOVE11_ONLY"
+msgid "Creating a ZIP file requires LÖVE $1 or higher"
+msgstr "إنشاء مجلد مضغوط ZIP يتطلب  LÖVE $1 أو أحدث"
+
+msgctxt "L.ZIP_SAVING_SUCCESS"
+msgid "ZIP saved!"
+msgstr "تم حفظ مجلد ZIP بنجاح!"
+
+msgctxt "L.ZIP_SAVING_FAIL"
+msgid "Could not save ZIP file!"
+msgstr "عملية حفظ مجلد ZIP فشلت!"
+
+#. Button, open a directory/folder in Explorer, Finder or another system file manager.
+msgctxt "L.OPENFOLDER"
+msgid "Open folder"
+msgstr "فتح مجلد"
+
+msgctxt "L.LEVELFONT"
+msgid "Level font"
+msgstr "خط المستوى"
+
+msgctxt "L.TEXTBOXCOLORS_BUTTON"
+msgid "Text colors"
+msgstr "ألوان النص"
+
+msgctxt "L.TEXTBOXCOLORS_TITLE"
+msgid "Textbox colors"
+msgstr "ألوان صندوق النص"
+
+msgctxt "L.TEXTBOXCOLORS_RENAME"
+msgid "Rename color \"$1\""
+msgstr "تسمية اللون \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_DUPLICATE"
+msgid "Duplicate color \"$1\""
+msgstr "تكرار اللون \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_CREATE"
+msgid "Add new color"
+msgstr "إضافة لون جديد"
+
+msgctxt "L.LIB_LOAD_ERRMSG_BIDI"
+msgid ""
+"Failed to load the library for right-to-left text support.\n"
+"\n"
+"$1"
+msgstr ""
+"فشل تحميل المكتبة التي تدعم إظهار النص من اليمين إلى اليسار. \n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_AV"
+msgid ""
+"\n"
+"\n"
+"Your antivirus may be breaking it."
+msgstr ""
+"\n"
+"\n"
+"قد يكون السبب أن برنامجك لمكافحة الفايروسات يوقفها."
+
+msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
+msgid "You have $1 plugin that is not supported in this version."
+msgid_plural "You have $1 plugins that are not supported in this version."
+msgstr[0] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+msgstr[1] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+msgstr[2] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+msgstr[3] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+msgstr[4] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+msgstr[5] "عندك $1 مكون إضافي غير مدعوم في هذا الإصدار."
+
+msgctxt "L_PLU.LEVELFAILEDCHECKS"
+msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgstr[0] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+msgstr[1] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+msgstr[2] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+msgstr[3] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+msgstr[4] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+msgstr[5] "فشل المستوى في $1 من التحققات. قد تكون المشكلة صححت تلقائيا، لكن من الوارد أن يسفر رغم ذلك هذا عن أعطال وتناقضات."
+
+msgctxt "L_PLU.SCRIPTUSAGESROOMS"
+msgid "$1 usage in rooms: $2"
+msgid_plural "$1 usages in rooms: $2"
+msgstr[0] "$1 من الاستخدامات في الغرف: $2"
+msgstr[1] "$1 من الاستخدامات في الغرف: $2"
+msgstr[2] "$1 من الاستخدامات في الغرف: $2"
+msgstr[3] "$1 من الاستخدامات في الغرف: $2"
+msgstr[4] "$1 من الاستخدامات في الغرف: $2"
+msgstr[5] "$1 من الاستخدامات في الغرف: $2"
+
+msgctxt "L_PLU.SCRIPTUSAGESSCRIPTS"
+msgid "$1 usage in scripts: $2"
+msgid_plural "$1 usages in scripts: $2"
+msgstr[0] "$1 من الاستخدامات في الاسكربتات: $2"
+msgstr[1] "$1 من الاستخدامات في الاسكربتات: $2"
+msgstr[2] "$1 من الاستخدامات في الاسكربتات: $2"
+msgstr[3] "$1 من الاستخدامات في الاسكربتات: $2"
+msgstr[4] "$1 من الاستخدامات في الاسكربتات: $2"
+msgstr[5] "$1 من الاستخدامات في الاسكربتات: $2"
+
+msgctxt "L_PLU.ENTITYINVALIDPROPERTIES"
+msgid "Entity at [$1 $2] has $3 invalid property!"
+msgid_plural "Entity at [$1 $2] has $3 invalid properties!"
+msgstr[0] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+msgstr[1] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+msgstr[2] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+msgstr[3] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+msgstr[4] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+msgstr[5] "الكيان في  [$1 $2] لديه $3 من الميزات غير الصالحة!"
+
+msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
+msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
+msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
+msgstr[0] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+msgstr[1] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+msgstr[2] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+msgstr[3] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+msgstr[4] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+msgstr[5] "بيانات المستوى LevelMetadata للغرفة  $1,$2 لديها $3 من الميزات غير الصالحة!"
+
+msgctxt "L_PLU.SCRIPTDISPLAY_SHOWING"
+msgid "Showing $1"
+msgid_plural "Showing $1"
+msgstr[0] "يظهر $1"
+msgstr[1] "يظهر $1"
+msgstr[2] "يظهر $1"
+msgstr[3] "يظهر $1"
+msgstr[4] "يظهر $1"
+msgstr[5] "يظهر $1"
+
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] "استخدم $1 من مرات في الاسكربتات: $2"
+msgstr[1] "استخدم $1 من مرات في الاسكربتات: $2"
+msgstr[2] "استخدم $1 من مرات في الاسكربتات: $2"
+msgstr[3] "استخدم $1 من مرات في الاسكربتات: $2"
+msgstr[4] "استخدم $1 من مرات في الاسكربتات: $2"
+msgstr[5] "استخدم $1 من مرات في الاسكربتات: $2"
+
+msgctxt "L_PLU.NOTALLTILESVALID"
+msgid "$1 tile is not a valid whole number greater than or equal to 0"
+msgid_plural "$1 tiles are not a valid whole number greater than or equal to 0"
+msgstr[0] "الخلية $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+msgstr[1] "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+msgstr[2] "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+msgstr[3] "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+msgstr[4] "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+msgstr[5] "الخلايا $1 ليست قيمتها العددية مناسبة لأنها ليست عددا صحيحا قيمته 0 أو أكثر."
+
+msgctxt "L_PLU.BYTES"
+msgid "$1 byte"
+msgid_plural "$1 bytes"
+msgstr[0] "$1 بايت"
+msgstr[1] "$1 بايتات"
+msgstr[2] "$1 بايتات"
+msgstr[3] "$1 بايتات"
+msgstr[4] "$1 بايتات"
+msgstr[5] "$1 بايتات"
+
+msgctxt "L_PLU.NUM_GRAPHICS_CUSTOMIZED"
+msgid "$1 image customized"
+msgid_plural "$1 images customized"
+msgstr[0] "$1 صورة خصصت"
+msgstr[1] "$1 من الصور خصصت"
+msgstr[2] "$1 من الصور خصصت"
+msgstr[3] "$1 من الصور خصصت"
+msgstr[4] "$1 من الصور خصصت"
+msgstr[5] "$1 من الصور خصصت"
+
+msgctxt "L_PLU.NUM_SOUNDS_CUSTOMIZED"
+msgid "$1 sound effect customized"
+msgid_plural "$1 sound effects customized"
+msgstr[0] "$1 مؤثرات صوتية خصصت"
+msgstr[1] "$1 من المؤثرات الصوتية خصصت"
+msgstr[2] "$1 من المؤثرات الصوتية خصصت"
+msgstr[3] "$1 من المؤثرات الصوتية خصصت"
+msgstr[4] "$1 من المؤثرات الصوتية خصصت"
+msgstr[5] "$1 من المؤثرات الصوتية خصصت"
+
+msgctxt "toolnames.1"
+msgid "Wall"
+msgstr "حائط"
+
+msgctxt "toolnames.2"
+msgid "Background"
+msgstr "خلفية"
+
+msgctxt "toolnames.3"
+msgid "Spike"
+msgstr "إبرة"
+
+msgctxt "toolnames.4"
+msgid "Trinket"
+msgstr "مقتنى"
+
+msgctxt "toolnames.5"
+msgid "Checkpoint"
+msgstr "نقطة حفظ"
+
+msgctxt "toolnames.6"
+msgid "Disappearing platform"
+msgstr "منصة متلاشية"
+
+msgctxt "toolnames.7"
+msgid "Conveyor"
+msgstr "بساط متحرك"
+
+msgctxt "toolnames.8"
+msgid "Moving platform"
+msgstr "منصة متحركة"
+
+msgctxt "toolnames.9"
+msgid "Enemy"
+msgstr "عدو"
+
+msgctxt "toolnames.10"
+msgid "Gravity line"
+msgstr "خط جاذبية"
+
+msgctxt "toolnames.11"
+msgid "Roomtext"
+msgstr "نص الغرفة"
+
+msgctxt "toolnames.12"
+msgid "Terminal"
+msgstr "حاسب"
+
+msgctxt "toolnames.13"
+msgid "Script box"
+msgstr "صندوق اسكربت"
+
+msgctxt "toolnames.14"
+msgid "Warp token"
+msgstr "تذكرة تنقيلة"
+
+msgctxt "toolnames.15"
+msgid "Warp line"
+msgstr "خط تنقيلة"
+
+msgctxt "toolnames.16"
+msgid "Crewmate"
+msgstr "زميل"
+
+msgctxt "toolnames.17"
+msgid "Start point"
+msgstr "نقطة البدء"
+
+msgctxt "subtoolnames.1.1"
+msgid "1x1 brush"
+msgstr "فرشاة 1×1"
+
+msgctxt "subtoolnames.1.2"
+msgid "3x3 brush"
+msgstr "فرشاة 3×3"
+
+msgctxt "subtoolnames.1.3"
+msgid "5x5 brush"
+msgstr "فرشاة 5×5"
+
+msgctxt "subtoolnames.1.4"
+msgid "7x7 brush"
+msgstr "فرشاة 7×7"
+
+msgctxt "subtoolnames.1.5"
+msgid "9x9 brush"
+msgstr "فرشاة 9×9"
+
+msgctxt "subtoolnames.1.6"
+msgid "Fill horizontally"
+msgstr "تعبئة أفقية"
+
+msgctxt "subtoolnames.1.7"
+msgid "Fill vertically"
+msgstr "تعبئة عمودية"
+
+msgctxt "subtoolnames.1.8"
+msgid "Custom brush size"
+msgstr "تخصيص حجم الفرشاة"
+
+msgctxt "subtoolnames.1.9"
+msgid "Fill bucket"
+msgstr "تعبئة علبة الدهان"
+
+msgctxt "subtoolnames.1.10"
+msgid "Potato for Doing Things that are Magical"
+msgstr "بطاطس تنجز أمورا سحرية"
+
+msgctxt "subtoolnames.3.1"
+msgid "Auto 1"
+msgstr "تلقائي 1"
+
+msgctxt "subtoolnames.3.2"
+msgid "Auto expand L+R"
+msgstr "توسيع تلقائي يمين+يسار"
+
+msgctxt "subtoolnames.3.3"
+msgid "Auto expand L"
+msgstr "توسيع تلقائي يسار"
+
+msgctxt "subtoolnames.3.4"
+msgid "Auto expand R"
+msgstr "توسيع تلقائي يمين"
+
+msgctxt "subtoolnames.5.1"
+msgid "Upright"
+msgstr "مستقيم"
+
+msgctxt "subtoolnames.5.2"
+msgid "Flipped"
+msgstr "معكوس"
+
+msgctxt "subtoolnames.7.1"
+msgid "Small R"
+msgstr "يمين صغير"
+
+msgctxt "subtoolnames.7.2"
+msgid "Small L"
+msgstr "يسار صغير"
+
+msgctxt "subtoolnames.7.3"
+msgid "Large R"
+msgstr "يمين عريض"
+
+msgctxt "subtoolnames.7.4"
+msgid "Large L"
+msgstr "يسار عريض"
+
+msgctxt "subtoolnames.8.1"
+msgid "Down"
+msgstr "تحت"
+
+msgctxt "subtoolnames.8.2"
+msgid "Up"
+msgstr "فوق"
+
+msgctxt "subtoolnames.8.3"
+msgid "Left"
+msgstr "يسار"
+
+msgctxt "subtoolnames.8.4"
+msgid "Right"
+msgstr "يمين"
+
+msgctxt "subtoolnames.10.1"
+msgid "Horizontal"
+msgstr "أفقي"
+
+msgctxt "subtoolnames.10.2"
+msgid "Vertical"
+msgstr "عمودي"
+
+msgctxt "subtoolnames.14.1"
+msgid "Entrance"
+msgstr "مدخل"
+
+msgctxt "subtoolnames.14.2"
+msgid "Exit"
+msgstr "مخرج"
+
+msgctxt "subtoolnames.16.1"
+msgid "Pink"
+msgstr "وردي"
+
+msgctxt "subtoolnames.16.2"
+msgid "Yellow"
+msgstr "أصفر"
+
+msgctxt "subtoolnames.16.3"
+msgid "Red"
+msgstr "أحمر"
+
+msgctxt "subtoolnames.16.4"
+msgid "Green"
+msgstr "أخضر"
+
+msgctxt "subtoolnames.16.5"
+msgid "Blue"
+msgstr "أزرق"
+
+msgctxt "subtoolnames.16.6"
+msgid "Cyan"
+msgstr "سماوي"
+
+msgctxt "subtoolnames.16.7"
+msgid "Random"
+msgstr "عشوائي"
+
+msgctxt "subtoolnames.17.1"
+msgid "Face right"
+msgstr "ملتفت لليمين"
+
+msgctxt "subtoolnames.17.2"
+msgid "Face left"
+msgstr "ملتفت لليسار"
+
+msgctxt "warpdirs.0"
+msgid "x"
+msgstr "x"
+
+msgctxt "warpdirs.1"
+msgid "H"
+msgstr "H"
+
+msgctxt "warpdirs.2"
+msgid "V"
+msgstr "V"
+
+msgctxt "warpdirs.3"
+msgid "A"
+msgstr "A"
+
+msgctxt "warpdirchangedtext.0"
+msgid "Room warping disabled"
+msgstr "تنقيل حواف الغرفة معطل"
+
+msgctxt "warpdirchangedtext.1"
+msgid "Warp direction set to horizontal"
+msgstr "تنقيل حواف الغرفة حدد للأفقي"
+
+msgctxt "warpdirchangedtext.2"
+msgid "Warp direction set to vertical"
+msgstr "تنقيل حواف الغرفة حدد للعمودي"
+
+msgctxt "warpdirchangedtext.3"
+msgid "Warp direction set to all directions"
+msgstr "تنقيل حواف الغرفة حدد لكل الاتجاهات"
+
+msgctxt "langtilesetnames.short0"
+msgid "Space Stn."
+msgstr "محطة الفضاء"
+
+msgctxt "langtilesetnames.long0"
+msgid "Space Station"
+msgstr "المحطة الفضائية"
+
+msgctxt "langtilesetnames.short1"
+msgid "Outside"
+msgstr "فضاء خارجي"
+
+msgctxt "langtilesetnames.long1"
+msgid "Outside"
+msgstr "الفضاء الخارجي"
+
+msgctxt "langtilesetnames.short2"
+msgid "Lab"
+msgstr "المخبر"
+
+msgctxt "langtilesetnames.long2"
+msgid "Lab"
+msgstr "المخبر"
+
+msgctxt "langtilesetnames.short3"
+msgid "Warp Zone"
+msgstr "نطاق التنقيل"
+
+msgctxt "langtilesetnames.long3"
+msgid "Warp Zone"
+msgstr "منطقة التنقيل"
+
+msgctxt "langtilesetnames.short4"
+msgid "Ship"
+msgstr "السفينة"
+
+msgctxt "langtilesetnames.long4"
+msgid "Ship"
+msgstr "السفينة"
+
+msgctxt "langtilesetnames.short5"
+msgid "Tower"
+msgstr "البرج"
+
+msgctxt "langtilesetnames.long5"
+msgid "Tower"
+msgstr "البرج"
+
+msgctxt "ERR_VEDHASCRASHED"
+msgid "Ved has crashed!"
+msgstr "تعطل محرر Ved !"
+
+msgctxt "ERR_VEDVERSION"
+msgid "Ved version:"
+msgstr "إصدار Ved :"
+
+msgctxt "ERR_LOVEVERSION"
+msgid "LÖVE version:"
+msgstr "إصدار LÖVE :"
+
+msgctxt "ERR_STATE"
+msgid "State:"
+msgstr "الحالة:"
+
+msgctxt "ERR_OS"
+msgid "OS:"
+msgstr "نظام التشغيل:"
+
+msgctxt "ERR_TIMESINCESTART"
+msgid "Time since start:"
+msgstr "الوقت منذ البدء:"
+
+msgctxt "ERR_PLUGINS"
+msgid "Plugins:"
+msgstr "المكونات الإضافية:"
+
+msgctxt "ERR_PLUGINSNOTLOADED"
+msgid "(not loaded)"
+msgstr "(غير محمل)"
+
+msgctxt "ERR_PLUGINSNONE"
+msgid "(none)"
+msgstr "(بدون)"
+
+msgctxt "ERR_PLEASETELLDAV"
+msgid ""
+"Please tell Dav999 about this problem.\n"
+"\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"يرجى إبلاغ المطور Dav999 عن المشكلة.\n"
+"\n"
+"\n"
+"التفاصيل: (اضغط زر الأوامر Ctrl/Cmd + زر C للنسخ إلى الحافظة)\n"
+"\n"
+
+#. pre-release version, so a version in between officially released versions
+msgctxt "ERR_INTERMEDIATE"
+msgid " (intermediate version)"
+msgstr " (نسخة انتقالية)"
+
+msgctxt "ERR_TOONEW"
+msgid " (too new)"
+msgstr " (جديدة أكثر من اللازم)"
+
+msgctxt "ERR_PLUGINERROR"
+msgid "Plugin error!"
+msgstr "خطأ في المكون الإضافي!"
+
+msgctxt "ERR_FILE"
+msgid "File to be edited:"
+msgstr "الملف الذي سيحرر:"
+
+msgctxt "ERR_FILEEDITORS"
+msgid "Plugins that edit this file:"
+msgstr "المكون الإضافي الذي يحرر هذا الملف:"
+
+msgctxt "ERR_CURRENTPLUGIN"
+msgid "Plugin that triggered the error:"
+msgstr "المكون الإضافي الذي سبب هذا الخطأ:"
+
+msgctxt "ERR_PLEASETELLAUTHOR"
+msgid ""
+"A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\n"
+"It is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"كان يفترض بمكون إضافي أن يطبق تعديلا على برمجة في محرر Ved، إلا أننا لم نجد البرمجة الأصلية التي كان سيقع استبدالها.\n"
+"من الوارد أن تضاربا بين مكونين إضافيين سبب هذا، أو أن تحديثا لمحرر Ved أفسد التوافق مع هذا المكون الإضافي.\n"
+"\n"
+"التفاصيل: (يرجى ضغط زر الأوامر (Ctrl/Cmd) + الزر C لنسخ التفاصيل إلى الحافظة)\n"
+"\n"
+
+msgctxt "ERR_CONTINUE"
+msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr "يمكنك المواصلة بضغط ESC أو Enter ، لكن انتبه لكون هذا التعديل الفاشل قد يتسبب بمشاكل أخرى."
+
+msgctxt "ERR_OPENPLUGINSFOLDER"
+msgid "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+msgstr "يمكنك فتح مجلد المكونات الإضافية بضغط F ، وهكذا يمكنك إصلاح أو نزع المكون الإضافي الذي يسبب المشكلة. بعد ذلك، أعد تشغيل Ved ."
+
+msgctxt "ERR_REPLACECODE"
+msgid "Failed to find this in %s.lua:"
+msgstr "فشل إيجاد هذا في %s.lua :"
+
+msgctxt "ERR_REPLACECODEPATTERN"
+msgid "Failed to find this in %s.lua (as pattern):"
+msgstr "فشل إيجاد هذا في %s.lua (بمثابة نمط) :"
+
+msgctxt "ERR_LINESTOTAL"
+msgid "%i lines in total"
+msgstr "%i سطر إجمالا"
+
+msgctxt "ERR_SAVELEVEL"
+msgid "To save a copy of your level, press S"
+msgstr "لحفظ نسخة من المستوى، اضغط S"
+
+msgctxt "ERR_SAVESUCC"
+msgid "Level saved successfully as %s!"
+msgstr "نجح حفظ المستوى تحت %s !"
+
+msgctxt "ERR_SAVEERROR"
+msgid "Save error! %s"
+msgstr "خطأ حفظ!  %s"
+
+msgctxt "ERR_LOGSAVED"
+msgid ""
+"More information can be found in the crash log:\n"
+"%s"
+msgstr ""
+"يمكن العثور على المزيد من المعلومات في سجل الأعطال:\n"
+"%s"
+
+msgctxt "diffmessages.pages.levelproperties"
+msgid "Level properties"
+msgstr "خاصيات المستوى"
+
+msgctxt "diffmessages.pages.changedrooms"
+msgid "Changed rooms"
+msgstr "الغرف المغيرة"
+
+msgctxt "diffmessages.pages.changedroommetadata"
+msgid "Changed room metadata"
+msgstr "معلومات الغرف المغيرة"
+
+msgctxt "diffmessages.pages.entities"
+msgid "Entities"
+msgstr "الكيانات"
+
+msgctxt "diffmessages.pages.scripts"
+msgid "Scripts"
+msgstr "الاسكربتات"
+
+msgctxt "diffmessages.pages.flagnames"
+msgid "Flag names"
+msgstr "أسماء الرايات"
+
+msgctxt "diffmessages.pages.levelnotes"
+msgid "Level notes"
+msgstr "ملحوظات المستوى"
+
+msgctxt "diffmessages.levelpropertiesdiff.Title"
+msgid "Name was changed from \"$1\" to \"$2\""
+msgstr "تغير الاسم من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Creator"
+msgid "Author was changed from \"$1\" to \"$2\""
+msgstr "تغير المؤلف من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.website"
+msgid "Website was changed from \"$1\" to \"$2\""
+msgstr "تغير موقع الويب من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc1"
+msgid "Desc1 was changed from \"$1\" to \"$2\""
+msgstr "تغير الوصف Desc1 من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc2"
+msgid "Desc2 was changed from \"$1\" to \"$2\""
+msgstr "تغير الوصف Desc2 من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc3"
+msgid "Desc3 was changed from \"$1\" to \"$2\""
+msgstr "تغير الوصف Desc3 من \"$1\" إلى \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsize"
+msgid "Map size was changed from $1x$2 to $3x$4"
+msgstr "تغير حجم الخريطة من $1x$2 إلى $3x$4"
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsizenote"
+msgid ""
+"NOTE: Map size was changed from $1x$2 to $3x$4.\\o\n"
+"Rooms outside of $5x$6 are not listed.\\o"
+msgstr ""
+"ملاحظة: تغير حجم الخريطة من $1x$2 إلى $3x$4.\\o\n"
+"الغرف خارج $5x$6 لم تدرج في القائمة.\\o"
+
+msgctxt "diffmessages.levelpropertiesdiff.levmusic"
+msgid "Level music was changed from $1 to $2"
+msgstr "تغيرت موسيقى المستوى من $1 إلى $2"
+
+msgctxt "diffmessages.rooms.added1"
+msgid "Added ($1,$2) ($3)\\G"
+msgstr "تمت إضافة ($1,$2) ($3)\\G"
+
+msgctxt "diffmessages.rooms.added2"
+msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgstr "تمت إضافة ($1,$2) ($3 -> $4)\\G"
+
+msgctxt "diffmessages.rooms.changed1"
+msgid "Changed ($1,$2) ($3)\\Y"
+msgstr "تم تغيير ($1,$2) ($3)\\Y"
+
+msgctxt "diffmessages.rooms.changed2"
+msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgstr "تم تغيير ($1,$2) ($3 -> $4)\\Y"
+
+msgctxt "diffmessages.rooms.cleared1"
+msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgstr "تم مسح كل الخلايا في ($1,$2) ($3)\\R"
+
+msgctxt "diffmessages.rooms.cleared2"
+msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgstr "تم مسح كل الخلايا في ($1,$2) ($3 -> $4)\\R"
+
+msgctxt "diffmessages.roommetadata.changed0"
+msgid "Room $1,$2:"
+msgstr "الغرفة $1,$2:"
+
+msgctxt "diffmessages.roommetadata.changed1"
+msgid "Room $1,$2 ($3):"
+msgstr "الغرفة $1,$2 ($3):"
+
+msgctxt "diffmessages.roommetadata.roomname"
+msgid "Roomname changed from \"$1\" to \"$2\"\\Y"
+msgstr "اسم الغرفة \"$1\" غير إلى \"$2\"\\Y"
+
+msgctxt "diffmessages.roommetadata.roomnameremoved"
+msgid "Roomname \"$1\" removed\\R"
+msgstr "اسم الغرفة \"$1\" حذف\\R"
+
+msgctxt "diffmessages.roommetadata.roomnameadded"
+msgid "Room named \"$1\"\\G"
+msgstr "الغرفة سميت \"$1\"\\G"
+
+msgctxt "diffmessages.roommetadata.tileset"
+msgid "Tileset $1 tilecol $2 changed to tileset $3 tilecol $4\\Y"
+msgstr "مجموعة خ $1 بلون $2 غيرت إلى مجموعة خ $3 بلون $4\\Y"
+
+msgctxt "diffmessages.roommetadata.platv"
+msgid "Platform speed changed from $1 to $2\\Y"
+msgstr "سرعة المنصة غيرت من $1 إلى $2\\Y"
+
+msgctxt "diffmessages.roommetadata.enemytype"
+msgid "Enemy type changed from $1 to $2\\Y"
+msgstr "نوع الأعداء غير من $1 إلى $2\\Y"
+
+msgctxt "diffmessages.roommetadata.platbounds"
+msgid "Platform bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "نطاق المنصات غير من $1,$2,$3,$4 إلى $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.enemybounds"
+msgid "Enemy bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "نطاق الأعداء غير من $1,$2,$3,$4 إلى $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.directmode01"
+msgid "Direct mode enabled\\G"
+msgstr "الوضع المباشر مفعل\\G"
+
+msgctxt "diffmessages.roommetadata.directmode10"
+msgid "Direct mode disabled\\R"
+msgstr "الوضع المباشر معطل\\G"
+
+msgctxt "diffmessages.roommetadata.warpdir"
+msgid "Warp direction changed from $1 to $2\\Y"
+msgstr "اتجاه التنقيل تغير من $1 إلى $2\\Y"
+
+msgctxt "diffmessages.entities.added"
+msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgstr "أضفت نوع الكيان $1 في الموضع $2,$3 في الغرفة ($4,$5)\\G"
+
+msgctxt "diffmessages.entities.removed"
+msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgstr "نزعت نوع الكيان $1 من الموضع $2,$3 في الغرفة ($4,$5)\\R"
+
+msgctxt "diffmessages.entities.changed"
+msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgstr "غيرت نوع الكيان $1 في الموضع $2,$3 في الغرفة ($4,$5)\\Y"
+
+msgctxt "diffmessages.entities.changedtype"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgstr "غيرت نوع الكيان $1 إلى النوع $2 في الموضع $3,$4 في الغرفة ($5,$6)\\Y"
+
+msgctxt "diffmessages.entities.multiple1"
+msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgstr "غيرت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\Y"
+
+msgctxt "diffmessages.entities.multiple2"
+msgid "to:"
+msgstr "إلى:"
+
+msgctxt "diffmessages.entities.addedmultiple"
+msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgstr "أضفت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\G"
+
+msgctxt "diffmessages.entities.removedmultiple"
+msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgstr "نزعت الكيانات في الموضع $1,$2 في الغرفة ($3,$4):\\R"
+
+msgctxt "diffmessages.entities.entity"
+msgid "Type $1"
+msgstr "النوع $1"
+
+msgctxt "diffmessages.entities.incomplete"
+msgid "Not all entities were handled! Please report this to Dav.\\r"
+msgstr "لم يتم التعامل مع كل الكيانات! يرجى إبلاغ المطور Dav بهذا.\\r"
+
+msgctxt "diffmessages.scripts.added"
+msgid "Added script \"$1\"\\G"
+msgstr "أضفت الاسكربت \"$1\"\\G"
+
+msgctxt "diffmessages.scripts.removed"
+msgid "Removed script \"$1\"\\R"
+msgstr "نزع الاسكربت \"$1\"\\R"
+
+msgctxt "diffmessages.scripts.edited"
+msgid "Edited script \"$1\"\\Y"
+msgstr "حررت الاسكربت \"$1\"\\Y"
+
+msgctxt "diffmessages.flagnames.added"
+msgid "Set name for flag $1 to \"$2\"\\G"
+msgstr "عينت للراية $1 الاسم \"$2\"\\G"
+
+msgctxt "diffmessages.flagnames.removed"
+msgid "Removed name \"$1\" for flag $2\\R"
+msgstr "أزلت الاسم \"$1\" من الراية $2\\R"
+
+msgctxt "diffmessages.flagnames.edited"
+msgid "Changed name for flag $1 from \"$2\" to \"$3\"\\Y"
+msgstr "غيرت اسم الراية $1 من \"$2\" إلى \"$3\"\\Y"
+
+msgctxt "diffmessages.levelnotes.added"
+msgid "Added level note \"$1\"\\G"
+msgstr "أضفت ملحوظة المستوى \"$1\"\\G"
+
+msgctxt "diffmessages.levelnotes.removed"
+msgid "Removed level note \"$1\"\\R"
+msgstr "نزعت ملحوظة على الخريطة \"$1\"\\R"
+
+msgctxt "diffmessages.levelnotes.edited"
+msgid "Edited level note \"$1\"\\Y"
+msgstr "حررت ملحوظة المستوى \"$1\"\\Y"
+
+msgctxt "diffmessages.mde.added"
+msgid "Metadata entity was added.\\G"
+msgstr "وحدة بيانات التعريف أضيفت.\\G"
+
+msgctxt "diffmessages.mde.removed"
+msgid "Metadata entity was removed.\\R"
+msgstr "وحدة بيانات التعريف حذفت.\\R"

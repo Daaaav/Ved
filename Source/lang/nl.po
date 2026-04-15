@@ -1,0 +1,3083 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-11 03:51+0200\n"
+"PO-Revision-Date: 2026-02-22 21:05+0200\n"
+"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.8\n"
+"X-POOTLE-MTIME: 1771794316.996171\n"
+
+#. If you're making a translation, feel free to set this to something like "Translation made by (you)".
+msgctxt "L.TRANSLATIONCREDIT"
+msgid "English translation by Dav999"
+msgstr "Nederlandse vertaling door Dav999"
+
+msgctxt "L.OSNOTRECOGNIZED"
+msgid ""
+"Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n"
+"\n"
+"$2"
+msgstr ""
+"Je besturingssysteem ($1) wordt niet herkend! Valt terug op standaard-bestandssysteemfuncties; levels worden opgeslagen in:\n"
+"\n"
+"$2"
+
+msgctxt "L.MAXTRINKETS"
+msgid "The maximum amount of trinkets ($1) has been reached in this level."
+msgstr "Het maximum aantal artefacten ($1) is bereikt in dit level."
+
+msgctxt "L.MAXCREWMATES"
+msgid "The maximum amount of crewmates ($1) has been reached in this level."
+msgstr "Het maximum aantal bemanningsleden ($1) is bereikt in dit level."
+
+msgctxt "L.UNSUPPORTEDTOOL"
+msgid "Unsupported tool! Tool: "
+msgstr "Niet-ondersteund gereedschap! Gereedschap: "
+
+msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
+msgid "Could not get contents of levels folder. Please check if $1 exists and try again."
+msgstr "Kon de inhoud van de levelsmap niet verkrijgen. Controleer of $1 bestaat en probeer het opnieuw."
+
+msgctxt "L.MAPSAVEDAS"
+msgid "Map image saved as $1!"
+msgstr "Kaart opgeslagen als $1!"
+
+msgctxt "L.RAWENTITYPROPERTIES"
+msgid "You can change the raw property values of this entity here."
+msgstr "Je kunt de eigenschappen van deze entiteit hier wijzigen."
+
+msgctxt "L.UNKNOWNENTITYTYPE"
+msgid "Unknown entity type $1"
+msgstr "Onbekend entiteitstype $1"
+
+msgctxt "L.WARPTOKENENT404"
+msgid "Warp token entity no longer exists!"
+msgstr "Teleportatietoken-entiteit bestaat niet meer!"
+
+#. Command names are best left untranslated
+msgctxt "L.SPLITFAILED"
+msgid "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?"
+msgstr "Splitsen is miserabel mislukt! Zijn er te veel regels tussen een text-commando en een speak/speak_active?"
+
+msgctxt "L.NOFLAGSLEFT"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again."
+msgstr "Er zijn geen vlaggen meer beschikbaar, dus één of meer vlagnamen in dit script kunnen niet geassocieerd worden met een vlagnummer. Dit script in VVVVVV proberen uit te voeren kan fout gaan. Overweeg om alle verwijzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw."
+
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
+msgstr "Er zijn geen vlaggen meer beschikbaar, dus er kon geen laadscript gemaakt worden met een nieuwe vlag. In plaats daarvan is er een laadscript gemaakt dat het doelscript altijd laadt met iftrinkets(0,$1). Overweeg om alle verwijzingen te wissen naar vlaggen die je niet meer nodig hebt en probeer het opnieuw."
+
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
+msgstr "Kon $1.vvvvvv niet openen."
+
+msgctxt "L.SIZELIMIT"
+msgid ""
+"The maximum size of a level is $1 by $2.\n"
+"\n"
+"The level size will be changed to $3 by $4 instead."
+msgstr ""
+"De maximale grootte van een level is $1 bij $2.\n"
+"\n"
+"De levelgrootte zal worden aangepast naar $3 bij $4."
+
+msgctxt "L.SCRIPTALREADYEXISTS"
+msgid "Script \"$1\" already exists!"
+msgstr "Script \"$1\" bestaat al!"
+
+msgctxt "L.FLAGNAMENUMBERS"
+msgid "Flag names cannot be only numbers."
+msgstr "Namen van vlaggen kunnen niet alleen uit nummers bestaan."
+
+msgctxt "L.FLAGNAMECHARS"
+msgid "Flag names cannot contain parentheses, commas or spaces."
+msgstr "Namen van vlaggen kunnen geen haakjes, komma's of spaties bevatten."
+
+msgctxt "L.FLAGNAMEINUSE"
+msgid "The flag name $1 is already in use by flag $2"
+msgstr "De vlagnaam $1 wordt al gebruikt door vlag $2"
+
+msgctxt "L.DIFFSELECT"
+msgid "Select the level to compare to. The level you select now will be treated as being an older version."
+msgstr "Selecteer level om mee te vergelijken. Het level dat je nu kiest zal worden gezien als een oudere versie."
+
+msgctxt "L.SUREQUITNEW"
+msgid "You have unsaved changes. Do you want to save these changes before quitting?"
+msgstr "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het afsluiten?"
+
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het maken van een nieuw level?"
+
+msgctxt "L.SUREOPENLEVEL"
+msgid "You have unsaved changes. Do you want to save these changes before opening this level?"
+msgstr "Je hebt niet-opgeslagen wijzigingen. Wil je deze wijzigingen opslaan voor het openen van dit level?"
+
+msgctxt "L.NAMEFORFLAG"
+msgid "Name for flag $1:"
+msgstr "Naam voor vlag $1:"
+
+msgctxt "L.SCRIPT404"
+msgid "Script \"$1\" does not exist!"
+msgstr "Script \"$1\" bestaat niet!"
+
+msgctxt "L.ENTITY404"
+msgid "Entity #$1 no longer exists!"
+msgstr "Entiteit #$1 bestaat niet meer!"
+
+msgctxt "L.GRAPHICSCARDCANVAS"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr "Sorry, het lijkt dat je grafische kaart of het stuurprogramma deze functie niet ondersteunt!"
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid ""
+"Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n"
+"\n"
+"The size limit on this system is $3x$3."
+msgstr ""
+"Sorry, het maken van een afbeelding van $1x$2 lijkt niet te worden ondersteund door je grafische kaart of het stuurprogramma.\n"
+"\n"
+"De maximale grootte op dit systeem is $3x$3."
+
+msgctxt "L.SUREDELETESCRIPT"
+msgid "Are you sure you want to delete the script \"$1\"?"
+msgstr "Weet je zeker dat je het script \"$1\" wilt verwijderen?"
+
+msgctxt "L.SUREDELETENOTE"
+msgid "Are you sure you want to delete this note?"
+msgstr "Weet je zeker dat je deze notitie wilt verwijderen?"
+
+msgctxt "L.THREADERROR"
+msgid "Thread error!"
+msgstr "Threadfout!"
+
+msgctxt "L.WHATDIDYOUDO"
+msgid "What did you do?!"
+msgstr "Wat heb je gedaan?!"
+
+msgctxt "L.UNDOFAULTY"
+msgid "What are you doing?"
+msgstr "Waar ben je mee bezig?"
+
+msgctxt "L.SOURCEDESTROOMSSAME"
+msgid "Source and destination rooms are the same!"
+msgstr "Beide kamers zijn hetzelfde!"
+
+msgctxt "L.COORDS_OUT_OF_RANGE"
+msgid "Huh? These coordinates aren't even in this dimension!"
+msgstr "Huh? Deze coördinaten liggen niet eens in deze dimensie!"
+
+msgctxt "L.UNKNOWNUNDOTYPE"
+msgid "Unknown undo type \"$1\"!"
+msgstr "Onbekend ongedaan-maak-type \"$1\"!"
+
+msgctxt "L.MDEVERSIONWARNING"
+msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
+msgstr "Dit level lijkt in een nieuwere versie van Ved te zijn gemaakt, en kan data bevatten die verloren zal gaan als je dit level opslaat."
+
+msgctxt "L.FORGOTPATH"
+msgid "You forgot to specify a path!"
+msgstr "Je bent vergeten een pad op te geven!"
+
+msgctxt "L.LIB_LOAD_ERRMSG"
+msgid ""
+"Failed to load an essential library. Please tell Dav999 about this problem.\n"
+"\n"
+"$1"
+msgstr ""
+"Een essentiële bibliotheek kan niet worden geladen. Vertel Dav999 alsjeblieft over dit probleem.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_GCC"
+msgid ""
+"\n"
+"\n"
+"Try installing GCC to solve this problem, if it isn't already installed."
+msgstr ""
+"\n"
+"\n"
+"Probeer GCC te installeren om dit probleem op te lossen, als het niet al geïnstalleerd is."
+
+msgctxt "L.SELECTCOPY1"
+msgid "Select the room to copy"
+msgstr "Selecteer de kamer om te kopiëren"
+
+msgctxt "L.SELECTCOPY2"
+msgid "Select the location to copy this room to"
+msgstr "Selecteer de plek om deze kamer naartoe te kopiëren"
+
+msgctxt "L.SELECTSWAP1"
+msgid "Select the first room to swap"
+msgstr "Selecteer de eerste kamer om om te wisselen"
+
+msgctxt "L.SELECTSWAP2"
+msgid "Select the second room to swap"
+msgstr "Selecteer de tweede kamer om om te wisselen"
+
+msgctxt "L.TILESETCHANGEDTO"
+msgid "Tileset changed to $1"
+msgstr "Tileset veranderd naar $1"
+
+msgctxt "L.TILESETCOLORCHANGEDTO"
+msgid "Tileset color changed to $1"
+msgstr "Tilesetkleur veranderd naar $1"
+
+msgctxt "L.ENEMYTYPECHANGED"
+msgid "Enemy type changed"
+msgstr "Vijandtype veranderd"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODE"
+msgid "Changed to $1 tile placement"
+msgstr "Veranderd naar $1plaatsing"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEAUTO"
+msgid "automatic"
+msgstr "automatische "
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMANUAL"
+msgid "manual"
+msgstr "handmatige "
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMULTI"
+msgid "multi-tileset"
+msgstr "multi-tileset-"
+
+msgctxt "L.BUSYSAVING"
+msgid "Saving..."
+msgstr "Bezig met opslaan..."
+
+msgctxt "L.SAVEDLEVELAS"
+msgid "Saved level as $1.vvvvvv"
+msgstr "Level opgeslagen als $1.vvvvvv"
+
+msgctxt "L.ROOMCUT"
+msgid "Room cut to clipboard"
+msgstr "Kamer geknipt naar klembord"
+
+msgctxt "L.ROOMCOPIED"
+msgid "Copied room to clipboard"
+msgstr "Kamer gekopieerd naar klembord"
+
+msgctxt "L.ROOMPASTED"
+msgid "Pasted room"
+msgstr "Kamer geplakt"
+
+msgctxt "L.METADATAUNDONE"
+msgid "Level options undone"
+msgstr "Levelopties ongedaan gemaakt"
+
+msgctxt "L.METADATAREDONE"
+msgid "Level options redone"
+msgstr "Levelopties opnieuw gewijzigd"
+
+#. Old string: Click the top left corner of the bounds
+msgctxt "L.BOUNDSFIRST"
+msgid "Click the first corner of the bounds"
+msgstr "Klik op de eerste hoek van de begrenzing"
+
+#. Old string: Click the bottom right corner
+msgctxt "L.BOUNDSLAST"
+msgid "Click the last corner"
+msgstr "Klik op de laatste hoek"
+
+msgctxt "L.TILE"
+msgid "Tile $1"
+msgstr "Blok $1"
+
+msgctxt "L.HIDEALL"
+msgid "Hide all"
+msgstr "Verbergen"
+
+msgctxt "L.SHOWALL"
+msgid "Show all"
+msgstr "Toon alles"
+
+msgctxt "L.SCRIPTEDITOR"
+msgid "Script editor"
+msgstr "Scriptbewerker"
+
+msgctxt "L.FILE"
+msgid "File"
+msgstr "Bestand"
+
+msgctxt "L.NEW"
+msgid "New"
+msgstr "Nieuw"
+
+msgctxt "L.OPEN"
+msgid "Open"
+msgstr "Openen"
+
+msgctxt "L.SAVE"
+msgid "Save"
+msgstr "Opslaan"
+
+msgctxt "L.UNDO"
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+msgctxt "L.REDO"
+msgid "Redo"
+msgstr "Herhalen"
+
+msgctxt "L.COMPARE"
+msgid "Compare"
+msgstr "Vergelijken"
+
+msgctxt "L.STATS"
+msgid "Stats"
+msgstr "Statistieken"
+
+msgctxt "L.SCRIPTUSAGES"
+msgid "Usages"
+msgstr "Verwijzingen"
+
+msgctxt "L.EDITTAB"
+msgid "Edit"
+msgstr "Bewerken"
+
+msgctxt "L.COPYSCRIPT"
+msgid "Copy script"
+msgstr "Alles kopiëren"
+
+msgctxt "L.SEARCHSCRIPT"
+msgid "Search"
+msgstr "Zoeken"
+
+msgctxt "L.GOTOLINE"
+msgid "Go to line"
+msgstr "Ga naar regel"
+
+msgctxt "L.GOTOLINE2"
+msgid "Go to line:"
+msgstr "Ga naar regel:"
+
+msgctxt "L.INTERNALON"
+msgid "Int.sc is on"
+msgstr "Int.sc is aan"
+
+msgctxt "L.INTERNALOFF"
+msgid "Int.sc is off"
+msgstr "Int.sc is uit"
+
+msgctxt "L.INTERNALON_LONG"
+msgid "Internal scripting mode is enabled"
+msgstr "Interne scripting-modus is ingeschakeld"
+
+msgctxt "L.INTERNALOFF_LONG"
+msgid "Internal scripting mode is disabled"
+msgstr "Interne scripting-modus is uitgeschakeld"
+
+msgctxt "L.INTERNALYESBARS"
+msgid "say(-1) int.sc"
+msgstr "say(-1)-int.sc"
+
+msgctxt "L.INTERNALNOBARS"
+msgid "Loadscript int.sc"
+msgstr ""
+"Laadscript-\n"
+"int.sc"
+
+msgctxt "L.VIEW"
+msgid "View"
+msgstr "Beeld"
+
+msgctxt "L.SYNTAXHLOFF"
+msgid "Syntax HL: on"
+msgstr "Kleuren: aan"
+
+msgctxt "L.SYNTAXHLON"
+msgid "Syntax HL: off"
+msgstr "Kleuren: uit"
+
+msgctxt "L.TEXTSIZEN"
+msgid "Text size: N"
+msgstr "Grootte: norm."
+
+msgctxt "L.TEXTSIZEL"
+msgid "Text size: L"
+msgstr "Grootte: groot"
+
+msgctxt "L.INSERT"
+msgid "Insert"
+msgstr "Invoegen"
+
+msgctxt "L.HELP"
+msgid "Help"
+msgstr "Help"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
+msgid "Load script required!"
+msgstr "Laadscript nodig!"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT_EXPL"
+msgid "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script."
+msgstr "Er is geen script gevonden dat dit script laadt. Dit type interne script zal waarschijnlijk niet werken zoals je verwacht als het niet wordt geladen via een ander script."
+
+msgctxt "L.INTSCRWARNING_BOXED"
+msgid "Direct script box/terminal reference!"
+msgstr "Rechtstreekse scriptvak-/terminalverwijzing!"
+
+msgctxt "L.INTSCRWARNING_BOXED_EXPL"
+msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
+msgstr "Er is een terminal of scriptvak dat dit script rechtstreeks laadt. Die terminal of dat scriptvak activeren zal waarschijnlijk niet werken zoals je verwacht; dit type interne script moet worden geladen via een laadscript."
+
+msgctxt "L.INTSCRWARNING_NAME"
+msgid "Unsuitable script name!"
+msgstr "Ongeschikte scriptnaam!"
+
+msgctxt "L.INTSCRWARNING_NAME_EXPL"
+msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
+msgstr "De naam van dit script heeft een hoofdletter, een spatie, een haakje of een komma. Dit script kan alleen rechtstreeks vanaf een terminal of scriptvak worden geladen."
+
+msgctxt "L.COLUMN"
+msgid "Column: "
+msgstr "Kolom: "
+
+msgctxt "L.BTN_OK"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "L.BTN_CANCEL"
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgctxt "L.BTN_YES"
+msgid "Yes"
+msgstr "Ja"
+
+msgctxt "L.BTN_NO"
+msgid "No"
+msgstr "Nee"
+
+msgctxt "L.BTN_APPLY"
+msgid "Apply"
+msgstr "Toepassen"
+
+msgctxt "L.BTN_QUIT"
+msgid "Quit"
+msgstr "Afsluiten"
+
+msgctxt "L.BTN_DISCARD"
+msgid "Discard"
+msgstr "Verwerpen"
+
+msgctxt "L.BTN_SAVE"
+msgid "Save"
+msgstr "Opslaan"
+
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr "Sluiten"
+
+msgctxt "L.BTN_LOAD"
+msgid "Load"
+msgstr "Laden"
+
+msgctxt "L.BTN_ADVANCED"
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+msgctxt "L.BTN_AUTODETECT"
+msgid "Detect"
+msgstr "Detecteren"
+
+#. choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+msgctxt "L.BTN_MANUALLY"
+msgid "Override"
+msgstr "Handmatig"
+
+msgctxt "L.BTN_RETRY"
+msgid "Retry"
+msgstr "Opnieuw"
+
+msgctxt "L.COMPARINGTHESE"
+msgid "Comparing $1.vvvvvv to $2.vvvvvv"
+msgstr "$1.vvvvvv wordt vergeleken met $2.vvvvvv"
+
+msgctxt "L.COMPARINGTHESENEW"
+msgid "Comparing (unsaved level) to $1.vvvvvv"
+msgstr "(niet-opgeslagen level) wordt vergeleken met $1.vvvvvv"
+
+msgctxt "L.RETURN"
+msgid "Return"
+msgstr "Terug"
+
+msgctxt "L.CREATE"
+msgid "Create"
+msgstr "Aanmaken"
+
+msgctxt "L.GOTO"
+msgid "Go to"
+msgstr "Naartoe gaan"
+
+msgctxt "L.DELETE"
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgctxt "L.RENAME"
+msgid "Rename"
+msgstr "Hernoemen"
+
+msgctxt "L.CHANGEDIRECTION"
+msgid "Change direction"
+msgstr "Richting wijzigen"
+
+msgctxt "L.TESTFROMHERE"
+msgid "Test from here"
+msgstr "Testen vanaf hier"
+
+msgctxt "L.FLIP"
+msgid "Flip"
+msgstr "Omdraaien"
+
+msgctxt "L.CYCLETYPE"
+msgid "Change type"
+msgstr "Type wijzigen"
+
+msgctxt "L.GOTODESTINATION"
+msgid "Go to destination"
+msgstr "Naar bestemming gaan"
+
+msgctxt "L.GOTOENTRANCE"
+msgid "Go to entrance"
+msgstr "Naar ingang gaan"
+
+msgctxt "L.CHANGECOLOR"
+msgid "Change color"
+msgstr "Kleur wijzigen"
+
+msgctxt "L.EDITTEXT"
+msgid "Edit text"
+msgstr "Tekst wijzigen"
+
+msgctxt "L.COPYTEXT"
+msgid "Copy text"
+msgstr "Tekst kopiëren"
+
+msgctxt "L.EDITSCRIPT"
+msgid "Edit script"
+msgstr "Script wijzigen"
+
+msgctxt "L.OTHERSCRIPT"
+msgid "Change script name"
+msgstr "Scriptnaam veranderen"
+
+msgctxt "L.PROPERTIES"
+msgid "Properties"
+msgstr "Eigenschappen"
+
+msgctxt "L.CHANGETOHOR"
+msgid "Change to horizontal"
+msgstr "Naar horizontaal veranderen"
+
+msgctxt "L.CHANGETOVER"
+msgid "Change to vertical"
+msgstr "Naar verticaal veranderen"
+
+msgctxt "L.RESIZE"
+msgid "Move/Resize"
+msgstr "Opnieuw plaatsen"
+
+msgctxt "L.CHANGEENTRANCE"
+msgid "Move entrance"
+msgstr "Ingang verplaatsen"
+
+msgctxt "L.CHANGEEXIT"
+msgid "Move exit"
+msgstr "Uitgang verplaatsen"
+
+msgctxt "L.COPYENTRANCE"
+msgid "Copy entrance"
+msgstr "Ingang kopiëren"
+
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr "Vergrendelen"
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr "Ontgrendelen"
+
+msgctxt "L.VEDOPTIONS"
+msgid "Ved options"
+msgstr "Ved-opties"
+
+msgctxt "L.LEVELOPTIONS"
+msgid "Level options"
+msgstr "Levelopties"
+
+msgctxt "L.MAP"
+msgid "Map"
+msgstr "Kaart"
+
+msgctxt "L.SCRIPTS"
+msgid "Scripts"
+msgstr "Scripts"
+
+msgctxt "L.SEARCH"
+msgid "Search"
+msgstr "Zoeken"
+
+msgctxt "L.SENDFEEDBACK"
+msgid "Send Feedback"
+msgstr "Geef feedback"
+
+msgctxt "L.LEVELNOTEPAD"
+msgid "Level notepad"
+msgstr "Levelkladblok"
+
+msgctxt "L.PLUGINS"
+msgid "Plugins"
+msgstr "Plugins"
+
+msgctxt "L.BACKB"
+msgid "Back <<"
+msgstr "Terug <<"
+
+msgctxt "L.MOREB"
+msgid "More >>"
+msgstr "Meer >>"
+
+msgctxt "L.AUTOMODE"
+msgid "Mode: auto"
+msgstr "Modus: auto"
+
+msgctxt "L.AUTO2MODE"
+msgid "Mode: multi"
+msgstr "Modus: multi"
+
+msgctxt "L.MANUALMODE"
+msgid "Mode: manual"
+msgstr "Modus: handm."
+
+msgctxt "L.ENEMYTYPE"
+msgid "Enemy type: $1"
+msgstr "Type: $1"
+
+msgctxt "L.PLATFORMBOUNDS"
+msgid "Platf. bounds"
+msgstr "Begrenzing"
+
+msgctxt "L.WARPDIR"
+msgid "Warp dir: $1"
+msgstr "Warprichting:$1"
+
+msgctxt "L.ENEMYBOUNDS"
+msgid "Enemy bounds"
+msgstr "Begrenzing"
+
+msgctxt "L.ROOMNAME"
+msgid "Roomname"
+msgstr "Kamernaam"
+
+msgctxt "L.ROOMOPTIONS"
+msgid "Room options"
+msgstr "Kameropties"
+
+msgctxt "L.ROTATE180"
+msgid "Rotate 180deg"
+msgstr "180grd draaien"
+
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr "180° draaien"
+
+msgctxt "L.HIDEBOUNDS"
+msgid "Hide bounds"
+msgstr "Grenzen verb."
+
+msgctxt "L.SHOWBOUNDS"
+msgid "Show bounds"
+msgstr "Grenzen tonen"
+
+#. basically, platforms/enemies in/for this room
+msgctxt "L.ROOMPLATFORMS"
+msgid "Room platforms"
+msgstr "Platformen"
+
+msgctxt "L.ROOMENEMIES"
+msgid "Room enemies"
+msgstr "Vijanden"
+
+msgctxt "L.OPTNAME"
+msgid "Name"
+msgstr "Naam"
+
+msgctxt "L.OPTBY"
+msgid "By"
+msgstr "Door"
+
+msgctxt "L.OPTWEBSITE"
+msgid "Website"
+msgstr "Website"
+
+#. If necessary, you can span multiple lines
+msgctxt "L.OPTDESC"
+msgid "Desc"
+msgstr "Beschr."
+
+msgctxt "L.OPTSIZE"
+msgid "Size"
+msgstr "Grootte"
+
+msgctxt "L.OPTMUSIC"
+msgid "Music"
+msgstr "Muziek"
+
+msgctxt "L.CAPNONE"
+msgid "NONE"
+msgstr "GEEN"
+
+msgctxt "L.ENTERLONGOPTNAME"
+msgid "Level name:"
+msgstr "Levelnaam:"
+
+#. Used for level size: 20x20
+msgctxt "L.X"
+msgid "x"
+msgstr "x"
+
+msgctxt "L.SOLID"
+msgid "Solid"
+msgstr "Vast"
+
+msgctxt "L.NOTSOLID"
+msgid "Not solid"
+msgstr "Niet vast"
+
+msgctxt "L.TSCOLOR"
+msgid "Color $1"
+msgstr "Kleur $1"
+
+msgctxt "L.LEVELSLIST"
+msgid "Levels"
+msgstr "Levels"
+
+msgctxt "L.LOADTHISLEVEL"
+msgid "Load this level: "
+msgstr "Laad dit level: "
+
+msgctxt "L.ENTERNAMESAVE"
+msgid "Enter name to save as: "
+msgstr "Naam om mee op te slaan: "
+
+msgctxt "L.SEARCHFOR"
+msgid "Search for: "
+msgstr "Zoeken naar: "
+
+msgctxt "L.VERSIONERROR"
+msgid "Unable to check version."
+msgstr "Kon versie niet controleren."
+
+msgctxt "L.VERSIONUPTODATE"
+msgid "Your version of Ved is up-to-date."
+msgstr "Je versie van Ved is up-to-date."
+
+msgctxt "L.VERSIONOLD"
+msgid "Update available! Latest version: $1"
+msgstr "Update beschikbaar! Laatste versie: $1"
+
+msgctxt "L.VERSIONCHECKING"
+msgid "Checking for updates..."
+msgstr "Controleren op updates..."
+
+msgctxt "L.VERSIONDISABLED"
+msgid "Update check disabled"
+msgstr ""
+"Update-\n"
+"controle uitgeschakeld"
+
+#. Check for updates now
+msgctxt "L.VERSIONCHECKNOW"
+msgid "Check now"
+msgstr "Nu controleren"
+
+msgctxt "L.SAVENOSUCCESS"
+msgid "Saving not successful! Error: "
+msgstr "Opslaan niet succesvol! Fout: "
+
+msgctxt "L.INVALIDFILESIZE"
+msgid "Invalid file size."
+msgstr "Ongeldige bestandsgrootte."
+
+msgctxt "L.EDIT"
+msgid "Edit"
+msgstr "Bewerken"
+
+msgctxt "L.EDITWOBUMPING"
+msgid "Edit without bumping"
+msgstr "Bewerken, niet naar boven verplaatsen"
+
+msgctxt "L.EDITWBUMPING"
+msgid "Edit and bump"
+msgstr "Bewerken en naar boven verplaatsen"
+
+msgctxt "L.COPYNAME"
+msgid "Copy name"
+msgstr "Naam kopiëren"
+
+msgctxt "L.COPYCONTENTS"
+msgid "Copy contents"
+msgstr "Inhoud kopiëren"
+
+msgctxt "L.DUPLICATE"
+msgid "Duplicate"
+msgstr "Dupliceren"
+
+msgctxt "L.NEWSCRIPTNAME"
+msgid "Name:"
+msgstr "Naam:"
+
+msgctxt "L.CREATENEWSCRIPT"
+msgid "Create new script"
+msgstr "Nieuw script maken"
+
+msgctxt "L.NEWNOTENAME"
+msgid "Name:"
+msgstr "Naam:"
+
+msgctxt "L.CREATENEWNOTE"
+msgid "Create new note"
+msgstr "Nieuwe notitie maken"
+
+msgctxt "L.ADDNEWBTN"
+msgid "[Add new]"
+msgstr "[Nieuwe maken]"
+
+msgctxt "L.IMAGEERROR"
+msgid "[IMAGE ERROR]"
+msgstr "[AFBEELDINGSFOUT]"
+
+msgctxt "L.NEWNAME"
+msgid "New name:"
+msgstr "Nieuwe naam:"
+
+msgctxt "L.RENAMENOTE"
+msgid "Rename note"
+msgstr "Notitie hernoemen"
+
+msgctxt "L.RENAMESCRIPT"
+msgid "Rename script"
+msgstr "Script hernoemen"
+
+msgctxt "L.LINE"
+msgid "line "
+msgstr "regel "
+
+msgctxt "L.SAVEMAP"
+msgid "Save map"
+msgstr "Kaart opslaan"
+
+msgctxt "L.COPYROOMS"
+msgid "Copy room"
+msgstr "Kamer kopiëren"
+
+msgctxt "L.SWAPROOMS"
+msgid "Swap rooms"
+msgstr "Wissel kamers"
+
+msgctxt "L.MAP_STYLE"
+msgid "Map style"
+msgstr "Kaartstijl"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_FULL"
+msgid "Full"
+msgstr "Volledig"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_MINIMAP"
+msgid "Minimap"
+msgstr "Minimap"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_VTOOLS"
+msgid "VTools"
+msgstr "VTools"
+
+msgctxt "L.FLAGS"
+msgid "Flags"
+msgstr "Vlaggen"
+
+msgctxt "L.ROOM"
+msgid "room"
+msgstr "kamer"
+
+msgctxt "L.CONTENTFILLER"
+msgid "Content"
+msgstr "Inhoud"
+
+#. preferably same length as L.FLAGNOTUSED
+msgctxt "L.FLAGUSED"
+msgid "Used    "
+msgstr "Gebruikt     "
+
+msgctxt "L.FLAGNOTUSED"
+msgid "Not used"
+msgstr "Niet gebruikt"
+
+msgctxt "L.FLAGNONAME"
+msgid "No name"
+msgstr "Geen naam"
+
+msgctxt "L.USEDOUTOFRANGEFLAGS"
+msgid "Used out of range flags:"
+msgstr "Gebruikte vlaggen buiten bereik:"
+
+#. Settings to adapt Ved to how VVVVVV is installed/setup on this computer, like the location of the levels folder and selection of the executable for playtesting. Maybe "VVVVVV installation" or "VVVVVV configuration"
+msgctxt "L.VVVVVVSETUP"
+msgid "VVVVVV setup"
+msgstr ""
+"VVVVVV-\n"
+"configuratie"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY"
+msgid "VVVVVV folder"
+msgstr "VVVVVV-map"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
+msgid ""
+"The default VVVVVV directory Ved expects is:\n"
+"$1\n"
+"\n"
+"This path should not be set to the \"levels\" directory."
+msgstr ""
+"De standaard VVVVVV-map die Ved verwacht is:\n"
+"$1\n"
+"\n"
+"Dit pad moet niet worden ingesteld op de \"levels\"-map."
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_NOTSET"
+msgid ""
+"You do not have a custom VVVVVV directory set.\n"
+"\n"
+msgstr ""
+"Je hebt geen aangepaste VVVVVV-map ingesteld.\n"
+"\n"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_SET"
+msgid ""
+"Your VVVVVV directory is set to a custom path:\n"
+"$1\n"
+"\n"
+msgstr ""
+"Je VVVVVV-map is ingesteld op een aangepast pad:\n"
+"$1\n"
+"\n"
+
+msgctxt "L.LANGUAGE"
+msgid "Language"
+msgstr "Taal"
+
+msgctxt "L.DIALOGANIMATIONS"
+msgid "Dialog animations"
+msgstr "Dialoogvenster-animaties"
+
+msgctxt "L.FLIPSUBTOOLSCROLL"
+msgid "Flip tool scrolling direction"
+msgstr "Scrollrichting voor gereedschap omkeren"
+
+msgctxt "L.ADJACENTROOMLINES"
+msgid "Indicators of tiles in adjacent rooms"
+msgstr "Aanduidingen van blokken in naastgelegen kamers"
+
+msgctxt "L.NEVERASKBEFOREQUIT"
+msgid "Never ask before quitting, even if there are unsaved changes"
+msgstr "Nooit vragen voor afsluiten, zelfs als er niet-opgeslagen wijzigingen zijn"
+
+msgctxt "L.COORDS0"
+msgid "Display coordinates as starting at 0 (as in internal scripting)"
+msgstr "Coördinaten laten beginnen bij 0 (zoals in interne scripting)"
+
+msgctxt "L.ALLOWDEBUG"
+msgid "Enable debug mode"
+msgstr "Debugmodus inschakelen"
+
+msgctxt "L.SHOWFPS"
+msgid "Show FPS counter"
+msgstr "FPS-teller tonen"
+
+msgctxt "L.CHECKFORUPDATES"
+msgid "Check for updates"
+msgstr "Controleren op updates"
+
+msgctxt "L.PAUSEDRAWUNFOCUSED"
+msgid "Do not render when the window is unfocused"
+msgstr "Niet tekenen als het venster inactief is"
+
+msgctxt "L.ENABLEOVERWRITEBACKUPS"
+msgid "Make backups of level files that are overwritten"
+msgstr "Reservekopie maken van levelbestanden die worden overschreven"
+
+msgctxt "L.AMOUNTOVERWRITEBACKUPS"
+msgid "Number of backups to keep per level"
+msgstr "Aantal reservekopieën om te bewaren per level"
+
+msgctxt "L.SCALE"
+msgid "Scale"
+msgstr "Schaal"
+
+msgctxt "L.LOADALLMETADATA"
+msgid "Load metadata (such as title, author and description) for all files in levels list"
+msgstr "Laad metadata (zoals titel, auteur en beschrijving) voor alle bestanden in de lijst met levels"
+
+msgctxt "L.COLORED_TEXTBOXES"
+msgid "Use true textbox colors"
+msgstr "Gebruik echte kleuren voor tekstvakken"
+
+msgctxt "L.MOUSESCROLLINGSPEED"
+msgid "Mouse scrolling speed"
+msgstr "Scrollsnelheid van muis"
+
+msgctxt "L.BUMPSCRIPTSBYDEFAULT"
+msgid "Bump scripts to the top of the list when editing them by default"
+msgstr "Verplaats scripts standaard naar de bovenkant van de lijst bij het bewerken"
+
+msgctxt "L.SCRIPTSPLIT"
+msgid "Split"
+msgstr "Splitsen"
+
+msgctxt "L.SPLITSCRIPT"
+msgid "Split scripts"
+msgstr "Scripts splitsen"
+
+msgctxt "L.COUNT"
+msgid "Count: "
+msgstr "Aantal: "
+
+msgctxt "L.SMALLENTITYDATA"
+msgid "data"
+msgstr "data"
+
+#. Stats screen
+msgctxt "L.AMOUNTSCRIPTS"
+msgid "Scripts:"
+msgstr "Scripts:"
+
+#. Stats screen
+msgctxt "L.AMOUNTUSEDFLAGS"
+msgid "Flags:"
+msgstr "Vlaggen:"
+
+#. Stats screen
+msgctxt "L.AMOUNTENTITIES"
+msgid "Entities:"
+msgstr "Entiteiten:"
+
+#. Stats screen
+msgctxt "L.AMOUNTTRINKETS"
+msgid "Trinkets:"
+msgstr "Artefacten:"
+
+#. Stats screen
+msgctxt "L.AMOUNTCREWMATES"
+msgid "Crewmates:"
+msgstr "Bemanningsleden:"
+
+#. Stats screen
+msgctxt "L.AMOUNTINTERNALSCRIPTS"
+msgid "Internal scripts:"
+msgstr "Interne scripts:"
+
+#. Stats screen
+msgctxt "L.TILESETUSSAGE"
+msgid "Tileset usage"
+msgstr "Tilesetgebruik"
+
+#. Stats screen
+msgctxt "L.TILESETSONLYUSED"
+msgid "(only rooms having tiles are counted)"
+msgstr "(alleen kamers met blokken worden geteld)"
+
+#. Stats screen
+msgctxt "L.AMOUNTROOMSWITHNAMES"
+msgid "Rooms having a name:"
+msgstr "Kamers met een naam:"
+
+#. Stats screen
+msgctxt "L.PLACINGMODEUSAGE"
+msgid "Tile placing modes:"
+msgstr "Plaatsingsmodi:"
+
+#. Stats screen
+msgctxt "L.AMOUNTLEVELNOTES"
+msgid "Level notes:"
+msgstr "Levelnotities:"
+
+#. Stats screen
+msgctxt "L.AMOUNTFLAGNAMES"
+msgid "Flag names:"
+msgstr "Vlagnamen:"
+
+#. Stats screen
+msgctxt "L.TILESUSAGE"
+msgid "Tiles usage"
+msgstr "Gebruik van blokken"
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr "Blokken:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr "Vaste blokken:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
+msgstr "Spijkers:"
+
+msgctxt "L.UNEXPECTEDSCRIPTLINE"
+msgid "Unexpected script line without script: $1"
+msgstr "Onverwachte scriptregel zonder script: $1"
+
+msgctxt "L.DUPLICATESCRIPT"
+msgid "Script $1 is duplicate! Only one can be loaded."
+msgstr "Script $1 komt meerdere keren voor! Er kan er maar één geladen worden."
+
+msgctxt "L.MAPWIDTHINVALID"
+msgid "Map width is invalid: $1"
+msgstr "Levelbreedte is ongeldig: $1"
+
+msgctxt "L.MAPHEIGHTINVALID"
+msgid "Map height is invalid: $1"
+msgstr "Levelhoogte is ongeldig: $1"
+
+msgctxt "L.LEVMUSICEMPTY"
+msgid "Level music is empty!"
+msgstr "Levelmuziek is leeg!"
+
+msgctxt "L.NOT400ROOMS"
+msgid "The number of entries in levelMetaData is not 400!"
+msgstr "Het aantal elementen in levelMetaData is niet 400!"
+
+msgctxt "L.MOREERRORS"
+msgid "$1 more"
+msgstr "nog $1"
+
+msgctxt "L.DEBUGMODEON"
+msgid "Debug mode on"
+msgstr "Debugmodus aan"
+
+msgctxt "L.FPS"
+msgid "FPS"
+msgstr "FPS"
+
+msgctxt "L.STATE"
+msgid "State"
+msgstr "Toestand"
+
+msgctxt "L.MOUSE"
+msgid "Mouse"
+msgstr "Muis"
+
+msgctxt "L.BLUE"
+msgid "Blue"
+msgstr "Blauw"
+
+msgctxt "L.RED"
+msgid "Red"
+msgstr "Rood"
+
+msgctxt "L.CYAN"
+msgid "Cyan"
+msgstr "Cyaan"
+
+msgctxt "L.PURPLE"
+msgid "Purple"
+msgstr "Paars"
+
+msgctxt "L.YELLOW"
+msgid "Yellow"
+msgstr "Geel"
+
+msgctxt "L.GREEN"
+msgid "Green"
+msgstr "Groen"
+
+msgctxt "L.GRAY"
+msgid "Gray"
+msgstr "Grijs"
+
+msgctxt "L.PINK"
+msgid "Pink"
+msgstr "Roze"
+
+msgctxt "L.BROWN"
+msgid "Brown"
+msgstr "Bruin"
+
+msgctxt "L.RAINBOWBG"
+msgid "Rainbow BG"
+msgstr "Regenbg-AG"
+
+msgctxt "L.SYNTAXCOLORS"
+msgid "Syntax colors"
+msgstr ""
+"Syntaxis-\n"
+"kleuren"
+
+msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
+msgid "Scripting syntax highlighting color settings"
+msgstr "Scriptsyntaxiskleuren"
+
+msgctxt "L.SYNTAXCOLOR_COMMAND"
+msgid "Command"
+msgstr "Commando"
+
+msgctxt "L.SYNTAXCOLOR_GENERIC"
+msgid "Generic"
+msgstr "Algemeen"
+
+msgctxt "L.SYNTAXCOLOR_SEPARATOR"
+msgid "Separator"
+msgstr "Scheidingsteken"
+
+msgctxt "L.SYNTAXCOLOR_NUMBER"
+msgid "Number"
+msgstr "Getal"
+
+msgctxt "L.SYNTAXCOLOR_TEXTBOX"
+msgid "Textbox"
+msgstr "Tekst"
+
+msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
+msgid "Unrecognized command"
+msgstr "Onbekend commando"
+
+msgctxt "L.SYNTAXCOLOR_CURSOR"
+msgid "Cursor"
+msgstr "Cursor"
+
+msgctxt "L.SYNTAXCOLOR_FLAGNAME"
+msgid "Flag name"
+msgstr "Vlagnaam"
+
+msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
+msgid "New flag name"
+msgstr "Nieuwe vlagnaam"
+
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr "Commentaar"
+
+msgctxt "L.SYNTAXCOLOR_WRONGLANG"
+msgid "Simplified command in int.sc mode or vice versa"
+msgstr "Vereenvoudigd commando in int.sc-modus of andersom"
+
+msgctxt "L.RESETCOLORS"
+msgid "Reset colors"
+msgstr "Kleuren resetten"
+
+msgctxt "L.STRINGNOTFOUND"
+msgid "\"$1\" was not found"
+msgstr "\"$1\" kan niet worden gevonden"
+
+#. L.MAL is concatenated with an error message
+msgctxt "L.MAL"
+msgid "The level file is malformed: "
+msgstr "Het levelbestand is niet in orde: "
+
+msgctxt "L.LOADSCRIPTMADE"
+msgid "Load script created"
+msgstr "Laadscript gemaakt"
+
+msgctxt "L.COPY"
+msgid "Copy"
+msgstr "Kopiëren"
+
+msgctxt "L.CUSTOMSIZE"
+msgid "Custom brush size: $1x$2"
+msgstr "Aangepaste kwastgrootte: $1x$2"
+
+msgctxt "L.SELECTINGA"
+msgid "Selecting - click top left"
+msgstr "Selecteren - klik op linkerbovenhoek"
+
+msgctxt "L.SELECTINGB"
+msgid "Selecting: $1x$2"
+msgstr "Selecteren: $1x$2"
+
+msgctxt "L.TILESETSRELOADED"
+msgid "Tilesets and sprites reloaded"
+msgstr "Tilesets en sprites opnieuw geladen"
+
+msgctxt "L.BACKUPS"
+msgid "Backups"
+msgstr "Reservekopieën"
+
+msgctxt "L.BACKUPSOFLEVEL"
+msgid "Backups of level $1"
+msgstr "Reservekopieën van level $1"
+
+#. List header
+msgctxt "L.LASTMODIFIEDTIME"
+msgid "Originally last modified"
+msgstr "Oorspronkelijk laatst gewijzigd"
+
+#. List header
+msgctxt "L.OVERWRITTENTIME"
+msgid "Overwritten"
+msgstr "Overschreven"
+
+msgctxt "L.SAVEBACKUP"
+msgid "Save to VVVVVV folder"
+msgstr "Opslaan in VVVVVV-map"
+
+msgctxt "L.DATEFORMAT"
+msgid "Date format"
+msgstr "Datumformaat"
+
+msgctxt "L.TIMEFORMAT"
+msgid "Time format"
+msgstr "Tijdformaat"
+
+msgctxt "L.SAVEBACKUPNOBACKUP"
+msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
+msgstr "Kies een unieke naam hiervoor als je niets wilt overschrijven, hiervoor wordt namelijk GEEN backup gemaakt!"
+
+msgctxt "L.AUTOSAVECRASHLOGS"
+msgid "Automatically save crash logs"
+msgstr "Crashlogboeken automatisch opslaan"
+
+msgctxt "L.MOREINFO"
+msgid "Latest info"
+msgstr "Laatste info"
+
+msgctxt "L.COPYLINK"
+msgid "Copy link"
+msgstr "Link kopiëren"
+
+msgctxt "L.SCRIPTDISPLAY"
+msgid "Show"
+msgstr "Tonen"
+
+msgctxt "L.SCRIPTDISPLAY_USED"
+msgid "Used"
+msgstr "Gebruikt"
+
+msgctxt "L.SCRIPTDISPLAY_UNUSED"
+msgid "Unused"
+msgstr "Ongebruikt"
+
+msgctxt "L.RECENTLYOPENED"
+msgid "Recently opened levels"
+msgstr "Recent geopende levels"
+
+msgctxt "L.REMOVERECENT"
+msgid "Do you want to remove it from the list of recently opened levels?"
+msgstr "Wil je het uit de lijst met recent geopende levels verwijderen?"
+
+msgctxt "L.RESETCUSTOMBRUSH"
+msgid "(Right click to set new size)"
+msgstr "(Klik rechts om nieuwe grootte in te stellen)"
+
+msgctxt "L.DISPLAYSETTINGS"
+msgid "Display/Scale"
+msgstr "Beeld/Schaal"
+
+msgctxt "L.DISPLAYSETTINGSTITLE"
+msgid "Display/Scale settings"
+msgstr "Beeld-/Schaalinstellingen"
+
+msgctxt "L.SMALLERSCREEN"
+msgid "Smaller window width (800px wide instead of 896px)"
+msgstr "Kleinere vensterbreedte (800px breed in plaats van 896px)"
+
+msgctxt "L.FORCESCALE"
+msgid "Force scale settings"
+msgstr "Schaalinstellingen forceren"
+
+msgctxt "L.SCALENOFIT"
+msgid "The current scale settings make the window too large to fit."
+msgstr "Deze schaalinstellingen maken het venster te groot om te passen."
+
+msgctxt "L.SCALENONUM"
+msgid "The current scale settings are invalid."
+msgstr "Deze schaalinstellingen zijn ongeldig."
+
+msgctxt "L.MONITORSIZE"
+msgid "$1x$2 monitor"
+msgstr "$1x$2-beeldscherm"
+
+msgctxt "L.VEDRES"
+msgid "Ved resolution: $1x$2"
+msgstr "Resolutie van Ved: $1x$2"
+
+msgctxt "L.NONINTSCALE"
+msgid "Non-integer scaling"
+msgstr "Schalen met niet-gehele getallen"
+
+msgctxt "L.USEFONTPNG"
+msgid "Use font.png from VVVVVV graphics folder as font"
+msgstr "Gebruik font.png uit de graphics-map van VVVVVV als lettertype"
+
+msgctxt "L.USELEVELFONTPNG"
+msgid "Use per-level custom font.png as font"
+msgstr "Gebruik level-afhankelijke font.png als lettertype"
+
+msgctxt "L.REQUIRESHIGHERLOVE"
+msgid " (requires LÖVE $1 or higher)"
+msgstr " (vereist LÖVE $1 of hoger)"
+
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
+msgstr "FPS-limiet"
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr "Resolutie"
+
+# Ik zou "Zoals" doen, maar past niet
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr "Als weergegeven (max 640x480)"
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr "$1% ($2x$3 per kamer)"
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr "$1:$2 ($3x$4 per kamer)"
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr "Linksboven"
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr "Breedte & hoogte"
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr "Rechtsonder"
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr "Renderer-informatie:"
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr "De kaart is nog niet klaar (op het moment dat je op Opslaan klikte), probeer het opnieuw wanneer hij klaar is."
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr "Houd dialoogvenster geopend"
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr "Transparante achtergrond"
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr "Fout bij het maken van de kaart."
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr "Bekijken"
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
+msgstr "Voer een geldig regelnummer in."
+
+#. Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+msgctxt "L.OPENLEVELSFOLDER"
+msgid "Open lvl dir"
+msgstr "Levelsmap openen"
+
+msgctxt "L.MOVEENTITY"
+msgid "Move"
+msgstr "Verplaatsen"
+
+msgctxt "L.GOTOROOM"
+msgid "Go to room"
+msgstr "Ga naar kamer"
+
+msgctxt "L.ESCTOCANCEL"
+msgid "[Press ESC to cancel]"
+msgstr "[Druk op ESC om te annuleren]"
+
+msgctxt "L.INVALIDFILENAME_WIN"
+msgid ""
+"Windows doesn't allow the following characters in filenames:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| being a vertical bar)"
+msgstr ""
+"Windows staat de volgende tekens niet toe in bestandsnamen:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(waar | een verticale lijn is)"
+
+msgctxt "L.INVALIDFILENAME_MAC"
+msgid "macOS doesn't allow the : character in filenames."
+msgstr "macOS staat het teken : niet toe in bestandsnamen."
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_CTRL"
+msgid "CTRL"
+msgstr "CTRL"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_SHIFT"
+msgid "SHIFT"
+msgstr "SHIFT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ALT"
+msgid "ALT"
+msgstr "ALT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ESC"
+msgid "ESC"
+msgstr "ESC"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_TAB"
+msgid "TAB"
+msgstr "TAB"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_HOME"
+msgid "HOME"
+msgstr "HOME"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_END"
+msgid "END"
+msgstr "END"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_INSERT"
+msgid "INS"
+msgstr "INS"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_DEL"
+msgid "DEL"
+msgstr "DEL"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_SCRIPTS"
+msgid "Scripts [$1]"
+msgstr "Scripts [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_ROOMS"
+msgid "Rooms [$1]"
+msgstr "Kamers [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_NOTES"
+msgid "Notes [$1]"
+msgstr "Notities [$1]"
+
+#. If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+msgctxt "L.ASSETS"
+msgid "Assets"
+msgstr "Bronbestanden"
+
+msgctxt "L.MUSICPLAYERROR"
+msgid "Can not play this song. It may not exist or be of an unsupported type."
+msgstr "Kan dit nummer niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zijn."
+
+msgctxt "L.SOUNDPLAYERROR"
+msgid "Can not play this sound. It may not exist or be of an unsupported type."
+msgstr "Kan dit geluid niet afspelen. Het zou kunnen ontbreken of van een niet-ondersteund type kunnen zijn."
+
+msgctxt "L.MUSICLOADERROR"
+msgid "Can not load $1: "
+msgstr "Kan $1 niet laden: "
+
+msgctxt "L.MUSICLOADERROR_TOOSMALL"
+msgid "The music file is too small to be valid."
+msgstr "Het muziekbestand is te klein om geldig te zijn."
+
+msgctxt "L.MUSICEXISTSYES"
+msgid "Exists"
+msgstr "Bestaat"
+
+msgctxt "L.MUSICEXISTSNO"
+msgid "Does not exist"
+msgstr "Bestaat niet"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_NO"
+msgid "Does not exist - click to create"
+msgstr "Bestaat niet - klik om aan te maken"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_YES"
+msgid "Exists - click to open"
+msgstr "Bestaat - klik om te openen"
+
+msgctxt "L.NO_ASSETS_SUBFOLDER"
+msgid "No \"$1\" folder"
+msgstr "Geen \"$1\"-map"
+
+msgctxt "L.LOAD"
+msgid "Load"
+msgstr "Laden"
+
+msgctxt "L.RELOAD"
+msgid "Reload"
+msgstr "Herladen"
+
+msgctxt "L.UNLOAD"
+msgid "Unload"
+msgstr "Ontladen"
+
+msgctxt "L.MUSICEDITOR"
+msgid "Music editor"
+msgstr "Muziekbewerker"
+
+msgctxt "L.LOADMUSICNAME"
+msgid "Load .vvv"
+msgstr ".vvv laden"
+
+msgctxt "L.SAVEMUSICNAME"
+msgid "Save .vvv"
+msgstr ".vvv opslaan"
+
+msgctxt "L.INSERTSONG"
+msgid "Insert song at track $1"
+msgstr "Nummer invoegen op positie $1"
+
+msgctxt "L.SUREDELETESONG"
+msgid "Are you sure you want to remove song $1?"
+msgstr "Weet je zeker dat je nummer $1 wilt verwijderen?"
+
+msgctxt "L.SONGOPENFAIL"
+msgid "Unable to open $1, song not replaced."
+msgstr "Kon $1 niet openen, nummer is niet vervangen."
+
+msgctxt "L.SONGREPLACEFAIL"
+msgid "Something went wrong while replacing the song."
+msgstr "Er ging iets fout bij het vervangen van het nummer."
+
+msgctxt "L.BYTES"
+msgid "$1 B"
+msgstr "$1 B"
+
+msgctxt "L.KILOBYTES"
+msgid "$1 kB"
+msgstr "$1 kB"
+
+msgctxt "L.MEGABYTES"
+msgid "$1 MB"
+msgstr "$1 MB"
+
+msgctxt "L.GIGABYTES"
+msgid "$1 GB"
+msgstr "$1 GB"
+
+msgctxt "L.TERABYTES"
+msgid "$1 TB"
+msgstr "$1 TB"
+
+#. The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
+msgctxt "L.DECIMAL_SEP"
+msgid "."
+msgstr ","
+
+msgctxt "L.CANNOTUSENEWLINES"
+msgid "You cannot use the \"$1\" character in script names!"
+msgstr "Je kunt niet het \"$1\"-teken in scriptnamen gebruiken!"
+
+msgctxt "L.MUSICTITLE"
+msgid "Title: "
+msgstr "Titel: "
+
+msgctxt "L.MUSICARTIST"
+msgid "Artist: "
+msgstr "Artiest: "
+
+msgctxt "L.MUSICFILENAME"
+msgid "Filename: "
+msgstr "Bestandsnaam: "
+
+msgctxt "L.MUSICNOTES"
+msgid "Notes:"
+msgstr "Notities:"
+
+msgctxt "L.SONGMETADATA"
+msgid "Metadata for song $1"
+msgstr "Metadata voor nummer $1"
+
+msgctxt "L.MUSICFILEMETADATA"
+msgid "File metadata"
+msgstr "Metadata van bestand"
+
+#. Followed by date and time
+msgctxt "L.MUSICEXPORTEDON"
+msgid "Exported: "
+msgstr "Geëxporteerd: "
+
+msgctxt "L.SAVEMETADATA"
+msgid "Save metadata"
+msgstr "Metadata opslaan"
+
+msgctxt "L.SOUNDS"
+msgid "Sounds"
+msgstr "Geluiden"
+
+msgctxt "L.GRAPHICS"
+msgid "Graphics"
+msgstr "Afbeeldingen"
+
+msgctxt "L.FILEOPENERNAME"
+msgid "Name: "
+msgstr "Naam: "
+
+msgctxt "L.PATHINVALID"
+msgid "The path is invalid."
+msgstr "Het pad is ongeldig."
+
+#. like C: or F: on Windows
+msgctxt "L.DRIVES"
+msgid "Drives"
+msgstr "Schijven"
+
+#. "*.txt" for example
+msgctxt "L.DOFILTER"
+msgid "Only show *$1"
+msgstr "Alleen *$1 tonen"
+
+msgctxt "L.DOFILTERDIR"
+msgid "Only show directories"
+msgstr "Alleen mappen tonen"
+
+msgctxt "L.FILEDIALOGLUV"
+msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
+msgstr "Sorry, je besturingssysteem wordt niet herkend, dus het bestandsdialoogvenster werkt niet."
+
+msgctxt "L.RESET"
+msgid "Reset"
+msgstr "Resetten"
+
+#. verb
+msgctxt "L.CHANGEVERB"
+msgid "Change"
+msgstr "Wijzigen"
+
+msgctxt "L.LOADIMAGE"
+msgid "Load image"
+msgstr "Afbeelding laden"
+
+msgctxt "L.GRID"
+msgid "Grid"
+msgstr "Raster"
+
+msgctxt "L.NOTALPHAONLY"
+msgid "RGB"
+msgstr "RGB"
+
+msgctxt "L.UNSAVED_LEVEL_ASSETS_FOLDER"
+msgid "The level needs to be saved before it can use custom assets."
+msgstr "Het level moet worden opgeslagen voordat aangepaste bronbestanden kunnen worden gebruikt."
+
+#. $1: path
+msgctxt "L.CREATE_ASSETS_FOLDER"
+msgid ""
+"Would you like to create a custom assets folder for this level?\n"
+"\n"
+"$1"
+msgstr ""
+"Wil je een map maken voor aangepaste bronbestanden voor dit level?\n"
+"\n"
+"$1"
+
+msgctxt "L.CREATE_VVVVVV_FOLDER"
+msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+msgstr "Het lijkt erop dat de VVVVVV-map niet bestaat. Wil je deze aanmaken?"
+
+msgctxt "L.CREATE_LEVELS_FOLDER"
+msgid "It seems like the levels folder doesn't exist. Would you like to create it?"
+msgstr "Het lijkt erop dat de levels-map niet bestaat. Wil je deze aanmaken?"
+
+msgctxt "L.CREATE_FOLDER_FAIL"
+msgid ""
+"Unable to create folder.\n"
+"\n"
+"$1"
+msgstr ""
+"Kan map niet aanmaken.\n"
+"\n"
+"$1"
+
+msgctxt "L.ASSETS_FOLDER_FOR_LEVEL"
+msgid "Assets folder for $1"
+msgstr "Bronbestandenmap voor $1"
+
+msgctxt "L.OPAQUEROOMNAMEBACKGROUND"
+msgid "Make the black roomname backgrounds opaque"
+msgstr "Maak de zwarte achtergrond van kamernamen ondoorzichtig"
+
+msgctxt "L.PLATVCHANGE_TITLE"
+msgid "Change platform speed"
+msgstr "Platformsnelheid wijzigen"
+
+msgctxt "L.PLATVCHANGE_MSG"
+msgid "Speed:"
+msgstr "Snelheid:"
+
+msgctxt "L.PLATVCHANGE_INVALID"
+msgid "You have to type in a number."
+msgstr "Je moet een getal invoeren."
+
+msgctxt "L.RENAMESCRIPTREFERENCES"
+msgid "Rename references"
+msgstr "Verwijzingen hernoemen"
+
+msgctxt "L.PLATFORMSPEEDSLIDER"
+msgid "Spd.:"
+msgstr "Tempo"
+
+msgctxt "L.TRINKETS"
+msgid "Trinkets"
+msgstr "Artefacten"
+
+#. "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+msgctxt "L.LISTALLTRINKETS"
+msgid "List all trinkets"
+msgstr "Alle artefacten"
+
+msgctxt "L.LISTOFALLTRINKETS"
+msgid "List of all trinkets"
+msgstr "Lijst met alle artefacten"
+
+msgctxt "L.NOTRINKETSINLEVEL"
+msgid "There are no trinkets in this level."
+msgstr "Er zijn geen artefacten in dit level."
+
+msgctxt "L.CREWMATES"
+msgid "Crewmates"
+msgstr "Bemanning"
+
+#. "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+msgctxt "L.LISTALLCREWMATES"
+msgid "List all crewmates"
+msgstr "Alle leden"
+
+msgctxt "L.LISTOFALLCREWMATES"
+msgid "List of all rescuable crewmates"
+msgstr "Lijst met alle bemanningsleden"
+
+msgctxt "L.NOCREWMATESINLEVEL"
+msgid "There are no rescuable crewmates in this level."
+msgstr "Er zijn geen bemanningsleden in dit level."
+
+#. In the map. Move all rooms in the entire level in any direction
+msgctxt "L.SHIFTROOMS"
+msgid "Shift rooms"
+msgstr "Verschuif kamers"
+
+msgctxt "L.FRAMESTOSECONDS"
+msgid "$1 = $2 sec"
+msgstr "$1 = $2 sec"
+
+msgctxt "L.ROOMNUM"
+msgid "Room $1"
+msgstr "Kamer $1"
+
+msgctxt "L.SOUNDNUM"
+msgid "Sound $1"
+msgstr "Geluid $1"
+
+msgctxt "L.TRACKNUM"
+msgid "Track $1"
+msgstr "Nummer $1"
+
+msgctxt "L.STOPSMUSIC"
+msgid "Stops music"
+msgstr "Stopt muziek"
+
+msgctxt "L.PLAYSOUND"
+msgid "Play sound"
+msgstr "Geluid afspelen"
+
+msgctxt "L.EDITSCRIPTWOBUMPING"
+msgid "Edit script without bumping"
+msgstr "Script bewerken, niet naar boven verplaatsen"
+
+msgctxt "L.EDITSCRIPTWBUMPING"
+msgid "Edit script and bump"
+msgstr "Script bewerken en naar boven verplaatsen"
+
+msgctxt "L.CLICKONTHING"
+msgid "Click on $1"
+msgstr "Klik op $1"
+
+#. follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+msgctxt "L.ORDRAGDROP"
+msgid "or drag and drop onto here"
+msgstr "of sleep bestand hierheen"
+
+msgctxt "L.MORETHANONESTARTPOINT"
+msgid "There is more than one start point in this level!"
+msgstr "Er is meer dan één startpunt in dit level!"
+
+msgctxt "L.STARTPOINTNOTFOUND"
+msgid "There is no start point!"
+msgstr "Er is geen startpunt!"
+
+msgctxt "L.MAPBIGGERTHANSIZELIMIT"
+msgid "Map size $1 by $2 is bigger than $3 by $4!"
+msgstr "Kaartgrootte $1 bij $2 is groter dan $3 bij $4!"
+
+msgctxt "L.BTNOVERRIDE"
+msgid "Override"
+msgstr "Omzeilen"
+
+#. What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+msgctxt "L.TARGETPLATFORM"
+msgid "Target platform"
+msgstr "Doelplatform"
+
+msgctxt "L.PLATFORM_V"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.TIMETRIALS"
+msgid "Time trials"
+msgstr "Races tegen de klok"
+
+msgctxt "L.TIMETRIALTRINKETS"
+msgid "Trinket count"
+msgstr "Aantal artefacten"
+
+msgctxt "L.TIMETRIALTIME"
+msgid "Par time"
+msgstr "Partijd"
+
+msgctxt "L.SUREDELETETRIAL"
+msgid "Are you sure you want to delete the time trial \"$1\"?"
+msgstr "Weet je zeker dat je de race tegen de klok \"$1\" wilt verwijderen?"
+
+msgctxt "L.CUT"
+msgid "Cut"
+msgstr "Knippen"
+
+msgctxt "L.PASTE"
+msgid "Paste"
+msgstr "Plakken"
+
+msgctxt "L.SELECTWORD"
+msgid "Select word"
+msgstr "Woord selecteren"
+
+msgctxt "L.SELECTLINE"
+msgid "Select line"
+msgstr "Regel selecteren"
+
+msgctxt "L.SELECTALL"
+msgid "Select all"
+msgstr "Alles selecteren"
+
+msgctxt "L.INSERTRAWHEX"
+msgid "Insert Unicode character"
+msgstr "Unicode-teken invoegen"
+
+msgctxt "L.MOVELINEUP"
+msgid "Move line upwards"
+msgstr "Regel naar boven verplaatsen"
+
+msgctxt "L.MOVELINEDOWN"
+msgid "Move line downwards"
+msgstr "Regel naar onder verplaatsen"
+
+msgctxt "L.DUPLICATELINE"
+msgid "Duplicate line"
+msgstr "Regel dupliceren"
+
+msgctxt "L.WHEREPLACEPLAYER"
+msgid "Where do you want to start?"
+msgstr "Waar wil je beginnen?"
+
+msgctxt "L.YOUAREPLAYTESTING"
+msgid "You are currently playtesting"
+msgstr "Je bent momenteel aan het testen"
+
+#. application (example: Select your VVVVVV executable)
+msgctxt "L.LOCATEVVVVVV"
+msgid "Select your $1 executable"
+msgstr "Selecteer je $1-applicatie"
+
+msgctxt "L.ALREADYPLAYTESTING"
+msgid "You're already playtesting!"
+msgstr "Je bent al aan het testen!"
+
+msgctxt "L.PLAYTESTINGFAILED"
+msgid ""
+"Something went wrong when opening VVVVVV:\n"
+"$1\n"
+"\n"
+"If you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
+msgstr ""
+"Er ging iets mis bij het openen van VVVVVV:\n"
+"$1\n"
+"\n"
+"Als je de VVVVVV-applicatie die gebruikt wordt voor het testen moet wijzigen, houd dan Shift ingedrukt terwijl je op de testknop drukt."
+
+#. for example, code 1, indicating failure
+msgctxt "L.VVVVVV_EXITCODE_FAILURE"
+msgid "VVVVVV exited with code $1"
+msgstr "VVVVVV is afgesloten met code $1"
+
+msgctxt "L.VVVVVV_22_OR_OLDER"
+msgid "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
+msgstr "Het lijkt erop dat je VVVVVV 2.2 of ouder gebruikt. Upgrade naar VVVVVV 2.3 of nieuwer."
+
+msgctxt "L.VVVVVV_SOMETHING_HAPPENED"
+msgid "Something seems to have gone wrong with VVVVVV."
+msgstr "Er lijkt iets mis te zijn gegaan met VVVVVV."
+
+#. you cannot playtest on <operating system>
+msgctxt "L.PLAYTESTUNAVAILABLE"
+msgid "Sorry, you cannot playtest on $1."
+msgstr "Sorry, je kunt niet testen op $1."
+
+msgctxt "L.VVVVVVFILE"
+msgid "Please select the file named '$1'."
+msgstr "Selecteer het bestand genaamd '$1'."
+
+msgctxt "L.PLAYTESTINGOPTIONS"
+msgid "Playtesting"
+msgstr "Testen"
+
+#. $1: VVVVVV 2.3, $2: VVVVVV
+msgctxt "L.PLAYTESTING_EXECUTABLE_NOTSET"
+msgid ""
+"You did not yet set a $1 executable to use for playtesting.\n"
+"Ved will ask for it when playtesting a $2 level for the first time."
+msgstr ""
+"Je hebt nog geen $1-applicatie ingesteld die gebruikt wordt om levels te testen.\n"
+"Ved zal hier de eerste keer dat je een $2-level test om vragen."
+
+#. $1: VVVVVV 2.3
+msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
+msgid ""
+"The $1 executable to use for playtesting is set to:\n"
+"$2"
+msgstr ""
+"De $1-applicatie die gebruikt wordt om levels te testen is ingesteld op:\n"
+"$2"
+
+msgctxt "L.FIND_V_EXE_ERROR"
+msgid "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually."
+msgstr "Sorry, er is iets misgegaan bij het proberen om VVVVVV te vinden. Probeer het pad naar het uitvoerbare bestand handmatig in te stellen."
+
+msgctxt "L.FIND_V_EXE_FOUNDERROR"
+msgid "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually."
+msgstr "Er is iets gevonden dat op VVVVVV lijkt, maar het is niet gelukt om een bruikbaar pad ernaar te verkrijgen. Controleer of je niet een oude versie van het spel gebruikt (2.3 of nieuwer is vereist) of probeer het pad naar het uitvoerbare bestand handmatig in te stellen."
+
+msgctxt "L.FIND_V_EXE_NOTFOUND"
+msgid "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
+msgstr "Het lijkt erop dat VVVVVV niet draait. Controleer of je VVVVVV geopend hebt en probeer het opnieuw."
+
+msgctxt "L.FIND_V_EXE_MULTI"
+msgid "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
+msgstr "Er lijken meerdere exemplaren van VVVVVV tegelijk te draaien. Zorg dat je maar één versie van het spel open hebt en probeer het opnieuw."
+
+msgctxt "L.FIND_V_EXE_EXPLANATION"
+msgid ""
+"Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n"
+"\n"
+"\n"
+"To autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
+msgstr ""
+"Ved heeft VVVVVV nodig voor het testen, en het pad naar VVVVVV moet eerst worden ingesteld.\n"
+"\n"
+"\n"
+"Om VVVVVV automatisch te detecteren hoef je alleen het spel op te starten als het niet al draait en op \"Detecteren\" te drukken."
+
+msgctxt "L.VCE_REMOVED"
+msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
+msgstr "VVVVVV: Community Edition wordt niet meer onderhouden, en ondersteuning voor VVVVVV-CE levels is verwijderd uit Ved. Dit level wordt behandeld als een gewoon VVVVVV-level. Kijk voor meer informatie op https://vsix.dev/vce/status/"
+
+#. Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+msgctxt "L.VVVVVV_VERSION"
+msgid "VVVVVV version"
+msgstr "VVVVVV-versie"
+
+msgctxt "L.VVVVVV_VERSION_AUTO"
+msgid "Auto"
+msgstr "Auto"
+
+msgctxt "L.VVVVVV_VERSION_23PLUS"
+msgid "2.3+"
+msgstr "2.3+"
+
+msgctxt "L.VVVVVV_VERSION_24PLUS"
+msgid "2.4+"
+msgstr "2.4+"
+
+msgctxt "L.ALL_PLUGINS"
+msgid "All plugins"
+msgstr "Alle plugins"
+
+msgctxt "L.ALL_PLUGINS_MOREINFO"
+msgid "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl"
+msgstr "Ga naar ¤https://tolp.nl/ved/plugins.php¤deze pagina¤ voor meer informatie over plugins.\\nLCl"
+
+msgctxt "L.ALL_PLUGINS_FOLDER"
+msgid "Your plugins folder is:"
+msgstr "Je pluginsmap is:"
+
+msgctxt "L.ALL_PLUGINS_NOPLUGINS"
+msgid "You do not have any plugins yet."
+msgstr "Je hebt nog geen plugins."
+
+msgctxt "L.PLUGIN_NOT_SUPPORTED"
+msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
+msgstr "[Deze plugin wordt niet ondersteund omdat deze Ved $1 of hoger vereist!]\\r"
+
+#. by Person, version 1.0.0
+msgctxt "L.PLUGIN_AUTHOR_VERSION"
+msgid "by $1, version $2"
+msgstr "door $1, versie $2"
+
+msgctxt "L.CREATE_LOAD_SCRIPT"
+msgid "Create load script"
+msgstr "Laadscript maken"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_NO"
+msgid "No"
+msgstr "Nee"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_RUNONCE"
+msgid "Run once"
+msgstr "Eenmalig"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_REPEATING"
+msgid "Repeating"
+msgstr "Herhalend"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_NO"
+msgid "Don't create load script"
+msgstr "Geen laadscript maken"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_NO"
+msgid "This terminal will directly point to the script."
+msgstr "Deze terminal zal rechtstreeks verwijzen naar het script."
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_NO"
+msgid "This script box will directly point to the script."
+msgstr "Dit scriptvak zal rechtstreeks verwijzen naar het script."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_RUNONCE"
+msgid "Create load script to run once"
+msgstr "Laadscript maken om eenmalig uit te voeren"
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE"
+msgid "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Deze terminal zal verwijzen naar een nieuw laadscript, dat het echte script maar één keer laadt. Ved zal een ongebruikte vlag kiezen."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE"
+msgid "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Dit scriptvak zal verwijzen naar een nieuw laadscript, dat het echte script maar één keer laadt. Ved zal een ongebruikte vlag kiezen."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_REPEATING"
+msgid "Create repeating load script"
+msgstr "Herhalend laadscript maken"
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_REPEATING"
+msgid "This terminal will point to a new load script, which unconditionally loads the real script."
+msgstr "Deze terminal zal verwijzen naar een nieuw laadscript, dat het echte script onvoorwaardelijk laadt."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_REPEATING"
+msgid "This script box will point to a new load script, which unconditionally loads the real script."
+msgstr "Dit scriptvak zal verwijzen naar een nieuw laadscript, dat het echte script onvoorwaardelijk laadt."
+
+msgctxt "L.CUSTOM_SIZED_BRUSH"
+msgid "Custom brush"
+msgstr "Aangepaste kwast"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_BRUSH"
+msgid "Brush"
+msgstr "Kwast"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_STAMP"
+msgid "Stamp"
+msgstr "Stempel"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_TILESET"
+msgid "Tileset"
+msgstr "Tileset"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH"
+msgid "Custom brush size"
+msgstr "Aangepaste kwastgrootte"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH"
+msgid "Choose the size of the brush you need."
+msgstr "Kies de grootte van de kwast die je nodig hebt."
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_STAMP"
+msgid "Stamp from room"
+msgstr "Stempel uit kamer"
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_STAMP"
+msgid "Select tiles from the room to create a stamp."
+msgstr "Selecteer blokken uit de kamer om een stempel van te maken."
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_TILESET"
+msgid "Stamp from tileset"
+msgstr "Stempel uit tileset"
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_TILESET"
+msgid "Select tiles from the tileset to create a stamp. Only works in manual mode."
+msgstr "Selecteer blokken uit de tileset om een stempel van te maken. Werkt alleen in handmatige modus."
+
+msgctxt "L.ADVANCED_LEVEL_OPTIONS"
+msgid "Advanced level options"
+msgstr "Geavanceerde levelopties"
+
+#. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+msgctxt "L.ONEWAYCOL_OVERRIDE"
+msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
+msgstr "Herkleur eenrichtingsblokken ook in aangepaste bronbestanden (onewaycol_override)"
+
+#. .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+msgctxt "L.ZIP_SAVE_AS"
+msgid "Create ZIP of this version for sharing"
+msgstr "Maak ZIP van deze versie om te delen"
+
+msgctxt "L.ZIP_CREATE_TITLE"
+msgid "Save ZIP"
+msgstr "ZIP opslaan"
+
+msgctxt "L.ZIP_BUSY_TITLE"
+msgid "Creating ZIP..."
+msgstr "ZIP maken..."
+
+#. $1: version number
+msgctxt "L.ZIP_LOVE11_ONLY"
+msgid "Creating a ZIP file requires LÖVE $1 or higher"
+msgstr "LÖVE $1 of hoger is vereist om een ZIP-bestand te maken"
+
+msgctxt "L.ZIP_SAVING_SUCCESS"
+msgid "ZIP saved!"
+msgstr "ZIP opgeslagen!"
+
+msgctxt "L.ZIP_SAVING_FAIL"
+msgid "Could not save ZIP file!"
+msgstr "ZIP-bestand kon niet worden opgeslagen!"
+
+#. Button, open a directory/folder in Explorer, Finder or another system file manager.
+msgctxt "L.OPENFOLDER"
+msgid "Open folder"
+msgstr "Map openen"
+
+msgctxt "L.LEVELFONT"
+msgid "Level font"
+msgstr "Levellettertype"
+
+msgctxt "L.TEXTBOXCOLORS_BUTTON"
+msgid "Text colors"
+msgstr "Tekstkleuren"
+
+msgctxt "L.TEXTBOXCOLORS_TITLE"
+msgid "Textbox colors"
+msgstr "Kleuren voor tekstvakken"
+
+msgctxt "L.TEXTBOXCOLORS_RENAME"
+msgid "Rename color \"$1\""
+msgstr "Kleur \"$1\" hernoemen"
+
+msgctxt "L.TEXTBOXCOLORS_DUPLICATE"
+msgid "Duplicate color \"$1\""
+msgstr "Kleur \"$1\" dupliceren"
+
+msgctxt "L.TEXTBOXCOLORS_CREATE"
+msgid "Add new color"
+msgstr "Nieuwe kleur toevoegen"
+
+msgctxt "L.LIB_LOAD_ERRMSG_BIDI"
+msgid ""
+"Failed to load the library for right-to-left text support.\n"
+"\n"
+"$1"
+msgstr ""
+"De bibliotheek met ondersteuning voor tekst van rechts naar links kan niet worden geladen.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_AV"
+msgid ""
+"\n"
+"\n"
+"Your antivirus may be breaking it."
+msgstr ""
+"\n"
+"\n"
+"Het kan zijn dat je antivirus dit stukmaakt."
+
+msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
+msgid "You have $1 plugin that is not supported in this version."
+msgid_plural "You have $1 plugins that are not supported in this version."
+msgstr[0] "Je hebt $1 plugin die niet wordt ondersteund in deze versie."
+msgstr[1] "Je hebt $1 plugins die niet worden ondersteund in deze versie."
+
+msgctxt "L_PLU.LEVELFAILEDCHECKS"
+msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgstr[0] "Bij $1 test is een probleem geconstateerd bij dit level. Het probleem kan al automatisch zijn opgelost, maar het is nog steeds mogelijk dat dit crashes of inconsistenties zal veroorzaken."
+msgstr[1] "Bij $1 tests zijn problemen geconstateerd bij dit level. De problemen kunnen al automatisch zijn opgelost, maar het is nog steeds mogelijk dat dit crashes of inconsistenties zal veroorzaken."
+
+msgctxt "L_PLU.SCRIPTUSAGESROOMS"
+msgid "$1 usage in rooms: $2"
+msgid_plural "$1 usages in rooms: $2"
+msgstr[0] "$1 keer gebruikt in kamers: $2"
+msgstr[1] "$1 keer gebruikt in kamers: $2"
+
+msgctxt "L_PLU.SCRIPTUSAGESSCRIPTS"
+msgid "$1 usage in scripts: $2"
+msgid_plural "$1 usages in scripts: $2"
+msgstr[0] "$1 keer gebruikt in scripts: $2"
+msgstr[1] "$1 keer gebruikt in scripts: $2"
+
+msgctxt "L_PLU.ENTITYINVALIDPROPERTIES"
+msgid "Entity at [$1 $2] has $3 invalid property!"
+msgid_plural "Entity at [$1 $2] has $3 invalid properties!"
+msgstr[0] "Entiteit op [$1 $2] heeft $3 ongeldige eigenschap!"
+msgstr[1] "Entiteit op [$1 $2] heeft $3 ongeldige eigenschappen!"
+
+msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
+msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
+msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
+msgstr[0] "LevelMetadata voor kamer $1,$2 heeft $3 ongeldige eigenschap!"
+msgstr[1] "LevelMetadata voor kamer $1,$2 heeft $3 ongeldige eigenschappen!"
+
+# Old translation: "Toont $1". This one seems a little more natural.
+msgctxt "L_PLU.SCRIPTDISPLAY_SHOWING"
+msgid "Showing $1"
+msgid_plural "Showing $1"
+msgstr[0] "$1 wordt getoond"
+msgstr[1] "$1 worden getoond"
+
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] "$1 keer gebruikt in scripts: $2"
+msgstr[1] "$1 keer gebruikt in scripts: $2"
+
+msgctxt "L_PLU.NOTALLTILESVALID"
+msgid "$1 tile is not a valid whole number greater than or equal to 0"
+msgid_plural "$1 tiles are not a valid whole number greater than or equal to 0"
+msgstr[0] "$1 blok is geen geldig geheel getal groter dan of gelijk aan 0"
+msgstr[1] "$1 blokken zijn geen geldig geheel getal groter dan of gelijk aan 0"
+
+msgctxt "L_PLU.BYTES"
+msgid "$1 byte"
+msgid_plural "$1 bytes"
+msgstr[0] "$1 byte"
+msgstr[1] "$1 bytes"
+
+msgctxt "L_PLU.NUM_GRAPHICS_CUSTOMIZED"
+msgid "$1 image customized"
+msgid_plural "$1 images customized"
+msgstr[0] "$1 afbeelding aangepast"
+msgstr[1] "$1 afbeeldingen aangepast"
+
+msgctxt "L_PLU.NUM_SOUNDS_CUSTOMIZED"
+msgid "$1 sound effect customized"
+msgid_plural "$1 sound effects customized"
+msgstr[0] "$1 geluidseffect aangepast"
+msgstr[1] "$1 geluidseffecten aangepast"
+
+msgctxt "toolnames.1"
+msgid "Wall"
+msgstr "Muur"
+
+msgctxt "toolnames.2"
+msgid "Background"
+msgstr "Achtergrond"
+
+msgctxt "toolnames.3"
+msgid "Spike"
+msgstr "Spijker"
+
+msgctxt "toolnames.4"
+msgid "Trinket"
+msgstr "Artefact"
+
+msgctxt "toolnames.5"
+msgid "Checkpoint"
+msgstr "Checkpoint"
+
+msgctxt "toolnames.6"
+msgid "Disappearing platform"
+msgstr "Brekend platform"
+
+msgctxt "toolnames.7"
+msgid "Conveyor"
+msgstr "Lopende band"
+
+msgctxt "toolnames.8"
+msgid "Moving platform"
+msgstr "Bewegend platform"
+
+msgctxt "toolnames.9"
+msgid "Enemy"
+msgstr "Vijand"
+
+msgctxt "toolnames.10"
+msgid "Gravity line"
+msgstr "Zwaartekrachtlijn"
+
+msgctxt "toolnames.11"
+msgid "Roomtext"
+msgstr "Tekst"
+
+msgctxt "toolnames.12"
+msgid "Terminal"
+msgstr "Terminal"
+
+msgctxt "toolnames.13"
+msgid "Script box"
+msgstr "Scriptvak"
+
+msgctxt "toolnames.14"
+msgid "Warp token"
+msgstr "Teleportatietoken"
+
+msgctxt "toolnames.15"
+msgid "Warp line"
+msgstr "Wikkellijn"
+
+msgctxt "toolnames.16"
+msgid "Crewmate"
+msgstr "Bemanningslid"
+
+msgctxt "toolnames.17"
+msgid "Start point"
+msgstr "Startpunt"
+
+msgctxt "subtoolnames.1.1"
+msgid "1x1 brush"
+msgstr "1x1-kwast"
+
+msgctxt "subtoolnames.1.2"
+msgid "3x3 brush"
+msgstr "3x3-kwast"
+
+msgctxt "subtoolnames.1.3"
+msgid "5x5 brush"
+msgstr "5x5-kwast"
+
+msgctxt "subtoolnames.1.4"
+msgid "7x7 brush"
+msgstr "7x7-kwast"
+
+msgctxt "subtoolnames.1.5"
+msgid "9x9 brush"
+msgstr "9x9-kwast"
+
+msgctxt "subtoolnames.1.6"
+msgid "Fill horizontally"
+msgstr "Vul horizontaal"
+
+msgctxt "subtoolnames.1.7"
+msgid "Fill vertically"
+msgstr "Vul verticaal"
+
+msgctxt "subtoolnames.1.8"
+msgid "Custom brush size"
+msgstr "Aangepaste kwastgrootte"
+
+msgctxt "subtoolnames.1.9"
+msgid "Fill bucket"
+msgstr "Opvullen"
+
+msgctxt "subtoolnames.1.10"
+msgid "Potato for Doing Things that are Magical"
+msgstr "Aardappel voor het doen van dingen die magisch zijn"
+
+msgctxt "subtoolnames.3.1"
+msgid "Auto 1"
+msgstr "Auto 1"
+
+msgctxt "subtoolnames.3.2"
+msgid "Auto expand L+R"
+msgstr "Automatisch uitbreiden L+R"
+
+msgctxt "subtoolnames.3.3"
+msgid "Auto expand L"
+msgstr "Automatisch uitbreiden L"
+
+msgctxt "subtoolnames.3.4"
+msgid "Auto expand R"
+msgstr "Automatisch uitbreiden R"
+
+msgctxt "subtoolnames.5.1"
+msgid "Upright"
+msgstr "Rechtop"
+
+msgctxt "subtoolnames.5.2"
+msgid "Flipped"
+msgstr "Ondersteboven"
+
+msgctxt "subtoolnames.7.1"
+msgid "Small R"
+msgstr "Klein R"
+
+msgctxt "subtoolnames.7.2"
+msgid "Small L"
+msgstr "Klein L"
+
+msgctxt "subtoolnames.7.3"
+msgid "Large R"
+msgstr "Groot R"
+
+msgctxt "subtoolnames.7.4"
+msgid "Large L"
+msgstr "Groot L"
+
+msgctxt "subtoolnames.8.1"
+msgid "Down"
+msgstr "Omlaag"
+
+msgctxt "subtoolnames.8.2"
+msgid "Up"
+msgstr "Omhoog"
+
+msgctxt "subtoolnames.8.3"
+msgid "Left"
+msgstr "Links"
+
+msgctxt "subtoolnames.8.4"
+msgid "Right"
+msgstr "Rechts"
+
+msgctxt "subtoolnames.10.1"
+msgid "Horizontal"
+msgstr "Horizontaal"
+
+msgctxt "subtoolnames.10.2"
+msgid "Vertical"
+msgstr "Verticaal"
+
+msgctxt "subtoolnames.14.1"
+msgid "Entrance"
+msgstr "Ingang"
+
+msgctxt "subtoolnames.14.2"
+msgid "Exit"
+msgstr "Uitgang"
+
+msgctxt "subtoolnames.16.1"
+msgid "Pink"
+msgstr "Roze"
+
+msgctxt "subtoolnames.16.2"
+msgid "Yellow"
+msgstr "Geel"
+
+msgctxt "subtoolnames.16.3"
+msgid "Red"
+msgstr "Rood"
+
+msgctxt "subtoolnames.16.4"
+msgid "Green"
+msgstr "Groen"
+
+msgctxt "subtoolnames.16.5"
+msgid "Blue"
+msgstr "Blauw"
+
+msgctxt "subtoolnames.16.6"
+msgid "Cyan"
+msgstr "Cyaan"
+
+msgctxt "subtoolnames.16.7"
+msgid "Random"
+msgstr "Willekeurig"
+
+msgctxt "subtoolnames.17.1"
+msgid "Face right"
+msgstr "Gezicht naar rechts"
+
+msgctxt "subtoolnames.17.2"
+msgid "Face left"
+msgstr "Gezicht naar links"
+
+msgctxt "warpdirs.0"
+msgid "x"
+msgstr "x"
+
+msgctxt "warpdirs.1"
+msgid "H"
+msgstr "H"
+
+msgctxt "warpdirs.2"
+msgid "V"
+msgstr "V"
+
+msgctxt "warpdirs.3"
+msgid "A"
+msgstr "A"
+
+msgctxt "warpdirchangedtext.0"
+msgid "Room warping disabled"
+msgstr "Kamerwarping uitgeschakeld"
+
+msgctxt "warpdirchangedtext.1"
+msgid "Warp direction set to horizontal"
+msgstr "Warprichting op horizontaal gezet"
+
+msgctxt "warpdirchangedtext.2"
+msgid "Warp direction set to vertical"
+msgstr "Warprichting op verticaal gezet"
+
+msgctxt "warpdirchangedtext.3"
+msgid "Warp direction set to all directions"
+msgstr "Warprichting op alle richtingen gezet"
+
+msgctxt "langtilesetnames.short0"
+msgid "Space Stn."
+msgstr "Space Stn."
+
+msgctxt "langtilesetnames.long0"
+msgid "Space Station"
+msgstr "Space Station"
+
+msgctxt "langtilesetnames.short1"
+msgid "Outside"
+msgstr "Buiten"
+
+msgctxt "langtilesetnames.long1"
+msgid "Outside"
+msgstr "Buiten"
+
+msgctxt "langtilesetnames.short2"
+msgid "Lab"
+msgstr "Lab"
+
+msgctxt "langtilesetnames.long2"
+msgid "Lab"
+msgstr "Lab"
+
+msgctxt "langtilesetnames.short3"
+msgid "Warp Zone"
+msgstr "Warp Zone"
+
+msgctxt "langtilesetnames.long3"
+msgid "Warp Zone"
+msgstr "Warp Zone"
+
+msgctxt "langtilesetnames.short4"
+msgid "Ship"
+msgstr "Schip"
+
+msgctxt "langtilesetnames.long4"
+msgid "Ship"
+msgstr "Schip"
+
+msgctxt "langtilesetnames.short5"
+msgid "Tower"
+msgstr "Toren"
+
+msgctxt "langtilesetnames.long5"
+msgid "Tower"
+msgstr "Toren"
+
+msgctxt "ERR_VEDHASCRASHED"
+msgid "Ved has crashed!"
+msgstr "Ved is gecrasht!"
+
+msgctxt "ERR_VEDVERSION"
+msgid "Ved version:"
+msgstr "Ved-versie:"
+
+msgctxt "ERR_LOVEVERSION"
+msgid "LÖVE version:"
+msgstr "LÖVE-versie:"
+
+msgctxt "ERR_STATE"
+msgid "State:"
+msgstr "Toestand:"
+
+msgctxt "ERR_OS"
+msgid "OS:"
+msgstr "Besturingssysteem:"
+
+msgctxt "ERR_TIMESINCESTART"
+msgid "Time since start:"
+msgstr "Tijd sinds opstarten:"
+
+msgctxt "ERR_PLUGINS"
+msgid "Plugins:"
+msgstr "Plugins:"
+
+msgctxt "ERR_PLUGINSNOTLOADED"
+msgid "(not loaded)"
+msgstr "(niet geladen)"
+
+msgctxt "ERR_PLUGINSNONE"
+msgid "(none)"
+msgstr "(geen)"
+
+msgctxt "ERR_PLEASETELLDAV"
+msgid ""
+"Please tell Dav999 about this problem.\n"
+"\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Vertel Dav999 alsjeblieft over dit probleem.\n"
+"\n"
+"\n"
+"Details: (druk Ctrl/Cmd+C om naar het klembord te kopiëren)\n"
+"\n"
+
+#. pre-release version, so a version in between officially released versions
+msgctxt "ERR_INTERMEDIATE"
+msgid " (intermediate version)"
+msgstr " (tussenversie)"
+
+msgctxt "ERR_TOONEW"
+msgid " (too new)"
+msgstr " (te nieuw)"
+
+msgctxt "ERR_PLUGINERROR"
+msgid "Plugin error!"
+msgstr "Pluginfout!"
+
+msgctxt "ERR_FILE"
+msgid "File to be edited:"
+msgstr "Bestand om te bewerken:"
+
+msgctxt "ERR_FILEEDITORS"
+msgid "Plugins that edit this file:"
+msgstr "Plugins die dit bestand bewerken:"
+
+msgctxt "ERR_CURRENTPLUGIN"
+msgid "Plugin that triggered the error:"
+msgstr "Plugin die de fout heeft veroorzaakt:"
+
+msgctxt "ERR_PLEASETELLAUTHOR"
+msgid ""
+"A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\n"
+"It is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Een plugin moest een wijziging aanbrengen in code in Ved, maar de te vervangen code werd niet gevonden.\n"
+"Het is mogelijk dat dit wordt veroorzaakt door een conflict tussen twee plugins, of een update van Ved heeft deze plugin onbruikbaar gemaakt.\n"
+"\n"
+"Details: (druk Ctrl/Cmd+C om naar het klembord te kopiëren)\n"
+"\n"
+
+msgctxt "ERR_CONTINUE"
+msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr "Je kunt verdergaan door op ESC of enter te drukken, maar wees bewust dat deze mislukte bewerking voor problemen kan zorgen."
+
+msgctxt "ERR_OPENPLUGINSFOLDER"
+msgid "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+msgstr "Je kunt je pluginsmap openen door op F te drukken, zodat je de problematische plugin kunt repareren of verwijderen. Herstart daarna Ved."
+
+msgctxt "ERR_REPLACECODE"
+msgid "Failed to find this in %s.lua:"
+msgstr "Kon dit niet vinden in %s.lua:"
+
+msgctxt "ERR_REPLACECODEPATTERN"
+msgid "Failed to find this in %s.lua (as pattern):"
+msgstr "Kon dit niet vinden in %s.lua (als pattern):"
+
+msgctxt "ERR_LINESTOTAL"
+msgid "%i lines in total"
+msgstr "%i regels in totaal"
+
+msgctxt "ERR_SAVELEVEL"
+msgid "To save a copy of your level, press S"
+msgstr "Om een kopie van je level op te slaan, druk op S"
+
+msgctxt "ERR_SAVESUCC"
+msgid "Level saved successfully as %s!"
+msgstr "Level succesvol opgeslagen als %s!"
+
+msgctxt "ERR_SAVEERROR"
+msgid "Save error! %s"
+msgstr "Fout bij het opslaan! %s"
+
+msgctxt "ERR_LOGSAVED"
+msgid ""
+"More information can be found in the crash log:\n"
+"%s"
+msgstr ""
+"Meer informatie is te vinden in het crashlogboek:\n"
+"%s"
+
+msgctxt "diffmessages.pages.levelproperties"
+msgid "Level properties"
+msgstr "Leveleigenschappen"
+
+msgctxt "diffmessages.pages.changedrooms"
+msgid "Changed rooms"
+msgstr "Gewijzigde kamers"
+
+msgctxt "diffmessages.pages.changedroommetadata"
+msgid "Changed room metadata"
+msgstr "Kamermetadata"
+
+msgctxt "diffmessages.pages.entities"
+msgid "Entities"
+msgstr "Entiteiten"
+
+msgctxt "diffmessages.pages.scripts"
+msgid "Scripts"
+msgstr "Scripts"
+
+msgctxt "diffmessages.pages.flagnames"
+msgid "Flag names"
+msgstr "Vlagnamen"
+
+msgctxt "diffmessages.pages.levelnotes"
+msgid "Level notes"
+msgstr "Levelnotities"
+
+msgctxt "diffmessages.levelpropertiesdiff.Title"
+msgid "Name was changed from \"$1\" to \"$2\""
+msgstr "Naam is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Creator"
+msgid "Author was changed from \"$1\" to \"$2\""
+msgstr "Auteur is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.website"
+msgid "Website was changed from \"$1\" to \"$2\""
+msgstr "Website is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc1"
+msgid "Desc1 was changed from \"$1\" to \"$2\""
+msgstr "Desc1 is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc2"
+msgid "Desc2 was changed from \"$1\" to \"$2\""
+msgstr "Desc2 is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc3"
+msgid "Desc3 was changed from \"$1\" to \"$2\""
+msgstr "Desc3 is veranderd van \"$1\" naar \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsize"
+msgid "Map size was changed from $1x$2 to $3x$4"
+msgstr "Levelgrootte is veranderd van $1x$2 naar $3x$4"
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsizenote"
+msgid ""
+"NOTE: Map size was changed from $1x$2 to $3x$4.\\o\n"
+"Rooms outside of $5x$6 are not listed.\\o"
+msgstr ""
+"Let op: Levelgrootte is veranderd van $1x$2 naar $3x$4.\\o\n"
+"Kamers buiten het bereik van $5x$6 worden niet genoemd.\\o"
+
+msgctxt "diffmessages.levelpropertiesdiff.levmusic"
+msgid "Level music was changed from $1 to $2"
+msgstr "Levelmuziek is veranderd van $1 naar $2"
+
+msgctxt "diffmessages.rooms.added1"
+msgid "Added ($1,$2) ($3)\\G"
+msgstr "($1,$2) ($3) toegevoegd\\G"
+
+msgctxt "diffmessages.rooms.added2"
+msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgstr "($1,$2) ($3 -> $4) toegevoegd\\G"
+
+msgctxt "diffmessages.rooms.changed1"
+msgid "Changed ($1,$2) ($3)\\Y"
+msgstr "($1,$2) ($3) gewijzigd\\Y"
+
+msgctxt "diffmessages.rooms.changed2"
+msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgstr "($1,$2) ($3 -> $4) gewijzigd\\Y"
+
+msgctxt "diffmessages.rooms.cleared1"
+msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgstr "Alle blokken in ($1,$2) ($3) weggehaald\\R"
+
+msgctxt "diffmessages.rooms.cleared2"
+msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgstr "Alle blokken in ($1,$2) ($3 -> $4) weggehaald\\R"
+
+msgctxt "diffmessages.roommetadata.changed0"
+msgid "Room $1,$2:"
+msgstr "Kamer $1,$2:"
+
+msgctxt "diffmessages.roommetadata.changed1"
+msgid "Room $1,$2 ($3):"
+msgstr "Kamer $1,$2 ($3):"
+
+msgctxt "diffmessages.roommetadata.roomname"
+msgid "Roomname changed from \"$1\" to \"$2\"\\Y"
+msgstr "Naam van kamer veranderd van \"$1\" naar \"$2\"\\Y"
+
+msgctxt "diffmessages.roommetadata.roomnameremoved"
+msgid "Roomname \"$1\" removed\\R"
+msgstr "Naam van kamer \"$1\" verwijderd\\R"
+
+msgctxt "diffmessages.roommetadata.roomnameadded"
+msgid "Room named \"$1\"\\G"
+msgstr "Naam aan kamer gegeven: \"$1\"\\G"
+
+msgctxt "diffmessages.roommetadata.tileset"
+msgid "Tileset $1 tilecol $2 changed to tileset $3 tilecol $4\\Y"
+msgstr "Tileset $1 tilecol $2 veranderd naar tileset $3 tilecol $4\\Y"
+
+msgctxt "diffmessages.roommetadata.platv"
+msgid "Platform speed changed from $1 to $2\\Y"
+msgstr "Platformsnelheid veranderd van $1 naar $2\\Y"
+
+msgctxt "diffmessages.roommetadata.enemytype"
+msgid "Enemy type changed from $1 to $2\\Y"
+msgstr "Vijandtype veranderd van $1 naar $2\\Y"
+
+msgctxt "diffmessages.roommetadata.platbounds"
+msgid "Platform bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Platformbegrenzing veranderd van $1,$2,$3,$4 naar $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.enemybounds"
+msgid "Enemy bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Vijandbegrenzing veranderd van $1,$2,$3,$4 naar $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.directmode01"
+msgid "Direct mode enabled\\G"
+msgstr "Direct mode aangezet\\G"
+
+msgctxt "diffmessages.roommetadata.directmode10"
+msgid "Direct mode disabled\\R"
+msgstr "Direct mode uitgezet\\R"
+
+msgctxt "diffmessages.roommetadata.warpdir"
+msgid "Warp direction changed from $1 to $2\\Y"
+msgstr "Warprichting veranderd van $1 naar $2\\Y"
+
+msgctxt "diffmessages.entities.added"
+msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgstr "Entiteit van type $1 toegevoegd op positie $2,$3 in kamer ($4,$5)\\G"
+
+msgctxt "diffmessages.entities.removed"
+msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgstr "Entiteit van type $1 verwijderd van positie $2,$3 in kamer ($4,$5)\\R"
+
+msgctxt "diffmessages.entities.changed"
+msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgstr "Entiteit van type $1 op positie $2,$3 in kamer ($4,$5) gewijzigd\\Y"
+
+msgctxt "diffmessages.entities.changedtype"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgstr "Entiteit van type $1 veranderd naar type $2 op positie $3,$4 in kamer ($5,$6)\\Y"
+
+msgctxt "diffmessages.entities.multiple1"
+msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgstr "Entiteiten op positie $1,$2 in kamer ($3,$4) gewijzigd:\\Y"
+
+msgctxt "diffmessages.entities.multiple2"
+msgid "to:"
+msgstr "naar:"
+
+msgctxt "diffmessages.entities.addedmultiple"
+msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgstr "Entiteiten toegevoegd op positie $1,$2 in kamer ($3,$4):\\G"
+
+msgctxt "diffmessages.entities.removedmultiple"
+msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgstr "Entiteiten verwijderd van positie $1,$2 in kamer ($3,$4):\\R"
+
+msgctxt "diffmessages.entities.entity"
+msgid "Type $1"
+msgstr "Type $1"
+
+msgctxt "diffmessages.entities.incomplete"
+msgid "Not all entities were handled! Please report this to Dav.\\r"
+msgstr "Niet alle entiteiten zijn verwerkt! Rapporteer dit alsjeblieft aan Dav.\\r"
+
+msgctxt "diffmessages.scripts.added"
+msgid "Added script \"$1\"\\G"
+msgstr "Script \"$1\" toegevoegd\\G"
+
+msgctxt "diffmessages.scripts.removed"
+msgid "Removed script \"$1\"\\R"
+msgstr "Script \"$1\" verwijderd\\R"
+
+msgctxt "diffmessages.scripts.edited"
+msgid "Edited script \"$1\"\\Y"
+msgstr "Script \"$1\" bewerkt\\Y"
+
+msgctxt "diffmessages.flagnames.added"
+msgid "Set name for flag $1 to \"$2\"\\G"
+msgstr "Naam aan vlag $1 gegeven: \"$2\"\\G"
+
+msgctxt "diffmessages.flagnames.removed"
+msgid "Removed name \"$1\" for flag $2\\R"
+msgstr "Naam \"$1\" voor vlag $2 verwijderd\\R"
+
+msgctxt "diffmessages.flagnames.edited"
+msgid "Changed name for flag $1 from \"$2\" to \"$3\"\\Y"
+msgstr "Naam voor vlag $1 veranderd van \"$2\" naar \"$3\"\\Y"
+
+msgctxt "diffmessages.levelnotes.added"
+msgid "Added level note \"$1\"\\G"
+msgstr "Levelnotitie \"$1\" toegevoegd\\G"
+
+msgctxt "diffmessages.levelnotes.removed"
+msgid "Removed level note \"$1\"\\R"
+msgstr "Levelnotitie \"$1\" verwijderd\\R"
+
+msgctxt "diffmessages.levelnotes.edited"
+msgid "Edited level note \"$1\"\\Y"
+msgstr "Levelnotitie \"$1\" bewerkt\\Y"
+
+msgctxt "diffmessages.mde.added"
+msgid "Metadata entity was added.\\G"
+msgstr "Metadata-entiteit is toegevoegd.\\G"
+
+msgctxt "diffmessages.mde.removed"
+msgid "Metadata entity was removed.\\R"
+msgstr "Metadata-entiteit is verwijderd.\\R"

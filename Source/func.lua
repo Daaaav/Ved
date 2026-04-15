@@ -2081,8 +2081,10 @@ function get_all_languages()
 	local lang_codes = {}
 
 	for k,v in pairs(lang_filenames) do
-		if v:sub(-4,-1) == ".lua" then
-			table.insert(lang_codes, v:sub(1,-5))
+		if v == "en.pot" then
+			table.insert(lang_codes, "en")
+		elseif v:sub(-3,-1) == ".po" then
+			table.insert(lang_codes, v:sub(1,-4))
 		end
 	end
 

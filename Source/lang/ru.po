@@ -1,0 +1,3094 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-11 03:51+0200\n"
+"PO-Revision-Date: 2026-03-27 15:50+0200\n"
+"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 2.8\n"
+"X-POOTLE-MTIME: 1774626601.307291\n"
+
+#. If you're making a translation, feel free to set this to something like "Translation made by (you)".
+msgctxt "L.TRANSLATIONCREDIT"
+msgid "English translation by Dav999"
+msgstr "Переведено CreepiX'ом, cheep the peanut'ом и Omegaplex'ом"
+
+msgctxt "L.OSNOTRECOGNIZED"
+msgid ""
+"Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n"
+"\n"
+"$2"
+msgstr ""
+"Ваша ОС ($1) не опознана! Идёт возврат к первичным настройкам файловой системы; ваши уровни находятся в:\n"
+"\n"
+"$2"
+
+msgctxt "L.MAXTRINKETS"
+msgid "The maximum amount of trinkets ($1) has been reached in this level."
+msgstr "Достигнуто максимальное количество штуковин ($1)."
+
+msgctxt "L.MAXCREWMATES"
+msgid "The maximum amount of crewmates ($1) has been reached in this level."
+msgstr "Достигнуто максимальное количество членов экипажа ($1)."
+
+msgctxt "L.UNSUPPORTEDTOOL"
+msgid "Unsupported tool! Tool: "
+msgstr "Неподдерживаемый инструмент! Инструмент: "
+
+msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
+msgid "Could not get contents of levels folder. Please check if $1 exists and try again."
+msgstr "Папка с уровнями не найдена. Пожалуйста, убедитесь что $1 существует и попробуйте снова."
+
+msgctxt "L.MAPSAVEDAS"
+msgid "Map image saved as $1!"
+msgstr "Снимок карты $1 сохранён!"
+
+msgctxt "L.RAWENTITYPROPERTIES"
+msgid "You can change the raw property values of this entity here."
+msgstr "Вы можете изменять значения свойств этого объекта."
+
+msgctxt "L.UNKNOWNENTITYTYPE"
+msgid "Unknown entity type $1"
+msgstr "Неизвестный тип объекта $1"
+
+msgctxt "L.WARPTOKENENT404"
+msgid "Warp token entity no longer exists!"
+msgstr "Объект варп-токена больше не существует!"
+
+#. Command names are best left untranslated
+msgctxt "L.SPLITFAILED"
+msgid "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?"
+msgstr "Разделение провалено! Может, у вас слишком много строк между командами text и speak/speak_active?"
+
+msgctxt "L.NOFLAGSLEFT"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again."
+msgstr "Все флаги использованы, новые имена флагов в этом скрипте не будут ассоциироваться с номерами флагов. Попытка запустить этот скрипт в VVVVVV может привести к ошибке. Уберите все ссылки к флагам которые вам не нужны и попробуйте ещё раз."
+
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
+msgstr "Больше нет свободных флагов, поэтому скрипт загрузки использующий новый флаг не может быть создан. Вместо этого был создан скрипт загрузки, загружающий целевой скрипт при помощи iftrinkets(0,$1). Попробуйте убрать все использования ненужных флагов и повторите попытку."
+
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
+msgstr "Невозможно открыть $1.vvvvvv."
+
+msgctxt "L.SIZELIMIT"
+msgid ""
+"The maximum size of a level is $1 by $2.\n"
+"\n"
+"The level size will be changed to $3 by $4 instead."
+msgstr ""
+"Максимальный размер уровня $1x$2.\n"
+"\n"
+"Размер уровня будет изменён на $3x$4."
+
+msgctxt "L.SCRIPTALREADYEXISTS"
+msgid "Script \"$1\" already exists!"
+msgstr "Скрипт \"$1\" уже существует!"
+
+msgctxt "L.FLAGNAMENUMBERS"
+msgid "Flag names cannot be only numbers."
+msgstr "Имя флага не может состоять только из цифр."
+
+msgctxt "L.FLAGNAMECHARS"
+msgid "Flag names cannot contain parentheses, commas or spaces."
+msgstr "Имя флага не может содержать скобки, запятые или пробелы."
+
+msgctxt "L.FLAGNAMEINUSE"
+msgid "The flag name $1 is already in use by flag $2"
+msgstr "Имя флага $1 уже используется флагом $2"
+
+msgctxt "L.DIFFSELECT"
+msgid "Select the level to compare to. The level you select now will be treated as being an older version."
+msgstr "Выберите второй уровень для сравнения. Уровень, который вы выберете, будет считаться за старую версию."
+
+msgctxt "L.SUREQUITNEW"
+msgid "You have unsaved changes. Do you want to save these changes before quitting?"
+msgstr "Есть несохранённые изменения. Сохранить их перед выходом?"
+
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr "Есть несохранённые изменения. Сохранить их перед созданием нового уровня?"
+
+msgctxt "L.SUREOPENLEVEL"
+msgid "You have unsaved changes. Do you want to save these changes before opening this level?"
+msgstr "Есть несохранённые изменения. Сохранить их перед открытием нового уровня?"
+
+msgctxt "L.NAMEFORFLAG"
+msgid "Name for flag $1:"
+msgstr "Имя флага $1:"
+
+msgctxt "L.SCRIPT404"
+msgid "Script \"$1\" does not exist!"
+msgstr "Скрипт \"$1\" не существует!"
+
+msgctxt "L.ENTITY404"
+msgid "Entity #$1 no longer exists!"
+msgstr "Объект #$1 не существует!"
+
+msgctxt "L.GRAPHICSCARDCANVAS"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr "Ваша видеокарта или её драйвер не поддерживает данную функцию!"
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid ""
+"Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n"
+"\n"
+"The size limit on this system is $3x$3."
+msgstr ""
+"Ваша видеокарта или её драйвер не поддерживает изображение с масштабом $1x$2.\n"
+"\n"
+"Предел масштаба на этой системе - $3x$3."
+
+msgctxt "L.SUREDELETESCRIPT"
+msgid "Are you sure you want to delete the script \"$1\"?"
+msgstr "Вы уверены, что хотите удалить скрипт \"$1\"?"
+
+msgctxt "L.SUREDELETENOTE"
+msgid "Are you sure you want to delete this note?"
+msgstr "Вы уверены, что хотите удалить эту заметку?"
+
+msgctxt "L.THREADERROR"
+msgid "Thread error!"
+msgstr "Ошибка потока выполнения!"
+
+msgctxt "L.WHATDIDYOUDO"
+msgid "What did you do?!"
+msgstr "Что вы наделали?!"
+
+msgctxt "L.UNDOFAULTY"
+msgid "What are you doing?"
+msgstr "Что ты делаешь?"
+
+msgctxt "L.SOURCEDESTROOMSSAME"
+msgid "Source and destination rooms are the same!"
+msgstr "Изначальная комната и конечная комната совпадают!"
+
+msgctxt "L.COORDS_OUT_OF_RANGE"
+msgid "Huh? These coordinates aren't even in this dimension!"
+msgstr "Что? Этих координат даже нету в этом измерении!"
+
+msgctxt "L.UNKNOWNUNDOTYPE"
+msgid "Unknown undo type \"$1\"!"
+msgstr "Неизвестный тип отмены \"$1\"!"
+
+msgctxt "L.MDEVERSIONWARNING"
+msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
+msgstr "Этот уровень был сделан в более поздней версии Ved, и может содержать информацию, которая будет потеряна при сохранении."
+
+msgctxt "L.FORGOTPATH"
+msgid "You forgot to specify a path!"
+msgstr "Вы забыли указать путь!"
+
+msgctxt "L.LIB_LOAD_ERRMSG"
+msgid ""
+"Failed to load an essential library. Please tell Dav999 about this problem.\n"
+"\n"
+"$1"
+msgstr ""
+"Не удалось загрузить необходимую библиотеку. Пожалуйста, свяжитесь с Dav999 и расскажите о проблеме.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_GCC"
+msgid ""
+"\n"
+"\n"
+"Try installing GCC to solve this problem, if it isn't already installed."
+msgstr ""
+"\n"
+"\n"
+"Для решения проблемы попробуйте установить GCC, если он не установлен."
+
+msgctxt "L.SELECTCOPY1"
+msgid "Select the room to copy"
+msgstr "Выберите комнату для копирования"
+
+msgctxt "L.SELECTCOPY2"
+msgid "Select the location to copy this room to"
+msgstr "Выберите координаты для копии этой комнаты"
+
+msgctxt "L.SELECTSWAP1"
+msgid "Select the first room to swap"
+msgstr "Выберите первую комнату для замены"
+
+msgctxt "L.SELECTSWAP2"
+msgid "Select the second room to swap"
+msgstr "Выберите вторую комнату для замены"
+
+msgctxt "L.TILESETCHANGEDTO"
+msgid "Tileset changed to $1"
+msgstr "Набор тайлов изменён на $1"
+
+msgctxt "L.TILESETCOLORCHANGEDTO"
+msgid "Tileset color changed to $1"
+msgstr "Цвет тайлов изменён на $1"
+
+msgctxt "L.ENEMYTYPECHANGED"
+msgid "Enemy type changed"
+msgstr "Тип врагов изменён"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODE"
+msgid "Changed to $1 tile placement"
+msgstr "Выбран режим $1"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEAUTO"
+msgid "automatic"
+msgstr "Автоматический"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMANUAL"
+msgid "manual"
+msgstr "Ручной"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMULTI"
+msgid "multi-tileset"
+msgstr "Мульти"
+
+msgctxt "L.BUSYSAVING"
+msgid "Saving..."
+msgstr "Сохранение..."
+
+msgctxt "L.SAVEDLEVELAS"
+msgid "Saved level as $1.vvvvvv"
+msgstr "Уровень сохранён как $1.vvvvvv"
+
+msgctxt "L.ROOMCUT"
+msgid "Room cut to clipboard"
+msgstr "Комната вырезана в буфер обмена"
+
+msgctxt "L.ROOMCOPIED"
+msgid "Copied room to clipboard"
+msgstr "Комната скопирована в буфер обмена"
+
+msgctxt "L.ROOMPASTED"
+msgid "Pasted room"
+msgstr "Комната вставлена из буфера обмена"
+
+msgctxt "L.METADATAUNDONE"
+msgid "Level options undone"
+msgstr "Настройки уровня отменены"
+
+msgctxt "L.METADATAREDONE"
+msgid "Level options redone"
+msgstr "Настройки уровня восстановлены"
+
+#. Old string: Click the top left corner of the bounds
+msgctxt "L.BOUNDSFIRST"
+msgid "Click the first corner of the bounds"
+msgstr "Обозначьте первый угол границы"
+
+#. Old string: Click the bottom right corner
+msgctxt "L.BOUNDSLAST"
+msgid "Click the last corner"
+msgstr "Обозначьте второй угол"
+
+msgctxt "L.TILE"
+msgid "Tile $1"
+msgstr "Стена $1"
+
+msgctxt "L.HIDEALL"
+msgid "Hide all"
+msgstr "Скрыть все"
+
+msgctxt "L.SHOWALL"
+msgid "Show all"
+msgstr "Показать все"
+
+msgctxt "L.SCRIPTEDITOR"
+msgid "Script editor"
+msgstr "Редактор скриптов"
+
+msgctxt "L.FILE"
+msgid "File"
+msgstr "Файл"
+
+msgctxt "L.NEW"
+msgid "New"
+msgstr "Создать"
+
+msgctxt "L.OPEN"
+msgid "Open"
+msgstr "Открыть"
+
+msgctxt "L.SAVE"
+msgid "Save"
+msgstr "Сохранить"
+
+msgctxt "L.UNDO"
+msgid "Undo"
+msgstr "Отменить"
+
+msgctxt "L.REDO"
+msgid "Redo"
+msgstr "Восстановить"
+
+msgctxt "L.COMPARE"
+msgid "Compare"
+msgstr "Сравнить"
+
+msgctxt "L.STATS"
+msgid "Stats"
+msgstr "Статистика"
+
+msgctxt "L.SCRIPTUSAGES"
+msgid "Usages"
+msgstr "Использования"
+
+msgctxt "L.EDITTAB"
+msgid "Edit"
+msgstr "Редактировать"
+
+msgctxt "L.COPYSCRIPT"
+msgid "Copy script"
+msgstr "Копировать"
+
+msgctxt "L.SEARCHSCRIPT"
+msgid "Search"
+msgstr "Поиск"
+
+msgctxt "L.GOTOLINE"
+msgid "Go to line"
+msgstr "Перейти к строке"
+
+msgctxt "L.GOTOLINE2"
+msgid "Go to line:"
+msgstr "Перейти к строке:"
+
+msgctxt "L.INTERNALON"
+msgid "Int.sc is on"
+msgstr "Вн. скриптинг включён"
+
+msgctxt "L.INTERNALOFF"
+msgid "Int.sc is off"
+msgstr "Вн. скриптинг отключён"
+
+msgctxt "L.INTERNALON_LONG"
+msgid "Internal scripting mode is enabled"
+msgstr "Режим внутреннего скриптинга включён"
+
+msgctxt "L.INTERNALOFF_LONG"
+msgid "Internal scripting mode is disabled"
+msgstr "Режим внутреннего скриптинга отключён"
+
+msgctxt "L.INTERNALYESBARS"
+msgid "say(-1) int.sc"
+msgstr "Внутр. скрипт через say(-1)"
+
+msgctxt "L.INTERNALNOBARS"
+msgid "Loadscript int.sc"
+msgstr "Внутр. скрипт ч. loadscript"
+
+msgctxt "L.VIEW"
+msgid "View"
+msgstr "Просмотр"
+
+msgctxt "L.SYNTAXHLOFF"
+msgid "Syntax HL: on"
+msgstr "Подсветка включена"
+
+msgctxt "L.SYNTAXHLON"
+msgid "Syntax HL: off"
+msgstr "Подсветка отключена"
+
+msgctxt "L.TEXTSIZEN"
+msgid "Text size: N"
+msgstr "Обычный текст"
+
+msgctxt "L.TEXTSIZEL"
+msgid "Text size: L"
+msgstr "Большой текст"
+
+msgctxt "L.INSERT"
+msgid "Insert"
+msgstr "Вставить"
+
+msgctxt "L.HELP"
+msgid "Help"
+msgstr "Помощь"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
+msgid "Load script required!"
+msgstr "Требуется загрузочный скрипт!"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT_EXPL"
+msgid "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script."
+msgstr "Скрипт, загружающий данный скрипт, не найден. Такой тип внутреннего скрипта вряд ли заработает так, как ожидается, если он не загружен с помощью другого скрипта."
+
+msgctxt "L.INTSCRWARNING_BOXED"
+msgid "Direct script box/terminal reference!"
+msgstr "Прямая ссылка на рамку скрипта/терминал!"
+
+msgctxt "L.INTSCRWARNING_BOXED_EXPL"
+msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
+msgstr "Обнаружены терминал или рамка скрипта, загружающие данный скрипт напрямую. Активация этих терминала или рамки скрипта вряд ли сработает так, как ожидается. Такой тип внутреннего скрипта должен быть загружен с помощью загрузочного скрипта."
+
+msgctxt "L.INTSCRWARNING_NAME"
+msgid "Unsuitable script name!"
+msgstr "Неподходящее название скрипта!"
+
+msgctxt "L.INTSCRWARNING_NAME_EXPL"
+msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
+msgstr "Название данного скрипта содержит заглавную букву, пробел, скобку или запятую. Такой скрипт может быть загружен только с помощью терминала или рамки скрипта."
+
+msgctxt "L.COLUMN"
+msgid "Column: "
+msgstr "Символы: "
+
+msgctxt "L.BTN_OK"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "L.BTN_CANCEL"
+msgid "Cancel"
+msgstr "Отменить"
+
+msgctxt "L.BTN_YES"
+msgid "Yes"
+msgstr "Да"
+
+msgctxt "L.BTN_NO"
+msgid "No"
+msgstr "Нет"
+
+msgctxt "L.BTN_APPLY"
+msgid "Apply"
+msgstr "Применить"
+
+msgctxt "L.BTN_QUIT"
+msgid "Quit"
+msgstr "Выход"
+
+msgctxt "L.BTN_DISCARD"
+msgid "Discard"
+msgstr "Не сохранять"
+
+msgctxt "L.BTN_SAVE"
+msgid "Save"
+msgstr "Сохранить"
+
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr "Закрыть"
+
+msgctxt "L.BTN_LOAD"
+msgid "Load"
+msgstr "Загрузить"
+
+msgctxt "L.BTN_ADVANCED"
+msgid "Advanced"
+msgstr "Продвинутые"
+
+msgctxt "L.BTN_AUTODETECT"
+msgid "Detect"
+msgstr "Определить"
+
+#. choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+msgctxt "L.BTN_MANUALLY"
+msgid "Override"
+msgstr "Заменить"
+
+msgctxt "L.BTN_RETRY"
+msgid "Retry"
+msgstr "Повторить"
+
+msgctxt "L.COMPARINGTHESE"
+msgid "Comparing $1.vvvvvv to $2.vvvvvv"
+msgstr "Сравнивание $1.vvvvvv с $2.vvvvvv"
+
+msgctxt "L.COMPARINGTHESENEW"
+msgid "Comparing (unsaved level) to $1.vvvvvv"
+msgstr "Сравнивание (несохранённого уровня) и $1.vvvvvv"
+
+msgctxt "L.RETURN"
+msgid "Return"
+msgstr "Возврат"
+
+msgctxt "L.CREATE"
+msgid "Create"
+msgstr "Создать"
+
+msgctxt "L.GOTO"
+msgid "Go to"
+msgstr "Перейти"
+
+msgctxt "L.DELETE"
+msgid "Delete"
+msgstr "Удалить"
+
+msgctxt "L.RENAME"
+msgid "Rename"
+msgstr "Переименовать"
+
+msgctxt "L.CHANGEDIRECTION"
+msgid "Change direction"
+msgstr "Изменить направление"
+
+msgctxt "L.TESTFROMHERE"
+msgid "Test from here"
+msgstr "Тестировать отсюда"
+
+msgctxt "L.FLIP"
+msgid "Flip"
+msgstr "Перевернуть"
+
+msgctxt "L.CYCLETYPE"
+msgid "Change type"
+msgstr "Изменить тип"
+
+msgctxt "L.GOTODESTINATION"
+msgid "Go to destination"
+msgstr "Перейти к точке назначения"
+
+msgctxt "L.GOTOENTRANCE"
+msgid "Go to entrance"
+msgstr "Перейти к точке входа"
+
+msgctxt "L.CHANGECOLOR"
+msgid "Change color"
+msgstr "Изменить цвет"
+
+msgctxt "L.EDITTEXT"
+msgid "Edit text"
+msgstr "Изменить текст"
+
+msgctxt "L.COPYTEXT"
+msgid "Copy text"
+msgstr "Копировать текст"
+
+msgctxt "L.EDITSCRIPT"
+msgid "Edit script"
+msgstr "Редактировать скрипт"
+
+msgctxt "L.OTHERSCRIPT"
+msgid "Change script name"
+msgstr "Изменить имя скрипта"
+
+msgctxt "L.PROPERTIES"
+msgid "Properties"
+msgstr "Свойства"
+
+msgctxt "L.CHANGETOHOR"
+msgid "Change to horizontal"
+msgstr "Сделать горизонтальной"
+
+msgctxt "L.CHANGETOVER"
+msgid "Change to vertical"
+msgstr "Сделать вертикальной"
+
+msgctxt "L.RESIZE"
+msgid "Move/Resize"
+msgstr "Изменить размер"
+
+msgctxt "L.CHANGEENTRANCE"
+msgid "Move entrance"
+msgstr "Передвинуть вход"
+
+msgctxt "L.CHANGEEXIT"
+msgid "Move exit"
+msgstr "Передвинуть выход"
+
+msgctxt "L.COPYENTRANCE"
+msgid "Copy entrance"
+msgstr "Копировать вход"
+
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr "Закрепить"
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr "Открепить"
+
+msgctxt "L.VEDOPTIONS"
+msgid "Ved options"
+msgstr "Настройки Ved"
+
+msgctxt "L.LEVELOPTIONS"
+msgid "Level options"
+msgstr "Настройки уровня"
+
+msgctxt "L.MAP"
+msgid "Map"
+msgstr "Карта"
+
+msgctxt "L.SCRIPTS"
+msgid "Scripts"
+msgstr "Скрипты"
+
+msgctxt "L.SEARCH"
+msgid "Search"
+msgstr "Поиск"
+
+msgctxt "L.SENDFEEDBACK"
+msgid "Send Feedback"
+msgstr "Обратная связь"
+
+msgctxt "L.LEVELNOTEPAD"
+msgid "Level notepad"
+msgstr "Заметки"
+
+msgctxt "L.PLUGINS"
+msgid "Plugins"
+msgstr "Плагины"
+
+msgctxt "L.BACKB"
+msgid "Back <<"
+msgstr "Назад <<"
+
+msgctxt "L.MOREB"
+msgid "More >>"
+msgstr "Вперёд >>"
+
+msgctxt "L.AUTOMODE"
+msgid "Mode: auto"
+msgstr "Режим: авто"
+
+msgctxt "L.AUTO2MODE"
+msgid "Mode: multi"
+msgstr "Режим: мульти"
+
+msgctxt "L.MANUALMODE"
+msgid "Mode: manual"
+msgstr "Режим: ручной"
+
+msgctxt "L.ENEMYTYPE"
+msgid "Enemy type: $1"
+msgstr "Тип: $1"
+
+msgctxt "L.PLATFORMBOUNDS"
+msgid "Platf. bounds"
+msgstr "Границы платформ"
+
+msgctxt "L.WARPDIR"
+msgid "Warp dir: $1"
+msgstr "Тип варпа: $1"
+
+msgctxt "L.ENEMYBOUNDS"
+msgid "Enemy bounds"
+msgstr "Границы врагов"
+
+msgctxt "L.ROOMNAME"
+msgid "Roomname"
+msgstr "Название комнаты"
+
+msgctxt "L.ROOMOPTIONS"
+msgid "Room options"
+msgstr "Настройки комнаты"
+
+msgctxt "L.ROTATE180"
+msgid "Rotate 180deg"
+msgstr "Повернуть на 180 градусов"
+
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr "Повернуть на 180°"
+
+msgctxt "L.HIDEBOUNDS"
+msgid "Hide bounds"
+msgstr "Скрыть границы"
+
+msgctxt "L.SHOWBOUNDS"
+msgid "Show bounds"
+msgstr "Показать границы"
+
+#. basically, platforms/enemies in/for this room
+msgctxt "L.ROOMPLATFORMS"
+msgid "Room platforms"
+msgstr "Платформы"
+
+msgctxt "L.ROOMENEMIES"
+msgid "Room enemies"
+msgstr "Враги"
+
+msgctxt "L.OPTNAME"
+msgid "Name"
+msgstr "Название"
+
+msgctxt "L.OPTBY"
+msgid "By"
+msgstr "Автор"
+
+msgctxt "L.OPTWEBSITE"
+msgid "Website"
+msgstr "Сайт"
+
+#. If necessary, you can span multiple lines
+msgctxt "L.OPTDESC"
+msgid "Desc"
+msgstr "Описание"
+
+msgctxt "L.OPTSIZE"
+msgid "Size"
+msgstr "Размер"
+
+msgctxt "L.OPTMUSIC"
+msgid "Music"
+msgstr "Нач. музыка"
+
+msgctxt "L.CAPNONE"
+msgid "NONE"
+msgstr "НЕТ"
+
+msgctxt "L.ENTERLONGOPTNAME"
+msgid "Level name:"
+msgstr "Название уровня:"
+
+#. Used for level size: 20x20
+msgctxt "L.X"
+msgid "x"
+msgstr "х"
+
+msgctxt "L.SOLID"
+msgid "Solid"
+msgstr "Твёрдый"
+
+msgctxt "L.NOTSOLID"
+msgid "Not solid"
+msgstr "Не твёрдый"
+
+msgctxt "L.TSCOLOR"
+msgid "Color $1"
+msgstr "Цвет $1"
+
+msgctxt "L.LEVELSLIST"
+msgid "Levels"
+msgstr "Уровни"
+
+msgctxt "L.LOADTHISLEVEL"
+msgid "Load this level: "
+msgstr "Загрузить: "
+
+msgctxt "L.ENTERNAMESAVE"
+msgid "Enter name to save as: "
+msgstr "Сохранить как: "
+
+msgctxt "L.SEARCHFOR"
+msgid "Search for: "
+msgstr "Поиск: "
+
+msgctxt "L.VERSIONERROR"
+msgid "Unable to check version."
+msgstr "Невозможно проверить версию."
+
+msgctxt "L.VERSIONUPTODATE"
+msgid "Your version of Ved is up-to-date."
+msgstr "Ваша версия Ved последняя."
+
+msgctxt "L.VERSIONOLD"
+msgid "Update available! Latest version: $1"
+msgstr "Доступно обновление! Последняя версия: $1"
+
+msgctxt "L.VERSIONCHECKING"
+msgid "Checking for updates..."
+msgstr "Проверка обновлений..."
+
+msgctxt "L.VERSIONDISABLED"
+msgid "Update check disabled"
+msgstr "Проверка обновлений отключена"
+
+#. Check for updates now
+msgctxt "L.VERSIONCHECKNOW"
+msgid "Check now"
+msgstr "Проверить сейчас"
+
+msgctxt "L.SAVENOSUCCESS"
+msgid "Saving not successful! Error: "
+msgstr "Сохранение провалено! Ошибка: "
+
+msgctxt "L.INVALIDFILESIZE"
+msgid "Invalid file size."
+msgstr "Неверный размер файла."
+
+msgctxt "L.EDIT"
+msgid "Edit"
+msgstr "Редактировать"
+
+msgctxt "L.EDITWOBUMPING"
+msgid "Edit without bumping"
+msgstr "Редактировать без перемещения"
+
+msgctxt "L.EDITWBUMPING"
+msgid "Edit and bump"
+msgstr "Редактировать и переместить"
+
+msgctxt "L.COPYNAME"
+msgid "Copy name"
+msgstr "Копировать имя"
+
+msgctxt "L.COPYCONTENTS"
+msgid "Copy contents"
+msgstr "Копировать контент"
+
+msgctxt "L.DUPLICATE"
+msgid "Duplicate"
+msgstr "Дублировать"
+
+msgctxt "L.NEWSCRIPTNAME"
+msgid "Name:"
+msgstr "Имя:"
+
+msgctxt "L.CREATENEWSCRIPT"
+msgid "Create new script"
+msgstr "Создать новый скрипт"
+
+msgctxt "L.NEWNOTENAME"
+msgid "Name:"
+msgstr "Имя:"
+
+msgctxt "L.CREATENEWNOTE"
+msgid "Create new note"
+msgstr "Создать новую заметку"
+
+msgctxt "L.ADDNEWBTN"
+msgid "[Add new]"
+msgstr "[Создать новую]"
+
+msgctxt "L.IMAGEERROR"
+msgid "[IMAGE ERROR]"
+msgstr "[ОШИБКА ИЗОБРАЖЕНИЯ]"
+
+msgctxt "L.NEWNAME"
+msgid "New name:"
+msgstr "Новое название:"
+
+msgctxt "L.RENAMENOTE"
+msgid "Rename note"
+msgstr "Переименовать заметку"
+
+msgctxt "L.RENAMESCRIPT"
+msgid "Rename script"
+msgstr "Переименовать скрипт"
+
+msgctxt "L.LINE"
+msgid "line "
+msgstr "строка "
+
+msgctxt "L.SAVEMAP"
+msgid "Save map"
+msgstr "Сохранить карту"
+
+msgctxt "L.COPYROOMS"
+msgid "Copy room"
+msgstr "Копировать комнату"
+
+msgctxt "L.SWAPROOMS"
+msgid "Swap rooms"
+msgstr "Заменить комнаты"
+
+msgctxt "L.MAP_STYLE"
+msgid "Map style"
+msgstr "Стиль карты"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_FULL"
+msgid "Full"
+msgstr "Полный"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_MINIMAP"
+msgid "Minimap"
+msgstr "Миникарта"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_VTOOLS"
+msgid "VTools"
+msgstr "VTools"
+
+msgctxt "L.FLAGS"
+msgid "Flags"
+msgstr "Флаги"
+
+msgctxt "L.ROOM"
+msgid "room"
+msgstr "комната"
+
+msgctxt "L.CONTENTFILLER"
+msgid "Content"
+msgstr "Контент"
+
+#. preferably same length as L.FLAGNOTUSED
+msgctxt "L.FLAGUSED"
+msgid "Used    "
+msgstr "Использован   "
+
+msgctxt "L.FLAGNOTUSED"
+msgid "Not used"
+msgstr "Не использован"
+
+msgctxt "L.FLAGNONAME"
+msgid "No name"
+msgstr "Нет имени"
+
+msgctxt "L.USEDOUTOFRANGEFLAGS"
+msgid "Used out of range flags:"
+msgstr "Использовано лишних флагов:"
+
+#. Settings to adapt Ved to how VVVVVV is installed/setup on this computer, like the location of the levels folder and selection of the executable for playtesting. Maybe "VVVVVV installation" or "VVVVVV configuration"
+msgctxt "L.VVVVVVSETUP"
+msgid "VVVVVV setup"
+msgstr "Настройки VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY"
+msgid "VVVVVV folder"
+msgstr "Папка VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
+msgid ""
+"The default VVVVVV directory Ved expects is:\n"
+"$1\n"
+"\n"
+"This path should not be set to the \"levels\" directory."
+msgstr ""
+"Расположение VVVVVV, которое ожидает Ved:\n"
+"$1\n"
+"\n"
+"Этот путь не должен вести к папке \"levels\"."
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_NOTSET"
+msgid ""
+"You do not have a custom VVVVVV directory set.\n"
+"\n"
+msgstr ""
+"Не установлено пользовательское расположение VVVVVV.\n"
+"\n"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_SET"
+msgid ""
+"Your VVVVVV directory is set to a custom path:\n"
+"$1\n"
+"\n"
+msgstr ""
+"Пользовательское расположение VVVVVV:\n"
+"$1\n"
+"\n"
+
+msgctxt "L.LANGUAGE"
+msgid "Language"
+msgstr "Язык"
+
+msgctxt "L.DIALOGANIMATIONS"
+msgid "Dialog animations"
+msgstr "Анимация диалогов"
+
+msgctxt "L.FLIPSUBTOOLSCROLL"
+msgid "Flip tool scrolling direction"
+msgstr "Инвертировать направление прокручивания"
+
+msgctxt "L.ADJACENTROOMLINES"
+msgid "Indicators of tiles in adjacent rooms"
+msgstr "Индикаторы стен в соседних комнатах"
+
+msgctxt "L.NEVERASKBEFOREQUIT"
+msgid "Never ask before quitting, even if there are unsaved changes"
+msgstr "Никогда не подтверждать выход, даже при наличии несохранённых изменений"
+
+msgctxt "L.COORDS0"
+msgid "Display coordinates as starting at 0 (as in internal scripting)"
+msgstr "Отображать координаты, начиная с 0 (как во внутреннем скриптинге)"
+
+msgctxt "L.ALLOWDEBUG"
+msgid "Enable debug mode"
+msgstr "Включить режим разработчика"
+
+msgctxt "L.SHOWFPS"
+msgid "Show FPS counter"
+msgstr "Показать счётчик FPS"
+
+msgctxt "L.CHECKFORUPDATES"
+msgid "Check for updates"
+msgstr "Проверять обновления"
+
+msgctxt "L.PAUSEDRAWUNFOCUSED"
+msgid "Do not render when the window is unfocused"
+msgstr "Приостановить рендеринг, когда окно неактивно"
+
+msgctxt "L.ENABLEOVERWRITEBACKUPS"
+msgid "Make backups of level files that are overwritten"
+msgstr "Создавать бэкапы уровня при перезаписи файла"
+
+msgctxt "L.AMOUNTOVERWRITEBACKUPS"
+msgid "Number of backups to keep per level"
+msgstr "Кол-во бэкапов для каждого уровня"
+
+msgctxt "L.SCALE"
+msgid "Scale"
+msgstr "Масштаб"
+
+msgctxt "L.LOADALLMETADATA"
+msgid "Load metadata (such as title, author and description) for all files in levels list"
+msgstr "Показать метаданные (название, автор, описание и т.д.) у всех файлов в списке уровней"
+
+msgctxt "L.COLORED_TEXTBOXES"
+msgid "Use true textbox colors"
+msgstr "Использовать настоящие цвета текстовых рамок"
+
+msgctxt "L.MOUSESCROLLINGSPEED"
+msgid "Mouse scrolling speed"
+msgstr "Скорость прокрутки мыши"
+
+msgctxt "L.BUMPSCRIPTSBYDEFAULT"
+msgid "Bump scripts to the top of the list when editing them by default"
+msgstr "По умолчанию перемещать скрипты в начало списка при их редактировании"
+
+msgctxt "L.SCRIPTSPLIT"
+msgid "Split"
+msgstr "Разделить"
+
+msgctxt "L.SPLITSCRIPT"
+msgid "Split scripts"
+msgstr "Разделить скрипты"
+
+msgctxt "L.COUNT"
+msgid "Count: "
+msgstr "Счёт: "
+
+msgctxt "L.SMALLENTITYDATA"
+msgid "data"
+msgstr "инфо"
+
+#. Stats screen
+msgctxt "L.AMOUNTSCRIPTS"
+msgid "Scripts:"
+msgstr "Скрипты:"
+
+#. Stats screen
+msgctxt "L.AMOUNTUSEDFLAGS"
+msgid "Flags:"
+msgstr "Флаги:"
+
+#. Stats screen
+msgctxt "L.AMOUNTENTITIES"
+msgid "Entities:"
+msgstr "Объекты:"
+
+#. Stats screen
+msgctxt "L.AMOUNTTRINKETS"
+msgid "Trinkets:"
+msgstr "Штуковины:"
+
+#. Stats screen
+msgctxt "L.AMOUNTCREWMATES"
+msgid "Crewmates:"
+msgstr "Члены экипажа:"
+
+#. Stats screen
+msgctxt "L.AMOUNTINTERNALSCRIPTS"
+msgid "Internal scripts:"
+msgstr "Внутренние скрипты:"
+
+#. Stats screen
+msgctxt "L.TILESETUSSAGE"
+msgid "Tileset usage"
+msgstr "Использование набора тайлов"
+
+#. Stats screen
+msgctxt "L.TILESETSONLYUSED"
+msgid "(only rooms having tiles are counted)"
+msgstr "(считаются только комнаты со стенами)"
+
+#. Stats screen
+msgctxt "L.AMOUNTROOMSWITHNAMES"
+msgid "Rooms having a name:"
+msgstr "Комнаты с именами:"
+
+#. Stats screen
+msgctxt "L.PLACINGMODEUSAGE"
+msgid "Tile placing modes:"
+msgstr "Режимы расположения стен:"
+
+#. Stats screen
+msgctxt "L.AMOUNTLEVELNOTES"
+msgid "Level notes:"
+msgstr "Заметки:"
+
+#. Stats screen
+msgctxt "L.AMOUNTFLAGNAMES"
+msgid "Flag names:"
+msgstr "Названия флагов:"
+
+#. Stats screen
+msgctxt "L.TILESUSAGE"
+msgid "Tiles usage"
+msgstr "Использование стен"
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr "Стены:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr "Твёрдые тайлы:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
+msgstr "Шипы:"
+
+msgctxt "L.UNEXPECTEDSCRIPTLINE"
+msgid "Unexpected script line without script: $1"
+msgstr "Неизвестная строка скрипта без скрипта: $1"
+
+msgctxt "L.DUPLICATESCRIPT"
+msgid "Script $1 is duplicate! Only one can be loaded."
+msgstr "Скрипт $1 - дубликат! Можно загрузить только один."
+
+msgctxt "L.MAPWIDTHINVALID"
+msgid "Map width is invalid: $1"
+msgstr "Ширина карты неверная: $1"
+
+msgctxt "L.MAPHEIGHTINVALID"
+msgid "Map height is invalid: $1"
+msgstr "Высота карты неверна: $1"
+
+msgctxt "L.LEVMUSICEMPTY"
+msgid "Level music is empty!"
+msgstr "В уровне нет музыки!"
+
+msgctxt "L.NOT400ROOMS"
+msgid "The number of entries in levelMetaData is not 400!"
+msgstr "Количество данных в levelMetaData не равно 400!"
+
+msgctxt "L.MOREERRORS"
+msgid "$1 more"
+msgstr "Ещё $1"
+
+msgctxt "L.DEBUGMODEON"
+msgid "Debug mode on"
+msgstr "Режим разработчика включён"
+
+msgctxt "L.FPS"
+msgid "FPS"
+msgstr "FPS"
+
+msgctxt "L.STATE"
+msgid "State"
+msgstr "Статус"
+
+msgctxt "L.MOUSE"
+msgid "Mouse"
+msgstr "Мышь"
+
+msgctxt "L.BLUE"
+msgid "Blue"
+msgstr "Синий"
+
+msgctxt "L.RED"
+msgid "Red"
+msgstr "Красный"
+
+msgctxt "L.CYAN"
+msgid "Cyan"
+msgstr "Голубой"
+
+msgctxt "L.PURPLE"
+msgid "Purple"
+msgstr "Фиолетовый"
+
+msgctxt "L.YELLOW"
+msgid "Yellow"
+msgstr "Жёлтый"
+
+msgctxt "L.GREEN"
+msgid "Green"
+msgstr "Зелёный"
+
+msgctxt "L.GRAY"
+msgid "Gray"
+msgstr "Серый"
+
+msgctxt "L.PINK"
+msgid "Pink"
+msgstr "Розовый"
+
+msgctxt "L.BROWN"
+msgid "Brown"
+msgstr "Коричневый"
+
+msgctxt "L.RAINBOWBG"
+msgid "Rainbow BG"
+msgstr "Радужный фон"
+
+msgctxt "L.SYNTAXCOLORS"
+msgid "Syntax colors"
+msgstr "Цвета текста"
+
+msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
+msgid "Scripting syntax highlighting color settings"
+msgstr "Настройки подсветки команд в скриптах"
+
+msgctxt "L.SYNTAXCOLOR_COMMAND"
+msgid "Command"
+msgstr "Команда"
+
+msgctxt "L.SYNTAXCOLOR_GENERIC"
+msgid "Generic"
+msgstr "Обычный"
+
+msgctxt "L.SYNTAXCOLOR_SEPARATOR"
+msgid "Separator"
+msgstr "Разделитель"
+
+msgctxt "L.SYNTAXCOLOR_NUMBER"
+msgid "Number"
+msgstr "Номер"
+
+msgctxt "L.SYNTAXCOLOR_TEXTBOX"
+msgid "Textbox"
+msgstr "Текст"
+
+msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
+msgid "Unrecognized command"
+msgstr "Неизвестная команда"
+
+msgctxt "L.SYNTAXCOLOR_CURSOR"
+msgid "Cursor"
+msgstr "Курсор"
+
+msgctxt "L.SYNTAXCOLOR_FLAGNAME"
+msgid "Flag name"
+msgstr "Имя флага"
+
+msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
+msgid "New flag name"
+msgstr "Новое имя флага"
+
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr "Комментарий"
+
+msgctxt "L.SYNTAXCOLOR_WRONGLANG"
+msgid "Simplified command in int.sc mode or vice versa"
+msgstr "Простая команда в режиме вн. скриптинга или наоборот"
+
+msgctxt "L.RESETCOLORS"
+msgid "Reset colors"
+msgstr "Сбросить цвета"
+
+msgctxt "L.STRINGNOTFOUND"
+msgid "\"$1\" was not found"
+msgstr "\"$1\" не найдена"
+
+#. L.MAL is concatenated with an error message
+msgctxt "L.MAL"
+msgid "The level file is malformed: "
+msgstr "Файл уровня повреждён: "
+
+msgctxt "L.LOADSCRIPTMADE"
+msgid "Load script created"
+msgstr "Загрузочный скрипт создан"
+
+msgctxt "L.COPY"
+msgid "Copy"
+msgstr "Копировать"
+
+msgctxt "L.CUSTOMSIZE"
+msgid "Custom brush size: $1x$2"
+msgstr "Пользовательский размер кисти: $1x$2"
+
+msgctxt "L.SELECTINGA"
+msgid "Selecting - click top left"
+msgstr "Выбор - кликните на верхний левый угол"
+
+msgctxt "L.SELECTINGB"
+msgid "Selecting: $1x$2"
+msgstr "Выбор: $1x$2"
+
+msgctxt "L.TILESETSRELOADED"
+msgid "Tilesets and sprites reloaded"
+msgstr "Тайлы и спрайты перезагружены"
+
+msgctxt "L.BACKUPS"
+msgid "Backups"
+msgstr "Бэкапы"
+
+msgctxt "L.BACKUPSOFLEVEL"
+msgid "Backups of level $1"
+msgstr "Бэкапы уровня $1"
+
+#. List header
+msgctxt "L.LASTMODIFIEDTIME"
+msgid "Originally last modified"
+msgstr "Последние изменения"
+
+#. List header
+msgctxt "L.OVERWRITTENTIME"
+msgid "Overwritten"
+msgstr "Перезаписано"
+
+msgctxt "L.SAVEBACKUP"
+msgid "Save to VVVVVV folder"
+msgstr "Сохранить в папку VVVVVV"
+
+msgctxt "L.DATEFORMAT"
+msgid "Date format"
+msgstr "Формат даты"
+
+msgctxt "L.TIMEFORMAT"
+msgid "Time format"
+msgstr "Формат времени"
+
+msgctxt "L.SAVEBACKUPNOBACKUP"
+msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
+msgstr "Выберите уникальное имя для файла, иначе бэкап не будет создан!"
+
+msgctxt "L.AUTOSAVECRASHLOGS"
+msgid "Automatically save crash logs"
+msgstr "Сохранять отчёты об ошибке автоматически"
+
+msgctxt "L.MOREINFO"
+msgid "Latest info"
+msgstr "Последняя информация"
+
+msgctxt "L.COPYLINK"
+msgid "Copy link"
+msgstr "Скопировать ссылку"
+
+msgctxt "L.SCRIPTDISPLAY"
+msgid "Show"
+msgstr "Показать"
+
+msgctxt "L.SCRIPTDISPLAY_USED"
+msgid "Used"
+msgstr "Использовано"
+
+msgctxt "L.SCRIPTDISPLAY_UNUSED"
+msgid "Unused"
+msgstr "Не использ."
+
+msgctxt "L.RECENTLYOPENED"
+msgid "Recently opened levels"
+msgstr "Недавно открытые уровни"
+
+msgctxt "L.REMOVERECENT"
+msgid "Do you want to remove it from the list of recently opened levels?"
+msgstr "Вы действительно хотите удалить этот уровень из списка недавно открытых?"
+
+msgctxt "L.RESETCUSTOMBRUSH"
+msgid "(Right click to set new size)"
+msgstr "(ПКМ - изменение размера)"
+
+# Adding a newline so it fits on the button
+msgctxt "L.DISPLAYSETTINGS"
+msgid "Display/Scale"
+msgstr ""
+"Отображение\n"
+"/Масштаб"
+
+msgctxt "L.DISPLAYSETTINGSTITLE"
+msgid "Display/Scale settings"
+msgstr "Настройки отображения/масштаба"
+
+msgctxt "L.SMALLERSCREEN"
+msgid "Smaller window width (800px wide instead of 896px)"
+msgstr "Меньшая ширина окна (меняется с 896 пикс. на 800 пикс.)"
+
+msgctxt "L.FORCESCALE"
+msgid "Force scale settings"
+msgstr "Запрет изменений настроек масштаба"
+
+msgctxt "L.SCALENOFIT"
+msgid "The current scale settings make the window too large to fit."
+msgstr "Окно становится больше границ экрана при выбранном масштабе."
+
+msgctxt "L.SCALENONUM"
+msgid "The current scale settings are invalid."
+msgstr "Данный масштаб неверен."
+
+msgctxt "L.MONITORSIZE"
+msgid "$1x$2 monitor"
+msgstr "Экран $1x$2"
+
+msgctxt "L.VEDRES"
+msgid "Ved resolution: $1x$2"
+msgstr "Разрешение Ved: $1x$2"
+
+msgctxt "L.NONINTSCALE"
+msgid "Non-integer scaling"
+msgstr "Масштаб с дробным значением"
+
+msgctxt "L.USEFONTPNG"
+msgid "Use font.png from VVVVVV graphics folder as font"
+msgstr "Использовать font.png из папки графики VVVVVV как шрифт"
+
+# Similar to `Use font.png from VVVVVV graphics folder as font`/`Использовать font.png из папки графики VVVVVV как шрифт`
+msgctxt "L.USELEVELFONTPNG"
+msgid "Use per-level custom font.png as font"
+msgstr "Использовать font.png как шрифт индивидуально для каждого уровня"
+
+msgctxt "L.REQUIRESHIGHERLOVE"
+msgid " (requires LÖVE $1 or higher)"
+msgstr " (необходим LÖVE версии $1 или выше)"
+
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
+msgstr "Ограничение FPS"
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr "Разрешение"
+
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr "Как показано (макс. 640x480)"
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr "$1% ($2x$3 на комнату)"
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr "$1:$2 ($3x$4 на комнату)"
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr "Левый верхний"
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr "Ширина и высота"
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr "Правый нижний"
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr "Информация о рендере:"
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr "Карта ещё не готова (к моменту нажатия Сохранить), повторите попытку, когда она будет готова."
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr "Не закрывать диалог"
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr "Прозрачный фон"
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr "Ошибка в создании карты."
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr "Просмотр"
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
+msgstr "Пожалуйста, введите верное значение строки."
+
+#. Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+msgctxt "L.OPENLEVELSFOLDER"
+msgid "Open lvl dir"
+msgstr ""
+"Открыть в\n"
+"проводнике"
+
+msgctxt "L.MOVEENTITY"
+msgid "Move"
+msgstr "Переместить"
+
+msgctxt "L.GOTOROOM"
+msgid "Go to room"
+msgstr "Перейти к комнате"
+
+msgctxt "L.ESCTOCANCEL"
+msgid "[Press ESC to cancel]"
+msgstr "[ESC для отмены]"
+
+msgctxt "L.INVALIDFILENAME_WIN"
+msgid ""
+"Windows doesn't allow the following characters in filenames:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| being a vertical bar)"
+msgstr ""
+"Windos не позволяет использовать следующие символы в названиях файлов:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| как вертикальная черта)"
+
+msgctxt "L.INVALIDFILENAME_MAC"
+msgid "macOS doesn't allow the : character in filenames."
+msgstr "macOS не позволяет использовать символ : в названиях файлов."
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_CTRL"
+msgid "CTRL"
+msgstr "CTRL"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_SHIFT"
+msgid "SHIFT"
+msgstr "SHIFT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ALT"
+msgid "ALT"
+msgstr "ALT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ESC"
+msgid "ESC"
+msgstr "ESC"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_TAB"
+msgid "TAB"
+msgstr "TAB"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_HOME"
+msgid "HOME"
+msgstr "HOME"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_END"
+msgid "END"
+msgstr "END"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_INSERT"
+msgid "INS"
+msgstr "INS"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_DEL"
+msgid "DEL"
+msgstr "DEL"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_SCRIPTS"
+msgid "Scripts [$1]"
+msgstr "Скрипты [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_ROOMS"
+msgid "Rooms [$1]"
+msgstr "Комнаты [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_NOTES"
+msgid "Notes [$1]"
+msgstr "Заметки [$1]"
+
+#. If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+msgctxt "L.ASSETS"
+msgid "Assets"
+msgstr "Ресурсы"
+
+msgctxt "L.MUSICPLAYERROR"
+msgid "Can not play this song. It may not exist or be of an unsupported type."
+msgstr "Невозможно воспроизвести этот саундтрек. Файл не существует или его тип не поддерживается."
+
+msgctxt "L.SOUNDPLAYERROR"
+msgid "Can not play this sound. It may not exist or be of an unsupported type."
+msgstr "Невозможно воспроизвести этот звук. Файл не существует или его тип не поддерживается."
+
+msgctxt "L.MUSICLOADERROR"
+msgid "Can not load $1: "
+msgstr "Невозможно загрузить $1: "
+
+msgctxt "L.MUSICLOADERROR_TOOSMALL"
+msgid "The music file is too small to be valid."
+msgstr "Музыкальный файл слишком мал, чтобы быть действительным."
+
+msgctxt "L.MUSICEXISTSYES"
+msgid "Exists"
+msgstr "Существует"
+
+msgctxt "L.MUSICEXISTSNO"
+msgid "Does not exist"
+msgstr "Не существует"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_NO"
+msgid "Does not exist - click to create"
+msgstr "Не существует — нажмите для создания"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_YES"
+msgid "Exists - click to open"
+msgstr "Существует — нажмите для открытия"
+
+msgctxt "L.NO_ASSETS_SUBFOLDER"
+msgid "No \"$1\" folder"
+msgstr "Папки \"$1\" нет"
+
+msgctxt "L.LOAD"
+msgid "Load"
+msgstr "Загрузить"
+
+msgctxt "L.RELOAD"
+msgid "Reload"
+msgstr "Перезагрузить"
+
+msgctxt "L.UNLOAD"
+msgid "Unload"
+msgstr "Отменить загрузку"
+
+msgctxt "L.MUSICEDITOR"
+msgid "Music editor"
+msgstr "Редактор музыки"
+
+msgctxt "L.LOADMUSICNAME"
+msgid "Load .vvv"
+msgstr "Загрузить .vvv"
+
+msgctxt "L.SAVEMUSICNAME"
+msgid "Save .vvv"
+msgstr "Сохранение .vvv"
+
+msgctxt "L.INSERTSONG"
+msgid "Insert song at track $1"
+msgstr "Вставить аудио как трек $1"
+
+msgctxt "L.SUREDELETESONG"
+msgid "Are you sure you want to remove song $1?"
+msgstr "Вы уверены, что хотите удалить песню $1?"
+
+msgctxt "L.SONGOPENFAIL"
+msgid "Unable to open $1, song not replaced."
+msgstr "Невозможно открыть $1, трек не заменён."
+
+msgctxt "L.SONGREPLACEFAIL"
+msgid "Something went wrong while replacing the song."
+msgstr "Что-то пошло не так в процессе замены трека."
+
+msgctxt "L.BYTES"
+msgid "$1 B"
+msgstr "$1 Б"
+
+msgctxt "L.KILOBYTES"
+msgid "$1 kB"
+msgstr "$1 КБ"
+
+msgctxt "L.MEGABYTES"
+msgid "$1 MB"
+msgstr "$1 МБ"
+
+msgctxt "L.GIGABYTES"
+msgid "$1 GB"
+msgstr "$1 ГБ"
+
+msgctxt "L.TERABYTES"
+msgid "$1 TB"
+msgstr "$1 ТБ"
+
+#. The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
+msgctxt "L.DECIMAL_SEP"
+msgid "."
+msgstr ","
+
+msgctxt "L.CANNOTUSENEWLINES"
+msgid "You cannot use the \"$1\" character in script names!"
+msgstr "Нельзя использовать символ \"$1\" в названиях скриптов!"
+
+msgctxt "L.MUSICTITLE"
+msgid "Title: "
+msgstr "Название: "
+
+msgctxt "L.MUSICARTIST"
+msgid "Artist: "
+msgstr "Автор: "
+
+msgctxt "L.MUSICFILENAME"
+msgid "Filename: "
+msgstr "Название файла: "
+
+msgctxt "L.MUSICNOTES"
+msgid "Notes:"
+msgstr "Примечания:"
+
+msgctxt "L.SONGMETADATA"
+msgid "Metadata for song $1"
+msgstr "Метаданные трека $1"
+
+msgctxt "L.MUSICFILEMETADATA"
+msgid "File metadata"
+msgstr "Метаданные файла"
+
+#. Followed by date and time
+msgctxt "L.MUSICEXPORTEDON"
+msgid "Exported: "
+msgstr "Экспортировано: "
+
+msgctxt "L.SAVEMETADATA"
+msgid "Save metadata"
+msgstr "Сохранить метаданные"
+
+msgctxt "L.SOUNDS"
+msgid "Sounds"
+msgstr "Звуки"
+
+msgctxt "L.GRAPHICS"
+msgid "Graphics"
+msgstr "Графика"
+
+msgctxt "L.FILEOPENERNAME"
+msgid "Name: "
+msgstr "Имя: "
+
+msgctxt "L.PATHINVALID"
+msgid "The path is invalid."
+msgstr "Неверный путь."
+
+#. like C: or F: on Windows
+msgctxt "L.DRIVES"
+msgid "Drives"
+msgstr "Диски"
+
+#. "*.txt" for example
+msgctxt "L.DOFILTER"
+msgid "Only show *$1"
+msgstr "Показывать только *$1"
+
+msgctxt "L.DOFILTERDIR"
+msgid "Only show directories"
+msgstr "Только расположения"
+
+msgctxt "L.FILEDIALOGLUV"
+msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
+msgstr "Извините, не удаётся распознать Вашу систему, поэтому файловый диалог не работает."
+
+msgctxt "L.RESET"
+msgid "Reset"
+msgstr "По умолчанию"
+
+#. verb
+msgctxt "L.CHANGEVERB"
+msgid "Change"
+msgstr "Изменить"
+
+msgctxt "L.LOADIMAGE"
+msgid "Load image"
+msgstr "Загрузить изображение"
+
+msgctxt "L.GRID"
+msgid "Grid"
+msgstr "Сетка"
+
+msgctxt "L.NOTALPHAONLY"
+msgid "RGB"
+msgstr "RGB"
+
+msgctxt "L.UNSAVED_LEVEL_ASSETS_FOLDER"
+msgid "The level needs to be saved before it can use custom assets."
+msgstr "Уровень должен быть сохранён перед применением пользовательских ресурсов."
+
+#. $1: path
+msgctxt "L.CREATE_ASSETS_FOLDER"
+msgid ""
+"Would you like to create a custom assets folder for this level?\n"
+"\n"
+"$1"
+msgstr ""
+"Создать папку пользовательских ресурсов для этого уровня?\n"
+"\n"
+"$1"
+
+msgctxt "L.CREATE_VVVVVV_FOLDER"
+msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+msgstr "Папка с VVVVVV, кажется, не существует. Хотите её создать?"
+
+msgctxt "L.CREATE_LEVELS_FOLDER"
+msgid "It seems like the levels folder doesn't exist. Would you like to create it?"
+msgstr "Папка с уровнями, кажется, не существует. Хотите создать?"
+
+msgctxt "L.CREATE_FOLDER_FAIL"
+msgid ""
+"Unable to create folder.\n"
+"\n"
+"$1"
+msgstr ""
+"Не удалось создать папку.\n"
+"\n"
+"$1"
+
+msgctxt "L.ASSETS_FOLDER_FOR_LEVEL"
+msgid "Assets folder for $1"
+msgstr "Папка с ресурсами $1"
+
+msgctxt "L.OPAQUEROOMNAMEBACKGROUND"
+msgid "Make the black roomname backgrounds opaque"
+msgstr "Сделать фон названия комнаты непрозрачным"
+
+msgctxt "L.PLATVCHANGE_TITLE"
+msgid "Change platform speed"
+msgstr "Изменить скорость платформы"
+
+msgctxt "L.PLATVCHANGE_MSG"
+msgid "Speed:"
+msgstr "Скорость:"
+
+msgctxt "L.PLATVCHANGE_INVALID"
+msgid "You have to type in a number."
+msgstr "Необходимо ввести число."
+
+msgctxt "L.RENAMESCRIPTREFERENCES"
+msgid "Rename references"
+msgstr "Переименовать ссылки"
+
+msgctxt "L.PLATFORMSPEEDSLIDER"
+msgid "Spd.:"
+msgstr "Скор."
+
+msgctxt "L.TRINKETS"
+msgid "Trinkets"
+msgstr "Штуковины"
+
+#. "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+msgctxt "L.LISTALLTRINKETS"
+msgid "List all trinkets"
+msgstr "Показать все штуковины"
+
+msgctxt "L.LISTOFALLTRINKETS"
+msgid "List of all trinkets"
+msgstr "Список штуковин"
+
+msgctxt "L.NOTRINKETSINLEVEL"
+msgid "There are no trinkets in this level."
+msgstr "В этом уровне нет штуковин."
+
+msgctxt "L.CREWMATES"
+msgid "Crewmates"
+msgstr "Члены экипажа"
+
+#. "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+msgctxt "L.LISTALLCREWMATES"
+msgid "List all crewmates"
+msgstr "Показать всех членов экипажа"
+
+msgctxt "L.LISTOFALLCREWMATES"
+msgid "List of all rescuable crewmates"
+msgstr "Список всех членов экипажа"
+
+msgctxt "L.NOCREWMATESINLEVEL"
+msgid "There are no rescuable crewmates in this level."
+msgstr "В этом уровне нет членов экипажа."
+
+#. In the map. Move all rooms in the entire level in any direction
+msgctxt "L.SHIFTROOMS"
+msgid "Shift rooms"
+msgstr "Сдвинуть комнаты"
+
+msgctxt "L.FRAMESTOSECONDS"
+msgid "$1 = $2 sec"
+msgstr "$1 = $2 сек"
+
+msgctxt "L.ROOMNUM"
+msgid "Room $1"
+msgstr "Комната $1"
+
+msgctxt "L.SOUNDNUM"
+msgid "Sound $1"
+msgstr "Звук $1"
+
+msgctxt "L.TRACKNUM"
+msgid "Track $1"
+msgstr "Трек $1"
+
+msgctxt "L.STOPSMUSIC"
+msgid "Stops music"
+msgstr "Останавливает музыку"
+
+msgctxt "L.PLAYSOUND"
+msgid "Play sound"
+msgstr "Проиграть звук"
+
+msgctxt "L.EDITSCRIPTWOBUMPING"
+msgid "Edit script without bumping"
+msgstr "Редактировать без перемещения"
+
+msgctxt "L.EDITSCRIPTWBUMPING"
+msgid "Edit script and bump"
+msgstr "Редактировать и переместить"
+
+msgctxt "L.CLICKONTHING"
+msgid "Click on $1"
+msgstr "Нажмите \"$1\""
+
+#. follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+msgctxt "L.ORDRAGDROP"
+msgid "or drag and drop onto here"
+msgstr "или перетащите файл сюда"
+
+msgctxt "L.MORETHANONESTARTPOINT"
+msgid "There is more than one start point in this level!"
+msgstr "В данном уровне больше одной точки старта!"
+
+msgctxt "L.STARTPOINTNOTFOUND"
+msgid "There is no start point!"
+msgstr "Нет точки старта!"
+
+msgctxt "L.MAPBIGGERTHANSIZELIMIT"
+msgid "Map size $1 by $2 is bigger than $3 by $4!"
+msgstr "Размер карты $1 на $2 больше $3 на $4!"
+
+msgctxt "L.BTNOVERRIDE"
+msgid "Override"
+msgstr "Заменить"
+
+#. What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+msgctxt "L.TARGETPLATFORM"
+msgid "Target platform"
+msgstr "Для издания"
+
+msgctxt "L.PLATFORM_V"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.TIMETRIALS"
+msgid "Time trials"
+msgstr "Испытания временем"
+
+msgctxt "L.TIMETRIALTRINKETS"
+msgid "Trinket count"
+msgstr "Количество штуковин"
+
+msgctxt "L.TIMETRIALTIME"
+msgid "Par time"
+msgstr "Минимум"
+
+msgctxt "L.SUREDELETETRIAL"
+msgid "Are you sure you want to delete the time trial \"$1\"?"
+msgstr "Вы уверены, что хотите удалить испытание временем \"$1\"?"
+
+msgctxt "L.CUT"
+msgid "Cut"
+msgstr "Вырезать"
+
+msgctxt "L.PASTE"
+msgid "Paste"
+msgstr "Вставить"
+
+msgctxt "L.SELECTWORD"
+msgid "Select word"
+msgstr "Выделить слово"
+
+msgctxt "L.SELECTLINE"
+msgid "Select line"
+msgstr "Выделить строку"
+
+msgctxt "L.SELECTALL"
+msgid "Select all"
+msgstr "Выделить всё"
+
+msgctxt "L.INSERTRAWHEX"
+msgid "Insert Unicode character"
+msgstr "Вставить символ Unicode"
+
+msgctxt "L.MOVELINEUP"
+msgid "Move line upwards"
+msgstr "Поднять строку"
+
+msgctxt "L.MOVELINEDOWN"
+msgid "Move line downwards"
+msgstr "Опустить строку"
+
+msgctxt "L.DUPLICATELINE"
+msgid "Duplicate line"
+msgstr "Дублировать строку"
+
+msgctxt "L.WHEREPLACEPLAYER"
+msgid "Where do you want to start?"
+msgstr "Где вы хотите начать?"
+
+msgctxt "L.YOUAREPLAYTESTING"
+msgid "You are currently playtesting"
+msgstr "Вы находитесь в тестовом режиме"
+
+#. application (example: Select your VVVVVV executable)
+msgctxt "L.LOCATEVVVVVV"
+msgid "Select your $1 executable"
+msgstr "Выберите исполняемый файл $1"
+
+msgctxt "L.ALREADYPLAYTESTING"
+msgid "You're already playtesting!"
+msgstr "Вы уже в тестовом режиме!"
+
+msgctxt "L.PLAYTESTINGFAILED"
+msgid ""
+"Something went wrong when opening VVVVVV:\n"
+"$1\n"
+"\n"
+"If you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
+msgstr ""
+"Произошёл сбой при запуске VVVVVV:\n"
+"$1\n"
+"\n"
+"Если необходимо поменять исполняемый файл VVVVVV, используемый для тестового режима, зажмите Shift при запуске тестового режима."
+
+#. for example, code 1, indicating failure
+msgctxt "L.VVVVVV_EXITCODE_FAILURE"
+msgid "VVVVVV exited with code $1"
+msgstr "VVVVVV закрылась с ошибкой $1"
+
+msgctxt "L.VVVVVV_22_OR_OLDER"
+msgid "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
+msgstr "Кажется, у вас установлена версия VVVVVV 2.2 или старше. Пожалуйста, обновитесь до более поздней VVVVVV 2.3 или новее."
+
+msgctxt "L.VVVVVV_SOMETHING_HAPPENED"
+msgid "Something seems to have gone wrong with VVVVVV."
+msgstr "Кажется, с VVVVVV что-то пошло не так."
+
+#. you cannot playtest on <operating system>
+msgctxt "L.PLAYTESTUNAVAILABLE"
+msgid "Sorry, you cannot playtest on $1."
+msgstr "К сожалению, невозможно тестировать на $1."
+
+msgctxt "L.VVVVVVFILE"
+msgid "Please select the file named '$1'."
+msgstr "Пожалуйста, выберите файл \"$1\"."
+
+msgctxt "L.PLAYTESTINGOPTIONS"
+msgid "Playtesting"
+msgstr "Тестовый режим"
+
+#. $1: VVVVVV 2.3, $2: VVVVVV
+msgctxt "L.PLAYTESTING_EXECUTABLE_NOTSET"
+msgid ""
+"You did not yet set a $1 executable to use for playtesting.\n"
+"Ved will ask for it when playtesting a $2 level for the first time."
+msgstr ""
+"Вы ещё не указали исполняемый файл $1 для тестового режима.\n"
+"Ved попросит указать его при первом запуске уровня $2 в тестовом режиме."
+
+#. $1: VVVVVV 2.3
+msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
+msgid ""
+"The $1 executable to use for playtesting is set to:\n"
+"$2"
+msgstr ""
+"Исполняемый файл $1 для тестового режима указан как:\n"
+"$2"
+
+msgctxt "L.FIND_V_EXE_ERROR"
+msgid "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually."
+msgstr "Произошла ошибка при попытке найти VVVVVV. Попробуйте ввести путь к игре вручную."
+
+msgctxt "L.FIND_V_EXE_FOUNDERROR"
+msgid "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually."
+msgstr "Найдено что-то, похожее на VVVVV, но не удаётся найти подходящий путь к исполняемому файлу. Убедитесь, что вы не используете старую версию игры (требуется 2.3 или новее) или попробуйте задать путь к исполняемому файлу вручную."
+
+msgctxt "L.FIND_V_EXE_NOTFOUND"
+msgid "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
+msgstr "Кажется, сейчас VVVVVV не запущена. Убедитесь в том, что вы запустили игру и попробуйте снова."
+
+msgctxt "L.FIND_V_EXE_MULTI"
+msgid "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
+msgstr "Найдено несколько запущеных экземпляров VVVVVV. Убедитесь в том, что у вас запущена только одна версия игры и попробуйте снова."
+
+msgctxt "L.FIND_V_EXE_EXPLANATION"
+msgid ""
+"Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n"
+"\n"
+"\n"
+"To autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
+msgstr ""
+"Ved требуется VVVVVV для режима тестирования, но для этого сначала необходимо задать папку к игре.\n"
+"\n"
+"\n"
+"Чтобы автоматически определить VVVVVV - просто запустите игру, если она не запущена, и нажмите \"Определить\"."
+
+msgctxt "L.VCE_REMOVED"
+msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
+msgstr "VVVVVV: Community Edition больше не разрабатывается и поддержка VVVVVV-CE-уровней была удалена из Ved. Этот уровень будет считаться обычным VVVVVV-уровнем. Для получения подробной информации смотрите https://vsix.dev/vce/status/"
+
+#. Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+msgctxt "L.VVVVVV_VERSION"
+msgid "VVVVVV version"
+msgstr "Версия VVVVVV"
+
+msgctxt "L.VVVVVV_VERSION_AUTO"
+msgid "Auto"
+msgstr "Авто"
+
+msgctxt "L.VVVVVV_VERSION_23PLUS"
+msgid "2.3+"
+msgstr "2.3+"
+
+msgctxt "L.VVVVVV_VERSION_24PLUS"
+msgid "2.4+"
+msgstr "2.4+"
+
+msgctxt "L.ALL_PLUGINS"
+msgid "All plugins"
+msgstr "Все плагины"
+
+msgctxt "L.ALL_PLUGINS_MOREINFO"
+msgid "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl"
+msgstr "Перейдите на ¤https://tolp.nl/ved/plugins.php¤эту страницу¤ для большей информации о плагинах.\\nLCl"
+
+msgctxt "L.ALL_PLUGINS_FOLDER"
+msgid "Your plugins folder is:"
+msgstr "Ваша папка плагинов:"
+
+msgctxt "L.ALL_PLUGINS_NOPLUGINS"
+msgid "You do not have any plugins yet."
+msgstr "У вас пока нет никаких плагинов."
+
+msgctxt "L.PLUGIN_NOT_SUPPORTED"
+msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
+msgstr "[Этот плагин не поддерживается, так как ему необходима версия Ved $1 и выше!]\\r"
+
+#. by Person, version 1.0.0
+msgctxt "L.PLUGIN_AUTHOR_VERSION"
+msgid "by $1, version $2"
+msgstr "Автор: $1, версия $2"
+
+msgctxt "L.CREATE_LOAD_SCRIPT"
+msgid "Create load script"
+msgstr "Создать загрузочный скрипт"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_NO"
+msgid "No"
+msgstr "Нет"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_RUNONCE"
+msgid "Run once"
+msgstr "Одноразовый"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_REPEATING"
+msgid "Repeating"
+msgstr "Многоразовый"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_NO"
+msgid "Don't create load script"
+msgstr "Не создавать загрузочный скрипт"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_NO"
+msgid "This terminal will directly point to the script."
+msgstr "Этот терминал перенаправит напрямую на скрипт, минуя загрузочный."
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_NO"
+msgid "This script box will directly point to the script."
+msgstr "Эта рамка скрипта перенаправит напрямую на скрипт, минуя загрузочный."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_RUNONCE"
+msgid "Create load script to run once"
+msgstr "Создать загрузочный скрипт, запускающийся один раз"
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE"
+msgid "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Этот терминал перенаправит на новый загрузочный скрипт, который загрузит обычный скрипт только один раз за прохождение. Ved выберет неиспользуемый флаг."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE"
+msgid "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Эта рамка скрипта перенаправит на новый загрузочный скрипт, который загрузит обычный скрипт только один раз за прохождение. Ved выберет неиспользуемый флаг."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_REPEATING"
+msgid "Create repeating load script"
+msgstr "Создать многоразовый загрузочный скрипт"
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_REPEATING"
+msgid "This terminal will point to a new load script, which unconditionally loads the real script."
+msgstr "Этот терминал перенаправит на новый загрузочный скрипт, который загрузит обычный скрипт."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_REPEATING"
+msgid "This script box will point to a new load script, which unconditionally loads the real script."
+msgstr "Эта рамка скрипта перенаправит на новый загрузочный скрипт, который загрузит обычный скрипт."
+
+msgctxt "L.CUSTOM_SIZED_BRUSH"
+msgid "Custom brush"
+msgstr "Пользовательская кисть"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_BRUSH"
+msgid "Brush"
+msgstr "Кисть"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_STAMP"
+msgid "Stamp"
+msgstr "Штамп"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_TILESET"
+msgid "Tileset"
+msgstr "Набор тайлов"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH"
+msgid "Custom brush size"
+msgstr "Пользовательский размер кисти"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH"
+msgid "Choose the size of the brush you need."
+msgstr "Выберите необходимый размер кисти."
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_STAMP"
+msgid "Stamp from room"
+msgstr "Штамп из комнаты"
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_STAMP"
+msgid "Select tiles from the room to create a stamp."
+msgstr "Выберите тайлы из комнаты для создания штампа."
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_TILESET"
+msgid "Stamp from tileset"
+msgstr "Штамп для набора тайлов"
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_TILESET"
+msgid "Select tiles from the tileset to create a stamp. Only works in manual mode."
+msgstr "Выберите тайлы из набора для создания штампа. Работает только в ручном режиме."
+
+msgctxt "L.ADVANCED_LEVEL_OPTIONS"
+msgid "Advanced level options"
+msgstr "Продвинутые настройки уровня"
+
+#. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+msgctxt "L.ONEWAYCOL_OVERRIDE"
+msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
+msgstr "Перекрашивать односторонние тайлы в польз. ресурсах (onewaycol_override)"
+
+#. .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+msgctxt "L.ZIP_SAVE_AS"
+msgid "Create ZIP of this version for sharing"
+msgstr "Создать ZIP-архив этой версии уровня для возможности поделиться"
+
+msgctxt "L.ZIP_CREATE_TITLE"
+msgid "Save ZIP"
+msgstr "Сохранить ZIP"
+
+msgctxt "L.ZIP_BUSY_TITLE"
+msgid "Creating ZIP..."
+msgstr "Создание ZIP..."
+
+#. $1: version number
+msgctxt "L.ZIP_LOVE11_ONLY"
+msgid "Creating a ZIP file requires LÖVE $1 or higher"
+msgstr "Для создания ZIP-файла требуется LÖVE $1 или выше"
+
+msgctxt "L.ZIP_SAVING_SUCCESS"
+msgid "ZIP saved!"
+msgstr "ZIP сохранён!"
+
+msgctxt "L.ZIP_SAVING_FAIL"
+msgid "Could not save ZIP file!"
+msgstr "Не удалось сохранить ZIP-файл!"
+
+#. Button, open a directory/folder in Explorer, Finder or another system file manager.
+msgctxt "L.OPENFOLDER"
+msgid "Open folder"
+msgstr "Открыть папку"
+
+msgctxt "L.LEVELFONT"
+msgid "Level font"
+msgstr "Шрифт уровня"
+
+msgctxt "L.TEXTBOXCOLORS_BUTTON"
+msgid "Text colors"
+msgstr "Цвета текста"
+
+msgctxt "L.TEXTBOXCOLORS_TITLE"
+msgid "Textbox colors"
+msgstr "Цвета текстовых рамок"
+
+msgctxt "L.TEXTBOXCOLORS_RENAME"
+msgid "Rename color \"$1\""
+msgstr "Переименовать цвет \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_DUPLICATE"
+msgid "Duplicate color \"$1\""
+msgstr "Дублировать цвет \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_CREATE"
+msgid "Add new color"
+msgstr "Добавить цвет"
+
+msgctxt "L.LIB_LOAD_ERRMSG_BIDI"
+msgid ""
+"Failed to load the library for right-to-left text support.\n"
+"\n"
+"$1"
+msgstr ""
+"Не удалось загрузить библиотеку поддержки отображения текста справа налево.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_AV"
+msgid ""
+"\n"
+"\n"
+"Your antivirus may be breaking it."
+msgstr ""
+"\n"
+"\n"
+"Возможно, ваш антивирус блокирует её."
+
+# Plural form 0 - for the numbers that end with '1', except for '11' (1; 21; 31; etc.)
+# Plural form 1 - for the numbers that end with '2', '3' or '4', except for '12', '13' and '14'
+# Plural form 2 - for the numbers that end with '0', '5', '6', '7', '8' or '9', including '11', '12', '13' and '14'
+msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
+msgid "You have $1 plugin that is not supported in this version."
+msgid_plural "You have $1 plugins that are not supported in this version."
+msgstr[0] "У вас установлен $1 плагин, не поддерживаемый данной версией программы."
+msgstr[1] "У вас установлены $1 плагина, не поддерживаемые данной версией программы."
+msgstr[2] "У вас установлены $1 плагинов, не поддерживаемые данной версией программы."
+
+msgctxt "L_PLU.LEVELFAILEDCHECKS"
+msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgstr[0] "Этот уровень провалил $1 проверку. Ошибка могла быть исправлена автоматически, но это всё равно может привести к сбоям и несоответствиям."
+msgstr[1] "Этот уровень провалил $1 проверки. Ошибки могли быть исправлены автоматически, но это всё равно может привести к сбоям и несоответствиям."
+msgstr[2] "Этот уровень провалил $1 проверок. Ошибки могли быть исправлены автоматически, но это всё равно может привести к сбоям и несоответствиям."
+
+msgctxt "L_PLU.SCRIPTUSAGESROOMS"
+msgid "$1 usage in rooms: $2"
+msgid_plural "$1 usages in rooms: $2"
+msgstr[0] "$1 использование в комнатах: $2"
+msgstr[1] "$1 использования в комнатах: $2"
+msgstr[2] "$1 использований в комнатах: $2"
+
+msgctxt "L_PLU.SCRIPTUSAGESSCRIPTS"
+msgid "$1 usage in scripts: $2"
+msgid_plural "$1 usages in scripts: $2"
+msgstr[0] "$1 использование в скриптах: $2"
+msgstr[1] "$1 использования в скриптах: $2"
+msgstr[2] "$1 использований в скриптах: $2"
+
+msgctxt "L_PLU.ENTITYINVALIDPROPERTIES"
+msgid "Entity at [$1 $2] has $3 invalid property!"
+msgid_plural "Entity at [$1 $2] has $3 invalid properties!"
+msgstr[0] "Объект в комнате [$1 $2] имеет $3 неверное свойство!"
+msgstr[1] "Объект в комнате [$1 $2] имеет $3 неверных свойства!"
+msgstr[2] "Объект в комнате [$1 $2] имеет $3 неверных свойств!"
+
+msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
+msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
+msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
+msgstr[0] "Информация комнаты $1,$2 имеет $3 неверное свойство!"
+msgstr[1] "Информация комнаты $1,$2 имеет $3 неверных свойства!"
+msgstr[2] "Информация комнаты $1,$2 имеет $3 неверных свойств!"
+
+msgctxt "L_PLU.SCRIPTDISPLAY_SHOWING"
+msgid "Showing $1"
+msgid_plural "Showing $1"
+msgstr[0] "Всего показано: $1"
+msgstr[1] "Всего показано: $1"
+msgstr[2] "Всего показано: $1"
+
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] "Использован $1 раз в скриптах: $2"
+msgstr[1] "Использован $1 раза в скриптах: $2"
+msgstr[2] "Использован $1 раз в скриптах: $2"
+
+msgctxt "L_PLU.NOTALLTILESVALID"
+msgid "$1 tile is not a valid whole number greater than or equal to 0"
+msgid_plural "$1 tiles are not a valid whole number greater than or equal to 0"
+msgstr[0] "$1 тайл не является целым числом, большим или равным 0"
+msgstr[1] "$1 тайла не являются целыми числами, большими или равными 0"
+msgstr[2] "$1 тайлов не являются целыми числами, большими или равными 0"
+
+msgctxt "L_PLU.BYTES"
+msgid "$1 byte"
+msgid_plural "$1 bytes"
+msgstr[0] "$1 байт"
+msgstr[1] "$1 байта"
+msgstr[2] "$1 байтов"
+
+msgctxt "L_PLU.NUM_GRAPHICS_CUSTOMIZED"
+msgid "$1 image customized"
+msgid_plural "$1 images customized"
+msgstr[0] "$1 изображение изменено"
+msgstr[1] "$1 изображения изменено"
+msgstr[2] "$1 изображений изменено"
+
+msgctxt "L_PLU.NUM_SOUNDS_CUSTOMIZED"
+msgid "$1 sound effect customized"
+msgid_plural "$1 sound effects customized"
+msgstr[0] "$1 звуковой эффект изменён"
+msgstr[1] "$1 звуковых эффекта изменено"
+msgstr[2] "$1 звуковых эффектов изменено"
+
+msgctxt "toolnames.1"
+msgid "Wall"
+msgstr "Стена"
+
+msgctxt "toolnames.2"
+msgid "Background"
+msgstr "Фон"
+
+msgctxt "toolnames.3"
+msgid "Spike"
+msgstr "Шипы"
+
+msgctxt "toolnames.4"
+msgid "Trinket"
+msgstr "Штуковина"
+
+msgctxt "toolnames.5"
+msgid "Checkpoint"
+msgstr "Чекпоинт"
+
+msgctxt "toolnames.6"
+msgid "Disappearing platform"
+msgstr "Исчезающая платформа"
+
+msgctxt "toolnames.7"
+msgid "Conveyor"
+msgstr "Конвеер"
+
+msgctxt "toolnames.8"
+msgid "Moving platform"
+msgstr "Движущаяся платформа"
+
+msgctxt "toolnames.9"
+msgid "Enemy"
+msgstr "Враг"
+
+msgctxt "toolnames.10"
+msgid "Gravity line"
+msgstr "Гравитационная линия"
+
+msgctxt "toolnames.11"
+msgid "Roomtext"
+msgstr "Текст"
+
+msgctxt "toolnames.12"
+msgid "Terminal"
+msgstr "Терминал"
+
+msgctxt "toolnames.13"
+msgid "Script box"
+msgstr "Рамка скрипта"
+
+msgctxt "toolnames.14"
+msgid "Warp token"
+msgstr "Варп-токен"
+
+msgctxt "toolnames.15"
+msgid "Warp line"
+msgstr "Варп-линия"
+
+msgctxt "toolnames.16"
+msgid "Crewmate"
+msgstr "Член экипажа"
+
+msgctxt "toolnames.17"
+msgid "Start point"
+msgstr "Точка старта"
+
+msgctxt "subtoolnames.1.1"
+msgid "1x1 brush"
+msgstr "1x1"
+
+msgctxt "subtoolnames.1.2"
+msgid "3x3 brush"
+msgstr "3x3"
+
+msgctxt "subtoolnames.1.3"
+msgid "5x5 brush"
+msgstr "5x5"
+
+msgctxt "subtoolnames.1.4"
+msgid "7x7 brush"
+msgstr "7x7"
+
+msgctxt "subtoolnames.1.5"
+msgid "9x9 brush"
+msgstr "9x9"
+
+msgctxt "subtoolnames.1.6"
+msgid "Fill horizontally"
+msgstr "Залить горизонтально"
+
+msgctxt "subtoolnames.1.7"
+msgid "Fill vertically"
+msgstr "Залить вертикально"
+
+msgctxt "subtoolnames.1.8"
+msgid "Custom brush size"
+msgstr "Пользовательский размер кисти"
+
+msgctxt "subtoolnames.1.9"
+msgid "Fill bucket"
+msgstr "Заливка"
+
+msgctxt "subtoolnames.1.10"
+msgid "Potato for Doing Things that are Magical"
+msgstr "Картошка для Магических Вещей"
+
+msgctxt "subtoolnames.3.1"
+msgid "Auto 1"
+msgstr "1x1"
+
+msgctxt "subtoolnames.3.2"
+msgid "Auto expand L+R"
+msgstr "Авто-расширение Л+П"
+
+msgctxt "subtoolnames.3.3"
+msgid "Auto expand L"
+msgstr "Авто-расширение Л"
+
+msgctxt "subtoolnames.3.4"
+msgid "Auto expand R"
+msgstr "Авто-расширение П"
+
+msgctxt "subtoolnames.5.1"
+msgid "Upright"
+msgstr "Нормальный"
+
+msgctxt "subtoolnames.5.2"
+msgid "Flipped"
+msgstr "Перевёрнутый"
+
+msgctxt "subtoolnames.7.1"
+msgid "Small R"
+msgstr "Маленький П"
+
+msgctxt "subtoolnames.7.2"
+msgid "Small L"
+msgstr "Маленький Л"
+
+msgctxt "subtoolnames.7.3"
+msgid "Large R"
+msgstr "Большой П"
+
+msgctxt "subtoolnames.7.4"
+msgid "Large L"
+msgstr "Большой Л"
+
+msgctxt "subtoolnames.8.1"
+msgid "Down"
+msgstr "Вниз"
+
+msgctxt "subtoolnames.8.2"
+msgid "Up"
+msgstr "Вверх"
+
+msgctxt "subtoolnames.8.3"
+msgid "Left"
+msgstr "Влево"
+
+msgctxt "subtoolnames.8.4"
+msgid "Right"
+msgstr "Вправо"
+
+msgctxt "subtoolnames.10.1"
+msgid "Horizontal"
+msgstr "Горизонтальная"
+
+msgctxt "subtoolnames.10.2"
+msgid "Vertical"
+msgstr "Вертикальная"
+
+msgctxt "subtoolnames.14.1"
+msgid "Entrance"
+msgstr "Вход"
+
+msgctxt "subtoolnames.14.2"
+msgid "Exit"
+msgstr "Выход"
+
+msgctxt "subtoolnames.16.1"
+msgid "Pink"
+msgstr "Розовый"
+
+msgctxt "subtoolnames.16.2"
+msgid "Yellow"
+msgstr "Жёлтый"
+
+msgctxt "subtoolnames.16.3"
+msgid "Red"
+msgstr "Красный"
+
+msgctxt "subtoolnames.16.4"
+msgid "Green"
+msgstr "Зелёный"
+
+msgctxt "subtoolnames.16.5"
+msgid "Blue"
+msgstr "Синий"
+
+msgctxt "subtoolnames.16.6"
+msgid "Cyan"
+msgstr "Голубой"
+
+msgctxt "subtoolnames.16.7"
+msgid "Random"
+msgstr "Случайный"
+
+msgctxt "subtoolnames.17.1"
+msgid "Face right"
+msgstr "Вправо"
+
+msgctxt "subtoolnames.17.2"
+msgid "Face left"
+msgstr "Влево"
+
+msgctxt "warpdirs.0"
+msgid "x"
+msgstr "нет"
+
+msgctxt "warpdirs.1"
+msgid "H"
+msgstr "горизонтальный"
+
+msgctxt "warpdirs.2"
+msgid "V"
+msgstr "вертикальный"
+
+msgctxt "warpdirs.3"
+msgid "A"
+msgstr "полный"
+
+msgctxt "warpdirchangedtext.0"
+msgid "Room warping disabled"
+msgstr "Варп комнаты выключен"
+
+msgctxt "warpdirchangedtext.1"
+msgid "Warp direction set to horizontal"
+msgstr "Тип варпа изменён на горизонтальный"
+
+msgctxt "warpdirchangedtext.2"
+msgid "Warp direction set to vertical"
+msgstr "Тип варпа изменён на вертикальный"
+
+msgctxt "warpdirchangedtext.3"
+msgid "Warp direction set to all directions"
+msgstr "Варп во всех направлениях"
+
+msgctxt "langtilesetnames.short0"
+msgid "Space Stn."
+msgstr "Косм. Ст."
+
+msgctxt "langtilesetnames.long0"
+msgid "Space Station"
+msgstr "Космическая Станция"
+
+msgctxt "langtilesetnames.short1"
+msgid "Outside"
+msgstr "Космос"
+
+msgctxt "langtilesetnames.long1"
+msgid "Outside"
+msgstr "Космос"
+
+msgctxt "langtilesetnames.short2"
+msgid "Lab"
+msgstr "Лаб."
+
+msgctxt "langtilesetnames.long2"
+msgid "Lab"
+msgstr "Лаборатория"
+
+msgctxt "langtilesetnames.short3"
+msgid "Warp Zone"
+msgstr "Варп-Зона"
+
+msgctxt "langtilesetnames.long3"
+msgid "Warp Zone"
+msgstr "Варп-Зона"
+
+msgctxt "langtilesetnames.short4"
+msgid "Ship"
+msgstr "Корабль"
+
+msgctxt "langtilesetnames.long4"
+msgid "Ship"
+msgstr "Корабль"
+
+msgctxt "langtilesetnames.short5"
+msgid "Tower"
+msgstr "Башня"
+
+msgctxt "langtilesetnames.long5"
+msgid "Tower"
+msgstr "Башня"
+
+msgctxt "ERR_VEDHASCRASHED"
+msgid "Ved has crashed!"
+msgstr "Ved вылетел!"
+
+msgctxt "ERR_VEDVERSION"
+msgid "Ved version:"
+msgstr "Версия Ved:"
+
+msgctxt "ERR_LOVEVERSION"
+msgid "LÖVE version:"
+msgstr "Версия LÖVE:"
+
+msgctxt "ERR_STATE"
+msgid "State:"
+msgstr "Статус:"
+
+msgctxt "ERR_OS"
+msgid "OS:"
+msgstr "ОС:"
+
+msgctxt "ERR_TIMESINCESTART"
+msgid "Time since start:"
+msgstr "Прошло времени с начала запуска:"
+
+msgctxt "ERR_PLUGINS"
+msgid "Plugins:"
+msgstr "Плагины:"
+
+msgctxt "ERR_PLUGINSNOTLOADED"
+msgid "(not loaded)"
+msgstr "(не загружено)"
+
+msgctxt "ERR_PLUGINSNONE"
+msgid "(none)"
+msgstr "(нет)"
+
+msgctxt "ERR_PLEASETELLDAV"
+msgid ""
+"Please tell Dav999 about this problem.\n"
+"\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Пожалуйста, расскажите Dav999 об этой проблеме.\n"
+"\n"
+"\n"
+"Детали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n"
+"\n"
+
+#. pre-release version, so a version in between officially released versions
+msgctxt "ERR_INTERMEDIATE"
+msgid " (intermediate version)"
+msgstr " (Версия между официально выпущенными версиями)"
+
+msgctxt "ERR_TOONEW"
+msgid " (too new)"
+msgstr " (слишком новое)"
+
+msgctxt "ERR_PLUGINERROR"
+msgid "Plugin error!"
+msgstr "Ошибка плагина!"
+
+msgctxt "ERR_FILE"
+msgid "File to be edited:"
+msgstr "Файл для редактирования:"
+
+msgctxt "ERR_FILEEDITORS"
+msgid "Plugins that edit this file:"
+msgstr "Плагины редактирующие этот файл:"
+
+msgctxt "ERR_CURRENTPLUGIN"
+msgid "Plugin that triggered the error:"
+msgstr "Плагин вызвавший ошибку:"
+
+msgctxt "ERR_PLEASETELLAUTHOR"
+msgid ""
+"A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\n"
+"It is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Плагин должен был редактровать код Ved, но код для замены не был найден.\n"
+"Возможно это из-за конфликта между двумя плагинами или новая версия Ved не поддерживает этот плагин.\n"
+"\n"
+"Детали: (нажмите Ctrl+C/Cmd+C чтобы скопировать в буфер обмена)\n"
+"\n"
+
+msgctxt "ERR_CONTINUE"
+msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr "Вы можете продолжить, нажав Esc или Enter, но эта ошибка может вызвать глюки."
+
+msgctxt "ERR_OPENPLUGINSFOLDER"
+msgid "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+msgstr "Клавишей F можно открыть папку с плагинами, чтобы исправить или удалить плагин, вызывающий проблему. После этого перезапустите Ved."
+
+msgctxt "ERR_REPLACECODE"
+msgid "Failed to find this in %s.lua:"
+msgstr "Это не найдено в %s.lua:"
+
+msgctxt "ERR_REPLACECODEPATTERN"
+msgid "Failed to find this in %s.lua (as pattern):"
+msgstr "Это не найдено в %s.lua (как шаблон):"
+
+msgctxt "ERR_LINESTOTAL"
+msgid "%i lines in total"
+msgstr "%i строк всего"
+
+msgctxt "ERR_SAVELEVEL"
+msgid "To save a copy of your level, press S"
+msgstr "Чтобы сохранить копию уровня, нажмите S"
+
+msgctxt "ERR_SAVESUCC"
+msgid "Level saved successfully as %s!"
+msgstr "Уровень сохранён как %s!"
+
+msgctxt "ERR_SAVEERROR"
+msgid "Save error! %s"
+msgstr "Ошибка сохранения! %s"
+
+msgctxt "ERR_LOGSAVED"
+msgid ""
+"More information can be found in the crash log:\n"
+"%s"
+msgstr ""
+"Больше сведений в отчёте об ошибке:\n"
+"%s"
+
+msgctxt "diffmessages.pages.levelproperties"
+msgid "Level properties"
+msgstr "Свойства уровня"
+
+msgctxt "diffmessages.pages.changedrooms"
+msgid "Changed rooms"
+msgstr "Изменённые комнаты"
+
+msgctxt "diffmessages.pages.changedroommetadata"
+msgid "Changed room metadata"
+msgstr "Изменённая информация комнат"
+
+msgctxt "diffmessages.pages.entities"
+msgid "Entities"
+msgstr "Объекты"
+
+msgctxt "diffmessages.pages.scripts"
+msgid "Scripts"
+msgstr "Скрипты"
+
+msgctxt "diffmessages.pages.flagnames"
+msgid "Flag names"
+msgstr "Флаги"
+
+msgctxt "diffmessages.pages.levelnotes"
+msgid "Level notes"
+msgstr "Заметки"
+
+msgctxt "diffmessages.levelpropertiesdiff.Title"
+msgid "Name was changed from \"$1\" to \"$2\""
+msgstr "Название было изменено с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Creator"
+msgid "Author was changed from \"$1\" to \"$2\""
+msgstr "Автор был изменён с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.website"
+msgid "Website was changed from \"$1\" to \"$2\""
+msgstr "Сайт был изменён с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc1"
+msgid "Desc1 was changed from \"$1\" to \"$2\""
+msgstr "Описание 1 было изменено с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc2"
+msgid "Desc2 was changed from \"$1\" to \"$2\""
+msgstr "Описание 2 было изменено с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc3"
+msgid "Desc3 was changed from \"$1\" to \"$2\""
+msgstr "Описание 3 было изменено с \"$1\" на \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsize"
+msgid "Map size was changed from $1x$2 to $3x$4"
+msgstr "Размер карты был изменён с $1x$2 на $3x$4"
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsizenote"
+msgid ""
+"NOTE: Map size was changed from $1x$2 to $3x$4.\\o\n"
+"Rooms outside of $5x$6 are not listed.\\o"
+msgstr ""
+"ЗАМЕТЬТЕ: Размер карты был изменён с $1x$2 на $3x$4.\\o\n"
+"Комнаты вне $5x$6 не перечислены.\\o"
+
+msgctxt "diffmessages.levelpropertiesdiff.levmusic"
+msgid "Level music was changed from $1 to $2"
+msgstr "Музыка изменена с $1 на $2"
+
+msgctxt "diffmessages.rooms.added1"
+msgid "Added ($1,$2) ($3)\\G"
+msgstr "Добавлена ($1,$2) ($3)\\G"
+
+msgctxt "diffmessages.rooms.added2"
+msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgstr "Добавлена ($1,$2) ($3 -> $4)\\G"
+
+msgctxt "diffmessages.rooms.changed1"
+msgid "Changed ($1,$2) ($3)\\Y"
+msgstr "Изменена ($1,$2) ($3)\\Y"
+
+msgctxt "diffmessages.rooms.changed2"
+msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgstr "Изменена ($1,$2) ($3 -> $4)\\Y"
+
+msgctxt "diffmessages.rooms.cleared1"
+msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgstr "Очищены все тайлы в ($1,$2) ($3)\\R"
+
+msgctxt "diffmessages.rooms.cleared2"
+msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgstr "Очищены все тайлы в ($1,$2) ($3 -> $4)\\R"
+
+msgctxt "diffmessages.roommetadata.changed0"
+msgid "Room $1,$2:"
+msgstr "Комната $1,$2:"
+
+msgctxt "diffmessages.roommetadata.changed1"
+msgid "Room $1,$2 ($3):"
+msgstr "Комната $1,$2 ($3):"
+
+msgctxt "diffmessages.roommetadata.roomname"
+msgid "Roomname changed from \"$1\" to \"$2\"\\Y"
+msgstr "Название изменено с \"$1\" на \"$2\"\\Y"
+
+msgctxt "diffmessages.roommetadata.roomnameremoved"
+msgid "Roomname \"$1\" removed\\R"
+msgstr "Название \"$1\" убрано\\R"
+
+msgctxt "diffmessages.roommetadata.roomnameadded"
+msgid "Room named \"$1\"\\G"
+msgstr "Комната названа \"$1\"\\G"
+
+msgctxt "diffmessages.roommetadata.tileset"
+msgid "Tileset $1 tilecol $2 changed to tileset $3 tilecol $4\\Y"
+msgstr "Набор тайлов $1 с цветом $2 изменён на набор $3 с цветом $4\\Y"
+
+msgctxt "diffmessages.roommetadata.platv"
+msgid "Platform speed changed from $1 to $2\\Y"
+msgstr "Скорость платформ изменена с $1 на $2\\Y"
+
+msgctxt "diffmessages.roommetadata.enemytype"
+msgid "Enemy type changed from $1 to $2\\Y"
+msgstr "Тип врагов изменён с $1 на $2\\Y"
+
+msgctxt "diffmessages.roommetadata.platbounds"
+msgid "Platform bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Рамка платформ изменена с $1,$2,$3,$4 на $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.enemybounds"
+msgid "Enemy bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Рамка врагов изменена с $1,$2,$3,$4 на $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.directmode01"
+msgid "Direct mode enabled\\G"
+msgstr "Ручной режим включён\\G"
+
+msgctxt "diffmessages.roommetadata.directmode10"
+msgid "Direct mode disabled\\R"
+msgstr "Ручной режим отключён\\R"
+
+msgctxt "diffmessages.roommetadata.warpdir"
+msgid "Warp direction changed from $1 to $2\\Y"
+msgstr "Тип варпа изменён с $1 на $2\\Y"
+
+msgctxt "diffmessages.entities.added"
+msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgstr "Добавлен объект типа $1 на позицию $2,$3 в комнате ($4,$5)\\G"
+
+msgctxt "diffmessages.entities.removed"
+msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgstr "Удалён объект типа $1 с позиции $2,$3 в комнате ($4,$5)\\R"
+
+msgctxt "diffmessages.entities.changed"
+msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgstr "Изменён тип объекта $1 на позиции $2,$3 в комнате ($4,$5)\\Y"
+
+msgctxt "diffmessages.entities.changedtype"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgstr "Изменён тип объекта $1 на тип $2 на позиции $3,$4 в комнате ($5,$6)\\Y"
+
+msgctxt "diffmessages.entities.multiple1"
+msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgstr "Изменены объекты на позиции $1,$2 в комнате ($3,$4):\\Y"
+
+msgctxt "diffmessages.entities.multiple2"
+msgid "to:"
+msgstr "на:"
+
+msgctxt "diffmessages.entities.addedmultiple"
+msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgstr "Добавлены объекты на позицию $1,$2 в комнате ($3,$4):\\G"
+
+msgctxt "diffmessages.entities.removedmultiple"
+msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgstr "Удалены объекты на позиции $1,$2 в комнате ($3,$4):\\R"
+
+msgctxt "diffmessages.entities.entity"
+msgid "Type $1"
+msgstr "Тип $1"
+
+msgctxt "diffmessages.entities.incomplete"
+msgid "Not all entities were handled! Please report this to Dav.\\r"
+msgstr "Не все объекты были опознаны! Пожалуйста, сообщите об этом Dav999.\\r"
+
+msgctxt "diffmessages.scripts.added"
+msgid "Added script \"$1\"\\G"
+msgstr "Добавлен скрипт \"$1\"\\G"
+
+msgctxt "diffmessages.scripts.removed"
+msgid "Removed script \"$1\"\\R"
+msgstr "Удалён скрипт \"$1\"\\R"
+
+msgctxt "diffmessages.scripts.edited"
+msgid "Edited script \"$1\"\\Y"
+msgstr "Изменён скрипт \"$1\"\\Y"
+
+msgctxt "diffmessages.flagnames.added"
+msgid "Set name for flag $1 to \"$2\"\\G"
+msgstr "Задано имя флага $1 - \"$2\"\\G"
+
+msgctxt "diffmessages.flagnames.removed"
+msgid "Removed name \"$1\" for flag $2\\R"
+msgstr "Удалено имя \"$1\" флага $2\\R"
+
+msgctxt "diffmessages.flagnames.edited"
+msgid "Changed name for flag $1 from \"$2\" to \"$3\"\\Y"
+msgstr "Изменено имя флага $1 с \"$2\" на \"$3\"\\Y"
+
+msgctxt "diffmessages.levelnotes.added"
+msgid "Added level note \"$1\"\\G"
+msgstr "Добавлена заметка \"$1\"\\G"
+
+msgctxt "diffmessages.levelnotes.removed"
+msgid "Removed level note \"$1\"\\R"
+msgstr "Удалена заметка \"$1\"\\R"
+
+msgctxt "diffmessages.levelnotes.edited"
+msgid "Edited level note \"$1\"\\Y"
+msgstr "Изменена заметка \"$1\"\\Y"
+
+msgctxt "diffmessages.mde.added"
+msgid "Metadata entity was added.\\G"
+msgstr "Объект данных добавлен.\\G"
+
+msgctxt "diffmessages.mde.removed"
+msgid "Metadata entity was removed.\\R"
+msgstr "Объект данных удалён.\\R"

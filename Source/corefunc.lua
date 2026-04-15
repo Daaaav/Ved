@@ -102,9 +102,9 @@ function langkeys(str, thesekeys, pluralvar)
 			pluralform = pluralform and 1 or 0
 		end
 
-		if str[pluralform] == nil then
+		if str[pluralform] == nil or str[pluralform] == "" then
 			-- Use English fallback
-			pluralform = (thesekeys[pluralvar] ~= 1) and -2 or -1
+			pluralform = (thesekeys[pluralvar] == 1) and -1 or -2
 		end
 
 		str = str[pluralform]

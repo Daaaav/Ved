@@ -262,9 +262,6 @@ return function()
 
 	local toolanyofthese = selectedtool == 4 or selectedtool == 16 or selectedtool == 17
 
-	local pluraltoolnames = table.copy(toolnames)
-	pluraltoolnames[4] = L.TRINKETS
-	pluraltoolnames[16] = L.CREWMATES
 	if not s.psmallerscreen or keyboard_eitherIsDown(ctrl) then
 		love.graphics.setColor(0, 0, 0, 192)
 		love.graphics.rectangle("fill", 0, 0, 64, love.graphics.getHeight())
@@ -312,6 +309,9 @@ return function()
 				local cx, cy = 16+2, (16+2+(48*(t-1)))
 				theme:draw(toolimg[actual_t], cx, cy)
 				if nodialog and (mouseon(16, (16+(48*(t-1))), 32, 32)) and window_active() then
+					local pluraltoolnames = table.copy(toolnames)
+					pluraltoolnames[4] = L.TRINKETS
+					pluraltoolnames[16] = L.CREWMATES
 					love.graphics.setColor(128,128,128,192)
 					love.graphics.rectangle("fill", love.mouse.getX()+15, love.mouse.getY()-8, font_ui:getWidth(pluraltoolnames[actual_t]), 8)
 					love.graphics.setColor(255,255,255,255)

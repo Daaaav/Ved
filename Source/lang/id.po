@@ -1,0 +1,3062 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-11 03:51+0200\n"
+"PO-Revision-Date: 2026-02-22 21:05+0200\n"
+"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.8\n"
+"X-POOTLE-MTIME: 1771794311.184373\n"
+
+#. If you're making a translation, feel free to set this to something like "Translation made by (you)".
+msgctxt "L.TRANSLATIONCREDIT"
+msgid "English translation by Dav999"
+msgstr "Terjemahan dibuat oleh _march31onne (Marchionne Evangelisti)"
+
+msgctxt "L.OSNOTRECOGNIZED"
+msgid ""
+"Your operating system ($1) is not recognized! Falling back to default filesystem functions; levels are stored in:\n"
+"\n"
+"$2"
+msgstr ""
+"Sistem operasi Anda ($1) tidak dikenali! Kembali ke fungsi sistem file default; level disimpan di:\n"
+"\n"
+"$2"
+
+msgctxt "L.MAXTRINKETS"
+msgid "The maximum amount of trinkets ($1) has been reached in this level."
+msgstr "Jumlah maksimum trinket ($1) telah tercapai di level ini."
+
+msgctxt "L.MAXCREWMATES"
+msgid "The maximum amount of crewmates ($1) has been reached in this level."
+msgstr "Jumlah maksimum crewmate ($1) telah tercapai di level ini."
+
+msgctxt "L.UNSUPPORTEDTOOL"
+msgid "Unsupported tool! Tool: "
+msgstr "Alat tidak didukung! Alat: "
+
+msgctxt "L.COULDNOTGETCONTENTSLEVELFOLDER"
+msgid "Could not get contents of levels folder. Please check if $1 exists and try again."
+msgstr "Tidak bisa mendapatkan konten folder level. Silakan periksa apakah $1 ada dan coba lagi."
+
+msgctxt "L.MAPSAVEDAS"
+msgid "Map image saved as $1!"
+msgstr "Gambar peta disimpan sebagai $1!"
+
+msgctxt "L.RAWENTITYPROPERTIES"
+msgid "You can change the raw property values of this entity here."
+msgstr "Anda dapat mengubah nilai properti mentah entitas ini di sini."
+
+msgctxt "L.UNKNOWNENTITYTYPE"
+msgid "Unknown entity type $1"
+msgstr "Jenis entitas tidak dikenal $1"
+
+msgctxt "L.WARPTOKENENT404"
+msgid "Warp token entity no longer exists!"
+msgstr "Entitas warp token tidak ada lagi!"
+
+#. Command names are best left untranslated
+msgctxt "L.SPLITFAILED"
+msgid "Split failed miserably! Do you have too many lines between a text command and a speak/speak_active?"
+msgstr "Berpisah gagal total! Apakah Anda memiliki terlalu banyak baris antara perintah teks dan speak/speak_active?"
+
+msgctxt "L.NOFLAGSLEFT"
+msgid "There are no flags left, so one or more new flag labels in this script cannot be associated with any flag number. Trying to run this script in VVVVVV may break. Consider removing all references to flags you no longer need and try again."
+msgstr "Tidak ada tanda yang tersisa, jadi satu atau beberapa label tanda baru dalam skrip ini tidak dapat dikaitkan dengan nomor tanda mana pun. Mencoba menjalankan skrip ini di VVVVVV mungkin rusak. Pertimbangkan untuk menghapus semua referensi ke tanda yang tidak lagi Anda perlukan dan coba lagi."
+
+msgctxt "L.NOFLAGSLEFT_LOADSCRIPT"
+msgid "There are no flags left, so a load script using a new flag could not be created. Instead, a load script has been created that always loads the target script with iftrinkets(0,$1). Consider removing all references to flags you no longer need and try again."
+msgstr "Tidak ada tanda yang tersisa, jadi skrip pemuatan menggunakan tanda baru tidak dapat dibuat. Sebagai gantinya, skrip pemuatan telah dibuat yang selalu memuat skrip target dengan iftrinkets(0,$1). Pertimbangkan untuk menghapus semua referensi ke tanda yang tidak lagi Anda perlukan dan coba lagi."
+
+msgctxt "L.LEVELOPENFAIL"
+msgid "Unable to open $1.vvvvvv."
+msgstr "Tidak dapat membuka $1.vvvvvv."
+
+msgctxt "L.SIZELIMIT"
+msgid ""
+"The maximum size of a level is $1 by $2.\n"
+"\n"
+"The level size will be changed to $3 by $4 instead."
+msgstr ""
+"Ukuran maksimum level adalah $1 kali $2.\n"
+"\n"
+"Ukuran level akan diubah menjadi $3 kali $4."
+
+msgctxt "L.SCRIPTALREADYEXISTS"
+msgid "Script \"$1\" already exists!"
+msgstr "Skrip \"$1\" sudah ada!"
+
+msgctxt "L.FLAGNAMENUMBERS"
+msgid "Flag names cannot be only numbers."
+msgstr "Nama tanda tidak boleh hanya angka."
+
+msgctxt "L.FLAGNAMECHARS"
+msgid "Flag names cannot contain parentheses, commas or spaces."
+msgstr "Nama tanda tidak boleh mengandung tanda kurung, koma, atau spasi."
+
+msgctxt "L.FLAGNAMEINUSE"
+msgid "The flag name $1 is already in use by flag $2"
+msgstr "Nama tanda $1 sudah digunakan oleh tanda $2"
+
+msgctxt "L.DIFFSELECT"
+msgid "Select the level to compare to. The level you select now will be treated as being an older version."
+msgstr "Pilih level utk dibandingkan. Level yg Anda pilih skrg akan diperlakukan sebagai versi yg lebih lama."
+
+msgctxt "L.SUREQUITNEW"
+msgid "You have unsaved changes. Do you want to save these changes before quitting?"
+msgstr "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum keluar?"
+
+msgctxt "L.SURENEWLEVELNEW"
+msgid "You have unsaved changes. Do you want to save these changes before creating a new level?"
+msgstr "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum membuat level baru?"
+
+msgctxt "L.SUREOPENLEVEL"
+msgid "You have unsaved changes. Do you want to save these changes before opening this level?"
+msgstr "Anda memiliki perubahan yang belum disimpan. Apakah Anda ingin menyimpan perubahan ini sebelum membuka level ini?"
+
+msgctxt "L.NAMEFORFLAG"
+msgid "Name for flag $1:"
+msgstr "Nama untuk tanda $1:"
+
+msgctxt "L.SCRIPT404"
+msgid "Script \"$1\" does not exist!"
+msgstr "Skrip \"$1\" tidak ada!"
+
+msgctxt "L.ENTITY404"
+msgid "Entity #$1 no longer exists!"
+msgstr "Entitas #$1 tidak ada lagi!"
+
+msgctxt "L.GRAPHICSCARDCANVAS"
+msgid "Sorry, it seems like your graphics card or driver does not support this feature!"
+msgstr "Maaf, sepertinya kartu grafis atau driver Anda tidak mendukung fitur ini!"
+
+msgctxt "L.MAXTEXTURESIZE"
+msgid ""
+"Sorry, creating an image of $1x$2 doesn't seem to be supported by your graphics card or driver.\n"
+"\n"
+"The size limit on this system is $3x$3."
+msgstr ""
+"Maaf, membuat gambar $1x$2 tampaknya tidak didukung oleh kartu grafis atau driver Anda.\n"
+"\n"
+"Batas ukuran pada sistem ini adalah $3x$3."
+
+msgctxt "L.SUREDELETESCRIPT"
+msgid "Are you sure you want to delete the script \"$1\"?"
+msgstr "Anda yakin ingin menghapus skrip \"$1\"?"
+
+msgctxt "L.SUREDELETENOTE"
+msgid "Are you sure you want to delete this note?"
+msgstr "Anda yakin ingin menghapus nota ini?"
+
+msgctxt "L.THREADERROR"
+msgid "Thread error!"
+msgstr "Kesalahan utas!"
+
+msgctxt "L.WHATDIDYOUDO"
+msgid "What did you do?!"
+msgstr "Apa yang kamu lakukan?!"
+
+msgctxt "L.UNDOFAULTY"
+msgid "What are you doing?"
+msgstr "Apa yang kamu ngapain?"
+
+msgctxt "L.SOURCEDESTROOMSSAME"
+msgid "Source and destination rooms are the same!"
+msgstr "Ruang sumber dan tujuan sama!"
+
+msgctxt "L.COORDS_OUT_OF_RANGE"
+msgid "Huh? These coordinates aren't even in this dimension!"
+msgstr "Hah? Koordinat ini bahkan tidak ada di dimensi ini!"
+
+msgctxt "L.UNKNOWNUNDOTYPE"
+msgid "Unknown undo type \"$1\"!"
+msgstr "Jenis pembatalan tidak diketahui \"$1\"!"
+
+msgctxt "L.MDEVERSIONWARNING"
+msgid "This level appears to have been made in a more recent version of Ved, and may contain some data which will be lost when you save this level."
+msgstr "Level ini tampaknya dibuat dalam versi Ved yang lebih baru, dan mungkin berisi beberapa data yang akan hilang saat Anda menyimpan level ini."
+
+msgctxt "L.FORGOTPATH"
+msgid "You forgot to specify a path!"
+msgstr "Anda lupa menentukan jalur!"
+
+msgctxt "L.LIB_LOAD_ERRMSG"
+msgid ""
+"Failed to load an essential library. Please tell Dav999 about this problem.\n"
+"\n"
+"$1"
+msgstr ""
+"Gagal memuat perpustakaan penting. Silakan beri tahu Dav999 tentang masalah ini.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_GCC"
+msgid ""
+"\n"
+"\n"
+"Try installing GCC to solve this problem, if it isn't already installed."
+msgstr ""
+"\n"
+"\n"
+"Coba instal GCC untuk mengatasi masalah ini, jika belum diinstal."
+
+msgctxt "L.SELECTCOPY1"
+msgid "Select the room to copy"
+msgstr "Pilih ruangan yang akan disalin"
+
+msgctxt "L.SELECTCOPY2"
+msgid "Select the location to copy this room to"
+msgstr "Pilih lokasi untuk menyalin ruangan ini"
+
+msgctxt "L.SELECTSWAP1"
+msgid "Select the first room to swap"
+msgstr "Pilih ruang pertama yang akan ditukar"
+
+msgctxt "L.SELECTSWAP2"
+msgid "Select the second room to swap"
+msgstr "Pilih ruang kedua yang akan ditukar"
+
+msgctxt "L.TILESETCHANGEDTO"
+msgid "Tileset changed to $1"
+msgstr "Tileset diubah menjadi $1"
+
+msgctxt "L.TILESETCOLORCHANGEDTO"
+msgid "Tileset color changed to $1"
+msgstr "Warna tileset diubah menjadi $1"
+
+msgctxt "L.ENEMYTYPECHANGED"
+msgid "Enemy type changed"
+msgstr "Jenis musuhan berubah"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODE"
+msgid "Changed to $1 tile placement"
+msgstr "Berubah menjadi $1 penempatan ubin"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEAUTO"
+msgid "automatic"
+msgstr "otomatis"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMANUAL"
+msgid "manual"
+msgstr "manual"
+
+#. These four strings aren't used apart of each other, so if necessary you could even make CHANGEDTOMODE "$1" and make the other three full sentences
+msgctxt "L.CHANGEDTOMODEMULTI"
+msgid "multi-tileset"
+msgstr "multi-tileset"
+
+msgctxt "L.BUSYSAVING"
+msgid "Saving..."
+msgstr "Menyimpan..."
+
+msgctxt "L.SAVEDLEVELAS"
+msgid "Saved level as $1.vvvvvv"
+msgstr "Level disimpan sebagai $1.vvvvvv"
+
+msgctxt "L.ROOMCUT"
+msgid "Room cut to clipboard"
+msgstr "Ruang dipotong ke papan klip"
+
+msgctxt "L.ROOMCOPIED"
+msgid "Copied room to clipboard"
+msgstr "Ruang disalin ke papan klip"
+
+msgctxt "L.ROOMPASTED"
+msgid "Pasted room"
+msgstr "Ruang ditempel"
+
+msgctxt "L.METADATAUNDONE"
+msgid "Level options undone"
+msgstr "Opsi level diurung"
+
+msgctxt "L.METADATAREDONE"
+msgid "Level options redone"
+msgstr "Opsi level diulang"
+
+#. Old string: Click the top left corner of the bounds
+msgctxt "L.BOUNDSFIRST"
+msgid "Click the first corner of the bounds"
+msgstr "Klik sudut pertama batas"
+
+#. Old string: Click the bottom right corner
+msgctxt "L.BOUNDSLAST"
+msgid "Click the last corner"
+msgstr "Klik sudut terakhir"
+
+msgctxt "L.TILE"
+msgid "Tile $1"
+msgstr "Ubin $1"
+
+msgctxt "L.HIDEALL"
+msgid "Hide all"
+msgstr "Smbunyi smua"
+
+msgctxt "L.SHOWALL"
+msgid "Show all"
+msgstr "Lihat semua"
+
+msgctxt "L.SCRIPTEDITOR"
+msgid "Script editor"
+msgstr "Editor skrip"
+
+msgctxt "L.FILE"
+msgid "File"
+msgstr "File"
+
+msgctxt "L.NEW"
+msgid "New"
+msgstr "Baru"
+
+msgctxt "L.OPEN"
+msgid "Open"
+msgstr "Buka"
+
+msgctxt "L.SAVE"
+msgid "Save"
+msgstr "Simpan"
+
+msgctxt "L.UNDO"
+msgid "Undo"
+msgstr "Urung"
+
+msgctxt "L.REDO"
+msgid "Redo"
+msgstr "Ulang"
+
+msgctxt "L.COMPARE"
+msgid "Compare"
+msgstr "Membandingkan"
+
+msgctxt "L.STATS"
+msgid "Stats"
+msgstr "Statistik"
+
+msgctxt "L.SCRIPTUSAGES"
+msgid "Usages"
+msgstr "Penggunaan"
+
+msgctxt "L.EDITTAB"
+msgid "Edit"
+msgstr "Ubah"
+
+msgctxt "L.COPYSCRIPT"
+msgid "Copy script"
+msgstr "Salin skrip"
+
+msgctxt "L.SEARCHSCRIPT"
+msgid "Search"
+msgstr "Cari"
+
+msgctxt "L.GOTOLINE"
+msgid "Go to line"
+msgstr "Pergi ke baris"
+
+msgctxt "L.GOTOLINE2"
+msgid "Go to line:"
+msgstr "Pergi ke baris:"
+
+msgctxt "L.INTERNALON"
+msgid "Int.sc is on"
+msgstr "Sk.int aktif"
+
+msgctxt "L.INTERNALOFF"
+msgid "Int.sc is off"
+msgstr "Sk.int nonaktif"
+
+msgctxt "L.INTERNALON_LONG"
+msgid "Internal scripting mode is enabled"
+msgstr "Mode skrip internal diaktifkan"
+
+msgctxt "L.INTERNALOFF_LONG"
+msgid "Internal scripting mode is disabled"
+msgstr "Mode skrip internal dinonaktifkan"
+
+msgctxt "L.INTERNALYESBARS"
+msgid "say(-1) int.sc"
+msgstr "Sk.int say(-1)"
+
+msgctxt "L.INTERNALNOBARS"
+msgid "Loadscript int.sc"
+msgstr "Sk.int Loadscript"
+
+msgctxt "L.VIEW"
+msgid "View"
+msgstr "Lihat"
+
+# PNY: Penyorotan
+msgctxt "L.SYNTAXHLOFF"
+msgid "Syntax HL: on"
+msgstr "PNY sintaksis: aktif"
+
+msgctxt "L.SYNTAXHLON"
+msgid "Syntax HL: off"
+msgstr "PNY sintaksis: nonaktif"
+
+msgctxt "L.TEXTSIZEN"
+msgid "Text size: N"
+msgstr "Ukuran teks: N"
+
+msgctxt "L.TEXTSIZEL"
+msgid "Text size: L"
+msgstr "Ukuran teks: B"
+
+msgctxt "L.INSERT"
+msgid "Insert"
+msgstr "Masukkan"
+
+msgctxt "L.HELP"
+msgid "Help"
+msgstr "Bantuan"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT"
+msgid "Load script required!"
+msgstr "Memuat skrip diperlukan!"
+
+msgctxt "L.INTSCRWARNING_NOLOADSCRIPT_EXPL"
+msgid "A script that loads this script was not detected. This type of internal script will probably not work as you might expect when it is not loaded via another script."
+msgstr "Skrip yang memuat skrip ini tidak terdeteksi. Jenis skrip internal ini mungkin tidak akan berfungsi seperti yang Anda harapkan saat tidak dimuat melalui skrip lain."
+
+msgctxt "L.INTSCRWARNING_BOXED"
+msgid "Direct script box/terminal reference!"
+msgstr "Kotak skrip langsung/referensi terminal!"
+
+msgctxt "L.INTSCRWARNING_BOXED_EXPL"
+msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
+msgstr "Ada terminal atau kotak skrip yang memuat skrip ini secara langsung. Mengaktifkan terminal atau kotak skrip itu mungkin tidak akan berfungsi seperti yang Anda harapkan; jenis skrip internal ini perlu dimuat melalui skrip pemuatan."
+
+msgctxt "L.INTSCRWARNING_NAME"
+msgid "Unsuitable script name!"
+msgstr "Nama skrip tidak cocok!"
+
+msgctxt "L.INTSCRWARNING_NAME_EXPL"
+msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
+msgstr "Nama skrip ini memiliki huruf kapital, spasi, tanda kurung atau koma. Skrip ini hanya dapat dimuat langsung dari terminal atau kotak skrip."
+
+msgctxt "L.COLUMN"
+msgid "Column: "
+msgstr "Kolom: "
+
+msgctxt "L.BTN_OK"
+msgid "OK"
+msgstr "OKE"
+
+msgctxt "L.BTN_CANCEL"
+msgid "Cancel"
+msgstr "Batal"
+
+msgctxt "L.BTN_YES"
+msgid "Yes"
+msgstr "Ya"
+
+msgctxt "L.BTN_NO"
+msgid "No"
+msgstr "Tidak"
+
+msgctxt "L.BTN_APPLY"
+msgid "Apply"
+msgstr "Terapkan"
+
+msgctxt "L.BTN_QUIT"
+msgid "Quit"
+msgstr "Keluar"
+
+msgctxt "L.BTN_DISCARD"
+msgid "Discard"
+msgstr "Buang"
+
+msgctxt "L.BTN_SAVE"
+msgid "Save"
+msgstr "Simpan"
+
+msgctxt "L.BTN_CLOSE"
+msgid "Close"
+msgstr "Tutup"
+
+msgctxt "L.BTN_LOAD"
+msgid "Load"
+msgstr "Muat"
+
+msgctxt "L.BTN_ADVANCED"
+msgid "Advanced"
+msgstr "Lanjutan"
+
+msgctxt "L.BTN_AUTODETECT"
+msgid "Detect"
+msgstr "Mendeteksi"
+
+#. choose path to VVVVVV.exe manually. I didn't want 'Manual' in English because it sounds like 'instruction manual', but translations may use some form of 'manual setup'. This button should come across like 'I know what I'm doing, I want to override automatic detection'
+msgctxt "L.BTN_MANUALLY"
+msgid "Override"
+msgstr "Secr. manual"
+
+msgctxt "L.BTN_RETRY"
+msgid "Retry"
+msgstr "Cob. ulng."
+
+msgctxt "L.COMPARINGTHESE"
+msgid "Comparing $1.vvvvvv to $2.vvvvvv"
+msgstr "Membandingkan $1.vvvvvv dengan $2.vvvvvv"
+
+msgctxt "L.COMPARINGTHESENEW"
+msgid "Comparing (unsaved level) to $1.vvvvvv"
+msgstr "Membandingkan (level yang belum disimpan) dengan $1.vvvvvv"
+
+msgctxt "L.RETURN"
+msgid "Return"
+msgstr "Kembali"
+
+msgctxt "L.CREATE"
+msgid "Create"
+msgstr "Membuat"
+
+msgctxt "L.GOTO"
+msgid "Go to"
+msgstr "Pergi ke"
+
+msgctxt "L.DELETE"
+msgid "Delete"
+msgstr "Hapus"
+
+msgctxt "L.RENAME"
+msgid "Rename"
+msgstr "Ubah nama"
+
+msgctxt "L.CHANGEDIRECTION"
+msgid "Change direction"
+msgstr "Ubah arah"
+
+msgctxt "L.TESTFROMHERE"
+msgid "Test from here"
+msgstr "Tes dari sini"
+
+msgctxt "L.FLIP"
+msgid "Flip"
+msgstr "Balik"
+
+msgctxt "L.CYCLETYPE"
+msgid "Change type"
+msgstr "Ubah jenis"
+
+msgctxt "L.GOTODESTINATION"
+msgid "Go to destination"
+msgstr "Pergi ke tujuan"
+
+msgctxt "L.GOTOENTRANCE"
+msgid "Go to entrance"
+msgstr "Pergi ke jln. masuk"
+
+msgctxt "L.CHANGECOLOR"
+msgid "Change color"
+msgstr "Ganti warna"
+
+msgctxt "L.EDITTEXT"
+msgid "Edit text"
+msgstr "Edit teks"
+
+msgctxt "L.COPYTEXT"
+msgid "Copy text"
+msgstr "Salin teks"
+
+msgctxt "L.EDITSCRIPT"
+msgid "Edit script"
+msgstr "Edit skrip"
+
+msgctxt "L.OTHERSCRIPT"
+msgid "Change script name"
+msgstr "Ubah nama skrip"
+
+msgctxt "L.PROPERTIES"
+msgid "Properties"
+msgstr "Properti"
+
+msgctxt "L.CHANGETOHOR"
+msgid "Change to horizontal"
+msgstr "Ubah ke horizontal"
+
+msgctxt "L.CHANGETOVER"
+msgid "Change to vertical"
+msgstr "Ubah ke vertikal"
+
+msgctxt "L.RESIZE"
+msgid "Move/Resize"
+msgstr "Pindahkan/Ubah Ukuran"
+
+msgctxt "L.CHANGEENTRANCE"
+msgid "Move entrance"
+msgstr "Pindahkan masuk"
+
+msgctxt "L.CHANGEEXIT"
+msgid "Move exit"
+msgstr "Pindahkan keluar"
+
+msgctxt "L.COPYENTRANCE"
+msgid "Copy entrance"
+msgstr "Salin masuk"
+
+msgctxt "L.LOCK"
+msgid "Lock"
+msgstr "Kunci"
+
+msgctxt "L.UNLOCK"
+msgid "Unlock"
+msgstr "Buka kunci"
+
+msgctxt "L.VEDOPTIONS"
+msgid "Ved options"
+msgstr "Opsi Ved"
+
+msgctxt "L.LEVELOPTIONS"
+msgid "Level options"
+msgstr "Opsi level"
+
+msgctxt "L.MAP"
+msgid "Map"
+msgstr "Peta"
+
+msgctxt "L.SCRIPTS"
+msgid "Scripts"
+msgstr "Skrip"
+
+msgctxt "L.SEARCH"
+msgid "Search"
+msgstr "Cari"
+
+msgctxt "L.SENDFEEDBACK"
+msgid "Send Feedback"
+msgstr "Kirim Umpan Balik"
+
+msgctxt "L.LEVELNOTEPAD"
+msgid "Level notepad"
+msgstr "Level cacatan"
+
+msgctxt "L.PLUGINS"
+msgid "Plugins"
+msgstr "Plugin"
+
+msgctxt "L.BACKB"
+msgid "Back <<"
+msgstr "Kembali <<"
+
+msgctxt "L.MOREB"
+msgid "More >>"
+msgstr "Lebih >>"
+
+msgctxt "L.AUTOMODE"
+msgid "Mode: auto"
+msgstr "Mode: oto"
+
+msgctxt "L.AUTO2MODE"
+msgid "Mode: multi"
+msgstr "Mode: multi"
+
+msgctxt "L.MANUALMODE"
+msgid "Mode: manual"
+msgstr "Mode: manual"
+
+msgctxt "L.ENEMYTYPE"
+msgid "Enemy type: $1"
+msgstr "Jenis musuhan: $1"
+
+msgctxt "L.PLATFORMBOUNDS"
+msgid "Platf. bounds"
+msgstr "Batas platf."
+
+msgctxt "L.WARPDIR"
+msgid "Warp dir: $1"
+msgstr "Arah warp: $1"
+
+msgctxt "L.ENEMYBOUNDS"
+msgid "Enemy bounds"
+msgstr "Batas musuhan"
+
+msgctxt "L.ROOMNAME"
+msgid "Roomname"
+msgstr "Nama ruangan"
+
+msgctxt "L.ROOMOPTIONS"
+msgid "Room options"
+msgstr "Opsi ruangan"
+
+msgctxt "L.ROTATE180"
+msgid "Rotate 180deg"
+msgstr "Putar 180der"
+
+msgctxt "L.ROTATE180UNI"
+msgid "Rotate 180°"
+msgstr "Putar 180°"
+
+msgctxt "L.HIDEBOUNDS"
+msgid "Hide bounds"
+msgstr "Sembunyikan batas"
+
+msgctxt "L.SHOWBOUNDS"
+msgid "Show bounds"
+msgstr "Menunjukkan batas"
+
+#. basically, platforms/enemies in/for this room
+msgctxt "L.ROOMPLATFORMS"
+msgid "Room platforms"
+msgstr "Ruangan platf."
+
+msgctxt "L.ROOMENEMIES"
+msgid "Room enemies"
+msgstr "Ruangan musuhan"
+
+msgctxt "L.OPTNAME"
+msgid "Name"
+msgstr "Nama"
+
+msgctxt "L.OPTBY"
+msgid "By"
+msgstr "Oleh"
+
+msgctxt "L.OPTWEBSITE"
+msgid "Website"
+msgstr "Website"
+
+#. If necessary, you can span multiple lines
+msgctxt "L.OPTDESC"
+msgid "Desc"
+msgstr "Desk"
+
+msgctxt "L.OPTSIZE"
+msgid "Size"
+msgstr "Ukuran"
+
+msgctxt "L.OPTMUSIC"
+msgid "Music"
+msgstr "Musik"
+
+msgctxt "L.CAPNONE"
+msgid "NONE"
+msgstr "TDK ADA"
+
+msgctxt "L.ENTERLONGOPTNAME"
+msgid "Level name:"
+msgstr "Nama level:"
+
+#. Used for level size: 20x20
+msgctxt "L.X"
+msgid "x"
+msgstr "x"
+
+msgctxt "L.SOLID"
+msgid "Solid"
+msgstr "Padat"
+
+msgctxt "L.NOTSOLID"
+msgid "Not solid"
+msgstr "Bukan padat"
+
+msgctxt "L.TSCOLOR"
+msgid "Color $1"
+msgstr "Warna $1"
+
+msgctxt "L.LEVELSLIST"
+msgid "Levels"
+msgstr "Level"
+
+msgctxt "L.LOADTHISLEVEL"
+msgid "Load this level: "
+msgstr "Muat level ini: "
+
+msgctxt "L.ENTERNAMESAVE"
+msgid "Enter name to save as: "
+msgstr "Masukkan nama untuk disimpan sebagai: "
+
+msgctxt "L.SEARCHFOR"
+msgid "Search for: "
+msgstr "Cari untuk: "
+
+msgctxt "L.VERSIONERROR"
+msgid "Unable to check version."
+msgstr "Tidak dapat memeriksa versi."
+
+msgctxt "L.VERSIONUPTODATE"
+msgid "Your version of Ved is up-to-date."
+msgstr "Versi Ved Anda mutakhir."
+
+msgctxt "L.VERSIONOLD"
+msgid "Update available! Latest version: $1"
+msgstr "Pembaruan tersedia! Versi terbaru: $1"
+
+msgctxt "L.VERSIONCHECKING"
+msgid "Checking for updates..."
+msgstr "Memeriksa pembaruan..."
+
+msgctxt "L.VERSIONDISABLED"
+msgid "Update check disabled"
+msgstr "Pemeriksa pembaruan dinonaktifkan"
+
+#. Check for updates now
+msgctxt "L.VERSIONCHECKNOW"
+msgid "Check now"
+msgstr "Cek skrg."
+
+msgctxt "L.SAVENOSUCCESS"
+msgid "Saving not successful! Error: "
+msgstr "Menyimpan tidak berhasil! Kesalahan: "
+
+msgctxt "L.INVALIDFILESIZE"
+msgid "Invalid file size."
+msgstr "Ukuran file tidak valid."
+
+msgctxt "L.EDIT"
+msgid "Edit"
+msgstr "Ubah"
+
+msgctxt "L.EDITWOBUMPING"
+msgid "Edit without bumping"
+msgstr "Edit tanpa menabrak"
+
+msgctxt "L.EDITWBUMPING"
+msgid "Edit and bump"
+msgstr "Edit dan bentrok"
+
+msgctxt "L.COPYNAME"
+msgid "Copy name"
+msgstr "Salin nama"
+
+msgctxt "L.COPYCONTENTS"
+msgid "Copy contents"
+msgstr "Salin konten"
+
+msgctxt "L.DUPLICATE"
+msgid "Duplicate"
+msgstr "Duplikat"
+
+msgctxt "L.NEWSCRIPTNAME"
+msgid "Name:"
+msgstr "Nama:"
+
+msgctxt "L.CREATENEWSCRIPT"
+msgid "Create new script"
+msgstr "Buat skrip baru"
+
+msgctxt "L.NEWNOTENAME"
+msgid "Name:"
+msgstr "Nama:"
+
+msgctxt "L.CREATENEWNOTE"
+msgid "Create new note"
+msgstr "Buat cacatan baru"
+
+msgctxt "L.ADDNEWBTN"
+msgid "[Add new]"
+msgstr "[Buat baru]"
+
+msgctxt "L.IMAGEERROR"
+msgid "[IMAGE ERROR]"
+msgstr "[KESALAHAN GAMBAR]"
+
+msgctxt "L.NEWNAME"
+msgid "New name:"
+msgstr "Nama baru:"
+
+msgctxt "L.RENAMENOTE"
+msgid "Rename note"
+msgstr "Ubah nama nota"
+
+msgctxt "L.RENAMESCRIPT"
+msgid "Rename script"
+msgstr "Ubah nama skrip"
+
+msgctxt "L.LINE"
+msgid "line "
+msgstr "baris "
+
+msgctxt "L.SAVEMAP"
+msgid "Save map"
+msgstr "Simpan peta"
+
+msgctxt "L.COPYROOMS"
+msgid "Copy room"
+msgstr "Salin ruang"
+
+msgctxt "L.SWAPROOMS"
+msgid "Swap rooms"
+msgstr "Tukar ruang"
+
+msgctxt "L.MAP_STYLE"
+msgid "Map style"
+msgstr "Jenis peta"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_FULL"
+msgid "Full"
+msgstr "Penuh"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_MINIMAP"
+msgid "Minimap"
+msgstr "Mini-peta"
+
+#. Max 12*2 characters
+msgctxt "L.MAP_STYLE_VTOOLS"
+msgid "VTools"
+msgstr "VTools"
+
+msgctxt "L.FLAGS"
+msgid "Flags"
+msgstr "Tanda"
+
+msgctxt "L.ROOM"
+msgid "room"
+msgstr "ruang"
+
+msgctxt "L.CONTENTFILLER"
+msgid "Content"
+msgstr "Konten"
+
+#. preferably same length as L.FLAGNOTUSED
+msgctxt "L.FLAGUSED"
+msgid "Used    "
+msgstr "Digunakn.    "
+
+msgctxt "L.FLAGNOTUSED"
+msgid "Not used"
+msgstr "Tdk digunakn."
+
+msgctxt "L.FLAGNONAME"
+msgid "No name"
+msgstr "Tdk ada nama"
+
+msgctxt "L.USEDOUTOFRANGEFLAGS"
+msgid "Used out of range flags:"
+msgstr "Digunakan di luar jangkauan tanda:"
+
+#. Settings to adapt Ved to how VVVVVV is installed/setup on this computer, like the location of the levels folder and selection of the executable for playtesting. Maybe "VVVVVV installation" or "VVVVVV configuration"
+msgctxt "L.VVVVVVSETUP"
+msgid "VVVVVV setup"
+msgstr "Pengaturan VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY"
+msgid "VVVVVV folder"
+msgstr "Folder VVVVVV"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORYEXPL"
+msgid ""
+"The default VVVVVV directory Ved expects is:\n"
+"$1\n"
+"\n"
+"This path should not be set to the \"levels\" directory."
+msgstr ""
+"Direktori VVVVVV default yang diharapkan Ved adalah:\n"
+"$1\n"
+"\n"
+"Jalur ini tidak boleh disetel ke direktori \"level\"."
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_NOTSET"
+msgid ""
+"You do not have a custom VVVVVV directory set.\n"
+"\n"
+msgstr ""
+"Anda tidak memiliki set direktori VVVVVV kustom.\n"
+"\n"
+
+msgctxt "L.CUSTOMVVVVVVDIRECTORY_SET"
+msgid ""
+"Your VVVVVV directory is set to a custom path:\n"
+"$1\n"
+"\n"
+msgstr ""
+"Direktori VVVVVV Anda disetel ke jalur kustom:\n"
+"$1\n"
+"\n"
+
+msgctxt "L.LANGUAGE"
+msgid "Language"
+msgstr "Bahasa"
+
+msgctxt "L.DIALOGANIMATIONS"
+msgid "Dialog animations"
+msgstr "Animasi dialog"
+
+msgctxt "L.FLIPSUBTOOLSCROLL"
+msgid "Flip tool scrolling direction"
+msgstr "Arah gulir alat balik"
+
+msgctxt "L.ADJACENTROOMLINES"
+msgid "Indicators of tiles in adjacent rooms"
+msgstr "Indikator ubin di ruang yang berdekatan"
+
+msgctxt "L.NEVERASKBEFOREQUIT"
+msgid "Never ask before quitting, even if there are unsaved changes"
+msgstr "Jangan pernah bertanya sebelum keluar, meskipun ada perubahan yang belum disimpan"
+
+msgctxt "L.COORDS0"
+msgid "Display coordinates as starting at 0 (as in internal scripting)"
+msgstr "Tampilkan koordinat sebagai mulai dari 0 (seperti dalam skrip internal)"
+
+msgctxt "L.ALLOWDEBUG"
+msgid "Enable debug mode"
+msgstr "Aktifkan mode debug"
+
+msgctxt "L.SHOWFPS"
+msgid "Show FPS counter"
+msgstr "Tampilkan penghitung FPS"
+
+msgctxt "L.CHECKFORUPDATES"
+msgid "Check for updates"
+msgstr "Periksa pembaruan"
+
+msgctxt "L.PAUSEDRAWUNFOCUSED"
+msgid "Do not render when the window is unfocused"
+msgstr "Jangan merender saat jendela tidak fokus"
+
+msgctxt "L.ENABLEOVERWRITEBACKUPS"
+msgid "Make backups of level files that are overwritten"
+msgstr "Buat cadangan file level yang ditimpa"
+
+msgctxt "L.AMOUNTOVERWRITEBACKUPS"
+msgid "Number of backups to keep per level"
+msgstr "Jumlah cadangan yang harus disimpan per level"
+
+msgctxt "L.SCALE"
+msgid "Scale"
+msgstr "Skala"
+
+msgctxt "L.LOADALLMETADATA"
+msgid "Load metadata (such as title, author and description) for all files in levels list"
+msgstr "Muat metadata (seperti judul, penulis, dan deskripsi) untuk semua file dalam daftar level"
+
+msgctxt "L.COLORED_TEXTBOXES"
+msgid "Use true textbox colors"
+msgstr "Gunakan warna kotak teks yang benar"
+
+msgctxt "L.MOUSESCROLLINGSPEED"
+msgid "Mouse scrolling speed"
+msgstr "Kecepatan gulir mouse"
+
+msgctxt "L.BUMPSCRIPTSBYDEFAULT"
+msgid "Bump scripts to the top of the list when editing them by default"
+msgstr "Membentrok skrip ke bagian atas daftar saat mengeditnya secara default"
+
+msgctxt "L.SCRIPTSPLIT"
+msgid "Split"
+msgstr "Pisahkan"
+
+msgctxt "L.SPLITSCRIPT"
+msgid "Split scripts"
+msgstr "Pisahkan skrip"
+
+msgctxt "L.COUNT"
+msgid "Count: "
+msgstr "Jumlah: "
+
+msgctxt "L.SMALLENTITYDATA"
+msgid "data"
+msgstr "data"
+
+#. Stats screen
+msgctxt "L.AMOUNTSCRIPTS"
+msgid "Scripts:"
+msgstr "Skrip:"
+
+#. Stats screen
+msgctxt "L.AMOUNTUSEDFLAGS"
+msgid "Flags:"
+msgstr "Tanda:"
+
+#. Stats screen
+msgctxt "L.AMOUNTENTITIES"
+msgid "Entities:"
+msgstr "Entitas:"
+
+#. Stats screen
+msgctxt "L.AMOUNTTRINKETS"
+msgid "Trinkets:"
+msgstr "Trinket:"
+
+#. Stats screen
+msgctxt "L.AMOUNTCREWMATES"
+msgid "Crewmates:"
+msgstr "Crewmate:"
+
+#. Stats screen
+msgctxt "L.AMOUNTINTERNALSCRIPTS"
+msgid "Internal scripts:"
+msgstr "Skrip internal:"
+
+#. Stats screen
+msgctxt "L.TILESETUSSAGE"
+msgid "Tileset usage"
+msgstr "Penggunaan tileset"
+
+#. Stats screen
+msgctxt "L.TILESETSONLYUSED"
+msgid "(only rooms having tiles are counted)"
+msgstr "(hanya ruang yang memiliki ubin yang dihitung)"
+
+#. Stats screen
+msgctxt "L.AMOUNTROOMSWITHNAMES"
+msgid "Rooms having a name:"
+msgstr "Ruang memiliki nama:"
+
+#. Stats screen
+msgctxt "L.PLACINGMODEUSAGE"
+msgid "Tile placing modes:"
+msgstr "Mode penempatan ubin:"
+
+#. Stats screen
+msgctxt "L.AMOUNTLEVELNOTES"
+msgid "Level notes:"
+msgstr "Cacatan level:"
+
+#. Stats screen
+msgctxt "L.AMOUNTFLAGNAMES"
+msgid "Flag names:"
+msgstr "Nama tanda:"
+
+#. Stats screen
+msgctxt "L.TILESUSAGE"
+msgid "Tiles usage"
+msgstr "Penggunaan ubin"
+
+#. Stats screen
+msgctxt "L.AMOUNTTILES"
+msgid "Tiles:"
+msgstr "Ubin:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSOLIDTILES"
+msgid "Solid tiles:"
+msgstr "Padat ubin:"
+
+#. Stats screen
+msgctxt "L.AMOUNTSPIKES"
+msgid "Spikes:"
+msgstr "Paku:"
+
+msgctxt "L.UNEXPECTEDSCRIPTLINE"
+msgid "Unexpected script line without script: $1"
+msgstr "Baris skrip tak terduga tanpa skrip: $1"
+
+msgctxt "L.DUPLICATESCRIPT"
+msgid "Script $1 is duplicate! Only one can be loaded."
+msgstr "Skrip $1 adalah duplikat! Hanya satu yang dapat dimuat."
+
+msgctxt "L.MAPWIDTHINVALID"
+msgid "Map width is invalid: $1"
+msgstr "Lebar peta tidak valid: $1"
+
+msgctxt "L.MAPHEIGHTINVALID"
+msgid "Map height is invalid: $1"
+msgstr "Panjang peta tidak valid: $1"
+
+msgctxt "L.LEVMUSICEMPTY"
+msgid "Level music is empty!"
+msgstr "Musik level kosong!"
+
+msgctxt "L.NOT400ROOMS"
+msgid "The number of entries in levelMetaData is not 400!"
+msgstr "Jumlah entri di levelMetaData bukan 400!"
+
+msgctxt "L.MOREERRORS"
+msgid "$1 more"
+msgstr "$1 lagi"
+
+msgctxt "L.DEBUGMODEON"
+msgid "Debug mode on"
+msgstr "Mode debug aktif"
+
+msgctxt "L.FPS"
+msgid "FPS"
+msgstr "FPS"
+
+msgctxt "L.STATE"
+msgid "State"
+msgstr "State/status"
+
+msgctxt "L.MOUSE"
+msgid "Mouse"
+msgstr "Mouse"
+
+msgctxt "L.BLUE"
+msgid "Blue"
+msgstr "Biru"
+
+msgctxt "L.RED"
+msgid "Red"
+msgstr "Merah"
+
+msgctxt "L.CYAN"
+msgid "Cyan"
+msgstr "Biru muda"
+
+msgctxt "L.PURPLE"
+msgid "Purple"
+msgstr "Ungu"
+
+msgctxt "L.YELLOW"
+msgid "Yellow"
+msgstr "Kuning"
+
+msgctxt "L.GREEN"
+msgid "Green"
+msgstr "Hijau"
+
+msgctxt "L.GRAY"
+msgid "Gray"
+msgstr "Abu-abu"
+
+msgctxt "L.PINK"
+msgid "Pink"
+msgstr "Pink"
+
+msgctxt "L.BROWN"
+msgid "Brown"
+msgstr "Cokelat"
+
+msgctxt "L.RAINBOWBG"
+msgid "Rainbow BG"
+msgstr "Pelangi LB"
+
+msgctxt "L.SYNTAXCOLORS"
+msgid "Syntax colors"
+msgstr "Warna sintaks"
+
+msgctxt "L.SYNTAXCOLORSETTINGSTITLE"
+msgid "Scripting syntax highlighting color settings"
+msgstr "Sintaks skrip menyoroti pengaturan warna"
+
+msgctxt "L.SYNTAXCOLOR_COMMAND"
+msgid "Command"
+msgstr "Memerintah"
+
+msgctxt "L.SYNTAXCOLOR_GENERIC"
+msgid "Generic"
+msgstr "Generik"
+
+msgctxt "L.SYNTAXCOLOR_SEPARATOR"
+msgid "Separator"
+msgstr "Pemisah"
+
+msgctxt "L.SYNTAXCOLOR_NUMBER"
+msgid "Number"
+msgstr "Nomor"
+
+msgctxt "L.SYNTAXCOLOR_TEXTBOX"
+msgid "Textbox"
+msgstr "Kotak teks"
+
+msgctxt "L.SYNTAXCOLOR_ERRORTEXT"
+msgid "Unrecognized command"
+msgstr "Perintah tidak dikenal"
+
+msgctxt "L.SYNTAXCOLOR_CURSOR"
+msgid "Cursor"
+msgstr "Kursor"
+
+msgctxt "L.SYNTAXCOLOR_FLAGNAME"
+msgid "Flag name"
+msgstr "Nama tanda"
+
+msgctxt "L.SYNTAXCOLOR_NEWFLAGNAME"
+msgid "New flag name"
+msgstr "Nama tanda baru"
+
+msgctxt "L.SYNTAXCOLOR_COMMENT"
+msgid "Comment"
+msgstr "Komen"
+
+msgctxt "L.SYNTAXCOLOR_WRONGLANG"
+msgid "Simplified command in int.sc mode or vice versa"
+msgstr "Perintah sederhana dalam mode sk.int atau sebaliknya"
+
+msgctxt "L.RESETCOLORS"
+msgid "Reset colors"
+msgstr "Setel ulang warna"
+
+msgctxt "L.STRINGNOTFOUND"
+msgid "\"$1\" was not found"
+msgstr "\"$1\" tidak ditemukan"
+
+#. L.MAL is concatenated with an error message
+msgctxt "L.MAL"
+msgid "The level file is malformed: "
+msgstr "File level salah format: "
+
+msgctxt "L.LOADSCRIPTMADE"
+msgid "Load script created"
+msgstr "Muat skrip dibuat"
+
+msgctxt "L.COPY"
+msgid "Copy"
+msgstr "Salin"
+
+msgctxt "L.CUSTOMSIZE"
+msgid "Custom brush size: $1x$2"
+msgstr "Ukuran kuas kustom: $1x$2"
+
+msgctxt "L.SELECTINGA"
+msgid "Selecting - click top left"
+msgstr "Memilih - klik kiri atas"
+
+msgctxt "L.SELECTINGB"
+msgid "Selecting: $1x$2"
+msgstr "Memilih: $1x$2"
+
+msgctxt "L.TILESETSRELOADED"
+msgid "Tilesets and sprites reloaded"
+msgstr "Tileset dan sprite dimuat ulang"
+
+msgctxt "L.BACKUPS"
+msgid "Backups"
+msgstr "Cadangan"
+
+msgctxt "L.BACKUPSOFLEVEL"
+msgid "Backups of level $1"
+msgstr "Cadangan level $1"
+
+#. List header
+msgctxt "L.LASTMODIFIEDTIME"
+msgid "Originally last modified"
+msgstr "Awalnya terakhir diubah"
+
+#. List header
+msgctxt "L.OVERWRITTENTIME"
+msgid "Overwritten"
+msgstr "Ditimpa"
+
+msgctxt "L.SAVEBACKUP"
+msgid "Save to VVVVVV folder"
+msgstr "Simpan ke folder VVVVVV"
+
+msgctxt "L.DATEFORMAT"
+msgid "Date format"
+msgstr "Format tanggal"
+
+msgctxt "L.TIMEFORMAT"
+msgid "Time format"
+msgstr "Format waktu"
+
+msgctxt "L.SAVEBACKUPNOBACKUP"
+msgid "Make sure to choose a unique name for this if you do not want to overwrite anything, as NO backup will be made in this case!"
+msgstr "Pastikan untuk memilih nama yang unik untuk ini jika Anda tidak ingin menimpa apa pun, karena TIDAK ADA cadangan yang akan dibuat dalam kasus ini!"
+
+msgctxt "L.AUTOSAVECRASHLOGS"
+msgid "Automatically save crash logs"
+msgstr "Secara otomatis menyimpan log kerusakan"
+
+msgctxt "L.MOREINFO"
+msgid "Latest info"
+msgstr "Info terbaru"
+
+msgctxt "L.COPYLINK"
+msgid "Copy link"
+msgstr "Salin tautan"
+
+msgctxt "L.SCRIPTDISPLAY"
+msgid "Show"
+msgstr "Tunjukkan"
+
+msgctxt "L.SCRIPTDISPLAY_USED"
+msgid "Used"
+msgstr "Digunakn."
+
+msgctxt "L.SCRIPTDISPLAY_UNUSED"
+msgid "Unused"
+msgstr "Tdk digunakn."
+
+msgctxt "L.RECENTLYOPENED"
+msgid "Recently opened levels"
+msgstr "Level yang baru dibuka"
+
+msgctxt "L.REMOVERECENT"
+msgid "Do you want to remove it from the list of recently opened levels?"
+msgstr "Apakah Anda ingin menghapusnya dari daftar level yang baru dibuka?"
+
+msgctxt "L.RESETCUSTOMBRUSH"
+msgid "(Right click to set new size)"
+msgstr "(Klik kanan untuk mengatur ukuran baru)"
+
+msgctxt "L.DISPLAYSETTINGS"
+msgid "Display/Scale"
+msgstr "Tampilan/Skala"
+
+msgctxt "L.DISPLAYSETTINGSTITLE"
+msgid "Display/Scale settings"
+msgstr "Pengaturan Tampilan/Skala"
+
+msgctxt "L.SMALLERSCREEN"
+msgid "Smaller window width (800px wide instead of 896px)"
+msgstr "Lebar jendela lebih kecil (lebar 800 piksel, bukan 896 piksel)"
+
+msgctxt "L.FORCESCALE"
+msgid "Force scale settings"
+msgstr "Pengaturan skala paksa"
+
+msgctxt "L.SCALENOFIT"
+msgid "The current scale settings make the window too large to fit."
+msgstr "Pengaturan skala saat ini membuat jendela terlalu besar untuk muat."
+
+msgctxt "L.SCALENONUM"
+msgid "The current scale settings are invalid."
+msgstr "Pengaturan skala saat ini tidak valid."
+
+msgctxt "L.MONITORSIZE"
+msgid "$1x$2 monitor"
+msgstr "$1x$2 monitor"
+
+msgctxt "L.VEDRES"
+msgid "Ved resolution: $1x$2"
+msgstr "Resolusi Ved: $1x$2"
+
+msgctxt "L.NONINTSCALE"
+msgid "Non-integer scaling"
+msgstr "Penskalaan non-integer"
+
+msgctxt "L.USEFONTPNG"
+msgid "Use font.png from VVVVVV graphics folder as font"
+msgstr "Gunakan font.png dari folder grafis VVVVVV sebagai font"
+
+msgctxt "L.USELEVELFONTPNG"
+msgid "Use per-level custom font.png as font"
+msgstr "Gunakan font kustom per level.png sebagai font"
+
+msgctxt "L.REQUIRESHIGHERLOVE"
+msgid " (requires LÖVE $1 or higher)"
+msgstr " (membutuhkan LÖVE $1 atau lebih tinggi)"
+
+msgctxt "L.FPSLIMIT"
+msgid "FPS limit"
+msgstr "Batas FPS"
+
+#. Map export size
+msgctxt "L.MAPRESOLUTION"
+msgid "Resolution"
+msgstr "Resolusi"
+
+#. $1x$2 is resolution, max 640x480
+msgctxt "L.MAPRES_ASSHOWN"
+msgid "As shown (max 640x480)"
+msgstr "Seprti yg ditunjukkn (maks 640x480)"
+
+#. Example: 50% (160x120 per room)
+msgctxt "L.MAPRES_PERCENT"
+msgid "$1% ($2x$3 per room)"
+msgstr "$1% ($2x$3 per ruang)"
+
+#. Example: 1:8 (40x30 per room)
+msgctxt "L.MAPRES_RATIO"
+msgid "$1:$2 ($3x$4 per room)"
+msgstr "$1:$2 ($3x$4 per ruang)"
+
+msgctxt "L.TOPLEFT"
+msgid "Top left"
+msgstr "Kiri atas"
+
+msgctxt "L.WIDTHHEIGHT"
+msgid "Width & height"
+msgstr "Panjang & lebar"
+
+msgctxt "L.BOTTOMRIGHT"
+msgid "Bottom right"
+msgstr "Kanan bawah"
+
+msgctxt "L.RENDERERINFO"
+msgid "Renderer information:"
+msgstr "Informasi penyaji:"
+
+msgctxt "L.MAPINCOMPLETE"
+msgid "The map is not ready yet (at the time you pressed Save), please try again when it is ready."
+msgstr "Peta belum siap (saat Anda menekan Simpan), coba lagi jika sudah siap."
+
+msgctxt "L.KEEPDIALOGOPEN"
+msgid "Keep dialog open"
+msgstr "Biarkan dialog tetap terbuka"
+
+msgctxt "L.TRANSPARENTMAPBG"
+msgid "Transparent background"
+msgstr "Latar belakang transparan"
+
+msgctxt "L.MAPEXPORTERROR"
+msgid "Error while creating map."
+msgstr "Kesalahan saat membuat peta."
+
+#. Verb, view image
+msgctxt "L.VIEWIMAGE"
+msgid "View"
+msgstr "Lihat"
+
+msgctxt "L.INVALIDLINENUMBER"
+msgid "Please enter a valid line number."
+msgstr "Harap masukkan nomor baris yang valid."
+
+#. Open levels directory/folder in Explorer, Finder or another system file manager. I went for making it fit on one line in the button, but this can be near impossible in another language, so feel free to make it longer to use two lines.
+msgctxt "L.OPENLEVELSFOLDER"
+msgid "Open lvl dir"
+msgstr "Buka dir lvl"
+
+msgctxt "L.MOVEENTITY"
+msgid "Move"
+msgstr "Pindahkan"
+
+msgctxt "L.GOTOROOM"
+msgid "Go to room"
+msgstr "Pergi ke ruang"
+
+msgctxt "L.ESCTOCANCEL"
+msgid "[Press ESC to cancel]"
+msgstr "[Tekan ESC untuk membatalkan]"
+
+msgctxt "L.INVALIDFILENAME_WIN"
+msgid ""
+"Windows doesn't allow the following characters in filenames:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| being a vertical bar)"
+msgstr ""
+"Windows tidak mengizinkan karakter berikut dalam nama file:\n"
+"\n"
+": * ? \" < > |\n"
+"\n"
+"(| menjadi bilah vertikal)"
+
+msgctxt "L.INVALIDFILENAME_MAC"
+msgid "macOS doesn't allow the : character in filenames."
+msgstr "macOS tidak mengizinkan karakter : dalam nama file."
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_CTRL"
+msgid "CTRL"
+msgstr "CTRL"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_SHIFT"
+msgid "SHIFT"
+msgstr "SHIFT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ALT"
+msgid "ALT"
+msgstr "ALT"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_ESC"
+msgid "ESC"
+msgstr "ESC"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_TAB"
+msgid "TAB"
+msgstr "TAB"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_HOME"
+msgid "HOME"
+msgstr "HOME"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_END"
+msgid "END"
+msgstr "END"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_INSERT"
+msgid "INS"
+msgstr "INS"
+
+#. Keyboard key. Please use CAPITAL LETTERS ONLY
+msgctxt "L.TINY_DEL"
+msgid "DEL"
+msgstr "DEL"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_SCRIPTS"
+msgid "Scripts [$1]"
+msgstr "Skrip [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_ROOMS"
+msgid "Rooms [$1]"
+msgstr "Ruang [$1]"
+
+#. Header for search results
+msgctxt "L.SEARCHRESULTS_NOTES"
+msgid "Notes [$1]"
+msgstr "Cacatan [$1]"
+
+#. If this is hard to translate, try "resources" or just raw "assets". Assets are files like graphics (tiles.png, sprites.png, etc), music or sound effects
+msgctxt "L.ASSETS"
+msgid "Assets"
+msgstr "Sumber"
+
+msgctxt "L.MUSICPLAYERROR"
+msgid "Can not play this song. It may not exist or be of an unsupported type."
+msgstr "Tidak dapat memutar lagu ini. Itu mungkin tidak ada atau dari jenis yang tidak didukung."
+
+msgctxt "L.SOUNDPLAYERROR"
+msgid "Can not play this sound. It may not exist or be of an unsupported type."
+msgstr "Tidak dapat memutar suara ini. Itu mungkin tidak ada atau dari jenis yang tidak didukung."
+
+msgctxt "L.MUSICLOADERROR"
+msgid "Can not load $1: "
+msgstr "Tidak dapat memuat $1: "
+
+msgctxt "L.MUSICLOADERROR_TOOSMALL"
+msgid "The music file is too small to be valid."
+msgstr "File musik terlalu kecil untuk valid."
+
+msgctxt "L.MUSICEXISTSYES"
+msgid "Exists"
+msgstr "Ada"
+
+msgctxt "L.MUSICEXISTSNO"
+msgid "Does not exist"
+msgstr "Tidak ada"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_NO"
+msgid "Does not exist - click to create"
+msgstr "Tidak ada - klik untuk membuat"
+
+msgctxt "L.ASSETS_FOLDER_EXISTS_YES"
+msgid "Exists - click to open"
+msgstr "Ada - klik untuk membuka"
+
+msgctxt "L.NO_ASSETS_SUBFOLDER"
+msgid "No \"$1\" folder"
+msgstr "Tidak ada folder \"$1\""
+
+msgctxt "L.LOAD"
+msgid "Load"
+msgstr "Muat"
+
+msgctxt "L.RELOAD"
+msgid "Reload"
+msgstr "Muat ulang"
+
+msgctxt "L.UNLOAD"
+msgid "Unload"
+msgstr "Bongkarkan"
+
+msgctxt "L.MUSICEDITOR"
+msgid "Music editor"
+msgstr "Editor musik"
+
+msgctxt "L.LOADMUSICNAME"
+msgid "Load .vvv"
+msgstr "Muat .vvv"
+
+msgctxt "L.SAVEMUSICNAME"
+msgid "Save .vvv"
+msgstr "Simpan .vvv"
+
+msgctxt "L.INSERTSONG"
+msgid "Insert song at track $1"
+msgstr "Sisipkan lagu di trek $1"
+
+msgctxt "L.SUREDELETESONG"
+msgid "Are you sure you want to remove song $1?"
+msgstr "Anda yakin ingin menghapus lagu $1?"
+
+msgctxt "L.SONGOPENFAIL"
+msgid "Unable to open $1, song not replaced."
+msgstr "Tidak dapat membuka $1, lagu tidak diganti."
+
+msgctxt "L.SONGREPLACEFAIL"
+msgid "Something went wrong while replacing the song."
+msgstr "Terjadi masalah saat mengganti lagu."
+
+msgctxt "L.BYTES"
+msgid "$1 B"
+msgstr "$1 B"
+
+msgctxt "L.KILOBYTES"
+msgid "$1 kB"
+msgstr "$1 kB"
+
+msgctxt "L.MEGABYTES"
+msgid "$1 MB"
+msgstr "$1 MB"
+
+msgctxt "L.GIGABYTES"
+msgid "$1 GB"
+msgstr "$1 GB"
+
+msgctxt "L.TERABYTES"
+msgid "$1 TB"
+msgstr "$1 TB"
+
+#. The decimal separator for your language (so might be a comma if you use 1,5 instead of 1.5)
+msgctxt "L.DECIMAL_SEP"
+msgid "."
+msgstr ","
+
+msgctxt "L.CANNOTUSENEWLINES"
+msgid "You cannot use the \"$1\" character in script names!"
+msgstr "Anda tidak dapat menggunakan karakter \"$1\" dalam nama skrip!"
+
+msgctxt "L.MUSICTITLE"
+msgid "Title: "
+msgstr "Judul: "
+
+msgctxt "L.MUSICARTIST"
+msgid "Artist: "
+msgstr "Artis: "
+
+msgctxt "L.MUSICFILENAME"
+msgid "Filename: "
+msgstr "Nama file: "
+
+msgctxt "L.MUSICNOTES"
+msgid "Notes:"
+msgstr "Nota:"
+
+msgctxt "L.SONGMETADATA"
+msgid "Metadata for song $1"
+msgstr "Metadata untuk lagu $1"
+
+msgctxt "L.MUSICFILEMETADATA"
+msgid "File metadata"
+msgstr "Metadata file"
+
+#. Followed by date and time
+msgctxt "L.MUSICEXPORTEDON"
+msgid "Exported: "
+msgstr "Diekspor: "
+
+msgctxt "L.SAVEMETADATA"
+msgid "Save metadata"
+msgstr "Simpan metadata"
+
+msgctxt "L.SOUNDS"
+msgid "Sounds"
+msgstr "Suara"
+
+msgctxt "L.GRAPHICS"
+msgid "Graphics"
+msgstr "Grafis"
+
+msgctxt "L.FILEOPENERNAME"
+msgid "Name: "
+msgstr "Nama: "
+
+msgctxt "L.PATHINVALID"
+msgid "The path is invalid."
+msgstr "Jalannya tidak valid."
+
+#. like C: or F: on Windows
+msgctxt "L.DRIVES"
+msgid "Drives"
+msgstr "Drive"
+
+#. "*.txt" for example
+msgctxt "L.DOFILTER"
+msgid "Only show *$1"
+msgstr "Hanya tampilkan *$1"
+
+msgctxt "L.DOFILTERDIR"
+msgid "Only show directories"
+msgstr "Hanya tampilkan direktori"
+
+msgctxt "L.FILEDIALOGLUV"
+msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
+msgstr "Maaf, sistem operasi Anda tidak dikenali, sehingga dialog file tidak berfungsi."
+
+msgctxt "L.RESET"
+msgid "Reset"
+msgstr "Setel ulang"
+
+#. verb
+msgctxt "L.CHANGEVERB"
+msgid "Change"
+msgstr "Ubah"
+
+msgctxt "L.LOADIMAGE"
+msgid "Load image"
+msgstr "Muat gambar"
+
+msgctxt "L.GRID"
+msgid "Grid"
+msgstr "Kisi-kisi"
+
+msgctxt "L.NOTALPHAONLY"
+msgid "RGB"
+msgstr "RGB"
+
+msgctxt "L.UNSAVED_LEVEL_ASSETS_FOLDER"
+msgid "The level needs to be saved before it can use custom assets."
+msgstr "Level harus disimpan sebelum dapat menggunakan aset kustom."
+
+#. $1: path
+msgctxt "L.CREATE_ASSETS_FOLDER"
+msgid ""
+"Would you like to create a custom assets folder for this level?\n"
+"\n"
+"$1"
+msgstr ""
+"Apakah Anda ingin membuat folder aset kustom untuk level ini?\n"
+"\n"
+"$1"
+
+msgctxt "L.CREATE_VVVVVV_FOLDER"
+msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
+msgstr "Sepertinya folder VVVVVV tidak ada. Apakah Anda ingin membuatnya?"
+
+msgctxt "L.CREATE_LEVELS_FOLDER"
+msgid "It seems like the levels folder doesn't exist. Would you like to create it?"
+msgstr "Sepertinya folder level tidak ada. Apakah Anda ingin membuatnya?"
+
+msgctxt "L.CREATE_FOLDER_FAIL"
+msgid ""
+"Unable to create folder.\n"
+"\n"
+"$1"
+msgstr ""
+"Tidak dapat membuat folder.\n"
+"\n"
+"$1"
+
+msgctxt "L.ASSETS_FOLDER_FOR_LEVEL"
+msgid "Assets folder for $1"
+msgstr "Folder aset untuk $1"
+
+msgctxt "L.OPAQUEROOMNAMEBACKGROUND"
+msgid "Make the black roomname backgrounds opaque"
+msgstr "Jadikan latar belakang nama ruang hitam buram"
+
+msgctxt "L.PLATVCHANGE_TITLE"
+msgid "Change platform speed"
+msgstr "Ubah kecepatan platform"
+
+msgctxt "L.PLATVCHANGE_MSG"
+msgid "Speed:"
+msgstr "Kecepatan:"
+
+msgctxt "L.PLATVCHANGE_INVALID"
+msgid "You have to type in a number."
+msgstr "Anda harus mengetikkan angka."
+
+msgctxt "L.RENAMESCRIPTREFERENCES"
+msgid "Rename references"
+msgstr "Ganti nama referensi"
+
+msgctxt "L.PLATFORMSPEEDSLIDER"
+msgid "Spd.:"
+msgstr "Kcpt.:"
+
+msgctxt "L.TRINKETS"
+msgid "Trinkets"
+msgstr "Trinket"
+
+#. "Give a list of all trinkets", on a button. Alternatively: "Find all trinkets".
+msgctxt "L.LISTALLTRINKETS"
+msgid "List all trinkets"
+msgstr "Daftar semua trinket"
+
+msgctxt "L.LISTOFALLTRINKETS"
+msgid "List of all trinkets"
+msgstr "Daftar untuk semua trinket"
+
+msgctxt "L.NOTRINKETSINLEVEL"
+msgid "There are no trinkets in this level."
+msgstr "Tidak ada trinket di level ini."
+
+msgctxt "L.CREWMATES"
+msgid "Crewmates"
+msgstr "Crewmate"
+
+#. "Give a list of all rescuable crewmates", on a button. Alternatively: "Find all crewmates".
+msgctxt "L.LISTALLCREWMATES"
+msgid "List all crewmates"
+msgstr "Daftar semua crewmate"
+
+msgctxt "L.LISTOFALLCREWMATES"
+msgid "List of all rescuable crewmates"
+msgstr "Daftar untuk semua crewmate yg bisa diselamatkan"
+
+msgctxt "L.NOCREWMATESINLEVEL"
+msgid "There are no rescuable crewmates in this level."
+msgstr "Tidak ada crewmate yang bisa diselamatkan di level ini."
+
+#. In the map. Move all rooms in the entire level in any direction
+msgctxt "L.SHIFTROOMS"
+msgid "Shift rooms"
+msgstr "Pergeseran ruang"
+
+msgctxt "L.FRAMESTOSECONDS"
+msgid "$1 = $2 sec"
+msgstr "$1 = $2 dtk."
+
+msgctxt "L.ROOMNUM"
+msgid "Room $1"
+msgstr "Ruang $1"
+
+msgctxt "L.SOUNDNUM"
+msgid "Sound $1"
+msgstr "Suara $1"
+
+msgctxt "L.TRACKNUM"
+msgid "Track $1"
+msgstr "Trek $1"
+
+msgctxt "L.STOPSMUSIC"
+msgid "Stops music"
+msgstr "Menghentikan musik"
+
+msgctxt "L.PLAYSOUND"
+msgid "Play sound"
+msgstr "Putar suara"
+
+msgctxt "L.EDITSCRIPTWOBUMPING"
+msgid "Edit script without bumping"
+msgstr "Edit skrip tanpa menabrak"
+
+msgctxt "L.EDITSCRIPTWBUMPING"
+msgid "Edit script and bump"
+msgstr "Edit skrip dan bentrok"
+
+msgctxt "L.CLICKONTHING"
+msgid "Click on $1"
+msgstr "Klik $1"
+
+#. follows after "Click on Load". You can also drag and drop a file onto the window, like websites sometimes do when uploading
+msgctxt "L.ORDRAGDROP"
+msgid "or drag and drop onto here"
+msgstr "atau seret dan lepas ke sini"
+
+msgctxt "L.MORETHANONESTARTPOINT"
+msgid "There is more than one start point in this level!"
+msgstr "Ada lebih dari satu titik awal di level ini!"
+
+msgctxt "L.STARTPOINTNOTFOUND"
+msgid "There is no start point!"
+msgstr "Tidak ada titik awal!"
+
+msgctxt "L.MAPBIGGERTHANSIZELIMIT"
+msgid "Map size $1 by $2 is bigger than $3 by $4!"
+msgstr "Ukuran peta $1x$2 lebih besar dari $3x$4!"
+
+msgctxt "L.BTNOVERRIDE"
+msgid "Override"
+msgstr "Mengesampingkn."
+
+#. What edition of VVVVVV is this level made for? Standard VVVVVV? The Community Edition?
+msgctxt "L.TARGETPLATFORM"
+msgid "Target platform"
+msgstr "Platform sasaran"
+
+msgctxt "L.PLATFORM_V"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.TIMETRIALS"
+msgid "Time trials"
+msgstr "Percobaan waktu"
+
+msgctxt "L.TIMETRIALTRINKETS"
+msgid "Trinket count"
+msgstr "Jumlah trinket"
+
+msgctxt "L.TIMETRIALTIME"
+msgid "Par time"
+msgstr "Waktu par"
+
+msgctxt "L.SUREDELETETRIAL"
+msgid "Are you sure you want to delete the time trial \"$1\"?"
+msgstr "Yakin ingin menghapus uji coba waktu \"$1\"?"
+
+msgctxt "L.CUT"
+msgid "Cut"
+msgstr "Potong"
+
+msgctxt "L.PASTE"
+msgid "Paste"
+msgstr "Tempel"
+
+msgctxt "L.SELECTWORD"
+msgid "Select word"
+msgstr "Pilih kata"
+
+msgctxt "L.SELECTLINE"
+msgid "Select line"
+msgstr "Pilih baris"
+
+msgctxt "L.SELECTALL"
+msgid "Select all"
+msgstr "Pilih semua"
+
+msgctxt "L.INSERTRAWHEX"
+msgid "Insert Unicode character"
+msgstr "Masukkan karakter Unicode"
+
+msgctxt "L.MOVELINEUP"
+msgid "Move line upwards"
+msgstr "Pindahkan garis ke atas"
+
+msgctxt "L.MOVELINEDOWN"
+msgid "Move line downwards"
+msgstr "Pindahkan garis ke bawah"
+
+msgctxt "L.DUPLICATELINE"
+msgid "Duplicate line"
+msgstr "Duplikat baris"
+
+msgctxt "L.WHEREPLACEPLAYER"
+msgid "Where do you want to start?"
+msgstr "Di mana Anda ingin memulai?"
+
+msgctxt "L.YOUAREPLAYTESTING"
+msgid "You are currently playtesting"
+msgstr "Anda sedang playtesting"
+
+#. application (example: Select your VVVVVV executable)
+msgctxt "L.LOCATEVVVVVV"
+msgid "Select your $1 executable"
+msgstr "Pilih $1 Anda yang dapat dieksekusi"
+
+msgctxt "L.ALREADYPLAYTESTING"
+msgid "You're already playtesting!"
+msgstr "Anda sudah playtesting!"
+
+msgctxt "L.PLAYTESTINGFAILED"
+msgid ""
+"Something went wrong when opening VVVVVV:\n"
+"$1\n"
+"\n"
+"If you need to change the VVVVVV executable that's used for playtesting, hold Shift while pressing the playtest button."
+msgstr ""
+"Terjadi kesalahan saat membuka VVVVVV:\n"
+"$1\n"
+"\n"
+"Jika Anda perlu mengubah executable VVVVVV yang digunakan untuk playtesting, tahan Shift sambil menekan tombol playtest."
+
+#. for example, code 1, indicating failure
+msgctxt "L.VVVVVV_EXITCODE_FAILURE"
+msgid "VVVVVV exited with code $1"
+msgstr "VVVVVV keluar dengan kode $1"
+
+msgctxt "L.VVVVVV_22_OR_OLDER"
+msgid "It looks like you are using VVVVVV 2.2 or older. Please upgrade to VVVVVV 2.3 or later."
+msgstr "Sepertinya Anda menggunakan VVVVVV 2.2 atau lebih lama. Silakan tingkatkan ke VVVVVV 2.3 atau lebih baru."
+
+msgctxt "L.VVVVVV_SOMETHING_HAPPENED"
+msgid "Something seems to have gone wrong with VVVVVV."
+msgstr "Sepertinya ada yang salah dengan VVVVVV."
+
+#. you cannot playtest on <operating system>
+msgctxt "L.PLAYTESTUNAVAILABLE"
+msgid "Sorry, you cannot playtest on $1."
+msgstr "Maaf, Anda tidak dapat bermain dengan $1."
+
+msgctxt "L.VVVVVVFILE"
+msgid "Please select the file named '$1'."
+msgstr "Silakan pilih file bernama '$1'."
+
+msgctxt "L.PLAYTESTINGOPTIONS"
+msgid "Playtesting"
+msgstr "Playtesting"
+
+#. $1: VVVVVV 2.3, $2: VVVVVV
+msgctxt "L.PLAYTESTING_EXECUTABLE_NOTSET"
+msgid ""
+"You did not yet set a $1 executable to use for playtesting.\n"
+"Ved will ask for it when playtesting a $2 level for the first time."
+msgstr ""
+"Anda belum menetapkan $1 yang dapat dieksekusi untuk digunakan untuk pengujian bermain.\n"
+"Ved akan memintanya saat menguji level $2 untuk pertama kalinya."
+
+#. $1: VVVVVV 2.3
+msgctxt "L.PLAYTESTING_EXECUTABLE_SET"
+msgid ""
+"The $1 executable to use for playtesting is set to:\n"
+"$2"
+msgstr ""
+"$1 yang dapat dieksekusi untuk digunakan untuk pengujian bermain disetel ke:\n"
+"$2"
+
+msgctxt "L.FIND_V_EXE_ERROR"
+msgid "Sorry, something went wrong trying to find VVVVVV. Try setting the path to the executable manually."
+msgstr "Maaf, terjadi kesalahan saat mencoba menemukan VVVVVV. Coba atur jalur ke yang dapat dieksekusi secara manual."
+
+msgctxt "L.FIND_V_EXE_FOUNDERROR"
+msgid "Found something that looks like VVVVVV, but couldn't get a useable path to its executable. Make sure you aren't using an old version of the game (2.3 or newer is required) or try setting the path to the executable manually."
+msgstr "Menemukan sesuatu yang terlihat seperti VVVVVV, tetapi tidak bisa mendapatkan jalur yang bisa digunakan untuk dieksekusi. Pastikan Anda tidak menggunakan versi game yang lama (diperlukan 2.3 atau yang lebih baru) atau coba atur jalur ke yang dapat dieksekusi secara manual."
+
+msgctxt "L.FIND_V_EXE_NOTFOUND"
+msgid "It looks like VVVVVV is not running. Make sure you have VVVVVV running and try again."
+msgstr "Sepertinya VVVVVV tidak berjalan. Pastikan Anda menjalankan VVVVVV dan coba lagi."
+
+msgctxt "L.FIND_V_EXE_MULTI"
+msgid "Found multiple different instances of VVVVVV running. Make sure you have only one version of the game open and try again."
+msgstr "Ditemukan beberapa contoh berbeda dari VVVVVV berjalan. Pastikan Anda hanya memiliki satu versi permainan yang terbuka dan coba lagi."
+
+msgctxt "L.FIND_V_EXE_EXPLANATION"
+msgid ""
+"Ved needs VVVVVV for playtesting, and the path to VVVVVV needs to be set first.\n"
+"\n"
+"\n"
+"To autodetect VVVVVV, simply start the game if it isn't already running and press \"Detect\"."
+msgstr ""
+"Ved membutuhkan VVVVVV untuk playtesting, dan jalur ke VVVVVV perlu diatur terlebih dahulu.\n"
+"\n"
+"\n"
+"Untuk mendeteksi VVVVVV secara otomatis, cukup mulai permainan jika belum berjalan dan tekan \"Deteksikan\"."
+
+msgctxt "L.VCE_REMOVED"
+msgid "VVVVVV: Community Edition is no longer being maintained, and support for VVVVVV-CE levels has been removed from Ved. This level is treated like a regular VVVVVV level. For more information, see https://vsix.dev/vce/status/"
+msgstr "VVVVVV: Community Edition tidak lagi dipertahankan, dan dukungan untuk level VVVVVV-CE telah dihapus dari Ved. Tingkat ini diperlakukan seperti tingkat VVVVVV biasa. Untuk informasi lebih lanjut, lihat https://vsix.dev/vce/status/"
+
+#. Choose the version of VVVVVV you are using (for example, you CAN set it to 2.3+ if you have VVVVVV 2.4, but not 2.4+ if you have 2.3)
+msgctxt "L.VVVVVV_VERSION"
+msgid "VVVVVV version"
+msgstr "Versi VVVVVV"
+
+msgctxt "L.VVVVVV_VERSION_AUTO"
+msgid "Auto"
+msgstr "Oto"
+
+msgctxt "L.VVVVVV_VERSION_23PLUS"
+msgid "2.3+"
+msgstr "2.3+"
+
+msgctxt "L.VVVVVV_VERSION_24PLUS"
+msgid "2.4+"
+msgstr "2.4+"
+
+msgctxt "L.ALL_PLUGINS"
+msgid "All plugins"
+msgstr "Semua plugin"
+
+msgctxt "L.ALL_PLUGINS_MOREINFO"
+msgid "Please go to ¤https://tolp.nl/ved/plugins.php¤this page¤ for more information about plugins.\\nLCl"
+msgstr "Silakan buka ¤https://tolp.nl/ved/plugins.php¤halaman ini¤ untuk informasi lebih lanjut tentang plugin.\\nLCl"
+
+msgctxt "L.ALL_PLUGINS_FOLDER"
+msgid "Your plugins folder is:"
+msgstr "Folder plugin Anda adalah:"
+
+msgctxt "L.ALL_PLUGINS_NOPLUGINS"
+msgid "You do not have any plugins yet."
+msgstr "Anda belum memiliki plugin."
+
+msgctxt "L.PLUGIN_NOT_SUPPORTED"
+msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
+msgstr "[Plugin ini tidak didukung karena memerlukan Ved $1 atau lebih tinggi!]\\r"
+
+#. by Person, version 1.0.0
+msgctxt "L.PLUGIN_AUTHOR_VERSION"
+msgid "by $1, version $2"
+msgstr "oleh $1, versi $2"
+
+msgctxt "L.CREATE_LOAD_SCRIPT"
+msgid "Create load script"
+msgstr "Buat skrip pemuatan"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_NO"
+msgid "No"
+msgstr "Tidak"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_RUNONCE"
+msgid "Run once"
+msgstr "Jalankan 1x"
+
+#. These three are limited to 12*2 characters. Instead of "Repeating" you may also say something like "Basic" or "Simple" as long as it's consistent with the explanations below. "once" may be "1x"
+msgctxt "L.CREATE_LOAD_SCRIPT_REPEATING"
+msgid "Repeating"
+msgstr "Mengulang"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_NO"
+msgid "Don't create load script"
+msgstr "Jangan buat skrip pemuatan"
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_NO"
+msgid "This terminal will directly point to the script."
+msgstr "Terminal ini akan langsung menunjuk ke skrip."
+
+#. Explanation for "No"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_NO"
+msgid "This script box will directly point to the script."
+msgstr "Kotak skrip ini akan langsung menunjuk ke skrip."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_RUNONCE"
+msgid "Create load script to run once"
+msgstr "Buat skrip pemuatan untuk dijalankan sekali"
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_RUNONCE"
+msgid "This terminal will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Terminal ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli hanya sekali dalam pemutaran. Ved akan memilih tanda yang tidak digunakan."
+
+#. Explanation for "Run once"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_RUNONCE"
+msgid "This script box will point to a new load script, which loads the real script only once in a playthrough. Ved will choose an unused flag."
+msgstr "Kotak skrip ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli hanya sekali dalam pemutaran. Ved akan memilih tanda yang tidak digunakan."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_TITLE_REPEATING"
+msgid "Create repeating load script"
+msgstr "Buat skrip pemuatan berulang"
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_T_REPEATING"
+msgid "This terminal will point to a new load script, which unconditionally loads the real script."
+msgstr "Terminal ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli tanpa syarat."
+
+#. Explanation for "Repeating"
+msgctxt "L.CREATE_LOAD_SCRIPT_EXPL_S_REPEATING"
+msgid "This script box will point to a new load script, which unconditionally loads the real script."
+msgstr "Kotak skrip ini akan menunjuk ke skrip pemuatan baru, yang memuat skrip asli tanpa syarat."
+
+msgctxt "L.CUSTOM_SIZED_BRUSH"
+msgid "Custom brush"
+msgstr "Kuas kustom"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_BRUSH"
+msgid "Brush"
+msgstr "Kuas"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_STAMP"
+msgid "Stamp"
+msgstr "Stempel"
+
+#. These are limited to 12*2 characters
+msgctxt "L.CUSTOM_SIZED_BRUSH_TILESET"
+msgid "Tileset"
+msgstr "Tileset"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_BRUSH"
+msgid "Custom brush size"
+msgstr "Ukuran kuas kustom"
+
+#. Explanation for "Brush"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_BRUSH"
+msgid "Choose the size of the brush you need."
+msgstr "Pilih ukuran kuas yang Anda butuhkan."
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_STAMP"
+msgid "Stamp from room"
+msgstr "Stempel dari ruang"
+
+#. Explanation for "Stamp"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_STAMP"
+msgid "Select tiles from the room to create a stamp."
+msgstr "Pilih ubin dari ruangan untuk membuat stempel."
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_TITLE_TILESET"
+msgid "Stamp from tileset"
+msgstr "Stempel dari tileset"
+
+#. Explanation for "Tileset"
+msgctxt "L.CUSTOM_SIZED_BRUSH_EXPL_TILESET"
+msgid "Select tiles from the tileset to create a stamp. Only works in manual mode."
+msgstr "Pilih ubin dari ubin untuk membuat stempel. Hanya bekerja dalam mode manual."
+
+msgctxt "L.ADVANCED_LEVEL_OPTIONS"
+msgid "Advanced level options"
+msgstr "Opsi level lanjutan"
+
+#. Normally the game only recolors one-way tiles in stock assets, and leaves them unchanged in level-specific assets. Turning this on makes the recolor affect level-specific assets as well. Do not translate the (onewaycol_override)
+msgctxt "L.ONEWAYCOL_OVERRIDE"
+msgid "Recolor one-way tiles in custom assets as well (onewaycol_override)"
+msgstr "Warnai ulang ubin satu arah di aset kustom juga (onewaycol_override)"
+
+#. .ZIP file for distribution to others/sharing with others. The zip contains all the assets so people don't have to package the zip themselves anymore
+msgctxt "L.ZIP_SAVE_AS"
+msgid "Create ZIP of this version for sharing"
+msgstr "Buat ZIP versi ini untuk dibagikan"
+
+msgctxt "L.ZIP_CREATE_TITLE"
+msgid "Save ZIP"
+msgstr "Simpan ZIP"
+
+msgctxt "L.ZIP_BUSY_TITLE"
+msgid "Creating ZIP..."
+msgstr "Membuat ZIP..."
+
+#. $1: version number
+msgctxt "L.ZIP_LOVE11_ONLY"
+msgid "Creating a ZIP file requires LÖVE $1 or higher"
+msgstr "Membuat file ZIP memerlukan LÖVE $1 atau lebih tinggi"
+
+msgctxt "L.ZIP_SAVING_SUCCESS"
+msgid "ZIP saved!"
+msgstr "ZIP disimpan!"
+
+msgctxt "L.ZIP_SAVING_FAIL"
+msgid "Could not save ZIP file!"
+msgstr "Tidak dapat menyimpan file ZIP!"
+
+#. Button, open a directory/folder in Explorer, Finder or another system file manager.
+msgctxt "L.OPENFOLDER"
+msgid "Open folder"
+msgstr "Buka folder"
+
+msgctxt "L.LEVELFONT"
+msgid "Level font"
+msgstr "Font level"
+
+msgctxt "L.TEXTBOXCOLORS_BUTTON"
+msgid "Text colors"
+msgstr "Warna teks"
+
+msgctxt "L.TEXTBOXCOLORS_TITLE"
+msgid "Textbox colors"
+msgstr "Warna kotak teks"
+
+msgctxt "L.TEXTBOXCOLORS_RENAME"
+msgid "Rename color \"$1\""
+msgstr "Ganti nama warna \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_DUPLICATE"
+msgid "Duplicate color \"$1\""
+msgstr "Duplikasi warna \"$1\""
+
+msgctxt "L.TEXTBOXCOLORS_CREATE"
+msgid "Add new color"
+msgstr "Tambah warna baru"
+
+msgctxt "L.LIB_LOAD_ERRMSG_BIDI"
+msgid ""
+"Failed to load the library for right-to-left text support.\n"
+"\n"
+"$1"
+msgstr ""
+"Gagal memuat perpustakaan untuk dukungan teks kanan ke kiri.\n"
+"\n"
+"$1"
+
+msgctxt "L.LIB_LOAD_ERRMSG_AV"
+msgid ""
+"\n"
+"\n"
+"Your antivirus may be breaking it."
+msgstr ""
+"\n"
+"\n"
+"Antivirus Anda mungkin merusaknya."
+
+msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
+msgid "You have $1 plugin that is not supported in this version."
+msgid_plural "You have $1 plugins that are not supported in this version."
+msgstr[0] "Anda memiliki plugin $1 yang tidak didukung dalam versi ini."
+
+msgctxt "L_PLU.LEVELFAILEDCHECKS"
+msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
+msgstr[0] "Level ini gagal dalam pemeriksaan $1. Masalah mungkin telah diperbaiki secara otomatis, tetapi mungkin saja ini akan tetap menyebabkan error dan inkonsistensi."
+
+msgctxt "L_PLU.SCRIPTUSAGESROOMS"
+msgid "$1 usage in rooms: $2"
+msgid_plural "$1 usages in rooms: $2"
+msgstr[0] "$1 penggunaan di ruang: $2"
+
+msgctxt "L_PLU.SCRIPTUSAGESSCRIPTS"
+msgid "$1 usage in scripts: $2"
+msgid_plural "$1 usages in scripts: $2"
+msgstr[0] "$1 penggunaan di skrip: $2"
+
+msgctxt "L_PLU.ENTITYINVALIDPROPERTIES"
+msgid "Entity at [$1 $2] has $3 invalid property!"
+msgid_plural "Entity at [$1 $2] has $3 invalid properties!"
+msgstr[0] "Entitas di [$1 $2] memiliki $3 properti yang tidak valid!"
+
+msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
+msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
+msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
+msgstr[0] "LevelMetadata untuk ruang $1,$2 memiliki $3 properti yang tidak valid!"
+
+msgctxt "L_PLU.SCRIPTDISPLAY_SHOWING"
+msgid "Showing $1"
+msgid_plural "Showing $1"
+msgstr[0] "Menampilkan $1"
+
+msgctxt "L_PLU.FLAGUSAGES"
+msgid "Used $1 time in scripts: $2"
+msgid_plural "Used $1 times in scripts: $2"
+msgstr[0] "Digunakan $1 kali dalam skrip: $2"
+
+msgctxt "L_PLU.NOTALLTILESVALID"
+msgid "$1 tile is not a valid whole number greater than or equal to 0"
+msgid_plural "$1 tiles are not a valid whole number greater than or equal to 0"
+msgstr[0] "Ubin $1 bukan nomor yang valid lebih besar dari atau sama dengan 0"
+
+msgctxt "L_PLU.BYTES"
+msgid "$1 byte"
+msgid_plural "$1 bytes"
+msgstr[0] "$1 bita"
+
+msgctxt "L_PLU.NUM_GRAPHICS_CUSTOMIZED"
+msgid "$1 image customized"
+msgid_plural "$1 images customized"
+msgstr[0] "$1 gambar disesuaikan"
+
+msgctxt "L_PLU.NUM_SOUNDS_CUSTOMIZED"
+msgid "$1 sound effect customized"
+msgid_plural "$1 sound effects customized"
+msgstr[0] "$1 efek suara disesuaikan"
+
+msgctxt "toolnames.1"
+msgid "Wall"
+msgstr "Dinding"
+
+msgctxt "toolnames.2"
+msgid "Background"
+msgstr "Latar belakang"
+
+msgctxt "toolnames.3"
+msgid "Spike"
+msgstr "Paku"
+
+msgctxt "toolnames.4"
+msgid "Trinket"
+msgstr "Trinket"
+
+msgctxt "toolnames.5"
+msgid "Checkpoint"
+msgstr "Checkpoint"
+
+msgctxt "toolnames.6"
+msgid "Disappearing platform"
+msgstr "Penghilang platform"
+
+msgctxt "toolnames.7"
+msgid "Conveyor"
+msgstr "Konveyor"
+
+msgctxt "toolnames.8"
+msgid "Moving platform"
+msgstr "Platform bergerak"
+
+msgctxt "toolnames.9"
+msgid "Enemy"
+msgstr "Musuhan"
+
+msgctxt "toolnames.10"
+msgid "Gravity line"
+msgstr "Garis gravitasi"
+
+msgctxt "toolnames.11"
+msgid "Roomtext"
+msgstr "Teks ruangan"
+
+msgctxt "toolnames.12"
+msgid "Terminal"
+msgstr "Terminal"
+
+msgctxt "toolnames.13"
+msgid "Script box"
+msgstr "Kotak skrip"
+
+msgctxt "toolnames.14"
+msgid "Warp token"
+msgstr "Token warp"
+
+msgctxt "toolnames.15"
+msgid "Warp line"
+msgstr "Garis warp"
+
+msgctxt "toolnames.16"
+msgid "Crewmate"
+msgstr "Crewmate"
+
+msgctxt "toolnames.17"
+msgid "Start point"
+msgstr "Titik awal"
+
+msgctxt "subtoolnames.1.1"
+msgid "1x1 brush"
+msgstr "kuas 1x1"
+
+msgctxt "subtoolnames.1.2"
+msgid "3x3 brush"
+msgstr "kuas 3x3"
+
+msgctxt "subtoolnames.1.3"
+msgid "5x5 brush"
+msgstr "kuas 5x5"
+
+msgctxt "subtoolnames.1.4"
+msgid "7x7 brush"
+msgstr "kuas 7x7"
+
+msgctxt "subtoolnames.1.5"
+msgid "9x9 brush"
+msgstr "kuas 9x9"
+
+msgctxt "subtoolnames.1.6"
+msgid "Fill horizontally"
+msgstr "Isi secara horizontal"
+
+msgctxt "subtoolnames.1.7"
+msgid "Fill vertically"
+msgstr "Isi secara vertikal"
+
+msgctxt "subtoolnames.1.8"
+msgid "Custom brush size"
+msgstr "Ukuran kuas kustom"
+
+msgctxt "subtoolnames.1.9"
+msgid "Fill bucket"
+msgstr "Isi ember"
+
+msgctxt "subtoolnames.1.10"
+msgid "Potato for Doing Things that are Magical"
+msgstr "Kentang untuk Melakukan Hal-hal yang Ajaib"
+
+msgctxt "subtoolnames.3.1"
+msgid "Auto 1"
+msgstr "Oto 1"
+
+msgctxt "subtoolnames.3.2"
+msgid "Auto expand L+R"
+msgstr "Oto luas kiri+kanan"
+
+msgctxt "subtoolnames.3.3"
+msgid "Auto expand L"
+msgstr "Oto luas kiri"
+
+msgctxt "subtoolnames.3.4"
+msgid "Auto expand R"
+msgstr "Oto luas kanan"
+
+msgctxt "subtoolnames.5.1"
+msgid "Upright"
+msgstr "Tegak lurus"
+
+msgctxt "subtoolnames.5.2"
+msgid "Flipped"
+msgstr "Terbalik"
+
+msgctxt "subtoolnames.7.1"
+msgid "Small R"
+msgstr "Kecil kiri"
+
+msgctxt "subtoolnames.7.2"
+msgid "Small L"
+msgstr "Kecil kanan"
+
+msgctxt "subtoolnames.7.3"
+msgid "Large R"
+msgstr "Besar kiri"
+
+msgctxt "subtoolnames.7.4"
+msgid "Large L"
+msgstr "Besar kanan"
+
+msgctxt "subtoolnames.8.1"
+msgid "Down"
+msgstr "Bawah"
+
+msgctxt "subtoolnames.8.2"
+msgid "Up"
+msgstr "Atas"
+
+msgctxt "subtoolnames.8.3"
+msgid "Left"
+msgstr "Kiri"
+
+msgctxt "subtoolnames.8.4"
+msgid "Right"
+msgstr "Kanan"
+
+msgctxt "subtoolnames.10.1"
+msgid "Horizontal"
+msgstr "Horizontal"
+
+msgctxt "subtoolnames.10.2"
+msgid "Vertical"
+msgstr "Vertikal"
+
+msgctxt "subtoolnames.14.1"
+msgid "Entrance"
+msgstr "Masuk"
+
+msgctxt "subtoolnames.14.2"
+msgid "Exit"
+msgstr "Keluar"
+
+msgctxt "subtoolnames.16.1"
+msgid "Pink"
+msgstr "Pink"
+
+msgctxt "subtoolnames.16.2"
+msgid "Yellow"
+msgstr "Kuning"
+
+msgctxt "subtoolnames.16.3"
+msgid "Red"
+msgstr "Merah"
+
+msgctxt "subtoolnames.16.4"
+msgid "Green"
+msgstr "Hijau"
+
+msgctxt "subtoolnames.16.5"
+msgid "Blue"
+msgstr "Biru"
+
+msgctxt "subtoolnames.16.6"
+msgid "Cyan"
+msgstr "Biru muda"
+
+msgctxt "subtoolnames.16.7"
+msgid "Random"
+msgstr "Random"
+
+msgctxt "subtoolnames.17.1"
+msgid "Face right"
+msgstr "Wajah kanan"
+
+msgctxt "subtoolnames.17.2"
+msgid "Face left"
+msgstr "Wajah kiri"
+
+msgctxt "warpdirs.0"
+msgid "x"
+msgstr "x"
+
+msgctxt "warpdirs.1"
+msgid "H"
+msgstr "H"
+
+msgctxt "warpdirs.2"
+msgid "V"
+msgstr "V"
+
+msgctxt "warpdirs.3"
+msgid "A"
+msgstr "S"
+
+msgctxt "warpdirchangedtext.0"
+msgid "Room warping disabled"
+msgstr "Ruangan warping dinonaktifkan"
+
+msgctxt "warpdirchangedtext.1"
+msgid "Warp direction set to horizontal"
+msgstr "Arah warp diatur ke horizontal"
+
+msgctxt "warpdirchangedtext.2"
+msgid "Warp direction set to vertical"
+msgstr "Arah warp diatur ke vertikal"
+
+msgctxt "warpdirchangedtext.3"
+msgid "Warp direction set to all directions"
+msgstr "Arah warp diatur ke semua arah"
+
+msgctxt "langtilesetnames.short0"
+msgid "Space Stn."
+msgstr "Stasiun RA"
+
+msgctxt "langtilesetnames.long0"
+msgid "Space Station"
+msgstr "Stasiun Ruang Angkasa"
+
+msgctxt "langtilesetnames.short1"
+msgid "Outside"
+msgstr "Di-luar"
+
+msgctxt "langtilesetnames.long1"
+msgid "Outside"
+msgstr "Di-luar"
+
+msgctxt "langtilesetnames.short2"
+msgid "Lab"
+msgstr "Lab"
+
+msgctxt "langtilesetnames.long2"
+msgid "Lab"
+msgstr "Lab"
+
+msgctxt "langtilesetnames.short3"
+msgid "Warp Zone"
+msgstr "Zona Warp"
+
+msgctxt "langtilesetnames.long3"
+msgid "Warp Zone"
+msgstr "Zona Warp"
+
+msgctxt "langtilesetnames.short4"
+msgid "Ship"
+msgstr "Kapal"
+
+msgctxt "langtilesetnames.long4"
+msgid "Ship"
+msgstr "Kapal"
+
+msgctxt "langtilesetnames.short5"
+msgid "Tower"
+msgstr "Menara"
+
+msgctxt "langtilesetnames.long5"
+msgid "Tower"
+msgstr "Menara"
+
+msgctxt "ERR_VEDHASCRASHED"
+msgid "Ved has crashed!"
+msgstr "Ved rusak!"
+
+msgctxt "ERR_VEDVERSION"
+msgid "Ved version:"
+msgstr "Versi Ved:"
+
+msgctxt "ERR_LOVEVERSION"
+msgid "LÖVE version:"
+msgstr "Versi LÖVE:"
+
+msgctxt "ERR_STATE"
+msgid "State:"
+msgstr "State/status:"
+
+msgctxt "ERR_OS"
+msgid "OS:"
+msgstr "OS:"
+
+msgctxt "ERR_TIMESINCESTART"
+msgid "Time since start:"
+msgstr "Waktu sejak mulai:"
+
+msgctxt "ERR_PLUGINS"
+msgid "Plugins:"
+msgstr "Plugin:"
+
+msgctxt "ERR_PLUGINSNOTLOADED"
+msgid "(not loaded)"
+msgstr "(tidak dimuat)"
+
+msgctxt "ERR_PLUGINSNONE"
+msgid "(none)"
+msgstr "(tidak ada)"
+
+msgctxt "ERR_PLEASETELLDAV"
+msgid ""
+"Please tell Dav999 about this problem.\n"
+"\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Harap beri tahu Dav999 tentang masalah ini.\n"
+"\n"
+"\n"
+"Detail: (tekan Ctrl/Cmd+C untuk menyalin ke papan klip)\n"
+"\n"
+
+#. pre-release version, so a version in between officially released versions
+msgctxt "ERR_INTERMEDIATE"
+msgid " (intermediate version)"
+msgstr " (versi menengah)"
+
+msgctxt "ERR_TOONEW"
+msgid " (too new)"
+msgstr " (teralu baru)"
+
+msgctxt "ERR_PLUGINERROR"
+msgid "Plugin error!"
+msgstr "Kesalahan plugin!"
+
+msgctxt "ERR_FILE"
+msgid "File to be edited:"
+msgstr "File yang akan diedit:"
+
+msgctxt "ERR_FILEEDITORS"
+msgid "Plugins that edit this file:"
+msgstr "Plugin yang mengedit file ini:"
+
+msgctxt "ERR_CURRENTPLUGIN"
+msgid "Plugin that triggered the error:"
+msgstr "Plugin yang memicu kesalahan:"
+
+msgctxt "ERR_PLEASETELLAUTHOR"
+msgid ""
+"A plugin was supposed to make an edit to code in Ved, but the code to be replaced was not found.\n"
+"It is possible that this was caused by a conflict between two plugins, or a Ved update broke this plugin.\n"
+"\n"
+"Details: (press Ctrl/Cmd+C to copy to the clipboard)\n"
+"\n"
+msgstr ""
+"Sebuah plugin seharusnya mengedit kode di Ved, tetapi kode yang akan diganti tidak ditemukan.\n"
+"Hal ini mungkin disebabkan oleh konflik antara dua plugin, atau pembaruan Ved merusak plugin ini.\n"
+"\n"
+"Detail: (tekan Ctrl/Cmd+C untuk menyalin ke papan klip)\n"
+"\n"
+
+msgctxt "ERR_CONTINUE"
+msgid "You can continue by pressing ESC or enter, but note this failed edit may cause issues."
+msgstr "Anda dapat melanjutkan dengan menekan ESC atau enter, tetapi perhatikan bahwa pengeditan yang gagal ini dapat menyebabkan masalah."
+
+msgctxt "ERR_OPENPLUGINSFOLDER"
+msgid "You can open your plugins folder by pressing F, so you can fix or remove the offending plugin. Afterwards, restart Ved."
+msgstr "Anda dapat membuka folder plugin dengan menekan F, sehingga Anda dapat memperbaiki atau menghapus plugin yang mengganggu. Setelah itu, mulai ulang Ved."
+
+msgctxt "ERR_REPLACECODE"
+msgid "Failed to find this in %s.lua:"
+msgstr "Gagal menemukan ini di %s.lua:"
+
+msgctxt "ERR_REPLACECODEPATTERN"
+msgid "Failed to find this in %s.lua (as pattern):"
+msgstr "Gagal menemukan ini di %s.lua (sebagai pola):"
+
+msgctxt "ERR_LINESTOTAL"
+msgid "%i lines in total"
+msgstr "%i garis secara total"
+
+msgctxt "ERR_SAVELEVEL"
+msgid "To save a copy of your level, press S"
+msgstr "Untuk menyimpan salinan level Anda, tekan S"
+
+msgctxt "ERR_SAVESUCC"
+msgid "Level saved successfully as %s!"
+msgstr "Level berhasil disimpan sebagai %s!"
+
+msgctxt "ERR_SAVEERROR"
+msgid "Save error! %s"
+msgstr "Kesalahan simpan! %s"
+
+msgctxt "ERR_LOGSAVED"
+msgid ""
+"More information can be found in the crash log:\n"
+"%s"
+msgstr ""
+"Informasi lebih lanjut dapat ditemukan di crash log:\n"
+"%s"
+
+msgctxt "diffmessages.pages.levelproperties"
+msgid "Level properties"
+msgstr "Properti level"
+
+msgctxt "diffmessages.pages.changedrooms"
+msgid "Changed rooms"
+msgstr "Ruang berubah"
+
+msgctxt "diffmessages.pages.changedroommetadata"
+msgid "Changed room metadata"
+msgstr "Metadata ruangan berubah"
+
+msgctxt "diffmessages.pages.entities"
+msgid "Entities"
+msgstr "Entitas"
+
+msgctxt "diffmessages.pages.scripts"
+msgid "Scripts"
+msgstr "Skrip"
+
+msgctxt "diffmessages.pages.flagnames"
+msgid "Flag names"
+msgstr "Nama tanda"
+
+msgctxt "diffmessages.pages.levelnotes"
+msgid "Level notes"
+msgstr "Level nota"
+
+msgctxt "diffmessages.levelpropertiesdiff.Title"
+msgid "Name was changed from \"$1\" to \"$2\""
+msgstr "Nama diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Creator"
+msgid "Author was changed from \"$1\" to \"$2\""
+msgstr "Penulis diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.website"
+msgid "Website was changed from \"$1\" to \"$2\""
+msgstr "Situs web diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc1"
+msgid "Desc1 was changed from \"$1\" to \"$2\""
+msgstr "Deskr1 diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc2"
+msgid "Desc2 was changed from \"$1\" to \"$2\""
+msgstr "Deskr2 diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.Desc3"
+msgid "Desc3 was changed from \"$1\" to \"$2\""
+msgstr "Deskr3 diubah dari \"$1\" menjadi \"$2\""
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsize"
+msgid "Map size was changed from $1x$2 to $3x$4"
+msgstr "Ukuran peta diubah dari $1x$2 menjadi $3x$4"
+
+msgctxt "diffmessages.levelpropertiesdiff.mapsizenote"
+msgid ""
+"NOTE: Map size was changed from $1x$2 to $3x$4.\\o\n"
+"Rooms outside of $5x$6 are not listed.\\o"
+msgstr ""
+"CATATAN: Ukuran peta diubah dari $1x$2 menjadi $3x$4.\\o\n"
+"Ruang di luar $5x$6 tidak terdaftar.\\o"
+
+msgctxt "diffmessages.levelpropertiesdiff.levmusic"
+msgid "Level music was changed from $1 to $2"
+msgstr "Level musik diubah dari $1 menjadi $2"
+
+msgctxt "diffmessages.rooms.added1"
+msgid "Added ($1,$2) ($3)\\G"
+msgstr "Ditambahkan ($1,$2) ($3)\\G"
+
+msgctxt "diffmessages.rooms.added2"
+msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgstr "Ditambahkan ($1,$2) ($3 -> $4)\\G"
+
+msgctxt "diffmessages.rooms.changed1"
+msgid "Changed ($1,$2) ($3)\\Y"
+msgstr "Berubah ($1,$2) ($3)\\Y"
+
+msgctxt "diffmessages.rooms.changed2"
+msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgstr "Berubah ($1,$2) ($3 -> $4)\\Y"
+
+msgctxt "diffmessages.rooms.cleared1"
+msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgstr "Menghapus semua ubin di ($1,$2) ($3)\\R"
+
+msgctxt "diffmessages.rooms.cleared2"
+msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgstr "Menghapus semua ubin di ($1,$2) ($3 -> $4)\\R"
+
+msgctxt "diffmessages.roommetadata.changed0"
+msgid "Room $1,$2:"
+msgstr "Ruang $1,$2:"
+
+msgctxt "diffmessages.roommetadata.changed1"
+msgid "Room $1,$2 ($3):"
+msgstr "Ruang $1,$2 ($3):"
+
+msgctxt "diffmessages.roommetadata.roomname"
+msgid "Roomname changed from \"$1\" to \"$2\"\\Y"
+msgstr "Nama ruang diubah dari \"$1\" ke \"$2\"\\Y"
+
+msgctxt "diffmessages.roommetadata.roomnameremoved"
+msgid "Roomname \"$1\" removed\\R"
+msgstr "Nama ruang \"$1\" dihapus\\R"
+
+msgctxt "diffmessages.roommetadata.roomnameadded"
+msgid "Room named \"$1\"\\G"
+msgstr "Ruang bernama \"$1\"\\G"
+
+msgctxt "diffmessages.roommetadata.tileset"
+msgid "Tileset $1 tilecol $2 changed to tileset $3 tilecol $4\\Y"
+msgstr "Tileset $1 tilecol $2 diubah dari tileset $3 tilecol $4\\Y"
+
+msgctxt "diffmessages.roommetadata.platv"
+msgid "Platform speed changed from $1 to $2\\Y"
+msgstr "Kecepatan platform berubah dari $1 ke $2\\Y"
+
+msgctxt "diffmessages.roommetadata.enemytype"
+msgid "Enemy type changed from $1 to $2\\Y"
+msgstr "Jenis musuhan berubah dari $1 ke $2\\Y"
+
+msgctxt "diffmessages.roommetadata.platbounds"
+msgid "Platform bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Batasan platform berubah dari $1,$2,$3,$4 ke $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.enemybounds"
+msgid "Enemy bounds changed from $1,$2,$3,$4 to $5,$6,$7,$8\\Y"
+msgstr "Batasan musuhan berubah dari $1,$2,$3,$4 ke $5,$6,$7,$8\\Y"
+
+msgctxt "diffmessages.roommetadata.directmode01"
+msgid "Direct mode enabled\\G"
+msgstr "Mode pengatur diaktifkan\\G"
+
+msgctxt "diffmessages.roommetadata.directmode10"
+msgid "Direct mode disabled\\R"
+msgstr "Mode pengatur dinonaktifkan\\R"
+
+msgctxt "diffmessages.roommetadata.warpdir"
+msgid "Warp direction changed from $1 to $2\\Y"
+msgstr "Arah warp berubah dari $1 ke $2\\Y"
+
+msgctxt "diffmessages.entities.added"
+msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgstr "Menambahkan jenis entitas $1 pada posisi $2,$3 di ruang ($4,$5)\\G"
+
+msgctxt "diffmessages.entities.removed"
+msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgstr "Jenis entitas yang dihapus $1 dari posisi $2,$3 di ruangan ($4,$5)\\R"
+
+msgctxt "diffmessages.entities.changed"
+msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgstr "Mengubah jenis entitas $1 pada posisi $2,$3 di ruang ($4,$5)\\Y"
+
+msgctxt "diffmessages.entities.changedtype"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgstr "Mengubah jenis entitas $1 menjadi $2 pada posisi $3,$4 di ruang ($5,$6)\\Y"
+
+msgctxt "diffmessages.entities.multiple1"
+msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgstr "Mengubah entitas pada posisi $1,$2 di ruang ($3,$4):\\Y"
+
+msgctxt "diffmessages.entities.multiple2"
+msgid "to:"
+msgstr "ke:"
+
+msgctxt "diffmessages.entities.addedmultiple"
+msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgstr "Menambahkan entitas pada posisi $1,$2 di ruangan ($3,$4):\\G"
+
+msgctxt "diffmessages.entities.removedmultiple"
+msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgstr "Entitas yang dihapus pada posisi $1,$2 di ruangan ($3,$4):\\R"
+
+msgctxt "diffmessages.entities.entity"
+msgid "Type $1"
+msgstr "Jenis $1"
+
+msgctxt "diffmessages.entities.incomplete"
+msgid "Not all entities were handled! Please report this to Dav.\\r"
+msgstr "Tidak semua entitas ditangani! Harap laporkan ini ke Dav.\\r"
+
+msgctxt "diffmessages.scripts.added"
+msgid "Added script \"$1\"\\G"
+msgstr "Ditambahkan skrip \"$1\"\\G"
+
+msgctxt "diffmessages.scripts.removed"
+msgid "Removed script \"$1\"\\R"
+msgstr "Dihapus skrip \"$1\"\\R"
+
+msgctxt "diffmessages.scripts.edited"
+msgid "Edited script \"$1\"\\Y"
+msgstr "Diedit skrip \"$1\"\\Y"
+
+msgctxt "diffmessages.flagnames.added"
+msgid "Set name for flag $1 to \"$2\"\\G"
+msgstr "Tetapkan nama untuk tanda $1 ke \"$2\"\\G"
+
+msgctxt "diffmessages.flagnames.removed"
+msgid "Removed name \"$1\" for flag $2\\R"
+msgstr "Menghapus nama \"$1\" untuk tanda $2\\R"
+
+msgctxt "diffmessages.flagnames.edited"
+msgid "Changed name for flag $1 from \"$2\" to \"$3\"\\Y"
+msgstr "Mengubah nama untuk tanda $1 dari \"$2\" menjadi \"$3\"\\Y"
+
+msgctxt "diffmessages.levelnotes.added"
+msgid "Added level note \"$1\"\\G"
+msgstr "Ditambahkan level nota \"$1\"\\G"
+
+msgctxt "diffmessages.levelnotes.removed"
+msgid "Removed level note \"$1\"\\R"
+msgstr "Dihapus level nota \"$1\"\\R"
+
+msgctxt "diffmessages.levelnotes.edited"
+msgid "Edited level note \"$1\"\\Y"
+msgstr "Diedit level nota \"$1\"\\Y"
+
+msgctxt "diffmessages.mde.added"
+msgid "Metadata entity was added.\\G"
+msgstr "Entitas metadata telah ditambahkan.\\G"
+
+msgctxt "diffmessages.mde.removed"
+msgid "Metadata entity was removed.\\R"
+msgstr "Entitas metadata telah dihapus.\\R"

@@ -1,5 +1,6 @@
 require("vedfont")
 local vedxml = require("vedxml")
+local vedpo = require("vedpo")
 
 function read_font_file(custom_folder, font_name, ext)
 	-- custom_folder can be the path to a level-specific
@@ -219,31 +220,107 @@ end
 
 function unloadlanguage()
 	-- Prepare for language change
-	package.loaded["lang." .. s.lang] = false
 	package.loaded.devstrings = false
 end
 
 function loadlanguage()
 	-- Load current language files depending on setting, and devstrings
 	-- Possibly reload files that depend on language (const)
-	-- Apply non-ASCII replacements if font.png is active
-	if love.filesystem.exists("lang/" .. s.lang .. ".lua") then
-		ved_require("lang/" .. s.lang)
+
+	local filename
+	if s.lang == "en" then
+		filename = "en.pot"
 	else
-		-- Interpret old-style language setting
-		local found = false
-		for k,v in pairs(langinfo) do
-			if s.lang == v.name and love.filesystem.exists("lang/" .. v.code .. ".lua") then
-				ved_require("lang/" .. v.code)
-				s.lang = v.code
-				found = true
-				break
+		if langinfo[s.lang] == nil then
+			-- Interpret old-style language setting
+			for k,v in pairs(langinfo) do
+				if s.lang == v.name then
+					s.lang = v.code
+					break
+				end
 			end
 		end
-		if not found then
-			ved_require("lang/en")
+		filename = s.lang .. ".po"
+	end
+	local success, iter = pcall(love.filesystem.lines, "lang/" .. filename)
+	if not success then
+		iter = love.filesystem.lines("lang/en.pot")
+	end
+
+	local po = vedpo.VedPO:new(iter, true)
+
+	if po.plural_equation ~= nil then
+		lang_plurals = po.plural_equation
+	else
+		function lang_plurals(n)
+			return n == 1 and -1 or -2
 		end
 	end
+
+	L = {}
+	L_PLU = {}
+	langtilesetnames = {}
+	toolnames = {}
+	warpdirs = {}
+	warpdirchangedtext = {}
+	subtoolnames = {}
+	diffmessages = {}
+
+	for k,entry in ipairs(po.entries) do
+		local id = entry.msgctxt
+		if id ~= nil then
+			local str = entry.msgstr
+			if entry.msgid_plural ~= nil then
+				if entry.fuzzy then
+					str = {}
+				end
+				str[-1] = entry.msgid
+				str[-2] = entry.msgid_plural
+			elseif anythingbutnil(str) == "" or entry.fuzzy then
+				str = entry.msgid
+			end
+
+			local p = 3
+			local p1, p2, p3 = id:match("^([^%.]+)%.([^%.]+)%.([^%.]+)$")
+			if p3 == nil then
+				p = 2
+				p1, p2 = id:match("^([^%.]+)%.([^%.]+)$")
+			end
+			if p2 == nil then
+				p = 1
+				p1 = id
+			end
+			if p == 2 and (p1 == "L" or p1 == "L_PLU" or p1 == "langtilesetnames") then
+				_G[p1][p2] = str
+			elseif p == 2 and (p1 == "toolnames" or p1 == "warpdirs" or p1 == "warpdirchangedtext") then
+				p2 = tonumber(p2)
+				if p2 ~= nil then
+					_G[p1][p2] = str
+				end
+			elseif p == 3 and p1 == "subtoolnames" then
+				p2 = tonumber(p2)
+				p3 = tonumber(p3)
+				if p2 ~= nil and p3 ~= nil then
+					if _G[p1][p2] == nil then
+						_G[p1][p2] = {}
+					end
+					_G[p1][p2][p3] = str
+				end
+			elseif p == 3 and p1 == "diffmessages" then
+				if _G[p1][p2] == nil then
+					_G[p1][p2] = {}
+				end
+				_G[p1][p2][p3] = str
+			elseif p == 1 and p1:sub(1,4) == "ERR_" then
+				_G[p1] = str
+			end
+		end
+	end
+
+	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
+	subtoolnames[2] = subtoolnames[1]
+	subtoolnames[9] = subtoolnames[8]
+	subtoolnames[12] = table.copy(subtoolnames[5])
 
 	loadhelpindex()
 	for k,v in pairs(LH) do

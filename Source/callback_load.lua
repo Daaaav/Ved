@@ -362,11 +362,6 @@ function love.load()
 	subtoolimgs[16] = {st("16_1"), st("16_2"), st("16_3"), st("16_4"), st("16_5"), st("16_6"), st("16_7")}
 	subtoolimgs[17] = {st("17_1"), st("17_2")}
 
-	-- Reuse the subtool names from walls for background, and for moving platforms and enemies
-	subtoolnames[2] = subtoolnames[1]
-	subtoolnames[9] = subtoolnames[8]
-	subtoolnames[12] = table.copy(subtoolnames[5])
-
 	-- The help has images too, but they shouldn't be loaded repetitively!
 	helpimages = {}
 
