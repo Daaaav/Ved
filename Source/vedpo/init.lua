@@ -222,6 +222,13 @@ function VedPO:add_entry(entry)
 	-- and also doesn't check that the given entry is valid (the presence of msgid_plural
 	-- matches the presence of msgstr[N] tags and vice versa) - it just adds as requested.
 
+	if entry.comments == nil then
+		entry.comments = {}
+	end
+	if entry.fuzzy == nil then
+		entry.fuzzy = false
+	end
+
 	stringize(entry, "msgctxt")
 	stringize(entry, "msgid")
 	stringize(entry, "msgid_plural")

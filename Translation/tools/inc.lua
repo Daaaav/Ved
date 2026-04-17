@@ -1,16 +1,17 @@
 languages = {
-	templates = "en",
-	nl = "nl",
-	eo = "eo",
-	ru = "ru",
-	de = "de",
-	fr = "fr",
-	es_AR = "es_AR",
-	id = "id",
-	ar = "ar"
+	"en",
+	"nl",
+	"eo",
+	"ru",
+	"de",
+	"fr",
+	"es_AR",
+	"id",
+	"ar"
 }
 
 ved_path = "../../Source" -- must not include a trailing /
+weblate_repo_path = "../../../Ved-translation"
 
 orig_package_path = package.path
 package.path = orig_package_path .. ";" .. ved_path .. "/?.lua;" .. ved_path .. "/?/init.lua"
@@ -18,56 +19,6 @@ package.path = orig_package_path .. ";" .. ved_path .. "/?.lua;" .. ved_path .. 
 utf8 = require("utf8lib_fallback9")
 utf8.char = require("utf8lib_092fixedchar")
 local vedxml = require("vedxml")
-
-function assert_lang_arg(argnum, allownone)
-	-- If allownone is false/nil: Require that a valid language argument is given
-	-- If allownone is true: Return true if a valid lang argument is given,
-	--  require that it is valid if it is given, return false if nothing is given.
-	if arg[argnum] == nil then
-		if allownone then
-			return false
-		else
-			print("Please give a language code as an argument")
-			os.exit(0)
-		end
-	end
-	if languages[arg[argnum]] == nil then
-		print("\"" .. arg[argnum] .. "\" is not a valid language code. Choices are:")
-		for k,v in pairs(languages) do
-			print(k .. " (" .. v .. ")")
-		end
-		os.exit(0)
-	end
-	return true
-end
-
-function load_lua_lang(lang)
-	-- Load the language file that is given by the first argument
-	require("lang." .. languages[lang])
-end
-
-function escape_lua_str(str)
-	return str:gsub("\\", "\\\\"):gsub("\"", "\\\""):gsub("\n", "\\n")
-end
-
-function escape_lua_blockstr(str)
-	str = str:gsub("]]", "]] .. \"]]\" .. [[")
-	if str:sub(-1,-1) == "\n" then
-		str = str:sub(1,-2)
-	end
-	return str
-end
-
-function escape_po_str(str)
-	return str:gsub("\\", "\\\\"):gsub("\"", "\\\""):gsub("\n", "\\n")
-end
-
-function unescape_po_str(str)
-	-- This function is only really to uncomplicate things, at the cost
-	-- of a little bit of performance
-	local bbn_token = "<BACKSLASH BACKSLASN N>"
-	return str:gsub([[\\\n]], "\\\n"):gsub([[\\n]], bbn_token):gsub([[\n]], "\n"):gsub(bbn_token, "\\n"):gsub("\\\"", "\""):gsub("\\\\", "\\")
-end
 
 function split_help_page(str)
 	--[[
@@ -146,7 +97,7 @@ function merge_help_page(paragraphs_str, blanklines)
 end
 
 function load_help_page(lang, id)
-	local fh, everr = io.open(ved_path .. "/help/" .. languages[lang] .. "/" .. id .. ".txt")
+	local fh, everr = io.open(ved_path .. "/help/" .. lang .. "/" .. id .. ".txt")
 	if fh == nil then
 		print("ERROR: Cannot open " .. lang .. " help file " .. id)
 		print(everr)
