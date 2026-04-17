@@ -1,18 +1,20 @@
-Just for my reference (and transparency), here's more information about these scripts and how to work with them. There's less here than there is, for various reasons.
+Just for my reference (and transparency), here's more information about these scripts and how to work with them. There's less here than there is, for various reasons. For example, the tools assume you have a `Ved-translation` Git repository folder, next to the folder for the Ved repository.
 
-# Preparing a lua template and .pot templates
-This needs to be done whenever the strings get updated (or when starting out altogether).
+# Updating strings
+When making new strings for Ved before they're ready for translation, you can define them in `Source/devstrings.lua` to make them work in all languages, like so:
 
-Starting with the bare .lua language files in the `Source/lang/` folder for Ved, you can run `./create_template_pot.lua`. This will create `Template.lua`, which is a lua language file template with all strings replaced by tokens, which are the same as the keys. It will also create gettext PO template files which can be uploaded to Pootle.
+```lua
+L.THEMES = "Themes"
+L.THEMESTITLE = "Theme settings"
+```
 
-# Uploading new templates to Pootle
-Whenever the strings are changed, after running `./create_template_pot.lua` to create new templates, simply run `./upload_new_templates.sh`. This will copy the template files to the translations folder in Pootle, and will then update the files and database as described [here](http://docs.translatehouse.org/projects/pootle/en/stable-2.8.x/server/project_setup.html).
+To prepare them for translation, move them into `Source/lang/en.pot`.
 
-# Downloading all translations from Pootle
-To download everything, simply run `./download_everything.sh`. This will sync the Pootle stores, then download all the language folders to in/po/.
+In this `tools` folder, run the script `./before_push.lua`, which copies all English text from Ved into the `Ved-translation` folder. For the regular language files, this is a simple copy from Ved to Ved-translation. For the help, this generates .pot files based off the English .txt files.
 
-# Converting a .po to a lua language file
-After downloading everything, and making sure `Template.lua` is up-to-date, you can run `./create_lua_from_po.lua xx`. This will create a `(Language name).lua` file in the `out/` directory, which should be directly copyable to the Ved lang folder.
+Afterwards, run the script `./push.sh`, which makes a commit and pushes it.
 
-# Converting a translated lua language file to a .po
-In case someone translates the lua file directly, it can be converted to PO format. The script `create_language_po.lua` can be used for that. Add the language file to `Source/lang/`, then add it to the array in `inc.lua`. Then run the script, for example: `./create_language_po.lua xx`. Then create the language in Pootle, download the files for offline translation, and copy over the revision IDs (unless they are 0, in that case try starting translation inside Pootle or something before downloading), make a zip of the po files, and upload them again inside Pootle.
+# Downloading all translations from Weblate
+Assuming Weblate has committed and pushed all changes (check Operations > Repository maintenance to be sure), you can run `./pull.sh` to pull the `Ved-translation` repo.
+
+Then run `./after_pull.lua` to copy (and if needed, convert) them to the correct places in Ved.
