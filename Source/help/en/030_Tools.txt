@@ -28,8 +28,7 @@ place spikes on a surface with one click (or slide).
    Trinket\h#
 
 
-The trinket tool can be used to place trinkets. Please note that there is a limit
-of twenty trinkets in a level.
+The trinket tool can be used to place trinkets.
 
 \4
    Checkpoint\h#
@@ -109,8 +108,7 @@ can only be placed on the edges of a room.
 
 
 The crewmate tool can be used to place missing crewmates that can be rescued. If
-all crewmates are rescued, the level will be finished. Please note that there is
-a limit of twenty missing crewmates in a level.
+all crewmates are rescued, the level will be finished.
 
 \^6
    Start point\h#

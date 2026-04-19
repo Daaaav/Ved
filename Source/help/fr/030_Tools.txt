@@ -30,8 +30,7 @@ utiliser le sous-outil d'expansion pour placer des pointes sur un mur en un clic
    Médaille\h#
 
 
-L'outil de médaille peut être utiliser pour placer des médailles. Veuillez noter
-qu'il existe une limite de vingt médailles dans un niveau.
+L'outil de médaille peut être utiliser pour placer des médailles.
 
 \4
    Point de sauvegarde\h#
@@ -120,7 +119,6 @@ placées que sur les bords d'une salle.
 
 L'outil d'équipier peut être utilisé pour placer des équipiers disparus qui
 peuvent être secourus. Si tous les équipiers sont secourus, le niveau est terminé.
-Veuillez noter qu'il y a une limite de vingt équipiers dans un niveau.
 
 \^6
    Point de départ\h#

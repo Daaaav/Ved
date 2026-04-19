@@ -28,8 +28,7 @@ perluasan untuk menempatkan paku pada permukaan dengan satu klik (atau geser).
    Trinket/Perhiasan\h#
 
 
-Alat trinket dapat digunakan untuk meletakkan trinket. Harap dicatat bahwa ada
-batas dua puluh trinket dalam satu level.
+Alat trinket dapat digunakan untuk meletakkan trinket.
 
 \4
    Checkpoint\h#
@@ -110,8 +109,7 @@ bahwa garis warp hanya dapat ditempatkan di tepi ruangan.
 
 
 Alat crewmate dapat digunakan untuk menempatkan crewmate yang hilang yang dapat
-diselamatkan. Jika semua crewmate diselamatkan, level akan selesai. Harap dicatat
-bahwa ada batas dua puluh crewmate yang hilang dalam satu level.
+diselamatkan. Jika semua crewmate diselamatkan, level akan selesai.
 
 \^6
    Titik awal\h#

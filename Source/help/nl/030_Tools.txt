@@ -29,8 +29,7 @@ verschuiving).
    Artefact\h#
 
 
-Hiermee kun je artefacten plaatsen. Bedenk dat er maximaal honderd artefacten in
-een level geplaatst kunnen worden.
+Hiermee kun je artefacten plaatsen.
 
 \4
    Checkpoint\h#
@@ -75,7 +74,6 @@ Hiermee kun je zwaartekrachtlijnen plaatsen.
 
 Hiermee kun je tekst plaatsen.
 
-
 \^1
    Terminal\h#
 
@@ -111,8 +109,7 @@ randen van een kamer geplaatst kunnen worden.
 
 
 Hiermee kun je bemanningsleden plaatsen die gered kunnen worden. Wanneer alle
-bemanningsleden worden gered, eindigt het level. Bedenk dat er maximaal honderd
-bemanningsleden in een level geplaatst kunnen worden.
+bemanningsleden zijn gered, eindigt het level.
 
 \^6
    Startpunt\h#

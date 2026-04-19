@@ -28,8 +28,7 @@ meti pikaĵojn sur surfacon per unu klako (aŭ deŝovo).
    Kolektaĵo\h#
 
 
-Uzu ĉi tiun ilon por meti kolektaĵojn. Bonvole notu, ke estas limo
-de dudek kolektaĵoj en nivelo.
+Uzu ĉi tiun ilon por meti kolektaĵojn.
 
 \4
    Konservejo\h#
@@ -111,7 +110,7 @@ meteblaj nur ĉe la randoj de ĉambro.
 
 
 Uzu ĉi tiun ilon por meti saveblajn skipanojn. Se ĉiuj skipanoj estas savitaj,
-la nivelo finiĝos. Bonvolu noti, ke estas limo de dudek skipanoj en nivelo.
+la nivelo finiĝos.
 
 \^6
    Komencejo\h#

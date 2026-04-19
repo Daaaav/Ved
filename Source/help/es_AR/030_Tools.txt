@@ -28,8 +28,7 @@ de expander para poner espinas en una superficie en un click (o tambien deslizar
    Trinket\h#
 
 
-La herramienta de trinket se usa para poner trinkets. Porfavor note que hay un
-limite de veinte trinkets en un nivel.
+La herramienta de trinket se usa para poner trinkets.
 
 \4
    Checkpoint\h#
@@ -113,7 +112,6 @@ que las lineas de warp solo se pueden poner en los bordes de una habitación.
 
 La herramienta de compañeros se usa para poner compañeros desaparecidos que
 pueden ser rescatados. Si todos los compañeros son rescatados, el nivel terminara.
-Porfavor note que hay un limite de veinte compañeros desaparecidos en un nivel.
 
 \^6
    Punto de comienzo\h#
