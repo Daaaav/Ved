@@ -53,7 +53,7 @@ for _,lang_code in pairs(languages) do
 					if entry.msgctxt == "LHS." .. id .. ".subj" then
 						help_subj = str
 					end
-				elseif entry.msgid ~= nil then
+				elseif entry.msgid ~= nil and entry.msgid ~= "" then
 					-- No key (ctxt), just add this to our dictionary.
 					if str == "" or entry.fuzzy then
 						-- Just use the English string if it's untranslated
