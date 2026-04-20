@@ -1,5 +1,5 @@
 info = {
-	name = "Default",
-	author = "Reese Rivers and Dav999",
-	description = "Ved's default theme from Ved 2.0 onwards."
+	name = L.THEME_DEFAULT_NAME,
+	author = "Reese Rivers, Dav999",
+	description = L.THEME_DEFAULT_DESC
 }

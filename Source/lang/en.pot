@@ -1753,7 +1753,11 @@ msgid "Only show *$1"
 msgstr ""
 
 msgctxt "L.DOFILTERDIR"
-msgid "Only show directories"
+msgid "Only show folders"
+msgstr ""
+
+msgctxt "L.CREATENEWFOLDER"
+msgid "Create new folder"
 msgstr ""
 
 msgctxt "L.FILEDIALOGLUV"
@@ -2333,6 +2337,30 @@ msgstr ""
 
 msgctxt "L.INACTIVETHEMES"
 msgid "Inactive themes"
+msgstr ""
+
+msgctxt "L.THEME_DEFAULT_NAME"
+msgid "Default"
+msgstr ""
+
+msgctxt "L.THEME_DEFAULT_DESC"
+msgid "Ved's default theme from Ved 2.0 onwards."
+msgstr ""
+
+msgctxt "L.THEME_CLASSIC_NAME"
+msgid "Classic"
+msgstr ""
+
+msgctxt "L.THEME_CLASSIC_DESC"
+msgid "Ved's classic theme, that was used in versions 1.x.x."
+msgstr ""
+
+msgctxt "L.THEME_VVVVVV_NAME"
+msgid "VVVVVV"
+msgstr ""
+
+msgctxt "L.THEME_VVVVVV_DESC"
+msgid "A theme which makes Ved look like VVVVVV's editor."
 msgstr ""
 
 msgctxt "L.SPECIALROOMNAMES_TITLE"

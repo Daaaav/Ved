@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 02:55+0000\n"
-"PO-Revision-Date: 2026-04-18 03:01+0000\n"
+"PO-Revision-Date: 2026-04-20 16:34+0000\n"
 "Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -1804,8 +1804,12 @@ msgid "Only show *$1"
 msgstr "Alleen *$1 tonen"
 
 msgctxt "L.DOFILTERDIR"
-msgid "Only show directories"
+msgid "Only show folders"
 msgstr "Alleen mappen tonen"
+
+msgctxt "L.CREATENEWFOLDER"
+msgid "Create new folder"
+msgstr "Nieuwe map maken"
 
 msgctxt "L.FILEDIALOGLUV"
 msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
@@ -2409,6 +2413,30 @@ msgstr "Actieve thema's"
 msgctxt "L.INACTIVETHEMES"
 msgid "Inactive themes"
 msgstr "Inactieve thema's"
+
+msgctxt "L.THEME_DEFAULT_NAME"
+msgid "Default"
+msgstr "Standaard"
+
+msgctxt "L.THEME_DEFAULT_DESC"
+msgid "Ved's default theme from Ved 2.0 onwards."
+msgstr "Het standaardthema vanaf Ved 2.0."
+
+msgctxt "L.THEME_CLASSIC_NAME"
+msgid "Classic"
+msgstr "Klassiek"
+
+msgctxt "L.THEME_CLASSIC_DESC"
+msgid "Ved's classic theme, that was used in versions 1.x.x."
+msgstr "Het klassieke thema van Ved dat werd gebruikt in versie 1.x.x."
+
+msgctxt "L.THEME_VVVVVV_NAME"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.THEME_VVVVVV_DESC"
+msgid "A theme which makes Ved look like VVVVVV's editor."
+msgstr "Een thema dat Ved meer laat lijken op VVVVVV's editor."
 
 msgctxt "L.SPECIALROOMNAMES_TITLE"
 msgid "Special roomnames"

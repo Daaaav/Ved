@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-04-20 15:23+0000\n"
+"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 3.19.3\n"
+"X-Generator: Weblate 5.17\n"
 
 #. If you're making a translation, feel free to set this to something like "Translation made by (you)".
 msgctxt "L.TRANSLATIONCREDIT"
@@ -1806,8 +1806,13 @@ msgid "Only show *$1"
 msgstr "Seulement montrer *$1"
 
 msgctxt "L.DOFILTERDIR"
-msgid "Only show directories"
+msgid "Only show folders"
 msgstr "Seulement montrer les dossiers"
+
+#, fuzzy
+msgctxt "L.CREATENEWFOLDER"
+msgid "Create new folder"
+msgstr "Créer une nouvelle note"
 
 msgctxt "L.FILEDIALOGLUV"
 msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
@@ -2416,6 +2421,31 @@ msgstr ""
 
 msgctxt "L.INACTIVETHEMES"
 msgid "Inactive themes"
+msgstr ""
+
+msgctxt "L.THEME_DEFAULT_NAME"
+msgid "Default"
+msgstr ""
+
+msgctxt "L.THEME_DEFAULT_DESC"
+msgid "Ved's default theme from Ved 2.0 onwards."
+msgstr ""
+
+msgctxt "L.THEME_CLASSIC_NAME"
+msgid "Classic"
+msgstr ""
+
+msgctxt "L.THEME_CLASSIC_DESC"
+msgid "Ved's classic theme, that was used in versions 1.x.x."
+msgstr ""
+
+#, fuzzy
+msgctxt "L.THEME_VVVVVV_NAME"
+msgid "VVVVVV"
+msgstr "VVVVVV"
+
+msgctxt "L.THEME_VVVVVV_DESC"
+msgid "A theme which makes Ved look like VVVVVV's editor."
 msgstr ""
 
 msgctxt "L.SPECIALROOMNAMES_TITLE"

@@ -1,7 +1,7 @@
 info = {
-	name = "Classic",
+	name = L.THEME_CLASSIC_NAME,
 	author = "Dav999",
-	description = "Ved's classic theme, that was used in versions 1.x.x."
+	description = L.THEME_CLASSIC_DESC
 }
 
 function draw_button(...)

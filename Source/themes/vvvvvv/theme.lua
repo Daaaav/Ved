@@ -1,8 +1,8 @@
 
 info = {
-	name = "VVVVVV",
+	name = L.THEME_VVVVVV_NAME,
 	author = "NyakoFox",
-	description = "A theme which tries to make Ved look like VVVVVV's editor."
+	description = L.THEME_VVVVVV_DESC
 }
 
 function draw_nineslice(asset, x, y, x2, y2)
