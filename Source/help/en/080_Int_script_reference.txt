@@ -140,6 +140,17 @@ Changes the player's color
 
 color - cyan/player/blue/red/yellow/green/purple/teleporter
 
+changeregion¤(id)\w#h
+
+Change the current minimap region to the one with the given ID (0 is the default
+map).
+
+This will restrict the minimap to the area previously defined with ¤#setregion(id,x1,y1,x2,y2)¤setregion¤. If\nLwl&Z
+there is a custom graphic ¤regionXXX.png¤ corresponding with the region ID (e.g.\nn&Z
+region1.png¤, ¤region2.png¤, etc.), then that image will be used for the minimap.\n&Znn&Z
+
+This command was added in 2.5.\g
+
 changerespawncolour¤(color)\w#h
 
 Changes the color the player respawns with upon death.
@@ -211,7 +222,7 @@ Same as ¤iftrinketsless(n,script)¤ in simplified scripting\nn&Z
 
 custommap¤(on/off)\w#h
 
-The internal variant of the map command
+The internal variant of the ¤map¤ command\nn&Z
 
 customposition¤(type,above/below)\w#h
 
@@ -265,6 +276,12 @@ Turns on Secret Lab mode.
 
 2.2 AND BELOW: Actually unlocks the Secret Lab, which is probably an unwanted
 effect for a custom level to have.
+
+everybodyhappy¤()\w#h
+
+The opposite of ¤#everybodysad()¤everybodysad¤: makes all crewmates happy.\nLwl&Z
+
+This command was added in 2.5.\g
 
 everybodysad¤()\w#h
 
@@ -350,13 +367,14 @@ teleporter to show the map, game to hide it (shows teleporters of the main game)
 
 x - teleporter/game
 
-gamestate¤(state)\o#h
+gamestate¤(state,statedelay)\o#h
 
 Change the current gamestate to the specified state number.
 
 state - The gamestate to jump to
+statedelay - The delay before the gamestate is activated, 0 by default
 
-A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤.\gLClg
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤. The ¤statedelay¤ argument was added in 2.5.\gLClgn&Zg
 
 gotoposition¤(x,y,gravity)\w#h
 
@@ -461,6 +479,17 @@ However, it checks against the greatest number of trinkets that you have ever
 gotten during a single playthrough of the main game, NOT the amount of trinkets
 you actually have. Loads an internal (main game) script
 
+ifversion¤(version,script)\w#h
+
+Check if the current version of the game is the specified version or greater, and
+if so, jump to the given custom script.
+
+version - The minimum version number, separated with dots (e.g. ¤2.6¤ or ¤2.6.0¤)\nn&Znn&Z
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.5. By design, it works in any version (from 2.0\g
+onward) to check any version that is 2.5 or higher.\g
+
 ifwarp¤(x,y,dir,script)\w#h
 
 If the warpdir for room ¤(x,y)¤, 1-indexed, is set to dir, go to (simplified) script\nn&Z
@@ -501,6 +530,20 @@ loop\w#h
 
 Put this at the end of a loop block started with the ¤#do(times)¤do¤ command.\nLwl&Z
 
+mapexplored¤(all/none)\w#h
+
+Reveals or hides the whole map, all at once.
+
+Useful so you don't have to use ¤#showcoordinates(x,y)¤showcoordinates¤ or ¤#hidecoordinates(x,y)¤hidecoordinates¤ on all 400\gLwl&ZgLwl&Zg
+rooms.\g
+This command was added in 2.5.\g
+
+mapreveal¤(on/off)\w#h
+
+Enables or disables the map being revealed when the player enters a room.
+
+This command was added in 2.5.\g
+
 missing¤(color)\b#h
 
 Makes someone missing
@@ -534,7 +577,9 @@ n - Internal song number
 
 playef¤(sound)\w#h
 
-Play a sound effect.
+Play a sound effect by numerical ID.
+Since 2.5, sound ID can be a filename for custom sounds, e.g. ¤hello.wav¤ is\nn&Z
+playef(hello)¤. Spaces are stripped and case is lowered.\n&Z
 
 sound - Sound ID
 
@@ -546,9 +591,11 @@ position¤(type,above/below)\w#h
 
 Overrides the x,y of the text command and thus sets the position of the text box.
 
-type - center/centerx/centery, or a color name cyan/player/blue/red/yellow/green/
-purple
+type - center/centerx/centery/absolute, or a color name cyan/player/blue/red/
+yellow/green/purple
 above/below - Only used if type is a color name
+
+"absolute" was added in 2.5.\g
 
 purplecontrol\b#h
 
@@ -559,6 +606,14 @@ redcontrol\b#h
 
 Start a conversation with Vermilion just like when you meet him in the main game
 and press ENTER. Also creates an activity zone afterwards.
+
+removeregion¤(id)\w#h
+
+Remove the region with the given ID, originally set with ¤#setregion(id,x1,y1,x2,y2)¤setregion¤.\nLwl&Z
+
+id - Region ID
+
+This command was added in 2.5.\g
 
 rescued¤(color)\b#h
 
@@ -571,7 +626,10 @@ the last checkpoint.
 
 restoreplayercolour¤()\w#h
 
-Changes the player's color back to cyan
+Changes the player's color back to default
+
+Since 2.5, the player color for a level can be changed to a different color than\g
+cyan.\g
 
 resumemusic¤()\w#h
 
@@ -622,6 +680,15 @@ all - If ¤all¤ is specified (literally the word ¤all¤), then this retroactiv
 affects all textboxes that are already on screen. Otherwise simply leave this out.
 
 This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\gn&Zg
+
+setregion¤(id,x1,y1,x2,y2)\w#h
+
+Sets the minimap region with the given ID to the portion specified by the two
+corners (x1,y1) and (x2,y2). Can be unset with ¤#removeregion(id)¤removeregion¤.\nLwl&Z
+
+id - Region ID (1-400)
+
+These room coordinates are 0-indexed. This command was added in 2.5.\g
 
 setroomname\w#h
 
@@ -720,7 +787,7 @@ Does nothing in custom levels.
 text¤(color,x,y,lines)\w#h
 
 Store a text box in memory with color, position and number of lines. Usually, the
-position command is used after the text command (and its lines of text), which
+#position(type,above/below)¤position¤ command is used after the text command (and its lines of text), which\Lwl&Z
 will overwrite the coordinates given here, so these are usually left as 0.
 
 color - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
@@ -777,6 +844,12 @@ text box.
 image - levelcomplete/gamecomplete, or an unknown value to remove the image
 
 This command was added in 2.4.\g
+
+textoutline¤(on/off/default)\w#h
+
+Turn the text outline for a text box on, off, or what the player's setting is
+
+This command was added in 2.5.\g
 
 textsprite¤(x,y,sprite,color)\w#h
 

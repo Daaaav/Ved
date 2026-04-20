@@ -91,6 +91,13 @@ playremix\h#w
 
 Plays the remix of Predestined Fate as music.
 
+sound¤(id)\h#w
+
+Plays a sound effect.
+For the list of sound effect numbers, refer to the "Lists reference" article.
+Since 2.5, sound ID can be a filename for custom sounds, e.g. ¤hello.wav¤ is\nn&Z
+playef(hello)¤. Spaces are stripped and case is lowered.\n&Z
+
 flash\h#w
 
 Flashes the screen white, makes a bang sound and shakes the screen for a bit.
@@ -162,3 +169,14 @@ same text in a single script, this command can make them have unique translation
 Place it before a textbox.
 
 case - A number between 1 and 255
+
+ifversion¤(version,script)\w#h
+
+Check if the current version of the game is the specified version or greater, and
+if so, jump to the given custom script.
+
+version - The minimum version number, separated with dots (e.g. ¤2.6¤ or ¤2.6.0¤)\nn&Znn&Z
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.5. By design, it works in any version (from 2.0\g
+onward) to check any version that is 2.5 or higher.\g
