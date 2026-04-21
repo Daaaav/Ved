@@ -459,6 +459,43 @@ function script_context(text, textlinestogo)
 			end
 			return "track", track, nil, nil
 		end
+	elseif table.contains({"changecolour", "changeplayercolour", "changerespawncolour"}, parts[1]) then
+		-- Simple "crewmate with color" display
+
+		if parts[2] == nil then
+			return nil
+		end
+
+		if parts[1] == "changecolour" then
+			-- Second argument is the color
+			return "entity", 0, get_createcrewman_r(parts[3]), nil
+		end
+
+		-- First argument is the color
+		return "entity", 0, get_createcrewman_r(parts[2]), nil
+	elseif table.contains({"textsprite", "changetile"}, parts[1]) then
+		-- Slightly more complicated "entity" display
+
+		local color = 0
+		local tile = 0
+
+		if parts[1] == "changetile" then
+			if parts[2] == nil then
+				return nil, nil, nil, nil
+			end
+
+			color = get_createcrewman_r(parts[2])
+			tile = anythingbutnil0(parts[3])
+		elseif parts[1] == "textsprite" then
+			if parts[2] == nil or parts[3] == nil or parts[4] == nil then
+				return nil, nil, nil, nil
+			end
+
+			color = get_createcrewman_r(parts[5])
+			tile = anythingbutnil0(parts[4])
+		end
+
+		return "entity", tile, color, nil
 	else
 		return nil, nil, nil, nil
 	end
