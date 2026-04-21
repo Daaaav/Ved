@@ -615,5 +615,20 @@ return function()
 				)
 			end
 		end
+	elseif context == "entity" then
+		-- Sane "VVVVVVish" defaults
+		local tile = anythingbutnil0(carg1)
+		local color = anythingbutnil0(carg2)
+
+		local x = love.graphics.getWidth() - (128 - 8) + 24
+		local y = 8 + (24 * 12) + 4
+
+		v6_setcol(color)
+
+		drawentitysprite(tile, x, y)
+
+		love.graphics.setColor(128,128,128)
+		love.graphics.rectangle("line", x - .5, y - .5, 64, 64)
+		love.graphics.setColor(255,255,255)
 	end
 end
