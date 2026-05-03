@@ -1849,6 +1849,10 @@ msgstr ""
 "\n"
 "$1"
 
+msgctxt "L.ASSETS_FOLDER_RENAME"
+msgid "The assets folder will also be renamed to \"$1\"."
+msgstr ""
+
 msgctxt "L.CREATE_VVVVVV_FOLDER"
 msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
 msgstr "يبدو أن مجلد اللعبة VVVVVV غير موجود. هل تود إنشاءه؟"
@@ -1860,6 +1864,17 @@ msgstr "يبدو أن مجلد المستويات غير موجود. هل تود
 msgctxt "L.CREATE_FOLDER_FAIL"
 msgid ""
 "Unable to create folder.\n"
+"\n"
+"$1"
+msgstr ""
+"فشل إنشاء المجلد.\n"
+"\n"
+"$1"
+
+#, fuzzy
+msgctxt "L.RENAME_FOLDER_FAIL"
+msgid ""
+"Unable to rename folder.\n"
 "\n"
 "$1"
 msgstr ""
