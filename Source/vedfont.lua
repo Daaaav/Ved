@@ -810,7 +810,7 @@ function cVedFont:getWrap(text, max_width)
 			line_width = 0
 
 			-- Not a mistake - the bidi system changes a newline to a null terminator
-			if used_buf[print_buf_i] == 0 then
+			if used_buf[used_i] == 0 then
 				break
 			end
 
