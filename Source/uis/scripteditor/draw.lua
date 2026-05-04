@@ -313,22 +313,24 @@ return function()
 			-- Usages
 			local uentityuses, uloadscriptuses, uscriptuses = find_script_references(scriptname)
 
-			local roomsstr, scriptsstr = "", ""
-			local co = not s.coords0 and 1 or 0 -- coordoffset
+			local roomsstr, scriptsstr = {}, {}
 
 			for k,v in pairs(uentityuses) do
-				roomsstr = roomsstr .. (roomsstr == "" and "" or ", ") .. "("
-					.. (math.floor(level.entities[v].x/40)+co) .. ","
-					.. (math.floor(level.entities[v].y/30)+co) .. ")"
+				table.insert(roomsstr,
+					disp_room_coords(
+						math.floor(level.entities[v].x/40),
+						math.floor(level.entities[v].y/30)
+					)
+				)
 			end
 
 			for k,v in pairs(uscriptuses) do
-				scriptsstr = scriptsstr .. (scriptsstr == "" and "" or ", ") .. v[1] .. ":" .. v[2]
+				table.insert(scriptsstr, v[1] .. ":" .. v[2])
 			end
 
 			dialog.create(
-				langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, roomsstr}) .. "\n\n"
-				.. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, scriptsstr})
+				langkeys(L_PLU.SCRIPTUSAGESROOMS, {#uentityuses, table.concat(roomsstr, ", ")}) .. "\n\n"
+				.. langkeys(L_PLU.SCRIPTUSAGESSCRIPTS, {#uscriptuses, table.concat(scriptsstr, ", ")})
 			)
 		elseif onrbutton(3) then
 			-- Copy script
@@ -512,16 +514,8 @@ return function()
 				theme:draw(image.covered_80x60, map_x, map_y)
 			end
 
-			local disp_rx, disp_ry
-			if s.coords0 then
-				disp_rx = rx
-				disp_ry = ry
-			else
-				disp_rx = rx+1
-				disp_ry = ry+1
-			end
 			if context == "room" then
-				font_8x8:printf(disp_rx .. "," .. disp_ry, map_x, map_y+62, 80, "center")
+				font_8x8:printf(disp_room_coords(rx, ry), map_x, map_y+62, 80, "center")
 			elseif context == "roomcoords" then
 				font_8x8:printf(anythingbutnil(cx) .. "," .. anythingbutnil(cy), map_x, map_y+62, 80, "center")
 			end

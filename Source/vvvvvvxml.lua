@@ -469,8 +469,11 @@ function loadlevel(path)
 			lvl.roommetadata[ry][rx].auto2mode = 0
 
 			if oldFCcount < FC then
-				local co = not s.coords0 and 1 or 0
-				cons_fc(FClist, langkeys(L_PLU.ROOMINVALIDPROPERTIES , {rx+co, ry+co, (FC-oldFCcount)}, 3))
+				cons_fc(FClist,
+					langkeys(L_PLU.ROOMINVALIDPROPERTIES,
+						{disp_room_coords(rx, ry), (FC-oldFCcount)}, 2
+					)
+				)
 			end
 
 			-- If you select a higher tilecol in space station and then go to another tileset,

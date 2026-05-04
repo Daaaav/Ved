@@ -114,7 +114,7 @@ function dialog.form.exportmap_make()
 		{"", 0, 3, 40, L.TOPLEFT, DF.LABEL},
 		{"", wh_pos, 3, 40, L.WIDTHHEIGHT, DF.LABEL},
 		{"x1", 0, 4, 4, co},
-		{"", 4, 4, 1, ",", DF.LABEL},
+		{"", 4, 4, 1, s.coords0 and "," or ";", DF.LABEL},
 		{"y1", 5, 4, 4, co},
 		{"w", wh_pos, 4, 4, level.metadata.mapwidth},
 		{"h", wh_pos+5, 4, 4, level.metadata.mapheight},
@@ -122,8 +122,8 @@ function dialog.form.exportmap_make()
 		{
 			"bottomright_label", br_pos, 4, 40,
 			function(_, fields)
-				local x1, y1, w, h, x2, y2 = fix_map_export_input(fields)
-				return x2 .. "," .. y2
+				local x1, y1, w, h, x2, y2 = fix_map_export_input(fields, true)
+				return disp_room_coords(x2, y2)
 			end, DF.LABEL
 		},
 		{"transparentbg", 0, 6, 2+font_ui:getWidth(L.TRANSPARENTMAPBG)/8, false, DF.CHECKBOX},

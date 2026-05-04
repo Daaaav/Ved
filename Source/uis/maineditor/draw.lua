@@ -945,11 +945,7 @@ return function()
 						local x, y = math.floor(ent.x/40), math.floor(ent.y/30)
 						if x < 0 then x = 0 end
 						if y < 0 then y = 0 end
-						if not s.coords0 then
-							x = x + 1
-							y = y + 1
-						end
-						table.insert(trinkets, "(" .. x .. "," .. y .. ")")
+						table.insert(trinkets, disp_room_coords(x, y))
 					end
 				end
 
@@ -966,11 +962,7 @@ return function()
 						local x, y = math.floor(ent.x/40), math.floor(ent.y/30)
 						if x < 0 then x = 0 end
 						if y < 0 then y = 0 end
-						if not s.coords0 then
-							x = x + 1
-							y = y + 1
-						end
-						table.insert(crewmates, "(" .. x .. "," .. y .. ")")
+						table.insert(crewmates, disp_room_coords(x, y))
 					end
 				end
 
@@ -1096,15 +1088,13 @@ return function()
 
 	-- And coordinates.
 	love.graphics.setColor(128,128,128)
-	if s.coords0 then
-		tinyfont:print("0", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
-		love.graphics.setColor(255,255,255)
-		font_8x8:printf("(" .. roomx .. "," .. roomy .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
-	else
-		tinyfont:print("1", love.graphics.getWidth()-4, love.graphics.getHeight()-16-17)
-		love.graphics.setColor(255,255,255)
-		font_8x8:printf("(" .. (roomx+1) .. "," .. (roomy+1) .. ")", love.graphics.getWidth()-56, love.graphics.getHeight()-16-10, 56, "right")
-	end
+	tinyfont:print(s.coords0 and "0" or "1", love.graphics.getWidth()-4, love.graphics.getHeight()-18-17)
+	love.graphics.setColor(255,255,255)
+	font_8x8:printf(
+		disp_room_coords(roomx, roomy),
+		love.graphics.getWidth()-56, love.graphics.getHeight()-18-10,
+		56, "right"
+	)
 
 	local cursorx, cursory = maineditor_get_cursor()
 	local cursor_is_onscreen = cursorx >= 0 and cursorx <= 39 and cursory >= 0 and cursory <= 29
@@ -1122,23 +1112,23 @@ return function()
 		and tile < total_tiles then
 			font_ui:printf(
 				langkeys(L.TILE, {tile}),
-				love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right"
+				love.graphics.getWidth()-128, love.graphics.getHeight()-9-10, 128, "right"
 			)
 			font_ui:printf(
 				(issolid(tile, usedtilesets[level:get_roommetadata(roomx, roomy).tileset]) and L.SOLID or L.NOTSOLID),
 				love.graphics.getWidth()-128, love.graphics.getHeight()-10, 128, "right"
 			)
 		else
-			font_ui:printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-8-10, 128, "right")
+			font_ui:printf(langkeys(L.TILE, {"----"}), love.graphics.getWidth()-128, love.graphics.getHeight()-9-10, 128, "right")
 		end
 	else
-		local tile_coord = "[--,--]"
-		local pixel_coord = "<---,--->"
+		local tile_coord = "--,--"
+		local pixel_coord = "---,---"
 		if cursor_is_onscreen then
-			tile_coord = "[" .. cursorx .. "," .. cursory .. "]"
-			pixel_coord = "<" .. (cursorx*8) .. "," .. (cursory*8) .. ">"
+			tile_coord = "" .. cursorx .. "," .. cursory .. ""
+			pixel_coord = "" .. (cursorx*8) .. "," .. (cursory*8) .. ""
 		end
-		font_8x8:printf(tile_coord, love.graphics.getWidth()-56, love.graphics.getHeight()-8-10, 56, "right")
+		font_8x8:printf(tile_coord, love.graphics.getWidth()-56, love.graphics.getHeight()-9-10, 56, "right")
 		font_8x8:printf(pixel_coord, love.graphics.getWidth()-72, love.graphics.getHeight()-10, 72, "right")
 	end
 
@@ -1306,15 +1296,12 @@ return function()
 		end
 	else
 		-- Some text below the small tiles picker-- how many trinkets and crewmates do we have?
-		theme:draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-16-10)
-		theme:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-8-10)
+		theme:draw(image.stat_trinkets, 640+screenoffset+2, love.graphics.getHeight()-18-10)
+		theme:draw(image.stat_crewmates, 640+screenoffset+2, love.graphics.getHeight()-9-10)
 		theme:draw(image.stat_entities, 640+screenoffset+2, love.graphics.getHeight()-10)
-		font_8x8:printf(
-			fixdig(anythingbutnil(level.count.trinkets), 3, "") .. "\n"
-			.. fixdig(anythingbutnil(level.count.crewmates), 3, "") .. "\n"
-			.. fixdig(anythingbutnil(level.count.entities), 5, ""),
-			640+screenoffset+11, love.graphics.getHeight()-16-10, 128, "left"
-		)
+		font_8x8:print(fixdig(anythingbutnil(level.count.trinkets), 3, ""), 640+screenoffset+12, love.graphics.getHeight()-18-10)
+		font_8x8:print(fixdig(anythingbutnil(level.count.crewmates), 3, ""), 640+screenoffset+12, love.graphics.getHeight()-9-10)
+		font_8x8:print(fixdig(anythingbutnil(level.count.entities), 5, ""), 640+screenoffset+12, love.graphics.getHeight()-10)
 	end
 
 	if coordsdialog.active then

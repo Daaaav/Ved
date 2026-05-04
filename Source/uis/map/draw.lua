@@ -235,13 +235,7 @@ return function()
 
 	local bar_w = love.graphics.getWidth()-screenoffset-640
 	if (hoverx ~= nil) and (hovery ~= nil) then
-		local coordtext
-		if s.coords0 then
-			coordtext = "(" .. hoverx .. "," .. hovery .. ")"
-		else
-			coordtext = "(" .. (hoverx+1) .. "," .. (hovery+1) .. ")"
-		end
-		font_8x8:printf(coordtext, screenoffset+640, 1, bar_w, font_level:align_start())
+		font_8x8:printf(disp_room_coords(hoverx, hovery), screenoffset+640, 1, bar_w, font_level:align_start())
 	end
 	if (hovername ~= nil) then
 		font_level:printf(hovername, screenoffset+640, 12, bar_w, font_level:align_start())

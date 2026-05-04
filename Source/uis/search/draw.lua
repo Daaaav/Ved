@@ -54,11 +54,7 @@ return function()
 		if k <= showresults and 32*k+16+searchscroll+30 >= 48 and 32*k+16+searchscroll <= love.graphics.getHeight() then
 			love.graphics.setScissor(8+284+4, math.max(48, 32*k+16+searchscroll), 284, 30)
 			hoverrectangle(128,128,128,128, 8+284+4, 32*k+16+searchscroll, 284, 30)
-			if s.coords0 then
-				font_ui:print("(" .. v.x .. "," .. v.y .. ")", 12+284+4, 32*k+16+searchscroll+5)
-			else
-				font_ui:print("(" .. (v.x+1) .. "," .. (v.y+1) .. ")", 12+284+4, 32*k+16+searchscroll+5)
-			end
+			font_ui:print(disp_room_coords(v.x, v.y), 12+284+4, 32*k+16+searchscroll+5)
 			highlightresult(v.name, previous_search, 12+284+4, 32*k+16+searchscroll+8+5)
 
 			if nodialog and not mousepressed and love.mouse.isDown("l") and mouseon(8+284+4, 32*k+16+searchscroll, 284, 30) then

@@ -26,6 +26,10 @@ function love.keyreleased(key)
 		returnpressed = false
 	end
 
+	if coordsdialog.active then
+		coordsdialog.keyreleased()
+	end
+
 	if RCMactive or dialog.is_open() then
 		return
 	end

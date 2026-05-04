@@ -2477,8 +2477,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgctxt "L_PLU.ROOMINVALIDPROPERTIES"
-msgid "LevelMetadata for room $1,$2 has $3 invalid property!"
-msgid_plural "LevelMetadata for room $1,$2 has $3 invalid properties!"
+msgid "LevelMetadata for room $1 has $2 invalid property!"
+msgid_plural "LevelMetadata for room $1 has $2 invalid properties!"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -2998,35 +2998,35 @@ msgid "Level music was changed from $1 to $2"
 msgstr ""
 
 msgctxt "diffmessages.rooms.added1"
-msgid "Added ($1,$2) ($3)\\G"
+msgid "Added $1 ($2)\\G"
 msgstr ""
 
 msgctxt "diffmessages.rooms.added2"
-msgid "Added ($1,$2) ($3 -> $4)\\G"
+msgid "Added $1 ($2 -> $3)\\G"
 msgstr ""
 
 msgctxt "diffmessages.rooms.changed1"
-msgid "Changed ($1,$2) ($3)\\Y"
+msgid "Changed $1 ($2)\\Y"
 msgstr ""
 
 msgctxt "diffmessages.rooms.changed2"
-msgid "Changed ($1,$2) ($3 -> $4)\\Y"
+msgid "Changed $1 ($2 -> $3)\\Y"
 msgstr ""
 
 msgctxt "diffmessages.rooms.cleared1"
-msgid "Cleared all tiles in ($1,$2) ($3)\\R"
+msgid "Cleared all tiles in $1 ($2)\\R"
 msgstr ""
 
 msgctxt "diffmessages.rooms.cleared2"
-msgid "Cleared all tiles in ($1,$2) ($3 -> $4)\\R"
+msgid "Cleared all tiles in $1 ($2 -> $3)\\R"
 msgstr ""
 
 msgctxt "diffmessages.roommetadata.changed0"
-msgid "Room $1,$2:"
+msgid "Room $1:"
 msgstr ""
 
 msgctxt "diffmessages.roommetadata.changed1"
-msgid "Room $1,$2 ($3):"
+msgid "Room $1 ($2):"
 msgstr ""
 
 msgctxt "diffmessages.roommetadata.roomname"
@@ -3074,23 +3074,23 @@ msgid "Warp direction changed from $1 to $2\\Y"
 msgstr ""
 
 msgctxt "diffmessages.entities.added"
-msgid "Added entity type $1 at position $2,$3 in room ($4,$5)\\G"
+msgid "Added entity type $1 at position $2,$3 in room $4\\G"
 msgstr ""
 
 msgctxt "diffmessages.entities.removed"
-msgid "Removed entity type $1 from position $2,$3 in room ($4,$5)\\R"
+msgid "Removed entity type $1 from position $2,$3 in room $4\\R"
 msgstr ""
 
 msgctxt "diffmessages.entities.changed"
-msgid "Changed entity type $1 at position $2,$3 in room ($4,$5)\\Y"
+msgid "Changed entity type $1 at position $2,$3 in room $4\\Y"
 msgstr ""
 
 msgctxt "diffmessages.entities.changedtype"
-msgid "Changed entity type $1 to type $2 at position $3,$4 in room ($5,$6)\\Y"
+msgid "Changed entity type $1 to type $2 at position $3,$4 in room $5\\Y"
 msgstr ""
 
 msgctxt "diffmessages.entities.multiple1"
-msgid "Changed entities at position $1,$2 in room ($3,$4):\\Y"
+msgid "Changed entities at position $1,$2 in room $3:\\Y"
 msgstr ""
 
 msgctxt "diffmessages.entities.multiple2"
@@ -3098,11 +3098,11 @@ msgid "to:"
 msgstr ""
 
 msgctxt "diffmessages.entities.addedmultiple"
-msgid "Added entities at position $1,$2 in room ($3,$4):\\G"
+msgid "Added entities at position $1,$2 in room $3:\\G"
 msgstr ""
 
 msgctxt "diffmessages.entities.removedmultiple"
-msgid "Removed entities at position $1,$2 in room ($3,$4):\\R"
+msgid "Removed entities at position $1,$2 in room $3:\\R"
 msgstr ""
 
 msgctxt "diffmessages.entities.entity"

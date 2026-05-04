@@ -1511,7 +1511,6 @@ function compare_level_differences(second_level_name)
 
 	-- R O O M S
 	pagetext = diffmessages.pages.changedrooms .. "\\wh#\n\n"
-	local co = not s.coords0 and 1 or 0 -- coordoffset
 
 	if level2.metadata.mapwidth ~= level.metadata.mapwidth
 	or level2.metadata.mapheight ~= level.metadata.mapheight then
@@ -1547,17 +1546,17 @@ function compare_level_differences(second_level_name)
 				if leftblank then
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.added1,
-						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+						{disp_room_coords(rx, ry), level2:get_roommetadata(rx, ry).roomname}
 					) .. "\n"
 				elseif rightblank then
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.cleared1,
-						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+						{disp_room_coords(rx, ry), level2:get_roommetadata(rx, ry).roomname}
 					) .. "\n"
 				else
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.changed1,
-						{rx+co, ry+co, level2:get_roommetadata(rx, ry).roomname}
+						{disp_room_coords(rx, ry), level2:get_roommetadata(rx, ry).roomname}
 					) .. "\n"
 				end
 			elseif changed then -- room names not the same
@@ -1565,7 +1564,7 @@ function compare_level_differences(second_level_name)
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.added2,
 						{
-							rx+co, ry+co,
+							disp_room_coords(rx, ry),
 							level2:get_roommetadata(rx, ry).roomname,
 							level:get_roommetadata(rx, ry).roomname
 						}
@@ -1574,7 +1573,7 @@ function compare_level_differences(second_level_name)
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.cleared2,
 						{
-							rx+co, ry+co,
+							disp_room_coords(rx, ry),
 							level2:get_roommetadata(rx, ry).roomname,
 							level:get_roommetadata(rx, ry).roomname
 						}
@@ -1583,7 +1582,7 @@ function compare_level_differences(second_level_name)
 					pagetext = pagetext .. langkeys(
 						diffmessages.rooms.changed2,
 						{
-							rx+co, ry+co,
+							disp_room_coords(rx, ry),
 							level2:get_roommetadata(rx, ry).roomname,
 							level:get_roommetadata(rx, ry).roomname
 						}
@@ -1610,24 +1609,17 @@ function compare_level_differences(second_level_name)
 				end
 			end
 
-			local lrmx, lrmy = rx, ry
-
-			if not s.coords0 then
-				lrmx = lrmx + 1
-				lrmy = lrmy + 1
-			end
-
 			if changed and rmd2.roomname ~= rmd1.roomname then
 				-- We're already going to show that the room name has changed
 				pagetext = pagetext .. langkeys(
 					diffmessages.roommetadata.changed0,
-					{lrmx, lrmy}
+					{disp_room_coords(rx, ry)}
 				) .. "\n"
 			elseif changed then
 				-- We're not, so label this
 				pagetext = pagetext .. langkeys(
 					diffmessages.roommetadata.changed1,
-					{lrmx, lrmy, rmd2.roomname}
+					{disp_room_coords(rx, ry), rmd2.roomname}
 				) .. "\\\n"
 			end
 
@@ -1732,13 +1724,13 @@ function compare_level_differences(second_level_name)
 		if #v > 1 then
 			-- This is what we're looking for.
 			local bkx, bky = v[1].x % 40, v[1].y % 30
-			local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
+			local eroomx, eroomy = (v[1].x-bkx)/40, (v[1].y-bky)/30
 
 			if locentities2[k] == nil then
 				-- Easy, everything was added.
 				pagetext = pagetext .. langkeys(
 					diffmessages.entities.addedmultiple,
-					{bkx, bky, eroomx, eroomy}
+					{bkx, bky, disp_room_coords(eroomx, eroomy)}
 				) .. "\n"
 				for k2,v2 in pairs(v) do
 					pagetext = pagetext .. "  " .. langkeys(
@@ -1778,7 +1770,7 @@ function compare_level_differences(second_level_name)
 					-- Different situation
 					pagetext = pagetext .. langkeys(
 						diffmessages.entities.multiple1,
-						{bkx, bky, eroomx, eroomy}
+						{bkx, bky, disp_room_coords(eroomx, eroomy)}
 					) .. "\n"
 					-- List all entities at this spot from original level
 					for k2,v2 in pairs(locentities2[k]) do
@@ -1810,11 +1802,11 @@ function compare_level_differences(second_level_name)
 		if #v > 1 then
 			-- These were all removed, else we'd have seen these above
 			local bkx, bky = v[1].x % 40, v[1].y % 30
-			local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
+			local eroomx, eroomy = (v[1].x-bkx)/40, (v[1].y-bky)/30
 
 			pagetext = pagetext .. langkeys(
 				diffmessages.entities.removedmultiple,
-				{bkx, bky, eroomx, eroomy}
+				{bkx, bky, disp_room_coords(eroomx, eroomy)}
 			) .. "\n"
 			for k2,v2 in pairs(v) do
 				pagetext = pagetext .. "  " .. langkeys(
@@ -1831,12 +1823,12 @@ function compare_level_differences(second_level_name)
 	-- Now we only have single entities left! Check for added and changed entities now
 	for k,v in pairs(locentities) do
 		local bkx, bky = v[1].x % 40, v[1].y % 30
-		local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
+		local eroomx, eroomy = (v[1].x-bkx)/40, (v[1].y-bky)/30
 		if locentities2[k] == nil then
 			-- Added
 			pagetext = pagetext .. langkeys(
 				diffmessages.entities.added,
-				{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+				{getentityname(v[1].t, v[1].p1), bkx, bky, disp_room_coords(eroomx, eroomy)}
 			) .. "\n"
 		else
 			-- Maybe changed?
@@ -1857,13 +1849,13 @@ function compare_level_differences(second_level_name)
 						{
 							getentityname(locentities2[k][1].t, locentities2[k][1].p1),
 							getentityname(v[1].t, v[1].p1),
-							bkx, bky, eroomx, eroomy
+							bkx, bky, disp_room_coords(eroomx, eroomy)
 						}
 					) .. "\n"
 				else
 					pagetext = pagetext .. langkeys(
 						diffmessages.entities.changed,
-						{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+						{getentityname(v[1].t, v[1].p1), bkx, bky, disp_room_coords(eroomx, eroomy)}
 					) .. "\n"
 				end
 			end
@@ -1877,11 +1869,11 @@ function compare_level_differences(second_level_name)
 	-- Lastly, were any entities removed?
 	for k,v in pairs(locentities2) do
 		local bkx, bky = v[1].x % 40, v[1].y % 30
-		local eroomx, eroomy = (v[1].x-bkx)/40+co, (v[1].y-bky)/30+co
+		local eroomx, eroomy = (v[1].x-bkx)/40, (v[1].y-bky)/30
 
 		pagetext = pagetext .. langkeys(
 			diffmessages.entities.removed,
-			{getentityname(v[1].t, v[1].p1), bkx, bky, eroomx, eroomy}
+			{getentityname(v[1].t, v[1].p1), bkx, bky, disp_room_coords(eroomx, eroomy)}
 		) .. "\n"
 
 		-- Just so we can check if everything was handled.
@@ -3490,6 +3482,21 @@ function get_desc3_field_type()
 		return DF.TEXT
 	end
 	return DF.HIDDEN
+end
+
+function disp_room_coords(x, y, coords0)
+	-- Takes room coordinates and display them as [0,0] or (1;1).
+	-- If coords0 is specified: true is 0-indexing, false is 1-indexing.
+	-- If coords0 is not specified: use s.coords0
+	if coords0 == nil then
+		coords0 = s.coords0
+	end
+
+	if coords0 then
+		return string.format("[%d,%d]", x, y)
+	else
+		return string.format("(%d;%d)", x+1, y+1)
+	end
 end
 
 hook("func")

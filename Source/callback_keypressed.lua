@@ -178,7 +178,10 @@ function love.keypressed(key, scancode, isrepeat)
 	end
 
 	if coordsdialog.active and key == "backspace" then
-		coordsdialog.input = coordsdialog.input:sub(1, -2)
+		coordsdialog.input = coordsdialog.input:sub(1, coordsdialog.lettermode and -3 or -2)
+		if coordsdialog.input:len() == 0 then
+			coordsdialog.lettermode = false
+		end
 	elseif takinginput and nodialog then
 		if key == "backspace" then
 			input = backspace(input)

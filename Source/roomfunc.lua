@@ -2443,12 +2443,7 @@ end
 function gotoroom(rx, ry)
 	if rx < 0 or ry < 0
 	or rx >= level.metadata.mapwidth or ry >= level.metadata.mapheight then
-		local disp_rx, disp_ry = rx, ry
-		if not s.coords0 then
-			disp_rx = disp_rx + 1
-			disp_ry = disp_ry + 1
-		end
-		dialog.create(L.COORDS_OUT_OF_RANGE, nil, nil, langkeys("($1,$2)", {disp_rx, disp_ry}))
+		dialog.create(L.COORDS_OUT_OF_RANGE, nil, nil, disp_room_coords(rx, ry))
 		return false
 	end
 
