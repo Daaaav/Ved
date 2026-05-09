@@ -464,9 +464,9 @@ If crewmate x was rescued last, go to script
 crewmate - Numbers are used here: 0: Viridian, 1: Violet, 2: Vitellary, 3:
 Vermilion, 4: Verdigris, 5 Victoria
 
-ifskip¤(x)\b#h
+ifskip¤(script)\b#h
 
-If you skip the cutscenes in No Death Mode, go to script x
+If you skip the cutscenes in No Death Mode, go to script
 
 iftrinkets¤(n,script)\b#h
 
@@ -823,6 +823,9 @@ The replaced placeholders are:
 - {b_map} - Map
 - {b_res} - Restart
 - {b_esc} - Esc/Menu
+
+In VVVVVV's font, curly braces show up as ö and Á, but they are actually curly\g
+braces, not the accented characters. (None of this is visible in-game, of course)\g
 
 This command was added in 2.4.\g
 
