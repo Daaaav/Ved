@@ -1911,121 +1911,284 @@ function mapswap(x1, y1, x2, y2, skip_undo)
 	cons("Done...")
 end
 
-function rotateroom180(rx, ry, undoing)
+function flip_room(rx, ry, hflip, vflip, undoing)
 	if not undoing then
-		table.insert(undobuffer, {undotype = "rotateroom180", rx = rx, ry = ry})
-		finish_undo("ROTATE ROOM 180")
+		table.insert(undobuffer,
+			{
+				undotype = "flip_room",
+				rx = rx,
+				ry = ry,
+				hflip = hflip,
+				vflip = vflip
+			}
+		)
+		finish_undo("FLIP ROOM")
 	end
 
 	local oldtiles = table.copy(level:get_tiles(rx, ry))
-
 	local newtiles = {}
-	for n = 1, 1200 do
-		newtiles[1201-n] = oldtiles[n]
+
+	for n = 0, 1199 do
+		if hflip and vflip then
+			newtiles[1200 - n] = oldtiles[n + 1]
+		else
+			local tx = n % 40
+			local ty = math.floor(n / 40)
+			if hflip then
+				newtiles[ty*40 + (39-tx) + 1] = oldtiles[n + 1]
+			elseif vflip then
+				newtiles[(29-ty)*40 + tx + 1] = oldtiles[n + 1]
+			end
+		end
 	end
 	level:set_tiles(rx, ry, newtiles)
 
 	-- Now for the entities!
-	for k,v in pairs(level.entities) do
-		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
-			--cons(rx .. " " .. ry .. "  en " .. ((rx*40)+39 - v.x - 1)+(rx*40))
-
-			if v.t == 9 or v.t == 13 then
-				-- Trinket or warp token entrance, 2x2 block
-				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
-			elseif v.t == 1 then
-				-- Enemy- change the direction as well!
-				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
-
-				-- v^<>
-				if v.p1 == 0 or v.p1 == 2 then
-					level.entities[k].p1 = v.p1+1
-				else
-					level.entities[k].p1 = v.p1-1
-				end
-			elseif v.t == 10 then
-				-- Checkpoint, 2x2 block that can be flipped.
-				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
-
-				if v.p1 == 1 then level.entities[k].p1 = 0 else level.entities[k].p1 = 1 end
-			elseif v.t == 15 or v.t == 16 or v.t == 18 then
-				-- Rescuable crewmate, start point and terminal, all 2x3 blocks.
-				-- I won't let myself be stopped from making room rotation/flip functions because you can't rotate crewmates!
-				level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
-
-				if v.t == 16 then
-					-- Well at least we can flip the start point horizontally, that's something, right?
-					level.entities[k].p1 = (v.p1 == 0) and 1 or 0
-				elseif v.t == 18 then
-					-- Terminals can be flipped in 2.3 and up! Well... They can have any sprite, let's only flip terminals.
-					if v.p1 == 1 then
-						level.entities[k].p1 = 0
-					elseif v.p1 == 0 then
-						level.entities[k].p1 = 1
-					end
-				end
-			elseif v.t == 3 or (v.t == 2 and v.p1 <= 6) then
-				-- Disappearing platform, moving platform, or a 4-block conveyor
-				level.entities[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
-
-				-- Change the direction as well!
-				if v.p1 == 0 or v.p1 == 2 or v.p1 == 5 then
-					level.entities[k].p1 = v.p1+1
-				else
-					level.entities[k].p1 = v.p1-1
-				end
-			elseif v.t == 2 then
-				-- An 8 block conveyor then!
-				level.entities[k].x = ((rx*40)+39 - v.x - 7)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
-
-				-- Flip it
-				if v.p1 == 7 then
-					level.entities[k].p1 = 8
-				else
-					level.entities[k].p1 = 7
-				end
-			elseif v.t == 17 then
-				-- Roomtext, the new placement of x depends on the length of the string!
-				level.entities[k].x = ((rx*40)+39 - v.x - (math.floor(font_level:getWidth(v.data)/8)-1))+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
-			elseif v.t == 19 then
-				-- Script box.
-				level.entities[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
-			elseif v.t == 11 or v.t == 50 then
-				-- Gravity line or warp line
-				level.entities[k].x = ((rx*40)+39 - v.x)+(rx*40)
-				level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
-
-				if v.t == 50 then
-					-- Same code as for enemy/moving platform directions, but it works here as well (<>^v now I think)
-					if v.p1 == 0 or v.p1 == 2 then
-						level.entities[k].p1 = v.p1+1
-					else
-						level.entities[k].p1 = v.p1-1
-					end
-				end
-			else
-				cons("Entity type " .. v.t .. " not handled when rotating the room!")
-			end
-		end
-		if ((v.t == 13) and (v.p1 >= rx*40) and (v.p1 <= (rx*40)+39) and (v.p2 >= ry*30) and (v.p2 <= (ry*30)+29)) then
-			-- Warp token exit here!
-			level.entities[k].p1 = ((rx*40)+39 - v.p1 - 1)+(rx*40)
-			level.entities[k].p2 = ((ry*30)+29 - v.p2 - 1)+(ry*30)
-		end
-	end
+	flip_entities(rx, ry, hflip, vflip)
 
 	-- If we have any gravity lines or warp lines, let the autocorrect do the job of fixing them!
 	autocorrectlines()
 	-- Same with tiles
 	autocorrectroom()
+end
+
+function flip_entities(rx, ry, hflip, vflip)
+	for k,v in pairs(level.entities) do
+		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
+			if v.t == 9 or v.t == 13 then
+				-- Trinket or warp token entrance, 2x2 block
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+				end
+			elseif v.t == 1 then
+				-- Enemy- change the direction as well!
+				-- Directions: v^<>
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+
+					if v.p1 == 2 then
+						level.entities[k].p1 = 3
+					elseif v.p1 == 3 then
+						level.entities[k].p1 = 2
+					end
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+
+					if v.p1 == 0 then
+						level.entities[k].p1 = 1
+					elseif v.p1 == 1 then
+						level.entities[k].p1 = 0
+					end
+				end
+			elseif v.t == 10 then
+				-- Checkpoint, 2x2 block that can be flipped.
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y - 1)+(ry*30)
+
+					if v.p1 == 1 then
+						level.entities[k].p1 = 0
+					else
+						level.entities[k].p1 = 1
+					end
+				end
+			elseif v.t == 15 or v.t == 16 or v.t == 18 then
+				-- Rescuable crewmate, start point and terminal, all 2x3 blocks.
+				-- I won't let myself be stopped from making room rotation/flip functions because you can't rotate crewmates!
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 1)+(rx*40)
+
+					if v.t == 16 then
+						-- Well at least we can flip the start point horizontally, that's something, right?
+						level.entities[k].p1 = (v.p1 == 0) and 1 or 0
+					end
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y - 2)+(ry*30)
+
+					if v.t == 18 then
+						-- Terminals can be flipped in 2.3 and up! Well... They can have any sprite, let's only flip terminals.
+						if v.p1 == 1 then
+							level.entities[k].p1 = 0
+						elseif v.p1 == 0 then
+							level.entities[k].p1 = 1
+						end
+					end
+				end
+			elseif v.t == 3 then
+				-- Disappearing platform
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				end
+			elseif v.t == 2 and v.p1 <= 6 then
+				-- Moving platform, or a 4-block conveyor
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 3)+(rx*40)
+
+					-- Change the direction as well!
+					-- 2 and 3 are left/right moving platforms, 5 and 6 are conveyors
+					if v.p1 == 2 or v.p1 == 5 then
+						level.entities[k].p1 = v.p1+1
+					elseif v.p1 == 3 or v.p1 == 6 then
+						level.entities[k].p1 = v.p1-1
+					end
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
+
+					-- Change the direction as well!
+					-- 0 and 1 are up/down moving platforms
+					if v.p1 == 0 then
+						level.entities[k].p1 = 1
+					elseif v.p1 == 1 then
+						level.entities[k].p1 = 0
+					end
+				end
+			elseif v.t == 2 then
+				-- An 8 block conveyor then!
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - 7)+(rx*40)
+
+					-- Flip it
+					if v.p1 == 7 then
+						level.entities[k].p1 = 8
+					else
+						level.entities[k].p1 = 7
+					end
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				end
+			elseif v.t == 17 then
+				-- Roomtext, the new placement of x depends on the length of the string!
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - (math.floor(font_level:getWidth(v.data)/8)-1))+(rx*40)
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
+				end
+			elseif v.t >= 19 and v.t <= 25 then
+				-- Script box (19), as well as those newfangled "Blocks", "Zones" and "Boxes" (20-25)
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x - (v.p1-1))+(rx*40)
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y - (v.p2-1))+(ry*30)
+				end
+			elseif v.t == 11 or v.t == 50 then
+				-- Gravity line or warp line
+				-- For warp lines, we need to change the edge using similar code
+				-- as for enemy/moving platform directions, but it works here as well (<>^v now)
+				if hflip then
+					level.entities[k].x = ((rx*40)+39 - v.x)+(rx*40)
+
+					if v.t == 50 and v.p1 == 0 then
+						level.entities[k].p1 = 1
+					elseif v.t == 50 and v.p1 == 1 then
+						level.entities[k].p1 = 0
+					end
+				end
+				if vflip then
+					level.entities[k].y = ((ry*30)+29 - v.y)+(ry*30)
+
+					if v.t == 50 and v.p1 == 2 then
+						level.entities[k].p1 = 3
+					elseif v.t == 50 and v.p1 == 3 then
+						level.entities[k].p1 = 2
+					end
+				end
+			else
+				cons("Entity type " .. v.t .. " not handled when flipping/rotating the room!")
+			end
+		end
+		if ((v.t == 13) and (v.p1 >= rx*40) and (v.p1 <= (rx*40)+39) and (v.p2 >= ry*30) and (v.p2 <= (ry*30)+29)) then
+			-- Warp token exit here!
+			if hflip then
+				level.entities[k].p1 = ((rx*40)+39 - v.p1 - 1)+(rx*40)
+			end
+			if vflip then
+				level.entities[k].p2 = ((ry*30)+29 - v.p2 - 1)+(ry*30)
+			end
+		end
+	end
+end
+
+function shift_room(rx, ry, offset_x, offset_y, undoing)
+	-- This function assumes you don't shift by more than a room,
+	-- because then the entities may get too far away
+	if not undoing then
+		table.insert(undobuffer,
+			{
+				undotype = "shift_room",
+				rx = rx,
+				ry = ry,
+				offset_x = offset_x,
+				offset_y = offset_y
+			}
+		)
+		finish_undo("SHIFT ROOM")
+	end
+
+
+	local oldtiles = table.copy(level:get_tiles(rx, ry))
+	local newtiles = {}
+
+	for n = 0, 1199 do
+		local tx = n % 40
+		local ty = math.floor(n / 40)
+
+		tx = (tx + offset_x) % 40
+		ty = (ty + offset_y) % 30
+
+		newtiles[ty*40 + tx + 1] = oldtiles[n + 1]
+	end
+	level:set_tiles(rx, ry, newtiles)
+
+	-- Now for the entities!
+	shift_entities(rx, ry, offset_x, offset_y)
+
+	-- If we have any gravity lines or warp lines, let the autocorrect do the job of fixing them!
+	autocorrectlines()
+	-- Same with tiles
+	autocorrectroom()
+end
+
+function shift_entities(rx, ry, offset_x, offset_y)
+	-- We're shifting entities and making sure they wrap around,
+	-- but we're not doing anything like splitting up script boxes or roomtext or anything.
+	-- The only special case we have is room-filling boxes (t = 19-25 with p1/p2 being width/height),
+	-- they're pretty common and they don't have to become essentially 1 tile wide/high when wrapping.
+
+	for k,v in pairs(level.entities) do
+		if ((v.x >= rx*40) and (v.x <= (rx*40)+39) and (v.y >= ry*30) and (v.y <= (ry*30)+29)) then
+			if v.t < 19 or v.t > 25 or v.p1 < 40 then
+				local in_room_x = (v.x + offset_x) % 40
+				level.entities[k].x = rx*40 + in_room_x
+			end
+
+			if v.t < 19 or v.t > 25 or v.p2 < 30 then
+				local in_room_y = (v.y + offset_y) % 30
+				level.entities[k].y = ry*30 + in_room_y
+			end
+		end
+		if ((v.t == 13) and (v.p1 >= rx*40) and (v.p1 <= (rx*40)+39) and (v.p2 >= ry*30) and (v.p2 <= (ry*30)+29)) then
+			-- Warp token exit here!
+			local in_room_x = (v.p1 + offset_x) % 40
+			level.entities[k].p1 = rx*40 + in_room_x
+
+			local in_room_y = (v.p2 + offset_y) % 30
+			level.entities[k].p2 = ry*30 + in_room_y
+		end
+	end
 end
 
 function autocorrectlines()
@@ -2183,8 +2346,20 @@ function undo()
 			selectedtileset = rmd.tileset
 			selectedcolor = rmd.tilecol
 		end
-	elseif undobuffer[#undobuffer].undotype == "rotateroom180" then
-		rotateroom180(roomx, roomy, true)
+	elseif undobuffer[#undobuffer].undotype == "flip_room" then
+		flip_room(
+			roomx, roomy,
+			undobuffer[#undobuffer].hflip,
+			undobuffer[#undobuffer].vflip,
+			true
+		)
+	elseif undobuffer[#undobuffer].undotype == "shift_room" then
+		shift_room(
+			roomx, roomy,
+			-undobuffer[#undobuffer].offset_x,
+			-undobuffer[#undobuffer].offset_y,
+			true
+		)
 	elseif undobuffer[#undobuffer].undotype == "paste" then
 		setroomfromcopy(undobuffer[#undobuffer].olddata, undobuffer[#undobuffer].rx, undobuffer[#undobuffer].ry, true)
 		temporaryroomnametimer = 0
@@ -2297,8 +2472,20 @@ function redo()
 			selectedcolor = rmd.tilecol
 			autocorrectroom()
 		end
-	elseif redobuffer[#redobuffer].undotype == "rotateroom180" then
-		rotateroom180(roomx, roomy, true)
+	elseif redobuffer[#redobuffer].undotype == "flip_room" then
+		flip_room(
+			roomx, roomy,
+			redobuffer[#redobuffer].hflip,
+			redobuffer[#redobuffer].vflip,
+			true
+		)
+	elseif redobuffer[#redobuffer].undotype == "shift_room" then
+		shift_room(
+			roomx, roomy,
+			redobuffer[#redobuffer].offset_x,
+			redobuffer[#redobuffer].offset_y,
+			true
+		)
 	elseif redobuffer[#redobuffer].undotype == "paste" then
 		setroomfromcopy(redobuffer[#redobuffer].newdata, redobuffer[#redobuffer].rx, redobuffer[#redobuffer].ry, true)
 		temporaryroomnametimer = 0

@@ -675,15 +675,23 @@ return function()
 	local additionalbutton_np = additionalbutton and 1 or 0
 	local additionalbutton_yoffset = additionalbutton and 166 or 164
 	local additionalbutton_spacing = additionalbutton and 20 or 24
+	local transformbtns_y = love.graphics.getHeight() - (additionalbutton and 178 or 180)
 
 	if not editingroomname then
-		if additionalbutton then
-			rbutton("...", 0, 166, true, 20)
-		end
-
 		local rmd = level:get_roommetadata(roomx, roomy)
 
-		rbutton(L.ROTATE180UNI, 0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
+		hoverdraw(image.fliphbtn, love.graphics.getWidth()-120, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.flipvbtn, love.graphics.getWidth()-120+16, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.rotate180btn, love.graphics.getWidth()-120+32, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.shiftleftbtn, love.graphics.getWidth()-120+48, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.shiftupbtn, love.graphics.getWidth()-120+64, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.shiftdownbtn, love.graphics.getWidth()-120+80, transformbtns_y, 16, 16, 1)
+		hoverdraw(image.shiftrightbtn, love.graphics.getWidth()-120+96, transformbtns_y, 16, 16, 1)
+
+		if additionalbutton then
+			rbutton("...", 1, 166, true, 20)
+		end
+
 		rbutton({(rmd.directmode == 1 and L.MANUALMODE or (rmd.auto2mode == 1 and L.AUTO2MODE or L.AUTOMODE)), "p"}, 1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
 
 		rbutton((showepbounds and L.HIDEBOUNDS or L.SHOWBOUNDS), 2+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing)
@@ -853,12 +861,33 @@ return function()
 		elseif additionalbutton and onrbutton(0, 166, true, 20) then
 			-- ...
 
-		elseif onrbutton(0+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
-			-- Rotate
-			rotateroom180(roomx, roomy)
-			if level:get_roommetadata(roomx, roomy).directmode == 0 then
-				autocorrectroom()
-			end
+		elseif mouseon(love.graphics.getWidth()-120, transformbtns_y, 16, 16) then
+			-- Flip horizontally
+			flip_room(roomx, roomy, true, false)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+16, transformbtns_y, 16, 16) then
+			-- Flip vertically
+			flip_room(roomx, roomy, false, true)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+32, transformbtns_y, 16, 16) then
+			-- Rotate 180 degrees
+			flip_room(roomx, roomy, true, true)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+48, transformbtns_y, 16, 16) then
+			-- Shift left
+			shift_room(roomx, roomy, -1, 0)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+64, transformbtns_y, 16, 16) then
+			-- Shift up
+			shift_room(roomx, roomy, 0, -1)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+80, transformbtns_y, 16, 16) then
+			-- Shift down
+			shift_room(roomx, roomy, 0, 1)
+			mousepressed = true
+		elseif mouseon(love.graphics.getWidth()-120+96, transformbtns_y, 16, 16) then
+			-- Shift right
+			shift_room(roomx, roomy, 1, 0)
 			mousepressed = true
 		elseif onrbutton(1+additionalbutton_np, additionalbutton_yoffset, true, additionalbutton_spacing) then
 			-- Direct mode on or off

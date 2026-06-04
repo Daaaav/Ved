@@ -246,6 +246,14 @@ function love.load()
 		eraseroff = "ui/images/eraseroff",
 		eraser = "ui/images/eraser",
 
+		fliphbtn = "ui/images/fliph",
+		flipvbtn = "ui/images/flipv",
+		rotate180btn = "ui/images/rotate180",
+		shiftleftbtn = "ui/images/shift_left",
+		shiftupbtn = "ui/images/shift_up",
+		shiftdownbtn = "ui/images/shift_down",
+		shiftrightbtn = "ui/images/shift_right",
+
 		checkon = "ui/images/checkon",
 		checkoff = "ui/images/checkoff",
 		checkon_hq = "ui/images/checkon_hq",
