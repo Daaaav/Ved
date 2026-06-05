@@ -292,6 +292,10 @@ return function()
 			end
 			if nodialog and not mousepressed and love.mouse.isDown("r") and mouseon(16, (16+(48*(t-1))), 32, 32) and t == 4 then
 				gotostartpointroom()
+				mapmovedroom = true
+
+				-- This works with right click as well
+				mousepressed = true
 			end
 
 			if (t ~= 1 and selectedtool == actual_t) or (t == 1 and not toolanyofthese) then
