@@ -24,6 +24,8 @@ function updatecheck.start_check()
 	updatecheck.scrolling_text = nil
 	updatecheck.scrolling_text_pos = 0
 
+	plugins_online = {}
+
 	-- Determine the distribution method
 	if love.filesystem.isFused() then
 		local opsys = love.system.getOS()
@@ -89,6 +91,46 @@ function updatecheck.await_response()
 				updatecheck.notes_refreshable = true
 			elseif current_article_name == "_SCROLLINGTEXT" then
 				updatecheck.scrolling_text = vedxml.VedXML:unxmlspecialchars(v)
+			elseif current_article_name:sub(1,8) == "_PLUGIN_" then
+				local n, key = current_article_name:match("^_PLUGIN_([0-9]+)_(.+)$")
+
+				if n ~= nil and key ~= nil then
+					n = tonumber(n)
+					if n ~= nil and plugins_online[n] == nil then
+						plugins_online[n] = {
+							info = {
+								id = "",
+								shortname = "",
+								longname = "",
+								author = "",
+								author_color = "w",
+								version = "",
+								description = {},
+								link = "",
+								filename = "",
+								size = 0,
+								sha512 = "",
+								time_updated = 0,
+							}
+						}
+					end
+					if n ~= nil and table.contains({
+							"ID", "SHORTNAME", "LONGNAME",
+							"AUTHOR", "AUTHOR_COLOR", "VERSION", "LINK",
+							"FILENAME", "SIZE", "SHA512", "TIME_UPDATED"
+						}, key
+					) then
+						if key == "SIZE" or key == "TIME_UPDATED" then
+							v = anythingbutnil0(tonumber(v))
+						else
+							v = vedxml.VedXML:unxmlspecialchars(v)
+						end
+
+						plugins_online[n].info[key:lower()] = v
+					elseif n ~= nil and key == "DESCRIPTION" then
+						table.insert(plugins_online[n].info.description, vedxml.VedXML:unxmlspecialchars(v))
+					end
+				end
 			end
 			if current_article ~= nil and (current_article_name:sub(1,1) ~= "_" or allowdebug) then
 				table.insert(current_article_contents, v)
@@ -98,6 +140,9 @@ function updatecheck.await_response()
 	if current_article ~= 0 then
 		-- Save the last article
 		updatecheck.notes[current_article].cont = table.concat(current_article_contents, "\n")
+	end
+	for k,v in pairs(plugins_online) do
+		plugins_online[k].info.description = table.concat(plugins_online[k].info.description, "\n")
 	end
 end
 

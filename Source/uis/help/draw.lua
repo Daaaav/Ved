@@ -463,8 +463,11 @@ return function()
 	for article_i = 0, #helppages+(helpeditable and 1 or 0) do
 		j = j + 1
 		local buttoncolor = {128,128,128}
+		local is_header = helppages[article_i] ~= nil and helppages[article_i].cont == ""
 		if helparticle == article_i then
 			buttoncolor = {192,192,192}
+		elseif is_header then
+			buttoncolor = {0,0,0}
 		end
 		if helpeditingline ~= 0 then
 			love.graphics.setColor(buttoncolor[1],buttoncolor[2],buttoncolor[3],64) -- Unfortunately we cannot simply unpack() this because there are more arguments
@@ -502,30 +505,32 @@ return function()
 		end
 
 		-- Are we clicking on this?
-		if nodialog and helpeditingline == 0 and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16) and (not s.psmallerscreen or onlefthelpbuttons) then
-			if love.mouse.isDown("l") then
-				if article_i == 0 then
-					-- Return
-					if oldstate == 11 then
-						-- Back to search results
-						resume_search = true
-						tostate(11)
-					else
-						tostate(oldstate, true)
-					end
-					nodialog = false
-				elseif article_i == #helppages+1 then
-					-- Add new
-					dialog.create(
-						L.NEWNOTENAME,
-						DBS.OKCANCEL,
-						dialog.callback.newnote,
-						L.CREATENEWNOTE,
-						dialog.form.simplename
-					)
+		if nodialog and helpeditingline == 0
+		and (not is_header or helpeditable)
+		and mouseon(8, helplistscroll+8+(24*j), 25*8-28, 16)
+		and (not s.psmallerscreen or onlefthelpbuttons)
+		and love.mouse.isDown("l") then
+			if article_i == 0 then
+				-- Return
+				if oldstate == 11 then
+					-- Back to search results
+					resume_search = true
+					tostate(11)
 				else
-					gotohelparticle(article_i)
+					tostate(oldstate, true)
 				end
+				nodialog = false
+			elseif article_i == #helppages+1 then
+				-- Add new
+				dialog.create(
+					L.NEWNOTENAME,
+					DBS.OKCANCEL,
+					dialog.callback.newnote,
+					L.CREATENEWNOTE,
+					dialog.form.simplename
+				)
+			else
+				gotohelparticle(article_i)
 			end
 		end
 	end

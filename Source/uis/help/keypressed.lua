@@ -57,10 +57,16 @@ return function(key)
 			input = anythingbutnil(helparticlecontent[helpeditingline])
 			input_r = ""
 		end
-	elseif key == "up" then
-		gotohelparticle(revcycle(helparticle, #helppages, 1))
-	elseif key == "down" then
-		gotohelparticle(cycle(helparticle, #helppages, 1))
+	elseif key == "up" or key == "down" then
+		local new = helparticle
+		repeat
+			if key == "up" then
+				new = revcycle(new, #helppages, 1)
+			else
+				new = cycle(new, #helppages, 1)
+			end
+		until helppages[new] == nil or helppages[new].cont ~= "" or new == helparticle
+		gotohelparticle(new)
 	elseif table.contains({"home", "end"}, key) then
 		handle_scrolling(true, key)
 	end

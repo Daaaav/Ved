@@ -2138,6 +2138,11 @@ msgctxt "L.PLUGIN_NOT_SUPPORTED"
 msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
 msgstr ""
 
+#. by Person
+msgctxt "L.PLUGIN_AUTHOR"
+msgid "by $1"
+msgstr ""
+
 #. by Person, version 1.0.0
 msgctxt "L.PLUGIN_AUTHOR_VERSION"
 msgid "by $1, version $2"

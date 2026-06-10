@@ -5,9 +5,11 @@ Two tables are made:
 plugins = {
 	[<PLUGIN NAME>] = {
 		info = {
+			id = 'string',
 			shortname = 'string',
 			longname = 'string',
 			author = 'string',
+			author_color = 'string',
 			version = 'string',
 			minimumved = 'string',
 			description = 'string',
@@ -70,6 +72,7 @@ function loadplugins()
 	cons("--Loading plugins...")
 
 	plugins = {}
+	plugins_online = {}
 	hooks = {}
 	pluginfileedits = {}
 	pluginincludes = {}
@@ -118,9 +121,11 @@ function loadplugins()
 					plugins[pluginname] = {}
 					-- Some defaults
 					plugins[pluginname].info = {
+						id = pluginname,
 						shortname = pluginname:sub(1,21),
 						longname = pluginname,
 						author = "Unknown",
+						author_color = "w",
 						version = "N.A.",
 						minimumved = "a58",
 						description = "No description specified",
@@ -276,6 +281,44 @@ function hook(hookname, vars)
 	end
 end
 
+function plugin_author_and_version(info)
+	-- Returns a (help) formatted version of the author and version for a plugin, if present.
+	local col = info.author_color
+	if col == nil or col:len() ~= 1 then
+		col = "w"
+	end
+
+	local author = info.author
+	if author == nil or author == "" then
+		author = "?"
+	end
+	if author:len() == 1 then
+		author = author .. "§"
+		col = col .. "("
+	end
+	author = "¤" .. author .. "¤"
+	col = "n" .. col .. "n"
+
+	local text
+	if info.version == nil or info.version == "" then
+		text = langkeys(L.PLUGIN_AUTHOR, {author})
+	else
+		text = langkeys(L.PLUGIN_AUTHOR_VERSION, {author, info.version})
+	end
+
+	local splitter_nbytes = ("¤"):len()
+	if text:sub(1,splitter_nbytes) == "¤" then
+		text = text:sub(splitter_nbytes + 1)
+		col = col:sub(2)
+	end
+	if text:sub(-splitter_nbytes) == "¤" then
+		text = text:sub(1, -splitter_nbytes - 1)
+		col = col:sub(1, -2)
+	end
+
+	return text .. "\\" .. col
+end
+
 function loadpluginpages()
 	helppages = {}
 
@@ -283,13 +326,15 @@ function loadpluginpages()
 
 	local short_list = {}
 
+	table.insert(helppages, {subj=L.PLUGINS_INSTALLED, imgs={}, cont=""})
+
 	for k,v in pairs(plugins) do
 		table.insert(helppages, {
 			subj = v.info.shortname,
 			imgs = {},
 			cont = (v.info.supported and "" or langkeys(L.PLUGIN_NOT_SUPPORTED, {v.info.minimumved}) .. "\n\n")
 				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\wh#\n\n"
-				.. langkeys(L.PLUGIN_AUTHOR_VERSION, {v.info.author, v.info.version}) .. "\n\\-\n\n"
+				.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
 				.. v.info.description
 				)
 		})
@@ -329,6 +374,21 @@ function loadpluginpages()
 			.. L.ALL_PLUGINS_FOLDER .. "\n"
 			.. "file://" .. plugins_path .. "¤" .. plugins_path_disp .. "\\LCl"
 	})
+
+	if #plugins_online > 0 then
+		table.insert(helppages, {subj=L.PLUGINS_AVAILABLE, imgs={}, cont=""})
+
+		for k,v in pairs(plugins_online) do
+			table.insert(helppages, {
+				subj = v.info.shortname,
+				imgs = {},
+				cont = (v.info.longname .. "\\wh#\n\n"
+					.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
+					.. v.info.description
+					)
+			})
+		end
+	end
 end
 
 function ved_require(reqfile)
