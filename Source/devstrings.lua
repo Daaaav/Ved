@@ -7,3 +7,8 @@ L.PLUGIN_AUTHOR = "by $1" -- already in pot
 
 L.PLUGINS_INSTALLED = "Installed"
 L.PLUGINS_AVAILABLE = "Available"
+
+L.UPDATENOW = "Update now"
+L.INSTALL = "Install"
+
+L.CANNOT_DELETE_FOLDER_PLUGIN = "This plugin is a folder, please remove it manually."

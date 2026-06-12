@@ -361,6 +361,40 @@ return function()
 					end
 				end
 			end
+		elseif helppages[helparticle].special == "plugin_installed"
+		or helppages[helparticle].special == "plugin_online" then
+			local buttons = plugin_help_buttons(helppages[helparticle])
+
+			local btn_x = love.graphics.getWidth()-140
+			for k,v in pairs(buttons) do
+				local yellow = v == "update"
+				local label
+				if v == "install" then
+					label = L.INSTALL
+				elseif v == "update" then
+					label = L.UPDATENOW
+				elseif v == "delete" then
+					label = L.DELETE
+				end
+
+				hoverrectangle(
+					yellow and 160 or 128,
+					yellow and 160 or 128,
+					yellow and 0 or 128,
+					128,
+					btn_x, love.graphics.getHeight()-24,
+					128-16, 16
+				)
+				font_ui:printf(label, btn_x, (love.graphics.getHeight()-24)+4, 128-16, "center")
+
+				if nodialog and love.mouse.isDown("l") and not mousepressed
+				and mouseon(btn_x, love.graphics.getHeight()-24, 128-16, 16) then
+					plugin_help_action(helppages[helparticle], v)
+					mousepressed = true
+				end
+
+				btn_x = btn_x - 116
+			end
 		end
 
 		-- Were we hovering over a link?

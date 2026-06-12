@@ -72,6 +72,7 @@ function loadplugins()
 	cons("--Loading plugins...")
 
 	plugins = {}
+	plugins_id_to_key = {}
 	plugins_online = {}
 	hooks = {}
 	pluginfileedits = {}
@@ -90,6 +91,7 @@ function loadplugins()
 			or v:sub(-4, -1) == ".zip" then
 				-- This is a plugin folder/zip, neat! But if it's a zip, then we first need to mount it.
 				local pluginpath, pluginname
+				local plugin_package_filename = v
 
 				if v:sub(1,1) == "#" or v:sub(1,1) == "." then
 					-- Plugins starting with a # or . are disabled!
@@ -136,14 +138,29 @@ function loadplugins()
 						supported = true,
 						failededits = 0,
 						internal_pluginpath = pluginpath,
+						filename = plugin_package_filename,
 					}
 					plugins[pluginname].usedhooks = {}
+
+					-- Status can be:
+					-- - "installed" (completely loaded and ready)
+					-- - "missing" (online-only, or deleted)
+					-- - "just_installed" (just installed or updated)
+					plugins[pluginname].status = "installed"
+
+					-- .online can be either nil (no known online plugin),
+					-- or a reference to an entry in plugins_online.
+					-- This property does not exist in plugins_online entries,
+					-- instead there's in_plugins (true/false)
+					plugins[pluginname].online = nil
 
 					-- So does this plugin have an info file?
 					if love.filesystem.exists(pluginpath .. "/info.lua") then
 						local infofile = love.filesystem.load(pluginpath .. "/info.lua")
 						infofile(plugins[pluginname].info)
 					end
+
+					plugins_id_to_key[plugins[pluginname].info.id] = pluginname
 
 					-- Is this plugin supported?
 					local pver1, pver2 = plugins[pluginname].info.minimumved:match("^([0-9]+)%.([0-9]+)$")
@@ -336,7 +353,9 @@ function loadpluginpages()
 				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\wh#\n\n"
 				.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
 				.. v.info.description
-				)
+				),
+			special = "plugin_installed",
+			plugin_key = k
 		})
 
 		helppages[#helppages].imgs = table.copy(v.info.descriptionimgs)
@@ -375,19 +394,95 @@ function loadpluginpages()
 			.. "file://" .. plugins_path .. "¤" .. plugins_path_disp .. "\\LCl"
 	})
 
-	if #plugins_online > 0 then
-		table.insert(helppages, {subj=L.PLUGINS_AVAILABLE, imgs={}, cont=""})
+	local any_available = false
+	for k,v in pairs(plugins_online) do
+		if not v.in_plugins then
+			if not any_available then
+				table.insert(helppages, {subj=L.PLUGINS_AVAILABLE, imgs={}, cont=""})
+				any_available = true
+			end
 
-		for k,v in pairs(plugins_online) do
 			table.insert(helppages, {
 				subj = v.info.shortname,
 				imgs = {},
 				cont = (v.info.longname .. "\\wh#\n\n"
 					.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
 					.. v.info.description
-					)
+					),
+				special = "plugin_online",
+				plugin_key = k
 			})
 		end
+	end
+end
+
+function plugin_help_buttons(article)
+	-- Takes a help article's special and plugin_key (on the plugins screen),
+	-- and returns the buttons that this plugin should have (right to left).
+	-- Available buttons are "install", "update" and "delete".
+
+	local is_installed = article.special == "plugin_installed"
+	local plugin
+	if is_installed then
+		plugin = plugins[article.plugin_key]
+	elseif article.special == "plugin_online" then
+		plugin = plugins_online[article.plugin_key]
+	end
+
+	if plugin.status == "installed" then
+		-- Guaranteed is_installed for this status
+		if plugin.online ~= nil and plugin.online.info.link ~= ""
+		and plugin.online.info.version ~= plugin.info.version then
+			return {"update", "delete"}
+		end
+		return {"delete"}
+	elseif plugin.status == "missing" then
+		-- This plugin doesn't have a package file in our filesystem,
+		-- but it may still be in plugins if we just deleted it!
+		-- Or it may be in plugins_online because we never installed it.
+		if (plugin.online ~= nil and plugin.online.info.link ~= "")
+		or anythingbutnil(plugin.info.link) ~= "" then
+			return {"install"}
+		end
+		return {}
+	elseif plugin.status == "just_installed" then
+		return {"delete"}
+	end
+	return {}
+end
+
+function plugin_help_action(article, pressed)
+	local is_installed = article.special == "plugin_installed"
+	local plugin
+	if is_installed then
+		plugin = plugins[article.plugin_key]
+	elseif article.special == "plugin_online" then
+		plugin = plugins_online[article.plugin_key]
+	end
+
+	if (pressed == "update" or pressed == "delete")
+	and plugin.info.filename ~= nil
+	and plugin.info.filename:sub(-4, -1) ~= ".zip" then
+		-- These are operations we can't do on folders
+		local plugins_path = love.filesystem.getSaveDirectory() .. "/plugins"
+		dialog.create(
+			L.CANNOT_DELETE_FOLDER_PLUGIN,
+			{L.OPENFOLDER, DB.OK},
+			function(button)
+				if button == L.OPENFOLDER then
+					love.system.openURL("file://" .. plugins_path)
+				end
+			end
+		)
+		return
+	end
+
+	if pressed == "install" then
+		dialog.create("install")
+	elseif pressed == "update" then
+		dialog.create("update")
+	elseif pressed == "delete" then
+		dialog.create("delet")
 	end
 end
 

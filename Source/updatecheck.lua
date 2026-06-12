@@ -24,6 +24,9 @@ function updatecheck.start_check()
 	updatecheck.scrolling_text = nil
 	updatecheck.scrolling_text_pos = 0
 
+	for k,v in pairs(plugins) do
+		plugins[k].online = nil
+	end
 	plugins_online = {}
 
 	-- Determine the distribution method
@@ -111,7 +114,9 @@ function updatecheck.await_response()
 								size = 0,
 								sha512 = "",
 								time_updated = 0,
-							}
+							},
+							in_plugins = false,
+							status = "missing"
 						}
 					end
 					if n ~= nil and table.contains({
@@ -143,6 +148,12 @@ function updatecheck.await_response()
 	end
 	for k,v in pairs(plugins_online) do
 		plugins_online[k].info.description = table.concat(plugins_online[k].info.description, "\n")
+		local installed_key = plugins_id_to_key[plugins_online[k].info.id]
+		if installed_key ~= nil then
+			plugins_online[k].in_plugins = true
+			plugins_online[k].status = plugins[installed_key].status
+			plugins[installed_key].online = plugins_online[k]
+		end
 	end
 end
 
