@@ -1,3 +1,5 @@
+local downloader = ved_require("downloader")
+
 function love.update(dt)
 	hook("love_update_start", {dt})
 
@@ -184,6 +186,7 @@ function love.update(dt)
 	end
 
 	updatecheck.await_response()
+	downloader.await_response()
 
 	local callback_state = state
 	if uis[state] ~= nil and uis[state].update ~= nil then

@@ -12,3 +12,7 @@ L.UPDATENOW = "Update now"
 L.INSTALL = "Install"
 
 L.CANNOT_DELETE_FOLDER_PLUGIN = "This plugin is a folder, please remove it manually."
+
+L.DOWNLOAD_REQUIRES_BETTER_LOVE = "Downloading packages requires LÖVE 11.0 or higher."
+L.DOWNLOAD_FAIL_GET = "Download failed."
+L.DOWNLOAD_FAIL_VERIFY = "The downloaded package isn't correct. It may have changed from the expected version."

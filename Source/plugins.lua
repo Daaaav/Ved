@@ -16,7 +16,9 @@ plugins = {
 		},
 		usedhooks = {
 			<LIST OF HOOKS HERE>
-		}
+		},
+		status = "installed", -- see below
+		online = nil, -- see below
 	}
 
 hooks = {
@@ -433,7 +435,7 @@ function plugin_help_buttons(article)
 		-- Guaranteed is_installed for this status
 		if plugin.online ~= nil and plugin.online.info.link ~= ""
 		and plugin.online.info.version ~= plugin.info.version then
-			return {"update", "delete"}
+			return {"delete", "update"}
 		end
 		return {"delete"}
 	elseif plugin.status == "missing" then
@@ -452,12 +454,17 @@ function plugin_help_buttons(article)
 end
 
 function plugin_help_action(article, pressed)
+	local downloader = ved_require("downloader")
+
 	local is_installed = article.special == "plugin_installed"
 	local plugin
+	local plugin_online
 	if is_installed then
 		plugin = plugins[article.plugin_key]
+		plugin_online = plugins[article.plugin_key].online
 	elseif article.special == "plugin_online" then
 		plugin = plugins_online[article.plugin_key]
+		plugin_online = plugin
 	end
 
 	if (pressed == "update" or pressed == "delete")
@@ -477,10 +484,34 @@ function plugin_help_action(article, pressed)
 		return
 	end
 
-	if pressed == "install" then
-		dialog.create("install")
-	elseif pressed == "update" then
-		dialog.create("update")
+	if pressed == "install" or pressed == "update" then
+		local download_id = string.format("plugin:%d:%s", os.time(), plugin.info.id)
+		if pressed == "install" then
+			downloader.request(
+				"plugin_install",
+				download_id,
+				plugin_online.info.link,
+				plugin_online.info.sha512,
+				plugin_online.info.size,
+				{
+					plugin_id = plugin.info.id,
+					new_filename = plugin_online.info.filename
+				}
+			)
+		else
+			downloader.request(
+				"plugin_update",
+				download_id,
+				plugin_online.info.link,
+				plugin_online.info.sha512,
+				plugin_online.info.size,
+				{
+					plugin_id = plugin.info.id,
+					new_filename = plugin_online.info.filename,
+					old_filename = plugin.info.filename
+				}
+			)
+		end
 	elseif pressed == "delete" then
 		dialog.create("delet")
 	end
@@ -527,6 +558,8 @@ function ved_require(reqfile)
 		package.loaded[dots] = true
 		return module()
 	end
+
+	return package.loaded[dots]
 end
 
 -- Plugins can allocate a number of states for their use, without clashing with other plugins
