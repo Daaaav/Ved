@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: 2026-05-04 03:01+0200\n"
-"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"PO-Revision-Date: 2026-06-14 21:00+0000\n"
+"Last-Translator: Omegaplexx <omegaplexx@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.17\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #. If you're making a translation, feel free to set this to something like "Translation made by (you)".
 msgctxt "L.TRANSLATIONCREDIT"
@@ -379,53 +379,49 @@ msgctxt "L.INTERNALOFF_LONG"
 msgid "Internal scripting mode is disabled"
 msgstr "Режим внутреннего скриптинга отключён"
 
-#, fuzzy
 msgctxt "L.INTSC_LONG"
 msgid "Internal scripting mode"
-msgstr "Режим внутреннего скриптинга включён"
+msgstr "Режим внутреннего скриптинга"
 
 #. A scripting mode that requires a loadscript, and only works in VVVVVV 2.4+
-#, fuzzy
 msgctxt "L.INTSC_LOADSCRIPT24"
 msgid "Loadscript (2.4+)"
-msgstr "Внутр. скрипт ч. loadscript"
+msgstr "Загрузочный скрипт (2.4+)"
 
 #. Like the other Loadscript option, but also works in earlier versions
 msgctxt "L.INTSC_LOADSCRIPT23"
 msgid "Loadscript (compatible with 2.3-)"
-msgstr ""
+msgstr "Загрузочный скрипт (совместимый с 2.3-)"
 
 #. The say(-1) method involves using the scripting command say(-1)
-#, fuzzy
 msgctxt "L.INTSC_SAYMIN1"
 msgid "say(-1)"
-msgstr "Внутр. скрипт через say(-1)"
+msgstr "say(-1)"
 
 msgctxt "L.INTSC_LOADSCRIPT24_SHORT"
 msgid "Mode: 2.4+"
-msgstr ""
+msgstr "Режим: 2.4+"
 
 msgctxt "L.INTSC_LOADSCRIPT23_SHORT"
 msgid "Mode: 2.1+"
-msgstr ""
+msgstr "Режим: 2.1+"
 
-#, fuzzy
 msgctxt "L.INTSC_SAYMIN1_SHORT"
 msgid "Mode: say(-1)"
-msgstr "Режим: авто"
+msgstr "Режим: say(-1)"
 
 msgctxt "L.INTSC_LOADSCRIPT24_EXPL"
 msgid "When making a level for VVVVVV 2.4 or above, this setting is all you need. This script needs to be loaded from another script."
-msgstr ""
+msgstr "При создании уровня для VVVVVV 2.4 и выше эта настройка - всё, что вам нужно. Этот скрипт должен быть загружен с помощью другого скрипта."
 
 msgctxt "L.INTSC_LOADSCRIPT23_EXPL"
 msgid "Like the 2.4+ method, but the script is (invisibly) split into blocks of less than 50 lines for compatibility with many VVVVVV versions. This might be a limitation for some specific usecases."
-msgstr ""
+msgstr "Как метод 2.4+, но скрипт (незаметно) разбивается на блоки менее 50 строк для совместимости со многими версиями VVVVVV. Для некоторых особых случаев использования это может быть ограничением."
 
 #. the word 'saves' = 'economizes'/'removes the need for', NOT 'stores data to disk'!
 msgctxt "L.INTSC_SAYMIN1_EXPL"
 msgid "Like \"Loadscript (compatible with 2.3-)\", but it saves a loadscript, which helped when there was a limit of 500 scripts in total. The script forcibly starts with cutscene bars."
-msgstr ""
+msgstr "Как «Загрузочный скрипт (совместимый с 2.3-)», но избавляет от необходимости создавать загрузочный скрипт, что помогало, когда было ограничение на 500 скриптов в сумме. Данный тип скрипта всегда запускается с полосками катсцены (вверху и внизу)."
 
 msgctxt "L.VIEW"
 msgid "View"
@@ -818,7 +814,7 @@ msgstr "Поиск: "
 #. You last searched for these 5 things, click one to search it again
 msgctxt "L.RECENT_SEARCHES"
 msgid "Recent searches"
-msgstr ""
+msgstr "Недавние запросы"
 
 msgctxt "L.VERSIONERROR"
 msgid "Unable to check version."
@@ -1810,10 +1806,9 @@ msgctxt "L.DOFILTERDIR"
 msgid "Only show folders"
 msgstr "Только расположения"
 
-#, fuzzy
 msgctxt "L.CREATENEWFOLDER"
 msgid "Create new folder"
-msgstr "Создать новую заметку"
+msgstr "Создать новую папку"
 
 msgctxt "L.FILEDIALOGLUV"
 msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
@@ -1857,7 +1852,7 @@ msgstr ""
 
 msgctxt "L.ASSETS_FOLDER_RENAME"
 msgid "The assets folder will also be renamed to \"$1\"."
-msgstr ""
+msgstr "Папка ресурсов тоже будет переименована в \"$1\"."
 
 msgctxt "L.CREATE_VVVVVV_FOLDER"
 msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
@@ -1877,14 +1872,13 @@ msgstr ""
 "\n"
 "$1"
 
-#, fuzzy
 msgctxt "L.RENAME_FOLDER_FAIL"
 msgid ""
 "Unable to rename folder.\n"
 "\n"
 "$1"
 msgstr ""
-"Не удалось создать папку.\n"
+"Не удалось переименовать папку.\n"
 "\n"
 "$1"
 
@@ -2215,6 +2209,11 @@ msgctxt "L.PLUGIN_NOT_SUPPORTED"
 msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
 msgstr "[Этот плагин не поддерживается, так как ему необходима версия Ved $1 и выше!]\\r"
 
+#. by Person
+msgctxt "L.PLUGIN_AUTHOR"
+msgid "by $1"
+msgstr "Автор: $1"
+
 #. by Person, version 1.0.0
 msgctxt "L.PLUGIN_AUTHOR_VERSION"
 msgid "by $1, version $2"
@@ -2419,121 +2418,228 @@ msgstr ""
 
 msgctxt "L.THEMES"
 msgid "Themes"
-msgstr ""
+msgstr "Темы"
 
-#, fuzzy
 msgctxt "L.THEMESTITLE"
 msgid "Theme settings"
-msgstr "Запрет изменений настроек масштаба"
+msgstr "Параметры темы"
 
 msgctxt "L.ACTIVETHEMES"
 msgid "Active themes"
-msgstr ""
+msgstr "Активные темы"
 
 msgctxt "L.INACTIVETHEMES"
 msgid "Inactive themes"
-msgstr ""
+msgstr "Неактивные темы"
 
 msgctxt "L.THEME_DEFAULT_NAME"
 msgid "Default"
-msgstr ""
+msgstr "По умолчанию"
 
 msgctxt "L.THEME_DEFAULT_DESC"
 msgid "Ved's default theme from Ved 2.0 onwards."
-msgstr ""
+msgstr "Тема Ved по умолчанию, начиная с Ved 2.0."
 
 msgctxt "L.THEME_CLASSIC_NAME"
 msgid "Classic"
-msgstr ""
+msgstr "Классическая"
 
 msgctxt "L.THEME_CLASSIC_DESC"
 msgid "Ved's classic theme, that was used in versions 1.x.x."
-msgstr ""
+msgstr "Классическая тема Ved, использовавшаяся в версиях 1.x.x."
 
-#, fuzzy
 msgctxt "L.THEME_VVVVVV_NAME"
 msgid "VVVVVV"
 msgstr "VVVVVV"
 
 msgctxt "L.THEME_VVVVVV_DESC"
 msgid "A theme which makes Ved look like VVVVVV's editor."
-msgstr ""
+msgstr "Тема, делающая Ved похожим на редактор уровней VVVVVV."
 
 msgctxt "L.SPECIALROOMNAMES_TITLE"
 msgid "Special roomnames"
-msgstr ""
+msgstr "Особые названия комнат"
 
 #. Indicates the regular room name
 msgctxt "L.STANDARD_ROOMNAME"
 msgid "Standard roomname"
-msgstr ""
+msgstr "Стандартное название"
 
 #. There is a list of possible names for this room. The last name in that list will be used over earlier ones if its flag is set, otherwise the second-to-last, and so on
 msgctxt "L.HINT_LAST_ROOMNAME"
 msgid "Lower roomnames have priority."
-msgstr ""
+msgstr "У названий снизу выше приоритет."
 
 msgctxt "L.ADD_SPECIALROOMNAME"
 msgid "Add special roomname"
-msgstr ""
+msgstr "Добавить особое название комнаты"
 
-#, fuzzy
 msgctxt "L.SPECIALROOMNAME_STATIC"
 msgid "Static name"
-msgstr "Статус"
+msgstr "Статичное название"
 
 msgctxt "L.SPECIALROOMNAME_GLITCH"
 msgid "Glitch"
-msgstr ""
+msgstr "Глючное"
 
 msgctxt "L.SPECIALROOMNAME_TRANSFORM"
 msgid "Animation/Transformation"
-msgstr ""
+msgstr "Анимация/трансформация"
 
 #. Followed by a button, showing either a flag or the None string below
-#, fuzzy
 msgctxt "L.SPECIALROOMNAME_THIS_FLAG"
 msgid "Flag:"
-msgstr "Флаги:"
+msgstr "Флаг:"
 
 msgctxt "L.SPECIALROOMNAME_NO_FLAG"
 msgid "None (always active)"
-msgstr ""
+msgstr "Нет (всегда активно)"
 
 #. Followed by input field
-#, fuzzy
 msgctxt "L.SPECIALROOMNAME_ROOMNAME"
 msgid "Roomname:"
-msgstr "Название комнаты"
+msgstr "Название комнаты:"
 
 #. Followed by input field. Like frames in an animation, but with text
 msgctxt "L.SPECIALROOMNAME_FRAME1"
 msgid "Frame 1:"
-msgstr ""
+msgstr "Кадр 1:"
 
 #. Followed by input field. Like frames in an animation, but with text
 msgctxt "L.SPECIALROOMNAME_FRAME2"
 msgid "Frame 2:"
-msgstr ""
+msgstr "Кадр 2:"
 
 #. Followed by multiline input field. Like frames in an animation, but with text
 msgctxt "L.SPECIALROOMNAME_FRAMES"
 msgid "Frames (one per line):"
-msgstr ""
+msgstr "Кадры (по одному на строку):"
 
 #. Checkbox: this animation keeps repeating
 msgctxt "L.SPECIALROOMNAME_LOOP"
 msgid "Loop"
-msgstr ""
+msgstr "Зациклить"
 
 msgctxt "L.FLAGS_SPECIALROOMNAME"
 msgid "Choose the flag that activates this special roomname"
-msgstr ""
+msgstr "Выберите флаг, который активирует особое название комнаты"
 
-#, fuzzy
 msgctxt "L.SUREDELETESPECIALROOMNAME"
 msgid "Are you sure you want to delete this roomname?"
-msgstr "Вы уверены, что хотите удалить эту заметку?"
+msgstr "Вы уверены, что хотите удалить это название?"
+
+#. List of installed plugins
+msgctxt "L.PLUGINS_INSTALLED"
+msgid "Installed"
+msgstr "Установленные"
+
+#. List of not installed plugins, available to install
+msgctxt "L.PLUGINS_AVAILABLE"
+msgid "Available"
+msgstr "Доступные"
+
+#. Info about the installed version of this plugin
+msgctxt "L.PLUGININFO_INSTALLED_HEADER"
+msgid "== Installed =="
+msgstr "== Установлен =="
+
+#. Info about the version of this plugin available from online
+msgctxt "L.PLUGININFO_AVAILABLE_HEADER"
+msgid "== Online =="
+msgstr ""
+
+#. Shows a version number
+msgctxt "L.VERSION_IS"
+msgid "Version: $1"
+msgstr "Версия: $1"
+
+#. Shows a date and time
+msgctxt "L.INSTALLED_ON"
+msgid "Installed on: $1"
+msgstr "Дата установки: $1"
+
+#. Shows a date and time
+msgctxt "L.LAST_UPDATED"
+msgid "Last updated: $1"
+msgstr "Дата обновления: $1"
+
+#. File size. Shows something like: 100 MB
+msgctxt "L.FILE_SIZE"
+msgid "Size: $1"
+msgstr "Размер: $1"
+
+msgctxt "L.PLUGIN_NOT_INSTALLED"
+msgid "You don't have this plugin installed."
+msgstr "У вас не установлен этот плагин."
+
+msgctxt "L.PLUGIN_NOT_AVAILABLE"
+msgid "This plugin is not available online."
+msgstr "Этот плагин недоступен для скачивания."
+
+msgctxt "L.PLUGIN_NOT_DOWNLOADABLE"
+msgid "This plugin does not have a download available for your version of Ved."
+msgstr "У этого плагина нет версий, совместимых с вашей версией Ved."
+
+msgctxt "L.UPDATE"
+msgid "Update"
+msgstr "Обновить"
+
+msgctxt "L.UPDATENOW"
+msgid "Update now"
+msgstr "Обновить сейчас"
+
+msgctxt "L.INSTALL"
+msgid "Install"
+msgstr "Установить"
+
+#. See information about something
+msgctxt "L.INFO"
+msgid "Information"
+msgstr "Информация"
+
+msgctxt "L.CONFIRM_INSTALL_PLUGIN"
+msgid "Install this plugin?"
+msgstr "Установить это плагин?"
+
+msgctxt "L.CONFIRM_UPDATE_PLUGIN"
+msgid "Update this plugin?"
+msgstr "Обновить этот плагин?"
+
+msgctxt "L.CONFIRM_DELETE_PLUGIN"
+msgid "Remove this plugin?"
+msgstr "Удалить этот плагин?"
+
+msgctxt "L.NOTE_SAFE_PLUGINS"
+msgid "Note that it's not guaranteed that all plugins are safe."
+msgstr "Обратите внимание, что безопасность плагинов не гарантируется."
+
+msgctxt "L.NOTE_RESTART_VED_DELETE"
+msgid "Note that you'll need to restart Ved to see the plugin stop working."
+msgstr "Обратите внимание, что вам нужно перезапустить Ved, чтобы плагин перестал работать."
+
+msgctxt "L.DONE_INSTALLING_PLUGIN"
+msgid "Done! Restart Ved to see the new plugin working."
+msgstr "Готово! Перезапустите Ved, чтобы новый плагин начал работать."
+
+msgctxt "L.RESTART_NEEDED"
+msgid "Restart needed!"
+msgstr "Нужен перезапуск!"
+
+msgctxt "L.CANNOT_DELETE_FOLDER_PLUGIN"
+msgid "This plugin is a folder, please remove it manually."
+msgstr "Этот плагин является папкой. Пожалуйста, удалите его самостоятельно."
+
+msgctxt "L.DOWNLOAD_REQUIRES_BETTER_LOVE"
+msgid "Downloading packages requires LÖVE 11.0 or higher."
+msgstr "Для загрузки пакетов требуется LÖVE 11.0 или выше."
+
+msgctxt "L.DOWNLOAD_FAIL_GET"
+msgid "Download failed."
+msgstr "Не удалось загрузить."
+
+msgctxt "L.DOWNLOAD_FAIL_VERIFY"
+msgid "The downloaded package isn't correct. It may have changed from the expected version."
+msgstr "Загруженный пакет некорректен. Возможно, он изменился относительно ожидаемой версии."
 
 # Plural form 0 - for the numbers that end with '1', except for '11' (1; 21; 31; etc.)
 # Plural form 1 - for the numbers that end with '2', '3' or '4', except for '12', '13' and '14'

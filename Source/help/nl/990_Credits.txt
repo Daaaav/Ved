@@ -41,7 +41,7 @@ Terry Cavanagh voor het maken van VVVVVV
 Iedereen die bugs gerapporteerd heeft, met ideeën is gekomen en mij heeft
 gemotiveerd om dit te maken!
 \
-
+\
 
 
 Licentie\h#

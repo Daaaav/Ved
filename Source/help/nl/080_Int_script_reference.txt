@@ -149,6 +149,18 @@ Verandert de kleur van de speler
 
 kleur - cyan/player/blue/red/yellow/green/purple/teleporter
 
+changeregion¤(id)\w#h
+
+Verander de huidige minikaart-regio naar de regio met het gegeven ID (0 is de
+normale kaart).
+
+Dit zal de minikaart beperken tot het gebied dat eerder is gedefinieerd met
+#setregion(id,x1,y1,x2,y2)¤setregion¤. Als er een aangepaste afbeelding ¤regionXXX.png¤ is die overeenkomt met\Lwl&Znn&Z
+de regio-ID (zoals ¤region1.png¤, ¤region2.png¤, etc.) zal die afbeelding worden\nn&Znn&Z
+gebruikt voor de minikaart.
+
+Dit commando is toegevoegd in 2.5.\g
+
 changerespawncolour¤(kleur)\w#h
 
 Verandert de kleur waarmee de speler terugkomt na dood te zijn gegaan.
@@ -221,7 +233,7 @@ Hetzelfde als ¤iftrinketsless(n,script)¤ in vereenvoudigde scripting\nn&Z
 
 custommap¤(on/off)\w#h
 
-De interne variant van het map-commando
+De interne variant van het ¤map¤-commando\nn&Z
 
 customposition¤(type,above/below)\w#h
 
@@ -276,6 +288,12 @@ Schakelt "Secret Lab mode" in.
 
 2.2 EN LAGER: Ontgrendelt daadwerkelijk het Secret Lab, wat waarschijnlijk
 een ongewenst effect is voor een aangepast level om te hebben.
+
+everybodyhappy¤()\w#h
+
+Het omgekeerde van ¤#everybodysad()¤everybodysad¤: maakt alle bemanningsleden blij.\nLwl&Z
+
+Dit commando is toegevoegd in 2.5.\g
 
 everybodysad¤()\w#h
 
@@ -363,13 +381,14 @@ het hoofdspel)
 
 x - teleporter/game
 
-gamestate¤(state)\o#h
+gamestate¤(state,statedelay)\o#h
 
 Verander de huidige gamestate naar het opgegeven state-nummer.
 
 state - De gamestate om naar te springen
+statedelay - De wachttijd voordat de gamestate wordt geactiveerd, standaard 0
 
-Een volledige lijst met gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤hier¤.\gLClg
+Een volledige lijst met gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤hier¤. Het ¤statedelay¤-argument is toegevoegd in 2.5.\gLClgn&Zg
 
 gotoposition¤(x,y,zwaartekracht)\w#h
 
@@ -459,9 +478,9 @@ Als bemanningslid x als laatste gered is, ga naar script
 bemanningslid - Nummers worden hier gebruikt: 0: Viridian, 1: Violet, 2:
 Vitellary, 3: Vermilion, 4: Verdigris, 5 Victoria
 
-ifskip¤(x)\b#h
+ifskip¤(script)\b#h
 
-Als je cutscenes overslaat in No Death Mode, ga naar script x
+Als je cutscenes overslaat in No Death Mode, ga naar script
 
 iftrinkets¤(n,script)\b#h
 
@@ -474,6 +493,17 @@ Controleert of het gegeven getal kleiner is dan een aantal dat gerelateerd is aa
 artefacten. Echter, het vergelijkt het met het grootste aantal artefacten dat je
 ooit hebt gekregen tijdens het spelen van het hoofdspel, NIET het aantal
 artefacten dat je eigenlijk hebt. Laadt een intern script (uit het hoofdspel)
+
+ifversion¤(versie,script)\w#h
+
+Controleer of de huidige versie van het spel de aangegeven versie is of later, en
+zo ja, spring naar het aangegeven aangepaste script.
+
+versie - Het minimale versienummer, gescheiden met puntjes (zoals ¤2.6¤ of ¤2.6.0¤)\nn&Znn&Z
+script - Het vereenvoudigde script om naar te springen als de controle waar is
+
+Dit commando is toegevoegd in 2.5. Dit werkt dus in alle versies\g
+(vanaf 2.0 en later) om elke versie vanaf 2.5 te controleren.\g
 
 ifwarp¤(x,y,richting,script)\w#h
 
@@ -517,6 +547,21 @@ loop\w#h
 
 Zet dit aan het eind van het lusblok dat begint met het ¤#do(herhalingen)¤do¤-commando.\nLwl&Z
 
+mapexplored¤(all/none)\w#h
+
+Toont of verbergt de hele kaart, alle kamers tegelijk.
+
+Nuttig zodat je niet ¤#showcoordinates(x,y)¤showcoordinates¤ of ¤#hidecoordinates(x,y)¤hidecoordinates¤ hoeft te gebruiken\gLwl&ZgLwl&Zg
+op alle 400 kamers.\g
+Dit commando is toegevoegd in 2.5.\g
+
+mapreveal¤(on/off)\w#h
+
+Schakelt in of uit of de kaart moet worden onthuld wanneer een speler een kamer
+binnengaat.
+
+Dit commando is toegevoegd in 2.5.\g
+
 missing¤(kleur)\b#h
 
 Maakt iemand vermist
@@ -551,7 +596,10 @@ n - Intern liednummer
 
 playef¤(geluid)\w#h
 
-Speel een geluidseffect.
+Speel een geluidseffect met numeriek ID.
+Vanaf 2.5 kan het geluids-ID een bestandsnaam zijn voor eigen geluidseffecten,
+hallo.wav¤ is bijvoorbeeld ¤playef(hallo)¤. Spaties worden verwijderd en\n&Znn&Z
+hoofdletters worden veranderd in kleine letters.
 
 geluid - Geluids-ID
 
@@ -563,9 +611,11 @@ position¤(type,above/below)\w#h
 Overschrijft de x,y van het text-commando en stelt daarmee de positie van het
 tekstvak in.
 
-type - center/centerx/centery, of de naam van een kleur
+type - center/centerx/centery/absolute, of de naam van een kleur
 cyan/player/blue/red/yellow/green/purple
-above/below - Wordt alleen gebruikt als x de naam van een kleur is
+above/below - Wordt alleen gebruikt als type de naam van een kleur is
+
+"absolute" is toegevoegd in 2.5.\g
 
 purplecontrol\b#h
 
@@ -576,6 +626,14 @@ redcontrol\b#h
 
 Start een gesprek met Vermilion net zoals wanneer je hem in het hoofdspel ontmoet
 en op ENTER drukt. Maakt daarna ook een activiteitszone.
+
+removeregion¤(id)\w#h
+
+Verwijder de regio met het gegeven ID, oorspronkelijk ingesteld met ¤#setregion(id,x1,y1,x2,y2)¤setregion¤.\nLwl&Z
+
+id - Regio-ID
+
+Dit commando is toegevoegd in 2.5.\g
 
 rescued¤(kleur)\b#h
 
@@ -588,7 +646,10 @@ speler naar het laatste checkpoint.
 
 restoreplayercolour¤()\w#h
 
-Verandert de kleur van de speler terug naar cyaan
+Verandert de kleur van de speler terug naar de standaard
+
+Vanaf 2.5 kan de kleur van de speler in een level worden veranderd naar iets\g
+anders dan cyaan.\g
 
 resumemusic¤()\w#h
 
@@ -641,6 +702,15 @@ kracht van toepassing worden op alle tekstvakken die al in beeld zijn. Laat dit
 anders leeg.
 
 Dit commando is toegevoegd in 2.4. Het ¤all¤-argument is toegevoegd in 2.4.1.\gn&Zg
+
+setregion¤(id,x1,y1,x2,y2)\w#h
+
+Stelt de minikaart-regio met het gegeven ID in op het gedeelte gedefinieerd door
+de twee hoeken (x1,y1) en (x2,y2). Kan weer worden verwijderd met ¤#removeregion(id)¤removeregion¤.\nLwl&Z
+
+id - Regio-ID (1-400)
+
+Deze kamercoördinaten beginnen bij 0. Dit commando is toegevoegd in 2.5.\g
 
 setroomname\w#h
 
@@ -743,7 +813,7 @@ niet!
 text¤(kleur,x,y,regels)\w#h
 
 Slaat een tekstvak op in het geheugen met kleur, positie en aantal regels. Meestal
-wordt het position-commando gebruikt na het text-commando (en het aantal regels)
+wordt het ¤#position(type,above/below)¤position¤-commando gebruikt na het text-commando (en het aantal regels)\nLwl&Z
 wat de coördinaten zal overschrijven die hier gegeven zijn, dus deze worden
 meestal op 0 gelaten.
 
@@ -782,6 +852,10 @@ De placeholders die worden vervangen zijn:
 - {b_res} - Herstarten
 - {b_esc} - Esc/Menu
 
+In het lettertype van VVVVVV worden accolades weergegeven als ö en Á, maar het\g
+zijn dus accolades, niet de accenttekentjes. (Je ziet hier natuurlijk niks van\g
+tijdens het spelen)\g
+
 Dit commando is toegevoegd in 2.4.\g
 
 textcase¤(geval)\w#h
@@ -803,6 +877,13 @@ afbeelding - levelcomplete/gamecomplete, of een onbekende waarde om de afbeeldin
              te verwijderen
 
 Dit commando is toegevoegd in 2.4.\g
+
+textoutline¤(on/off/default)\w#h
+
+Schakel de tekstomtrek voor een tekstvan in, uit, of wat de instelling van de
+speler is
+
+Dit commando is toegevoegd in 2.5.\g
 
 textsprite¤(x,y,sprite,kleur)\w#h
 

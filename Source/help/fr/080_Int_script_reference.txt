@@ -152,6 +152,17 @@ Change la couleur du joueur
 
 couleur - cyan/player/blue/red/yellow/green/purple/teleporter
 
+changeregion¤(id)\w#h
+
+Change the current minimap region to the one with the given ID (0 is the default
+map).
+
+This will restrict the minimap to the area previously defined with ¤#setregion(id,x1,y1,x2,y2)¤setregion¤. If\nLwl&Z
+there is a custom graphic ¤regionXXX.png¤ corresponding with the region ID (e.g.\nn&Z
+region1.png¤, ¤region2.png¤, etc.), then that image will be used for the minimap.\n&Znn&Z
+
+Cette commande a été ajoutée dans la 2.5.\g
+
 changerespawncolour¤(couleur)\w#h
 
 Change la couleur du joueur après être réapparu après une mort.
@@ -226,7 +237,7 @@ Même comportement que ¤iftrinketsless(n,script)¤ dans un script simplifié\nn
 
 custommap¤(on/off)\w#h
 
-La variante interne de la commande map
+La variante interne de la commande ¤map\nn&Z
 
 customposition¤(type,above/below)\w#h
 
@@ -287,6 +298,12 @@ Active le mode Laboratoire Secret.
 2.2 ET ANTÉRIEUR: Débloque le Laboratoire Secret pour le jeu principal, ce qui
 n'est probablement pas quelque chose qu'un niveau personnalisé devrait
 faire.
+
+everybodyhappy¤()\w#h
+
+The opposite of ¤#everybodysad()¤everybodysad¤: makes all crewmates happy.\nLwl&Z
+
+Cette commande a été ajoutée dans la 2.5.\g
 
 everybodysad¤()\w#h
 
@@ -378,13 +395,14 @@ du jeu principal)
 
 x - teleporter/game
 
-gamestate¤(état)\b#h
+gamestate¤(state,statedelay)\o#h
 
 Change l'état de jeu courant à l'index d'état spécifié.
 
-état - L'état de jeu auquel passer
+state - The gamestate to jump to
+statedelay - The delay before the gamestate is activated, 0 by default
 
-Une liste des états de jeux se trouve ¤https://vsix.dev/wiki/List_of_gamestates¤ici¤.\gLClg
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤. The ¤statedelay¤ argument was added in 2.5.\gLClgn&Zg
 
 gotoposition¤(x,y,gravité)\w#h
 
@@ -477,9 +495,9 @@ Si le dernier équipier secouru est x, exécuter le script script
 équipier - Des index sont utilisés ici: 0: Viridian, 1: Violet, 2: Vitellary, 3:
 Vermilion, 4: Verdigris, 5: Victoria
 
-ifskip¤(x)\b#h
+ifskip¤(script)\b#h
 
-Si vous passez les cinématiques en Mode Sans Mort, exécuter le script x
+Si vous passez les cinématiques en Mode Sans Mort, exécuter le script donné
 
 iftrinkets¤(n,script)\b#h
 
@@ -492,6 +510,17 @@ Vérifie si le nombre donné est inférieur au nombre qui est lié aux médaille
 Cependant, il vérifie le plus grand nombre de médailles que vous avez récupéré
 dans un seule instance du jeu principal, PAS le nombre de médailles que vous
 avez maintenant. Charge un script interne (du jeu principal)
+
+ifversion¤(version,script)\w#h
+
+Check if the current version of the game is the specified version or greater, and
+if so, jump to the given custom script.
+
+version - The minimum version number, separated with dots (e.g. ¤2.6¤ or ¤2.6.0¤)\nn&Znn&Z
+script - The custom script to jump to, if the check succeeds
+
+This command was added in 2.5. By design, it works in any version (from 2.0\g
+onward) to check any version that is 2.5 or higher.\g
 
 ifwarp¤(x,y,dir,script)\w#h
 
@@ -536,6 +565,20 @@ loop\w#h
 Ajoutez cette commande à la fin d'une boucle de code commencée avec la commande
 #do(times)¤do¤.\Lwl&Z
 
+mapexplored¤(all/none)\w#h
+
+Reveals or hides the whole map, all at once.
+
+Useful so you don't have to use ¤#showcoordinates(x,y)¤showcoordinates¤ or ¤#hidecoordinates(x,y)¤hidecoordinates¤ on all 400\gLwl&ZgLwl&Zg
+rooms.\g
+This command was added in 2.5.\g
+
+mapreveal¤(on/off)\w#h
+
+Enables or disables the map being revealed when the player enters a room.
+
+Cette commande a été ajoutée dans la 2.5.\g
+
 missing¤(couleur)\b#h
 
 Force la disparition d'un équipier
@@ -570,7 +613,9 @@ n - Index de chanson interne
 
 playef¤(son)\w#h
 
-Joue un effet sonore.
+Play a sound effect by numerical ID.
+Since 2.5, sound ID can be a filename for custom sounds, e.g. ¤hello.wav¤ is\nn&Z
+playef(hello)¤. Spaces are stripped and case is lowered.\n&Z
 
 son - ID de son
 
@@ -583,11 +628,11 @@ position¤(type,above/below)\w#h
 Écrase les valeurs x,y d'une commande de texte, fixant la position de la boite
 de dialogue.
 
-type - center(centré) / center(centré en x) / centery(centré en y), ou un nom de
-couleur cyan/ player(joueur) / blue(bleu) / red(rouge) / yellow(jaune) /
-green(vert) / purple(violet) (secourable)
-above(au-dessus) / below(au-dessous) - Seulement utilisé si type est un nom
-de couleur.
+type - center/centerx/centery/absolute, or a color name cyan/player/blue/red/
+yellow/green/purple
+above/below - Only used if type is a color name
+
+"absolute" was added in 2.5.\g
 
 purplecontrol\b#h
 
@@ -601,6 +646,14 @@ Commence une conversation avec Vermilion comme si vous venez de le
 rencontrer dans le jeu principal et vous venez d'appuyer sur la touche
 ENTREE. Créée aussi une zone d'activité après l'exécution.
 
+removeregion¤(id)\w#h
+
+Remove the region with the given ID, originally set with ¤#setregion(id,x1,y1,x2,y2)¤setregion¤.\nLwl&Z
+
+id - Region ID
+
+Cette commande a été ajoutée dans la 2.5.\g
+
 rescued¤(couleur)\b#h
 
 Force la rescousse d'un équipier
@@ -612,7 +665,10 @@ téléporte le joueur vers le dernier point de sauvegarde.
 
 restoreplayercolour¤()\w#h
 
-Restaure la couleur du joueur par défaut (cyan)
+Restaure la couleur du joueur par défaut
+
+Since 2.5, the player color for a level can be changed to a different color than\g
+cyan.\g
 
 resumemusic¤()\w#h
 
@@ -667,6 +723,15 @@ absolument toutes les boîtes de dialogue à l'écran.
 
 Cette commande a été ajoutée dans la 2.4. L'argument ¤all¤ a été ajouté dans la\gn&Zg
 2.4.1.\g
+
+setregion¤(id,x1,y1,x2,y2)\w#h
+
+Sets the minimap region with the given ID to the portion specified by the two
+corners (x1,y1) and (x2,y2). Can be unset with ¤#removeregion(id)¤removeregion¤.\nLwl&Z
+
+id - Region ID (1-400)
+
+These room coordinates are 0-indexed. This command was added in 2.5.\g
 
 setroomname\w#h
 
@@ -773,7 +838,7 @@ normale, donc ne l'utilisez pas!
 text¤(couleur,x,y,lignes)\w#h
 
 Sauvegarde une boite de dialogue en mémoire avec une couleur, une position
-et un nombre de lignes. Normalement, la commande de position est utilisée
+et un nombre de lignes. Normalement, la commande de ¤#position(type,above/below)¤position¤ est utilisée\nLwl&Z
 après la commande de texte (et ses lignes de texte), ce qui écrase les
 coordonnées données ici, donc elles sont usuellement laissées à 0.
 
@@ -813,6 +878,9 @@ Les boutons de replacement sont :
 - {b_res} - Réessayer
 - {b_esc} - Echap/Menu
 
+In VVVVVV's font, curly braces show up as ö and Á, but they are actually curly\g
+braces, not the accented characters. (None of this is visible in-game, of course)\g
+
 Cette commande a été ajoutée dans la 2.4.\g
 
 textcase¤(casse)\w#h
@@ -834,6 +902,12 @@ Il ne peut y avoir qu'une image par boîte de dialogue.
 image - levelcomplete/gamecomplete, ou une autre valeur pour enlever l'image
 
 Cette commande a été ajoutée dans la 2.4.\g
+
+textoutline¤(on/off/default)\w#h
+
+Turn the text outline for a text box on, off, or what the player's setting is
+
+Cette commande a été ajoutée dans la 2.5.\g
 
 textsprite¤(x,y,sprite,couleur)\w#h
 

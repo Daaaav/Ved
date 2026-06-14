@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: 2026-05-04 03:01+0200\n"
+"PO-Revision-Date: 2026-06-14 21:00+0000\n"
 "Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #. If you're making a translation, feel free to set this to something like "Translation made by (you)".
 msgctxt "L.TRANSLATIONCREDIT"
@@ -2227,6 +2227,11 @@ msgctxt "L.PLUGIN_NOT_SUPPORTED"
 msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
 msgstr "[Dieses Plugin ist nicht unterstützt, da Ved $1 oder höher benötigt wird!]\\r"
 
+#. by Person
+msgctxt "L.PLUGIN_AUTHOR"
+msgid "by $1"
+msgstr "von $1"
+
 #. by Person, version 1.0.0
 msgctxt "L.PLUGIN_AUTHOR_VERSION"
 msgid "by $1, version $2"
@@ -2546,6 +2551,124 @@ msgstr ""
 msgctxt "L.SUREDELETESPECIALROOMNAME"
 msgid "Are you sure you want to delete this roomname?"
 msgstr "Bist du sicher dass du diese Notiz löschen möchtest?"
+
+#. List of installed plugins
+msgctxt "L.PLUGINS_INSTALLED"
+msgid "Installed"
+msgstr ""
+
+#. List of not installed plugins, available to install
+msgctxt "L.PLUGINS_AVAILABLE"
+msgid "Available"
+msgstr ""
+
+#. Info about the installed version of this plugin
+msgctxt "L.PLUGININFO_INSTALLED_HEADER"
+msgid "== Installed =="
+msgstr ""
+
+#. Info about the version of this plugin available from online
+msgctxt "L.PLUGININFO_AVAILABLE_HEADER"
+msgid "== Online =="
+msgstr ""
+
+#. Shows a version number
+#, fuzzy
+msgctxt "L.VERSION_IS"
+msgid "Version: $1"
+msgstr "Ved-Version:"
+
+#. Shows a date and time
+msgctxt "L.INSTALLED_ON"
+msgid "Installed on: $1"
+msgstr ""
+
+#. Shows a date and time
+msgctxt "L.LAST_UPDATED"
+msgid "Last updated: $1"
+msgstr ""
+
+#. File size. Shows something like: 100 MB
+#, fuzzy
+msgctxt "L.FILE_SIZE"
+msgid "Size: $1"
+msgstr "Größe"
+
+#, fuzzy
+msgctxt "L.PLUGIN_NOT_INSTALLED"
+msgid "You don't have this plugin installed."
+msgstr "Du hast noch keine Plugins."
+
+msgctxt "L.PLUGIN_NOT_AVAILABLE"
+msgid "This plugin is not available online."
+msgstr ""
+
+msgctxt "L.PLUGIN_NOT_DOWNLOADABLE"
+msgid "This plugin does not have a download available for your version of Ved."
+msgstr ""
+
+msgctxt "L.UPDATE"
+msgid "Update"
+msgstr ""
+
+msgctxt "L.UPDATENOW"
+msgid "Update now"
+msgstr ""
+
+msgctxt "L.INSTALL"
+msgid "Install"
+msgstr ""
+
+#. See information about something
+#, fuzzy
+msgctxt "L.INFO"
+msgid "Information"
+msgstr "Rendererinformationen:"
+
+msgctxt "L.CONFIRM_INSTALL_PLUGIN"
+msgid "Install this plugin?"
+msgstr ""
+
+msgctxt "L.CONFIRM_UPDATE_PLUGIN"
+msgid "Update this plugin?"
+msgstr ""
+
+msgctxt "L.CONFIRM_DELETE_PLUGIN"
+msgid "Remove this plugin?"
+msgstr ""
+
+msgctxt "L.NOTE_SAFE_PLUGINS"
+msgid "Note that it's not guaranteed that all plugins are safe."
+msgstr ""
+
+msgctxt "L.NOTE_RESTART_VED_DELETE"
+msgid "Note that you'll need to restart Ved to see the plugin stop working."
+msgstr ""
+
+msgctxt "L.DONE_INSTALLING_PLUGIN"
+msgid "Done! Restart Ved to see the new plugin working."
+msgstr ""
+
+msgctxt "L.RESTART_NEEDED"
+msgid "Restart needed!"
+msgstr ""
+
+msgctxt "L.CANNOT_DELETE_FOLDER_PLUGIN"
+msgid "This plugin is a folder, please remove it manually."
+msgstr ""
+
+#, fuzzy
+msgctxt "L.DOWNLOAD_REQUIRES_BETTER_LOVE"
+msgid "Downloading packages requires LÖVE 11.0 or higher."
+msgstr "LÖVE $1 oder höher ist erforderlich, um eine ZIP-Datei zu erstellen"
+
+msgctxt "L.DOWNLOAD_FAIL_GET"
+msgid "Download failed."
+msgstr ""
+
+msgctxt "L.DOWNLOAD_FAIL_VERIFY"
+msgid "The downloaded package isn't correct. It may have changed from the expected version."
+msgstr ""
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."

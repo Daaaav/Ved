@@ -32,7 +32,7 @@ acak, dan menghidupkannya secara tidak menentu.
 
 tile¤ teleporter disetel ke 6, dan ¤color¤ disetel ke 102. Perintah ini membuat\n&Zgn&Zg
 teleporter tidak melakukan apa pun saat disentuh, karena ubin teleporter disetel\g
-ke sesuatu yang bukan 1.\gn&Zg(
+ke sesuatu yang bukan ¤1§¤.\gn&Zg(
 
 activeteleporter¤()\w#h
 
@@ -143,6 +143,18 @@ Mengubah warna pemain
 
 warna - cyan/player/blue/red/yellow/green/purple/teleporter
 
+changeregion¤(id)\w#h
+
+Ubah wilayah minimap saat ini ke wilayah dengan ID yang
+diberikan (0 adalah peta default).
+
+Ini akan membatasi minimap ke area yang sebelumnya telah ditentukan dengan
+#setregion(id,x1,y1,x2,y2)¤setregion¤. Jika terdapat gambar khusus ¤regionXXX.png¤ yang sesuai dengan ID wilayah\Lwl&Znn&Z
+(misalnya ¤region1.png¤, ¤region2.png¤, dll.), maka gambar tersebut akan digunakan\nn&Znn&Z
+untuk minimap.
+
+Perintah ini ditambahkan di 2.5.\g
+
 changerespawncolour¤(warna)\w#h
 
 Mengubah warna pemain yang dibangkitkan kembali saat mati.
@@ -216,7 +228,7 @@ Sama seperti ¤iftrinketsless(n,skrip)¤ dalam skrip sederhana\nn&Z
 
 custommap¤(on/off)\w#h
 
-Varian internal dari perintah peta
+Varian internal dari perintah ¤peta\nn&Z
 
 customposition¤(type,above/below)\w#h
 
@@ -270,6 +282,12 @@ Mengaktifkan mode Secret Lab.
 
 2.2 DAN DI BAWAH: Sebenarnya membuka Rahasia Lab, yang mungkin merupakan efek
 yang tidak diinginkan untuk memiliki level kustom.
+
+everybodyhappy¤()\w#h
+
+Kebalikan dari ¤#everybodysad()¤everybodysad¤: membuat semua crewmate senang.\nLwl&Z
+
+Perintah ini ditambahkan di 2.5.\g
 
 everybodysad¤()\w#h
 
@@ -357,18 +375,20 @@ teleporter dari game utama)
 
 x - teleporter/game
 
-gamestate¤(state)\b#h
+gamestate¤(state,statedelay)\o#h
 
 Ubah gamestate saat ini ke nomor status yang ditentukan.
 
 state - Keadaan permainan untuk melompat ke
+statedelay - Penundaan sebelum status permainan diaktifkan, 0 secara default
 
-Daftar lengkap status permainan ada ¤https://vsix.dev/wiki/List_of_gamestates¤di sini¤.\gLClg
+Daftar lengkap status permainan ada ¤https://vsix.dev/wiki/List_of_gamestates¤di sini¤. Argumen ¤statedelay¤ ditambahkan\gLClgn&Zg
+pada versi 2.5.
 
 gotoposition¤(x,y,gravitasi)\w#h
 
-Ubah posisi Viridian menjadi ¤(x,y)¤ di ruangan ini, dan mengubah gravitasinya juga.\nn&Z
-
+Ubah posisi Viridian menjadi ¤(x,y)¤ di ruangan ini, dan mengubah gravitasinya\nn&Z
+juga.
 
 gravitasi - 1 untuk dibalik, 0 untuk tidak dibalik. Nilai lainnya mengakibatkan
 kesalahan gravitasi pemain.
@@ -453,10 +473,9 @@ Jika crewmate x diselamatkan terakhir kali, buka skrip
 crewmate - Nomor digunakan di sini: 0: Viridian, 1: Violet, 2: Vitellary, 3:
 Vermilion, 4: Verdigris, 5 Victoria
 
-ifskip¤(x)\b#h
+ifskip¤(skrip)\b#h
 
-Jika Anda melewatkan cutscene dalam No Death Mode/Mode Tampa Kematian, buka
-skrip x
+Jika Anda melewatkan cutscene dalam No Death Mode/Mode Tampa Kematian, buka skrip
 
 iftrinkets¤(n,skrip)\b#h
 
@@ -469,6 +488,18 @@ Memeriksa apakah nomor yang diberikan kurang dari jumlah yang terkait dengan
 trinket. Namun, itu memeriksa jumlah trinket terbesar yang pernah
 Anda dapatkan selama satu permainan utama, BUKAN jumlah trinket yang
 sebenarnya Anda miliki. Memuat skrip internal (permainan utama)
+
+ifversion¤(versi,skrip)\w#h
+
+Periksa apakah versi game saat ini adalah versi yang ditentukan atau lebih tinggi,
+dan jika ya, lompat ke skrip kustom yang diberikan.
+
+version - The minimum version number, separated with dots (e.g. ¤2.6¤ or ¤2.6.0¤)\nn&Znn&Z
+skrip - Skrip khusus untuk melompati, jika pemeriksaan berhasil
+
+Perintah ini ditambahkan pada versi 2.5. Sesuai rancangannya, perintah ini\g
+berfungsi di semua versi (mulai dari 2.0 dan seterusnya) untuk memeriksa\g
+versi apa pun yang 2.5 atau lebih tinggi.\g
 
 ifwarp¤(x,y,dir,skrip)\w#h
 
@@ -511,6 +542,20 @@ loop\w#h
 
 Letakkan ini di akhir blok perulangan yang dimulai dengan perintah ¤#do(kali)¤do¤.\nLwl&Z
 
+mapexplored¤(all/none)\w#h
+
+Menampilkan atau menyembunyikan seluruh peta sekaligus.
+
+Berguna agar Anda tidak perlu menggunakan ¤#showcoordinates(x,y)¤showcoordinates¤ atau ¤#hidecoordinates(x,y)¤hidecoordinates\gLwl&ZgLwl&Zg
+pada semua 400 ruangan.\g
+Perintah ini ditambahkan pada versi 2.5.\g
+
+mapreveal¤(on/off)\w#h
+
+Mengaktifkan atau menonaktifkan tampilan peta saat pemain memasuki ruangan.
+
+Perintah ini ditambahkan di 2.5.\g
+
 missing¤(warna)\b#h
 
 Membuat seseorang hilang
@@ -545,7 +590,10 @@ n - Nomor lagu internal
 
 playef¤(suara)\w#h
 
-Mainkan efek suara.
+Putar efek suara berdasarkan ID numerik.
+Sejak versi 2.5, ID suara dapat berupa nama file untuk suara kustom,\g
+misalnya ¤hello.wav¤ adalah ¤playef(hello)¤. Spasi dihilangkan dan huruf\gnn&Znn&Z
+besar/kecil diubah menjadi huruf kecil.\g
 
 suara - ID Suara
 
@@ -556,9 +604,11 @@ position¤(tipe,above/below)\w#h
 
 Mengganti x,y dari perintah teks dan dengan demikian mengatur posisi kotak teks.
 
-tipe - center/centerx/centery, atau nama warna cyan/player/blue/red/yellow/green/
-purple
+tipe - center/centerx/centery/absolute, atau nama warna cyan/player/blue/red/
+yellow/green/purple
 above/below - Hanya digunakan jika tipe adalah nama warna
+
+"absolute" telah ditambahkan di 2.5.\g
 
 purplecontrol\b#h
 
@@ -569,6 +619,14 @@ redcontrol\b#h
 
 Mulai percakapan dengan Vermilion seperti saat Anda bertemu dengannya di game
 utama dan tekan ENTER. Juga membuat zona aktivitas setelahnya.
+
+removeregion¤(id)\w#h
+
+Menghapus wilayah dari ID yang diberikan, yang awalnya diatur dengan ¤#setregion(id,x1,y1,x2,y2)¤setregion¤.\nLwl&Z
+
+id - Wilayah ID
+
+Perintah ini ditambahkan di 2.5.\g
 
 rescued¤(warna)\b#h
 
@@ -581,7 +639,10 @@ pemain ke checkpoint terakhir.
 
 restoreplayercolour¤()\w#h
 
-Mengubah warna pemain kembali ke biru muda
+Mengubah warna pemain kembali ke bawaan
+
+Sejak versi 2.5, warna pemain untuk suatu level dapat diubah menjadi warna selain\g
+biru muda.\g
 
 resumemusic¤()\w#h
 
@@ -635,6 +696,15 @@ tinggalkan saja ini.
 
 Perintah ini ditambahkan di 2.4. Argumen ¤all¤ ditambahkan di 2.4.1.\gn&Zg
 
+setregion¤(id,x1,y1,x2,y2)\w#h
+
+Mengatur wilayah minimap dengan ID yang diberikan ke bagian yang ditentukan
+oleh dua sudut (x1,y1) dan (x2,y2). Dapat dibatalkan dengan ¤#removeregion(id)¤removeregion¤.\nLwl&Z
+
+id - Wilayah ID (1-400)
+
+Koordinat ruangan ini diindeks 0. Perintah ini ditambakan di 2.5.\g
+
 setroomname\w#h
 
 Ubah nama ruangan dari ruangan saat ini. Baris setelah perintah ini akan diambil
@@ -659,7 +729,7 @@ Perintah ini ditambahkan di 2.4.\g
 
 shake¤(n)\w#h
 
-Kocok layar untuk n kutu. Ini tidak akan membuat penundaan.
+Goyang layar untuk n detik. Ini tidak akan membuat penundaan.
 
 showcoordinates¤(x,y)\w#h
 
@@ -733,9 +803,9 @@ gunakan itu!
 
 text¤(warna,x,y,baris)\w#h
 
-Simpan kotak teks dalam memori dengan warna, posisi dan jumlah baris. Biasanya,
-perintah posisi digunakan setelah perintah teks (dan baris teksnya), yang akan
-menimpa koordinat yang diberikan di sini, jadi ini biasanya dibiarkan sebagai 0.
+Store a text box in memory with color, position and number of lines. Usually, the
+#position(type,above/below)¤position¤ command is used after the text command (and its lines of text), which\Lwl&Z
+will overwrite the coordinates given here, so these are usually left as 0.
 
 warna - cyan/player/blue/red/yellow/green/purple/gray/white/orange/transparent
 x - Posisi x dari kotak teks
@@ -771,6 +841,10 @@ Placeholder yang diganti adalah:
 - {b_res} - Mulai ulang
 - {b_esc} - Esc/Menu
 
+Dalam font VVVVVV, tanda kurung kurawal muncul sebagai ö dan Á, tetapi sebenarnya\g
+itu adalah tanda kurung kurawal, bukan karakter beraksen. (Tentu saja, semua ini\g
+tidak terlihat dalam game)\g
+
 Perintah ini ditambahkan di 2.4.\g
 
 textcase¤(kasus)\w#h
@@ -792,6 +866,13 @@ gambar - levelcomplete/gamecomplete, atau nilai yang tidak diketahui untuk
 menghapus gambar
 
 Perintah ini ditambahkan di 2.4.\g
+
+textoutline¤(on/off/default)\w#h
+
+Mengaktifkan/menonaktifkan garis luar teks untuk kotak teks, atau sesuaikan
+dengan pengaturan pemain.
+
+Perintah ini ditambahkan di 2.5.\g
 
 textsprite¤(x,y,sprite,warna)\w#h
 

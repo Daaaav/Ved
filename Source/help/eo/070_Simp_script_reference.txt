@@ -35,7 +35,7 @@ sad¤([skipano])\h#w
 Malfeliĉigas skipanon. Sen argumento, tio ĉi malfeliĉigos Viridianon. Vi ankaŭ
 povas uzi "all", "everyone" aŭ "everybody" kiel argumenton por malfeliĉigi ĉiujn.
 
-Note: this command can also be written as ¤cry¤ instead of ¤sad¤.\nwnw
+Notu: eblas skribi ¤cry¤ anstataŭ ¤sad¤ por uzi la komandon.\nwnw
 
 flag¤(flago,on/off)\h#w
 
@@ -70,14 +70,14 @@ skriptnomo. Se ĝi estas >= nombro, daŭru en la nuntempa skripto.
 
 destroy¤(forigotaĵo)\h#w
 
-Remove all objects of the given type, until you re-enter the room.
+Forigas ĉiujn objektojn de la tipo specifita, ĝis reeniro en la ĉambron.
 
-Valid arguments can be:
-warptokens - Warp tokens
-gravitylines - Gravity lines
-platforms - Doesn't work properly
-moving - Moving platforms (added in 2.4)
-disappear - Disappearing platforms (added in 2.4)
+Validaj argumentoj estas:
+warptokens - Teleportĵetonoj
+gravitylines - Gravitaj linioj
+platforms - Ne funkcias ĝuste
+moving - Moviĝantaj platformoj (ekde 2.4)
+disappear - Malaperantaj platformoj (ekde 2.4)
 
 music¤(numero)\h#w
 
@@ -87,6 +87,14 @@ Por la listo de muzikaĵaj numeroj, legu la artikolon "Manlibreto de listoj".
 playremix\h#w
 
 Ludas la remiksaĵon de Predestined Fate kiel muzikon.
+
+sound¤(id)\h#w
+
+Ludas sonon.
+Por la listo de muzikaĵaj numeroj, legu la artikolon "Manlibreto de listoj".
+Ekde 2.5, la sona identigilo povas esti dosiernomo por propraj sonoj: ekz.
+por ¤saluton.wav¤ uzu ¤playef(saluton)¤. Spacetoj estos forigitaj, kaj\nn&Znn&Z
+la identigilo estos minuskligita.
 
 flash\h#w
 
@@ -126,36 +134,48 @@ x - Ĉambra x-koordinato, ekde 1
 y - Ĉambra y-koordinato, ekde 1
 dir - La ĉirkaŭflua direkto. Normale 0-3, sed ankaŭ ellimaj valutoj akceptiĝas
 
-loadtext¤(language)\w#h
+loadtext¤(lingvo)\w#h
 
-Load a translation for the level by language code. Use an empty value to use
-VVVVVV's language again.
+Ŝargas tradukon por la nivelo laŭ lingvokodo. Uzu malplenan valoron por
+denove uzi la lingvon de VVVVVV.
 
-language - A language code, like fr or pt_BR
+lingvo - Lingvokodo, kiel fr aŭ pt_BR
 
-iflang¤(language,script)\w#h
+iflang¤(lingvo,skripto)\w#h
 
-If VVVVVV's language is set to the given language, go to a script. This is not
-affected by the language code you pass to loadtext(), only by what language the
-user has selected in the menu.
+Se la lingvo de VVVVVV egalas al la lingvo specifita, iras al skripto. Tio ĉi
+ne estas afekciita de la lingvokodo donita al loadtext(), nur de la lingvo
+elektita de la uzanto en la menuo.
 
-setfont¤(font)\w#h
+setfont¤(tiparo)\w#h
 
-Change the font used for text in the level. This can be a font supplied with the
-game, such as font_ja for Japanese, or a font supplied with the level. Leave blank
-to revert to the default font for the level.
+Ŝanĝas la tiparon uzatan por teksto en la nivelo. Tio povas esti tiparo donita
+kun la ludo, ekz. font_ja por japana tiparo, aŭ tiparo donita kun la nivelo.
+Lasu la argumenton malplena por denove uzi la defaŭltan tiparon.
 
 setrtl¤(on/off)\w#h
 
-In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
-default, the font is not RTL (it is LTR).
+En propraj niveloj, baskulas ĉu la tiparo skribiĝas dekstre-maldekstren aŭ ne.
+Defaŭlte, la tiparo skribiĝas maldekstre-dekstren.
 
-RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+Ĉefe, la reĝimo de skribo dekstre-maldekstren ĝisrandigas tekstoskatolojn
+dekstren, por lingvoj kiel la araba.
 
-textcase¤(case)\w#h
+textcase¤(kazo)\w#h
 
-If your level has translation files, and you have multiple text boxes with the
-same text in a single script, this command can make them have unique translations.
-Place it before a textbox.
+Se via nivelo havas tradukajn dosierojn, kaj vi havas plurajn tekstoskatolojn
+kun la sama teksto en unu skripto, ĉi tiu komando povas havigi al ili apartajn
+tradukojn. Metu ĝin super komando de tekstoskatolo.
 
-case - A number between 1 and 255
+kazo - Numero inter 1 kaj 255
+
+ifversion¤(versio,skripto)\w#h
+
+Kontrolas, ĉu la aktuala versio de la ludo estas la specifita aŭ pli posta, kaj
+se jes, saltas al la specifita propra skripto.
+
+versio - La minimuma versio-numero, apartigita per punktoj (ekz. ¤2.6¤ aŭ ¤2.6.0¤)\nn&Znn&Z
+skripto - La propra skripto por alsalti, se sukcesas la kontrolo
+
+Ĉi tiu komando aldoniĝis en 2.5. Ĝi kreiĝis por funkcii en ajna versio (ekde 2.0\g
+kaj pli poste) por kontroli ajnan version, kiu estas 2.5 aŭ pli nova.\g

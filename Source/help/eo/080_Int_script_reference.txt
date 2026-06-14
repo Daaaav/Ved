@@ -24,8 +24,8 @@ Ruĝa¤   - Ruĝaj komandoj ne estu uzataj en propraj niveloj ĉar ili aŭ malŝ
 
 activateteleporter¤()\w#h
 
-Activate the first teleporter in the room, which makes it flash random colors, and
-animate erratically.
+Aktivigas la unuan teleportilon en la ĉambron, kio ĝin briligas kun hazardaj
+koloroj, kaj ĝin animacias malstabile.
 
 The teleporter's ¤tile¤ is set to 6, and the ¤color¤ is set to 102. This command makes\gn&Zgn&Zg
 the teleporter do nothing when touched, as the teleporter's tile is set to\g
@@ -33,9 +33,9 @@ something which isn't ¤1§¤.\gn&Zg(
 
 activeteleporter¤()\w#h
 
-Makes the first teleporter in the room white, aka color ¤101¤.\nn&Z
+Kolorigas la unuan teleportilon en la ĉambro blanka, kun la koloro ¤101¤.\nn&Z
 
-This command does not change the tile, so it will not affect functionality.\g
+Ĉi tiu komando ne ŝanĝas la kahelon, do funkcioj restos samaj.\g
 
 alarmoff\w#h
 
@@ -51,7 +51,7 @@ altstates¤(stato)\b#h
 kaj post la eksplodo, kaj la enirejon al la sekreta laboratorio (propraj niveloj
 tute ne subtenas ĉi tion).
 
-In the code, this changes the global ¤altstates¤ variable.\gn&Zg
+En la kodo, tio ŝanĝas la ĉiean variablon ¤altstates¤.\gn&Zg
 
 audiopause¤(on/off)\w#h
 
@@ -59,27 +59,27 @@ Devige (mal)ebligi paŭzigon de sonoj je elfokusiĝo, senrigarde al ties agordo
 de la uzanto. La defaŭlto estas off (malŝalta), t.e. paŭzigu sonon dum elfokusiĝa
 paŭzo.
 
-This command was added in 2.3.\g
+Ĉi tiu komando aldoniĝis en 2.3.\g
 
 backgroundtext\w#h
 
-Makes the next shown textbox not wait for ACTION to be pressed before continuing
-the script. The most common usage of this is to display multiple textboxes at
-once.
+Ebligas daŭrigi la skripton sen atendi premon de AGOKLAVO je la sekva
+montrata tekstoskatolo. La plej ofta uzado de tiu ĉi funkcio estas montri
+plurajn tekstoskatolojn samtempe.
 
 befadein¤()\w#h
 
-Instantly remove a fade, such as from ¤#fadeout()¤fadeout¤ or ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
+Tuj forigas fordissolvon, kiel de ¤#fadeout()¤fadeout¤ aŭ ¤#fadein()¤fadein¤.\nLwl&ZnLwl&Z
 
 blackon¤()\w#h
 
-Resume rendering if it was paused by ¤#blackout()¤blackout¤.\nLwl&Z
+Daŭrigas bildigadon, se ĝi estis paŭzigita de ¤#blackout()¤blackout¤.\nLwl&Z
 
 blackout¤()\w#h
 
-Pauses rendering.
+Paŭzigas bildigadon.
 
-To make the screen black, use ¤#shake(n)¤shake¤ at the same time.\gLwl&Zg
+Por nigrigi la ekranon, uzu ¤#shake(n)¤shake¤ samtempe.\gLwl&Zg
 
 bluecontrol\b#h
 
@@ -95,22 +95,22 @@ ai1 - followplayer/followpurple/followyellow/followred/followgreen/followblue/
 faceleft/faceright/followposition,ai2
 ai2 - deviga se followposition estas uzata por ai1
 
-faceplayer¤ is missing, use 18 instead. ¤panic¤ also does not work, requiring ¤20¤.\n&Zgn&Zgn&Zg
+faceplayer¤ mankas, uzu 18 anstataŭe. Ankau ne funkcias ¤panic¤, kiu bezonas ¤20¤.\n&Zgn&Zgn&Zg
 
 changecolour¤(a,b)\w#h
 
-Changes the color of a crewmate. This command can be used with Arbitrary Entity
-Manipulation.
+Ŝanĝas la koloron de skipano. Eblas uzi ĉi tiun komandon kun
+arbitra ento-manipulado.
 
-a - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
-b - Color name to change to. Since 2.4, you can also use a color ID
+a - Koloro de ŝanĝota skipano (cyan/player/blue/red/yellow/green/purple)
+b - Nova koloro de la skipano. Ekde 2.4, eblas ankaŭ uzi kolor-identigilon
 
 changecustommood¤(koloro,humoro)\w#h
 
-Changes the mood of a rescuable crewmate.
+Ŝanĝas la humoron de savebla skipano.
 
-color - Color of crewmate to change (cyan/player/blue/red/yellow/green/purple)
-mood - 0 for happy, 1 for sad
+koloro - Nova koloro de la skipano (cyan/player/blue/red/yellow/green/purple)
+humoro - 0 por feliĉa, 1 por malfeliĉa
 
 changedir¤(koloro,direkto)\w#h
 
@@ -127,12 +127,12 @@ skipano - Koloro de la ŝanĝenda skipano cyan/player/blue/red/yellow/green/purp
 
 changemood¤(koloro,humoro)\w#h
 
-Changes the mood of the player or a cutscene crewmate.
+Ŝanĝas la humoron de la ludanto, aŭ de interscena skipano.
 
 koloro - cyan/player/blue/red/yellow/green/purple
 humoro - 0 por feliĉa, 1 por malfeliĉa
 
-Cutscene crewmates are crewmates created with ¤#createcrewman(x,y,color,mood,ai1,ai2)¤createcrewman¤.\gLwl&Zg
+Interscenaj skipanoj estas skipanoj kreitaj per ¤#createcrewman(x,y,koloro,humoro,ai1,ai2)¤createcrewman¤.\gLwl&Zg
 
 changeplayercolour¤(koloro)\w#h
 
@@ -140,13 +140,24 @@ changeplayercolour¤(koloro)\w#h
 
 koloro - cyan/player/blue/red/yellow/green/purple/teleporter
 
+changeregion¤(id)\w#h
+
+Ŝanĝas la aktualan minimapan regionon al tiu kun specifita identigilo
+(0 estas la defaŭlta mapo).
+
+Tio ĉi limigos la minimapon al la areo antaŭe difinita per ¤#setregion(id,x1,y1,x2,y2)¤setregion¤. Se\nLwl&Z
+estas propra grafiko ¤regionXXX.png¤ kiu kongruas kun la regionidentigilo (ekz.\nn&Z
+region1.png¤, ¤region2.png¤, ktp.), tiu bildo do uziĝos por la minimapo.\n&Znn&Z
+
+Ĉi tiu komando aldoniĝis en 2.5.\g
+
 changerespawncolour¤(koloro)\w#h
 
 Ŝanĝas la koloron de la ludanto post ties morto kaj reestiĝo.
 
 koloro - red/yellow/green/cyan/blue/purple/teleporter aŭ numero
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 changetile¤(koloro,kahelo)\w#h
 
@@ -211,7 +222,7 @@ Same kiel ¤iftrinketsless(n,skripto)¤ en simpligita skriptado\nn&Z
 
 custommap¤(on/off)\w#h
 
-Same kiel map() en simpligita skriptado
+Same kiel ¤map()¤ en simpligita skriptado\nn&Z
 
 customposition¤(tipo,above/below)\w#h
 
@@ -241,8 +252,8 @@ moving¤ and ¤disappear¤ were added in 2.4.\n&Zgn&Zg
 
 do¤(times)\w#h
 
-Starts a loop block which will repeat a specified number of times. End the block
-using ¤#loop¤loop¤.\nLwl&Z
+Komencas iteracio-blokon, kiu ripetiĝos specifitan nombron da fojoj. Finu la
+blokon per la komando ¤#loop¤loop¤.\nLwl&Z
 
 times - The amount of times the block will loop.
 
@@ -265,6 +276,12 @@ entersecretlab\r#h
 2.2 KAJ SUBE: Vere malŝlosas la sekretan laboratorion por la ĉefa ludo - verŝajne
 nevolata efiko por propra nivelo.
 
+everybodyhappy¤()\w#h
+
+The opposite of ¤#everybodysad()¤everybodysad¤: makes all crewmates happy.\nLwl&Z
+
+Ĉi tiu komando aldoniĝis en 2.5.\g
+
 everybodysad¤()\w#h
 
 Makes all crewmates sad.
@@ -286,7 +303,7 @@ Fades back in from ¤#fadeout()¤fadeout¤.\nLwl&Z
 
 fadeout¤()\w#h
 
-Fades the screen to black. To undo, use ¤#fadein()¤fadein¤ or ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
+Dissolvigas la ekranon al nigro. Por malfari, uzu ¤#fadein()¤fadein¤ aŭ ¤#befadein()¤befadein¤.\nLwl&ZnLwl&Z
 
 finalmode¤(x,y)\b#h
 
@@ -351,13 +368,14 @@ teleporter por montri la mapon, game por kaŝi ĝin (montras teleportilojn de la
 
 x - teleporter/game
 
-gamestate¤(state)\o#h
+gamestate¤(state,statedelay)\o#h
 
 Change the current gamestate to the specified state number.
 
 state - The gamestate to jump to
+statedelay - The delay before the gamestate is activated, 0 by default
 
-A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤.\gLClg
+A full list of gamestates is ¤https://vsix.dev/wiki/List_of_gamestates¤here¤. The ¤statedelay¤ argument was added in 2.5.\gLClgn&Zg
 
 gotoposition¤(x,y,gravity)\w#h
 
@@ -428,7 +446,7 @@ ifflag¤(n,skripto)\b#h
 
 Same kiel customifflag, sed ŝargas internan skripton (de la ĉefa ludo)
 
-iflang¤(language,script)\w#h
+iflang¤(lingvo,skripto)\w#h
 
 Check if the current language of the game is a certain language, and if so, jump
 to the given custom script. ¤#loadtext(language)¤loadtext¤ has no influence on this command; only what\nLwl&Z
@@ -438,7 +456,7 @@ language - The language to check, usually a two-letter code, such as ¤en¤ for\
 English
 script - The custom script to jump to, if the check succeeds
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 iflast¤(skipano,skripto)\b#h
 
@@ -447,9 +465,9 @@ Se skipano x estas savita laste, saltas al skripto
 skipano - Numeroj uziĝas ĉi tie: 0: Viridiano, 1: Violeto, 2: Vitelario, 3:
 Vermiljo, 4: Verdigriso, 5: Viktoria
 
-ifskip¤(x)\b#h
+ifskip¤(skripto)\b#h
 
-Se interscenoj estas preterpasataj en mortula reĝimo, saltas al skripto x
+Se interscenoj estas preterpasataj en mortula reĝimo, saltas al skripto
 
 iftrinkets¤(n,skripto)\b#h
 
@@ -461,6 +479,17 @@ Kontrolas ĉu la specifita nombo estas malpli ol kvanto, kiu rilatas al kolekta�
 Tamen, ĝi kontrolas kontraŭ la pleja kvanto da kolektaĵoj, kiun vi iam ajn akiris
 dum individua ludado de la ĉefa ludo, kaj NE kontraŭ via aktuala fakta kvanto.
 Ŝargas internan (ĉefludan) skripton.
+
+ifversion¤(versio,skripto)\w#h
+
+Kontrolas, ĉu la aktuala versio de la ludo estas la specifita aŭ pli posta, kaj
+se jes, saltas al la specifita propra skripto.
+
+versio - La minimuma versio-numero, apartigita per punktoj (ekz. ¤2.6¤ aŭ ¤2.6.0¤)\nn&Znn&Z
+skripto - La propra skripto por alsalti, se sukcesas la kontrolo
+
+Ĉi tiu komando aldoniĝis en 2.5. Ĝi kreiĝis por funkcii en ajna versio (ekde 2.0\g
+kaj pli poste) por kontroli ajnan version, kiu estas 2.5 aŭ pli nova.\g
 
 ifwarp¤(x,y,dir,skripto)\w#h
 
@@ -489,7 +518,7 @@ loadscript¤(skripto)\b#h
 Ŝargi internan skripton (de la ĉefa ludo). Komune uzata en propraj niveloj kiel
 loadscript(stop)
 
-loadtext¤(language)\w#h
+loadtext¤(lingvo)\w#h
 
 In custom levels, load the translation for the given language.
 
@@ -497,11 +526,25 @@ language - The language to load, usually a two-letter code, such as ¤en¤ for\n
 English. Pass an empty language code to revert to the default behavior of simply
 using VVVVVV's language.
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 loop\w#h
 
 Put this at the end of a loop block started with the ¤#do(times)¤do¤ command.\nLwl&Z
+
+mapexplored¤(all/none)\w#h
+
+Reveals or hides the whole map, all at once.
+
+Useful so you don't have to use ¤#showcoordinates(x,y)¤showcoordinates¤ or ¤#hidecoordinates(x,y)¤hidecoordinates¤ on all 400\gLwl&ZgLwl&Zg
+rooms.\g
+This command was added in 2.5.\g
+
+mapreveal¤(on/off)\w#h
+
+Enables or disables the map being revealed when the player enters a room.
+
+Ĉi tiu komando aldoniĝis en 2.5.\g
 
 missing¤(koloro)\b#h
 
@@ -536,7 +579,9 @@ n - Interna muzika numero
 
 playef¤(sound)\w#h
 
-Ludas sonon.
+Play a sound effect by numerical ID.
+Since 2.5, sound ID can be a filename for custom sounds, e.g. ¤hello.wav¤ is\nn&Z
+playef(hello)¤. Spaces are stripped and case is lowered.\n&Z
 
 sound - Sound ID
 
@@ -549,9 +594,11 @@ position¤(tipo,above/below)\w#h
 Superskribas la x,y de la komando text kaj tiel agordas la pozicion de la
 dialog-skatolo.
 
-tipo - center/centerx/centery, aŭ kolornomo
+tipo - center/centerx/centery/absolute, aŭ kolornomo
 cyan/player/blue/red/yellow/green/purple
 above/below - Supere/sube, nur uzata se tipo estas kolornomo
+
+"absolute" was added in 2.5.\g
 
 purplecontrol\b#h
 
@@ -562,6 +609,14 @@ redcontrol\b#h
 
 Komencas konversacion kun Vermiljo ĝuste kiel kiam vi renkontas lin en la ĉefa
 ludo kaj premas ENTER. Ankaŭ kreas agado-zonon poste.
+
+removeregion¤(id)\w#h
+
+Remove the region with the given ID, originally set with ¤#setregion(id,x1,y1,x2,y2)¤setregion¤.\nLwl&Z
+
+id - Region ID
+
+Ĉi tiu komando aldoniĝis en 2.5.\g
 
 rescued¤(koloro)\b#h
 
@@ -574,7 +629,10 @@ la ludanton al la lasta konservejo.
 
 restoreplayercolour¤()\w#h
 
-Reŝanĝas la koloron de la ludanto al bluverda
+Changes the player's color back to default
+
+Since 2.5, the player color for a level can be changed to a different color than\g
+cyan.\g
 
 resumemusic¤()\w#h
 
@@ -595,7 +653,7 @@ Change the color of the next activity zone that gets spawned.
 
 color - Any color that ¤#text(color,x,y,lines)¤text¤ takes\nLwl&Z
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 setactivityposition¤(y)\w#h
 
@@ -603,14 +661,14 @@ Change the position of the next activity zone that gets spawned.
 
 y - The y position
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 setactivitytext\w#h
 
 Change the text of the next activity zone that gets spawned. The line after this
 command will be taken as the text (just like ¤#text(color,x,y,lines)¤text¤ with 1 line).\nLwl&Z
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 setcheckpoint¤()\w#h
 
@@ -627,6 +685,15 @@ affects all textboxes that are already on screen. Otherwise simply leave this ou
 
 This command was added in 2.4. The ¤all¤ argument was added in 2.4.1.\gn&Zg
 
+setregion¤(id,x1,y1,x2,y2)\w#h
+
+Sets the minimap region with the given ID to the portion specified by the two
+corners (x1,y1) and (x2,y2). Can be unset with ¤#removeregion(id)¤removeregion¤.\nLwl&Z
+
+id - Region ID (1-400)
+
+These room coordinates are 0-indexed. This command was added in 2.5.\g
+
 setroomname\w#h
 
 Change the room name of the current room. The line after this command will be
@@ -637,16 +704,17 @@ room is reloaded (e.g. by leaving and coming back).
 
 This name overrides any special changing room name, if the room has one.
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 setrtl¤(on/off)\w#h
 
-In custom levels, toggle whether or not the font is RTL (right-to-left) or not. By
-default, the font is not RTL (it is LTR).
+En propraj niveloj, baskulas ĉu la tiparo skribiĝas dekstre-maldekstren aŭ ne.
+Defaŭlte, la tiparo skribiĝas maldekstre-dekstren.
 
-RTL mode mainly makes textboxes right-aligned, for languages like Arabic.
+Ĉefe, la reĝimo de skribo dekstre-maldekstren ĝisrandigas tekstoskatolojn
+dekstren, por lingvoj kiel la araba.
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 shake¤(n)\w#h
 
@@ -725,7 +793,7 @@ do ne uzu ĝin!
 text¤(koloro,x,y,linioj)\w#h
 
 Konservi dialog-skatolon en memoro kun koloro, pozicio kaj nombro da linioj.
-Kutime, la komando position estas uzita post la komando text (kaj ties tekst-
+Kutime, la komando ¤#position(type,above/below)¤position¤ estas uzita post la komando text (kaj ties tekst-\nLwl&Z
 linioj), kio superskribos la koordinatojn ĉi tie donitajn, do ĉi tiuj kutime
 estas lasitaj kiel 0.
 
@@ -749,7 +817,7 @@ advancing the script.
 
 frames - The amount of frames to wait before fading out
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 textbuttons¤()\w#h
 
@@ -763,17 +831,20 @@ The replaced placeholders are:
 - {b_res} - Restart
 - {b_esc} - Esc/Menu
 
-This command was added in 2.4.\g
+In VVVVVV's font, curly braces show up as ö and Á, but they are actually curly\g
+braces, not the accented characters. (None of this is visible in-game, of course)\g
 
-textcase¤(case)\w#h
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
-If your level has translation files, and you have multiple text boxes with the
-same text in a single script, this command can make them have unique translations.
-Place it before a textbox.
+textcase¤(kazo)\w#h
+
+Se via nivelo havas tradukajn dosierojn, kaj vi havas plurajn tekstoskatolojn
+kun la sama teksto en unu skripto, ĉi tiu komando povas havigi al ili apartajn
+tradukojn. Metu ĝin super komando de tekstoskatolo.
 
 case - The case number, between 1 and 255.
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 textimage¤(image)\w#h
 
@@ -782,7 +853,13 @@ text box.
 
 image - levelcomplete/gamecomplete, or an unknown value to remove the image
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
+
+textoutline¤(on/off/default)\w#h
+
+Turn the text outline for a text box on, off, or what the player's setting is
+
+Ĉi tiu komando aldoniĝis en 2.5.\g
 
 textsprite¤(x,y,sprite,color)\w#h
 
@@ -794,7 +871,7 @@ y - The y-coordinate of the sprite. This is relative to the text box.
 sprite - The sprite number of the sprite, from ¤sprites.png¤.\nn&Z
 color - The color ID of the sprite.
 
-This command was added in 2.4.\g
+Ĉi tiu komando aldoniĝis en 2.4.\g
 
 tofloor\w#h
 

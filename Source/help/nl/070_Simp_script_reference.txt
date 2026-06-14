@@ -93,6 +93,14 @@ playremix\h#w
 
 Speelt de remix van Predestined Fate als muziek.
 
+sound¤(id)\h#w
+
+Speel een geluidseffect.
+Kijk voor de lijst van geluidsnummers naar het artikel "Lijsten".
+Vanaf 2.5 kan het geluids-ID een bestandsnaam zijn voor eigen geluidseffecten,
+hallo.wav¤ is bijvoorbeeld ¤playef(hallo)¤. Spaties worden verwijderd en\n&Znn&Z
+hoofdletters worden veranderd in kleine letters.
+
 flash\h#w
 
 Laat het scherm flitsen, maakt een geluid van een knal en schudt het scherm even.
@@ -108,7 +116,7 @@ squeak¤(bemanningslid/on/off)\h#w
 Zorgt dat een bemanningslid een geluid maakt, of zet het tekstvak-geluid aan of
 uit.
 
-speaker¤(color)\h#w
+speaker¤(kleur)\h#w
 
 Verandert de kleur en positie van de volgende tekstvakken gemaakt met het "say"-
 commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
@@ -162,10 +170,21 @@ Standaard is het lettertype niet RTL (het is dus links-naar-rechts).
 RTL-modus zorgt vooral dat tekstvakken rechts uitgelijnd zijn, voor talen zoals
 Arabisch.
 
-textcase¤(case)\w#h
+textcase¤(geval)\w#h
 
 Als je level vertaalbestanden heeft, en je hebt meerdere tekstvakken met dezelfde
 tekst in een enkel script, kan dit commando ze unieke vertalingen laten hebben.
 Zet het voor een tekstvak.
 
 case - Een getal tussen 1 en 255
+
+ifversion¤(versie,script)\w#h
+
+Controleer of de huidige versie van het spel de aangegeven versie is of later, en
+zo ja, spring naar het aangegeven aangepaste script.
+
+versie - Het minimale versienummer, gescheiden met puntjes (zoals ¤2.6¤ of ¤2.6.0¤)\nn&Znn&Z
+script - Het vereenvoudigde script om naar te springen als de controle waar is
+
+Dit commando is toegevoegd in 2.5. Dit werkt dus in alle versies\g
+(vanaf 2.0 en later) om elke versie vanaf 2.5 te controleren.\g

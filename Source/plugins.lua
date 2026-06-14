@@ -516,7 +516,7 @@ function plugin_help_action(article, pressed)
 				L.PLUGIN_AUTHOR_VERSION,
 				{plugin_online.info.author, msg_version}
 			) .. "\n\n"
-			.. langkeys(L.DOWNLOAD_SIZE, {bytes_notation(plugin_online.info.size)})
+			.. langkeys(L.FILE_SIZE, {bytes_notation(plugin_online.info.size)})
 			.. "\n\n\n" .. msg_bot,
 			{btn_confirm, DB.CANCEL},
 			function(button)
@@ -590,7 +590,7 @@ function plugin_help_action(article, pressed)
 			}))
 			if downloadable then
 				table.insert(lines, L.MUSICFILENAME .. plugin_online.info.filename)
-				table.insert(lines, langkeys(L.DOWNLOAD_SIZE, {
+				table.insert(lines, langkeys(L.FILE_SIZE, {
 					bytes_notation(plugin_online.info.size)
 				}))
 			else

@@ -93,6 +93,14 @@ playremix\h#w
 
 Memainkan remix dari Predestined Fate sebagai musik.
 
+sound¤(id)\h#w
+
+Mainkan efek suara.
+Untuk daftar nomor efek suara, lihat artikel "Referensi daftar".
+Sejak versi 2.5, ID suara dapat berupa nama file untuk suara kustom, misalnya
+hello.wav¤ adalah ¤playef(hello)¤. Spasi dihilangkan dan huruf besar/kecil\n&Znn&Z
+diturunkan.
+
 flash\h#w
 
 Mengedipkan layar putih, membuat suara ledakan dan mengguncang layar sebentar.
@@ -165,3 +173,15 @@ dengan teks yang sama dalam satu skrip, perintah ini dapat membuatnya memiliki
 terjemahan unik. Tempatkan itu sebelum kotak teks.
 
 kasus - Angka antara 1 dan 255
+
+ifversion¤(versi,skrip)\w#h
+
+Periksa apakah versi game saat ini adalah versi yang ditentukan atau lebih tinggi,
+dan jika ya, lompat ke skrip kustom yang diberikan.
+
+version - The minimum version number, separated with dots (e.g. ¤2.6¤ or ¤2.6.0¤)\nn&Znn&Z
+skrip - Skrip khusus untuk melompati, jika pemeriksaan berhasil
+
+Perintah ini ditambahkan pada versi 2.5. Sesuai rancangannya, perintah ini\g
+berfungsi di semua versi (mulai dari 2.0 dan seterusnya) untuk memeriksa\g
+versi apa pun yang 2.5 atau lebih tinggi.\g

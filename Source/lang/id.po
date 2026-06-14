@@ -3,20 +3,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: 2026-04-20 15:23+0000\n"
-"Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
+"PO-Revision-Date: 2026-06-14 20:59+0000\n"
+"Last-Translator: Marchionne <marchionne@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.17\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #. If you're making a translation, feel free to set this to something like "Translation made by (you)".
 msgctxt "L.TRANSLATIONCREDIT"
 msgid "English translation by Dav999"
-msgstr "Terjemahan dibuat oleh _march31onne (Marchionne Evangelisti)"
+msgstr "Terjemahan Indonesia oleh __[марк31онне/march31onne]__/March31onne Evangelisti"
 
 msgctxt "L.OSNOTRECOGNIZED"
 msgid ""
@@ -379,53 +379,52 @@ msgctxt "L.INTERNALOFF_LONG"
 msgid "Internal scripting mode is disabled"
 msgstr "Mode skrip internal dinonaktifkan"
 
-#, fuzzy
 msgctxt "L.INTSC_LONG"
 msgid "Internal scripting mode"
-msgstr "Mode skrip internal diaktifkan"
+msgstr "Mode skrip internal"
 
 #. A scripting mode that requires a loadscript, and only works in VVVVVV 2.4+
-#, fuzzy
 msgctxt "L.INTSC_LOADSCRIPT24"
 msgid "Loadscript (2.4+)"
-msgstr "Sk.int Loadscript"
+msgstr "Loadscript (2.4+)"
 
 #. Like the other Loadscript option, but also works in earlier versions
 msgctxt "L.INTSC_LOADSCRIPT23"
 msgid "Loadscript (compatible with 2.3-)"
-msgstr ""
+msgstr "Loadscript (kompatibel dengan 2.3-)"
 
 #. The say(-1) method involves using the scripting command say(-1)
-#, fuzzy
 msgctxt "L.INTSC_SAYMIN1"
 msgid "say(-1)"
-msgstr "Sk.int say(-1)"
+msgstr "say(-1)"
 
+#, fuzzy
 msgctxt "L.INTSC_LOADSCRIPT24_SHORT"
 msgid "Mode: 2.4+"
-msgstr ""
+msgstr "Mode: 2.4+"
 
+#, fuzzy
 msgctxt "L.INTSC_LOADSCRIPT23_SHORT"
 msgid "Mode: 2.1+"
-msgstr ""
+msgstr "Mode: 2.1+"
 
 #, fuzzy
 msgctxt "L.INTSC_SAYMIN1_SHORT"
 msgid "Mode: say(-1)"
-msgstr "Mode: oto"
+msgstr "Mode: say(-1)"
 
 msgctxt "L.INTSC_LOADSCRIPT24_EXPL"
 msgid "When making a level for VVVVVV 2.4 or above, this setting is all you need. This script needs to be loaded from another script."
-msgstr ""
+msgstr "Saat membuat level untuk VVVVVV 2.4 atau lebih tinggi, pengaturan ini saja sudah cukup. Skrip ini perlu dimuat dari skrip lain."
 
 msgctxt "L.INTSC_LOADSCRIPT23_EXPL"
 msgid "Like the 2.4+ method, but the script is (invisibly) split into blocks of less than 50 lines for compatibility with many VVVVVV versions. This might be a limitation for some specific usecases."
-msgstr ""
+msgstr "Sama seperti metode 2.4+, tetapi skripnya (secara tidak terlihat) dibagi menjadi blok-blok yang berisi kurang dari 50 baris agar kompatibel dengan banyak versi VVVVVV. Ini mungkin menjadi keterbatasan untuk beberapa kasus penggunaan tertentu."
 
 #. the word 'saves' = 'economizes'/'removes the need for', NOT 'stores data to disk'!
 msgctxt "L.INTSC_SAYMIN1_EXPL"
 msgid "Like \"Loadscript (compatible with 2.3-)\", but it saves a loadscript, which helped when there was a limit of 500 scripts in total. The script forcibly starts with cutscene bars."
-msgstr ""
+msgstr "Mirip dengan \"Loadscript (kompatibel dengan 2.3-)\", tetapi menyimpan loadscript, yang membantu ketika ada batasan 500 skrip secara total. Skrip ini secara paksa dimulai dengan bar cutscene."
 
 msgctxt "L.VIEW"
 msgid "View"
@@ -819,7 +818,7 @@ msgstr "Cari untuk: "
 #. You last searched for these 5 things, click one to search it again
 msgctxt "L.RECENT_SEARCHES"
 msgid "Recent searches"
-msgstr ""
+msgstr "Pencarian terkini"
 
 msgctxt "L.VERSIONERROR"
 msgid "Unable to check version."
@@ -1255,7 +1254,7 @@ msgstr "Abu-abu"
 
 msgctxt "L.PINK"
 msgid "Pink"
-msgstr "Pink"
+msgstr "Merah muda"
 
 msgctxt "L.BROWN"
 msgid "Brown"
@@ -1852,7 +1851,7 @@ msgstr ""
 
 msgctxt "L.ASSETS_FOLDER_RENAME"
 msgid "The assets folder will also be renamed to \"$1\"."
-msgstr ""
+msgstr "Folder aset juga akan diganti namanya menjadi \"$1\"."
 
 msgctxt "L.CREATE_VVVVVV_FOLDER"
 msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
@@ -1952,7 +1951,7 @@ msgstr "Pergeseran ruang"
 
 msgctxt "L.FRAMESTOSECONDS"
 msgid "$1 = $2 sec"
-msgstr "$1 = $2 dtk."
+msgstr "$1 = $2 detik"
 
 msgctxt "L.ROOMNUM"
 msgid "Room $1"
@@ -2210,6 +2209,11 @@ msgctxt "L.PLUGIN_NOT_SUPPORTED"
 msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
 msgstr "[Plugin ini tidak didukung karena memerlukan Ved $1 atau lebih tinggi!]\\r"
 
+#. by Person
+msgctxt "L.PLUGIN_AUTHOR"
+msgid "by $1"
+msgstr "oleh $1"
+
 #. by Person, version 1.0.0
 msgctxt "L.PLUGIN_AUTHOR_VERSION"
 msgid "by $1, version $2"
@@ -2414,36 +2418,35 @@ msgstr ""
 
 msgctxt "L.THEMES"
 msgid "Themes"
-msgstr ""
+msgstr "Tema"
 
-#, fuzzy
 msgctxt "L.THEMESTITLE"
 msgid "Theme settings"
-msgstr "Pengaturan skala paksa"
+msgstr "Setelan tema"
 
 msgctxt "L.ACTIVETHEMES"
 msgid "Active themes"
-msgstr ""
+msgstr "Tema-tema yang aktif"
 
 msgctxt "L.INACTIVETHEMES"
 msgid "Inactive themes"
-msgstr ""
+msgstr "Tema-tema yang nonaktif"
 
 msgctxt "L.THEME_DEFAULT_NAME"
 msgid "Default"
-msgstr ""
+msgstr "Bawaan"
 
 msgctxt "L.THEME_DEFAULT_DESC"
 msgid "Ved's default theme from Ved 2.0 onwards."
-msgstr ""
+msgstr "Tema default Ved dari Ved versi 2.0 dan seterusnya."
 
 msgctxt "L.THEME_CLASSIC_NAME"
 msgid "Classic"
-msgstr ""
+msgstr "Klasik"
 
 msgctxt "L.THEME_CLASSIC_DESC"
 msgid "Ved's classic theme, that was used in versions 1.x.x."
-msgstr ""
+msgstr "Tema klasik Ved, yang digunakan pada versi 1.x.x."
 
 #, fuzzy
 msgctxt "L.THEME_VVVVVV_NAME"
@@ -2452,30 +2455,29 @@ msgstr "VVVVVV"
 
 msgctxt "L.THEME_VVVVVV_DESC"
 msgid "A theme which makes Ved look like VVVVVV's editor."
-msgstr ""
+msgstr "Sebuah tema yang membuat Ved terlihat seperti editor VVVVVV."
 
 msgctxt "L.SPECIALROOMNAMES_TITLE"
 msgid "Special roomnames"
-msgstr ""
+msgstr "Nama ruangan khusus"
 
 #. Indicates the regular room name
 msgctxt "L.STANDARD_ROOMNAME"
 msgid "Standard roomname"
-msgstr ""
+msgstr "Nama ruangan standar"
 
 #. There is a list of possible names for this room. The last name in that list will be used over earlier ones if its flag is set, otherwise the second-to-last, and so on
 msgctxt "L.HINT_LAST_ROOMNAME"
 msgid "Lower roomnames have priority."
-msgstr ""
+msgstr "Nama ruangan yang lebih pendek memiliki prioritas."
 
 msgctxt "L.ADD_SPECIALROOMNAME"
 msgid "Add special roomname"
-msgstr ""
+msgstr "Tambahkan nama ruangan khusus"
 
-#, fuzzy
 msgctxt "L.SPECIALROOMNAME_STATIC"
 msgid "Static name"
-msgstr "State/status"
+msgstr "Nama statis"
 
 msgctxt "L.SPECIALROOMNAME_GLITCH"
 msgid "Glitch"
@@ -2483,7 +2485,7 @@ msgstr ""
 
 msgctxt "L.SPECIALROOMNAME_TRANSFORM"
 msgid "Animation/Transformation"
-msgstr ""
+msgstr "Animasi/Transformasi"
 
 #. Followed by a button, showing either a flag or the None string below
 #, fuzzy
@@ -2493,13 +2495,12 @@ msgstr "Tanda:"
 
 msgctxt "L.SPECIALROOMNAME_NO_FLAG"
 msgid "None (always active)"
-msgstr ""
+msgstr "Tidak ada (selalu aktif)"
 
 #. Followed by input field
-#, fuzzy
 msgctxt "L.SPECIALROOMNAME_ROOMNAME"
 msgid "Roomname:"
-msgstr "Nama ruangan"
+msgstr "Nama ruangan:"
 
 #. Followed by input field. Like frames in an animation, but with text
 msgctxt "L.SPECIALROOMNAME_FRAME1"
@@ -2514,21 +2515,134 @@ msgstr ""
 #. Followed by multiline input field. Like frames in an animation, but with text
 msgctxt "L.SPECIALROOMNAME_FRAMES"
 msgid "Frames (one per line):"
-msgstr ""
+msgstr "Frame (satu per baris):"
 
 #. Checkbox: this animation keeps repeating
 msgctxt "L.SPECIALROOMNAME_LOOP"
 msgid "Loop"
-msgstr ""
+msgstr "Putaran"
 
 msgctxt "L.FLAGS_SPECIALROOMNAME"
 msgid "Choose the flag that activates this special roomname"
-msgstr ""
+msgstr "Pilih tanda yang mengaktifkan nama ruangan khusus ini"
 
 #, fuzzy
 msgctxt "L.SUREDELETESPECIALROOMNAME"
 msgid "Are you sure you want to delete this roomname?"
 msgstr "Anda yakin ingin menghapus nota ini?"
+
+#. List of installed plugins
+msgctxt "L.PLUGINS_INSTALLED"
+msgid "Installed"
+msgstr "Terinstal"
+
+#. List of not installed plugins, available to install
+msgctxt "L.PLUGINS_AVAILABLE"
+msgid "Available"
+msgstr "Tersedia"
+
+#. Info about the installed version of this plugin
+msgctxt "L.PLUGININFO_INSTALLED_HEADER"
+msgid "== Installed =="
+msgstr "== Terinstal =="
+
+#. Info about the version of this plugin available from online
+msgctxt "L.PLUGININFO_AVAILABLE_HEADER"
+msgid "== Online =="
+msgstr ""
+
+#. Shows a version number
+msgctxt "L.VERSION_IS"
+msgid "Version: $1"
+msgstr "Versi: $1"
+
+#. Shows a date and time
+msgctxt "L.INSTALLED_ON"
+msgid "Installed on: $1"
+msgstr "Terinstal pada: $1"
+
+#. Shows a date and time
+msgctxt "L.LAST_UPDATED"
+msgid "Last updated: $1"
+msgstr "Terakhir diperbarui: $1"
+
+#. File size. Shows something like: 100 MB
+msgctxt "L.FILE_SIZE"
+msgid "Size: $1"
+msgstr "Ukuran: $1"
+
+msgctxt "L.PLUGIN_NOT_INSTALLED"
+msgid "You don't have this plugin installed."
+msgstr "Anda belum memiliki plugin yang terinstal."
+
+msgctxt "L.PLUGIN_NOT_AVAILABLE"
+msgid "This plugin is not available online."
+msgstr "Plugin ini tidak tersedia secara online."
+
+msgctxt "L.PLUGIN_NOT_DOWNLOADABLE"
+msgid "This plugin does not have a download available for your version of Ved."
+msgstr "Plugin ini tidak memiliki unduhan yang tersedia untuk versi Ved Anda."
+
+msgctxt "L.UPDATE"
+msgid "Update"
+msgstr ""
+
+msgctxt "L.UPDATENOW"
+msgid "Update now"
+msgstr "Update skrg"
+
+msgctxt "L.INSTALL"
+msgid "Install"
+msgstr ""
+
+#. See information about something
+msgctxt "L.INFO"
+msgid "Information"
+msgstr "Informasi"
+
+msgctxt "L.CONFIRM_INSTALL_PLUGIN"
+msgid "Install this plugin?"
+msgstr "Instal plugin ini?"
+
+msgctxt "L.CONFIRM_UPDATE_PLUGIN"
+msgid "Update this plugin?"
+msgstr "Update plugin ini?"
+
+msgctxt "L.CONFIRM_DELETE_PLUGIN"
+msgid "Remove this plugin?"
+msgstr "Hapus plugin ini?"
+
+msgctxt "L.NOTE_SAFE_PLUGINS"
+msgid "Note that it's not guaranteed that all plugins are safe."
+msgstr "Perlu diingat bahwa tidak ada jaminan bahwa semua plugin aman."
+
+msgctxt "L.NOTE_RESTART_VED_DELETE"
+msgid "Note that you'll need to restart Ved to see the plugin stop working."
+msgstr "Perlu diingat bahwa Anda perlu memulai ulang Ved agar plugin berhenti berfungsi."
+
+msgctxt "L.DONE_INSTALLING_PLUGIN"
+msgid "Done! Restart Ved to see the new plugin working."
+msgstr "Selesai! Mulai ulang Ved untuk melihat plugin baru berfungsi."
+
+msgctxt "L.RESTART_NEEDED"
+msgid "Restart needed!"
+msgstr "Perlu dimulai ulang!"
+
+msgctxt "L.CANNOT_DELETE_FOLDER_PLUGIN"
+msgid "This plugin is a folder, please remove it manually."
+msgstr "Plugin ini berupa folder, harap hapus secara manual."
+
+msgctxt "L.DOWNLOAD_REQUIRES_BETTER_LOVE"
+msgid "Downloading packages requires LÖVE 11.0 or higher."
+msgstr "Mengunduh paket memerlukan LÖVE 11.0 atau lebih tinggi."
+
+msgctxt "L.DOWNLOAD_FAIL_GET"
+msgid "Download failed."
+msgstr "Download gagal."
+
+msgctxt "L.DOWNLOAD_FAIL_VERIFY"
+msgid "The downloaded package isn't correct. It may have changed from the expected version."
+msgstr "Paket yang diunduh tidak benar. Mungkin ada perubahan dari versi yang diharapkan."
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
@@ -2772,7 +2886,7 @@ msgstr "Keluar"
 
 msgctxt "subtoolnames.16.1"
 msgid "Pink"
-msgstr "Pink"
+msgstr "Merah muda"
 
 msgctxt "subtoolnames.16.2"
 msgid "Yellow"
@@ -2796,7 +2910,7 @@ msgstr "Biru muda"
 
 msgctxt "subtoolnames.16.7"
 msgid "Random"
-msgstr "Random"
+msgstr "Acak"
 
 msgctxt "subtoolnames.17.1"
 msgid "Face right"
@@ -2838,9 +2952,10 @@ msgctxt "warpdirchangedtext.3"
 msgid "Warp direction set to all directions"
 msgstr "Arah warp diatur ke semua arah"
 
+#, fuzzy
 msgctxt "langtilesetnames.short0"
 msgid "Space Stn."
-msgstr "Stasiun RA"
+msgstr "Stn. Angksa"
 
 msgctxt "langtilesetnames.long0"
 msgid "Space Station"

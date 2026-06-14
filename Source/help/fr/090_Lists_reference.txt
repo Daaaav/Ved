@@ -1,6 +1,7 @@
 Référence listes
 
-Références des listes
+Références des listes\wh#
+\C=
 
 Ce qui suit sont des listes d'index utilisés dans VVVVVV, en grande majorité
 copiées depuis des postes de forums. Un grand merci à tout ceux qui ont

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 02:55+0000\n"
-"PO-Revision-Date: 2026-04-27 14:38+0000\n"
+"PO-Revision-Date: 2026-06-14 22:18+0000\n"
 "Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #. If you're making a translation, feel free to set this to something like "Translation made by (you)".
 msgctxt "L.TRANSLATIONCREDIT"
@@ -1873,14 +1873,13 @@ msgstr ""
 "\n"
 "$1"
 
-#, fuzzy
 msgctxt "L.RENAME_FOLDER_FAIL"
 msgid ""
 "Unable to rename folder.\n"
 "\n"
 "$1"
 msgstr ""
-"Kan map niet aanmaken.\n"
+"Kan map niet hernoemen.\n"
 "\n"
 "$1"
 
@@ -2211,6 +2210,11 @@ msgctxt "L.PLUGIN_NOT_SUPPORTED"
 msgid "[This plugin is not supported because it requires Ved $1 or higher!]\\r"
 msgstr "[Deze plugin wordt niet ondersteund omdat deze Ved $1 of hoger vereist!]\\r"
 
+#. by Person
+msgctxt "L.PLUGIN_AUTHOR"
+msgid "by $1"
+msgstr "door $1"
+
 #. by Person, version 1.0.0
 msgctxt "L.PLUGIN_AUTHOR_VERSION"
 msgid "by $1, version $2"
@@ -2524,6 +2528,119 @@ msgstr "Kies de vlag die deze speciale kamernaam moet activeren"
 msgctxt "L.SUREDELETESPECIALROOMNAME"
 msgid "Are you sure you want to delete this roomname?"
 msgstr "Weet je zeker dat je deze kamernaam wilt verwijderen?"
+
+#. List of installed plugins
+msgctxt "L.PLUGINS_INSTALLED"
+msgid "Installed"
+msgstr "Geïnstalleerd"
+
+#. List of not installed plugins, available to install
+msgctxt "L.PLUGINS_AVAILABLE"
+msgid "Available"
+msgstr "Beschikbaar"
+
+#. Info about the installed version of this plugin
+msgctxt "L.PLUGININFO_INSTALLED_HEADER"
+msgid "== Installed =="
+msgstr "== Geïnstalleerd =="
+
+#. Info about the version of this plugin available from online
+msgctxt "L.PLUGININFO_AVAILABLE_HEADER"
+msgid "== Online =="
+msgstr "== Online =="
+
+#. Shows a version number
+msgctxt "L.VERSION_IS"
+msgid "Version: $1"
+msgstr "Versie: $1"
+
+#. Shows a date and time
+msgctxt "L.INSTALLED_ON"
+msgid "Installed on: $1"
+msgstr "Geïnstalleerd op: $1"
+
+#. Shows a date and time
+msgctxt "L.LAST_UPDATED"
+msgid "Last updated: $1"
+msgstr "Laatst bijgewerkt: $1"
+
+#. File size. Shows something like: 100 MB
+msgctxt "L.FILE_SIZE"
+msgid "Size: $1"
+msgstr "Grootte: $1"
+
+msgctxt "L.PLUGIN_NOT_INSTALLED"
+msgid "You don't have this plugin installed."
+msgstr "Je hebt deze plugin niet geïnstalleerd."
+
+msgctxt "L.PLUGIN_NOT_AVAILABLE"
+msgid "This plugin is not available online."
+msgstr "Deze plugin is niet online beschikbaar."
+
+msgctxt "L.PLUGIN_NOT_DOWNLOADABLE"
+msgid "This plugin does not have a download available for your version of Ved."
+msgstr "Deze plugin heeft geen download beschikbaar voor jouw versie van Ved."
+
+msgctxt "L.UPDATE"
+msgid "Update"
+msgstr "Bijwerken"
+
+msgctxt "L.UPDATENOW"
+msgid "Update now"
+msgstr "Nu bijwerken"
+
+msgctxt "L.INSTALL"
+msgid "Install"
+msgstr "Installeren"
+
+#. See information about something
+msgctxt "L.INFO"
+msgid "Information"
+msgstr "Informatie"
+
+msgctxt "L.CONFIRM_INSTALL_PLUGIN"
+msgid "Install this plugin?"
+msgstr "Deze plugin installeren?"
+
+msgctxt "L.CONFIRM_UPDATE_PLUGIN"
+msgid "Update this plugin?"
+msgstr "Deze plugin bijwerken?"
+
+msgctxt "L.CONFIRM_DELETE_PLUGIN"
+msgid "Remove this plugin?"
+msgstr "Deze plugin verwijderen?"
+
+msgctxt "L.NOTE_SAFE_PLUGINS"
+msgid "Note that it's not guaranteed that all plugins are safe."
+msgstr "Houd er rekening mee dat er geen garantie is dat alle plugins veilig zijn."
+
+msgctxt "L.NOTE_RESTART_VED_DELETE"
+msgid "Note that you'll need to restart Ved to see the plugin stop working."
+msgstr "Houd er rekening mee dat je Ved moet herstarten voordat de plugin stopt met werken."
+
+msgctxt "L.DONE_INSTALLING_PLUGIN"
+msgid "Done! Restart Ved to see the new plugin working."
+msgstr "Klaar! Herstart Ved om de nieuwe plugin te zien werken."
+
+msgctxt "L.RESTART_NEEDED"
+msgid "Restart needed!"
+msgstr "Herstart nodig!"
+
+msgctxt "L.CANNOT_DELETE_FOLDER_PLUGIN"
+msgid "This plugin is a folder, please remove it manually."
+msgstr "Deze plugin is een map, hij kan alleen handmatig verwijderd worden."
+
+msgctxt "L.DOWNLOAD_REQUIRES_BETTER_LOVE"
+msgid "Downloading packages requires LÖVE 11.0 or higher."
+msgstr "LÖVE 11.0 of hoger is vereist om pakketten te downloaden."
+
+msgctxt "L.DOWNLOAD_FAIL_GET"
+msgid "Download failed."
+msgstr "Downloaden mislukt."
+
+msgctxt "L.DOWNLOAD_FAIL_VERIFY"
+msgid "The downloaded package isn't correct. It may have changed from the expected version."
+msgstr "Het gedownloade pakket is niet correct. Hij kan zijn veranderd van de verwachte versie."
 
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."

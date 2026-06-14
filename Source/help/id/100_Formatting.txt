@@ -10,8 +10,7 @@ Setelah \, Anda dapat menambahkan jumlah karakter berikut, dalam urutan apa pun:
 
 h - Ukuran font ganda\h
 
-# - Jangkar. Anda dapat melompat ke jangkar dengan cepat dengan tautan
-    ¤#Tautan¤tautan¤.\nLCl
+# - Jangkar. Anda dapat melompat ke jangkar dengan cepat dengan ¤#Tautan¤tautan¤.\nLCl
 - - Garis horizontal:
 \-
 = - Garis horizontal di bawah teks besar
