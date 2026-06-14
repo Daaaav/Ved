@@ -109,6 +109,7 @@ function updatecheck.await_response()
 								author_color = "w",
 								version = "",
 								description = {},
+								update_notes = {},
 								link = "",
 								filename = "",
 								size = 0,
@@ -133,8 +134,8 @@ function updatecheck.await_response()
 						end
 
 						plugins_online[n].info[key:lower()] = v
-					elseif n ~= nil and key == "DESCRIPTION" then
-						table.insert(plugins_online[n].info.description, vedxml.VedXML:unxmlspecialchars(v))
+					elseif n ~= nil and (key == "DESCRIPTION" or key == "UPDATE_NOTES") then
+						table.insert(plugins_online[n].info[key:lower()], vedxml.VedXML:unxmlspecialchars(v))
 					end
 				end
 			end
@@ -149,6 +150,7 @@ function updatecheck.await_response()
 	end
 	for k,v in pairs(plugins_online) do
 		plugins_online[k].info.description = table.concat(plugins_online[k].info.description, "\n")
+		plugins_online[k].info.update_notes = table.concat(plugins_online[k].info.update_notes, "\n")
 		local installed_key = plugins_id_to_key[plugins_online[k].info.id]
 		if installed_key ~= nil then
 			plugins_online[k].in_plugins = true

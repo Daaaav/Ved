@@ -352,13 +352,20 @@ function loadpluginpages()
 	table.insert(helppages, {subj=L.PLUGINS_INSTALLED, imgs={}, cont=""})
 
 	for k,v in pairs(plugins) do
+		local description
+		if v.online ~= nil and v.online.info.version ~= v.info.version then
+			-- Show update notes!
+			description = v.info.description:gsub("[\r\n]+$", "") .. "\n" .. v.online.info.update_notes
+		else
+			description = v.info.description
+		end
 		table.insert(helppages, {
 			subj = v.info.shortname,
 			imgs = {},
 			cont = (v.info.supported and "" or langkeys(L.PLUGIN_NOT_SUPPORTED, {v.info.minimumved}) .. "\n\n")
 				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\Gh#\n\n"
 				.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
-				.. v.info.description
+				.. description
 				),
 			special = "plugin_installed",
 			plugin_key = k
