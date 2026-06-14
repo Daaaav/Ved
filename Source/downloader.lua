@@ -79,19 +79,29 @@ function install_whole_queue()
 
 		if q.kind == "plugin_update"
 		or q.kind == "plugin_install" then
-			love.filesystem.write("plugins/" .. q.new_filename, msg.data)
+			local success, errmsg = love.filesystem.write("plugins/" .. q.new_filename, msg.data)
+			if not success then
+				dialog.create(errmsg, nil, nil, q.new_filename)
+			end
 
 			-- Now we need to set the plugin's status to "just_installed"
 			if plugins_id_to_key[q.plugin_id] ~= nil then
 				plugins[plugins_id_to_key[q.plugin_id]].status = "just_installed"
+				plugins[plugins_id_to_key[q.plugin_id]].status_pending = true
+				plugins[plugins_id_to_key[q.plugin_id]].info.filename = q.new_filename -- make sure deletion works
 			else
 				-- Might be an online-only plugin... Not until we restart!
 				for k,v in pairs(plugins_online) do
 					if v.info.id == q.plugin_id then
 						v.status = "just_installed"
+						v.status_pending = true
 					end
 				end
 			end
+		end
+
+		if q.done_msg ~= nil then
+			dialog.create(q.done_msg)
 		end
 	end
 

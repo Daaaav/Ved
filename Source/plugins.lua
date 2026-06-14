@@ -18,6 +18,7 @@ plugins = {
 			<LIST OF HOOKS HERE>
 		},
 		status = "installed", -- see below
+		status_pending = false, -- see below
 		online = nil, -- see below
 	}
 
@@ -149,6 +150,9 @@ function loadplugins()
 					-- - "missing" (online-only, or deleted)
 					-- - "just_installed" (just installed or updated)
 					plugins[pluginname].status = "installed"
+
+					-- status_pending indicates Ved needs to be restarted for this plugin
+					plugins[pluginname].status_pending = false
 
 					-- .online can be either nil (no known online plugin),
 					-- or a reference to an entry in plugins_online.
@@ -352,7 +356,7 @@ function loadpluginpages()
 			subj = v.info.shortname,
 			imgs = {},
 			cont = (v.info.supported and "" or langkeys(L.PLUGIN_NOT_SUPPORTED, {v.info.minimumved}) .. "\n\n")
-				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\wh#\n\n"
+				.. (v.info.overrideinfo and v.info.description or v.info.longname .. "\\Gh#\n\n"
 				.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
 				.. v.info.description
 				),
@@ -407,7 +411,7 @@ function loadpluginpages()
 			table.insert(helppages, {
 				subj = v.info.shortname,
 				imgs = {},
-				cont = (v.info.longname .. "\\wh#\n\n"
+				cont = (v.info.longname .. "\\Yh#\n\n"
 					.. plugin_author_and_version(v.info) .. "\n\\-\n\n"
 					.. v.info.description
 					),
@@ -435,22 +439,22 @@ function plugin_help_buttons(article)
 		-- Guaranteed is_installed for this status
 		if plugin.online ~= nil and plugin.online.info.link ~= ""
 		and plugin.online.info.version ~= plugin.info.version then
-			return {"delete", "update"}
+			return {"info", "delete","update"}, plugin.status_pending
 		end
-		return {"delete"}
+		return {"info", "delete"}, plugin.status_pending
 	elseif plugin.status == "missing" then
 		-- This plugin doesn't have a package file in our filesystem,
 		-- but it may still be in plugins if we just deleted it!
 		-- Or it may be in plugins_online because we never installed it.
 		if (plugin.online ~= nil and plugin.online.info.link ~= "")
 		or anythingbutnil(plugin.info.link) ~= "" then
-			return {"install"}
+			return {"info", "install"}, plugin.status_pending
 		end
-		return {}
+		return {"info"}, plugin.status_pending
 	elseif plugin.status == "just_installed" then
-		return {"delete"}
+		return {"info", "delete"}, plugin.status_pending
 	end
-	return {}
+	return {"info"}, plugin.status_pending
 end
 
 function plugin_help_action(article, pressed)
@@ -486,34 +490,116 @@ function plugin_help_action(article, pressed)
 
 	if pressed == "install" or pressed == "update" then
 		local download_id = string.format("plugin:%d:%s", os.time(), plugin.info.id)
-		if pressed == "install" then
-			downloader.request(
-				"plugin_install",
-				download_id,
-				plugin_online.info.link,
-				plugin_online.info.sha512,
-				plugin_online.info.size,
-				{
-					plugin_id = plugin.info.id,
-					new_filename = plugin_online.info.filename
-				}
-			)
-		else
-			downloader.request(
-				"plugin_update",
-				download_id,
-				plugin_online.info.link,
-				plugin_online.info.sha512,
-				plugin_online.info.size,
-				{
-					plugin_id = plugin.info.id,
-					new_filename = plugin_online.info.filename,
-					old_filename = plugin.info.filename
-				}
-			)
+		local kind = "plugin_install"
+		local msg_top = L.CONFIRM_INSTALL_PLUGIN
+		local msg_bot = L.NOTE_SAFE_PLUGINS
+		local msg_version = plugin_online.info.version
+		local btn_confirm = L.INSTALL
+		local userdata = {
+			plugin_id = plugin.info.id,
+			new_filename = plugin_online.info.filename,
+			done_msg = L.DONE_INSTALLING_PLUGIN
+		}
+		if pressed == "update" then
+			kind = "plugin_update"
+			userdata.old_filename = plugin.info.filename
+			msg_top = L.CONFIRM_UPDATE_PLUGIN
+			msg_bot = ""
+			msg_version = plugin.info.version .. " " .. arrow_right .. " " .. plugin_online.info.version
+			btn_confirm = L.UPDATE
 		end
+
+		dialog.create(
+			msg_top .. "\n\n"
+			.. plugin_online.info.longname .. "\n"
+			.. langkeys(
+				L.PLUGIN_AUTHOR_VERSION,
+				{plugin_online.info.author, msg_version}
+			) .. "\n\n"
+			.. langkeys(L.DOWNLOAD_SIZE, {bytes_notation(plugin_online.info.size)})
+			.. "\n\n\n" .. msg_bot,
+			{btn_confirm, DB.CANCEL},
+			function(button)
+				if button == DB.CANCEL then
+					return
+				end
+
+				downloader.request(
+					kind,
+					download_id,
+					plugin_online.info.link,
+					plugin_online.info.sha512,
+					plugin_online.info.size,
+					userdata
+				)
+			end
+		)
 	elseif pressed == "delete" then
-		dialog.create("delet")
+		dialog.create(
+			L.CONFIRM_DELETE_PLUGIN .. "\n\n"
+			.. plugin.info.longname .. "\n"
+			.. langkeys(
+				L.PLUGIN_AUTHOR_VERSION,
+				{plugin.info.author, plugin.info.version}
+			) .. "\n\n\n" .. L.NOTE_RESTART_VED_DELETE,
+			DBS.YESNO,
+			function(button)
+				if button ~= DB.YES then
+					return
+				end
+
+				local filename = plugin.info.filename
+				if filename == nil then
+					filename = plugin_online.info.filename
+				end
+
+				if filename ~= nil and love.filesystem.remove("plugins/" .. filename) then
+					plugin.status = "missing"
+					plugin.status_pending = true
+				else
+					dialog.create(L.COORDS_OUT_OF_RANGE)
+				end
+			end
+		)
+	elseif pressed == "info" then
+		local lines = {}
+		table.insert(lines, L.PLUGININFO_INSTALLED_HEADER)
+		table.insert(lines, "")
+		if not is_installed then
+			table.insert(lines, L.PLUGIN_NOT_INSTALLED)
+		else
+			table.insert(lines, langkeys(L.VERSION_IS, {plugin.info.version}))
+			table.insert(lines, langkeys(L.INSTALLED_ON, {
+				format_date(love.filesystem.getLastModified("plugins/" .. plugin.info.filename))
+			}))
+			table.insert(lines, L.MUSICFILENAME .. plugin.info.filename)
+		end
+		table.insert(lines, "")
+		table.insert(lines, "")
+		table.insert(lines, L.PLUGININFO_AVAILABLE_HEADER)
+		table.insert(lines, "")
+		if plugin_online == nil then
+			table.insert(lines, L.PLUGIN_NOT_AVAILABLE)
+		else
+			local downloadable = plugin_online.info.link ~= ""
+			if downloadable then
+				table.insert(lines, langkeys(L.VERSION_IS, {plugin_online.info.version}))
+			end
+			table.insert(lines, langkeys(L.LAST_UPDATED, {
+				format_date(plugin_online.info.time_updated)
+			}))
+			if downloadable then
+				table.insert(lines, L.MUSICFILENAME .. plugin_online.info.filename)
+				table.insert(lines, langkeys(L.DOWNLOAD_SIZE, {
+					bytes_notation(plugin_online.info.size)
+				}))
+			else
+				table.insert(lines, "")
+				table.insert(lines, L.PLUGIN_NOT_DOWNLOADABLE)
+			end
+		end
+
+		dialog.create(table.concat(lines, "\n"))
 	end
 end
 

@@ -116,7 +116,8 @@ function updatecheck.await_response()
 								time_updated = 0,
 							},
 							in_plugins = false,
-							status = "missing"
+							status = "missing",
+							status_pending = false,
 						}
 					end
 					if n ~= nil and table.contains({
