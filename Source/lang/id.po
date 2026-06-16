@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: 2026-06-14 20:59+0000\n"
+"PO-Revision-Date: 2026-06-16 02:01+0000\n"
 "Last-Translator: Marchionne <marchionne@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -2526,10 +2526,9 @@ msgctxt "L.FLAGS_SPECIALROOMNAME"
 msgid "Choose the flag that activates this special roomname"
 msgstr "Pilih tanda yang mengaktifkan nama ruangan khusus ini"
 
-#, fuzzy
 msgctxt "L.SUREDELETESPECIALROOMNAME"
 msgid "Are you sure you want to delete this roomname?"
-msgstr "Anda yakin ingin menghapus nota ini?"
+msgstr "Apakah Anda yakin ingin menghapus nama ruangan ini?"
 
 #. List of installed plugins
 msgctxt "L.PLUGINS_INSTALLED"
@@ -2585,15 +2584,15 @@ msgstr "Plugin ini tidak memiliki unduhan yang tersedia untuk versi Ved Anda."
 
 msgctxt "L.UPDATE"
 msgid "Update"
-msgstr ""
+msgstr "Perbarui"
 
 msgctxt "L.UPDATENOW"
 msgid "Update now"
-msgstr "Update skrg"
+msgstr "Perbarui skrg"
 
 msgctxt "L.INSTALL"
 msgid "Install"
-msgstr ""
+msgstr "Instal"
 
 #. See information about something
 msgctxt "L.INFO"
@@ -2647,12 +2646,12 @@ msgstr "Paket yang diunduh tidak benar. Mungkin ada perubahan dari versi yang di
 msgctxt "L_PLU.NUMUNSUPPORTEDPLUGINS"
 msgid "You have $1 plugin that is not supported in this version."
 msgid_plural "You have $1 plugins that are not supported in this version."
-msgstr[0] "Anda memiliki plugin $1 yang tidak didukung dalam versi ini."
+msgstr[0] "Anda memiliki $1 plugin yang tidak didukung dalam versi ini."
 
 msgctxt "L_PLU.LEVELFAILEDCHECKS"
 msgid "This level failed $1 check. The issue may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
 msgid_plural "This level failed $1 checks. The issues may have been fixed automatically, but it's possible this will still result in crashes and inconsistencies."
-msgstr[0] "Level ini gagal dalam pemeriksaan $1. Masalah mungkin telah diperbaiki secara otomatis, tetapi mungkin saja ini akan tetap menyebabkan error dan inkonsistensi."
+msgstr[0] "Level ini gagal dalam $1 cek. Masalah mungkin telah diperbaiki secara otomatis, tetapi mungkin saja ini akan tetap menyebabkan kerusakan dan inkonsistensi."
 
 msgctxt "L_PLU.SCRIPTUSAGESROOMS"
 msgid "$1 usage in rooms: $2"

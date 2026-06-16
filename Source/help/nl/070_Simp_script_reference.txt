@@ -123,24 +123,24 @@ commando. Dit kan worden gebruikt in plaats van het tweede argument voor "say".
 
 warpdir¤(x,y,richting)\w#h
 
-Verandert de warprichting voor kamer x,y, beginnend bij 1, naar de aangegeven
+Verandert de wikkelrichting voor kamer x,y, beginnend bij 1, naar de aangegeven
 richting. Dit kan worden gecontroleerd met ifwarp, wat zorgt voor een relatief
 krachtig extra vlaggen-/variabelesysteem.
 
 x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
-richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
-geaccepteerd
+richting - De wikkelrichting. Normaal gesproken 0-3, maar waarden daarbuiten
+worden geaccepteerd
 
 ifwarp¤(x,y,richting,script)\w#h
 
-Als de warprichting voor kamer x,y, beginnend bij 1, is ingesteld op richting, ga
-naar (vereenvoudigd) script
+Als de wikkelrichting voor kamer x,y, beginnend bij 1, is ingesteld op richting,
+ga naar (vereenvoudigd) script
 
 x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
-richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
-geaccepteerd
+richting - De wikkelrichting. Normaal gesproken 0-3, maar waarden daarbuiten
+worden geaccepteerd
 
 loadtext¤(taal)\w#h
 

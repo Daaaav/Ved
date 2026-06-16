@@ -916,7 +916,7 @@ direkto - left/right (maldekstren/dekstren)
 warpdir¤(x,y,dir)\w#h
 
 Ŝanĝas la ĉirkaŭfluan direkton por ĉambro x,y, 1-indice, al la specifita direkto.
-Tio estas kontrolebla per ifwarp, rezultante en relative potenca aldona sistemo de
+Tio estas kontrolebla per ifwarp, rezultante en relative potenca sistemo plua de
 flagoj/variabloj.
 
 x - Ĉambra x-koordinato, ekde 1

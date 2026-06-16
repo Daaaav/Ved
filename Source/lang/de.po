@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 03:02+0000\n"
-"PO-Revision-Date: 2026-06-14 21:00+0000\n"
+"PO-Revision-Date: 2026-06-16 02:01+0000\n"
 "Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -379,53 +379,49 @@ msgctxt "L.INTERNALOFF_LONG"
 msgid "Internal scripting mode is disabled"
 msgstr "Interner Skript-Modus ausgeschaltet"
 
-#, fuzzy
 msgctxt "L.INTSC_LONG"
 msgid "Internal scripting mode"
-msgstr "Interner Skript-Modus eingeschaltet"
+msgstr "Interner Skript-Modus"
 
 #. A scripting mode that requires a loadscript, and only works in VVVVVV 2.4+
-#, fuzzy
 msgctxt "L.INTSC_LOADSCRIPT24"
 msgid "Loadscript (2.4+)"
-msgstr "Ladeskript int.sc"
+msgstr "Ladeskript (2.4+)"
 
 #. Like the other Loadscript option, but also works in earlier versions
 msgctxt "L.INTSC_LOADSCRIPT23"
 msgid "Loadscript (compatible with 2.3-)"
-msgstr ""
+msgstr "Ladeskript (kompatibel mit 2.3-)"
 
 #. The say(-1) method involves using the scripting command say(-1)
-#, fuzzy
 msgctxt "L.INTSC_SAYMIN1"
 msgid "say(-1)"
-msgstr "say(-1) int.sc"
+msgstr "say(-1)"
 
 msgctxt "L.INTSC_LOADSCRIPT24_SHORT"
 msgid "Mode: 2.4+"
-msgstr ""
+msgstr "Modus: 2.4+"
 
 msgctxt "L.INTSC_LOADSCRIPT23_SHORT"
 msgid "Mode: 2.1+"
-msgstr ""
+msgstr "Modus: 2.1+"
 
-#, fuzzy
 msgctxt "L.INTSC_SAYMIN1_SHORT"
 msgid "Mode: say(-1)"
-msgstr "Modus: automatisch"
+msgstr "Modus: say(-1)"
 
 msgctxt "L.INTSC_LOADSCRIPT24_EXPL"
 msgid "When making a level for VVVVVV 2.4 or above, this setting is all you need. This script needs to be loaded from another script."
-msgstr ""
+msgstr "Wenn du einen Level für VVVVVV 2.4 oder höher machst, ist diese Einstellung alles, was du brauchst. Dieses Skript muss von einem anderen Skript geladen werden."
 
 msgctxt "L.INTSC_LOADSCRIPT23_EXPL"
 msgid "Like the 2.4+ method, but the script is (invisibly) split into blocks of less than 50 lines for compatibility with many VVVVVV versions. This might be a limitation for some specific usecases."
-msgstr ""
+msgstr "Gleich wie bei der 2.4+-Methode, aber das Skript wird (unsichtbar) in Blöcke von weniger als 50 Zeilen aufgeteilt, für Kompatibilität mit vielen VVVVVV-Versionen. Das kann für bestimmte Projekte eine Einschränkung sein."
 
 #. the word 'saves' = 'economizes'/'removes the need for', NOT 'stores data to disk'!
 msgctxt "L.INTSC_SAYMIN1_EXPL"
 msgid "Like \"Loadscript (compatible with 2.3-)\", but it saves a loadscript, which helped when there was a limit of 500 scripts in total. The script forcibly starts with cutscene bars."
-msgstr ""
+msgstr "Gleich wie \"Loadscript (kompatibel mit 2.3-)\", spart aber ein Loadscript, was hilfreich war, als es eine Obergrenze von insgesamt 500 Skripten gab. Das Skript startet zwangsweise mit Cutscene-Balken."
 
 msgctxt "L.VIEW"
 msgid "View"
@@ -465,11 +461,11 @@ msgstr "Ein Skript, das dieses Skript lädt, wurde nicht erkannt. Diese Art von 
 
 msgctxt "L.INTSCRWARNING_BOXED"
 msgid "Direct script box/terminal reference!"
-msgstr "Direkte Skriptbox/Konsolen Referenz!"
+msgstr "Direkte Skriptbox-/Terminalreferenz!"
 
 msgctxt "L.INTSCRWARNING_BOXED_EXPL"
 msgid "There is a terminal or script box that loads this script directly. Activating that terminal or script box will probably not work as you might expect; this type of internal script needs to be loaded via a load script."
-msgstr "Es gibt eine Konsole oder ein Skriptfeld, das dieses Skript direkt lädt. Das Aktivieren dieser Konsole oder dieses Skriptfelds wird wahrscheinlich nicht wie erwartet funktionieren; diese Art von internem Skript muss über ein Ladeskript geladen werden."
+msgstr "Es gibt ein Terminal oder ein Skriptfeld, das dieses Skript direkt lädt. Das Aktivieren dieses Terminal oder dieses Skriptfelds wird wahrscheinlich nicht wie erwartet funktionieren; diese Art von internem Skript muss über ein Ladeskript geladen werden."
 
 msgctxt "L.INTSCRWARNING_NAME"
 msgid "Unsuitable script name!"
@@ -477,7 +473,7 @@ msgstr "Ungeeigneter Skriptname!"
 
 msgctxt "L.INTSCRWARNING_NAME_EXPL"
 msgid "The name of this script has a capital letter, a space, a parenthesis or a comma. This script can only be loaded directly from a terminal or script box."
-msgstr "Der Name dieses Skripts hat einen Großbuchstaben, ein Leerzeichen, eine Klammer oder ein Komma. Dieses Skript kann nur direkt von einer Konsole oder Skriptbox geladen werden."
+msgstr "Der Name dieses Skripts hat einen Großbuchstaben, ein Leerzeichen, eine Klammer oder ein Komma. Dieses Skript kann nur direkt von einem Terminal oder Skriptbox geladen werden."
 
 msgctxt "L.COLUMN"
 msgid "Column: "
@@ -708,7 +704,7 @@ msgstr "Objekttyp: $1"
 
 msgctxt "L.PLATFORMBOUNDS"
 msgid "Platf. bounds"
-msgstr "Platf. Grenze"
+msgstr "Begrenzung"
 
 msgctxt "L.WARPDIR"
 msgid "Warp dir: $1"
@@ -824,7 +820,7 @@ msgstr "Suche nach: "
 #. You last searched for these 5 things, click one to search it again
 msgctxt "L.RECENT_SEARCHES"
 msgid "Recent searches"
-msgstr ""
+msgstr "Zuletzt gesucht"
 
 msgctxt "L.VERSIONERROR"
 msgid "Unable to check version."
@@ -1142,7 +1138,7 @@ msgstr "Interne Skripts:"
 #. Stats screen
 msgctxt "L.TILESETUSSAGE"
 msgid "Tileset usage"
-msgstr "Tileset Benutzung"
+msgstr "Tilesetbenutzung"
 
 #. Stats screen
 msgctxt "L.TILESETSONLYUSED"
@@ -1172,7 +1168,7 @@ msgstr "Flagnamen:"
 #. Stats screen
 msgctxt "L.TILESUSAGE"
 msgid "Tiles usage"
-msgstr "Tiles Verwendung"
+msgstr "Tilesverwendung"
 
 #. Stats screen
 msgctxt "L.AMOUNTTILES"
@@ -1464,7 +1460,7 @@ msgstr "$1x$2 Monitor"
 
 msgctxt "L.VEDRES"
 msgid "Ved resolution: $1x$2"
-msgstr "Ved Auflösung: $1x$2"
+msgstr "Ved-Auflösung: $1x$2"
 
 msgctxt "L.NONINTSCALE"
 msgid "Non-integer scaling"
@@ -1581,7 +1577,7 @@ msgstr ""
 
 msgctxt "L.INVALIDFILENAME_MAC"
 msgid "macOS doesn't allow the : character in filenames."
-msgstr "macOS erlaubt kein : Zeichen in Dateinamen."
+msgstr "macOS erlaubt das Zeichen : nicht in Dateinamen."
 
 #. Keyboard key. Please use CAPITAL LETTERS ONLY
 msgctxt "L.TINY_CTRL"
@@ -1752,7 +1748,7 @@ msgstr ","
 
 msgctxt "L.CANNOTUSENEWLINES"
 msgid "You cannot use the \"$1\" character in script names!"
-msgstr "Du kannst das \"$1\" Zeichen nicht in Skriptnamen benutzen!"
+msgstr "Du kannst das Zeichen \"$1\" nicht in Skriptnamen benutzen!"
 
 msgctxt "L.MUSICTITLE"
 msgid "Title: "
@@ -1817,10 +1813,9 @@ msgctxt "L.DOFILTERDIR"
 msgid "Only show folders"
 msgstr "Nur Verzeichnisse zeigen"
 
-#, fuzzy
 msgctxt "L.CREATENEWFOLDER"
 msgid "Create new folder"
-msgstr "Erstelle neue Notiz"
+msgstr "Erstelle neuen Ordner"
 
 msgctxt "L.FILEDIALOGLUV"
 msgid "Sorry, your operating system is unrecognized, so the file dialog does not work."
@@ -1864,7 +1859,7 @@ msgstr ""
 
 msgctxt "L.ASSETS_FOLDER_RENAME"
 msgid "The assets folder will also be renamed to \"$1\"."
-msgstr ""
+msgstr "Der Assets-Ordner wird auch in \"$1\" umbenannt."
 
 msgctxt "L.CREATE_VVVVVV_FOLDER"
 msgid "It seems like the VVVVVV folder doesn't exist. Would you like to create it?"
@@ -2788,7 +2783,7 @@ msgstr "Raumtext"
 
 msgctxt "toolnames.12"
 msgid "Terminal"
-msgstr "Konsole"
+msgstr "Terminal"
 
 msgctxt "toolnames.13"
 msgid "Script box"
@@ -3024,7 +3019,7 @@ msgstr "Teleportationszone"
 
 msgctxt "langtilesetnames.short4"
 msgid "Ship"
-msgstr "Schf."
+msgstr "Schiff"
 
 msgctxt "langtilesetnames.long4"
 msgid "Ship"
@@ -3099,7 +3094,7 @@ msgstr " (zu neu)"
 
 msgctxt "ERR_PLUGINERROR"
 msgid "Plugin error!"
-msgstr "Plugin Fehler!"
+msgstr "Pluginfehler!"
 
 msgctxt "ERR_FILE"
 msgid "File to be edited:"
@@ -3209,15 +3204,15 @@ msgstr "Webseite wurde gändert von \"$1\" zu \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc1"
 msgid "Desc1 was changed from \"$1\" to \"$2\""
-msgstr "Beschreibung1 wurde geändert von \"$1\" zu \"$2\""
+msgstr "Beschreibung-1 wurde geändert von \"$1\" zu \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc2"
 msgid "Desc2 was changed from \"$1\" to \"$2\""
-msgstr "Beschreibung2 wurde geändert von \"$1\" zu \"$2\""
+msgstr "Beschreibung-2 wurde geändert von \"$1\" zu \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc3"
 msgid "Desc3 was changed from \"$1\" to \"$2\""
-msgstr "Beschreibung3 wurde geändert von \"$1\" zu \"$2\""
+msgstr "Beschreibung-3 wurde geändert von \"$1\" zu \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.mapsize"
 msgid "Map size was changed from $1x$2 to $3x$4"
@@ -3301,11 +3296,11 @@ msgstr "Gegnergrenzen geändert von $1,$2,$3,$4 zu $5,$6,$7,$8\\Y"
 
 msgctxt "diffmessages.roommetadata.directmode01"
 msgid "Direct mode enabled\\G"
-msgstr "Direkter-Modus aktiviert\\G"
+msgstr "Direkter Modus aktiviert\\G"
 
 msgctxt "diffmessages.roommetadata.directmode10"
 msgid "Direct mode disabled\\R"
-msgstr "Direkter-Modus deaktiviert\\R"
+msgstr "Direkter Modus deaktiviert\\R"
 
 msgctxt "diffmessages.roommetadata.warpdir"
 msgid "Warp direction changed from $1 to $2\\Y"

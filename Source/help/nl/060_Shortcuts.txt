@@ -17,7 +17,7 @@ F5¤  Platform-grenzen\C
 
 F10¤  Handmatige/automatische modus (direct mode/niet-direct mode)\C
 
-W¤  Warprichting veranderen\C
+W¤  Kamerwikkeling veranderen\C
 E¤  Kamernaam veranderen\C
 
 L¤  Level laden\C

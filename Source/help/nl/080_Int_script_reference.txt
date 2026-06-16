@@ -507,13 +507,13 @@ Dit commando is toegevoegd in 2.5. Dit werkt dus in alle versies\g
 
 ifwarp¤(x,y,richting,script)\w#h
 
-Als de warprichting voor kamer ¤(x,y)¤, beginnend bij 1, is ingesteld op richting,\nn&Z
+Als de wikkelrichting voor kamer ¤(x,y)¤, beginnend bij 1, is ingesteld op richting,\nn&Z
 ga naar (vereenvoudigd) script
 
 x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
-richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
-geaccepteerd
+richting - De wikkelrichting. Normaal gesproken 0-3, maar waarden daarbuiten
+worden geaccepteerd
 
 jukebox¤(n)\w#h
 
@@ -938,14 +938,14 @@ richting - left/right
 
 warpdir¤(x,y,richting)\w#h
 
-Verandert de warprichting voor kamer x,y, beginnend bij 1, naar de aangegeven
+Verandert de wikkelrichting voor kamer x,y, beginnend bij 1, naar de aangegeven
 richting. Dit kan worden gecontroleerd met ifwarp, wat zorgt voor een relatief
 krachtig extra vlaggen-/variabelesysteem.
 
 x - x-coördinaat van kamer, beginnend bij 1
 y - y-coördinaat van kamer, beginnend bij 1
-richting - De warprichting. Normaal gesproken 0-3, maar waarden daarbuiten worden
-geaccepteerd
+richting - De wikkelrichting. Normaal gesproken 0-3, maar waarden daarbuiten
+worden geaccepteerd
 
 yellowcontrol\b#h
 

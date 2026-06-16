@@ -928,9 +928,9 @@ arah - left/right
 
 warpdir¤(x,y,dir)\w#h
 
-Mengubah arah lengkung untuk ruang x,y, berindeks 1, ke arah yang ditentukan. Ini
-dapat diperiksa dengan ifwarp, menghasilkan sistem flag/variabel ekstra yang
-relatif kuat.
+Mengubah arah lengkung untuk ruang x,y, berindeks-1, ke arah yang ditentukan.
+Ini dapat diperiksa dengan ifwarp, menghasilkan sistem tanda/variabel ekstra
+yang relatif kuat.
 
 x - Ruang x koordinat, mulai dari 1
 y - Ruang y koordinat, mulai dari 1

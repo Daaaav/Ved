@@ -883,7 +883,7 @@ braces, not the accented characters. (None of this is visible in-game, of course
 
 Cette commande a été ajoutée dans la 2.4.\g
 
-textcase¤(casse)\w#h
+textcase¤(case)\w#h
 
 Si votre niveau a des fichiers de traduction, et que vous avez plusieurs
 boîtes de dialogue ayant le même texte dans un seul script, cette commande

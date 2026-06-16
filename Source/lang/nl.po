@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 02:55+0000\n"
-"PO-Revision-Date: 2026-06-14 22:18+0000\n"
+"PO-Revision-Date: 2026-06-16 20:18+0000\n"
 "Last-Translator: Dav999 <dav999@private.tolp.nl>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -706,7 +706,7 @@ msgstr "Begrenzing"
 
 msgctxt "L.WARPDIR"
 msgid "Warp dir: $1"
-msgstr "Warprichting:$1"
+msgstr "Wikkeling: $1"
 
 msgctxt "L.ENEMYBOUNDS"
 msgid "Enemy bounds"
@@ -1742,7 +1742,7 @@ msgstr ","
 
 msgctxt "L.CANNOTUSENEWLINES"
 msgid "You cannot use the \"$1\" character in script names!"
-msgstr "Je kunt niet het \"$1\"-teken in scriptnamen gebruiken!"
+msgstr "Je kunt het teken \"$1\" niet in scriptnamen gebruiken!"
 
 msgctxt "L.MUSICTITLE"
 msgid "Title: "
@@ -2949,19 +2949,19 @@ msgstr "A"
 
 msgctxt "warpdirchangedtext.0"
 msgid "Room warping disabled"
-msgstr "Kamerwarping uitgeschakeld"
+msgstr "Kamerwikkeling uitgeschakeld"
 
 msgctxt "warpdirchangedtext.1"
 msgid "Warp direction set to horizontal"
-msgstr "Warprichting op horizontaal gezet"
+msgstr "Kamerwikkeling op horizontaal gezet"
 
 msgctxt "warpdirchangedtext.2"
 msgid "Warp direction set to vertical"
-msgstr "Warprichting op verticaal gezet"
+msgstr "Kamerwikkeling op verticaal gezet"
 
 msgctxt "warpdirchangedtext.3"
 msgid "Warp direction set to all directions"
-msgstr "Warprichting op alle richtingen gezet"
+msgstr "Kamerwikkeling op alle richtingen gezet"
 
 msgctxt "langtilesetnames.short0"
 msgid "Space Stn."
@@ -3182,15 +3182,15 @@ msgstr "Website is veranderd van \"$1\" naar \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc1"
 msgid "Desc1 was changed from \"$1\" to \"$2\""
-msgstr "Desc1 is veranderd van \"$1\" naar \"$2\""
+msgstr "Beschrijving-1 is veranderd van \"$1\" naar \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc2"
 msgid "Desc2 was changed from \"$1\" to \"$2\""
-msgstr "Desc2 is veranderd van \"$1\" naar \"$2\""
+msgstr "Beschrijving-2 is veranderd van \"$1\" naar \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.Desc3"
 msgid "Desc3 was changed from \"$1\" to \"$2\""
-msgstr "Desc3 is veranderd van \"$1\" naar \"$2\""
+msgstr "Beschrijving-3 is veranderd van \"$1\" naar \"$2\""
 
 msgctxt "diffmessages.levelpropertiesdiff.mapsize"
 msgid "Map size was changed from $1x$2 to $3x$4"
@@ -3274,15 +3274,15 @@ msgstr "Vijandbegrenzing veranderd van $1,$2,$3,$4 naar $5,$6,$7,$8\\Y"
 
 msgctxt "diffmessages.roommetadata.directmode01"
 msgid "Direct mode enabled\\G"
-msgstr "Direct mode aangezet\\G"
+msgstr "Directe modus aangezet\\G"
 
 msgctxt "diffmessages.roommetadata.directmode10"
 msgid "Direct mode disabled\\R"
-msgstr "Direct mode uitgezet\\R"
+msgstr "Directe modus uitgezet\\R"
 
 msgctxt "diffmessages.roommetadata.warpdir"
 msgid "Warp direction changed from $1 to $2\\Y"
-msgstr "Warprichting veranderd van $1 naar $2\\Y"
+msgstr "Kamerwikkeling veranderd van $1 naar $2\\Y"
 
 msgctxt "diffmessages.entities.added"
 msgid "Added entity type $1 at position $2,$3 in room $4\\G"

@@ -64,7 +64,7 @@ Geluidseffecten\h#
 7 - Normaal drijfzandblok aangeraakt
 8 - Zwaartekrachtlijn aangeraakt
 9 - Flits
-10 - Warp
+10 - Teleportatie
 11 - Geluid van Viridian
 12 - Geluid van Verdigris
 13 - Geluid van Victoria
