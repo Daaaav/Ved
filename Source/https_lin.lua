@@ -4,9 +4,20 @@ function https_request(url)
 		return nil
 	end
 
+	local total_bytes = 0
+
 	local pfile = io.popen("wget -qO- '" .. url .. "' --https-only")
-	response_text = pfile:read("*a")
+	local lua_string_data = {}
+	while true do
+		local response_text = pfile:read(50000)
+		if response_text == nil then
+			break
+		end
+
+		total_bytes = total_bytes + response_text:len()
+		table.insert(lua_string_data, response_text)
+	end
 	pfile:close()
 
-	return response_text
+	return table.concat(lua_string_data)
 end
