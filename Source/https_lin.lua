@@ -1,4 +1,6 @@
-function https_request(url)
+local https_lin = {}
+
+function https_lin.request(url)
 	-- We could assume the URL is trusted and doesn't need to be escaped, but just in case
 	if url:find("'") ~= nil then
 		return nil
@@ -21,3 +23,5 @@ function https_request(url)
 
 	return table.concat(lua_string_data)
 end
+
+return https_lin

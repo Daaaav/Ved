@@ -30,8 +30,8 @@ if love.getVersion() < 11 then
 	return
 end
 
-require("https_main")
-local package = https_request(url)
+local https = require("https_main")
+local package = https.request(url)
 
 if package == nil then
 	print("Package download failed!")

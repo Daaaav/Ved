@@ -1,3 +1,5 @@
+local https_win = {}
+
 require("libs.windows_constants")
 
 local ffi = require("ffi")
@@ -13,7 +15,7 @@ local function utf16(text_utf8)
 	return text_utf16
 end
 
-function https_request(url)
+function https_win.request(url)
 	local hInternet = wininet.InternetOpenW(utf16("Ved/WinINet"), INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0)
 	if hInternet == nil then
 		return nil
@@ -51,3 +53,5 @@ function https_request(url)
 
 	return table.concat(lua_string_data)
 end
+
+return https_win

@@ -1,10 +1,12 @@
+local https_mac = {}
+
 require("librarian")
 
 local ffi = require("ffi")
 local lib = load_library(ffi, "vedlib_https_mac01.so")
 ffi.cdef((love.filesystem.read("libs/vedlib_https_mac.h")))
 
-function https_request(url)
+function https_mac.request(url)
 	if lib == nil then
 		return nil
 	end
@@ -26,3 +28,5 @@ function https_request(url)
 	lib.https_free_request()
 	return response
 end
+
+return https_mac

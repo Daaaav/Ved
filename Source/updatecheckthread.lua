@@ -12,8 +12,8 @@ check_channel:clear()
 -- Needed in LÖVE 0.9.x
 require("love.filesystem")
 
-require("https_main")
-local response_text = https_request("https://tolp.nl/ved/version-ssl.php" .. request_query)
+local https = require("https_main")
+local response_text = https.request("https://tolp.nl/ved/version-ssl.php" .. request_query)
 
 print("Finished version request.")
 
