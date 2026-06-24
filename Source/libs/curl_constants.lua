@@ -1,0 +1,4 @@
+return {
+	CURL_GLOBAL_ALL = 3,
+	CURLPROTO_HTTPS = 2
+}

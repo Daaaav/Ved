@@ -69,10 +69,13 @@ function love.load()
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end
+		local https_lin = require("https_lin")
+		https_lin.global_init()
 		loaded_filefunc = "linmac"
 		playtesting_available = true
 		autodetect_vvvvvv_available = true
 		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_lin00.so")
+		prepare_library("vedlib_curlhelper_lin00.so", "vedlib_curlhelper.c")
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
