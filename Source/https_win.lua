@@ -15,7 +15,7 @@ local function utf16(text_utf8)
 	return text_utf16
 end
 
-function https_win.request(url)
+function https_win.request(url, progress_callback)
 	local hInternet = wininet.InternetOpenW(utf16("Ved/WinINet"), INTERNET_OPEN_TYPE_PRECONFIG, nil, nil, 0)
 	if hInternet == nil then
 		return nil
@@ -30,7 +30,23 @@ function https_win.request(url)
 		return nil
 	end
 
+	local progress_dltotal = nil
+	if progress_callback ~= nil then
+		local dword_content_length = ffi.new("DWORD[1]")
+		local sizeof_dword = ffi.new("DWORD[1]", ffi.sizeof(dword_content_length))
+		if wininet.HttpQueryInfoW(
+			hRequest,
+			HTTP_QUERY_CONTENT_LENGTH + HTTP_QUERY_FLAG_NUMBER,
+			dword_content_length,
+			sizeof_dword,
+			nil
+		) then
+			progress_dltotal = tonumber(dword_content_length[0])
+		end
+	end
+
 	local lua_string_data = {}
+	local progress_dlnow = 0
 	local buffer_data = ffi.new("char[50000]")
 	local bytesRead = ffi.new("DWORD[1]")
 	while true do
@@ -45,7 +61,11 @@ function https_win.request(url)
 			-- success and 0 bytes read means done
 			break
 		end
+		progress_dlnow = progress_dlnow + bytesRead[0]
 		table.insert(lua_string_data, ffi.string(buffer_data, bytesRead[0]))
+		if progress_callback ~= nil then
+			progress_callback(progress_dlnow, progress_dltotal)
+		end
 	end
 
 	wininet.InternetCloseHandle(hRequest)

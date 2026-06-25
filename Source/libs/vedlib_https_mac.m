@@ -4,13 +4,27 @@
 #error ARC is enabled, it probably shouldn't be
 #endif
 
-// I could have used a completion handler instead of a delegate of course, but I want progress updates later
+
+typedef struct _https_status
+{
+	int64_t progress_dlnow;
+	int64_t progress_dltotal;
+
+	bool done;
+	bool final_success;
+	unsigned long final_dltotal;
+} https_status;
+
+
+// I could have used a completion handler instead of a delegate of course, but I want progress updates
 @interface VedHTTPSDelegate : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 {
 	NSMutableData* response;
 	BOOL done;
 	BOOL success;
 	dispatch_semaphore_t sem;
+	int64_t progress_dlnow;
+	int64_t progress_dltotal;
 }
 @end
 
@@ -24,6 +38,8 @@
 		done = NO;
 		success = NO;
 		sem = s;
+		progress_dlnow = 0;
+		progress_dltotal = 0;
 	}
 	return self;
 }
@@ -58,16 +74,30 @@
 - (void) URLSession:(NSURLSession*)session dataTask:(NSURLSessionDataTask*)dataTask didReceiveData:(NSData*)data
 {
 	[response appendData:data];
+
+	progress_dlnow = [dataTask countOfBytesReceived];
+	progress_dltotal = [dataTask countOfBytesExpectedToReceive];
+	if (progress_dltotal == NSURLSessionTransferSizeUnknown)
+	{
+		progress_dltotal = 0;
+	}
 }
 
-- (bool) getSuccess
+- (dispatch_semaphore_t) getSemaphore
 {
-	return success;
+	return sem;
 }
 
-- (unsigned long) getResponseLength
+- (void) getStatus:(https_status*)status
 {
-	return [response length];
+	status->progress_dlnow = progress_dlnow;
+	status->progress_dltotal = progress_dltotal;
+	status->done = done;
+	if (done)
+	{
+		status->final_success = success;
+		status->final_dltotal = [response length];
+	}
 }
 
 - (const void*) getResponseData
@@ -76,9 +106,10 @@
 }
 @end
 
+
 VedHTTPSDelegate* ved_delegate;
 
-bool https_start_request(const char* cstr_url, unsigned long expected_length)
+void https_start_request(const char* cstr_url, unsigned long expected_length)
 {
 	@autoreleasepool
 	{
@@ -101,16 +132,22 @@ bool https_start_request(const char* cstr_url, unsigned long expected_length)
 
 		NSURLSessionTask* task = [session dataTaskWithURL:url];
 		[task resume];
-
-		dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-
-		return [ved_delegate getSuccess];
 	}
 }
 
-unsigned long https_get_response_length(void)
+bool https_request_await(https_status* status)
 {
-	return [ved_delegate getResponseLength];
+	/* Call this repeatedly, while it returns true.
+	 * The semaphore call can either return because it was signaled,
+	 * or after a 50ms timeout. */
+	dispatch_semaphore_wait(
+		[ved_delegate getSemaphore],
+		dispatch_time(DISPATCH_TIME_NOW, 50*NSEC_PER_MSEC)
+	);
+
+	[ved_delegate getStatus:status];
+
+	return !status->done;
 }
 
 const void* https_get_response_data(void)

@@ -28,3 +28,11 @@ BOOL InternetReadFile(
 BOOL InternetCloseHandle(
   HINTERNET hInternet
 );
+
+BOOL HttpQueryInfoW(
+  HINTERNET hRequest,
+  DWORD     dwInfoLevel,
+  LPVOID    lpBuffer,
+  LPDWORD   lpdwBufferLength,
+  LPDWORD   lpdwIndex
+);

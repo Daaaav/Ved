@@ -3,6 +3,7 @@
  * You can use `cpp -P curl.h preprocessed.h` to preprocess */
 
 typedef void CURL;
+typedef int curl_socket_t;
 
 typedef enum {
   CURLE_OK = 0,
@@ -428,3 +429,103 @@ CURL *curl_easy_init(void);
 CURLcode curl_easy_setopt(CURL *curl, CURLoption option, ...);
 CURLcode curl_easy_perform(CURL *curl);
 void curl_easy_cleanup(CURL *curl);
+
+typedef void CURLM;
+
+typedef enum {
+  CURLM_CALL_MULTI_PERFORM = -1,
+  CURLM_OK,
+  CURLM_BAD_HANDLE,
+  CURLM_BAD_EASY_HANDLE,
+  CURLM_OUT_OF_MEMORY,
+  CURLM_INTERNAL_ERROR,
+  CURLM_BAD_SOCKET,
+  CURLM_UNKNOWN_OPTION,
+  CURLM_ADDED_ALREADY,
+  CURLM_RECURSIVE_API_CALL,
+  CURLM_WAKEUP_FAILURE,
+  CURLM_BAD_FUNCTION_ARGUMENT,
+  CURLM_ABORTED_BY_CALLBACK,
+  CURLM_UNRECOVERABLE_POLL,
+  CURLM_LAST
+} CURLMcode;
+
+typedef enum {
+  CURLMSG_NONE,
+  CURLMSG_DONE,
+  CURLMSG_LAST
+} CURLMSG;
+
+struct CURLMsg {
+  CURLMSG msg;
+  CURL *easy_handle;
+  union {
+    void *whatever;
+    CURLcode result;
+  } data;
+};
+typedef struct CURLMsg CURLMsg;
+
+struct curl_waitfd {
+  curl_socket_t fd;
+  short events;
+  short revents;
+};
+
+CURLM *curl_multi_init(void);
+CURLMcode curl_multi_add_handle(CURLM *m, CURL *curl);
+CURLMcode curl_multi_remove_handle(CURLM *m, CURL *curl);
+CURLMcode curl_multi_poll(CURLM *m, struct curl_waitfd extra_fds[], unsigned int extra_nfds, int timeout_ms, int *ret);
+CURLMcode curl_multi_perform(CURLM *m, int *running_handles);
+CURLMcode curl_multi_cleanup(CURLM *m);
+CURLMsg *curl_multi_info_read(CURLM *m, int *msgs_in_queue);
+
+
+typedef enum {
+  CURLVERSION_FIRST, /* 7.10 */
+  CURLVERSION_SECOND, /* 7.11.1 */
+  CURLVERSION_THIRD, /* 7.12.0 */
+  CURLVERSION_FOURTH, /* 7.16.1 */
+  CURLVERSION_FIFTH, /* 7.57.0 */
+  CURLVERSION_SIXTH, /* 7.66.0 */
+  CURLVERSION_SEVENTH, /* 7.70.0 */
+  CURLVERSION_EIGHTH, /* 7.72.0 */
+  CURLVERSION_NINTH, /* 7.75.0 */
+  CURLVERSION_TENTH, /* 7.77.0 */
+  CURLVERSION_ELEVENTH, /* 7.87.0 */
+  CURLVERSION_TWELFTH, /* 8.8.0 */
+  CURLVERSION_LAST /* never actually use this */
+} CURLversion;
+
+struct curl_version_info_data {
+  CURLversion age;
+  const char *version;
+  unsigned int version_num;
+  const char *host;
+  int features;
+  const char *ssl_version;
+  long ssl_version_num;
+  const char *libz_version;
+  const char * const *protocols;
+  const char *ares;
+  int ares_num;
+  const char *libidn;
+  int iconv_ver_num;
+  const char *libssh_version;
+  unsigned int brotli_ver_num;
+  const char *brotli_version;
+  unsigned int nghttp2_ver_num;
+  const char *nghttp2_version;
+  const char *quic_version;
+  const char *cainfo;
+  const char *capath;
+  unsigned int zstd_ver_num;
+  const char *zstd_version;
+  const char *hyper_version;
+  const char *gsasl_version;
+  const char * const *feature_names;
+  const char *rtmp_version;
+};
+typedef struct curl_version_info_data curl_version_info_data;
+
+curl_version_info_data *curl_version_info(CURLversion stamp);

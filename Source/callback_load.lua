@@ -42,7 +42,7 @@ function love.load()
 		if not lib_ok then
 			lib_load_errmsg = errmsg
 		end
-		prepare_library("vedlib_https_mac01.so")
+		prepare_library("vedlib_https_mac02.so")
 		autodetect_vvvvvv_available = prepare_library("vedlib_findv6_mac01.so")
 		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_mac00.so")
 		playtesting_available = true
@@ -75,7 +75,7 @@ function love.load()
 		playtesting_available = true
 		autodetect_vvvvvv_available = true
 		bidi_available, bidi_load_errmsg = prepare_library("vedlib_bidi_lin00.so")
-		prepare_library("vedlib_curlhelper_lin00.so", "vedlib_curlhelper.c")
+		prepare_library("vedlib_curlhelper_lin01.so", "vedlib_curlhelper.c")
 	else
 		-- This OS is unknown, so I suppose we will have to fall back on functions in love.filesystem.
 		ctrl = "ctrl"
