@@ -321,7 +321,7 @@ return function()
 				end
 				if md ~= nil then
 					if topy+48 > love.graphics.getHeight() then
-						topy = topy-56
+						topy = topy-60
 					end
 					love.graphics.setColor(73,73,73,224)
 					love.graphics.rectangle("fill", metadatax, topy, 40*8, 6*8)
