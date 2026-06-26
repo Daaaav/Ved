@@ -3256,6 +3256,7 @@ function load_uis()
 	uis[36] = load_ui("textboxcolors")
 	uis[37] = load_ui("theme")
 	uis[38] = load_ui("specialroomnames")
+	uis[39] = load_ui("httpstest")
 	-- Don't forget states.txt
 
 	for k,v in pairs(plugin_uis) do

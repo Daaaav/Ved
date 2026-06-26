@@ -30,18 +30,31 @@ function https_win.request(url, progress_callback)
 		return nil
 	end
 
+	local dword_buf = ffi.new("DWORD[1]")
+	local sizeof_dword = ffi.new("DWORD[1]", ffi.sizeof(dword_buf))
+
+	if wininet.HttpQueryInfoW(
+		hRequest,
+		HTTP_QUERY_STATUS_CODE + HTTP_QUERY_FLAG_NUMBER,
+		dword_buf,
+		sizeof_dword,
+		nil
+	) and tonumber(dword_buf[0]) >= 400 then
+		wininet.InternetCloseHandle(hRequest)
+		wininet.InternetCloseHandle(hInternet)
+		return nil
+	end
+
 	local progress_dltotal = nil
 	if progress_callback ~= nil then
-		local dword_content_length = ffi.new("DWORD[1]")
-		local sizeof_dword = ffi.new("DWORD[1]", ffi.sizeof(dword_content_length))
 		if wininet.HttpQueryInfoW(
 			hRequest,
 			HTTP_QUERY_CONTENT_LENGTH + HTTP_QUERY_FLAG_NUMBER,
-			dword_content_length,
+			dword_buf,
 			sizeof_dword,
 			nil
 		) then
-			progress_dltotal = tonumber(dword_content_length[0])
+			progress_dltotal = tonumber(dword_buf[0])
 		end
 	end
 

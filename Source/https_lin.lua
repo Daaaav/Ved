@@ -65,6 +65,9 @@ function https_lin.request_curl(url, progress_callback)
 	end
 	curl.curl_easy_setopt(ehand, "CURLOPT_NOSIGNAL", ffi.new("long", 1))
 	curl.curl_easy_setopt(ehand, "CURLOPT_USERAGENT", "Ved/libcurl")
+	curl.curl_easy_setopt(ehand, "CURLOPT_FAILONERROR", ffi.new("long", 1))
+	curl.curl_easy_setopt(ehand, "CURLOPT_FOLLOWLOCATION", ffi.new("long", 1))
+	curl.curl_easy_setopt(ehand, "CURLOPT_MAXREDIRS", ffi.new("long", 10))
 	if curl.curl_easy_setopt(ehand, "CURLOPT_XFERINFOFUNCTION", helper.ved_curl_progress) == "CURLE_OK"
 	and curl.curl_easy_setopt(ehand, "CURLOPT_XFERINFODATA", userdata) == "CURLE_OK" then
 		curl.curl_easy_setopt(ehand, "CURLOPT_NOPROGRESS", ffi.new("long", 0))
@@ -156,6 +159,11 @@ function https_lin.request_wget(url, progress_callback)
 		end
 	end
 	pfile:close()
+
+	if total_bytes == 0 then
+		-- More likely failure than an actual empty download
+		return nil
+	end
 
 	return table.concat(lua_string_data)
 end

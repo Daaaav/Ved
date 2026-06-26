@@ -98,6 +98,8 @@ function install_whole_queue()
 					end
 				end
 			end
+		elseif q.kind == "test" then
+			dialog.create(msg.data)
 		end
 
 		if q.done_msg ~= nil then

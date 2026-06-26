@@ -41,3 +41,4 @@ States:
 36	Textbox colors
 37	Theme selection
 38	Special roomnames
+39	HTTPS test

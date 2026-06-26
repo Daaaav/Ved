@@ -71,6 +71,21 @@ typedef struct _https_status
 	[session invalidateAndCancel];
 }
 
+- (void) URLSession:(NSURLSession*)session
+	dataTask:(NSURLSessionDataTask*)dataTask
+	didReceiveResponse:(NSURLResponse*)baseResponse
+	completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))handler
+{
+	NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)baseResponse;
+	if ([httpResponse statusCode] >= 400)
+	{
+		handler(NSURLSessionResponseCancel);
+		return;
+	}
+
+	handler(NSURLSessionResponseAllow);
+}
+
 - (void) URLSession:(NSURLSession*)session dataTask:(NSURLSessionDataTask*)dataTask didReceiveData:(NSData*)data
 {
 	[response appendData:data];
