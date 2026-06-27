@@ -1,7 +1,7 @@
 info = {
-	name = L.THEME_CLASSIC_NAME,
-	author = "Dav999",
-	description = L.THEME_CLASSIC_DESC
+	name = function() return L.THEME_CLASSIC_NAME end,
+	author = function() return "Dav999" end,
+	description = function() return L.THEME_CLASSIC_DESC end
 }
 
 function draw_button(...)

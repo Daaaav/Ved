@@ -1,5 +1,5 @@
 info = {
-	name = L.THEME_DEFAULT_NAME,
-	author = "Reese Rivers, Dav999",
-	description = L.THEME_DEFAULT_DESC
+	name = function() return L.THEME_DEFAULT_NAME end,
+	author = function() return "Reese Rivers, Dav999" end,
+	description = function() return L.THEME_DEFAULT_DESC end
 }

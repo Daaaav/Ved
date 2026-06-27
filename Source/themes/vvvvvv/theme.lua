@@ -1,8 +1,8 @@
 
 info = {
-	name = L.THEME_VVVVVV_NAME,
-	author = "NyakoFox",
-	description = L.THEME_VVVVVV_DESC
+	name = function() return L.THEME_VVVVVV_NAME end,
+	author = function() return "NyakoFox" end,
+	description = function() return L.THEME_VVVVVV_DESC end
 }
 
 function draw_nineslice(asset, x, y, x2, y2)
