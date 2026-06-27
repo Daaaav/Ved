@@ -7,23 +7,23 @@
 		<img>images/demo_manual.png</img>
 	</page>
 	<page id="030_Tools">
-		<img>images/tools/1.png</img>
-		<img>images/tools/2.png</img>
-		<img>images/tools/3.png</img>
-		<img>images/tools/4.png</img>
-		<img>images/tools/5.png</img>
-		<img>images/tools/6.png</img>
-		<img>images/tools/7.png</img>
-		<img>images/tools/8.png</img>
-		<img>images/tools/9.png</img>
-		<img>images/tools/10.png</img>
-		<img>images/tools/11.png</img>
-		<img>images/tools/12.png</img>
-		<img>images/tools/13.png</img>
-		<img>images/tools/14.png</img>
-		<img>images/tools/15.png</img>
-		<img>images/tools/16.png</img>
-		<img>images/tools/17.png</img>
+		<img>themes/default/ui/tools/prepared/1.png</img>
+		<img>themes/default/ui/tools/prepared/2.png</img>
+		<img>themes/default/ui/tools/prepared/3.png</img>
+		<img>themes/default/ui/tools/prepared/4.png</img>
+		<img>themes/default/ui/tools/prepared/5.png</img>
+		<img>themes/default/ui/tools/prepared/6.png</img>
+		<img>themes/default/ui/tools/prepared/7.png</img>
+		<img>themes/default/ui/tools/prepared/8.png</img>
+		<img>themes/default/ui/tools/prepared/9.png</img>
+		<img>themes/default/ui/tools/prepared/10.png</img>
+		<img>themes/default/ui/tools/prepared/11.png</img>
+		<img>themes/default/ui/tools/prepared/12.png</img>
+		<img>themes/default/ui/tools/prepared/13.png</img>
+		<img>themes/default/ui/tools/prepared/14.png</img>
+		<img>themes/default/ui/tools/prepared/15.png</img>
+		<img>themes/default/ui/tools/prepared/16.png</img>
+		<img>themes/default/ui/tools/prepared/17.png</img>
 	</page>
 	<page id="040_Script_editor"/>
 	<page id="050_Int_sc_mode"/>
