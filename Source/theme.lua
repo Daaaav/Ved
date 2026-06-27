@@ -97,6 +97,7 @@ end
 function self:load_theme(name)
 	local theme = {
 		name = name,
+		thumbnail = nil,
 		assets = {},
 		events = {},
 		info = {
@@ -155,6 +156,12 @@ function self:load_theme(name)
 			theme.info = env.info
 		end
 	end
+
+	-- Also load the thumbnail for the theme screen, if it exists
+	if love.filesystem.exists("themes/" .. name .. "/thumbnail.png") then
+		theme.thumbnail = love.graphics.newImage("themes/" .. name .. "/thumbnail.png")
+	end
+
 	return theme
 end
 

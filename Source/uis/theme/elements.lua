@@ -46,7 +46,7 @@ local function get_theme_element(name, active_in_position, n_active_themes)
 		)
 	end
 
-	local theme_info = theme:get_themes()[name].info
+	local theme_data = theme:get_themes()[name]
 
 	return HorizontalListContainer(
 		{
@@ -75,18 +75,23 @@ local function get_theme_element(name, active_in_position, n_active_themes)
 					love.graphics.setColor(128, 128, 128)
 					love.graphics.rectangle("line", x+.5, y+.5, w-9, 57)
 
-					love.graphics.setColor(0, 128, 0)
-					love.graphics.rectangle("fill", x+1, y+1, 56, 56)
+					if theme_data.thumbnail == nil then
+						love.graphics.setColor(24, 24, 24)
+						love.graphics.rectangle("fill", x+1, y+1, 56, 56)
+					else
+						love.graphics.setColor(255, 255, 255)
+						love.graphics.draw(theme_data.thumbnail, x+1, y+1)
+					end
 
 					love.graphics.setColor(255, 255, 255)
-					font_ui:print(theme_info.name(), x+64, y+8)
+					font_ui:print(theme_data.info.name(), x+64, y+8)
 
 					love.graphics.setColor(128, 128, 128)
-					font_ui:print(theme_info.author(), x+64, y+18)
+					font_ui:print(theme_data.info.author(), x+64, y+18)
 
 					local text_w = w-16-64
 					love.graphics.setColor(255, 255, 255)
-					font_ui:printf(theme_info.description(), x+64, y+34, text_w, "left")
+					font_ui:printf(theme_data.info.description(), x+64, y+34, text_w, "left")
 
 					return w, 58
 				end
@@ -116,6 +121,7 @@ update_elements = function()
 
 	for i, name in ipairs(inactive_themes) do
 		if i == 1 then
+			table.insert(theme_elements, Spacer())
 			table.insert(theme_elements, WrappedText(L.INACTIVETHEMES))
 		end
 		table.insert(theme_elements, get_theme_element(name, nil, nil))
